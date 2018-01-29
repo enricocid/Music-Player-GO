@@ -21,7 +21,8 @@ UI inversion and equalizer;
 
 - Minimal code:
 
-The player is based on nothing and it was written from scratch besides few snippets here and there. Used dependencies: sliding up panel by Umano,Android Support V4, RecyclerView;
+The player is based on nothing and it was written from scratch besides few snippets here and there. 
+Used dependencies: sliding up panel by Umano (https://github.com/umano/AndroidSlidingUpPanel), Android Support V4, RecyclerView;
 
 - Other features: 
 
