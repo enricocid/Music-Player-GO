@@ -1,7 +1,7 @@
 # Music-Player-GO
 Very slim music player
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art.png)
+![Screenshots](https://lh4.googleusercontent.com/t_luKUy0oh7iVF2fwT_NZReyklk-UbAj0Q5wdaCW5FlNIrfJV_xol7lDzyl9iJBpz8pYJWez-ArhUPP8rpCWBQ=w1366-h637-rw)
 
 <a href="https://play.google.com/apps/testing/com.iven.musicplayergo" target="_blank">
   <img alt="Get it on Google Play"
@@ -21,7 +21,7 @@ UI inversion and equalizer;
 
 - Minimal code:
 
-The player is based on nothing and it was written from scratch besides few snippets here and there. Used dependencies: sliding up panel by Umano and Android Support V4;
+The player is based on nothing and it was written from scratch besides few snippets here and there. Used dependencies: sliding up panel by Umano,Android Support V4, RecyclerView;
 
 - Other features: 
 
