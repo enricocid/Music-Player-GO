@@ -1,7 +1,7 @@
 # Music-Player-GO
 Very slim music player
 
-![Screenshots](https://lh4.googleusercontent.com/t_luKUy0oh7iVF2fwT_NZReyklk-UbAj0Q5wdaCW5FlNIrfJV_xol7lDzyl9iJBpz8pYJWez-ArhUPP8rpCWBQ=w1366-h637-rw)
+![Screenshots](https://i.imgur.com/t2C7dGk.png)
 
 <a href="https://play.google.com/apps/testing/com.iven.musicplayergo" target="_blank">
   <img alt="Get it on Google Play"
