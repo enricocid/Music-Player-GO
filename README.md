@@ -1,4 +1,4 @@
-# Music-Player-GO - Issue Tracker  [![API](https://img.shields.io/badge/API-24%2B-blue.svg?style=social)](https://android-arsenal.com/api?level=24)
+# Music-Player-GO [![API](https://img.shields.io/badge/API-24%2B-blue.svg?style=social)](https://android-arsenal.com/api?level=24) - Issue Tracker
 
 
 
