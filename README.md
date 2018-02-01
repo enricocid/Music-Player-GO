@@ -1,5 +1,8 @@
-# Music-Player-GO
-Very slim music player
+# Music-Player-GO  [![API](https://img.shields.io/badge/API-24%2B-blue.svg?style=social)](https://android-arsenal.com/api?level=24)
+
+
+
+### Very slim music player
 
 ![Screenshots](https://i.imgur.com/uWzasf0.png)
 
