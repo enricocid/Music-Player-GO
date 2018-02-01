@@ -1,8 +1,13 @@
 # Music-Player-GO [![API](https://img.shields.io/badge/API-24%2B-blue.svg?style=social)](https://android-arsenal.com/api?level=24) - Issue Tracker
 
+<a href="https://play.google.com/apps/testing/com.iven.musicplayergo" target="_blank">
+  <img alt="Get it on Google Play"
+       src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="60"/>
+</a>
 
 
-### Very slim music player
+
+### Very slim music player (828KB)
 
 ![Screenshots](https://i.imgur.com/uWzasf0.png)
 
@@ -12,21 +17,28 @@
 </a>
 
 
-Very slim Music Player (828KB)!
 
-- Very simple UI "Everything in one UI", the way I'd like it to be:
+### Very simple UI "Everything in one UI", the way I'd like it to be:
 
-Music is organized by artist and a sliding up panel containing controls (when collapsed) and the artist albums/songs (when expanded) is present.  No need to navigate between activities;
+- Music organized by artist
+- Sliding up panel containing controls (when collapsed) and the artist albums/songs (when expanded)  
+- No need to navigate between activities
 
--  Open settings directly from UI thanks to an elegant circular reveal animation. Available settings: 
+### Open settings directly from UI thanks to an elegant circular reveal animation. Available settings: 
 
-UI inversion and equalizer;
+- UI inversion
+- Equalizer;
 
-- Minimal code:
+### Minimal code:
 
-The player is based on nothing and it was written from scratch besides few snippets here and there. 
-Used dependencies: sliding up panel by @umano (https://github.com/umano/AndroidSlidingUpPanel), Android Support v4, RecyclerView;
+- Based on nothing: it was written from scratch besides few snippets here and there
+- Dependencies used: 
 
-- Other features: 
+  - Sliding up panel by @umano (https://github.com/umano/AndroidSlidingUpPanel);
+  - Android Support Library v4;
+  - RecyclerView V7;
 
-Pause/resume when the headsets are (dis)connected and simple audio focus (notifications, calls, or other media apps) management;
+### Other features: 
+
+- Pause/resume when the headsets are (dis)connected
+- Simple audio focus (notifications, calls, or other media apps) management
