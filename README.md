@@ -12,7 +12,7 @@
 </a>
 
 
-Very slim Music Player (878KB)!
+Very slim Music Player (828KB)!
 
 - Very simple UI "Everything in one UI", the way I'd like it to be:
 
