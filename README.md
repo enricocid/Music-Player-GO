@@ -7,9 +7,9 @@
 
 
 
-### Very slim music player (828KB)
+### Very slim music player (<900KB)
 
-![Screenshots](https://i.imgur.com/uWzasf0.png)
+![Screenshots](https://i.imgur.com/FPbg9JN.png)
 
 <a href="https://play.google.com/apps/testing/com.iven.musicplayergo" target="_blank">
   <img alt="Get it on Google Play"
@@ -18,15 +18,16 @@
 
 
 
-### Very simple UI "Everything in one UI", the way I'd like it to be:
+### Very simple and nice UI "Everything in one UI", the way I'd like it to be:
 
 - Music organized by artist;
 - Sliding up panel containing controls (when collapsed) and the artist albums/songs (when expanded);
 - No need to navigate between activities;
 
-### Open settings directly from UI thanks to an elegant circular reveal animation. Available settings: 
+### Open settings directly from UI. Available settings: 
 
 - UI inversion;
+- UI accents;
 - Equalizer;
 
 ### Minimal code:
