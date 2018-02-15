@@ -9,7 +9,7 @@
 
 ### Very slim music player (<900KB)
 
-![Screenshots](https://i.imgur.com/FPbg9JN.png)
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art5.png)
 
 <a href="https://play.google.com/apps/testing/com.iven.musicplayergo" target="_blank">
   <img alt="Get it on Google Play"
@@ -29,6 +29,8 @@
 - UI inversion;
 - UI accents;
 - Equalizer;
+
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/settings.gif)
 
 ### Minimal code:
 
