@@ -21,14 +21,16 @@
 ### Very simple and nice UI "Everything in one UI", the way I'd like it to be:
 
 - Music organized by artist;
+- Fast scroll;
 - Sliding up panel containing controls (when collapsed) and the artist albums/songs (when expanded);
 - No need to navigate between activities;
 
 ### Open settings directly from UI. Available settings: 
 
+- Equalizer;
+- Immersive Mode;
 - UI inversion;
 - UI accents;
-- Equalizer;
 
 ![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/settings.gif)
 
@@ -39,7 +41,7 @@
 
   - Sliding up panel by @umano (https://github.com/umano/AndroidSlidingUpPanel);
   - Android Support Library v4;
-  - RecyclerView V7;
+  - RecyclerView-FastScroll by @timusus (https://github.com/timusus/RecyclerView-FastScroll);
 
 ### Other features: 
 
