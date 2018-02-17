@@ -49,3 +49,6 @@
 
 - Pause/resume when the headsets are (dis)connected;
 - Simple audio focus (notifications, calls, or other media apps) management;
+
+### Screenshots made with Screener:
+https://play.google.com/store/apps/details?id=de.toastcode.screener
