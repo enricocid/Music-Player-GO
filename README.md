@@ -23,7 +23,8 @@
 - Music organized by artist;
 - Fast scroller;
 - Sliding up panel containing controls (when collapsed) and the artist albums/songs (when expanded);
-- Dark status bar icons for light accents;
+- Dark status bar icons for light accents
+(according to https://material.io/guidelines/style/color.html#color-color-palette);
 - No need to navigate between activities;
 
 ### Open settings directly from UI. Available settings: 
