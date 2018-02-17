@@ -9,7 +9,7 @@
 
 ### Very slim music player (<900KB)
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art5.png)
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art6.png)
 
 <a href="https://play.google.com/apps/testing/com.iven.musicplayergo" target="_blank">
   <img alt="Get it on Google Play"
