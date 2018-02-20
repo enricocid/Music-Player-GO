@@ -1,4 +1,4 @@
-# Music-Player-GO [![API](https://img.shields.io/badge/API-24%2B-blue.svg?style=social)](https://android-arsenal.com/api?level=21) - Issue Tracker
+# Music-Player-GO [![API](https://img.shields.io/badge/API-24%2B-blue.svg?style=social)](https://android-arsenal.com/api?level=21)
 
 <a href="https://play.google.com/apps/testing/com.iven.musicplayergo" target="_blank">
   <img alt="Get it on Google Play"
