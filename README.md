@@ -1,4 +1,4 @@
-# Music-Player-GO [![API](https://img.shields.io/badge/API-24%2B-blue.svg?style=social)](https://android-arsenal.com/api?level=24) - Issue Tracker
+# Music-Player-GO [![API](https://img.shields.io/badge/API-24%2B-blue.svg?style=social)](https://android-arsenal.com/api?level=21) - Issue Tracker
 
 <a href="https://play.google.com/apps/testing/com.iven.musicplayergo" target="_blank">
   <img alt="Get it on Google Play"
@@ -8,6 +8,8 @@
 
 
 ### Very slim music player (<900KB)
+
+### Current version: 1.5 (beta)
 
 ![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art6.png)
 
