@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@android:id/progress"
+        android:gravity="center_vertical|fill_horizontal">
+        <selector>
+            <item
+                android:drawable="@color/grey_500"
+                android:state_enabled="false" />
+            <item>
+                <shape
+                    android:shape="rectangle"
+                    android:tint="?attr/accent_color">
+
+                    <size android:height="20dp" />
+                </shape>
+            </item>
+        </selector>
+
+    </item>
+</layer-list>

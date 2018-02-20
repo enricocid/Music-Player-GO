@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name" translatable="false">Music Player GO</string>
+    <string name="loading">Searching music&#8230;</string>
+    <string name="fail">Permissions are needed to get the music! Closing&#8230;</string>
+    <string name="albums">%s (%d albums)</string>
+    <string name="album" translatable="false">%s (%s)</string>
+    <string name="artists">Artists</string>
+    <string name="unknown_year">Year unknown</string>
+    <string name="eq">Equalizer</string>
+    <string name="no_eq">No equalizer was found! :(</string>
+    <string name="bad_id">Play a song first! :P</string>
+    <string name="enjoy">Select a song :D</string>
+    <string name="playing_song" translatable="false">&lt;b>%1s&lt;/b> - %2s</string>
+</resources>

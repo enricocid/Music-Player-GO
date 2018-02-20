@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/artists_rv"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="4dp"
+    app:fastScrollAutoHide="true"
+    app:fastScrollPopupBgColor="?attr/accent_color"
+    app:fastScrollPopupPosition="adjacent"
+    app:fastScrollPopupTextColor="?android:textColorSecondary"
+    app:fastScrollThumbColor="?attr/accent_color"
+    tools:context="com.iven.musicplayergo.MainActivity" />

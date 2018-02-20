@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/controls"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/replay"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/app_name"
+        android:onClick="reset"
+        android:padding="8dp"
+        android:src="@drawable/ic_repeat_24dp" />
+
+    <ImageButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/app_name"
+        android:onClick="skipPrev"
+        android:padding="8dp"
+        android:src="@drawable/ic_skip_previous_24dp" />
+
+    <ImageButton
+        android:id="@+id/play_pause"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/app_name"
+        android:onClick="resumeOrPause"
+        android:padding="8dp"
+        android:src="@drawable/ic_play_arrow_24dp" />
+
+    <ImageButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/app_name"
+        android:onClick="skipNext"
+        android:padding="8dp"
+        android:src="@drawable/ic_skip_next_24dp" />
+
+    <ImageButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/app_name"
+        android:onClick="openSettings"
+        android:padding="8dp"
+        android:src="@drawable/ic_settings_24dp" />
+</LinearLayout>

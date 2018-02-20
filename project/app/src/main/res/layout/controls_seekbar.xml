@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <SeekBar
+        android:id="@+id/seekTo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingEnd="0dp"
+        android:paddingStart="0dp"
+        android:progressDrawable="@drawable/seekbar"
+        android:splitTrack="false"
+        android:thumb="@drawable/seekbar_thumb" />
+
+    <TextView
+        android:id="@+id/song_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center_vertical"
+        android:paddingEnd="4dp"
+        android:paddingStart="4dp"
+        android:shadowColor="?attr/card_color"
+        android:shadowDx="-1"
+        android:shadowDy="-1"
+        android:shadowRadius="1"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textColor="?android:textColorPrimary" />
+
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:paddingEnd="4dp"
+        android:paddingStart="4dp"
+        android:shadowColor="?attr/card_color"
+        android:shadowDx="-1"
+        android:shadowDy="-1"
+        android:shadowRadius="1"
+        android:singleLine="true"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textColor="?android:textColorPrimary" />
+</FrameLayout>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="loading">Sto cercando la musica&#8230;</string>
+    <string name="fail">Permessi necessari per trovare la musica! Chiusura&#8230;</string>
+    <string name="albums">%s (%d dischi)</string>
+    <string name="artists">Artisti</string>
+    <string name="unknown_year">Anno sconosciuto</string>
+    <string name="eq">Equalizzatore</string>
+    <string name="no_eq">Nessun equalizzatore trovato! :(</string>
+    <string name="bad_id">Magari esegui una canzone :P</string>
+    <string name="enjoy">Seleziona una canzone :D</string>
+</resources>
