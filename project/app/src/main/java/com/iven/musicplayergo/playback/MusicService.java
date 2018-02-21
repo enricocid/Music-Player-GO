@@ -31,6 +31,7 @@ public class MusicService extends Service {
         return mMusicNotificationManager;
     }
 
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         return START_NOT_STICKY;
