@@ -514,20 +514,15 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     public void onArtistSelected(String artist) {
 
         sExpandPanel = true;
-        if (mSelectedArtist != null) {
-            if (!mSelectedArtist.equals(artist)) {
-                //load artist albums only if not already loaded
-                mSelectedArtist = artist;
-                mPlayerAdapter.setCurrentArtist(mSelectedArtist);
-                getSupportLoaderManager().restartLoader(AlbumProvider.ALBUMS_LOADER, null, this);
-            } else {
-                mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-            }
 
-        } else {
+        if (!mSelectedArtist.equals(artist)) {
+            //load artist albums only if not already loaded
             mSelectedArtist = artist;
             mPlayerAdapter.setCurrentArtist(mSelectedArtist);
-            getSupportLoaderManager().initLoader(AlbumProvider.ALBUMS_LOADER, null, this);
+            getSupportLoaderManager().restartLoader(AlbumProvider.ALBUMS_LOADER, null, this);
+        } else {
+            //if already loaded expand the panel
+            mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
         }
     }
 
