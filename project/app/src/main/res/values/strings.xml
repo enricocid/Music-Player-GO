@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">Music Player GO</string>
-    <string name="loading">Searching music&#8230;</string>
     <string name="fail">Permissions are needed to get the music! Closing&#8230;</string>
     <string name="albums">%s (%d albums)</string>
     <string name="album" translatable="false">%s (%s)</string>
