@@ -1,12 +1,11 @@
 <resources>
-    <string name="loading">Recherche de piste musicale en cours&#8230;</string>
-    <string name="fail">Autorisations nécessaires pour accéder aux pistes musicales ! Fermeture en cours&#8230;</string>
+    <string name="fail">Autorisations nécessaires pour accéder aux pistes musicales! Fermeture en cours&#8230;</string>
     <string name="albums">%s (%d albums)</string>
     <string name="artists">Artistes</string>
     <string name="unknown_year">Année inconnue</string>
     <string name="eq">Égaliseur</string>
-    <string name="no_eq">Aucun égaliseur sur l\'appareil ! (</string>
-    <string name="bad_id">Démarrer une piste musicale d\'abord ! :P</string>
+    <string name="no_eq">Aucun égaliseur sur l\'appareil! :(</string>
+    <string name="bad_id">Démarrer une piste musicale d\'abord! :P</string>
     <string name="enjoy">Choisir une piste musicale :D</string>
-    <string name="no_browser">no navigateur trouvé :(</string>
+    <string name="no_browser">No navigateur trouvé :(</string>
 </resources>

@@ -1,5 +1,4 @@
 <resources>
-    <string name="loading">Sto cercando la musica&#8230;</string>
     <string name="fail">Permessi necessari per trovare la musica! Chiusura&#8230;</string>
     <string name="albums">%s (%d dischi)</string>
     <string name="artists">Artisti</string>
