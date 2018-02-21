@@ -10,7 +10,7 @@
 
 ### Current version: 1.5 (beta)
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art6.png)
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art7.png)
 
 <a href="https://play.google.com/apps/testing/com.iven.musicplayergo" target="_blank">
   <img alt="Get it on Google Play"
@@ -35,7 +35,7 @@
 - UI inversion;
 - UI accents;
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/settings.gif)
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/settings2.gif)
 
 ### Minimal code:
 

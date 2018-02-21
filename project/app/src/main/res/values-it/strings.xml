@@ -8,4 +8,5 @@
     <string name="no_eq">Nessun equalizzatore trovato! :(</string>
     <string name="bad_id">Magari esegui una canzone :P</string>
     <string name="enjoy">Seleziona una canzone :D</string>
+    <string name="no_browser">Nessun browser trovato :(</string>
 </resources>

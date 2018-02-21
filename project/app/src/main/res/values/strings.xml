@@ -11,4 +11,5 @@
     <string name="bad_id">Play a song first! :P</string>
     <string name="enjoy">Select a song :D</string>
     <string name="playing_song" translatable="false">&lt;b>%1s&lt;/b> - %2s</string>
+    <string name="no_browser">No browser found :(</string>
 </resources>

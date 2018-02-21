@@ -1,6 +1,7 @@
 package com.iven.musicplayergo;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
@@ -27,6 +29,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.iven.musicplayergo.adapters.AlbumsAdapter;
 import com.iven.musicplayergo.adapters.ArtistsAdapter;
@@ -300,6 +303,15 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (checkIsPlayer()) {
             mPlayerAdapter.openEqualizer(MainActivity.this);
             SettingsUtils.openOrCloseSettings(mSettingsView, mColorsView, false);
+        }
+    }
+
+    public void openGitPage(View v) {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/enricocid/Music-Player-GO")));
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, getString(R.string.no_browser), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
     }
 
