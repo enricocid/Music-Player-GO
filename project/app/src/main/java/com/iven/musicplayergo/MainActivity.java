@@ -555,7 +555,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         public void onPositionChanged(int position) {
             if (!mUserIsSeeking) {
                 if (AndroidVersion.isNougat()) {
-                    mSeekBarAudio.setProgress(position, false);
+                    mSeekBarAudio.setProgress(position, true);
                 } else {
                     mSeekBarAudio.setProgress(position);
                 }
