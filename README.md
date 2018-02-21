@@ -8,7 +8,7 @@
 
 ### Very slim music player (<900KB)
 
-### Current version: 1.5 (beta)
+### Current version: 1.5.1 (beta)
 
 ![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art7.png)
 
@@ -34,6 +34,7 @@
 - Immersive Mode;
 - UI inversion;
 - UI accents;
+- Link to git page;
 
 ![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/settings2.gif)
 
@@ -51,5 +52,14 @@
 - Pause/resume when the headsets are (dis)connected;
 - Simple audio focus (notifications, calls, or other media apps) management;
 
+### French translations by KowalskiOmniROM
+https://github.com/KowalskiOmniROM
+
 ### Screenshots made with Screener:
 https://play.google.com/store/apps/details?id=de.toastcode.screener
+
+### GIF made with DU Recorder:
+https://play.google.com/store/apps/details?id=com.duapps.recorder
+
+### Some icons are from materialdesignicons.com
+https://materialdesignicons.com/
