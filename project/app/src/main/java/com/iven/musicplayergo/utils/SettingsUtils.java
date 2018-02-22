@@ -89,6 +89,7 @@ public class SettingsUtils {
                 @Override
                 public void onAnimationEnd(Animator animator) {
 
+                    colors.setVisibility(View.GONE);
                     settings.setVisibility(View.INVISIBLE);
                 }
 
