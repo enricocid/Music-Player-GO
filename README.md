@@ -8,7 +8,7 @@
 
 ### Very slim music player (<900KB)
 
-### Current version: 1.5.3 (beta)
+### Current version: 1.5.4 (beta)
 
 ![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art7.png)
 
