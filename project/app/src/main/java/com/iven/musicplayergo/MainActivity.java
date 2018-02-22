@@ -57,7 +57,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private int mAccent;
     private FastScrollRecyclerView mArtistsRecyclerView;
-    private RecyclerView mAlbumsRecyclerView, mSongsRecyclerView;
+    private RecyclerView mColorsRecyclerView, mAlbumsRecyclerView, mSongsRecyclerView;
     private AlbumsAdapter mAlbumsAdapter;
     private SongsAdapter mSongsAdapter;
 
@@ -66,7 +66,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private LinearLayout mControlsContainer;
     private SlidingUpPanelLayout mSlidingUpPanel;
     private ImageButton mPlayPauseButton, mResetButton, mImmersiveButton;
-    private View mSettingsView, mColorsView;
+    private View mSettingsView;
     private boolean sThemeDark;
 
     private PlayerAdapter mPlayerAdapter;
@@ -206,7 +206,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mImmersiveButton = findViewById(R.id.immersive);
 
         mSettingsView = findViewById(R.id.settings_view);
-        mColorsView = findViewById(R.id.colors_rv);
+        mColorsRecyclerView = findViewById(R.id.colors_rv);
 
         mSeekBarAudio = findViewById(R.id.seekTo);
 
@@ -302,7 +302,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     public void openEqualizer(View v) {
         if (checkIsPlayer()) {
             mPlayerAdapter.openEqualizer(MainActivity.this);
-            SettingsUtils.openOrCloseSettings(mSettingsView, mColorsView, false);
+            SettingsUtils.openOrCloseSettings(mSettingsView, mColorsRecyclerView, false);
         }
     }
 
@@ -325,7 +325,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     public void openSettings(View v) {
-        SettingsUtils.openOrCloseSettings(mSettingsView, mColorsView, true);
+        SettingsUtils.openOrCloseSettings(mSettingsView, mColorsRecyclerView, true);
     }
 
     public void invertUI(View v) {
@@ -339,7 +339,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     public void closeSettings(View v) {
-        SettingsUtils.openOrCloseSettings(mSettingsView, mColorsView, false);
+        SettingsUtils.openOrCloseSettings(mSettingsView, mColorsRecyclerView, false);
     }
 
     public void immersePlayer(View v) {
@@ -348,10 +348,10 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private void initializeColorsSettings() {
 
-        RecyclerView colorsRV = findViewById(R.id.colors_rv);
+        mColorsRecyclerView = findViewById(R.id.colors_rv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        colorsRV.setLayoutManager(linearLayoutManager);
-        colorsRV.setAdapter(new ColorsAdapter(this, mAccent));
+        mColorsRecyclerView.setLayoutManager(linearLayoutManager);
+        mColorsRecyclerView.setAdapter(new ColorsAdapter(this, mColorsRecyclerView, mAccent));
     }
 
     private void onPermissionGranted() {

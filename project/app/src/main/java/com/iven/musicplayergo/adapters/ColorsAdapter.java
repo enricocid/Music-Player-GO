@@ -13,6 +13,7 @@ import com.iven.musicplayergo.R;
 public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleViewHolder> {
 
     private Activity mActivity;
+    private View mColorsRecyclerView;
     private int mAccent;
     private onAccentChangedListener mOnAccentChangedListener;
 
@@ -34,8 +35,9 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
             R.color.deep_orange_A400
     };
 
-    public ColorsAdapter(Activity activity, int accent) {
+    public ColorsAdapter(Activity activity, RecyclerView colorsRecyclerView, int accent) {
         mActivity = activity;
+        mColorsRecyclerView = colorsRecyclerView;
         mAccent = accent;
         mOnAccentChangedListener = (onAccentChangedListener) mActivity;
     }
@@ -76,17 +78,18 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
             super(itemView);
 
             color = (ImageButton) itemView;
-
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
 
-            //recreate the activity only if necessary
-            int color = colors[getAdapterPosition()];
-            if (color != mAccent) {
-                mOnAccentChangedListener.onAccentChanged(color);
+            if (mColorsRecyclerView.getVisibility() == View.VISIBLE) {
+                //recreate the activity only if necessary
+                int color = colors[getAdapterPosition()];
+                if (color != mAccent) {
+                    mOnAccentChangedListener.onAccentChanged(color);
+                }
             }
         }
     }

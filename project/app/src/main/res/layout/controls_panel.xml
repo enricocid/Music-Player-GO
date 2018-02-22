@@ -9,21 +9,29 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/player_controls" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <include layout="@layout/player_settings" />
+            <include layout="@layout/player_controls" />
 
-    </FrameLayout>
+            <include layout="@layout/controls_info" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        </LinearLayout>
 
-        <include layout="@layout/controls_info" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <include layout="@layout/colors_settings" />
+            <include layout="@layout/player_settings" />
+
+            <include layout="@layout/colors_settings" />
+
+        </LinearLayout>
 
     </FrameLayout>
 
