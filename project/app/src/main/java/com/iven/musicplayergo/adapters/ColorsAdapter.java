@@ -1,6 +1,10 @@
 package com.iven.musicplayergo.adapters;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.RippleDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,7 +19,6 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
     private Activity mActivity;
     private int mAccent;
     private onAccentChangedListener mOnAccentChangedListener;
-
     //fixed int array of accent colors
     private int[] colors = new int[]{
 
@@ -40,6 +43,15 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
         mOnAccentChangedListener = (onAccentChangedListener) mActivity;
     }
 
+    private Drawable createRipple(Context context, int rippleColor) {
+        RippleDrawable ripple;
+        ripple = (RippleDrawable) context.getResources().getDrawable(R.drawable.ripple, null);
+        if (ripple != null) {
+            ripple.setColor(ColorStateList.valueOf(rippleColor));
+        }
+        return ripple;
+    }
+
     @Override
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -54,8 +66,11 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
         int color = colors[holder.getAdapterPosition()];
 
         int drawable = color != mAccent ? R.drawable.ic_checkbox_blank_circle_24dp : R.drawable.ic_checkbox_marked_circle_24dp;
+
+        int parsedColor = ContextCompat.getColor(mActivity, color);
+        holder.color.setBackground(createRipple(mActivity, parsedColor));
         holder.color.setImageResource(drawable);
-        holder.color.setColorFilter(ContextCompat.getColor(mActivity, color));
+        holder.color.setColorFilter(parsedColor);
     }
 
     @Override
@@ -82,11 +97,11 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
         @Override
         public void onClick(View v) {
 
-                //recreate the activity only if necessary
-                int color = colors[getAdapterPosition()];
-                if (color != mAccent) {
-                    mOnAccentChangedListener.onAccentChanged(color);
-                }
+            //recreate the activity only if necessary
+            int color = colors[getAdapterPosition()];
+            if (color != mAccent) {
+                mOnAccentChangedListener.onAccentChanged(color);
+            }
         }
     }
 }
