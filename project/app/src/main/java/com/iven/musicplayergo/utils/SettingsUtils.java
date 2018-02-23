@@ -40,12 +40,16 @@ public class SettingsUtils {
         view.startAnimation(animate);
     }
 
-    public static void openOrCloseSettings(final View settings, final View colors, boolean show) {
+    public static void openOrCloseSettings(final View mControlsContainer, boolean show) {
 
+        final View controlsInfoContainer = mControlsContainer.findViewById(R.id.controls_info_container);
+        final View settingsContainer = mControlsContainer.findViewById(R.id.settings_container);
+
+        final View settings = mControlsContainer.findViewById(R.id.settings_view);
+        final View colorsSettings = mControlsContainer.findViewById(R.id.colors_rv);
         int settingsHeight = settings.getHeight();
         int settingsWidth = settings.getWidth();
         int radius = (int) Math.hypot(settingsWidth, settingsHeight);
-        ;
 
         if (show) {
 
@@ -57,8 +61,9 @@ public class SettingsUtils {
                 @Override
                 public void onAnimationStart(Animator animator) {
 
+                    settingsContainer.bringToFront();
                     settings.setVisibility(View.VISIBLE);
-                    slideUpOrDown(colors, true);
+                    slideUpOrDown(colorsSettings, true);
                 }
 
                 @Override
@@ -83,13 +88,13 @@ public class SettingsUtils {
                 @Override
                 public void onAnimationStart(Animator animator) {
 
-                    slideUpOrDown(colors, false);
+                    slideUpOrDown(colorsSettings, false);
                 }
 
                 @Override
                 public void onAnimationEnd(Animator animator) {
-
-                    colors.setVisibility(View.INVISIBLE);
+                    controlsInfoContainer.bringToFront();
+                    colorsSettings.setVisibility(View.INVISIBLE);
                     settings.setVisibility(View.INVISIBLE);
                 }
 

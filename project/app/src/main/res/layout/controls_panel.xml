@@ -3,26 +3,18 @@
     android:id="@+id/controls_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="vertical">
 
     <include layout="@layout/controls_seekbar" />
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <include layout="@layout/player_controls" />
-
-            <include layout="@layout/controls_info" />
-
-        </LinearLayout>
-
-        <LinearLayout
+            android:id="@+id/settings_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -33,6 +25,19 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/controls_info_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical">
+
+            <include layout="@layout/player_controls" />
+
+            <include layout="@layout/controls_info" />
+
+        </LinearLayout>
     </FrameLayout>
 
 </LinearLayout>
