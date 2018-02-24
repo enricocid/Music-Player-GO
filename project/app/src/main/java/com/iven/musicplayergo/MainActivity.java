@@ -298,7 +298,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     public void openEqualizer(View v) {
         if (checkIsPlayer()) {
             mPlayerAdapter.openEqualizer(MainActivity.this);
-            SettingsUtils.openOrCloseSettings(mControlsContainer, false);
         }
     }
 
