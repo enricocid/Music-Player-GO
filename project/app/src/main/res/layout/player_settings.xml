@@ -50,6 +50,7 @@
         android:src="?attr/theme_icon" />
 
     <ImageButton
+        android:id="@+id/closeSettings"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -57,5 +58,6 @@
         android:contentDescription="@string/app_name"
         android:onClick="closeSettings"
         android:padding="8dp"
-        android:src="@drawable/ic_close_24dp" />
+        android:src="@drawable/ic_close_24dp"
+        android:clickable="false"/>
 </LinearLayout>

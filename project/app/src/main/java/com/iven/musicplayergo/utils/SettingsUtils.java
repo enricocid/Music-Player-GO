@@ -10,6 +10,7 @@ import android.support.v4.graphics.ColorUtils;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.TranslateAnimation;
+import android.widget.ImageButton;
 
 import com.iven.musicplayergo.R;
 
@@ -47,6 +48,10 @@ public class SettingsUtils {
 
         final View settings = mControlsContainer.findViewById(R.id.settings_view);
         final View colorsSettings = mControlsContainer.findViewById(R.id.colors_rv);
+
+        final ImageButton toSettingsButton = mControlsContainer.findViewById(R.id.toSettings);
+        final ImageButton closeSettingsButton = mControlsContainer.findViewById(R.id.closeSettings);
+
         int settingsHeight = settings.getHeight();
         int settingsWidth = settings.getWidth();
         int radius = (int) Math.hypot(settingsWidth, settingsHeight);
@@ -61,6 +66,7 @@ public class SettingsUtils {
                 @Override
                 public void onAnimationStart(Animator animator) {
 
+                    toSettingsButton.setClickable(false);
                     settingsContainer.bringToFront();
                     settings.setVisibility(View.VISIBLE);
                     slideUpOrDown(colorsSettings, true);
@@ -68,6 +74,7 @@ public class SettingsUtils {
 
                 @Override
                 public void onAnimationEnd(Animator animator) {
+                    closeSettingsButton.setClickable(true);
                 }
 
                 @Override
@@ -87,13 +94,14 @@ public class SettingsUtils {
             anim.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animator) {
-
+                    closeSettingsButton.setClickable(false);
                     slideUpOrDown(colorsSettings, false);
                 }
 
                 @Override
                 public void onAnimationEnd(Animator animator) {
                     controlsInfoContainer.bringToFront();
+                    toSettingsButton.setClickable(true);
                     colorsSettings.setVisibility(View.INVISIBLE);
                     settings.setVisibility(View.INVISIBLE);
                 }
