@@ -41,16 +41,16 @@ public class SettingsUtils {
         view.startAnimation(animate);
     }
 
-    public static void openOrCloseSettings(final View mControlsContainer, boolean show) {
+    public static void openOrCloseSettings(final View controlsContainer, boolean show) {
 
-        final View controlsInfoContainer = mControlsContainer.findViewById(R.id.controls_info_container);
-        final View settingsContainer = mControlsContainer.findViewById(R.id.settings_container);
+        final View controlsInfoContainer = controlsContainer.findViewById(R.id.controls_info_container);
+        final View settingsContainer = controlsContainer.findViewById(R.id.settings_container);
 
-        final View settings = mControlsContainer.findViewById(R.id.settings_view);
-        final View colorsSettings = mControlsContainer.findViewById(R.id.colors_rv);
+        final View settings = controlsContainer.findViewById(R.id.settings_view);
+        final View colorsSettings = controlsContainer.findViewById(R.id.colors_rv);
 
-        final ImageButton toSettingsButton = mControlsContainer.findViewById(R.id.toSettings);
-        final ImageButton closeSettingsButton = mControlsContainer.findViewById(R.id.closeSettings);
+        final ImageButton toSettingsButton = controlsContainer.findViewById(R.id.toSettings);
+        final ImageButton closeSettingsButton = controlsContainer.findViewById(R.id.closeSettings);
 
         int settingsHeight = settings.getHeight();
         int settingsWidth = settings.getWidth();
@@ -67,8 +67,8 @@ public class SettingsUtils {
                 public void onAnimationStart(Animator animator) {
 
                     toSettingsButton.setClickable(false);
-                    settingsContainer.bringToFront();
                     settings.setVisibility(View.VISIBLE);
+                    settingsContainer.bringToFront();
                     slideUpOrDown(colorsSettings, true);
                 }
 
@@ -100,10 +100,9 @@ public class SettingsUtils {
 
                 @Override
                 public void onAnimationEnd(Animator animator) {
-                    controlsInfoContainer.bringToFront();
                     toSettingsButton.setClickable(true);
                     colorsSettings.setVisibility(View.INVISIBLE);
-                    settings.setVisibility(View.INVISIBLE);
+                    controlsInfoContainer.bringToFront();
                 }
 
                 @Override
