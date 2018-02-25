@@ -16,7 +16,7 @@ Icon by **Julian Javier Gomez**, go check his works!:
 
 https://plus.google.com/+JulianGomezAxinen
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art7.png)
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art8.png)
 
 <a href="https://play.google.com/apps/testing/com.iven.musicplayergo" target="_blank">
   <img alt="Get it on Google Play"
