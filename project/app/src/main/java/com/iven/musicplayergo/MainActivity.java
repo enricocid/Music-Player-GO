@@ -388,10 +388,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         }
 
         //restore sliding panel content (albums and songs)
-        if (mPlayerAdapter.getCurrentArtist() != null) {
-            mSelectedArtist = mPlayerAdapter.getCurrentArtist();
-            getSupportLoaderManager().initLoader(AlbumProvider.ALBUMS_LOADER, null, this);
-        }
+        getSupportLoaderManager().initLoader(AlbumProvider.ALBUMS_LOADER, null, this);
     }
 
     private void doBindService() {
@@ -498,7 +495,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (!mSelectedArtist.equals(artist)) {
             //load artist albums only if not already loaded
             mSelectedArtist = artist;
-            mPlayerAdapter.setCurrentArtist(mSelectedArtist);
             getSupportLoaderManager().restartLoader(AlbumProvider.ALBUMS_LOADER, null, this);
         } else {
             //if already loaded expand the panel

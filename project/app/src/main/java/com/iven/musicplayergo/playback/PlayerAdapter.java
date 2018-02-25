@@ -63,8 +63,4 @@ public interface PlayerAdapter {
     void registerNotificationActionsReceiver(boolean isRegister);
 
     void setCurrentSong(Song song, List<Song> songs);
-
-    String getCurrentArtist();
-
-    void setCurrentArtist(String artist);
 }

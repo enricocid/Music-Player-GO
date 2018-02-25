@@ -46,7 +46,6 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     private ScheduledExecutorService mExecutor;
     private Runnable mSeekBarPositionUpdateTask;
     private Song mSelectedSong;
-    private String mSelectedArtist;
     private List<Song> mSongs;
 
     private boolean sReplaySong = false;
@@ -141,16 +140,6 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     public void setCurrentSong(Song song, List<Song> songs) {
         mSelectedSong = song;
         mSongs = songs;
-    }
-
-    @Override
-    public String getCurrentArtist() {
-        return mSelectedArtist;
-    }
-
-    @Override
-    public void setCurrentArtist(String artist) {
-        mSelectedArtist = artist;
     }
 
     @Override
