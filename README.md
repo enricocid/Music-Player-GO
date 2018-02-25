@@ -46,7 +46,7 @@ https://plus.google.com/+JulianGomezAxinen
 - UI accents;
 - Link to git page;
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/settings3.gif)
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/settings4.gif)
 
 ### Minimal code:
 
