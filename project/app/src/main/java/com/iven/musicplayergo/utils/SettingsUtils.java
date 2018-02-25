@@ -215,7 +215,7 @@ public class SettingsUtils {
     }
 
     public static int getAccent(Activity activity) {
-        return activity.getSharedPreferences(ACCENT_PREF, Context.MODE_PRIVATE).getInt(ACCENT_VALUE, R.color.light_blue_A400);
+        return activity.getSharedPreferences(ACCENT_PREF, Context.MODE_PRIVATE).getInt(ACCENT_VALUE, R.color.blue_A400);
     }
 
     //get theme
