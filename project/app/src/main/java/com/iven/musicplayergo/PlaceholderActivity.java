@@ -28,10 +28,9 @@ import com.iven.musicplayergo.utils.AndroidVersion;
 
 public class PlaceholderActivity extends Activity {
 
-    public static final int STARTUP_DELAY = 300;
     public static final int ANIM_ITEM_DURATION = 1000;
     public static final int ITEM_DELAY = 300;
-
+    public static int STARTUP_DELAY = 300;
     private ViewGroup mContainer;
     private TextView mRationale;
 
@@ -108,8 +107,10 @@ public class PlaceholderActivity extends Activity {
 
         if (hasPermission) {
             mContainer.setVisibility(View.GONE);
+
+            STARTUP_DELAY = 0;
             ViewGroup.MarginLayoutParams logoViewLayoutParams = (ViewGroup.MarginLayoutParams) logoView.getLayoutParams();
-            logoViewLayoutParams.setMargins(0, -translationY, 0, 0);
+            logoViewLayoutParams.setMargins(0, -2 * translationY, 0, 0);
         }
 
         ViewCompat.animate(logoView)
