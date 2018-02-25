@@ -6,9 +6,15 @@
 
 
 
-### Very slim music player (<900KB)
+### Very slim music player (~1000KB)
 
-### Current version: 1.5.5 (beta)
+### Current version: 2.0 (beta)
+
+![ScreenShot](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/icon.png)
+
+Icon by **Julian Javier Gomez**, go check his works!:
+
+https://plus.google.com/+JulianGomezAxinen
 
 ![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art7.png)
 
@@ -19,14 +25,17 @@
 
 
 
-### Very simple and nice UI "Everything in one UI", the way I'd like it to be:
+### Very simple, colorful and nice UI "Everything in one UI", the way I'd like it to be:
 
 - Music organized by artist;
 - Fast scroller;
 - Sliding up panel containing controls (when collapsed) and the artist albums/songs (when expanded);
+- Colorful UI;
 - Dark status bar icons for light accents
 (according to https://material.io/guidelines/style/color.html#color-color-palette);
 - No need to navigate between activities;
+- Awesome splash screen to manage storage permissions:
+](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/permissions.gif)
 
 ### Open settings directly from UI. Available settings: 
 
@@ -36,7 +45,7 @@
 - UI accents;
 - Link to git page;
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/settings2.gif)
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/settings3.gif)
 
 ### Minimal code:
 
