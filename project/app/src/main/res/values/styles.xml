@@ -1,5 +1,17 @@
 <resources>
 
+    <style name="AppTheme.Placeholder" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/blue_A400</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <style name="Button" parent="android:Theme.Material">
+        <item name="android:colorControlHighlight">@color/amber_A400</item>
+        <item name="android:colorButtonNormal">@color/amber_700</item>
+        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+    </style>
+
     <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:typeface">sans</item>
         <item name="icon_color">@android:color/black</item>

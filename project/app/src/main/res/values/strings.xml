@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">Music Player GO</string>
-    <string name="fail">Permissions are needed to get the music! Closing&#8230;</string>
     <string name="albums">%s (%d albums)</string>
     <string name="album" translatable="false">%s (%s)</string>
     <string name="artists">Artists</string>
@@ -11,4 +10,6 @@
     <string name="enjoy">Select a song :D</string>
     <string name="playing_song" translatable="false">&lt;b>%1s&lt;/b> - %2s</string>
     <string name="no_browser">No browser found :(</string>
+    <string name="perm_rationale">To let You play the music on your phone, Music Player GO needs access to your files</string>
+    <string name="perm_button">Allow files access</string>
 </resources>

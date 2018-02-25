@@ -1,5 +1,4 @@
 <resources>
-    <string name="fail">Permessi necessari per trovare la musica! Chiusura&#8230;</string>
     <string name="albums">%s (%d dischi)</string>
     <string name="artists">Artisti</string>
     <string name="unknown_year">Anno sconosciuto</string>
@@ -8,4 +7,6 @@
     <string name="bad_id">Magari esegui una canzone :P</string>
     <string name="enjoy">Seleziona una canzone :D</string>
     <string name="no_browser">Nessun browser trovato :(</string>
+    <string name="perm_rationale">Per farti ascoltare la musica presente sul tuo telefono, Music Player GO deve poter accedere ai tuoi file</string>
+    <string name="perm_button">Consenti accesso ai file</string>
 </resources>
