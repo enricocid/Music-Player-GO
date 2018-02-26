@@ -86,7 +86,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 mPlaybackListener = new PlaybackListener();
                 mPlayerAdapter.setPlaybackInfoListener(mPlaybackListener);
             }
-            restorePlayerStatus();
+            onPermissionGranted();
         }
 
         @Override
@@ -131,6 +131,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         sThemeDark = SettingsUtils.isThemeDark(this);
         mAccent = SettingsUtils.getAccent(this);
 
+        boolean isImmersive = SettingsUtils.isImmersive(this);
+
         SettingsUtils.setTheme(this, sThemeDark, mAccent);
 
         setContentView(R.layout.main_activity);
@@ -150,27 +152,14 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                     }
                 });
 
-        boolean isImmersive = SettingsUtils.isImmersive(this);
         if (isImmersive) {
             SettingsUtils.toggleHideyBar(this, true);
             setImmersiveDrawable(true);
         }
 
-        initializeSeekBar();
-
-        mSeekBarAudio.setEnabled(false);
-
-        initializeColorsSettings();
-
         setSlidingUpPanelHeight();
 
         doBindService();
-
-        Intent startNotStickyIntent = new Intent(this, MusicService.class);
-
-        startService(startNotStickyIntent);
-
-        onPermissionGranted();
     }
 
     private void getViews() {
@@ -365,6 +354,12 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private void restorePlayerStatus() {
 
+        initializeColorsSettings();
+
+        initializeSeekBar();
+
+        mSeekBarAudio.setEnabled(mPlayerAdapter.isMediaPlayer());
+
         //if we are playing and the activity was restarted
         //update the controls panel
         if (mPlayerAdapter.isMediaPlayer()) {
@@ -373,7 +368,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             updatePlayingStatus();
             updateResetStatus(false);
 
-            setSeekBarEnabled();
             int duration = mSelectedSong.duration;
             mSeekBarAudio.setMax(duration);
             mSeekBarAudio.setProgress(mPlayerAdapter.getPlayerPosition());
@@ -386,9 +380,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 mMusicService.setRestoredFromPause(false);
             }
         }
-
-        //restore sliding panel content (albums and songs)
-        getSupportLoaderManager().initLoader(AlbumProvider.ALBUMS_LOADER, null, this);
     }
 
     private void doBindService() {
@@ -399,6 +390,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         bindService(new Intent(this,
                 MusicService.class), mConnection, Context.BIND_AUTO_CREATE);
         mIsBound = true;
+
+        Intent startNotStickyIntent = new Intent(this, MusicService.class);
+        startService(startNotStickyIntent);
     }
 
     private void doUnbindService() {
@@ -426,7 +420,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 setArtistsRecyclerView(artists);
 
                 //load the details of the first artist on list
-                mSelectedArtist = artists.get(0).getName();
+                mSelectedArtist = mPlayerAdapter.isMediaPlayer() ? mPlayerAdapter.getCurrentSong().artistName : artists.get(0).getName();
                 getSupportLoaderManager().initLoader(AlbumProvider.ALBUMS_LOADER, null, this);
                 break;
 
@@ -445,6 +439,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 if (sExpandPanel) {
                     mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
                 }
+
+                restorePlayerStatus();
                 break;
         }
     }
@@ -469,16 +465,12 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         doUnbindService();
     }
 
-    private void setSeekBarEnabled() {
-        if (!mSeekBarAudio.isEnabled()) {
-            mSeekBarAudio.setEnabled(true);
-        }
-    }
-
     @Override
     public void onSongSelected(Song song, List<Song> songs) {
 
-        setSeekBarEnabled();
+        if (!mSeekBarAudio.isEnabled()) {
+            mSeekBarAudio.setEnabled(true);
+        }
         mSelectedSong = song;
         if (mMusicService != null) {
             mMusicService.getMusicNotificationManager().setAccentColor(mAccent);
