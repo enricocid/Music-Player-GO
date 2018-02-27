@@ -8,7 +8,7 @@
 
 ### Very slim music player (~1000KB)
 
-### Current version: 2.0.2 (beta)
+### Current version: 2.0.3 (beta)
 
 ![ScreenShot](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/icon2.png)
 
