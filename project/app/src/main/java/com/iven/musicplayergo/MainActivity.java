@@ -159,6 +159,10 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         setSlidingUpPanelHeight();
 
+        initializeColorsSettings();
+
+        initializeSeekBar();
+
         doBindService();
     }
 
@@ -353,10 +357,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     private void restorePlayerStatus() {
-
-        initializeColorsSettings();
-
-        initializeSeekBar();
 
         mSeekBarAudio.setEnabled(mPlayerAdapter.isMediaPlayer());
 
