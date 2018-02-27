@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/artists_rv"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="4dp"
-    app:fastScrollAutoHide="true"
-    app:fastScrollPopupBgColor="?attr/accent_color"
-    app:fastScrollPopupPosition="adjacent"
-    app:fastScrollPopupTextColor="?android:textColorSecondary"
-    app:fastScrollThumbColor="?attr/accent_color"
-    tools:context="com.iven.musicplayergo.MainActivity" />
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/error_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawablePadding="8dp"
+        android:drawableTop="@drawable/dissatisfied_logo"
+        android:text="@string/error_no_music"
+        android:textAlignment="center"
+        android:textAppearance="@android:style/TextAppearance.Material.Widget.ActionBar.Subtitle"
+        android:textColor="@color/pink_500"
+        android:textSize="16sp"
+        android:visibility="invisible" />
+
+    <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
+        android:id="@+id/artists_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="4dp"
+        app:fastScrollAutoHide="true"
+        app:fastScrollPopupBgColor="?attr/accent_color"
+        app:fastScrollPopupPosition="adjacent"
+        app:fastScrollPopupTextColor="?android:textColorSecondary"
+        app:fastScrollThumbColor="?attr/accent_color"
+        tools:context="com.iven.musicplayergo.MainActivity" />
+</FrameLayout>

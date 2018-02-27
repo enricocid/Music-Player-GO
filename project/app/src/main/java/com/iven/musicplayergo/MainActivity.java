@@ -190,16 +190,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSongPosition = findViewById(R.id.song_position);
 
         mArtistsRecyclerView = findViewById(R.id.artists_rv);
-        LinearLayoutManager artistsLayoutManager = new LinearLayoutManager(this);
-        mArtistsRecyclerView.setLayoutManager(artistsLayoutManager);
-
         mAlbumsRecyclerView = findViewById(R.id.albums_rv);
-        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        mAlbumsRecyclerView.setLayoutManager(horizontalLayoutManager);
-
         mSongsRecyclerView = findViewById(R.id.songs_rv);
-        LinearLayoutManager songsLayoutManager = new LinearLayoutManager(this);
-        mSongsRecyclerView.setLayoutManager(songsLayoutManager);
     }
 
     private void setSlidingUpPanelHeight() {
@@ -216,6 +208,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     void setArtistsRecyclerView(List<Artist> data) {
 
+        LinearLayoutManager artistsLayoutManager = new LinearLayoutManager(this);
+        mArtistsRecyclerView.setLayoutManager(artistsLayoutManager);
         ArtistsAdapter artistsAdapter = new ArtistsAdapter(this, data);
         mArtistsRecyclerView.setAdapter(artistsAdapter);
     }
@@ -339,7 +333,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     private void updatePlayingStatus() {
-
         int drawable = mPlayerAdapter.getState() != PlaybackInfoListener.State.PAUSED ? R.drawable.ic_pause_24dp : R.drawable.ic_play_arrow_24dp;
         mPlayPauseButton.setImageResource(drawable);
     }
@@ -417,11 +410,20 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
                 //get loaded artist list and set the artists recycler view
                 List<Artist> artists = (List<Artist>) data;
-                setArtistsRecyclerView(artists);
 
-                //load the details of the first artist on list
-                mSelectedArtist = mPlayerAdapter.isMediaPlayer() ? mPlayerAdapter.getCurrentSong().artistName : artists.get(0).getName();
-                getSupportLoaderManager().initLoader(AlbumProvider.ALBUMS_LOADER, null, this);
+                if (artists.isEmpty()) {
+
+                    final TextView dissatisfied = findViewById(R.id.error_logo);
+                    dissatisfied.setVisibility(View.VISIBLE);
+                    mSeekBarAudio.setEnabled(false);
+
+                } else {
+                    setArtistsRecyclerView(artists);
+
+                    //load the details of the first artist on list
+                    mSelectedArtist = mPlayerAdapter.isMediaPlayer() ? mPlayerAdapter.getCurrentSong().artistName : artists.get(0).getName();
+                    getSupportLoaderManager().initLoader(AlbumProvider.ALBUMS_LOADER, null, this);
+                }
                 break;
 
             case AlbumProvider.ALBUMS_LOADER:
@@ -433,6 +435,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                     //only notify recycler view of item changed if an adapter already exists
                     mAlbumsAdapter.swapArtist(albumsForArtist);
                 } else {
+                    LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+                    mAlbumsRecyclerView.setLayoutManager(horizontalLayoutManager);
                     mAlbumsAdapter = new AlbumsAdapter(this, albumsForArtist);
                     mAlbumsRecyclerView.setAdapter(mAlbumsAdapter);
                 }
@@ -500,6 +504,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             mSongsAdapter.swapSongs(album.songs);
 
         } else {
+            LinearLayoutManager songsLayoutManager = new LinearLayoutManager(this);
+            mSongsRecyclerView.setLayoutManager(songsLayoutManager);
             mSongsAdapter = new SongsAdapter(this, album.songs);
             mSongsRecyclerView.setAdapter(mSongsAdapter);
         }
