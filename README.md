@@ -8,13 +8,15 @@
 
 ### Very slim music player (~1000KB)
 
-### Current version: 2.0.2 (beta)
+### Current version: 2.0.3 (beta)
 
 ![ScreenShot](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/icon2.png)
 
 Icon by **Julian Javier Gomez**, go check his works!:
 
 https://plus.google.com/+JulianGomezAxinen
+
+
 
 ![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art8.png)
 
