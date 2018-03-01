@@ -73,6 +73,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private MusicService mMusicService;
     private PlaybackListener mPlaybackListener;
+    private MusicNotificationManager mMusicNotificationManager;
     private boolean mIsBound;
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -81,6 +82,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
             mMusicService = ((MusicService.LocalBinder) iBinder).getInstance();
             mPlayerAdapter = mMusicService.getMediaPlayerHolder();
+            mMusicNotificationManager = mMusicService.getMusicNotificationManager();
+            mMusicNotificationManager.setAccentColor(mAccent);
 
             if (mPlaybackListener == null) {
                 mPlaybackListener = new PlaybackListener();
@@ -97,19 +100,15 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     @Override
     public void onAccentChanged(int color) {
-        if (mMusicService != null) {
-            MusicNotificationManager musicNotificationManager = mMusicService.getMusicNotificationManager();
-            musicNotificationManager.setAccentColor(color);
-            if (mMusicService.getMediaPlayerHolder().isMediaPlayer()) {
-                musicNotificationManager.getNotificationManager().notify(MusicNotificationManager.NOTIFICATION_ID, musicNotificationManager.createNotification());
-            }
+        mMusicNotificationManager.setAccentColor(color);
+        if (mPlayerAdapter.isMediaPlayer()) {
+            mMusicNotificationManager.getNotificationManager().notify(MusicNotificationManager.NOTIFICATION_ID, mMusicNotificationManager.createNotification());
         }
         SettingsUtils.setThemeAccent(this, color);
     }
 
     @Override
     public void onBackPressed() {
-
         //if the sliding up panel is expanded collapse it
         if (mSlidingUpPanel.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
             mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
@@ -476,11 +475,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             mSeekBarAudio.setEnabled(true);
         }
         mSelectedSong = song;
-        if (mMusicService != null) {
-            mMusicService.getMusicNotificationManager().setAccentColor(mAccent);
-            mPlayerAdapter.setCurrentSong(song, songs);
-            mPlayerAdapter.play();
-        }
+        mPlayerAdapter.setCurrentSong(song, songs);
+        mPlayerAdapter.play();
     }
 
     @Override
