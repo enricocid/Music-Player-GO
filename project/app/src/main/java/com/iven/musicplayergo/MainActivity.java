@@ -441,9 +441,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 }
                 if (sExpandPanel) {
                     mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+                } else {
+                    restorePlayerStatus();
                 }
-
-                restorePlayerStatus();
                 break;
         }
     }
@@ -482,9 +482,10 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     @Override
     public void onArtistSelected(String artist) {
 
-        sExpandPanel = true;
-
         if (!mSelectedArtist.equals(artist)) {
+
+            sExpandPanel = true;
+
             //load artist albums only if not already loaded
             mSelectedArtist = artist;
             getSupportLoaderManager().restartLoader(AlbumProvider.ALBUMS_LOADER, null, this);
