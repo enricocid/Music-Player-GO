@@ -484,6 +484,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         if (!mSelectedArtist.equals(artist)) {
 
+            //make the panel expandable
             sExpandPanel = true;
 
             //load artist albums only if not already loaded
