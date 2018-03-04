@@ -440,9 +440,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
                 if (artists.isEmpty()) {
 
-                    final TextView dissatisfied = findViewById(R.id.error_logo);
-                    dissatisfied.setVisibility(View.VISIBLE);
-                    mSeekBarAudio.setEnabled(false);
+                    Toast.makeText(this, getString(R.string.error_no_music), Toast.LENGTH_SHORT)
+                            .show();
+                    finish();
 
                 } else {
                     setArtistsRecyclerView(artists);
