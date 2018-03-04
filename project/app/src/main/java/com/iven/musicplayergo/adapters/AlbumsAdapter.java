@@ -1,6 +1,7 @@
 package com.iven.musicplayergo.adapters;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -79,7 +80,8 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
     }
 
     @Override
-    public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public SimpleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(mActivity)
                 .inflate(R.layout.album_item, parent, false);
@@ -92,7 +94,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
     }
 
     @Override
-    public void onBindViewHolder(SimpleViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SimpleViewHolder holder, int position) {
 
         Album album = mAlbums.get(holder.getAdapterPosition());
         String albumTitle = album.getTitle();
