@@ -23,6 +23,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Pair;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
@@ -45,11 +46,11 @@ import com.iven.musicplayergo.playback.MusicNotificationManager;
 import com.iven.musicplayergo.playback.MusicService;
 import com.iven.musicplayergo.playback.PlaybackInfoListener;
 import com.iven.musicplayergo.playback.PlayerAdapter;
+import com.iven.musicplayergo.slidinguppanel.SlidingUpPanelLayout;
 import com.iven.musicplayergo.utils.AndroidVersion;
 import com.iven.musicplayergo.utils.PermissionDialog;
 import com.iven.musicplayergo.utils.SettingsUtils;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.List;
 
@@ -184,6 +185,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             setImmersiveDrawable(true);
         }
 
+        mSlidingUpPanel.setScrollableView(mSongsRecyclerView);
+        mSlidingUpPanel.setGravity(Gravity.BOTTOM);
         setSlidingUpPanelHeight();
 
         initializeColorsSettings();

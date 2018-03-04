@@ -19,19 +19,8 @@ android {
     }
 }
 
-//force the usage of the latest support libs version
-configurations.all {
-    resolutionStrategy {
-        eachDependency { DependencyResolveDetails details ->
-            if (details.requested.group == 'com.android.support' && !details.requested.name.contains('multidex')) {
-                details.useVersion "27.0.2"
-            }
-        }
-    }
-}
-
 dependencies {
     implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.17'
-    implementation 'com.android.support:support-v4:27.0.2'
-    implementation 'com.sothree.slidinguppanel:library:3.4.0'
+    implementation 'com.android.support:support-v4:27.1.0'
+    implementation 'com.android.support:recyclerview-v7:27.1.0'
 }
