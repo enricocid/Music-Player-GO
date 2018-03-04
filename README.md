@@ -38,9 +38,6 @@ https://plus.google.com/+JulianGomezAxinen
 - Dark status bar icons for light accents
 (according to https://material.io/guidelines/style/color.html#color-color-palette);
 - No need to navigate between activities;
-- Awesome splash screen to manage storage permissions:
-
-![ScreenShot](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/permissions.gif)
 
 ### Open settings directly from UI. Available settings: 
 
