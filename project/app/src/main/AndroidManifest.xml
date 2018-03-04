@@ -13,17 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeBlue">
         <activity
-            android:name=".PlaceholderActivity"
-            android:theme="@style/AppTheme.Placeholder"
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".MainActivity"
-            android:screenOrientation="portrait" >
         </activity>
         <service android:name=".playback.MusicService" />
     </application>

@@ -8,6 +8,5 @@
     <string name="enjoy">Choisir une piste musicale :D</string>
     <string name="no_browser">No navigateur trouvé :(</string>
     <string name="perm_rationale">Pour vous permettre de lire la musique sur votre appareil, Music Player GO a besoin d\'accèder à vos fichiers</string>
-    <string name="perm_button">Autoriser accès fichiers</string>
     <string name="error_no_music">No musique sur votre appareil</string>
 </resources>

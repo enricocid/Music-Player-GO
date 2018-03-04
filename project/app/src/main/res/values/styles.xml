@@ -1,23 +1,14 @@
 <resources>
 
-    <style name="AppTheme.Placeholder" parent="android:Theme.Material.NoActionBar">
-        <item name="android:windowBackground">@color/blue_A400</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-    </style>
-
-    <style name="Button" parent="android:Theme.Material">
-        <item name="android:colorControlHighlight">@color/amber_A400</item>
-        <item name="android:colorButtonNormal">@color/amber_700</item>
-        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
-    </style>
-
     <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:typeface">sans</item>
         <item name="icon_color">@android:color/black</item>
         <item name="card_color">@color/grey_100</item>
         <item name="theme_icon">@drawable/ic_theme_dark_24dp</item>
         <item name="android:navigationBarColor">@color/grey_900</item>
+        <item name="android:colorEdgeEffect">?attr/accent_color</item>
+        <item name="android:statusBarColor">?attr/accent_color</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogStyleLight</item>
     </style>
 
     <style name="AppThemeDark" parent="android:Theme.Material.NoActionBar">
@@ -27,5 +18,18 @@
         <item name="theme_icon">@drawable/ic_theme_light_24dp</item>
         <item name="android:windowBackground">@color/grey_900</item>
         <item name="android:navigationBarColor">@color/grey_900</item>
+        <item name="android:colorEdgeEffect">?attr/accent_color</item>
+        <item name="android:statusBarColor">?attr/accent_color</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogStyle</item>
     </style>
+
+    <style name="AlertDialogStyleLight" parent="android:Theme.Material.Light.Dialog.Alert">
+        <item name="android:colorAccent">?attr/accent_color</item>
+    </style>
+
+    <style name="AlertDialogStyle" parent="android:Theme.Material.Dialog.Alert">
+        <item name="android:colorAccent">?attr/accent_color</item>
+        <item name="android:background">@color/grey_900</item>
+    </style>
+
 </resources>

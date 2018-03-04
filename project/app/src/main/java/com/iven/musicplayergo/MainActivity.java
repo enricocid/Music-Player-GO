@@ -1,15 +1,18 @@
 package com.iven.musicplayergo;
 
+import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
@@ -43,6 +46,7 @@ import com.iven.musicplayergo.playback.MusicService;
 import com.iven.musicplayergo.playback.PlaybackInfoListener;
 import com.iven.musicplayergo.playback.PlayerAdapter;
 import com.iven.musicplayergo.utils.AndroidVersion;
+import com.iven.musicplayergo.utils.PermissionDialog;
 import com.iven.musicplayergo.utils.SettingsUtils;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -89,7 +93,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 mPlaybackListener = new PlaybackListener();
                 mPlayerAdapter.setPlaybackInfoListener(mPlaybackListener);
             }
-            onPermissionGranted();
+            checkReadStoragePermissions();
         }
 
         @Override
@@ -121,6 +125,30 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         int drawable = isImmersive ? R.drawable.ic_fullscreen_exit_24dp : R.drawable.ic_fullscreen_24dp;
         mImmersiveButton.setImageResource(drawable);
+    }
+
+    private void checkReadStoragePermissions() {
+        if (AndroidVersion.isMarshmallow()) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+                PermissionDialog.showPermissionDialog(this, false);
+            } else {
+
+                onPermissionGranted();
+            }
+        } else {
+            onPermissionGranted();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+            PermissionDialog.showPermissionDialog(this, true);
+        } else {
+            onPermissionGranted();
+        }
     }
 
     @Override
