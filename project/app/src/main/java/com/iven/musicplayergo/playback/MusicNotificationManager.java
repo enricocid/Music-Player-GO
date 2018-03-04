@@ -6,7 +6,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.VectorDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
@@ -84,8 +86,8 @@ public class MusicNotificationManager {
 
         mNotificationBuilder
                 .setShowWhen(false)
-                .setSmallIcon(R.drawable.music_circle_notification)
-                .setLargeIcon(BitmapFactory.decodeResource(mMusicService.getResources(), R.drawable.music_circle))
+                .setSmallIcon(R.drawable.music_circle_notification_small)
+                .setLargeIcon(getLargeIcon((VectorDrawable) mMusicService.getDrawable(R.drawable.music_circle_notification_large)))
                 .setColor(mAccent)
                 .setContentTitle(spanned)
                 .setContentText(song.albumName)
@@ -138,5 +140,19 @@ public class MusicNotificationManager {
 
             mNotificationManager.createNotificationChannel(notificationChannel);
         }
+    }
+
+    //https://gist.github.com/Gnzlt/6ddc846ef68c587d559f1e1fcd0900d3
+    private Bitmap getLargeIcon(VectorDrawable vectorDrawable) {
+
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(),
+                vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        vectorDrawable.setTint(mAccent);
+        vectorDrawable.setAlpha(20);
+        vectorDrawable.draw(canvas);
+        return bitmap;
     }
 }
