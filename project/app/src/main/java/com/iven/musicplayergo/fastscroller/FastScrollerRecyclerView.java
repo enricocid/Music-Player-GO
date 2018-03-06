@@ -3,8 +3,6 @@ package com.iven.musicplayergo.fastscroller;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -12,10 +10,7 @@ import android.view.MotionEvent;
 
 public class FastScrollerRecyclerView extends RecyclerView {
 
-    static final int INDEX_BAR = 3000;
-    static final int INDEX_THUMB = 500;
     private FastScrollerView mScroller;
-    private Handler mVisibilityHandler;
     private GestureDetector mGestureDetector = null;
     private int mAccent;
     private boolean sDark;
@@ -44,7 +39,6 @@ public class FastScrollerRecyclerView extends RecyclerView {
     private void init(Context context) {
 
         mScroller = new FastScrollerView(context, this);
-        mVisibilityHandler = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -97,24 +91,5 @@ public class FastScrollerRecyclerView extends RecyclerView {
         super.onSizeChanged(w, h, oldW, oldH);
         if (mScroller != null)
             mScroller.onSizeChanged(w, h);
-    }
-
-    void setBarItemVisibility(final int which) {
-        if (mVisibilityHandler.hasMessages(0)) {
-            mVisibilityHandler.removeCallbacksAndMessages(null);
-        }
-        mVisibilityHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                switch (which) {
-                    case INDEX_BAR:
-                        mScroller.setHidden();
-                        break;
-                    case INDEX_THUMB:
-                        invalidate();
-                        break;
-                }
-            }
-        }, which);
     }
 }

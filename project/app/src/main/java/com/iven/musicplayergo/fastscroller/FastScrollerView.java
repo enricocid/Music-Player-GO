@@ -6,14 +6,20 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.os.Handler;
+import android.os.Message;
+import android.os.SystemClock;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.SectionIndexer;
 
+import java.lang.ref.WeakReference;
+
 public class FastScrollerView extends RecyclerView.AdapterDataObserver {
 
+    static final int INDEX_THUMB = 500;
+    private static final int INDEX_BAR = 3000;
     private float mIndexbarWidth;
     private float mIndexbarMargin;
     private float mPreviewPadding;
@@ -30,8 +36,13 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
     private int mIndexTextSize;
     private int mIndexBarCornerRadius;
     private boolean sHidden = true;
+    private indexBarThumbHandler mIndexBarThumbHandler;
+    private indexBarHandler mIndexBarHandler;
 
     FastScrollerView(Context context, FastScrollerRecyclerView rv) {
+
+        mIndexBarThumbHandler = new indexBarThumbHandler(rv);
+        mIndexBarHandler = new indexBarHandler(this);
 
         mIndexTextSize = 12;
         float indexbarWidth = 20;
@@ -101,7 +112,8 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
                 canvas.drawRoundRect(previewRect, 5 * mDensity, 5 * mDensity, previewPaint);
                 canvas.drawText(mSections[mCurrentSection], previewRect.left + (previewSize - previewTextWidth) / 2 - 1
                         , previewRect.top + mPreviewPadding - previewTextPaint.ascent() + 1, previewTextPaint);
-                mRecyclerView.setBarItemVisibility(FastScrollerRecyclerView.INDEX_THUMB);
+                mIndexBarThumbHandler.removeMessages(0);
+                mIndexBarThumbHandler.sendEmptyMessageAtTime(INDEX_THUMB, SystemClock.uptimeMillis() + INDEX_THUMB);
             }
 
             Paint indexPaint = new Paint();
@@ -168,7 +180,8 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
                 mCurrentSection = -1;
 
                 if (mSections != null) {
-                    mRecyclerView.setBarItemVisibility(FastScrollerRecyclerView.INDEX_BAR);
+                    mIndexBarHandler.removeCallbacksAndMessages(null);
+                    mIndexBarHandler.sendEmptyMessageAtTime(INDEX_BAR, SystemClock.uptimeMillis() + INDEX_BAR);
                 }
                 break;
         }
@@ -185,7 +198,7 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
                 layoutManager.scrollToPosition(position);
             }
         } catch (Exception e) {
-            Log.d("INDEX_BAR", "Data size returns null");
+            e.printStackTrace();
         }
     }
 
@@ -224,5 +237,37 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
         if (y >= mIndexbarRect.top + mIndexbarRect.height() - mIndexbarMargin)
             return mSections.length - 1;
         return (int) ((y - mIndexbarRect.top - mIndexbarMargin) / ((mIndexbarRect.height() - 2 * mIndexbarMargin) / mSections.length));
+    }
+
+    private static class indexBarThumbHandler extends Handler {
+        private final WeakReference<FastScrollerRecyclerView> mRecyclerView;
+
+        indexBarThumbHandler(FastScrollerRecyclerView recyclerView) {
+            mRecyclerView = new WeakReference<>(recyclerView);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == INDEX_THUMB) {
+
+                mRecyclerView.get().invalidate();
+            }
+        }
+    }
+
+    private static class indexBarHandler extends Handler {
+        private final WeakReference<FastScrollerView> mFastScroller;
+
+        indexBarHandler(FastScrollerView fastScrollerView) {
+            mFastScroller = new WeakReference<>(fastScrollerView);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == INDEX_BAR) {
+
+                mFastScroller.get().setHidden();
+            }
+        }
     }
 }
