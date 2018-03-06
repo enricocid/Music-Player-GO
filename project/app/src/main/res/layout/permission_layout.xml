@@ -3,9 +3,9 @@
     android:id="@+id/rationale"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="24dp"
     android:paddingLeft="24dp"
     android:paddingRight="24dp"
     android:paddingTop="20dp"
+    android:paddingBottom="24dp"
     android:textAppearance="@android:style/TextAppearance.Theme.Dialog"
     android:textColor="?android:textColorSecondary" />
