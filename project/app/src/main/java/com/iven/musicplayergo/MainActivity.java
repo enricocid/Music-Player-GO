@@ -476,6 +476,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 }
                 if (sExpandPanel) {
                     mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+                    sExpandPanel = false;
                 } else {
                     restorePlayerStatus();
                 }
