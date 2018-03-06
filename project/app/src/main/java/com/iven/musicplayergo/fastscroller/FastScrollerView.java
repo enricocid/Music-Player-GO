@@ -1,4 +1,4 @@
-package com.iven.musicplayergo;
+package com.iven.musicplayergo.fastscroller;
 
 import android.content.Context;
 import android.graphics.Canvas;

@@ -36,6 +36,7 @@ import com.iven.musicplayergo.adapters.AlbumsAdapter;
 import com.iven.musicplayergo.adapters.ArtistsAdapter;
 import com.iven.musicplayergo.adapters.ColorsAdapter;
 import com.iven.musicplayergo.adapters.SongsAdapter;
+import com.iven.musicplayergo.fastscroller.FastScrollerRecyclerView;
 import com.iven.musicplayergo.loaders.AlbumProvider;
 import com.iven.musicplayergo.loaders.ArtistProvider;
 import com.iven.musicplayergo.models.Album;

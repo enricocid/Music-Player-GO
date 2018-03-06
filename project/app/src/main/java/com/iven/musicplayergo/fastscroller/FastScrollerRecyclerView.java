@@ -1,4 +1,4 @@
-package com.iven.musicplayergo;
+package com.iven.musicplayergo.fastscroller;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -33,11 +33,11 @@ public class FastScrollerRecyclerView extends RecyclerView {
         super(context, attrs, defStyle);
     }
 
-    void setAccent(int accent) {
+    public void setAccent(int accent) {
         mAccent = accent;
     }
 
-    void setIsDark(boolean isDark) {
+    public void setIsDark(boolean isDark) {
         sDark = isDark;
     }
 
