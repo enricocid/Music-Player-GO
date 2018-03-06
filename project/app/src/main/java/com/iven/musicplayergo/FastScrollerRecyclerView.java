@@ -31,7 +31,6 @@ public class FastScrollerRecyclerView extends RecyclerView {
 
     public FastScrollerRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init(context);
     }
 
     void setAccent(int accent) {
