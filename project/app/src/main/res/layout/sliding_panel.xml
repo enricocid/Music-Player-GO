@@ -11,5 +11,4 @@
 
     <!-- ARTIST DETAILS -->
     <include layout="@layout/artist_albums" />
-
 </LinearLayout>

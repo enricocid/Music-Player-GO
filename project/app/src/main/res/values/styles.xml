@@ -1,5 +1,4 @@
 <resources>
-
     <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:typeface">sans</item>
         <item name="icon_color">@android:color/black</item>
@@ -31,5 +30,4 @@
         <item name="android:colorAccent">?attr/accent_color</item>
         <item name="android:background">@color/grey_900</item>
     </style>
-
 </resources>
