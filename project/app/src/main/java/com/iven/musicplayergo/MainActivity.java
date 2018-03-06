@@ -132,7 +132,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (AndroidVersion.isMarshmallow()) {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-                PermissionDialog.showPermissionDialog(this, false);
+                PermissionDialog.showPermissionDialog(getSupportFragmentManager());
             } else {
 
                 onPermissionGranted();
@@ -146,7 +146,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-            PermissionDialog.showPermissionDialog(this, true);
+            PermissionDialog.showPermissionDialog(getSupportFragmentManager());
         } else {
             onPermissionGranted();
         }
@@ -427,13 +427,14 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     @Override
+    @NonNull
     public Loader onCreateLoader(int id, Bundle args) {
         return id != AlbumProvider.ALBUMS_LOADER ? new ArtistProvider.AsyncArtistLoader(this) : new AlbumProvider.AsyncAlbumsForArtistLoader(this, mSelectedArtist);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public void onLoadFinished(Loader loader, Object data) {
+    public void onLoadFinished(@NonNull Loader loader, Object data) {
 
         switch (loader.getId()) {
             case ArtistProvider.ARTISTS_LOADER:
@@ -480,7 +481,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     @Override
-    public void onLoaderReset(Loader loader) {
+    public void onLoaderReset(@NonNull Loader loader) {
     }
 
     @Override
