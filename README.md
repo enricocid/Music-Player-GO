@@ -8,7 +8,7 @@
 
 ### Very slim music player (~1000KB)
 
-### Current version: 2.0.6 (beta)
+### Current version: 2.1 (beta)
 
 
 
@@ -20,7 +20,7 @@ https://plus.google.com/+JulianGomezAxinen
 
 
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art8.png)
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art9.png)
 
 <a href="https://play.google.com/apps/testing/com.iven.musicplayergo" target="_blank">
   <img alt="Get it on Google Play"
@@ -32,7 +32,7 @@ https://plus.google.com/+JulianGomezAxinen
 ### Very simple, colorful and nice UI "Everything in one UI", the way I'd like it to be:
 
 - Music organized by artist;
-- Fast scroller;
+- Alphabetic Fast scroller;
 - Sliding up panel containing controls (when collapsed) and the artist albums/songs (when expanded);
 - Colorful UI;
 - Dark status bar icons for light accents
@@ -47,16 +47,15 @@ https://plus.google.com/+JulianGomezAxinen
 - UI accents;
 - Link to git page;
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/settings4.gif)
 
 ### Minimal code:
 
 - Based on nothing: it was written from scratch besides few snippets here and there;
 - Dependencies used: 
 
-  - Sliding up panel by @umano (https://github.com/umano/AndroidSlidingUpPanel);
+  - Sliding up panel by @umano opportunely modified (https://github.com/umano/AndroidSlidingUpPanel) (lightened and with deprecated methods replaced);
   - Android Support Library v4;
-  - RecyclerView-FastScroll by @timusus (https://github.com/timusus/RecyclerView-FastScroll);
+  - Alphabetic Index Fast Scroller by @myinnos opportunely modified to be shown/hidden on RecyclerView's scroll (https://github.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView);
 
 ### Other features: 
 
