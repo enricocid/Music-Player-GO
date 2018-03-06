@@ -8,7 +8,7 @@
 
 ### Very slim music player (~1000KB)
 
-### Current version: 2.0.6 (beta)
+### Current version: 2.1 (beta)
 
 
 
@@ -32,7 +32,7 @@ https://plus.google.com/+JulianGomezAxinen
 ### Very simple, colorful and nice UI "Everything in one UI", the way I'd like it to be:
 
 - Music organized by artist;
-- Fast scroller;
+- Alphabetic Fast scroller;
 - Sliding up panel containing controls (when collapsed) and the artist albums/songs (when expanded);
 - Colorful UI;
 - Dark status bar icons for light accents
@@ -54,9 +54,9 @@ https://plus.google.com/+JulianGomezAxinen
 - Based on nothing: it was written from scratch besides few snippets here and there;
 - Dependencies used: 
 
-  - Sliding up panel by @umano (https://github.com/umano/AndroidSlidingUpPanel);
+  - Modified Sliding up panel by @umano (https://github.com/umano/AndroidSlidingUpPanel);
   - Android Support Library v4;
-  - RecyclerView-FastScroll by @timusus (https://github.com/timusus/RecyclerView-FastScroll);
+  - Modified Alphabetic Fast Scroller by @myinnos (https://github.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView);
 
 ### Other features: 
 
