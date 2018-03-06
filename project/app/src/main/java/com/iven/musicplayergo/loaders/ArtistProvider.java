@@ -11,6 +11,8 @@ import com.iven.musicplayergo.models.Artist;
 import com.iven.musicplayergo.models.Song;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ArtistProvider {
@@ -21,6 +23,14 @@ public class ArtistProvider {
         return MediaStore.Audio.Artists.DEFAULT_SORT_ORDER + ", " + MediaStore.Audio.Albums.DEFAULT_SORT_ORDER + ", " + MediaStore.Audio.Media.DEFAULT_SORT_ORDER;
     }
 
+    private static void sortArtists(List<Artist> artists) {
+        Collections.sort(artists, new Comparator<Artist>() {
+            public int compare(Artist obj1, Artist obj2) {
+                return obj1.getName().compareToIgnoreCase(obj2.getName());
+            }
+        });
+    }
+
     @NonNull
     private static List<Artist> getAllArtists(@NonNull final Context context) {
         List<Song> songs = SongProvider.getSongs(SongProvider.makeSongCursor(
@@ -29,7 +39,9 @@ public class ArtistProvider {
                 null,
                 getSongLoaderSortOrder())
         );
-        return retrieveArtists(AlbumProvider.retrieveAlbums(songs));
+        List<Artist> artists = retrieveArtists(AlbumProvider.retrieveAlbums(songs));
+        sortArtists(artists);
+        return artists;
     }
 
     @NonNull
