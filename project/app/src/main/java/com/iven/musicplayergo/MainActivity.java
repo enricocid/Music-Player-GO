@@ -50,14 +50,14 @@ import com.iven.musicplayergo.slidinguppanel.SlidingUpPanelLayout;
 import com.iven.musicplayergo.utils.AndroidVersion;
 import com.iven.musicplayergo.utils.PermissionDialog;
 import com.iven.musicplayergo.utils.SettingsUtils;
-import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.List;
 
 public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks, SongsAdapter.songSelectedListener, ColorsAdapter.onAccentChangedListener, AlbumsAdapter.albumSelectedListener, ArtistsAdapter.artistSelectedListener {
 
+
     private int mAccent;
-    private FastScrollRecyclerView mArtistsRecyclerView;
+    private FastScrollerRecyclerView mArtistsRecyclerView;
     private RecyclerView mAlbumsRecyclerView, mSongsRecyclerView;
     private AlbumsAdapter mAlbumsAdapter;
     private SongsAdapter mSongsAdapter;
@@ -240,6 +240,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         LinearLayoutManager artistsLayoutManager = new LinearLayoutManager(this);
         mArtistsRecyclerView.setLayoutManager(artistsLayoutManager);
+        mArtistsRecyclerView.setAccent(ContextCompat.getColor(this, mAccent));
+        mArtistsRecyclerView.setIsDark(sThemeDark);
         ArtistsAdapter artistsAdapter = new ArtistsAdapter(this, data);
         mArtistsRecyclerView.setAdapter(artistsAdapter);
     }
