@@ -80,7 +80,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private PlaybackListener mPlaybackListener;
     private MusicNotificationManager mMusicNotificationManager;
     private boolean mIsBound;
-    private FastScrollerView mFastScrollerView;
+
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -247,8 +247,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 int h = mArtistsRecyclerView.getHeight();
                 mArtistsRecyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 if (mArtistsRecyclerView.computeVerticalScrollRange() > h) {
-                    mFastScrollerView = new FastScrollerView(mArtistsRecyclerView, mArtistsAdapter, mArtistsLayoutManager, ContextCompat.getColor(MainActivity.this, mAccent), sThemeDark);
-                    mArtistsRecyclerView.setFastScroller(mFastScrollerView);
+                    FastScrollerView fastScrollerView = new FastScrollerView(mArtistsRecyclerView, mArtistsAdapter, mArtistsLayoutManager, ContextCompat.getColor(MainActivity.this, mAccent), sThemeDark);
+                    mArtistsRecyclerView.setFastScroller(fastScrollerView);
                 }
             }
         });
