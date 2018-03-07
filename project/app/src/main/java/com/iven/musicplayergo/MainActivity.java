@@ -58,33 +58,29 @@ import java.util.List;
 public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks, SongsAdapter.songSelectedListener, ColorsAdapter.onAccentChangedListener, AlbumsAdapter.albumSelectedListener, ArtistsAdapter.artistSelectedListener {
 
 
+    LinearLayoutManager mArtistsLayoutManager;
+    ArtistsAdapter mArtistsAdapter;
     private int mAccent;
     private FastScrollerRecyclerView mArtistsRecyclerView;
     private RecyclerView mAlbumsRecyclerView, mSongsRecyclerView;
     private AlbumsAdapter mAlbumsAdapter;
     private SongsAdapter mSongsAdapter;
-
     private TextView mPlayingAlbum, mPlayingSong, mDuration, mSongPosition;
     private SeekBar mSeekBarAudio;
     private LinearLayout mControlsContainer;
     private SlidingUpPanelLayout mSlidingUpPanel;
     private ImageButton mPlayPauseButton, mResetButton, mImmersiveButton;
     private boolean sThemeDark;
-
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
-
     private Song mSelectedSong;
     private String mSelectedArtist;
     private boolean sExpandPanel = false;
-
     private MusicService mMusicService;
     private PlaybackListener mPlaybackListener;
     private MusicNotificationManager mMusicNotificationManager;
     private boolean mIsBound;
-
     private FastScrollerView mFastScrollerView;
-
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -247,22 +243,23 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                if (mArtistsRecyclerView.computeVerticalScrollRange() > mArtistsRecyclerView.getHeight()) {
-                    mArtistsRecyclerView.setFastScroller(mFastScrollerView);
-                }
+
+                int h = mArtistsRecyclerView.getHeight();
                 mArtistsRecyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                if (mArtistsRecyclerView.computeVerticalScrollRange() > h) {
+                    mFastScrollerView = new FastScrollerView(mArtistsRecyclerView, mArtistsAdapter, mArtistsLayoutManager, ContextCompat.getColor(MainActivity.this, mAccent), sThemeDark);
+                    mArtistsRecyclerView.setFastScroller(mFastScrollerView, mArtistsRecyclerView.getWidth(), h);
+                }
             }
         });
     }
 
     void setArtistsRecyclerView(List<Artist> data) {
 
-        LinearLayoutManager artistsLayoutManager = new LinearLayoutManager(this);
-        mArtistsRecyclerView.setLayoutManager(artistsLayoutManager);
-        ArtistsAdapter artistsAdapter = new ArtistsAdapter(this, data);
-        mFastScrollerView = new FastScrollerView(mArtistsRecyclerView, artistsAdapter, artistsLayoutManager, ContextCompat.getColor(this, mAccent), sThemeDark);
-        mArtistsRecyclerView.setAdapter(artistsAdapter);
-
+        mArtistsLayoutManager = new LinearLayoutManager(this);
+        mArtistsRecyclerView.setLayoutManager(mArtistsLayoutManager);
+        mArtistsAdapter = new ArtistsAdapter(this, data);
+        mArtistsRecyclerView.setAdapter(mArtistsAdapter);
         // Set the FastScroller only if the RecyclerView is scrollable;
         setScrollerIfRecyclerViewScrollable();
     }
