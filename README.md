@@ -8,7 +8,7 @@
 
 ### Very slim music player (~1000KB)
 
-### Current version: 2.1 (beta)
+### Current version: 2.1.1 (beta)
 
 
 
@@ -20,7 +20,7 @@ https://plus.google.com/+JulianGomezAxinen
 
 
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art9.png)
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art10.png)
 
 <a href="https://play.google.com/apps/testing/com.iven.musicplayergo" target="_blank">
   <img alt="Get it on Google Play"
