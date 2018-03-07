@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
-import android.widget.TextView;
 
 import com.iven.musicplayergo.R;
 
@@ -39,13 +37,8 @@ public class PermissionDialog extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        View dialogView = View.inflate(getActivity(), R.layout.permission_layout, null);
-        builder.setView(dialogView);
-        TextView rationale = dialogView.findViewById(R.id.rationale);
-
-        rationale.setText(getString(R.string.perm_rationale));
-
         builder.setTitle(getString(R.string.app_name));
+        builder.setMessage(getString(R.string.perm_rationale));
 
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
