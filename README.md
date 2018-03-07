@@ -51,11 +51,14 @@ https://plus.google.com/+JulianGomezAxinen
 ### Minimal code:
 
 - Based on nothing: it was written from scratch besides few snippets here and there;
-- Dependencies used: 
 
-  - Sliding up panel by @umano opportunely modified (https://github.com/umano/AndroidSlidingUpPanel) (lightened and with deprecated methods replaced);
+### Dependencies used: 
+
   - Android Support Library v4;
-  - Alphabetic Index Fast Scroller by @myinnos opportunely modified to be shown/hidden on RecyclerView's scroll (https://github.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView);
+  - RecyclerView v7;
+
+  - Sliding up panel by @umano opportunely modified by Me (https://github.com/umano/AndroidSlidingUpPanel) (lightened and with deprecated methods replaced);
+  - Alphabetic Index Fast Scroller by @myinnos opportunely modified by Me to be shown/hidden on RecyclerView's scroll (https://github.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView);
 
 ### Other features: 
 
@@ -67,9 +70,6 @@ https://github.com/KowalskiOmniROM
 
 ### Screenshots made with Screener:
 https://play.google.com/store/apps/details?id=de.toastcode.screener
-
-### GIF made with DU Recorder:
-https://play.google.com/store/apps/details?id=com.duapps.recorder
 
 ### Some icons are from materialdesignicons.com
 https://materialdesignicons.com/
