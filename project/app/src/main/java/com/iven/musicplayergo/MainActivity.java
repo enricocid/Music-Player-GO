@@ -248,7 +248,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 mArtistsRecyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 if (mArtistsRecyclerView.computeVerticalScrollRange() > h) {
                     mFastScrollerView = new FastScrollerView(mArtistsRecyclerView, mArtistsAdapter, mArtistsLayoutManager, ContextCompat.getColor(MainActivity.this, mAccent), sThemeDark);
-                    mArtistsRecyclerView.setFastScroller(mFastScrollerView, mArtistsRecyclerView.getWidth(), h);
+                    mArtistsRecyclerView.setFastScroller(mFastScrollerView);
                 }
             }
         });

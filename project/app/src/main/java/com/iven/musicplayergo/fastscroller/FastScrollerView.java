@@ -205,6 +205,7 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
     void onSetScroller(int w, int h) {
         mArtistsRecyclerViewWidth = w;
         mArtistsRecyclerViewHeight = h;
+
         mIndexBarRect = new RectF(w - mIndexBarMargin - mIndexBarWidth
                 , mIndexBarMargin
                 , w - mIndexBarMargin

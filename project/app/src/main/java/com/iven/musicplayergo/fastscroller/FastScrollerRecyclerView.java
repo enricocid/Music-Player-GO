@@ -25,9 +25,9 @@ public class FastScrollerRecyclerView extends RecyclerView {
         super(context, attrs, defStyle);
     }
 
-    public void setFastScroller(FastScrollerView fastScrollerView, int w, int h) {
+    public void setFastScroller(FastScrollerView fastScrollerView) {
         mScroller = fastScrollerView;
-        mScroller.onSetScroller(w, h);
+        mScroller.onSetScroller(this.getWidth(), this.getHeight());
     }
 
     @Override
