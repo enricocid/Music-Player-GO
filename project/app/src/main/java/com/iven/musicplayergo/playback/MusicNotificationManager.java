@@ -151,7 +151,7 @@ public class MusicNotificationManager {
         Canvas canvas = new Canvas(bitmap);
         vectorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         vectorDrawable.setTint(mAccent);
-        vectorDrawable.setAlpha(50);
+        vectorDrawable.setAlpha(100);
         vectorDrawable.draw(canvas);
         return bitmap;
     }
