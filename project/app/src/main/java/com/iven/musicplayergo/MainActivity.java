@@ -130,7 +130,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private void checkReadStoragePermissions() {
         if (AndroidVersion.isMarshmallow()) {
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
                 PermissionDialog.showPermissionDialog(getSupportFragmentManager());
             } else {
@@ -360,6 +360,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     public void immersePlayer(View v) {
+        mArtistsRecyclerView.setVisibilityChanged();
         SettingsUtils.toggleHideyBar(MainActivity.this, false);
     }
 

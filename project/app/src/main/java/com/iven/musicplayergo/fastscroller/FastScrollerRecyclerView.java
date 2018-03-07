@@ -12,6 +12,7 @@ public class FastScrollerRecyclerView extends RecyclerView {
 
     private FastScrollerView mScroller;
     private GestureDetector mGestureDetector = null;
+    private boolean sVisibilityChanged = false;
 
     public FastScrollerRecyclerView(Context context) {
         super(context);
@@ -23,6 +24,10 @@ public class FastScrollerRecyclerView extends RecyclerView {
 
     public FastScrollerRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+    }
+
+    public void setVisibilityChanged() {
+        sVisibilityChanged = true;
     }
 
     public void setFastScroller(FastScrollerView fastScrollerView) {
@@ -66,5 +71,14 @@ public class FastScrollerRecyclerView extends RecyclerView {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         return mScroller != null && mScroller.contains(ev.getX(), ev.getY()) || super.onInterceptTouchEvent(ev);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldW, int oldH) {
+        super.onSizeChanged(w, h, oldW, oldH);
+        if (mScroller != null && sVisibilityChanged) {
+            sVisibilityChanged = false;
+            mScroller.onSetScroller(w, h);
+        }
     }
 }

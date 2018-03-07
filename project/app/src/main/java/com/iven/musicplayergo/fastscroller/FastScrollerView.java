@@ -214,7 +214,7 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
 
     boolean contains(float x, float y) {
         // Determine if the point is in index bar region, which includes the right margin of the bar
-        return (x >= mIndexBarRect.left && y >= mIndexBarRect.top && y <= mIndexBarRect.top + mIndexBarRect.height());
+        return mIndexBarRect != null && (x >= mIndexBarRect.left && y >= mIndexBarRect.top && y <= mIndexBarRect.top + mIndexBarRect.height());
     }
 
     private int getSectionByPoint(float y) {
