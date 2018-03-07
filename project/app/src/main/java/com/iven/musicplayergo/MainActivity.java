@@ -37,6 +37,7 @@ import com.iven.musicplayergo.adapters.ArtistsAdapter;
 import com.iven.musicplayergo.adapters.ColorsAdapter;
 import com.iven.musicplayergo.adapters.SongsAdapter;
 import com.iven.musicplayergo.fastscroller.FastScrollerRecyclerView;
+import com.iven.musicplayergo.fastscroller.FastScrollerView;
 import com.iven.musicplayergo.loaders.AlbumProvider;
 import com.iven.musicplayergo.loaders.ArtistProvider;
 import com.iven.musicplayergo.models.Album;
@@ -81,6 +82,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private PlaybackListener mPlaybackListener;
     private MusicNotificationManager mMusicNotificationManager;
     private boolean mIsBound;
+
+    private FastScrollerView mFastScrollerView;
 
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
@@ -237,14 +240,31 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         });
     }
 
+    private void setScrollerIfRecyclerViewScrollable() {
+
+        // ViewTreeObserver allows us to measure the layout params
+        final ViewTreeObserver observer = mArtistsRecyclerView.getViewTreeObserver();
+        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (mArtistsRecyclerView.computeVerticalScrollRange() > mArtistsRecyclerView.getHeight()) {
+                    mArtistsRecyclerView.setFastScroller(mFastScrollerView);
+                }
+                mArtistsRecyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+    }
+
     void setArtistsRecyclerView(List<Artist> data) {
 
         LinearLayoutManager artistsLayoutManager = new LinearLayoutManager(this);
         mArtistsRecyclerView.setLayoutManager(artistsLayoutManager);
-        mArtistsRecyclerView.setAccent(ContextCompat.getColor(this, mAccent));
-        mArtistsRecyclerView.setIsDark(sThemeDark);
         ArtistsAdapter artistsAdapter = new ArtistsAdapter(this, data);
+        mFastScrollerView = new FastScrollerView(mArtistsRecyclerView, artistsAdapter, artistsLayoutManager, ContextCompat.getColor(this, mAccent), sThemeDark);
         mArtistsRecyclerView.setAdapter(artistsAdapter);
+
+        // Set the FastScroller only if the RecyclerView is scrollable;
+        setScrollerIfRecyclerViewScrollable();
     }
 
     private void initializeSeekBar() {

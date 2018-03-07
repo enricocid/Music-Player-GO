@@ -12,7 +12,6 @@ import android.support.v4.app.FragmentManager;
 
 import com.iven.musicplayergo.R;
 
-
 public class PermissionDialog extends DialogFragment {
 
     private static final String DIALOG_TAG = "com.iven.musicplayergo.permissions";

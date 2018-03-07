@@ -6,53 +6,47 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.iven.musicplayergo.R;
 import com.iven.musicplayergo.models.Artist;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleViewHolder> implements SectionIndexer {
+public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleViewHolder> {
 
     private FragmentActivity mActivity;
     private List<Artist> mArtists;
     private artistSelectedListener mArtistSelectedListener;
-    private List<Integer> mSectionPositions;
+    private HashMap<Integer, String> mIndexedPositions = new LinkedHashMap<>();
 
     public ArtistsAdapter(FragmentActivity activity, List<Artist> artists) {
 
         mActivity = activity;
         mArtists = artists;
         mArtistSelectedListener = (artistSelectedListener) activity;
+        generateIndexes();
     }
 
-    @Override
-    public int getSectionForPosition(int position) {
-        return 0;
+    public String[] getIndexes() {
+        return mIndexedPositions.values().toArray(new String[mIndexedPositions.values().size()]);
     }
 
-    @Override
-    public Object[] getSections() {
-        List<String> sections = new ArrayList<>(mArtists.size());
-        mSectionPositions = new ArrayList<>(mArtists.size());
+    public int getIndexPosition(int currentSection) {
+        return mIndexedPositions.keySet().toArray(new Integer[mIndexedPositions.keySet().size()])[currentSection];
+    }
+
+    private void generateIndexes() {
 
         for (int i = 0, size = mArtists.size(); i < size; i++) {
             String section = mArtists.get(i).getName().substring(0, 1).toUpperCase(Locale.getDefault());
-            if (!sections.contains(section)) {
-                sections.add(section);
-                mSectionPositions.add(i);
+            if (!mIndexedPositions.containsValue(section)) {
+                mIndexedPositions.put(i, section);
             }
         }
-        return sections.toArray(new String[0]);
-    }
-
-    @Override
-    public int getPositionForSection(int sectionIndex) {
-        return mSectionPositions.get(sectionIndex);
     }
 
     @Override

@@ -12,8 +12,6 @@ public class FastScrollerRecyclerView extends RecyclerView {
 
     private FastScrollerView mScroller;
     private GestureDetector mGestureDetector = null;
-    private int mAccent;
-    private boolean sDark;
 
     public FastScrollerRecyclerView(Context context) {
         super(context);
@@ -21,24 +19,22 @@ public class FastScrollerRecyclerView extends RecyclerView {
 
     public FastScrollerRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
     }
 
     public FastScrollerRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
-    public void setAccent(int accent) {
-        mAccent = accent;
+    public void setFastScroller(FastScrollerView fastScrollerView) {
+        mScroller = fastScrollerView;
     }
 
-    public void setIsDark(boolean isDark) {
-        sDark = isDark;
-    }
-
-    private void init(Context context) {
-
-        mScroller = new FastScrollerView(context, this);
+    @Override
+    protected void onSizeChanged(int w, int h, int oldW, int oldH) {
+        super.onSizeChanged(w, h, oldW, oldH);
+        if (mScroller != null) {
+            mScroller.onSizeChanged(w, h);
+        }
     }
 
     @Override
@@ -46,8 +42,8 @@ public class FastScrollerRecyclerView extends RecyclerView {
         super.draw(canvas);
 
         // Overlay index bar
-        if (mScroller != null) {
-            mScroller.draw(canvas, mAccent, sDark);
+        if (mScroller != null && mScroller.isFastScrollerVisible()) {
+            mScroller.draw(canvas);
         }
     }
 
@@ -55,9 +51,9 @@ public class FastScrollerRecyclerView extends RecyclerView {
     @SuppressLint("ClickableViewAccessibility")
     public boolean onTouchEvent(MotionEvent ev) {
         // Intercept RecyclerView's touch event
-        if (mScroller != null && mScroller.onTouchEvent(ev))
+        if (mScroller != null && mScroller.onTouchEvent(ev)) {
             return true;
-
+        }
         if (mGestureDetector == null) {
             mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
 
@@ -77,19 +73,5 @@ public class FastScrollerRecyclerView extends RecyclerView {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         return mScroller != null && mScroller.contains(ev.getX(), ev.getY()) || super.onInterceptTouchEvent(ev);
-    }
-
-    @Override
-    public void setAdapter(Adapter adapter) {
-        super.setAdapter(adapter);
-        if (mScroller != null)
-            mScroller.setAdapter(adapter);
-    }
-
-    @Override
-    protected void onSizeChanged(int w, int h, int oldW, int oldH) {
-        super.onSizeChanged(w, h, oldW, oldH);
-        if (mScroller != null)
-            mScroller.onSizeChanged(w, h);
     }
 }
