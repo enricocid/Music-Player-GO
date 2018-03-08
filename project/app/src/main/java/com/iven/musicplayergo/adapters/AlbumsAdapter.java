@@ -105,7 +105,6 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
         Album album = mAlbums.get(holder.getAdapterPosition());
         String albumTitle = album.getTitle();
         holder.title.setText(albumTitle);
-        holder.number.setText(String.valueOf(album.getSongCount()));
 
         holder.year.setText(getYear(album.getYear()));
     }
@@ -122,13 +121,12 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
     class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView title, number, year;
+        TextView title, year;
 
         SimpleViewHolder(View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.album);
-            number = itemView.findViewById(R.id.count);
             year = itemView.findViewById(R.id.year);
             itemView.setOnClickListener(this);
         }
