@@ -12,6 +12,7 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
@@ -81,6 +82,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private MusicNotificationManager mMusicNotificationManager;
     private boolean mIsBound;
 
+    private Parcelable savedRecyclerLayoutState;
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -102,6 +104,12 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             mMusicService = null;
         }
     };
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        savedRecyclerLayoutState = mArtistsLayoutManager.onSaveInstanceState();
+    }
 
     @Override
     public void onAccentChanged(int color) {
@@ -260,6 +268,11 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mArtistsRecyclerView.setLayoutManager(mArtistsLayoutManager);
         mArtistsAdapter = new ArtistsAdapter(this, data);
         mArtistsRecyclerView.setAdapter(mArtistsAdapter);
+
+        if (savedRecyclerLayoutState != null) {
+            mArtistsLayoutManager.onRestoreInstanceState(savedRecyclerLayoutState);
+        }
+
         // Set the FastScroller only if the RecyclerView is scrollable;
         setScrollerIfRecyclerViewScrollable();
     }
