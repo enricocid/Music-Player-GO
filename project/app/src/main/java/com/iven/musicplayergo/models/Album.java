@@ -2,10 +2,10 @@ package com.iven.musicplayergo.models;
 
 import android.support.annotation.NonNull;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Album implements Serializable {
+public class Album {
+
     public final ArrayList<Song> songs;
 
     public Album() {
