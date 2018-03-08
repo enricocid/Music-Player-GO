@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.iven.musicplayergo.R;
+import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Song;
 
 import java.util.Collections;
@@ -18,17 +19,21 @@ import java.util.List;
 public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHolder> {
 
     private List<Song> mSongs;
+    private Album mAlbum;
     private songSelectedListener mSongSelectedListener;
 
-    public SongsAdapter(Activity activity, List<Song> songs) {
+    public SongsAdapter(Activity activity, Album album) {
 
-        mSongs = songs;
+        mAlbum = album;
+        mSongs = mAlbum.songs;
+
         sortSongsByTrack();
         mSongSelectedListener = (songSelectedListener) activity;
     }
 
-    public void swapSongs(List<Song> songs) {
-        mSongs = songs;
+    public void swapSongs(Album album) {
+        mAlbum = album;
+        mSongs = mAlbum.songs;
         sortSongsByTrack();
         notifyDataSetChanged();
     }
@@ -70,7 +75,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
     }
 
     public interface songSelectedListener {
-        void onSongSelected(Song song, List<Song> songs);
+        void onSongSelected(Song song, Album album);
     }
 
     class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -91,7 +96,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
         public void onClick(View v) {
 
             Song song = mSongs.get(getAdapterPosition());
-            mSongSelectedListener.onSongSelected(song, mSongs);
+            mSongSelectedListener.onSongSelected(song, mAlbum);
         }
     }
 }

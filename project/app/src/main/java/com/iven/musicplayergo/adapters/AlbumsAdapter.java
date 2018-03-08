@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.iven.musicplayergo.R;
 import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Artist;
+import com.iven.musicplayergo.playback.PlayerAdapter;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -31,13 +32,17 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
     private albumSelectedListener mAlbumSelectedListener;
 
-    public AlbumsAdapter(Activity activity, Pair<Artist, List<Album>> albumsForArtist) {
+    private PlayerAdapter mPlayerAdapter;
+
+    public AlbumsAdapter(Activity activity, Pair<Artist, List<Album>> albumsForArtist, PlayerAdapter playerAdapter) {
 
         mActivity = activity;
 
         mAlbumSelectedListener = (albumSelectedListener) mActivity;
 
         mAlbumsForArtist = albumsForArtist;
+
+        mPlayerAdapter = playerAdapter;
 
         mAlbums = mAlbumsForArtist.second;
 
@@ -60,7 +65,8 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
         sortAlbums();
 
         Artist artist = mAlbumsForArtist.first;
-        mSelectedAlbum = artist.getFirstAlbum();
+
+        mSelectedAlbum = mPlayerAdapter != null && mPlayerAdapter.getSelectedAlbum(mPlayerAdapter.isPlaying()) != null ? mPlayerAdapter.getSelectedAlbum(mPlayerAdapter.isPlaying()) : artist.getFirstAlbum();
 
         mDiscs.setText(mActivity.getString(R.string.albums, artist.getName(), getItemCount()));
 
@@ -133,6 +139,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
             //update songs list only if the album is updated
             if (mAlbums.get(getAdapterPosition()) != mSelectedAlbum) {
                 mSelectedAlbum = mAlbums.get(getAdapterPosition());
+                mPlayerAdapter.setSelectedAlbum(mSelectedAlbum);
                 mDisc.setText(mActivity.getString(R.string.album, mSelectedAlbum.getTitle(), getYear(mSelectedAlbum.getYear())));
                 mAlbumSelectedListener.onAlbumSelected(mSelectedAlbum);
             }

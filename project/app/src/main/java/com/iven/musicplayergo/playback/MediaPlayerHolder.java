@@ -13,6 +13,7 @@ import android.os.PowerManager;
 import android.support.v4.media.session.PlaybackStateCompat;
 
 import com.iven.musicplayergo.MainActivity;
+import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Song;
 
 import java.util.List;
@@ -47,6 +48,8 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     private Runnable mSeekBarPositionUpdateTask;
     private Song mSelectedSong;
     private List<Song> mSongs;
+    private Album mSelectedAlbum;
+    private Album mPlayedAlbum;
 
     private boolean sReplaySong = false;
     private @PlaybackInfoListener.State
@@ -137,9 +140,20 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     }
 
     @Override
-    public void setCurrentSong(Song song, List<Song> songs) {
+    public void setCurrentSong(Song song, Album album) {
         mSelectedSong = song;
-        mSongs = songs;
+        mPlayedAlbum = album;
+        mSongs = album.songs;
+    }
+
+    @Override
+    public Album getSelectedAlbum(boolean isPlaying) {
+        return isPlaying ? mPlayedAlbum : mSelectedAlbum;
+    }
+
+    @Override
+    public void setSelectedAlbum(Album album) {
+        mSelectedAlbum = album;
     }
 
     @Override

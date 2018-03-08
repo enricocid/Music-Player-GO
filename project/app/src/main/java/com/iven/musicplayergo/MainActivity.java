@@ -502,7 +502,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 } else {
                     LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
                     mAlbumsRecyclerView.setLayoutManager(horizontalLayoutManager);
-                    mAlbumsAdapter = new AlbumsAdapter(this, albumsForArtist);
+                    mAlbumsAdapter = new AlbumsAdapter(this, albumsForArtist, mPlayerAdapter);
                     mAlbumsRecyclerView.setAdapter(mAlbumsAdapter);
                 }
                 if (sExpandPanel) {
@@ -536,13 +536,13 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     @Override
-    public void onSongSelected(Song song, List<Song> songs) {
+    public void onSongSelected(Song song, Album album) {
 
         if (!mSeekBarAudio.isEnabled()) {
             mSeekBarAudio.setEnabled(true);
         }
         mSelectedSong = song;
-        mPlayerAdapter.setCurrentSong(song, songs);
+        mPlayerAdapter.setCurrentSong(song, album);
         mPlayerAdapter.play();
     }
 
@@ -551,6 +551,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         if (!mSelectedArtist.equals(artist)) {
 
+            mPlayerAdapter.setSelectedAlbum(null);
             //make the panel expandable
             sExpandPanel = true;
 
@@ -565,13 +566,16 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     @Override
     public void onAlbumSelected(Album album) {
-        if (mSongsAdapter != null) {
-            mSongsAdapter.swapSongs(album.songs);
 
+        if (mSongsAdapter != null) {
+            mSongsAdapter.swapSongs(album);
         } else {
+            if (mPlayerAdapter.getSelectedAlbum(mPlayerAdapter.isPlaying()) != null) {
+                album = mPlayerAdapter.getSelectedAlbum(mPlayerAdapter.isPlaying());
+            }
             LinearLayoutManager songsLayoutManager = new LinearLayoutManager(this);
             mSongsRecyclerView.setLayoutManager(songsLayoutManager);
-            mSongsAdapter = new SongsAdapter(this, album.songs);
+            mSongsAdapter = new SongsAdapter(this, album);
             mSongsRecyclerView.setAdapter(mSongsAdapter);
         }
     }
