@@ -27,6 +27,7 @@ import android.util.Pair;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -108,7 +109,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     @Override
     public void onPause() {
         super.onPause();
-        savedRecyclerLayoutState = mArtistsLayoutManager.onSaveInstanceState();
+        if (mArtistsLayoutManager != null) {
+            savedRecyclerLayoutState = mArtistsLayoutManager.onSaveInstanceState();
+        }
     }
 
     @Override
