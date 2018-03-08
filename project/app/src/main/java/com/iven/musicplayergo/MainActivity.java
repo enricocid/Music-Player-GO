@@ -542,7 +542,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             mSeekBarAudio.setEnabled(true);
         }
         mSelectedSong = song;
-        mPlayerAdapter.setCurrentSong(song, album);
+        mPlayerAdapter.setCurrentSong(song, album.songs);
+        mPlayerAdapter.setPlayingAlbum(album);
         mPlayerAdapter.play();
     }
 
@@ -570,8 +571,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (mSongsAdapter != null) {
             mSongsAdapter.swapSongs(album);
         } else {
-            if (mPlayerAdapter.getSelectedAlbum(mPlayerAdapter.isPlaying()) != null) {
-                album = mPlayerAdapter.getSelectedAlbum(mPlayerAdapter.isPlaying());
+            if (mPlayerAdapter.getSelectedAlbum() != null) {
+                album = mPlayerAdapter.isPlaying() ? mPlayerAdapter.getPlayingAlbum() : mPlayerAdapter.getSelectedAlbum();
             }
             LinearLayoutManager songsLayoutManager = new LinearLayoutManager(this);
             mSongsRecyclerView.setLayoutManager(songsLayoutManager);

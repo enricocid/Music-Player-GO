@@ -66,7 +66,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
         Artist artist = mAlbumsForArtist.first;
 
-        mSelectedAlbum = mPlayerAdapter != null && mPlayerAdapter.getSelectedAlbum(mPlayerAdapter.isPlaying()) != null ? mPlayerAdapter.getSelectedAlbum(mPlayerAdapter.isPlaying()) : artist.getFirstAlbum();
+        mSelectedAlbum = mPlayerAdapter != null && mPlayerAdapter.getSelectedAlbum() != null ? mPlayerAdapter.getSelectedAlbum() : artist.getFirstAlbum();
 
         mDiscs.setText(mActivity.getString(R.string.albums, artist.getName(), getItemCount()));
 
