@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.SystemClock;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -78,7 +79,7 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
     void draw(Canvas canvas) {
 
         mSections = mArtistsAdapter.getIndexes();
-        int indexBarBackgroundColor = sHidden ? Color.TRANSPARENT : Color.argb(20, Color.red(mAccent), Color.green(mAccent), Color.blue(mAccent));
+        int indexBarBackgroundColor = sHidden ? Color.TRANSPARENT : ColorUtils.setAlphaComponent(mAccent, 20);
 
         final int indexTextSize = 12;
         final int indexBarCornerRadius = 5;

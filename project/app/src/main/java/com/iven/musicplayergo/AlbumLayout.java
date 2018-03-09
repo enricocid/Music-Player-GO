@@ -14,7 +14,9 @@ class AlbumLayout extends FrameLayout {
 
     private Bitmap mOffscreenBitmap;
     private Canvas mOffscreenCanvas;
-    private BitmapShader mBitmapShader;
+
+    private Paint mCirclePaint;
+    private Paint mBorderPaint;
 
     public AlbumLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -32,24 +34,25 @@ class AlbumLayout extends FrameLayout {
     @Override
     public void draw(Canvas canvas) {
 
-        Paint circlePaint;
         if (mOffscreenBitmap == null) {
             mOffscreenBitmap = Bitmap.createBitmap(canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
             mOffscreenCanvas = new Canvas(mOffscreenBitmap);
-            mBitmapShader = new BitmapShader(mOffscreenBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+            BitmapShader mBitmapShader = new BitmapShader(mOffscreenBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+
+            mCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            mCirclePaint.setStyle(Paint.Style.FILL);
+            mCirclePaint.setShader(mBitmapShader);
+
+            mBorderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            mBorderPaint.setStyle(Paint.Style.STROKE);
+            mBorderPaint.setStrokeWidth(2);
+            mBorderPaint.setShader(null);
+            mBorderPaint.setColor(Color.parseColor(String.valueOf(getContentDescription())));
+            mBorderPaint.setAlpha(25);
         }
         super.draw(mOffscreenCanvas);
 
-        circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        circlePaint.setStyle(Paint.Style.FILL);
-        circlePaint.setShader(mBitmapShader);
-        canvas.drawCircle(canvas.getHeight() / 2, canvas.getHeight() / 2, canvas.getHeight() / 2, circlePaint);
-
-        circlePaint.setStyle(Paint.Style.STROKE);
-        circlePaint.setStrokeWidth(2);
-        circlePaint.setShader(null);
-        circlePaint.setColor(Color.parseColor(String.valueOf(getContentDescription())));
-        circlePaint.setAlpha(25);
-        canvas.drawCircle(canvas.getHeight() / 2, canvas.getHeight() / 2, canvas.getHeight() / 2 - 2, circlePaint);
+        canvas.drawCircle(canvas.getHeight() / 2, canvas.getHeight() / 2, canvas.getHeight() / 2, mCirclePaint);
+        canvas.drawCircle(canvas.getHeight() / 2, canvas.getHeight() / 2, canvas.getHeight() / 2 - 2, mBorderPaint);
     }
 }
