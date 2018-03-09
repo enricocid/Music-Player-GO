@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.iven.musicplayergo.AlbumLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="112dp"
-    android:layout_height="112dp"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="96dp"
+    android:layout_height="128dp"
     android:layout_margin="4dp"
+    android:elevation="2dp"
     android:background="?attr/card_color"
     android:contentDescription="?attr/accent_color"
     android:foreground="@drawable/ripple"
@@ -46,4 +47,4 @@
         android:textAppearance="@android:style/TextAppearance.Material.Caption"
         android:textColor="?attr/accent_color"
         android:textSize="12sp" />
-</com.iven.musicplayergo.AlbumLayout>
+</FrameLayout>
