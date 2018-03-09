@@ -28,10 +28,6 @@ public class Album {
         return getFirstSong().year;
     }
 
-    public int getSongCount() {
-        return songs.size();
-    }
-
     @NonNull
     private Song getFirstSong() {
         return songs.isEmpty() ? Song.EMPTY_SONG : songs.get(0);
