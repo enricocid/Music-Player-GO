@@ -86,8 +86,8 @@ public class MusicNotificationManager {
 
         mNotificationBuilder
                 .setShowWhen(false)
-                .setSmallIcon(R.drawable.music_circle_notification_small)
-                .setLargeIcon(getLargeIcon((VectorDrawable) mMusicService.getDrawable(R.drawable.music_circle_notification_large)))
+                .setSmallIcon(R.drawable.music_notification_small)
+                .setLargeIcon(getLargeIcon((VectorDrawable) mMusicService.getDrawable(R.drawable.music_notification_large)))
                 .setColor(mAccent)
                 .setContentTitle(spanned)
                 .setContentText(song.albumName)
@@ -109,14 +109,14 @@ public class MusicNotificationManager {
         switch (action) {
             default:
             case PREV_ACTION:
-                icon = R.drawable.ic_skip_previous_notification_24dp;
+                icon = R.drawable.ic_skip_previous_notification;
                 break;
             case PLAY_PAUSE_ACTION:
 
-                icon = mMusicService.getMediaPlayerHolder().getState() != PlaybackInfoListener.State.PAUSED ? R.drawable.ic_pause_notification_24dp : R.drawable.ic_play_arrow_notification_24dp;
+                icon = mMusicService.getMediaPlayerHolder().getState() != PlaybackInfoListener.State.PAUSED ? R.drawable.ic_pause_notification : R.drawable.ic_play_notification;
                 break;
             case NEXT_ACTION:
-                icon = R.drawable.ic_skip_next_notification_24dp;
+                icon = R.drawable.ic_skip_next_notification;
                 break;
         }
         return new NotificationCompat.Action.Builder(icon, action, playerAction(action)).build();

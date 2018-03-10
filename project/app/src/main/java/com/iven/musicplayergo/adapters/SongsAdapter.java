@@ -94,7 +94,6 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
 
         @Override
         public void onClick(View v) {
-
             Song song = mSongs.get(getAdapterPosition());
             mSongSelectedListener.onSongSelected(song, mAlbum);
         }

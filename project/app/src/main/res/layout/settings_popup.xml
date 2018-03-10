@@ -27,7 +27,7 @@
             android:foreground="@drawable/ripple"
             android:onClick="openGitPage"
             android:padding="8dp"
-            android:src="@drawable/ic_github_circle_24dp" />
+            android:src="@drawable/ic_github" />
 
         <ImageButton
             android:id="@+id/eq"
@@ -39,7 +39,7 @@
             android:foreground="@drawable/ripple"
             android:onClick="openEqualizer"
             android:padding="8dp"
-            android:src="@drawable/ic_equalizer_24dp" />
+            android:src="@drawable/ic_equalizer" />
 
         <ImageButton
             android:layout_width="0dp"

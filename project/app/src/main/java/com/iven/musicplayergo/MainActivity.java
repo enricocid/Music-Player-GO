@@ -252,7 +252,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSettingsPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                mSettingsButton.setImageResource(R.drawable.ic_settings_24dp);
+                mSettingsButton.setImageResource(R.drawable.ic_settings);
             }
         });
         mSettingsPopup.setElevation(6);
@@ -262,7 +262,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         mSettingsPopup.setAnimationStyle(android.R.style.Animation_Translucent);
         if (!mSettingsPopup.isShowing()) {
-            mSettingsButton.setImageResource(R.drawable.ic_close_24dp);
+            mSettingsButton.setImageResource(R.drawable.ic_close);
             mSettingsPopup.showAtLocation(mSettingsView, Gravity.CENTER, 0, 0);
         } else {
             mSettingsPopup.dismiss();
@@ -414,7 +414,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     private void updatePlayingStatus() {
-        int drawable = mPlayerAdapter.getState() != PlaybackInfoListener.State.PAUSED ? R.drawable.ic_pause_24dp : R.drawable.ic_play_arrow_24dp;
+        int drawable = mPlayerAdapter.getState() != PlaybackInfoListener.State.PAUSED ? R.drawable.ic_pause : R.drawable.ic_play;
         mPlayPauseButton.setImageResource(drawable);
     }
 

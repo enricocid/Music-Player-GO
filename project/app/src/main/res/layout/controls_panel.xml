@@ -25,7 +25,7 @@
             android:contentDescription="@string/app_name"
             android:onClick="reset"
             android:padding="8dp"
-            android:src="@drawable/ic_repeat_24dp" />
+            android:src="@drawable/ic_repeat" />
 
         <ImageButton
             android:layout_width="0dp"
@@ -35,7 +35,7 @@
             android:contentDescription="@string/app_name"
             android:onClick="skipPrev"
             android:padding="8dp"
-            android:src="@drawable/ic_skip_previous_24dp" />
+            android:src="@drawable/ic_skip_previous" />
 
         <ImageButton
             android:id="@+id/play_pause"
@@ -46,7 +46,7 @@
             android:contentDescription="@string/app_name"
             android:onClick="resumeOrPause"
             android:padding="8dp"
-            android:src="@drawable/ic_play_arrow_24dp" />
+            android:src="@drawable/ic_play" />
 
         <ImageButton
             android:layout_width="0dp"
@@ -56,7 +56,7 @@
             android:contentDescription="@string/app_name"
             android:onClick="skipNext"
             android:padding="8dp"
-            android:src="@drawable/ic_skip_next_24dp" />
+            android:src="@drawable/ic_skip_next" />
 
         <ImageButton
             android:id="@+id/settings"
@@ -67,7 +67,7 @@
             android:contentDescription="@string/app_name"
             android:onClick="showSettingsPopup"
             android:padding="8dp"
-            android:src="@drawable/ic_settings_24dp" />
+            android:src="@drawable/ic_settings" />
     </LinearLayout>
 
     <!-- PLAYER SEEK TO BAR -->
@@ -159,5 +159,5 @@
         android:background="@drawable/ripple"
         android:contentDescription="@string/app_name"
         android:onClick="expandPanel"
-        android:src="@drawable/ic_arrow_up_24dp" />
+        android:src="@drawable/ic_chevron_up" />
 </LinearLayout>

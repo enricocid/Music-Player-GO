@@ -18,7 +18,6 @@ class FastScrollerHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == INDEX_THUMB) {
-
                 mRecyclerView.invalidate();
             }
         }
@@ -34,7 +33,6 @@ class FastScrollerHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == INDEX_BAR) {
-
                 mFastScroller.setHidden();
             }
         }

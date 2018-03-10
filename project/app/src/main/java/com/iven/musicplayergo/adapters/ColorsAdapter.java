@@ -67,7 +67,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
 
         int color = colors[holder.getAdapterPosition()];
 
-        int drawable = color != mAccent ? R.drawable.ic_checkbox_blank_circle_24dp : R.drawable.ic_checkbox_marked_circle_24dp;
+        int drawable = color != mAccent ? R.drawable.ic_checkbox_blank : R.drawable.ic_checkbox_marked;
 
         int parsedColor = ContextCompat.getColor(mActivity, color);
         holder.color.setBackground(createRipple(mActivity, parsedColor));
@@ -98,7 +98,6 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
 
         @Override
         public void onClick(View v) {
-
             //recreate the activity only if necessary
             int color = colors[getAdapterPosition()];
             if (color != mAccent) {

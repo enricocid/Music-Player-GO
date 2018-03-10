@@ -6,7 +6,7 @@
         <item name="android:windowBackground">@color/grey_100</item>
         <item name="card_color">@color/grey_200</item>
         <item name="panel_color">@color/grey_100</item>
-        <item name="theme_icon">@drawable/ic_theme_dark_24dp</item>
+        <item name="theme_icon">@drawable/ic_theme_dark</item>
         <item name="android:navigationBarColor">@color/grey_900</item>
         <item name="android:colorEdgeEffect">?attr/accent_color</item>
         <item name="android:statusBarColor">?attr/accent_color</item>
@@ -18,7 +18,7 @@
         <item name="icon_color">@color/grey_200</item>
         <item name="card_color">@color/grey_900_darker</item>
         <item name="panel_color">@color/grey_900</item>
-        <item name="theme_icon">@drawable/ic_theme_light_24dp</item>
+        <item name="theme_icon">@drawable/ic_theme_light</item>
         <item name="android:windowBackground">@color/grey_900</item>
         <item name="android:navigationBarColor">@color/grey_900</item>
         <item name="android:colorEdgeEffect">?attr/accent_color</item>

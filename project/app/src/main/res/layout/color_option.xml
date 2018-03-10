@@ -5,4 +5,4 @@
     android:contentDescription="@string/app_name"
     android:orientation="vertical"
     android:padding="8dp"
-    android:src="@drawable/ic_checkbox_blank_circle_24dp" />
+    android:src="@drawable/ic_checkbox_blank" />
