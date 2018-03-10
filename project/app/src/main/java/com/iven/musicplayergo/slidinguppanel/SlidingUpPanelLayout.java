@@ -3,8 +3,6 @@ package com.iven.musicplayergo.slidinguppanel;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.PixelFormat;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.view.ViewCompat;
@@ -120,11 +118,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
         mDragHelper.setMinVelocity(400 * density);
     }
 
-    private static boolean hasOpaqueBackground(View v) {
-        final Drawable bg = v.getBackground();
-        return bg != null && bg.getOpacity() == PixelFormat.OPAQUE;
-    }
-
     public void setGravity(int gravity) {
         mIsSlidingUp = gravity == Gravity.BOTTOM;
         if (!mFirstLayout) {
@@ -190,50 +183,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
                     }
                 }
             });
-        }
-    }
-
-    private void updateObscuredViewVisibility() {
-        if (getChildCount() == 0) {
-            return;
-        }
-        final int leftBound = getPaddingLeft();
-        final int rightBound = getWidth() - getPaddingRight();
-        final int topBound = getPaddingTop();
-        final int bottomBound = getHeight() - getPaddingBottom();
-        final int left;
-        final int right;
-        final int top;
-        final int bottom;
-        if (mSlideView != null && hasOpaqueBackground(mSlideView)) {
-            left = mSlideView.getLeft();
-            right = mSlideView.getRight();
-            top = mSlideView.getTop();
-            bottom = mSlideView.getBottom();
-        } else {
-            left = right = top = bottom = 0;
-        }
-        View child = getChildAt(0);
-        final int clampedChildLeft = Math.max(leftBound, child.getLeft());
-        final int clampedChildTop = Math.max(topBound, child.getTop());
-        final int clampedChildRight = Math.min(rightBound, child.getRight());
-        final int clampedChildBottom = Math.min(bottomBound, child.getBottom());
-        final int vis;
-        if (clampedChildLeft >= left && clampedChildTop >= top &&
-                clampedChildRight <= right && clampedChildBottom <= bottom) {
-            vis = INVISIBLE;
-        } else {
-            vis = VISIBLE;
-        }
-        child.setVisibility(vis);
-    }
-
-    private void setAllChildrenVisible() {
-        for (int i = 0, childCount = getChildCount(); i < childCount; i++) {
-            final View child = getChildAt(i);
-            if (child.getVisibility() == INVISIBLE) {
-                child.setVisibility(VISIBLE);
-            }
         }
     }
 
@@ -379,10 +328,10 @@ public class SlidingUpPanelLayout extends ViewGroup {
         }
 
         if (mFirstLayout) {
-            updateObscuredViewVisibility();
+            mFirstLayout = false;
         }
 
-        mFirstLayout = false;
+
     }
 
     @Override
@@ -666,14 +615,12 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
     void applyDim() {
 
-        if (mSlideOffset > 0) {
-            int coveredFadeColor = 0x99000000;
-            final int baseAlpha = (coveredFadeColor & 0xff000000) >>> 24;
-            final int iMag = (int) (baseAlpha * mSlideOffset);
-            final int color = iMag << 24 | (coveredFadeColor & mDimViewColor);
-            mDimView.setBackgroundColor(color);
-            mArrowUp.setRotationX(iMag);
-        }
+        int coveredFadeColor = 0x99000000;
+        final int baseAlpha = (coveredFadeColor & 0xff000000) >>> 24;
+        final int iMag = (int) (baseAlpha * mSlideOffset);
+        final int color = iMag << 24 | (coveredFadeColor & mDimViewColor);
+        mDimView.setBackgroundColor(color);
+        mArrowUp.setRotationX(iMag);
     }
 
     /**
@@ -686,7 +633,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
         int panelTop = computePanelTopPosition(slideOffset);
 
         if (mDragHelper.smoothSlideViewTo(mSlideView, mSlideView.getLeft(), panelTop)) {
-            setAllChildrenVisible();
             ViewCompat.postInvalidateOnAnimation(this);
         }
     }
@@ -698,7 +644,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
                 mDragHelper.abort();
                 return;
             }
-
             ViewCompat.postInvalidateOnAnimation(this);
         }
     }
@@ -795,7 +740,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
         public void onViewDragStateChanged(int state) {
             if (mDragHelper != null && mDragHelper.getViewDragState() == ViewDragHelper.STATE_IDLE) {
                 mSlideOffset = computeSlideOffset(mSlideView.getTop());
-
                 if (mSlideOffset == 1) {
                     setPanelStateInternal(PanelState.EXPANDED);
                 } else {
