@@ -560,9 +560,10 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         if (!mSelectedArtist.equals(artist)) {
 
-            mPlayerAdapter.setSelectedAlbum(null);
             //make the panel expandable
             sExpandPanel = true;
+
+            mPlayerAdapter.setSelectedAlbum(null);
 
             //load artist albums only if not already loaded
             mSelectedArtist = artist;
@@ -579,9 +580,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (mSongsAdapter != null) {
             mSongsAdapter.swapSongs(album);
         } else {
-            if (mPlayerAdapter.getSelectedAlbum() != null) {
-                album = mPlayerAdapter.isPlaying() ? mPlayerAdapter.getPlayingAlbum() : mPlayerAdapter.getSelectedAlbum();
-            }
             LinearLayoutManager songsLayoutManager = new LinearLayoutManager(this);
             mSongsRecyclerView.setLayoutManager(songsLayoutManager);
             mSongsAdapter = new SongsAdapter(this, album);
