@@ -117,6 +117,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (mArtistsLayoutManager != null) {
             savedRecyclerLayoutState = mArtistsLayoutManager.onSaveInstanceState();
         }
+        if (mSettingsPopup.isShowing()) {
+            mSettingsPopup.dismiss();
+        }
     }
 
     @Override
