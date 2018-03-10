@@ -766,10 +766,9 @@ public class SlidingUpPanelLayout extends ViewGroup {
             // direction is always positive if we are sliding in the expanded direction
             float direction = mIsSlidingUp ? -yVel : yVel;
 
-            if (direction > 0 && mSlideOffset <= anchorPoint / 2) {
-                target = computePanelTopPosition(0.0f);
+            if (direction > 0 && mSlideOffset <= anchorPoint) {
                 // swipe up -> expand and stop at anchor point
-                // target = computePanelTopPosition(anchorPoint);
+                target = computePanelTopPosition(anchorPoint);
             } else if (direction > 0 && mSlideOffset > anchorPoint) {
                 // swipe up past anchor -> expand
                 target = computePanelTopPosition(1.0f);
