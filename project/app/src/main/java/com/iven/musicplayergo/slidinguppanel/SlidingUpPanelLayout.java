@@ -611,12 +611,15 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
     void applyDim() {
 
-        int coveredFadeColor = 0x99000000;
-        final int baseAlpha = (coveredFadeColor & 0xff000000) >>> 24;
-        final int iMag = (int) (baseAlpha * mSlideOffset);
-        final int color = iMag << 24 | (coveredFadeColor & mDimViewColor);
-        mDimView.setBackgroundColor(color);
-        mArrowUp.setRotationX(iMag);
+        if (mSlideOffset > 0) {
+            int coveredFadeColor = 0x99000000;
+            final int baseAlpha = (coveredFadeColor & 0xff000000) >>> 24;
+            final int iMag = (int) (baseAlpha * mSlideOffset);
+            final int color = iMag << 24 | (coveredFadeColor & mDimViewColor);
+            mDimView.setBackgroundColor(color);
+            int rotationX = (int) (180 * mSlideOffset);
+            mArrowUp.setRotationX(rotationX);
+        }
     }
 
     /**
