@@ -37,17 +37,6 @@
             android:src="@drawable/ic_equalizer_24dp" />
 
         <ImageButton
-            android:id="@+id/immersive"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/ripple"
-            android:contentDescription="@string/app_name"
-            android:onClick="immersePlayer"
-            android:padding="4dp"
-            android:src="@drawable/ic_fullscreen_24dp" />
-
-        <ImageButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

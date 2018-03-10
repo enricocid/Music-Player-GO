@@ -73,7 +73,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private LinearLayout mControlsContainer;
     private View mSettingsView;
     private SlidingUpPanelLayout mSlidingUpPanel;
-    private ImageButton mPlayPauseButton, mResetButton, mImmersiveButton, mEqButton, mArrowUp, mSettingsButton;
+    private ImageButton mPlayPauseButton, mResetButton, mEqButton, mArrowUp, mSettingsButton;
     private boolean sThemeDark;
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
@@ -138,11 +138,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         }
     }
 
-    private void setImmersiveDrawable(boolean isImmersive) {
-        int immersiveDrawable = isImmersive ? R.drawable.ic_fullscreen_exit_24dp : R.drawable.ic_fullscreen_24dp;
-        mImmersiveButton.setImageResource(immersiveDrawable);
-    }
-
     private void checkReadStoragePermissions() {
         if (AndroidVersion.isMarshmallow()) {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -174,26 +169,17 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         sThemeDark = SettingsUtils.isThemeDark(this);
         mAccent = SettingsUtils.getAccent(this);
 
-        boolean isImmersive = SettingsUtils.isImmersive(this);
-
         SettingsUtils.setTheme(this, sThemeDark, mAccent);
 
         setContentView(R.layout.main_activity);
 
         getViews();
 
-        if (isImmersive) {
-            SettingsUtils.toggleHideyBar(this, true);
-            setImmersiveDrawable(true);
-        }
-
         getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(
                 new View.OnSystemUiVisibilityChangeListener() {
                     @Override
                     public void onSystemUiVisibilityChange(int visibility) {
-                        boolean isImmersive = (visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) != 0;
-                        setImmersiveDrawable(isImmersive);
-                        if (!isImmersive && AndroidVersion.isMarshmallow()) {
+                        if (AndroidVersion.isMarshmallow()) {
                             //check light status bar if immersive mode is disabled
                             SettingsUtils.enableLightStatusBar(MainActivity.this, ContextCompat.getColor(MainActivity.this, mAccent));
                         }
@@ -235,7 +221,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         mSettingsView = LayoutInflater.from(this).inflate(R.layout.settings_popup, null);
 
-        mImmersiveButton = mSettingsView.findViewById(R.id.immersive);
         mEqButton = mSettingsView.findViewById(R.id.eq);
     }
 
@@ -406,11 +391,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         SettingsUtils.setThemeDark(MainActivity.this);
     }
 
-    public void immersePlayer(View v) {
-        mArtistsRecyclerView.setVisibilityChanged();
-        SettingsUtils.toggleHideyBar(MainActivity.this, false);
-    }
-
     private void initializeColorsSettings() {
 
         RecyclerView colorsRecyclerView = mSettingsView.findViewById(R.id.colors_rv);
@@ -551,15 +531,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     @Override
     public void onLoaderReset(@NonNull Loader loader) {
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-
-        boolean isImmersive = SettingsUtils.isImmersive(this);
-        if (hasFocus && isImmersive) {
-            SettingsUtils.toggleHideyBar(this, true);
-        }
     }
 
     @Override

@@ -16,11 +16,8 @@ public class SettingsUtils {
     private static final String ACCENT_PREF = "com.iven.musicplayergo.pref_theme";
     private static final String ACCENT_VALUE = "com.iven.musicplayergo.pref_value";
     private static final String THEME_VALUE_DARK = "com.iven.musicplayergo.pref_value_dark";
-    private static final String IMMERSIVE_PREF = "com.iven.musicplayergo.pref_immersive";
-    private static final String IMMERSIVE_VALUE = "com.iven.musicplayergo.pref_value_immersive";
 
     public static void setThemeDark(Activity activity) {
-
         boolean isDark = isThemeDark(activity);
         boolean value = !isDark;
         SharedPreferences preferences = activity.getSharedPreferences(THEME_PREF_DARK, Context.MODE_PRIVATE);
@@ -60,54 +57,6 @@ public class SettingsUtils {
 
     public static boolean isThemeDark(Activity activity) {
         return activity.getSharedPreferences(THEME_PREF_DARK, Context.MODE_PRIVATE).getBoolean(THEME_VALUE_DARK, false);
-    }
-
-    private static void setImmersive(Activity activity, boolean isImmersive) {
-
-        SharedPreferences preferences = activity.getSharedPreferences(IMMERSIVE_PREF, Context.MODE_PRIVATE);
-        preferences.edit().putBoolean(IMMERSIVE_VALUE, isImmersive).apply();
-    }
-
-    public static boolean isImmersive(Activity activity) {
-        return activity.getSharedPreferences(IMMERSIVE_PREF, Context.MODE_PRIVATE).getBoolean(IMMERSIVE_VALUE, false);
-    }
-
-    public static void toggleHideyBar(Activity activity, boolean onCreateOrFocusChanged) {
-
-        if (onCreateOrFocusChanged) {
-
-            applyImmersiveModeOnResume(activity);
-
-        } else {
-
-            int uiOptions = activity.getWindow().getDecorView().getSystemUiVisibility();
-            uiOptions ^= View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-            uiOptions ^= View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
-            uiOptions ^= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-            uiOptions ^= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-
-            uiOptions ^= View.SYSTEM_UI_FLAG_FULLSCREEN;
-            uiOptions ^= View.SYSTEM_UI_FLAG_IMMERSIVE;
-            uiOptions ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-            activity.getWindow().getDecorView().setSystemUiVisibility(uiOptions);
-            setImmersive(activity, (uiOptions & View.SYSTEM_UI_FLAG_FULLSCREEN) != 0);
-        }
-    }
-
-    private static void applyImmersiveModeOnResume(Activity activity) {
-
-        activity.getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE
-
-                        //Sticky flag - This is the UI you see if you use the IMMERSIVE_STICKY flag, and the user
-                        //swipes to display the system bars. Semi-transparent bars temporarily appear
-                        //and then hide again
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
 
     public static void setThemeAccent(Activity activity, int accent) {
