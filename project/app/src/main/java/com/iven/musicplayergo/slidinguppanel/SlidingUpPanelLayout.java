@@ -125,10 +125,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
         }
     }
 
-    private boolean isTouchEnabled() {
-        return mSlideView != null;
-    }
-
     /**
      * Set the collapsed panel height in pixels
      *
@@ -175,7 +171,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
             mDragView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!isEnabled() || !isTouchEnabled()) return;
+                    if (!isEnabled()) return;
                     if (mSlideState != PanelState.EXPANDED) {
                         setPanelState(PanelState.EXPANDED);
                     } else {
@@ -346,7 +342,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         // If the scrollable view is handling touch, never intercept
-        if (mIsScrollableViewHandlingTouch || !isTouchEnabled()) {
+        if (mIsScrollableViewHandlingTouch) {
             mDragHelper.abort();
             return false;
         }
@@ -398,7 +394,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
     @Override
     @SuppressLint("ClickableViewAccessibility")
     public boolean onTouchEvent(MotionEvent ev) {
-        if (!isEnabled() || !isTouchEnabled()) {
+        if (!isEnabled()) {
             return super.onTouchEvent(ev);
         }
         try {
@@ -414,7 +410,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
     public boolean dispatchTouchEvent(MotionEvent ev) {
         final int action = ev.getAction();
 
-        if (!isEnabled() || !isTouchEnabled() || (mIsUnableToDrag && action != MotionEvent.ACTION_DOWN)) {
+        if (!isEnabled() || (mIsUnableToDrag && action != MotionEvent.ACTION_DOWN)) {
             mDragHelper.abort();
             return super.dispatchTouchEvent(ev);
         }
@@ -733,7 +729,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
         @Override
         public boolean tryCaptureView(View child, int pointerId) {
             return !mIsUnableToDrag && child == mSlideView;
-
         }
 
         @Override
@@ -745,7 +740,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
                 } else {
                     setPanelStateInternal(PanelState.COLLAPSED);
                 }
-
             }
         }
 
@@ -769,9 +763,10 @@ public class SlidingUpPanelLayout extends ViewGroup {
             // direction is always positive if we are sliding in the expanded direction
             float direction = mIsSlidingUp ? -yVel : yVel;
 
-            if (direction > 0 && mSlideOffset <= anchorPoint) {
+            if (direction > 0 && mSlideOffset <= anchorPoint / 2) {
+                target = computePanelTopPosition(0.0f);
                 // swipe up -> expand and stop at anchor point
-                target = computePanelTopPosition(anchorPoint);
+                // target = computePanelTopPosition(anchorPoint);
             } else if (direction > 0 && mSlideOffset > anchorPoint) {
                 // swipe up past anchor -> expand
                 target = computePanelTopPosition(1.0f);
