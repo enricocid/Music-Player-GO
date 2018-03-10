@@ -1,6 +1,5 @@
 package com.iven.musicplayergo.utils;
 
-import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -8,9 +7,6 @@ import android.content.SharedPreferences;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
 import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.animation.TranslateAnimation;
-import android.widget.ImageButton;
 
 import com.iven.musicplayergo.R;
 
@@ -22,100 +18,6 @@ public class SettingsUtils {
     private static final String THEME_VALUE_DARK = "com.iven.musicplayergo.pref_value_dark";
     private static final String IMMERSIVE_PREF = "com.iven.musicplayergo.pref_immersive";
     private static final String IMMERSIVE_VALUE = "com.iven.musicplayergo.pref_value_immersive";
-    private static int ANIMATION_DURATION = 500;
-
-    // slide up or down the view from the current position
-    private static void slideUpOrDown(View view, boolean show) {
-        if (show) {
-            view.setVisibility(View.VISIBLE);
-        }
-        int fromYdelta = show ? view.getHeight() : 0;
-        int toYdelta = show ? 0 : view.getHeight();
-        TranslateAnimation animate = new TranslateAnimation(
-                0,                 // fromXDelta
-                0,                 // toXDelta
-                fromYdelta,  // fromYDelta
-                toYdelta);                // toYDelta
-        animate.setDuration(ANIMATION_DURATION);
-        animate.setFillAfter(true);
-        view.startAnimation(animate);
-    }
-
-    public static void openOrCloseSettings(final View controlsContainer, boolean show) {
-
-        final View controlsInfoContainer = controlsContainer.findViewById(R.id.controls_info_container);
-        final View settingsContainer = controlsContainer.findViewById(R.id.settings_container);
-
-        final View settings = controlsContainer.findViewById(R.id.settings_view);
-        final View colorsSettings = controlsContainer.findViewById(R.id.colors_rv);
-
-        final ImageButton toSettingsButton = controlsContainer.findViewById(R.id.toSettings);
-        final ImageButton closeSettingsButton = controlsContainer.findViewById(R.id.closeSettings);
-
-        int settingsHeight = settings.getHeight();
-        int settingsWidth = settings.getWidth();
-        int radius = (int) Math.hypot(settingsWidth, settingsHeight);
-
-        if (show) {
-
-            Animator anim = ViewAnimationUtils.createCircularReveal(settings, settings.getRight(), settingsHeight / 2, 0, radius);
-
-            anim.setDuration(ANIMATION_DURATION);
-
-            anim.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animator) {
-
-                    toSettingsButton.setClickable(false);
-                    settings.setVisibility(View.VISIBLE);
-                    settingsContainer.bringToFront();
-                    slideUpOrDown(colorsSettings, true);
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                    closeSettingsButton.setClickable(true);
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animator) {
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animator) {
-                }
-            });
-            anim.start();
-
-        } else {
-
-            Animator anim = ViewAnimationUtils.createCircularReveal(settings, settings.getRight(), settingsHeight / 2, radius, 0);
-            anim.setDuration(ANIMATION_DURATION);
-            anim.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animator) {
-                    closeSettingsButton.setClickable(false);
-                    slideUpOrDown(colorsSettings, false);
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                    toSettingsButton.setClickable(true);
-                    colorsSettings.setVisibility(View.INVISIBLE);
-                    controlsInfoContainer.bringToFront();
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animator) {
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animator) {
-                }
-            });
-            anim.start();
-        }
-    }
 
     public static void setThemeDark(Activity activity) {
 

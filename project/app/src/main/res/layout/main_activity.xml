@@ -8,8 +8,14 @@
     tools:context="com.iven.musicplayergo.MainActivity">
 
     <!-- ARTISTS LAYOUT -->
-    <include layout="@layout/artists_list" />
+    <com.iven.musicplayergo.fastscroller.FastScrollerRecyclerView
+        android:id="@+id/artists_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.iven.musicplayergo.MainActivity" />
+
 
     <!-- SLIDING LAYOUT -->
     <include layout="@layout/sliding_panel" />
+
 </com.iven.musicplayergo.slidinguppanel.SlidingUpPanelLayout>

@@ -58,7 +58,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
     public SimpleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.color_item, parent, false);
+                .inflate(R.layout.color_option, parent, false);
         return new SimpleViewHolder(itemView);
     }
 

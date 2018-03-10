@@ -3,5 +3,6 @@
     <attr name="accent_color" format="color" />
     <attr name="icon_color" format="color" />
     <attr name="card_color" format="color" />
+    <attr name="panel_color" format="color" />
     <attr name="theme_icon" format="reference" />
 </resources>

@@ -3,9 +3,9 @@
     android:layout_width="96dp"
     android:layout_height="128dp"
     android:layout_margin="4dp"
-    android:elevation="2dp"
     android:background="?attr/card_color"
     android:contentDescription="?attr/accent_color"
+    android:elevation="2dp"
     android:foreground="@drawable/ripple"
     android:orientation="vertical">
 

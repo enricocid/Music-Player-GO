@@ -19,17 +19,19 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Pair;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,7 +61,6 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks, SongsAdapter.songSelectedListener, ColorsAdapter.onAccentChangedListener, AlbumsAdapter.albumSelectedListener, ArtistsAdapter.artistSelectedListener {
 
-
     LinearLayoutManager mArtistsLayoutManager;
     ArtistsAdapter mArtistsAdapter;
     private int mAccent;
@@ -70,8 +71,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private TextView mPlayingAlbum, mPlayingSong, mDuration, mSongPosition;
     private SeekBar mSeekBarAudio;
     private LinearLayout mControlsContainer;
+    private View mSettingsView;
     private SlidingUpPanelLayout mSlidingUpPanel;
-    private ImageButton mPlayPauseButton, mResetButton, mImmersiveButton;
+    private ImageButton mPlayPauseButton, mResetButton, mImmersiveButton, mEqButton, mArrowUp, mSettingsButton;
     private boolean sThemeDark;
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
@@ -84,6 +86,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private boolean mIsBound;
 
     private Parcelable savedRecyclerLayoutState;
+
+    private PopupWindow mSettingsPopup;
+
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -134,9 +139,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     private void setImmersiveDrawable(boolean isImmersive) {
-
-        int drawable = isImmersive ? R.drawable.ic_fullscreen_exit_24dp : R.drawable.ic_fullscreen_24dp;
-        mImmersiveButton.setImageResource(drawable);
+        int immersiveDrawable = isImmersive ? R.drawable.ic_fullscreen_exit_24dp : R.drawable.ic_fullscreen_24dp;
+        mImmersiveButton.setImageResource(immersiveDrawable);
     }
 
     private void checkReadStoragePermissions() {
@@ -178,6 +182,11 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         getViews();
 
+        if (isImmersive) {
+            SettingsUtils.toggleHideyBar(this, true);
+            setImmersiveDrawable(true);
+        }
+
         getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(
                 new View.OnSystemUiVisibilityChangeListener() {
                     @Override
@@ -191,16 +200,12 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                     }
                 });
 
-        if (isImmersive) {
-            SettingsUtils.toggleHideyBar(this, true);
-            setImmersiveDrawable(true);
-        }
-
-        mSlidingUpPanel.setScrollableView(mSongsRecyclerView);
+        mSlidingUpPanel.setSlidingUpPanel(mSongsRecyclerView, mArtistsRecyclerView, mArrowUp);
         mSlidingUpPanel.setGravity(Gravity.BOTTOM);
-        setSlidingUpPanelHeight();
 
-        initializeColorsSettings();
+        initializeSettings();
+
+        setSlidingUpPanelHeight();
 
         initializeSeekBar();
 
@@ -213,16 +218,10 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         mControlsContainer = findViewById(R.id.controls_container);
 
+        mArrowUp = findViewById(R.id.arrow_up);
         mPlayPauseButton = findViewById(R.id.play_pause);
         mResetButton = findViewById(R.id.replay);
-
-        ImageButton eqButton = findViewById(R.id.eq);
-        if (!EqualizerUtils.hasEqualizer(this)) {
-            mControlsContainer.removeView(eqButton);
-        }
-
-        mImmersiveButton = findViewById(R.id.immersive);
-
+        mSettingsButton = findViewById(R.id.settings);
         mSeekBarAudio = findViewById(R.id.seekTo);
 
         mPlayingSong = findViewById(R.id.playing_song);
@@ -233,6 +232,11 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mArtistsRecyclerView = findViewById(R.id.artists_rv);
         mAlbumsRecyclerView = findViewById(R.id.albums_rv);
         mSongsRecyclerView = findViewById(R.id.songs_rv);
+
+        mSettingsView = LayoutInflater.from(this).inflate(R.layout.settings_popup, null);
+
+        mImmersiveButton = mSettingsView.findViewById(R.id.immersive);
+        mEqButton = mSettingsView.findViewById(R.id.eq);
     }
 
     private void setSlidingUpPanelHeight() {
@@ -245,6 +249,36 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 mControlsContainer.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
+    }
+
+    private void initializeSettings() {
+        if (!EqualizerUtils.hasEqualizer(this)) {
+            mControlsContainer.removeView(mEqButton);
+        }
+
+        initializeColorsSettings();
+
+        mSettingsPopup = new PopupWindow(mSettingsView, LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT, true); // Creation of popup
+        mSettingsPopup.setOutsideTouchable(true);
+        mSettingsPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                mSettingsButton.setImageResource(R.drawable.ic_settings_24dp);
+            }
+        });
+        mSettingsPopup.setElevation(6);
+    }
+
+    public void showSettingsPopup(View v) {
+
+        mSettingsPopup.setAnimationStyle(android.R.style.Animation_Translucent);
+        if (!mSettingsPopup.isShowing()) {
+            mSettingsButton.setImageResource(R.drawable.ic_close_24dp);
+            mSettingsPopup.showAtLocation(mSettingsView, Gravity.CENTER, 0, 0);
+        } else {
+            mSettingsPopup.dismiss();
+        }
     }
 
     private void setScrollerIfRecyclerViewScrollable() {
@@ -348,6 +382,11 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         }
     }
 
+    public void expandPanel(View v) {
+        SlidingUpPanelLayout.PanelState panelState = mSlidingUpPanel.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED ? SlidingUpPanelLayout.PanelState.EXPANDED : SlidingUpPanelLayout.PanelState.COLLAPSED;
+        mSlidingUpPanel.setPanelState(panelState);
+    }
+
     private boolean checkIsPlayer() {
 
         boolean isPlayer = mPlayerAdapter.isMediaPlayer();
@@ -355,10 +394,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             EqualizerUtils.notifyNoSessionId(MainActivity.this);
         }
         return isPlayer;
-    }
-
-    public void openSettings(View v) {
-        SettingsUtils.openOrCloseSettings(mControlsContainer, true);
     }
 
     public void invertUI(View v) {
@@ -371,10 +406,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         SettingsUtils.setThemeDark(MainActivity.this);
     }
 
-    public void closeSettings(View v) {
-        SettingsUtils.openOrCloseSettings(mControlsContainer, false);
-    }
-
     public void immersePlayer(View v) {
         mArtistsRecyclerView.setVisibilityChanged();
         SettingsUtils.toggleHideyBar(MainActivity.this, false);
@@ -382,8 +413,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private void initializeColorsSettings() {
 
-        RecyclerView colorsRecyclerView = findViewById(R.id.colors_rv);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView colorsRecyclerView = mSettingsView.findViewById(R.id.colors_rv);
+        LinearLayoutManager linearLayoutManager = new GridLayoutManager(this, 5);
         colorsRecyclerView.setLayoutManager(linearLayoutManager);
         colorsRecyclerView.setAdapter(new ColorsAdapter(this, mAccent));
     }

@@ -3,10 +3,7 @@ package com.iven.musicplayergo.slidinguppanel;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.PixelFormat;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -17,6 +14,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 public class SlidingUpPanelLayout extends ViewGroup {
 
@@ -28,12 +26,9 @@ public class SlidingUpPanelLayout extends ViewGroup {
      * Default initial state for the component
      */
     private static final PanelState DEFAULT_SLIDE_STATE = PanelState.COLLAPSED;
-    /**
-     * The paint used to dim the main layout when sliding
-     */
-    private final Paint mCoveredFadePaint = new Paint();
+
     private final ViewDragHelper mDragHelper;
-    private final Rect mTmpRect = new Rect();
+
     private final RecyclerViewHelper mScrollableViewHelper = new RecyclerViewHelper();
     /**
      * The size of the overhang in pixels.
@@ -47,6 +42,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
      * If provided, the panel can be dragged by only this view. Otherwise, the entire panel can be
      * used for dragging.
      */
+
     private View mDragView;
     /**
      * If provided, the panel will transfer the scroll from this view to itself when needed.
@@ -95,6 +91,11 @@ public class SlidingUpPanelLayout extends ViewGroup {
      */
     private boolean mFirstLayout = true;
 
+    private View mDimView;
+    private int mDimViewColor;
+
+    private ImageButton mArrowUp;
+
     public SlidingUpPanelLayout(Context context) {
         this(context, null);
     }
@@ -125,9 +126,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
     }
 
     public void setGravity(int gravity) {
-        if (gravity != Gravity.TOP && gravity != Gravity.BOTTOM) {
-            throw new IllegalArgumentException("gravity must be set to either top or bottom");
-        }
         mIsSlidingUp = gravity == Gravity.BOTTOM;
         if (!mFirstLayout) {
             requestLayout();
@@ -154,6 +152,13 @@ public class SlidingUpPanelLayout extends ViewGroup {
             smoothToBottom();
             invalidate();
         }
+    }
+
+    public void setSlidingUpPanel(RecyclerView scrollableView, View dimView, ImageButton arrowUp) {
+        mScrollableView = scrollableView;
+        mArrowUp = arrowUp;
+        mDimView = dimView;
+        mDimViewColor = mDimView.getSolidColor();
     }
 
     private void smoothToBottom() {
@@ -186,17 +191,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
                 }
             });
         }
-    }
-
-
-    /**
-     * Set the scrollable child of the sliding layout. If set, scrolling will be transferred between
-     * the panel and the view when necessary
-     *
-     * @param scrollableView The scrollable view
-     */
-    public void setScrollableView(RecyclerView scrollableView) {
-        mScrollableView = scrollableView;
     }
 
     private void updateObscuredViewVisibility() {
@@ -667,43 +661,19 @@ public class SlidingUpPanelLayout extends ViewGroup {
             lp.height = LayoutParams.MATCH_PARENT;
             mMainView.requestLayout();
         }
+        applyDim();
     }
 
-    @Override
-    protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
-        boolean result;
-        final int save = canvas.save(Canvas.ALL_SAVE_FLAG);
+    void applyDim() {
 
-        if (mSlideView != null && mSlideView != child) { // if main view
-            // Clip against the slider; no sense drawing what will immediately be covered,
-            // Unless the panel is set to overlay content
-            canvas.getClipBounds(mTmpRect);
-
-            if (mIsSlidingUp) {
-                mTmpRect.bottom = Math.min(mTmpRect.bottom, mSlideView.getTop());
-            } else {
-                mTmpRect.top = Math.max(mTmpRect.top, mSlideView.getBottom());
-            }
-
-            canvas.clipRect(mTmpRect);
-
-            result = super.drawChild(canvas, child, drawingTime);
-
-            int coveredColor = 0x99000000;
-            if (mSlideOffset > 0) {
-                final int baseAlpha = (coveredColor & 0xff000000) >>> 24;
-                final int iMag = (int) (baseAlpha * mSlideOffset);
-                final int color = iMag << 24 | (coveredColor & 0xffffff);
-                mCoveredFadePaint.setColor(color);
-                canvas.drawRect(mTmpRect, mCoveredFadePaint);
-            }
-        } else {
-            result = super.drawChild(canvas, child, drawingTime);
+        if (mSlideOffset > 0) {
+            int coveredFadeColor = 0x99000000;
+            final int baseAlpha = (coveredFadeColor & 0xff000000) >>> 24;
+            final int iMag = (int) (baseAlpha * mSlideOffset);
+            final int color = iMag << 24 | (coveredFadeColor & mDimViewColor);
+            mDimView.setBackgroundColor(color);
+            mArrowUp.setRotationX(iMag);
         }
-
-        canvas.restoreToCount(save);
-
-        return result;
     }
 
     /**
@@ -827,17 +797,16 @@ public class SlidingUpPanelLayout extends ViewGroup {
                 mSlideOffset = computeSlideOffset(mSlideView.getTop());
 
                 if (mSlideOffset == 1) {
-                    updateObscuredViewVisibility();
                     setPanelStateInternal(PanelState.EXPANDED);
                 } else {
                     setPanelStateInternal(PanelState.COLLAPSED);
                 }
+
             }
         }
 
         @Override
         public void onViewCaptured(View capturedChild, int activePointerId) {
-            setAllChildrenVisible();
         }
 
         @Override

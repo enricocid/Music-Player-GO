@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settings_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/card_color"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- OPTIONS -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/ripple"
+            android:contentDescription="@string/app_name"
+            android:onClick="openGitPage"
+            android:padding="4dp"
+            android:src="@drawable/ic_github_circle_24dp" />
+
+        <ImageButton
+            android:id="@+id/eq"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/ripple"
+            android:contentDescription="@string/app_name"
+            android:onClick="openEqualizer"
+            android:padding="4dp"
+            android:src="@drawable/ic_equalizer_24dp" />
+
+        <ImageButton
+            android:id="@+id/immersive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/ripple"
+            android:contentDescription="@string/app_name"
+            android:onClick="immersePlayer"
+            android:padding="4dp"
+            android:src="@drawable/ic_fullscreen_24dp" />
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/ripple"
+            android:contentDescription="@string/app_name"
+            android:onClick="invertUI"
+            android:padding="4dp"
+            android:src="?attr/theme_icon" />
+    </LinearLayout>
+
+    <!-- COLORS OPTIONS -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/colors_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context="com.iven.musicplayergo.MainActivity" />
+</LinearLayout>

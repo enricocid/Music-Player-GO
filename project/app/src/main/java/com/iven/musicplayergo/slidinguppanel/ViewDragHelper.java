@@ -755,6 +755,7 @@ class ViewDragHelper {
 
             case MotionEvent.ACTION_MOVE: {
                 if (mDragState == STATE_DRAGGING) {
+
                     final int index = ev.findPointerIndex(mActivePointerId);
                     final float x = ev.getX(index);
                     final float y = ev.getY(index);
