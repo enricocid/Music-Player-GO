@@ -6,7 +6,10 @@
     android:layout_height="match_parent"
     android:background="?attr/card_color"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:paddingBottom="16dp"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp"
+    android:paddingTop="8dp">
 
     <!-- OPTIONS -->
     <LinearLayout
@@ -19,10 +22,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/ripple"
+            android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
+            android:foreground="@drawable/ripple"
             android:onClick="openGitPage"
-            android:padding="4dp"
+            android:padding="8dp"
             android:src="@drawable/ic_github_circle_24dp" />
 
         <ImageButton
@@ -30,20 +34,22 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/ripple"
+            android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
+            android:foreground="@drawable/ripple"
             android:onClick="openEqualizer"
-            android:padding="4dp"
+            android:padding="8dp"
             android:src="@drawable/ic_equalizer_24dp" />
 
         <ImageButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/ripple"
+            android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
+            android:foreground="@drawable/ripple"
             android:onClick="invertUI"
-            android:padding="4dp"
+            android:padding="8dp"
             android:src="?attr/theme_icon" />
     </LinearLayout>
 
