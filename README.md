@@ -8,7 +8,7 @@
 
 ### Very slim music player (~1000KB)
 
-### Current version: 2.1.3 (beta)
+### Current version: 2.2 (beta)
 
 
 
@@ -20,7 +20,7 @@ https://plus.google.com/+JulianGomezAxinen
 
 
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art10.png)
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art11.png)
 
 <a href="https://play.google.com/apps/testing/com.iven.musicplayergo" target="_blank">
   <img alt="Get it on Google Play"
@@ -42,10 +42,9 @@ https://plus.google.com/+JulianGomezAxinen
 ### Open settings directly from UI. Available settings: 
 
 - Equalizer;
-- Immersive Mode;
 - UI inversion;
-- UI accents;
 - Link to git page;
+- UI accents;
 
 
 ### Minimal code:
@@ -57,7 +56,7 @@ https://plus.google.com/+JulianGomezAxinen
   - Android Support Library v4;
   - RecyclerView v7;
 
-  - Sliding up panel by @umano opportunely modified by Me (https://github.com/umano/AndroidSlidingUpPanel) (lightened and with deprecated methods replaced);
+  - Sliding up panel by @umano opportunely modified by Me (https://github.com/umano/AndroidSlidingUpPanel) (animated arrow indicator, lightened and with deprecated methods replaced);
   - Alphabetic Index Fast Scroller by @myinnos opportunely modified by Me to be shown/hidden on RecyclerView's scroll (https://github.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView);
 
 ### Other features: 
