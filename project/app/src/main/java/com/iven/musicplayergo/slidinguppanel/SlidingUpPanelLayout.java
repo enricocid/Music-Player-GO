@@ -3,6 +3,8 @@ package com.iven.musicplayergo.slidinguppanel;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.view.ViewCompat;
@@ -28,6 +30,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
     private final ViewDragHelper mDragHelper;
 
     private final RecyclerViewHelper mScrollableViewHelper = new RecyclerViewHelper();
+    private final Rect mTmpRect = new Rect();
     /**
      * The size of the overhang in pixels.
      */
@@ -68,7 +71,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
      * How far in pixels the sliding panel may move.
      */
     private int mSlideRange;
-
     /**
      * A panel view is locked into internal scrolling or another condition that
      * is preventing a drag.
@@ -88,7 +90,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
      * instance state save/restore.
      */
     private boolean mFirstLayout = true;
-
     private View mDimView;
     private int mDimViewColor;
 
@@ -606,11 +607,9 @@ public class SlidingUpPanelLayout extends ViewGroup {
             lp.height = LayoutParams.MATCH_PARENT;
             mMainView.requestLayout();
         }
-        applyDim();
     }
 
     void applyDim() {
-
         if (mSlideOffset > 0) {
             int coveredFadeColor = 0x99000000;
             final int baseAlpha = (coveredFadeColor & 0xff000000) >>> 24;
@@ -620,6 +619,36 @@ public class SlidingUpPanelLayout extends ViewGroup {
             int rotationX = (int) (180 * mSlideOffset);
             mArrowUp.setRotationX(rotationX);
         }
+    }
+
+    @Override
+    protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
+        boolean result;
+        final int save = canvas.save(Canvas.ALL_SAVE_FLAG);
+
+        if (mSlideView != null && mSlideView != child) { // if main view
+            // Clip against the slider; no sense drawing what will immediately be covered,
+            // Unless the panel is set to overlay content
+            canvas.getClipBounds(mTmpRect);
+
+            if (mIsSlidingUp) {
+                mTmpRect.bottom = Math.min(mTmpRect.bottom, mSlideView.getTop());
+            } else {
+                mTmpRect.top = Math.max(mTmpRect.top, mSlideView.getBottom());
+            }
+
+            canvas.clipRect(mTmpRect);
+
+            result = super.drawChild(canvas, child, drawingTime);
+            applyDim();
+
+        } else {
+            result = super.drawChild(canvas, child, drawingTime);
+        }
+
+        canvas.restoreToCount(save);
+
+        return result;
     }
 
     /**
