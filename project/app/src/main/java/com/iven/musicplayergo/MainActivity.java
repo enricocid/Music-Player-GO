@@ -183,7 +183,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                     @Override
                     public void onSystemUiVisibilityChange(int visibility) {
                         if (AndroidVersion.isMarshmallow()) {
-                            //check light status bar if immersive mode is disabled
+                            //check light status bar
                             SettingsUtils.enableLightStatusBar(MainActivity.this, ContextCompat.getColor(MainActivity.this, mAccent));
                         }
                     }
