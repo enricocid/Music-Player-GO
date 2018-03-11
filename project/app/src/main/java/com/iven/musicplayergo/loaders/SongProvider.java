@@ -40,7 +40,7 @@ class SongProvider {
         List<Song> songs = new ArrayList<>();
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                if (getSongFromCursorImpl(cursor).duration >= 1000) {
+                if (getSongFromCursorImpl(cursor).duration >= 5000) {
                     songs.add(getSongFromCursorImpl(cursor));
                 }
             } while (cursor.moveToNext());
