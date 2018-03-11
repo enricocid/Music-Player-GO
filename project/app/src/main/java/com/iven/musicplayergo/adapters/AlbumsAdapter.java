@@ -127,7 +127,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
     class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView title, year, count;
+        TextView title, year;
         ImageView nowPlaying;
 
         SimpleViewHolder(View itemView) {
