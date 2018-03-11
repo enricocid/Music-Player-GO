@@ -117,7 +117,7 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
 
                 canvas.drawRoundRect(previewRect, 5 * mDensity, 5 * mDensity, previewPaint);
                 canvas.drawText(mSections[mCurrentSection], previewRect.left + (previewSize - previewTextWidth) / 2 - 1
-                        , previewRect.top + mPreviewPadding - previewTextPaint.ascent() + 1, previewTextPaint);
+                        , previewRect.top + (previewSize - (previewTextPaint.descent() - previewTextPaint.ascent())) / 2 - previewTextPaint.ascent(), previewTextPaint);
                 mIndexThumbHandler.removeMessages(0);
                 mIndexThumbHandler.sendEmptyMessageAtTime(FastScrollerHandler.INDEX_THUMB, SystemClock.uptimeMillis() + FastScrollerHandler.INDEX_THUMB);
             }
