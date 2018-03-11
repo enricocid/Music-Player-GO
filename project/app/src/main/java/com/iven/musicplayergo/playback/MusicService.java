@@ -39,9 +39,6 @@ public class MusicService extends Service {
 
     @Override
     public void onDestroy() {
-        if (mMediaPlayerHolder.isPlaying()) {
-            mMediaPlayerHolder.setSelectedAlbum(mMediaPlayerHolder.getPlayingAlbum());
-        }
         mMediaPlayerHolder.registerNotificationActionsReceiver(false);
         mMusicNotificationManager = null;
         mMediaPlayerHolder.release();
