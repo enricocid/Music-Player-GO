@@ -10,6 +10,8 @@ import com.iven.musicplayergo.models.Artist;
 import com.iven.musicplayergo.models.Song;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class AlbumProvider {
@@ -24,7 +26,21 @@ public class AlbumProvider {
                 getAlbum(albums, song.albumName).songs.add(song);
             }
         }
+        sortAlbums(albums);
+        for (Album album : albums) {
+            album.setPosition(albums.indexOf(album));
+        }
         return albums;
+    }
+
+    private static void sortAlbums(List<Album> albums) {
+        if (albums.size() > 1) {
+            Collections.sort(albums, new Comparator<Album>() {
+                public int compare(Album obj1, Album obj2) {
+                    return Integer.compare(obj1.getYear(), obj2.getYear());
+                }
+            });
+        }
     }
 
     private static Album getAlbum(List<Album> albums, String albumName) {

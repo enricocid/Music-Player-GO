@@ -15,8 +15,6 @@ import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Artist;
 import com.iven.musicplayergo.playback.PlayerAdapter;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleViewHolder> {
@@ -37,9 +35,13 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
     private int mSelectedPosition;
 
-    public AlbumsAdapter(Activity activity, Pair<Artist, List<Album>> albumsForArtist, PlayerAdapter playerAdapter) {
+    private RecyclerView mAlbumsRecyclerView;
+
+    public AlbumsAdapter(Activity activity, RecyclerView albumsRecyclerView, Pair<Artist, List<Album>> albumsForArtist, PlayerAdapter playerAdapter) {
 
         mActivity = activity;
+
+        mAlbumsRecyclerView = albumsRecyclerView;
 
         mAlbumSelectedListener = (albumSelectedListener) mActivity;
 
@@ -57,31 +59,24 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
     public void swapArtist(Pair<Artist, List<Album>> albumsForArtist) {
         mAlbumsForArtist = albumsForArtist;
         mAlbums = mAlbumsForArtist.second;
-        updateAlbumsForArtist();
         notifyDataSetChanged();
+        updateAlbumsForArtist();
     }
 
     private void updateAlbumsForArtist() {
 
-        sortAlbums();
-
         Artist artist = mAlbumsForArtist.first;
+        mArtistName.setText(mActivity.getString(R.string.albums, artist.getName(), getItemCount()));
 
         mSelectedAlbum = mPlayerAdapter != null && mPlayerAdapter.getSelectedAlbum() != null ? mPlayerAdapter.getSelectedAlbum() : artist.getFirstAlbum();
 
-        mArtistName.setText(mActivity.getString(R.string.albums, artist.getName(), getItemCount()));
+        if (mPlayerAdapter.getPlayingAlbum() != null && artist.getName().equals(mPlayerAdapter.getPlayingAlbum().getArtistName())) {
+            mSelectedAlbum = mPlayerAdapter.getPlayingAlbum();
+        }
+        mSelectedPosition = mSelectedAlbum.position;
+        mAlbumsRecyclerView.smoothScrollToPosition(mSelectedPosition);
 
         mAlbumSelectedListener.onAlbumSelected(mSelectedAlbum);
-    }
-
-    private void sortAlbums() {
-        if (getItemCount() > 1) {
-            Collections.sort(mAlbums, new Comparator<Album>() {
-                public int compare(Album obj1, Album obj2) {
-                    return Integer.compare(obj1.getYear(), obj2.getYear());
-                }
-            });
-        }
     }
 
     @Override
@@ -103,12 +98,8 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
         Album album = mAlbums.get(holder.getAdapterPosition());
 
-        if (!mSelectedAlbum.getTitle().equals(album.getTitle())) {
-            holder.nowPlaying.setVisibility(View.GONE);
-        } else {
-            holder.nowPlaying.setVisibility(View.VISIBLE);
-            mSelectedPosition = holder.getAdapterPosition();
-        }
+        int visibility = !mSelectedAlbum.getTitle().equals(album.getTitle()) ? View.GONE : View.VISIBLE;
+        holder.nowPlaying.setVisibility(visibility);
 
         String albumTitle = album.getTitle();
         holder.title.setText(albumTitle);

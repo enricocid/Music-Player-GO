@@ -7,9 +7,14 @@ import java.util.ArrayList;
 public class Album {
 
     public final ArrayList<Song> songs;
+    public int position;
 
     public Album() {
         this.songs = new ArrayList<>();
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     public String getTitle() {
@@ -20,7 +25,7 @@ public class Album {
         return getFirstSong().artistId;
     }
 
-    String getArtistName() {
+    public String getArtistName() {
         return getFirstSong().artistName;
     }
 

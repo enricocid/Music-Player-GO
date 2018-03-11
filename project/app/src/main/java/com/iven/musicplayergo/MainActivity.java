@@ -518,7 +518,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 } else {
                     LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
                     mAlbumsRecyclerView.setLayoutManager(horizontalLayoutManager);
-                    mAlbumsAdapter = new AlbumsAdapter(this, albumsForArtist, mPlayerAdapter);
+                    mAlbumsAdapter = new AlbumsAdapter(this, mAlbumsRecyclerView, albumsForArtist, mPlayerAdapter);
                     mAlbumsRecyclerView.setAdapter(mAlbumsAdapter);
                 }
                 if (sExpandPanel) {
