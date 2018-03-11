@@ -4,8 +4,8 @@
         <item name="android:typeface">sans</item>
         <item name="icon_color">@color/grey_900_darker</item>
         <item name="android:windowBackground">@color/grey_100</item>
-        <item name="card_color">@color/grey_200</item>
-        <item name="panel_color">@color/grey_100</item>
+        <item name="card_color">@color/grey_100</item>
+        <item name="panel_color">@color/grey_200</item>
         <item name="theme_icon">@drawable/ic_theme_dark</item>
         <item name="android:navigationBarColor">@color/grey_900</item>
         <item name="android:colorEdgeEffect">?attr/accent_color</item>
@@ -16,8 +16,8 @@
     <style name="AppThemeDark" parent="android:Theme.Material.NoActionBar">
         <item name="android:typeface">sans</item>
         <item name="icon_color">@color/grey_200</item>
-        <item name="card_color">@color/grey_900_darker</item>
-        <item name="panel_color">@color/grey_900</item>
+        <item name="card_color">@color/grey_900</item>
+        <item name="panel_color">@color/grey_900_darker</item>
         <item name="theme_icon">@drawable/ic_theme_light</item>
         <item name="android:windowBackground">@color/grey_900</item>
         <item name="android:navigationBarColor">@color/grey_900</item>

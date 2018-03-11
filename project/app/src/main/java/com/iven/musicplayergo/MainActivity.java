@@ -26,7 +26,6 @@ import android.text.Html;
 import android.text.Spanned;
 import android.util.Pair;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
@@ -222,7 +221,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mAlbumsRecyclerView = findViewById(R.id.albums_rv);
         mSongsRecyclerView = findViewById(R.id.songs_rv);
 
-        mSettingsView = LayoutInflater.from(this).inflate(R.layout.settings_popup, null);
+        mSettingsView = View.inflate(this, R.layout.settings_popup, null);
 
         mEqButton = mSettingsView.findViewById(R.id.eq);
     }
