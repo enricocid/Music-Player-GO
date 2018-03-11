@@ -49,7 +49,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
         mAlbums = mAlbumsForArtist.second;
 
-        mArtistName = mActivity.findViewById(R.id.discs);
+        mArtistName = mActivity.findViewById(R.id.artist_count);
 
         updateAlbumsForArtist();
     }

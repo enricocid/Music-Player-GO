@@ -17,14 +17,14 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/discs"
+            android:id="@+id/artist_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:ellipsize="marquee"
             android:paddingEnd="16dp"
             android:paddingStart="16dp"
-            android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+            android:textAppearance="@android:style/TextAppearance.Material.Title"
             android:textColor="?attr/accent_color"
             android:textStyle="bold" />
 
