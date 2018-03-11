@@ -58,5 +58,7 @@
         android:id="@+id/colors_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        android:overScrollMode="never"
         tools:context="com.iven.musicplayergo.MainActivity" />
 </LinearLayout>
