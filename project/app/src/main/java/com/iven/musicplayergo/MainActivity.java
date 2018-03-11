@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -422,6 +423,10 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSelectedSong = mPlayerAdapter.getCurrentSong();
         mSelectedArtist = mSelectedSong.artistName;
 
+        int duration = mSelectedSong.duration;
+        mSeekBarAudio.setMax(duration);
+        mDuration.setText(Song.formatDuration(duration));
+
         Spanned spanned = AndroidVersion.isNougat() ?
                 Html.fromHtml(getString(R.string.playing_song, mSelectedArtist, mSelectedSong.title), Html.FROM_HTML_MODE_LEGACY) :
                 Html.fromHtml(getString(R.string.playing_song, mSelectedArtist, mSelectedSong.title));
@@ -438,20 +443,21 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (mPlayerAdapter.isMediaPlayer()) {
 
             updatePlayingInfo();
+            mSeekBarAudio.setProgress(mPlayerAdapter.getPlayerPosition());
             updatePlayingStatus();
             updateResetStatus(false);
 
-            int duration = mSelectedSong.duration;
-            mSeekBarAudio.setMax(duration);
-            mSeekBarAudio.setProgress(mPlayerAdapter.getPlayerPosition());
-            mDuration.setText(Song.formatDuration(duration));
-
-            //stop foreground if coming from pause state
-            if (mMusicService.isRestoredFromPause()) {
-                mMusicService.stopForeground(false);
-                mMusicService.getMusicNotificationManager().getNotificationManager().notify(MusicNotificationManager.NOTIFICATION_ID, mMusicService.getMusicNotificationManager().getNotificationBuilder().build());
-                mMusicService.setRestoredFromPause(false);
-            }
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //stop foreground if coming from pause state
+                    if (mMusicService.isRestoredFromPause()) {
+                        mMusicService.stopForeground(false);
+                        mMusicService.getMusicNotificationManager().getNotificationManager().notify(MusicNotificationManager.NOTIFICATION_ID, mMusicService.getMusicNotificationManager().getNotificationBuilder().build());
+                        mMusicService.setRestoredFromPause(false);
+                    }
+                }
+            }, 100);
         }
     }
 
@@ -605,8 +611,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             updatePlayingStatus();
             if (mPlayerAdapter.getState() != State.RESUMED && mPlayerAdapter.getState() != State.PAUSED) {
                 updatePlayingInfo();
-                mSeekBarAudio.setMax(mSelectedSong.duration);
-                mDuration.setText(Song.formatDuration(mSelectedSong.duration));
             }
         }
 

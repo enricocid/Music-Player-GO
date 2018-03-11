@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.support.v4.media.session.PlaybackStateCompat;
 
@@ -359,8 +360,14 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
 
         startUpdatingCallbackWithPosition();
         setStatus(PlaybackInfoListener.State.PLAYING);
-        mMediaPlayer.start();
-        mMusicService.startForeground(MusicNotificationManager.NOTIFICATION_ID, mMusicNotificationManager.createNotification());
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mMediaPlayer.start();
+                mMusicService.startForeground(MusicNotificationManager.NOTIFICATION_ID, mMusicNotificationManager.createNotification());
+            }
+        }, 100);
     }
 
     @Override
