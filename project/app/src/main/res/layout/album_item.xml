@@ -29,8 +29,6 @@
         android:gravity="center"
         android:maxLines="3"
         android:padding="4dp"
-        android:shadowColor="?attr/accent_color"
-        android:shadowRadius="1.5"
         android:textAlignment="center"
         android:textAppearance="@android:style/TextAppearance.Material.Subhead"
         android:textColor="?android:textColorSecondary"
