@@ -10,14 +10,15 @@
     android:orientation="vertical">
 
     <ImageView
+        android:id="@+id/nowPlaying"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:adjustViewBounds="true"
+        android:layout_gravity="top|end"
         android:contentDescription="@string/app_name"
-        android:scaleX="2.5"
-        android:scaleY="2.5"
-        android:src="@drawable/ic_music_note" />
+        android:padding="8dp"
+        android:src="@drawable/ic_checkbox_marked"
+        android:tint="?attr/accent_color"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/album"

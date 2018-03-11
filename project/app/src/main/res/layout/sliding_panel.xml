@@ -33,23 +33,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:layout_marginTop="4dp" />
-
-        <TextView
-            android:id="@+id/disc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:paddingEnd="16dp"
-            android:paddingStart="16dp"
-            android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-            android:textColor="?attr/accent_color"
-            android:textStyle="bold" />
+            android:layout_marginTop="8dp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/songs_rv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="4dp" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.iven.musicplayergo.R;
@@ -22,7 +23,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
     private Activity mActivity;
 
-    private TextView mDisc, mDiscs;
+    private TextView mArtistName;
 
     private Album mSelectedAlbum;
 
@@ -33,6 +34,8 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
     private albumSelectedListener mAlbumSelectedListener;
 
     private PlayerAdapter mPlayerAdapter;
+
+    private int mSelectedPosition;
 
     public AlbumsAdapter(Activity activity, Pair<Artist, List<Album>> albumsForArtist, PlayerAdapter playerAdapter) {
 
@@ -46,9 +49,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
         mAlbums = mAlbumsForArtist.second;
 
-        mDisc = mActivity.findViewById(R.id.disc);
-
-        mDiscs = mActivity.findViewById(R.id.discs);
+        mArtistName = mActivity.findViewById(R.id.discs);
 
         updateAlbumsForArtist();
     }
@@ -68,9 +69,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
         mSelectedAlbum = mPlayerAdapter != null && mPlayerAdapter.getSelectedAlbum() != null ? mPlayerAdapter.getSelectedAlbum() : artist.getFirstAlbum();
 
-        mDiscs.setText(mActivity.getString(R.string.albums, artist.getName(), getItemCount()));
-
-        mDisc.setText(mActivity.getString(R.string.album, mSelectedAlbum.getTitle(), getYear(mSelectedAlbum.getYear())));
+        mArtistName.setText(mActivity.getString(R.string.albums, artist.getName(), getItemCount()));
 
         mAlbumSelectedListener.onAlbumSelected(mSelectedAlbum);
     }
@@ -103,9 +102,16 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
     public void onBindViewHolder(@NonNull SimpleViewHolder holder, int position) {
 
         Album album = mAlbums.get(holder.getAdapterPosition());
+
+        if (!mSelectedAlbum.getTitle().equals(album.getTitle())) {
+            holder.nowPlaying.setVisibility(View.GONE);
+        } else {
+            holder.nowPlaying.setVisibility(View.VISIBLE);
+            mSelectedPosition = holder.getAdapterPosition();
+        }
+
         String albumTitle = album.getTitle();
         holder.title.setText(albumTitle);
-
         holder.year.setText(getYear(album.getYear()));
     }
 
@@ -121,13 +127,15 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
     class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView title, year;
+        TextView title, year, count;
+        ImageView nowPlaying;
 
         SimpleViewHolder(View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.album);
             year = itemView.findViewById(R.id.year);
+            nowPlaying = itemView.findViewById(R.id.nowPlaying);
             itemView.setOnClickListener(this);
         }
 
@@ -135,10 +143,14 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
         public void onClick(View v) {
 
             //update songs list only if the album is updated
-            if (mAlbums.get(getAdapterPosition()) != mSelectedAlbum) {
+            if (getAdapterPosition() != mSelectedPosition) {
+
+                notifyItemChanged(mSelectedPosition);
+                mSelectedPosition = getAdapterPosition();
+
                 mSelectedAlbum = mAlbums.get(getAdapterPosition());
+                nowPlaying.setVisibility(View.VISIBLE);
                 mPlayerAdapter.setSelectedAlbum(mSelectedAlbum);
-                mDisc.setText(mActivity.getString(R.string.album, mSelectedAlbum.getTitle(), getYear(mSelectedAlbum.getYear())));
                 mAlbumSelectedListener.onAlbumSelected(mSelectedAlbum);
             }
         }
