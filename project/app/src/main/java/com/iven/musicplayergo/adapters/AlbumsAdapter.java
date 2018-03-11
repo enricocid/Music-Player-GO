@@ -75,7 +75,6 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
         }
         mSelectedPosition = mSelectedAlbum.position;
         mAlbumsRecyclerView.smoothScrollToPosition(mSelectedPosition);
-
         mAlbumSelectedListener.onAlbumSelected(mSelectedAlbum);
     }
 
