@@ -230,9 +230,8 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
             mMusicNotificationManager = mMusicService.getMusicNotificationManager();
 
         } else {
-
-            stopUpdatingCallbackWithPosition(false);
             mMediaPlayer.reset();
+            stopUpdatingCallbackWithPosition(false);
         }
     }
 
