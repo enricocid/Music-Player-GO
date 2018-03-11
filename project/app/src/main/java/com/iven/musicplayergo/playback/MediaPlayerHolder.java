@@ -180,7 +180,12 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
             }
             sReplaySong = false;
         } else {
-            skip(true);
+            if (mPlayingAlbum.songs.size() > 1) {
+                skip(true);
+            } else {
+                pauseMediaPlayer();
+                mMediaPlayer.seekTo(0);
+            }
         }
     }
 
