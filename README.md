@@ -8,7 +8,7 @@
 
 ### Very slim music player (~1000KB)
 
-### Current version: 2.2.1 (beta)
+### Current version: 2.2.2 (beta)
 
 
 
@@ -20,7 +20,7 @@ https://plus.google.com/+JulianGomezAxinen
 
 
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art11.png)
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art12.png)
 
 <a href="https://play.google.com/apps/testing/com.iven.musicplayergo" target="_blank">
   <img alt="Get it on Google Play"
@@ -42,7 +42,7 @@ https://plus.google.com/+JulianGomezAxinen
 ### Open settings directly from UI. Available settings: 
 
 - Equalizer;
-- UI inversion;
+- Themes (Light, dark, night)(Long click to force night theme);
 - Link to git page;
 - UI accents;
 

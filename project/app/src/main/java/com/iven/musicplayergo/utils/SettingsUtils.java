@@ -83,7 +83,6 @@ public class SettingsUtils {
         return activity.getSharedPreferences(ACCENT_PREF, Context.MODE_PRIVATE).getInt(ACCENT_VALUE, R.color.blue_A400);
     }
 
-
     //get theme
     private static int resolveTheme(int contrast, int accent) {
 
