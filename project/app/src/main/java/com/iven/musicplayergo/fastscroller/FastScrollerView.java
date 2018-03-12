@@ -17,6 +17,7 @@ import android.view.MotionEvent;
 
 import com.iven.musicplayergo.R;
 import com.iven.musicplayergo.adapters.ArtistsAdapter;
+import com.iven.musicplayergo.utils.SettingsUtils;
 
 public class FastScrollerView extends RecyclerView.AdapterDataObserver {
 
@@ -92,7 +93,7 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
 
         Paint indexBarPaint = new Paint();
 
-        int indexBarTextColor = mThemeContrast != 0 ? ContextCompat.getColor(mContext, R.color.grey_200) : ContextCompat.getColor(mContext, R.color.grey_900_darker);
+        int indexBarTextColor = mThemeContrast != SettingsUtils.THEME_LIGHT ? ContextCompat.getColor(mContext, R.color.grey_200) : ContextCompat.getColor(mContext, R.color.grey_900_darker);
 
         indexBarPaint.setColor(indexBarBackgroundColor);
         indexBarPaint.setAntiAlias(true);

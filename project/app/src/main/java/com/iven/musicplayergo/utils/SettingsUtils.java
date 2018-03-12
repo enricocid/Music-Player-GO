@@ -12,16 +12,16 @@ import com.iven.musicplayergo.R;
 
 public class SettingsUtils {
 
-    public static final int THEME_NIGHT = 2;
-    private static final String THEME_PREF_DARK = "com.iven.musicplayergo.pref_theme_dark";
-    private static final String ACCENT_PREF = "com.iven.musicplayergo.pref_theme";
-    private static final String ACCENT_VALUE = "com.iven.musicplayergo.pref_value";
+    private static final String ACCENT_PREF = "com.iven.musicplayergo.pref_accent";
+    private static final String ACCENT_VALUE = "com.iven.musicplayergo.pref_accent_value";
+    private static final String THEME_PREF = "com.iven.musicplayergo.pref_theme";
     private static final String THEME_VALUE = "com.iven.musicplayergo.pref_theme_value";
-    private static final int THEME_LIGHT = 0;
+    public static final int THEME_LIGHT = 0;
     private static final int THEME_DARK = 1;
+    public static final int THEME_NIGHT = 2;
 
     public static void setNightTheme(Activity activity) {
-        SharedPreferences preferences = activity.getSharedPreferences(THEME_PREF_DARK, Context.MODE_PRIVATE);
+        SharedPreferences preferences = activity.getSharedPreferences(THEME_PREF, Context.MODE_PRIVATE);
         preferences.edit().putInt(THEME_VALUE, THEME_NIGHT).apply();
         activity.recreate();
     }
@@ -30,7 +30,7 @@ public class SettingsUtils {
         int contrast = getContrast(activity);
         boolean isThemeNight = isThemeNight(contrast);
         int value = isThemeNight ? THEME_LIGHT : contrast != THEME_DARK ? THEME_DARK : THEME_NIGHT;
-        SharedPreferences preferences = activity.getSharedPreferences(THEME_PREF_DARK, Context.MODE_PRIVATE);
+        SharedPreferences preferences = activity.getSharedPreferences(THEME_PREF, Context.MODE_PRIVATE);
         preferences.edit().putInt(THEME_VALUE, value).apply();
         activity.recreate();
     }
@@ -66,7 +66,7 @@ public class SettingsUtils {
     }
 
     public static int getContrast(Activity activity) {
-        return activity.getSharedPreferences(THEME_PREF_DARK, Context.MODE_PRIVATE).getInt(THEME_VALUE, 0);
+        return activity.getSharedPreferences(THEME_PREF, Context.MODE_PRIVATE).getInt(THEME_VALUE, THEME_LIGHT);
     }
 
     private static boolean isThemeNight(int contrast) {
