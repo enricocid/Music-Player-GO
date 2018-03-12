@@ -1,9 +1,8 @@
-# Music-Player-GO [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21)
+# Music-Player-GO [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) - [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
 <a href="https://play.google.com/apps/testing/com.iven.musicplayergo" target="_blank">
   <img alt="Get it on Google Play"
        src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="60"/>
 </a>
-
 
 
 ### Very slim music player (~1000KB)
@@ -50,6 +49,11 @@ https://plus.google.com/+JulianGomezAxinen
 ### Minimal code:
 
 - Based on nothing: it was written from scratch besides few snippets here and there;
+
+### What does this cost?
+Music Player GO will always be free! Anyway, you can still support me by buying me a beer, 
+an icecream or something via [PayPal](https://www.paypal.me/enricocid)
+
 
 ### Dependencies used: 
 
