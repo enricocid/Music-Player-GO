@@ -50,9 +50,9 @@ https://plus.google.com/+JulianGomezAxinen
 
 - Based on nothing: it was written from scratch besides few snippets here and there;
 
+
 ### What does this cost?
-Music Player GO will always be free! Anyway, you can still support me by buying me a beer, 
-an icecream or something via [PayPal](https://www.paypal.me/enricocid)
+Music Player GO will always be free! Anyway, you can still buy me a beer, an ice cream or something via [PayPal](https://www.paypal.me/enricocid) if You really liked it! :)
 
 
 ### Dependencies used: 
