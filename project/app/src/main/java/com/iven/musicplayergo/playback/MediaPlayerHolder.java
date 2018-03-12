@@ -9,7 +9,6 @@ import android.content.IntentFilter;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.Handler;
 import android.os.PowerManager;
 import android.support.v4.media.session.PlaybackStateCompat;
 
@@ -168,8 +167,6 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-        stopUpdatingCallbackWithPosition(false);
-
         if (mPlaybackInfoListener != null) {
             mPlaybackInfoListener.onStateChanged(PlaybackInfoListener.State.COMPLETED);
             mPlaybackInfoListener.onPlaybackCompleted();
@@ -184,8 +181,8 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
             if (mPlayingAlbum.songs.size() > 1) {
                 skip(true);
             } else {
-                pauseMediaPlayer();
                 mMediaPlayer.seekTo(0);
+                pauseMediaPlayer();
             }
         }
     }
@@ -210,32 +207,6 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
         }
     }
 
-    /**
-     * Once the {@link MediaPlayer} is released, it can't be used again, and another one has to be
-     * created. In the onStop() method of the {@link MainActivity} the {@link MediaPlayer} is
-     * released. Then in the onStart() of the {@link MainActivity} a new {@link MediaPlayer}
-     * object has to be created. That's why this method is private, and called by load(int) and
-     * not the constructor.
-     */
-    private void initializeMediaPlayer() {
-
-        tryToGetAudioFocus();
-
-        if (mMediaPlayer == null) {
-            mMediaPlayer = new MediaPlayer();
-            EqualizerUtils.openAudioEffectSession(mContext, mMediaPlayer.getAudioSessionId());
-
-            mMediaPlayer.setOnPreparedListener(this);
-            mMediaPlayer.setOnCompletionListener(this);
-            mMediaPlayer.setWakeMode(mContext, PowerManager.PARTIAL_WAKE_LOCK);
-            mMusicNotificationManager = mMusicService.getMusicNotificationManager();
-
-        } else {
-            mMediaPlayer.reset();
-            stopUpdatingCallbackWithPosition(false);
-        }
-    }
-
     public void setPlaybackInfoListener(PlaybackInfoListener listener) {
         mPlaybackInfoListener = listener;
     }
@@ -251,7 +222,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
 
     private void resumeMediaPlayer() {
         if (!isPlaying()) {
-            startUpdatingCallbackWithPosition();
+            //startUpdatingCallbackWithPosition();
             mMediaPlayer.start();
             setStatus(PlaybackInfoListener.State.RESUMED);
             mMusicService.startForeground(MusicNotificationManager.NOTIFICATION_ID, mMusicNotificationManager.createNotification());
@@ -259,7 +230,6 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     }
 
     private void pauseMediaPlayer() {
-        stopUpdatingCallbackWithPosition(true);
         setStatus(PlaybackInfoListener.State.PAUSED);
         mMediaPlayer.pause();
 
@@ -268,25 +238,10 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     }
 
     private void resetSong() {
-
-        startUpdatingCallbackWithPosition();
         mMediaPlayer.seekTo(0);
         mMediaPlayer.start();
 
         setStatus(PlaybackInfoListener.State.PLAYING);
-    }
-
-    // Reports media playback position to mPlaybackProgressCallback.
-    private void stopUpdatingCallbackWithPosition(boolean paused) {
-        if (mExecutor != null) {
-            mExecutor.shutdownNow();
-            mExecutor = null;
-            mSeekBarPositionUpdateTask = null;
-            if (mPlaybackInfoListener != null) {
-                int position = paused ? mMediaPlayer.getCurrentPosition() : 0;
-                mPlaybackInfoListener.onPositionChanged(position);
-            }
-        }
     }
 
     /**
@@ -334,25 +289,45 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
         }
     }
 
-    //Implements PlaybackControl.
+    /**
+     * Once the {@link MediaPlayer} is released, it can't be used again, and another one has to be
+     * created. In the onStop() method of the {@link MainActivity} the {@link MediaPlayer} is
+     * released. Then in the onStart() of the {@link MainActivity} a new {@link MediaPlayer}
+     * object has to be created. That's why this method is private, and called by load(int) and
+     * not the constructor.
+     */
     @Override
-    public void play() {
-
-        initializeMediaPlayer();
+    public void initMediaPlayer() {
 
         try {
+            if (mMediaPlayer != null) {
+                mMediaPlayer.reset();
+            } else {
+                mMediaPlayer = new MediaPlayer();
+                EqualizerUtils.openAudioEffectSession(mContext, mMediaPlayer.getAudioSessionId());
 
-            mMediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .build());
+                mMediaPlayer.setOnPreparedListener(this);
+                mMediaPlayer.setOnCompletionListener(this);
+                mMediaPlayer.setWakeMode(mContext, PowerManager.PARTIAL_WAKE_LOCK);
+                mMediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .build());
+                tryToGetAudioFocus();
+                mMusicNotificationManager = mMusicService.getMusicNotificationManager();
+            }
 
             mMediaPlayer.setDataSource(mSelectedSong.path);
             mMediaPlayer.prepare();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    @Override
+    public MediaPlayer getMediaPlayer() {
+        return mMediaPlayer;
     }
 
     @Override
@@ -360,14 +335,6 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
 
         startUpdatingCallbackWithPosition();
         setStatus(PlaybackInfoListener.State.PLAYING);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mMediaPlayer.start();
-                mMusicService.startForeground(MusicNotificationManager.NOTIFICATION_ID, mMusicNotificationManager.createNotification());
-            }
-        }, 100);
     }
 
     @Override
@@ -381,7 +348,6 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
             EqualizerUtils.closeAudioEffectSession(mContext, mMediaPlayer.getAudioSessionId());
             mMediaPlayer.release();
             mMediaPlayer = null;
-            stopUpdatingCallbackWithPosition(false);
             giveUpAudioFocus();
             unregisterActionsReceiver();
         }
@@ -444,13 +410,12 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
             mSelectedSong = currentIndex != 0 ? mSongs.get(0) : mSongs.get(mSongs.size() - 1);
             e.printStackTrace();
         }
-
-        play();
+        initMediaPlayer();
     }
 
     @Override
     public void seekTo(int position) {
-        if (isMediaPlayer()) {
+        if (mPlaybackInfoListener != null) {
             mMediaPlayer.seekTo(position);
         }
     }

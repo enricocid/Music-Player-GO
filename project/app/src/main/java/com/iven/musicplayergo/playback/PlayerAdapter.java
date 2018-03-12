@@ -17,6 +17,7 @@
 package com.iven.musicplayergo.playback;
 
 import android.app.Activity;
+import android.media.MediaPlayer;
 import android.support.v4.media.session.PlaybackStateCompat;
 
 import com.iven.musicplayergo.MainActivity;
@@ -30,7 +31,7 @@ import java.util.List;
  */
 public interface PlayerAdapter {
 
-    void play();
+    void initMediaPlayer();
 
     void release();
 
@@ -72,4 +73,6 @@ public interface PlayerAdapter {
     Album getPlayingAlbum();
 
     void setPlayingAlbum(Album album);
+
+    MediaPlayer getMediaPlayer();
 }

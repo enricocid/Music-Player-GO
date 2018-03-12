@@ -23,8 +23,10 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.TextWatcher;
 import android.util.Pair;
 import android.view.Gravity;
 import android.view.View;
@@ -183,7 +185,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                     @Override
                     public void onSystemUiVisibilityChange(int visibility) {
                         if (AndroidVersion.isMarshmallow()) {
-                            //check light status bar
+                            //check light status bar if immersive mode is disabled
                             SettingsUtils.enableLightStatusBar(MainActivity.this, ContextCompat.getColor(MainActivity.this, mAccent));
                         }
                     }
@@ -418,13 +420,48 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mPlayPauseButton.setImageResource(drawable);
     }
 
-    private void updatePlayingInfo() {
+    private void updatePlayingInfo(boolean restore, boolean startPlay) {
 
         mSelectedSong = mPlayerAdapter.getCurrentSong();
         mSelectedArtist = mSelectedSong.artistName;
+        final int duration = mSelectedSong.duration;
 
-        int duration = mSelectedSong.duration;
-        mSeekBarAudio.setMax(duration);
+        if (restore) {
+            mDuration.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    mSeekBarAudio.setMax(duration);
+                    mSeekBarAudio.setProgress(mPlayerAdapter.getPlayerPosition());
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            updatePlayingStatus();
+                            updateResetStatus(false);
+                            //stop foreground if coming from pause state
+                            if (mMusicService.isRestoredFromPause()) {
+                                mMusicService.stopForeground(false);
+                                mMusicService.getMusicNotificationManager().getNotificationManager().notify(MusicNotificationManager.NOTIFICATION_ID, mMusicService.getMusicNotificationManager().getNotificationBuilder().build());
+                                mMusicService.setRestoredFromPause(false);
+                            }
+                        }
+                    }, 250);
+                }
+            });
+        }
+
+        if (!restore) {
+            mSeekBarAudio.setMax(duration);
+        }
         mDuration.setText(Song.formatDuration(duration));
 
         Spanned spanned = AndroidVersion.isNougat() ?
@@ -432,6 +469,16 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 Html.fromHtml(getString(R.string.playing_song, mSelectedArtist, mSelectedSong.title));
         mPlayingSong.setText(spanned);
         mPlayingAlbum.setText(mSelectedSong.albumName);
+
+        if (startPlay) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mPlayerAdapter.getMediaPlayer().start();
+                    mMusicService.startForeground(MusicNotificationManager.NOTIFICATION_ID, mMusicNotificationManager.createNotification());
+                }
+            }, 250);
+        }
     }
 
     private void restorePlayerStatus() {
@@ -442,22 +489,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         //update the controls panel
         if (mPlayerAdapter.isMediaPlayer()) {
 
-            updatePlayingInfo();
-            mSeekBarAudio.setProgress(mPlayerAdapter.getPlayerPosition());
-            updatePlayingStatus();
-            updateResetStatus(false);
-
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    //stop foreground if coming from pause state
-                    if (mMusicService.isRestoredFromPause()) {
-                        mMusicService.stopForeground(false);
-                        mMusicService.getMusicNotificationManager().getNotificationManager().notify(MusicNotificationManager.NOTIFICATION_ID, mMusicService.getMusicNotificationManager().getNotificationBuilder().build());
-                        mMusicService.setRestoredFromPause(false);
-                    }
-                }
-            }, 100);
+            updatePlayingInfo(true, false);
         }
     }
 
@@ -555,9 +587,15 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             mSeekBarAudio.setEnabled(true);
         }
         mSelectedSong = song;
-        mPlayerAdapter.setCurrentSong(song, album.songs);
+        mPlayerAdapter.setCurrentSong(mSelectedSong, album.songs);
         mPlayerAdapter.setPlayingAlbum(album);
-        mPlayerAdapter.play();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mPlayerAdapter.initMediaPlayer();
+            }
+        }, 250);
     }
 
     @Override
@@ -597,11 +635,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         @Override
         public void onPositionChanged(int position) {
             if (!mUserIsSeeking) {
-                if (AndroidVersion.isNougat()) {
-                    mSeekBarAudio.setProgress(position, true);
-                } else {
-                    mSeekBarAudio.setProgress(position);
-                }
+                mSeekBarAudio.setProgress(position);
             }
         }
 
@@ -610,7 +644,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
             updatePlayingStatus();
             if (mPlayerAdapter.getState() != State.RESUMED && mPlayerAdapter.getState() != State.PAUSED) {
-                updatePlayingInfo();
+                updatePlayingInfo(false, true);
             }
         }
 
