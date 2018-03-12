@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.fastscroller;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -7,12 +8,14 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.SystemClock;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 
+import com.iven.musicplayergo.R;
 import com.iven.musicplayergo.adapters.ArtistsAdapter;
 
 public class FastScrollerView extends RecyclerView.AdapterDataObserver {
@@ -30,7 +33,7 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
     private FastScrollerHandler.IndexThumbHandler mIndexThumbHandler;
 
     private int mAccent;
-    private boolean sDark;
+    private int mThemeContrast;
     private FastScrollerRecyclerView mArtistsRecyclerView;
     private ArtistsAdapter mArtistsAdapter;
     private LinearLayoutManager mLinearLayoutManager;
@@ -40,13 +43,16 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
     private int mCurrentSection = -1;
     private boolean sHidden = true;
 
-    public FastScrollerView(FastScrollerRecyclerView rv, ArtistsAdapter artistsAdapter, LinearLayoutManager linearLayoutManager, int accent, boolean isDark) {
+    private Context mContext;
 
+    public FastScrollerView(FastScrollerRecyclerView rv, ArtistsAdapter artistsAdapter, LinearLayoutManager linearLayoutManager, int accent, int themeContrast) {
+
+        mContext = rv.getContext();
         mArtistsRecyclerView = rv;
         mArtistsAdapter = artistsAdapter;
         mLinearLayoutManager = linearLayoutManager;
         mAccent = accent;
-        sDark = isDark;
+        mThemeContrast = themeContrast;
 
         DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
         mDensity = displayMetrics.density;
@@ -85,7 +91,8 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
         final int indexBarCornerRadius = 5;
 
         Paint indexBarPaint = new Paint();
-        int indexBarTextColor = sDark ? Color.WHITE : Color.BLACK;
+
+        int indexBarTextColor = mThemeContrast != 0 ? ContextCompat.getColor(mContext, R.color.grey_200) : ContextCompat.getColor(mContext, R.color.grey_900_darker);
 
         indexBarPaint.setColor(indexBarBackgroundColor);
         indexBarPaint.setAntiAlias(true);

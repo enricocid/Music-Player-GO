@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
@@ -75,8 +74,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private LinearLayout mControlsContainer;
     private View mSettingsView;
     private SlidingUpPanelLayout mSlidingUpPanel;
-    private ImageButton mPlayPauseButton, mResetButton, mEqButton, mArrowUp, mSettingsButton;
-    private boolean sThemeDark;
+    private ImageButton mPlayPauseButton, mResetButton, mEqButton, mArrowUp, mSettingsButton, mThemeButton;
+    private int mThemeContrast;
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
     private Song mSelectedSong;
@@ -171,10 +170,10 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sThemeDark = SettingsUtils.isThemeDark(this);
+        mThemeContrast = SettingsUtils.getContrast(this);
         mAccent = SettingsUtils.getAccent(this);
 
-        SettingsUtils.setTheme(this, sThemeDark, mAccent);
+        SettingsUtils.retrieveTheme(this, mThemeContrast, mAccent);
 
         setContentView(R.layout.main_activity);
 
@@ -227,6 +226,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSettingsView = View.inflate(this, R.layout.settings_popup, null);
 
         mEqButton = mSettingsView.findViewById(R.id.eq);
+        mThemeButton = mSettingsView.findViewById(R.id.theme_button);
     }
 
     private void setSlidingUpPanelHeight() {
@@ -258,6 +258,16 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             }
         });
         mSettingsPopup.setElevation(6);
+
+        if (mThemeContrast != SettingsUtils.THEME_NIGHT) {
+            mThemeButton.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    SettingsUtils.setNightTheme(MainActivity.this);
+                    return false;
+                }
+            });
+        }
     }
 
     public void showSettingsPopup(View v) {
@@ -282,7 +292,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 int h = mArtistsRecyclerView.getHeight();
                 mArtistsRecyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 if (mArtistsRecyclerView.computeVerticalScrollRange() > h) {
-                    FastScrollerView fastScrollerView = new FastScrollerView(mArtistsRecyclerView, mArtistsAdapter, mArtistsLayoutManager, ContextCompat.getColor(MainActivity.this, mAccent), sThemeDark);
+                    FastScrollerView fastScrollerView = new FastScrollerView(mArtistsRecyclerView, mArtistsAdapter, mArtistsLayoutManager, ContextCompat.getColor(MainActivity.this, mAccent), mThemeContrast);
                     mArtistsRecyclerView.setFastScroller(fastScrollerView);
                 }
             }
@@ -386,14 +396,13 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         return isPlayer;
     }
 
-    public void invertUI(View v) {
+    public void switchTheme(View v) {
         //avoid service killing when the player is in paused state
         if (mPlayerAdapter != null && mPlayerAdapter.getState() == PlaybackInfoListener.State.PAUSED) {
             mMusicService.startForeground(MusicNotificationManager.NOTIFICATION_ID, mMusicService.getMusicNotificationManager().createNotification());
             mMusicService.setRestoredFromPause(true);
         }
-
-        SettingsUtils.setThemeDark(MainActivity.this);
+        SettingsUtils.setTheme(MainActivity.this);
     }
 
     private void initializeColorsSettings() {
@@ -410,7 +419,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private void updateResetStatus(boolean onPlaybackCompletion) {
 
-        int themeColor = sThemeDark ? Color.WHITE : Color.BLACK;
+        int themeColor = mThemeContrast != 0 ? ContextCompat.getColor(this, R.color.grey_200) : ContextCompat.getColor(this, R.color.grey_900_darker);
         int color = onPlaybackCompletion ? themeColor : mPlayerAdapter.isReset() ? ContextCompat.getColor(this, mAccent) : themeColor;
         mResetButton.getDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
     }

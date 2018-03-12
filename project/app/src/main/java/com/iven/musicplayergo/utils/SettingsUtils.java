@@ -12,21 +12,31 @@ import com.iven.musicplayergo.R;
 
 public class SettingsUtils {
 
+    public static final int THEME_NIGHT = 2;
     private static final String THEME_PREF_DARK = "com.iven.musicplayergo.pref_theme_dark";
     private static final String ACCENT_PREF = "com.iven.musicplayergo.pref_theme";
     private static final String ACCENT_VALUE = "com.iven.musicplayergo.pref_value";
-    private static final String THEME_VALUE_DARK = "com.iven.musicplayergo.pref_value_dark";
+    private static final String THEME_VALUE = "com.iven.musicplayergo.pref_theme_value";
+    private static final int THEME_LIGHT = 0;
+    private static final int THEME_DARK = 1;
 
-    public static void setThemeDark(Activity activity) {
-        boolean isDark = isThemeDark(activity);
-        boolean value = !isDark;
+    public static void setNightTheme(Activity activity) {
         SharedPreferences preferences = activity.getSharedPreferences(THEME_PREF_DARK, Context.MODE_PRIVATE);
-        preferences.edit().putBoolean(THEME_VALUE_DARK, value).apply();
+        preferences.edit().putInt(THEME_VALUE, THEME_NIGHT).apply();
         activity.recreate();
     }
 
-    public static void setTheme(Activity activity, boolean isThemeDark, int accent) {
-        int theme = SettingsUtils.resolveTheme(isThemeDark, accent);
+    public static void setTheme(Activity activity) {
+        int contrast = getContrast(activity);
+        boolean isThemeNight = isThemeNight(contrast);
+        int value = isThemeNight ? THEME_LIGHT : contrast != THEME_DARK ? THEME_DARK : THEME_NIGHT;
+        SharedPreferences preferences = activity.getSharedPreferences(THEME_PREF_DARK, Context.MODE_PRIVATE);
+        preferences.edit().putInt(THEME_VALUE, value).apply();
+        activity.recreate();
+    }
+
+    public static void retrieveTheme(Activity activity, int contrast, int accent) {
+        int theme = SettingsUtils.resolveTheme(contrast, accent);
         activity.setTheme(theme);
         if (AndroidVersion.isMarshmallow()) {
             enableLightStatusBar(activity, ContextCompat.getColor(activity, accent));
@@ -55,8 +65,12 @@ public class SettingsUtils {
         }
     }
 
-    public static boolean isThemeDark(Activity activity) {
-        return activity.getSharedPreferences(THEME_PREF_DARK, Context.MODE_PRIVATE).getBoolean(THEME_VALUE_DARK, false);
+    public static int getContrast(Activity activity) {
+        return activity.getSharedPreferences(THEME_PREF_DARK, Context.MODE_PRIVATE).getInt(THEME_VALUE, 0);
+    }
+
+    private static boolean isThemeNight(int contrast) {
+        return contrast == THEME_NIGHT;
     }
 
     public static void setThemeAccent(Activity activity, int accent) {
@@ -69,64 +83,67 @@ public class SettingsUtils {
         return activity.getSharedPreferences(ACCENT_PREF, Context.MODE_PRIVATE).getInt(ACCENT_VALUE, R.color.blue_A400);
     }
 
-    //get theme
-    private static int resolveTheme(boolean isThemeDark, int accent) {
 
+    //get theme
+    private static int resolveTheme(int contrast, int accent) {
+
+        boolean isThemeNight = contrast == THEME_NIGHT;
+        boolean isThemeDark = contrast == THEME_DARK;
         int selectedTheme;
 
         switch (accent) {
 
             case R.color.red_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeRedDark : R.style.AppThemeRed;
+                selectedTheme = isThemeNight ? R.style.AppThemeRedNight : isThemeDark ? R.style.AppThemeRedDark : R.style.AppThemeRed;
                 break;
 
             case R.color.pink_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemePinkDark : R.style.AppThemePink;
+                selectedTheme = isThemeNight ? R.style.AppThemePinkNight : isThemeDark ? R.style.AppThemePinkDark : R.style.AppThemePink;
                 break;
 
             case R.color.purple_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemePurpleDark : R.style.AppThemePurple;
+                selectedTheme = isThemeNight ? R.style.AppThemePurpleNight : isThemeDark ? R.style.AppThemePurpleDark : R.style.AppThemePurple;
                 break;
 
             case R.color.deep_purple_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeDeepPurpleDark : R.style.AppThemeDeepPurple;
+                selectedTheme = isThemeNight ? R.style.AppThemeDeepPurpleNight : isThemeDark ? R.style.AppThemeDeepPurpleDark : R.style.AppThemeDeepPurple;
                 break;
 
             case R.color.indigo_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeIndigoDark : R.style.AppThemeIndigo;
+                selectedTheme = isThemeNight ? R.style.AppThemeIndigoNight : isThemeDark ? R.style.AppThemeIndigoDark : R.style.AppThemeIndigo;
                 break;
 
             case R.color.blue_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeBlueDark : R.style.AppThemeBlue;
+                selectedTheme = isThemeNight ? R.style.AppThemeBlueNight : isThemeDark ? R.style.AppThemeBlueDark : R.style.AppThemeBlue;
                 break;
 
             default:
             case R.color.light_blue_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeLightBlueDark : R.style.AppThemeLightBlue;
+                selectedTheme = isThemeNight ? R.style.AppThemeLightBlueNight : isThemeDark ? R.style.AppThemeLightBlueDark : R.style.AppThemeLightBlue;
                 break;
 
             case R.color.cyan_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeCyanDark : R.style.AppThemeCyan;
+                selectedTheme = isThemeNight ? R.style.AppThemeCyanNight : isThemeDark ? R.style.AppThemeCyanDark : R.style.AppThemeCyan;
                 break;
 
             case R.color.teal_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeTealDark : R.style.AppThemeTeal;
+                selectedTheme = isThemeNight ? R.style.AppThemeTealNight : isThemeDark ? R.style.AppThemeTealDark : R.style.AppThemeTeal;
                 break;
 
             case R.color.green_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeGreenDark : R.style.AppThemeGreen;
+                selectedTheme = isThemeNight ? R.style.AppThemeGreenNight : isThemeDark ? R.style.AppThemeGreenDark : R.style.AppThemeGreen;
                 break;
 
             case R.color.amber_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeAmberDark : R.style.AppThemeAmber;
+                selectedTheme = isThemeNight ? R.style.AppThemeAmberNight : isThemeDark ? R.style.AppThemeAmberDark : R.style.AppThemeAmber;
                 break;
 
             case R.color.orange_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeOrangeDark : R.style.AppThemeOrange;
+                selectedTheme = isThemeNight ? R.style.AppThemeOrangeNight : isThemeDark ? R.style.AppThemeOrangeDark : R.style.AppThemeOrange;
                 break;
 
             case R.color.deep_orange_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeDeepOrangeDark : R.style.AppThemeDeepOrange;
+                selectedTheme = isThemeNight ? R.style.AppThemeDeepOrangeNight : isThemeDark ? R.style.AppThemeDeepOrangeDark : R.style.AppThemeDeepOrange;
                 break;
         }
         return selectedTheme;
