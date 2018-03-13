@@ -121,6 +121,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (mSettingsPopup.isShowing()) {
             mSettingsPopup.dismiss();
         }
+        if (mPlayerAdapter.isPlaying()) {
+            mPlayerAdapter.onPauseActivity();
+        }
     }
 
     @Override
@@ -467,13 +470,12 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 @Override
                 public void afterTextChanged(Editable s) {
                     mSeekBarAudio.setProgress(mPlayerAdapter.getPlayerPosition());
+                    updatePlayingStatus();
+                    updateResetStatus(false);
 
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-
-                            updatePlayingStatus();
-                            updateResetStatus(false);
                             //stop foreground if coming from pause state
                             if (mMusicService.isRestoredFromPause()) {
                                 mMusicService.stopForeground(false);
@@ -495,6 +497,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         //update the controls panel
         if (mPlayerAdapter.isMediaPlayer()) {
 
+            mPlayerAdapter.onResumeActivity();
             updatePlayingInfo(true, false);
         }
     }

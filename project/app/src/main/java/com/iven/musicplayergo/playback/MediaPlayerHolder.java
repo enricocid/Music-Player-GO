@@ -182,6 +182,16 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
         }
     }
 
+    @Override
+    public void onResumeActivity() {
+        startUpdatingCallbackWithPosition();
+    }
+
+    @Override
+    public void onPauseActivity() {
+        stopUpdatingCallbackWithPosition();
+    }
+
     private void tryToGetAudioFocus() {
 
         int result = mAudioManager.requestAudioFocus(
@@ -226,7 +236,6 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     private void pauseMediaPlayer() {
         setStatus(PlaybackInfoListener.State.PAUSED);
         mMediaPlayer.pause();
-
         mMusicService.stopForeground(false);
         mMusicNotificationManager.getNotificationManager().notify(MusicNotificationManager.NOTIFICATION_ID, mMusicNotificationManager.createNotification());
     }
@@ -260,6 +269,15 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
                 1000,
                 TimeUnit.MILLISECONDS
         );
+    }
+
+    // Reports media playback position to mPlaybackProgressCallback.
+    private void stopUpdatingCallbackWithPosition() {
+        if (mExecutor != null) {
+            mExecutor.shutdownNow();
+            mExecutor = null;
+            mSeekBarPositionUpdateTask = null;
+        }
     }
 
     private void updateProgressCallbackTask() {
