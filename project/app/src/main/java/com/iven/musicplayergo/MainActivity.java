@@ -184,7 +184,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                     @Override
                     public void onSystemUiVisibilityChange(int visibility) {
                         if (AndroidVersion.isMarshmallow()) {
-                            //check light status bar if immersive mode is disabled
+                            //check if we have to enable light status bar
                             SettingsUtils.enableLightStatusBar(MainActivity.this, ContextCompat.getColor(MainActivity.this, mAccent));
                         }
                     }
@@ -431,12 +431,31 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private void updatePlayingInfo(boolean restore, boolean startPlay) {
 
-        mSelectedSong = mPlayerAdapter.getCurrentSong();
+        if (startPlay) {
+            mPlayerAdapter.getMediaPlayer().start();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mMusicService.startForeground(MusicNotificationManager.NOTIFICATION_ID, mMusicNotificationManager.createNotification());
+                }
+            }, 250);
+        }
+        if (restore) {
+            mSelectedSong = mPlayerAdapter.getCurrentSong();
+        }
         mSelectedArtist = mSelectedSong.artistName;
         final int duration = mSelectedSong.duration;
+        mSeekBarAudio.setMax(duration);
+        mDuration.setText(Song.formatDuration(duration));
+
+        Spanned spanned = AndroidVersion.isNougat() ?
+                Html.fromHtml(getString(R.string.playing_song, mSelectedArtist, mSelectedSong.title), Html.FROM_HTML_MODE_LEGACY) :
+                Html.fromHtml(getString(R.string.playing_song, mSelectedArtist, mSelectedSong.title));
+        mPlayingSong.setText(spanned);
+        mPlayingAlbum.setText(mSelectedSong.albumName);
 
         if (restore) {
-            mDuration.addTextChangedListener(new TextWatcher() {
+            mPlayingAlbum.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 }
@@ -447,7 +466,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    mSeekBarAudio.setMax(duration);
                     mSeekBarAudio.setProgress(mPlayerAdapter.getPlayerPosition());
 
                     new Handler().postDelayed(new Runnable() {
@@ -466,27 +484,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                     }, 250);
                 }
             });
-        }
-
-        if (!restore) {
-            mSeekBarAudio.setMax(duration);
-        }
-        mDuration.setText(Song.formatDuration(duration));
-
-        Spanned spanned = AndroidVersion.isNougat() ?
-                Html.fromHtml(getString(R.string.playing_song, mSelectedArtist, mSelectedSong.title), Html.FROM_HTML_MODE_LEGACY) :
-                Html.fromHtml(getString(R.string.playing_song, mSelectedArtist, mSelectedSong.title));
-        mPlayingSong.setText(spanned);
-        mPlayingAlbum.setText(mSelectedSong.albumName);
-
-        if (startPlay) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mPlayerAdapter.getMediaPlayer().start();
-                    mMusicService.startForeground(MusicNotificationManager.NOTIFICATION_ID, mMusicNotificationManager.createNotification());
-                }
-            }, 250);
         }
     }
 
@@ -598,13 +595,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSelectedSong = song;
         mPlayerAdapter.setCurrentSong(mSelectedSong, album.songs);
         mPlayerAdapter.setPlayingAlbum(album);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mPlayerAdapter.initMediaPlayer();
-            }
-        }, 250);
+        mPlayerAdapter.initMediaPlayer();
     }
 
     @Override

@@ -178,12 +178,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
             }
             sReplaySong = false;
         } else {
-            if (mPlayingAlbum.songs.size() > 1) {
-                skip(true);
-            } else {
-                mMediaPlayer.seekTo(0);
-                pauseMediaPlayer();
-            }
+            skip(true);
         }
     }
 
@@ -222,7 +217,6 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
 
     private void resumeMediaPlayer() {
         if (!isPlaying()) {
-            //startUpdatingCallbackWithPosition();
             mMediaPlayer.start();
             setStatus(PlaybackInfoListener.State.RESUMED);
             mMusicService.startForeground(MusicNotificationManager.NOTIFICATION_ID, mMusicNotificationManager.createNotification());
@@ -415,7 +409,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
 
     @Override
     public void seekTo(int position) {
-        if (mPlaybackInfoListener != null) {
+        if (isMediaPlayer()) {
             mMediaPlayer.seekTo(position);
         }
     }
