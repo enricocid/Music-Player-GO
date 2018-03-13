@@ -327,8 +327,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
         if (mFirstLayout) {
             mFirstLayout = false;
         }
-
-
     }
 
     @Override

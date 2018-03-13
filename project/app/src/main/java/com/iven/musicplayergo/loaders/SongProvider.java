@@ -10,6 +10,8 @@ import android.support.annotation.Nullable;
 import com.iven.musicplayergo.models.Song;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 class SongProvider {
@@ -46,9 +48,22 @@ class SongProvider {
             } while (cursor.moveToNext());
         }
 
-        if (cursor != null)
+        if (cursor != null) {
             cursor.close();
+        }
+        if (songs.size() > 1) {
+            sortSongsByTrack(songs);
+        }
         return songs;
+    }
+
+    private static void sortSongsByTrack(List<Song> songs) {
+
+        Collections.sort(songs, new Comparator<Song>() {
+            public int compare(Song obj1, Song obj2) {
+                return Long.compare(obj1.trackNumber, obj2.trackNumber);
+            }
+        });
     }
 
     @NonNull

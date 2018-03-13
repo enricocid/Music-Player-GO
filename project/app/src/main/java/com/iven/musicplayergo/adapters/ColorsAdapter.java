@@ -19,7 +19,8 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
 
     private Activity mActivity;
     private int mAccent;
-    private onAccentChangedListener mOnAccentChangedListener;
+    private AccentChangedListener mOnAccentChangedListener;
+
     //fixed int array of accent colors
     private int[] colors = new int[]{
 
@@ -41,7 +42,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
     public ColorsAdapter(Activity activity, int accent) {
         mActivity = activity;
         mAccent = accent;
-        mOnAccentChangedListener = (onAccentChangedListener) mActivity;
+        mOnAccentChangedListener = (AccentChangedListener) mActivity;
     }
 
     private Drawable createRipple(Context context, int rippleColor) {
@@ -81,7 +82,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
         return colors.length;
     }
 
-    public interface onAccentChangedListener {
+    public interface AccentChangedListener {
         void onAccentChanged(int color);
     }
 

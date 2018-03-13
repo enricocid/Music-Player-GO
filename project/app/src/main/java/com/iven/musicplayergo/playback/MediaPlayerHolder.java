@@ -219,7 +219,6 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     private void setStatus(@PlaybackInfoListener.State int state) {
 
         mState = state;
-
         if (mPlaybackInfoListener != null) {
             mPlaybackInfoListener.onStateChanged(state);
         }
@@ -243,7 +242,6 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     private void resetSong() {
         mMediaPlayer.seekTo(0);
         mMediaPlayer.start();
-
         setStatus(PlaybackInfoListener.State.PLAYING);
     }
 
@@ -404,7 +402,6 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
 
     @Override
     public void skip(boolean isNext) {
-
         getSkipSong(isNext);
     }
 

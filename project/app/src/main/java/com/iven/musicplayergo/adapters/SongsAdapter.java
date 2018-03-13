@@ -13,40 +13,25 @@ import com.iven.musicplayergo.R;
 import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Song;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHolder> {
 
     private List<Song> mSongs;
     private Album mAlbum;
-    private songSelectedListener mSongSelectedListener;
+    private SongSelectedListener mSongSelectedListener;
 
     public SongsAdapter(Activity activity, Album album) {
 
         mAlbum = album;
         mSongs = mAlbum.songs;
-
-        sortSongsByTrack();
-        mSongSelectedListener = (songSelectedListener) activity;
+        mSongSelectedListener = (SongSelectedListener) activity;
     }
 
     public void swapSongs(Album album) {
         mAlbum = album;
         mSongs = mAlbum.songs;
-        sortSongsByTrack();
         notifyDataSetChanged();
-    }
-
-    private void sortSongsByTrack() {
-        if (getItemCount() > 1) {
-            Collections.sort(mSongs, new Comparator<Song>() {
-                public int compare(Song obj1, Song obj2) {
-                    return Long.compare(obj1.trackNumber, obj2.trackNumber);
-                }
-            });
-        }
     }
 
     @Override
@@ -75,7 +60,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
         return mSongs.size();
     }
 
-    public interface songSelectedListener {
+    public interface SongSelectedListener {
         void onSongSelected(Song song, Album album);
     }
 

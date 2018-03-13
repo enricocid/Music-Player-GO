@@ -20,14 +20,14 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
 
     private FragmentActivity mActivity;
     private List<Artist> mArtists;
-    private artistSelectedListener mArtistSelectedListener;
+    private ArtistSelectedListener mArtistSelectedListener;
     private HashMap<Integer, String> mIndexedPositions = new LinkedHashMap<>();
 
     public ArtistsAdapter(FragmentActivity activity, List<Artist> artists) {
 
         mActivity = activity;
         mArtists = artists;
-        mArtistSelectedListener = (artistSelectedListener) activity;
+        mArtistSelectedListener = (ArtistSelectedListener) activity;
         generateIndexes();
     }
 
@@ -72,7 +72,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
         return mArtists.size();
     }
 
-    public interface artistSelectedListener {
+    public interface ArtistSelectedListener {
         void onArtistSelected(String artist);
     }
 

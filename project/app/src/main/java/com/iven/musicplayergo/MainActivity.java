@@ -60,7 +60,7 @@ import com.iven.musicplayergo.utils.SettingsUtils;
 
 import java.util.List;
 
-public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks, SongsAdapter.songSelectedListener, ColorsAdapter.onAccentChangedListener, AlbumsAdapter.albumSelectedListener, ArtistsAdapter.artistSelectedListener {
+public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks, SongsAdapter.SongSelectedListener, ColorsAdapter.AccentChangedListener, AlbumsAdapter.AlbumSelectedListener, ArtistsAdapter.ArtistSelectedListener {
 
     LinearLayoutManager mArtistsLayoutManager;
     ArtistsAdapter mArtistsAdapter;

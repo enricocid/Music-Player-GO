@@ -29,7 +29,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
     private List<Album> mAlbums;
 
-    private albumSelectedListener mAlbumSelectedListener;
+    private AlbumSelectedListener mAlbumSelectedListener;
 
     private PlayerAdapter mPlayerAdapter;
 
@@ -43,7 +43,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
         mAlbumsRecyclerView = albumsRecyclerView;
 
-        mAlbumSelectedListener = (albumSelectedListener) mActivity;
+        mAlbumSelectedListener = (AlbumSelectedListener) mActivity;
 
         mAlbumsForArtist = albumsForArtist;
 
@@ -111,7 +111,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
         return mAlbums.size();
     }
 
-    public interface albumSelectedListener {
+    public interface AlbumSelectedListener {
         void onAlbumSelected(Album album);
     }
 

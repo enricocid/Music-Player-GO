@@ -40,7 +40,6 @@ public class Song {
         if (trackNumber >= 1000) {
             formatted = trackNumber % 1000;
         }
-
         return String.valueOf(formatted);
     }
 }
