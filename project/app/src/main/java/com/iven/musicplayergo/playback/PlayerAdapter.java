@@ -75,4 +75,8 @@ public interface PlayerAdapter {
     void setPlayingAlbum(Album album);
 
     MediaPlayer getMediaPlayer();
+
+    void onPauseActivity();
+
+    void onResumeActivity();
 }
