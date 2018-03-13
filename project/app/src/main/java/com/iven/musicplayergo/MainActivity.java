@@ -22,10 +22,8 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.text.Html;
 import android.text.Spanned;
-import android.text.TextWatcher;
 import android.util.Pair;
 import android.view.Gravity;
 import android.view.View;
@@ -458,34 +456,21 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mPlayingAlbum.setText(mSelectedSong.albumName);
 
         if (restore) {
-            mPlayingAlbum.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
+            mSeekBarAudio.setProgress(mPlayerAdapter.getPlayerPosition());
+            updatePlayingStatus();
+            updateResetStatus(false);
 
+            new Handler().postDelayed(new Runnable() {
                 @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                public void run() {
+                    //stop foreground if coming from pause state
+                    if (mMusicService.isRestoredFromPause()) {
+                        mMusicService.stopForeground(false);
+                        mMusicService.getMusicNotificationManager().getNotificationManager().notify(MusicNotificationManager.NOTIFICATION_ID, mMusicService.getMusicNotificationManager().getNotificationBuilder().build());
+                        mMusicService.setRestoredFromPause(false);
+                    }
                 }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    mSeekBarAudio.setProgress(mPlayerAdapter.getPlayerPosition());
-                    updatePlayingStatus();
-                    updateResetStatus(false);
-
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            //stop foreground if coming from pause state
-                            if (mMusicService.isRestoredFromPause()) {
-                                mMusicService.stopForeground(false);
-                                mMusicService.getMusicNotificationManager().getNotificationManager().notify(MusicNotificationManager.NOTIFICATION_ID, mMusicService.getMusicNotificationManager().getNotificationBuilder().build());
-                                mMusicService.setRestoredFromPause(false);
-                            }
-                        }
-                    }, 250);
-                }
-            });
+            }, 250);
         }
     }
 
