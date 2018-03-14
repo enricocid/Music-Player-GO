@@ -1,6 +1,5 @@
 <resources>
     <string name="albums">%s (%d dischi)</string>
-    <string name="artists">Artisti</string>
     <string name="unknown_year">Anno sconosciuto</string>
     <string name="eq">Equalizzatore</string>
     <string name="no_eq">Nessun equalizzatore trovato! :(</string>

@@ -1,6 +1,5 @@
 <resources>
     <string name="albums">%s (%d albums)</string>
-    <string name="artists">Artistes</string>
     <string name="unknown_year">Année inconnue</string>
     <string name="eq">Égaliseur</string>
     <string name="no_eq">Aucun égaliseur sur l\'appareil! :(</string>
