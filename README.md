@@ -19,7 +19,7 @@ https://plus.google.com/+JulianGomezAxinen
 
 
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art13.png)
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art12.png)
 
 <a href="https://play.google.com/apps/testing/com.iven.musicplayergo" target="_blank">
   <img alt="Get it on Google Play"
