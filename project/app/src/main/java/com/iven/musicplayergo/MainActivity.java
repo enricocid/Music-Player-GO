@@ -67,7 +67,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private RecyclerView mAlbumsRecyclerView, mSongsRecyclerView;
     private AlbumsAdapter mAlbumsAdapter;
     private SongsAdapter mSongsAdapter;
-    private TextView mPlayingAlbum, mPlayingSong, mDuration, mSongPosition;
+    private TextView mPlayingAlbum, mPlayingSong, mDuration, mSongPosition, mArtistAlbumCount;
     private SeekBar mSeekBarAudio;
     private LinearLayout mControlsContainer;
     private View mSettingsView;
@@ -208,6 +208,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mPlayingAlbum = findViewById(R.id.playing_album);
         mDuration = findViewById(R.id.duration);
         mSongPosition = findViewById(R.id.song_position);
+        mArtistAlbumCount = findViewById(R.id.artist_album_count);
 
         mArtistsRecyclerView = findViewById(R.id.artists_rv);
         mAlbumsRecyclerView = findViewById(R.id.albums_rv);
@@ -533,6 +534,11 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 //get loaded albums for artist
                 Pair<Artist, List<Album>> albumsForArtist = (Pair<Artist, List<Album>>) data;
 
+                int albumCount = albumsForArtist.second.size();
+                int artistAlbumCount = albumCount > 1 ? R.string.albums : R.string.album;
+
+                mArtistAlbumCount.setText(getString(artistAlbumCount, mSelectedArtist, albumCount));
+
                 if (mAlbumsAdapter != null) {
                     //only notify recycler view of item changed if an adapter already exists
                     mAlbumsAdapter.swapArtist(albumsForArtist);
@@ -587,6 +593,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
             //load artist albums only if not already loaded
             mSelectedArtist = artist;
+
             getSupportLoaderManager().restartLoader(AlbumProvider.ALBUMS_LOADER, null, this);
         } else {
             //if already loaded expand the panel

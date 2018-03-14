@@ -21,8 +21,6 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
     private Activity mActivity;
 
-    private TextView mArtistName;
-
     private Album mSelectedAlbum;
 
     private Pair<Artist, List<Album>> mAlbumsForArtist;
@@ -51,8 +49,6 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
         mAlbums = mAlbumsForArtist.second;
 
-        mArtistName = mActivity.findViewById(R.id.artist_count);
-
         updateAlbumsForArtist();
     }
 
@@ -66,7 +62,6 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
     private void updateAlbumsForArtist() {
 
         Artist artist = mAlbumsForArtist.first;
-        mArtistName.setText(mActivity.getString(R.string.albums, artist.getName(), getItemCount()));
 
         mSelectedAlbum = mPlayerAdapter != null && mPlayerAdapter.getSelectedAlbum() != null ? mPlayerAdapter.getSelectedAlbum() : artist.getFirstAlbum();
 

@@ -1,4 +1,5 @@
 <resources>
+    <string name="album">%s (%d album)</string>
     <string name="albums">%s (%d albums)</string>
     <string name="unknown_year">Année inconnue</string>
     <string name="eq">Égaliseur</string>
