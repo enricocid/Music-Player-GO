@@ -180,17 +180,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         getViews();
 
-        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(
-                new View.OnSystemUiVisibilityChangeListener() {
-                    @Override
-                    public void onSystemUiVisibilityChange(int visibility) {
-                        if (AndroidVersion.isMarshmallow()) {
-                            //check if we have to enable light status bar
-                            SettingsUtils.enableLightStatusBar(MainActivity.this, ContextCompat.getColor(MainActivity.this, mAccent));
-                        }
-                    }
-                });
-
         mSlidingUpPanel.setSlidingUpPanel(mSongsRecyclerView, mArtistsRecyclerView, mArrowUp);
         mSlidingUpPanel.setGravity(Gravity.BOTTOM);
 
