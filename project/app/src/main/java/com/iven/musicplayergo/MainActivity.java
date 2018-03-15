@@ -431,9 +431,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 }
             }, 250);
         }
-        if (restore) {
-            mSelectedSong = mPlayerAdapter.getCurrentSong();
-        }
+
+        mSelectedSong = mPlayerAdapter.getCurrentSong();
+
         mSelectedArtist = mSelectedSong.artistName;
         final int duration = mSelectedSong.duration;
         mSeekBarAudio.setMax(duration);
