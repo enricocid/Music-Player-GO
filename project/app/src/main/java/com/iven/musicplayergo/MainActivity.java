@@ -76,7 +76,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private int mThemeContrast;
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
-    private Song mSelectedSong;
     private String mSelectedArtist;
     private boolean sExpandPanel = false;
     private MusicService mMusicService;
@@ -432,18 +431,18 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             }, 250);
         }
 
-        mSelectedSong = mPlayerAdapter.getCurrentSong();
+        final Song selectedSong = mPlayerAdapter.getCurrentSong();
 
-        mSelectedArtist = mSelectedSong.artistName;
-        final int duration = mSelectedSong.duration;
+        mSelectedArtist = selectedSong.artistName;
+        final int duration = selectedSong.duration;
         mSeekBarAudio.setMax(duration);
         mDuration.setText(Song.formatDuration(duration));
 
         Spanned spanned = AndroidVersion.isNougat() ?
-                Html.fromHtml(getString(R.string.playing_song, mSelectedArtist, mSelectedSong.title), Html.FROM_HTML_MODE_LEGACY) :
-                Html.fromHtml(getString(R.string.playing_song, mSelectedArtist, mSelectedSong.title));
+                Html.fromHtml(getString(R.string.playing_song, mSelectedArtist, selectedSong.title), Html.FROM_HTML_MODE_LEGACY) :
+                Html.fromHtml(getString(R.string.playing_song, mSelectedArtist, selectedSong.title));
         mPlayingSong.setText(spanned);
-        mPlayingAlbum.setText(mSelectedSong.albumName);
+        mPlayingAlbum.setText(selectedSong.albumName);
 
         if (restore) {
             mSeekBarAudio.setProgress(mPlayerAdapter.getPlayerPosition());
@@ -575,8 +574,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (!mSeekBarAudio.isEnabled()) {
             mSeekBarAudio.setEnabled(true);
         }
-        mSelectedSong = song;
-        mPlayerAdapter.setCurrentSong(mSelectedSong, album.songs);
+        mPlayerAdapter.setCurrentSong(song, album.songs);
         mPlayerAdapter.setPlayingAlbum(album);
         mPlayerAdapter.initMediaPlayer();
     }
