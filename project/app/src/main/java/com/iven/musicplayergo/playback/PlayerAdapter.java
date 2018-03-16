@@ -18,7 +18,6 @@ package com.iven.musicplayergo.playback;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
-import android.support.v4.media.session.PlaybackStateCompat;
 
 import com.iven.musicplayergo.MainActivity;
 import com.iven.musicplayergo.models.Album;
@@ -57,7 +56,7 @@ public interface PlayerAdapter {
 
     Song getCurrentSong();
 
-    @PlaybackStateCompat.State
+    @PlaybackInfoListener.State
     int getState();
 
     int getPlayerPosition();

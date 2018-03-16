@@ -10,7 +10,6 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.PowerManager;
-import android.support.v4.media.session.PlaybackStateCompat;
 
 import com.iven.musicplayergo.MainActivity;
 import com.iven.musicplayergo.models.Album;
@@ -379,7 +378,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     }
 
     @Override
-    public @PlaybackStateCompat.State
+    public @PlaybackInfoListener.State
     int getState() {
         return mState;
     }

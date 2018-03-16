@@ -18,7 +18,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
-import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -622,7 +621,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         }
 
         @Override
-        public void onStateChanged(@PlaybackStateCompat.State int state) {
+        public void onStateChanged(@State int state) {
 
             updatePlayingStatus();
             if (mPlayerAdapter.getState() != State.RESUMED && mPlayerAdapter.getState() != State.PAUSED) {
