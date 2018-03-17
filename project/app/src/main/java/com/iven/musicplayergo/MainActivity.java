@@ -80,12 +80,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private MusicService mMusicService;
     private PlaybackListener mPlaybackListener;
     private MusicNotificationManager mMusicNotificationManager;
-    private boolean mIsBound;
-
-    private Parcelable savedRecyclerLayoutState;
-
-    private PopupWindow mSettingsPopup;
-
     private final ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -107,6 +101,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             mMusicService = null;
         }
     };
+    private boolean mIsBound;
+    private Parcelable savedRecyclerLayoutState;
+    private PopupWindow mSettingsPopup;
 
     @Override
     public void onPause() {
@@ -114,10 +111,10 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (mArtistsLayoutManager != null) {
             savedRecyclerLayoutState = mArtistsLayoutManager.onSaveInstanceState();
         }
-        if (mSettingsPopup.isShowing()) {
+        if (mSettingsPopup != null && mSettingsPopup.isShowing()) {
             mSettingsPopup.dismiss();
         }
-        if (mPlayerAdapter.isPlaying()) {
+        if (mPlayerAdapter != null && mPlayerAdapter.isMediaPlayer()) {
             mPlayerAdapter.onPauseActivity();
         }
     }
@@ -468,7 +465,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         //if we are playing and the activity was restarted
         //update the controls panel
-        if (mPlayerAdapter.isMediaPlayer()) {
+        if (mPlayerAdapter != null && mPlayerAdapter.isMediaPlayer()) {
 
             mPlayerAdapter.onResumeActivity();
             updatePlayingInfo(true, false);
