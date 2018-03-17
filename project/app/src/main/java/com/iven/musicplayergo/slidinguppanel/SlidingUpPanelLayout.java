@@ -607,7 +607,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
         }
     }
 
-    void applyDim() {
+    private void applyDim() {
         if (mSlideOffset > 0) {
             int coveredFadeColor = 0x99000000;
             final int baseAlpha = (coveredFadeColor & 0xff000000) >>> 24;

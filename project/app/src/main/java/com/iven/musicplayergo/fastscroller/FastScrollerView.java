@@ -21,30 +21,30 @@ import com.iven.musicplayergo.utils.SettingsUtils;
 
 public class FastScrollerView extends RecyclerView.AdapterDataObserver {
 
-    private float mIndexBarWidth;
-    private float mIndexBarMargin;
-    private float mPreviewPadding;
-    private float mDensity;
-    private float mScaledDensity;
+    private final float mIndexBarWidth;
+    private final float mIndexBarMargin;
+    private final float mPreviewPadding;
+    private final float mDensity;
+    private final float mScaledDensity;
     private int mArtistsRecyclerViewWidth;
     private int mArtistsRecyclerViewHeight;
     private RectF mIndexBarRect;
 
-    private FastScrollerHandler.IndexBarHandler mIndexBarHandler;
-    private FastScrollerHandler.IndexThumbHandler mIndexThumbHandler;
+    private final FastScrollerHandler.IndexBarHandler mIndexBarHandler;
+    private final FastScrollerHandler.IndexThumbHandler mIndexThumbHandler;
 
-    private int mAccent;
-    private int mThemeContrast;
-    private FastScrollerRecyclerView mArtistsRecyclerView;
-    private ArtistsAdapter mArtistsAdapter;
-    private LinearLayoutManager mLinearLayoutManager;
+    private final int mAccent;
+    private final int mThemeContrast;
+    private final FastScrollerRecyclerView mArtistsRecyclerView;
+    private final ArtistsAdapter mArtistsAdapter;
+    private final LinearLayoutManager mLinearLayoutManager;
 
     private String[] mSections;
     private boolean mIsIndexing;
     private int mCurrentSection = -1;
     private boolean sHidden = true;
 
-    private Context mContext;
+    private final Context mContext;
 
     public FastScrollerView(FastScrollerRecyclerView rv, ArtistsAdapter artistsAdapter, LinearLayoutManager linearLayoutManager, int accent, int themeContrast) {
 

@@ -55,7 +55,6 @@ public class FastScrollerRecyclerView extends RecyclerView {
                                        float velocityX, float velocityY) {
                     return super.onFling(e1, e2, velocityX, velocityY);
                 }
-
             });
         }
         mGestureDetector.onTouchEvent(ev);

@@ -9,7 +9,7 @@ class FastScrollerHandler extends Handler {
     static final int INDEX_BAR = 3000;
 
     static class IndexThumbHandler extends Handler {
-        private FastScrollerRecyclerView mRecyclerView;
+        private final FastScrollerRecyclerView mRecyclerView;
 
         IndexThumbHandler(FastScrollerRecyclerView recyclerView) {
             mRecyclerView = recyclerView;
@@ -24,7 +24,7 @@ class FastScrollerHandler extends Handler {
     }
 
     static class IndexBarHandler extends Handler {
-        private FastScrollerView mFastScroller;
+        private final FastScrollerView mFastScroller;
 
         IndexBarHandler(FastScrollerView fastScrollerView) {
             mFastScroller = fastScrollerView;

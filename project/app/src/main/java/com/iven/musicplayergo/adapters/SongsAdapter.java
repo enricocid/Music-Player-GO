@@ -19,7 +19,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
 
     private List<Song> mSongs;
     private Album mAlbum;
-    private SongSelectedListener mSongSelectedListener;
+    private final SongSelectedListener mSongSelectedListener;
 
     public SongsAdapter(Activity activity, Album album) {
 
@@ -66,8 +66,8 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
 
     class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView number, title, duration;
-        ImageView nowPlaying;
+        final TextView number, title, duration;
+        final ImageView nowPlaying;
 
         SimpleViewHolder(View itemView) {
             super(itemView);

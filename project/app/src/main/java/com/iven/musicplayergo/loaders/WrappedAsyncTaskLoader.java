@@ -9,7 +9,7 @@ import android.support.v4.content.AsyncTaskLoader;
  *
  * @author Alexander Blom
  */
-public abstract class WrappedAsyncTaskLoader<D> extends AsyncTaskLoader<D> {
+abstract class WrappedAsyncTaskLoader<D> extends AsyncTaskLoader<D> {
 
     private D mData;
 

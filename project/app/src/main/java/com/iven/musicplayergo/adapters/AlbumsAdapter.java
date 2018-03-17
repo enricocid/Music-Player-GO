@@ -19,7 +19,7 @@ import java.util.List;
 
 public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleViewHolder> {
 
-    private Activity mActivity;
+    private final Activity mActivity;
 
     private Album mSelectedAlbum;
 
@@ -27,13 +27,13 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
     private List<Album> mAlbums;
 
-    private AlbumSelectedListener mAlbumSelectedListener;
+    private final AlbumSelectedListener mAlbumSelectedListener;
 
-    private PlayerAdapter mPlayerAdapter;
+    private final PlayerAdapter mPlayerAdapter;
 
     private int mSelectedPosition;
 
-    private RecyclerView mAlbumsRecyclerView;
+    private final RecyclerView mAlbumsRecyclerView;
 
     public AlbumsAdapter(Activity activity, RecyclerView albumsRecyclerView, Pair<Artist, List<Album>> albumsForArtist, PlayerAdapter playerAdapter) {
 
@@ -65,7 +65,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
         mSelectedAlbum = mPlayerAdapter != null && mPlayerAdapter.getSelectedAlbum() != null ? mPlayerAdapter.getSelectedAlbum() : artist.getFirstAlbum();
 
-        if (mPlayerAdapter.getPlayingAlbum() != null && artist.getName().equals(mPlayerAdapter.getPlayingAlbum().getArtistName())) {
+        if (mPlayerAdapter != null && mPlayerAdapter.getPlayingAlbum() != null && artist.getName().equals(mPlayerAdapter.getPlayingAlbum().getArtistName())) {
             mSelectedAlbum = mPlayerAdapter.getPlayingAlbum();
         }
         mSelectedPosition = mSelectedAlbum.position;
@@ -112,8 +112,8 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
     class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView title, year;
-        ImageView nowPlaying;
+        final TextView title, year;
+        final ImageView nowPlaying;
 
         SimpleViewHolder(View itemView) {
             super(itemView);

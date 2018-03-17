@@ -22,7 +22,7 @@ public class PermissionDialog extends DialogFragment {
         // Use `newInstance` instead as shown below
     }
 
-    public static PermissionDialog newInstance() {
+    private static PermissionDialog newInstance() {
         return new PermissionDialog();
     }
 

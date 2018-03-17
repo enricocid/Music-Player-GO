@@ -57,7 +57,7 @@ public class AlbumProvider {
 
     public static class AsyncAlbumsForArtistLoader extends WrappedAsyncTaskLoader<Pair<Artist, List<Album>>> {
 
-        private String mSelectedArtist;
+        private final String mSelectedArtist;
 
         public AsyncAlbumsForArtistLoader(Context context, String selectedArtist) {
             super(context);

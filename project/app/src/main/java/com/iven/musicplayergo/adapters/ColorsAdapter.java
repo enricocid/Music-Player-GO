@@ -17,12 +17,12 @@ import com.iven.musicplayergo.R;
 
 public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleViewHolder> {
 
-    private Activity mActivity;
-    private int mAccent;
-    private AccentChangedListener mOnAccentChangedListener;
+    private final Activity mActivity;
+    private final int mAccent;
+    private final AccentChangedListener mOnAccentChangedListener;
 
     //fixed int array of accent colors
-    private int[] colors = new int[]{
+    private final int[] colors = new int[]{
 
             R.color.red_A400,
             R.color.pink_A400,
@@ -88,7 +88,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
 
     class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private ImageButton color;
+        private final ImageButton color;
 
         SimpleViewHolder(View itemView) {
             super(itemView);

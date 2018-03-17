@@ -59,8 +59,8 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks, SongsAdapter.SongSelectedListener, ColorsAdapter.AccentChangedListener, AlbumsAdapter.AlbumSelectedListener, ArtistsAdapter.ArtistSelectedListener {
 
-    LinearLayoutManager mArtistsLayoutManager;
-    ArtistsAdapter mArtistsAdapter;
+    private LinearLayoutManager mArtistsLayoutManager;
+    private ArtistsAdapter mArtistsAdapter;
     private int mAccent;
     private FastScrollerRecyclerView mArtistsRecyclerView;
     private RecyclerView mAlbumsRecyclerView, mSongsRecyclerView;
@@ -86,7 +86,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private PopupWindow mSettingsPopup;
 
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private final ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
 
@@ -288,7 +288,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         });
     }
 
-    void setArtistsRecyclerView(List<Artist> data) {
+    private void setArtistsRecyclerView(List<Artist> data) {
 
         mArtistsLayoutManager = new LinearLayoutManager(this);
         mArtistsRecyclerView.setLayoutManager(mArtistsLayoutManager);

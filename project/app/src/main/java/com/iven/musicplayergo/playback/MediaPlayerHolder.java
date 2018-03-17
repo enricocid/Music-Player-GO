@@ -40,7 +40,8 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     // we have full audio focus
     private static final int AUDIO_FOCUSED = 2;
     private final Context mContext;
-    private MusicService mMusicService;
+    private final MusicService mMusicService;
+    private final AudioManager mAudioManager;
     private MediaPlayer mMediaPlayer;
     private PlaybackInfoListener mPlaybackInfoListener;
     private ScheduledExecutorService mExecutor;
@@ -49,14 +50,11 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     private List<Song> mSongs;
     private Album mSelectedAlbum;
     private Album mPlayingAlbum;
-
     private boolean sReplaySong = false;
     private @PlaybackInfoListener.State
     int mState;
-
     private NotificationReceiver mNotificationActionsReceiver;
     private MusicNotificationManager mMusicNotificationManager;
-    private AudioManager mAudioManager;
     private int mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK;
     private boolean mPlayOnFocusGain;
     private final AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener =

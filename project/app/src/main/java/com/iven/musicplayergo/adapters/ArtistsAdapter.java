@@ -18,10 +18,10 @@ import java.util.Locale;
 
 public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleViewHolder> {
 
-    private FragmentActivity mActivity;
-    private List<Artist> mArtists;
-    private ArtistSelectedListener mArtistSelectedListener;
-    private HashMap<Integer, String> mIndexedPositions = new LinkedHashMap<>();
+    private final FragmentActivity mActivity;
+    private final List<Artist> mArtists;
+    private final ArtistSelectedListener mArtistSelectedListener;
+    private final HashMap<Integer, String> mIndexedPositions = new LinkedHashMap<>();
 
     public ArtistsAdapter(FragmentActivity activity, List<Artist> artists) {
 
@@ -78,7 +78,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
 
     class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView title;
+        final TextView title;
 
         SimpleViewHolder(View itemView) {
             super(itemView);

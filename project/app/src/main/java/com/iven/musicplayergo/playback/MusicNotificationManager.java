@@ -30,9 +30,9 @@ public class MusicNotificationManager {
     static final String PREV_ACTION = "com.iven.musicplayergo.PREV";
     private final String CHANNEL_ID = "com.iven.musicplayergo.CHANNEL_ID";
     private final int REQUEST_CODE = 100;
-    private NotificationManager mNotificationManager;
+    private final NotificationManager mNotificationManager;
     private NotificationCompat.Builder mNotificationBuilder;
-    private MusicService mMusicService;
+    private final MusicService mMusicService;
     private int mAccent;
 
     MusicNotificationManager(MusicService musicService) {
