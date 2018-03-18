@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.iven.musicplayergo.R;
@@ -17,9 +16,9 @@ import java.util.List;
 
 public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHolder> {
 
+    private final SongSelectedListener mSongSelectedListener;
     private List<Song> mSongs;
     private Album mAlbum;
-    private final SongSelectedListener mSongSelectedListener;
 
     public SongsAdapter(Activity activity, Album album) {
 
@@ -67,7 +66,6 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
     class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         final TextView number, title, duration;
-        final ImageView nowPlaying;
 
         SimpleViewHolder(View itemView) {
             super(itemView);
@@ -75,7 +73,6 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
             number = itemView.findViewById(R.id.track);
             title = itemView.findViewById(R.id.title);
             duration = itemView.findViewById(R.id.duration);
-            nowPlaying = itemView.findViewById(R.id.nowPlaying);
 
             itemView.setOnClickListener(this);
         }
