@@ -7,7 +7,7 @@
 
 ### Very slim music player (~1000KB)
 
-### Current version: 2.2.9.1 (beta)
+### Current version: 2.3
 
 
 
