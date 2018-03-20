@@ -529,20 +529,16 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 //get loaded albums for artist
                 Pair<Artist, List<Album>> albumsForArtist = (Pair<Artist, List<Album>>) data;
 
-                int albumCount = albumsForArtist.second.size();
-                int artistAlbumCount = albumCount > 1 ? R.string.albums : R.string.album;
-
-                mArtistAlbumCount.setText(getString(artistAlbumCount, mSelectedArtist, albumCount));
-
                 if (mAlbumsAdapter != null) {
                     //only notify recycler view of item changed if an adapter already exists
                     mAlbumsAdapter.swapArtist(albumsForArtist);
                 } else {
                     LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
                     mAlbumsRecyclerView.setLayoutManager(horizontalLayoutManager);
-                    mAlbumsAdapter = new AlbumsAdapter(this, mAlbumsRecyclerView, albumsForArtist, mPlayerAdapter);
+                    mAlbumsAdapter = new AlbumsAdapter(this, mAlbumsRecyclerView, mArtistAlbumCount, albumsForArtist, mPlayerAdapter);
                     mAlbumsRecyclerView.setAdapter(mAlbumsAdapter);
                 }
+
                 if (sExpandPanel) {
                     mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
                     sExpandPanel = false;
