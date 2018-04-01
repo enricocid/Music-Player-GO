@@ -45,17 +45,17 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
         mAlbums = mAlbumsForArtist.second;
 
-        updateAlbumsForArtist();
+        updateAlbumsForArtist(false);
     }
 
     public void swapArtist(Pair<Artist, List<Album>> albumsForArtist) {
         mAlbumsForArtist = albumsForArtist;
         mAlbums = mAlbumsForArtist.second;
         notifyDataSetChanged();
-        updateAlbumsForArtist();
+        updateAlbumsForArtist(true);
     }
 
-    private void updateAlbumsForArtist() {
+    private void updateAlbumsForArtist(boolean artistChanged) {
 
         Artist artist = mAlbumsForArtist.first;
 
@@ -63,7 +63,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
         int artistAlbumCount = albumCount > 1 ? R.string.albums : R.string.album;
         mArtistAlbumCount.setText(mActivity.getString(artistAlbumCount, artist.getName(), albumCount));
 
-        mSelectedAlbum = mPlayerAdapter != null && mPlayerAdapter.getSelectedAlbum(mPlayerAdapter.isPlaying()) != null ? mPlayerAdapter.getSelectedAlbum(mPlayerAdapter.isPlaying()) : artist.getFirstAlbum();
+        mSelectedAlbum = artistChanged ? artist.getFirstAlbum() : mPlayerAdapter != null && mPlayerAdapter.getSelectedAlbum(mPlayerAdapter.isPlaying()) != null ? mPlayerAdapter.getSelectedAlbum(mPlayerAdapter.isPlaying()) : artist.getFirstAlbum();
 
         mSelectedPosition = mSelectedAlbum.position;
         mAlbumsRecyclerView.smoothScrollToPosition(mSelectedPosition);
