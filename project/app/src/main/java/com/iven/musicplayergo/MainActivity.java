@@ -519,7 +519,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                     setArtistsRecyclerView(artists);
 
                     //load the details of the first artist on list
-                    mSelectedArtist = mPlayerAdapter.isMediaPlayer() ? mPlayerAdapter.getCurrentSong().artistName : artists.get(0).getName();
+                    mSelectedArtist = mPlayerAdapter.isMediaPlayer() && mPlayerAdapter.getSelectedAlbum(mPlayerAdapter.isPlaying()) != null ? mPlayerAdapter.getSelectedAlbum(mPlayerAdapter.isPlaying()).getArtistName() : artists.get(0).getName();
                     getSupportLoaderManager().initLoader(AlbumProvider.ALBUMS_LOADER, null, this);
                 }
                 break;
@@ -566,8 +566,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (!mSeekBarAudio.isEnabled()) {
             mSeekBarAudio.setEnabled(true);
         }
-        mPlayerAdapter.setCurrentSong(song, album.songs);
-        mPlayerAdapter.setPlayingAlbum(album);
+        mPlayerAdapter.setPlayingAlbum(song, album);
         mPlayerAdapter.initMediaPlayer();
     }
 
@@ -593,7 +592,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     @Override
     public void onAlbumSelected(Album album) {
-
         if (mSongsAdapter != null) {
             mSongsAdapter.swapSongs(album);
         } else {

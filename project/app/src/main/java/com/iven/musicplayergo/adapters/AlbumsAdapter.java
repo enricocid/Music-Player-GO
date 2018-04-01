@@ -20,21 +20,13 @@ import java.util.List;
 public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleViewHolder> {
 
     private final Activity mActivity;
-
-    private Album mSelectedAlbum;
-
-    private Pair<Artist, List<Album>> mAlbumsForArtist;
-
-    private List<Album> mAlbums;
-
     private final AlbumSelectedListener mAlbumSelectedListener;
-
     private final PlayerAdapter mPlayerAdapter;
-
-    private int mSelectedPosition;
-
     private final RecyclerView mAlbumsRecyclerView;
-
+    private Album mSelectedAlbum;
+    private Pair<Artist, List<Album>> mAlbumsForArtist;
+    private List<Album> mAlbums;
+    private int mSelectedPosition;
     private TextView mArtistAlbumCount;
 
     public AlbumsAdapter(Activity activity, RecyclerView albumsRecyclerView, TextView artistAlbumCount, Pair<Artist, List<Album>> albumsForArtist, PlayerAdapter playerAdapter) {
@@ -71,11 +63,8 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
         int artistAlbumCount = albumCount > 1 ? R.string.albums : R.string.album;
         mArtistAlbumCount.setText(mActivity.getString(artistAlbumCount, artist.getName(), albumCount));
 
-        mSelectedAlbum = mPlayerAdapter != null && mPlayerAdapter.getSelectedAlbum() != null ? mPlayerAdapter.getSelectedAlbum() : artist.getFirstAlbum();
+        mSelectedAlbum = mPlayerAdapter != null && mPlayerAdapter.getSelectedAlbum(mPlayerAdapter.isPlaying()) != null ? mPlayerAdapter.getSelectedAlbum(mPlayerAdapter.isPlaying()) : artist.getFirstAlbum();
 
-        if (mPlayerAdapter != null && mPlayerAdapter.getPlayingAlbum() != null && artist.getName().equals(mPlayerAdapter.getPlayingAlbum().getArtistName())) {
-            mSelectedAlbum = mPlayerAdapter.getPlayingAlbum();
-        }
         mSelectedPosition = mSelectedAlbum.position;
         mAlbumsRecyclerView.smoothScrollToPosition(mSelectedPosition);
         mAlbumSelectedListener.onAlbumSelected(mSelectedAlbum);
