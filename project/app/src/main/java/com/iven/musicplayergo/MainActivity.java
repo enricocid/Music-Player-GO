@@ -260,7 +260,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         mSettingsPopup.setAnimationStyle(android.R.style.Animation_Translucent);
         if (!mSettingsPopup.isShowing()) {
-            mSettingsButton.setImageResource(R.drawable.ic_close);
             mSettingsPopup.showAtLocation(mSettingsView, Gravity.CENTER, 0, 0);
         } else {
             mSettingsPopup.dismiss();
