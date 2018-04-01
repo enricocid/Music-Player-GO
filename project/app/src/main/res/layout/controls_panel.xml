@@ -5,15 +5,14 @@
     android:layout_height="wrap_content"
     android:background="?attr/panel_color"
     android:clickable="true"
-    android:focusable="true"
     android:elevation="2dp"
+    android:focusable="true"
     android:orientation="vertical">
 
     <!-- PLAYER_CONTROLS -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/panel_color"
         android:orientation="horizontal">
 
         <ImageButton
@@ -21,8 +20,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/ripple"
+            android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
+            android:foreground="@drawable/ripple"
             android:onClick="reset"
             android:padding="8dp"
             android:src="@drawable/ic_repeat" />
@@ -31,8 +31,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/ripple"
+            android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
+            android:foreground="@drawable/ripple"
             android:onClick="skipPrev"
             android:padding="8dp"
             android:src="@drawable/ic_skip_previous" />
@@ -42,7 +43,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
             android:onClick="resumeOrPause"
             android:padding="8dp"
@@ -52,8 +53,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/ripple"
+            android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
+            android:foreground="@drawable/ripple"
             android:onClick="skipNext"
             android:padding="8dp"
             android:src="@drawable/ic_skip_next" />
@@ -63,66 +65,53 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/ripple"
+            android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/app_name"
+            android:foreground="@drawable/ripple"
             android:onClick="showSettingsPopup"
             android:padding="8dp"
             android:src="@drawable/ic_settings" />
     </LinearLayout>
 
     <!-- PLAYER SEEK TO BAR -->
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:clickable="true"
-        android:focusable="true">
-
-        <SeekBar
-            android:id="@+id/seekTo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingEnd="0dp"
-            android:paddingStart="0dp"
-            android:progressDrawable="@drawable/seekbar"
-            android:splitTrack="false"
-            android:thumb="@drawable/seekbar_thumb" />
+        android:focusable="true"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/song_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
-            android:paddingEnd="4dp"
-            android:paddingStart="4dp"
-            android:shadowColor="?attr/card_color"
-            android:shadowDx="-1"
-            android:shadowDy="-1"
-            android:shadowRadius="1"
+            android:paddingEnd="2dp"
+            android:paddingStart="2dp"
             android:textAppearance="@android:style/TextAppearance.Material.Small"
             android:textColor="?android:textColorPrimary" />
+
+        <SeekBar
+            android:id="@+id/seekTo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:splitTrack="false" />
 
         <TextView
             android:id="@+id/duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
-            android:paddingEnd="4dp"
-            android:paddingStart="4dp"
-            android:shadowColor="?attr/card_color"
-            android:shadowDx="-1"
-            android:shadowDy="-1"
-            android:shadowRadius="1"
+            android:paddingEnd="2dp"
+            android:paddingStart="2dp"
             android:singleLine="true"
             android:textAppearance="@android:style/TextAppearance.Material.Small"
             android:textColor="?android:textColorPrimary" />
-    </FrameLayout>
+    </LinearLayout>
 
     <!-- PLAYING SONG INFO -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/panel_color"
         android:orientation="vertical"
         android:paddingEnd="8dp"
         android:paddingStart="8dp"

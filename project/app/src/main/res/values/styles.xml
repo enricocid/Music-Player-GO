@@ -61,4 +61,11 @@
         <item name="android:colorAccent">?attr/accent_color</item>
         <item name="android:background">@color/black_panel</item>
     </style>
+
+    <style name="SeekBarStyle" parent="android:Widget.Material.SeekBar">
+        <item name="android:progressBackgroundTint">?attr/accent_color</item>
+        <item name="android:progressTint">?attr/accent_color</item>
+        <item name="android:colorControlActivated">?attr/accent_color</item>
+        <item name="android:thumbTint">?attr/accent_color</item>
+    </style>
 </resources>

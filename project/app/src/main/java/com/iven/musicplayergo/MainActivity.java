@@ -303,6 +303,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSeekBarAudio.setOnSeekBarChangeListener(
                 new SeekBar.OnSeekBarChangeListener() {
                     int userSelectedPosition = 0;
+                    int currentPositionColor = mSongPosition.getCurrentTextColor();
 
                     @Override
                     public void onStartTrackingTouch(SeekBar seekBar) {
@@ -314,6 +315,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
                         if (fromUser) {
                             userSelectedPosition = progress;
+                            mSongPosition.setTextColor(ContextCompat.getColor(MainActivity.this, mAccent));
                         }
                         mSongPosition.setText(Song.formatDuration(progress));
                     }
@@ -321,6 +323,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
 
+                        if (mUserIsSeeking) {
+                            mSongPosition.setTextColor(currentPositionColor);
+                        }
                         mUserIsSeeking = false;
                         mPlayerAdapter.seekTo(userSelectedPosition);
                     }
