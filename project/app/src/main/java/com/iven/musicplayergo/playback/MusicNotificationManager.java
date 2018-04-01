@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -31,8 +32,8 @@ public class MusicNotificationManager {
     private final String CHANNEL_ID = "com.iven.musicplayergo.CHANNEL_ID";
     private final int REQUEST_CODE = 100;
     private final NotificationManager mNotificationManager;
-    private NotificationCompat.Builder mNotificationBuilder;
     private final MusicService mMusicService;
+    private NotificationCompat.Builder mNotificationBuilder;
     private int mAccent;
 
     MusicNotificationManager(MusicService musicService) {
@@ -87,7 +88,7 @@ public class MusicNotificationManager {
         mNotificationBuilder
                 .setShowWhen(false)
                 .setSmallIcon(R.drawable.music_notification_small)
-                .setLargeIcon(getLargeIcon((VectorDrawable) mMusicService.getDrawable(R.drawable.music_notification_large)))
+                .setLargeIcon(getLargeIcon(mMusicService.getDrawable(R.drawable.music_notification_large)))
                 .setColor(mAccent)
                 .setContentTitle(spanned)
                 .setContentText(song.albumName)
@@ -143,8 +144,9 @@ public class MusicNotificationManager {
     }
 
     //https://gist.github.com/Gnzlt/6ddc846ef68c587d559f1e1fcd0900d3
-    private Bitmap getLargeIcon(VectorDrawable vectorDrawable) {
+    private Bitmap getLargeIcon(Drawable drawable) {
 
+        VectorDrawable vectorDrawable = (VectorDrawable) drawable;
         Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(),
                 vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
 
