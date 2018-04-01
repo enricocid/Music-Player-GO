@@ -515,10 +515,11 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                     finish();
 
                 } else {
+
                     setArtistsRecyclerView(artists);
 
-                    //load the details of the first artist on list
-                    mSelectedArtist = mPlayerAdapter.isMediaPlayer() && mPlayerAdapter.getSelectedAlbum(mPlayerAdapter.isPlaying()) != null ? mPlayerAdapter.getSelectedAlbum(mPlayerAdapter.isPlaying()).getArtistName() : artists.get(0).getName();
+                    mSelectedArtist = mPlayerAdapter.getSelectedAlbum() != null ? mPlayerAdapter.getSelectedAlbum().getArtistName() : artists.get(0).getName();
+
                     getSupportLoaderManager().initLoader(AlbumProvider.ALBUMS_LOADER, null, this);
                 }
                 break;
@@ -528,15 +529,21 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 //get loaded albums for artist
                 Pair<Artist, List<Album>> albumsForArtist = (Pair<Artist, List<Album>>) data;
 
+                List<Album> albums = albumsForArtist.second;
+
                 if (mAlbumsAdapter != null) {
                     //only notify recycler view of item changed if an adapter already exists
-                    mAlbumsAdapter.swapArtist(albumsForArtist);
+                    mAlbumsAdapter.swapArtist(albums);
                 } else {
                     LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
                     mAlbumsRecyclerView.setLayoutManager(horizontalLayoutManager);
-                    mAlbumsAdapter = new AlbumsAdapter(this, mAlbumsRecyclerView, mArtistAlbumCount, albumsForArtist, mPlayerAdapter);
+                    mAlbumsAdapter = new AlbumsAdapter(this, mAlbumsRecyclerView, albums, mPlayerAdapter);
                     mAlbumsRecyclerView.setAdapter(mAlbumsAdapter);
                 }
+
+                int albumCount = albumsForArtist.second.size();
+                int artistAlbumCount = albumCount > 1 ? R.string.albums : R.string.album;
+                mArtistAlbumCount.setText(getString(artistAlbumCount, mSelectedArtist, albumCount));
 
                 if (sExpandPanel) {
                     mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
@@ -565,7 +572,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (!mSeekBarAudio.isEnabled()) {
             mSeekBarAudio.setEnabled(true);
         }
-        mPlayerAdapter.setPlayingAlbum(song, album);
+        mPlayerAdapter.setCurrentSong(song, album.songs);
         mPlayerAdapter.initMediaPlayer();
     }
 
@@ -591,6 +598,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     @Override
     public void onAlbumSelected(Album album) {
+        mPlayerAdapter.setSelectedAlbum(album);
         if (mSongsAdapter != null) {
             mSongsAdapter.swapSongs(album);
         } else {

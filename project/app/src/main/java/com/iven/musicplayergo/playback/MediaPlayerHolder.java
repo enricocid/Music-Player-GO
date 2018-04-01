@@ -49,7 +49,6 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     private Song mSelectedSong;
     private List<Song> mSongs;
     private Album mSelectedAlbum;
-    private Album mPlayingAlbum;
     private boolean sReplaySong = false;
     private @PlaybackInfoListener.State
     int mState;
@@ -137,8 +136,8 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     }
 
     @Override
-    public Album getSelectedAlbum(boolean isPlaying) {
-        return isPlaying ? mPlayingAlbum : mSelectedAlbum;
+    public Album getSelectedAlbum() {
+        return mSelectedAlbum;
     }
 
     @Override
@@ -147,10 +146,9 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     }
 
     @Override
-    public void setPlayingAlbum(Song song, Album album) {
+    public void setCurrentSong(Song song, List<Song> songs) {
         mSelectedSong = song;
-        mPlayingAlbum = album;
-        mSongs = mPlayingAlbum.songs;
+        mSongs = songs;
     }
 
     @Override

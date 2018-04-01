@@ -23,6 +23,8 @@ import com.iven.musicplayergo.MainActivity;
 import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Song;
 
+import java.util.List;
+
 /**
  * Allows {@link MainActivity} to control media playback of {@link MediaPlayerHolder}.
  */
@@ -61,11 +63,11 @@ public interface PlayerAdapter {
 
     void registerNotificationActionsReceiver(boolean isRegister);
 
-    Album getSelectedAlbum(boolean isPlaying);
+    Album getSelectedAlbum();
 
     void setSelectedAlbum(Album album);
 
-    void setPlayingAlbum(Song song, Album album);
+    void setCurrentSong(Song song, List<Song> songs);
 
     MediaPlayer getMediaPlayer();
 

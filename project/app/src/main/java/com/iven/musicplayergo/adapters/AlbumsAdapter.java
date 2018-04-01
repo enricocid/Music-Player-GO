@@ -3,7 +3,6 @@ package com.iven.musicplayergo.adapters;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.iven.musicplayergo.R;
 import com.iven.musicplayergo.models.Album;
-import com.iven.musicplayergo.models.Artist;
 import com.iven.musicplayergo.playback.PlayerAdapter;
 
 import java.util.List;
@@ -21,51 +19,35 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
     private final Activity mActivity;
     private final AlbumSelectedListener mAlbumSelectedListener;
-    private final PlayerAdapter mPlayerAdapter;
     private final RecyclerView mAlbumsRecyclerView;
-    private Album mSelectedAlbum;
-    private Pair<Artist, List<Album>> mAlbumsForArtist;
     private List<Album> mAlbums;
+    private Album mSelectedAlbum;
     private int mSelectedPosition;
-    private TextView mArtistAlbumCount;
+    private PlayerAdapter mPlayerAdapter;
 
-    public AlbumsAdapter(Activity activity, RecyclerView albumsRecyclerView, TextView artistAlbumCount, Pair<Artist, List<Album>> albumsForArtist, PlayerAdapter playerAdapter) {
+    public AlbumsAdapter(Activity activity, RecyclerView albumsRecyclerView, List<Album> albums, PlayerAdapter playerAdapter) {
 
         mActivity = activity;
 
-        mAlbumsRecyclerView = albumsRecyclerView;
-
-        mArtistAlbumCount = artistAlbumCount;
-
-        mAlbumSelectedListener = (AlbumSelectedListener) mActivity;
-
-        mAlbumsForArtist = albumsForArtist;
+        mAlbums = albums;
 
         mPlayerAdapter = playerAdapter;
 
-        mAlbums = mAlbumsForArtist.second;
+        mAlbumsRecyclerView = albumsRecyclerView;
 
-        updateAlbumsForArtist(false);
+        mAlbumSelectedListener = (AlbumSelectedListener) mActivity;
+
+        updateAlbumsForArtist();
     }
 
-    public void swapArtist(Pair<Artist, List<Album>> albumsForArtist) {
-        mAlbumsForArtist = albumsForArtist;
-        mAlbums = mAlbumsForArtist.second;
+    public void swapArtist(List<Album> albums) {
+        mAlbums = albums;
         notifyDataSetChanged();
-        updateAlbumsForArtist(true);
+        updateAlbumsForArtist();
     }
 
-    private void updateAlbumsForArtist(boolean artistChanged) {
-
-        Artist artist = mAlbumsForArtist.first;
-
-        int albumCount = mAlbums.size();
-        int artistAlbumCount = albumCount > 1 ? R.string.albums : R.string.album;
-        mArtistAlbumCount.setText(mActivity.getString(artistAlbumCount, artist.getName(), albumCount));
-
-        mSelectedAlbum = artistChanged ? artist.getFirstAlbum() : mPlayerAdapter != null && mPlayerAdapter.getSelectedAlbum(mPlayerAdapter.isPlaying()) != null ? mPlayerAdapter.getSelectedAlbum(mPlayerAdapter.isPlaying()) : artist.getFirstAlbum();
-
-        mSelectedPosition = mSelectedAlbum.position;
+    private void updateAlbumsForArtist() {
+        mSelectedAlbum = mPlayerAdapter.getSelectedAlbum() != null ? mPlayerAdapter.getSelectedAlbum() : mAlbums.get(0);
         mAlbumsRecyclerView.smoothScrollToPosition(mSelectedPosition);
         mAlbumSelectedListener.onAlbumSelected(mSelectedAlbum);
     }
@@ -132,7 +114,6 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
                 mSelectedAlbum = mAlbums.get(getAdapterPosition());
                 nowPlaying.setVisibility(View.VISIBLE);
-                mPlayerAdapter.setSelectedAlbum(mSelectedAlbum);
                 mAlbumSelectedListener.onAlbumSelected(mSelectedAlbum);
             }
         }
