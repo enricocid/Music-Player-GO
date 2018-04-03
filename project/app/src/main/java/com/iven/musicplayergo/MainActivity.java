@@ -133,6 +133,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         //if the sliding up panel is expanded collapse it
         if (mSlidingUpPanel.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
             mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        } else if (mSettingsPopup.isShowing()) {
+            mSettingsPopup.dismiss();
         } else {
             super.onBackPressed();
         }
@@ -259,6 +261,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     public void showSettingsPopup(View v) {
 
         mSettingsPopup.setAnimationStyle(android.R.style.Animation_Translucent);
+        mSettingsPopup.setOutsideTouchable(true);
         if (!mSettingsPopup.isShowing()) {
             mSettingsPopup.showAtLocation(mSettingsView, Gravity.CENTER, 0, 0);
         } else {
