@@ -267,6 +267,12 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         }
     }
 
+    public void closeSettingsPopup(View v) {
+        if (mSettingsPopup.isShowing()) {
+            mSettingsPopup.dismiss();
+        }
+    }
+
     private void setScrollerIfRecyclerViewScrollable() {
 
         // ViewTreeObserver allows us to measure the layout params
