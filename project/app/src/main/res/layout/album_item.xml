@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="96dp"
-    android:layout_height="128dp"
+    android:layout_width="84dp"
+    android:layout_height="116dp"
     android:layout_margin="4dp"
     android:background="?attr/card_color"
     android:contentDescription="?attr/accent_color"
-    android:elevation="4dp"
+    android:elevation="2dp"
     android:foreground="@drawable/ripple"
     android:orientation="vertical">
 
@@ -18,6 +18,8 @@
         android:contentDescription="@string/app_name"
         android:elevation="6dp"
         android:padding="8dp"
+        android:scaleX="0.85"
+        android:scaleY="0.85"
         android:src="@drawable/ic_checkbox_marked"
         android:tint="?attr/accent_color"
         android:visibility="gone" />

@@ -27,9 +27,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="2dp"
+            android:alpha="0.50"
             android:singleLine="true"
-            android:textAppearance="@android:style/TextAppearance.Material.Small"
-            android:textColor="?android:textColorSecondary" />
+            android:textAppearance="@android:style/TextAppearance.Material.Caption"
+            android:textColor="?attr/accent_color" />
     </LinearLayout>
 
     <TextView
