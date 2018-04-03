@@ -264,8 +264,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSettingsPopup.setOutsideTouchable(true);
         if (!mSettingsPopup.isShowing()) {
             mSettingsPopup.showAtLocation(mSettingsView, Gravity.CENTER, 0, 0);
-        } else {
-            mSettingsPopup.dismiss();
         }
     }
 
