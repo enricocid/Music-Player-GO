@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageButton
+        android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="@string/app_name"
+        android:foreground="@drawable/ripple"
+        android:id="@+id/replay"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:onClick="reset"
+        android:padding="8dp"
+        android:src="@drawable/ic_repeat" />
+
+    <ImageButton
+        android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="@string/app_name"
+        android:foreground="@drawable/ripple"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:onClick="skipPrev"
+        android:padding="8dp"
+        android:src="@drawable/ic_skip_previous" />
+
+    <ImageButton
+        android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="@string/app_name"
+        android:id="@+id/play_pause"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:onClick="resumeOrPause"
+        android:padding="8dp"
+        android:src="@drawable/ic_play" />
+
+    <ImageButton
+        android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="@string/app_name"
+        android:foreground="@drawable/ripple"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:onClick="skipNext"
+        android:padding="8dp"
+        android:src="@drawable/ic_skip_next" />
+
+    <ImageButton
+        android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="@string/app_name"
+        android:foreground="@drawable/ripple"
+        android:id="@+id/settings"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:onClick="showSettingsPopup"
+        android:padding="8dp"
+        android:src="@drawable/ic_settings" />
+</LinearLayout>
