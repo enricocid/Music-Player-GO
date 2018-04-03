@@ -160,9 +160,12 @@
             android:layout_marginEnd="7dp"
             android:layout_marginStart="16dp"
             android:layout_weight="5"
+            android:alpha="0.50"
             android:background="@drawable/ripple"
             android:contentDescription="@string/app_name"
             android:onClick="expandPanel"
             android:src="@drawable/ic_chevron_up" />
+
     </LinearLayout>
+
 </LinearLayout>
