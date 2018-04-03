@@ -26,7 +26,7 @@ public class Artist {
     }
 
     @NonNull
-    public Album getFirstAlbum() {
+    private Album getFirstAlbum() {
         return albums.isEmpty() ? new Album() : albums.get(0);
     }
 }

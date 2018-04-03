@@ -87,8 +87,8 @@ public class MusicNotificationManager {
 
         mNotificationBuilder
                 .setShowWhen(false)
-                .setSmallIcon(R.drawable.music_notification_small)
-                .setLargeIcon(getLargeIcon(mMusicService.getDrawable(R.drawable.music_notification_large)))
+                .setSmallIcon(R.drawable.music_notification)
+                .setLargeIcon(getLargeIcon(mMusicService.getDrawable(R.drawable.music_notification)))
                 .setColor(mAccent)
                 .setContentTitle(spanned)
                 .setContentText(song.albumName)
@@ -147,9 +147,9 @@ public class MusicNotificationManager {
     private Bitmap getLargeIcon(Drawable drawable) {
 
         VectorDrawable vectorDrawable = (VectorDrawable) drawable;
-        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(),
-                vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-
+        int largeIconSize = mMusicService.getResources().getDimensionPixelSize(R.dimen.notification_large_dim);
+        Bitmap bitmap = Bitmap.createBitmap(largeIconSize,
+                largeIconSize, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         vectorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         vectorDrawable.setTint(mAccent);

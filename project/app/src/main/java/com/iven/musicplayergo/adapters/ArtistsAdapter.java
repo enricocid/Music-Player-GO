@@ -24,7 +24,6 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
     private final HashMap<Integer, String> mIndexedPositions = new LinkedHashMap<>();
 
     public ArtistsAdapter(FragmentActivity activity, List<Artist> artists) {
-
         mActivity = activity;
         mArtists = artists;
         mArtistSelectedListener = (ArtistSelectedListener) activity;

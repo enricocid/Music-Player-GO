@@ -81,7 +81,6 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
     @Override
     public int getItemCount() {
-
         return mAlbums.size();
     }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="84dp"
-    android:layout_height="116dp"
+    android:layout_width="@dimen/album_width"
+    android:layout_height="@dimen/album_height"
     android:layout_margin="4dp"
     android:background="?attr/card_color"
     android:contentDescription="?attr/accent_color"

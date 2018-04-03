@@ -12,13 +12,13 @@ import com.iven.musicplayergo.R;
 
 public class SettingsUtils {
 
+    public static final int THEME_LIGHT = 0;
+    public static final int THEME_NIGHT = 2;
     private static final String ACCENT_PREF = "com.iven.musicplayergo.pref_accent";
     private static final String ACCENT_VALUE = "com.iven.musicplayergo.pref_accent_value";
     private static final String THEME_PREF = "com.iven.musicplayergo.pref_theme";
     private static final String THEME_VALUE = "com.iven.musicplayergo.pref_theme_value";
-    public static final int THEME_LIGHT = 0;
     private static final int THEME_DARK = 1;
-    public static final int THEME_NIGHT = 2;
 
     public static void setNightTheme(Activity activity) {
         SharedPreferences preferences = activity.getSharedPreferences(THEME_PREF, Context.MODE_PRIVATE);
