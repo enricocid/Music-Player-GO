@@ -21,7 +21,7 @@ https://plus.google.com/+JulianGomezAxinen
 
 ![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art13.png)
 
-<a href="https://play.google.com/apps/testing/com.iven.musicplayergo" target="_blank">
+<a href="https://play.google.com/store/apps/details?id=com.iven.musicplayergo" target="_blank">
   <img alt="Get it on Google Play"
        src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="60"/>
 </a>
