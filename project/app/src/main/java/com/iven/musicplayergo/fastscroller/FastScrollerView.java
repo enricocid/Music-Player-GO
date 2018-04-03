@@ -26,25 +26,21 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
     private final float mPreviewPadding;
     private final float mDensity;
     private final float mScaledDensity;
-    private int mArtistsRecyclerViewWidth;
-    private int mArtistsRecyclerViewHeight;
-    private RectF mIndexBarRect;
-
     private final FastScrollerHandler.IndexBarHandler mIndexBarHandler;
     private final FastScrollerHandler.IndexThumbHandler mIndexThumbHandler;
-
     private final int mAccent;
     private final int mThemeContrast;
     private final FastScrollerRecyclerView mArtistsRecyclerView;
     private final ArtistsAdapter mArtistsAdapter;
     private final LinearLayoutManager mLinearLayoutManager;
-
+    private final Context mContext;
+    private int mArtistsRecyclerViewWidth;
+    private int mArtistsRecyclerViewHeight;
+    private RectF mIndexBarRect;
     private String[] mSections;
     private boolean mIsIndexing;
     private int mCurrentSection = -1;
     private boolean sHidden = true;
-
-    private final Context mContext;
 
     public FastScrollerView(FastScrollerRecyclerView rv, ArtistsAdapter artistsAdapter, LinearLayoutManager linearLayoutManager, int accent, int themeContrast) {
 
@@ -143,7 +139,6 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
 
                 if (mCurrentSection > -1 && i == mCurrentSection) {
                     indexPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-                    indexPaint.setTextSize((indexTextSize * 2) * mScaledDensity);
                     indexPaint.setColor(mAccent);
                 } else {
 
