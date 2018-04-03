@@ -6,5 +6,4 @@
     <attr name="panel_color" format="color" />
     <attr name="theme_icon" format="reference" />
     <attr name="settings_bg" format="reference" />
-    <attr name="seek_bg" format="reference" />
 </resources>

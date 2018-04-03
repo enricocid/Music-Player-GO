@@ -8,7 +8,6 @@
         <item name="card_color">@color/grey_100</item>
         <item name="panel_color">@color/grey_200</item>
         <item name="settings_bg">@color/grey_100</item>
-        <item name="seek_bg">@color/a_black</item>
         <item name="theme_icon">@drawable/ic_theme_dark</item>
         <item name="android:navigationBarColor">@color/grey_900_darker</item>
         <item name="android:colorEdgeEffect">?attr/accent_color</item>
@@ -23,7 +22,6 @@
         <item name="card_color">@color/grey_900</item>
         <item name="settings_bg">@color/grey_900</item>
         <item name="panel_color">@color/grey_900_darker</item>
-        <item name="seek_bg">@color/a_black</item>
         <item name="theme_icon">@drawable/ic_theme_night</item>
         <item name="android:windowBackground">@color/grey_900</item>
         <item name="android:navigationBarColor">@color/grey_900_darker</item>
@@ -39,7 +37,6 @@
         <item name="card_color">?android:attr/windowBackground</item>
         <item name="panel_color">@color/black_panel</item>
         <item name="settings_bg">@color/black_panel</item>
-        <item name="seek_bg">?android:attr/windowBackground</item>
         <item name="theme_icon">@drawable/ic_theme_light</item>
         <item name="android:windowBackground">@android:color/black</item>
         <item name="android:navigationBarColor">@color/black_panel</item>
