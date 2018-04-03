@@ -27,7 +27,6 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
     private final float mDensity;
     private final float mScaledDensity;
     private final FastScrollerHandler.IndexBarHandler mIndexBarHandler;
-    private final FastScrollerHandler.IndexThumbHandler mIndexThumbHandler;
     private final int mAccent;
     private final int mThemeContrast;
     private final FastScrollerRecyclerView mArtistsRecyclerView;
@@ -56,7 +55,6 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
         mScaledDensity = displayMetrics.scaledDensity;
 
         mIndexBarHandler = new FastScrollerHandler.IndexBarHandler(this);
-        mIndexThumbHandler = new FastScrollerHandler.IndexThumbHandler(rv);
 
         mIndexBarWidth = 20 * mDensity;
         mIndexBarMargin = 5 * mDensity;
@@ -122,8 +120,7 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
                 canvas.drawRoundRect(previewRect, 5 * mDensity, 5 * mDensity, previewPaint);
                 canvas.drawText(mSections[mCurrentSection], previewRect.left + (previewSize - previewTextWidth) / 2 - 1
                         , previewRect.top + (previewSize - (previewTextPaint.descent() - previewTextPaint.ascent())) / 2 - previewTextPaint.ascent(), previewTextPaint);
-                mIndexThumbHandler.removeMessages(0);
-                mIndexThumbHandler.sendEmptyMessageAtTime(FastScrollerHandler.INDEX_THUMB, SystemClock.uptimeMillis() + FastScrollerHandler.INDEX_THUMB);
+                mArtistsRecyclerView.invalidate();
             }
 
             Paint indexPaint = new Paint();
@@ -149,8 +146,6 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
                 float paddingLeft = (mIndexBarWidth - indexPaint.measureText(mSections[i])) / 2;
                 canvas.drawText(mSections[i], mIndexBarRect.left + paddingLeft
                         , mIndexBarRect.top + mIndexBarMargin + sectionHeight * i + paddingTop - indexPaint.ascent(), indexPaint);
-
-
             }
         }
     }
