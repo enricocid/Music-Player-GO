@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/album_width"
     android:layout_height="@dimen/album_height"
     android:layout_margin="4dp"
@@ -9,30 +9,19 @@
     android:foreground="@drawable/ripple"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/nowPlaying"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        android:alpha="0.50"
-        android:contentDescription="@string/app_name"
-        android:elevation="6dp"
-        android:padding="8dp"
-        android:scaleX="0.85"
-        android:scaleY="0.85"
-        android:src="@drawable/ic_checkbox_marked"
-        android:tint="?attr/accent_color"
-        android:visibility="gone" />
-
     <TextView
         android:id="@+id/album"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:ellipsize="end"
-        android:gravity="center"
-        android:maxLines="3"
+        android:gravity="center_vertical"
+        android:maxLines="5"
         android:padding="4dp"
+        android:shadowColor="?attr/accent_color"
+        android:shadowDx="-1"
+        android:shadowDy="-1"
+        android:shadowRadius="1"
         android:textAlignment="center"
         android:textAppearance="@android:style/TextAppearance.Material.Subhead"
         android:textColor="?android:textColorSecondary"
@@ -42,12 +31,10 @@
         android:id="@+id/year"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
         android:background="@color/a_black"
-        android:gravity="center"
         android:padding="4dp"
         android:singleLine="true"
+        android:textAlignment="center"
         android:textAppearance="@android:style/TextAppearance.Material.Caption"
-        android:textColor="?attr/accent_color"
-        android:textSize="12sp" />
-</FrameLayout>
+        android:textColor="?attr/accent_color" />
+</LinearLayout>

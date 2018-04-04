@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/panel_color"
+    android:orientation="vertical">
+
+    <!-- ARTIST + ALBUM COUNT -->
+    <TextView
+        android:id="@+id/artist_album_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:ellipsize="marquee"
+        android:paddingEnd="4dp"
+        android:paddingStart="4dp"
+        android:shadowColor="?attr/icon_color"
+        android:shadowDx="-1"
+        android:shadowDy="-1"
+        android:shadowRadius="1"
+        android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+        android:textColor="?attr/accent_color"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- ALBUMS -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/albums_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never" />
+
+    <!-- SELECTED DISC -->
+    <TextView
+        android:id="@+id/selected_disc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:ellipsize="marquee"
+        android:paddingEnd="4dp"
+        android:paddingStart="4dp"
+        android:shadowColor="?attr/icon_color"
+        android:shadowDx="-1"
+        android:shadowDy="-1"
+        android:shadowRadius="1"
+        android:singleLine="true"
+        android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+        android:textColor="?attr/accent_color" />
+
+    <!-- DISC SONGS -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/songs_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never" />
+</LinearLayout>

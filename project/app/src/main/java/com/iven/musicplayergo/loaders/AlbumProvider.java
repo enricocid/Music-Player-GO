@@ -29,9 +29,6 @@ public class AlbumProvider {
         if (albums.size() > 1) {
             sortAlbums(albums);
         }
-        for (int i = 0, size = albums.size(); i < size; i++) {
-            albums.get(i).setPosition(i);
-        }
         return albums;
     }
 

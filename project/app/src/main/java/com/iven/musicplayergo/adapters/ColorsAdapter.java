@@ -23,7 +23,6 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
 
     //fixed int array of accent colors
     private final int[] colors = new int[]{
-
             R.color.red_A400,
             R.color.pink_A400,
             R.color.purple_A400,

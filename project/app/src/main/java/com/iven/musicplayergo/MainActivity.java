@@ -66,7 +66,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private RecyclerView mAlbumsRecyclerView, mSongsRecyclerView;
     private AlbumsAdapter mAlbumsAdapter;
     private SongsAdapter mSongsAdapter;
-    private TextView mPlayingAlbum, mPlayingSong, mDuration, mSongPosition, mArtistAlbumCount;
+    private TextView mPlayingAlbum, mPlayingSong, mDuration, mSongPosition, mArtistAlbumCount, mSelectedAlbum;
     private SeekBar mSeekBarAudio;
     private LinearLayout mControlsContainer;
     private View mSettingsView;
@@ -206,6 +206,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mDuration = findViewById(R.id.duration);
         mSongPosition = findViewById(R.id.song_position);
         mArtistAlbumCount = findViewById(R.id.artist_album_count);
+        mSelectedAlbum = findViewById(R.id.selected_disc);
 
         mArtistsRecyclerView = findViewById(R.id.artists_rv);
         mAlbumsRecyclerView = findViewById(R.id.albums_rv);
@@ -549,7 +550,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 } else {
                     LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
                     mAlbumsRecyclerView.setLayoutManager(horizontalLayoutManager);
-                    mAlbumsAdapter = new AlbumsAdapter(this, mAlbumsRecyclerView, albums, mPlayerAdapter);
+                    mAlbumsAdapter = new AlbumsAdapter(this, albums, mPlayerAdapter);
                     mAlbumsRecyclerView.setAdapter(mAlbumsAdapter);
                 }
 
@@ -610,6 +611,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     @Override
     public void onAlbumSelected(Album album) {
+        mSelectedAlbum.setText(album.getTitle());
         mPlayerAdapter.setSelectedAlbum(album);
         if (mSongsAdapter != null) {
             mSongsAdapter.swapSongs(album);

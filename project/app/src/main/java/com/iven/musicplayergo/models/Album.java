@@ -13,10 +13,6 @@ public class Album {
         this.songs = new ArrayList<>();
     }
 
-    public void setPosition(int position) {
-        this.position = position;
-    }
-
     public String getTitle() {
         return getFirstSong().albumName;
     }

@@ -21,7 +21,6 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
     private Album mAlbum;
 
     public SongsAdapter(Activity activity, Album album) {
-
         mAlbum = album;
         mSongs = mAlbum.songs;
         mSongSelectedListener = (SongSelectedListener) activity;

@@ -9,35 +9,6 @@
     <!-- CONTROLS -->
     <include layout="@layout/controls_panel" />
 
-    <!-- ARTIST DETAILS -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/panel_color"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/artist_album_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:ellipsize="marquee"
-            android:paddingEnd="4dp"
-            android:paddingStart="4dp"
-            android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-            android:textColor="?attr/accent_color"
-            android:textStyle="bold" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/albums_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:overScrollMode="never" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/songs_rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="never" />
-    </LinearLayout>
+    <!-- ARTIST ALBUMS -->
+    <include layout="@layout/artist_albums" />
 </LinearLayout>
