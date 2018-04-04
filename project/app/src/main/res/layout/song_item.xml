@@ -31,7 +31,7 @@
             android:shadowColor="?attr/icon_color"
             android:shadowDx="-1"
             android:shadowDy="-1"
-            android:shadowRadius="1"
+            android:shadowRadius="0.5"
             android:singleLine="true"
             android:textAppearance="@android:style/TextAppearance.Material.Caption"
             android:textColor="?attr/accent_color" />
