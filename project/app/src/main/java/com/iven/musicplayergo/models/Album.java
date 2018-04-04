@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class Album {
 
     public final ArrayList<Song> songs;
-    public int position;
 
     public Album() {
         this.songs = new ArrayList<>();
