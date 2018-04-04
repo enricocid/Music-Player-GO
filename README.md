@@ -5,7 +5,7 @@
 </a>
 
 
-### Very slim music player (<1000KB)
+### Very slim music player! (<1000KB)
 
 ### Current version: 2.3.1
 
@@ -28,15 +28,15 @@ https://plus.google.com/+JulianGomezAxinen
 
 
 
-### Very simple, colorful and nice UI "Everything in one UI", the way I'd like it to be:
+### Unifield UI, the way I'd like it to be:
 
+- Colorful and simple UI;
+- No need to navigate between activities;
 - Music organized by artist;
 - Alphabetic Fast scroller;
 - Sliding up panel containing controls (when collapsed) and the artist albums/songs (when expanded);
-- Colorful UI;
 - Dark status bar icons for light accents
 (according to https://material.io/guidelines/style/color.html#color-color-palette);
-- No need to navigate between activities;
 
 ### Open settings directly from UI. Available settings: 
 
