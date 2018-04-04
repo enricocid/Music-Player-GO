@@ -31,7 +31,7 @@ https://plus.google.com/+JulianGomezAxinen
 ### Unifield UI, the way I'd like it to be:
 
 - Colorful and simple UI;
-- No need to navigate between activities;
+- Unified UI: no need to navigate between activities;
 - Music organized by artist;
 - Alphabetic Fast scroller;
 - Sliding up panel containing controls (when collapsed) and the artist albums/songs (when expanded);
