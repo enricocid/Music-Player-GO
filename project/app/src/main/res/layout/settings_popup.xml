@@ -23,13 +23,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
+            android:shadowColor="?attr/icon_color"
+            android:shadowDx="-1"
+            android:shadowDy="-1"
+            android:shadowRadius="0.5"
             android:text="@string/settings"
-            android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle" />
+            android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
+            android:textColor="?attr/accent_color" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/ripple"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/app_name"
             android:onClick="closeSettingsPopup"
             android:src="@drawable/ic_close" />

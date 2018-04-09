@@ -1,10 +1,6 @@
 package com.iven.musicplayergo.adapters;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.RippleDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -44,15 +40,6 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
         mOnAccentChangedListener = (AccentChangedListener) mActivity;
     }
 
-    private Drawable createRipple(Context context, int rippleColor) {
-        RippleDrawable ripple;
-        ripple = (RippleDrawable) context.getResources().getDrawable(R.drawable.ripple, null);
-        if (ripple != null) {
-            ripple.setColor(ColorStateList.valueOf(rippleColor));
-        }
-        return ripple;
-    }
-
     @Override
     @NonNull
     public SimpleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -70,7 +57,6 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
         int drawable = color != mAccent ? R.drawable.ic_checkbox_blank : R.drawable.ic_checkbox_marked;
 
         int parsedColor = ContextCompat.getColor(mActivity, color);
-        holder.color.setBackground(createRipple(mActivity, parsedColor));
         holder.color.setImageResource(drawable);
         holder.color.setColorFilter(parsedColor);
     }
