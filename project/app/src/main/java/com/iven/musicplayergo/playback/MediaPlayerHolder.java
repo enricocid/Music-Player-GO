@@ -309,10 +309,9 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
                         .setUsage(AudioAttributes.USAGE_MEDIA)
                         .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                         .build());
-                tryToGetAudioFocus();
                 mMusicNotificationManager = mMusicService.getMusicNotificationManager();
             }
-
+            tryToGetAudioFocus();
             mMediaPlayer.setDataSource(mSelectedSong.path);
             mMediaPlayer.prepare();
         } catch (Exception e) {
