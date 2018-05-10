@@ -71,7 +71,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private LinearLayout mControlsContainer;
     private View mSettingsView;
     private SlidingUpPanelLayout mSlidingUpPanel;
-    private ImageButton mPlayPauseButton, mResetButton, mEqButton, mArrowUp, mSettingsButton, mThemeButton;
+    private ImageButton mPlayPauseButton, mResetButton, mEqButton, mArrowUp, mThemeButton;
     private int mThemeContrast;
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
@@ -198,7 +198,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mArrowUp = findViewById(R.id.arrow_up);
         mPlayPauseButton = findViewById(R.id.play_pause);
         mResetButton = findViewById(R.id.replay);
-        mSettingsButton = findViewById(R.id.settings);
         mSeekBarAudio = findViewById(R.id.seekTo);
 
         mPlayingSong = findViewById(R.id.playing_song);
@@ -240,12 +239,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSettingsPopup = new PopupWindow(mSettingsView, LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT, true); // Creation of popup
         mSettingsPopup.setOutsideTouchable(true);
-        mSettingsPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                mSettingsButton.setImageResource(R.drawable.ic_settings);
-            }
-        });
         mSettingsPopup.setElevation(6);
 
         if (mThemeContrast != SettingsUtils.THEME_NIGHT) {
