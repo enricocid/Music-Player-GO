@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
@@ -231,7 +232,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private void initializeSettings() {
         if (!EqualizerUtils.hasEqualizer(this)) {
-            mControlsContainer.removeView(mEqButton);
+            mEqButton.getDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
         }
 
         initializeColorsSettings();
@@ -359,8 +360,12 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     public void openEqualizer(View v) {
-        if (checkIsPlayer()) {
-            mPlayerAdapter.openEqualizer(MainActivity.this);
+        if (EqualizerUtils.hasEqualizer(this)) {
+            if (checkIsPlayer()) {
+                mPlayerAdapter.openEqualizer(MainActivity.this);
+            }
+        } else {
+            Toast.makeText(this, getString(R.string.no_eq), Toast.LENGTH_SHORT).show();
         }
     }
 
