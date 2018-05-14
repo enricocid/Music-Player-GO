@@ -46,7 +46,7 @@ public class SettingsUtils {
     //enable light status bar only for light colors according to
     //https://material.io/guidelines/style/color.html#color-color-palette
     @TargetApi(23)
-    static void enableLightStatusBar(Activity activity, int accent) {
+    private static void enableLightStatusBar(Activity activity, int accent) {
 
         View decorView = activity.getWindow().getDecorView();
         int oldSystemUiFlags = decorView.getSystemUiVisibility();
