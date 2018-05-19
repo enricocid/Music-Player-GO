@@ -1,0 +1,12 @@
+<resources>
+    <string name="albums">%s (альбомов: %d)</string>
+    <string name="unknown_year">Год неизвестен</string>
+    <string name="eq">Эквалайзер</string>
+    <string name="no_eq">Эквалайзер не обнаружен!</string>
+    <string name="bad_id">Сначала выберите песню!</string>
+    <string name="enjoy">Выберите песню</string>
+    <string name="no_browser">Браузер не найден</string>
+    <string name="perm_rationale">Для воспроизведения музыки нужен доступ Player-GO к Вашим файлам</string>
+    <string name="error_no_music">Музыка отсутствует</string>
+    <string name="settings">Настройки</string>
+</resources>
