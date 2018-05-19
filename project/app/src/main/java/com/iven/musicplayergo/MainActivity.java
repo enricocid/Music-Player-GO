@@ -553,8 +553,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 }
 
                 int albumCount = albumsForArtist.second.size();
-                int artistAlbumCount = albumCount > 1 ? R.string.albums : R.string.album;
-                mArtistAlbumCount.setText(getString(artistAlbumCount, mSelectedArtist, albumCount));
+                mArtistAlbumCount.setText(getString(R.string.albums, mSelectedArtist, albumCount));
 
                 if (sExpandPanel) {
                     mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
