@@ -6,7 +6,7 @@
     <string name="bad_id">З початку оберіть пісню!</string>
     <string name="enjoy">Оберіть пісню</string>
     <string name="no_browser">Браузер не знайдено</string>
-    <string name="perm_rationale">Для відтворення музики потрібен доступ Player-GO до Ваших файлів</string>
+    <string name="perm_rationale">Для відтворення музики потрібен доступ Music Player-GO до Ваших файлів</string>
     <string name="error_no_music">Музика відсутня</string>
     <string name="settings">Налаштування</string>
 </resources>
