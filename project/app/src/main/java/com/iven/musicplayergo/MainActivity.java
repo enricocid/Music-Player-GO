@@ -39,8 +39,6 @@ import com.iven.musicplayergo.adapters.AlbumsAdapter;
 import com.iven.musicplayergo.adapters.ArtistsAdapter;
 import com.iven.musicplayergo.adapters.ColorsAdapter;
 import com.iven.musicplayergo.adapters.SongsAdapter;
-import com.iven.musicplayergo.fastscroller.FastScrollerRecyclerView;
-import com.iven.musicplayergo.fastscroller.FastScrollerView;
 import com.iven.musicplayergo.loaders.AlbumProvider;
 import com.iven.musicplayergo.loaders.ArtistProvider;
 import com.iven.musicplayergo.models.Album;
@@ -55,16 +53,16 @@ import com.iven.musicplayergo.slidinguppanel.SlidingUpPanelLayout;
 import com.iven.musicplayergo.utils.AndroidVersion;
 import com.iven.musicplayergo.utils.PermissionDialog;
 import com.iven.musicplayergo.utils.SettingsUtils;
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.List;
 
 public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks, SongsAdapter.SongSelectedListener, ColorsAdapter.AccentChangedListener, AlbumsAdapter.AlbumSelectedListener, ArtistsAdapter.ArtistSelectedListener {
 
     private LinearLayoutManager mArtistsLayoutManager;
-    private ArtistsAdapter mArtistsAdapter;
     private int mAccent;
     private boolean sThemeInverted;
-    private FastScrollerRecyclerView mArtistsRecyclerView;
+    private FastScrollRecyclerView mArtistsRecyclerView;
     private RecyclerView mAlbumsRecyclerView, mSongsRecyclerView;
     private AlbumsAdapter mAlbumsAdapter;
     private SongsAdapter mSongsAdapter;
@@ -257,37 +255,16 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         }
     }
 
-    private void setScrollerIfRecyclerViewScrollable() {
-
-        // ViewTreeObserver allows us to measure the layout params
-        final ViewTreeObserver observer = mArtistsRecyclerView.getViewTreeObserver();
-        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-
-                int h = mArtistsRecyclerView.getHeight();
-                mArtistsRecyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                if (mArtistsRecyclerView.computeVerticalScrollRange() > h) {
-                    FastScrollerView fastScrollerView = new FastScrollerView(mArtistsRecyclerView, mArtistsAdapter, mArtistsLayoutManager, ContextCompat.getColor(MainActivity.this, mAccent), sThemeInverted);
-                    mArtistsRecyclerView.setFastScroller(fastScrollerView);
-                }
-            }
-        });
-    }
-
     private void setArtistsRecyclerView(List<Artist> data) {
 
         mArtistsLayoutManager = new LinearLayoutManager(this);
         mArtistsRecyclerView.setLayoutManager(mArtistsLayoutManager);
-        mArtistsAdapter = new ArtistsAdapter(this, data);
-        mArtistsRecyclerView.setAdapter(mArtistsAdapter);
+        ArtistsAdapter artistsAdapter = new ArtistsAdapter(this, data);
+        mArtistsRecyclerView.setAdapter(artistsAdapter);
 
         if (savedRecyclerLayoutState != null) {
             mArtistsLayoutManager.onRestoreInstanceState(savedRecyclerLayoutState);
         }
-
-        // Set the FastScroller only if the RecyclerView is scrollable;
-        setScrollerIfRecyclerViewScrollable();
     }
 
     private void initializeSeekBar() {

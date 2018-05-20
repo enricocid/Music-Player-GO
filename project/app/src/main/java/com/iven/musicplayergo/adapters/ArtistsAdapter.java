@@ -10,42 +10,26 @@ import android.widget.TextView;
 
 import com.iven.musicplayergo.R;
 import com.iven.musicplayergo.models.Artist;
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 
-public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleViewHolder> {
+public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleViewHolder> implements FastScrollRecyclerView.SectionedAdapter {
 
     private final FragmentActivity mActivity;
     private final List<Artist> mArtists;
     private final ArtistSelectedListener mArtistSelectedListener;
-    private final HashMap<Integer, String> mIndexedPositions = new LinkedHashMap<>();
 
     public ArtistsAdapter(FragmentActivity activity, List<Artist> artists) {
         mActivity = activity;
         mArtists = artists;
         mArtistSelectedListener = (ArtistSelectedListener) activity;
-        generateIndexes();
     }
 
-    public String[] getIndexes() {
-        return mIndexedPositions.values().toArray(new String[mIndexedPositions.values().size()]);
-    }
-
-    public int getIndexPosition(int currentSection) {
-        return mIndexedPositions.keySet().toArray(new Integer[mIndexedPositions.keySet().size()])[currentSection];
-    }
-
-    private void generateIndexes() {
-
-        for (int i = 0, size = mArtists.size(); i < size; i++) {
-            String section = mArtists.get(i).getName().substring(0, 1).toUpperCase(Locale.getDefault());
-            if (!mIndexedPositions.containsValue(section)) {
-                mIndexedPositions.put(i, section);
-            }
-        }
+    @NonNull
+    @Override
+    public String getSectionName(int position) {
+        return mArtists.get(position).getName().substring(0, 1);
     }
 
     @Override

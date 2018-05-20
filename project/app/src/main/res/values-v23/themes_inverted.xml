@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="light_blue_A400">#00B0FF</color> <!-- DARK -->
-    <color name="cyan_A400">#00E5FF</color> <!-- DARK -->
-    <color name="teal_A400">#1DE9B6</color> <!-- DARK -->
-    <color name="green_A400">#00E676</color> <!-- DARK -->
-    <color name="amber_A400">#FFC400</color> <!-- DARK -->
-    <color name="orange_A400">#FF9100</color> <!-- DARK -->
-    <color name="deep_orange_A400">#FF3D00</color> <!-- LIGHT -->
     <!-- ACCENTS THEMES Inverted -->
     <style name="AppThemeRedInverted" parent="AppThemeInverted">
         <item name="accent_color">@color/red_A400</item>

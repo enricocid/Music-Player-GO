@@ -2,6 +2,8 @@
 <resources>
 
     <color name="night">#050505</color>
+    <color name="scroller_light">#150a0a0a</color>
+    <color name="scroller_inverted">#15fafafa</color>
     <color name="red_A400">#FF1744</color> <!-- LIGHT -->
     <color name="pink_A400">#F50057</color> <!-- LIGHT -->
     <color name="purple_A400">#D500F9</color> <!-- LIGHT -->

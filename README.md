@@ -58,10 +58,12 @@ Music Player GO will always be free! Anyway, you can still buy me a beer, an ice
 ### Dependencies used: 
 
   - Android Support Library v4;
+
   - RecyclerView v7;
 
+  - RecyclerView-FastScroll by Tim Malseed (@timusus) (https://github.com/timusus/RecyclerView-FastScroll)
+
   - Sliding up panel by @umano opportunely modified by Me (https://github.com/umano/AndroidSlidingUpPanel) (animated arrow indicator, lightened and with deprecated methods replaced);
-  - Alphabetic Index Fast Scroller by @myinnos opportunely modified by Me to be shown/hidden on RecyclerView's scroll (https://github.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView);
 
 ### Other features: 
 

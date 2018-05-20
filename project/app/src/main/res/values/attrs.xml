@@ -4,4 +4,5 @@
     <attr name="icon_color" format="color" />
     <attr name="theme_icon" format="color" />
     <attr name="secondary_bg_color" format="color" />
+    <attr name="scroller_track_color" format="color" />
 </resources>

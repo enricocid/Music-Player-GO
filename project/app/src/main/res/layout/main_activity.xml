@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.iven.musicplayergo.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sliding_panel"
     android:layout_width="match_parent"
@@ -8,10 +9,15 @@
     tools:context="com.iven.musicplayergo.MainActivity">
 
     <!-- ARTISTS LAYOUT -->
-    <com.iven.musicplayergo.fastscroller.FastScrollerRecyclerView
+    <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
         android:id="@+id/artists_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:fastScrollPopupBgColor="?attr/accent_color"
+        app:fastScrollPopupTextColor="?android:textColorSecondary"
+        app:fastScrollThumbColor="?attr/accent_color"
+        app:fastScrollThumbInactiveColor="?attr/scroller_track_color"
+        app:fastScrollTrackColor="?attr/scroller_track_color"
         tools:context="com.iven.musicplayergo.MainActivity" />
 
     <!-- SLIDING LAYOUT -->
