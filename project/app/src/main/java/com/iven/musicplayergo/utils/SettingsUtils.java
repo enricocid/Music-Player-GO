@@ -1,12 +1,8 @@
 package com.iven.musicplayergo.utils;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
-import android.view.View;
 
 import com.iven.musicplayergo.R;
 
@@ -33,9 +29,6 @@ public class SettingsUtils {
     public static void setTheme(Activity activity, boolean isThemeInverted, int accent) {
         int theme = SettingsUtils.resolveTheme(isThemeInverted, accent);
         activity.setTheme(theme);
-        if (AndroidVersion.isMarshmallow()) {
-            enableLightStatusBar(activity, ContextCompat.getColor(activity, accent));
-        }
     }
 
     //get theme
@@ -99,28 +92,6 @@ public class SettingsUtils {
                 break;
         }
         return selectedTheme;
-    }
-
-    //enable light status bar only for light colors according to
-    //https://material.io/guidelines/style/color.html#color-color-palette
-    @TargetApi(23)
-    private static void enableLightStatusBar(Activity activity, int accent) {
-
-        View decorView = activity.getWindow().getDecorView();
-        int oldSystemUiFlags = decorView.getSystemUiVisibility();
-        int newSystemUiFlags = oldSystemUiFlags;
-
-        boolean isColorDark = ColorUtils.calculateLuminance(accent) < 0.35;
-        if (isColorDark) {
-            newSystemUiFlags &= ~(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        } else {
-            newSystemUiFlags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-        }
-
-        //just to avoid to set light status bar if it already enabled and viceversa
-        if (newSystemUiFlags != oldSystemUiFlags) {
-            decorView.setSystemUiVisibility(newSystemUiFlags);
-        }
     }
 
     public static void setThemeAccent(Activity activity, int accent) {
