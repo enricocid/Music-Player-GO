@@ -73,7 +73,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private LinearLayout mControlsContainer;
     private View mSettingsView;
     private SlidingUpPanelLayout mSlidingUpPanel;
-    private ImageButton mPlayPauseButton, mResetButton, mEqButton, mArrowUp, mThemeButton;
+    private ImageButton mPlayPauseButton, mResetButton, mEqButton, mArrowUp;
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
     private String mSelectedArtist;
@@ -215,7 +215,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSettingsView = View.inflate(this, R.layout.settings_popup, null);
 
         mEqButton = mSettingsView.findViewById(R.id.eq);
-        mThemeButton = mSettingsView.findViewById(R.id.theme_button);
     }
 
     private void setSlidingUpPanelHeight() {

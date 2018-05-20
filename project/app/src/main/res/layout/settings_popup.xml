@@ -71,7 +71,6 @@
             android:src="@drawable/ic_equalizer" />
 
         <ImageButton
-            android:id="@+id/theme_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
