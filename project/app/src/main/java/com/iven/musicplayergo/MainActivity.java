@@ -63,6 +63,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private LinearLayoutManager mArtistsLayoutManager;
     private ArtistsAdapter mArtistsAdapter;
     private int mAccent;
+    private boolean sThemeInverted;
     private FastScrollerRecyclerView mArtistsRecyclerView;
     private RecyclerView mAlbumsRecyclerView, mSongsRecyclerView;
     private AlbumsAdapter mAlbumsAdapter;
@@ -73,7 +74,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private View mSettingsView;
     private SlidingUpPanelLayout mSlidingUpPanel;
     private ImageButton mPlayPauseButton, mResetButton, mEqButton, mArrowUp, mThemeButton;
-    private int mThemeContrast;
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
     private String mSelectedArtist;
@@ -169,10 +169,10 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mThemeContrast = SettingsUtils.getContrast(this);
+        sThemeInverted = SettingsUtils.isThemeInverted(this);
         mAccent = SettingsUtils.getAccent(this);
 
-        SettingsUtils.retrieveTheme(this, mThemeContrast, mAccent);
+        SettingsUtils.setTheme(this, sThemeInverted, mAccent);
 
         setContentView(R.layout.main_activity);
 
@@ -241,16 +241,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 LinearLayout.LayoutParams.WRAP_CONTENT, true); // Creation of popup
         mSettingsPopup.setOutsideTouchable(true);
         mSettingsPopup.setElevation(6);
-
-        if (mThemeContrast != SettingsUtils.THEME_NIGHT) {
-            mThemeButton.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    SettingsUtils.setNightTheme(MainActivity.this);
-                    return false;
-                }
-            });
-        }
     }
 
     public void showSettingsPopup(View v) {
@@ -279,7 +269,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 int h = mArtistsRecyclerView.getHeight();
                 mArtistsRecyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 if (mArtistsRecyclerView.computeVerticalScrollRange() > h) {
-                    FastScrollerView fastScrollerView = new FastScrollerView(mArtistsRecyclerView, mArtistsAdapter, mArtistsLayoutManager, ContextCompat.getColor(MainActivity.this, mAccent), mThemeContrast);
+                    FastScrollerView fastScrollerView = new FastScrollerView(mArtistsRecyclerView, mArtistsAdapter, mArtistsLayoutManager, ContextCompat.getColor(MainActivity.this, mAccent), sThemeInverted);
                     mArtistsRecyclerView.setFastScroller(fastScrollerView);
                 }
             }
@@ -398,7 +388,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             mMusicService.startForeground(MusicNotificationManager.NOTIFICATION_ID, mMusicService.getMusicNotificationManager().createNotification());
             mMusicService.setRestoredFromPause(true);
         }
-        SettingsUtils.setTheme(MainActivity.this);
+        SettingsUtils.invertTheme(this);
     }
 
     private void initializeColorsSettings() {
@@ -415,7 +405,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private void updateResetStatus(boolean onPlaybackCompletion) {
 
-        int themeColor = mThemeContrast != SettingsUtils.THEME_LIGHT ? ContextCompat.getColor(this, R.color.grey_200) : ContextCompat.getColor(this, R.color.grey_900_darker);
+        int themeColor = sThemeInverted ? ContextCompat.getColor(this, R.color.grey_200) : ContextCompat.getColor(this, R.color.grey_900_darker);
         int color = onPlaybackCompletion ? themeColor : mPlayerAdapter.isReset() ? ContextCompat.getColor(this, mAccent) : themeColor;
         mResetButton.getDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
     }

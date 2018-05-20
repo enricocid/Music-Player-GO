@@ -5,7 +5,6 @@
     <color name="grey_100">#F5F5F5</color>
     <color name="grey_200">#EEEEEE</color>
     <color name="grey_500">#9E9E9E</color>
-    <color name="grey_900">#212121</color>
     <color name="grey_900_darker">#1E1E1E</color>
     <color name="red_A400">#FF1744</color> <!-- DARK -->
     <color name="pink_A400">#F50057</color> <!-- DARK -->

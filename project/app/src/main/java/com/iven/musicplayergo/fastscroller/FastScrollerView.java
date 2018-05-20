@@ -17,7 +17,6 @@ import android.view.MotionEvent;
 
 import com.iven.musicplayergo.R;
 import com.iven.musicplayergo.adapters.ArtistsAdapter;
-import com.iven.musicplayergo.utils.SettingsUtils;
 
 public class FastScrollerView extends RecyclerView.AdapterDataObserver {
 
@@ -28,7 +27,7 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
     private final float mScaledDensity;
     private final FastScrollerHandler.IndexBarHandler mIndexBarHandler;
     private final int mAccent;
-    private final int mThemeContrast;
+    private final boolean sThemeInverted;
     private final FastScrollerRecyclerView mArtistsRecyclerView;
     private final ArtistsAdapter mArtistsAdapter;
     private final LinearLayoutManager mLinearLayoutManager;
@@ -41,14 +40,14 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
     private int mCurrentSection = -1;
     private boolean sHidden = true;
 
-    public FastScrollerView(FastScrollerRecyclerView rv, ArtistsAdapter artistsAdapter, LinearLayoutManager linearLayoutManager, int accent, int themeContrast) {
+    public FastScrollerView(FastScrollerRecyclerView rv, ArtistsAdapter artistsAdapter, LinearLayoutManager linearLayoutManager, int accent, boolean isThemeInverted) {
 
         mContext = rv.getContext();
         mArtistsRecyclerView = rv;
         mArtistsAdapter = artistsAdapter;
         mLinearLayoutManager = linearLayoutManager;
         mAccent = accent;
-        mThemeContrast = themeContrast;
+        sThemeInverted = isThemeInverted;
 
         DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
         mDensity = displayMetrics.density;
@@ -87,7 +86,7 @@ public class FastScrollerView extends RecyclerView.AdapterDataObserver {
 
         Paint indexBarPaint = new Paint();
 
-        int indexBarTextColor = mThemeContrast != SettingsUtils.THEME_LIGHT ? ContextCompat.getColor(mContext, R.color.grey_200) : ContextCompat.getColor(mContext, R.color.grey_900_darker);
+        int indexBarTextColor = sThemeInverted ? ContextCompat.getColor(mContext, R.color.grey_200) : ContextCompat.getColor(mContext, R.color.grey_900_darker);
 
         indexBarPaint.setColor(indexBarBackgroundColor);
         indexBarPaint.setAntiAlias(true);
