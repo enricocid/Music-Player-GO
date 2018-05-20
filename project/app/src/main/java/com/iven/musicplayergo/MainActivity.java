@@ -243,6 +243,13 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     public void showSettingsPopup(View v) {
 
         mSettingsPopup.setAnimationStyle(android.R.style.Animation_Translucent);
+
+        if (sThemeInverted) {
+            int bgColor = mSlidingUpPanel.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED ?
+                    ContextCompat.getColor(this, R.color.inverted) : Color.BLACK;
+            mSettingsView.setBackgroundColor(bgColor);
+        }
+
         mSettingsPopup.setOutsideTouchable(true);
         if (!mSettingsPopup.isShowing()) {
             mSettingsPopup.showAtLocation(mSettingsView, Gravity.CENTER, 0, 0);
