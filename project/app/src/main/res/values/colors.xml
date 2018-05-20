@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <color name="night">#050505</color>
+    <color name="light">#fafafa</color>
+    <color name="inverted">#060606</color>
     <color name="scroller_light">#150a0a0a</color>
     <color name="scroller_inverted">#15fafafa</color>
     <color name="red_A400">#FF1744</color> <!-- LIGHT -->

@@ -4,11 +4,11 @@
     <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:typeface">sans</item>
         <item name="icon_color">@android:color/black</item>
-        <item name="android:windowBackground">@android:color/background_light</item>
-        <item name="secondary_bg_color">@android:color/white</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="secondary_bg_color">@color/light</item>
         <item name="scroller_track_color">@color/scroller_light</item>
         <item name="theme_icon">@drawable/ic_theme_night</item>
-        <item name="android:navigationBarColor">@color/night</item>
+        <item name="android:navigationBarColor">@color/inverted</item>
         <item name="android:statusBarColor">?attr/accent_color</item>
         <item name="android:alertDialogTheme">@style/AlertDialogStyleLight</item>
         <item name="android:colorEdgeEffect">?attr/accent_color</item>
@@ -20,9 +20,9 @@
         <item name="icon_color">@android:color/white</item>
         <item name="theme_icon">@drawable/ic_theme_light</item>
         <item name="android:windowBackground">@android:color/black</item>
-        <item name="secondary_bg_color">@color/night</item>
+        <item name="secondary_bg_color">@color/inverted</item>
         <item name="scroller_track_color">@color/scroller_inverted</item>
-        <item name="android:navigationBarColor">@color/night</item>
+        <item name="android:navigationBarColor">@color/inverted</item>
         <item name="android:statusBarColor">?attr/accent_color</item>
         <item name="android:alertDialogTheme">@style/AlertDialogStyleInverted</item>
         <item name="android:colorEdgeEffect">?attr/accent_color</item>
@@ -30,11 +30,12 @@
 
     <style name="AlertDialogStyleLight" parent="android:Theme.Material.Light.Dialog.Alert">
         <item name="android:colorAccent">?attr/accent_color</item>
+        <item name="android:background">@color/light</item>
     </style>
 
     <style name="AlertDialogStyleInverted" parent="android:Theme.Material.Dialog.Alert">
         <item name="android:colorAccent">?attr/accent_color</item>
-        <item name="android:background">@color/night</item>
+        <item name="android:background">@color/inverted</item>
     </style>
 
     <style name="SeekBarStyle" parent="android:Widget.Material.SeekBar">
