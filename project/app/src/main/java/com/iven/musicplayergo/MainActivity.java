@@ -404,7 +404,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private void updateResetStatus(boolean onPlaybackCompletion) {
 
-        int themeColor = sThemeInverted ? ContextCompat.getColor(this, R.color.grey_200) : ContextCompat.getColor(this, R.color.grey_900_darker);
+        int themeColor = sThemeInverted ? Color.WHITE : Color.BLACK;
         int color = onPlaybackCompletion ? themeColor : mPlayerAdapter.isReset() ? ContextCompat.getColor(this, mAccent) : themeColor;
         mResetButton.getDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
     }

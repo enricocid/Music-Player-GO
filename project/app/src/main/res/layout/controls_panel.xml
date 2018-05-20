@@ -3,7 +3,7 @@
     android:id="@+id/controls_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/panel_color"
+    android:background="?attr/secondary_bg_color"
     android:clickable="true"
     android:elevation="2dp"
     android:focusable="true"
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="?attr/panel_color"
+        android:background="?attr/secondary_bg_color"
         android:contentDescription="@string/app_name"
         android:onClick="expandPanel"
         android:src="@drawable/ic_chevron_up" />

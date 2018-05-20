@@ -46,56 +46,56 @@ public class SettingsUtils {
         switch (accent) {
 
             case R.color.red_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeRedNight : R.style.AppThemeRed;
+                selectedTheme = isThemeDark ? R.style.AppThemeRedInverted : R.style.AppThemeRed;
                 break;
 
             case R.color.pink_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemePinkNight : R.style.AppThemePink;
+                selectedTheme = isThemeDark ? R.style.AppThemePinkInverted : R.style.AppThemePink;
                 break;
 
             case R.color.purple_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemePurpleNight : R.style.AppThemePurple;
+                selectedTheme = isThemeDark ? R.style.AppThemePurpleInverted : R.style.AppThemePurple;
                 break;
 
             case R.color.deep_purple_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeDeepPurpleNight : R.style.AppThemeDeepPurple;
+                selectedTheme = isThemeDark ? R.style.AppThemeDeepPurpleInverted : R.style.AppThemeDeepPurple;
                 break;
 
             case R.color.indigo_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeIndigoNight : R.style.AppThemeIndigo;
+                selectedTheme = isThemeDark ? R.style.AppThemeIndigoInverted : R.style.AppThemeIndigo;
                 break;
 
             case R.color.blue_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeBlueNight : R.style.AppThemeBlue;
+                selectedTheme = isThemeDark ? R.style.AppThemeBlueInverted : R.style.AppThemeBlue;
                 break;
 
             default:
             case R.color.light_blue_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeLightBlueNight : R.style.AppThemeLightBlue;
+                selectedTheme = isThemeDark ? R.style.AppThemeLightBlueInverted : R.style.AppThemeLightBlue;
                 break;
 
             case R.color.cyan_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeCyanNight : R.style.AppThemeCyan;
+                selectedTheme = isThemeDark ? R.style.AppThemeCyanInverted : R.style.AppThemeCyan;
                 break;
 
             case R.color.teal_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeTealNight : R.style.AppThemeTeal;
+                selectedTheme = isThemeDark ? R.style.AppThemeTealInverted : R.style.AppThemeTeal;
                 break;
 
             case R.color.green_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeGreenNight : R.style.AppThemeGreen;
+                selectedTheme = isThemeDark ? R.style.AppThemeGreenInverted : R.style.AppThemeGreen;
                 break;
 
             case R.color.amber_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeAmberNight : R.style.AppThemeAmber;
+                selectedTheme = isThemeDark ? R.style.AppThemeAmberInverted : R.style.AppThemeAmber;
                 break;
 
             case R.color.orange_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeOrangeNight : R.style.AppThemeOrange;
+                selectedTheme = isThemeDark ? R.style.AppThemeOrangeInverted : R.style.AppThemeOrange;
                 break;
 
             case R.color.deep_orange_A400:
-                selectedTheme = isThemeDark ? R.style.AppThemeDeepOrangeNight : R.style.AppThemeDeepOrange;
+                selectedTheme = isThemeDark ? R.style.AppThemeDeepOrangeInverted : R.style.AppThemeDeepOrange;
                 break;
         }
         return selectedTheme;

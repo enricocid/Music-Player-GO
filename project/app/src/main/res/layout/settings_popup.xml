@@ -4,7 +4,7 @@
     android:id="@+id/settings_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/settings_bg"
+    android:background="?attr/secondary_bg_color"
     android:orientation="vertical"
     android:paddingBottom="16dp"
     android:paddingEnd="16dp"
