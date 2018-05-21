@@ -47,7 +47,6 @@
         android:shadowDy="-1"
         android:shadowRadius="0.5"
         android:singleLine="true"
-           
         android:textAppearance="@android:style/TextAppearance.Material.Subhead"
         android:textColor="?attr/accent_color" />
 
