@@ -2,12 +2,11 @@
 
     <!-- LIGHT THEME -->
     <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:typeface">sans</item>
         <item name="icon_color">@android:color/black</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="secondary_bg_color">@color/light</item>
+        <item name="android:typeface">sans</item>
         <item name="android:navigationBarColor">@color/light</item>
-        <item name="scroller_track_color">@color/scroller_light</item>
         <item name="android:statusBarColor">?attr/accent_color</item>
         <item name="android:alertDialogTheme">@style/AlertDialogStyleLight</item>
         <item name="android:colorEdgeEffect">?attr/accent_color</item>

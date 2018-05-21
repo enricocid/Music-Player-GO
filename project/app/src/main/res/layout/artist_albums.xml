@@ -5,6 +5,13 @@
     android:background="?attr/secondary_bg_color"
     android:orientation="vertical">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_gravity="center_horizontal"
+        android:alpha="0.25"
+        android:background="?attr/accent_color" />
+
     <!-- ARTIST + ALBUM COUNT -->
     <TextView
         android:id="@+id/artist_album_count"
@@ -14,11 +21,7 @@
         android:ellipsize="marquee"
         android:paddingEnd="4dp"
         android:paddingStart="4dp"
-        android:shadowColor="?attr/icon_color"
-        android:shadowDx="-1"
-        android:shadowDy="-1"
-        android:shadowRadius="0.5"
-        android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+        android:textAppearance="@android:style/TextAppearance.Material.Title"
         android:textColor="?attr/accent_color"
         android:textStyle="bold" />
 
@@ -34,18 +37,14 @@
         android:id="@+id/selected_disc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
+        android:layout_margin="12dp"
         android:ellipsize="marquee"
         android:paddingEnd="4dp"
         android:paddingStart="4dp"
-        android:shadowColor="?attr/icon_color"
-        android:shadowDx="-1"
-        android:shadowDy="-1"
-        android:shadowRadius="0.5"
         android:singleLine="true"
         android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-        android:textColor="?attr/accent_color" />
+        android:textColor="?attr/accent_color"
+        android:textStyle="bold" />
 
     <!-- DISC SONGS -->
     <android.support.v7.widget.RecyclerView

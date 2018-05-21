@@ -16,8 +16,7 @@
         app:fastScrollPopupBgColor="?attr/accent_color"
         app:fastScrollPopupTextColor="?android:textColorSecondary"
         app:fastScrollThumbColor="?attr/accent_color"
-        app:fastScrollThumbInactiveColor="?attr/scroller_track_color"
-        app:fastScrollTrackColor="?attr/scroller_track_color"
+        app:fastScrollThumbInactiveColor="?attr/accent_color"
         tools:context="com.iven.musicplayergo.MainActivity" />
 
     <!-- SLIDING LAYOUT -->

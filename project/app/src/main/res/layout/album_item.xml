@@ -18,20 +18,17 @@
         android:gravity="center_vertical"
         android:maxLines="5"
         android:padding="4dp"
-        android:shadowColor="?attr/accent_color"
-        android:shadowDx="-1"
-        android:shadowDy="-1"
-        android:shadowRadius="1"
         android:textAlignment="center"
         android:textAppearance="@android:style/TextAppearance.Material.Subhead"
         android:textColor="?android:textColorSecondary"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/year"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="4dp"
+        android:padding="8dp"
         android:singleLine="true"
         android:textAlignment="center"
         android:textAppearance="@android:style/TextAppearance.Material.Caption"

@@ -96,8 +96,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
      */
     private boolean mFirstLayout = true;
 
-    private boolean mOverlayContent = true;
-
     public SlidingUpPanelLayout(Context context) {
         this(context, null);
     }
@@ -215,11 +213,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
             int height = layoutHeight;
             int width = layoutWidth;
             if (child == mMainView) {
-
-                if (!mOverlayContent) {
-                    height -= mPanelHeight;
-                }
-
+                height -= mPanelHeight;
                 width -= lp.leftMargin + lp.rightMargin;
             } else if (child == mSlideView) {
                 // The sliding view should be aware of its top margin.
@@ -294,7 +288,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
             }
 
             if (!mIsSlidingUp) {
-                if (child == mMainView && !mOverlayContent) {
+                if (child == mMainView) {
                     childTop = computePanelTopPosition(mSlideOffset) + mSlideView.getMeasuredHeight();
                 }
             }
@@ -575,14 +569,14 @@ public class SlidingUpPanelLayout extends ViewGroup {
         LayoutParams lp = (LayoutParams) mMainView.getLayoutParams();
         int defaultHeight = getHeight() - getPaddingBottom() - getPaddingTop() - mPanelHeight;
 
-        if (mSlideOffset <= 0 && !mOverlayContent) {
+        if (mSlideOffset <= 0) {
             // expand the main view
             lp.height = mIsSlidingUp ? (newTop - getPaddingBottom()) : (getHeight() - getPaddingBottom() - mSlideView.getMeasuredHeight() - newTop);
             if (lp.height == defaultHeight) {
                 lp.height = LayoutParams.MATCH_PARENT;
             }
             mMainView.requestLayout();
-        } else if (lp.height != LayoutParams.MATCH_PARENT && !mOverlayContent) {
+        } else if (lp.height != LayoutParams.MATCH_PARENT) {
             lp.height = LayoutParams.MATCH_PARENT;
             mMainView.requestLayout();
         }
@@ -598,15 +592,13 @@ public class SlidingUpPanelLayout extends ViewGroup {
             // Unless the panel is set to overlay content
             canvas.getClipBounds(mTmpRect);
 
-            if (!mOverlayContent) {
-                if (mIsSlidingUp) {
-                    mTmpRect.bottom = Math.min(mTmpRect.bottom, mSlideView.getTop());
-                } else {
-                    mTmpRect.top = Math.max(mTmpRect.top, mSlideView.getBottom());
-                }
+            if (mIsSlidingUp) {
+                mTmpRect.bottom = Math.min(mTmpRect.bottom, mSlideView.getTop());
+            } else {
+                mTmpRect.top = Math.max(mTmpRect.top, mSlideView.getBottom());
             }
-            canvas.clipRect(mTmpRect);
 
+            canvas.clipRect(mTmpRect);
 
             result = super.drawChild(canvas, child, drawingTime);
             if (mSlideOffset > 0) {
