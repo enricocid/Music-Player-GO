@@ -6,7 +6,7 @@
     <string name="no_eq">No equalizer was found!</string>
     <string name="bad_id">Play a song first!</string>
     <string name="enjoy">Select a song</string>
-    <string name="playing_song" translatable="false">&lt;b>%1s&lt;/b> - %2s</string>
+    <string name="playing_song" translatable="false">&lt;b>%1s&lt;/b>&lt;br/>%2s</string>
     <string name="no_browser">No browser found</string>
     <string name="perm_rationale">To let You play the music on your phone, Music Player GO needs access to your files</string>
     <string name="error_no_music">No music on your phone</string>
