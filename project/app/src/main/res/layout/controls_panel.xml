@@ -17,15 +17,4 @@
 
     <!-- PLAYING SONG INFO -->
     <include layout="@layout/player_info" />
-
-    <!-- THE ANIMATED ARROW -->
-    <ImageButton
-        android:id="@+id/arrow_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="?attr/secondary_bg_color"
-        android:contentDescription="@string/app_name"
-        android:onClick="expandPanel"
-        android:src="@drawable/ic_chevron_up" />
 </LinearLayout>

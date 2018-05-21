@@ -71,7 +71,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private LinearLayout mControlsContainer;
     private View mSettingsView;
     private SlidingUpPanelLayout mSlidingUpPanel;
-    private ImageButton mPlayPauseButton, mResetButton, mEqButton, mArrowUp;
+    private ImageButton mPlayPauseButton, mResetButton, mEqButton;
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
     private String mSelectedArtist;
@@ -176,12 +176,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         getViews();
 
-        mSlidingUpPanel.setSlidingUpPanel(mSongsRecyclerView, mArtistsRecyclerView, mArrowUp);
-        mSlidingUpPanel.setGravity(Gravity.BOTTOM);
-
         initializeSettings();
 
-        setSlidingUpPanelHeight();
+        setupSlidingUpPanel();
 
         initializeSeekBar();
 
@@ -191,10 +188,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private void getViews() {
 
         mSlidingUpPanel = findViewById(R.id.sliding_panel);
-
         mControlsContainer = findViewById(R.id.controls_container);
 
-        mArrowUp = findViewById(R.id.arrow_up);
         mPlayPauseButton = findViewById(R.id.play_pause);
         mResetButton = findViewById(R.id.replay);
         mSeekBarAudio = findViewById(R.id.seekTo);
@@ -215,13 +210,13 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mEqButton = mSettingsView.findViewById(R.id.eq);
     }
 
-    private void setSlidingUpPanelHeight() {
+    private void setupSlidingUpPanel() {
 
         final ViewTreeObserver observer = mControlsContainer.getViewTreeObserver();
         observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                mSlidingUpPanel.setPanelHeight(mControlsContainer.getHeight());
+                mSlidingUpPanel.setupSlidingUpPanel(mSongsRecyclerView, Gravity.BOTTOM, mControlsContainer.getHeight());
                 mControlsContainer.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
@@ -349,11 +344,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             Toast.makeText(this, getString(R.string.no_browser), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
-    }
-
-    public void expandPanel(View v) {
-        SlidingUpPanelLayout.PanelState panelState = mSlidingUpPanel.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED ? SlidingUpPanelLayout.PanelState.EXPANDED : SlidingUpPanelLayout.PanelState.COLLAPSED;
-        mSlidingUpPanel.setPanelState(panelState);
     }
 
     private boolean checkIsPlayer() {

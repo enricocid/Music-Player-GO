@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -14,7 +16,6 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
 public class SlidingUpPanelLayout extends ViewGroup {
 
@@ -31,6 +32,10 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
     private final RecyclerViewHelper mScrollableViewHelper = new RecyclerViewHelper();
     private final Rect mTmpRect = new Rect();
+    /**
+     * The paint used to dim the main layout when sliding
+     */
+    private final Paint mCoveredFadePaint = new Paint();
     /**
      * The size of the overhang in pixels.
      */
@@ -90,10 +95,8 @@ public class SlidingUpPanelLayout extends ViewGroup {
      * instance state save/restore.
      */
     private boolean mFirstLayout = true;
-    private View mDimView;
-    private int mDimViewColor;
 
-    private ImageButton mArrowUp;
+    private boolean mOverlayContent = true;
 
     public SlidingUpPanelLayout(Context context) {
         this(context, null);
@@ -119,40 +122,16 @@ public class SlidingUpPanelLayout extends ViewGroup {
         mDragHelper.setMinVelocity(400 * density);
     }
 
-    public void setGravity(int gravity) {
+    public void setupSlidingUpPanel(RecyclerView scrollableView, int gravity, int panelHeight) {
+        mScrollableView = scrollableView;
         mIsSlidingUp = gravity == Gravity.BOTTOM;
+        mPanelHeight = panelHeight;
         if (!mFirstLayout) {
             requestLayout();
         }
-    }
-
-    /**
-     * Set the collapsed panel height in pixels
-     *
-     * @param val A height in pixels
-     */
-    public void setPanelHeight(int val) {
-
-        mPanelHeight = val;
-        if (!mFirstLayout) {
-            requestLayout();
-        }
-
         if (getPanelState() == PanelState.COLLAPSED) {
-            smoothToBottom();
             invalidate();
         }
-    }
-
-    public void setSlidingUpPanel(RecyclerView scrollableView, View dimView, ImageButton arrowUp) {
-        mScrollableView = scrollableView;
-        mArrowUp = arrowUp;
-        mDimView = dimView;
-        mDimViewColor = mDimView.getSolidColor();
-    }
-
-    private void smoothToBottom() {
-        smoothSlideTo(0);
     }
 
     /**
@@ -237,7 +216,9 @@ public class SlidingUpPanelLayout extends ViewGroup {
             int width = layoutWidth;
             if (child == mMainView) {
 
-                height -= mPanelHeight;
+                if (!mOverlayContent) {
+                    height -= mPanelHeight;
+                }
 
                 width -= lp.leftMargin + lp.rightMargin;
             } else if (child == mSlideView) {
@@ -313,7 +294,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
             }
 
             if (!mIsSlidingUp) {
-                if (child == mMainView) {
+                if (child == mMainView && !mOverlayContent) {
                     childTop = computePanelTopPosition(mSlideOffset) + mSlideView.getMeasuredHeight();
                 }
             }
@@ -594,28 +575,16 @@ public class SlidingUpPanelLayout extends ViewGroup {
         LayoutParams lp = (LayoutParams) mMainView.getLayoutParams();
         int defaultHeight = getHeight() - getPaddingBottom() - getPaddingTop() - mPanelHeight;
 
-        if (mSlideOffset <= 0) {
+        if (mSlideOffset <= 0 && !mOverlayContent) {
             // expand the main view
             lp.height = mIsSlidingUp ? (newTop - getPaddingBottom()) : (getHeight() - getPaddingBottom() - mSlideView.getMeasuredHeight() - newTop);
             if (lp.height == defaultHeight) {
                 lp.height = LayoutParams.MATCH_PARENT;
             }
             mMainView.requestLayout();
-        } else if (lp.height != LayoutParams.MATCH_PARENT) {
+        } else if (lp.height != LayoutParams.MATCH_PARENT && !mOverlayContent) {
             lp.height = LayoutParams.MATCH_PARENT;
             mMainView.requestLayout();
-        }
-    }
-
-    private void applyDim() {
-        if (mSlideOffset > 0) {
-            int coveredFadeColor = 0x99000000;
-            final int baseAlpha = (coveredFadeColor & 0xff000000) >>> 24;
-            final int iMag = (int) (baseAlpha * mSlideOffset);
-            final int color = iMag << 24 | (coveredFadeColor & mDimViewColor);
-            mDimView.setBackgroundColor(color);
-            int rotationX = (int) (180 * mSlideOffset);
-            mArrowUp.setRotationX(rotationX);
         }
     }
 
@@ -629,16 +598,24 @@ public class SlidingUpPanelLayout extends ViewGroup {
             // Unless the panel is set to overlay content
             canvas.getClipBounds(mTmpRect);
 
-            if (mIsSlidingUp) {
-                mTmpRect.bottom = Math.min(mTmpRect.bottom, mSlideView.getTop());
-            } else {
-                mTmpRect.top = Math.max(mTmpRect.top, mSlideView.getBottom());
+            if (!mOverlayContent) {
+                if (mIsSlidingUp) {
+                    mTmpRect.bottom = Math.min(mTmpRect.bottom, mSlideView.getTop());
+                } else {
+                    mTmpRect.top = Math.max(mTmpRect.top, mSlideView.getBottom());
+                }
             }
-
             canvas.clipRect(mTmpRect);
 
+
             result = super.drawChild(canvas, child, drawingTime);
-            applyDim();
+            if (mSlideOffset > 0) {
+                final int baseAlpha = (Color.BLACK & 0xff000000) >>> 24;
+                final int imag = (int) (baseAlpha * mSlideOffset);
+                final int color = imag << 24;
+                mCoveredFadePaint.setColor(color);
+                canvas.drawRect(mTmpRect, mCoveredFadePaint);
+            }
 
         } else {
             result = super.drawChild(canvas, child, drawingTime);
