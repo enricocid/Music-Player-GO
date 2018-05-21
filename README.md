@@ -7,7 +7,7 @@
 
 ### Very slim music player! (<1000KB)
 
-### Current version: (**48**) 2.3.3.2
+### Current version: (**49**) 2.3.3.3
 
 
 
@@ -19,7 +19,7 @@ https://plus.google.com/+JulianGomezAxinen
 
 
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/art16.png)
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots.png)
 
 <a href="https://play.google.com/store/apps/details?id=com.iven.musicplayergo" target="_blank">
   <img alt="Get it on Google Play"
@@ -68,11 +68,11 @@ Music Player GO will always be free! Anyway, you can still buy me a beer, an ice
 - Pause/resume when the headsets are (dis)connected;
 - Simple audio focus (notifications, calls, or other media apps) management;
 
+### Ukrainian and Russian translations and other strings refinements by Stanislav (STWheel)
+https://github.com/STWheel
+
 ### French translations by KowalskiOmniROM
 https://github.com/KowalskiOmniROM
-
-### Screenshots made with Screener:
-https://play.google.com/store/apps/details?id=de.toastcode.screener
 
 ### Some icons are from materialdesignicons.com
 https://materialdesignicons.com/
