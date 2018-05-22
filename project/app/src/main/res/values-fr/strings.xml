@@ -7,4 +7,5 @@
     <string name="no_browser">No navigateur trouvé</string>
     <string name="perm_rationale">Pour vous permettre de lire la musique sur votre appareil, Music Player GO a besoin d\'accèder à vos fichiers</string>
     <string name="error_no_music">No musique sur votre appareil</string>
+    <string name="artist_info">&lt;b>Albums:\n&lt;/b>%1d\n\u2022\n&lt;b>Pistes:\n&lt;/b>%2d</string>
 </resources>
