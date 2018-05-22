@@ -9,10 +9,6 @@ public class Artist {
 
     public final List<Album> albums;
 
-    public Artist(List<Album> albums) {
-        this.albums = albums;
-    }
-
     public Artist() {
         this.albums = new ArrayList<>();
     }
@@ -28,5 +24,13 @@ public class Artist {
     @NonNull
     private Album getFirstAlbum() {
         return albums.isEmpty() ? new Album() : albums.get(0);
+    }
+
+    public int getSongCount() {
+        int songCount = 0;
+        for (Album album : albums) {
+            songCount += album.getSongCount();
+        }
+        return songCount;
     }
 }
