@@ -7,7 +7,7 @@
 
 ### Very slim music player! (<1000KB)
 
-### Current version: (**49**) 2.3.3.3
+### Current version: (49) 2.3.3.3
 
 
 
@@ -33,7 +33,7 @@ https://plus.google.com/+JulianGomezAxinen
 - Colorful and simple UI;
 - Unified UI: no need to navigate between activities;
 - Music organized by artist;
-- Alphabetic scrolling;
+- Fast scrolling;
 - Sliding up panel containing controls (when collapsed) and the artist albums/songs (when expanded);
 - Dark status bar icons for light accents
 (according to https://material.io/guidelines/style/color.html#color-color-palette);
@@ -41,7 +41,7 @@ https://plus.google.com/+JulianGomezAxinen
 ### Open settings directly from UI. Available settings: 
 
 - Equalizer;
-- Themes (Light, dark, night)(Long click to force night theme);
+- Themes (Light and Inverted)
 - Link to git page;
 - UI accents;
 
