@@ -7,7 +7,7 @@
 
 ### Very slim music player! (<1000KB)
 
-### Current version: (51) 2.4.1
+### Current version: (52) 2.4.1.1
 
 
 
