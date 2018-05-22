@@ -140,7 +140,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (AndroidVersion.isMarshmallow()) {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-                PermissionDialog.showPermissionDialog(getSupportFragmentManager());
+                PermissionDialog.show(getSupportFragmentManager());
             } else {
 
                 onPermissionGranted();
@@ -154,7 +154,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-            PermissionDialog.showPermissionDialog(getSupportFragmentManager());
+            PermissionDialog.show(getSupportFragmentManager());
         } else {
             onPermissionGranted();
         }
@@ -330,7 +330,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         boolean isPlayer = mPlayerAdapter.isMediaPlayer();
         if (!isPlayer) {
-            EqualizerUtils.notifyNoSessionId(MainActivity.this);
+            EqualizerUtils.notifyNoSessionId(this);
         }
         return isPlayer;
     }
@@ -463,11 +463,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         } else {
 
-            setArtistsRecyclerView(artists);
-
             mArtists = artists;
-            mSelectedArtist = mPlayerAdapter.getSelectedAlbum() != null ? mPlayerAdapter.getSelectedAlbum().getArtistName() : artists.get(0).getName();
-
+            setArtistsRecyclerView(mArtists);
+            mSelectedArtist = mPlayerAdapter.getSelectedAlbum() != null ? mPlayerAdapter.getSelectedAlbum().getArtistName() : mArtists.get(1).getName();
             setArtistDetails(ArtistProvider.getArtist(mArtists, mSelectedArtist).albums);
         }
     }

@@ -35,7 +35,6 @@ public class Song {
     }
 
     public static int formatTrack(int trackNumber) {
-
         int formatted = trackNumber;
         if (trackNumber >= 1000) {
             formatted = trackNumber % 1000;

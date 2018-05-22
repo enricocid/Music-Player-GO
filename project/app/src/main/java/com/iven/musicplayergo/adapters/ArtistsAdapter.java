@@ -1,7 +1,7 @@
 package com.iven.musicplayergo.adapters;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
@@ -19,11 +19,11 @@ import java.util.List;
 
 public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleViewHolder> implements FastScrollRecyclerView.SectionedAdapter {
 
-    private final FragmentActivity mActivity;
+    private final Activity mActivity;
     private final List<Artist> mArtists;
     private final ArtistSelectedListener mArtistSelectedListener;
 
-    public ArtistsAdapter(FragmentActivity activity, List<Artist> artists) {
+    public ArtistsAdapter(Activity activity, List<Artist> artists) {
         mActivity = activity;
         mArtists = artists;
         mArtistSelectedListener = (ArtistSelectedListener) activity;
@@ -72,10 +72,8 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
 
         SimpleViewHolder(View itemView) {
             super(itemView);
-
             title = itemView.findViewById(R.id.artist);
             albumCount = itemView.findViewById(R.id.album_count);
-
             itemView.setOnClickListener(this);
         }
 

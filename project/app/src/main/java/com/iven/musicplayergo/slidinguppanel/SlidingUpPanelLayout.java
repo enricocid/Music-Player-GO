@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -120,7 +121,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
         mDragHelper.setMinVelocity(400 * density);
     }
 
-    public void setupSlidingUpPanel(RecyclerView scrollableView, int gravity, int panelHeight) {
+    public void setupSlidingUpPanel(@NonNull final RecyclerView scrollableView, int gravity, int panelHeight) {
         mScrollableView = scrollableView;
         mIsSlidingUp = gravity == Gravity.BOTTOM;
         mPanelHeight = panelHeight;

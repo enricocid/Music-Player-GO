@@ -3,6 +3,7 @@ package com.iven.musicplayergo.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.iven.musicplayergo.R;
@@ -14,8 +15,7 @@ public class SettingsUtils {
     private static final String THEME_PREF = "com.iven.musicplayergo.pref_theme";
     private static final String THEME_VALUE = "com.iven.musicplayergo.pref_theme_value";
 
-
-    public static void showSettings(final View controlsContainer, View settingsContainer, boolean show) {
+    public static void showSettings(@NonNull final View controlsContainer, @NonNull View settingsContainer, boolean show) {
 
         int settingsVisibility = show ? View.VISIBLE : View.GONE;
         int controlsVisibility = show ? View.GONE : View.VISIBLE;
@@ -23,7 +23,7 @@ public class SettingsUtils {
         settingsContainer.setVisibility(settingsVisibility);
     }
 
-    public static void invertTheme(Activity activity) {
+    public static void invertTheme(@NonNull final Activity activity) {
         boolean isDark = isThemeInverted(activity);
         boolean value = !isDark;
         SharedPreferences preferences = activity.getSharedPreferences(THEME_PREF, Context.MODE_PRIVATE);
@@ -31,11 +31,11 @@ public class SettingsUtils {
         activity.recreate();
     }
 
-    public static boolean isThemeInverted(Activity activity) {
-        return activity.getSharedPreferences(THEME_PREF, Context.MODE_PRIVATE).getBoolean(THEME_VALUE, false);
+    public static boolean isThemeInverted(@NonNull final Context context) {
+        return context.getSharedPreferences(THEME_PREF, Context.MODE_PRIVATE).getBoolean(THEME_VALUE, false);
     }
 
-    public static void setTheme(Activity activity, boolean isThemeInverted, int accent) {
+    public static void setTheme(@NonNull final Activity activity, boolean isThemeInverted, int accent) {
         int theme = SettingsUtils.resolveTheme(isThemeInverted, accent);
         activity.setTheme(theme);
     }
@@ -103,13 +103,13 @@ public class SettingsUtils {
         return selectedTheme;
     }
 
-    public static void setThemeAccent(Activity activity, int accent) {
+    public static void setThemeAccent(@NonNull final Activity activity, int accent) {
         SharedPreferences preferences = activity.getSharedPreferences(ACCENT_PREF, Context.MODE_PRIVATE);
         preferences.edit().putInt(ACCENT_VALUE, accent).apply();
         activity.recreate();
     }
 
-    public static int getAccent(Activity activity) {
-        return activity.getSharedPreferences(ACCENT_PREF, Context.MODE_PRIVATE).getInt(ACCENT_VALUE, R.color.blue_A400);
+    public static int getAccent(@NonNull final Context context) {
+        return context.getSharedPreferences(ACCENT_PREF, Context.MODE_PRIVATE).getInt(ACCENT_VALUE, R.color.blue_A400);
     }
 }
