@@ -52,7 +52,7 @@ public class ArtistProvider {
 
     @NonNull
     private static List<Artist> retrieveArtists(@Nullable final List<Album> albums) {
-        ArrayList<Artist> artists = new ArrayList<>();
+        List<Artist> artists = new ArrayList<>();
         if (albums != null) {
             for (Album album : albums) {
                 getOrCreateArtist(artists, album.getArtistId()).albums.add(album);

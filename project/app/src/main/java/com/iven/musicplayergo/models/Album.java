@@ -3,10 +3,11 @@ package com.iven.musicplayergo.models;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Album {
 
-    public final ArrayList<Song> songs;
+    public final List<Song> songs;
 
     public Album() {
         this.songs = new ArrayList<>();

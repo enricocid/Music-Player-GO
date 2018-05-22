@@ -10,5 +10,5 @@
     <include layout="@layout/controls_panel" />
 
     <!-- ARTIST ALBUMS -->
-    <include layout="@layout/artist_albums" />
+    <include layout="@layout/artist_details" />
 </LinearLayout>

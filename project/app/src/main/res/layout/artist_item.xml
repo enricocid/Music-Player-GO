@@ -6,6 +6,7 @@
     android:foreground="@drawable/ripple"
     android:orientation="vertical"
     android:padding="16dp">
+
     <TextView
         android:id="@+id/artist"
         android:layout_width="match_parent"
