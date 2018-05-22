@@ -7,7 +7,7 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-
+//https://github.com/yoog568/VerticalTextView/blob/master/src/com/yoog/widget/VerticalTextView.java
 public class VerticalTextView extends TextView {
 
     Rect mTextBounds = new Rect();

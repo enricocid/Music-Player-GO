@@ -20,7 +20,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.graphics.ColorUtils;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -31,7 +30,6 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -103,7 +101,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     };
     private boolean mIsBound;
     private Parcelable savedRecyclerLayoutState;
-    private PopupWindow mSettingsPopup;
 
     @Override
     public void onPause() {
@@ -111,11 +108,11 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (mArtistsLayoutManager != null) {
             savedRecyclerLayoutState = mArtistsLayoutManager.onSaveInstanceState();
         }
-        if (mSettingsPopup != null && mSettingsPopup.isShowing()) {
-            mSettingsPopup.dismiss();
-        }
         if (mPlayerAdapter != null && mPlayerAdapter.isMediaPlayer()) {
             mPlayerAdapter.onPauseActivity();
+        }
+        if (mSettingsView.getVisibility() == View.VISIBLE) {
+            SettingsUtils.showSettings(mControlsContainer, mSettingsView, false);
         }
     }
 
@@ -133,8 +130,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         //if the sliding up panel is expanded collapse it
         if (mSlidingUpPanel.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
             mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-        } else if (mSettingsPopup.isShowing()) {
-            mSettingsPopup.dismiss();
+        } else if (mSettingsView.getVisibility() == View.VISIBLE) {
+            closeSettings(mSettingsView);
         } else {
             super.onBackPressed();
         }
@@ -207,9 +204,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mAlbumsRecyclerView = findViewById(R.id.albums_rv);
         mSongsRecyclerView = findViewById(R.id.songs_rv);
 
-        mSettingsView = View.inflate(this, R.layout.settings_popup, null);
+        mSettingsView = findViewById(R.id.settings_view);
 
-        mEqButton = mSettingsView.findViewById(R.id.eq);
+        mEqButton = findViewById(R.id.eq);
     }
 
     private void setupSlidingUpPanel() {
@@ -219,6 +216,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             @Override
             public void onGlobalLayout() {
                 mSlidingUpPanel.setupSlidingUpPanel(mSongsRecyclerView, Gravity.BOTTOM, mControlsContainer.getHeight());
+                mSettingsView.setMinimumHeight(mControlsContainer.getHeight());
                 mControlsContainer.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
@@ -228,35 +226,16 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (!EqualizerUtils.hasEqualizer(this)) {
             mEqButton.getDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
         }
-
+        mSettingsView.setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(this, mAccent), 10));
         initializeColorsSettings();
-
-        mSettingsPopup = new PopupWindow(mSettingsView, LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT, true); // Creation of popup
-        mSettingsPopup.setOutsideTouchable(true);
-        mSettingsPopup.setElevation(6);
     }
 
-    public void showSettingsPopup(View v) {
-
-        mSettingsPopup.setAnimationStyle(android.R.style.Animation_Translucent);
-
-        if (sThemeInverted) {
-            int bgColor = mSlidingUpPanel.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED ?
-                    ContextCompat.getColor(this, R.color.inverted) : Color.BLACK;
-            mSettingsView.setBackgroundColor(bgColor);
-        }
-
-        mSettingsPopup.setOutsideTouchable(true);
-        if (!mSettingsPopup.isShowing()) {
-            mSettingsPopup.showAtLocation(mSettingsView, Gravity.CENTER, 0, 0);
-        }
+    public void showSettings(View v) {
+        SettingsUtils.showSettings(mControlsContainer, mSettingsView, true);
     }
 
-    public void closeSettingsPopup(View v) {
-        if (mSettingsPopup.isShowing()) {
-            mSettingsPopup.dismiss();
-        }
+    public void closeSettings(View v) {
+        SettingsUtils.showSettings(mControlsContainer, mSettingsView, false);
     }
 
     private void setArtistsRecyclerView(List<Artist> data) {
@@ -369,7 +348,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private void initializeColorsSettings() {
 
         RecyclerView colorsRecyclerView = mSettingsView.findViewById(R.id.colors_rv);
-        LinearLayoutManager linearLayoutManager = new GridLayoutManager(this, 5);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         colorsRecyclerView.setLayoutManager(linearLayoutManager);
         colorsRecyclerView.setAdapter(new ColorsAdapter(this, mAccent));
     }

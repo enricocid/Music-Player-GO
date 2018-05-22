@@ -3,6 +3,7 @@ package com.iven.musicplayergo.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.view.View;
 
 import com.iven.musicplayergo.R;
 
@@ -13,6 +14,14 @@ public class SettingsUtils {
     private static final String THEME_PREF = "com.iven.musicplayergo.pref_theme";
     private static final String THEME_VALUE = "com.iven.musicplayergo.pref_theme_value";
 
+
+    public static void showSettings(final View controlsContainer, View settingsContainer, boolean show) {
+
+        int settingsVisibility = show ? View.VISIBLE : View.GONE;
+        int controlsVisibility = show ? View.GONE : View.VISIBLE;
+        controlsContainer.setVisibility(controlsVisibility);
+        settingsContainer.setVisibility(settingsVisibility);
+    }
 
     public static void invertTheme(Activity activity) {
         boolean isDark = isThemeInverted(activity);

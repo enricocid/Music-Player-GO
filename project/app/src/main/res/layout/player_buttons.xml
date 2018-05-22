@@ -13,7 +13,7 @@
         android:contentDescription="@string/app_name"
         android:foreground="@drawable/ripple"
         android:onClick="reset"
-        android:padding="8dp"
+        android:padding="12dp"
         android:src="@drawable/ic_repeat" />
 
     <ImageButton
@@ -24,7 +24,7 @@
         android:contentDescription="@string/app_name"
         android:foreground="@drawable/ripple"
         android:onClick="skipPrev"
-        android:padding="8dp"
+        android:padding="12dp"
         android:src="@drawable/ic_skip_previous" />
 
     <ImageButton
@@ -35,7 +35,7 @@
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/app_name"
         android:onClick="resumeOrPause"
-        android:padding="8dp"
+        android:padding="12dp"
         android:src="@drawable/ic_play" />
 
     <ImageButton
@@ -46,7 +46,7 @@
         android:contentDescription="@string/app_name"
         android:foreground="@drawable/ripple"
         android:onClick="skipNext"
-        android:padding="8dp"
+        android:padding="12dp"
         android:src="@drawable/ic_skip_next" />
 
     <ImageButton
@@ -56,7 +56,7 @@
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/app_name"
         android:foreground="@drawable/ripple"
-        android:onClick="showSettingsPopup"
-        android:padding="8dp"
+        android:onClick="showSettings"
+        android:padding="12dp"
         android:src="@drawable/ic_settings" />
 </LinearLayout>

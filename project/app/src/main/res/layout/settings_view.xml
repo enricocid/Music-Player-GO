@@ -4,41 +4,10 @@
     android:id="@+id/settings_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/secondary_bg_color"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="vertical"
-    android:paddingBottom="16dp"
-    android:paddingEnd="16dp"
-    android:paddingStart="16dp"
-    android:paddingTop="8dp">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="8dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:shadowColor="?attr/icon_color"
-            android:shadowDx="-1"
-            android:shadowDy="-1"
-            android:shadowRadius="0.5"
-            android:text="@string/settings"
-            android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
-            android:textColor="?attr/accent_color" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/app_name"
-            android:onClick="closeSettingsPopup"
-            android:src="@drawable/ic_close" />
-    </LinearLayout>
+    android:visibility="gone">
 
     <!-- OPTIONS -->
     <LinearLayout
@@ -55,7 +24,7 @@
             android:contentDescription="@string/app_name"
             android:foreground="@drawable/ripple"
             android:onClick="openGitPage"
-            android:padding="8dp"
+            android:padding="16dp"
             android:src="@drawable/ic_github" />
 
         <ImageButton
@@ -67,7 +36,7 @@
             android:contentDescription="@string/app_name"
             android:foreground="@drawable/ripple"
             android:onClick="openEqualizer"
-            android:padding="8dp"
+            android:padding="16dp"
             android:src="@drawable/ic_equalizer" />
 
         <ImageButton
@@ -78,8 +47,19 @@
             android:contentDescription="@string/app_name"
             android:foreground="@drawable/ripple"
             android:onClick="switchTheme"
-            android:padding="8dp"
+            android:padding="16dp"
             android:src="@drawable/ic_invert_colors" />
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@string/app_name"
+            android:foreground="@drawable/ripple"
+            android:onClick="closeSettings"
+            android:padding="16dp"
+            android:src="@drawable/ic_close" />
     </LinearLayout>
 
     <!-- COLORS OPTIONS -->
@@ -87,7 +67,6 @@
         android:id="@+id/colors_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:nestedScrollingEnabled="false"
         android:overScrollMode="never"
         tools:context="com.iven.musicplayergo.MainActivity" />
 </LinearLayout>
