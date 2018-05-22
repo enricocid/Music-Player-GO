@@ -9,7 +9,6 @@
         android:id="@+id/controls_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/secondary_bg_color"
         android:clickable="true"
         android:focusable="true"
         android:orientation="vertical">

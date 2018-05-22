@@ -34,37 +34,31 @@
     <style name="AppThemeLightBlue" parent="AppTheme">
         <item name="accent_color">@color/light_blue_A400</item>
         <item name="android:seekBarStyle">@style/SeekBarStyle</item>
-        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="AppThemeCyan" parent="AppTheme">
         <item name="accent_color">@color/cyan_A400</item>
         <item name="android:seekBarStyle">@style/SeekBarStyle</item>
-        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="AppThemeTeal" parent="AppTheme">
         <item name="accent_color">@color/teal_A400</item>
         <item name="android:seekBarStyle">@style/SeekBarStyle</item>
-        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="AppThemeGreen" parent="AppTheme">
         <item name="accent_color">@color/green_A400</item>
         <item name="android:seekBarStyle">@style/SeekBarStyle</item>
-        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="AppThemeAmber" parent="AppTheme">
         <item name="accent_color">@color/amber_A400</item>
         <item name="android:seekBarStyle">@style/SeekBarStyle</item>
-        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="AppThemeOrange" parent="AppTheme">
         <item name="accent_color">@color/orange_A400</item>
         <item name="android:seekBarStyle">@style/SeekBarStyle</item>
-        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="AppThemeDeepOrange" parent="AppTheme">

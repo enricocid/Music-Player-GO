@@ -24,7 +24,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
     private List<Song> mSongs;
     private Album mAlbum;
 
-    public SongsAdapter(Activity activity, Album album) {
+    public SongsAdapter(@NonNull Activity activity, Album album) {
         mActivity = activity;
         mAlbum = album;
         mSongs = mAlbum.songs;

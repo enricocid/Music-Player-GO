@@ -5,13 +5,6 @@
     android:background="?attr/secondary_bg_color"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_gravity="center_horizontal"
-        android:alpha="0.25"
-        android:background="?attr/accent_color" />
-
     <!-- ARTIST + ALBUM COUNT -->
     <TextView
         android:id="@+id/artist_album_count"

@@ -34,7 +34,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
             R.color.deep_orange_A400
     };
 
-    public ColorsAdapter(Activity activity, int accent) {
+    public ColorsAdapter(@NonNull Activity activity, int accent) {
         mActivity = activity;
         mAccent = accent;
         mOnAccentChangedListener = (AccentChangedListener) mActivity;

@@ -186,6 +186,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         mSlidingUpPanel = findViewById(R.id.sliding_panel);
         mControlsContainer = findViewById(R.id.controls_container);
+        mControlsContainer.setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(this, mAccent), 10));
 
         mPlayPauseButton = findViewById(R.id.play_pause);
         mResetButton = findViewById(R.id.replay);
@@ -225,7 +226,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (!EqualizerUtils.hasEqualizer(this)) {
             mEqButton.getDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
         }
-        mSettingsView.setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(this, mAccent), 10));
+        mSettingsView.setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(this, mAccent), 20));
         initializeColorsSettings();
     }
 
@@ -465,7 +466,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
             mArtists = artists;
             setArtistsRecyclerView(mArtists);
-            mSelectedArtist = mPlayerAdapter.getSelectedAlbum() != null ? mPlayerAdapter.getSelectedAlbum().getArtistName() : mArtists.get(1).getName();
+            mSelectedArtist = mPlayerAdapter.getSelectedAlbum() != null ? mPlayerAdapter.getSelectedAlbum().getArtistName() : mArtists.get(0).getName();
             setArtistDetails(ArtistProvider.getArtist(mArtists, mSelectedArtist).albums);
         }
     }

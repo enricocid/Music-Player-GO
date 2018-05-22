@@ -35,7 +35,7 @@ public class ArtistProvider {
         List<Song> songs = SongProvider.getSongs(SongProvider.makeSongCursor(
                 context, getSongLoaderSortOrder())
         );
-        List<Artist> artists = retrieveArtists(context, AlbumProvider.retrieveAlbums(songs));
+        List<Artist> artists = retrieveArtists(AlbumProvider.retrieveAlbums(songs));
         sortArtists(artists);
         return artists;
     }
@@ -51,7 +51,7 @@ public class ArtistProvider {
     }
 
     @NonNull
-    private static List<Artist> retrieveArtists(@NonNull final Context context, @Nullable final List<Album> albums) {
+    private static List<Artist> retrieveArtists(@Nullable final List<Album> albums) {
         List<Artist> artists = new ArrayList<>();
         if (albums != null) {
             for (Album album : albums) {

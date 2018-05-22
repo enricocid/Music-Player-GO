@@ -23,7 +23,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
     private final List<Artist> mArtists;
     private final ArtistSelectedListener mArtistSelectedListener;
 
-    public ArtistsAdapter(Activity activity, List<Artist> artists) {
+    public ArtistsAdapter(@NonNull Activity activity, List<Artist> artists) {
         mActivity = activity;
         mArtists = artists;
         mArtistSelectedListener = (ArtistSelectedListener) activity;

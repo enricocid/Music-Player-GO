@@ -24,7 +24,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
     private PlayerAdapter mPlayerAdapter;
     private int mAccent;
 
-    public AlbumsAdapter(Activity activity, List<Album> albums, PlayerAdapter playerAdapter, int accent) {
+    public AlbumsAdapter(@NonNull Activity activity, List<Album> albums, PlayerAdapter playerAdapter, int accent) {
         mActivity = activity;
         mAlbums = albums;
         mPlayerAdapter = playerAdapter;
