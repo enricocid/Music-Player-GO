@@ -1,6 +1,5 @@
 <resources>
     <string name="albums">%s (альбомів: %d)</string>
-    <string name="unknown_year">Рік невідомий</string>
     <string name="eq">Єквалайзер</string>
     <string name="no_eq">Єквалайзер не знайдено!</string>
     <string name="bad_id">З початку оберіть пісню!</string>

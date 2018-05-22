@@ -7,12 +7,23 @@
     android:contentDescription="?attr/accent_color"
     android:elevation="2dp"
     android:foreground="@drawable/ripple"
-    android:orientation="vertical">
+    android:orientation="horizontal">
+
+    <com.iven.musicplayergo.utils.VerticalTextView
+        android:id="@+id/year"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:padding="8dp"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textAppearance="@android:style/TextAppearance.Material.Caption"
+        android:textColor="?android:textColorSecondary" />
 
     <TextView
         android:id="@+id/album"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:ellipsize="end"
         android:gravity="center_vertical"
@@ -23,14 +34,4 @@
         android:textColor="?android:textColorSecondary"
         android:textSize="14sp"
         android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/year"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:singleLine="true"
-        android:textAlignment="center"
-        android:textAppearance="@android:style/TextAppearance.Material.Caption"
-        android:textColor="?android:textColorSecondary" />
 </LinearLayout>
