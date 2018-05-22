@@ -19,7 +19,7 @@ https://plus.google.com/+JulianGomezAxinen
 
 
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v50.png)
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v50_edit.png)
 
 <a href="https://play.google.com/store/apps/details?id=com.iven.musicplayergo" target="_blank">
   <img alt="Get it on Google Play"
@@ -63,7 +63,7 @@ Music Player GO will always be free! Anyway, you can still buy me a beer, an ice
 
   - RecyclerView-FastScroll by Tim Malseed (@timusus) (https://github.com/timusus/RecyclerView-FastScroll)
 
-  - Sliding up panel by @umano opportunely modified by Me (https://github.com/umano/AndroidSlidingUpPanel) (animated arrow indicator, lightened and with deprecated methods replaced);
+  - Sliding up panel by @umano lightened and updated by Me (https://github.com/umano/AndroidSlidingUpPanel);
 
 ### Other features: 
 
