@@ -24,7 +24,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
-import android.util.Pair;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -38,7 +37,6 @@ import com.iven.musicplayergo.adapters.AlbumsAdapter;
 import com.iven.musicplayergo.adapters.ArtistsAdapter;
 import com.iven.musicplayergo.adapters.ColorsAdapter;
 import com.iven.musicplayergo.adapters.SongsAdapter;
-import com.iven.musicplayergo.loaders.AlbumProvider;
 import com.iven.musicplayergo.loaders.ArtistProvider;
 import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Artist;
@@ -56,7 +54,7 @@ import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.List;
 
-public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks, SongsAdapter.SongSelectedListener, ColorsAdapter.AccentChangedListener, AlbumsAdapter.AlbumSelectedListener, ArtistsAdapter.ArtistSelectedListener {
+public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<List<Artist>>, SongsAdapter.SongSelectedListener, ColorsAdapter.AccentChangedListener, AlbumsAdapter.AlbumSelectedListener, ArtistsAdapter.ArtistSelectedListener {
 
     private LinearLayoutManager mArtistsLayoutManager;
     private int mAccent;
@@ -73,6 +71,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private ImageButton mPlayPauseButton, mResetButton, mEqButton;
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
+    private List<Artist> mArtists;
     private String mSelectedArtist;
     private boolean sExpandPanel = false;
     private MusicService mMusicService;
@@ -449,63 +448,49 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     @Override
     @NonNull
-    public Loader onCreateLoader(int id, Bundle args) {
-        return id != AlbumProvider.ALBUMS_LOADER ? new ArtistProvider.AsyncArtistLoader(this) : new AlbumProvider.AsyncAlbumsForArtistLoader(this, mSelectedArtist);
+    public Loader<List<Artist>> onCreateLoader(int id, Bundle args) {
+        return new ArtistProvider.AsyncArtistLoader(this);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public void onLoadFinished(@NonNull Loader loader, Object data) {
+    public void onLoadFinished(@NonNull Loader<List<Artist>> loader, List<Artist> artists) {
 
-        switch (loader.getId()) {
-            case ArtistProvider.ARTISTS_LOADER:
+        if (artists.isEmpty()) {
 
-                //get loaded artist list and set the artists recycler view
-                List<Artist> artists = (List<Artist>) data;
+            Toast.makeText(this, getString(R.string.error_no_music), Toast.LENGTH_SHORT)
+                    .show();
+            finish();
 
-                if (artists.isEmpty()) {
+        } else {
 
-                    Toast.makeText(this, getString(R.string.error_no_music), Toast.LENGTH_SHORT)
-                            .show();
-                    finish();
+            setArtistsRecyclerView(artists);
 
-                } else {
+            mArtists = artists;
+            mSelectedArtist = mPlayerAdapter.getSelectedAlbum() != null ? mPlayerAdapter.getSelectedAlbum().getArtistName() : artists.get(0).getName();
 
-                    setArtistsRecyclerView(artists);
+            setArtistDetails(ArtistProvider.getArtist(mArtists, mSelectedArtist).albums);
+        }
+    }
 
-                    mSelectedArtist = mPlayerAdapter.getSelectedAlbum() != null ? mPlayerAdapter.getSelectedAlbum().getArtistName() : artists.get(0).getName();
+    private void setArtistDetails(List<Album> albums) {
+        if (mAlbumsAdapter != null) {
+            //only notify recycler view of item changed if an adapter already exists
+            mAlbumsAdapter.swapArtist(albums);
+        } else {
+            LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+            mAlbumsRecyclerView.setLayoutManager(horizontalLayoutManager);
+            mAlbumsAdapter = new AlbumsAdapter(this, albums, mPlayerAdapter, ContextCompat.getColor(this, mAccent));
+            mAlbumsRecyclerView.setAdapter(mAlbumsAdapter);
+        }
 
-                    getSupportLoaderManager().initLoader(AlbumProvider.ALBUMS_LOADER, null, this);
-                }
-                break;
+        int albumCount = albums.size();
+        mArtistAlbumCount.setText(getString(R.string.albums, mSelectedArtist, albumCount));
 
-            case AlbumProvider.ALBUMS_LOADER:
-
-                //get loaded albums for artist
-                Pair<Artist, List<Album>> albumsForArtist = (Pair<Artist, List<Album>>) data;
-
-                List<Album> albums = albumsForArtist.second;
-
-                if (mAlbumsAdapter != null) {
-                    //only notify recycler view of item changed if an adapter already exists
-                    mAlbumsAdapter.swapArtist(albums);
-                } else {
-                    LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-                    mAlbumsRecyclerView.setLayoutManager(horizontalLayoutManager);
-                    mAlbumsAdapter = new AlbumsAdapter(this, albums, mPlayerAdapter, ContextCompat.getColor(this, mAccent));
-                    mAlbumsRecyclerView.setAdapter(mAlbumsAdapter);
-                }
-
-                int albumCount = albumsForArtist.second.size();
-                mArtistAlbumCount.setText(getString(R.string.albums, mSelectedArtist, albumCount));
-
-                if (sExpandPanel) {
-                    mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-                    sExpandPanel = false;
-                } else {
-                    restorePlayerStatus();
-                }
-                break;
+        if (sExpandPanel) {
+            mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            sExpandPanel = false;
+        } else {
+            restorePlayerStatus();
         }
     }
 
@@ -543,7 +528,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             //load artist albums only if not already loaded
             mSelectedArtist = artist;
 
-            getSupportLoaderManager().restartLoader(AlbumProvider.ALBUMS_LOADER, null, this);
+            setArtistDetails(ArtistProvider.getArtist(mArtists, mSelectedArtist).albums);
+
         } else {
             //if already loaded expand the panel
             mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
