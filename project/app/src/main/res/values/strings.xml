@@ -8,7 +8,7 @@
     <string name="enjoy">Select a song</string>
     <string name="artist_info" translatable="false">&lt;b>Albums:\n&lt;/b>%1d\n\u2022\n&lt;b>Songs:\n&lt;/b>%2d</string>
     <string name="track_title" translatable="false">&lt;b>%1d\n\u2022\n&lt;/b>%2s</string>
-    <string name="playing_song" translatable="false">&lt;b>%1s\n\u2022\n&lt;/b>%2s</string>
+    <string name="playing_song" translatable="false">&lt;b>%1s\n&lt;/b>%2s</string>
     <string name="no_browser">No browser found</string>
     <string name="perm_rationale">To let You play the music on your phone, Music Player GO needs access to your files</string>
     <string name="error_no_music">No music on your phone</string>
