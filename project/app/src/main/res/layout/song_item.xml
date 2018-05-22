@@ -14,7 +14,7 @@
         android:ellipsize="end"
         android:singleLine="true"
         android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-        android:textColor="?android:textColorSecondary" />
+        android:textColor="?android:textColorPrimary" />
 
     <TextView
         android:id="@+id/duration"
