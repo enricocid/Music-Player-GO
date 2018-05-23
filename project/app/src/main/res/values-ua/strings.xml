@@ -1,6 +1,5 @@
 <resources>
     <string name="albums">%s (альбомів: %d)</string>
-    <string name="unknown_year">Рік невідомий</string>
     <string name="eq">Єквалайзер</string>
     <string name="no_eq">Єквалайзер не знайдено!</string>
     <string name="bad_id">З початку оберіть пісню!</string>
@@ -8,5 +7,5 @@
     <string name="no_browser">Браузер не знайдено</string>
     <string name="perm_rationale">Для відтворення музики потрібен доступ Music Player-GO до Ваших файлів</string>
     <string name="error_no_music">Музика відсутня</string>
-    <string name="settings">Налаштування</string>
+    <string name="artist_info">&lt;b>Aльбомів:\n&lt;/b>%1d\n\u2022\n&lt;b>Пісні:\n&lt;/b>%2d</string>
 </resources>

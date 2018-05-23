@@ -3,7 +3,7 @@
     android:layout_width="@dimen/album_width"
     android:layout_height="@dimen/album_height"
     android:layout_margin="4dp"
-    android:background="?attr/card_color"
+    android:background="?android:attr/windowBackground"
     android:contentDescription="?attr/accent_color"
     android:elevation="2dp"
     android:foreground="@drawable/ripple"
@@ -17,24 +17,21 @@
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:maxLines="5"
-        android:padding="4dp"
-        android:shadowColor="?attr/accent_color"
-        android:shadowDx="-1"
-        android:shadowDy="-1"
-        android:shadowRadius="1"
+        android:padding="2dp"
         android:textAlignment="center"
         android:textAppearance="@android:style/TextAppearance.Material.Subhead"
         android:textColor="?android:textColorSecondary"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/year"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/a_black"
+        android:layout_gravity="center_vertical"
         android:padding="4dp"
         android:singleLine="true"
         android:textAlignment="center"
         android:textAppearance="@android:style/TextAppearance.Material.Caption"
-        android:textColor="?attr/accent_color" />
+        android:textColor="?android:textColorSecondary" />
 </LinearLayout>

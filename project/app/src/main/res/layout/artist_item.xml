@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/artist"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:ellipsize="marquee"
+    android:layout_gravity="center_vertical"
     android:foreground="@drawable/ripple"
-    android:paddingBottom="24dp"
-    android:paddingEnd="24dp"
-    android:paddingStart="16dp"
-    android:paddingTop="24dp"
-    android:singleLine="true"
-    android:textAlignment="textStart"
-    android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-    android:textColor="?android:textColorSecondary" />
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/artist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+        android:textColor="?android:textColorPrimary" />
+
+    <TextView
+        android:id="@+id/album_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:singleLine="true"
+        android:textAppearance="@android:style/TextAppearance.Material.Caption"
+        android:textColor="?android:textColorSecondary" />
+</LinearLayout>

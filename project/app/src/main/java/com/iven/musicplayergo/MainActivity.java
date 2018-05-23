@@ -19,18 +19,16 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
-import android.util.Pair;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,9 +37,6 @@ import com.iven.musicplayergo.adapters.AlbumsAdapter;
 import com.iven.musicplayergo.adapters.ArtistsAdapter;
 import com.iven.musicplayergo.adapters.ColorsAdapter;
 import com.iven.musicplayergo.adapters.SongsAdapter;
-import com.iven.musicplayergo.fastscroller.FastScrollerRecyclerView;
-import com.iven.musicplayergo.fastscroller.FastScrollerView;
-import com.iven.musicplayergo.loaders.AlbumProvider;
 import com.iven.musicplayergo.loaders.ArtistProvider;
 import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Artist;
@@ -55,15 +50,16 @@ import com.iven.musicplayergo.slidinguppanel.SlidingUpPanelLayout;
 import com.iven.musicplayergo.utils.AndroidVersion;
 import com.iven.musicplayergo.utils.PermissionDialog;
 import com.iven.musicplayergo.utils.SettingsUtils;
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.List;
 
-public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks, SongsAdapter.SongSelectedListener, ColorsAdapter.AccentChangedListener, AlbumsAdapter.AlbumSelectedListener, ArtistsAdapter.ArtistSelectedListener {
+public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<List<Artist>>, SongsAdapter.SongSelectedListener, ColorsAdapter.AccentChangedListener, AlbumsAdapter.AlbumSelectedListener, ArtistsAdapter.ArtistSelectedListener {
 
     private LinearLayoutManager mArtistsLayoutManager;
-    private ArtistsAdapter mArtistsAdapter;
     private int mAccent;
-    private FastScrollerRecyclerView mArtistsRecyclerView;
+    private boolean sThemeInverted;
+    private FastScrollRecyclerView mArtistsRecyclerView;
     private RecyclerView mAlbumsRecyclerView, mSongsRecyclerView;
     private AlbumsAdapter mAlbumsAdapter;
     private SongsAdapter mSongsAdapter;
@@ -72,10 +68,10 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private LinearLayout mControlsContainer;
     private View mSettingsView;
     private SlidingUpPanelLayout mSlidingUpPanel;
-    private ImageButton mPlayPauseButton, mResetButton, mEqButton, mArrowUp, mThemeButton;
-    private int mThemeContrast;
+    private ImageButton mPlayPauseButton, mResetButton, mEqButton;
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
+    private List<Artist> mArtists;
     private String mSelectedArtist;
     private boolean sExpandPanel = false;
     private MusicService mMusicService;
@@ -104,7 +100,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     };
     private boolean mIsBound;
     private Parcelable savedRecyclerLayoutState;
-    private PopupWindow mSettingsPopup;
 
     @Override
     public void onPause() {
@@ -112,11 +107,11 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (mArtistsLayoutManager != null) {
             savedRecyclerLayoutState = mArtistsLayoutManager.onSaveInstanceState();
         }
-        if (mSettingsPopup != null && mSettingsPopup.isShowing()) {
-            mSettingsPopup.dismiss();
-        }
         if (mPlayerAdapter != null && mPlayerAdapter.isMediaPlayer()) {
             mPlayerAdapter.onPauseActivity();
+        }
+        if (mSettingsView.getVisibility() == View.VISIBLE) {
+            SettingsUtils.showSettings(mControlsContainer, mSettingsView, false);
         }
     }
 
@@ -134,8 +129,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         //if the sliding up panel is expanded collapse it
         if (mSlidingUpPanel.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
             mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-        } else if (mSettingsPopup.isShowing()) {
-            mSettingsPopup.dismiss();
+        } else if (mSettingsView.getVisibility() == View.VISIBLE) {
+            closeSettings(mSettingsView);
         } else {
             super.onBackPressed();
         }
@@ -145,7 +140,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (AndroidVersion.isMarshmallow()) {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-                PermissionDialog.showPermissionDialog(getSupportFragmentManager());
+                PermissionDialog.show(getSupportFragmentManager());
             } else {
 
                 onPermissionGranted();
@@ -159,7 +154,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-            PermissionDialog.showPermissionDialog(getSupportFragmentManager());
+            PermissionDialog.show(getSupportFragmentManager());
         } else {
             onPermissionGranted();
         }
@@ -169,21 +164,18 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mThemeContrast = SettingsUtils.getContrast(this);
+        sThemeInverted = SettingsUtils.isThemeInverted(this);
         mAccent = SettingsUtils.getAccent(this);
 
-        SettingsUtils.retrieveTheme(this, mThemeContrast, mAccent);
+        SettingsUtils.setTheme(this, sThemeInverted, mAccent);
 
         setContentView(R.layout.main_activity);
 
         getViews();
 
-        mSlidingUpPanel.setSlidingUpPanel(mSongsRecyclerView, mArtistsRecyclerView, mArrowUp);
-        mSlidingUpPanel.setGravity(Gravity.BOTTOM);
-
         initializeSettings();
 
-        setSlidingUpPanelHeight();
+        setupSlidingUpPanel();
 
         initializeSeekBar();
 
@@ -193,10 +185,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private void getViews() {
 
         mSlidingUpPanel = findViewById(R.id.sliding_panel);
-
         mControlsContainer = findViewById(R.id.controls_container);
+        mControlsContainer.setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(this, mAccent), 10));
 
-        mArrowUp = findViewById(R.id.arrow_up);
         mPlayPauseButton = findViewById(R.id.play_pause);
         mResetButton = findViewById(R.id.replay);
         mSeekBarAudio = findViewById(R.id.seekTo);
@@ -209,22 +200,23 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSelectedAlbum = findViewById(R.id.selected_disc);
 
         mArtistsRecyclerView = findViewById(R.id.artists_rv);
+        mArtistsRecyclerView.setTrackColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(this, mAccent), sThemeInverted ? 15 : 30));
         mAlbumsRecyclerView = findViewById(R.id.albums_rv);
         mSongsRecyclerView = findViewById(R.id.songs_rv);
 
-        mSettingsView = View.inflate(this, R.layout.settings_popup, null);
+        mSettingsView = findViewById(R.id.settings_view);
 
-        mEqButton = mSettingsView.findViewById(R.id.eq);
-        mThemeButton = mSettingsView.findViewById(R.id.theme_button);
+        mEqButton = findViewById(R.id.eq);
     }
 
-    private void setSlidingUpPanelHeight() {
+    private void setupSlidingUpPanel() {
 
         final ViewTreeObserver observer = mControlsContainer.getViewTreeObserver();
         observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                mSlidingUpPanel.setPanelHeight(mControlsContainer.getHeight());
+                mSlidingUpPanel.setupSlidingUpPanel(mSongsRecyclerView, Gravity.BOTTOM, mControlsContainer.getHeight());
+                mSettingsView.setMinimumHeight(mControlsContainer.getHeight());
                 mControlsContainer.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
@@ -234,71 +226,28 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (!EqualizerUtils.hasEqualizer(this)) {
             mEqButton.getDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
         }
-
+        mSettingsView.setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(this, mAccent), 20));
         initializeColorsSettings();
-
-        mSettingsPopup = new PopupWindow(mSettingsView, LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT, true); // Creation of popup
-        mSettingsPopup.setOutsideTouchable(true);
-        mSettingsPopup.setElevation(6);
-
-        if (mThemeContrast != SettingsUtils.THEME_NIGHT) {
-            mThemeButton.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    SettingsUtils.setNightTheme(MainActivity.this);
-                    return false;
-                }
-            });
-        }
     }
 
-    public void showSettingsPopup(View v) {
-
-        mSettingsPopup.setAnimationStyle(android.R.style.Animation_Translucent);
-        mSettingsPopup.setOutsideTouchable(true);
-        if (!mSettingsPopup.isShowing()) {
-            mSettingsPopup.showAtLocation(mSettingsView, Gravity.CENTER, 0, 0);
-        }
+    public void showSettings(View v) {
+        SettingsUtils.showSettings(mControlsContainer, mSettingsView, true);
     }
 
-    public void closeSettingsPopup(View v) {
-        if (mSettingsPopup.isShowing()) {
-            mSettingsPopup.dismiss();
-        }
-    }
-
-    private void setScrollerIfRecyclerViewScrollable() {
-
-        // ViewTreeObserver allows us to measure the layout params
-        final ViewTreeObserver observer = mArtistsRecyclerView.getViewTreeObserver();
-        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-
-                int h = mArtistsRecyclerView.getHeight();
-                mArtistsRecyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                if (mArtistsRecyclerView.computeVerticalScrollRange() > h) {
-                    FastScrollerView fastScrollerView = new FastScrollerView(mArtistsRecyclerView, mArtistsAdapter, mArtistsLayoutManager, ContextCompat.getColor(MainActivity.this, mAccent), mThemeContrast);
-                    mArtistsRecyclerView.setFastScroller(fastScrollerView);
-                }
-            }
-        });
+    public void closeSettings(View v) {
+        SettingsUtils.showSettings(mControlsContainer, mSettingsView, false);
     }
 
     private void setArtistsRecyclerView(List<Artist> data) {
 
         mArtistsLayoutManager = new LinearLayoutManager(this);
         mArtistsRecyclerView.setLayoutManager(mArtistsLayoutManager);
-        mArtistsAdapter = new ArtistsAdapter(this, data);
-        mArtistsRecyclerView.setAdapter(mArtistsAdapter);
+        ArtistsAdapter artistsAdapter = new ArtistsAdapter(this, data);
+        mArtistsRecyclerView.setAdapter(artistsAdapter);
 
         if (savedRecyclerLayoutState != null) {
             mArtistsLayoutManager.onRestoreInstanceState(savedRecyclerLayoutState);
         }
-
-        // Set the FastScroller only if the RecyclerView is scrollable;
-        setScrollerIfRecyclerViewScrollable();
     }
 
     private void initializeSeekBar() {
@@ -378,16 +327,11 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         }
     }
 
-    public void expandPanel(View v) {
-        SlidingUpPanelLayout.PanelState panelState = mSlidingUpPanel.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED ? SlidingUpPanelLayout.PanelState.EXPANDED : SlidingUpPanelLayout.PanelState.COLLAPSED;
-        mSlidingUpPanel.setPanelState(panelState);
-    }
-
     private boolean checkIsPlayer() {
 
         boolean isPlayer = mPlayerAdapter.isMediaPlayer();
         if (!isPlayer) {
-            EqualizerUtils.notifyNoSessionId(MainActivity.this);
+            EqualizerUtils.notifyNoSessionId(this);
         }
         return isPlayer;
     }
@@ -398,13 +342,13 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             mMusicService.startForeground(MusicNotificationManager.NOTIFICATION_ID, mMusicService.getMusicNotificationManager().createNotification());
             mMusicService.setRestoredFromPause(true);
         }
-        SettingsUtils.setTheme(MainActivity.this);
+        SettingsUtils.invertTheme(this);
     }
 
     private void initializeColorsSettings() {
 
         RecyclerView colorsRecyclerView = mSettingsView.findViewById(R.id.colors_rv);
-        LinearLayoutManager linearLayoutManager = new GridLayoutManager(this, 5);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         colorsRecyclerView.setLayoutManager(linearLayoutManager);
         colorsRecyclerView.setAdapter(new ColorsAdapter(this, mAccent));
     }
@@ -415,7 +359,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private void updateResetStatus(boolean onPlaybackCompletion) {
 
-        int themeColor = mThemeContrast != SettingsUtils.THEME_LIGHT ? ContextCompat.getColor(this, R.color.grey_200) : ContextCompat.getColor(this, R.color.grey_900_darker);
+        int themeColor = sThemeInverted ? Color.WHITE : Color.BLACK;
         int color = onPlaybackCompletion ? themeColor : mPlayerAdapter.isReset() ? ContextCompat.getColor(this, mAccent) : themeColor;
         mResetButton.getDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
     }
@@ -505,63 +449,47 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     @Override
     @NonNull
-    public Loader onCreateLoader(int id, Bundle args) {
-        return id != AlbumProvider.ALBUMS_LOADER ? new ArtistProvider.AsyncArtistLoader(this) : new AlbumProvider.AsyncAlbumsForArtistLoader(this, mSelectedArtist);
+    public Loader<List<Artist>> onCreateLoader(int id, Bundle args) {
+        return new ArtistProvider.AsyncArtistLoader(this);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public void onLoadFinished(@NonNull Loader loader, Object data) {
+    public void onLoadFinished(@NonNull Loader<List<Artist>> loader, List<Artist> artists) {
 
-        switch (loader.getId()) {
-            case ArtistProvider.ARTISTS_LOADER:
+        if (artists.isEmpty()) {
 
-                //get loaded artist list and set the artists recycler view
-                List<Artist> artists = (List<Artist>) data;
+            Toast.makeText(this, getString(R.string.error_no_music), Toast.LENGTH_SHORT)
+                    .show();
+            finish();
 
-                if (artists.isEmpty()) {
+        } else {
 
-                    Toast.makeText(this, getString(R.string.error_no_music), Toast.LENGTH_SHORT)
-                            .show();
-                    finish();
+            mArtists = artists;
+            setArtistsRecyclerView(mArtists);
+            mSelectedArtist = mPlayerAdapter.getSelectedAlbum() != null ? mPlayerAdapter.getSelectedAlbum().getArtistName() : mArtists.get(0).getName();
+            setArtistDetails(ArtistProvider.getArtist(mArtists, mSelectedArtist).albums);
+        }
+    }
 
-                } else {
+    private void setArtistDetails(List<Album> albums) {
+        if (mAlbumsAdapter != null) {
+            //only notify recycler view of item changed if an adapter already exists
+            mAlbumsAdapter.swapArtist(albums);
+        } else {
+            LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+            mAlbumsRecyclerView.setLayoutManager(horizontalLayoutManager);
+            mAlbumsAdapter = new AlbumsAdapter(this, albums, mPlayerAdapter, ContextCompat.getColor(this, mAccent));
+            mAlbumsRecyclerView.setAdapter(mAlbumsAdapter);
+        }
 
-                    setArtistsRecyclerView(artists);
+        int albumCount = albums.size();
+        mArtistAlbumCount.setText(getString(R.string.albums, mSelectedArtist, albumCount));
 
-                    mSelectedArtist = mPlayerAdapter.getSelectedAlbum() != null ? mPlayerAdapter.getSelectedAlbum().getArtistName() : artists.get(0).getName();
-
-                    getSupportLoaderManager().initLoader(AlbumProvider.ALBUMS_LOADER, null, this);
-                }
-                break;
-
-            case AlbumProvider.ALBUMS_LOADER:
-
-                //get loaded albums for artist
-                Pair<Artist, List<Album>> albumsForArtist = (Pair<Artist, List<Album>>) data;
-
-                List<Album> albums = albumsForArtist.second;
-
-                if (mAlbumsAdapter != null) {
-                    //only notify recycler view of item changed if an adapter already exists
-                    mAlbumsAdapter.swapArtist(albums);
-                } else {
-                    LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-                    mAlbumsRecyclerView.setLayoutManager(horizontalLayoutManager);
-                    mAlbumsAdapter = new AlbumsAdapter(this, albums, mPlayerAdapter);
-                    mAlbumsRecyclerView.setAdapter(mAlbumsAdapter);
-                }
-
-                int albumCount = albumsForArtist.second.size();
-                mArtistAlbumCount.setText(getString(R.string.albums, mSelectedArtist, albumCount));
-
-                if (sExpandPanel) {
-                    mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-                    sExpandPanel = false;
-                } else {
-                    restorePlayerStatus();
-                }
-                break;
+        if (sExpandPanel) {
+            mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            sExpandPanel = false;
+        } else {
+            restorePlayerStatus();
         }
     }
 
@@ -599,7 +527,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             //load artist albums only if not already loaded
             mSelectedArtist = artist;
 
-            getSupportLoaderManager().restartLoader(AlbumProvider.ALBUMS_LOADER, null, this);
+            setArtistDetails(ArtistProvider.getArtist(mArtists, mSelectedArtist).albums);
+
         } else {
             //if already loaded expand the panel
             mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);

@@ -26,7 +26,7 @@ public class PermissionDialog extends DialogFragment {
         return new PermissionDialog();
     }
 
-    public static void showPermissionDialog(FragmentManager fm) {
+    public static void show(@NonNull FragmentManager fm) {
         newInstance().show(fm, DIALOG_TAG);
     }
 

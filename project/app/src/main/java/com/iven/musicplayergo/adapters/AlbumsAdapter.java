@@ -2,6 +2,7 @@ package com.iven.musicplayergo.adapters;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +22,13 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
     private List<Album> mAlbums;
     private Album mSelectedAlbum;
     private PlayerAdapter mPlayerAdapter;
+    private int mAccent;
 
-    public AlbumsAdapter(Activity activity, List<Album> albums, PlayerAdapter playerAdapter) {
+    public AlbumsAdapter(@NonNull Activity activity, List<Album> albums, PlayerAdapter playerAdapter, int accent) {
         mActivity = activity;
         mAlbums = albums;
         mPlayerAdapter = playerAdapter;
+        mAccent = accent;
         mAlbumSelectedListener = (AlbumSelectedListener) mActivity;
         updateAlbumsForArtist();
     }
@@ -82,6 +85,8 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
             title = itemView.findViewById(R.id.album);
             year = itemView.findViewById(R.id.year);
+            year.setBackgroundColor(ColorUtils.setAlphaComponent(year.getCurrentTextColor(), 10));
+            itemView.setBackgroundColor(ColorUtils.setAlphaComponent(mAccent, 10));
             itemView.setOnClickListener(this);
         }
 

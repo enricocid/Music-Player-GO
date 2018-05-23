@@ -2,8 +2,5 @@
 <resources>
     <attr name="accent_color" format="color" />
     <attr name="icon_color" format="color" />
-    <attr name="card_color" format="color" />
-    <attr name="panel_color" format="color" />
-    <attr name="theme_icon" format="reference" />
-    <attr name="settings_bg" format="reference" />
+    <attr name="secondary_bg_color" format="color" />
 </resources>

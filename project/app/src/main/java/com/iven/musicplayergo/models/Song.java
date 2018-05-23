@@ -34,12 +34,11 @@ public class Song {
                         TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration)));
     }
 
-    public static String formatTrack(int trackNumber) {
-
+    public static int formatTrack(int trackNumber) {
         int formatted = trackNumber;
         if (trackNumber >= 1000) {
             formatted = trackNumber % 1000;
         }
-        return String.valueOf(formatted);
+        return formatted;
     }
 }

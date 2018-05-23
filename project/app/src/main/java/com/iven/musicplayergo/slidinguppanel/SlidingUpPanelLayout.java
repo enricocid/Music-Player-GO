@@ -4,9 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -14,7 +17,6 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
 public class SlidingUpPanelLayout extends ViewGroup {
 
@@ -31,6 +33,10 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
     private final RecyclerViewHelper mScrollableViewHelper = new RecyclerViewHelper();
     private final Rect mTmpRect = new Rect();
+    /**
+     * The paint used to dim the main layout when sliding
+     */
+    private final Paint mCoveredFadePaint = new Paint();
     /**
      * The size of the overhang in pixels.
      */
@@ -90,10 +96,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
      * instance state save/restore.
      */
     private boolean mFirstLayout = true;
-    private View mDimView;
-    private int mDimViewColor;
-
-    private ImageButton mArrowUp;
 
     public SlidingUpPanelLayout(Context context) {
         this(context, null);
@@ -119,40 +121,16 @@ public class SlidingUpPanelLayout extends ViewGroup {
         mDragHelper.setMinVelocity(400 * density);
     }
 
-    public void setGravity(int gravity) {
+    public void setupSlidingUpPanel(@NonNull final RecyclerView scrollableView, int gravity, int panelHeight) {
+        mScrollableView = scrollableView;
         mIsSlidingUp = gravity == Gravity.BOTTOM;
+        mPanelHeight = panelHeight;
         if (!mFirstLayout) {
             requestLayout();
         }
-    }
-
-    /**
-     * Set the collapsed panel height in pixels
-     *
-     * @param val A height in pixels
-     */
-    public void setPanelHeight(int val) {
-
-        mPanelHeight = val;
-        if (!mFirstLayout) {
-            requestLayout();
-        }
-
         if (getPanelState() == PanelState.COLLAPSED) {
-            smoothToBottom();
             invalidate();
         }
-    }
-
-    public void setSlidingUpPanel(RecyclerView scrollableView, View dimView, ImageButton arrowUp) {
-        mScrollableView = scrollableView;
-        mArrowUp = arrowUp;
-        mDimView = dimView;
-        mDimViewColor = mDimView.getSolidColor();
-    }
-
-    private void smoothToBottom() {
-        smoothSlideTo(0);
     }
 
     /**
@@ -236,9 +214,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
             int height = layoutHeight;
             int width = layoutWidth;
             if (child == mMainView) {
-
                 height -= mPanelHeight;
-
                 width -= lp.leftMargin + lp.rightMargin;
             } else if (child == mSlideView) {
                 // The sliding view should be aware of its top margin.
@@ -607,18 +583,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
         }
     }
 
-    private void applyDim() {
-        if (mSlideOffset > 0) {
-            int coveredFadeColor = 0x99000000;
-            final int baseAlpha = (coveredFadeColor & 0xff000000) >>> 24;
-            final int iMag = (int) (baseAlpha * mSlideOffset);
-            final int color = iMag << 24 | (coveredFadeColor & mDimViewColor);
-            mDimView.setBackgroundColor(color);
-            int rotationX = (int) (180 * mSlideOffset);
-            mArrowUp.setRotationX(rotationX);
-        }
-    }
-
     @Override
     protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
         boolean result;
@@ -638,7 +602,13 @@ public class SlidingUpPanelLayout extends ViewGroup {
             canvas.clipRect(mTmpRect);
 
             result = super.drawChild(canvas, child, drawingTime);
-            applyDim();
+            if (mSlideOffset > 0) {
+                final int baseAlpha = (Color.BLACK & 0xff000000) >>> 24;
+                final int imag = (int) (baseAlpha * mSlideOffset);
+                final int color = imag << 24;
+                mCoveredFadePaint.setColor(color);
+                canvas.drawRect(mTmpRect, mCoveredFadePaint);
+            }
 
         } else {
             result = super.drawChild(canvas, child, drawingTime);

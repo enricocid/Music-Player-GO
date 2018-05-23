@@ -2,61 +2,36 @@
 
     <!-- LIGHT THEME -->
     <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="icon_color">@android:color/black</item>
+        <item name="secondary_bg_color">@color/light</item>
         <item name="android:typeface">sans</item>
-        <item name="icon_color">@color/grey_900_darker</item>
-        <item name="android:windowBackground">@color/grey_100</item>
-        <item name="card_color">@color/grey_100</item>
-        <item name="panel_color">@color/grey_200</item>
-        <item name="settings_bg">@color/grey_100</item>
-        <item name="theme_icon">@drawable/ic_theme_dark</item>
-        <item name="android:navigationBarColor">@color/grey_900_darker</item>
-        <item name="android:colorEdgeEffect">?attr/accent_color</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:navigationBarColor">@color/inverted</item>
         <item name="android:statusBarColor">?attr/accent_color</item>
         <item name="android:alertDialogTheme">@style/AlertDialogStyleLight</item>
-    </style>
-
-    <!-- DARK THEME -->
-    <style name="AppThemeDark" parent="android:Theme.Material.NoActionBar">
-        <item name="android:typeface">sans</item>
-        <item name="icon_color">@color/grey_200</item>
-        <item name="card_color">@color/grey_900</item>
-        <item name="settings_bg">@color/grey_900</item>
-        <item name="panel_color">@color/grey_900_darker</item>
-        <item name="theme_icon">@drawable/ic_theme_night</item>
-        <item name="android:windowBackground">@color/grey_900</item>
-        <item name="android:navigationBarColor">@color/grey_900_darker</item>
         <item name="android:colorEdgeEffect">?attr/accent_color</item>
-        <item name="android:statusBarColor">?attr/accent_color</item>
-        <item name="android:alertDialogTheme">@style/AlertDialogStyle</item>
     </style>
 
-    <!-- NIGHT THEME -->
-    <style name="AppThemeNight" parent="android:Theme.Material.NoActionBar">
+    <!-- INVERTED THEME -->
+    <style name="AppThemeInverted" parent="android:Theme.Material.NoActionBar">
+        <item name="icon_color">@android:color/white</item>
+        <item name="secondary_bg_color">@color/inverted</item>
         <item name="android:typeface">sans</item>
-        <item name="icon_color">@color/grey_200</item>
-        <item name="card_color">?android:attr/windowBackground</item>
-        <item name="panel_color">@color/black_panel</item>
-        <item name="settings_bg">@color/black_panel</item>
-        <item name="theme_icon">@drawable/ic_theme_light</item>
         <item name="android:windowBackground">@android:color/black</item>
-        <item name="android:navigationBarColor">@color/black_panel</item>
-        <item name="android:colorEdgeEffect">?attr/accent_color</item>
+        <item name="android:navigationBarColor">@color/inverted</item>
         <item name="android:statusBarColor">?attr/accent_color</item>
-        <item name="android:alertDialogTheme">@style/AlertDialogStyleNight</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogStyleInverted</item>
+        <item name="android:colorEdgeEffect">?attr/accent_color</item>
     </style>
 
     <style name="AlertDialogStyleLight" parent="android:Theme.Material.Light.Dialog.Alert">
         <item name="android:colorAccent">?attr/accent_color</item>
+        <item name="android:background">@color/light</item>
     </style>
 
-    <style name="AlertDialogStyle" parent="android:Theme.Material.Dialog.Alert">
+    <style name="AlertDialogStyleInverted" parent="android:Theme.Material.Dialog.Alert">
         <item name="android:colorAccent">?attr/accent_color</item>
-        <item name="android:background">@color/grey_900</item>
-    </style>
-
-    <style name="AlertDialogStyleNight" parent="android:Theme.Material.Dialog.Alert">
-        <item name="android:colorAccent">?attr/accent_color</item>
-        <item name="android:background">@color/black_panel</item>
+        <item name="android:background">@color/inverted</item>
     </style>
 
     <style name="SeekBarStyle" parent="android:Widget.Material.SeekBar">

@@ -1,14 +1,15 @@
 <resources>
     <string name="app_name" translatable="false">Music Player GO</string>
     <string name="albums">%s (albums: %d)</string>
-    <string name="unknown_year">Year unknown</string>
+    <string name="unknown_year" translatable="false">N&#x2F;A</string>
     <string name="eq">Equalizer</string>
     <string name="no_eq">No equalizer was found!</string>
     <string name="bad_id">Play a song first!</string>
     <string name="enjoy">Select a song</string>
-    <string name="playing_song" translatable="false">&lt;b>%1s&lt;/b> - %2s</string>
+    <string name="artist_info">&lt;b>Albums:\n&lt;/b>%1d\n\u2022\n&lt;b>Songs:\n&lt;/b>%2d</string>
+    <string name="track_title" translatable="false">&lt;b>%1d\n\u2022\n&lt;/b>%2s</string>
+    <string name="playing_song" translatable="false">&lt;b>%1s\n&lt;/b>%2s</string>
     <string name="no_browser">No browser found</string>
     <string name="perm_rationale">To let You play the music on your phone, Music Player GO needs access to your files</string>
     <string name="error_no_music">No music on your phone</string>
-    <string name="settings">Options</string>
 </resources>

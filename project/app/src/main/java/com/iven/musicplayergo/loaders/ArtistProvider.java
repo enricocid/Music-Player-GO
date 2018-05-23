@@ -2,7 +2,6 @@ package com.iven.musicplayergo.loaders;
 
 import android.content.Context;
 import android.provider.MediaStore;
-import android.provider.MediaStore.Audio.AudioColumns;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -34,30 +33,26 @@ public class ArtistProvider {
     @NonNull
     private static List<Artist> getAllArtists(@NonNull final Context context) {
         List<Song> songs = SongProvider.getSongs(SongProvider.makeSongCursor(
-                context,
-                null,
-                null,
-                getSongLoaderSortOrder())
+                context, getSongLoaderSortOrder())
         );
         List<Artist> artists = retrieveArtists(AlbumProvider.retrieveAlbums(songs));
         sortArtists(artists);
         return artists;
     }
 
-    @NonNull
-    static Artist getArtist(@NonNull final Context context, String artist) {
-        List<Song> songs = SongProvider.getSongs(SongProvider.makeSongCursor(
-                context,
-                AudioColumns.ARTIST + "=?",
-                new String[]{String.valueOf(artist)},
-                getSongLoaderSortOrder())
-        );
-        return new Artist(AlbumProvider.retrieveAlbums(songs));
+    public static Artist getArtist(List<Artist> artists, String selectedArtist) {
+        Artist returnerArtist = null;
+        for (Artist artist : artists) {
+            if (artist.getName().equals(selectedArtist)) {
+                returnerArtist = artist;
+            }
+        }
+        return returnerArtist;
     }
 
     @NonNull
     private static List<Artist> retrieveArtists(@Nullable final List<Album> albums) {
-        ArrayList<Artist> artists = new ArrayList<>();
+        List<Artist> artists = new ArrayList<>();
         if (albums != null) {
             for (Album album : albums) {
                 getOrCreateArtist(artists, album.getArtistId()).albums.add(album);

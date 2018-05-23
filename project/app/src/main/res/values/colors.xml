@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black_panel">#050505</color>
-    <color name="a_black">#15000000</color>
-    <color name="grey_100">#F5F5F5</color>
-    <color name="grey_200">#EEEEEE</color>
-    <color name="grey_500">#9E9E9E</color>
-    <color name="grey_900">#212121</color>
-    <color name="grey_900_darker">#1E1E1E</color>
-    <color name="red_A400">#FF1744</color> <!-- DARK -->
-    <color name="pink_A400">#F50057</color> <!-- DARK -->
-    <color name="purple_A400">#D500F9</color> <!-- DARK -->
-    <color name="deep_purple_A400">#651FFF</color> <!-- DARK -->
-    <color name="indigo_A400">#3D5AFE</color> <!-- DARK -->
-    <color name="blue_A400">#2979FF</color> <!-- DARK -->
-    <color name="light_blue_A400">#00B0FF</color> <!-- LIGHT -->
-    <color name="cyan_A400">#00E5FF</color> <!-- LIGHT -->
-    <color name="teal_A400">#1DE9B6</color> <!-- LIGHT -->
-    <color name="green_A400">#00E676</color> <!-- LIGHT -->
-    <color name="amber_A400">#FFC400</color> <!-- LIGHT -->
-    <color name="orange_A400">#FF9100</color> <!-- LIGHT -->
-    <color name="deep_orange_A400">#FF3D00</color> <!-- DARK -->
+    <color name="light">#fafafa</color>
+    <color name="inverted">#060606</color>
+    <color name="red_A400">#FF1744</color> <!-- LIGHT -->
+    <color name="pink_A400">#F50057</color> <!-- LIGHT -->
+    <color name="purple_A400">#D500F9</color> <!-- LIGHT -->
+    <color name="deep_purple_A400">#651FFF</color> <!-- LIGHT -->
+    <color name="indigo_A400">#3D5AFE</color> <!-- LIGHT -->
+    <color name="blue_A400">#2979FF</color> <!-- LIGHT -->
+    <color name="light_blue_A400">#00B0FF</color> <!-- DARK -->
+    <color name="cyan_A400">#00E5FF</color> <!-- DARK -->
+    <color name="teal_A400">#1DE9B6</color> <!-- DARK -->
+    <color name="green_A400">#00E676</color> <!-- DARK -->
+    <color name="amber_A400">#FFC400</color> <!-- DARK -->
+    <color name="orange_A400">#FF9100</color> <!-- DARK -->
+    <color name="deep_orange_A400">#FF3D00</color> <!-- LIGHT -->
 </resources>

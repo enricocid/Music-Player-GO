@@ -7,7 +7,7 @@
 
 ### Very slim music player! (<1000KB)
 
-### Current version: (**49**) 2.3.3.3
+### Current version: (52) 2.4.1.1
 
 
 
@@ -19,7 +19,7 @@ https://plus.google.com/+JulianGomezAxinen
 
 
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots.png)
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v50_edit.png)
 
 <a href="https://play.google.com/store/apps/details?id=com.iven.musicplayergo" target="_blank">
   <img alt="Get it on Google Play"
@@ -33,7 +33,7 @@ https://plus.google.com/+JulianGomezAxinen
 - Colorful and simple UI;
 - Unified UI: no need to navigate between activities;
 - Music organized by artist;
-- Alphabetic scrolling;
+- Fast scrolling;
 - Sliding up panel containing controls (when collapsed) and the artist albums/songs (when expanded);
 - Dark status bar icons for light accents
 (according to https://material.io/guidelines/style/color.html#color-color-palette);
@@ -41,7 +41,7 @@ https://plus.google.com/+JulianGomezAxinen
 ### Open settings directly from UI. Available settings: 
 
 - Equalizer;
-- Themes (Light, dark, night)(Long click to force night theme);
+- Themes (Light and Inverted)
 - Link to git page;
 - UI accents;
 
@@ -58,10 +58,12 @@ Music Player GO will always be free! Anyway, you can still buy me a beer, an ice
 ### Dependencies used: 
 
   - Android Support Library v4;
+
   - RecyclerView v7;
 
-  - Sliding up panel by @umano opportunely modified by Me (https://github.com/umano/AndroidSlidingUpPanel) (animated arrow indicator, lightened and with deprecated methods replaced);
-  - Alphabetic Index Fast Scroller by @myinnos opportunely modified by Me to be shown/hidden on RecyclerView's scroll (https://github.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView);
+  - RecyclerView-FastScroll by Tim Malseed (@timusus) (https://github.com/timusus/RecyclerView-FastScroll)
+
+  - Sliding up panel by @umano lightened and updated by Me (https://github.com/umano/AndroidSlidingUpPanel);
 
 ### Other features: 
 

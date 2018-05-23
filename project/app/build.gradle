@@ -7,8 +7,8 @@ android {
         applicationId "com.iven.musicplayergo"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 49
-        versionName "2.3.3.3"
+        versionCode 52
+        versionName "2.4.1.1"
     }
     buildTypes {
         release {
@@ -22,4 +22,5 @@ android {
 dependencies {
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.18'
 }

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/panel_color"
+    android:background="?attr/secondary_bg_color"
     android:orientation="vertical">
 
     <!-- ARTIST + ALBUM COUNT -->
@@ -14,10 +14,6 @@
         android:ellipsize="marquee"
         android:paddingEnd="4dp"
         android:paddingStart="4dp"
-        android:shadowColor="?attr/icon_color"
-        android:shadowDx="-1"
-        android:shadowDy="-1"
-        android:shadowRadius="0.5"
         android:textAppearance="@android:style/TextAppearance.Material.Subhead"
         android:textColor="?attr/accent_color"
         android:textStyle="bold" />
@@ -34,15 +30,10 @@
         android:id="@+id/selected_disc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
+        android:layout_margin="12dp"
         android:ellipsize="marquee"
         android:paddingEnd="4dp"
         android:paddingStart="4dp"
-        android:shadowColor="?attr/icon_color"
-        android:shadowDx="-1"
-        android:shadowDy="-1"
-        android:shadowRadius="0.5"
         android:singleLine="true"
         android:textAppearance="@android:style/TextAppearance.Material.Subhead"
         android:textColor="?attr/accent_color" />

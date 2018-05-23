@@ -2,53 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
     android:foreground="@drawable/ripple"
-    android:orientation="horizontal">
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:id="@+id/track"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:singleLine="true"
-            android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-            android:textColor="?android:textColorSecondary"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/duration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="2dp"
-            android:alpha="0.50"
-            android:shadowColor="?attr/icon_color"
-            android:shadowDx="-1"
-            android:shadowDy="-1"
-            android:shadowRadius="0.5"
-            android:singleLine="true"
-            android:textAppearance="@android:style/TextAppearance.Material.Caption"
-            android:textColor="?attr/accent_color" />
-    </LinearLayout>
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/track_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+        android:textColor="?android:textColorPrimary" />
+
+    <TextView
+        android:id="@+id/duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:ellipsize="marquee"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:scrollHorizontally="true"
+        android:layout_marginTop="12dp"
         android:singleLine="true"
-        android:textAlignment="center"
-        android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-        android:textColor="?android:textColorSecondary" />
+        android:textAppearance="@android:style/TextAppearance.Material.Caption"
+        android:textColor="?attr/accent_color"
+        android:textStyle="bold" />
 </LinearLayout>

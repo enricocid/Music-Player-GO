@@ -36,7 +36,7 @@ public class MusicNotificationManager {
     private NotificationCompat.Builder mNotificationBuilder;
     private int mAccent;
 
-    MusicNotificationManager(MusicService musicService) {
+    MusicNotificationManager(@NonNull final MusicService musicService) {
 
         mMusicService = musicService;
         mNotificationManager = (NotificationManager) mMusicService.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -144,7 +144,7 @@ public class MusicNotificationManager {
     }
 
     //https://gist.github.com/Gnzlt/6ddc846ef68c587d559f1e1fcd0900d3
-    private Bitmap getLargeIcon(Drawable drawable) {
+    private Bitmap getLargeIcon(@NonNull final Drawable drawable) {
 
         VectorDrawable vectorDrawable = (VectorDrawable) drawable;
         int largeIconSize = mMusicService.getResources().getDimensionPixelSize(R.dimen.notification_large_dim);

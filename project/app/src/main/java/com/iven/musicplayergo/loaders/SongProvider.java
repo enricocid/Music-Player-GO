@@ -24,8 +24,8 @@ class SongProvider {
     private static final int ALBUM = 5;
     private static final int ARTIST_ID = 6;
     private static final int ARTIST = 7;
+    private static final String UNKNOWN = "<unknown>";
 
-    private static final String BASE_SELECTION = AudioColumns.IS_MUSIC + "=1" + " AND " + AudioColumns.TITLE + " != ''";
     private static final String[] BASE_PROJECTION = new String[]{
             AudioColumns.TITLE,// 0
             AudioColumns.TRACK,// 1
@@ -42,7 +42,7 @@ class SongProvider {
         List<Song> songs = new ArrayList<>();
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                if (getSongFromCursorImpl(cursor).duration >= 5000) {
+                if (getSongFromCursorImpl(cursor).duration >= 5000 && !getSongFromCursorImpl(cursor).artistName.equals(UNKNOWN)) {
                     songs.add(getSongFromCursorImpl(cursor));
                 }
             } while (cursor.moveToNext());
@@ -81,16 +81,10 @@ class SongProvider {
     }
 
     @Nullable
-    static Cursor makeSongCursor(@NonNull final Context context, @Nullable String selection, String[] selectionValues, final String sortOrder) {
-        if (selection != null && !selection.trim().equals("")) {
-            selection = BASE_SELECTION + " AND " + selection;
-        } else {
-            selection = BASE_SELECTION;
-        }
-
+    static Cursor makeSongCursor(@NonNull final Context context, final String sortOrder) {
         try {
             return context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                    BASE_PROJECTION, selection, selectionValues, sortOrder);
+                    BASE_PROJECTION, null, null, sortOrder);
         } catch (SecurityException e) {
             return null;
         }
