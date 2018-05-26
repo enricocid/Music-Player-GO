@@ -31,7 +31,10 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
             R.color.green_A400,
             R.color.amber_A400,
             R.color.orange_A400,
-            R.color.deep_orange_A400
+            R.color.deep_orange_A400,
+            R.color.brown_400,
+            R.color.gray_400,
+            R.color.blue_gray_400
     };
 
     public ColorsAdapter(@NonNull Activity activity, int accent) {
