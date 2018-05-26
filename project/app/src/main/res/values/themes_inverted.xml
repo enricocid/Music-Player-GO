@@ -71,8 +71,13 @@
         <item name="android:seekBarStyle">@style/SeekBarStyle</item>
     </style>
 
-    <style name="AppThemeGrayInverted" parent="AppThemeInverted">
+    <style name="AppThemeGrayLightInverted" parent="AppThemeInverted">
         <item name="accent_color">@color/gray_400</item>
+        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+    </style>
+
+    <style name="AppThemeGrayDarkInverted" parent="AppThemeInverted">
+        <item name="accent_color">@color/gray_800</item>
         <item name="android:seekBarStyle">@style/SeekBarStyle</item>
     </style>
 

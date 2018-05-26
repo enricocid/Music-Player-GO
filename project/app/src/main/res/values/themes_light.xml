@@ -76,6 +76,16 @@
         <item name="android:seekBarStyle">@style/SeekBarStyle</item>
     </style>
 
+    <style name="AppThemeGrayLight" parent="AppTheme">
+        <item name="accent_color">@color/gray_400</item>
+        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+    </style>
+
+    <style name="AppThemeGrayDark" parent="AppTheme">
+        <item name="accent_color">@color/gray_800</item>
+        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+    </style>
+
     <style name="AppThemeBlueGray" parent="AppTheme">
         <item name="accent_color">@color/blue_gray_400</item>
         <item name="android:seekBarStyle">@style/SeekBarStyle</item>

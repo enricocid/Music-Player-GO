@@ -7,7 +7,7 @@
 
 ### Very slim music player! (<1000KB)
 
-### Current version: (52) 2.4.1.1
+### Current version: (53) 2.4.1.2
 
 
 
@@ -41,9 +41,9 @@ https://plus.google.com/+JulianGomezAxinen
 ### Open settings directly from UI. Available settings: 
 
 - Equalizer;
-- Themes (Light and Inverted)
+- Themes (light and inverted)
 - Link to git page;
-- UI accents;
+- 16 UI accents!;
 
 
 ### Minimal code:

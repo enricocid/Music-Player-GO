@@ -133,7 +133,11 @@ public class SettingsUtils {
                 break;
 
             case R.color.gray_400:
-                selectedTheme = isThemeDark ? R.style.AppThemeGrayInverted : R.style.AppThemeGray;
+                selectedTheme = isThemeDark ? R.style.AppThemeGrayLightInverted : R.style.AppThemeGrayLight;
+                break;
+
+            case R.color.gray_800:
+                selectedTheme = isThemeDark ? R.style.AppThemeGrayDarkInverted : R.style.AppThemeGrayDark;
                 break;
 
             case R.color.blue_gray_400:
