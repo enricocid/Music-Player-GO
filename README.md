@@ -1,9 +1,7 @@
 # Music-Player-GO [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) - [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
-<a href="https://play.google.com/store/apps/details?id=com.iven.musicplayergo" target="_blank">
-  <img alt="Get it on Google Play"
-       src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="60"/>
-</a>
 
+[<img alt="Get it on Google Play" height="80" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png">](https://play.google.com/store/apps/details?id=com.iven.musicplayergo)
+[<img alt="Get it on F-Droid" height="80" src="https://f-droid.org/badge/get-it-on.png">](https://f-droid.org/repository/browse/?fdid=com.iven.musicplayergo)
 
 ### Very slim music player! (<1000KB)
 
@@ -21,10 +19,8 @@ https://plus.google.com/+JulianGomezAxinen
 
 ![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v50_edit.png)
 
-<a href="https://play.google.com/store/apps/details?id=com.iven.musicplayergo" target="_blank">
-  <img alt="Get it on Google Play"
-       src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="60"/>
-</a>
+[<img alt="Get it on Google Play" height="80" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png">](https://play.google.com/store/apps/details?id=com.iven.musicplayergo)
+[<img alt="Get it on F-Droid" height="80" src="https://f-droid.org/badge/get-it-on.png">](https://f-droid.org/repository/browse/?fdid=com.iven.musicplayergo)
 
 
 
