@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="light">#fafafa</color>
+    <color name="light">#FAFAFA</color>
     <color name="inverted">#060606</color>
     <color name="red_A400">#FF1744</color> <!-- LIGHT -->
     <color name="pink_A400">#F50057</color> <!-- LIGHT -->
@@ -15,4 +15,8 @@
     <color name="amber_A400">#FFC400</color> <!-- DARK -->
     <color name="orange_A400">#FF9100</color> <!-- DARK -->
     <color name="deep_orange_A400">#FF3D00</color> <!-- LIGHT -->
+    <color name="brown_400">#8D6E63</color> <!-- LIGHT -->
+    <color name="gray_400">#BDBDBD</color> <!-- DARK -->
+    <color name="gray_800">#212121</color> <!-- LIGHT -->
+    <color name="blue_gray_400">#78909C</color> <!-- LIGHT -->
 </resources>

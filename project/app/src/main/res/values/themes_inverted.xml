@@ -65,4 +65,24 @@
         <item name="accent_color">@color/deep_orange_A400</item>
         <item name="android:seekBarStyle">@style/SeekBarStyle</item>
     </style>
+
+    <style name="AppThemeBrownInverted" parent="AppThemeInverted">
+        <item name="accent_color">@color/brown_400</item>
+        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+    </style>
+
+    <style name="AppThemeGrayLightInverted" parent="AppThemeInverted">
+        <item name="accent_color">@color/gray_400</item>
+        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+    </style>
+
+    <style name="AppThemeGrayDarkInverted" parent="AppThemeInverted">
+        <item name="accent_color">@color/gray_800</item>
+        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+    </style>
+
+    <style name="AppThemeBlueGrayInverted" parent="AppThemeInverted">
+        <item name="accent_color">@color/blue_gray_400</item>
+        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+    </style>
 </resources>

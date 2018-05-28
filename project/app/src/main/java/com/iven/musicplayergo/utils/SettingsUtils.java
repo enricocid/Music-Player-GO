@@ -127,6 +127,22 @@ public class SettingsUtils {
             case R.color.deep_orange_A400:
                 selectedTheme = isThemeDark ? R.style.AppThemeDeepOrangeInverted : R.style.AppThemeDeepOrange;
                 break;
+
+            case R.color.brown_400:
+                selectedTheme = isThemeDark ? R.style.AppThemeBrownInverted : R.style.AppThemeBrown;
+                break;
+
+            case R.color.gray_400:
+                selectedTheme = isThemeDark ? R.style.AppThemeGrayLightInverted : R.style.AppThemeGrayLight;
+                break;
+
+            case R.color.gray_800:
+                selectedTheme = isThemeDark ? R.style.AppThemeGrayDarkInverted : R.style.AppThemeGrayDark;
+                break;
+
+            case R.color.blue_gray_400:
+                selectedTheme = isThemeDark ? R.style.AppThemeBlueGrayInverted : R.style.AppThemeBlueGray;
+                break;
         }
         return selectedTheme;
     }
