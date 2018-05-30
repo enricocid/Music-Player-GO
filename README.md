@@ -3,9 +3,13 @@
 [<img alt="Get it on Google Play" height="80" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png">](https://play.google.com/store/apps/details?id=com.iven.musicplayergo)
 [<img alt="Get it on F-Droid" height="80" src="https://f-droid.org/badge/get-it-on.png">](https://f-droid.org/repository/browse/?fdid=com.iven.musicplayergo)
 
+You can also get the app from IzzyOnDroid repository! To add this repo to Your F-Droid client, scan the QR code below (click to enlarge) or use the url (**https://apt.izzysoft.de/fdroid/repo**):
+
+[<img alt="Get it on IzzyOnDroid" height=80 src="https://apt.izzysoft.de/shared/images/fdroid_repo_qr.png">](https://apt.izzysoft.de/shared/images/fdroid_repo_qr.png)
+
 ### Very slim music player! (<1000KB)
 
-### Current version: (53) 2.4.1.2
+### Current version: (54) 2.4.1.3
 
 
 
@@ -22,7 +26,11 @@ https://plus.google.com/+JulianGomezAxinen
 [<img alt="Get it on Google Play" height="80" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png">](https://play.google.com/store/apps/details?id=com.iven.musicplayergo)
 [<img alt="Get it on F-Droid" height="80" src="https://f-droid.org/badge/get-it-on.png">](https://f-droid.org/repository/browse/?fdid=com.iven.musicplayergo)
 
+You can also get the app from IzzyOnDroid repository! To add this repo to Your F-Droid client, scan the QR code below (click to enlarge) or use the url (**https://apt.izzysoft.de/fdroid/repo**):
 
+[<img alt="Get it on IzzyOnDroid" height=80 src="https://apt.izzysoft.de/shared/images/fdroid_repo_qr.png">](https://apt.izzysoft.de/shared/images/fdroid_repo_qr.png)
+
+# Features:
 
 ### Unifield UI, the way I'd like it to be:
 
@@ -32,7 +40,6 @@ https://plus.google.com/+JulianGomezAxinen
 - Fast scrolling;
 - Sliding up panel containing controls (when collapsed) and the artist albums/songs (when expanded);
 - Dark status bar icons for light accents
-(according to https://material.io/guidelines/style/color.html#color-color-palette);
 
 ### Open settings directly from UI. Available settings: 
 
@@ -44,11 +51,11 @@ https://plus.google.com/+JulianGomezAxinen
 
 ### Minimal code:
 
-- Based on nothing: it was written from scratch besides few snippets here and there;
+*Based on nothing: it was written from scratch besides few snippets here and there*
 
 
 ### What does this cost?
-Music Player GO will always be free! Anyway, you can still buy me a beer, an ice cream or something via [PayPal](https://www.paypal.me/enricocid) if You really liked it! :)
+*Music Player GO will always be free! Anyway, you can still buy me a beer, an ice cream or something via [PayPal](https://www.paypal.me/enricocid) if You really liked it! :)*
 
 
 ### Dependencies used: 
@@ -66,11 +73,13 @@ Music Player GO will always be free! Anyway, you can still buy me a beer, an ice
 - Pause/resume when the headsets are (dis)connected;
 - Simple audio focus (notifications, calls, or other media apps) management;
 
-### Ukrainian and Russian translations and other strings refinements by Stanislav (STWheel)
+# Credits:
+
+- **IzzySoft** (https://github.com/IzzySoft) and **Poussinou** (https://github.com/Poussinou) for setting up the F-Droid repository
+
+- Ukrainian and Russian translations and other strings refinements by **Stanislav (STWheel)**
 https://github.com/STWheel
 
-### French translations by KowalskiOmniROM
-https://github.com/KowalskiOmniROM
+- **KowalskiOmniROM** (https://github.com/KowalskiOmniROM) for French translations 
 
-### Some icons are from materialdesignicons.com
-https://materialdesignicons.com/
+- https://materialdesignicons.com/ for icons
