@@ -4,31 +4,17 @@
 
 ### Very slim music player! (<1000KB) | Current version: (54) 2.4.1.3
 
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v54.png)
+
 # Download
 
 [<img alt="Get it on Google Play" height="80" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png">](https://play.google.com/store/apps/details?id=com.iven.musicplayergo)
 [<img alt="Get it on F-Droid" height="80" src="https://f-droid.org/badge/get-it-on.png">](https://f-droid.org/repository/browse/?fdid=com.iven.musicplayergo)
 
-You can also get the app from IzzyOnDroid repository! To add this repo to Your F-Droid client, scan the QR code below (click to enlarge) or use the url (**https://apt.izzysoft.de/fdroid/repo**):
+You can also get the app from **IzzyOnDroid** repository! To add this repo to Your F-Droid client, scan the QR code below (click to enlarge) or use the **url** (*https://apt.izzysoft.de/fdroid/repo*):
 
 [<img alt="Get it on IzzyOnDroid" height=80 src="https://apt.izzysoft.de/shared/images/fdroid_repo_qr.png">](https://apt.izzysoft.de/shared/images/fdroid_repo_qr.png)
 
-# Credits:
-
-- **Julian Javier Gomez** (https://plus.google.com/+JulianGomezAxinen) for the wonderful **material design icon**
-
-- **IzzySoft** (https://github.com/IzzySoft) and **Poussinou** (https://github.com/Poussinou) for setting up the F-Droid repository
-
-- **Stanislav** (STWheel - https://github.com/STWheel
-) for Ukrainian and Russian translations and other strings/ui refinements
-
-- **KowalskiOmniROM** (https://github.com/KowalskiOmniROM) for French translations 
-
-- https://materialdesignicons.com/ for icons
-
-# Screenshots
-
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v50_edit.png)
 
 # Features:
 
@@ -72,3 +58,17 @@ You can also get the app from IzzyOnDroid repository! To add this repo to Your F
 
 - Pause/resume when the headsets are (dis)connected;
 - Simple audio focus (notifications, calls, or other media apps) management;
+
+
+# Credits:
+
+- **Julian Javier Gomez** (https://plus.google.com/+JulianGomezAxinen) for the wonderful **material design icon**
+
+- **IzzySoft** (https://github.com/IzzySoft) and **Poussinou** (https://github.com/Poussinou) for setting up the F-Droid repository
+
+- **Stanislav** (STWheel - https://github.com/STWheel
+) for Ukrainian and Russian translations and other strings/ui refinements
+
+- **KowalskiOmniROM** (https://github.com/KowalskiOmniROM) for French translations 
+
+- https://materialdesignicons.com/ for icons
