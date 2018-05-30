@@ -1,10 +1,13 @@
 # Music-Player-GO [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) - [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
 
-![ScreenShot](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/icon2.png)
+
+![ScreenShot](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/icon2.png) Icon by **Julian Javier Gomez** (https://plus.google.com/+JulianGomezAxinen)
+
 
 ### Very slim music player! (<1000KB) | Current version: (54) 2.4.1.3
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v54.png)
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v54.png) 
+
 
 # Download
 
@@ -34,15 +37,12 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 - Link to git page;
 - 16 UI accents!;
 
-
 ### Minimal code:
 
 *Based on nothing: it was written from scratch besides few snippets here and there*
 
-
 ### What does this cost?
 *Music Player GO will always be free! Anyway, you can still buy me a beer, an ice cream or something via [PayPal](https://www.paypal.me/enricocid) if You really liked it! :)*
-
 
 ### Dependencies used: 
 
