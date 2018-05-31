@@ -3,4 +3,5 @@
     <attr name="accent_color" format="color" />
     <attr name="icon_color" format="color" />
     <attr name="secondary_bg_color" format="color" />
+    <attr name="popup_text_color" format="color" />
 </resources>
