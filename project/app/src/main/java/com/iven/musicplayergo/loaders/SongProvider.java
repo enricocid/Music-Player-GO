@@ -24,7 +24,6 @@ class SongProvider {
     private static final int ALBUM = 5;
     private static final int ARTIST_ID = 6;
     private static final int ARTIST = 7;
-    private static final String UNKNOWN = "<unknown>";
 
     private static final String[] BASE_PROJECTION = new String[]{
             AudioColumns.TITLE,// 0
@@ -42,7 +41,7 @@ class SongProvider {
         List<Song> songs = new ArrayList<>();
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                if (getSongFromCursorImpl(cursor).duration >= 5000 && !getSongFromCursorImpl(cursor).artistName.equals(UNKNOWN)) {
+                if (getSongFromCursorImpl(cursor).duration >= 5000) {
                     songs.add(getSongFromCursorImpl(cursor));
                 }
             } while (cursor.moveToNext());
