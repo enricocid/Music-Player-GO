@@ -1,7 +1,8 @@
-# Music-Player-GO [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) - [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
+# Music-Player-GO
+[![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21)[![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
 
 ###### Very slim music player!: size <1000KB!
-###### Current version: (54) 2.4.1.3
+###### Current version: (55) 2.4.1.4
 ###### Material Design Icon by Julian Javier Gomez (https://plus.google.com/+JulianGomezAxinen)
 
 
@@ -10,7 +11,7 @@
 
 # Screenshots
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v54.png) 
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v55.png) 
 
 
 # Download
