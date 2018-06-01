@@ -29,7 +29,7 @@ public class Utils {
                 Html.fromHtml(res);
     }
 
-    public static void invertTheme(@NonNull final Activity activity) {
+    static void invertTheme(@NonNull final Activity activity) {
         boolean isDark = isThemeInverted(activity);
         boolean value = !isDark;
         SharedPreferences preferences = activity.getSharedPreferences(THEME_PREF, Context.MODE_PRIVATE);
@@ -48,7 +48,7 @@ public class Utils {
         return isThemeInverted;
     }
 
-    public static void setTheme(@NonNull final Activity activity, boolean isThemeInverted, int accent) {
+    static void setTheme(@NonNull final Activity activity, boolean isThemeInverted, int accent) {
         int theme = resolveTheme(isThemeInverted, accent);
         activity.setTheme(theme);
         if (isMarshmallow()) {
@@ -157,13 +157,13 @@ public class Utils {
         return selectedTheme;
     }
 
-    public static void setThemeAccent(@NonNull final Activity activity, int accent) {
+    static void setThemeAccent(@NonNull final Activity activity, int accent) {
         SharedPreferences preferences = activity.getSharedPreferences(ACCENT_PREF, Context.MODE_PRIVATE);
         preferences.edit().putInt(ACCENT_VALUE, accent).apply();
         activity.recreate();
     }
 
-    public static int getAccent(@NonNull final Context context) {
+    static int getAccent(@NonNull final Context context) {
         int accent;
         try {
             accent = context.getSharedPreferences(ACCENT_PREF, Context.MODE_PRIVATE).getInt(ACCENT_VALUE, R.color.blue_A400);

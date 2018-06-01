@@ -3,7 +3,7 @@
 
 ###### Very slim music player!: size <1000KB!
 ###### Low memory footprint!
-###### Current version: (57) 2.4.1.6
+###### Current version: (58) 2.4.1.7
 ###### Material Design Icon by Julian Javier Gomez (https://plus.google.com/+JulianGomezAxinen)
 
 
