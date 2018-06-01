@@ -48,7 +48,7 @@ import com.iven.musicplayergo.playback.PlaybackInfoListener;
 import com.iven.musicplayergo.playback.PlayerAdapter;
 import com.iven.musicplayergo.slidinguppanel.SlidingUpPanelLayout;
 import com.iven.musicplayergo.utils.AndroidVersion;
-import com.iven.musicplayergo.utils.PermissionDialog;
+import com.iven.musicplayergo.utils.PermissionUtils;
 import com.iven.musicplayergo.utils.SettingsUtils;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
@@ -140,7 +140,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (AndroidVersion.isMarshmallow()) {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-                PermissionDialog.show(getSupportFragmentManager());
+                PermissionUtils.show(this);
             } else {
 
                 onPermissionGranted();
@@ -154,7 +154,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-            PermissionDialog.show(getSupportFragmentManager());
+            PermissionUtils.show(this);
         } else {
             onPermissionGranted();
         }
