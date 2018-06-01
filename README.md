@@ -2,7 +2,7 @@
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
 
 ###### Very slim music player!: size <1000KB!
-###### Current version: (55) 2.4.1.4
+###### Current version: (56) 2.4.1.5
 ###### Material Design Icon by Julian Javier Gomez (https://plus.google.com/+JulianGomezAxinen)
 
 
