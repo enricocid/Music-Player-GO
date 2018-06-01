@@ -35,7 +35,13 @@ public class SettingsUtils {
     }
 
     public static boolean isThemeInverted(@NonNull final Context context) {
-        return context.getSharedPreferences(THEME_PREF, Context.MODE_PRIVATE).getBoolean(THEME_VALUE, false);
+        boolean isThemeInverted;
+        try {
+            isThemeInverted = context.getSharedPreferences(THEME_PREF, Context.MODE_PRIVATE).getBoolean(THEME_VALUE, false);
+        } catch (Exception e) {
+            isThemeInverted = false;
+        }
+        return isThemeInverted;
     }
 
     public static void setTheme(@NonNull final Activity activity, boolean isThemeInverted, int accent) {
@@ -154,6 +160,12 @@ public class SettingsUtils {
     }
 
     public static int getAccent(@NonNull final Context context) {
-        return context.getSharedPreferences(ACCENT_PREF, Context.MODE_PRIVATE).getInt(ACCENT_VALUE, R.color.blue_A400);
+        int accent;
+        try {
+            accent = context.getSharedPreferences(ACCENT_PREF, Context.MODE_PRIVATE).getInt(ACCENT_VALUE, R.color.blue_A400);
+        } catch (Exception e) {
+            accent = R.color.blue_A400;
+        }
+        return accent;
     }
 }
