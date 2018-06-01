@@ -3,7 +3,6 @@ package com.iven.musicplayergo.adapters;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +10,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.iven.musicplayergo.R;
+import com.iven.musicplayergo.Utils;
 import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Song;
-import com.iven.musicplayergo.utils.AndroidVersion;
 
 import java.util.List;
 
 public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHolder> {
 
     private final SongSelectedListener mSongSelectedListener;
-    private Activity mActivity;
+    private final Activity mActivity;
     private List<Song> mSongs;
     private Album mAlbum;
 
@@ -54,9 +53,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
         String songTitle = song.title;
 
         int songTrack = Song.formatTrack(song.trackNumber);
-        Spanned spanned = AndroidVersion.isNougat() ?
-                Html.fromHtml(mActivity.getString(R.string.track_title, songTrack, songTitle), Html.FROM_HTML_MODE_LEGACY) :
-                Html.fromHtml(mActivity.getString(R.string.track_title, songTrack, songTitle));
+        Spanned spanned = Utils.buildSpanned(mActivity.getString(R.string.track_title, songTrack, songTitle));
         holder.trackTitle.setText(spanned);
         holder.duration.setText(Song.formatDuration(song.duration));
     }

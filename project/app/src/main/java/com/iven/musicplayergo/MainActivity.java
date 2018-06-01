@@ -1,9 +1,12 @@
 package com.iven.musicplayergo;
 
 import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
@@ -22,7 +25,6 @@ import android.support.v4.content.Loader;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.Spanned;
 import android.view.Gravity;
 import android.view.View;
@@ -47,9 +49,6 @@ import com.iven.musicplayergo.playback.MusicService;
 import com.iven.musicplayergo.playback.PlaybackInfoListener;
 import com.iven.musicplayergo.playback.PlayerAdapter;
 import com.iven.musicplayergo.slidinguppanel.SlidingUpPanelLayout;
-import com.iven.musicplayergo.utils.AndroidVersion;
-import com.iven.musicplayergo.utils.PermissionUtils;
-import com.iven.musicplayergo.utils.SettingsUtils;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.List;
@@ -111,7 +110,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             mPlayerAdapter.onPauseActivity();
         }
         if (mSettingsView.getVisibility() == View.VISIBLE) {
-            SettingsUtils.showSettings(mControlsContainer, mSettingsView, false);
+            showSettings(false);
         }
     }
 
@@ -121,7 +120,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (mPlayerAdapter.isMediaPlayer()) {
             mMusicNotificationManager.getNotificationManager().notify(MusicNotificationManager.NOTIFICATION_ID, mMusicNotificationManager.createNotification());
         }
-        SettingsUtils.setThemeAccent(this, color);
+        Utils.setThemeAccent(this, color);
     }
 
     @Override
@@ -137,12 +136,10 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     private void checkReadStoragePermissions() {
-        if (AndroidVersion.isMarshmallow()) {
+        if (Utils.isMarshmallow()) {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-
-                PermissionUtils.show(this);
+                showPermissionRationale();
             } else {
-
                 onPermissionGranted();
             }
         } else {
@@ -150,11 +147,34 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         }
     }
 
+    @TargetApi(23)
+    private void showPermissionRationale() {
+        AlertDialog builder = new AlertDialog.Builder(this).create();
+        builder.setIcon(R.drawable.ic_folder);
+        builder.setTitle(getString(R.string.app_name));
+        builder.setMessage(getString(R.string.perm_rationale));
+        builder.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        final int READ_FILES_CODE = 2588;
+                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}
+                                , READ_FILES_CODE);
+                    }
+                });
+        builder.setCanceledOnTouchOutside(false);
+        try {
+            builder.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-            PermissionUtils.show(this);
+            showPermissionRationale();
         } else {
             onPermissionGranted();
         }
@@ -164,10 +184,10 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sThemeInverted = SettingsUtils.isThemeInverted(this);
-        mAccent = SettingsUtils.getAccent(this);
+        sThemeInverted = Utils.isThemeInverted(this);
+        mAccent = Utils.getAccent(this);
 
-        SettingsUtils.setTheme(this, sThemeInverted, mAccent);
+        Utils.setTheme(this, sThemeInverted, mAccent);
 
         setContentView(R.layout.main_activity);
 
@@ -231,11 +251,11 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     public void showSettings(View v) {
-        SettingsUtils.showSettings(mControlsContainer, mSettingsView, true);
+        showSettings(true);
     }
 
     public void closeSettings(View v) {
-        SettingsUtils.showSettings(mControlsContainer, mSettingsView, false);
+        showSettings(false);
     }
 
     private void setArtistsRecyclerView(List<Artist> data) {
@@ -253,8 +273,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private void initializeSeekBar() {
         mSeekBarAudio.setOnSeekBarChangeListener(
                 new SeekBar.OnSeekBarChangeListener() {
+                    final int currentPositionColor = mSongPosition.getCurrentTextColor();
                     int userSelectedPosition = 0;
-                    int currentPositionColor = mSongPosition.getCurrentTextColor();
 
                     @Override
                     public void onStartTrackingTouch(SeekBar seekBar) {
@@ -342,7 +362,15 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             mMusicService.startForeground(MusicNotificationManager.NOTIFICATION_ID, mMusicService.getMusicNotificationManager().createNotification());
             mMusicService.setRestoredFromPause(true);
         }
-        SettingsUtils.invertTheme(this);
+        Utils.invertTheme(this);
+    }
+
+    private void showSettings(boolean show) {
+
+        int settingsVisibility = show ? View.VISIBLE : View.GONE;
+        int controlsVisibility = show ? View.GONE : View.VISIBLE;
+        mControlsContainer.setVisibility(controlsVisibility);
+        mSettingsView.setVisibility(settingsVisibility);
     }
 
     private void initializeColorsSettings() {
@@ -388,9 +416,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSeekBarAudio.setMax(duration);
         mDuration.setText(Song.formatDuration(duration));
 
-        Spanned spanned = AndroidVersion.isNougat() ?
-                Html.fromHtml(getString(R.string.playing_song, mSelectedArtist, selectedSong.title), Html.FROM_HTML_MODE_LEGACY) :
-                Html.fromHtml(getString(R.string.playing_song, mSelectedArtist, selectedSong.title));
+        Spanned spanned = Utils.buildSpanned(getString(R.string.playing_song, mSelectedArtist, selectedSong.title));
+
         mPlayingSong.setText(spanned);
         mPlayingAlbum.setText(selectedSong.albumName);
 

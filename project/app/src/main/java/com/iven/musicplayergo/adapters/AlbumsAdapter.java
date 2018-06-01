@@ -19,10 +19,10 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
     private final Activity mActivity;
     private final AlbumSelectedListener mAlbumSelectedListener;
+    private final PlayerAdapter mPlayerAdapter;
+    private final int mAccent;
     private List<Album> mAlbums;
     private Album mSelectedAlbum;
-    private PlayerAdapter mPlayerAdapter;
-    private int mAccent;
 
     public AlbumsAdapter(@NonNull Activity activity, List<Album> albums, PlayerAdapter playerAdapter, int accent) {
         mActivity = activity;

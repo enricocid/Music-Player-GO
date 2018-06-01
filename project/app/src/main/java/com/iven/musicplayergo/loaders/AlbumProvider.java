@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class AlbumProvider {
+class AlbumProvider {
 
     @NonNull
     static List<Album> retrieveAlbums(@Nullable final List<Song> songs) {

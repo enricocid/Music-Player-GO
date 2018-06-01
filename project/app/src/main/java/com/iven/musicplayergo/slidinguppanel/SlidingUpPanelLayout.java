@@ -694,7 +694,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
         DRAGGING
     }
 
-    public static class LayoutParams extends ViewGroup.MarginLayoutParams {
+    private static class LayoutParams extends ViewGroup.MarginLayoutParams {
         private static final int[] ATTRS = new int[]{
                 android.R.attr.layout_weight
         };

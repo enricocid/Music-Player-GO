@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- ACCENTS THEMES Inverted -->
+    <!-- ACCENTS THEMES INVERTED -->
     <style name="AppThemeRedInverted" parent="AppThemeInverted">
         <item name="popup_text_color">@color/light</item>
         <item name="accent_color">@color/red_A400</item>

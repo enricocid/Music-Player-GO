@@ -3,7 +3,6 @@ package com.iven.musicplayergo.adapters;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.iven.musicplayergo.R;
+import com.iven.musicplayergo.Utils;
 import com.iven.musicplayergo.models.Artist;
-import com.iven.musicplayergo.utils.AndroidVersion;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.List;
@@ -51,9 +50,8 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
         Artist artist = mArtists.get(holder.getAdapterPosition());
         holder.title.setText(artist.getName());
 
-        Spanned spanned = AndroidVersion.isNougat() ?
-                Html.fromHtml(mActivity.getString(R.string.artist_info, artist.albums.size(), artist.getSongCount()), Html.FROM_HTML_MODE_LEGACY) :
-                Html.fromHtml(mActivity.getString(R.string.artist_info, artist.albums.size(), artist.getSongCount()));
+        Spanned spanned = Utils.buildSpanned(mActivity.getString(R.string.artist_info, artist.albums.size(), artist.getSongCount()));
+
         holder.albumCount.setText(spanned);
     }
 

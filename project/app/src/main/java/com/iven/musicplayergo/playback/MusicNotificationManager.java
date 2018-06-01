@@ -8,20 +8,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.media.app.NotificationCompat.MediaStyle;
-import android.text.Html;
 import android.text.Spanned;
 
 import com.iven.musicplayergo.MainActivity;
 import com.iven.musicplayergo.R;
+import com.iven.musicplayergo.Utils;
 import com.iven.musicplayergo.models.Song;
-import com.iven.musicplayergo.utils.AndroidVersion;
 
 public class MusicNotificationManager {
 
@@ -37,7 +36,6 @@ public class MusicNotificationManager {
     private int mAccent;
 
     MusicNotificationManager(@NonNull final MusicService musicService) {
-
         mMusicService = musicService;
         mNotificationManager = (NotificationManager) mMusicService.getSystemService(Context.NOTIFICATION_SERVICE);
     }
@@ -68,7 +66,7 @@ public class MusicNotificationManager {
 
         mNotificationBuilder = new NotificationCompat.Builder(mMusicService, CHANNEL_ID);
 
-        if (AndroidVersion.isOreo()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel();
         }
 
@@ -81,14 +79,12 @@ public class MusicNotificationManager {
         String artist = song.artistName;
         String songTitle = song.title;
 
-        Spanned spanned = AndroidVersion.isNougat() ?
-                Html.fromHtml(mMusicService.getString(R.string.playing_song, artist, songTitle), Html.FROM_HTML_MODE_LEGACY) :
-                Html.fromHtml(mMusicService.getString(R.string.playing_song, artist, songTitle));
+        Spanned spanned = Utils.buildSpanned(mMusicService.getString(R.string.playing_song, artist, songTitle));
 
         mNotificationBuilder
                 .setShowWhen(false)
                 .setSmallIcon(R.drawable.music_notification)
-                .setLargeIcon(getLargeIcon(mMusicService.getDrawable(R.drawable.music_notification)))
+                .setLargeIcon(getLargeIcon())
                 .setColor(mAccent)
                 .setContentTitle(spanned)
                 .setContentText(song.albumName)
@@ -144,17 +140,22 @@ public class MusicNotificationManager {
     }
 
     //https://gist.github.com/Gnzlt/6ddc846ef68c587d559f1e1fcd0900d3
-    private Bitmap getLargeIcon(@NonNull final Drawable drawable) {
+    private Bitmap getLargeIcon() {
 
-        VectorDrawable vectorDrawable = (VectorDrawable) drawable;
+        VectorDrawable vectorDrawable = (VectorDrawable) mMusicService.getDrawable(R.drawable.music_notification);
+
         int largeIconSize = mMusicService.getResources().getDimensionPixelSize(R.dimen.notification_large_dim);
         Bitmap bitmap = Bitmap.createBitmap(largeIconSize,
                 largeIconSize, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-        vectorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        vectorDrawable.setTint(mAccent);
-        vectorDrawable.setAlpha(100);
-        vectorDrawable.draw(canvas);
+
+        if (vectorDrawable != null) {
+            vectorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            vectorDrawable.setTint(mAccent);
+            vectorDrawable.setAlpha(100);
+            vectorDrawable.draw(canvas);
+        }
+
         return bitmap;
     }
 }
