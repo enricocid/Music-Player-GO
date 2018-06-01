@@ -14,7 +14,7 @@ public class PermissionUtils {
     public static void show(@NonNull final Activity activity) {
         AlertDialog builder = new AlertDialog.Builder(activity).create();
 
-        builder.setIcon(R.drawable.ic_sd_card);
+        builder.setIcon(R.drawable.ic_folder);
         builder.setTitle(activity.getString(R.string.app_name));
         builder.setMessage(activity.getString(R.string.perm_rationale));
 
