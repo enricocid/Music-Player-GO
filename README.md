@@ -1,8 +1,8 @@
 # Music-Player-GO
-###### Current version: (59) 2.4.1.8
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
 
 ###### Very slim music player (size <1000KB!) with low memory footprint!
+###### Current version: (59) 2.4.1.8
 ###### Material Design Icon by Julian Javier Gomez (https://plus.google.com/+JulianGomezAxinen)
 
 
@@ -34,6 +34,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 - Fast scrolling;
 - Sliding up panel containing controls (when collapsed) and the artist albums/songs (when expanded);
 - Dark status bar icons for light accents
+- Horizontally slide too long played song/album text in controls panel (on long click);
 
 ### Open settings directly from UI. Available settings: 
 
