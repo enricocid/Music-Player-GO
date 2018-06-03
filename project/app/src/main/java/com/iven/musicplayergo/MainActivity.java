@@ -1,6 +1,7 @@
 package com.iven.musicplayergo;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -27,6 +28,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spanned;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
@@ -65,7 +67,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private TextView mPlayingAlbum, mPlayingSong, mDuration, mSongPosition, mArtistAlbumCount, mSelectedAlbum;
     private SeekBar mSeekBarAudio;
     private LinearLayout mControlsContainer;
-    private View mSettingsView;
+    private View mSettingsView, mPlayerInfoView;
     private SlidingUpPanelLayout mSlidingUpPanel;
     private ImageButton mPlayPauseButton, mResetButton, mEqButton;
     private PlayerAdapter mPlayerAdapter;
@@ -73,6 +75,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private List<Artist> mArtists;
     private String mSelectedArtist;
     private boolean sExpandPanel = false;
+    private boolean sPlayerInfoLongPressed = false;
     private MusicService mMusicService;
     private PlaybackListener mPlaybackListener;
     private MusicNotificationManager mMusicNotificationManager;
@@ -207,6 +210,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSlidingUpPanel = findViewById(R.id.sliding_panel);
         mControlsContainer = findViewById(R.id.controls_container);
         mControlsContainer.setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(this, mAccent), 10));
+        mPlayerInfoView = findViewById(R.id.player_info);
+        setupPlayerInfoView();
 
         mPlayPauseButton = findViewById(R.id.play_pause);
         mResetButton = findViewById(R.id.replay);
@@ -227,6 +232,33 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSettingsView = findViewById(R.id.settings_view);
 
         mEqButton = findViewById(R.id.eq);
+    }
+
+    //https://stackoverflow.com/questions/6183874/android-detect-end-of-long-press
+    private void setupPlayerInfoView() {
+        mPlayerInfoView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mPlayingSong.setSelected(true);
+                mPlayingAlbum.setSelected(true);
+                sPlayerInfoLongPressed = true;
+                return true;
+            }
+        });
+        mPlayerInfoView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            @SuppressLint("ClickableViewAccessibility")
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (sPlayerInfoLongPressed) {
+                        mPlayingSong.setSelected(false);
+                        mPlayingAlbum.setSelected(false);
+                        sPlayerInfoLongPressed = false;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     private void setupSlidingUpPanel() {

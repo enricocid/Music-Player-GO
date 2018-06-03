@@ -77,7 +77,6 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
 
             trackTitle = itemView.findViewById(R.id.track_title);
             duration = itemView.findViewById(R.id.duration);
-
             itemView.setOnClickListener(this);
         }
 
