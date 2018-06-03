@@ -72,8 +72,9 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
 - **IzzySoft** (https://github.com/IzzySoft) and **Poussinou** (https://github.com/Poussinou) for setting up the F-Droid repository
 
-- **Stanislav** (STWheel - https://github.com/STWheel
-) for Ukrainian and Russian translations and other strings/ui refinements
+- **Luis F. Uceta** (uzluisf - https://github.com/uzluisf) for Spanish translations
+
+- **Stanislav** (STWheel - https://github.com/STWheel) for Ukrainian and Russian translations and other strings/ui refinements
 
 - **KowalskiOmniROM** (https://github.com/KowalskiOmniROM) for French translations 
 
