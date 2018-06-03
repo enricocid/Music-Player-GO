@@ -239,9 +239,11 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mPlayerInfoView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                mPlayingSong.setSelected(true);
-                mPlayingAlbum.setSelected(true);
-                sPlayerInfoLongPressed = true;
+                if (!sPlayerInfoLongPressed) {
+                    mPlayingSong.setSelected(true);
+                    mPlayingAlbum.setSelected(true);
+                    sPlayerInfoLongPressed = true;
+                }
                 return true;
             }
         });

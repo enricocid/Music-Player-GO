@@ -1,9 +1,8 @@
 # Music-Player-GO
+###### Current version: (59) 2.4.1.8
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
 
-###### Very slim music player!: size <1000KB!
-###### Low memory footprint!
-###### Current version: (58) 2.4.1.7
+###### Very slim music player (size <1000KB!) with low memory footprint!
 ###### Material Design Icon by Julian Javier Gomez (https://plus.google.com/+JulianGomezAxinen)
 
 
