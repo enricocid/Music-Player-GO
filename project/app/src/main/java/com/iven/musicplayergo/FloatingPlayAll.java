@@ -15,24 +15,16 @@ public class FloatingPlayAll extends FrameLayout {
     public FloatingPlayAll(Context context, AttributeSet attrs) {
         super(context, attrs);
         inflateLayout(context);
-        initView();
-    }
-
-    private void inflateLayout(Context context) {
-        View v = LayoutInflater.from(context).inflate(R.layout.floating_play_all, this, true);
-        container = v.findViewById(R.id.layout_button_container);
-    }
-
-    private void initView() {
-        initViewRadius();
-    }
-
-    private void initViewRadius() {
         container.post(new Runnable() {
             @Override
             public void run() {
                 container.setRadius(container.getHeight() / 2);
             }
         });
+    }
+
+    private void inflateLayout(Context context) {
+        View v = LayoutInflater.from(context).inflate(R.layout.floating_play_all, this, true);
+        container = v.findViewById(R.id.layout_button_container);
     }
 }

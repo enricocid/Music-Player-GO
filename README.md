@@ -2,7 +2,7 @@
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
 
 ###### Very slim music player (size <1000KB!) with low memory footprint!
-###### Current version: (59) 2.4.1.8
+###### Current version: (60) 2.4.2
 ###### Material Design Icon by Julian Javier Gomez, Axinen Design (https://plus.google.com/u/0/+AxinenDesign)
 
 
@@ -11,7 +11,7 @@
 
 # Screenshots
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v55.png) 
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v60.png) 
 
 
 # Download
@@ -35,13 +35,16 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 - Sliding up panel containing controls (when collapsed) and the artist albums/songs (when expanded);
 - Dark status bar icons for light accents
 - Horizontally slide too long played song/album text in controls panel (long click on it);
+- Play All! button to play all songs in device;
+- Ability to play all the songs from an artist;
 
 ### Open settings directly from UI. Available settings: 
 
-- Equalizer;
 - Themes (light and inverted)
 - Link to git page;
 - 17 UI accents!;
+- Equalizer;
+- Toggle Play All! button visibility;
 
 ### Minimal code:
 
@@ -55,6 +58,8 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
   - Android Support Library v4;
 
   - RecyclerView v7;
+
+  - CardView v7;
 
   - RecyclerView-FastScroll by Tim Malseed (@timusus) (https://github.com/timusus/RecyclerView-FastScroll)
 
@@ -71,6 +76,9 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 - **Julian Javier Gomez - Axinen Design** (https://plus.google.com/u/0/+AxinenDesign) for the wonderful **material design icon**
 
 - **IzzySoft** (https://github.com/IzzySoft) and **Poussinou** (https://github.com/Poussinou) for setting up the F-Droid repository
+
+- **Dima Merkurev** (dimorinny - https://github.com/dimorinny) for part of the floating play button code
+https://github.com/dimorinny/floating-text-button
 
 - **Luis F. Uceta** (uzluisf - https://github.com/uzluisf) for Spanish translations
 
