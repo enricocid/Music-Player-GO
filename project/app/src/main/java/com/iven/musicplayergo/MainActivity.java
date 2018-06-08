@@ -627,6 +627,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     @Override
     public void onSongSelected(Song song, List<Song> songs) {
 
+        if (mSettingsView.getVisibility() == View.VISIBLE) {
+            showSettings(false);
+        }
         if (!mSeekBarAudio.isEnabled()) {
             mSeekBarAudio.setEnabled(true);
         }
