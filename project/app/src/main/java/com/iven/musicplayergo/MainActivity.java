@@ -42,6 +42,7 @@ import com.iven.musicplayergo.adapters.ArtistsAdapter;
 import com.iven.musicplayergo.adapters.ColorsAdapter;
 import com.iven.musicplayergo.adapters.SongsAdapter;
 import com.iven.musicplayergo.loaders.ArtistProvider;
+import com.iven.musicplayergo.loaders.SongProvider;
 import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Artist;
 import com.iven.musicplayergo.models.Song;
@@ -69,11 +70,13 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private LinearLayout mControlsContainer;
     private View mSettingsView, mPlayerInfoView;
     private SlidingUpPanelLayout mSlidingUpPanel;
-    private ImageButton mPlayPauseButton, mResetButton, mEqButton;
+    private ImageButton mPlayPauseButton, mResetButton, mEqButton, mHandlePlayAllButton;
+    private FloatingPlayAll mFloatingPlayAll;
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
     private List<Artist> mArtists;
     private String mSelectedArtist;
+    private List<Song> mAllSelectedArtistSongs;
     private boolean sExpandPanel = false;
     private boolean sPlayerInfoLongPressed = false;
     private MusicService mMusicService;
@@ -198,6 +201,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         initializeSettings();
 
+        restoreFloatingPlayAllVisibility();
+
         setupSlidingUpPanel();
 
         initializeSeekBar();
@@ -214,6 +219,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         setupPlayerInfoView();
 
         mPlayPauseButton = findViewById(R.id.play_pause);
+        mFloatingPlayAll = findViewById(R.id.floating_play);
         mResetButton = findViewById(R.id.replay);
         mSeekBarAudio = findViewById(R.id.seekTo);
 
@@ -226,12 +232,20 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         mArtistsRecyclerView = findViewById(R.id.artists_rv);
         mArtistsRecyclerView.setTrackColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(this, mAccent), sThemeInverted ? 15 : 30));
+        mArtistsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                float alpha = newState == RecyclerView.SCROLL_STATE_IDLE ? 255 : 0;
+                mFloatingPlayAll.animate().alpha(alpha).start();
+            }
+        });
         mAlbumsRecyclerView = findViewById(R.id.albums_rv);
         mSongsRecyclerView = findViewById(R.id.songs_rv);
 
         mSettingsView = findViewById(R.id.settings_view);
-
         mEqButton = findViewById(R.id.eq);
+        mHandlePlayAllButton = findViewById(R.id.play_all);
     }
 
     //https://stackoverflow.com/questions/6183874/android-detect-end-of-long-press
@@ -264,13 +278,13 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     private void setupSlidingUpPanel() {
-
         final ViewTreeObserver observer = mControlsContainer.getViewTreeObserver();
         observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                mSlidingUpPanel.setupSlidingUpPanel(mSongsRecyclerView, Gravity.BOTTOM, mControlsContainer.getHeight());
-                mSettingsView.setMinimumHeight(mControlsContainer.getHeight());
+                int controlsContainerHeight = mControlsContainer.getHeight();
+                mSlidingUpPanel.setupSlidingUpPanel(mSongsRecyclerView, Gravity.BOTTOM, controlsContainerHeight);
+                mSettingsView.setMinimumHeight(controlsContainerHeight);
                 mControlsContainer.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
@@ -292,9 +306,36 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         showSettings(false);
     }
 
+    public void playAllDeviceSongs(View v) {
+        onSongSelected(SongProvider.getAllDeviceSongs().get(0), SongProvider.getAllDeviceSongs());
+    }
+
+    public void playAllSelectedArtistSongs(View v) {
+        onSongSelected(mAllSelectedArtistSongs.get(0), mAllSelectedArtistSongs);
+    }
+
+    public void handleFloatingPlayButtonVisibility(View v) {
+        boolean isFloatingPlayButtonVisible = mFloatingPlayAll.getVisibility() == View.VISIBLE;
+        int visibility = isFloatingPlayButtonVisible ? View.INVISIBLE : View.VISIBLE;
+        setPlayAllButtonVisibility(visibility);
+        Utils.setPlayAllButtonVisibility(this, visibility);
+    }
+
+    private void setPlayAllButtonVisibility(int visibility) {
+        int drawable = visibility == View.INVISIBLE ? R.drawable.ic_playlist_add : R.drawable.ic_playlist_remove;
+        mHandlePlayAllButton.setImageResource(drawable);
+        mFloatingPlayAll.setVisibility(visibility);
+    }
+
+    private void restoreFloatingPlayAllVisibility() {
+        int visibility = Utils.getPlayAllButtonVisibility(this);
+        setPlayAllButtonVisibility(visibility);
+    }
+
     private void setArtistsRecyclerView(List<Artist> data) {
 
         mArtistsLayoutManager = new LinearLayoutManager(this);
+
         mArtistsRecyclerView.setLayoutManager(mArtistsLayoutManager);
         ArtistsAdapter artistsAdapter = new ArtistsAdapter(this, data);
         mArtistsRecyclerView.setAdapter(artistsAdapter);
@@ -543,6 +584,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             mAlbumsRecyclerView.setAdapter(mAlbumsAdapter);
         }
 
+        mAllSelectedArtistSongs = SongProvider.getAllArtistSongs(albums);
         int albumCount = albums.size();
         mArtistAlbumCount.setText(getString(R.string.albums, mSelectedArtist, albumCount));
 
@@ -566,12 +608,12 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     @Override
-    public void onSongSelected(Song song, Album album) {
+    public void onSongSelected(Song song, List<Song> songs) {
 
         if (!mSeekBarAudio.isEnabled()) {
             mSeekBarAudio.setEnabled(true);
         }
-        mPlayerAdapter.setCurrentSong(song, album.songs);
+        mPlayerAdapter.setCurrentSong(song, songs);
         mPlayerAdapter.initMediaPlayer();
     }
 

@@ -7,6 +7,7 @@ import android.provider.MediaStore.Audio.AudioColumns;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Song;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-class SongProvider {
+public class SongProvider {
 
     private static final int TITLE = 0;
     private static final int TRACK = 1;
@@ -36,13 +37,29 @@ class SongProvider {
             AudioColumns.ARTIST,// 7
     };
 
+    private static List<Song> mAllDeviceSongs = new ArrayList<>();
+
+    public static List<Song> getAllDeviceSongs() {
+        return mAllDeviceSongs;
+    }
+
+    public static List<Song> getAllArtistSongs(List<Album> albums) {
+        List<Song> songsList = new ArrayList<>();
+        for (Album album : albums) {
+            songsList.addAll(album.songs);
+        }
+        return songsList;
+    }
+
     @NonNull
     static List<Song> getSongs(@Nullable final Cursor cursor) {
         List<Song> songs = new ArrayList<>();
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                if (getSongFromCursorImpl(cursor).duration >= 5000) {
-                    songs.add(getSongFromCursorImpl(cursor));
+                Song song = getSongFromCursorImpl(cursor);
+                if (song.duration >= 5000) {
+                    songs.add(song);
+                    mAllDeviceSongs.add(song);
                 }
             } while (cursor.moveToNext());
         }

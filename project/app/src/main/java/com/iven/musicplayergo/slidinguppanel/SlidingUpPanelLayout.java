@@ -386,6 +386,8 @@ public class SlidingUpPanelLayout extends ViewGroup {
         final int action = ev.getAction();
 
         if (!isEnabled() || (mIsUnableToDrag && action != MotionEvent.ACTION_DOWN)) {
+            //fix for panel freeze when user touch the view below
+            //https://github.com/umano/AndroidSlidingUpPanel/pull/917
             if (mDragHelper.getViewDragState() == ViewDragHelper.STATE_IDLE) {
                 mDragHelper.abort();
             }

@@ -65,7 +65,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
     }
 
     public interface SongSelectedListener {
-        void onSongSelected(Song song, Album album);
+        void onSongSelected(Song song, List<Song> songs);
     }
 
     class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -83,7 +83,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
         @Override
         public void onClick(View v) {
             Song song = mSongs.get(getAdapterPosition());
-            mSongSelectedListener.onSongSelected(song, mAlbum);
+            mSongSelectedListener.onSongSelected(song, mSongs);
         }
     }
 }

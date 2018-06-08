@@ -8,4 +8,5 @@
     <string name="perm_rationale">Per farti ascoltare la musica presente sul tuo telefono, Music Player GO deve poter accedere ai tuoi file</string>
     <string name="error_no_music">Musica non presente sul telefono</string>
     <string name="artist_info">&lt;b>Dischi:\n&lt;/b>%1d\n\u2022\n&lt;b>Canzoni:\n&lt;/b>%2d</string>
+    <string name="play_all">Esegui tutto!</string>
 </resources>
