@@ -35,7 +35,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 - Sliding up panel containing controls (when collapsed) and the artist albums/songs (when expanded);
 - Dark status bar icons for light accents
 - Horizontally slide too long played song/album text in controls panel (long click on it);
-- Play All! button to play all songs in device;
+- "Play All!" button to play all songs in device;
 - Ability to play all the songs from an artist;
 
 ### Open settings directly from UI. Available settings: 
