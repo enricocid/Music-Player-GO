@@ -9,4 +9,9 @@
     <string name="error_no_music">Musica non presente sul telefono</string>
     <string name="artist_info">&lt;b>Dischi:\n&lt;/b>%1d\n\u2022\n&lt;b>Canzoni:\n&lt;/b>%2d</string>
     <string name="play_all">Esegui tutto!</string>
+    <string name="close">Chiudi impostazioni</string>
+    <string name="invert">Cambia tema</string>
+    <string name="play_all_visibility">Gestisci la visibilità del pulsante \"Esegui tutto!\"</string>
+    <string name="open_eq">Apri equalizzatore (se presente)</string>
+    <string name="open_git">Apri la pagina github del progetto</string>
 </resources>

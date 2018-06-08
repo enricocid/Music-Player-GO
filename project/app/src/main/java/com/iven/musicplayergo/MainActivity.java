@@ -70,7 +70,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private LinearLayout mControlsContainer;
     private View mSettingsView, mPlayerInfoView;
     private SlidingUpPanelLayout mSlidingUpPanel;
-    private ImageButton mPlayPauseButton, mResetButton, mEqButton, mHandlePlayAllButton;
+    private ImageButton mPlayPauseButton, mResetButton, mGitButton, mEqButton, mHandlePlayAllButton, mInvertButton, mCloseButton;
     private FloatingPlayAll mFloatingPlayAll;
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
@@ -244,8 +244,25 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSongsRecyclerView = findViewById(R.id.songs_rv);
 
         mSettingsView = findViewById(R.id.settings_view);
+        mGitButton = findViewById(R.id.git);
         mEqButton = findViewById(R.id.eq);
         mHandlePlayAllButton = findViewById(R.id.play_all);
+        mInvertButton = findViewById(R.id.invert);
+        mCloseButton = findViewById(R.id.close);
+        setupSettingsRationale(mGitButton, mEqButton, mHandlePlayAllButton, mInvertButton, mCloseButton);
+    }
+
+    private void setupSettingsRationale(ImageButton... imageButtons) {
+        for (final ImageButton imageButton : imageButtons) {
+            imageButton.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Toast.makeText(MainActivity.this, imageButton.getContentDescription(), Toast.LENGTH_SHORT)
+                            .show();
+                    return false;
+                }
+            });
+        }
     }
 
     //https://stackoverflow.com/questions/6183874/android-detect-end-of-long-press

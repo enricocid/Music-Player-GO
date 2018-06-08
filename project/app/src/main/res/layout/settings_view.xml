@@ -17,11 +17,12 @@
         android:orientation="horizontal">
 
         <ImageButton
+            android:id="@+id/git"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/open_git"
             android:foreground="@drawable/ripple"
             android:onClick="openGitPage"
             android:padding="16dp"
@@ -33,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/open_eq"
             android:foreground="@drawable/ripple"
             android:onClick="openEqualizer"
             android:padding="16dp"
@@ -45,29 +46,31 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/play_all_visibility"
             android:foreground="@drawable/ripple"
             android:onClick="handleFloatingPlayButtonVisibility"
             android:padding="16dp"
             android:src="@drawable/ic_playlist_remove" />
 
         <ImageButton
+            android:id="@+id/invert"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/invert"
             android:foreground="@drawable/ripple"
             android:onClick="switchTheme"
             android:padding="16dp"
             android:src="@drawable/ic_invert_colors" />
 
         <ImageButton
+            android:id="@+id/close"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/close"
             android:foreground="@drawable/ripple"
             android:onClick="closeSettings"
             android:padding="16dp"
