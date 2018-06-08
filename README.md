@@ -3,7 +3,7 @@
 
 ###### Very slim music player (size <1000KB!) with low memory footprint!
 ###### Current version: (59) 2.4.1.8
-###### Material Design Icon by Julian Javier Gomez (https://plus.google.com/+JulianGomezAxinen)
+###### Material Design Icon by Julian Javier Gomez, Axinen Design (https://plus.google.com/u/0/+AxinenDesign)
 
 
 ![ScreenShot](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/icon2.png) 
@@ -68,7 +68,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
 # Credits:
 
-- **Julian Javier Gomez** (https://plus.google.com/+JulianGomezAxinen) for the wonderful **material design icon**
+- **Julian Javier Gomez - Axinen Design** (https://plus.google.com/u/0/+AxinenDesign) for the wonderful **material design icon**
 
 - **IzzySoft** (https://github.com/IzzySoft) and **Poussinou** (https://github.com/Poussinou) for setting up the F-Droid repository
 
