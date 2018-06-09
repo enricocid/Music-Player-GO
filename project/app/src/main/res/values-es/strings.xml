@@ -7,5 +7,5 @@
     <string name="no_browser">No se encontró un navegador</string>
     <string name="perm_rationale">Para reproducir la música en tu teléfono, Music Player Go necesita acceso a tus archivos</string>
     <string name="error_no_music">No se encontró música en tu teléfono</string>
-    <string name="artist_info">&lt;b>Álbumes:\n&lt;/b>%1d\n\u2022\n&lt;b>Canciones:\n&lt;/b>%2d</string>
+    <string name="artist_info">&lt;b>Álbumes:&lt;/b>&#160;%1d&#160;&lt;b>Canciones:&lt;/b>&#160;%2d</string>
 </resources>

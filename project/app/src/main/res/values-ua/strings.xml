@@ -7,5 +7,5 @@
     <string name="no_browser">Браузер не знайдено</string>
     <string name="perm_rationale">Для відтворення музики потрібен доступ Music Player-GO до Ваших файлів</string>
     <string name="error_no_music">Музика відсутня</string>
-    <string name="artist_info">&lt;b>Aльбомів:\n&lt;/b>%1d\n\u2022\n&lt;b>Пісень:\n&lt;/b>%2d</string>
+    <string name="artist_info">&lt;b>Aльбомів:&lt;/b>&#160;%1d&#160;&lt;b>Пісень:&lt;/b>&#160;%2d</string>
 </resources>
