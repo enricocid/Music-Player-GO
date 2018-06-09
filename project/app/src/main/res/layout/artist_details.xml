@@ -8,17 +8,15 @@
     <!-- ARTIST + ALBUM COUNT -->
     <TextView
         android:id="@+id/artist_album_count"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="2dp"
+        android:layout_margin="4dp"
         android:drawablePadding="4dp"
         android:drawableStart="@drawable/ic_playlist_play_artist"
-        android:ellipsize="marquee"
         android:foreground="?android:attr/selectableItemBackground"
         android:onClick="playAllSelectedArtistSongs"
         android:padding="8dp"
-        android:paddingEnd="4dp"
-        android:paddingStart="4dp"
+        android:textAllCaps="true"
         android:textAppearance="@android:style/TextAppearance.Material.Subhead"
         android:textColor="?attr/accent_color"
         android:textStyle="bold" />
@@ -33,16 +31,13 @@
     <!-- SELECTED DISC -->
     <TextView
         android:id="@+id/selected_disc"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="2dp"
-        android:ellipsize="marquee"
+        android:layout_margin="4dp"
         android:padding="8dp"
-        android:paddingEnd="4dp"
-        android:paddingStart="4dp"
-        android:singleLine="true"
         android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-        android:textColor="?attr/accent_color" />
+        android:textColor="?attr/accent_color"
+        android:textStyle="bold" />
 
     <!-- DISC SONGS -->
     <android.support.v7.widget.RecyclerView

@@ -5,7 +5,7 @@
     android:layout_gravity="center_vertical"
     android:foreground="?android:attr/selectableItemBackground"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="12dp">
 
     <TextView
         android:id="@+id/artist"
