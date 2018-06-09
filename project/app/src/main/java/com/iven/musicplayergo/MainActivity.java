@@ -236,8 +236,10 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                float alpha = newState == RecyclerView.SCROLL_STATE_IDLE ? 255 : 0;
-                mFloatingPlayAll.animate().alpha(alpha).start();
+                if (mFloatingPlayAll != null && mFloatingPlayAll.getVisibility() == View.VISIBLE) {
+                    float alpha = newState == RecyclerView.SCROLL_STATE_IDLE ? 255 : 0;
+                    mFloatingPlayAll.animate().alpha(alpha).start();
+                }
             }
         });
         mAlbumsRecyclerView = findViewById(R.id.albums_rv);
