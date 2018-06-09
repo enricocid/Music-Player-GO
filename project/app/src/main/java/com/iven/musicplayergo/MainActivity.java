@@ -104,13 +104,13 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         }
     };
     private boolean mIsBound;
-    private Parcelable savedRecyclerLayoutState;
+    private Parcelable mSavedRecyclerLayoutState;
 
     @Override
     public void onPause() {
         super.onPause();
         if (mArtistsLayoutManager != null) {
-            savedRecyclerLayoutState = mArtistsLayoutManager.onSaveInstanceState();
+            mSavedRecyclerLayoutState = mArtistsLayoutManager.onSaveInstanceState();
         }
         if (mPlayerAdapter != null && mPlayerAdapter.isMediaPlayer()) {
             mPlayerAdapter.onPauseActivity();
@@ -359,8 +359,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         ArtistsAdapter artistsAdapter = new ArtistsAdapter(this, data);
         mArtistsRecyclerView.setAdapter(artistsAdapter);
 
-        if (savedRecyclerLayoutState != null) {
-            mArtistsLayoutManager.onRestoreInstanceState(savedRecyclerLayoutState);
+        if (mSavedRecyclerLayoutState != null) {
+            mArtistsLayoutManager.onRestoreInstanceState(mSavedRecyclerLayoutState);
         }
     }
 
