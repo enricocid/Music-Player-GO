@@ -93,7 +93,7 @@
 
     <style name="AppThemeGrayDarkInverted" parent="AppThemeInverted">
         <item name="popup_text_color">@color/light</item>
-        <item name="accent_color">@color/gray_800</item>
+        <item name="accent_color">@color/gray_900</item>
         <item name="android:seekBarStyle">@style/SeekBarStyle</item>
     </style>
 
