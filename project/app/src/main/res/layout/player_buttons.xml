@@ -1,63 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
-    <ImageButton
-        android:id="@+id/replay"
-        android:layout_width="0dp"
+    <android.support.v7.widget.CardView
+        android:id="@+id/layout_button_container"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="?android:attr/selectableItemBackground"
-        android:contentDescription="@string/app_name"
-        android:foreground="@drawable/ripple"
-        android:onClick="reset"
-        android:padding="12dp"
-        android:src="@drawable/ic_repeat" />
+        android:layout_margin="8dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardElevation="2dp">
 
-    <ImageButton
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="?android:attr/selectableItemBackground"
-        android:contentDescription="@string/app_name"
-        android:foreground="@drawable/ripple"
-        android:onClick="skipPrev"
-        android:padding="12dp"
-        android:src="@drawable/ic_skip_previous" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/play_pause"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="?android:attr/selectableItemBackground"
-        android:contentDescription="@string/app_name"
-        android:onClick="resumeOrPause"
-        android:padding="12dp"
-        android:src="@drawable/ic_play" />
+            <ImageButton
+                android:id="@+id/replay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@string/app_name"
+                android:foreground="@drawable/ripple"
+                android:onClick="reset"
+                android:padding="12dp"
+                android:src="@drawable/ic_repeat" />
 
-    <ImageButton
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="?android:attr/selectableItemBackground"
-        android:contentDescription="@string/app_name"
-        android:foreground="@drawable/ripple"
-        android:onClick="skipNext"
-        android:padding="12dp"
-        android:src="@drawable/ic_skip_next" />
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@string/app_name"
+                android:foreground="@drawable/ripple"
+                android:onClick="skipPrev"
+                android:padding="12dp"
+                android:src="@drawable/ic_skip_previous" />
 
-    <ImageButton
-        android:id="@+id/play_all"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="?android:attr/selectableItemBackground"
-        android:contentDescription="@string/play_all_songs"
-        android:foreground="@drawable/ripple"
-        android:onClick="playAllDeviceSongs"
-        android:padding="12dp"
-        android:src="@drawable/ic_playlist_play" />
-</LinearLayout>
+            <ImageButton
+                android:id="@+id/play_pause"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@string/app_name"
+                android:onClick="resumeOrPause"
+                android:padding="12dp"
+                android:src="@drawable/ic_play" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@string/app_name"
+                android:foreground="@drawable/ripple"
+                android:onClick="skipNext"
+                android:padding="12dp"
+                android:src="@drawable/ic_skip_next" />
+
+            <ImageButton
+                android:id="@+id/play_all"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@string/play_all_songs"
+                android:foreground="@drawable/ripple"
+                android:onClick="playAllDeviceSongs"
+                android:padding="12dp"
+                android:src="@drawable/ic_playlist_play" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</merge>

@@ -5,7 +5,7 @@
     android:background="?attr/secondary_bg_color"
     android:elevation="4dp">
 
-    <include layout="@layout/settings_view" />
+    <include layout="@layout/player_settings" />
 
     <LinearLayout
         android:id="@+id/controls_container"

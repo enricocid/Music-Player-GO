@@ -24,7 +24,7 @@ public class FloatingPlayButtons extends FrameLayout {
     }
 
     private void inflateLayout(Context context) {
-        View v = LayoutInflater.from(context).inflate(R.layout.floating_play_buttons, this, true);
+        View v = LayoutInflater.from(context).inflate(R.layout.player_buttons, this, true);
         container = v.findViewById(R.id.layout_button_container);
     }
 }

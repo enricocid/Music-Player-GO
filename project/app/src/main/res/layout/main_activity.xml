@@ -32,10 +32,10 @@
             android:orientation="vertical">
 
             <!-- NOW PLAYING INFO -->
-            <include layout="@layout/player_info" />
+            <include layout="@layout/player_now_playing" />
 
             <!-- ARTIST_DETAILS -->
-            <include layout="@layout/artist_details" />
+            <include layout="@layout/artist_discography" />
 
         </LinearLayout>
 
