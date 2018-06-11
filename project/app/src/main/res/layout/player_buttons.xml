@@ -50,13 +50,14 @@
         android:src="@drawable/ic_skip_next" />
 
     <ImageButton
+        android:id="@+id/play_all"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="?android:attr/selectableItemBackground"
-        android:contentDescription="@string/app_name"
+        android:contentDescription="@string/play_all_songs"
         android:foreground="@drawable/ripple"
-        android:onClick="showSettings"
+        android:onClick="playAllDeviceSongs"
         android:padding="12dp"
-        android:src="@drawable/ic_settings" />
+        android:src="@drawable/ic_playlist_play" />
 </LinearLayout>

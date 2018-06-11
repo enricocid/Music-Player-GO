@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/artist_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/secondary_bg_color"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:visibility="invisible">
 
     <!-- ARTIST + ALBUM COUNT -->
     <TextView
         android:id="@+id/artist_album_count"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
+        android:layout_marginBottom="4dp"
         android:drawablePadding="4dp"
         android:drawableStart="@drawable/ic_playlist_play_artist"
         android:foreground="?android:attr/selectableItemBackground"

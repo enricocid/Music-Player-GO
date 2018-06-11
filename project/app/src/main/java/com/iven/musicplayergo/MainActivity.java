@@ -1,6 +1,7 @@
 package com.iven.musicplayergo;
 
 import android.Manifest;
+import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -24,14 +25,20 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.graphics.ColorUtils;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spanned;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewTreeObserver;
+import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.RotateAnimation;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -51,10 +58,10 @@ import com.iven.musicplayergo.playback.MusicNotificationManager;
 import com.iven.musicplayergo.playback.MusicService;
 import com.iven.musicplayergo.playback.PlaybackInfoListener;
 import com.iven.musicplayergo.playback.PlayerAdapter;
-import com.iven.musicplayergo.slidinguppanel.SlidingUpPanelLayout;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.List;
+
 
 public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<List<Artist>>, SongsAdapter.SongSelectedListener, ColorsAdapter.AccentChangedListener, AlbumsAdapter.AlbumSelectedListener, ArtistsAdapter.ArtistSelectedListener {
 
@@ -68,10 +75,10 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private TextView mPlayingAlbum, mPlayingSong, mDuration, mSongPosition, mArtistAlbumCount, mSelectedAlbum;
     private SeekBar mSeekBarAudio;
     private LinearLayout mControlsContainer;
-    private View mSettingsView, mPlayerInfoView;
-    private SlidingUpPanelLayout mSlidingUpPanel;
-    private ImageButton mPlayPauseButton, mResetButton, mEqButton, mHandlePlayAllButton;
-    private FloatingPlayAll mFloatingPlayAll;
+    private View mSettingsView, mPlayerInfoView, mArtistDetails;
+
+    private ImageButton mPlayPauseButton, mResetButton, mEqButton;
+    private ImageView mExpandImage;
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
     private List<Artist> mArtists;
@@ -79,9 +86,11 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private List<Song> mAllSelectedArtistSongs;
     private boolean sExpandPanel = false;
     private boolean sPlayerInfoLongPressed = false;
+    private boolean sExpanded = false;
     private MusicService mMusicService;
     private PlaybackListener mPlaybackListener;
     private MusicNotificationManager mMusicNotificationManager;
+
     private final ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -116,7 +125,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             mPlayerAdapter.onPauseActivity();
         }
         if (mSettingsView.getVisibility() == View.VISIBLE) {
-            showSettings(false);
+            revealView(mSettingsView, mControlsContainer, true, false);
         }
     }
 
@@ -131,9 +140,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     @Override
     public void onBackPressed() {
-        //if the sliding up panel is expanded collapse it
-        if (mSlidingUpPanel.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
-            mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        //if the reveal view is expanded collapse it
+        if (sExpanded) {
+            revealView(mArtistDetails, mArtistsRecyclerView, false, false);
         } else if (mSettingsView.getVisibility() == View.VISIBLE) {
             closeSettings(mSettingsView);
         } else {
@@ -201,9 +210,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         initializeSettings();
 
-        restoreFloatingPlayAllVisibility();
-
-        setupSlidingUpPanel();
+        setupViewParams();
 
         initializeSeekBar();
 
@@ -212,19 +219,22 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private void getViews() {
 
-        mSlidingUpPanel = findViewById(R.id.sliding_panel);
         mControlsContainer = findViewById(R.id.controls_container);
-        mControlsContainer.setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(this, mAccent), 10));
+        CardView floatingButtonsContainer = findViewById(R.id.layout_button_container);
+        floatingButtonsContainer.setCardBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(this, mAccent), 10));
+
+        mArtistDetails = findViewById(R.id.artist_details);
         mPlayerInfoView = findViewById(R.id.player_info);
-        setupPlayerInfoView();
+        mPlayingSong = findViewById(R.id.playing_song);
+        mPlayingAlbum = findViewById(R.id.playing_album);
+        mExpandImage = findViewById(R.id.expand);
+        setupPlayerInfoTouchBehaviour();
 
         mPlayPauseButton = findViewById(R.id.play_pause);
-        mFloatingPlayAll = findViewById(R.id.floating_play);
+
         mResetButton = findViewById(R.id.replay);
         mSeekBarAudio = findViewById(R.id.seekTo);
 
-        mPlayingSong = findViewById(R.id.playing_song);
-        mPlayingAlbum = findViewById(R.id.playing_album);
         mDuration = findViewById(R.id.duration);
         mSongPosition = findViewById(R.id.song_position);
         mArtistAlbumCount = findViewById(R.id.artist_album_count);
@@ -232,29 +242,20 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         mArtistsRecyclerView = findViewById(R.id.artists_rv);
         mArtistsRecyclerView.setTrackColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(this, mAccent), sThemeInverted ? 15 : 30));
-        mArtistsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (mFloatingPlayAll != null && mFloatingPlayAll.getVisibility() == View.VISIBLE) {
-                    float alpha = newState == RecyclerView.SCROLL_STATE_IDLE ? 255 : 0;
-                    mFloatingPlayAll.animate().alpha(alpha).start();
-                }
-            }
-        });
+
         mAlbumsRecyclerView = findViewById(R.id.albums_rv);
         mSongsRecyclerView = findViewById(R.id.songs_rv);
 
         mSettingsView = findViewById(R.id.settings_view);
         ImageButton gitButton = findViewById(R.id.git);
         mEqButton = findViewById(R.id.eq);
-        mHandlePlayAllButton = findViewById(R.id.play_all);
+
         ImageButton invertButton = findViewById(R.id.invert);
-        ImageButton closeButton = findViewById(R.id.close);
-        setupSettingsRationale(gitButton, mEqButton, mHandlePlayAllButton, invertButton, closeButton);
+        ImageButton playAllButton = findViewById(R.id.play_all);
+        setupButtonsRationale(gitButton, mEqButton, playAllButton, invertButton);
     }
 
-    private void setupSettingsRationale(ImageButton... imageButtons) {
+    private void setupButtonsRationale(ImageButton... imageButtons) {
         for (final ImageButton imageButton : imageButtons) {
             imageButton.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -268,7 +269,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     //https://stackoverflow.com/questions/6183874/android-detect-end-of-long-press
-    private void setupPlayerInfoView() {
+    private void setupPlayerInfoTouchBehaviour() {
         mPlayerInfoView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -296,13 +297,16 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         });
     }
 
-    private void setupSlidingUpPanel() {
+    private void setupViewParams() {
         final ViewTreeObserver observer = mControlsContainer.getViewTreeObserver();
         observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 int controlsContainerHeight = mControlsContainer.getHeight();
-                mSlidingUpPanel.setupSlidingUpPanel(mSongsRecyclerView, Gravity.BOTTOM, controlsContainerHeight);
+
+                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mArtistsRecyclerView.getLayoutParams();
+                layoutParams.topMargin = mPlayerInfoView.getHeight();
+                mArtistsRecyclerView.setLayoutParams(layoutParams);
                 mSettingsView.setMinimumHeight(controlsContainerHeight);
                 mControlsContainer.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
@@ -318,47 +322,30 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     public void showSettings(View v) {
-        showSettings(true);
+        revealView(mSettingsView, mControlsContainer, true, true);
     }
 
     public void closeSettings(View v) {
-        showSettings(false);
+        revealView(mSettingsView, mControlsContainer, true, false);
     }
 
     public void playAllDeviceSongs(View v) {
-        onSongSelected(SongProvider.getAllDeviceSongs().get(0), SongProvider.getAllDeviceSongs());
+        if (sExpanded) {
+            onSongSelected(mAllSelectedArtistSongs.get(0), mAllSelectedArtistSongs);
+        } else {
+            onSongSelected(SongProvider.getAllDeviceSongs().get(0), SongProvider.getAllDeviceSongs());
+        }
     }
 
     public void playAllSelectedArtistSongs(View v) {
         onSongSelected(mAllSelectedArtistSongs.get(0), mAllSelectedArtistSongs);
     }
 
-    public void handleFloatingPlayButtonVisibility(View v) {
-        boolean isFloatingPlayButtonVisible = mFloatingPlayAll.getVisibility() == View.VISIBLE;
-        int visibility = isFloatingPlayButtonVisible ? View.INVISIBLE : View.VISIBLE;
-        setPlayAllButtonVisibility(visibility);
-        Utils.setPlayAllButtonVisibility(this, visibility);
-    }
-
-    private void setPlayAllButtonVisibility(int visibility) {
-        int drawable = visibility == View.INVISIBLE ? R.drawable.ic_playlist_add : R.drawable.ic_playlist_remove;
-        mHandlePlayAllButton.setImageResource(drawable);
-        mFloatingPlayAll.setVisibility(visibility);
-    }
-
-    private void restoreFloatingPlayAllVisibility() {
-        int visibility = Utils.getPlayAllButtonVisibility(this);
-        setPlayAllButtonVisibility(visibility);
-    }
-
     private void setArtistsRecyclerView(List<Artist> data) {
-
         mArtistsLayoutManager = new LinearLayoutManager(this);
-
         mArtistsRecyclerView.setLayoutManager(mArtistsLayoutManager);
         ArtistsAdapter artistsAdapter = new ArtistsAdapter(this, data);
         mArtistsRecyclerView.setAdapter(artistsAdapter);
-
         if (mSavedRecyclerLayoutState != null) {
             mArtistsLayoutManager.onRestoreInstanceState(mSavedRecyclerLayoutState);
         }
@@ -457,14 +444,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             mMusicService.setRestoredFromPause(true);
         }
         Utils.invertTheme(this);
-    }
-
-    private void showSettings(boolean show) {
-
-        int settingsVisibility = show ? View.VISIBLE : View.GONE;
-        int controlsVisibility = show ? View.GONE : View.VISIBLE;
-        mControlsContainer.setVisibility(controlsVisibility);
-        mSettingsView.setVisibility(settingsVisibility);
     }
 
     private void initializeColorsSettings() {
@@ -608,7 +587,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mArtistAlbumCount.setText(getString(R.string.albums, mSelectedArtist, albumCount));
 
         if (sExpandPanel) {
-            mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            revealView(mArtistDetails, mArtistsRecyclerView, false, true);
             sExpandPanel = false;
         } else {
             restorePlayerStatus();
@@ -630,7 +609,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     public void onSongSelected(Song song, List<Song> songs) {
 
         if (mSettingsView.getVisibility() == View.VISIBLE) {
-            showSettings(false);
+            revealView(mSettingsView, mControlsContainer, true, false);
         }
         if (!mSeekBarAudio.isEnabled()) {
             mSeekBarAudio.setEnabled(true);
@@ -655,8 +634,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             setArtistDetails(ArtistProvider.getArtist(mArtists, mSelectedArtist).albums);
 
         } else {
+            expandArtistDetails(mArtistDetails);
             //if already loaded expand the panel
-            mSlidingUpPanel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            revealView(mArtistDetails, mArtistsRecyclerView, false, true);
         }
     }
 
@@ -671,6 +651,110 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             mSongsRecyclerView.setLayoutManager(songsLayoutManager);
             mSongsAdapter = new SongsAdapter(this, album);
             mSongsRecyclerView.setAdapter(mSongsAdapter);
+        }
+    }
+
+    public void expandArtistDetails(View v) {
+        revealView(mArtistDetails, mArtistsRecyclerView, false, !sExpanded);
+    }
+
+    private void rotateExpandImage(boolean expand) {
+
+        AnimationSet animSet = new AnimationSet(true);
+        animSet.setInterpolator(new DecelerateInterpolator());
+        animSet.setFillAfter(true);
+        animSet.setFillEnabled(true);
+
+        float from = expand ? 0.0f : 180.0f;
+        float to = expand ? 180.0f : 0.0f;
+
+        final RotateAnimation animRotate = new RotateAnimation(from, to,
+                RotateAnimation.RELATIVE_TO_SELF, 0.5f,
+                RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+
+        animRotate.setDuration(500);
+        animRotate.setFillAfter(true);
+        animSet.addAnimation(animRotate);
+
+        mExpandImage.startAnimation(animSet);
+    }
+
+    private void revealView(final View viewToReveal, final View viewToHide, final boolean isSettings, boolean show) {
+
+        final int ANIMATION_DURATION = 500;
+
+        int settingsHeight = viewToReveal.getHeight();
+        int settingsWidth = viewToReveal.getWidth();
+        int radius = (int) Math.hypot(settingsWidth, settingsHeight);
+
+        int fromY = isSettings ? settingsHeight / 2 : viewToHide.getTop() / 2;
+        if (show) {
+
+            Animator anim = ViewAnimationUtils.createCircularReveal(viewToReveal, viewToReveal.getRight() / 2, fromY, 0, radius);
+
+            anim.setDuration(ANIMATION_DURATION);
+
+            anim.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animator) {
+
+                    if (!isSettings) {
+                        rotateExpandImage(true);
+                    }
+                    viewToReveal.setVisibility(View.VISIBLE);
+                    viewToHide.setVisibility(View.INVISIBLE);
+                    viewToReveal.setClickable(false);
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    if (!isSettings) {
+                        sExpanded = true;
+                    }
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animator) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animator) {
+                }
+            });
+            anim.start();
+
+        } else {
+
+            Animator anim = ViewAnimationUtils.createCircularReveal(viewToReveal, viewToReveal.getRight() / 2, fromY, radius, 0);
+            anim.setDuration(ANIMATION_DURATION);
+            anim.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animator) {
+                    if (!isSettings) {
+                        rotateExpandImage(false);
+                    }
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animator) {
+
+                    viewToReveal.setVisibility(View.INVISIBLE);
+                    viewToHide.setVisibility(View.VISIBLE);
+                    viewToReveal.setClickable(true);
+                    if (!isSettings) {
+                        sExpanded = false;
+                    }
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animator) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animator) {
+                }
+            });
+            anim.start();
         }
     }
 

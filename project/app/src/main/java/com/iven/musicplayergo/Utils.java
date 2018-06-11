@@ -18,8 +18,6 @@ public class Utils {
     private static final String ACCENT_VALUE = "com.iven.musicplayergo.pref_accent_value";
     private static final String THEME_PREF = "com.iven.musicplayergo.pref_theme";
     private static final String THEME_VALUE = "com.iven.musicplayergo.pref_theme_value";
-    private static final String PLAY_ALL_VISIBILITY_PREF = "com.iven.musicplayergo.pref_play_all_visibility";
-    private static final String PLAY_ALL_VISIBILITY_VALUE = "com.iven.musicplayergo.pref_play_all_visibility_value";
 
     static boolean isMarshmallow() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
@@ -29,22 +27,6 @@ public class Utils {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N ?
                 Html.fromHtml(res, Html.FROM_HTML_MODE_LEGACY) :
                 Html.fromHtml(res);
-    }
-
-    static void setPlayAllButtonVisibility(@NonNull final Context context, int visibility) {
-        SharedPreferences preferences = context.getSharedPreferences(PLAY_ALL_VISIBILITY_PREF, Context.MODE_PRIVATE);
-        preferences.edit().putInt(PLAY_ALL_VISIBILITY_VALUE, visibility).apply();
-    }
-
-    static int getPlayAllButtonVisibility(@NonNull final Context context) {
-        int visibility;
-        try {
-            visibility = context.getSharedPreferences(PLAY_ALL_VISIBILITY_PREF, Context.MODE_PRIVATE).getInt(PLAY_ALL_VISIBILITY_VALUE, View.VISIBLE);
-        } catch (Exception e) {
-            e.printStackTrace();
-            visibility = View.VISIBLE;
-        }
-        return visibility;
     }
 
     static void invertTheme(@NonNull final Activity activity) {

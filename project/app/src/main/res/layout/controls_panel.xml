@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?attr/secondary_bg_color"
+    android:elevation="4dp">
 
     <include layout="@layout/settings_view" />
 
@@ -13,13 +15,44 @@
         android:focusable="true"
         android:orientation="vertical">
 
-        <!-- PLAYER_CONTROLS -->
-        <include layout="@layout/player_buttons" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/eq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/secondary_bg_color"
+                android:contentDescription="@string/open_eq"
+                android:onClick="openEqualizer"
+                android:padding="12dp"
+                android:src="@drawable/ic_equalizer" />
+
+            <!-- PLAYER_CONTROLS -->
+            <com.iven.musicplayergo.FloatingPlayButtons
+                android:id="@+id/floating_buttons"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="playAllDeviceSongs" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/secondary_bg_color"
+                android:contentDescription="@string/app_name"
+                android:onClick="showSettings"
+                android:padding="12dp"
+                android:src="@drawable/ic_settings" />
+        </LinearLayout>
 
         <!-- PLAYER SEEK TO BAR -->
         <include layout="@layout/player_seek" />
 
-        <!-- PLAYING SONG INFO -->
-        <include layout="@layout/player_info" />
     </LinearLayout>
+
 </FrameLayout>

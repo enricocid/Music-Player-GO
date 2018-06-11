@@ -8,11 +8,11 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 //inspired by https://github.com/dimorinny/floating-text-button
-public class FloatingPlayAll extends FrameLayout {
+public class FloatingPlayButtons extends FrameLayout {
 
     private CardView container;
 
-    public FloatingPlayAll(Context context, AttributeSet attrs) {
+    public FloatingPlayButtons(Context context, AttributeSet attrs) {
         super(context, attrs);
         inflateLayout(context);
         container.post(new Runnable() {
@@ -24,7 +24,7 @@ public class FloatingPlayAll extends FrameLayout {
     }
 
     private void inflateLayout(Context context) {
-        View v = LayoutInflater.from(context).inflate(R.layout.floating_play_all, this, true);
+        View v = LayoutInflater.from(context).inflate(R.layout.floating_play_buttons, this, true);
         container = v.findViewById(R.id.layout_button_container);
     }
 }

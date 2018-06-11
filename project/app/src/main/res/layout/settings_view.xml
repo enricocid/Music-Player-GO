@@ -4,16 +4,15 @@
     android:id="@+id/settings_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
-    android:focusable="true"
+    android:background="?android:attr/windowBackground"
     android:orientation="vertical"
-    android:visibility="gone">
+    android:visibility="invisible">
 
     <!-- OPTIONS -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:orientation="horizontal">
 
         <ImageButton
@@ -21,59 +20,34 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
+            android:background="@android:color/transparent"
             android:contentDescription="@string/open_git"
-            android:foreground="@drawable/ripple"
+            android:foreground="?android:attr/selectableItemBackgroundBorderless"
             android:onClick="openGitPage"
-            android:padding="16dp"
+            android:padding="12dp"
             android:src="@drawable/ic_github" />
-
-        <ImageButton
-            android:id="@+id/eq"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
-            android:contentDescription="@string/open_eq"
-            android:foreground="@drawable/ripple"
-            android:onClick="openEqualizer"
-            android:padding="16dp"
-            android:src="@drawable/ic_equalizer" />
-
-        <ImageButton
-            android:id="@+id/play_all"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
-            android:contentDescription="@string/play_all_visibility"
-            android:foreground="@drawable/ripple"
-            android:onClick="handleFloatingPlayButtonVisibility"
-            android:padding="16dp"
-            android:src="@drawable/ic_playlist_remove" />
 
         <ImageButton
             android:id="@+id/invert"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
+            android:background="@android:color/transparent"
             android:contentDescription="@string/invert"
-            android:foreground="@drawable/ripple"
+            android:foreground="?android:attr/selectableItemBackgroundBorderless"
             android:onClick="switchTheme"
-            android:padding="16dp"
+            android:padding="12dp"
             android:src="@drawable/ic_invert_colors" />
 
         <ImageButton
-            android:id="@+id/close"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
-            android:contentDescription="@string/close"
-            android:foreground="@drawable/ripple"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/app_name"
+            android:foreground="?android:attr/selectableItemBackgroundBorderless"
             android:onClick="closeSettings"
-            android:padding="16dp"
+            android:padding="12dp"
             android:src="@drawable/ic_close" />
     </LinearLayout>
 

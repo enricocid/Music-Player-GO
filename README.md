@@ -28,23 +28,20 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
 ### Unifield UI, the way I'd like it to be:
 
-- Colorful and simple UI;
-- Unified UI: no need to navigate between activities;
+- Colorful, simple and 'unified'UI : no need to navigate between activities;
+- Bottom panel containing the player controls;
 - Music organized by artist;
+- Top panel containing the now played song and a toggle the reveal layout;
+- Reveal layout containing the selected artist's discography; 
 - Fast scrolling;
-- Sliding up panel containing controls (when collapsed) and the artist albums/songs (when expanded);
 - Dark status bar icons for light accents
-- Horizontally slide too long played song/album text in controls panel (long click on it);
-- "Play All!" button to play all songs in device;
-- Ability to play all the songs from an artist;
+- Ability to play all the songs from the device or from an artist;
 
-### Open settings directly from UI. Available settings: 
+### Open settings directly on the UI. Available settings: 
 
 - Themes (light and inverted)
 - Link to git page;
 - 17 UI accents!;
-- Equalizer;
-- Toggle Play All! button visibility;
 
 ### Minimal code:
 
@@ -62,8 +59,6 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
   - CardView v7;
 
   - RecyclerView-FastScroll by Tim Malseed (@timusus) (https://github.com/timusus/RecyclerView-FastScroll)
-
-  - Sliding up panel by @umano lightened and updated by Me (https://github.com/umano/AndroidSlidingUpPanel);
 
 ### Other features: 
 

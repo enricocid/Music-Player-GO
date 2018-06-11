@@ -3,6 +3,7 @@ package com.iven.musicplayergo.adapters;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v4.graphics.ColorUtils;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,7 +87,8 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
             title = itemView.findViewById(R.id.album);
             year = itemView.findViewById(R.id.year);
             year.setBackgroundColor(ColorUtils.setAlphaComponent(year.getCurrentTextColor(), 10));
-            itemView.setBackgroundColor(ColorUtils.setAlphaComponent(mAccent, 10));
+            CardView cardContainer = (CardView) itemView;
+            cardContainer.setCardBackgroundColor(ColorUtils.setAlphaComponent(mAccent, 10));
             itemView.setOnClickListener(this);
         }
 
