@@ -146,10 +146,6 @@ public class Utils {
                 selectedTheme = isThemeDark ? R.style.AppThemeGrayLightInverted : R.style.AppThemeGrayLight;
                 break;
 
-            case R.color.gray_900:
-                selectedTheme = isThemeDark ? R.style.AppThemeGrayDarkInverted : R.style.AppThemeGrayDark;
-                break;
-
             case R.color.blue_gray_400:
                 selectedTheme = isThemeDark ? R.style.AppThemeBlueGrayInverted : R.style.AppThemeBlueGray;
                 break;

@@ -41,7 +41,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
 - Themes (light and inverted)
 - Link to git page;
-- 17 UI accents!;
+- 16 UI accents!;
 
 ### Minimal code:
 

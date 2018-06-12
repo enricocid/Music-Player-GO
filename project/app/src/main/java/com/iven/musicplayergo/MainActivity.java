@@ -32,11 +32,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -60,7 +60,6 @@ import com.iven.musicplayergo.playback.PlayerAdapter;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.List;
-
 
 public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<List<Artist>>, SongsAdapter.SongSelectedListener, ColorsAdapter.AccentChangedListener, AlbumsAdapter.AlbumSelectedListener, ArtistsAdapter.ArtistSelectedListener {
 
@@ -454,8 +453,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     private void updateResetStatus(boolean onPlaybackCompletion) {
-
-        int color = onPlaybackCompletion ? Color.BLACK : mPlayerAdapter.isReset() ? ContextCompat.getColor(this, mAccent) : Color.BLACK;
+        int color = onPlaybackCompletion ? Color.BLACK : mPlayerAdapter.isReset() ? Color.WHITE : Color.BLACK;
         mResetButton.getDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
     }
 
@@ -652,7 +650,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         revealView(mArtistDetails, mArtistsRecyclerView, false, !sExpanded);
     }
 
-    private void rotateExpandImage(boolean expand) {
+    private void rotateExpandImage(final boolean expand) {
 
         AnimationSet animSet = new AnimationSet(true);
         animSet.setInterpolator(new DecelerateInterpolator());
@@ -668,6 +666,27 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         animRotate.setDuration(500);
         animRotate.setFillAfter(true);
+        animRotate.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                if (!expand) {
+                    mExpandImage.setVisibility(View.VISIBLE);
+                    mExpandImage.animate().alpha(0.65f).start();
+                }
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                if (expand) {
+                    mExpandImage.animate().alpha(0.0f).start();
+                    mExpandImage.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
         animSet.addAnimation(animRotate);
 
         mExpandImage.startAnimation(animSet);

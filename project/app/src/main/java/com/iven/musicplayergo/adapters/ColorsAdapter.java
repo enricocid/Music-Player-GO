@@ -34,7 +34,6 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
             R.color.deep_orange_A400,
             R.color.brown_400,
             R.color.gray_400,
-            R.color.gray_900,
             R.color.blue_gray_400
     };
 

@@ -17,6 +17,5 @@
     <color name="deep_orange_A400">#FF3D00</color> <!-- LIGHT -->
     <color name="brown_400">#8D6E63</color> <!-- LIGHT -->
     <color name="gray_400">#BDBDBD</color> <!-- DARK -->
-    <color name="gray_900">#212121</color> <!-- LIGHT -->
     <color name="blue_gray_400">#78909C</color> <!-- LIGHT -->
 </resources>
