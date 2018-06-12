@@ -28,10 +28,10 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
 ### Unifield UI, the way I'd like it to be:
 
-- Colorful, simple and 'unified'UI : no need to navigate between activities;
+- Colorful, simple and 'unified' UI : no need to navigate between activities;
 - Bottom panel containing the player controls;
 - Music organized by artist;
-- Top panel containing the now played song. The panel click opens the artist discographyusing a reveal animation;
+- Top panel containing the now played song. By clicking on it You can 'reveal' the artist discography;
 - The now playing text is scrollable on long clicking when it is too long;
 - Reveal layout containing the selected artist's discography and a toggle to collapse the artist discography;
 - Fast scrolling;
