@@ -2,7 +2,7 @@
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
 
 ###### Very slim music player (size <1000KB!) with low memory footprint!
-###### Current version: (62) 2.4.2.2
+###### Current version: (63) 2.5
 ###### Material Design Icon by Julian Javier Gomez, Axinen Design (https://plus.google.com/u/0/+AxinenDesign)
 
 
@@ -11,7 +11,7 @@
 
 # Screenshots
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v61.png) 
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v63.png) 
 
 
 # Download
@@ -31,8 +31,8 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 - Colorful, simple and 'unified'UI : no need to navigate between activities;
 - Bottom panel containing the player controls;
 - Music organized by artist;
-- Top panel containing the now played song and a toggle the reveal layout;
-- Reveal layout containing the selected artist's discography; 
+- Top panel containing the now played song and a toggle to expand the reveal layout;
+- Reveal layout containing the selected artist's discography and a toggle to collapse the reveal layout; 
 - Fast scrolling;
 - Dark status bar icons for light accents
 - Ability to play all the songs from the device or from an artist;
