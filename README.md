@@ -31,9 +31,9 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 - Colorful, simple and 'unified'UI : no need to navigate between activities;
 - Bottom panel containing the player controls;
 - Music organized by artist;
-- Top panel containing the now played song and a toggle to expand the reveal layout;
+- Top panel containing the now played song. The panel click opens the artist discographyusing a reveal animation;
 - The now playing text is scrollable on long clicking when it is too long;
-- Reveal layout containing the selected artist's discography and a toggle to collapse the reveal layout; 
+- Reveal layout containing the selected artist's discography and a toggle to collapse the artist discography;
 - Fast scrolling;
 - Dark status bar icons for light accents
 - Ability to play all the songs from the device or from an artist;
