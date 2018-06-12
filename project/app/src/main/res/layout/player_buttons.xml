@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardBackgroundColor="?attr/accent_color"
         card_view:cardElevation="2dp">
 
         <LinearLayout
@@ -15,59 +16,60 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/replay"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="?android:attr/selectableItemBackground"
+                android:alpha="0.65"
                 android:contentDescription="@string/app_name"
-                android:foreground="@drawable/ripple"
+                android:foreground="@drawable/accent_ripple"
                 android:onClick="reset"
                 android:padding="12dp"
                 android:src="@drawable/ic_repeat" />
 
-            <ImageButton
+            <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="?android:attr/selectableItemBackground"
+                android:alpha="0.65"
                 android:contentDescription="@string/app_name"
-                android:foreground="@drawable/ripple"
+                android:foreground="@drawable/accent_ripple"
                 android:onClick="skipPrev"
                 android:padding="12dp"
                 android:src="@drawable/ic_skip_previous" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/play_pause"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="?android:attr/selectableItemBackground"
+                android:alpha="0.75"
                 android:contentDescription="@string/app_name"
+                android:foreground="@drawable/accent_ripple"
                 android:onClick="resumeOrPause"
                 android:padding="12dp"
                 android:src="@drawable/ic_play" />
 
-            <ImageButton
+            <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="?android:attr/selectableItemBackground"
+                android:alpha="0.65"
                 android:contentDescription="@string/app_name"
-                android:foreground="@drawable/ripple"
+                android:foreground="@drawable/accent_ripple"
                 android:onClick="skipNext"
                 android:padding="12dp"
                 android:src="@drawable/ic_skip_next" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/play_all"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="?android:attr/selectableItemBackground"
+                android:alpha="0.65"
                 android:contentDescription="@string/play_all_songs"
-                android:foreground="@drawable/ripple"
+                android:foreground="@drawable/accent_ripple"
                 android:onClick="playAllDeviceSongs"
                 android:padding="12dp"
                 android:src="@drawable/ic_playlist_play" />

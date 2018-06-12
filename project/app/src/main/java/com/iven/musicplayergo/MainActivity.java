@@ -25,7 +25,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.graphics.ColorUtils;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spanned;
@@ -77,8 +76,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private LinearLayout mControlsContainer;
     private View mSettingsView, mPlayerInfoView, mArtistDetails;
 
-    private ImageButton mPlayPauseButton, mResetButton, mEqButton;
-    private ImageView mExpandImage;
+    private ImageView mPlayPauseButton, mResetButton, mEqButton, mExpandImage;
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
     private List<Artist> mArtists;
@@ -220,8 +218,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private void getViews() {
 
         mControlsContainer = findViewById(R.id.controls_container);
-        CardView floatingButtonsContainer = findViewById(R.id.layout_button_container);
-        floatingButtonsContainer.setCardBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(this, mAccent), 10));
 
         mArtistDetails = findViewById(R.id.artist_details);
         mPlayerInfoView = findViewById(R.id.player_info);
@@ -247,20 +243,20 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSongsRecyclerView = findViewById(R.id.songs_rv);
 
         mSettingsView = findViewById(R.id.settings_view);
-        ImageButton gitButton = findViewById(R.id.git);
+        ImageView gitButton = findViewById(R.id.git);
         mEqButton = findViewById(R.id.eq);
 
-        ImageButton invertButton = findViewById(R.id.invert);
-        ImageButton playAllButton = findViewById(R.id.play_all);
+        ImageView invertButton = findViewById(R.id.invert);
+        ImageView playAllButton = findViewById(R.id.play_all);
         setupButtonsRationale(gitButton, mEqButton, playAllButton, invertButton);
     }
 
-    private void setupButtonsRationale(ImageButton... imageButtons) {
-        for (final ImageButton imageButton : imageButtons) {
-            imageButton.setOnLongClickListener(new View.OnLongClickListener() {
+    private void setupButtonsRationale(ImageView... imageViews) {
+        for (final ImageView imageView : imageViews) {
+            imageView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    Toast.makeText(MainActivity.this, imageButton.getContentDescription(), Toast.LENGTH_SHORT)
+                    Toast.makeText(MainActivity.this, imageView.getContentDescription(), Toast.LENGTH_SHORT)
                             .show();
                     return false;
                 }
@@ -317,7 +313,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (!EqualizerUtils.hasEqualizer(this)) {
             mEqButton.getDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
         }
-        mSettingsView.setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(this, mAccent), 20));
         initializeColorsSettings();
     }
 
@@ -460,8 +455,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private void updateResetStatus(boolean onPlaybackCompletion) {
 
-        int themeColor = sThemeInverted ? Color.WHITE : Color.BLACK;
-        int color = onPlaybackCompletion ? themeColor : mPlayerAdapter.isReset() ? ContextCompat.getColor(this, mAccent) : themeColor;
+        int color = onPlaybackCompletion ? Color.BLACK : mPlayerAdapter.isReset() ? ContextCompat.getColor(this, mAccent) : Color.BLACK;
         mResetButton.getDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
     }
 

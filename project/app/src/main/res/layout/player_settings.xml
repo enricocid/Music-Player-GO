@@ -4,7 +4,7 @@
     android:id="@+id/settings_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/windowBackground"
+    android:background="?attr/secondary_bg_color"
     android:orientation="vertical"
     android:visibility="invisible">
 

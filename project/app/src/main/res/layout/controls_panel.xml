@@ -2,8 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/secondary_bg_color"
-    android:elevation="4dp">
+    android:background="?android:attr/windowBackground">
 
     <include layout="@layout/player_settings" />
 
@@ -22,12 +21,13 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/eq"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?attr/secondary_bg_color"
+                android:alpha="0.65"
                 android:contentDescription="@string/open_eq"
+                android:foreground="?android:attr/actionBarItemBackground"
                 android:onClick="openEqualizer"
                 android:padding="12dp"
                 android:src="@drawable/ic_equalizer" />
@@ -40,11 +40,12 @@
                 android:layout_weight="1"
                 android:onClick="playAllDeviceSongs" />
 
-            <ImageButton
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?attr/secondary_bg_color"
+                android:alpha="0.65"
                 android:contentDescription="@string/app_name"
+                android:foreground="?android:attr/actionBarItemBackground"
                 android:onClick="showSettings"
                 android:padding="12dp"
                 android:src="@drawable/ic_settings" />
