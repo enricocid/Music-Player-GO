@@ -32,6 +32,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 - Bottom panel containing the player controls;
 - Music organized by artist;
 - Top panel containing the now played song and a toggle to expand the reveal layout;
+- The now playing text is scrollable on long clicking when it is too long;
 - Reveal layout containing the selected artist's discography and a toggle to collapse the reveal layout; 
 - Fast scrolling;
 - Dark status bar icons for light accents
@@ -72,7 +73,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
 - **IzzySoft** (https://github.com/IzzySoft) and **Poussinou** (https://github.com/Poussinou) for setting up the F-Droid repository
 
-- **Dima Merkurev** (dimorinny - https://github.com/dimorinny) for part of the floating play button code
+- **Dima Merkurev** (dimorinny - https://github.com/dimorinny) for part of the floating controls code
 https://github.com/dimorinny/floating-text-button
 
 - **Luis F. Uceta** (uzluisf - https://github.com/uzluisf) for Spanish translations
