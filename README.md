@@ -38,7 +38,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 - Dark status bar icons for light accents
 - Ability to play all the songs from the device or from an artist;
 
-### Open settings directly on the UI. Available settings: 
+### Settings at hand: 
 
 - Themes (light and inverted)
 - Link to git page;
