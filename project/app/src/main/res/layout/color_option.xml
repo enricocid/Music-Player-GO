@@ -5,5 +5,4 @@
     android:background="?android:attr/actionBarItemBackground"
     android:contentDescription="@string/app_name"
     android:orientation="vertical"
-    android:padding="8dp"
-    android:src="@drawable/ic_checkbox_blank" />
+    android:padding="8dp" />

@@ -39,7 +39,7 @@
             android:foreground="?android:attr/selectableItemBackgroundBorderless"
             android:onClick="switchTheme"
             android:padding="12dp"
-            android:src="@drawable/ic_invert_colors" />
+            android:src="@drawable/ic_invert_theme" />
 
         <ImageButton
             android:layout_width="0dp"
