@@ -86,9 +86,8 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
             title = itemView.findViewById(R.id.album);
             year = itemView.findViewById(R.id.year);
-            year.setBackgroundColor(ColorUtils.setAlphaComponent(year.getCurrentTextColor(), 20));
             CardView cardContainer = (CardView) itemView;
-            cardContainer.setCardBackgroundColor(ColorUtils.setAlphaComponent(mAccent, 20));
+            cardContainer.setCardBackgroundColor(ColorUtils.setAlphaComponent(mAccent, 15));
             itemView.setOnClickListener(this);
         }
 
