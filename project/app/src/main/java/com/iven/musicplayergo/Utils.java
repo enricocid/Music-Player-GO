@@ -72,7 +72,7 @@ public class Utils {
             newSystemUiFlags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
         }
 
-        //just to avoid to set light status bar if it already enabled and viceversa
+        //just to avoid to set light status bar if it is already enabled
         if (newSystemUiFlags != oldSystemUiFlags) {
             decorView.setSystemUiVisibility(newSystemUiFlags);
         }
