@@ -33,12 +33,12 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 - Music organized by artist;
 - Top panel containing the now played song. By clicking on it You can 'reveal' the artist discography;
 - The now playing text is scrollable on long clicking when it is too long;
-- Reveal layout containing the selected artist's discography and a toggle to collapse the artist discography;
+- Reveal layout containing the selected artist's discography and a toggle to collapse it;
 - Fast scrolling;
 - Dark status bar icons for light accents
 - Ability to play all the songs from the device or from an artist;
 
-### Open settings directly on the UI. Available settings: 
+### Settings at hand: 
 
 - Themes (light and inverted)
 - Link to git page;
