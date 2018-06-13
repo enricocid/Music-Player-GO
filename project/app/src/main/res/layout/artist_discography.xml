@@ -36,7 +36,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:padding="8dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
         android:textAppearance="@android:style/TextAppearance.Material.Subhead"
         android:textColor="?attr/accent_color"
         android:textStyle="bold" />
