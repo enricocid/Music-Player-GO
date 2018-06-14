@@ -33,8 +33,6 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -63,6 +61,7 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<List<Artist>>, SongsAdapter.SongSelectedListener, ColorsAdapter.AccentChangedListener, AlbumsAdapter.AlbumSelectedListener, ArtistsAdapter.ArtistSelectedListener {
 
+    private final int ANIMATION_DURATION = 500;
     private LinearLayoutManager mArtistsLayoutManager;
     private int mAccent;
     private boolean sThemeInverted;
@@ -74,7 +73,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private SeekBar mSeekBarAudio;
     private LinearLayout mControlsContainer;
     private View mSettingsView, mPlayerInfoView, mArtistDetails;
-
     private ImageView mPlayPauseButton, mResetButton, mEqButton, mExpandImage;
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
@@ -87,7 +85,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private MusicService mMusicService;
     private PlaybackListener mPlaybackListener;
     private MusicNotificationManager mMusicNotificationManager;
-
     private final ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -652,33 +649,29 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private void rotateExpandImage(final boolean expand) {
 
-        AnimationSet animSet = new AnimationSet(true);
-        animSet.setInterpolator(new DecelerateInterpolator());
-        animSet.setFillAfter(true);
-        animSet.setFillEnabled(true);
+        final int ALPHA_DURATION = 100;
+        final float PIVOT_VALUE = 0.5f;
+        final int PIVOT_TYPE = RotateAnimation.RELATIVE_TO_SELF;
+        final float from = expand ? 0.0f : 180.0f;
+        final float to = expand ? 180.0f : 0.0f;
+        final float originalAlpha = mExpandImage.getImageAlpha();
 
-        float from = expand ? 0.0f : 180.0f;
-        float to = expand ? 180.0f : 0.0f;
-
-        final RotateAnimation animRotate = new RotateAnimation(from, to,
-                RotateAnimation.RELATIVE_TO_SELF, 0.5f,
-                RotateAnimation.RELATIVE_TO_SELF, 0.5f);
-
-        animRotate.setDuration(500);
+        final RotateAnimation animRotate = new RotateAnimation(from, to, PIVOT_TYPE, PIVOT_VALUE, PIVOT_TYPE, PIVOT_VALUE);
+        animRotate.setDuration(ANIMATION_DURATION);
         animRotate.setFillAfter(true);
         animRotate.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
                 if (!expand) {
                     mExpandImage.setVisibility(View.VISIBLE);
-                    mExpandImage.animate().alpha(0.65f).start();
+                    mExpandImage.animate().alpha(originalAlpha).setDuration(ALPHA_DURATION).start();
                 }
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
                 if (expand) {
-                    mExpandImage.animate().alpha(0.0f).start();
+                    mExpandImage.animate().alpha(0.0f).setDuration(ALPHA_DURATION).start();
                     mExpandImage.setVisibility(View.GONE);
                 }
             }
@@ -687,30 +680,23 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             public void onAnimationRepeat(Animation animation) {
             }
         });
-        animSet.addAnimation(animRotate);
-
-        mExpandImage.startAnimation(animSet);
+        mExpandImage.startAnimation(animRotate);
     }
 
     private void revealView(final View viewToReveal, final View viewToHide, final boolean isSettings, boolean show) {
 
-        final int ANIMATION_DURATION = 500;
+        final int viewToRevealHeight = viewToReveal.getHeight();
+        final int viewToRevealWidth = viewToReveal.getWidth();
+        final int viewToRevealHalfWidth = viewToRevealWidth / 2;
+        final int radius = (int) Math.hypot(viewToRevealWidth, viewToRevealHeight);
+        final int fromY = isSettings ? viewToRevealHeight / 2 : viewToHide.getTop() / 2;
 
-        int settingsHeight = viewToReveal.getHeight();
-        int settingsWidth = viewToReveal.getWidth();
-        int radius = (int) Math.hypot(settingsWidth, settingsHeight);
-
-        int fromY = isSettings ? settingsHeight / 2 : viewToHide.getTop() / 2;
         if (show) {
-
-            Animator anim = ViewAnimationUtils.createCircularReveal(viewToReveal, viewToReveal.getRight() / 2, fromY, 0, radius);
-
+            Animator anim = ViewAnimationUtils.createCircularReveal(viewToReveal, viewToRevealHalfWidth, fromY, 0, radius);
             anim.setDuration(ANIMATION_DURATION);
-
             anim.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animator) {
-
                     if (!isSettings) {
                         rotateExpandImage(true);
                     }
@@ -738,7 +724,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         } else {
 
-            Animator anim = ViewAnimationUtils.createCircularReveal(viewToReveal, viewToReveal.getRight() / 2, fromY, radius, 0);
+            Animator anim = ViewAnimationUtils.createCircularReveal(viewToReveal, viewToRevealHalfWidth, fromY, radius, 0);
             anim.setDuration(ANIMATION_DURATION);
             anim.addListener(new Animator.AnimatorListener() {
                 @Override
@@ -750,7 +736,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
                 @Override
                 public void onAnimationEnd(Animator animator) {
-
                     viewToReveal.setVisibility(View.INVISIBLE);
                     viewToHide.setVisibility(View.VISIBLE);
                     viewToReveal.setClickable(true);
