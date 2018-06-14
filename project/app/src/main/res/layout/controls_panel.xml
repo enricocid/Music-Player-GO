@@ -25,7 +25,6 @@
                 android:id="@+id/eq"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:alpha="0.65"
                 android:contentDescription="@string/open_eq"
                 android:foreground="?android:attr/actionBarItemBackground"
                 android:onClick="openEqualizer"
@@ -42,7 +41,6 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:alpha="0.65"
                 android:contentDescription="@string/app_name"
                 android:foreground="?android:attr/actionBarItemBackground"
                 android:onClick="showSettings"
