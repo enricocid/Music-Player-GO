@@ -43,5 +43,5 @@
 
 
     <!-- CONTROLS PANEL -->
-    <include layout="@layout/controls_panel" />
+    <include layout="@layout/player_controls_panel" />
 </LinearLayout>
