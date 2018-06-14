@@ -33,6 +33,8 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -649,13 +651,16 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private void rotateExpandImage(final boolean expand) {
 
-        final int ALPHA_DURATION = 100;
+        final int ALPHA_DURATION = 250;
         final float PIVOT_VALUE = 0.5f;
         final int PIVOT_TYPE = RotateAnimation.RELATIVE_TO_SELF;
         final float from = expand ? 0.0f : 180.0f;
         final float to = expand ? 180.0f : 0.0f;
-        final float originalAlpha = mExpandImage.getImageAlpha();
 
+        AnimationSet animSet = new AnimationSet(true);
+        animSet.setInterpolator(new DecelerateInterpolator());
+        animSet.setFillAfter(true);
+        animSet.setFillEnabled(true);
         final RotateAnimation animRotate = new RotateAnimation(from, to, PIVOT_TYPE, PIVOT_VALUE, PIVOT_TYPE, PIVOT_VALUE);
         animRotate.setDuration(ANIMATION_DURATION);
         animRotate.setFillAfter(true);
@@ -664,7 +669,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             public void onAnimationStart(Animation animation) {
                 if (!expand) {
                     mExpandImage.setVisibility(View.VISIBLE);
-                    mExpandImage.animate().alpha(originalAlpha).setDuration(ALPHA_DURATION).start();
+                    mExpandImage.animate().alpha(1.0f).setDuration(ALPHA_DURATION).start();
                 }
             }
 
@@ -672,7 +677,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             public void onAnimationEnd(Animation animation) {
                 if (expand) {
                     mExpandImage.animate().alpha(0.0f).setDuration(ALPHA_DURATION).start();
-                    mExpandImage.setVisibility(View.GONE);
+                    mExpandImage.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -680,7 +685,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             public void onAnimationRepeat(Animation animation) {
             }
         });
-        mExpandImage.startAnimation(animRotate);
+        animSet.addAnimation(animRotate);
+        mExpandImage.startAnimation(animSet);
     }
 
     private void revealView(final View viewToReveal, final View viewToHide, final boolean isSettings, boolean show) {
