@@ -12,8 +12,4 @@
     <string name="no_browser">No browser found!</string>
     <string name="perm_rationale">To let You play the music on your phone, Music Player GO needs access to your files</string>
     <string name="error_no_music">No music on your phone</string>
-    <string name="invert">Switch theme</string>
-    <string name="play_all_songs">Play all the songs!</string>
-    <string name="open_eq">Open the equalizer (if present)</string>
-    <string name="open_git">Open the project\'s github page</string>
 </resources>

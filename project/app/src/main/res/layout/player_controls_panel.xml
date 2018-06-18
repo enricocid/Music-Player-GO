@@ -25,7 +25,7 @@
                 android:id="@+id/eq"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/open_eq"
+                android:contentDescription="@string/app_name"
                 android:foreground="?android:attr/actionBarItemBackground"
                 android:onClick="openEqualizer"
                 android:padding="12dp"

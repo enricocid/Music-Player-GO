@@ -6,8 +6,4 @@
     <string name="no_browser">Kein Browser gefunden!</string>
     <string name="perm_rationale">Damit du Musik auf deinem Handy wiedergeben kannst, benötigt Music Player GO Zugriff auf deine Dateien</string>
     <string name="error_no_music">Keine Musik auf deinem Handy</string>
-    <string name="invert">Wechsel das Theme</string>
-    <string name="play_all_songs">Spiele alle Lieder!</string>
-    <string name="open_eq">Öffne den Equalizer (Falls vorhanden)</string>
-    <string name="open_git">Öffne das Projekt bei Github</string>
 </resources>

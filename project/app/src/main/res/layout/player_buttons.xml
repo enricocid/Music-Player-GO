@@ -59,11 +59,10 @@
                 android:src="@drawable/ic_skip_next" />
 
             <ImageView
-                android:id="@+id/play_all"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:contentDescription="@string/play_all_songs"
+                android:contentDescription="@string/app_name"
                 android:foreground="@drawable/accent_ripple"
                 android:onClick="playAllDeviceSongs"
                 android:padding="12dp"

@@ -16,24 +16,22 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/git"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:contentDescription="@string/open_git"
+            android:contentDescription="@string/app_name"
             android:foreground="?android:attr/selectableItemBackgroundBorderless"
             android:onClick="openGitPage"
             android:padding="12dp"
             android:src="@drawable/ic_github" />
 
         <ImageButton
-            android:id="@+id/invert"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:contentDescription="@string/invert"
+            android:contentDescription="@string/app_name"
             android:foreground="?android:attr/selectableItemBackgroundBorderless"
             android:onClick="switchTheme"
             android:padding="12dp"

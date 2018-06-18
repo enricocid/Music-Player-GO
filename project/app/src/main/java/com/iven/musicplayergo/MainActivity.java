@@ -75,7 +75,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private SeekBar mSeekBarAudio;
     private LinearLayout mControlsContainer;
     private View mSettingsView, mPlayerInfoView, mArtistDetails;
-    private ImageView mPlayPauseButton, mResetButton, mEqButton, mExpandImage;
+    private ImageView mPlayPauseButton, mResetButton, mExpandImage;
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
     private List<Artist> mArtists;
@@ -241,25 +241,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSongsRecyclerView = findViewById(R.id.songs_rv);
 
         mSettingsView = findViewById(R.id.settings_view);
-        ImageView gitButton = findViewById(R.id.git);
-        mEqButton = findViewById(R.id.eq);
-
-        ImageView invertButton = findViewById(R.id.invert);
-        ImageView playAllButton = findViewById(R.id.play_all);
-        setupButtonsRationale(gitButton, mEqButton, playAllButton, invertButton);
-    }
-
-    private void setupButtonsRationale(ImageView... imageViews) {
-        for (final ImageView imageView : imageViews) {
-            imageView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Toast.makeText(MainActivity.this, imageView.getContentDescription(), Toast.LENGTH_SHORT)
-                            .show();
-                    return false;
-                }
-            });
-        }
     }
 
     //https://stackoverflow.com/questions/6183874/android-detect-end-of-long-press
@@ -309,7 +290,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private void initializeSettings() {
         if (!EqualizerUtils.hasEqualizer(this)) {
-            mEqButton.getDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+            ImageView eqButton = findViewById(R.id.eq);
+            eqButton.getDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
         }
         initializeColorsSettings();
     }
