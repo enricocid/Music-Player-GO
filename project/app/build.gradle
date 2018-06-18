@@ -17,10 +17,6 @@ android {
             zipAlignEnabled true
         }
     }
-    lintOptions {
-        checkReleaseBuilds false
-        abortOnError false
-    }
 }
 
 dependencies {
