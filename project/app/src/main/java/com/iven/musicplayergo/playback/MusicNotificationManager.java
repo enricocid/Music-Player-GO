@@ -40,7 +40,7 @@ public class MusicNotificationManager {
         mNotificationManager = (NotificationManager) mMusicService.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
-    public void setAccentColor(int color) {
+    public void setAccentColor(final int color) {
         mAccent = ContextCompat.getColor(mMusicService, color);
     }
 
@@ -123,7 +123,7 @@ public class MusicNotificationManager {
     private void createNotificationChannel() {
 
         if (mNotificationManager.getNotificationChannel(CHANNEL_ID) == null) {
-            NotificationChannel notificationChannel =
+            final NotificationChannel notificationChannel =
                     new NotificationChannel(CHANNEL_ID,
                             mMusicService.getString(R.string.app_name),
                             NotificationManager.IMPORTANCE_LOW);

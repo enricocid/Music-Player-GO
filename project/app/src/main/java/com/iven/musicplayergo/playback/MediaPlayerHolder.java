@@ -390,7 +390,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     }
 
     private void getSkipSong(final boolean isNext) {
-        int currentIndex = mSongs.indexOf(mSelectedSong);
+        final int currentIndex = mSongs.indexOf(mSelectedSong);
 
         int index;
 
@@ -450,7 +450,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
         @Override
         public void onReceive(Context context, Intent intent) {
             // TODO Auto-generated method stub
-            String action = intent.getAction();
+            final String action = intent.getAction();
 
             if (action != null) {
 

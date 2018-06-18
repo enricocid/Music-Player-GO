@@ -1,6 +1,7 @@
 package com.iven.musicplayergo;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -23,7 +24,7 @@ public class FloatingPlayButtons extends FrameLayout {
         });
     }
 
-    private void inflateLayout(Context context) {
+    private void inflateLayout(@NonNull final Context context) {
         final View v = LayoutInflater.from(context).inflate(R.layout.player_buttons, this, true);
         container = v.findViewById(R.id.layout_button_container);
     }

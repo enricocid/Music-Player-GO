@@ -23,7 +23,7 @@ public class Utils {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 
-    public static Spanned buildSpanned(String res) {
+    public static Spanned buildSpanned(final String res) {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N ?
                 Html.fromHtml(res, Html.FROM_HTML_MODE_LEGACY) :
                 Html.fromHtml(res);
@@ -48,7 +48,7 @@ public class Utils {
         return isThemeInverted;
     }
 
-    static void setTheme(@NonNull final Activity activity, boolean isThemeInverted, int accent) {
+    static void setTheme(@NonNull final Activity activity, final boolean isThemeInverted, final int accent) {
         final int theme = resolveTheme(isThemeInverted, accent);
         activity.setTheme(theme);
         if (isMarshmallow()) {
