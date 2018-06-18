@@ -76,6 +76,8 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 - **Dima Merkurev** (dimorinny - https://github.com/dimorinny) for part of the floating controls code
 https://github.com/dimorinny/floating-text-button
 
+- **Malte Kiefer** (beli3ver - https://github.com/beli3ver) for German translations
+
 - **Luis F. Uceta** (uzluisf - https://github.com/uzluisf) for Spanish translations
 
 - **Stanislav** (STWheel - https://github.com/STWheel) for Ukrainian and Russian translations and other strings/ui refinements
