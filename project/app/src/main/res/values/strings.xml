@@ -3,7 +3,6 @@
     <string name="version" translatable="false">v2.5.1.4</string>
     <string name="albums">%s (albums: %d)</string>
     <string name="unknown_year" translatable="false">N&#x2F;A</string>
-    <string name="eq">Equalizer</string>
     <string name="no_eq">No equalizer found!</string>
     <string name="bad_id">Play a song first!</string>
     <string name="artist_info">&lt;b>Albums:&lt;/b>&#160;%1d&#160;&lt;b>Songs:&lt;/b>&#160;%2d</string>

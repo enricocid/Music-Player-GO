@@ -1,6 +1,5 @@
 <resources>
     <string name="albums">%s (álbumes: %d)</string>
-    <string name="eq">Ecualizador</string>
     <string name="no_eq">No se encontró un ecualizador</string>
     <string name="bad_id">¡Primero reproduce una canción!</string>
     <string name="no_browser">No se encontró un navegador</string>
