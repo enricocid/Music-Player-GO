@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Music Player GO</string>
-    <string name="version" translatable="false">v2.5.1.4</string>
+    <string name="version" translatable="false">v2.5.1.5</string>
     <string name="albums">%s (albums: %d)</string>
     <string name="unknown_year" translatable="false">N&#x2F;A</string>
     <string name="no_eq">No equalizer found!</string>
@@ -10,5 +10,5 @@
     <string name="playing_song" translatable="false">&lt;b>%1s&lt;/b>&lt;br/>%2s</string>
     <string name="no_browser">No browser found!</string>
     <string name="perm_rationale">To let You play the music on your phone, Music Player GO needs access to your files</string>
-    <string name="error_no_music">No music on your phone</string>
+    <string name="error_no_music">No music found on your phone!</string>
 </resources>

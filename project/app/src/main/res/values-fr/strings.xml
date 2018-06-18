@@ -2,8 +2,8 @@
     <string name="albums">%s (albums: %d)</string>
     <string name="no_eq">Aucun égaliseur sur l\'appareil!</string>
     <string name="bad_id">Démarrer une piste musicale d\'abord!</string>
-    <string name="no_browser">No navigateur trouvé</string>
+    <string name="no_browser">No navigateur trouvé!</string>
     <string name="perm_rationale">Pour vous permettre de lire la musique sur votre appareil, Music Player GO a besoin d\'accèder à vos fichiers</string>
-    <string name="error_no_music">No musique sur votre appareil</string>
+    <string name="error_no_music">No musique sur votre appareil!</string>
     <string name="artist_info">&lt;b>Albums:&lt;/b>&#160;%1d&#160;&lt;b>Pistes:&lt;/b>&#160;%2d</string>
 </resources>
