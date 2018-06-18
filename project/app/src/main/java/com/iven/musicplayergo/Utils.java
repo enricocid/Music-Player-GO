@@ -30,9 +30,9 @@ public class Utils {
     }
 
     static void invertTheme(@NonNull final Activity activity) {
-        boolean isDark = isThemeInverted(activity);
-        boolean value = !isDark;
-        SharedPreferences preferences = activity.getSharedPreferences(THEME_PREF, Context.MODE_PRIVATE);
+        final boolean isDark = isThemeInverted(activity);
+        final boolean value = !isDark;
+        final SharedPreferences preferences = activity.getSharedPreferences(THEME_PREF, Context.MODE_PRIVATE);
         preferences.edit().putBoolean(THEME_VALUE, value).apply();
         activity.recreate();
     }
@@ -49,7 +49,7 @@ public class Utils {
     }
 
     static void setTheme(@NonNull final Activity activity, boolean isThemeInverted, int accent) {
-        int theme = resolveTheme(isThemeInverted, accent);
+        final int theme = resolveTheme(isThemeInverted, accent);
         activity.setTheme(theme);
         if (isMarshmallow()) {
             enableLightStatusBar(activity, ContextCompat.getColor(activity, accent));
@@ -61,11 +61,11 @@ public class Utils {
     @TargetApi(23)
     private static void enableLightStatusBar(Activity activity, int accent) {
 
-        View decorView = activity.getWindow().getDecorView();
-        int oldSystemUiFlags = decorView.getSystemUiVisibility();
+        final View decorView = activity.getWindow().getDecorView();
+        final int oldSystemUiFlags = decorView.getSystemUiVisibility();
         int newSystemUiFlags = oldSystemUiFlags;
 
-        boolean isColorDark = ColorUtils.calculateLuminance(accent) < 0.35;
+        final boolean isColorDark = ColorUtils.calculateLuminance(accent) < 0.35;
         if (isColorDark) {
             newSystemUiFlags &= ~(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         } else {
@@ -154,7 +154,7 @@ public class Utils {
     }
 
     static void setThemeAccent(@NonNull final Activity activity, int accent) {
-        SharedPreferences preferences = activity.getSharedPreferences(ACCENT_PREF, Context.MODE_PRIVATE);
+        final SharedPreferences preferences = activity.getSharedPreferences(ACCENT_PREF, Context.MODE_PRIVATE);
         preferences.edit().putInt(ACCENT_VALUE, accent).apply();
         activity.recreate();
     }

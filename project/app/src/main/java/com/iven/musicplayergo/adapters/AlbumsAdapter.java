@@ -25,7 +25,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
     private List<Album> mAlbums;
     private Album mSelectedAlbum;
 
-    public AlbumsAdapter(@NonNull Activity activity, List<Album> albums, PlayerAdapter playerAdapter, int accent) {
+    public AlbumsAdapter(@NonNull final Activity activity, @NonNull final List<Album> albums, @NonNull final PlayerAdapter playerAdapter, final int accent) {
         mActivity = activity;
         mAlbums = albums;
         mPlayerAdapter = playerAdapter;
@@ -49,21 +49,21 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
     @NonNull
     public SimpleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View itemView = LayoutInflater.from(mActivity)
+        final View itemView = LayoutInflater.from(mActivity)
                 .inflate(R.layout.album_item, parent, false);
 
         return new SimpleViewHolder(itemView);
     }
 
-    private String getYear(int year) {
+    private String getYear(final int year) {
         return year != 0 && year != -1 ? String.valueOf(year) : mActivity.getString(R.string.unknown_year);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SimpleViewHolder holder, int position) {
 
-        Album album = mAlbums.get(holder.getAdapterPosition());
-        String albumTitle = album.getTitle();
+        final Album album = mAlbums.get(holder.getAdapterPosition());
+        final String albumTitle = album.getTitle();
         holder.title.setText(albumTitle);
         holder.year.setText(getYear(album.getYear()));
     }
@@ -74,19 +74,19 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
     }
 
     public interface AlbumSelectedListener {
-        void onAlbumSelected(Album album);
+        void onAlbumSelected(@NonNull final Album album);
     }
 
     class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         final TextView title, year;
 
-        SimpleViewHolder(View itemView) {
+        SimpleViewHolder(@NonNull final View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.album);
             year = itemView.findViewById(R.id.year);
-            CardView cardContainer = (CardView) itemView;
+            final CardView cardContainer = (CardView) itemView;
             cardContainer.setCardBackgroundColor(ColorUtils.setAlphaComponent(mAccent, 15));
             itemView.setOnClickListener(this);
         }

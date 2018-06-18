@@ -17,12 +17,12 @@ public class EqualizerUtils {
 
     public static boolean hasEqualizer(@NonNull final Context context) {
         final Intent effects = new Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL);
-        PackageManager pm = context.getPackageManager();
-        ResolveInfo ri = pm.resolveActivity(effects, 0);
+        final PackageManager pm = context.getPackageManager();
+        final ResolveInfo ri = pm.resolveActivity(effects, 0);
         return ri != null;
     }
 
-    static void openAudioEffectSession(@NonNull final Context context, int sessionId) {
+    static void openAudioEffectSession(@NonNull final Context context, final int sessionId) {
         final Intent intent = new Intent(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION);
         intent.putExtra(AudioEffect.EXTRA_AUDIO_SESSION, sessionId);
         intent.putExtra(AudioEffect.EXTRA_PACKAGE_NAME, context.getPackageName());
@@ -30,7 +30,7 @@ public class EqualizerUtils {
         context.sendBroadcast(intent);
     }
 
-    static void closeAudioEffectSession(@NonNull final Context context, int sessionId) {
+    static void closeAudioEffectSession(@NonNull final Context context, final int sessionId) {
         final Intent audioEffectsIntent = new Intent(AudioEffect.ACTION_CLOSE_AUDIO_EFFECT_CONTROL_SESSION);
         audioEffectsIntent.putExtra(AudioEffect.EXTRA_AUDIO_SESSION, sessionId);
         audioEffectsIntent.putExtra(AudioEffect.EXTRA_PACKAGE_NAME, context.getPackageName());

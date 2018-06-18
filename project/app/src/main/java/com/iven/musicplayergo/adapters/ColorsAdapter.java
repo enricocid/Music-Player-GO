@@ -37,7 +37,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
             R.color.blue_gray_400
     };
 
-    public ColorsAdapter(@NonNull Activity activity, int accent) {
+    public ColorsAdapter(@NonNull Activity activity, final int accent) {
         mActivity = activity;
         mAccent = accent;
         mOnAccentChangedListener = (AccentChangedListener) mActivity;
@@ -47,7 +47,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
     @NonNull
     public SimpleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View itemView = LayoutInflater.from(parent.getContext())
+        final View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.color_option, parent, false);
         return new SimpleViewHolder(itemView);
     }
@@ -55,11 +55,9 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
     @Override
     public void onBindViewHolder(@NonNull SimpleViewHolder holder, int position) {
 
-        int color = colors[holder.getAdapterPosition()];
-
-        int drawable = color != mAccent ? R.drawable.ic_checkbox_blank : R.drawable.ic_checkbox_marked;
-
-        int parsedColor = ContextCompat.getColor(mActivity, color);
+        final int color = colors[holder.getAdapterPosition()];
+        final int drawable = color != mAccent ? R.drawable.ic_checkbox_blank : R.drawable.ic_checkbox_marked;
+        final int parsedColor = ContextCompat.getColor(mActivity, color);
         holder.color.setImageResource(drawable);
         holder.color.setColorFilter(parsedColor);
     }
@@ -71,14 +69,14 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
     }
 
     public interface AccentChangedListener {
-        void onAccentChanged(int color);
+        void onAccentChanged(final int color);
     }
 
     class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ImageView color;
 
-        SimpleViewHolder(View itemView) {
+        SimpleViewHolder(@NonNull final View itemView) {
             super(itemView);
 
             color = (ImageView) itemView;
@@ -88,7 +86,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
         @Override
         public void onClick(View v) {
             //recreate the activity only if necessary
-            int color = colors[getAdapterPosition()];
+            final int color = colors[getAdapterPosition()];
             if (color != mAccent) {
                 mOnAccentChangedListener.onAccentChanged(color);
             }

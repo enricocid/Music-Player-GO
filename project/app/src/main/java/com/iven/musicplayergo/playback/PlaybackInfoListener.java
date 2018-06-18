@@ -29,10 +29,10 @@ import java.lang.annotation.RetentionPolicy;
  */
 public abstract class PlaybackInfoListener {
 
-    public void onPositionChanged(int position) {
+    public void onPositionChanged(final int position) {
     }
 
-    public void onStateChanged(@State int state) {
+    public void onStateChanged(final @State int state) {
     }
 
     public void onPlaybackCompleted() {

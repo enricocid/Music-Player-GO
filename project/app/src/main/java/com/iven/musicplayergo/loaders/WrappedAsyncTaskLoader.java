@@ -1,6 +1,7 @@
 package com.iven.musicplayergo.loaders;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.content.AsyncTaskLoader;
 
 /**
@@ -18,7 +19,7 @@ abstract class WrappedAsyncTaskLoader<D> extends AsyncTaskLoader<D> {
      *
      * @param context The {@link Context} to use.
      */
-    WrappedAsyncTaskLoader(Context context) {
+    WrappedAsyncTaskLoader(@NonNull final Context context) {
         super(context);
     }
 

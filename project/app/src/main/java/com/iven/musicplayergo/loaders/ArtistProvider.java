@@ -22,7 +22,7 @@ public class ArtistProvider {
         return MediaStore.Audio.Artists.DEFAULT_SORT_ORDER + ", " + MediaStore.Audio.Albums.DEFAULT_SORT_ORDER + ", " + MediaStore.Audio.Media.DEFAULT_SORT_ORDER;
     }
 
-    private static void sortArtists(List<Artist> artists) {
+    private static void sortArtists(@NonNull final List<Artist> artists) {
         Collections.sort(artists, new Comparator<Artist>() {
             public int compare(Artist obj1, Artist obj2) {
                 return obj1.getName().compareToIgnoreCase(obj2.getName());
@@ -32,10 +32,10 @@ public class ArtistProvider {
 
     @NonNull
     private static List<Artist> getAllArtists(@NonNull final Context context) {
-        List<Song> songs = SongProvider.getSongs(SongProvider.makeSongCursor(
+        final List<Song> songs = SongProvider.getSongs(SongProvider.makeSongCursor(
                 context, getSongLoaderSortOrder())
         );
-        List<Artist> artists = retrieveArtists(AlbumProvider.retrieveAlbums(songs));
+        final List<Artist> artists = retrieveArtists(AlbumProvider.retrieveAlbums(songs));
         sortArtists(artists);
         return artists;
     }
@@ -52,7 +52,7 @@ public class ArtistProvider {
 
     @NonNull
     private static List<Artist> retrieveArtists(@Nullable final List<Album> albums) {
-        List<Artist> artists = new ArrayList<>();
+        final List<Artist> artists = new ArrayList<>();
         if (albums != null) {
             for (Album album : albums) {
                 getOrCreateArtist(artists, album.getArtistId()).albums.add(album);
@@ -61,20 +61,20 @@ public class ArtistProvider {
         return artists;
     }
 
-    private static Artist getOrCreateArtist(List<Artist> artists, int artistId) {
+    private static Artist getOrCreateArtist(@NonNull final List<Artist> artists, final int artistId) {
         for (Artist artist : artists) {
             if (!artist.albums.isEmpty() && !artist.albums.get(0).songs.isEmpty() && artist.albums.get(0).songs.get(0).artistId == artistId) {
                 return artist;
             }
         }
-        Artist artist = new Artist();
+        final Artist artist = new Artist();
         artists.add(artist);
         return artist;
     }
 
     public static class AsyncArtistLoader extends WrappedAsyncTaskLoader<List<Artist>> {
 
-        public AsyncArtistLoader(Context context) {
+        public AsyncArtistLoader(@NonNull final Context context) {
             super(context);
         }
 

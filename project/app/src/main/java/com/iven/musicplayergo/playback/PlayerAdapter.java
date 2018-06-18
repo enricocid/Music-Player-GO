@@ -18,6 +18,7 @@ package com.iven.musicplayergo.playback;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
+import android.support.annotation.NonNull;
 
 import com.iven.musicplayergo.MainActivity;
 import com.iven.musicplayergo.models.Album;
@@ -46,13 +47,13 @@ public interface PlayerAdapter {
 
     void instantReset();
 
-    void skip(boolean isNext);
+    void skip(final boolean isNext);
 
-    void openEqualizer(Activity activity);
+    void openEqualizer(@NonNull final Activity activity);
 
-    void seekTo(int position);
+    void seekTo(final int position);
 
-    void setPlaybackInfoListener(PlaybackInfoListener playbackInfoListener);
+    void setPlaybackInfoListener(final PlaybackInfoListener playbackInfoListener);
 
     Song getCurrentSong();
 
@@ -61,13 +62,13 @@ public interface PlayerAdapter {
 
     int getPlayerPosition();
 
-    void registerNotificationActionsReceiver(boolean isRegister);
+    void registerNotificationActionsReceiver(final boolean isRegister);
 
     Album getSelectedAlbum();
 
-    void setSelectedAlbum(Album album);
+    void setSelectedAlbum(final Album album);
 
-    void setCurrentSong(Song song, List<Song> songs);
+    void setCurrentSong(@NonNull final Song song, @NonNull final List<Song> songs);
 
     MediaPlayer getMediaPlayer();
 

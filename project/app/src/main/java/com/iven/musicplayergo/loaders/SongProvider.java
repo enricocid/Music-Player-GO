@@ -43,8 +43,8 @@ public class SongProvider {
         return mAllDeviceSongs;
     }
 
-    public static List<Song> getAllArtistSongs(List<Album> albums) {
-        List<Song> songsList = new ArrayList<>();
+    public static List<Song> getAllArtistSongs(@NonNull final List<Album> albums) {
+        final List<Song> songsList = new ArrayList<>();
         for (Album album : albums) {
             songsList.addAll(album.songs);
         }
@@ -53,10 +53,10 @@ public class SongProvider {
 
     @NonNull
     static List<Song> getSongs(@Nullable final Cursor cursor) {
-        List<Song> songs = new ArrayList<>();
+        final List<Song> songs = new ArrayList<>();
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                Song song = getSongFromCursorImpl(cursor);
+                final Song song = getSongFromCursorImpl(cursor);
                 if (song.duration >= 5000) {
                     songs.add(song);
                     mAllDeviceSongs.add(song);

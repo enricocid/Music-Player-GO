@@ -126,7 +126,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     @Override
-    public void onAccentChanged(int color) {
+    public void onAccentChanged(final int color) {
         mMusicNotificationManager.setAccentColor(color);
         if (mPlayerAdapter.isMediaPlayer()) {
             mMusicNotificationManager.getNotificationManager().notify(MusicNotificationManager.NOTIFICATION_ID, mMusicNotificationManager.createNotification());
@@ -160,7 +160,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     @TargetApi(23)
     private void showPermissionRationale() {
-        AlertDialog builder = new AlertDialog.Builder(this).create();
+        final AlertDialog builder = new AlertDialog.Builder(this).create();
         builder.setIcon(R.drawable.ic_folder);
         builder.setTitle(getString(R.string.app_name));
         builder.setMessage(getString(R.string.perm_rationale));
@@ -290,7 +290,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private void initializeSettings() {
         if (!EqualizerUtils.hasEqualizer(this)) {
-            ImageView eqButton = findViewById(R.id.eq);
+            final ImageView eqButton = findViewById(R.id.eq);
             eqButton.getDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
         }
         initializeColorsSettings();
@@ -316,10 +316,10 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         onSongSelected(mAllSelectedArtistSongs.get(0), mAllSelectedArtistSongs);
     }
 
-    private void setArtistsRecyclerView(List<Artist> data) {
+    private void setArtistsRecyclerView(@NonNull final List<Artist> data) {
         mArtistsLayoutManager = new LinearLayoutManager(this);
         mArtistsRecyclerView.setLayoutManager(mArtistsLayoutManager);
-        ArtistsAdapter artistsAdapter = new ArtistsAdapter(this, data);
+        final ArtistsAdapter artistsAdapter = new ArtistsAdapter(this, data);
         mArtistsRecyclerView.setAdapter(artistsAdapter);
         if (mSavedRecyclerLayoutState != null) {
             mArtistsLayoutManager.onRestoreInstanceState(mSavedRecyclerLayoutState);
@@ -423,8 +423,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private void initializeColorsSettings() {
 
-        RecyclerView colorsRecyclerView = mSettingsView.findViewById(R.id.colors_rv);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        final RecyclerView colorsRecyclerView = mSettingsView.findViewById(R.id.colors_rv);
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         colorsRecyclerView.setLayoutManager(linearLayoutManager);
         colorsRecyclerView.setAdapter(new ColorsAdapter(this, mAccent));
     }
@@ -434,12 +434,12 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     private void updateResetStatus(boolean onPlaybackCompletion) {
-        int color = onPlaybackCompletion ? Color.BLACK : mPlayerAdapter.isReset() ? Color.WHITE : Color.BLACK;
+        final int color = onPlaybackCompletion ? Color.BLACK : mPlayerAdapter.isReset() ? Color.WHITE : Color.BLACK;
         mResetButton.getDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
     }
 
     private void updatePlayingStatus() {
-        int drawable = mPlayerAdapter.getState() != PlaybackInfoListener.State.PAUSED ? R.drawable.ic_pause : R.drawable.ic_play;
+        final int drawable = mPlayerAdapter.getState() != PlaybackInfoListener.State.PAUSED ? R.drawable.ic_pause : R.drawable.ic_play;
         mPlayPauseButton.setImageResource(drawable);
     }
 
@@ -462,7 +462,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSeekBarAudio.setMax(duration);
         mDuration.setText(Song.formatDuration(duration));
 
-        Spanned spanned = Utils.buildSpanned(getString(R.string.playing_song, mSelectedArtist, selectedSong.title));
+        final Spanned spanned = Utils.buildSpanned(getString(R.string.playing_song, mSelectedArtist, selectedSong.title));
 
         mPlayingSong.setText(spanned);
         mPlayingAlbum.setText(selectedSong.albumName);
@@ -508,7 +508,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 MusicService.class), mConnection, Context.BIND_AUTO_CREATE);
         mIsBound = true;
 
-        Intent startNotStickyIntent = new Intent(this, MusicService.class);
+        final Intent startNotStickyIntent = new Intent(this, MusicService.class);
         startService(startNotStickyIntent);
     }
 
@@ -549,15 +549,14 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             //only notify recycler view of item changed if an adapter already exists
             mAlbumsAdapter.swapArtist(albums);
         } else {
-            LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+            final LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
             mAlbumsRecyclerView.setLayoutManager(horizontalLayoutManager);
             mAlbumsAdapter = new AlbumsAdapter(this, albums, mPlayerAdapter, ContextCompat.getColor(this, mAccent));
             mAlbumsRecyclerView.setAdapter(mAlbumsAdapter);
         }
 
         mAllSelectedArtistSongs = SongProvider.getAllArtistSongs(albums);
-        int albumCount = albums.size();
-        mArtistAlbumCount.setText(getString(R.string.albums, mSelectedArtist, albumCount));
+        mArtistAlbumCount.setText(getString(R.string.albums, mSelectedArtist, albums.size()));
 
         if (sExpandPanel) {
             revealView(mArtistDetails, mArtistsRecyclerView, false, true);
@@ -579,7 +578,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     @Override
-    public void onSongSelected(Song song, List<Song> songs) {
+    public void onSongSelected(@NonNull final Song song, @NonNull final List<Song> songs) {
 
         if (mSettingsView.getVisibility() == View.VISIBLE) {
             revealView(mSettingsView, mControlsContainer, true, false);
@@ -592,18 +591,16 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     @Override
-    public void onArtistSelected(String artist) {
+    public void onArtistSelected(@NonNull final String artist) {
 
         if (!mSelectedArtist.equals(artist)) {
 
             //make the panel expandable
             sExpandPanel = true;
-
             mPlayerAdapter.setSelectedAlbum(null);
 
             //load artist albums only if not already loaded
             mSelectedArtist = artist;
-
             setArtistDetails(ArtistProvider.getArtist(mArtists, mSelectedArtist).albums);
 
         } else {
@@ -614,13 +611,13 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     @Override
-    public void onAlbumSelected(Album album) {
+    public void onAlbumSelected(@NonNull final Album album) {
         mSelectedAlbum.setText(album.getTitle());
         mPlayerAdapter.setSelectedAlbum(album);
         if (mSongsAdapter != null) {
             mSongsAdapter.swapSongs(album);
         } else {
-            LinearLayoutManager songsLayoutManager = new LinearLayoutManager(this);
+            final LinearLayoutManager songsLayoutManager = new LinearLayoutManager(this);
             mSongsRecyclerView.setLayoutManager(songsLayoutManager);
             mSongsAdapter = new SongsAdapter(this, album);
             mSongsRecyclerView.setAdapter(mSongsAdapter);
@@ -639,7 +636,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         final float from = expand ? 0.0f : 180.0f;
         final float to = expand ? 180.0f : 0.0f;
 
-        AnimationSet animSet = new AnimationSet(true);
+        final AnimationSet animSet = new AnimationSet(true);
         animSet.setInterpolator(new DecelerateInterpolator());
         animSet.setFillAfter(true);
         animSet.setFillEnabled(true);
@@ -680,7 +677,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         final int fromY = isSettings ? viewToRevealHeight / 2 : viewToHide.getTop() / 2;
 
         if (show) {
-            Animator anim = ViewAnimationUtils.createCircularReveal(viewToReveal, viewToRevealHalfWidth, fromY, 0, radius);
+            final Animator anim = ViewAnimationUtils.createCircularReveal(viewToReveal, viewToRevealHalfWidth, fromY, 0, radius);
             anim.setDuration(ANIMATION_DURATION);
             anim.addListener(new Animator.AnimatorListener() {
                 @Override
@@ -712,7 +709,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         } else {
 
-            Animator anim = ViewAnimationUtils.createCircularReveal(viewToReveal, viewToRevealHalfWidth, fromY, radius, 0);
+            final Animator anim = ViewAnimationUtils.createCircularReveal(viewToReveal, viewToRevealHalfWidth, fromY, radius, 0);
             anim.setDuration(ANIMATION_DURATION);
             anim.addListener(new Animator.AnimatorListener() {
                 @Override

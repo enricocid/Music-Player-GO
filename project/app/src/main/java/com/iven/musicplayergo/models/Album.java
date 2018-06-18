@@ -17,19 +17,19 @@ public class Album {
         return getFirstSong().albumName;
     }
 
-    public int getArtistId() {
+    public final int getArtistId() {
         return getFirstSong().artistId;
     }
 
-    public String getArtistName() {
+    public final String getArtistName() {
         return getFirstSong().artistName;
     }
 
-    public int getYear() {
+    public final int getYear() {
         return getFirstSong().year;
     }
 
-    public int getSongCount() {
+    public final int getSongCount() {
         return songs.size();
     }
 

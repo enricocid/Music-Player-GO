@@ -10,6 +10,7 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.PowerManager;
+import android.support.annotation.NonNull;
 
 import com.iven.musicplayergo.MainActivity;
 import com.iven.musicplayergo.models.Album;
@@ -90,7 +91,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
                 }
             };
 
-    MediaPlayerHolder(MusicService musicService) {
+    MediaPlayerHolder(@NonNull final MusicService musicService) {
         mMusicService = musicService;
         mContext = mMusicService.getApplicationContext();
         mAudioManager = (AudioManager) mContext.getSystemService(AUDIO_SERVICE);
@@ -98,7 +99,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
 
     private void registerActionsReceiver() {
         mNotificationActionsReceiver = new NotificationReceiver();
-        IntentFilter intentFilter = new IntentFilter();
+        final IntentFilter intentFilter = new IntentFilter();
 
         intentFilter.addAction(MusicNotificationManager.PREV_ACTION);
         intentFilter.addAction(MusicNotificationManager.PLAY_PAUSE_ACTION);
@@ -121,7 +122,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     }
 
     @Override
-    public void registerNotificationActionsReceiver(boolean isReceiver) {
+    public void registerNotificationActionsReceiver(final boolean isReceiver) {
 
         if (isReceiver) {
             registerActionsReceiver();
@@ -131,12 +132,12 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     }
 
     @Override
-    public Song getCurrentSong() {
+    public final Song getCurrentSong() {
         return mSelectedSong;
     }
 
     @Override
-    public Album getSelectedAlbum() {
+    public final Album getSelectedAlbum() {
         return mSelectedAlbum;
     }
 
@@ -146,13 +147,13 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     }
 
     @Override
-    public void setCurrentSong(Song song, List<Song> songs) {
+    public void setCurrentSong(@NonNull final Song song, @NonNull final List<Song> songs) {
         mSelectedSong = song;
         mSongs = songs;
     }
 
     @Override
-    public void onCompletion(MediaPlayer mediaPlayer) {
+    public void onCompletion(@NonNull final MediaPlayer mediaPlayer) {
         if (mPlaybackInfoListener != null) {
             mPlaybackInfoListener.onStateChanged(PlaybackInfoListener.State.COMPLETED);
             mPlaybackInfoListener.onPlaybackCompleted();
@@ -180,7 +181,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
 
     private void tryToGetAudioFocus() {
 
-        int result = mAudioManager.requestAudioFocus(
+        final int result = mAudioManager.requestAudioFocus(
                 mOnAudioFocusChangeListener,
                 AudioManager.STREAM_MUSIC,
                 AudioManager.AUDIOFOCUS_GAIN);
@@ -198,11 +199,11 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
         }
     }
 
-    public void setPlaybackInfoListener(PlaybackInfoListener listener) {
+    public void setPlaybackInfoListener(@NonNull final PlaybackInfoListener listener) {
         mPlaybackInfoListener = listener;
     }
 
-    private void setStatus(@PlaybackInfoListener.State int state) {
+    private void setStatus(final @PlaybackInfoListener.State int state) {
 
         mState = state;
         if (mPlaybackInfoListener != null) {
@@ -276,7 +277,6 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     @Override
     public void instantReset() {
         if (isMediaPlayer()) {
-
             if (mMediaPlayer.getCurrentPosition() < 5000) {
                 skip(false);
             } else {
@@ -321,7 +321,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
 
 
     @Override
-    public MediaPlayer getMediaPlayer() {
+    public final MediaPlayer getMediaPlayer() {
         return mMediaPlayer;
     }
 
@@ -333,7 +333,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     }
 
     @Override
-    public void openEqualizer(Activity activity) {
+    public void openEqualizer(@NonNull final Activity activity) {
         EqualizerUtils.openEqualizer(activity, mMediaPlayer);
     }
 
@@ -364,7 +364,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     }
 
     @Override
-    public @PlaybackInfoListener.State
+    public final @PlaybackInfoListener.State
     int getState() {
         return mState;
     }
@@ -376,7 +376,6 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
 
     @Override
     public void reset() {
-
         sReplaySong = !sReplaySong;
     }
 
@@ -386,20 +385,18 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     }
 
     @Override
-    public void skip(boolean isNext) {
+    public void skip(final boolean isNext) {
         getSkipSong(isNext);
     }
 
-    private void getSkipSong(boolean isNext) {
+    private void getSkipSong(final boolean isNext) {
         int currentIndex = mSongs.indexOf(mSelectedSong);
 
         int index;
 
         try {
-
             index = isNext ? currentIndex + 1 : currentIndex - 1;
             mSelectedSong = mSongs.get(index);
-
         } catch (IndexOutOfBoundsException e) {
             mSelectedSong = currentIndex != 0 ? mSongs.get(0) : mSongs.get(mSongs.size() - 1);
             e.printStackTrace();
@@ -408,7 +405,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     }
 
     @Override
-    public void seekTo(int position) {
+    public void seekTo(final int position) {
         if (isMediaPlayer()) {
             mMediaPlayer.seekTo(position);
         }

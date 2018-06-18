@@ -44,17 +44,17 @@ public class MusicNotificationManager {
         mAccent = ContextCompat.getColor(mMusicService, color);
     }
 
-    public NotificationManager getNotificationManager() {
+    public final NotificationManager getNotificationManager() {
         return mNotificationManager;
     }
 
-    public NotificationCompat.Builder getNotificationBuilder() {
+    public final NotificationCompat.Builder getNotificationBuilder() {
         return mNotificationBuilder;
     }
 
     private PendingIntent playerAction(String action) {
 
-        Intent pauseIntent = new Intent();
+        final Intent pauseIntent = new Intent();
         pauseIntent.setAction(action);
 
         return PendingIntent.getBroadcast(mMusicService, REQUEST_CODE, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -62,7 +62,7 @@ public class MusicNotificationManager {
 
     public Notification createNotification() {
 
-        Song song = mMusicService.getMediaPlayerHolder().getCurrentSong();
+        final Song song = mMusicService.getMediaPlayerHolder().getCurrentSong();
 
         mNotificationBuilder = new NotificationCompat.Builder(mMusicService, CHANNEL_ID);
 
@@ -70,16 +70,16 @@ public class MusicNotificationManager {
             createNotificationChannel();
         }
 
-        Intent openPlayerIntent = new Intent(mMusicService, MainActivity.class);
+        final Intent openPlayerIntent = new Intent(mMusicService, MainActivity.class);
         openPlayerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent contentIntent = PendingIntent.getActivity(mMusicService, REQUEST_CODE,
+        final PendingIntent contentIntent = PendingIntent.getActivity(mMusicService, REQUEST_CODE,
                 openPlayerIntent, 0);
 
-        String artist = song.artistName;
-        String songTitle = song.title;
+        final String artist = song.artistName;
+        final String songTitle = song.title;
 
-        Spanned spanned = Utils.buildSpanned(mMusicService.getString(R.string.playing_song, artist, songTitle));
+        final Spanned spanned = Utils.buildSpanned(mMusicService.getString(R.string.playing_song, artist, songTitle));
 
         mNotificationBuilder
                 .setShowWhen(false)
@@ -99,7 +99,7 @@ public class MusicNotificationManager {
     }
 
     @NonNull
-    private NotificationCompat.Action notificationAction(String action) {
+    private NotificationCompat.Action notificationAction(final String action) {
 
         int icon;
 
@@ -142,12 +142,11 @@ public class MusicNotificationManager {
     //https://gist.github.com/Gnzlt/6ddc846ef68c587d559f1e1fcd0900d3
     private Bitmap getLargeIcon() {
 
-        VectorDrawable vectorDrawable = (VectorDrawable) mMusicService.getDrawable(R.drawable.music_notification);
+        final VectorDrawable vectorDrawable = (VectorDrawable) mMusicService.getDrawable(R.drawable.music_notification);
 
-        int largeIconSize = mMusicService.getResources().getDimensionPixelSize(R.dimen.notification_large_dim);
-        Bitmap bitmap = Bitmap.createBitmap(largeIconSize,
-                largeIconSize, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
+        final int largeIconSize = mMusicService.getResources().getDimensionPixelSize(R.dimen.notification_large_dim);
+        final Bitmap bitmap = Bitmap.createBitmap(largeIconSize, largeIconSize, Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(bitmap);
 
         if (vectorDrawable != null) {
             vectorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());

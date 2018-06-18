@@ -15,7 +15,7 @@ public class MusicService extends Service {
 
     private boolean sRestoredFromPause = false;
 
-    public boolean isRestoredFromPause() {
+    public final boolean isRestoredFromPause() {
         return sRestoredFromPause;
     }
 
@@ -23,7 +23,7 @@ public class MusicService extends Service {
         sRestoredFromPause = restore;
     }
 
-    public MediaPlayerHolder getMediaPlayerHolder() {
+    public final MediaPlayerHolder getMediaPlayerHolder() {
         return mMediaPlayerHolder;
     }
 

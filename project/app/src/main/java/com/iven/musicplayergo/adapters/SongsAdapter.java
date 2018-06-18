@@ -23,14 +23,14 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
     private List<Song> mSongs;
     private Album mAlbum;
 
-    public SongsAdapter(@NonNull Activity activity, Album album) {
+    public SongsAdapter(@NonNull final Activity activity, @NonNull final Album album) {
         mActivity = activity;
         mAlbum = album;
         mSongs = mAlbum.songs;
         mSongSelectedListener = (SongSelectedListener) activity;
     }
 
-    public void swapSongs(Album album) {
+    public void swapSongs(@NonNull final Album album) {
         mAlbum = album;
         mSongs = mAlbum.songs;
         notifyDataSetChanged();
@@ -40,7 +40,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
     @NonNull
     public SimpleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View itemView = LayoutInflater.from(parent.getContext())
+        final View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.song_item, parent, false);
 
         return new SimpleViewHolder(itemView);
@@ -49,30 +49,29 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
     @Override
     public void onBindViewHolder(@NonNull SimpleViewHolder holder, int position) {
 
-        Song song = mSongs.get(holder.getAdapterPosition());
-        String songTitle = song.title;
+        final Song song = mSongs.get(holder.getAdapterPosition());
+        final String songTitle = song.title;
 
-        int songTrack = Song.formatTrack(song.trackNumber);
-        Spanned spanned = Utils.buildSpanned(mActivity.getString(R.string.track_title, songTrack, songTitle));
+        final int songTrack = Song.formatTrack(song.trackNumber);
+        final Spanned spanned = Utils.buildSpanned(mActivity.getString(R.string.track_title, songTrack, songTitle));
         holder.trackTitle.setText(spanned);
         holder.duration.setText(Song.formatDuration(song.duration));
     }
 
     @Override
     public int getItemCount() {
-
         return mSongs.size();
     }
 
     public interface SongSelectedListener {
-        void onSongSelected(Song song, List<Song> songs);
+        void onSongSelected(@NonNull final Song song, @NonNull final List<Song> songs);
     }
 
     class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         final TextView trackTitle, duration;
 
-        SimpleViewHolder(View itemView) {
+        SimpleViewHolder(@NonNull final View itemView) {
             super(itemView);
 
             trackTitle = itemView.findViewById(R.id.track_title);
@@ -82,7 +81,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
 
         @Override
         public void onClick(View v) {
-            Song song = mSongs.get(getAdapterPosition());
+            final Song song = mSongs.get(getAdapterPosition());
             mSongSelectedListener.onSongSelected(song, mSongs);
         }
     }

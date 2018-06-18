@@ -16,7 +16,7 @@ public class Song {
     public final String artistName;
     final int year;
 
-    public Song(String title, int trackNumber, int year, int duration, String path, String albumName, int artistId, String artistName) {
+    public Song(final String title, final int trackNumber, final int year, final int duration, final String path, final String albumName, final int artistId, final String artistName) {
         this.title = title;
         this.trackNumber = trackNumber;
         this.year = year;
@@ -27,7 +27,7 @@ public class Song {
         this.artistName = artistName;
     }
 
-    public static String formatDuration(int duration) {
+    public static String formatDuration(final int duration) {
         return String.format(Locale.getDefault(), "%02d:%02d",
                 TimeUnit.MILLISECONDS.toMinutes(duration),
                 TimeUnit.MILLISECONDS.toSeconds(duration) -

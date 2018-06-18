@@ -15,7 +15,7 @@ class AlbumProvider {
 
     @NonNull
     static List<Album> retrieveAlbums(@Nullable final List<Song> songs) {
-        List<Album> albums = new ArrayList<>();
+        final List<Album> albums = new ArrayList<>();
         if (songs != null) {
             for (Song song : songs) {
                 getAlbum(albums, song.albumName).songs.add(song);
@@ -27,7 +27,7 @@ class AlbumProvider {
         return albums;
     }
 
-    private static void sortAlbums(List<Album> albums) {
+    private static void sortAlbums(@NonNull final List<Album> albums) {
         Collections.sort(albums, new Comparator<Album>() {
             public int compare(Album obj1, Album obj2) {
                 return Integer.compare(obj1.getYear(), obj2.getYear());
@@ -35,13 +35,13 @@ class AlbumProvider {
         });
     }
 
-    private static Album getAlbum(List<Album> albums, String albumName) {
+    private static Album getAlbum(@NonNull final List<Album> albums, final String albumName) {
         for (Album album : albums) {
             if (!album.songs.isEmpty() && album.songs.get(0).albumName.equals(albumName)) {
                 return album;
             }
         }
-        Album album = new Album();
+        final Album album = new Album();
         albums.add(album);
         return album;
     }

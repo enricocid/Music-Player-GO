@@ -13,11 +13,11 @@ public class Artist {
         this.albums = new ArrayList<>();
     }
 
-    public int getId() {
+    public final int getId() {
         return getFirstAlbum().getArtistId();
     }
 
-    public String getName() {
+    public final String getName() {
         return getFirstAlbum().getArtistName();
     }
 
@@ -26,7 +26,7 @@ public class Artist {
         return albums.isEmpty() ? new Album() : albums.get(0);
     }
 
-    public int getSongCount() {
+    public final int getSongCount() {
         int songCount = 0;
         for (Album album : albums) {
             songCount += album.getSongCount();
