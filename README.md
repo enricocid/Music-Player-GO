@@ -2,7 +2,7 @@
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
 
 ###### Very slim music player (size <1000KB!) with low memory footprint!
-###### Current version: (69) 2.5.1.5
+###### Current version: (70) 2.5.2
 ###### Material Design Icon by Julian Javier Gomez, Axinen Design (https://plus.google.com/u/0/+AxinenDesign)
 
 
@@ -11,7 +11,7 @@
 
 # Screenshots
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v64.png) 
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v70.png) 
 
 
 # Download
@@ -29,14 +29,19 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 ### Unifield UI, the way I'd like it to be:
 
 - Colorful, simple and 'unified' UI : no need to navigate between activities;
-- Bottom panel containing the player controls;
+- Bottom panel containing the player controls:
+  - Equalizer (if present on the device)
+  - Repeat 1x;
+  - Skip to previous song;
+  - Skip to next song;
+  - Dynamic shuffle button: plays the artist/device songs when   
+    its discography is revealed/closed;
+  - Settings;
 - Music organized by artist;
-- Top panel containing the now played song. By clicking on it You can 'reveal' the artist discography;
+- Top panel containing the now played song. By clicking on it You can 'reveal'/close the artist's discography;
 - The now playing text is scrollable on long clicking when it is too long;
-- Reveal layout containing the selected artist's discography and a toggle to collapse it;
 - Fast scrolling;
 - Dark status bar icons for light accents
-- Ability to play all the songs from the device or from an artist;
 
 ### Settings at hand: 
 

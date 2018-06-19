@@ -465,7 +465,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSelectedArtist = selectedSong.artistName;
         final int duration = selectedSong.duration;
         mSeekBarAudio.setMax(duration);
-        updateTextView(mDuration, Song.formatDuration(duration));
+        Utils.updateTextView(mDuration, Song.formatDuration(duration));
 
         final Spanned spanned = Utils.buildSpanned(getString(R.string.playing_song, mSelectedArtist, selectedSong.title));
 
@@ -476,7 +476,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             }
         });
 
-        updateTextView(mPlayingAlbum, selectedSong.albumName);
+        Utils.updateTextView(mPlayingAlbum, selectedSong.albumName);
 
         if (restore) {
             mSeekBarAudio.setProgress(mPlayerAdapter.getPlayerPosition());
@@ -495,15 +495,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 }
             }, 250);
         }
-    }
-
-    private void updateTextView(final TextView textView, final String text) {
-        textView.post(new Runnable() {
-            @Override
-            public void run() {
-                textView.setText(text);
-            }
-        });
     }
 
     private void restorePlayerStatus() {
@@ -577,7 +568,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         }
 
         mSelectedArtistSongs = SongProvider.getAllArtistSongs(albums);
-        updateTextView(mArtistAlbumCount, getString(R.string.albums, mSelectedArtist, albums.size()));
+        Utils.updateTextView(mArtistAlbumCount, getString(R.string.albums, mSelectedArtist, albums.size()));
 
         if (sExpandPanel) {
             revealView(mArtistDetails, mArtistsRecyclerView, false, true);
@@ -633,7 +624,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     @Override
     public void onAlbumSelected(@NonNull final Album album) {
-        updateTextView(mSelectedAlbum, album.getTitle());
+        Utils.updateTextView(mSelectedAlbum, album.getTitle());
         mPlayerAdapter.setSelectedAlbum(album);
         if (mSongsAdapter != null) {
             mSongsRecyclerView.scrollToPosition(0);

@@ -11,6 +11,7 @@ import android.support.v4.graphics.ColorUtils;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
+import android.widget.TextView;
 
 public class Utils {
 
@@ -168,5 +169,14 @@ public class Utils {
             accent = R.color.blue_A400;
         }
         return accent;
+    }
+
+    static void updateTextView(@NonNull final TextView textView, final String text) {
+        textView.post(new Runnable() {
+            @Override
+            public void run() {
+                textView.setText(text);
+            }
+        });
     }
 }
