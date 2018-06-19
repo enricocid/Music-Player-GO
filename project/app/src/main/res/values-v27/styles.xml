@@ -2,10 +2,10 @@
 
     <!-- LIGHT THEME -->
     <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="icon_color">@android:color/black</item>
-        <item name="android:windowBackground">@android:color/white</item>
+        <item name="icon_color">@color/black</item>
+        <item name="android:windowBackground">@color/white</item>
         <item name="secondary_bg_color">@color/light</item>
-        <item name="android:typeface">sans</item>
+        <item name="theme_icon">@drawable/ic_invert_theme</item>
         <item name="android:navigationBarColor">@color/light</item>
         <item name="android:statusBarColor">?attr/accent_color</item>
         <item name="android:alertDialogTheme">@style/AlertDialogStyleLight</item>
@@ -15,10 +15,10 @@
 
     <!-- INVERTED THEME -->
     <style name="AppThemeInverted" parent="android:Theme.Material.NoActionBar">
-        <item name="icon_color">@android:color/white</item>
+        <item name="icon_color">@color/white</item>
         <item name="secondary_bg_color">@color/inverted</item>
-        <item name="android:typeface">sans</item>
-        <item name="android:windowBackground">@android:color/black</item>
+        <item name="theme_icon">@drawable/ic_invert_theme_off</item>
+        <item name="android:windowBackground">@color/black</item>
         <item name="android:navigationBarColor">@color/inverted</item>
         <item name="android:statusBarColor">?attr/accent_color</item>
         <item name="android:alertDialogTheme">@style/AlertDialogStyleInverted</item>
