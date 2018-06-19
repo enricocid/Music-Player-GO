@@ -656,7 +656,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             public void onAnimationEnd(Animation animation) {
                 if (expand) {
                     mExpandImage.animate().alpha(0.0f).setDuration(ALPHA_DURATION).start();
-                    mExpandImage.setVisibility(View.INVISIBLE);
+                    mExpandImage.setVisibility(View.GONE);
                 }
             }
 
