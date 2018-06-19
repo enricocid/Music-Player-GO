@@ -64,9 +64,9 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/app_name"
                 android:foreground="@drawable/accent_ripple"
-                android:onClick="playAllDeviceSongs"
+                android:onClick="shuffleSongs"
                 android:padding="12dp"
-                android:src="@drawable/ic_playlist_play" />
+                android:src="@drawable/ic_shuffle" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </merge>

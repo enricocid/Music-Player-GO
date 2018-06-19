@@ -59,6 +59,7 @@ import com.iven.musicplayergo.playback.PlaybackInfoListener;
 import com.iven.musicplayergo.playback.PlayerAdapter;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<List<Artist>>, SongsAdapter.SongSelectedListener, ColorsAdapter.AccentChangedListener, AlbumsAdapter.AlbumSelectedListener, ArtistsAdapter.ArtistSelectedListener {
@@ -80,12 +81,12 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private boolean mUserIsSeeking = false;
     private List<Artist> mArtists;
     private String mSelectedArtist;
-    private List<Song> mAllSelectedArtistSongs;
     private boolean sExpandPanel = false;
     private boolean sPlayerInfoLongPressed = false;
     private boolean sExpanded = false;
     private MusicService mMusicService;
     private PlaybackListener mPlaybackListener;
+    private List<Song> mSelectedArtistSongs;
     private MusicNotificationManager mMusicNotificationManager;
     private final ServiceConnection mConnection = new ServiceConnection() {
         @Override
@@ -304,16 +305,10 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         revealView(mSettingsView, mControlsContainer, true, false);
     }
 
-    public void playAllDeviceSongs(View v) {
-        if (sExpanded) {
-            onSongSelected(mAllSelectedArtistSongs.get(0), mAllSelectedArtistSongs);
-        } else {
-            onSongSelected(SongProvider.getAllDeviceSongs().get(0), SongProvider.getAllDeviceSongs());
-        }
-    }
-
-    public void playAllSelectedArtistSongs(View v) {
-        onSongSelected(mAllSelectedArtistSongs.get(0), mAllSelectedArtistSongs);
+    public void shuffleSongs(View v) {
+        final List<Song> songs = sExpanded ? mSelectedArtistSongs : SongProvider.getAllDeviceSongs();
+        Collections.shuffle(songs);
+        onSongSelected(songs.get(0), songs);
     }
 
     private void setArtistsRecyclerView(@NonNull final List<Artist> data) {
@@ -555,7 +550,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             mAlbumsRecyclerView.setAdapter(mAlbumsAdapter);
         }
 
-        mAllSelectedArtistSongs = SongProvider.getAllArtistSongs(albums);
+        mSelectedArtistSongs = SongProvider.getAllArtistSongs(albums);
         mArtistAlbumCount.setText(getString(R.string.albums, mSelectedArtist, albums.size()));
 
         if (sExpandPanel) {
