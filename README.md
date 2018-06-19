@@ -33,6 +33,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
   - Equalizer (if present on the device);
   - Repeat 1x;
   - Skip to previous song;
+  - Play/pause;
   - Skip to next song;
   - Dynamic shuffle button: randomly plays the artist or the
     device songs;
