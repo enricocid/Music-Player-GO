@@ -71,6 +71,8 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
 - **Julian Javier Gomez - Axinen Design** (https://plus.google.com/u/0/+AxinenDesign) for the wonderful **material design icon**
 
+- https://material.io/tools/icons/?style=round for icons
+
 - **IzzySoft** (https://github.com/IzzySoft) and **Poussinou** (https://github.com/Poussinou) for setting up the F-Droid repository
 
 - **Dima Merkurev** (dimorinny - https://github.com/dimorinny) for part of the floating controls code
@@ -83,5 +85,3 @@ https://github.com/dimorinny/floating-text-button
 - **Stanislav** (STWheel - https://github.com/STWheel) for Ukrainian and Russian translations and other strings/ui refinements
 
 - **KowalskiOmniROM** (https://github.com/KowalskiOmniROM) for French translations 
-
-- https://materialdesignicons.com/ for icons
