@@ -430,12 +430,22 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private void updateResetStatus(boolean onPlaybackCompletion) {
         final int color = onPlaybackCompletion ? Color.BLACK : mPlayerAdapter.isReset() ? Color.WHITE : Color.BLACK;
-        mResetButton.getDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+        mResetButton.post(new Runnable() {
+            @Override
+            public void run() {
+                mResetButton.getDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            }
+        });
     }
 
     private void updatePlayingStatus() {
         final int drawable = mPlayerAdapter.getState() != PlaybackInfoListener.State.PAUSED ? R.drawable.ic_pause : R.drawable.ic_play;
-        mPlayPauseButton.setImageResource(drawable);
+        mPlayPauseButton.post(new Runnable() {
+            @Override
+            public void run() {
+                mPlayPauseButton.setImageResource(drawable);
+            }
+        });
     }
 
     private void updatePlayingInfo(boolean restore, boolean startPlay) {
@@ -455,12 +465,18 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSelectedArtist = selectedSong.artistName;
         final int duration = selectedSong.duration;
         mSeekBarAudio.setMax(duration);
-        mDuration.setText(Song.formatDuration(duration));
+        updateTextView(mDuration, Song.formatDuration(duration));
 
         final Spanned spanned = Utils.buildSpanned(getString(R.string.playing_song, mSelectedArtist, selectedSong.title));
 
-        mPlayingSong.setText(spanned);
-        mPlayingAlbum.setText(selectedSong.albumName);
+        mPlayingSong.post(new Runnable() {
+            @Override
+            public void run() {
+                mPlayingSong.setText(spanned);
+            }
+        });
+
+        updateTextView(mPlayingAlbum, selectedSong.albumName);
 
         if (restore) {
             mSeekBarAudio.setProgress(mPlayerAdapter.getPlayerPosition());
@@ -479,6 +495,15 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 }
             }, 250);
         }
+    }
+
+    private void updateTextView(final TextView textView, final String text) {
+        textView.post(new Runnable() {
+            @Override
+            public void run() {
+                textView.setText(text);
+            }
+        });
     }
 
     private void restorePlayerStatus() {
@@ -551,7 +576,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         }
 
         mSelectedArtistSongs = SongProvider.getAllArtistSongs(albums);
-        mArtistAlbumCount.setText(getString(R.string.albums, mSelectedArtist, albums.size()));
+        updateTextView(mArtistAlbumCount, getString(R.string.albums, mSelectedArtist, albums.size()));
 
         if (sExpandPanel) {
             revealView(mArtistDetails, mArtistsRecyclerView, false, true);
@@ -607,7 +632,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     @Override
     public void onAlbumSelected(@NonNull final Album album) {
-        mSelectedAlbum.setText(album.getTitle());
+        updateTextView(mSelectedAlbum, album.getTitle());
         mPlayerAdapter.setSelectedAlbum(album);
         if (mSongsAdapter != null) {
             mSongsAdapter.swapSongs(album);
