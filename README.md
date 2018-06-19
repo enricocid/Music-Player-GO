@@ -30,7 +30,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
 - Colorful, simple and 'unified' UI : no need to navigate between activities;
 - Bottom panel containing the player controls:
-  - Equalizer (if present on the device)
+  - Equalizer (if present on the device);
   - Repeat 1x;
   - Skip to previous song;
   - Skip to next song;
@@ -41,7 +41,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 - Top panel containing the now played song. By clicking on it You can 'reveal'/close the artist's discography;
 - The now playing text is scrollable on long clicking when it is too long;
 - Fast scrolling;
-- Dark status bar icons for light accents
+- Dark status bar icons for light accents;
 
 ### Settings at hand: 
 
