@@ -34,8 +34,8 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
   - Repeat 1x;
   - Skip to previous song;
   - Skip to next song;
-  - Dynamic shuffle button: plays the artist/device songs when   
-    its discography is revealed/closed;
+  - Dynamic shuffle button: randomly plays the artist or the
+    device songs;
   - Settings;
 - Music organized by artist;
 - Top panel containing the now played song. By clicking on it You can 'reveal'/close the artist's discography;
