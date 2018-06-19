@@ -50,6 +50,13 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 - Link to git page;
 - 16 UI accents!;
 
+
+### Other features: 
+
+- Pause/resume when the headsets are (dis)connected;
+- Simple audio focus (notifications, calls, or other media apps) management;
+
+
 ### Minimal code:
 
 *Based on nothing: it was written from scratch besides few snippets here and there*
@@ -66,11 +73,6 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
   - CardView v7;
 
   - RecyclerView-FastScroll by Tim Malseed (@timusus) (https://github.com/timusus/RecyclerView-FastScroll)
-
-### Other features: 
-
-- Pause/resume when the headsets are (dis)connected;
-- Simple audio focus (notifications, calls, or other media apps) management;
 
 
 # Credits:
