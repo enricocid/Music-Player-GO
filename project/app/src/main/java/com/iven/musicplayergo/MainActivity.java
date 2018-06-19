@@ -566,6 +566,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private void setArtistDetails(List<Album> albums) {
         if (mAlbumsAdapter != null) {
+            mAlbumsRecyclerView.scrollToPosition(0);
             //only notify recycler view of item changed if an adapter already exists
             mAlbumsAdapter.swapArtist(albums);
         } else {
@@ -635,9 +636,11 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         updateTextView(mSelectedAlbum, album.getTitle());
         mPlayerAdapter.setSelectedAlbum(album);
         if (mSongsAdapter != null) {
+            mSongsRecyclerView.scrollToPosition(0);
             mSongsAdapter.swapSongs(album);
         } else {
             final LinearLayoutManager songsLayoutManager = new LinearLayoutManager(this);
+            songsLayoutManager.scrollToPosition(0);
             mSongsRecyclerView.setLayoutManager(songsLayoutManager);
             mSongsAdapter = new SongsAdapter(this, album);
             mSongsRecyclerView.setAdapter(mSongsAdapter);
