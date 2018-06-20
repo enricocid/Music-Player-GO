@@ -14,6 +14,7 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
+        <!-- ARTISTS LIST -->
         <com.iven.musicplayergo.roundedfastscroller.RoundedFastScrollRecyclerView
             android:id="@+id/artists_rv"
             android:layout_width="match_parent"
@@ -32,7 +33,7 @@
             <!-- NOW PLAYING INFO -->
             <include layout="@layout/player_now_playing" />
 
-            <!-- ARTIST_DETAILS -->
+            <!-- ARTIST'S DISCOGRAPHY -->
             <include layout="@layout/artist_discography" />
 
         </LinearLayout>
