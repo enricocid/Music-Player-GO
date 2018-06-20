@@ -85,9 +85,9 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 https://github.com/timusus/RecyclerView-FastScroll
 
 - **AOSP** (Android Open Source Project - https://source.android.com) for part of the Launcher 3 fast scroller code:
-https://android.googlesource.com/platform/packages/apps/Launcher3/
+https://android.googlesource.com/platform/packages/apps/Launcher3
 
-- **Dima Merkurev** (dimorinny - https://github.com/dimorinny)for part of the floating controls code:
+- **Dima Merkurev** (dimorinny - https://github.com/dimorinny) for part of the floating controls code:
 https://github.com/dimorinny/floating-text-button
 
 - **Malte Kiefer** (beli3ver - https://github.com/beli3ver) for German translations
