@@ -57,7 +57,7 @@ import com.iven.musicplayergo.playback.MusicNotificationManager;
 import com.iven.musicplayergo.playback.MusicService;
 import com.iven.musicplayergo.playback.PlaybackInfoListener;
 import com.iven.musicplayergo.playback.PlayerAdapter;
-import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
+import com.iven.musicplayergo.roundedfastscroller.RoundedFastScrollRecyclerView;
 
 import java.util.Collections;
 import java.util.List;
@@ -68,7 +68,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private LinearLayoutManager mArtistsLayoutManager;
     private int mAccent;
     private boolean sThemeInverted;
-    private FastScrollRecyclerView mArtistsRecyclerView;
+    private RoundedFastScrollRecyclerView mArtistsRecyclerView;
     private RecyclerView mAlbumsRecyclerView, mSongsRecyclerView;
     private AlbumsAdapter mAlbumsAdapter;
     private SongsAdapter mSongsAdapter;
@@ -236,6 +236,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSelectedAlbum = findViewById(R.id.selected_disc);
 
         mArtistsRecyclerView = findViewById(R.id.artists_rv);
+
         mArtistsRecyclerView.setTrackColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(this, mAccent), sThemeInverted ? 15 : 30));
 
         mAlbumsRecyclerView = findViewById(R.id.albums_rv);

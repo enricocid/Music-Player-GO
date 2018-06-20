@@ -72,8 +72,6 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
   - CardView v7;
 
-  - RecyclerView-FastScroll by Tim Malseed (@timusus) (https://github.com/timusus/RecyclerView-FastScroll)
-
 
 # Credits:
 
@@ -83,7 +81,13 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
 - **IzzySoft** (https://github.com/IzzySoft) and **Poussinou** (https://github.com/Poussinou) for setting up the F-Droid repository
 
-- **Dima Merkurev** (dimorinny - https://github.com/dimorinny) for part of the floating controls code
+- **Tim Malseed** (@timusus - https://github.com/timusus) for part of the fast scroller code:
+https://github.com/timusus/RecyclerView-FastScroll
+
+- **AOSP** (Android Open Source Project - https://source.android.com) for part of the Launcher 3 fast scroller code:
+https://android.googlesource.com/platform/packages/apps/Launcher3/
+
+- **Dima Merkurev** (dimorinny - https://github.com/dimorinny)for part of the floating controls code:
 https://github.com/dimorinny/floating-text-button
 
 - **Malte Kiefer** (beli3ver - https://github.com/beli3ver) for German translations

@@ -33,7 +33,7 @@
             android:id="@+id/year"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:gravity="center"
             android:paddingBottom="2dp"
             android:singleLine="true"
             android:textAlignment="center"

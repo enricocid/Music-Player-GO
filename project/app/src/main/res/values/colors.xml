@@ -2,6 +2,9 @@
 <resources>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="rounded_thumb_default_color">#79000000</color>
+    <color name="rounded_track_default_color">#28000000</color>
+
     <color name="light">#FAFAFA</color>
     <color name="inverted">#060606</color>
     <color name="red_A400">#FF1744</color> <!-- LIGHT -->

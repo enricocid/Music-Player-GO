@@ -3,4 +3,11 @@
     <dimen name="notification_large_dim">256dp</dimen>
     <dimen name="album_height">104dp</dimen>
     <dimen name="album_width">120dp</dimen>
+
+    <!-- Rounded fast scroll -->
+    <dimen name="rounded_fast_scroll_popup_size">75dp</dimen>
+    <dimen name="rounded_fast_scroll_popup_text_size">32dp</dimen>
+    <dimen name="rounded_fast_scroll_track_max_width">8dp</dimen>
+    <dimen name="rounded_fast_scroll_thumb_height">52dp</dimen>
+    <dimen name="rounded_fast_scroll_thumb_touch_inset">-24dp</dimen>
 </resources>

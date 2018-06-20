@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:scroller="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sliding_panel"
     android:layout_width="match_parent"
@@ -14,16 +14,14 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-
-        <!-- ARTISTS LAYOUT -->
-        <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
+        <com.iven.musicplayergo.roundedfastscroller.RoundedFastScrollRecyclerView
             android:id="@+id/artists_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:fastScrollPopupBgColor="?attr/accent_color"
-            app:fastScrollPopupTextColor="?attr/popup_text_color"
-            app:fastScrollThumbColor="?attr/accent_color"
-            app:fastScrollThumbInactiveColor="?attr/accent_color"
+            scroller:roundedFastScrollPopupBgColor="?attr/accent_color"
+            scroller:roundedFastScrollPopupTextColor="?attr/popup_text_color"
+            scroller:roundedFastScrollThumbColor="?attr/accent_color"
+            scroller:roundedFastScrollThumbInactiveColor="?attr/accent_color"
             tools:context="com.iven.musicplayergo.MainActivity" />
 
         <LinearLayout
@@ -40,7 +38,6 @@
         </LinearLayout>
 
     </FrameLayout>
-
 
     <!-- CONTROLS PANEL -->
     <include layout="@layout/player_controls_panel" />

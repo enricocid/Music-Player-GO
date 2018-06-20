@@ -22,6 +22,5 @@ android {
 dependencies {
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.18'
     implementation 'com.android.support:cardview-v7:27.1.1'
 }
