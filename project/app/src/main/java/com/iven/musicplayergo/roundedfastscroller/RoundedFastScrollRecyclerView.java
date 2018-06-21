@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -108,7 +107,6 @@ public class RoundedFastScrollRecyclerView extends RecyclerView implements Recyc
 
     @Override
     public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
     }
 
     /**
@@ -149,13 +147,8 @@ public class RoundedFastScrollRecyclerView extends RecyclerView implements Recyc
         int availableScrollBarHeight;
         int scrolledPastHeight;
 
-        if (getAdapter() instanceof MeasurableAdapter) {
-            availableScrollHeight = getAvailableScrollHeight(calculateAdapterHeight());
-            scrolledPastHeight = calculateScrollDistanceToPosition(scrollPosState.rowIndex);
-        } else {
-            availableScrollHeight = getAvailableScrollHeight(rowCount * scrollPosState.rowHeight);
-            scrolledPastHeight = scrollPosState.rowIndex * scrollPosState.rowHeight;
-        }
+        availableScrollHeight = getAvailableScrollHeight(rowCount * scrollPosState.rowHeight);
+        scrolledPastHeight = scrollPosState.rowIndex * scrollPosState.rowHeight;
 
         availableScrollBarHeight = getAvailableScrollBarHeight();
 
@@ -223,24 +216,8 @@ public class RoundedFastScrollRecyclerView extends RecyclerView implements Recyc
         return sectionedAdapter.getSectionName(posInt);
     }
 
-    @SuppressWarnings("unchecked")
     private float findItemPosition(float touchFraction) {
-
-        if (getAdapter() instanceof MeasurableAdapter) {
-            MeasurableAdapter measurer = (MeasurableAdapter) getAdapter();
-            int viewTop = (int) (touchFraction * calculateAdapterHeight());
-
-            for (int i = 0; i < getAdapter().getItemCount(); i++) {
-                int top = calculateScrollDistanceToPosition(i);
-                int bottom = top + measurer.getViewTypeHeight(this, findViewHolderForAdapterPosition(i), getAdapter().getItemViewType(i));
-                if (viewTop >= top && viewTop <= bottom) {
-                    return i;
-                }
-            }
-            return touchFraction * getAdapter().getItemCount();
-        } else {
-            return getAdapter().getItemCount() * touchFraction;
-        }
+        return getAdapter().getItemCount() * touchFraction;
     }
 
     /**
@@ -299,50 +276,6 @@ public class RoundedFastScrollRecyclerView extends RecyclerView implements Recyc
                 + getLayoutManager().getBottomDecorationHeight(child);
     }
 
-    /**
-     * Calculates the total height of all views above a position in the recycler view. This method
-     * should only be called when the attached adapter implements {@link MeasurableAdapter}.
-     *
-     * @param adapterIndex The index in the adapter to find the total height above the
-     *                     corresponding view
-     * @return The total height of all views above {@code adapterIndex} in pixels
-     */
-    @SuppressWarnings("unchecked")
-    private int calculateScrollDistanceToPosition(int adapterIndex) {
-        if (!(getAdapter() instanceof MeasurableAdapter)) {
-            throw new IllegalStateException("calculateScrollDistanceToPosition() should only be called where the RecyclerView.Adapter is an instance of MeasurableAdapter");
-        }
-
-        if (mScrollOffsets.indexOfKey(adapterIndex) >= 0) {
-            return mScrollOffsets.get(adapterIndex);
-        }
-
-        int totalHeight = 0;
-        MeasurableAdapter measurer = (MeasurableAdapter) getAdapter();
-
-        for (int i = 0; i < adapterIndex; i++) {
-            mScrollOffsets.put(i, totalHeight);
-            int viewType = getAdapter().getItemViewType(i);
-            totalHeight += measurer.getViewTypeHeight(this, findViewHolderForAdapterPosition(i), viewType);
-        }
-
-        mScrollOffsets.put(adapterIndex, totalHeight);
-        return totalHeight;
-    }
-
-    /**
-     * Calculates the total height of the recycler view. This method should only be called when the
-     * attached adapter implements {@link MeasurableAdapter}.
-     *
-     * @return The total height of all rows in the RecyclerView
-     */
-    private int calculateAdapterHeight() {
-        if (!(getAdapter() instanceof MeasurableAdapter)) {
-            throw new IllegalStateException("calculateAdapterHeight() should only be called where the RecyclerView.Adapter is an instance of MeasurableAdapter");
-        }
-        return calculateScrollDistanceToPosition(getAdapter().getItemCount());
-    }
-
     public void setTrackColor(@ColorInt int color) {
         mScrollbar.setTrackColor(color);
     }
@@ -350,24 +283,6 @@ public class RoundedFastScrollRecyclerView extends RecyclerView implements Recyc
     public interface SectionedAdapter {
         @NonNull
         String getSectionName(int position);
-    }
-
-    /**
-     * FastScrollRecyclerView by default assumes that all items in a RecyclerView will have
-     * ItemViews with the same heights so that the total height of all views in the RecyclerView
-     * can be calculated. If your list uses different view heights, then make your adapter implement
-     * this interface.
-     */
-    public interface MeasurableAdapter<VH extends ViewHolder> {
-        /**
-         * Gets the height of a specific view type, including item decorations
-         *
-         * @param recyclerView The recyclerView that this item view will be placed in
-         * @param viewHolder   The viewHolder that corresponds to this item view
-         * @param viewType     The view type to get the height of
-         * @return The height of a single view for the given view type in pixels
-         */
-        int getViewTypeHeight(RecyclerView recyclerView, @Nullable VH viewHolder, int viewType);
     }
 
     /**
