@@ -761,7 +761,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         }
     }
 
-    public class PlaybackListener extends PlaybackInfoListener {
+    class PlaybackListener extends PlaybackInfoListener {
 
         @Override
         public void onPositionChanged(int position) {
