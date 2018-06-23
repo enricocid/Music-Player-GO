@@ -81,9 +81,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private boolean mUserIsSeeking = false;
     private List<Artist> mArtists;
     private String mSelectedArtist;
-    private boolean sExpandPanel = false;
+    private boolean sExpandArtistDiscography = false;
     private boolean sPlayerInfoLongPressed = false;
-    private boolean sExpanded = false;
+    private boolean sArtistDiscographyExpanded = false;
     private MusicService mMusicService;
     private PlaybackListener mPlaybackListener;
     private List<Song> mSelectedArtistSongs;
@@ -142,7 +142,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     @Override
     public void onBackPressed() {
         //if the reveal view is expanded collapse it
-        if (sExpanded) {
+        if (sArtistDiscographyExpanded) {
             revealView(mArtistDetails, mArtistsRecyclerView, false, false);
         } else if (mSettingsView.getVisibility() == View.VISIBLE) {
             closeSettings(mSettingsView);
@@ -311,7 +311,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     public void shuffleSongs(View v) {
-        final List<Song> songs = sExpanded ? mSelectedArtistSongs : SongProvider.getAllDeviceSongs();
+        final List<Song> songs = sArtistDiscographyExpanded ? mSelectedArtistSongs : SongProvider.getAllDeviceSongs();
         Collections.shuffle(songs);
         onSongSelected(songs.get(0), songs);
     }
@@ -577,9 +577,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mSelectedArtistSongs = SongProvider.getAllArtistSongs(albums);
         Utils.updateTextView(mArtistAlbumCount, getString(R.string.albums, mSelectedArtist, albums.size()));
 
-        if (sExpandPanel) {
+        if (sExpandArtistDiscography) {
             revealView(mArtistDetails, mArtistsRecyclerView, false, true);
-            sExpandPanel = false;
+            sExpandArtistDiscography = false;
         } else {
             restorePlayerStatus();
         }
@@ -615,7 +615,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         if (!mSelectedArtist.equals(artist)) {
 
             //make the panel expandable
-            sExpandPanel = true;
+            sExpandArtistDiscography = true;
             mPlayerAdapter.setSelectedAlbum(null);
 
             //load artist albums only if not already loaded
@@ -645,7 +645,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     public void expandArtistDetails(View v) {
-        revealView(mArtistDetails, mArtistsRecyclerView, false, !sExpanded);
+        revealView(mArtistDetails, mArtistsRecyclerView, false, !sArtistDiscographyExpanded);
     }
 
     private void rotateExpandImage(final boolean expand) {
@@ -713,7 +713,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                 @Override
                 public void onAnimationEnd(Animator animator) {
                     if (!isSettings) {
-                        sExpanded = true;
+                        sArtistDiscographyExpanded = true;
                     }
                 }
 
@@ -745,7 +745,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                     viewToHide.setVisibility(View.VISIBLE);
                     viewToReveal.setClickable(true);
                     if (!isSettings) {
-                        sExpanded = false;
+                        sArtistDiscographyExpanded = false;
                     }
                 }
 
