@@ -65,7 +65,7 @@ import java.util.List;
 public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<List<Artist>>, SongsAdapter.SongSelectedListener, ColorsAdapter.AccentChangedListener, AlbumsAdapter.AlbumSelectedListener, ArtistsAdapter.ArtistSelectedListener {
 
     private final int ANIMATION_DURATION = 500;
-    private LinearLayoutManager mArtistsLayoutManager;
+    private LinearLayoutManager mArtistsLayoutManager, mAlbumsLayoutManager, mSongsLayoutManager;
     private int mAccent;
     private boolean sThemeInverted;
     private RoundedFastScrollRecyclerView mArtistsRecyclerView;
@@ -110,13 +110,17 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         }
     };
     private boolean mIsBound;
-    private Parcelable mSavedRecyclerLayoutState;
+    private Parcelable mSavedArtistRecyclerLayoutState;
+    private Parcelable mSavedAlbumsRecyclerLayoutState;
+    private Parcelable mSavedSongRecyclerLayoutState;
 
     @Override
     public void onPause() {
         super.onPause();
-        if (mArtistsLayoutManager != null) {
-            mSavedRecyclerLayoutState = mArtistsLayoutManager.onSaveInstanceState();
+        if (mArtistsLayoutManager != null && mAlbumsLayoutManager != null && mSongsLayoutManager != null) {
+            mSavedArtistRecyclerLayoutState = mArtistsLayoutManager.onSaveInstanceState();
+            mSavedAlbumsRecyclerLayoutState = mAlbumsLayoutManager.onSaveInstanceState();
+            mSavedSongRecyclerLayoutState = mSongsLayoutManager.onSaveInstanceState();
         }
         if (mPlayerAdapter != null && mPlayerAdapter.isMediaPlayer()) {
             mPlayerAdapter.onPauseActivity();
@@ -317,9 +321,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mArtistsRecyclerView.setLayoutManager(mArtistsLayoutManager);
         final ArtistsAdapter artistsAdapter = new ArtistsAdapter(this, data);
         mArtistsRecyclerView.setAdapter(artistsAdapter);
-        if (mSavedRecyclerLayoutState != null) {
-            mArtistsLayoutManager.onRestoreInstanceState(mSavedRecyclerLayoutState);
-        }
     }
 
     private void initializeSeekBar() {
@@ -553,6 +554,11 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             setArtistsRecyclerView(mArtists);
             mSelectedArtist = mPlayerAdapter.getSelectedAlbum() != null ? mPlayerAdapter.getSelectedAlbum().getArtistName() : mArtists.get(0).getName();
             setArtistDetails(ArtistProvider.getArtist(mArtists, mSelectedArtist).albums);
+            if (mSavedArtistRecyclerLayoutState != null && mSavedAlbumsRecyclerLayoutState != null && mSavedSongRecyclerLayoutState != null) {
+                mArtistsLayoutManager.onRestoreInstanceState(mSavedArtistRecyclerLayoutState);
+                mAlbumsLayoutManager.onRestoreInstanceState(mSavedAlbumsRecyclerLayoutState);
+                mSongsLayoutManager.onRestoreInstanceState(mSavedSongRecyclerLayoutState);
+            }
         }
     }
 
@@ -562,8 +568,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             //only notify recycler view of item changed if an adapter already exists
             mAlbumsAdapter.swapArtist(albums);
         } else {
-            final LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-            mAlbumsRecyclerView.setLayoutManager(horizontalLayoutManager);
+            mAlbumsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+            mAlbumsRecyclerView.setLayoutManager(mAlbumsLayoutManager);
             mAlbumsAdapter = new AlbumsAdapter(this, albums, mPlayerAdapter, ContextCompat.getColor(this, mAccent));
             mAlbumsRecyclerView.setAdapter(mAlbumsAdapter);
         }
@@ -631,9 +637,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             mSongsRecyclerView.scrollToPosition(0);
             mSongsAdapter.swapSongs(album);
         } else {
-            final LinearLayoutManager songsLayoutManager = new LinearLayoutManager(this);
-            songsLayoutManager.scrollToPosition(0);
-            mSongsRecyclerView.setLayoutManager(songsLayoutManager);
+            mSongsLayoutManager = new LinearLayoutManager(this);
+            mSongsRecyclerView.setLayoutManager(mSongsLayoutManager);
             mSongsAdapter = new SongsAdapter(this, album);
             mSongsRecyclerView.setAdapter(mSongsAdapter);
         }
