@@ -69,12 +69,12 @@ public class RoundedFastScrollRecyclerView extends RecyclerView implements Recyc
      * scroll bar.  Otherwise, we fall back to the default RecyclerView touch handling.
      */
     @Override
-    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent ev) {
+    public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent ev) {
         return handleTouchEvent(ev);
     }
 
     @Override
-    public void onTouchEvent(RecyclerView rv, MotionEvent ev) {
+    public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent ev) {
         handleTouchEvent(ev);
     }
 
