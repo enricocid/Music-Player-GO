@@ -10,7 +10,7 @@
         <item name="android:statusBarColor">?attr/accent_color</item>
         <item name="android:alertDialogTheme">@style/AlertDialogStyleLight</item>
         <item name="android:colorEdgeEffect">?attr/accent_color</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="28">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 
     <!-- INVERTED THEME -->
@@ -23,6 +23,6 @@
         <item name="android:statusBarColor">?attr/accent_color</item>
         <item name="android:alertDialogTheme">@style/AlertDialogStyleInverted</item>
         <item name="android:colorEdgeEffect">?attr/accent_color</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="28">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
     </style>
 </resources>
