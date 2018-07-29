@@ -107,6 +107,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
         intentFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
         intentFilter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
         intentFilter.addAction(Intent.ACTION_HEADSET_PLUG);
+        intentFilter.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
 
         mMusicService.registerReceiver(mNotificationActionsReceiver, intentFilter);
     }
@@ -489,6 +490,11 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
                                     }
                                     break;
                             }
+                        }
+                        break;
+                    case AudioManager.ACTION_AUDIO_BECOMING_NOISY:
+                        if (isPlaying()) {
+                            pauseMediaPlayer();
                         }
                         break;
                 }
