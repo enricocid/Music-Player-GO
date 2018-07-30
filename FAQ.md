@@ -41,7 +41,7 @@ Yes, you can change the look of the app in settings, the app colour can be chang
 No, the music library is scanned by the operating system. To exclude folders create a file called ".nomedia".
 
 
-**What sources does Music Player GO plays from?**
+**What source does Music Player GO plays from?**
 
 Music Player GO plays music tracks from local library no external sources are included.
 
