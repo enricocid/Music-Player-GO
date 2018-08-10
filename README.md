@@ -1,5 +1,6 @@
 # Music-Player-GO
-[![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
+[![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid) [FAQ](https://github.com/enricocid/Music-Player-GO/blob/master/FAQ.md) -  [Privacy policy](https://github.com/enricocid/Music-Player-GO/blob/master/Privacy.md)
+
 
 ###### Very slim music player (size <1000KB!) with low memory footprint!
 ###### Current version: (73) 2.5.3.2
@@ -80,6 +81,10 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 - https://material.io/tools/icons/?style=round for icons
 
 - **IzzySoft** (https://github.com/IzzySoft) and **Poussinou** (https://github.com/Poussinou) for setting up the F-Droid repository
+
+- **Harry** (@HarryHeights - https://github.com/HarryHeights) for Privacy policy
+
+- **olayhemy** (ttps://github.com/olayhemy) for FAQ
 
 - **Tim Malseed** (@timusus - https://github.com/timusus) for part of the fast scroller code:
 https://github.com/timusus/RecyclerView-FastScroll
