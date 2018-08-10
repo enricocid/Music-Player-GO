@@ -1,6 +1,8 @@
 # Music-Player-GO
-[![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid) [FAQ](https://github.com/enricocid/Music-Player-GO/blob/master/FAQ.md) -  [Privacy policy](https://github.com/enricocid/Music-Player-GO/blob/master/Privacy.md)
 
+[FAQ](https://github.com/enricocid/Music-Player-GO/blob/master/FAQ.md) -  [Privacy policy](https://github.com/enricocid/Music-Player-GO/blob/master/Privacy.md)
+
+[![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
 
 ###### Very slim music player (size <1000KB!) with low memory footprint!
 ###### Current version: (73) 2.5.3.2
