@@ -8,44 +8,25 @@
     android:layout_height="match_parent"
     tools:context="com.iven.musicplayergo.MainActivity">
 
-    <LinearLayout
-        android:id="@+id/sliding_panel"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <FrameLayout
+        <!-- ARTISTS LIST -->
+        <com.iven.musicplayergo.roundedfastscroller.RoundedFastScrollRecyclerView
+            android:id="@+id/artists_rv"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="match_parent"
+            scroller:roundedFastScrollPopupBgColor="?attr/colorAccent"
+            scroller:roundedFastScrollPopupTextColor="?attr/popup_text_color"
+            scroller:roundedFastScrollThumbColor="?attr/colorAccent"
+            scroller:roundedFastScrollThumbInactiveColor="?attr/colorAccent"
+            tools:context="com.iven.musicplayergo.MainActivity" />
 
-            <!-- ARTISTS LIST -->
-            <com.iven.musicplayergo.roundedfastscroller.RoundedFastScrollRecyclerView
-                android:id="@+id/artists_rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                scroller:roundedFastScrollPopupBgColor="?attr/colorAccent"
-                scroller:roundedFastScrollPopupTextColor="?attr/popup_text_color"
-                scroller:roundedFastScrollThumbColor="?attr/colorAccent"
-                scroller:roundedFastScrollThumbInactiveColor="?attr/colorAccent"
-                tools:context="com.iven.musicplayergo.MainActivity" />
+        <!-- ARTIST'S DISCOGRAPHY -->
+        <include layout="@layout/artist_discography" />
+    </FrameLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <!-- NOW PLAYING INFO -->
-                <include layout="@layout/player_now_playing" />
-
-                <!-- ARTIST'S DISCOGRAPHY -->
-                <include layout="@layout/artist_discography" />
-
-            </LinearLayout>
-
-        </FrameLayout>
-
-        <!-- CONTROLS PANEL -->
-        <include layout="@layout/player_controls_panel" />
-    </LinearLayout>
+    <!-- CONTROLS PANEL -->
+    <include layout="@layout/player_controls_panel" />
 </android.support.design.widget.CoordinatorLayout>

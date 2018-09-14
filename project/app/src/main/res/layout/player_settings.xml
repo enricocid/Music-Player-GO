@@ -4,49 +4,54 @@
     android:id="@+id/settings_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/secondary_bg_color"
-    android:orientation="vertical"
-    android:visibility="invisible">
+    android:orientation="vertical">
 
     <!-- OPTIONS -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:orientation="horizontal">
 
-        <ImageButton
+        <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
             android:contentDescription="@string/app_name"
-            android:foreground="?android:attr/selectableItemBackgroundBorderless"
+            android:foreground="?android:attr/actionBarItemBackground"
+            android:onClick="shuffleSongs"
+            android:padding="12dp"
+            android:src="@drawable/ic_shuffle" />
+
+        <ImageView
+            android:id="@+id/eq"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/app_name"
+            android:foreground="?android:attr/actionBarItemBackground"
+            android:onClick="openEqualizer"
+            android:padding="12dp"
+            android:src="@drawable/ic_equalizer" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/app_name"
+            android:foreground="?android:attr/actionBarItemBackground"
             android:onClick="openGitPage"
             android:padding="12dp"
             android:src="@drawable/ic_github" />
 
-        <ImageButton
+        <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
             android:contentDescription="@string/app_name"
-            android:foreground="?android:attr/selectableItemBackgroundBorderless"
+            android:foreground="?android:attr/actionBarItemBackground"
             android:onClick="switchTheme"
             android:padding="12dp"
             android:src="?attr/theme_icon" />
-
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/app_name"
-            android:foreground="?android:attr/selectableItemBackgroundBorderless"
-            android:onClick="closeSettings"
-            android:padding="12dp"
-            android:src="@drawable/ic_close" />
     </LinearLayout>
 
     <!-- COLORS OPTIONS -->

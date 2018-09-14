@@ -3,7 +3,7 @@
     android:id="@+id/artist_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/secondary_bg_color"
+    android:background="?android:attr/windowBackground"
     android:orientation="vertical"
     android:visibility="invisible">
 

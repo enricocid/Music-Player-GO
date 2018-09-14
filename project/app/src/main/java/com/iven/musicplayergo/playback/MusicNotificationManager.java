@@ -106,14 +106,14 @@ public class MusicNotificationManager {
         switch (action) {
             default:
             case PREV_ACTION:
-                icon = R.drawable.ic_skip_previous;
+                icon = R.drawable.ic_skip_previous_notification;
                 break;
             case PLAY_PAUSE_ACTION:
 
-                icon = mMusicService.getMediaPlayerHolder().getState() != PlaybackInfoListener.State.PAUSED ? R.drawable.ic_pause : R.drawable.ic_play;
+                icon = mMusicService.getMediaPlayerHolder().getState() != PlaybackInfoListener.State.PAUSED ? R.drawable.ic_pause_notification : R.drawable.ic_play_notification;
                 break;
             case NEXT_ACTION:
-                icon = R.drawable.ic_skip_next;
+                icon = R.drawable.ic_skip_next_notification;
                 break;
         }
         return new NotificationCompat.Action.Builder(icon, action, playerAction(action)).build();

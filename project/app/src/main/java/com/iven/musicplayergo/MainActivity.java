@@ -18,12 +18,14 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spanned;
@@ -31,10 +33,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewTreeObserver;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -63,7 +61,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Artist>>, SongsAdapter.SongSelectedListener, ColorsAdapter.AccentChangedListener, AlbumsAdapter.AlbumSelectedListener, ArtistsAdapter.ArtistSelectedListener {
 
-    private final int ANIMATION_DURATION = 500;
     private LinearLayoutManager mArtistsLayoutManager, mAlbumsLayoutManager, mSongsLayoutManager;
     private int mAccent;
     private boolean sThemeInverted;
@@ -74,8 +71,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private TextView mPlayingAlbum, mPlayingSong, mDuration, mSongPosition, mArtistAlbumCount, mSelectedAlbum;
     private SeekBar mSeekBarAudio;
     private LinearLayout mControlsContainer;
+    private BottomSheetBehavior mBottomSheetBehaviour;
     private View mSettingsView, mPlayerInfoView, mArtistDetails;
-    private ImageView mPlayPauseButton, mResetButton, mExpandImage;
+    private ImageView mPlayPauseButton, mSkipPrevButton;
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
     private List<Artist> mArtists;
@@ -124,9 +122,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (mPlayerAdapter != null && mPlayerAdapter.isMediaPlayer()) {
             mPlayerAdapter.onPauseActivity();
         }
-        if (mSettingsView.getVisibility() == View.VISIBLE) {
-            revealView(mSettingsView, mControlsContainer, true, false);
-        }
     }
 
     @Override
@@ -142,9 +137,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onBackPressed() {
         //if the reveal view is expanded collapse it
         if (sArtistDiscographyExpanded) {
-            revealView(mArtistDetails, mArtistsRecyclerView, false, false);
-        } else if (mSettingsView.getVisibility() == View.VISIBLE) {
-            closeSettings(mSettingsView);
+            revealView(mArtistDetails, mArtistsRecyclerView, false);
+        } else if (mBottomSheetBehaviour.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+            mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_COLLAPSED);
         } else {
             super.onBackPressed();
         }
@@ -215,17 +210,24 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private void getViews() {
 
         mControlsContainer = findViewById(R.id.controls_container);
-
+        CardView bottomSheetLayout = findViewById(R.id.design_bottom_sheet);
+        mBottomSheetBehaviour = BottomSheetBehavior.from(bottomSheetLayout);
         mArtistDetails = findViewById(R.id.artist_details);
         mPlayerInfoView = findViewById(R.id.player_info);
         mPlayingSong = findViewById(R.id.playing_song);
         mPlayingAlbum = findViewById(R.id.playing_album);
-        mExpandImage = findViewById(R.id.expand);
         setupPlayerInfoTouchBehaviour();
 
         mPlayPauseButton = findViewById(R.id.play_pause);
 
-        mResetButton = findViewById(R.id.replay);
+        mSkipPrevButton = findViewById(R.id.skip_prev);
+        mSkipPrevButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                setRepeat();
+                return false;
+            }
+        });
         mSeekBarAudio = findViewById(R.id.seekTo);
 
         mDuration = findViewById(R.id.duration);
@@ -278,11 +280,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onGlobalLayout() {
                 int controlsContainerHeight = mControlsContainer.getHeight();
-
                 FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mArtistsRecyclerView.getLayoutParams();
-                layoutParams.topMargin = mPlayerInfoView.getHeight();
+                layoutParams.bottomMargin = controlsContainerHeight;
                 mArtistsRecyclerView.setLayoutParams(layoutParams);
-                mSettingsView.setMinimumHeight(controlsContainerHeight);
+                mBottomSheetBehaviour.setPeekHeight(controlsContainerHeight);
+                //mSettingsView.setMinimumHeight(controlsContainerHeight);
                 mControlsContainer.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
@@ -294,14 +296,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             eqButton.getDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
         }
         initializeColorsSettings();
-    }
-
-    public void showSettings(View v) {
-        revealView(mSettingsView, mControlsContainer, true, true);
-    }
-
-    public void closeSettings(View v) {
-        revealView(mSettingsView, mControlsContainer, true, false);
     }
 
     public void shuffleSongs(View v) {
@@ -350,7 +344,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 });
     }
 
-    public void reset(View v) {
+    private void setRepeat() {
         if (checkIsPlayer()) {
             mPlayerAdapter.reset();
             updateResetStatus(false);
@@ -360,6 +354,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void skipPrev(View v) {
         if (checkIsPlayer()) {
             mPlayerAdapter.instantReset();
+            if (mPlayerAdapter.isReset()) {
+                mPlayerAdapter.reset();
+                updateResetStatus(false);
+            }
         }
     }
 
@@ -426,11 +424,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void updateResetStatus(boolean onPlaybackCompletion) {
-        final int color = onPlaybackCompletion ? Color.BLACK : mPlayerAdapter.isReset() ? Color.WHITE : Color.BLACK;
-        mResetButton.post(new Runnable() {
+        final int themeColor = sThemeInverted ? R.color.white : R.color.black;
+        final int color = onPlaybackCompletion ? themeColor : mPlayerAdapter.isReset() ? mAccent : themeColor;
+        mSkipPrevButton.post(new Runnable() {
             @Override
             public void run() {
-                mResetButton.getDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+                mSkipPrevButton.getDrawable().setColorFilter(ContextCompat.getColor(MainActivity.this, color), PorterDuff.Mode.SRC_IN);
             }
         });
     }
@@ -573,7 +572,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Utils.updateTextView(mArtistAlbumCount, getString(R.string.albums, mSelectedArtist, albums.size()));
 
         if (sExpandArtistDiscography) {
-            revealView(mArtistDetails, mArtistsRecyclerView, false, true);
+            revealView(mArtistDetails, mArtistsRecyclerView, true);
             sExpandArtistDiscography = false;
         } else {
             restorePlayerStatus();
@@ -593,10 +592,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onSongSelected(@NonNull final Song song, @NonNull final List<Song> songs) {
-
-        if (mSettingsView.getVisibility() == View.VISIBLE) {
-            revealView(mSettingsView, mControlsContainer, true, false);
-        }
         if (!mSeekBarAudio.isEnabled()) {
             mSeekBarAudio.setEnabled(true);
         }
@@ -620,7 +615,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         } else {
             expandArtistDetails(mArtistDetails);
             //if already loaded expand the panel
-            revealView(mArtistDetails, mArtistsRecyclerView, false, true);
+            revealView(mArtistDetails, mArtistsRecyclerView, true);
         }
     }
 
@@ -640,56 +635,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     public void expandArtistDetails(View v) {
-        revealView(mArtistDetails, mArtistsRecyclerView, false, !sArtistDiscographyExpanded);
+        revealView(mArtistDetails, mArtistsRecyclerView, !sArtistDiscographyExpanded);
     }
 
-    private void rotateExpandImage(final boolean expand) {
 
-        final int ALPHA_DURATION = 250;
-        final float PIVOT_VALUE = 0.5f;
-        final int PIVOT_TYPE = RotateAnimation.RELATIVE_TO_SELF;
-        final float from = expand ? 0.0f : 180.0f;
-        final float to = expand ? 180.0f : 0.0f;
+    private void revealView(final View viewToReveal, final View viewToHide, boolean show) {
 
-        final AnimationSet animSet = new AnimationSet(true);
-        animSet.setInterpolator(new DecelerateInterpolator());
-        animSet.setFillAfter(true);
-        animSet.setFillEnabled(true);
-        final RotateAnimation animRotate = new RotateAnimation(from, to, PIVOT_TYPE, PIVOT_VALUE, PIVOT_TYPE, PIVOT_VALUE);
-        animRotate.setDuration(ANIMATION_DURATION);
-        animRotate.setFillAfter(true);
-        animRotate.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                if (!expand) {
-                    mExpandImage.setVisibility(View.VISIBLE);
-                    mExpandImage.animate().alpha(1.0f).setDuration(ALPHA_DURATION).start();
-                }
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                if (expand) {
-                    mExpandImage.animate().alpha(0.0f).setDuration(ALPHA_DURATION).start();
-                    mExpandImage.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-        animSet.addAnimation(animRotate);
-        mExpandImage.startAnimation(animSet);
-    }
-
-    private void revealView(final View viewToReveal, final View viewToHide, final boolean isSettings, boolean show) {
-
+        final int ANIMATION_DURATION = 500;
         final int viewToRevealHeight = viewToReveal.getHeight();
         final int viewToRevealWidth = viewToReveal.getWidth();
         final int viewToRevealHalfWidth = viewToRevealWidth / 2;
         final int radius = (int) Math.hypot(viewToRevealWidth, viewToRevealHeight);
-        final int fromY = isSettings ? viewToRevealHeight / 2 : viewToHide.getTop() / 2;
+        final int fromY = viewToHide.getTop() / 2;
 
         if (show) {
             final Animator anim = ViewAnimationUtils.createCircularReveal(viewToReveal, viewToRevealHalfWidth, fromY, 0, radius);
@@ -697,9 +654,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             anim.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animator) {
-                    if (!isSettings) {
-                        rotateExpandImage(true);
-                    }
                     viewToReveal.setVisibility(View.VISIBLE);
                     viewToHide.setVisibility(View.INVISIBLE);
                     viewToReveal.setClickable(false);
@@ -707,9 +661,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 @Override
                 public void onAnimationEnd(Animator animator) {
-                    if (!isSettings) {
-                        sArtistDiscographyExpanded = true;
-                    }
+                    sArtistDiscographyExpanded = true;
                 }
 
                 @Override
@@ -729,9 +681,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             anim.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animator) {
-                    if (!isSettings) {
-                        rotateExpandImage(false);
-                    }
+                    sArtistDiscographyExpanded = false;
                 }
 
                 @Override
@@ -739,9 +689,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     viewToReveal.setVisibility(View.INVISIBLE);
                     viewToHide.setVisibility(View.VISIBLE);
                     viewToReveal.setClickable(true);
-                    if (!isSettings) {
-                        sArtistDiscographyExpanded = false;
-                    }
+                    sArtistDiscographyExpanded = false;
                 }
 
                 @Override

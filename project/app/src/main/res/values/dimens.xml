@@ -10,4 +10,6 @@
     <dimen name="rounded_fast_scroll_track_max_width">8dp</dimen>
     <dimen name="rounded_fast_scroll_thumb_height">52dp</dimen>
     <dimen name="rounded_fast_scroll_thumb_touch_inset">-24dp</dimen>
+
+    <dimen name="bottom_sheet_corner_radius">16dp</dimen>
 </resources>
