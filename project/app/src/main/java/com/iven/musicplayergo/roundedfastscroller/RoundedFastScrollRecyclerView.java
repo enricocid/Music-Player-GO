@@ -14,13 +14,13 @@ import android.view.View;
 
 public class RoundedFastScrollRecyclerView extends RecyclerView implements RecyclerView.OnItemTouchListener {
 
-    private RoundedFastScroller mScrollbar;
-    private ScrollPositionState mScrollPosState = new ScrollPositionState();
+    private final RoundedFastScroller mScrollbar;
+    private final ScrollPositionState mScrollPosState = new ScrollPositionState();
+    private final SparseIntArray mScrollOffsets;
+    private final ScrollOffsetInvalidator mScrollOffsetInvalidator;
     private int mDownX;
     private int mDownY;
     private int mLastY;
-    private SparseIntArray mScrollOffsets;
-    private ScrollOffsetInvalidator mScrollOffsetInvalidator;
 
     public RoundedFastScrollRecyclerView(Context context) {
         this(context, null);
@@ -113,7 +113,7 @@ public class RoundedFastScrollRecyclerView extends RecyclerView implements Recyc
      * Returns the available scroll height:
      * AvailableScrollHeight = Total height of the all items - last page height
      **/
-    protected int getAvailableScrollHeight(int adapterHeight) {
+    private int getAvailableScrollHeight(int adapterHeight) {
         int scrollHeight = getPaddingTop() + adapterHeight + getPaddingBottom();
         return scrollHeight - getHeight();
     }
@@ -122,7 +122,7 @@ public class RoundedFastScrollRecyclerView extends RecyclerView implements Recyc
      * Returns the available scroll bar height:
      * AvailableScrollBarHeight = Total height of the visible view - thumb height
      */
-    protected int getAvailableScrollBarHeight() {
+    private int getAvailableScrollBarHeight() {
         return getHeight() - mScrollbar.getThumbHeight();
     }
 
@@ -141,7 +141,7 @@ public class RoundedFastScrollRecyclerView extends RecyclerView implements Recyc
      * @param scrollPosState the current scroll position
      * @param rowCount       the number of rows, used to calculate the total scroll height (assumes that
      */
-    protected void updateThumbPosition(ScrollPositionState scrollPosState, int rowCount) {
+    private void updateThumbPosition(ScrollPositionState scrollPosState, int rowCount) {
 
         int availableScrollHeight;
         int availableScrollBarHeight;
@@ -174,56 +174,72 @@ public class RoundedFastScrollRecyclerView extends RecyclerView implements Recyc
      * Maps the touch (from 0..1) to the adapter position that should be visible.
      */
     public String scrollToPositionAtProgress(float touchFraction) {
-        int itemCount = getAdapter().getItemCount();
-        if (itemCount == 0) {
-            return "";
+
+        String sectionName = "";
+
+        if (getAdapter() != null) {
+
+            int itemCount = getAdapter().getItemCount();
+            if (itemCount == 0) {
+                return "";
+            }
+            int spanCount = 1;
+
+            // Stop the scroller if it is scrolling
+            stopScroll();
+
+            if (getAdapter() != null) {
+                getCurScrollState(mScrollPosState);
+            }
+
+            float itemPos;
+            int availableScrollHeight;
+
+            int scrollPosition;
+            int scrollOffset;
+
+            itemPos = findItemPosition(touchFraction);
+            availableScrollHeight = getAvailableScrollHeight(itemCount * mScrollPosState.rowHeight);
+
+            //The exact position of our desired item
+            int exactItemPos = (int) (availableScrollHeight * touchFraction);
+
+            //The offset used here is kind of hard to explain.
+            //If the position we wish to scroll to is, say, position 10.5, we scroll to position 10,
+            //and then offset by 0.5 * rowHeight. This is how we achieve smooth scrolling.
+            scrollPosition = spanCount * exactItemPos / mScrollPosState.rowHeight;
+            scrollOffset = -(exactItemPos % mScrollPosState.rowHeight);
+
+            if (getLayoutManager() != null) {
+                LinearLayoutManager layoutManager = ((LinearLayoutManager) getLayoutManager());
+                layoutManager.scrollToPositionWithOffset(scrollPosition, scrollOffset);
+            }
+
+            if (!(getAdapter() instanceof SectionedAdapter)) {
+                return "";
+            }
+
+            int posInt = (int) ((touchFraction == 1) ? itemPos - 1 : itemPos);
+
+            SectionedAdapter sectionedAdapter = (SectionedAdapter) getAdapter();
+
+            sectionName = sectionedAdapter.getSectionName(posInt);
         }
-        int spanCount = 1;
-
-        // Stop the scroller if it is scrolling
-        stopScroll();
-
-        getCurScrollState(mScrollPosState);
-
-        float itemPos;
-        int availableScrollHeight;
-
-        int scrollPosition;
-        int scrollOffset;
-
-        itemPos = findItemPosition(touchFraction);
-        availableScrollHeight = getAvailableScrollHeight(itemCount * mScrollPosState.rowHeight);
-
-        //The exact position of our desired item
-        int exactItemPos = (int) (availableScrollHeight * touchFraction);
-
-        //The offset used here is kind of hard to explain.
-        //If the position we wish to scroll to is, say, position 10.5, we scroll to position 10,
-        //and then offset by 0.5 * rowHeight. This is how we achieve smooth scrolling.
-        scrollPosition = spanCount * exactItemPos / mScrollPosState.rowHeight;
-        scrollOffset = -(exactItemPos % mScrollPosState.rowHeight);
-
-        LinearLayoutManager layoutManager = ((LinearLayoutManager) getLayoutManager());
-        layoutManager.scrollToPositionWithOffset(scrollPosition, scrollOffset);
-
-        if (!(getAdapter() instanceof SectionedAdapter)) {
-            return "";
-        }
-
-        int posInt = (int) ((touchFraction == 1) ? itemPos - 1 : itemPos);
-
-        SectionedAdapter sectionedAdapter = (SectionedAdapter) getAdapter();
-        return sectionedAdapter.getSectionName(posInt);
+        return sectionName;
     }
 
     private float findItemPosition(float touchFraction) {
-        return getAdapter().getItemCount() * touchFraction;
+        float itemPosition = 0;
+        if (getAdapter() != null) {
+            itemPosition = getAdapter().getItemCount() * touchFraction;
+        }
+        return itemPosition;
     }
 
     /**
      * Updates the bounds for the scrollbar.
      */
-    public void onUpdateScrollbar() {
+    private void onUpdateScrollbar() {
 
         if (getAdapter() == null) {
             return;
@@ -258,22 +274,26 @@ public class RoundedFastScrollRecyclerView extends RecyclerView implements Recyc
         stateOut.rowTopOffset = -1;
         stateOut.rowHeight = -1;
 
-        int itemCount = getAdapter().getItemCount();
+        if (getAdapter() != null) {
+            int itemCount = getAdapter().getItemCount();
 
-        // Return early if there are no items, or no children.
-        if (itemCount == 0 || getChildCount() == 0) {
-            return;
+            // Return early if there are no items, or no children.
+            if (itemCount == 0 || getChildCount() == 0) {
+                return;
+            }
+
+            View child = getChildAt(0);
+
+            stateOut.rowIndex = getChildAdapterPosition(child);
+            if (getLayoutManager() instanceof GridLayoutManager) {
+                stateOut.rowIndex = stateOut.rowIndex / ((GridLayoutManager) getLayoutManager()).getSpanCount();
+            }
+            if (getLayoutManager() != null) {
+                stateOut.rowTopOffset = getLayoutManager().getDecoratedTop(child);
+                stateOut.rowHeight = child.getHeight() + getLayoutManager().getTopDecorationHeight(child)
+                        + getLayoutManager().getBottomDecorationHeight(child);
+            }
         }
-
-        View child = getChildAt(0);
-
-        stateOut.rowIndex = getChildAdapterPosition(child);
-        if (getLayoutManager() instanceof GridLayoutManager) {
-            stateOut.rowIndex = stateOut.rowIndex / ((GridLayoutManager) getLayoutManager()).getSpanCount();
-        }
-        stateOut.rowTopOffset = getLayoutManager().getDecoratedTop(child);
-        stateOut.rowHeight = child.getHeight() + getLayoutManager().getTopDecorationHeight(child)
-                + getLayoutManager().getBottomDecorationHeight(child);
     }
 
     public void setTrackColor(@ColorInt int color) {
@@ -291,7 +311,7 @@ public class RoundedFastScrollRecyclerView extends RecyclerView implements Recyc
      * that we can calculate what the scroll bar looks like, and where to jump to from the fast
      * scroller.
      */
-    public static class ScrollPositionState {
+    static class ScrollPositionState {
         // The index of the first visible row
         int rowIndex;
         // The offset of the first visible row

@@ -4,11 +4,9 @@ import android.Manifest;
 import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
@@ -20,11 +18,12 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.graphics.ColorUtils;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spanned;
@@ -62,7 +61,7 @@ import com.iven.musicplayergo.roundedfastscroller.RoundedFastScrollRecyclerView;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<List<Artist>>, SongsAdapter.SongSelectedListener, ColorsAdapter.AccentChangedListener, AlbumsAdapter.AlbumSelectedListener, ArtistsAdapter.ArtistSelectedListener {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Artist>>, SongsAdapter.SongSelectedListener, ColorsAdapter.AccentChangedListener, AlbumsAdapter.AlbumSelectedListener, ArtistsAdapter.ArtistSelectedListener {
 
     private final int ANIMATION_DURATION = 500;
     private LinearLayoutManager mArtistsLayoutManager, mAlbumsLayoutManager, mSongsLayoutManager;
@@ -165,25 +164,20 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     @TargetApi(23)
     private void showPermissionRationale() {
-        final AlertDialog builder = new AlertDialog.Builder(this).create();
-        builder.setIcon(R.drawable.ic_folder);
-        builder.setTitle(getString(R.string.app_name));
-        builder.setMessage(getString(R.string.perm_rationale));
-        builder.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+        View contextView = findViewById(R.id.context_view);
+
+        Snackbar.make(contextView, R.string.perm_rationale, Snackbar.LENGTH_INDEFINITE)
+                .setAction(android.R.string.ok, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Respond to the click, such as by undoing the modification that caused
+                        // this message to be displayed
                         final int READ_FILES_CODE = 2588;
                         requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}
                                 , READ_FILES_CODE);
                     }
-                });
-        builder.setCanceledOnTouchOutside(false);
-        try {
-            builder.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                })
+                .show();
     }
 
     @Override
@@ -426,6 +420,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         colorsRecyclerView.setAdapter(new ColorsAdapter(this, mAccent));
     }
 
+    @SuppressWarnings("deprecation")
     private void onPermissionGranted() {
         getSupportLoaderManager().initLoader(ArtistProvider.ARTISTS_LOADER, null, this);
     }

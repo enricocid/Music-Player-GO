@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:foreground="?android:attr/selectableItemBackground"
-        card_view:cardBackgroundColor="?attr/accent_color"
+        card_view:cardBackgroundColor="?attr/colorAccent"
         card_view:cardElevation="2dp">
 
         <LinearLayout

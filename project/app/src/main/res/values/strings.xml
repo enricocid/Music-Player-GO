@@ -9,6 +9,6 @@
     <string name="track_title" translatable="false">&lt;b>%1d&lt;/b>&#160;%2s</string>
     <string name="playing_song" translatable="false">&lt;b>%1s&lt;/b>&lt;br/>%2s</string>
     <string name="no_browser">No browser found!</string>
-    <string name="perm_rationale">To let You play the music on your phone, Music Player GO needs access to your files</string>
+    <string name="perm_rationale">Music Player GO needs access to your files</string>
     <string name="error_no_music">No music found on your phone!</string>
 </resources>

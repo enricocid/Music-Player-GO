@@ -37,7 +37,7 @@ public class SongProvider {
             AudioColumns.ARTIST,// 7
     };
 
-    private static List<Song> mAllDeviceSongs = new ArrayList<>();
+    private static final List<Song> mAllDeviceSongs = new ArrayList<>();
 
     public static List<Song> getAllDeviceSongs() {
         return mAllDeviceSongs;

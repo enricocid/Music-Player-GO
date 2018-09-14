@@ -3,97 +3,113 @@
     <!-- ACCENTS THEMES LIGHT -->
     <style name="AppThemeRed" parent="AppTheme">
         <item name="popup_text_color">@color/light</item>
-        <item name="accent_color">@color/red_A400</item>
-        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+        <item name="colorPrimary">@color/red_A400</item>
+        <item name="colorPrimaryDark">@color/red_A400</item>
+        <item name="colorAccent">@color/red_A400</item>
     </style>
 
     <style name="AppThemePink" parent="AppTheme">
         <item name="popup_text_color">@color/light</item>
-        <item name="accent_color">@color/pink_A400</item>
-        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+        <item name="colorPrimary">@color/pink_A400</item>
+        <item name="colorPrimaryDark">@color/pink_A400</item>
+        <item name="colorAccent">@color/pink_A400</item>
     </style>
 
     <style name="AppThemePurple" parent="AppTheme">
         <item name="popup_text_color">@color/light</item>
-        <item name="accent_color">@color/purple_A400</item>
-        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+        <item name="colorPrimary">@color/purple_A400</item>
+        <item name="colorPrimaryDark">@color/purple_A400</item>
+        <item name="colorAccent">@color/purple_A400</item>
     </style>
 
     <style name="AppThemeDeepPurple" parent="AppTheme">
         <item name="popup_text_color">@color/light</item>
-        <item name="accent_color">@color/deep_purple_A400</item>
-        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+        <item name="colorPrimary">@color/deep_purple_A400</item>
+        <item name="colorPrimaryDark">@color/deep_purple_A400</item>
+        <item name="colorAccent">@color/deep_purple_A400</item>
     </style>
 
     <style name="AppThemeIndigo" parent="AppTheme">
         <item name="popup_text_color">@color/light</item>
-        <item name="accent_color">@color/indigo_A400</item>
-        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+        <item name="colorPrimary">@color/indigo_A400</item>
+        <item name="colorPrimaryDark">@color/indigo_A400</item>
+        <item name="colorAccent">@color/indigo_A400</item>
     </style>
 
     <style name="AppThemeBlue" parent="AppTheme">
         <item name="popup_text_color">@color/light</item>
-        <item name="accent_color">@color/blue_A400</item>
-        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+        <item name="colorPrimary">@color/blue_A400</item>
+        <item name="colorPrimaryDark">@color/blue_A400</item>
+        <item name="colorAccent">@color/blue_A400</item>
     </style>
 
     <style name="AppThemeLightBlue" parent="AppTheme">
         <item name="popup_text_color">@color/inverted</item>
-        <item name="accent_color">@color/light_blue_A400</item>
-        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+        <item name="colorPrimary">@color/light_blue_A400</item>
+        <item name="colorPrimaryDark">@color/light_blue_A400</item>
+        <item name="colorAccent">@color/light_blue_A400</item>
     </style>
 
     <style name="AppThemeCyan" parent="AppTheme">
         <item name="popup_text_color">@color/inverted</item>
-        <item name="accent_color">@color/cyan_A400</item>
-        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+        <item name="colorPrimaryDark">@color/cyan_A400</item>
+        <item name="colorAccent">@color/cyan_A400</item>
+        <item name="colorPrimary">@color/cyan_A400</item>
     </style>
 
     <style name="AppThemeTeal" parent="AppTheme">
         <item name="popup_text_color">@color/inverted</item>
-        <item name="accent_color">@color/teal_A400</item>
-        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+        <item name="colorPrimaryDark">@color/teal_A400</item>
+        <item name="colorAccent">@color/teal_A400</item>
+        <item name="colorPrimary">@color/teal_A400</item>
     </style>
 
     <style name="AppThemeGreen" parent="AppTheme">
         <item name="popup_text_color">@color/inverted</item>
-        <item name="accent_color">@color/green_A400</item>
-        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+        <item name="colorPrimaryDark">@color/green_A400</item>
+        <item name="colorAccent">@color/green_A400</item>
+        <item name="colorPrimary">@color/green_A400</item>
     </style>
 
     <style name="AppThemeAmber" parent="AppTheme">
         <item name="popup_text_color">@color/inverted</item>
-        <item name="accent_color">@color/amber_A400</item>
-        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+        <item name="colorPrimaryDark">@color/amber_A400</item>
+        <item name="colorAccent">@color/amber_A400</item>
+        <item name="colorPrimary">@color/amber_A400</item>
     </style>
 
     <style name="AppThemeOrange" parent="AppTheme">
         <item name="popup_text_color">@color/inverted</item>
-        <item name="accent_color">@color/orange_A400</item>
-        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+        <item name="colorPrimaryDark">@color/orange_A400</item>
+        <item name="colorAccent">@color/orange_A400</item>
+        <item name="colorPrimary">@color/orange_A400</item>
     </style>
 
     <style name="AppThemeDeepOrange" parent="AppTheme">
         <item name="popup_text_color">@color/light</item>
-        <item name="accent_color">@color/deep_orange_A400</item>
-        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+        <item name="colorPrimaryDark">@color/deep_orange_A400</item>
+        <item name="colorAccent">@color/deep_orange_A400</item>
+        <item name="colorPrimary">@color/deep_orange_A400</item>
     </style>
 
     <style name="AppThemeBrown" parent="AppTheme">
         <item name="popup_text_color">@color/light</item>
-        <item name="accent_color">@color/brown_400</item>
-        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+        <item name="colorPrimaryDark">@color/brown_400</item>
+        <item name="colorAccent">@color/brown_400</item>
+        <item name="colorPrimary">@color/brown_400</item>
     </style>
 
     <style name="AppThemeGrayLight" parent="AppTheme">
         <item name="popup_text_color">@color/inverted</item>
-        <item name="accent_color">@color/gray_400</item>
-        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+        <item name="colorPrimaryDark">@color/gray_400</item>
+        <item name="colorAccent">@color/gray_400</item>
+        <item name="colorPrimary">@color/gray_400</item>
     </style>
 
     <style name="AppThemeBlueGray" parent="AppTheme">
         <item name="popup_text_color">@color/light</item>
-        <item name="accent_color">@color/blue_gray_400</item>
-        <item name="android:seekBarStyle">@style/SeekBarStyle</item>
+        <item name="colorPrimaryDark">@color/blue_gray_400</item>
+        <item name="colorAccent">@color/blue_gray_400</item>
+        <item name="colorPrimary">@color/blue_gray_400</item>
     </style>
 </resources>

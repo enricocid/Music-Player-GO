@@ -38,7 +38,7 @@
             android:singleLine="true"
             android:textAlignment="center"
             android:textAppearance="@android:style/TextAppearance.Material.Caption"
-            android:textColor="?attr/accent_color"
+            android:textColor="?attr/colorAccent"
             android:textStyle="bold" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

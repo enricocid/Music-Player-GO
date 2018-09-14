@@ -22,7 +22,7 @@
         android:singleLine="true"
         android:textAllCaps="true"
         android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-        android:textColor="?attr/accent_color"
+        android:textColor="?attr/colorAccent"
         android:textStyle="bold" />
 
     <!-- ALBUMS -->
@@ -44,7 +44,7 @@
         android:paddingTop="4dp"
         android:singleLine="true"
         android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-        android:textColor="?attr/accent_color"
+        android:textColor="?attr/colorAccent"
         android:textStyle="bold" />
 
     <!-- DISC SONGS -->
