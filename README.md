@@ -33,12 +33,11 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
 - Colorful, simple and 'unified' UI: no need to navigate between activities;
 - Awesome typeface: Raleway + Roboto condensed
-- Bottom sheet panel containing the player controls:
+- Bottom panel containing the player controls and the settings (if expanded):
   - Played song info. By clicking on it You can 'reveal'/close the artist's discography. By long click You can scroll the text;
   - Skip to previous song (long click to enable reset 1x);
   - Play/pause;
   - Skip to next song;
-  - Settings (when expanded);
 - Music organized by artist;
 - Colorful index bar;
 - Dark status bar icons for light accents;
