@@ -626,7 +626,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             setArtistDetails(ArtistProvider.getArtist(mArtists, mSelectedArtist).albums);
 
         } else {
-            revealView(mArtistDetails, mArtistsRecyclerView, !sArtistDiscographyExpanded);
             //if already loaded expand the panel
             revealView(mArtistDetails, mArtistsRecyclerView, true);
         }
