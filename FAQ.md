@@ -8,7 +8,7 @@ This frequently asked questions will be continually updated to accommodate new i
 
 **What is Music Player GO?**
 
-is a lightweight and ads free music player that plays music from local library. It’s colorful, simple and 'unified' UI.
+It is a lightweight and ads free music player that plays music from local library. It has colorful, simple and 'unified' UI.
 
 
 **Does Music Player GO uses equalizer?**
@@ -23,7 +23,7 @@ No, Music Player GO doesn't play music tracks from any online source, it only pl
 
 **Where can I find the equalizer?**
 
-The equalizer can be found at the lower part of the app, it’s like a bar icon beside the action bar.
+The equalizer can be found in settings.
 
 
 **How does Music Player GO categorized music tracks?**

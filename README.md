@@ -4,8 +4,8 @@
 
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
 
-###### Very slim music player (size <1000KB!) with low memory footprint!
-###### Current version: (73) 2.5.3.2
+###### Very slim music player with low memory footprint!
+###### Current version: (74) 3.0.0
 ###### Material Design Icon by Julian Javier Gomez, Axinen Design (https://plus.google.com/u/0/+AxinenDesign)
 
 
@@ -14,7 +14,7 @@
 
 # Screenshots
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v71.png) 
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v3.png) 
 
 
 # Download
@@ -31,24 +31,25 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
 ### Unifield UI, the way I'd like it to be:
 
-- Colorful, simple and 'unified' UI : no need to navigate between activities;
-- Bottom panel containing the player controls:
-  - Equalizer (if present on the device);
-  - Repeat 1x;
+- Colorful, simple and 'unified' UI: no need to navigate between activities;
+- Awesome typeface: Raleway + Roboto condensed
+- Bottom sheet panel containing the player controls:
+  - Player info (on click You can expand the artist details;
   - Skip to previous song;
   - Play/pause;
   - Skip to next song;
-  - Dynamic shuffle button: randomly plays the artist or the
-    device songs;
-  - Settings;
+  - Settings (when expanded);
 - Music organized by artist;
 - Top panel containing the now played song. By clicking on it You can 'reveal'/close the artist's discography;
 - The now playing text is scrollable on long clicking when it is too long;
-- Fast scrolling;
+- Colorful index bar;
 - Dark status bar icons for light accents;
 
 ### Settings at hand: 
 
+- Dynamic shuffle button: randomly plays the artist or the
+    device songs;
+- Equalizer (if present on the device);
 - Themes (light and inverted)
 - Link to git page;
 - 16 UI accents!;
@@ -69,11 +70,11 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
 ### Dependencies used: 
 
-  - Android Support Library v4;
-
+  - Android Support Design (Material Design Components)
+  - Android Support Library v4 core-utils;
+  - Android Support Library v4 media-compat;
   - RecyclerView v7;
-
-  - CardView v7;
+  - AppCompat v7;
 
 
 # Credits:
@@ -84,18 +85,17 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
 - **IzzySoft** (https://github.com/IzzySoft) and **Poussinou** (https://github.com/Poussinou) for setting up the F-Droid repository
 
+- **Dankan1890** (https://github.com/dankan1890) for some fixes to bluetooth devices
+
 - **Harry** (@HarryHeights - https://github.com/HarryHeights) for Privacy policy
 
 - **olayhemy** (ttps://github.com/olayhemy) for FAQ
 
-- **Tim Malseed** (@timusus - https://github.com/timusus) for part of the fast scroller code:
-https://github.com/timusus/RecyclerView-FastScroll
+- **Prabhakar Thota** (@myinnos - https://github.com/myinnos) for part of the alphabetic index bar code:
+https://github.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView
 
 - **AOSP** (Android Open Source Project - https://source.android.com) for part of the Launcher 3 fast scroller code:
 https://android.googlesource.com/platform/packages/apps/Launcher3
-
-- **Dima Merkurev** (dimorinny - https://github.com/dimorinny) for part of the floating controls code:
-https://github.com/dimorinny/floating-text-button
 
 - **Malte Kiefer** (beli3ver - https://github.com/beli3ver) for German translations
 

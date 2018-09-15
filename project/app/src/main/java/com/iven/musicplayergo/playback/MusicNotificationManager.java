@@ -13,7 +13,6 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.media.app.NotificationCompat.MediaStyle;
 import android.text.Spanned;
 
@@ -41,7 +40,7 @@ public class MusicNotificationManager {
     }
 
     public void setAccentColor(final int color) {
-        mAccent = Utils.getColorFromResource(mMusicService, mAccent, R.color.blue);
+        mAccent = Utils.getColorFromResource(mMusicService, color, R.color.blue);
     }
 
     public final NotificationManager getNotificationManager() {

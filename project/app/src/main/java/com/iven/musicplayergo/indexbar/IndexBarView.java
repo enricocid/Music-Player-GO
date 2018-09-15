@@ -34,8 +34,8 @@ public class IndexBarView extends RecyclerView.AdapterDataObserver {
     private String[] mSections;
     private boolean mIsIndexing;
     private int mCurrentSection = -1;
-    private Typeface mTypefaceIndexes, mTypefaceIndexesBold, mTypefacePreview;
-    private Context mContext;
+    private final Typeface mTypefaceIndexes, mTypefaceIndexesBold, mTypefacePreview;
+    private final Context mContext;
 
     public IndexBarView(IndexBarRecyclerView rv, ArtistsAdapter artistsAdapter, LinearLayoutManager linearLayoutManager, boolean isThemeInverted) {
 
