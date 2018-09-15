@@ -41,7 +41,7 @@ public class MusicNotificationManager {
     }
 
     public void setAccentColor(final int color) {
-        mAccent = ContextCompat.getColor(mMusicService, color);
+        mAccent = Utils.getColorFromResource(mMusicService, mAccent, R.color.blue);
     }
 
     public final NotificationManager getNotificationManager() {

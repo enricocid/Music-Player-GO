@@ -53,8 +53,18 @@ public class Utils {
         final int theme = resolveTheme(isThemeInverted, accent);
         activity.setTheme(theme);
         if (isMarshmallow()) {
-            enableLightStatusBar(activity, ContextCompat.getColor(activity, accent));
+            enableLightStatusBar(activity, getColorFromResource(activity, accent, R.color.blue));
         }
+    }
+
+    public static int getColorFromResource(@NonNull final Context context, final int resource, final int emergencyColor) {
+        int color;
+        try {
+            color = ContextCompat.getColor(context, resource);
+        } catch (Exception e) {
+            color = ContextCompat.getColor(context, emergencyColor);
+        }
+        return color;
     }
 
     //enable light status bar only for light colors according to
@@ -154,7 +164,7 @@ public class Utils {
         return selectedTheme;
     }
 
-    static void setThemeAccent(@NonNull final Activity activity, int accent) {
+    static void setThemeAccent(@NonNull final Activity activity, final int accent) {
         final SharedPreferences preferences = activity.getSharedPreferences(ACCENT_PREF, Context.MODE_PRIVATE);
         preferences.edit().putInt(ACCENT_VALUE, accent).apply();
         activity.recreate();
@@ -167,6 +177,10 @@ public class Utils {
         } catch (Exception e) {
             e.printStackTrace();
             accent = R.color.blue;
+            //if resource is not found, it means the developer changed resources names
+            //when updating the app. This way, we will fix the preference
+            final SharedPreferences preferences = context.getSharedPreferences(ACCENT_PREF, Context.MODE_PRIVATE);
+            preferences.edit().putInt(ACCENT_VALUE, accent).apply();
         }
         return accent;
     }

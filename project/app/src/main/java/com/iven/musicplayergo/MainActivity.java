@@ -23,7 +23,6 @@ import android.support.annotation.NonNull;
 import android.support.design.card.MaterialCardView;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -219,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private void getViews() {
 
         mControlsContainer = findViewById(R.id.controls_container);
-        findViewById(R.id.context_view).setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(this, mAccent), sThemeInverted ? 10 : 40));
+        findViewById(R.id.context_view).setBackgroundColor(ColorUtils.setAlphaComponent(Utils.getColorFromResource(this, mAccent, R.color.blue), sThemeInverted ? 10 : 40));
 
         MaterialCardView bottomSheetLayout = findViewById(R.id.design_bottom_sheet);
         mBottomSheetBehaviour = BottomSheetBehavior.from(bottomSheetLayout);
@@ -362,7 +361,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                         if (fromUser) {
                             userSelectedPosition = progress;
-                            mSongPosition.setTextColor(ContextCompat.getColor(MainActivity.this, mAccent));
+                            mSongPosition.setTextColor(Utils.getColorFromResource(MainActivity.this, mAccent, R.color.blue));
                         }
                         mSongPosition.setText(Song.formatDuration(progress));
                     }
@@ -458,13 +457,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         getSupportLoaderManager().initLoader(ArtistProvider.ARTISTS_LOADER, null, this);
     }
 
-    private void updateResetStatus(boolean onPlaybackCompletion) {
+    private void updateResetStatus(final boolean onPlaybackCompletion) {
         final int themeColor = sThemeInverted ? R.color.white : R.color.black;
         final int color = onPlaybackCompletion ? themeColor : mPlayerAdapter.isReset() ? mAccent : themeColor;
         mSkipPrevButton.post(new Runnable() {
             @Override
             public void run() {
-                mSkipPrevButton.setColorFilter(ContextCompat.getColor(MainActivity.this, color), PorterDuff.Mode.SRC_IN);
+                mSkipPrevButton.setColorFilter(Utils.getColorFromResource(MainActivity.this, color, onPlaybackCompletion ? themeColor : mPlayerAdapter.isReset() ? R.color.blue : themeColor), PorterDuff.Mode.SRC_IN);
             }
         });
     }
