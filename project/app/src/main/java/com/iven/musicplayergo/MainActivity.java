@@ -20,13 +20,13 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.design.card.MaterialCardView;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spanned;
@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mControlsContainer = findViewById(R.id.controls_container);
         findViewById(R.id.context_view).setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(this, mAccent), sThemeInverted ? 10 : 40));
 
-        CardView bottomSheetLayout = findViewById(R.id.design_bottom_sheet);
+        MaterialCardView bottomSheetLayout = findViewById(R.id.design_bottom_sheet);
         mBottomSheetBehaviour = BottomSheetBehavior.from(bottomSheetLayout);
         mArtistDetails = findViewById(R.id.artist_details);
         mPlayerInfoView = findViewById(R.id.player_info);
@@ -616,7 +616,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onArtistSelected(@NonNull final String artist) {
 
         if (!mSelectedArtist.equals(artist)) {
-
             //make the panel expandable
             sExpandArtistDiscography = true;
             mPlayerAdapter.setSelectedAlbum(null);
@@ -624,7 +623,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             //load artist albums only if not already loaded
             mSelectedArtist = artist;
             setArtistDetails(ArtistProvider.getArtist(mArtists, mSelectedArtist).albums);
-
         } else {
             //if already loaded expand the panel
             revealView(mArtistDetails, mArtistsRecyclerView, true);
