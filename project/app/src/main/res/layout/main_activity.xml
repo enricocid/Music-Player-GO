@@ -1,27 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:scroller="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/context_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.iven.musicplayergo.MainActivity">
+    tools:context=".MainActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <!-- ARTISTS LIST -->
-        <com.iven.musicplayergo.roundedfastscroller.RoundedFastScrollRecyclerView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/artists_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            scroller:roundedFastScrollPopupBgColor="?attr/colorAccent"
-            scroller:roundedFastScrollPopupTextColor="?attr/popup_text_color"
-            scroller:roundedFastScrollThumbColor="?attr/colorAccent"
-            scroller:roundedFastScrollThumbInactiveColor="?attr/colorAccent"
-            tools:context="com.iven.musicplayergo.MainActivity" />
+            tools:context=".MainActivity" />
 
         <!-- ARTIST'S DISCOGRAPHY -->
         <include layout="@layout/artist_discography" />

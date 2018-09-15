@@ -86,68 +86,68 @@ public class Utils {
 
         switch (accent) {
 
-            case R.color.red_A400:
+            case R.color.red:
                 selectedTheme = isThemeDark ? R.style.AppThemeRedInverted : R.style.AppThemeRed;
                 break;
 
-            case R.color.pink_A400:
+            case R.color.pink:
                 selectedTheme = isThemeDark ? R.style.AppThemePinkInverted : R.style.AppThemePink;
                 break;
 
-            case R.color.purple_A400:
+            case R.color.purple:
                 selectedTheme = isThemeDark ? R.style.AppThemePurpleInverted : R.style.AppThemePurple;
                 break;
 
-            case R.color.deep_purple_A400:
+            case R.color.deep_purple:
                 selectedTheme = isThemeDark ? R.style.AppThemeDeepPurpleInverted : R.style.AppThemeDeepPurple;
                 break;
 
-            case R.color.indigo_A400:
+            case R.color.indigo:
                 selectedTheme = isThemeDark ? R.style.AppThemeIndigoInverted : R.style.AppThemeIndigo;
                 break;
 
-            case R.color.blue_A400:
+            case R.color.blue:
                 selectedTheme = isThemeDark ? R.style.AppThemeBlueInverted : R.style.AppThemeBlue;
                 break;
 
             default:
-            case R.color.light_blue_A400:
+            case R.color.light_blue:
                 selectedTheme = isThemeDark ? R.style.AppThemeLightBlueInverted : R.style.AppThemeLightBlue;
                 break;
 
-            case R.color.cyan_A400:
+            case R.color.cyan:
                 selectedTheme = isThemeDark ? R.style.AppThemeCyanInverted : R.style.AppThemeCyan;
                 break;
 
-            case R.color.teal_A400:
+            case R.color.teal:
                 selectedTheme = isThemeDark ? R.style.AppThemeTealInverted : R.style.AppThemeTeal;
                 break;
 
-            case R.color.green_A400:
+            case R.color.green:
                 selectedTheme = isThemeDark ? R.style.AppThemeGreenInverted : R.style.AppThemeGreen;
                 break;
 
-            case R.color.amber_A400:
+            case R.color.amber:
                 selectedTheme = isThemeDark ? R.style.AppThemeAmberInverted : R.style.AppThemeAmber;
                 break;
 
-            case R.color.orange_A400:
+            case R.color.orange:
                 selectedTheme = isThemeDark ? R.style.AppThemeOrangeInverted : R.style.AppThemeOrange;
                 break;
 
-            case R.color.deep_orange_A400:
+            case R.color.deep_orange:
                 selectedTheme = isThemeDark ? R.style.AppThemeDeepOrangeInverted : R.style.AppThemeDeepOrange;
                 break;
 
-            case R.color.brown_400:
+            case R.color.brown:
                 selectedTheme = isThemeDark ? R.style.AppThemeBrownInverted : R.style.AppThemeBrown;
                 break;
 
-            case R.color.gray_400:
+            case R.color.gray:
                 selectedTheme = isThemeDark ? R.style.AppThemeGrayLightInverted : R.style.AppThemeGrayLight;
                 break;
 
-            case R.color.blue_gray_400:
+            case R.color.blue_gray:
                 selectedTheme = isThemeDark ? R.style.AppThemeBlueGrayInverted : R.style.AppThemeBlueGray;
                 break;
         }
@@ -163,10 +163,10 @@ public class Utils {
     static int getAccent(@NonNull final Context context) {
         int accent;
         try {
-            accent = context.getSharedPreferences(ACCENT_PREF, Context.MODE_PRIVATE).getInt(ACCENT_VALUE, R.color.blue_A400);
+            accent = context.getSharedPreferences(ACCENT_PREF, Context.MODE_PRIVATE).getInt(ACCENT_VALUE, R.color.blue);
         } catch (Exception e) {
             e.printStackTrace();
-            accent = R.color.blue_A400;
+            accent = R.color.blue;
         }
         return accent;
     }

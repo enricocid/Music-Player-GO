@@ -12,11 +12,10 @@ import android.widget.TextView;
 import com.iven.musicplayergo.R;
 import com.iven.musicplayergo.Utils;
 import com.iven.musicplayergo.models.Artist;
-import com.iven.musicplayergo.roundedfastscroller.RoundedFastScrollRecyclerView;
 
 import java.util.List;
 
-public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleViewHolder> implements RoundedFastScrollRecyclerView.SectionedAdapter {
+public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleViewHolder> {
 
     private final Activity mActivity;
     private final List<Artist> mArtists;
@@ -26,12 +25,6 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
         mActivity = activity;
         mArtists = artists;
         mArtistSelectedListener = (ArtistSelectedListener) activity;
-    }
-
-    @NonNull
-    @Override
-    public String getSectionName(int position) {
-        return mArtists.get(position).getName().substring(0, 1);
     }
 
     @Override

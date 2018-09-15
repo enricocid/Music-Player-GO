@@ -2,25 +2,23 @@
 <resources>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="rounded_thumb_default_color">#79000000</color>
-    <color name="rounded_track_default_color">#28000000</color>
 
     <color name="light">#FAFAFA</color>
     <color name="inverted">#060606</color>
-    <color name="red_A400">#FF1744</color> <!-- LIGHT -->
-    <color name="pink_A400">#F50057</color> <!-- LIGHT -->
-    <color name="purple_A400">#D500F9</color> <!-- LIGHT -->
-    <color name="deep_purple_A400">#651FFF</color> <!-- LIGHT -->
-    <color name="indigo_A400">#3D5AFE</color> <!-- LIGHT -->
-    <color name="blue_A400">#2979FF</color> <!-- LIGHT -->
-    <color name="light_blue_A400">#00B0FF</color> <!-- DARK -->
-    <color name="cyan_A400">#00E5FF</color> <!-- DARK -->
-    <color name="teal_A400">#1DE9B6</color> <!-- DARK -->
-    <color name="green_A400">#00E676</color> <!-- DARK -->
-    <color name="amber_A400">#FFC400</color> <!-- DARK -->
-    <color name="orange_A400">#FF9100</color> <!-- DARK -->
-    <color name="deep_orange_A400">#FF3D00</color> <!-- LIGHT -->
-    <color name="brown_400">#8D6E63</color> <!-- LIGHT -->
-    <color name="gray_400">#BDBDBD</color> <!-- DARK -->
-    <color name="blue_gray_400">#78909C</color> <!-- LIGHT -->
+    <color name="red">#EF9A9A</color>
+    <color name="pink">#F48FB1</color>
+    <color name="purple">#CE93D8</color>
+    <color name="deep_purple">#B39DDB</color>
+    <color name="indigo">#9FA8DA</color>
+    <color name="blue">#90CAF9</color>
+    <color name="light_blue">#81D4FA</color>
+    <color name="cyan">#80DEEA</color>
+    <color name="teal">#80CBC4</color>
+    <color name="green">#A5D6A7</color>
+    <color name="amber">#C5E1A5</color>
+    <color name="orange">#FFCC80</color>
+    <color name="deep_orange">#FFAB91</color>
+    <color name="brown">#BCAAA4</color>
+    <color name="gray">#BDBDBD</color>
+    <color name="blue_gray">#B0BEC5</color>
 </resources>

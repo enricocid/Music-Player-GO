@@ -7,6 +7,7 @@
         <item name="theme_icon">@drawable/ic_invert_theme</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:navigationBarColor">@color/inverted</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogStyleLight</item>
     </style>
 
     <!-- INVERTED THEME -->
@@ -16,5 +17,18 @@
         <item name="theme_icon">@drawable/ic_invert_theme_off</item>
         <item name="android:windowBackground">@color/black</item>
         <item name="android:navigationBarColor">@color/inverted</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogStyleInverted</item>
+    </style>
+
+    <style name="AlertDialogStyleLight" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="android:colorAccent">?attr/colorAccent</item>
+        <item name="android:background">@color/light</item>
+        <item name="android:fontFamily">@font/raleway_medium</item>
+    </style>
+
+    <style name="AlertDialogStyleInverted" parent="Theme.MaterialComponents.Dialog.Alert">
+        <item name="android:colorAccent">?attr/colorAccent</item>
+        <item name="android:background">@color/inverted</item>
+        <item name="android:fontFamily">@font/raleway_medium</item>
     </style>
 </resources>

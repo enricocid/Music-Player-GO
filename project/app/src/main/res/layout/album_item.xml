@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="@dimen/album_width"
@@ -21,23 +20,25 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:ellipsize="end"
+            android:fontFamily="@font/raleway_medium"
             android:gravity="center"
             android:maxLines="4"
             android:padding="2dp"
             android:textAlignment="center"
-            android:textAppearance="@android:style/TextAppearance.Material.Small"
-            android:textColor="?android:textColorSecondary" />
+            android:textColor="?android:textColorSecondary"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/year"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway_semibold"
             android:gravity="center"
             android:paddingBottom="2dp"
             android:singleLine="true"
             android:textAlignment="center"
-            android:textAppearance="@android:style/TextAppearance.Material.Caption"
             android:textColor="?attr/colorAccent"
+            android:textSize="12sp"
             android:textStyle="bold" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

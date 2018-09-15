@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -7,9 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
-    card_view:cardBackgroundColor="?attr/secondary_bg_color"
+    card_view:cardBackgroundColor="?android:attr/windowBackground"
     card_view:cardCornerRadius="@dimen/bottom_sheet_corner_radius"
-    card_view:cardElevation="@dimen/bottom_sheet_corner_radius">
+    card_view:cardElevation="24dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,8 +23,8 @@
             android:focusable="true"
             android:orientation="vertical"
             android:paddingBottom="16dp"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
             android:paddingTop="8dp">
 
             <LinearLayout
@@ -42,33 +41,36 @@
                     android:layout_marginEnd="2dp"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:padding="2dp">
+                    android:paddingEnd="2dp"
+                    android:paddingStart="8dp">
 
                     <TextView
                         android:id="@+id/playing_song"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="marquee"
+                        android:fontFamily="@font/raleway"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:scrollHorizontally="true"
                         android:singleLine="true"
                         android:text="@string/app_name"
                         android:textAlignment="textStart"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="?android:attr/textColorPrimary" />
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/playing_album"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="marquee"
+                        android:fontFamily="@font/raleway_semibold"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:scrollHorizontally="true"
                         android:singleLine="true"
                         android:text="@string/version"
                         android:textAlignment="textStart"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="?android:attr/textColorSecondary" />
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -112,7 +114,6 @@
 
                 </LinearLayout>
             </LinearLayout>
-
 
             <!-- PLAYER SEEK TO BAR -->
             <include layout="@layout/player_seek" />

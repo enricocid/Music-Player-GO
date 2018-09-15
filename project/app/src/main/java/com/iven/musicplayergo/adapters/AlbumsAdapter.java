@@ -2,6 +2,7 @@ package com.iven.musicplayergo.adapters;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -21,15 +22,13 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
     private final Activity mActivity;
     private final AlbumSelectedListener mAlbumSelectedListener;
     private final PlayerAdapter mPlayerAdapter;
-    private final int mAccent;
     private List<Album> mAlbums;
     private Album mSelectedAlbum;
 
-    public AlbumsAdapter(@NonNull final Activity activity, @NonNull final List<Album> albums, @NonNull final PlayerAdapter playerAdapter, final int accent) {
+    public AlbumsAdapter(@NonNull final Activity activity, @NonNull final List<Album> albums, @NonNull final PlayerAdapter playerAdapter) {
         mActivity = activity;
         mAlbums = albums;
         mPlayerAdapter = playerAdapter;
-        mAccent = accent;
         mAlbumSelectedListener = (AlbumSelectedListener) mActivity;
         updateAlbumsForArtist();
     }
@@ -66,6 +65,9 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
         final String albumTitle = album.getTitle();
         holder.title.setText(albumTitle);
         holder.year.setText(getYear(album.getYear()));
+        final int randomColor = ContextCompat.getColor(mActivity, ColorsAdapter.getRandomColor());
+        holder.container.setCardBackgroundColor(ColorUtils.setAlphaComponent(randomColor, 25));
+        holder.year.setTextColor(randomColor);
     }
 
     @Override
@@ -80,14 +82,14 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
     class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         final TextView title, year;
+        final CardView container;
 
         SimpleViewHolder(@NonNull final View itemView) {
             super(itemView);
 
+            container = (CardView) itemView;
             title = itemView.findViewById(R.id.album);
             year = itemView.findViewById(R.id.year);
-            final CardView cardContainer = (CardView) itemView;
-            cardContainer.setCardBackgroundColor(ColorUtils.setAlphaComponent(mAccent, 15));
             itemView.setOnClickListener(this);
         }
 

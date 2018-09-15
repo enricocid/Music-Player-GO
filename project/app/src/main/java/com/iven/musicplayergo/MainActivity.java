@@ -4,9 +4,11 @@ import android.Manifest;
 import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
@@ -19,7 +21,6 @@ import android.os.IBinder;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
@@ -54,7 +55,6 @@ import com.iven.musicplayergo.playback.MusicNotificationManager;
 import com.iven.musicplayergo.playback.MusicService;
 import com.iven.musicplayergo.playback.PlaybackInfoListener;
 import com.iven.musicplayergo.playback.PlayerAdapter;
-import com.iven.musicplayergo.roundedfastscroller.RoundedFastScrollRecyclerView;
 
 import java.util.Collections;
 import java.util.List;
@@ -64,11 +64,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private LinearLayoutManager mArtistsLayoutManager, mAlbumsLayoutManager, mSongsLayoutManager;
     private int mAccent;
     private boolean sThemeInverted;
-    private RoundedFastScrollRecyclerView mArtistsRecyclerView;
-    private RecyclerView mAlbumsRecyclerView, mSongsRecyclerView;
+    private RecyclerView mArtistsRecyclerView, mAlbumsRecyclerView, mSongsRecyclerView;
     private AlbumsAdapter mAlbumsAdapter;
     private SongsAdapter mSongsAdapter;
-    private TextView mPlayingAlbum, mPlayingSong, mDuration, mSongPosition, mArtistAlbumCount, mSelectedAlbum;
+    private TextView mPlayingAlbum, mPlayingSong, mDuration, mSongPosition, mSelectedDiscographyArtist, mSelectedArtistDiscCount, mSelectedDiscographyDisc, mSelectedDiscographyDiscYear;
+
     private SeekBar mSeekBarAudio;
     private LinearLayout mControlsContainer;
     private BottomSheetBehavior mBottomSheetBehaviour;
@@ -135,11 +135,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onBackPressed() {
-        //if the reveal view is expanded collapse it
-        if (sArtistDiscographyExpanded) {
-            revealView(mArtistDetails, mArtistsRecyclerView, false);
-        } else if (mBottomSheetBehaviour.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+        //if the bottom sheet is expanded collapse it
+        if (mBottomSheetBehaviour.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            //then collapse the artist discography view
+        } else if (sArtistDiscographyExpanded) {
+            revealView(mArtistDetails, mArtistsRecyclerView, false);
         } else {
             super.onBackPressed();
         }
@@ -159,25 +160,29 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @TargetApi(23)
     private void showPermissionRationale() {
-        View contextView = findViewById(R.id.context_view);
-
-        Snackbar.make(contextView, R.string.perm_rationale, Snackbar.LENGTH_INDEFINITE)
-                .setAction(android.R.string.ok, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Respond to the click, such as by undoing the modification that caused
-                        // this message to be displayed
+        final AlertDialog builder = new AlertDialog.Builder(this).create();
+        builder.setIcon(R.drawable.ic_folder);
+        builder.setTitle(getString(R.string.app_name));
+        builder.setMessage(getString(R.string.perm_rationale));
+        builder.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
                         final int READ_FILES_CODE = 2588;
                         requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}
                                 , READ_FILES_CODE);
                     }
-                })
-                .show();
+                });
+        builder.setCanceledOnTouchOutside(false);
+        try {
+            builder.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
         if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
             showPermissionRationale();
         } else {
@@ -210,12 +215,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private void getViews() {
 
         mControlsContainer = findViewById(R.id.controls_container);
+        findViewById(R.id.context_view).setBackgroundColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(this, mAccent), sThemeInverted ? 10 : 40));
+
         CardView bottomSheetLayout = findViewById(R.id.design_bottom_sheet);
         mBottomSheetBehaviour = BottomSheetBehavior.from(bottomSheetLayout);
         mArtistDetails = findViewById(R.id.artist_details);
         mPlayerInfoView = findViewById(R.id.player_info);
         mPlayingSong = findViewById(R.id.playing_song);
         mPlayingAlbum = findViewById(R.id.playing_album);
+
         setupPlayerInfoTouchBehaviour();
 
         mPlayPauseButton = findViewById(R.id.play_pause);
@@ -232,13 +240,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         mDuration = findViewById(R.id.duration);
         mSongPosition = findViewById(R.id.song_position);
-        mArtistAlbumCount = findViewById(R.id.artist_album_count);
-        mSelectedAlbum = findViewById(R.id.selected_disc);
+        mSelectedDiscographyArtist = findViewById(R.id.selected_discography_artist);
+        mSelectedArtistDiscCount = findViewById(R.id.selected_artist_album_count);
+        mSelectedDiscographyDisc = findViewById(R.id.selected_disc);
+        mSelectedDiscographyDiscYear = findViewById(R.id.selected_disc_year);
+
 
         mArtistsRecyclerView = findViewById(R.id.artists_rv);
-
-        mArtistsRecyclerView.setTrackColor(ColorUtils.setAlphaComponent(ContextCompat.getColor(this, mAccent), sThemeInverted ? 15 : 30));
-
         mAlbumsRecyclerView = findViewById(R.id.albums_rv);
         mSongsRecyclerView = findViewById(R.id.songs_rv);
 
@@ -280,11 +288,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onGlobalLayout() {
                 int controlsContainerHeight = mControlsContainer.getHeight();
-                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mArtistsRecyclerView.getLayoutParams();
-                layoutParams.bottomMargin = controlsContainerHeight;
-                mArtistsRecyclerView.setLayoutParams(layoutParams);
+
+                //add bottom margin to those recycler view to avoid they are covered by bottom sheet
+                FrameLayout.LayoutParams artistsLayoutParams = (FrameLayout.LayoutParams) mArtistsRecyclerView.getLayoutParams();
+                artistsLayoutParams.bottomMargin = controlsContainerHeight;
+
+                LinearLayout.LayoutParams songsLayoutParams = (LinearLayout.LayoutParams) mSongsRecyclerView.getLayoutParams();
+                songsLayoutParams.bottomMargin = controlsContainerHeight;
+
                 mBottomSheetBehaviour.setPeekHeight(controlsContainerHeight);
-                //mSettingsView.setMinimumHeight(controlsContainerHeight);
                 mControlsContainer.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
@@ -293,7 +305,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private void initializeSettings() {
         if (!EqualizerUtils.hasEqualizer(this)) {
             final ImageView eqButton = findViewById(R.id.eq);
-            eqButton.getDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+            eqButton.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
         }
         initializeColorsSettings();
     }
@@ -429,7 +441,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mSkipPrevButton.post(new Runnable() {
             @Override
             public void run() {
-                mSkipPrevButton.getDrawable().setColorFilter(ContextCompat.getColor(MainActivity.this, color), PorterDuff.Mode.SRC_IN);
+                mSkipPrevButton.setColorFilter(ContextCompat.getColor(MainActivity.this, color), PorterDuff.Mode.SRC_IN);
             }
         });
     }
@@ -564,12 +576,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         } else {
             mAlbumsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
             mAlbumsRecyclerView.setLayoutManager(mAlbumsLayoutManager);
-            mAlbumsAdapter = new AlbumsAdapter(this, albums, mPlayerAdapter, ContextCompat.getColor(this, mAccent));
+            mAlbumsAdapter = new AlbumsAdapter(this, albums, mPlayerAdapter);
             mAlbumsRecyclerView.setAdapter(mAlbumsAdapter);
         }
 
         mSelectedArtistSongs = SongProvider.getAllArtistSongs(albums);
-        Utils.updateTextView(mArtistAlbumCount, getString(R.string.albums, mSelectedArtist, albums.size()));
+        Utils.updateTextView(mSelectedDiscographyArtist, mSelectedArtist);
+        Utils.updateTextView(mSelectedArtistDiscCount, getString(R.string.albums, albums.size()));
 
         if (sExpandArtistDiscography) {
             revealView(mArtistDetails, mArtistsRecyclerView, true);
@@ -613,7 +626,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             setArtistDetails(ArtistProvider.getArtist(mArtists, mSelectedArtist).albums);
 
         } else {
-            expandArtistDetails(mArtistDetails);
+            revealView(mArtistDetails, mArtistsRecyclerView, !sArtistDiscographyExpanded);
             //if already loaded expand the panel
             revealView(mArtistDetails, mArtistsRecyclerView, true);
         }
@@ -621,7 +634,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onAlbumSelected(@NonNull final Album album) {
-        Utils.updateTextView(mSelectedAlbum, album.getTitle());
+        Utils.updateTextView(mSelectedDiscographyDisc, album.getTitle());
+        Utils.updateTextView(mSelectedDiscographyDiscYear, String.valueOf(album.getYear()));
+
         mPlayerAdapter.setSelectedAlbum(album);
         if (mSongsAdapter != null) {
             mSongsRecyclerView.scrollToPosition(0);
@@ -633,11 +648,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             mSongsRecyclerView.setAdapter(mSongsAdapter);
         }
     }
-
-    public void expandArtistDetails(View v) {
-        revealView(mArtistDetails, mArtistsRecyclerView, !sArtistDiscographyExpanded);
-    }
-
 
     private void revealView(final View viewToReveal, final View viewToHide, boolean show) {
 

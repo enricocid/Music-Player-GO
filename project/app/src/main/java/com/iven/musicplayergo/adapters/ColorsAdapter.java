@@ -11,36 +11,42 @@ import android.widget.ImageView;
 
 import com.iven.musicplayergo.R;
 
+import java.util.Random;
+
 public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleViewHolder> {
 
+    //fixed int array of accent colors
+    private static final int[] colors = new int[]{
+            R.color.red,
+            R.color.pink,
+            R.color.purple,
+            R.color.deep_purple,
+            R.color.indigo,
+            R.color.blue,
+            R.color.light_blue,
+            R.color.cyan,
+            R.color.teal,
+            R.color.green,
+            R.color.amber,
+            R.color.orange,
+            R.color.deep_orange,
+            R.color.brown,
+            R.color.gray,
+            R.color.blue_gray
+    };
     private final Activity mActivity;
     private final int mAccent;
     private final AccentChangedListener mOnAccentChangedListener;
-
-    //fixed int array of accent colors
-    private final int[] colors = new int[]{
-            R.color.red_A400,
-            R.color.pink_A400,
-            R.color.purple_A400,
-            R.color.deep_purple_A400,
-            R.color.indigo_A400,
-            R.color.blue_A400,
-            R.color.light_blue_A400,
-            R.color.cyan_A400,
-            R.color.teal_A400,
-            R.color.green_A400,
-            R.color.amber_A400,
-            R.color.orange_A400,
-            R.color.deep_orange_A400,
-            R.color.brown_400,
-            R.color.gray_400,
-            R.color.blue_gray_400
-    };
 
     public ColorsAdapter(@NonNull Activity activity, final int accent) {
         mActivity = activity;
         mAccent = accent;
         mOnAccentChangedListener = (AccentChangedListener) mActivity;
+    }
+
+    public static int getRandomColor() {
+        int rnd = new Random().nextInt(colors.length);
+        return colors[rnd];
     }
 
     @Override

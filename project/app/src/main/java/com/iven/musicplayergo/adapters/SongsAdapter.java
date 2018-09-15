@@ -1,16 +1,17 @@
 package com.iven.musicplayergo.adapters;
 
 import android.app.Activity;
+import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.iven.musicplayergo.R;
-import com.iven.musicplayergo.Utils;
 import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Song;
 
@@ -53,9 +54,13 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
         final String songTitle = song.title;
 
         final int songTrack = Song.formatTrack(song.trackNumber);
-        final Spanned spanned = Utils.buildSpanned(mActivity.getString(R.string.track_title, songTrack, songTitle));
-        holder.trackTitle.setText(spanned);
+
+        holder.track.setText(String.valueOf(songTrack));
+        holder.title.setText(songTitle);
         holder.duration.setText(Song.formatDuration(song.duration));
+        final int randomColor = ContextCompat.getColor(mActivity, ColorsAdapter.getRandomColor());
+        holder.foreground.setColorFilter(randomColor, PorterDuff.Mode.SRC_IN);
+        holder.duration.setTextColor(randomColor);
     }
 
     @Override
@@ -69,14 +74,18 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
 
     class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        final TextView trackTitle, duration;
+        final ImageView foreground;
+        final TextView track, title, duration;
 
         SimpleViewHolder(@NonNull final View itemView) {
             super(itemView);
 
-            trackTitle = itemView.findViewById(R.id.track_title);
+            foreground = itemView.findViewById(R.id.foreground);
+            track = itemView.findViewById(R.id.track);
+            title = itemView.findViewById(R.id.title);
             duration = itemView.findViewById(R.id.duration);
             itemView.setOnClickListener(this);
+
         }
 
         @Override

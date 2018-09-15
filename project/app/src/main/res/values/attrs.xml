@@ -2,14 +2,5 @@
 <resources>
     <attr name="icon_color" format="color" />
     <attr name="secondary_bg_color" format="color" />
-    <attr name="popup_text_color" format="color" />
     <attr name="theme_icon" format="color" />
-
-    <declare-styleable name="RoundedFastScrollRecyclerView">
-        <attr name="roundedFastScrollThumbColor" format="reference|color" />
-        <attr name="roundedFastScrollThumbInactiveColor" format="reference|color" />
-        <attr name="roundedFastScrollTrackColor" format="reference|color" />
-        <attr name="roundedFastScrollPopupBgColor" format="reference|color" />
-        <attr name="roundedFastScrollPopupTextColor" format="reference|color" />
-    </declare-styleable>
 </resources>

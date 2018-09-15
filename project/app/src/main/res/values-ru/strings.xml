@@ -1,5 +1,5 @@
 <resources>
-    <string name="albums">%s (альбомов: %d)</string>
+    <string name="albums">альбомов: %d</string>
     <string name="no_eq">Эквалайзер не обнаружен!</string>
     <string name="bad_id">Сначала выберите песню!</string>
     <string name="no_browser">Браузер не найден!</string>

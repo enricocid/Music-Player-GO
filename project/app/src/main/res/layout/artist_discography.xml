@@ -1,29 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/artist_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/windowBackground"
     android:orientation="vertical"
     android:visibility="invisible">
 
-    <!-- ARTIST + ALBUM COUNT -->
+    <!-- ARTIST -->
     <TextView
-        android:id="@+id/artist_album_count"
+        android:id="@+id/selected_discography_artist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        android:drawablePadding="4dp"
-        android:drawableStart="@drawable/ic_shuffle_artist"
         android:ellipsize="end"
+        android:fontFamily="@font/raleway_black"
         android:foreground="?android:attr/selectableItemBackground"
-        android:onClick="shuffleSongs"
-        android:padding="4dp"
+        android:gravity="center"
+        android:paddingBottom="2dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
         android:singleLine="true"
+        android:textAlignment="center"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="20sp" />
+
+    <!-- ALBUM COUNT -->
+    <TextView
+        android:id="@+id/selected_artist_album_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/raleway_semibold"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textAlignment="center"
         android:textAllCaps="true"
-        android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-        android:textColor="?attr/colorAccent"
-        android:textStyle="bold" />
+        android:textColor="?android:textColorPrimary"
+        android:textSize="12sp" />
 
     <!-- ALBUMS -->
     <android.support.v7.widget.RecyclerView
@@ -32,35 +49,69 @@
         android:layout_height="wrap_content"
         android:overScrollMode="never" />
 
-    <!-- SELECTED DISC -->
-    <TextView
-        android:id="@+id/selected_disc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:ellipsize="end"
-        android:paddingEnd="4dp"
-        android:paddingStart="4dp"
-        android:paddingTop="4dp"
-        android:singleLine="true"
-        android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-        android:textColor="?attr/colorAccent"
-        android:textStyle="bold" />
-
-    <!-- DISC SONGS -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/songs_rv"
+    <android.support.v7.widget.CardView
+        android:id="@+id/songs_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="1"
-        android:overScrollMode="never" />
+        card_view:cardBackgroundColor="?attr/secondary_bg_color"
+        card_view:cardCornerRadius="8dp"
+        card_view:cardElevation="2dp">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/app_name"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:onClick="expandArtistDetails"
-        android:rotation="180"
-        android:src="@drawable/ic_expand_more" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!-- SELECTED DISC -->
+            <TextView
+                android:id="@+id/selected_disc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/raleway_black_italic"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:paddingTop="8dp"
+                android:singleLine="true"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="16sp" />
+
+            <!-- ALBUM YEAR -->
+            <TextView
+                android:id="@+id/selected_disc_year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/raleway_semibold"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:alpha="0.25"
+                android:background="?android:attr/listDivider" />
+
+            <!-- DISC SONGS -->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/songs_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 </LinearLayout>
