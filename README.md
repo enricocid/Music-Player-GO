@@ -35,7 +35,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 - Awesome typeface: Raleway + Roboto condensed
 - Bottom sheet panel containing the player controls:
   - Player info (on click You can expand the artist details;
-  - Skip to previous song;
+  - Skip to previous song (long click to enable reset 1x);
   - Play/pause;
   - Skip to next song;
   - Settings (when expanded);
