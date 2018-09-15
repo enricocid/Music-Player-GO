@@ -45,6 +45,8 @@ import com.iven.musicplayergo.adapters.AlbumsAdapter;
 import com.iven.musicplayergo.adapters.ArtistsAdapter;
 import com.iven.musicplayergo.adapters.ColorsAdapter;
 import com.iven.musicplayergo.adapters.SongsAdapter;
+import com.iven.musicplayergo.indexbar.IndexBarRecyclerView;
+import com.iven.musicplayergo.indexbar.IndexBarView;
 import com.iven.musicplayergo.loaders.ArtistProvider;
 import com.iven.musicplayergo.loaders.SongProvider;
 import com.iven.musicplayergo.models.Album;
@@ -64,7 +66,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private LinearLayoutManager mArtistsLayoutManager, mAlbumsLayoutManager, mSongsLayoutManager;
     private int mAccent;
     private boolean sThemeInverted;
-    private RecyclerView mArtistsRecyclerView, mAlbumsRecyclerView, mSongsRecyclerView;
+    private IndexBarRecyclerView mArtistsRecyclerView;
+    private RecyclerView mAlbumsRecyclerView, mSongsRecyclerView;
+    private ArtistsAdapter mArtistsAdapter;
     private AlbumsAdapter mAlbumsAdapter;
     private SongsAdapter mSongsAdapter;
     private TextView mPlayingAlbum, mPlayingSong, mDuration, mSongPosition, mSelectedDiscographyArtist, mSelectedArtistDiscCount, mSelectedDiscographyDisc, mSelectedDiscographyDiscYear;
@@ -245,7 +249,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mSelectedDiscographyDisc = findViewById(R.id.selected_disc);
         mSelectedDiscographyDiscYear = findViewById(R.id.selected_disc_year);
 
-
         mArtistsRecyclerView = findViewById(R.id.artists_rv);
         mAlbumsRecyclerView = findViewById(R.id.albums_rv);
         mSongsRecyclerView = findViewById(R.id.songs_rv);
@@ -319,8 +322,28 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private void setArtistsRecyclerView(@NonNull final List<Artist> data) {
         mArtistsLayoutManager = new LinearLayoutManager(this);
         mArtistsRecyclerView.setLayoutManager(mArtistsLayoutManager);
-        final ArtistsAdapter artistsAdapter = new ArtistsAdapter(this, data);
-        mArtistsRecyclerView.setAdapter(artistsAdapter);
+        mArtistsAdapter = new ArtistsAdapter(this, data);
+        mArtistsRecyclerView.setAdapter(mArtistsAdapter);
+        // Set the FastScroller only if the RecyclerView is scrollable;
+        setScrollerIfRecyclerViewScrollable();
+    }
+
+    private void setScrollerIfRecyclerViewScrollable() {
+
+        // ViewTreeObserver allows us to measure the layout params
+        final ViewTreeObserver observer = mArtistsRecyclerView.getViewTreeObserver();
+        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+
+                int h = mArtistsRecyclerView.getHeight();
+                mArtistsRecyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                if (mArtistsRecyclerView.computeVerticalScrollRange() > h) {
+                    IndexBarView indexBarView = new IndexBarView(mArtistsRecyclerView, mArtistsAdapter, mArtistsLayoutManager, sThemeInverted);
+                    mArtistsRecyclerView.setFastScroller(indexBarView);
+                }
+            }
+        });
     }
 
     private void initializeSeekBar() {

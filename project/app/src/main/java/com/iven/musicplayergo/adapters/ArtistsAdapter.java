@@ -13,18 +13,41 @@ import com.iven.musicplayergo.R;
 import com.iven.musicplayergo.Utils;
 import com.iven.musicplayergo.models.Artist;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleViewHolder> {
 
     private final Activity mActivity;
     private final List<Artist> mArtists;
     private final ArtistSelectedListener mArtistSelectedListener;
+    private final HashMap<Integer, String> mIndexedPositions = new LinkedHashMap<>();
 
     public ArtistsAdapter(@NonNull Activity activity, List<Artist> artists) {
         mActivity = activity;
         mArtists = artists;
         mArtistSelectedListener = (ArtistSelectedListener) activity;
+        generateIndexes();
+    }
+
+    public String[] getIndexes() {
+        return mIndexedPositions.values().toArray(new String[mIndexedPositions.values().size()]);
+    }
+
+    public int getIndexPosition(int currentSection) {
+        return mIndexedPositions.keySet().toArray(new Integer[mIndexedPositions.keySet().size()])[currentSection];
+    }
+
+    private void generateIndexes() {
+
+        for (int i = 0, size = mArtists.size(); i < size; i++) {
+            String section = mArtists.get(i).getName().substring(0, 1).toUpperCase(Locale.getDefault());
+            if (!mIndexedPositions.containsValue(section)) {
+                mIndexedPositions.put(i, section);
+            }
+        }
     }
 
     @Override

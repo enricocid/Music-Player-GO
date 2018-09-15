@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <!-- ARTISTS LIST -->
-        <android.support.v7.widget.RecyclerView
+        <com.iven.musicplayergo.indexbar.IndexBarRecyclerView
             android:id="@+id/artists_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
