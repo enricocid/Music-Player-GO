@@ -669,6 +669,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 
+    public void expandArtistDetails(View v) {
+        revealView(mArtistDetails, mArtistsRecyclerView, !sArtistDiscographyExpanded);
+    }
+
     private void revealView(final View viewToReveal, final View viewToHide, boolean show) {
 
         final int ANIMATION_DURATION = 500;
