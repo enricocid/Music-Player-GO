@@ -670,11 +670,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     public void expandArtistDetails(View v) {
-        if (mPlayerAdapter != null && mPlayerAdapter.isPlaying() && mPlayerAdapter.getCurrentSong() != null) {
-            onArtistSelected(mPlayerAdapter.getCurrentSong().artistName);
-        }
-        if (!sArtistDiscographyExpanded) {
-            revealView(mArtistDetails, mArtistsRecyclerView, true);
+        if (mPlayerAdapter != null && mPlayerAdapter.getCurrentSong() != null) {
+            if (!mPlayerAdapter.getCurrentSong().artistName.equals(mSelectedArtist)) {
+                onArtistSelected(mPlayerAdapter.getCurrentSong().artistName);
+            } else if (sArtistDiscographyExpanded) {
+                revealView(mArtistDetails, mArtistsRecyclerView, false);
+            } else {
+                revealView(mArtistDetails, mArtistsRecyclerView, false);
+            }
+        } else {
+            revealView(mArtistDetails, mArtistsRecyclerView, !sArtistDiscographyExpanded);
         }
     }
 
