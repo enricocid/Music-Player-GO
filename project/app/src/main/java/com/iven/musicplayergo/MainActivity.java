@@ -654,7 +654,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onAlbumSelected(@NonNull final Album album) {
         Utils.updateTextView(mSelectedDiscographyDisc, album.getTitle());
-        Utils.updateTextView(mSelectedDiscographyDiscYear, String.valueOf(album.getYear()));
+        Utils.updateTextView(mSelectedDiscographyDiscYear, Album.getYearForAlbum(this, album.getYear()));
 
         mPlayerAdapter.setSelectedAlbum(album);
         if (mSongsAdapter != null) {

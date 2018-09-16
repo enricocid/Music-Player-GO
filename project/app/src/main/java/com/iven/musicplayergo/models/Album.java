@@ -1,6 +1,9 @@
 package com.iven.musicplayergo.models;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
+
+import com.iven.musicplayergo.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,5 +39,9 @@ public class Album {
     @NonNull
     private Song getFirstSong() {
         return songs.isEmpty() ? Song.EMPTY_SONG : songs.get(0);
+    }
+
+    public static String getYearForAlbum(@NonNull final Context context, final int year) {
+        return year != 0 && year != -1 ? String.valueOf(year) : context.getString(R.string.unknown_year);
     }
 }

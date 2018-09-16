@@ -54,17 +54,13 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
         return new SimpleViewHolder(itemView);
     }
 
-    private String getYear(final int year) {
-        return year != 0 && year != -1 ? String.valueOf(year) : mActivity.getString(R.string.unknown_year);
-    }
-
     @Override
     public void onBindViewHolder(@NonNull SimpleViewHolder holder, int position) {
 
         final Album album = mAlbums.get(holder.getAdapterPosition());
         final String albumTitle = album.getTitle();
         holder.title.setText(albumTitle);
-        holder.year.setText(getYear(album.getYear()));
+        holder.year.setText(Album.getYearForAlbum(mActivity, album.getYear()));
         final int randomColor = ContextCompat.getColor(mActivity, ColorsAdapter.getRandomColor());
         holder.container.setCardBackgroundColor(ColorUtils.setAlphaComponent(randomColor, 25));
         holder.year.setTextColor(randomColor);
