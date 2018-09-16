@@ -12,7 +12,6 @@ import com.iven.musicplayergo.models.Song;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class SongProvider {
@@ -75,11 +74,7 @@ public class SongProvider {
 
     private static void sortSongsByTrack(List<Song> songs) {
 
-        Collections.sort(songs, new Comparator<Song>() {
-            public int compare(Song obj1, Song obj2) {
-                return Long.compare(obj1.trackNumber, obj2.trackNumber);
-            }
-        });
+        Collections.sort(songs, (obj1, obj2) -> Long.compare(obj1.trackNumber, obj2.trackNumber));
     }
 
     @NonNull
