@@ -56,7 +56,8 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     private NotificationReceiver mNotificationActionsReceiver;
     private MusicNotificationManager mMusicNotificationManager;
     private int mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK;
-    private boolean mPlayOnFocusGain;
+    private boolean sPlayOnFocusGain;
+
     private final AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener =
             new AudioManager.OnAudioFocusChangeListener() {
 
@@ -75,7 +76,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
                             // Lost audio focus, but will gain it back (shortly), so note whether
                             // playback should resume
                             mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK;
-                            mPlayOnFocusGain = isMediaPlayer() && mState == PlaybackInfoListener.State.PLAYING || mState == PlaybackInfoListener.State.RESUMED;
+                            sPlayOnFocusGain = isMediaPlayer() && mState == PlaybackInfoListener.State.PLAYING || mState == PlaybackInfoListener.State.RESUMED;
                             break;
                         case AudioManager.AUDIOFOCUS_LOSS:
                             // Lost audio focus, probably "permanently"
@@ -439,9 +440,9 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
             }
 
             // If we were playing when we lost focus, we need to resume playing.
-            if (mPlayOnFocusGain) {
+            if (sPlayOnFocusGain) {
                 resumeMediaPlayer();
-                mPlayOnFocusGain = false;
+                sPlayOnFocusGain = false;
             }
         }
     }

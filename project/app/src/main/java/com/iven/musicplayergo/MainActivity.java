@@ -492,7 +492,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         final Song selectedSong = mPlayerAdapter.getCurrentSong();
 
-        mSelectedArtist = selectedSong.artistName;
+        // mSelectedArtist = selectedSong.artistName;
         final int duration = selectedSong.duration;
         mSeekBarAudio.setMax(duration);
         Utils.updateTextView(mDuration, Song.formatDuration(duration));
@@ -533,10 +533,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         //if we are playing and the activity was restarted
         //update the controls panel
-        if (mPlayerAdapter != null && mPlayerAdapter.isMediaPlayer()) {
-
+        try {
+            mSelectedArtist = mPlayerAdapter.getCurrentSong().artistName;
+            mPlayerAdapter.setSelectedAlbum(null);
             mPlayerAdapter.onResumeActivity();
             updatePlayingInfo(true, false);
+        } catch (Exception e) {
+            mSelectedArtist = mArtists.get(0).getName();
         }
     }
 
@@ -580,7 +583,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             mArtists = artists;
             setArtistsRecyclerView(mArtists);
-            mSelectedArtist = mPlayerAdapter.getSelectedAlbum() != null ? mPlayerAdapter.getSelectedAlbum().getArtistName() : mArtists.get(0).getName();
+            restorePlayerStatus();
             setArtistDetails(ArtistProvider.getArtist(mArtists, mSelectedArtist).albums);
             if (mSavedArtistRecyclerLayoutState != null && mSavedAlbumsRecyclerLayoutState != null && mSavedSongRecyclerLayoutState != null) {
                 mArtistsLayoutManager.onRestoreInstanceState(mSavedArtistRecyclerLayoutState);
@@ -609,8 +612,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (sExpandArtistDiscography) {
             revealView(mArtistDetails, mArtistsRecyclerView, true);
             sExpandArtistDiscography = false;
-        } else {
-            restorePlayerStatus();
         }
     }
 
@@ -644,7 +645,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             //load artist albums only if not already loaded
             mSelectedArtist = artist;
-            setArtistDetails(ArtistProvider.getArtist(mArtists, mSelectedArtist).albums);
+            setArtistDetails(ArtistProvider.getArtist(mArtists, artist).albums);
         } else {
             //if already loaded expand the panel
             revealView(mArtistDetails, mArtistsRecyclerView, true);
@@ -669,7 +670,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     public void expandArtistDetails(View v) {
-        revealView(mArtistDetails, mArtistsRecyclerView, !sArtistDiscographyExpanded);
+        if (mPlayerAdapter != null && mPlayerAdapter.isPlaying() && mPlayerAdapter.getCurrentSong() != null) {
+            onArtistSelected(mPlayerAdapter.getCurrentSong().artistName);
+        }
+        if (!sArtistDiscographyExpanded) {
+            revealView(mArtistDetails, mArtistsRecyclerView, true);
+        }
     }
 
     private void revealView(final View viewToReveal, final View viewToHide, boolean show) {
