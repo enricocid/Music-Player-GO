@@ -29,6 +29,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -673,13 +674,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (mPlayerAdapter != null && mPlayerAdapter.getCurrentSong() != null) {
             if (!mPlayerAdapter.getCurrentSong().artistName.equals(mSelectedArtist)) {
                 onArtistSelected(mPlayerAdapter.getCurrentSong().artistName);
+                Log.d("1", "1");
             } else if (sArtistDiscographyExpanded) {
                 revealView(mArtistDetails, mArtistsRecyclerView, false);
+                Log.d("2", "2");
             } else {
-                revealView(mArtistDetails, mArtistsRecyclerView, false);
+                revealView(mArtistDetails, mArtistsRecyclerView, true);
+                Log.d("3", "3");
             }
         } else {
             revealView(mArtistDetails, mArtistsRecyclerView, !sArtistDiscographyExpanded);
+            Log.d("4", "4");
         }
     }
 
