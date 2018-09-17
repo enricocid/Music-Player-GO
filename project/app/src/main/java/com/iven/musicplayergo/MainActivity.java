@@ -2,13 +2,11 @@ package com.iven.musicplayergo;
 
 import android.Manifest;
 import android.animation.Animator;
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
@@ -167,15 +165,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         builder.setIcon(R.drawable.ic_folder);
         builder.setTitle(getString(R.string.app_name));
         builder.setMessage(getString(R.string.perm_rationale));
-        builder.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        final int READ_FILES_CODE = 2588;
-                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}
-                                , READ_FILES_CODE);
-                    }
-                });
+        builder.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok), (dialog, which) -> {
+            dialog.dismiss();
+            final int READ_FILES_CODE = 2588;
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}
+                    , READ_FILES_CODE);
+        });
         builder.setCanceledOnTouchOutside(false);
         try {
             builder.show();
@@ -232,12 +227,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mPlayPauseButton = findViewById(R.id.play_pause);
 
         mSkipPrevButton = findViewById(R.id.skip_prev);
-        mSkipPrevButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                setRepeat();
-                return false;
-            }
+        mSkipPrevButton.setOnLongClickListener(v -> {
+            setRepeat();
+            return false;
         });
         mSeekBarAudio = findViewById(R.id.seekTo);
 
@@ -257,30 +249,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     //https://stackoverflow.com/questions/6183874/android-detect-end-of-long-press
     private void setupPlayerInfoTouchBehaviour() {
-        mPlayerInfoView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (!sPlayerInfoLongPressed) {
-                    mPlayingSong.setSelected(true);
-                    mPlayingAlbum.setSelected(true);
-                    sPlayerInfoLongPressed = true;
-                }
-                return true;
+        mPlayerInfoView.setOnLongClickListener(v -> {
+            if (!sPlayerInfoLongPressed) {
+                mPlayingSong.setSelected(true);
+                mPlayingAlbum.setSelected(true);
+                sPlayerInfoLongPressed = true;
             }
+            return true;
         });
-        mPlayerInfoView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            @SuppressLint("ClickableViewAccessibility")
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (sPlayerInfoLongPressed) {
-                        mPlayingSong.setSelected(false);
-                        mPlayingAlbum.setSelected(false);
-                        sPlayerInfoLongPressed = false;
-                    }
+        mPlayerInfoView.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (sPlayerInfoLongPressed) {
+                    mPlayingSong.setSelected(false);
+                    mPlayingAlbum.setSelected(false);
+                    sPlayerInfoLongPressed = false;
                 }
-                return false;
             }
+            return false;
         });
     }
 
@@ -460,34 +445,19 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private void updateResetStatus(final boolean onPlaybackCompletion) {
         final int themeColor = sThemeInverted ? R.color.white : R.color.black;
         final int color = onPlaybackCompletion ? themeColor : mPlayerAdapter.isReset() ? mAccent : themeColor;
-        mSkipPrevButton.post(new Runnable() {
-            @Override
-            public void run() {
-                mSkipPrevButton.setColorFilter(Utils.getColorFromResource(MainActivity.this, color, onPlaybackCompletion ? themeColor : mPlayerAdapter.isReset() ? R.color.blue : themeColor), PorterDuff.Mode.SRC_IN);
-            }
-        });
+        mSkipPrevButton.post(() -> mSkipPrevButton.setColorFilter(Utils.getColorFromResource(MainActivity.this, color, onPlaybackCompletion ? themeColor : mPlayerAdapter.isReset() ? R.color.blue : themeColor), PorterDuff.Mode.SRC_IN));
     }
 
     private void updatePlayingStatus() {
         final int drawable = mPlayerAdapter.getState() != PlaybackInfoListener.State.PAUSED ? R.drawable.ic_pause : R.drawable.ic_play;
-        mPlayPauseButton.post(new Runnable() {
-            @Override
-            public void run() {
-                mPlayPauseButton.setImageResource(drawable);
-            }
-        });
+        mPlayPauseButton.post(() -> mPlayPauseButton.setImageResource(drawable));
     }
 
     private void updatePlayingInfo(boolean restore, boolean startPlay) {
 
         if (startPlay) {
             mPlayerAdapter.getMediaPlayer().start();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mMusicService.startForeground(MusicNotificationManager.NOTIFICATION_ID, mMusicNotificationManager.createNotification());
-                }
-            }, 250);
+            new Handler().postDelayed(() -> mMusicService.startForeground(MusicNotificationManager.NOTIFICATION_ID, mMusicNotificationManager.createNotification()), 250);
         }
 
         final Song selectedSong = mPlayerAdapter.getCurrentSong();
@@ -499,12 +469,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         final Spanned spanned = Utils.buildSpanned(getString(R.string.playing_song, mSelectedArtist, selectedSong.title));
 
-        mPlayingSong.post(new Runnable() {
-            @Override
-            public void run() {
-                mPlayingSong.setText(spanned);
-            }
-        });
+        mPlayingSong.post(() -> mPlayingSong.setText(spanned));
 
         Utils.updateTextView(mPlayingAlbum, selectedSong.albumName);
 
@@ -513,15 +478,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             updatePlayingStatus();
             updateResetStatus(false);
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    //stop foreground if coming from pause state
-                    if (mMusicService.isRestoredFromPause()) {
-                        mMusicService.stopForeground(false);
-                        mMusicService.getMusicNotificationManager().getNotificationManager().notify(MusicNotificationManager.NOTIFICATION_ID, mMusicService.getMusicNotificationManager().getNotificationBuilder().build());
-                        mMusicService.setRestoredFromPause(false);
-                    }
+            new Handler().postDelayed(() -> {
+                //stop foreground if coming from pause state
+                if (mMusicService.isRestoredFromPause()) {
+                    mMusicService.stopForeground(false);
+                    mMusicService.getMusicNotificationManager().getNotificationManager().notify(MusicNotificationManager.NOTIFICATION_ID, mMusicService.getMusicNotificationManager().getNotificationBuilder().build());
+                    mMusicService.setRestoredFromPause(false);
                 }
             }, 250);
         }

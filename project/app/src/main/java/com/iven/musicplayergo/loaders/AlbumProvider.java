@@ -8,7 +8,6 @@ import com.iven.musicplayergo.models.Song;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 class AlbumProvider {
@@ -28,11 +27,7 @@ class AlbumProvider {
     }
 
     private static void sortAlbums(@NonNull final List<Album> albums) {
-        Collections.sort(albums, new Comparator<Album>() {
-            public int compare(Album obj1, Album obj2) {
-                return Integer.compare(obj1.getYear(), obj2.getYear());
-            }
-        });
+        Collections.sort(albums, (obj1, obj2) -> Integer.compare(obj1.getYear(), obj2.getYear()));
     }
 
     private static Album getAlbum(@NonNull final List<Album> albums, final String albumName) {

@@ -242,12 +242,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
             mExecutor = Executors.newSingleThreadScheduledExecutor();
         }
         if (mSeekBarPositionUpdateTask == null) {
-            mSeekBarPositionUpdateTask = new Runnable() {
-                @Override
-                public void run() {
-                    updateProgressCallbackTask();
-                }
-            };
+            mSeekBarPositionUpdateTask = this::updateProgressCallbackTask;
         }
 
         mExecutor.scheduleAtFixedRate(

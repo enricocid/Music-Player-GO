@@ -11,7 +11,6 @@ import com.iven.musicplayergo.models.Song;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class ArtistProvider {
@@ -23,11 +22,7 @@ public class ArtistProvider {
     }
 
     private static void sortArtists(@NonNull final List<Artist> artists) {
-        Collections.sort(artists, new Comparator<Artist>() {
-            public int compare(Artist obj1, Artist obj2) {
-                return obj1.getName().compareToIgnoreCase(obj2.getName());
-            }
-        });
+        Collections.sort(artists, (obj1, obj2) -> obj1.getName().compareToIgnoreCase(obj2.getName()));
     }
 
     @NonNull

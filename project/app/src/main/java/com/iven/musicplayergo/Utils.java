@@ -12,7 +12,6 @@ import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
 import android.widget.TextView;
-
 public class Utils {
 
     private static final String ACCENT_PREF = "com.iven.musicplayergo.pref_accent";
@@ -186,11 +185,6 @@ public class Utils {
     }
 
     static void updateTextView(@NonNull final TextView textView, final String text) {
-        textView.post(new Runnable() {
-            @Override
-            public void run() {
-                textView.setText(text);
-            }
-        });
+        textView.post(() -> textView.setText(text));
     }
 }
