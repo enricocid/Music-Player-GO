@@ -62,10 +62,10 @@ Music Player GO can be [here](https://play.google.com/store/apps/details?id=com.
 
 If you have other questions to ask which are not listed in the above FAQ, kindly ask by creating an issue. We will be available to give answers to your questions.
 
-Music Player GO can be [here](https://play.google.com/store/apps/details?id=com.iven.musicplayergo) on the Google Play Store and [here](https://f-droid.org/repository/browse/?fdid=com.iven.musicplayergo) on F-Droid. 
 
 **I want to contribute to Your project but I get this error while building on Android Studio: 'Configuration on demand is not supported by the current version'. How to solve?**
 
 In Android Studio, just go to File -> Settings -> Build, Execution, Deployment -> Compiler and click to uncheck the configure on demand option, then click Ok and Sync Project with gradle files again (https://stackoverflow.com/a/49996317).
+
 
 If you have other questions to ask which are not listed in the above FAQ, kindly ask by creating an issue. We will be available to give answers to your questions.
