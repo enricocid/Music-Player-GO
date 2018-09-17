@@ -5,7 +5,7 @@
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
 
 ###### Very slim music player with low memory footprint!
-###### Current version: (79) 3.0.3
+###### Current version: (80) 3.0.4
 ###### Material Design Icon by Julian Javier Gomez, Axinen Design (https://plus.google.com/u/0/+AxinenDesign)
 
 
@@ -14,7 +14,7 @@
 
 # Screenshots
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v3_1.png) 
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v3_2.png) 
 
 
 # Download
@@ -71,14 +71,11 @@ Here is the fix: https://stackoverflow.com/a/49996317
 ### What does this cost?
 *Music Player GO will always be free! Anyway, you can still buy me a beer, an ice cream or something via [PayPal](https://www.paypal.me/enricocid) if You really liked it! :)*
 
-### Dependencies used: 
+### Dependencies/API used: 
 
   - Android Support Design (Material Design Components)
   - Android Support Library v4 core-utils;
   - Android Support Library v4 media-compat;
-  - RecyclerView v7;
-  - AppCompat v7;
-
 
 # Credits:
 
