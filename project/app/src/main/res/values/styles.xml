@@ -20,14 +20,12 @@
         <item name="android:alertDialogTheme">@style/AlertDialogStyleInverted</item>
     </style>
 
-    <style name="AlertDialogStyleLight" parent="Theme.MaterialComponents.Light.Dialog.Alert">
-        <item name="android:colorAccent">?attr/colorAccent</item>
+    <style name="AlertDialogStyleLight" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:background">@color/light</item>
         <item name="android:fontFamily">@font/raleway_medium</item>
     </style>
 
-    <style name="AlertDialogStyleInverted" parent="Theme.MaterialComponents.Dialog.Alert">
-        <item name="android:colorAccent">?attr/colorAccent</item>
+    <style name="AlertDialogStyleInverted" parent="Theme.AppCompat.Dialog.Alert">
         <item name="android:background">@color/inverted</item>
         <item name="android:fontFamily">@font/raleway_medium</item>
     </style>
