@@ -18,7 +18,7 @@
             tools:context=".MainActivity" />
 
         <!-- ARTIST'S DISCOGRAPHY -->
-        <include layout="@layout/artist_discography" />
+        <include layout="@layout/artist_details" />
     </FrameLayout>
 
     <!-- CONTROLS PANEL -->

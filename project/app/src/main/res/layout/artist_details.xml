@@ -7,40 +7,61 @@
     android:orientation="vertical"
     android:visibility="invisible">
 
-    <!-- ARTIST -->
-    <TextView
-        android:id="@+id/selected_discography_artist"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:ellipsize="end"
-        android:fontFamily="@font/raleway_black"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:gravity="center"
-        android:paddingBottom="2dp"
-        android:paddingEnd="16dp"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:singleLine="true"
-        android:textAlignment="center"
-        android:textColor="?android:textColorPrimary"
-        android:textSize="20sp" />
+        android:orientation="horizontal">
 
-    <!-- ALBUM COUNT -->
-    <TextView
-        android:id="@+id/selected_artist_album_count"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:ellipsize="end"
-        android:fontFamily="@font/raleway_semibold"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:gravity="center"
-        android:singleLine="true"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="?android:textColorPrimary"
-        android:textSize="12sp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:contentDescription="@string/app_name"
+            android:foreground="?android:attr/actionBarItemBackground"
+            android:onClick="closeArtistDetails"
+            android:padding="16dp"
+            android:src="@drawable/ic_arrow_back" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingBottom="4dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="8dp">
+            <!-- ARTIST -->
+            <TextView
+                android:id="@+id/selected_discography_artist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/raleway_black"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:paddingBottom="2dp"
+                android:paddingTop="8dp"
+                android:singleLine="true"
+                android:textAlignment="textStart"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="20sp" />
+
+            <!-- ALBUM COUNT -->
+            <TextView
+                android:id="@+id/selected_artist_album_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/raleway_semibold"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:singleLine="true"
+                android:textAlignment="textStart"
+                android:textAllCaps="true"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
 
     <!-- ALBUMS -->
     <android.support.v7.widget.RecyclerView
