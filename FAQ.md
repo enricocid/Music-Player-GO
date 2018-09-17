@@ -63,9 +63,10 @@ Music Player GO can be [here](https://play.google.com/store/apps/details?id=com.
 If you have other questions to ask which are not listed in the above FAQ, kindly ask by creating an issue. We will be available to give answers to your questions.
 
 
-**I want to contribute to Your project but I get this error while building on Android Studio: 'Configuration on demand is not supported by the current version'. How to solve?**
+**For developers:**
+Want to help, but You **get stuck** during the build process at **'Configuration on demand is not supported by the current version'** on Android Studio 3.x.x?
 
-In Android Studio, just go to File -> Settings -> Build, Execution, Deployment -> Compiler and click to uncheck the configure on demand option, then click Ok and Sync Project with gradle files again (https://stackoverflow.com/a/49996317).
+Here is the answer to Your problems: https://stackoverflow.com/a/49996317
 
 
 If you have other questions to ask which are not listed in the above FAQ, kindly ask by creating an issue. We will be available to give answers to your questions.

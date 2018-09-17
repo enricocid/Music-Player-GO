@@ -8,6 +8,12 @@
 ###### Current version: (78) 3.0.2.2
 ###### Material Design Icon by Julian Javier Gomez, Axinen Design (https://plus.google.com/u/0/+AxinenDesign)
 
+# For developers:
+Want to help, but You **get stuck** during the build process at **'Configuration on demand is not supported by the current version'** on Android Studio 3.x.x?
+
+Here is the answer to Your problems: https://stackoverflow.com/a/49996317
+
+
 
 ![ScreenShot](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/icon2.png) 
 
