@@ -82,7 +82,9 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
 - **IzzySoft** (https://github.com/IzzySoft) and **Poussinou** (https://github.com/Poussinou) for setting up the F-Droid repository
 
-- **Dankan1890** (https://github.com/dankan1890) for some fixes to bluetooth devices
+- **TacoTheDank** (@acoTheDank - https://github.com/TacoTheDank) for updates to gradle/java 1.8
+
+- **Dankan1890** (@dankan1890 - https://github.com/dankan1890) for some fixes to bluetooth devices
 
 - **Harry** (@HarryHeights - https://github.com/HarryHeights) for Privacy policy
 
