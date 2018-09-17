@@ -5,14 +5,8 @@
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
 
 ###### Very slim music player with low memory footprint!
-###### Current version: (78) 3.0.2.2
+###### Current version: (79) 3.0.3
 ###### Material Design Icon by Julian Javier Gomez, Axinen Design (https://plus.google.com/u/0/+AxinenDesign)
-
-# For developers:
-Want to help, but You **get stuck** during the build process at **'Configuration on demand is not supported by the current version'** on Android Studio 3.x.x?
-
-Here is the answer to Your problems: https://stackoverflow.com/a/49996317
-
 
 
 ![ScreenShot](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/icon2.png) 
@@ -67,6 +61,12 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 ### Minimal code:
 
 *Based on nothing: it was written from scratch besides few snippets here and there*
+
+### For developers:
+Want to help, but You **get stuck** during the build process at **'Configuration on demand is not supported by the current version'** on Android Studio 3.x.x?
+
+
+Here is the fix: https://stackoverflow.com/a/49996317
 
 ### What does this cost?
 *Music Player GO will always be free! Anyway, you can still buy me a beer, an ice cream or something via [PayPal](https://www.paypal.me/enricocid) if You really liked it! :)*
