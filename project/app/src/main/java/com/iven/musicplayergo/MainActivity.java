@@ -3,7 +3,6 @@ package com.iven.musicplayergo;
 import android.Manifest;
 import android.animation.Animator;
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
@@ -23,6 +22,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.graphics.ColorUtils;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +31,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -162,11 +164,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @TargetApi(23)
     private void showPermissionRationale() {
         final AlertDialog builder = new AlertDialog.Builder(this).create();
+        View view = View.inflate(this, R.layout.dialog_one_button, null);
         builder.setIcon(R.drawable.ic_folder);
-        builder.setTitle(getString(R.string.app_name));
-        builder.setMessage(getString(R.string.perm_rationale));
-        builder.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok), (dialog, which) -> {
-            dialog.dismiss();
+        builder.setView(view);
+        if (builder.getWindow() != null) {
+            builder.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        }
+        TextView title, message;
+        title = view.findViewById(R.id.title);
+        message = view.findViewById(R.id.message);
+        title.setText(getString(R.string.app_name));
+        message.setText(getString(R.string.perm_rationale));
+
+        Button positiveButton = view.findViewById(R.id.dlg_one_button_btn_ok);
+        positiveButton.setOnClickListener((View v) -> {
+            builder.dismiss();
             final int READ_FILES_CODE = 2588;
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}
                     , READ_FILES_CODE);

@@ -5,4 +5,5 @@
     <dimen name="album_width">120dp</dimen>
 
     <dimen name="bottom_sheet_corner_radius">16dp</dimen>
+    <dimen name="dlg_one_button_icon_size">96dp</dimen>
 </resources>

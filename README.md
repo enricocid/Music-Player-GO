@@ -93,6 +93,9 @@ Here is the fix: https://stackoverflow.com/a/49996317
 
 - **olayhemy** (ttps://github.com/olayhemy) for FAQ
 
+- **Bruno Trovo** (@brunotrovo - https://github.com/brunotrovo) for part of the custom dialog:
+https://medium.com/@brunotrovo/android-creating-custom-dialogs-201003052f1c
+
 - **Prabhakar Thota** (@myinnos - https://github.com/myinnos) for part of the alphabetic index bar code:
 https://github.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView
 
