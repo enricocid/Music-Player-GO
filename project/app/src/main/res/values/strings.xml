@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Music Player GO</string>
-    <string name="version" translatable="false">v3.0.4.1</string>
+    <string name="version" translatable="false">v3.0.5</string>
     <string name="albums">albums: %d</string>
     <string name="unknown_year" translatable="false">N&#x2F;A</string>
     <string name="no_eq">No equalizer found!</string>
