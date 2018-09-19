@@ -13,10 +13,8 @@ import android.os.PowerManager;
 import android.support.annotation.NonNull;
 
 import com.iven.musicplayergo.MainActivity;
-import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Song;
 
-import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -47,9 +45,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     private PlaybackInfoListener mPlaybackInfoListener;
     private ScheduledExecutorService mExecutor;
     private Runnable mSeekBarPositionUpdateTask;
-    private Song mSelectedSong;
-    private List<Song> mSongs;
-    private Album mSelectedAlbum;
+
     private boolean sReplaySong = false;
     private @PlaybackInfoListener.State
     int mState;
@@ -62,7 +58,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
             new AudioManager.OnAudioFocusChangeListener() {
 
                 @Override
-                public void onAudioFocusChange(int focusChange) {
+                public void onAudioFocusChange(final int focusChange) {
 
                     switch (focusChange) {
                         case AudioManager.AUDIOFOCUS_GAIN:
@@ -131,27 +127,6 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
         } else {
             unregisterActionsReceiver();
         }
-    }
-
-    @Override
-    public final Song getCurrentSong() {
-        return mSelectedSong;
-    }
-
-    @Override
-    public final Album getSelectedAlbum() {
-        return mSelectedAlbum;
-    }
-
-    @Override
-    public void setSelectedAlbum(Album album) {
-        mSelectedAlbum = album;
-    }
-
-    @Override
-    public void setCurrentSong(@NonNull final Song song, @NonNull final List<Song> songs) {
-        mSelectedSong = song;
-        mSongs = songs;
     }
 
     @Override
@@ -290,7 +265,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
      * not the constructor.
      */
     @Override
-    public void initMediaPlayer() {
+    public void initMediaPlayer(@NonNull final Song song) {
 
         try {
             if (mMediaPlayer != null) {
@@ -309,7 +284,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
                 mMusicNotificationManager = mMusicService.getMusicNotificationManager();
             }
             tryToGetAudioFocus();
-            mMediaPlayer.setDataSource(mSelectedSong.path);
+            mMediaPlayer.setDataSource(song.path);
             mMediaPlayer.prepare();
         } catch (Exception e) {
             e.printStackTrace();
@@ -387,18 +362,19 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     }
 
     private void getSkipSong(final boolean isNext) {
-        final int currentIndex = mSongs.indexOf(mSelectedSong);
+        final int currentIndex = PlayingInfoProvider.getSongsForPlayedArtist().indexOf(PlayingInfoProvider.getPlayedSong());
 
         int index;
+        Song song;
 
         try {
             index = isNext ? currentIndex + 1 : currentIndex - 1;
-            mSelectedSong = mSongs.get(index);
+            song = PlayingInfoProvider.getSongsForPlayedArtist().get(index);
         } catch (IndexOutOfBoundsException e) {
-            mSelectedSong = currentIndex != 0 ? mSongs.get(0) : mSongs.get(mSongs.size() - 1);
+            song = currentIndex != 0 ? PlayingInfoProvider.getSongsForPlayedArtist().get(0) : PlayingInfoProvider.getSongsForPlayedArtist().get(PlayingInfoProvider.getSongsForPlayedArtist().size() - 1);
             e.printStackTrace();
         }
-        initMediaPlayer();
+        initMediaPlayer(song);
     }
 
     @Override
@@ -445,7 +421,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     private class NotificationReceiver extends BroadcastReceiver {
 
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void onReceive(@NonNull final Context context, @NonNull final Intent intent) {
             // TODO Auto-generated method stub
             final String action = intent.getAction();
 
@@ -463,17 +439,17 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
                         break;
 
                     case BluetoothDevice.ACTION_ACL_DISCONNECTED:
-                        if (mSelectedSong != null) {
+                        if (PlayingInfoProvider.getPlayedSong() != null) {
                             pauseMediaPlayer();
                         }
                         break;
                     case BluetoothDevice.ACTION_ACL_CONNECTED:
-                        if (mSelectedSong != null && !isPlaying()) {
+                        if (PlayingInfoProvider.getPlayedSong() != null && !isPlaying()) {
                             resumeMediaPlayer();
                         }
                         break;
                     case Intent.ACTION_HEADSET_PLUG:
-                        if (mSelectedSong != null) {
+                        if (PlayingInfoProvider.getPlayedSong() != null) {
                             switch (intent.getIntExtra("state", -1)) {
                                 //0 means disconnected
                                 case 0:

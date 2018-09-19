@@ -78,7 +78,7 @@ public class SongProvider {
     }
 
     @NonNull
-    private static Song getSongFromCursorImpl(@NonNull Cursor cursor) {
+    private static Song getSongFromCursorImpl(@NonNull final Cursor cursor) {
         final String title = cursor.getString(TITLE);
         final int trackNumber = cursor.getInt(TRACK);
         final int year = cursor.getInt(YEAR);
@@ -92,7 +92,7 @@ public class SongProvider {
     }
 
     @Nullable
-    static Cursor makeSongCursor(@NonNull final Context context, final String sortOrder) {
+    static Cursor makeSongCursor(@NonNull final Context context, @NonNull final String sortOrder) {
         try {
             return context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                     BASE_PROJECTION, null, null, sortOrder);

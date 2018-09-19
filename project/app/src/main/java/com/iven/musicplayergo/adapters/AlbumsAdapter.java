@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.iven.musicplayergo.R;
 import com.iven.musicplayergo.models.Album;
-import com.iven.musicplayergo.playback.PlayerAdapter;
+import com.iven.musicplayergo.playback.PlayingInfoProvider;
 
 import java.util.List;
 
@@ -21,32 +21,20 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
 
     private final Activity mActivity;
     private final AlbumSelectedListener mAlbumSelectedListener;
-    private final PlayerAdapter mPlayerAdapter;
-    private List<Album> mAlbums;
     private Album mSelectedAlbum;
+    private List<Album> mAlbums;
 
-    public AlbumsAdapter(@NonNull final Activity activity, @NonNull final List<Album> albums, @NonNull final PlayerAdapter playerAdapter) {
+    public AlbumsAdapter(@NonNull final Activity activity, @NonNull final List<Album> albums, final boolean showPlayedArtist) {
         mActivity = activity;
         mAlbums = albums;
-        mPlayerAdapter = playerAdapter;
         mAlbumSelectedListener = (AlbumSelectedListener) mActivity;
-        updateAlbumsForArtist();
-    }
-
-    public void swapArtist(List<Album> albums) {
-        mAlbums = albums;
-        notifyDataSetChanged();
-        updateAlbumsForArtist();
-    }
-
-    private void updateAlbumsForArtist() {
-        mSelectedAlbum = mPlayerAdapter.getSelectedAlbum() != null ? mPlayerAdapter.getSelectedAlbum() : mAlbums.get(0);
+        mSelectedAlbum = showPlayedArtist ? PlayingInfoProvider.getPlayedAlbum() : PlayingInfoProvider.getNavigationAlbum() != null ? PlayingInfoProvider.getNavigationAlbum() : mAlbums.get(0);
         mAlbumSelectedListener.onAlbumSelected(mSelectedAlbum);
     }
 
     @Override
     @NonNull
-    public SimpleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SimpleViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
 
         final View itemView = LayoutInflater.from(mActivity)
                 .inflate(R.layout.album_item, parent, false);
@@ -55,7 +43,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SimpleViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final SimpleViewHolder holder, final int position) {
 
         final Album album = mAlbums.get(holder.getAdapterPosition());
         final String albumTitle = album.getTitle();
@@ -95,6 +83,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
             //update songs list only if the album is updated
             if (mAlbums.get(getAdapterPosition()) != mSelectedAlbum) {
                 mSelectedAlbum = mAlbums.get(getAdapterPosition());
+                PlayingInfoProvider.setNavigationAlbum(mSelectedAlbum);
                 mAlbumSelectedListener.onAlbumSelected(mSelectedAlbum);
             }
         }

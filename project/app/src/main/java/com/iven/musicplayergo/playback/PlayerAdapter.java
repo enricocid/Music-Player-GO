@@ -21,17 +21,14 @@ import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 
 import com.iven.musicplayergo.MainActivity;
-import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Song;
-
-import java.util.List;
 
 /**
  * Allows {@link MainActivity} to control media playback of {@link MediaPlayerHolder}.
  */
 public interface PlayerAdapter {
 
-    void initMediaPlayer();
+    void initMediaPlayer(@NonNull final Song song);
 
     void release();
 
@@ -55,20 +52,12 @@ public interface PlayerAdapter {
 
     void setPlaybackInfoListener(final PlaybackInfoListener playbackInfoListener);
 
-    Song getCurrentSong();
-
     @PlaybackInfoListener.State
     int getState();
 
     int getPlayerPosition();
 
     void registerNotificationActionsReceiver(final boolean isRegister);
-
-    Album getSelectedAlbum();
-
-    void setSelectedAlbum(final Album album);
-
-    void setCurrentSong(@NonNull final Song song, @NonNull final List<Song> songs);
 
     MediaPlayer getMediaPlayer();
 

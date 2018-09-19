@@ -3,6 +3,7 @@ package com.iven.musicplayergo.indexbar;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -13,7 +14,7 @@ public class IndexBarRecyclerView extends RecyclerView {
     private IndexBarView mScroller;
     private GestureDetector mGestureDetector = null;
 
-    public IndexBarRecyclerView(Context context) {
+    public IndexBarRecyclerView(@NonNull final Context context) {
         super(context);
     }
 
@@ -21,17 +22,17 @@ public class IndexBarRecyclerView extends RecyclerView {
         super(context, attrs);
     }
 
-    public IndexBarRecyclerView(Context context, AttributeSet attrs, int defStyle) {
+    public IndexBarRecyclerView(@NonNull final Context context, @NonNull final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
     }
 
-    public void setFastScroller(IndexBarView indexBarView) {
+    public void setFastScroller(@NonNull final IndexBarView indexBarView) {
         mScroller = indexBarView;
         mScroller.onSetScroller(this.getWidth(), this.getHeight());
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(@NonNull final Canvas canvas) {
         super.draw(canvas);
 
         // Overlay index bar
@@ -42,7 +43,7 @@ public class IndexBarRecyclerView extends RecyclerView {
 
     @Override
     @SuppressLint("ClickableViewAccessibility")
-    public boolean onTouchEvent(MotionEvent ev) {
+    public boolean onTouchEvent(@NonNull final MotionEvent ev) {
         // Intercept RecyclerView's touch event
         if (mScroller != null && mScroller.onTouchEvent(ev)) {
             return true;
@@ -62,7 +63,7 @@ public class IndexBarRecyclerView extends RecyclerView {
     }
 
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
+    public boolean onInterceptTouchEvent(@NonNull final MotionEvent ev) {
         return mScroller != null && mScroller.contains(ev.getX(), ev.getY()) || super.onInterceptTouchEvent(ev);
     }
 }

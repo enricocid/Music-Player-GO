@@ -1,5 +1,7 @@
 package com.iven.musicplayergo.models;
 
+import android.support.annotation.NonNull;
+
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -16,7 +18,7 @@ public class Song {
     public final String artistName;
     final int year;
 
-    public Song(final String title, final int trackNumber, final int year, final int duration, final String path, final String albumName, final int artistId, final String artistName) {
+    public Song(@NonNull final String title, final int trackNumber, final int year, final int duration, final String path, final String albumName, final int artistId, final String artistName) {
         this.title = title;
         this.trackNumber = trackNumber;
         this.year = year;
@@ -34,7 +36,7 @@ public class Song {
                         TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration)));
     }
 
-    public static int formatTrack(int trackNumber) {
+    public static int formatTrack(final int trackNumber) {
         int formatted = trackNumber;
         if (trackNumber >= 1000) {
             formatted = trackNumber % 1000;

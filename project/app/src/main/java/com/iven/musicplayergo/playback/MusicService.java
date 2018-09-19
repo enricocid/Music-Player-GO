@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 
 public class MusicService extends Service {
 
@@ -32,7 +33,7 @@ public class MusicService extends Service {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public int onStartCommand(@NonNull final Intent intent, final int flags, final int startId) {
         return START_NOT_STICKY;
     }
 
@@ -45,7 +46,7 @@ public class MusicService extends Service {
     }
 
     @Override
-    public IBinder onBind(Intent intent) {
+    public IBinder onBind(@NonNull final Intent intent) {
         if (mMediaPlayerHolder == null) {
             mMediaPlayerHolder = new MediaPlayerHolder(this);
             mMusicNotificationManager = new MusicNotificationManager(this);

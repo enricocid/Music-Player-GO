@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,6 +28,8 @@ public class IndexBarView extends RecyclerView.AdapterDataObserver {
     private final IndexBarRecyclerView mArtistsRecyclerView;
     private final ArtistsAdapter mArtistsAdapter;
     private final LinearLayoutManager mLinearLayoutManager;
+    private final Typeface mTypefaceIndexes, mTypefaceIndexesBold, mTypefacePreview;
+    private final Context mContext;
     private int mAccent;
     private int mArtistsRecyclerViewWidth;
     private int mArtistsRecyclerViewHeight;
@@ -34,10 +37,8 @@ public class IndexBarView extends RecyclerView.AdapterDataObserver {
     private String[] mSections;
     private boolean mIsIndexing;
     private int mCurrentSection = -1;
-    private final Typeface mTypefaceIndexes, mTypefaceIndexesBold, mTypefacePreview;
-    private final Context mContext;
 
-    public IndexBarView(IndexBarRecyclerView rv, ArtistsAdapter artistsAdapter, LinearLayoutManager linearLayoutManager, boolean isThemeInverted) {
+    public IndexBarView(@NonNull final IndexBarRecyclerView rv, @NonNull final ArtistsAdapter artistsAdapter, @NonNull final LinearLayoutManager linearLayoutManager, final boolean isThemeInverted) {
 
         mContext = rv.getContext();
         mArtistsRecyclerView = rv;
@@ -58,7 +59,7 @@ public class IndexBarView extends RecyclerView.AdapterDataObserver {
         mTypefacePreview = ResourcesCompat.getFont(mContext, R.font.raleway_semibold);
     }
 
-    void draw(Canvas canvas) {
+    void draw(@NonNull final Canvas canvas) {
 
         mSections = mArtistsAdapter.getIndexes();
         final int indexTextSize = 12;
@@ -126,7 +127,7 @@ public class IndexBarView extends RecyclerView.AdapterDataObserver {
         }
     }
 
-    boolean onTouchEvent(MotionEvent ev) {
+    boolean onTouchEvent(@NonNull final MotionEvent ev) {
         switch (ev.getAction()) {
 
             case MotionEvent.ACTION_DOWN:
@@ -169,7 +170,7 @@ public class IndexBarView extends RecyclerView.AdapterDataObserver {
         }
     }
 
-    void onSetScroller(int w, int h) {
+    void onSetScroller(final int w, final int h) {
         mArtistsRecyclerViewWidth = w;
         mArtistsRecyclerViewHeight = h;
 
@@ -179,12 +180,12 @@ public class IndexBarView extends RecyclerView.AdapterDataObserver {
                 , h);
     }
 
-    boolean contains(float x, float y) {
+    boolean contains(final float x, final float y) {
         // Determine if the point is in index bar region, which includes the right margin of the bar
         return mIndexBarRect != null && (x >= mIndexBarRect.left && y >= mIndexBarRect.top && y <= mIndexBarRect.top + mIndexBarRect.height());
     }
 
-    private int getSectionByPoint(float y) {
+    private int getSectionByPoint(final float y) {
         if (mSections == null || mSections.length == 0) {
             return 0;
         }

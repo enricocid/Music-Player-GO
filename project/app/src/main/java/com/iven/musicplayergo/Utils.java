@@ -12,6 +12,7 @@ import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
 import android.widget.TextView;
+
 public class Utils {
 
     private static final String ACCENT_PREF = "com.iven.musicplayergo.pref_accent";
@@ -23,7 +24,7 @@ public class Utils {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 
-    public static Spanned buildSpanned(final String res) {
+    public static Spanned buildSpanned(@NonNull final String res) {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N ?
                 Html.fromHtml(res, Html.FROM_HTML_MODE_LEGACY) :
                 Html.fromHtml(res);
@@ -69,7 +70,7 @@ public class Utils {
     //enable light status bar only for light colors according to
     //https://material.io/guidelines/style/color.html#color-color-palette
     @TargetApi(23)
-    private static void enableLightStatusBar(Activity activity, int accent) {
+    private static void enableLightStatusBar(@NonNull final Activity activity, final int accent) {
 
         final View decorView = activity.getWindow().getDecorView();
         final int oldSystemUiFlags = decorView.getSystemUiVisibility();
@@ -89,7 +90,7 @@ public class Utils {
     }
 
     //get theme
-    private static int resolveTheme(boolean isThemeDark, int accent) {
+    private static int resolveTheme(final boolean isThemeDark, final int accent) {
 
         int selectedTheme;
 
@@ -184,7 +185,7 @@ public class Utils {
         return accent;
     }
 
-    static void updateTextView(@NonNull final TextView textView, final String text) {
+    static void updateTextView(@NonNull final TextView textView, @NonNull final String text) {
         textView.post(() -> textView.setText(text));
     }
 }

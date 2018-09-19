@@ -25,7 +25,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
     private final ArtistSelectedListener mArtistSelectedListener;
     private final HashMap<Integer, String> mIndexedPositions = new LinkedHashMap<>();
 
-    public ArtistsAdapter(@NonNull Activity activity, List<Artist> artists) {
+    public ArtistsAdapter(@NonNull final Activity activity, @NonNull final List<Artist> artists) {
         mActivity = activity;
         mArtists = artists;
         mArtistSelectedListener = (ArtistSelectedListener) activity;
@@ -36,12 +36,11 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
         return mIndexedPositions.values().toArray(new String[mIndexedPositions.values().size()]);
     }
 
-    public int getIndexPosition(int currentSection) {
+    public int getIndexPosition(final int currentSection) {
         return mIndexedPositions.keySet().toArray(new Integer[mIndexedPositions.keySet().size()])[currentSection];
     }
 
     private void generateIndexes() {
-
         for (int i = 0, size = mArtists.size(); i < size; i++) {
             String section = mArtists.get(i).getName().substring(0, 1).toUpperCase(Locale.getDefault());
             if (!mIndexedPositions.containsValue(section)) {
@@ -52,7 +51,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
 
     @Override
     @NonNull
-    public SimpleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SimpleViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
 
         View itemView = LayoutInflater.from(mActivity)
                 .inflate(R.layout.artist_item, parent, false);
@@ -61,7 +60,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SimpleViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final SimpleViewHolder holder, final int position) {
 
         Artist artist = mArtists.get(holder.getAdapterPosition());
         holder.title.setText(artist.getName());
@@ -77,7 +76,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
     }
 
     public interface ArtistSelectedListener {
-        void onArtistSelected(String artist);
+        void onArtistSelected(@NonNull final String artist, final boolean showPlayedArtist);
     }
 
     class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -93,7 +92,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
 
         @Override
         public void onClick(View v) {
-            mArtistSelectedListener.onArtistSelected(mArtists.get(getAdapterPosition()).getName());
+            mArtistSelectedListener.onArtistSelected(mArtists.get(getAdapterPosition()).getName(), false);
         }
     }
 }

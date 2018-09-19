@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.iven.musicplayergo.R;
 import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Song;
+import com.iven.musicplayergo.playback.PlayingInfoProvider;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
 
     @Override
     @NonNull
-    public SimpleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SimpleViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
 
         final View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.song_item, parent, false);
@@ -48,7 +49,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SimpleViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final SimpleViewHolder holder, final int position) {
 
         final Song song = mSongs.get(holder.getAdapterPosition());
         final String songTitle = song.title;
@@ -92,6 +93,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
         public void onClick(View v) {
             final Song song = mSongs.get(getAdapterPosition());
             mSongSelectedListener.onSongSelected(song, mSongs);
+            PlayingInfoProvider.setPlayedAlbum(mAlbum);
         }
     }
 }

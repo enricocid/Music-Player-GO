@@ -37,7 +37,7 @@ public class EqualizerUtils {
         context.sendBroadcast(audioEffectsIntent);
     }
 
-    static void openEqualizer(@NonNull final Activity activity, MediaPlayer mediaPlayer) {
+    static void openEqualizer(@NonNull final Activity activity, @NonNull final MediaPlayer mediaPlayer) {
         final int sessionId = mediaPlayer.getAudioSessionId();
 
         if (sessionId == AudioEffect.ERROR_BAD_VALUE) {

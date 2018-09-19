@@ -38,7 +38,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
     private final int mAccent;
     private final AccentChangedListener mOnAccentChangedListener;
 
-    public ColorsAdapter(@NonNull Activity activity, final int accent) {
+    public ColorsAdapter(@NonNull final Activity activity, final int accent) {
         mActivity = activity;
         mAccent = accent;
         mOnAccentChangedListener = (AccentChangedListener) mActivity;
@@ -51,7 +51,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
 
     @Override
     @NonNull
-    public SimpleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SimpleViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
 
         final View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.color_option, parent, false);
@@ -59,7 +59,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SimpleViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final SimpleViewHolder holder, final int position) {
 
         final int color = colors[holder.getAdapterPosition()];
         final int drawable = color != mAccent ? R.drawable.ic_checkbox_blank : R.drawable.ic_checkbox_marked;

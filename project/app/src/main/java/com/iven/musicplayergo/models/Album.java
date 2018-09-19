@@ -13,7 +13,11 @@ public class Album {
     public final List<Song> songs;
 
     public Album() {
-        this.songs = new ArrayList<>();
+        songs = new ArrayList<>();
+    }
+
+    public static String getYearForAlbum(@NonNull final Context context, final int year) {
+        return year != 0 && year != -1 ? String.valueOf(year) : context.getString(R.string.unknown_year);
     }
 
     public String getTitle() {
@@ -39,9 +43,5 @@ public class Album {
     @NonNull
     private Song getFirstSong() {
         return songs.isEmpty() ? Song.EMPTY_SONG : songs.get(0);
-    }
-
-    public static String getYearForAlbum(@NonNull final Context context, final int year) {
-        return year != 0 && year != -1 ? String.valueOf(year) : context.getString(R.string.unknown_year);
     }
 }

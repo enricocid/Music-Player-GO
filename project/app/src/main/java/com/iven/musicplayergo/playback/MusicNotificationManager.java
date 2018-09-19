@@ -51,7 +51,7 @@ public class MusicNotificationManager {
         return mNotificationBuilder;
     }
 
-    private PendingIntent playerAction(String action) {
+    private PendingIntent playerAction(@NonNull final String action) {
 
         final Intent pauseIntent = new Intent();
         pauseIntent.setAction(action);
@@ -61,7 +61,7 @@ public class MusicNotificationManager {
 
     public Notification createNotification() {
 
-        final Song song = mMusicService.getMediaPlayerHolder().getCurrentSong();
+        final Song song = PlayingInfoProvider.getPlayedSong();
 
         mNotificationBuilder = new NotificationCompat.Builder(mMusicService, CHANNEL_ID);
 
@@ -98,7 +98,7 @@ public class MusicNotificationManager {
     }
 
     @NonNull
-    private NotificationCompat.Action notificationAction(final String action) {
+    private NotificationCompat.Action notificationAction(@NonNull final String action) {
 
         int icon;
 
