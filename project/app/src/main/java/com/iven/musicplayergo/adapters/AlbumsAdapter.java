@@ -13,22 +13,24 @@ import android.widget.TextView;
 
 import com.iven.musicplayergo.R;
 import com.iven.musicplayergo.models.Album;
-import com.iven.musicplayergo.playback.PlayingInfoProvider;
+import com.iven.musicplayergo.playback.PlayerAdapter;
 
 import java.util.List;
 
 public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleViewHolder> {
 
     private final Activity mActivity;
+    private final PlayerAdapter mPlayerAdapter;
     private final AlbumSelectedListener mAlbumSelectedListener;
-    private Album mSelectedAlbum;
     private final List<Album> mAlbums;
+    private Album mSelectedAlbum;
 
-    public AlbumsAdapter(@NonNull final Activity activity, @NonNull final List<Album> albums, final boolean showPlayedArtist) {
+    public AlbumsAdapter(@NonNull final Activity activity, @NonNull final PlayerAdapter playerAdapter, @NonNull final List<Album> albums, final boolean showPlayedArtist) {
         mActivity = activity;
+        mPlayerAdapter = playerAdapter;
         mAlbums = albums;
         mAlbumSelectedListener = (AlbumSelectedListener) mActivity;
-        mSelectedAlbum = showPlayedArtist ? PlayingInfoProvider.getPlayedAlbum() : PlayingInfoProvider.getNavigationAlbum() != null ? PlayingInfoProvider.getNavigationAlbum() : mAlbums.get(0);
+        mSelectedAlbum = showPlayedArtist ? mPlayerAdapter.getPlayedAlbum() : mPlayerAdapter.getNavigationAlbum() != null ? mPlayerAdapter.getNavigationAlbum() : mAlbums.get(0);
         mAlbumSelectedListener.onAlbumSelected(mSelectedAlbum);
     }
 
@@ -78,12 +80,12 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(@NonNull final View v) {
 
             //update songs list only if the album is updated
             if (mAlbums.get(getAdapterPosition()) != mSelectedAlbum) {
                 mSelectedAlbum = mAlbums.get(getAdapterPosition());
-                PlayingInfoProvider.setNavigationAlbum(mSelectedAlbum);
+                mPlayerAdapter.setNavigationAlbum(mSelectedAlbum);
                 mAlbumSelectedListener.onAlbumSelected(mSelectedAlbum);
             }
         }

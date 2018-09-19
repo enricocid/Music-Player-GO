@@ -11,10 +11,13 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.iven.musicplayergo.MainActivity;
+import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Song;
 
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -41,11 +44,12 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     private final Context mContext;
     private final MusicService mMusicService;
     private final AudioManager mAudioManager;
+    private String mNavigationArtist;
+    private Album mPlayedAlbum, mNavigationAlbum;
     private MediaPlayer mMediaPlayer;
     private PlaybackInfoListener mPlaybackInfoListener;
     private ScheduledExecutorService mExecutor;
     private Runnable mSeekBarPositionUpdateTask;
-
     private boolean sReplaySong = false;
     private @PlaybackInfoListener.State
     int mState;
@@ -53,7 +57,6 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     private MusicNotificationManager mMusicNotificationManager;
     private int mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK;
     private boolean sPlayOnFocusGain;
-
     private final AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener =
             new AudioManager.OnAudioFocusChangeListener() {
 
@@ -87,6 +90,8 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
 
                 }
             };
+    private Song mSelectedSong;
+    private List<Song> mSongs;
 
     MediaPlayerHolder(@NonNull final MusicService musicService) {
         mMusicService = musicService;
@@ -120,6 +125,39 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     }
 
     @Override
+    public final Album getPlayedAlbum() {
+        return mPlayedAlbum;
+    }
+
+    @Override
+    public final void setPlayedAlbum(@NonNull final Album album) {
+        mPlayedAlbum = album;
+    }
+
+    @Override
+    public final String getNavigationArtist() {
+        return mNavigationArtist;
+    }
+
+    @Override
+    public final void setNavigationArtist(@NonNull final String navigationArtist) {
+        mNavigationArtist = navigationArtist;
+    }
+
+    public final Album getNavigationAlbum() {
+        return mNavigationAlbum;
+    }
+
+    public final void setNavigationAlbum(@Nullable final Album navigationAlbum) {
+        mNavigationAlbum = navigationAlbum;
+    }
+
+    @Override
+    public final Song getCurrentSong() {
+        return mSelectedSong;
+    }
+
+    @Override
     public void registerNotificationActionsReceiver(final boolean isReceiver) {
 
         if (isReceiver) {
@@ -127,6 +165,12 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
         } else {
             unregisterActionsReceiver();
         }
+    }
+
+    @Override
+    public void setCurrentSong(@NonNull final Song song, @NonNull final List<Song> songs) {
+        mSelectedSong = song;
+        mSongs = songs;
     }
 
     @Override
@@ -284,7 +328,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
                 mMusicNotificationManager = mMusicService.getMusicNotificationManager();
             }
             tryToGetAudioFocus();
-            mMediaPlayer.setDataSource(song.path);
+            mMediaPlayer.setDataSource(mSelectedSong.path);
             mMediaPlayer.prepare();
         } catch (Exception e) {
             e.printStackTrace();
@@ -299,7 +343,6 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
 
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
-
         startUpdatingCallbackWithPosition();
         setStatus(PlaybackInfoListener.State.PLAYING);
     }
@@ -362,19 +405,17 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     }
 
     private void getSkipSong(final boolean isNext) {
-        final int currentIndex = PlayingInfoProvider.getSongsForPlayedArtist().indexOf(PlayingInfoProvider.getPlayedSong());
-
+        final int currentIndex = mSongs.indexOf(mSelectedSong);
         int index;
-        Song song;
 
         try {
             index = isNext ? currentIndex + 1 : currentIndex - 1;
-            song = PlayingInfoProvider.getSongsForPlayedArtist().get(index);
+            mSelectedSong = mSongs.get(index);
         } catch (IndexOutOfBoundsException e) {
-            song = currentIndex != 0 ? PlayingInfoProvider.getSongsForPlayedArtist().get(0) : PlayingInfoProvider.getSongsForPlayedArtist().get(PlayingInfoProvider.getSongsForPlayedArtist().size() - 1);
+            mSelectedSong = currentIndex != 0 ? mSongs.get(0) : mSongs.get(mSongs.size() - 1);
             e.printStackTrace();
         }
-        initMediaPlayer(song);
+        initMediaPlayer(mSelectedSong);
     }
 
     @Override
@@ -439,17 +480,17 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
                         break;
 
                     case BluetoothDevice.ACTION_ACL_DISCONNECTED:
-                        if (PlayingInfoProvider.getPlayedSong() != null) {
+                        if (mSelectedSong != null) {
                             pauseMediaPlayer();
                         }
                         break;
                     case BluetoothDevice.ACTION_ACL_CONNECTED:
-                        if (PlayingInfoProvider.getPlayedSong() != null && !isPlaying()) {
+                        if (mSelectedSong != null && !isPlaying()) {
                             resumeMediaPlayer();
                         }
                         break;
                     case Intent.ACTION_HEADSET_PLUG:
-                        if (PlayingInfoProvider.getPlayedSong() != null) {
+                        if (mSelectedSong != null) {
                             switch (intent.getIntExtra("state", -1)) {
                                 //0 means disconnected
                                 case 0:

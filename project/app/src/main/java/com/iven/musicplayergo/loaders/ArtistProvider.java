@@ -35,7 +35,7 @@ public class ArtistProvider {
         return artists;
     }
 
-    public static Artist getArtist(List<Artist> artists, String selectedArtist) {
+    public static Artist getArtist(@NonNull final List<Artist> artists, @NonNull final String selectedArtist) {
         Artist returnerArtist = null;
         for (Artist artist : artists) {
             if (artist.getName().equals(selectedArtist)) {

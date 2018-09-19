@@ -61,7 +61,7 @@ public class MusicNotificationManager {
 
     public Notification createNotification() {
 
-        final Song song = PlayingInfoProvider.getPlayedSong();
+        final Song song = mMusicService.getMediaPlayerHolder().getCurrentSong();
 
         mNotificationBuilder = new NotificationCompat.Builder(mMusicService, CHANNEL_ID);
 

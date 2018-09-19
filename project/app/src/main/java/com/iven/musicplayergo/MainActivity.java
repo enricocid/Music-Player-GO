@@ -57,7 +57,6 @@ import com.iven.musicplayergo.playback.MusicNotificationManager;
 import com.iven.musicplayergo.playback.MusicService;
 import com.iven.musicplayergo.playback.PlaybackInfoListener;
 import com.iven.musicplayergo.playback.PlayerAdapter;
-import com.iven.musicplayergo.playback.PlayingInfoProvider;
 
 import java.util.Collections;
 import java.util.List;
@@ -92,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private final ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(@NonNull final ComponentName componentName, @NonNull final IBinder iBinder) {
-
             mMusicService = ((MusicService.LocalBinder) iBinder).getInstance();
             mPlayerAdapter = mMusicService.getMediaPlayerHolder();
             mMusicNotificationManager = mMusicService.getMusicNotificationManager();
@@ -356,7 +354,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                     @Override
                     public void onProgressChanged(@NonNull final SeekBar seekBar, final int progress, final boolean fromUser) {
-
                         if (fromUser) {
                             userSelectedPosition = progress;
                             mSongPosition.setTextColor(Utils.getColorFromResource(MainActivity.this, mAccent, R.color.blue));
@@ -366,7 +363,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                     @Override
                     public void onStopTrackingTouch(@NonNull final SeekBar seekBar) {
-
                         if (mUserIsSeeking) {
                             mSongPosition.setTextColor(currentPositionColor);
                         }
@@ -473,7 +469,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             new Handler().postDelayed(() -> mMusicService.startForeground(MusicNotificationManager.NOTIFICATION_ID, mMusicNotificationManager.createNotification()), 250);
         }
 
-        final Song selectedSong = PlayingInfoProvider.getPlayedSong();
+        final Song selectedSong = mPlayerAdapter.getCurrentSong();
 
         final int duration = selectedSong.duration;
         mSeekBarAudio.setMax(duration);
@@ -552,7 +548,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             mArtists = artists;
             setArtistsRecyclerView(mArtists);
 
-            mNavigationArtist = PlayingInfoProvider.getNavigationArtist() != null ? PlayingInfoProvider.getNavigationArtist() : mArtists.get(0).getName();
+            mNavigationArtist = mPlayerAdapter.getNavigationArtist() != null ? mPlayerAdapter.getNavigationArtist() : mArtists.get(0).getName();
 
             setArtistDetails(ArtistProvider.getArtist(mArtists, mNavigationArtist).albums, false, false);
             restorePlayerStatus();
@@ -567,7 +563,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private void setArtistDetails(@NonNull List<Album> albums, final boolean isNewArtist, final boolean showPlayedArtist) {
         if (showPlayedArtist) {
-            Artist artist = ArtistProvider.getArtist(mArtists, PlayingInfoProvider.getPlayedSong().artistName);
+            Artist artist = ArtistProvider.getArtist(mArtists, mPlayerAdapter.getCurrentSong().artistName);
             albums = artist.albums;
         }
         if (isNewArtist) {
@@ -575,7 +571,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
         mAlbumsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mAlbumsRecyclerView.setLayoutManager(mAlbumsLayoutManager);
-        AlbumsAdapter albumsAdapter = new AlbumsAdapter(this, albums, showPlayedArtist);
+        AlbumsAdapter albumsAdapter = new AlbumsAdapter(this, mPlayerAdapter, albums, showPlayedArtist);
         mAlbumsRecyclerView.setAdapter(albumsAdapter);
 
         mSelectedArtistSongs = SongProvider.getAllArtistSongs(albums);
@@ -600,11 +596,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public void onSongSelected(@NonNull final Song playedSong, @NonNull final List<Song> songsForPlayedArtit) {
+    public void onSongSelected(@NonNull final Song playedSong, @NonNull final List<Song> songsForPlayedArtist) {
         if (!mSeekBarAudio.isEnabled()) {
             mSeekBarAudio.setEnabled(true);
         }
-        PlayingInfoProvider.setPlayedSong(playedSong, songsForPlayedArtit);
+        mPlayerAdapter.setCurrentSong(playedSong, songsForPlayedArtist);
         mPlayerAdapter.initMediaPlayer(playedSong);
     }
 
@@ -617,8 +613,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             //load artist albums only if not already loaded
             mNavigationArtist = selectedArtist;
-            PlayingInfoProvider.setNavigationArtist(selectedArtist);
-            PlayingInfoProvider.setNavigationAlbum(null);
+            mPlayerAdapter.setNavigationArtist(selectedArtist);
+            mPlayerAdapter.setNavigationAlbum(null);
             setArtistDetails(ArtistProvider.getArtist(mArtists, selectedArtist).albums, true, showPlayedArtist);
         } else {
             //if already loaded expand the panel
@@ -628,7 +624,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onAlbumSelected(@NonNull final Album album) {
-        PlayingInfoProvider.setNavigationAlbum(album);
+        mPlayerAdapter.setNavigationAlbum(album);
         Utils.updateTextView(mSelectedDiscographyDisc, album.getTitle());
         Utils.updateTextView(mSelectedDiscographyDiscYear, Album.getYearForAlbum(this, album.getYear()));
 
@@ -638,13 +634,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         } else {
             mSongsLayoutManager = new LinearLayoutManager(this);
             mSongsRecyclerView.setLayoutManager(mSongsLayoutManager);
-            mSongsAdapter = new SongsAdapter(this, album);
+            mSongsAdapter = new SongsAdapter(this, mPlayerAdapter, album);
             mSongsRecyclerView.setAdapter(mSongsAdapter);
         }
     }
 
     private Pair<Album, List<Album>> scrollToPlayedAlbumPosition(final boolean setArtistDetails) {
-        List<Album> playedArtistAlbums = ArtistProvider.getArtist(mArtists, PlayingInfoProvider.getPlayedSong().artistName).albums;
+        List<Album> playedArtistAlbums = ArtistProvider.getArtist(mArtists, mPlayerAdapter.getCurrentSong().artistName).albums;
         Pair<Album, Integer> playedAlbumPosition = playedAlbumPosition(playedArtistAlbums);
         if (setArtistDetails) {
             setArtistDetails(playedArtistAlbums, false, true);
@@ -654,27 +650,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private Pair<Album, Integer> playedAlbumPosition(@NonNull final List<Album> playedArtistAlbums) {
-        Album playedAlbum = PlayingInfoProvider.getPlayedAlbum();
+        Album playedAlbum = mPlayerAdapter.getPlayedAlbum();
         return new Pair<>(playedAlbum, playedArtistAlbums.indexOf(playedAlbum));
     }
 
     public void expandArtistDetails(@NonNull final View v) {
-        if (PlayingInfoProvider.getPlayedSong() != null && !PlayingInfoProvider.getPlayedSong().artistName.equals(mNavigationArtist)) {
+        if (mPlayerAdapter.getCurrentSong() != null && !mPlayerAdapter.getCurrentSong().artistName.equals(mNavigationArtist)) {
             // if we come from different artist show the played artist page
-            onArtistSelected(PlayingInfoProvider.getPlayedSong().artistName, true);
-            if (PlayingInfoProvider.getPlayedAlbum() != null) {
+            onArtistSelected(mPlayerAdapter.getCurrentSong().artistName, true);
+            if (mPlayerAdapter.getPlayedAlbum() != null) {
                 scrollToPlayedAlbumPosition(false);
             }
         } else if (sArtistDiscographyExpanded) {
-            if (PlayingInfoProvider.getPlayedSong() != null && PlayingInfoProvider.getPlayedSong().artistName.equals(mNavigationArtist) && !PlayingInfoProvider.getNavigationAlbum().equals(PlayingInfoProvider.getPlayedAlbum())) {
+            if (mPlayerAdapter.getCurrentSong() != null && mPlayerAdapter.getCurrentSong().artistName.equals(mNavigationArtist) && !mPlayerAdapter.getNavigationAlbum().equals(mPlayerAdapter.getPlayedAlbum())) {
                 // if the played artist details are already expanded (but not on played album)
                 // and we are playing one of his albums, the show the played album
-                PlayingInfoProvider.setNavigationAlbum(scrollToPlayedAlbumPosition(true).first);
+                mPlayerAdapter.setNavigationAlbum(scrollToPlayedAlbumPosition(true).first);
             } else {
                 // if the the played artist details are already expanded
                 // but the navigation album equals the played album:
-                if (PlayingInfoProvider.getPlayedSong() != null && PlayingInfoProvider.getPlayedSong().artistName.equals(mNavigationArtist) && PlayingInfoProvider.getPlayedSong().artistName.equals(mNavigationArtist)) {
-                    List<Album> playedArtistAlbums = ArtistProvider.getArtist(mArtists, PlayingInfoProvider.getPlayedSong().artistName).albums;
+                if (mPlayerAdapter.getCurrentSong() != null && mPlayerAdapter.getCurrentSong().artistName.equals(mNavigationArtist) && mPlayerAdapter.getCurrentSong().artistName.equals(mNavigationArtist)) {
+                    List<Album> playedArtistAlbums = ArtistProvider.getArtist(mArtists, mPlayerAdapter.getCurrentSong().artistName).albums;
                     Pair<Album, Integer> playedAlbumPosition = playedAlbumPosition(playedArtistAlbums);
                     // if we are scrolling the albums recycler view and the played album
                     // is visible then close the artist details
@@ -691,7 +687,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 }
             }
         } else {
-            if (PlayingInfoProvider.getPlayedSong() != null && PlayingInfoProvider.getPlayedSong().artistName.equals(mNavigationArtist)) {
+            if (mPlayerAdapter.getCurrentSong() != null && mPlayerAdapter.getCurrentSong().artistName.equals(mNavigationArtist)) {
                 scrollToPlayedAlbumPosition(false);
             }
             revealView(mArtistDetails, mArtistsRecyclerView, true);
@@ -772,14 +768,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     class PlaybackListener extends PlaybackInfoListener {
 
         @Override
-        public void onPositionChanged(final int position) {
+        public void onPositionChanged(int position) {
             if (!mUserIsSeeking) {
                 mSeekBarAudio.setProgress(position);
             }
         }
 
         @Override
-        public void onStateChanged(final @State int state) {
+        public void onStateChanged(@State int state) {
 
             updatePlayingStatus();
             if (mPlayerAdapter.getState() != State.RESUMED && mPlayerAdapter.getState() != State.PAUSED) {

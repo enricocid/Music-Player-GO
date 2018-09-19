@@ -83,7 +83,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
 
         final TextView title, albumCount;
 
-        SimpleViewHolder(View itemView) {
+        SimpleViewHolder(@NonNull final View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.artist);
             albumCount = itemView.findViewById(R.id.album_count);
@@ -91,7 +91,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(@NonNull final View v) {
             mArtistSelectedListener.onArtistSelected(mArtists.get(getAdapterPosition()).getName(), false);
         }
     }

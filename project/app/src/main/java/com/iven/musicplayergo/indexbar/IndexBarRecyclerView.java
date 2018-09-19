@@ -18,7 +18,7 @@ public class IndexBarRecyclerView extends RecyclerView {
         super(context);
     }
 
-    public IndexBarRecyclerView(Context context, AttributeSet attrs) {
+    public IndexBarRecyclerView(@NonNull final Context context, @NonNull final AttributeSet attrs) {
         super(context, attrs);
     }
 

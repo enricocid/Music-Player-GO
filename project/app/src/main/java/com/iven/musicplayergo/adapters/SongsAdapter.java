@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.iven.musicplayergo.R;
 import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Song;
-import com.iven.musicplayergo.playback.PlayingInfoProvider;
+import com.iven.musicplayergo.playback.PlayerAdapter;
 
 import java.util.List;
 
@@ -22,11 +22,13 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
 
     private final SongSelectedListener mSongSelectedListener;
     private final Activity mActivity;
+    private final PlayerAdapter mPlayerAdapter;
     private List<Song> mSongs;
     private Album mAlbum;
 
-    public SongsAdapter(@NonNull final Activity activity, @NonNull final Album album) {
+    public SongsAdapter(@NonNull final Activity activity, @NonNull final PlayerAdapter playerAdapter, @NonNull final Album album) {
         mActivity = activity;
+        mPlayerAdapter = playerAdapter;
         mAlbum = album;
         mSongs = mAlbum.songs;
         mSongSelectedListener = (SongSelectedListener) activity;
@@ -90,10 +92,10 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(@NonNull final View v) {
             final Song song = mSongs.get(getAdapterPosition());
-            mSongSelectedListener.onSongSelected(song, mSongs);
-            PlayingInfoProvider.setPlayedAlbum(mAlbum);
+            mPlayerAdapter.setPlayedAlbum(mAlbum);
+            mSongSelectedListener.onSongSelected(song, mAlbum.songs);
         }
     }
 }

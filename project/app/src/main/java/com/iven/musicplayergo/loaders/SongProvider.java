@@ -72,7 +72,7 @@ public class SongProvider {
         return songs;
     }
 
-    private static void sortSongsByTrack(List<Song> songs) {
+    private static void sortSongsByTrack(@NonNull final List<Song> songs) {
 
         Collections.sort(songs, (obj1, obj2) -> Long.compare(obj1.trackNumber, obj2.trackNumber));
     }

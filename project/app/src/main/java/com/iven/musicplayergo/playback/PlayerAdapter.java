@@ -19,9 +19,13 @@ package com.iven.musicplayergo.playback;
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.iven.musicplayergo.MainActivity;
+import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Song;
+
+import java.util.List;
 
 /**
  * Allows {@link MainActivity} to control media playback of {@link MediaPlayerHolder}.
@@ -43,6 +47,22 @@ public interface PlayerAdapter {
     boolean isReset();
 
     void instantReset();
+
+    Song getCurrentSong();
+
+    Album getPlayedAlbum();
+
+    void setPlayedAlbum(@NonNull final Album album);
+
+    String getNavigationArtist();
+
+    void setNavigationArtist(@NonNull final String navigationArtist);
+
+    Album getNavigationAlbum();
+
+    void setNavigationAlbum(@Nullable final Album navigationAlbum);
+
+    void setCurrentSong(@NonNull final Song song, @NonNull final List<Song> songs);
 
     void skip(final boolean isNext);
 

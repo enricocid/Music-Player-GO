@@ -90,7 +90,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(@NonNull final View v) {
             //recreate the activity only if necessary
             final int color = colors[getAdapterPosition()];
             if (color != mAccent) {
