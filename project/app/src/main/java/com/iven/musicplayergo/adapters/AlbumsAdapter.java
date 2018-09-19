@@ -22,7 +22,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
     private final Activity mActivity;
     private final AlbumSelectedListener mAlbumSelectedListener;
     private Album mSelectedAlbum;
-    private List<Album> mAlbums;
+    private final List<Album> mAlbums;
 
     public AlbumsAdapter(@NonNull final Activity activity, @NonNull final List<Album> albums, final boolean showPlayedArtist) {
         mActivity = activity;
