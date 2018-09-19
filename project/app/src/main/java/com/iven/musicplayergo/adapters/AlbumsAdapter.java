@@ -30,7 +30,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
         mPlayerAdapter = playerAdapter;
         mAlbums = albums;
         mAlbumSelectedListener = (AlbumSelectedListener) mActivity;
-        mSelectedAlbum = showPlayedArtist ? mPlayerAdapter.getPlayedAlbum() : mPlayerAdapter.getNavigationAlbum() != null ? mPlayerAdapter.getNavigationAlbum() : mAlbums.get(0);
+        mSelectedAlbum = showPlayedArtist ? mPlayerAdapter.getCurrentSong().getSongAlbum() : mPlayerAdapter.getNavigationAlbum() != null ? mPlayerAdapter.getNavigationAlbum() : mAlbums.get(0);
         mAlbumSelectedListener.onAlbumSelected(mSelectedAlbum);
     }
 

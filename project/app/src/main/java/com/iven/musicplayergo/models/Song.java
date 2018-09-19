@@ -17,6 +17,7 @@ public class Song {
     public final int artistId;
     public final String artistName;
     final int year;
+    private Album mSongAlbum;
 
     public Song(@NonNull final String title, final int trackNumber, final int year, final int duration, final String path, final String albumName, final int artistId, final String artistName) {
         this.title = title;
@@ -42,5 +43,13 @@ public class Song {
             formatted = trackNumber % 1000;
         }
         return formatted;
+    }
+
+    public Album getSongAlbum() {
+        return mSongAlbum;
+    }
+
+    public void setSongAlbum(@NonNull final Album album) {
+        mSongAlbum = album;
     }
 }

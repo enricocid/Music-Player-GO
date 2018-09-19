@@ -17,7 +17,9 @@ class AlbumProvider {
         final List<Album> albums = new ArrayList<>();
         if (songs != null) {
             for (Song song : songs) {
-                getAlbum(albums, song.albumName).songs.add(song);
+                Album album = getAlbum(albums, song.albumName);
+                album.songs.add(song);
+                song.setSongAlbum(album);
             }
         }
         if (albums.size() > 1) {

@@ -50,10 +50,6 @@ public interface PlayerAdapter {
 
     Song getCurrentSong();
 
-    Album getPlayedAlbum();
-
-    void setPlayedAlbum(@NonNull final Album album);
-
     String getNavigationArtist();
 
     void setNavigationArtist(@NonNull final String navigationArtist);

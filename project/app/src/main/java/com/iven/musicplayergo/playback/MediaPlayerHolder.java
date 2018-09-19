@@ -45,7 +45,7 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     private final MusicService mMusicService;
     private final AudioManager mAudioManager;
     private String mNavigationArtist;
-    private Album mPlayedAlbum, mNavigationAlbum;
+    private Album mNavigationAlbum;
     private MediaPlayer mMediaPlayer;
     private PlaybackInfoListener mPlaybackInfoListener;
     private ScheduledExecutorService mExecutor;
@@ -125,30 +125,22 @@ public final class MediaPlayerHolder implements PlayerAdapter, MediaPlayer.OnCom
     }
 
     @Override
-    public final Album getPlayedAlbum() {
-        return mPlayedAlbum;
-    }
-
-    @Override
-    public final void setPlayedAlbum(@NonNull final Album album) {
-        mPlayedAlbum = album;
-    }
-
-    @Override
     public final String getNavigationArtist() {
         return mNavigationArtist;
     }
 
     @Override
-    public final void setNavigationArtist(@NonNull final String navigationArtist) {
+    public void setNavigationArtist(@NonNull final String navigationArtist) {
         mNavigationArtist = navigationArtist;
     }
 
+    @Override
     public final Album getNavigationAlbum() {
         return mNavigationAlbum;
     }
 
-    public final void setNavigationAlbum(@Nullable final Album navigationAlbum) {
+    @Override
+    public void setNavigationAlbum(@Nullable final Album navigationAlbum) {
         mNavigationAlbum = navigationAlbum;
     }
 

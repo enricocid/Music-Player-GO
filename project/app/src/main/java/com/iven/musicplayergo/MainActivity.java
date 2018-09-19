@@ -311,7 +311,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void shuffleSongs(@NonNull final View v) {
         final List<Song> songs = sArtistDiscographyExpanded ? mSelectedArtistSongs : SongProvider.getAllDeviceSongs();
         Collections.shuffle(songs);
-        onSongSelected(songs.get(0), songs);
+        onSongSelected(songs.get(0), songs, true);
     }
 
     private void setArtistsRecyclerView(@NonNull final List<Artist> data) {
@@ -439,7 +439,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void initializeColorsSettings() {
-
         final RecyclerView colorsRecyclerView = mSettingsView.findViewById(R.id.colors_rv);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         colorsRecyclerView.setLayoutManager(linearLayoutManager);
@@ -596,7 +595,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public void onSongSelected(@NonNull final Song playedSong, @NonNull final List<Song> songsForPlayedArtist) {
+    public void onSongSelected(@NonNull final Song playedSong, @NonNull final List<Song> songsForPlayedArtist, final boolean shuffleMode) {
         if (!mSeekBarAudio.isEnabled()) {
             mSeekBarAudio.setEnabled(true);
         }
@@ -634,7 +633,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         } else {
             mSongsLayoutManager = new LinearLayoutManager(this);
             mSongsRecyclerView.setLayoutManager(mSongsLayoutManager);
-            mSongsAdapter = new SongsAdapter(this, mPlayerAdapter, album);
+            mSongsAdapter = new SongsAdapter(this, album);
             mSongsRecyclerView.setAdapter(mSongsAdapter);
         }
     }
@@ -650,19 +649,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private Pair<Album, Integer> playedAlbumPosition(@NonNull final List<Album> playedArtistAlbums) {
-        Album playedAlbum = mPlayerAdapter.getPlayedAlbum();
+        Album playedAlbum = mPlayerAdapter.getCurrentSong().getSongAlbum();
         return new Pair<>(playedAlbum, playedArtistAlbums.indexOf(playedAlbum));
     }
 
     public void expandArtistDetails(@NonNull final View v) {
+
         if (mPlayerAdapter.getCurrentSong() != null && !mPlayerAdapter.getCurrentSong().artistName.equals(mNavigationArtist)) {
             // if we come from different artist show the played artist page
             onArtistSelected(mPlayerAdapter.getCurrentSong().artistName, true);
-            if (mPlayerAdapter.getPlayedAlbum() != null) {
+            if (mPlayerAdapter.getCurrentSong() != null) {
                 scrollToPlayedAlbumPosition(false);
             }
         } else if (sArtistDiscographyExpanded) {
-            if (mPlayerAdapter.getCurrentSong() != null && mPlayerAdapter.getCurrentSong().artistName.equals(mNavigationArtist) && !mPlayerAdapter.getNavigationAlbum().equals(mPlayerAdapter.getPlayedAlbum())) {
+            if (mPlayerAdapter.getCurrentSong() != null && mPlayerAdapter.getCurrentSong().artistName.equals(mNavigationArtist) && !mPlayerAdapter.getNavigationAlbum().equals(mPlayerAdapter.getCurrentSong().getSongAlbum())) {
                 // if the played artist details are already expanded (but not on played album)
                 // and we are playing one of his albums, the show the played album
                 mPlayerAdapter.setNavigationAlbum(scrollToPlayedAlbumPosition(true).first);
