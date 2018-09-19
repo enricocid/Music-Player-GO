@@ -69,7 +69,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
     }
 
     public interface SongSelectedListener {
-        void onSongSelected(@NonNull final Song song, @NonNull final List<Song> songs, final boolean shuffleMode);
+        void onSongSelected(@NonNull final Song song, @NonNull final List<Song> songs);
     }
 
     class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -91,7 +91,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
         @Override
         public void onClick(@NonNull final View v) {
             final Song song = mSongs.get(getAdapterPosition());
-            mSongSelectedListener.onSongSelected(song, mAlbum.songs, false);
+            mSongSelectedListener.onSongSelected(song, mAlbum.songs);
         }
     }
 }

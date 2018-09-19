@@ -311,7 +311,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void shuffleSongs(@NonNull final View v) {
         final List<Song> songs = sArtistDiscographyExpanded ? mSelectedArtistSongs : SongProvider.getAllDeviceSongs();
         Collections.shuffle(songs);
-        onSongSelected(songs.get(0), songs, true);
+        onSongSelected(songs.get(0), songs);
     }
 
     private void setArtistsRecyclerView(@NonNull final List<Artist> data) {
@@ -595,7 +595,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public void onSongSelected(@NonNull final Song playedSong, @NonNull final List<Song> songsForPlayedArtist, final boolean shuffleMode) {
+    public void onSongSelected(@NonNull final Song playedSong, @NonNull final List<Song> songsForPlayedArtist) {
         if (!mSeekBarAudio.isEnabled()) {
             mSeekBarAudio.setEnabled(true);
         }
