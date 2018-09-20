@@ -99,9 +99,6 @@ https://medium.com/@brunotrovo/android-creating-custom-dialogs-201003052f1c
 - **Prabhakar Thota** (@myinnos - https://github.com/myinnos) for part of the alphabetic index bar code:
 https://github.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView
 
-- **AOSP** (Android Open Source Project - https://source.android.com) for part of the Launcher 3 fast scroller code:
-https://android.googlesource.com/platform/packages/apps/Launcher3
-
 - **Malte Kiefer** (beli3ver - https://github.com/beli3ver) for German translations
 
 - **Luis F. Uceta** (uzluisf - https://github.com/uzluisf) for Spanish translations
