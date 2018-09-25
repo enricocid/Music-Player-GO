@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -72,10 +73,11 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
         void onSongSelected(@NonNull final Song song, @NonNull final List<Song> songs);
     }
 
-    class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener, View.OnTouchListener {
 
         final ImageView foreground;
         final TextView track, title, duration;
+        private boolean sPlayerInfoLongPressed = false;
 
         SimpleViewHolder(@NonNull final View itemView) {
             super(itemView);
@@ -85,13 +87,34 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
             title = itemView.findViewById(R.id.title);
             duration = itemView.findViewById(R.id.duration);
             itemView.setOnClickListener(this);
-
+            itemView.setOnLongClickListener(this);
+            itemView.setOnTouchListener(this);
         }
 
         @Override
         public void onClick(@NonNull final View v) {
             final Song song = mSongs.get(getAdapterPosition());
             mSongSelectedListener.onSongSelected(song, mAlbum.songs);
+        }
+
+        @Override
+        public boolean onLongClick(@NonNull final View v) {
+            if (!sPlayerInfoLongPressed) {
+                title.setSelected(true);
+                sPlayerInfoLongPressed = true;
+            }
+            return true;
+        }
+
+        @Override
+        public boolean onTouch(@NonNull final View v, @NonNull final MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_OUTSIDE || event.getAction() == MotionEvent.ACTION_MOVE) {
+                if (sPlayerInfoLongPressed) {
+                    title.setSelected(false);
+                    sPlayerInfoLongPressed = false;
+                }
+            }
+            return false;
         }
     }
 }

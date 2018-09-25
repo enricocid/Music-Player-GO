@@ -6,8 +6,8 @@
     android:clickable="true"
     android:focusable="true"
     android:orientation="horizontal"
-    android:paddingEnd="8dp"
-    android:paddingStart="8dp">
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp">
 
     <TextView
         android:id="@+id/song_position"

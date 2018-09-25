@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private String mNavigationArtist;
     private boolean sExpandArtistDiscography = false;
     private boolean sPlayerInfoLongPressed = false;
+    private boolean sArtistDiscographyDiscLongPressed = false;
     private boolean sArtistDiscographyExpanded = false;
     private MusicService mMusicService;
     private PlaybackListener mPlaybackListener;
@@ -249,6 +250,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mSelectedDiscographyArtist = findViewById(R.id.selected_discography_artist);
         mSelectedArtistDiscCount = findViewById(R.id.selected_artist_album_count);
         mSelectedDiscographyDisc = findViewById(R.id.selected_disc);
+        setupArtistDiscographyDiscBehaviour();
         mSelectedDiscographyDiscYear = findViewById(R.id.selected_disc_year);
 
         mArtistsRecyclerView = findViewById(R.id.artists_rv);
@@ -274,6 +276,25 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     mPlayingSong.setSelected(false);
                     mPlayingAlbum.setSelected(false);
                     sPlayerInfoLongPressed = false;
+                }
+            }
+            return false;
+        });
+    }
+
+    private void setupArtistDiscographyDiscBehaviour() {
+        mSelectedDiscographyDisc.setOnLongClickListener(v -> {
+            if (!sArtistDiscographyDiscLongPressed) {
+                mSelectedDiscographyDisc.setSelected(true);
+                sArtistDiscographyDiscLongPressed = true;
+            }
+            return true;
+        });
+        mSelectedDiscographyDisc.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_OUTSIDE || event.getAction() == MotionEvent.ACTION_MOVE) {
+                if (sArtistDiscographyDiscLongPressed) {
+                    mSelectedDiscographyDisc.setSelected(false);
+                    sArtistDiscographyDiscLongPressed = false;
                 }
             }
             return false;

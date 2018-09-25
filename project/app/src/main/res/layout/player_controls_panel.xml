@@ -40,10 +40,10 @@
                     android:foreground="?android:attr/selectableItemBackgroundBorderless"
                     android:onClick="expandArtistDetails"
                     android:orientation="vertical"
-                    android:paddingBottom="8dp"
-                    android:paddingEnd="2dp"
                     android:paddingStart="16dp"
-                    android:paddingTop="8dp">
+                    android:paddingTop="8dp"
+                    android:paddingEnd="2dp"
+                    android:paddingBottom="8dp">
 
                     <TextView
                         android:id="@+id/playing_song"

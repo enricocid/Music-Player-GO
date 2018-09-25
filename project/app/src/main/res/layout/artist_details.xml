@@ -27,9 +27,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:paddingBottom="4dp"
+            android:paddingStart="8dp"
             android:paddingEnd="16dp"
-            android:paddingStart="8dp">
+            android:paddingBottom="4dp">
             <!-- ARTIST -->
             <TextView
                 android:id="@+id/selected_discography_artist"
@@ -39,8 +39,8 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/raleway_black"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:paddingBottom="2dp"
                 android:paddingTop="8dp"
+                android:paddingBottom="2dp"
                 android:singleLine="true"
                 android:textAlignment="textStart"
                 android:textColor="?android:textColorPrimary"
@@ -74,9 +74,9 @@
         android:id="@+id/songs_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_weight="1"
         card_view:cardBackgroundColor="?attr/secondary_bg_color"
         card_view:cardCornerRadius="8dp"
@@ -92,13 +92,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:ellipsize="end"
+                android:ellipsize="marquee"
                 android:fontFamily="@font/raleway_black_italic"
                 android:gravity="center"
-                android:paddingBottom="2dp"
-                android:paddingEnd="4dp"
+                android:marqueeRepeatLimit="marquee_forever"
                 android:paddingStart="4dp"
                 android:paddingTop="8dp"
+                android:paddingEnd="4dp"
+                android:paddingBottom="2dp"
+                android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:textColor="?android:textColorPrimary"
                 android:textSize="16sp" />
@@ -122,8 +124,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:alpha="0.25"
                 android:background="?android:attr/listDivider" />
 

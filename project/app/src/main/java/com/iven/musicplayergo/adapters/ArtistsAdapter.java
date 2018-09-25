@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spanned;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -79,9 +80,10 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
         void onArtistSelected(@NonNull final String artist, final boolean showPlayedArtist);
     }
 
-    class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener, View.OnTouchListener {
 
         final TextView title, albumCount;
+        private boolean sPlayerInfoLongPressed = false;
 
         SimpleViewHolder(@NonNull final View itemView) {
             super(itemView);
@@ -93,6 +95,26 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
         @Override
         public void onClick(@NonNull final View v) {
             mArtistSelectedListener.onArtistSelected(mArtists.get(getAdapterPosition()).getName(), false);
+        }
+
+        @Override
+        public boolean onLongClick(@NonNull final View v) {
+            if (!sPlayerInfoLongPressed) {
+                title.setSelected(true);
+                sPlayerInfoLongPressed = true;
+            }
+            return true;
+        }
+
+        @Override
+        public boolean onTouch(@NonNull final View v, @NonNull final MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_OUTSIDE || event.getAction() == MotionEvent.ACTION_MOVE) {
+                if (sPlayerInfoLongPressed) {
+                    title.setSelected(false);
+                    sPlayerInfoLongPressed = false;
+                }
+            }
+            return false;
         }
     }
 }
