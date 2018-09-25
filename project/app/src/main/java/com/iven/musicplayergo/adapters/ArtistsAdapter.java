@@ -83,7 +83,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
     class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener, View.OnTouchListener {
 
         final TextView title, albumCount;
-        private boolean sPlayerInfoLongPressed = false;
+        private boolean sArtistLongPressed = false;
 
         SimpleViewHolder(@NonNull final View itemView) {
             super(itemView);
@@ -99,9 +99,9 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
 
         @Override
         public boolean onLongClick(@NonNull final View v) {
-            if (!sPlayerInfoLongPressed) {
+            if (!sArtistLongPressed) {
                 title.setSelected(true);
-                sPlayerInfoLongPressed = true;
+                sArtistLongPressed = true;
             }
             return true;
         }
@@ -109,9 +109,9 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
         @Override
         public boolean onTouch(@NonNull final View v, @NonNull final MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_OUTSIDE || event.getAction() == MotionEvent.ACTION_MOVE) {
-                if (sPlayerInfoLongPressed) {
+                if (sArtistLongPressed) {
                     title.setSelected(false);
-                    sPlayerInfoLongPressed = false;
+                    sArtistLongPressed = false;
                 }
             }
             return false;

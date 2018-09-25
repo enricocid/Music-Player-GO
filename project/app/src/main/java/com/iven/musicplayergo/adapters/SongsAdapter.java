@@ -77,7 +77,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
 
         final ImageView foreground;
         final TextView track, title, duration;
-        private boolean sPlayerInfoLongPressed = false;
+        private boolean sSongLongPressed = false;
 
         SimpleViewHolder(@NonNull final View itemView) {
             super(itemView);
@@ -99,9 +99,9 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
 
         @Override
         public boolean onLongClick(@NonNull final View v) {
-            if (!sPlayerInfoLongPressed) {
+            if (!sSongLongPressed) {
                 title.setSelected(true);
-                sPlayerInfoLongPressed = true;
+                sSongLongPressed = true;
             }
             return true;
         }
@@ -109,9 +109,9 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
         @Override
         public boolean onTouch(@NonNull final View v, @NonNull final MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_OUTSIDE || event.getAction() == MotionEvent.ACTION_MOVE) {
-                if (sPlayerInfoLongPressed) {
+                if (sSongLongPressed) {
                     title.setSelected(false);
-                    sPlayerInfoLongPressed = false;
+                    sSongLongPressed = false;
                 }
             }
             return false;
