@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             mMusicService = null;
         }
     };
-    private boolean mIsBound;
+    private boolean sBound;
     private Parcelable mSavedArtistRecyclerLayoutState;
     private Parcelable mSavedAlbumsRecyclerLayoutState;
     private Parcelable mSavedSongRecyclerLayoutState;
@@ -536,17 +536,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // supporting component replacement by other applications).
         bindService(new Intent(this,
                 MusicService.class), mConnection, Context.BIND_AUTO_CREATE);
-        mIsBound = true;
+        sBound = true;
 
         final Intent startNotStickyIntent = new Intent(this, MusicService.class);
         startService(startNotStickyIntent);
     }
 
     private void doUnbindService() {
-        if (mIsBound) {
+        if (sBound) {
             // Detach our existing connection.
             unbindService(mConnection);
-            mIsBound = false;
+            sBound = false;
         }
     }
 
