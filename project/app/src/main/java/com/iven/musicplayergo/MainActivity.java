@@ -2,6 +2,7 @@ package com.iven.musicplayergo;
 
 import android.Manifest;
 import android.animation.Animator;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
@@ -261,6 +262,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     //https://stackoverflow.com/questions/6183874/android-detect-end-of-long-press
+    @SuppressLint("ClickableViewAccessibility")
     private void setupPlayerInfoTouchBehaviour() {
         mPlayerInfoView.setOnLongClickListener(v -> {
             if (!sPlayerInfoLongPressed) {

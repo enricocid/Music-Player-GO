@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -109,6 +110,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
         }
 
         @Override
+        @SuppressLint("ClickableViewAccessibility")
         public boolean onTouch(@NonNull final View v, @NonNull final MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_OUTSIDE || event.getAction() == MotionEvent.ACTION_MOVE) {
                 if (sArtistLongPressed) {

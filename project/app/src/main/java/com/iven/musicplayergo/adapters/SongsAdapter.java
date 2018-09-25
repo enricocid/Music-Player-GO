@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
@@ -107,6 +108,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
         }
 
         @Override
+        @SuppressLint("ClickableViewAccessibility")
         public boolean onTouch(@NonNull final View v, @NonNull final MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_OUTSIDE || event.getAction() == MotionEvent.ACTION_MOVE) {
                 if (sSongLongPressed) {
