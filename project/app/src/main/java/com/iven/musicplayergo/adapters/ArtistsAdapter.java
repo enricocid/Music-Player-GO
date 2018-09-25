@@ -34,11 +34,13 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
     }
 
     public String[] getIndexes() {
-        return mIndexedPositions.values().toArray(new String[mIndexedPositions.values().size()]);
+        int size = mIndexedPositions.values().size();
+        return mIndexedPositions.values().toArray(new String[size]);
     }
 
     public int getIndexPosition(final int currentSection) {
-        return mIndexedPositions.keySet().toArray(new Integer[mIndexedPositions.keySet().size()])[currentSection];
+        int size = mIndexedPositions.keySet().size();
+        return mIndexedPositions.keySet().toArray(new Integer[size])[currentSection];
     }
 
     private void generateIndexes() {
