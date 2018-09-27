@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private SeekBar mSeekBarAudio;
     private LinearLayout mControlsContainer;
     private BottomSheetBehavior mBottomSheetBehaviour;
-    private View mSettingsView, mPlayerInfoView, mArtistDetails;
+    private View mPlayerInfoView, mArtistDetails;
     private ImageView mPlayPauseButton, mSkipPrevButton;
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
@@ -252,8 +252,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mArtistsRecyclerView = findViewById(R.id.artists_rv);
         mAlbumsRecyclerView = findViewById(R.id.albums_rv);
         mSongsRecyclerView = findViewById(R.id.songs_rv);
-
-        mSettingsView = findViewById(R.id.settings_view);
     }
 
     //https://stackoverflow.com/questions/6183874/android-detect-end-of-long-press
@@ -456,7 +454,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void initializeColorsSettings() {
-        final RecyclerView colorsRecyclerView = mSettingsView.findViewById(R.id.colors_rv);
+        final RecyclerView colorsRecyclerView = findViewById(R.id.colors_rv);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         colorsRecyclerView.setLayoutManager(linearLayoutManager);
         colorsRecyclerView.setAdapter(new ColorsAdapter(this, mAccent));
