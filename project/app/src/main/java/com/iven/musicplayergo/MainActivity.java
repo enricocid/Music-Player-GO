@@ -172,12 +172,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (builder.getWindow() != null) {
             builder.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         }
-        TextView title, message;
-        title = view.findViewById(R.id.title);
-        message = view.findViewById(R.id.message);
-        title.setText(getString(R.string.app_name));
-        message.setText(getString(R.string.perm_rationale));
-
         Button positiveButton = view.findViewById(R.id.dlg_one_button_btn_ok);
         positiveButton.setOnClickListener((View v) -> {
             builder.dismiss();
