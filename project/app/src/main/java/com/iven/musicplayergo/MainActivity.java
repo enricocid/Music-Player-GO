@@ -62,6 +62,7 @@ import com.iven.musicplayergo.playback.PlayerAdapter;
 import java.util.Collections;
 import java.util.List;
 
+@SuppressLint("ClickableViewAccessibility")
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Artist>>, SongsAdapter.SongSelectedListener, ColorsAdapter.AccentChangedListener, AlbumsAdapter.AlbumSelectedListener, ArtistsAdapter.ArtistSelectedListener {
 
     private LinearLayoutManager mArtistsLayoutManager, mAlbumsLayoutManager, mSongsLayoutManager;
@@ -262,7 +263,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     //https://stackoverflow.com/questions/6183874/android-detect-end-of-long-press
-    @SuppressLint("ClickableViewAccessibility")
     private void setupPlayerInfoTouchBehaviour() {
         mPlayerInfoView.setOnLongClickListener(v -> {
             if (!sPlayerInfoLongPressed) {
