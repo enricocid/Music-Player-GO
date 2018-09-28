@@ -5,7 +5,7 @@
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
 
 ###### Very slim music player with low memory footprint!
-###### Current version: (87) 3.1.2.1
+###### Current version: (88) 3.1.3
 ###### Material Design Icon by Julian Javier Gomez, Axinen Design (https://plus.google.com/u/0/+AxinenDesign)
 
 
@@ -40,7 +40,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
   - Skip to next song;
 - Music organized by artist;
 - Colorful index bar;
-- Dark status bar icons for light accents;
+- Dark status bar icons (from Android Marshmallow);
 
 ### Settings at hand: 
 
