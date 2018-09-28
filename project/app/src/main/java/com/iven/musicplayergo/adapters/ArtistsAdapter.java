@@ -112,11 +112,9 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
         @Override
         @SuppressLint("ClickableViewAccessibility")
         public boolean onTouch(@NonNull final View v, @NonNull final MotionEvent event) {
-            if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_OUTSIDE || event.getAction() == MotionEvent.ACTION_MOVE) {
-                if (sArtistLongPressed) {
-                    title.setSelected(false);
-                    sArtistLongPressed = false;
-                }
+            if (sArtistLongPressed && event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_OUTSIDE || event.getAction() == MotionEvent.ACTION_MOVE) {
+                title.setSelected(false);
+                sArtistLongPressed = false;
             }
             return false;
         }

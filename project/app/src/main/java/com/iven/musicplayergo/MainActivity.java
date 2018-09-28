@@ -264,12 +264,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             return true;
         });
         mPlayerInfoView.setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_OUTSIDE || event.getAction() == MotionEvent.ACTION_MOVE) {
-                if (sPlayerInfoLongPressed) {
-                    mPlayingSong.setSelected(false);
-                    mPlayingAlbum.setSelected(false);
-                    sPlayerInfoLongPressed = false;
-                }
+            if (sPlayerInfoLongPressed && event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_OUTSIDE || event.getAction() == MotionEvent.ACTION_MOVE) {
+                mPlayingSong.setSelected(false);
+                mPlayingAlbum.setSelected(false);
+                sPlayerInfoLongPressed = false;
             }
             return false;
         });
