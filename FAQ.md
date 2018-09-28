@@ -38,7 +38,7 @@ https://developer.android.com/reference/android/R.attr#windowLightStatusBar
 
 **I'm on Lollipop/Marshmallow/Nougat and I can't see dark navigation bar icons**
 
-This feature is not supported on Lollipop, Marshmallow, Nougat. It has been added in api level 27 (Android O)
+This feature is not supported on Lollipop, Marshmallow, Nougat. It has been added in api level 27 (Oreo)
 
 https://developer.android.com/reference/android/R.attr#windowLightNavigationBar
 
