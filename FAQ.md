@@ -30,6 +30,18 @@ The equalizer can be found in settings.
 
 Music tracks are categorized into albums, each album consist of tracks from same album.
 
+**I'm on Lollipop and I can't see dark status bar icons**
+
+This feature is not supported on Lollipop. It has been added in api level 23 (Marshmallow)
+
+https://developer.android.com/reference/android/R.attr#windowLightStatusBar
+
+**I'm on Lollipop/Marshmallow/Nougat and I can't see dark navigation bar icons**
+
+This feature is not supported on Lollipop, Marshmallow, Nougat. It has been added in api level 27 (Android O)
+
+https://developer.android.com/reference/android/R.attr#windowLightNavigationBar
+
 
 **Can I customize the app theme to my taste?**
 
