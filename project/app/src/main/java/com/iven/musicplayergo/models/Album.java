@@ -10,38 +10,42 @@ import java.util.List;
 
 public class Album {
 
-    public final List<Song> songs;
+    private final List<Song> mSongs;
 
     public Album() {
-        songs = new ArrayList<>();
+        mSongs = new ArrayList<>();
     }
 
     public static String getYearForAlbum(@NonNull final Context context, final int year) {
         return year != 0 && year != -1 ? String.valueOf(year) : context.getString(R.string.unknown_year);
     }
 
-    public String getTitle() {
-        return getFirstSong().albumName;
+    public final List<Song> getSongs() {
+        return mSongs;
+    }
+
+    public final String getTitle() {
+        return getFirstSong().getAlbumName();
     }
 
     public final int getArtistId() {
-        return getFirstSong().artistId;
+        return getFirstSong().getArtistId();
     }
 
-    public final String getArtistName() {
-        return getFirstSong().artistName;
+    final String getArtistName() {
+        return getFirstSong().getArtistName();
     }
 
     public final int getYear() {
-        return getFirstSong().year;
+        return getFirstSong().getYear();
     }
 
-    public final int getSongCount() {
-        return songs.size();
+    final int getSongCount() {
+        return mSongs.size();
     }
 
     @NonNull
     private Song getFirstSong() {
-        return songs.isEmpty() ? Song.EMPTY_SONG : songs.get(0);
+        return mSongs.isEmpty() ? Song.EMPTY_SONG : mSongs.get(0);
     }
 }

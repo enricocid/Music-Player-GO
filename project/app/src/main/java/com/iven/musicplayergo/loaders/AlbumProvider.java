@@ -17,8 +17,8 @@ class AlbumProvider {
         final List<Album> albums = new ArrayList<>();
         if (songs != null) {
             for (Song song : songs) {
-                Album album = getAlbum(albums, song.albumName);
-                album.songs.add(song);
+                final Album album = getAlbum(albums, song.getAlbumName());
+                album.getSongs().add(song);
                 song.setSongAlbum(album);
             }
         }
@@ -32,9 +32,10 @@ class AlbumProvider {
         Collections.sort(albums, (obj1, obj2) -> Integer.compare(obj1.getYear(), obj2.getYear()));
     }
 
-    private static Album getAlbum(@NonNull final List<Album> albums, final String albumName) {
+    @NonNull
+    private static Album getAlbum(@NonNull final List<Album> albums, @NonNull final String albumName) {
         for (Album album : albums) {
-            if (!album.songs.isEmpty() && album.songs.get(0).albumName.equals(albumName)) {
+            if (!album.getSongs().isEmpty() && album.getSongs().get(0).getAlbumName().equals(albumName)) {
                 return album;
             }
         }

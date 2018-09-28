@@ -38,15 +38,15 @@ public class IndexBarView extends RecyclerView.AdapterDataObserver {
     private boolean mIsIndexing;
     private int mCurrentSection = -1;
 
-    public IndexBarView(@NonNull final IndexBarRecyclerView rv, @NonNull final ArtistsAdapter artistsAdapter, @NonNull final LinearLayoutManager linearLayoutManager, final boolean isThemeInverted) {
+    public IndexBarView(@NonNull final Context context, @NonNull final IndexBarRecyclerView rv, @NonNull final ArtistsAdapter artistsAdapter, @NonNull final LinearLayoutManager linearLayoutManager, final boolean isThemeInverted) {
 
-        mContext = rv.getContext();
+        mContext = context;
         mArtistsRecyclerView = rv;
         mArtistsAdapter = artistsAdapter;
         mLinearLayoutManager = linearLayoutManager;
         sThemeInverted = isThemeInverted;
 
-        DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
+        final DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
         final float density = displayMetrics.density;
         mScaledDensity = displayMetrics.scaledDensity;
 
@@ -63,50 +63,49 @@ public class IndexBarView extends RecyclerView.AdapterDataObserver {
 
         mSections = mArtistsAdapter.getIndexes();
         final int indexTextSize = 12;
-
-        int indexBarTextColor = sThemeInverted ? Color.GRAY : Color.BLACK;
+        final int indexBarTextColor = sThemeInverted ? Color.GRAY : Color.BLACK;
 
         if (mSections != null && mSections.length > 0) {
             // Preview is shown when mCurrentSection is set
             try {
                 if (mCurrentSection >= 0 && !mSections[mCurrentSection].isEmpty()) {
-                    Paint previewPaint = new Paint();
+                    final Paint previewPaint = new Paint();
 
                     previewPaint.setColor(mAccent);
                     previewPaint.setAlpha(95);
                     previewPaint.setAntiAlias(true);
 
-                    Paint previewTextPaint = new Paint();
+                    final Paint previewTextPaint = new Paint();
                     previewTextPaint.setColor(indexBarTextColor);
                     previewTextPaint.setAlpha(95);
                     previewTextPaint.setAntiAlias(true);
                     previewTextPaint.setTextSize(50 * mScaledDensity);
                     previewTextPaint.setTypeface(mTypefacePreview);
 
-                    float previewTextWidth = previewTextPaint.measureText(mSections[mCurrentSection]);
-                    float previewSize = 2 * mPreviewPadding + previewTextPaint.descent() - previewTextPaint.ascent();
-                    RectF previewRect = new RectF((mArtistsRecyclerViewWidth - previewSize) / 2
+                    final float previewTextWidth = previewTextPaint.measureText(mSections[mCurrentSection]);
+                    final float previewSize = 2 * mPreviewPadding + previewTextPaint.descent() - previewTextPaint.ascent();
+                    final RectF previewRect = new RectF((mArtistsRecyclerViewWidth - previewSize) / 2
                             , (mArtistsRecyclerViewHeight - previewSize) / 2
                             , (mArtistsRecyclerViewWidth - previewSize) / 2 + previewSize
                             , (mArtistsRecyclerViewHeight - previewSize) / 2 + previewSize);
 
-                    int cx = mArtistsRecyclerViewWidth / 2;
-                    int cy = mArtistsRecyclerViewHeight / 2;
+                    final int cx = mArtistsRecyclerViewWidth / 2;
+                    final int cy = mArtistsRecyclerViewHeight / 2;
                     canvas.drawCircle(cx, cy, 40 * mScaledDensity, previewPaint);
                     canvas.drawText(mSections[mCurrentSection], previewRect.left + (previewSize - previewTextWidth) / 2 - 1
                             , previewRect.top + (previewSize - (previewTextPaint.descent() - previewTextPaint.ascent())) / 2 - previewTextPaint.ascent(), previewTextPaint);
                     mArtistsRecyclerView.invalidate();
                 }
 
-                Paint indexPaint = new Paint();
+                final Paint indexPaint = new Paint();
                 indexPaint.setColor(indexBarTextColor);
                 indexPaint.setAlpha(95);
                 indexPaint.setAntiAlias(true);
                 indexPaint.setTextSize(indexTextSize * mScaledDensity);
                 indexPaint.setTypeface(mTypefaceIndexes);
 
-                float sectionHeight = (mIndexBarRect.height() - 2) / mSections.length;
-                float paddingTop = (sectionHeight - (indexPaint.descent() - indexPaint.ascent())) / 2;
+                final float sectionHeight = (mIndexBarRect.height() - 2) / mSections.length;
+                final float paddingTop = (sectionHeight - (indexPaint.descent() - indexPaint.ascent())) / 2;
                 for (int i = 0; i < mSections.length; i++) {
 
                     if (mCurrentSection > -1 && i == mCurrentSection) {
@@ -117,7 +116,7 @@ public class IndexBarView extends RecyclerView.AdapterDataObserver {
                         indexPaint.setTypeface(mTypefaceIndexes);
                         indexPaint.setColor(indexBarTextColor);
                     }
-                    float paddingLeft = (mIndexBarWidth - indexPaint.measureText(mSections[i])) / 2;
+                    final float paddingLeft = (mIndexBarWidth - indexPaint.measureText(mSections[i])) / 2;
                     canvas.drawText(mSections[i], mIndexBarRect.left + paddingLeft
                             , mIndexBarRect.top + sectionHeight * i + paddingTop - indexPaint.ascent(), indexPaint);
                 }
@@ -163,7 +162,7 @@ public class IndexBarView extends RecyclerView.AdapterDataObserver {
 
     private void scrollToPosition() {
         try {
-            int position = mArtistsAdapter.getIndexPosition(mCurrentSection);
+            final int position = mArtistsAdapter.getIndexPosition(mCurrentSection);
             mLinearLayoutManager.scrollToPositionWithOffset(position, 0);
         } catch (Exception e) {
             e.printStackTrace();

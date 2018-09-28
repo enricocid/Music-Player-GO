@@ -1,6 +1,6 @@
 package com.iven.musicplayergo.adapters;
 
-import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
@@ -19,17 +19,17 @@ import java.util.List;
 
 public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleViewHolder> {
 
-    private final Activity mActivity;
+    private final Context mContext;
     private final PlayerAdapter mPlayerAdapter;
     private final AlbumSelectedListener mAlbumSelectedListener;
     private final List<Album> mAlbums;
     private Album mSelectedAlbum;
 
-    public AlbumsAdapter(@NonNull final Activity activity, @NonNull final PlayerAdapter playerAdapter, @NonNull final List<Album> albums, final boolean showPlayedArtist) {
-        mActivity = activity;
+    public AlbumsAdapter(@NonNull final Context context, @NonNull final PlayerAdapter playerAdapter, @NonNull final List<Album> albums, final boolean showPlayedArtist) {
+        mContext = context;
         mPlayerAdapter = playerAdapter;
         mAlbums = albums;
-        mAlbumSelectedListener = (AlbumSelectedListener) mActivity;
+        mAlbumSelectedListener = (AlbumSelectedListener) mContext;
         mSelectedAlbum = showPlayedArtist ? mPlayerAdapter.getCurrentSong().getSongAlbum() : mPlayerAdapter.getNavigationAlbum() != null ? mPlayerAdapter.getNavigationAlbum() : mAlbums.get(0);
         mAlbumSelectedListener.onAlbumSelected(mSelectedAlbum);
     }
@@ -38,7 +38,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
     @NonNull
     public SimpleViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
 
-        final View itemView = LayoutInflater.from(mActivity)
+        final View itemView = LayoutInflater.from(mContext)
                 .inflate(R.layout.album_item, parent, false);
 
         return new SimpleViewHolder(itemView);
@@ -50,8 +50,8 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
         final Album album = mAlbums.get(holder.getAdapterPosition());
         final String albumTitle = album.getTitle();
         holder.title.setText(albumTitle);
-        holder.year.setText(Album.getYearForAlbum(mActivity, album.getYear()));
-        final int randomColor = ContextCompat.getColor(mActivity, ColorsAdapter.getRandomColor());
+        holder.year.setText(Album.getYearForAlbum(mContext, album.getYear()));
+        final int randomColor = ContextCompat.getColor(mContext, ColorsAdapter.getRandomColor());
         holder.container.setCardBackgroundColor(ColorUtils.setAlphaComponent(randomColor, 25));
         holder.year.setTextColor(randomColor);
     }

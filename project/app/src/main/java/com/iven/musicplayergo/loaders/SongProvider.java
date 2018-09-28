@@ -38,14 +38,16 @@ public class SongProvider {
 
     private static final List<Song> mAllDeviceSongs = new ArrayList<>();
 
+    @NonNull
     public static List<Song> getAllDeviceSongs() {
         return mAllDeviceSongs;
     }
 
+    @NonNull
     public static List<Song> getAllArtistSongs(@NonNull final List<Album> albums) {
         final List<Song> songsList = new ArrayList<>();
         for (Album album : albums) {
-            songsList.addAll(album.songs);
+            songsList.addAll(album.getSongs());
         }
         return songsList;
     }
@@ -56,7 +58,7 @@ public class SongProvider {
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 final Song song = getSongFromCursorImpl(cursor);
-                if (song.duration >= 5000) {
+                if (song.getSongDuration() >= 5000) {
                     songs.add(song);
                     mAllDeviceSongs.add(song);
                 }
@@ -73,8 +75,7 @@ public class SongProvider {
     }
 
     private static void sortSongsByTrack(@NonNull final List<Song> songs) {
-
-        Collections.sort(songs, (obj1, obj2) -> Long.compare(obj1.trackNumber, obj2.trackNumber));
+        Collections.sort(songs, (obj1, obj2) -> Long.compare(obj1.getTrackNumber(), obj2.getTrackNumber()));
     }
 
     @NonNull

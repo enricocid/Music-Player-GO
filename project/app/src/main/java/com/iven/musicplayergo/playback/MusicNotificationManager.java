@@ -75,8 +75,8 @@ public class MusicNotificationManager {
         final PendingIntent contentIntent = PendingIntent.getActivity(mMusicService, REQUEST_CODE,
                 openPlayerIntent, 0);
 
-        final String artist = song.artistName;
-        final String songTitle = song.title;
+        final String artist = song.getArtistName();
+        final String songTitle = song.getSongTitle();
 
         final Spanned spanned = Utils.buildSpanned(mMusicService.getString(R.string.playing_song, artist, songTitle));
 
@@ -86,7 +86,7 @@ public class MusicNotificationManager {
                 .setLargeIcon(getLargeIcon())
                 .setColor(mAccent)
                 .setContentTitle(spanned)
-                .setContentText(song.albumName)
+                .setContentText(song.getAlbumName())
                 .setContentIntent(contentIntent)
                 .addAction(notificationAction(PREV_ACTION))
                 .addAction(notificationAction(PLAY_PAUSE_ACTION))

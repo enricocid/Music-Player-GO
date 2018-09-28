@@ -27,9 +27,9 @@ abstract class WrappedAsyncTaskLoader<D> extends AsyncTaskLoader<D> {
      * {@inheritDoc}
      */
     @Override
-    public void deliverResult(D data) {
+    public void deliverResult(final D data) {
         if (!isReset()) {
-            this.mData = data;
+            mData = data;
             super.deliverResult(data);
         }
     }
@@ -41,9 +41,9 @@ abstract class WrappedAsyncTaskLoader<D> extends AsyncTaskLoader<D> {
     protected void onStartLoading() {
         super.onStartLoading();
 
-        if (this.mData != null) {
-            deliverResult(this.mData);
-        } else if (takeContentChanged() || this.mData == null) {
+        if (mData != null) {
+            deliverResult(mData);
+        } else if (takeContentChanged() || mData == null) {
             forceLoad();
         }
     }
@@ -66,6 +66,6 @@ abstract class WrappedAsyncTaskLoader<D> extends AsyncTaskLoader<D> {
         super.onReset();
         // Ensure the loader is stopped
         onStopLoading();
-        this.mData = null;
+        mData = null;
     }
 }

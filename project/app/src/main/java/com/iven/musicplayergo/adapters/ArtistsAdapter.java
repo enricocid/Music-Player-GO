@@ -1,7 +1,7 @@
 package com.iven.musicplayergo.adapters;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spanned;
@@ -22,15 +22,15 @@ import java.util.Locale;
 
 public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleViewHolder> {
 
-    private final Activity mActivity;
+    private final Context mContext;
     private final List<Artist> mArtists;
     private final ArtistSelectedListener mArtistSelectedListener;
     private final HashMap<Integer, String> mIndexedPositions = new LinkedHashMap<>();
 
-    public ArtistsAdapter(@NonNull final Activity activity, @NonNull final List<Artist> artists) {
-        mActivity = activity;
+    public ArtistsAdapter(@NonNull final Context context, @NonNull final List<Artist> artists) {
+        mContext = context;
         mArtists = artists;
-        mArtistSelectedListener = (ArtistSelectedListener) activity;
+        mArtistSelectedListener = (ArtistSelectedListener) mContext;
         generateIndexes();
     }
 
@@ -40,7 +40,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
     }
 
     public int getIndexPosition(final int currentSection) {
-        int size = mIndexedPositions.keySet().size();
+        final int size = mIndexedPositions.keySet().size();
         return mIndexedPositions.keySet().toArray(new Integer[size])[currentSection];
     }
 
@@ -57,7 +57,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
     @NonNull
     public SimpleViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
 
-        View itemView = LayoutInflater.from(mActivity)
+        final View itemView = LayoutInflater.from(mContext)
                 .inflate(R.layout.artist_item, parent, false);
 
         return new SimpleViewHolder(itemView);
@@ -69,7 +69,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
         Artist artist = mArtists.get(holder.getAdapterPosition());
         holder.title.setText(artist.getName());
 
-        Spanned spanned = Utils.buildSpanned(mActivity.getString(R.string.artist_info, artist.albums.size(), artist.getSongCount()));
+        final Spanned spanned = Utils.buildSpanned(mContext.getString(R.string.artist_info, artist.getAlbums().size(), artist.getSongCount()));
 
         holder.albumCount.setText(spanned);
     }

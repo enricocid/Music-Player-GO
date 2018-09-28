@@ -50,7 +50,7 @@ public class ArtistProvider {
         final List<Artist> artists = new ArrayList<>();
         if (albums != null) {
             for (Album album : albums) {
-                getOrCreateArtist(artists, album.getArtistId()).albums.add(album);
+                getOrCreateArtist(artists, album.getArtistId()).getAlbums().add(album);
             }
         }
         return artists;
@@ -58,7 +58,7 @@ public class ArtistProvider {
 
     private static Artist getOrCreateArtist(@NonNull final List<Artist> artists, final int artistId) {
         for (Artist artist : artists) {
-            if (!artist.albums.isEmpty() && !artist.albums.get(0).songs.isEmpty() && artist.albums.get(0).songs.get(0).artistId == artistId) {
+            if (!artist.getAlbums().isEmpty() && !artist.getAlbums().get(0).getSongs().isEmpty() && artist.getAlbums().get(0).getSongs().get(0).getArtistId() == artistId) {
                 return artist;
             }
         }

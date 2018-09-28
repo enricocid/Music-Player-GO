@@ -1,6 +1,6 @@
 package com.iven.musicplayergo.adapters;
 
-import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -34,18 +34,18 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
             R.color.gray,
             R.color.blue_gray
     };
-    private final Activity mActivity;
+    private final Context mContext;
     private final int mAccent;
     private final AccentChangedListener mOnAccentChangedListener;
 
-    public ColorsAdapter(@NonNull final Activity activity, final int accent) {
-        mActivity = activity;
+    public ColorsAdapter(@NonNull final Context context, final int accent) {
+        mContext = context;
         mAccent = accent;
-        mOnAccentChangedListener = (AccentChangedListener) mActivity;
+        mOnAccentChangedListener = (AccentChangedListener) mContext;
     }
 
     public static int getRandomColor() {
-        int rnd = new Random().nextInt(colors.length);
+        final int rnd = new Random().nextInt(colors.length);
         return colors[rnd];
     }
 
@@ -53,8 +53,9 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
     @NonNull
     public SimpleViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
 
-        final View itemView = LayoutInflater.from(parent.getContext())
+        final View itemView = LayoutInflater.from(mContext)
                 .inflate(R.layout.color_option, parent, false);
+
         return new SimpleViewHolder(itemView);
     }
 
@@ -63,7 +64,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
 
         final int color = colors[holder.getAdapterPosition()];
         final int drawable = color != mAccent ? R.drawable.ic_checkbox_blank : R.drawable.ic_checkbox_marked;
-        final int parsedColor = ContextCompat.getColor(mActivity, color);
+        final int parsedColor = ContextCompat.getColor(mContext, color);
         holder.color.setImageResource(drawable);
         holder.color.setColorFilter(parsedColor);
     }

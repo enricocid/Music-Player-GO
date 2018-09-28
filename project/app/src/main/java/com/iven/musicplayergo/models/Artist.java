@@ -7,28 +7,30 @@ import java.util.List;
 
 public class Artist {
 
-    public final List<Album> albums;
+    private final List<Album> mAlbums;
 
     public Artist() {
-        this.albums = new ArrayList<>();
+        mAlbums = new ArrayList<>();
     }
 
-    public final int getId() {
-        return getFirstAlbum().getArtistId();
+    @NonNull
+    public final List<Album> getAlbums() {
+        return mAlbums;
     }
 
+    @NonNull
     public final String getName() {
         return getFirstAlbum().getArtistName();
     }
 
     @NonNull
     private Album getFirstAlbum() {
-        return albums.isEmpty() ? new Album() : albums.get(0);
+        return mAlbums.isEmpty() ? new Album() : mAlbums.get(0);
     }
 
     public final int getSongCount() {
         int songCount = 0;
-        for (Album album : albums) {
+        for (Album album : mAlbums) {
             songCount += album.getSongCount();
         }
         return songCount;
