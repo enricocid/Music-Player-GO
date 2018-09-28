@@ -282,11 +282,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             return true;
         });
         mSelectedDiscographyDisc.setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_OUTSIDE || event.getAction() == MotionEvent.ACTION_MOVE) {
-                if (sArtistDiscographyDiscLongPressed) {
-                    mSelectedDiscographyDisc.setSelected(false);
-                    sArtistDiscographyDiscLongPressed = false;
-                }
+            if (sArtistDiscographyDiscLongPressed && event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_OUTSIDE || event.getAction() == MotionEvent.ACTION_MOVE) {
+                mSelectedDiscographyDisc.setSelected(false);
+                sArtistDiscographyDiscLongPressed = false;
             }
             return false;
         });
