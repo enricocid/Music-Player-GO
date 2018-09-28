@@ -572,22 +572,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 
-    private void setArtistDetails(@NonNull List<Album> albums, final boolean isNewArtist, final boolean showPlayedArtist) {
+    private void setArtistDetails(@NonNull final List<Album> albums, final boolean isNewArtist, final boolean showPlayedArtist) {
+        List<Album> artistAlbums = albums;
         if (showPlayedArtist) {
             final Artist artist = ArtistProvider.getArtist(mArtists, mPlayerAdapter.getCurrentSong().getArtistName());
-            albums = artist.getAlbums();
+            artistAlbums = artist.getAlbums();
         }
         if (isNewArtist) {
             mAlbumsRecyclerView.scrollToPosition(0);
         }
         mAlbumsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mAlbumsRecyclerView.setLayoutManager(mAlbumsLayoutManager);
-        final AlbumsAdapter albumsAdapter = new AlbumsAdapter(this, mPlayerAdapter, albums, showPlayedArtist);
+        final AlbumsAdapter albumsAdapter = new AlbumsAdapter(this, mPlayerAdapter, artistAlbums, showPlayedArtist);
         mAlbumsRecyclerView.setAdapter(albumsAdapter);
 
-        mSelectedArtistSongs = SongProvider.getAllArtistSongs(albums);
+        mSelectedArtistSongs = SongProvider.getAllArtistSongs(artistAlbums);
         Utils.updateTextView(mSelectedDiscographyArtist, mNavigationArtist);
-        Utils.updateTextView(mSelectedArtistDiscCount, getString(R.string.albums, albums.size()));
+        Utils.updateTextView(mSelectedArtistDiscCount, getString(R.string.albums, artistAlbums.size()));
 
         if (sExpandArtistDiscography) {
             revealView(mArtistDetails, mArtistsRecyclerView, true);
