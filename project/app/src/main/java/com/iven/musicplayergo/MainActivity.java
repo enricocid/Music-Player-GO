@@ -167,7 +167,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private void showPermissionRationale() {
         final AlertDialog builder = new AlertDialog.Builder(this).create();
         View view = View.inflate(this, R.layout.dialog_one_button, null);
-        builder.setIcon(R.drawable.ic_folder);
         builder.setView(view);
         if (builder.getWindow() != null) {
             builder.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
