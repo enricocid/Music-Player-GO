@@ -35,18 +35,18 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 - Colorful, simple and 'unified' UI: no need to navigate between screens;
 - Awesome typeface: Raleway + Roboto condensed
 - Expandable bottom panel containing the player controls and the settings (if expanded):
-  - Played song info: clicking on it You can open the played Artist page/album or open/close the Artist page You're exploring (when not playing). The text is scrollable on long click;
+  - Played song info: clicking on it You can open the played Artist's page/album or open/close the Artist's page You're exploring (when not playing). The text is scrollable on long click;
   - Skip to previous song (long click to enable reset 1x);
   - Play/pause;
   - Skip to next song;
 - Music organized by Artist (the Artists names are scrollable on long click);
-- "Revealable" Artist page: albums + songs (the selected album title and songs titles are scrollable on long click);
+- "Revealable" Artist's page: albums + songs (the selected album title and songs titles are scrollable on long click);
 - Colorful alphabetic scrollbar;
 - Dark status bar icons (available from Android Marshmallow);
 
 ### Settings at hand: 
 
-- Dynamic shuffle button: randomly plays the device or the Artist songs (when the Artist page is "revealed";
+- Dynamic shuffle button: randomly plays the device or the Artist songs (when the Artist's page is "revealed");
 - System equalizer (if present on the device);
 - Themes (light and inverted)
 - Link to git page;
