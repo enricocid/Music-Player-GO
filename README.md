@@ -32,25 +32,25 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
 ### Unifield UI, the way I'd like it to be:
 
-- Colorful, simple and 'unified' UI: no need to navigate between activities;
+- Colorful, simple and 'unified' UI: no need to navigate between screens;
 - Awesome typeface: Raleway + Roboto condensed
-- Bottom panel containing the player controls and the settings (if expanded):
-  - Played song info. By clicking on it You can 'reveal'/close the artist's discography. By long click You can scroll the text;
+- Expandable bottom panel containing the player controls and the settings (if expanded):
+  - Played song info: clicking on it You can open the played Artist page/album or open/close the Artist page You're exploring (when not playing). The text is scrollable on long click;
   - Skip to previous song (long click to enable reset 1x);
   - Play/pause;
   - Skip to next song;
-- Music organized by artist;
-- Colorful index bar;
-- Dark status bar icons (from Android Marshmallow);
+- Music organized by Artist (the Artists names are scrollable on long click);
+- "Revealable" Artist page: albums + songs (the selected album title and songs titles are scrollable on long click);
+- Colorful alphabetic scrollbar;
+- Dark status bar icons (available from Android Marshmallow);
 
 ### Settings at hand: 
 
-- Dynamic shuffle button: randomly plays the artist or the
-    device songs;
-- Equalizer (if present on the device);
+- Dynamic shuffle button: randomly plays the device or the Artist songs (when the Artist page is "revealed";
+- System equalizer (if present on the device);
 - Themes (light and inverted)
 - Link to git page;
-- 16 UI accents!;
+- 16 awesome UI accents!;
 
 
 ### Other features: 
