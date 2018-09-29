@@ -40,13 +40,13 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
   - Play/pause;
   - Skip to next song;
 - Music organized by Artist (the Artists names are scrollable on long click);
-- "Revealable" Artist's page: albums + songs (the selected album title and songs titles are scrollable on long click);
+- 'Revealable' Artist's page: albums + songs (the selected album title and songs titles are scrollable on long click);
 - Colorful alphabetic scrollbar;
 - Dark status bar icons (available from Android Marshmallow);
 
 ### Settings at hand: 
 
-- Dynamic shuffle button: randomly plays the device or the Artist songs (when the Artist's page is "revealed");
+- Dynamic shuffle button: randomly plays the device or the Artist songs (when the Artist's page is 'revealed');
 - System equalizer (if present on the device);
 - Themes (light and inverted)
 - Link to git page;
