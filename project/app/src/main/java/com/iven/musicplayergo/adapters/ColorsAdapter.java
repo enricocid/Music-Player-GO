@@ -1,6 +1,7 @@
 package com.iven.musicplayergo.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -30,7 +31,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
             R.color.deep_orange,
             R.color.brown,
             R.color.gray,
-            R.color.blue_gray
+            R.color.blue_gray,
     };
     private final Context mContext;
     private final int mAccent;

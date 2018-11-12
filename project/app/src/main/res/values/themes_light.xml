@@ -96,4 +96,10 @@
         <item name="colorAccent">@color/blue_gray</item>
         <item name="colorPrimary">@color/blue_gray</item>
     </style>
+
+    <style name="AppThemeBlack" parent="AppTheme">
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/black</item>
+        <item name="colorPrimary">@color/black</item>
+    </style>
 </resources>
