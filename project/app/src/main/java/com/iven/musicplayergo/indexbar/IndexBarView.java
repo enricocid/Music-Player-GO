@@ -53,9 +53,9 @@ public class IndexBarView extends RecyclerView.AdapterDataObserver {
         mPreviewPadding = 5 * density;
         mArtistsRecyclerView.setPadding(0, 0, (int) mIndexBarWidth, 0);
 
-        mTypefaceIndexes = ResourcesCompat.getFont(mContext, R.font.raleway_medium);
-        mTypefaceIndexesBold = ResourcesCompat.getFont(mContext, R.font.raleway_black);
-        mTypefacePreview = ResourcesCompat.getFont(mContext, R.font.raleway_semibold);
+        mTypefaceIndexes = ResourcesCompat.getFont(mContext, R.font.open_sans);
+        mTypefaceIndexesBold = ResourcesCompat.getFont(mContext, R.font.open_sans_bold);
+        mTypefacePreview = ResourcesCompat.getFont(mContext, R.font.open_sans_bold);
     }
 
     void draw(@NonNull final Canvas canvas) {

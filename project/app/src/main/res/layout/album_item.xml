@@ -5,8 +5,11 @@
     android:layout_height="@dimen/album_height"
     android:layout_marginStart="2dp"
     android:layout_marginEnd="2dp"
+    card_view:cardBackgroundColor="?android:attr/windowBackground"
     card_view:cardCornerRadius="8dp"
-    card_view:cardElevation="0dp">
+    card_view:cardElevation="0dp"
+    card_view:strokeColor="?attr/colorAccent"
+    card_view:strokeWidth="0.1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +23,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:fontFamily="@font/raleway_medium"
+            android:fontFamily="@font/open_sans"
             android:gravity="center"
             android:maxLines="4"
             android:padding="2dp"
@@ -32,7 +35,7 @@
             android:id="@+id/year"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/raleway_semibold"
+            android:fontFamily="@font/open_sans"
             android:gravity="center"
             android:paddingBottom="2dp"
             android:singleLine="true"

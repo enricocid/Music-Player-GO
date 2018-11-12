@@ -461,7 +461,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void updateResetStatus(final boolean onPlaybackCompletion) {
-        final int themeColor = sThemeInverted ? Color.WHITE : Color.BLACK;
+        final int themeColor = sThemeInverted ? R.color.white : R.color.black;
         final int color = onPlaybackCompletion ? themeColor : mPlayerAdapter.isReset() ? mAccent : themeColor;
         mSkipPrevButton.post(() -> mSkipPrevButton.setColorFilter(Utils.getColorFromResource(MainActivity.this, color, onPlaybackCompletion ? themeColor : mPlayerAdapter.isReset() ? R.color.blue : themeColor), PorterDuff.Mode.SRC_IN));
     }
@@ -581,7 +581,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
         mAlbumsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mAlbumsRecyclerView.setLayoutManager(mAlbumsLayoutManager);
-        final AlbumsAdapter albumsAdapter = new AlbumsAdapter(this, mPlayerAdapter, artistAlbums, showPlayedArtist, Utils.getColorFromResource(this, mAccent, R.color.blue));
+        final AlbumsAdapter albumsAdapter = new AlbumsAdapter(this, mPlayerAdapter, artistAlbums, showPlayedArtist);
         mAlbumsRecyclerView.setAdapter(albumsAdapter);
 
         mSelectedArtistSongs = SongProvider.getAllArtistSongs(artistAlbums);

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:ellipsize="end"
-        android:fontFamily="sans-serif-condensed"
+        android:fontFamily="@font/open_sans_bold"
         android:gravity="center"
         android:paddingStart="16dp"
         android:paddingTop="16dp"
@@ -21,8 +21,7 @@
         android:paddingBottom="16dp"
         android:singleLine="true"
         android:textColor="?android:textColorPrimary"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textSize="14sp" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -40,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
-            android:fontFamily="@font/raleway_medium"
+            android:fontFamily="@font/open_sans"
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
             android:singleLine="true"
@@ -52,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:fontFamily="@font/raleway_semibold"
+            android:fontFamily="@font/open_sans"
             android:singleLine="true"
             android:textColor="?android:textColorSecondary"
             android:textSize="12sp"

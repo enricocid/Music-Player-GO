@@ -2,7 +2,6 @@ package com.iven.musicplayergo.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,13 +22,11 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
     private final AlbumSelectedListener mAlbumSelectedListener;
     private final List<Album> mAlbums;
     private Album mSelectedAlbum;
-    private int mAccent;
 
-    public AlbumsAdapter(@NonNull final Context context, @NonNull final PlayerAdapter playerAdapter, @NonNull final List<Album> albums, final boolean showPlayedArtist, final int accent) {
+    public AlbumsAdapter(@NonNull final Context context, @NonNull final PlayerAdapter playerAdapter, @NonNull final List<Album> albums, final boolean showPlayedArtist) {
         mContext = context;
         mPlayerAdapter = playerAdapter;
         mAlbums = albums;
-        mAccent = accent;
         mAlbumSelectedListener = (AlbumSelectedListener) mContext;
         mSelectedAlbum = showPlayedArtist ? mPlayerAdapter.getCurrentSong().getSongAlbum() : mPlayerAdapter.getNavigationAlbum() != null ? mPlayerAdapter.getNavigationAlbum() : mAlbums.get(0);
         mAlbumSelectedListener.onAlbumSelected(mSelectedAlbum);
@@ -52,7 +49,6 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
         final String albumTitle = album.getTitle();
         holder.title.setText(albumTitle);
         holder.year.setText(Album.getYearForAlbum(mContext, album.getYear()));
-        holder.container.setCardBackgroundColor(ColorUtils.setAlphaComponent(mAccent, 25));
     }
 
     @Override

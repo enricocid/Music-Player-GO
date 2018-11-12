@@ -16,7 +16,7 @@
         android:layout_marginEnd="2dp"
         android:clickable="true"
         android:focusable="true"
-        android:fontFamily="sans-serif-condensed"
+        android:fontFamily="@font/open_sans"
         android:textAppearance="@android:style/TextAppearance.Material.Small"
         android:textColor="?android:textColorPrimary"
         android:textSize="14sp" />
@@ -35,7 +35,7 @@
         android:layout_marginStart="2dp"
         android:clickable="true"
         android:focusable="true"
-        android:fontFamily="sans-serif-condensed"
+        android:fontFamily="@font/open_sans"
         android:singleLine="true"
         android:textColor="?android:textColorPrimary"
         android:textSize="14sp" />

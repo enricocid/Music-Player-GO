@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/artist_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -37,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:ellipsize="end"
-                android:fontFamily="@font/raleway_black"
+                android:fontFamily="@font/open_sans_bold"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:paddingTop="8dp"
                 android:paddingBottom="2dp"
@@ -53,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:ellipsize="end"
-                android:fontFamily="@font/raleway_semibold"
+                android:fontFamily="@font/open_sans"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:singleLine="true"
                 android:textAlignment="textStart"
@@ -70,71 +69,59 @@
         android:layout_height="wrap_content"
         android:overScrollMode="never" />
 
-    <android.support.design.card.MaterialCardView
-        android:id="@+id/songs_container"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_weight="1"
-        card_view:cardBackgroundColor="?attr/secondary_bg_color"
-        card_view:cardCornerRadius="8dp"
-        card_view:cardElevation="0dp">
-
-        <LinearLayout
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!-- SELECTED DISC -->
+        <TextView
+            android:id="@+id/selected_disc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <!-- SELECTED DISC -->
-            <TextView
-                android:id="@+id/selected_disc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:ellipsize="marquee"
-                android:fontFamily="@font/raleway_black_italic"
-                android:gravity="center"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:paddingStart="4dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="4dp"
-                android:paddingBottom="2dp"
-                android:scrollHorizontally="true"
-                android:singleLine="true"
-                android:textColor="?android:textColorPrimary"
-                android:textSize="16sp" />
+            android:layout_margin="4dp"
+            android:ellipsize="marquee"
+            android:fontFamily="@font/open_sans_bold"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:paddingStart="4dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="4dp"
+            android:paddingBottom="2dp"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="14sp"
+            android:textStyle="italic" />
 
-            <!-- ALBUM YEAR -->
-            <TextView
-                android:id="@+id/selected_disc_year"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/raleway_semibold"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:gravity="center"
-                android:singleLine="true"
-                android:textAlignment="center"
-                android:textAllCaps="true"
-                android:textColor="?android:textColorPrimary"
-                android:textSize="12sp" />
+        <!-- ALBUM YEAR -->
+        <TextView
+            android:id="@+id/selected_disc_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/open_sans"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="12sp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:alpha="0.25"
-                android:background="?android:attr/listDivider" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:alpha="0.25"
+            android:background="?android:attr/listDivider" />
 
-            <!-- DISC SONGS -->
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/songs_rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:overScrollMode="never" />
-        </LinearLayout>
-    </android.support.design.card.MaterialCardView>
+        <!-- DISC SONGS -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/songs_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never" />
+    </LinearLayout>
 </LinearLayout>
