@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -553,7 +554,11 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
         sBound = true;
 
         final Intent startNotStickyIntent = new Intent(this, MusicService.class);
-        startService(startNotStickyIntent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(startNotStickyIntent);
+        } else {
+            startService(startNotStickyIntent);
+        }
     }
 
     private void doUnbindService() {
