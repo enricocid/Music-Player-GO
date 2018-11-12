@@ -42,7 +42,7 @@
                     android:foreground="?android:attr/selectableItemBackgroundBorderless"
                     android:onClick="expandArtistDetails"
                     android:orientation="vertical"
-                    android:paddingStart="16dp"
+                    android:paddingStart="8dp"
                     android:paddingTop="8dp"
                     android:paddingEnd="2dp"
                     android:paddingBottom="8dp">
