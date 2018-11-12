@@ -20,7 +20,7 @@
         android:paddingEnd="8dp"
         android:paddingBottom="16dp"
         android:singleLine="true"
-        android:textColor="?android:textColorSecondary"
+        android:textColor="?android:textColorPrimary"
         android:textSize="14sp"
         android:textStyle="bold" />
 
