@@ -5,7 +5,6 @@
     android:layout_height="@dimen/album_height"
     android:layout_marginStart="2dp"
     android:layout_marginEnd="2dp"
-    card_view:cardBackgroundColor="?android:attr/windowBackground"
     card_view:cardCornerRadius="8dp"
     card_view:cardElevation="0dp">
 
@@ -26,7 +25,7 @@
             android:maxLines="4"
             android:padding="2dp"
             android:textAlignment="center"
-            android:textColor="?android:textColorSecondary"
+            android:textColor="?android:textColorPrimary"
             android:textSize="14sp" />
 
         <TextView

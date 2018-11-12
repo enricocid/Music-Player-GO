@@ -1,105 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- ACCENTS THEMES LIGHT -->
     <style name="AppThemeRed" parent="AppTheme">
         <item name="colorPrimary">@color/red</item>
         <item name="colorPrimaryDark">@color/red</item>
         <item name="colorAccent">@color/red</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
     </style>
 
     <style name="AppThemePink" parent="AppTheme">
         <item name="colorPrimary">@color/pink</item>
         <item name="colorPrimaryDark">@color/pink</item>
         <item name="colorAccent">@color/pink</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
     </style>
 
     <style name="AppThemePurple" parent="AppTheme">
         <item name="colorPrimary">@color/purple</item>
         <item name="colorPrimaryDark">@color/purple</item>
         <item name="colorAccent">@color/purple</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
     </style>
 
     <style name="AppThemeDeepPurple" parent="AppTheme">
         <item name="colorPrimary">@color/deep_purple</item>
         <item name="colorPrimaryDark">@color/deep_purple</item>
         <item name="colorAccent">@color/deep_purple</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
     </style>
 
     <style name="AppThemeIndigo" parent="AppTheme">
         <item name="colorPrimary">@color/indigo</item>
         <item name="colorPrimaryDark">@color/indigo</item>
         <item name="colorAccent">@color/indigo</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
     </style>
 
     <style name="AppThemeBlue" parent="AppTheme">
         <item name="colorPrimary">@color/blue</item>
         <item name="colorPrimaryDark">@color/blue</item>
         <item name="colorAccent">@color/blue</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
     </style>
 
     <style name="AppThemeLightBlue" parent="AppTheme">
         <item name="colorPrimaryDark">@color/light_blue</item>
         <item name="colorAccent">@color/light_blue</item>
         <item name="colorPrimary">@color/light_blue</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
     </style>
 
     <style name="AppThemeCyan" parent="AppTheme">
         <item name="colorPrimaryDark">@color/cyan</item>
         <item name="colorAccent">@color/cyan</item>
         <item name="colorPrimary">@color/cyan</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
     </style>
 
     <style name="AppThemeTeal" parent="AppTheme">
         <item name="colorPrimaryDark">@color/teal</item>
         <item name="colorAccent">@color/teal</item>
         <item name="colorPrimary">@color/teal</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
     </style>
 
     <style name="AppThemeGreen" parent="AppTheme">
         <item name="colorPrimaryDark">@color/green</item>
         <item name="colorAccent">@color/green</item>
         <item name="colorPrimary">@color/green</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
     </style>
 
     <style name="AppThemeAmber" parent="AppTheme">
         <item name="colorPrimaryDark">@color/amber</item>
         <item name="colorAccent">@color/amber</item>
         <item name="colorPrimary">@color/amber</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
     </style>
 
     <style name="AppThemeOrange" parent="AppTheme">
         <item name="colorPrimaryDark">@color/orange</item>
         <item name="colorAccent">@color/orange</item>
         <item name="colorPrimary">@color/orange</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
     </style>
 
     <style name="AppThemeDeepOrange" parent="AppTheme">
         <item name="colorPrimaryDark">@color/deep_orange</item>
         <item name="colorAccent">@color/deep_orange</item>
         <item name="colorPrimary">@color/deep_orange</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
     </style>
 
     <style name="AppThemeBrown" parent="AppTheme">
         <item name="colorPrimaryDark">@color/brown</item>
         <item name="colorAccent">@color/brown</item>
         <item name="colorPrimary">@color/brown</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
     </style>
 
     <style name="AppThemeGrayLight" parent="AppTheme">
         <item name="colorPrimaryDark">@color/gray</item>
         <item name="colorAccent">@color/gray</item>
         <item name="colorPrimary">@color/gray</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
     </style>
 
     <style name="AppThemeBlueGray" parent="AppTheme">
         <item name="colorPrimaryDark">@color/blue_gray</item>
         <item name="colorAccent">@color/blue_gray</item>
         <item name="colorPrimary">@color/blue_gray</item>
-    </style>
-
-    <style name="AppThemeBlack" parent="AppTheme">
-        <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorAccent">@color/black</item>
-        <item name="colorPrimary">@color/black</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
     </style>
 </resources>

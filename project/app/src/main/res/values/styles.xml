@@ -1,22 +1,22 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <!-- LIGHT THEME -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="icon_color">@color/black</item>
+        <item name="card_color">@color/white</item>
         <item name="theme_icon">@drawable/ic_invert_theme</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:navigationBarColor">@color/black</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
         <item name="android:alertDialogTheme">@style/AlertDialogStyle</item>
     </style>
 
     <!-- INVERTED THEME -->
     <style name="AppThemeInverted" parent="Theme.MaterialComponents.NoActionBar">
         <item name="icon_color">@color/white</item>
-        <item name="theme_icon">@drawable/ic_invert_theme_off</item>
+        <item name="card_color">@color/black</item>
         <item name="android:windowBackground">@color/black</item>
+        <item name="theme_icon">@drawable/ic_invert_theme_off</item>
         <item name="android:navigationBarColor">@color/black</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
         <item name="android:alertDialogTheme">@style/AlertDialogStyle</item>
     </style>
 

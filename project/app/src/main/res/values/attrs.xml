@@ -2,4 +2,5 @@
 <resources>
     <attr name="icon_color" format="color" />
     <attr name="theme_icon" format="color" />
+    <attr name="card_color" format="color" />
 </resources>

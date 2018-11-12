@@ -220,7 +220,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private void getViews() {
 
         mControlsContainer = findViewById(R.id.controls_container);
-        findViewById(R.id.context_view).setBackgroundColor(ColorUtils.setAlphaComponent(Utils.getColorFromResource(this, mAccent, R.color.blue), sThemeInverted ? 10 : 40));
+        final int bg_color = R.color.blue_gray_100;
+        findViewById(R.id.context_view).setBackgroundColor(ColorUtils.setAlphaComponent(Utils.getColorFromResource(this, bg_color, bg_color), sThemeInverted ? 10 : 40));
 
         final MaterialCardView bottomSheetLayout = findViewById(R.id.design_bottom_sheet);
         mBottomSheetBehaviour = BottomSheetBehavior.from(bottomSheetLayout);
@@ -462,7 +463,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private void updateResetStatus(final boolean onPlaybackCompletion) {
         final int themeColor = sThemeInverted ? R.color.white : R.color.black;
-        final int color = onPlaybackCompletion ? themeColor : mPlayerAdapter.isReset() ? mAccent : themeColor;
+        final int color = onPlaybackCompletion ? themeColor : mPlayerAdapter.isReset() ? themeColor : mAccent;
         mSkipPrevButton.post(() -> mSkipPrevButton.setColorFilter(Utils.getColorFromResource(MainActivity.this, color, onPlaybackCompletion ? themeColor : mPlayerAdapter.isReset() ? R.color.blue : themeColor), PorterDuff.Mode.SRC_IN));
     }
 
@@ -581,7 +582,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
         mAlbumsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mAlbumsRecyclerView.setLayoutManager(mAlbumsLayoutManager);
-        final AlbumsAdapter albumsAdapter = new AlbumsAdapter(this, mPlayerAdapter, artistAlbums, showPlayedArtist);
+        final AlbumsAdapter albumsAdapter = new AlbumsAdapter(this, mPlayerAdapter, artistAlbums, showPlayedArtist, Utils.getColorFromResource(this, mAccent, R.color.blue));
         mAlbumsRecyclerView.setAdapter(albumsAdapter);
 
         mSelectedArtistSongs = SongProvider.getAllArtistSongs(artistAlbums);

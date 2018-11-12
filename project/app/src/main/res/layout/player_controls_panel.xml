@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
-    card_view:cardBackgroundColor="?android:attr/windowBackground"
+    card_view:cardBackgroundColor="?attr/card_color"
     card_view:cardCornerRadius="@dimen/bottom_sheet_corner_radius"
+    card_view:cardElevation="24dp"
     card_view:strokeColor="?attr/colorAccent"
-    card_view:strokeWidth="0.1dp"
-    card_view:cardElevation="24dp">
+    card_view:strokeWidth="0.1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -72,7 +72,7 @@
                         android:singleLine="true"
                         android:text="@string/version"
                         android:textAlignment="textStart"
-                        android:textColor="?android:attr/textColorSecondary"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:textSize="12sp" />
                 </LinearLayout>
 
