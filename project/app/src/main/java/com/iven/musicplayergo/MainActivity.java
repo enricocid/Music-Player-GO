@@ -4,7 +4,6 @@ import android.Manifest;
 import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
@@ -18,14 +17,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.design.card.MaterialCardView;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Spanned;
 import android.util.Pair;
 import android.view.MotionEvent;
@@ -41,6 +32,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.card.MaterialCardView;
 import com.iven.musicplayergo.adapters.AlbumsAdapter;
 import com.iven.musicplayergo.adapters.ArtistsAdapter;
 import com.iven.musicplayergo.adapters.ColorsAdapter;
@@ -61,6 +54,14 @@ import com.iven.musicplayergo.playback.PlayerAdapter;
 
 import java.util.Collections;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.ColorUtils;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 @SuppressLint("ClickableViewAccessibility")
 public class MainActivity extends AppCompatActivity implements SongsAdapter.SongSelectedListener, ColorsAdapter.AccentChangedListener, AlbumsAdapter.AlbumSelectedListener, ArtistsAdapter.ArtistSelectedListener {

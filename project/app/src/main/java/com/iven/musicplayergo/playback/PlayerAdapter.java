@@ -18,8 +18,8 @@ package com.iven.musicplayergo.playback;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.iven.musicplayergo.MainActivity;
 import com.iven.musicplayergo.models.Album;

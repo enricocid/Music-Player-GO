@@ -16,7 +16,7 @@
 
 package com.iven.musicplayergo.playback;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 
 import com.iven.musicplayergo.MainActivity;
 

@@ -4,8 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Audio.AudioColumns;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Song;
@@ -13,6 +11,9 @@ import com.iven.musicplayergo.models.Song;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class SongProvider {
 

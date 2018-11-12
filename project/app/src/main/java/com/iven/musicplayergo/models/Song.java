@@ -1,9 +1,9 @@
 package com.iven.musicplayergo.models;
 
-import android.support.annotation.NonNull;
-
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+
+import androidx.annotation.NonNull;
 
 public class Song {
 

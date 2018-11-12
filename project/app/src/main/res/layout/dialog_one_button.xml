@@ -38,7 +38,7 @@
         android:textAlignment="center"
         android:textSize="16sp" />
 
-    <android.support.design.button.MaterialButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/dlg_one_button_btn_ok"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"

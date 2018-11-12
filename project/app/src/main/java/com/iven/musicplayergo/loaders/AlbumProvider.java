@@ -1,14 +1,14 @@
 package com.iven.musicplayergo.loaders;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Song;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 class AlbumProvider {
 

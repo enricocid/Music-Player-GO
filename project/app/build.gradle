@@ -22,11 +22,11 @@ android {
     }
 }
 dependencies {
-    implementation 'com.android.support:support-core-utils:28.0.0'
-    implementation 'com.android.support:support-media-compat:28.0.0'
-    api 'com.android.support:design:28.0.0'
+    implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
+    implementation 'androidx.media:media:1.0.0'
+    api 'com.google.android.material:material:1.1.0-alpha01'
     // ViewModel and LiveData
-    implementation "android.arch.lifecycle:extensions:1.1.1"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
     //if using java 8,ignore above line and add the following line
-    implementation "android.arch.lifecycle:common-java8:1.1.1"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.0.0"
 }
