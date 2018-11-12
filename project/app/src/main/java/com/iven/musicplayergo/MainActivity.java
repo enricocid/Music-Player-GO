@@ -554,11 +554,7 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
         sBound = true;
 
         final Intent startNotStickyIntent = new Intent(this, MusicService.class);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(startNotStickyIntent);
-        } else {
-            startService(startNotStickyIntent);
-        }
+        startService(startNotStickyIntent);
     }
 
     private void doUnbindService() {
