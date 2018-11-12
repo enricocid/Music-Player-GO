@@ -344,7 +344,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 final int h = mArtistsRecyclerView.getHeight();
                 mArtistsRecyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 if (mArtistsRecyclerView.computeVerticalScrollRange() > h) {
-                    final IndexBarView indexBarView = new IndexBarView(MainActivity.this, mArtistsRecyclerView, mArtistsAdapter, mArtistsLayoutManager, sThemeInverted);
+                    final IndexBarView indexBarView = new IndexBarView(MainActivity.this, mArtistsRecyclerView, mArtistsAdapter, mArtistsLayoutManager, sThemeInverted, Utils.getColorFromResource(MainActivity.this, mAccent, R.color.blue));
                     mArtistsRecyclerView.setFastScroller(indexBarView);
                 }
             }
@@ -581,7 +581,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
         mAlbumsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mAlbumsRecyclerView.setLayoutManager(mAlbumsLayoutManager);
-        final AlbumsAdapter albumsAdapter = new AlbumsAdapter(this, mPlayerAdapter, artistAlbums, showPlayedArtist);
+        final AlbumsAdapter albumsAdapter = new AlbumsAdapter(this, mPlayerAdapter, artistAlbums, showPlayedArtist, Utils.getColorFromResource(this, mAccent, R.color.blue));
         mAlbumsRecyclerView.setAdapter(albumsAdapter);
 
         mSelectedArtistSongs = SongProvider.getAllArtistSongs(artistAlbums);

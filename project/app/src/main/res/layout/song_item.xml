@@ -7,36 +7,22 @@
     android:foreground="?android:attr/selectableItemBackgroundBorderless"
     android:orientation="horizontal">
 
-    <FrameLayout
+    <TextView
+        android:id="@+id/track"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center"
         android:paddingStart="16dp"
         android:paddingTop="16dp"
         android:paddingEnd="8dp"
-        android:paddingBottom="16dp">
-
-        <ImageView
-            android:id="@+id/foreground"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_checkbox_blank" />
-
-        <TextView
-            android:id="@+id/track"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="center"
-            android:singleLine="true"
-            android:textColor="?android:textColorSecondaryInverse"
-            android:textSize="16sp" />
-
-    </FrameLayout>
+        android:paddingBottom="16dp"
+        android:singleLine="true"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -59,7 +45,7 @@
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:textColor="?android:textColorPrimary"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/duration"

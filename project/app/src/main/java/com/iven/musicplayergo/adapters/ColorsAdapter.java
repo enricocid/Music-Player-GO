@@ -11,8 +11,6 @@ import android.widget.ImageView;
 
 import com.iven.musicplayergo.R;
 
-import java.util.Random;
-
 public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleViewHolder> {
 
     //fixed int array of accent colors
@@ -42,11 +40,6 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.SimpleView
         mContext = context;
         mAccent = accent;
         mOnAccentChangedListener = (AccentChangedListener) mContext;
-    }
-
-    public static int getRandomColor() {
-        final int rnd = new Random().nextInt(colors.length);
-        return colors[rnd];
     }
 
     @Override

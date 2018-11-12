@@ -2,7 +2,6 @@ package com.iven.musicplayergo.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -24,11 +23,13 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
     private final AlbumSelectedListener mAlbumSelectedListener;
     private final List<Album> mAlbums;
     private Album mSelectedAlbum;
+    private int mAccent;
 
-    public AlbumsAdapter(@NonNull final Context context, @NonNull final PlayerAdapter playerAdapter, @NonNull final List<Album> albums, final boolean showPlayedArtist) {
+    public AlbumsAdapter(@NonNull final Context context, @NonNull final PlayerAdapter playerAdapter, @NonNull final List<Album> albums, final boolean showPlayedArtist, final int accent) {
         mContext = context;
         mPlayerAdapter = playerAdapter;
         mAlbums = albums;
+        mAccent = accent;
         mAlbumSelectedListener = (AlbumSelectedListener) mContext;
         mSelectedAlbum = showPlayedArtist ? mPlayerAdapter.getCurrentSong().getSongAlbum() : mPlayerAdapter.getNavigationAlbum() != null ? mPlayerAdapter.getNavigationAlbum() : mAlbums.get(0);
         mAlbumSelectedListener.onAlbumSelected(mSelectedAlbum);
@@ -51,9 +52,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
         final String albumTitle = album.getTitle();
         holder.title.setText(albumTitle);
         holder.year.setText(Album.getYearForAlbum(mContext, album.getYear()));
-        final int randomColor = ContextCompat.getColor(mContext, ColorsAdapter.getRandomColor());
-        holder.container.setCardBackgroundColor(ColorUtils.setAlphaComponent(randomColor, 25));
-        holder.year.setTextColor(randomColor);
+        holder.container.setCardBackgroundColor(ColorUtils.setAlphaComponent(mAccent, 25));
     }
 
     @Override

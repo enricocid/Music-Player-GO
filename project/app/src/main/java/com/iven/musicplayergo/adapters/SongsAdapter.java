@@ -2,15 +2,12 @@ package com.iven.musicplayergo.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.iven.musicplayergo.R;
@@ -59,9 +56,6 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
         holder.track.setText(String.valueOf(songTrack));
         holder.title.setText(songTitle);
         holder.duration.setText(Song.formatDuration(song.getSongDuration()));
-        final int randomColor = ContextCompat.getColor(mContext, ColorsAdapter.getRandomColor());
-        holder.foreground.setColorFilter(randomColor, PorterDuff.Mode.SRC_IN);
-        holder.duration.setTextColor(randomColor);
     }
 
     @Override
@@ -75,14 +69,12 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
 
     class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener, View.OnTouchListener {
 
-        final ImageView foreground;
         final TextView track, title, duration;
         private boolean sSongLongPressed = false;
 
         SimpleViewHolder(@NonNull final View itemView) {
             super(itemView);
 
-            foreground = itemView.findViewById(R.id.foreground);
             track = itemView.findViewById(R.id.track);
             title = itemView.findViewById(R.id.title);
             duration = itemView.findViewById(R.id.duration);

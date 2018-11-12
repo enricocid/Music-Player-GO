@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +16,6 @@ import android.view.MotionEvent;
 
 import com.iven.musicplayergo.R;
 import com.iven.musicplayergo.adapters.ArtistsAdapter;
-import com.iven.musicplayergo.adapters.ColorsAdapter;
 
 public class IndexBarView extends RecyclerView.AdapterDataObserver {
 
@@ -30,21 +28,22 @@ public class IndexBarView extends RecyclerView.AdapterDataObserver {
     private final LinearLayoutManager mLinearLayoutManager;
     private final Typeface mTypefaceIndexes, mTypefaceIndexesBold, mTypefacePreview;
     private final Context mContext;
-    private int mAccent;
     private int mArtistsRecyclerViewWidth;
     private int mArtistsRecyclerViewHeight;
     private RectF mIndexBarRect;
     private String[] mSections;
     private boolean mIsIndexing;
     private int mCurrentSection = -1;
+    private int mAccent;
 
-    public IndexBarView(@NonNull final Context context, @NonNull final IndexBarRecyclerView rv, @NonNull final ArtistsAdapter artistsAdapter, @NonNull final LinearLayoutManager linearLayoutManager, final boolean isThemeInverted) {
+    public IndexBarView(@NonNull final Context context, @NonNull final IndexBarRecyclerView rv, @NonNull final ArtistsAdapter artistsAdapter, @NonNull final LinearLayoutManager linearLayoutManager, final boolean isThemeInverted, final int accent) {
 
         mContext = context;
         mArtistsRecyclerView = rv;
         mArtistsAdapter = artistsAdapter;
         mLinearLayoutManager = linearLayoutManager;
         sThemeInverted = isThemeInverted;
+        mAccent = accent;
 
         final DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
         final float density = displayMetrics.density;
@@ -132,7 +131,6 @@ public class IndexBarView extends RecyclerView.AdapterDataObserver {
             case MotionEvent.ACTION_DOWN:
                 // If down event occurs inside index bar region, start indexing
                 if (contains(ev.getX(), ev.getY())) {
-                    mAccent = ContextCompat.getColor(mContext, ColorsAdapter.getRandomColor());
                     // It demonstrates that the motion event started from index bar
                     mIsIndexing = true;
                     // Determine which section the point is in, and move the list to that section
