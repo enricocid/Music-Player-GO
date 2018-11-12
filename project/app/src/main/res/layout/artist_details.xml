@@ -115,7 +115,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:alpha="0.25"
-            android:background="?android:attr/listDivider" />
+            android:background="?attr/colorAccent" />
 
         <!-- DISC SONGS -->
         <android.support.v7.widget.RecyclerView
