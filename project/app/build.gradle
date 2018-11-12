@@ -25,4 +25,8 @@ dependencies {
     implementation 'com.android.support:support-core-utils:28.0.0'
     implementation 'com.android.support:support-media-compat:28.0.0'
     api 'com.android.support:design:28.0.0'
+    // ViewModel and LiveData
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    //if using java 8,ignore above line and add the following line
+    implementation "android.arch.lifecycle:common-java8:1.1.1"
 }

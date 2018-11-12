@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
@@ -20,8 +21,6 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.card.MaterialCardView;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -49,6 +48,7 @@ import com.iven.musicplayergo.adapters.SongsAdapter;
 import com.iven.musicplayergo.indexbar.IndexBarRecyclerView;
 import com.iven.musicplayergo.indexbar.IndexBarView;
 import com.iven.musicplayergo.loaders.ArtistProvider;
+import com.iven.musicplayergo.loaders.ArtistViewModel;
 import com.iven.musicplayergo.loaders.SongProvider;
 import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Artist;
@@ -63,7 +63,7 @@ import java.util.Collections;
 import java.util.List;
 
 @SuppressLint("ClickableViewAccessibility")
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Artist>>, SongsAdapter.SongSelectedListener, ColorsAdapter.AccentChangedListener, AlbumsAdapter.AlbumSelectedListener, ArtistsAdapter.ArtistSelectedListener {
+public class MainActivity extends AppCompatActivity implements SongsAdapter.SongSelectedListener, ColorsAdapter.AccentChangedListener, AlbumsAdapter.AlbumSelectedListener, ArtistsAdapter.ArtistSelectedListener {
 
     private LinearLayoutManager mArtistsLayoutManager, mAlbumsLayoutManager, mSongsLayoutManager;
     private int mAccent;
@@ -91,6 +91,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private PlaybackListener mPlaybackListener;
     private List<Song> mSelectedArtistSongs;
     private MusicNotificationManager mMusicNotificationManager;
+    private boolean sBound;
+    private Parcelable mSavedArtistRecyclerLayoutState;
+    private Parcelable mSavedAlbumsRecyclerLayoutState;
+    private Parcelable mSavedSongRecyclerLayoutState;
     private final ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(@NonNull final ComponentName componentName, @NonNull final IBinder iBinder) {
@@ -111,10 +115,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             mMusicService = null;
         }
     };
-    private boolean sBound;
-    private Parcelable mSavedArtistRecyclerLayoutState;
-    private Parcelable mSavedAlbumsRecyclerLayoutState;
-    private Parcelable mSavedSongRecyclerLayoutState;
 
     @Override
     public void onPause() {
@@ -456,9 +456,32 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         colorsRecyclerView.setAdapter(new ColorsAdapter(this, mAccent));
     }
 
-    @SuppressWarnings("deprecation")
     private void onPermissionGranted() {
-        getSupportLoaderManager().initLoader(ArtistProvider.ARTISTS_LOADER, null, this);
+        final ArtistViewModel model = ViewModelProviders.of(this).get(ArtistViewModel.class);
+        final List<Artist> artists = model.getArtists(this).getValue();
+
+        if (artists != null) {
+            if (artists.isEmpty()) {
+                Toast.makeText(MainActivity.this, getString(R.string.error_no_music), Toast.LENGTH_SHORT)
+                        .show();
+                finish();
+
+            } else {
+                mArtists = artists;
+                setArtistsRecyclerView(mArtists);
+
+                mNavigationArtist = mPlayerAdapter.getNavigationArtist() != null ? mPlayerAdapter.getNavigationArtist() : mArtists.get(0).getName();
+
+                setArtistDetails(ArtistProvider.getArtist(mArtists, mNavigationArtist).getAlbums(), false, false);
+                restorePlayerStatus();
+
+                if (mSavedArtistRecyclerLayoutState != null && mSavedAlbumsRecyclerLayoutState != null && mSavedSongRecyclerLayoutState != null) {
+                    mArtistsLayoutManager.onRestoreInstanceState(mSavedArtistRecyclerLayoutState);
+                    mAlbumsLayoutManager.onRestoreInstanceState(mSavedAlbumsRecyclerLayoutState);
+                    mSongsLayoutManager.onRestoreInstanceState(mSavedSongRecyclerLayoutState);
+                }
+            }
+        }
     }
 
     private void updateResetStatus(final boolean onPlaybackCompletion) {
@@ -540,37 +563,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 
-    @Override
-    @NonNull
-    public Loader<List<Artist>> onCreateLoader(final int id, final Bundle args) {
-        return new ArtistProvider.AsyncArtistLoader(this);
-    }
-
-    @Override
-    public void onLoadFinished(@NonNull Loader<List<Artist>> loader, @NonNull final List<Artist> artists) {
-
-        if (artists.isEmpty()) {
-            Toast.makeText(this, getString(R.string.error_no_music), Toast.LENGTH_SHORT)
-                    .show();
-            finish();
-
-        } else {
-            mArtists = artists;
-            setArtistsRecyclerView(mArtists);
-
-            mNavigationArtist = mPlayerAdapter.getNavigationArtist() != null ? mPlayerAdapter.getNavigationArtist() : mArtists.get(0).getName();
-
-            setArtistDetails(ArtistProvider.getArtist(mArtists, mNavigationArtist).getAlbums(), false, false);
-            restorePlayerStatus();
-
-            if (mSavedArtistRecyclerLayoutState != null && mSavedAlbumsRecyclerLayoutState != null && mSavedSongRecyclerLayoutState != null) {
-                mArtistsLayoutManager.onRestoreInstanceState(mSavedArtistRecyclerLayoutState);
-                mAlbumsLayoutManager.onRestoreInstanceState(mSavedAlbumsRecyclerLayoutState);
-                mSongsLayoutManager.onRestoreInstanceState(mSavedSongRecyclerLayoutState);
-            }
-        }
-    }
-
     private void setArtistDetails(@NonNull final List<Album> albums, final boolean isNewArtist, final boolean showPlayedArtist) {
         List<Album> artistAlbums = albums;
         if (showPlayedArtist) {
@@ -593,10 +585,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             revealView(mArtistDetails, mArtistsRecyclerView, true);
             sExpandArtistDiscography = false;
         }
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull final Loader loader) {
     }
 
     @Override

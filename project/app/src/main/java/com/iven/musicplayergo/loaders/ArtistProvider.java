@@ -15,8 +15,6 @@ import java.util.List;
 
 public class ArtistProvider {
 
-    public static final int ARTISTS_LOADER = 0;
-
     private static String getSongLoaderSortOrder() {
         return MediaStore.Audio.Artists.DEFAULT_SORT_ORDER + ", " + MediaStore.Audio.Albums.DEFAULT_SORT_ORDER + ", " + MediaStore.Audio.Media.DEFAULT_SORT_ORDER;
     }
@@ -26,7 +24,7 @@ public class ArtistProvider {
     }
 
     @NonNull
-    private static List<Artist> getAllArtists(@NonNull final Context context) {
+    static List<Artist> getAllArtists(@NonNull final Context context) {
         final List<Song> songs = SongProvider.getSongs(SongProvider.makeSongCursor(
                 context, getSongLoaderSortOrder())
         );
@@ -65,17 +63,5 @@ public class ArtistProvider {
         final Artist artist = new Artist();
         artists.add(artist);
         return artist;
-    }
-
-    public static class AsyncArtistLoader extends WrappedAsyncTaskLoader<List<Artist>> {
-
-        public AsyncArtistLoader(@NonNull final Context context) {
-            super(context);
-        }
-
-        @Override
-        public List<Artist> loadInBackground() {
-            return getAllArtists(getContext());
-        }
     }
 }
