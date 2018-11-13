@@ -3,11 +3,14 @@ package com.iven.musicplayergo;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Build;
 import android.text.Html;
 import android.text.Spanned;
 import android.widget.TextView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.iven.musicplayergo.models.Album;
 
 import java.util.List;
@@ -24,6 +27,11 @@ public class Utils {
 
     static boolean isMarshmallow() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
+    }
+
+    public static void setCardStroke(@NonNull final Context context, @NonNull final MaterialCardView container, final int color) {
+        container.setStrokeWidth(context.getResources().getDimensionPixelSize(R.dimen.selected_card_stroke_width));
+        container.setStrokeColor(color);
     }
 
     static void indexArtistAlbums(@NonNull final List<Album> albums) {
