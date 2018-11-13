@@ -118,6 +118,17 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
     };
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (mPlayerAdapter != null && mPlayerAdapter.isMediaPlayer()) {
+            mPlayerAdapter.onResumeActivity();
+            if (!mSeekBarAudio.isEnabled()) {
+                mSeekBarAudio.setEnabled(true);
+            }
+        }
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         if (mArtistsLayoutManager != null && mAlbumsLayoutManager != null && mSongsLayoutManager != null) {
@@ -532,14 +543,14 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
     }
 
     private void restorePlayerStatus() {
-
-        mSeekBarAudio.setEnabled(mPlayerAdapter.isMediaPlayer());
-
         //if we are playing and the activity was restarted
         //update the controls panel
         if (mPlayerAdapter != null && mPlayerAdapter.isMediaPlayer()) {
             mPlayerAdapter.onResumeActivity();
             updatePlayingInfo(true, false);
+            if (!mSeekBarAudio.isEnabled()) {
+                mSeekBarAudio.setEnabled(true);
+            }
         }
     }
 
