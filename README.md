@@ -33,7 +33,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 ### Unifield UI, the way I'd like it to be:
 
 - Colorful, simple and 'unified' UI: no need to navigate between screens;
-- Awesome typeface: Raleway + Roboto condensed
+- Awesome typeface: OpenSans
 - Expandable bottom panel containing the player controls and the settings (if expanded):
   - Played song info: clicking on it You can open the played Artist's page/album or open/close the Artist's page You're exploring (when not playing). The text is scrollable on long click;
   - Skip to previous song (long click to enable reset 1x);
