@@ -6,7 +6,6 @@
         <item name="theme_icon">@drawable/ic_invert_theme</item>
         <item name="android:navigationBarColor">@color/white</item>
         <item name="android:windowLightNavigationBar">true</item>
-        <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:alertDialogTheme">@style/AlertDialogStyle</item>
         <item name="card_color">@color/white</item>
@@ -18,7 +17,6 @@
         <item name="theme_icon">@drawable/ic_invert_theme_off</item>
         <item name="android:navigationBarColor">@color/black</item>
         <item name="android:windowLightNavigationBar">false</item>
-        <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowBackground">@color/black</item>
         <item name="card_color">@color/black</item>
         <item name="android:alertDialogTheme">@style/AlertDialogStyle</item>
