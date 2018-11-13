@@ -8,6 +8,10 @@ import android.text.Html;
 import android.text.Spanned;
 import android.widget.TextView;
 
+import com.iven.musicplayergo.models.Album;
+
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
@@ -20,6 +24,12 @@ public class Utils {
 
     static boolean isMarshmallow() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
+    }
+
+    static void indexArtistAlbums(@NonNull final List<Album> albums) {
+        for (int i = 0; i < albums.size(); i++) {
+            albums.get(i).setAlbumPosition(i);
+        }
     }
 
     public static Spanned buildSpanned(@NonNull final String res) {

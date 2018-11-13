@@ -564,11 +564,6 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
         }
     }
 
-    private void indexArtistAlbums(@NonNull final List<Album> albums) {
-        for (int i = 0; i < albums.size(); i++) {
-            albums.get(i).setAlbumPosition(i);
-        }
-    }
 
     private void setArtistDetails(@NonNull final List<Album> albums, final boolean isNewArtist, final boolean showPlayedArtist) {
         List<Album> artistAlbums = albums;
@@ -577,7 +572,8 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
             artistAlbums = artist.getAlbums();
         }
 
-        indexArtistAlbums(artistAlbums);
+        Utils.indexArtistAlbums(artistAlbums);
+
         if (isNewArtist) {
             mAlbumsRecyclerView.scrollToPosition(0);
         }
