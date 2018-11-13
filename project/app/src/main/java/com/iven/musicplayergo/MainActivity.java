@@ -18,7 +18,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Parcelable;
 import android.text.Spanned;
-import android.util.Log;
 import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
@@ -565,12 +564,20 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
         }
     }
 
+    private void indexArtistAlbums(@NonNull final List<Album> albums) {
+        for (int i = 0; i < albums.size(); i++) {
+            albums.get(i).setAlbumPosition(i);
+        }
+    }
+
     private void setArtistDetails(@NonNull final List<Album> albums, final boolean isNewArtist, final boolean showPlayedArtist) {
         List<Album> artistAlbums = albums;
         if (showPlayedArtist) {
             final Artist artist = ArtistProvider.getArtist(mArtists, mPlayerAdapter.getCurrentSong().getArtistName());
             artistAlbums = artist.getAlbums();
         }
+
+        indexArtistAlbums(artistAlbums);
         if (isNewArtist) {
             mAlbumsRecyclerView.scrollToPosition(0);
         }
@@ -642,7 +649,7 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
 
     private Pair<Album, List<Album>> scrollToPlayedAlbumPosition(final boolean setArtistDetails) {
         final List<Album> playedArtistAlbums = ArtistProvider.getArtist(mArtists, mPlayerAdapter.getCurrentSong().getArtistName()).getAlbums();
-        final Pair<Album, Integer> playedAlbumPosition = getPlayedAlbumPosition(playedArtistAlbums);
+        final Pair<Album, Integer> playedAlbumPosition = getPlayedAlbumPosition();
         if (setArtistDetails) {
             setArtistDetails(playedArtistAlbums, false, true);
         }
@@ -650,11 +657,8 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
         return new Pair<>(playedAlbumPosition.first, playedArtistAlbums);
     }
 
-    private Pair<Album, Integer> getPlayedAlbumPosition(@NonNull final List<Album> playedArtistAlbums) {
+    private Pair<Album, Integer> getPlayedAlbumPosition() {
         final Album playedAlbum = mPlayerAdapter.getCurrentSong().getSongAlbum();
-        for (int i = 0; i < playedArtistAlbums.size(); i++) {
-            playedArtistAlbums.get(i).setAlbumPosition(i);
-        }
         int pos = playedAlbum.getAlbumPosition();
         return new Pair<>(playedAlbum, pos);
     }
@@ -676,8 +680,7 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
                 // if the the played artist details are already expanded
                 // but the navigation album equals the played album:
                 if (mPlayerAdapter.getCurrentSong() != null && mPlayerAdapter.getCurrentSong().getArtistName().equals(mNavigationArtist)) {
-                    List<Album> playedArtistAlbums = ArtistProvider.getArtist(mArtists, mPlayerAdapter.getCurrentSong().getArtistName()).getAlbums();
-                    Pair<Album, Integer> playedAlbumPosition = getPlayedAlbumPosition(playedArtistAlbums);
+                    Pair<Album, Integer> playedAlbumPosition = getPlayedAlbumPosition();
                     // if we are scrolling the albums recycler view and the played album
                     // is visible then close the artist details
 
@@ -696,12 +699,8 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
         } else {
             if (mPlayerAdapter.getCurrentSong() != null && mPlayerAdapter.getCurrentSong().getArtistName().equals(mNavigationArtist)) {
                 scrollToPlayedAlbumPosition(false);
-                Log.d("8", "8");
-
             }
             revealView(mArtistDetails, mArtistsRecyclerView, true);
-            Log.d("9", "9");
-
         }
     }
 
