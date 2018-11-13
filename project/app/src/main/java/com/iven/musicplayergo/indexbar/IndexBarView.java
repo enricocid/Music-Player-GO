@@ -106,6 +106,7 @@ public class IndexBarView extends RecyclerView.AdapterDataObserver {
 
                 final float sectionHeight = (mIndexBarRect.height() - 2) / mSections.length;
                 final float paddingTop = (sectionHeight - (indexPaint.descent() - indexPaint.ascent())) / 2;
+
                 for (int i = 0; i < mSections.length; i++) {
 
                     if (mCurrentSection > -1 && i == mCurrentSection) {

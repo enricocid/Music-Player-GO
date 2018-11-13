@@ -36,10 +36,14 @@ public class ArtistProvider {
 
     public static Artist getArtist(@NonNull final List<Artist> artists, @NonNull final String selectedArtist) {
         Artist returnerArtist = null;
-        for (Artist artist : artists) {
-            if (artist.getName().equals(selectedArtist)) {
-                returnerArtist = artist;
+        try {
+            for (Artist artist : artists) {
+                if (artist.getName().equals(selectedArtist)) {
+                    returnerArtist = artist;
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return returnerArtist;
     }
@@ -47,10 +51,14 @@ public class ArtistProvider {
     @NonNull
     private static List<Artist> retrieveArtists(@Nullable final List<Album> albums) {
         final List<Artist> artists = new ArrayList<>();
-        if (albums != null) {
-            for (Album album : albums) {
-                getOrCreateArtist(artists, album.getArtistId()).getAlbums().add(album);
+        try {
+            if (albums != null) {
+                for (Album album : albums) {
+                    getOrCreateArtist(artists, album.getArtistId()).getAlbums().add(album);
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return artists;
     }

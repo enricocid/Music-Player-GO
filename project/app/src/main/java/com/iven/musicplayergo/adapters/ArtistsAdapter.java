@@ -46,11 +46,15 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleVi
     }
 
     private void generateIndexes() {
-        for (int i = 0, size = mArtists.size(); i < size; i++) {
-            String section = mArtists.get(i).getName().substring(0, 1).toUpperCase(Locale.getDefault());
-            if (!mIndexedPositions.containsValue(section)) {
-                mIndexedPositions.put(i, section);
+        try {
+            for (int i = 0, size = mArtists.size(); i < size; i++) {
+                String section = mArtists.get(i).getName().substring(0, 1).toUpperCase(Locale.getDefault());
+                if (!mIndexedPositions.containsValue(section)) {
+                    mIndexedPositions.put(i, section);
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

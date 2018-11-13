@@ -16,10 +16,14 @@ class AlbumProvider {
     static List<Album> retrieveAlbums(@Nullable final List<Song> songs) {
         final List<Album> albums = new ArrayList<>();
         if (songs != null) {
-            for (Song song : songs) {
-                final Album album = getAlbum(albums, song.getAlbumName());
-                album.getSongs().add(song);
-                song.setSongAlbum(album);
+            try {
+                for (Song song : songs) {
+                    final Album album = getAlbum(albums, song.getAlbumName());
+                    album.getSongs().add(song);
+                    song.setSongAlbum(album);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         if (albums.size() > 1) {

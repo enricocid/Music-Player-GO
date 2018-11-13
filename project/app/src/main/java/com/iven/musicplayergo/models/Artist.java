@@ -30,8 +30,12 @@ public class Artist {
 
     public final int getSongCount() {
         int songCount = 0;
-        for (Album album : mAlbums) {
-            songCount += album.getSongCount();
+        try {
+            for (Album album : mAlbums) {
+                songCount += album.getSongCount();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return songCount;
     }

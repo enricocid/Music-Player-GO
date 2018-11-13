@@ -27,8 +27,12 @@ public class Utils {
     }
 
     static void indexArtistAlbums(@NonNull final List<Album> albums) {
-        for (int i = 0; i < albums.size(); i++) {
-            albums.get(i).setAlbumPosition(i);
+        try {
+            for (int i = 0; i < albums.size(); i++) {
+                albums.get(i).setAlbumPosition(i);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

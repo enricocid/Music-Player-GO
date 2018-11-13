@@ -47,8 +47,12 @@ public class SongProvider {
     @NonNull
     public static List<Song> getAllArtistSongs(@NonNull final List<Album> albums) {
         final List<Song> songsList = new ArrayList<>();
-        for (Album album : albums) {
-            songsList.addAll(album.getSongs());
+        try {
+            for (Album album : albums) {
+                songsList.addAll(album.getSongs());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return songsList;
     }
