@@ -63,7 +63,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
         if (!mSelectedAlbum.getTitle().equals(album.getTitle())) {
             Utils.setCardStroke(mContext, holder.container, Color.TRANSPARENT);
         } else {
-            Utils.setCardStroke(mContext, holder.container, sThemeInverted? Color.WHITE : Color.BLACK);
+            Utils.setCardStroke(mContext, holder.container, sThemeInverted ? Color.LTGRAY : Color.DKGRAY);
             mSelectedPosition = holder.getAdapterPosition();
         }
     }
@@ -97,7 +97,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
             if (getAdapterPosition() != mSelectedPosition) {
                 notifyItemChanged(mSelectedPosition);
                 mSelectedPosition = getAdapterPosition();
-                Utils.setCardStroke(mContext, container, sThemeInverted? Color.WHITE : Color.BLACK);
+                Utils.setCardStroke(mContext, container, sThemeInverted ? Color.LTGRAY : Color.DKGRAY);
                 mSelectedAlbum = mAlbums.get(getAdapterPosition());
                 mPlayerAdapter.setNavigationAlbum(mSelectedAlbum);
                 mAlbumSelectedListener.onAlbumSelected(mSelectedAlbum);
