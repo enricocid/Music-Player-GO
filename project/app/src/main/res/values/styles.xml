@@ -25,4 +25,9 @@
     </style>
 
     <style name="AlertDialogStyle" parent="Theme.MaterialComponents.Light.Dialog.Alert" />
+
+    <style name="SeekBarStyle" parent="Widget.AppCompat.SeekBar">
+        <item name="android:progressBackgroundTint">?attr/colorAccent</item>
+        <item name="android:progressTint">?attr/colorAccent</item>
+    </style>
 </resources>

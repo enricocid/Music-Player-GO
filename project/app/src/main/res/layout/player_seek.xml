@@ -25,7 +25,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:splitTrack="false" />
+        android:splitTrack="false"
+        android:theme="@style/SeekBarStyle" />
 
     <TextView
         android:id="@+id/duration"
