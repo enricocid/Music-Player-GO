@@ -41,7 +41,7 @@ import com.iven.musicplayergo.adapters.SongsAdapter;
 import com.iven.musicplayergo.indexbar.IndexBarRecyclerView;
 import com.iven.musicplayergo.indexbar.IndexBarView;
 import com.iven.musicplayergo.loaders.ArtistProvider;
-import com.iven.musicplayergo.loaders.ArtistViewModel;
+import com.iven.musicplayergo.loaders.ArtistsViewModel;
 import com.iven.musicplayergo.loaders.SongProvider;
 import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Artist;
@@ -466,7 +466,7 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
     }
 
     private void onPermissionGranted() {
-        final ArtistViewModel model = ViewModelProviders.of(this).get(ArtistViewModel.class);
+        final ArtistsViewModel model = ViewModelProviders.of(this).get(ArtistsViewModel.class);
         final List<Artist> artists = model.getArtists(this).getValue();
 
         if (artists != null) {
