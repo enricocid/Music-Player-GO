@@ -16,12 +16,12 @@
 
 package com.iven.musicplayergo.playback;
 
-import androidx.annotation.IntDef;
-
 import com.iven.musicplayergo.MainActivity;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import androidx.annotation.IntDef;
 
 /**
  * Allows {@link MediaPlayerHolder} to report media playback duration and progress updates to

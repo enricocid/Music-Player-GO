@@ -28,18 +28,16 @@ public class IndexBarView extends RecyclerView.AdapterDataObserver {
     private final ArtistsAdapter mArtistsAdapter;
     private final LinearLayoutManager mLinearLayoutManager;
     private final Typeface mTypefaceIndexes, mTypefaceIndexesBold, mTypefacePreview;
-    private final Context mContext;
+    private final int mAccent;
     private int mArtistsRecyclerViewWidth;
     private int mArtistsRecyclerViewHeight;
     private RectF mIndexBarRect;
     private String[] mSections;
     private boolean mIsIndexing;
     private int mCurrentSection = -1;
-    private int mAccent;
 
     public IndexBarView(@NonNull final Context context, @NonNull final IndexBarRecyclerView rv, @NonNull final ArtistsAdapter artistsAdapter, @NonNull final LinearLayoutManager linearLayoutManager, final boolean isThemeInverted, final int accent) {
 
-        mContext = context;
         mArtistsRecyclerView = rv;
         mArtistsAdapter = artistsAdapter;
         mLinearLayoutManager = linearLayoutManager;
@@ -54,9 +52,9 @@ public class IndexBarView extends RecyclerView.AdapterDataObserver {
         mPreviewPadding = 5 * density;
         mArtistsRecyclerView.setPadding(0, 0, (int) mIndexBarWidth, 0);
 
-        mTypefaceIndexes = ResourcesCompat.getFont(mContext, R.font.open_sans);
-        mTypefaceIndexesBold = ResourcesCompat.getFont(mContext, R.font.open_sans_bold);
-        mTypefacePreview = ResourcesCompat.getFont(mContext, R.font.open_sans_bold);
+        mTypefaceIndexes = ResourcesCompat.getFont(context, R.font.raleway);
+        mTypefaceIndexesBold = ResourcesCompat.getFont(context, R.font.raleway_black);
+        mTypefacePreview = ResourcesCompat.getFont(context, R.font.raleway_medium);
     }
 
     void draw(@NonNull final Canvas canvas) {

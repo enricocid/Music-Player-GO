@@ -18,14 +18,15 @@ package com.iven.musicplayergo.playback;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.iven.musicplayergo.MainActivity;
 import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Song;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Allows {@link MainActivity} to control media playback of {@link MediaPlayerHolder}.

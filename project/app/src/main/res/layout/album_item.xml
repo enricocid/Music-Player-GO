@@ -20,7 +20,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/raleway"
             android:gravity="center"
             android:maxLines="4"
             android:padding="2dp"
@@ -32,13 +32,12 @@
             android:id="@+id/year"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/raleway_black"
             android:gravity="center"
             android:paddingBottom="2dp"
             android:singleLine="true"
             android:textAlignment="center"
             android:textColor="?attr/colorAccent"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+            android:textSize="12sp" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

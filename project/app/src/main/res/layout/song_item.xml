@@ -13,13 +13,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:ellipsize="end"
-        android:fontFamily="@font/open_sans_bold"
+        android:fontFamily="sans-serif-condensed"
         android:gravity="center"
         android:paddingStart="16dp"
         android:paddingTop="16dp"
         android:paddingEnd="8dp"
         android:paddingBottom="16dp"
         android:singleLine="true"
+        android:textStyle="bold"
         android:textColor="?android:textColorPrimary"
         android:textSize="14sp" />
 
@@ -39,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
-            android:fontFamily="@font/open_sans_bold"
+            android:fontFamily="@font/raleway_medium"
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
             android:singleLine="true"
@@ -51,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/raleway"
             android:singleLine="true"
             android:textColor="?android:textColorPrimary"
             android:textSize="12sp" />

@@ -10,16 +10,17 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.VectorDrawable;
 import android.os.Build;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
-import androidx.media.app.NotificationCompat.MediaStyle;
 import android.text.Spanned;
 
 import com.iven.musicplayergo.MainActivity;
 import com.iven.musicplayergo.R;
 import com.iven.musicplayergo.Utils;
 import com.iven.musicplayergo.models.Song;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
+import androidx.media.app.NotificationCompat.MediaStyle;
 
 public class MusicNotificationManager {
 
