@@ -9,7 +9,7 @@
         <item name="android:windowBackground">@color/white</item>
         <item name="android:alertDialogTheme">@style/AlertDialogStyle</item>
         <item name="card_color">@color/white</item>
-        <item name="controls_panel_stroke">@color/gray_900</item>
+        <item name="controls_panel_stroke">@color/gray_50</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 

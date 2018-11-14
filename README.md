@@ -6,7 +6,7 @@
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
 
 ###### Very slim music player with low memory footprint!
-###### Current version: (92) 3.2.1
+###### Current version: (93) 3.3
 ###### Material Design Icon by Julian Javier Gomez, Axinen Design (https://plus.google.com/u/0/+AxinenDesign)
 
 
@@ -15,7 +15,7 @@
 
 # Screenshots
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v3-2.png) 
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v3-3.png) 
 
 
 # Download
@@ -33,7 +33,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 ### Unifield UI, the way I'd like it to be:
 
 - Colorful, simple and 'unified' UI: no need to navigate between screens;
-- Awesome typeface: OpenSans
+- Awesome typeface: Raleway + Roboto condensed
 - Expandable bottom panel containing the player controls and the settings (if expanded):
   - Played song info: clicking on it You can open the played Artist's page/album or open/close the Artist's page You're exploring (when not playing). The text is scrollable on long click;
   - Skip to previous song (long click to enable reset 1x);
