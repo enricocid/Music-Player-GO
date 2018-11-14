@@ -495,7 +495,7 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
 
     private void updateResetStatus(final boolean onPlaybackCompletion) {
         final int themeColor = sThemeInverted ? R.color.white : R.color.black;
-        final int color = onPlaybackCompletion ? themeColor : mPlayerAdapter.isReset() ? themeColor : mAccent;
+        final int color = onPlaybackCompletion ? themeColor : mPlayerAdapter.isReset() ? mAccent : themeColor;
         mSkipPrevButton.post(() -> mSkipPrevButton.setColorFilter(Utils.getColorFromResource(MainActivity.this, color, onPlaybackCompletion ? themeColor : mPlayerAdapter.isReset() ? R.color.blue : themeColor), PorterDuff.Mode.SRC_IN));
     }
 
