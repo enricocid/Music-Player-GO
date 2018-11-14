@@ -1,13 +1,11 @@
 package com.iven.musicplayergo;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.text.Html;
 import android.text.Spanned;
-import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.card.MaterialCardView;
@@ -17,7 +15,6 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.ColorUtils;
 
 public class Utils {
 
@@ -28,28 +25,6 @@ public class Utils {
 
     static boolean isMarshmallow() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
-    }
-
-    //enable light status bar only for light colors according to
-    //https://material.io/guidelines/style/color.html#color-color-palette
-    @TargetApi(23)
-    private static void enableLightStatusBar(@NonNull final Activity activity, final int accent) {
-
-        final View decorView = activity.getWindow().getDecorView();
-        final int oldSystemUiFlags = decorView.getSystemUiVisibility();
-        int newSystemUiFlags = oldSystemUiFlags;
-
-        final boolean isColorDark = ColorUtils.calculateLuminance(accent) < 0.25;
-        if (isColorDark) {
-            newSystemUiFlags &= ~(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        } else {
-            newSystemUiFlags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-        }
-
-        //just to avoid to set light status bar if it is already enabled
-        if (newSystemUiFlags != oldSystemUiFlags) {
-            decorView.setSystemUiVisibility(newSystemUiFlags);
-        }
     }
 
     public static void setCardStroke(@NonNull final Context context, @NonNull final MaterialCardView container, final int color) {
@@ -95,9 +70,6 @@ public class Utils {
     static void setTheme(@NonNull final Activity activity, final boolean isThemeInverted, final int accent) {
         final int theme = resolveTheme(isThemeInverted, accent);
         activity.setTheme(theme);
-        if (isMarshmallow()) {
-            enableLightStatusBar(activity, ContextCompat.getColor(activity, accent));
-        }
     }
 
     public static int getColorFromResource(@NonNull final Context context, final int resource, final int emergencyColor) {

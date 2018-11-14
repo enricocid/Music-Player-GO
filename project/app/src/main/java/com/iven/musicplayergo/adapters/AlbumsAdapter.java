@@ -26,11 +26,10 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
     private final AlbumSelectedListener mAlbumSelectedListener;
     private final List<Album> mAlbums;
     private final int mAccent;
-    private final boolean sThemeInverted;
     private Album mSelectedAlbum;
     private int mSelectedPosition;
 
-    public AlbumsAdapter(@NonNull final Context context, @NonNull final PlayerAdapter playerAdapter, @NonNull final List<Album> albums, final boolean showPlayedArtist, final int accent, final boolean isThemeDark) {
+    public AlbumsAdapter(@NonNull final Context context, @NonNull final PlayerAdapter playerAdapter, @NonNull final List<Album> albums, final boolean showPlayedArtist, final int accent) {
         mContext = context;
         mPlayerAdapter = playerAdapter;
         mAlbums = albums;
@@ -38,7 +37,6 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
         mAlbumSelectedListener = (AlbumSelectedListener) mContext;
         mSelectedAlbum = showPlayedArtist ? mPlayerAdapter.getCurrentSong().getSongAlbum() : mPlayerAdapter.getNavigationAlbum() != null ? mPlayerAdapter.getNavigationAlbum() : mAlbums.get(0);
         mSelectedPosition = mSelectedAlbum.getAlbumPosition();
-        sThemeInverted = isThemeDark;
         mAlbumSelectedListener.onAlbumSelected(mSelectedAlbum);
     }
 
@@ -63,7 +61,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
         if (!mSelectedAlbum.getTitle().equals(album.getTitle())) {
             Utils.setCardStroke(mContext, holder.container, Color.TRANSPARENT);
         } else {
-            Utils.setCardStroke(mContext, holder.container, sThemeInverted ? Color.LTGRAY : Color.DKGRAY);
+            Utils.setCardStroke(mContext, holder.container, mAccent);
             mSelectedPosition = holder.getAdapterPosition();
         }
     }
@@ -97,7 +95,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.SimpleView
             if (getAdapterPosition() != mSelectedPosition) {
                 notifyItemChanged(mSelectedPosition);
                 mSelectedPosition = getAdapterPosition();
-                Utils.setCardStroke(mContext, container, sThemeInverted ? Color.LTGRAY : Color.DKGRAY);
+                Utils.setCardStroke(mContext, container, mAccent);
                 mSelectedAlbum = mAlbums.get(getAdapterPosition());
                 mPlayerAdapter.setNavigationAlbum(mSelectedAlbum);
                 mAlbumSelectedListener.onAlbumSelected(mSelectedAlbum);

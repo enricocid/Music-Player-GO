@@ -17,7 +17,7 @@
         android:focusable="true"
         android:fontFamily="sans-serif-condensed"
         android:textAppearance="@android:style/TextAppearance.Material.Small"
-        android:textColor="?android:textColorPrimary"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="14sp" />
 
     <SeekBar
@@ -35,6 +35,6 @@
         android:focusable="true"
         android:fontFamily="sans-serif-condensed"
         android:singleLine="true"
-        android:textColor="?android:textColorPrimary"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="14sp" />
 </LinearLayout>

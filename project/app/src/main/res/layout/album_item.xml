@@ -25,7 +25,7 @@
             android:maxLines="4"
             android:padding="2dp"
             android:textAlignment="center"
-            android:textColor="?android:textColorPrimary"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="14sp" />
 
         <TextView

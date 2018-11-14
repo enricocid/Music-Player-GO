@@ -11,7 +11,8 @@
     card_view:cardCornerRadius="8dp"
     card_view:cardElevation="0dp">
 
-    <LinearLayout android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:foreground="?android:attr/selectableItemBackgroundBorderless"
@@ -27,7 +28,7 @@
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
             android:singleLine="true"
-            android:textColor="?android:textColorPrimary"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="16sp" />
 
         <TextView
@@ -37,7 +38,7 @@
             android:layout_marginTop="12dp"
             android:fontFamily="@font/raleway"
             android:singleLine="true"
-            android:textColor="?android:textColorPrimary"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="12sp" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

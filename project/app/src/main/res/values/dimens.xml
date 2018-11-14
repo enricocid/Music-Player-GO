@@ -7,5 +7,5 @@
     <dimen name="bottom_sheet_corner_radius">16dp</dimen>
     <dimen name="dlg_one_button_icon_size">96dp</dimen>
 
-    <dimen name="selected_card_stroke_width">1dp</dimen>
+    <dimen name="selected_card_stroke_width">0.1dp</dimen>
 </resources>
