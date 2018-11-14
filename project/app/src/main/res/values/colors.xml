@@ -18,5 +18,6 @@
     <color name="brown">#BCAAA4</color>
     <color name="gray">#BDBDBD</color>
     <color name="blue_gray">#B0BEC5</color>
-    <color name="blue_gray_100">#CFD8DC</color>
+    <color name="gray_50">#FAFAFA</color>
+    <color name="gray_900">#212121</color>
 </resources>

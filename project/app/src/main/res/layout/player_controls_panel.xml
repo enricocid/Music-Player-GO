@@ -8,7 +8,9 @@
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     card_view:cardBackgroundColor="?attr/card_color"
     card_view:cardCornerRadius="@dimen/bottom_sheet_corner_radius"
-    card_view:cardElevation="24dp">
+    card_view:cardElevation="24dp"
+    card_view:strokeColor="?attr/controls_panel_stroke"
+    card_view:strokeWidth="0.1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
