@@ -6,7 +6,7 @@
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
 
 ###### Very slim music player with low memory footprint!
-###### Current version: (93) 3.3
+###### Current version: (94) 3.4
 ###### Material Design Icon by Julian Javier Gomez, Axinen Design (https://plus.google.com/u/0/+AxinenDesign)
 
 
@@ -15,7 +15,7 @@
 
 # Screenshots
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v3-3.png) 
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v3-4.png) 
 
 
 # Download
