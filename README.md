@@ -50,7 +50,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 - Dynamic shuffle button: randomly plays the device or the Artist songs (when the Artist's page is 'revealed');
 - System equalizer (if present on the device);
 - Themes (light and inverted)
-- SearchBar visibility;
+- Search bar visibility;
 - Link to git page;
 - 16 awesome UI accents!;
 
