@@ -6,10 +6,12 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.text.Html;
 import android.text.Spanned;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.card.MaterialCardView;
 import com.iven.musicplayergo.adapters.ArtistsAdapter;
+import com.iven.musicplayergo.indexbar.IndexBarRecyclerView;
 import com.iven.musicplayergo.models.Album;
 import com.iven.musicplayergo.models.Artist;
 
@@ -208,7 +210,7 @@ public class Utils {
         textView.post(() -> textView.setText(text));
     }
 
-    static void setupSearch(@NonNull final SearchView searchView, @NonNull final ArtistsAdapter artistsAdapter, @NonNull final List<Artist> artists) {
+    static void setupSearch(@NonNull final SearchView searchView, @NonNull final ArtistsAdapter artistsAdapter, @NonNull final List<Artist> artists, @NonNull final IndexBarRecyclerView indexBarRecyclerView) {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -221,7 +223,11 @@ public class Utils {
                 return false;
             }
         });
+        searchView.setOnQueryTextFocusChangeListener((View v, boolean hasFocus) ->
+
+                indexBarRecyclerView.setIndexingEnabled(!hasFocus));
     }
+
 
     private static void processQuery(@NonNull final String query, @NonNull final ArtistsAdapter artistsAdapter, @NonNull final List<Artist> artists) {
         // in real app you'd have it instantiated just once

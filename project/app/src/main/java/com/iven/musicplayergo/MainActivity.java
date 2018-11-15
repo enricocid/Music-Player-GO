@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
         final SearchView searchView = (SearchView) search.getActionView();
 
         searchView.setIconifiedByDefault(false);
-        Utils.setupSearch(searchView, mArtistsAdapter, mArtists);
+        Utils.setupSearch(searchView, mArtistsAdapter, mArtists, mArtistsRecyclerView);
 
         return true;
     }

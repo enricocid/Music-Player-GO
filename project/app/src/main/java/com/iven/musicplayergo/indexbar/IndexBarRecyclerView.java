@@ -14,6 +14,7 @@ public class IndexBarRecyclerView extends RecyclerView {
 
     private IndexBarView mScroller;
     private GestureDetector mGestureDetector = null;
+    private boolean sIndexingEnabled = true;
 
     public IndexBarRecyclerView(@NonNull final Context context) {
         super(context);
@@ -45,26 +46,31 @@ public class IndexBarRecyclerView extends RecyclerView {
     @Override
     @SuppressLint("ClickableViewAccessibility")
     public boolean onTouchEvent(@NonNull final MotionEvent ev) {
-        // Intercept RecyclerView's touch event
-        if (mScroller != null && mScroller.onTouchEvent(ev)) {
-            return true;
+        if (sIndexingEnabled) {
+            // Intercept RecyclerView's touch event
+            if (mScroller != null && mScroller.onTouchEvent(ev)) {
+                return true;
+            }
+            if (mGestureDetector == null) {
+                mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
+                    @Override
+                    public boolean onFling(MotionEvent e1, MotionEvent e2,
+                                           float velocityX, float velocityY) {
+                        return super.onFling(e1, e2, velocityX, velocityY);
+                    }
+                });
+            }
+            mGestureDetector.onTouchEvent(ev);
         }
-        if (mGestureDetector == null) {
-            mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
-                @Override
-                public boolean onFling(MotionEvent e1, MotionEvent e2,
-                                       float velocityX, float velocityY) {
-                    return super.onFling(e1, e2, velocityX, velocityY);
-                }
-            });
-        }
-        mGestureDetector.onTouchEvent(ev);
-
         return super.onTouchEvent(ev);
     }
 
     @Override
     public boolean onInterceptTouchEvent(@NonNull final MotionEvent ev) {
         return mScroller != null && mScroller.contains(ev.getX(), ev.getY()) || super.onInterceptTouchEvent(ev);
+    }
+
+    public void setIndexingEnabled(final boolean indexingEnabled) {
+        sIndexingEnabled = indexingEnabled;
     }
 }
