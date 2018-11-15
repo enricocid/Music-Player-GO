@@ -2,56 +2,51 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
+    android:layout_gravity="center"
     android:baselineAligned="false"
     android:foreground="?android:attr/selectableItemBackgroundBorderless"
-    android:orientation="horizontal">
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingTop="24dp"
+    android:paddingBottom="24dp"
+    android:weightSum="6">
 
     <TextView
         android:id="@+id/track"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_weight="1"
         android:ellipsize="end"
         android:fontFamily="sans-serif-condensed"
-        android:gravity="center"
-        android:padding="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="2dp"
         android:singleLine="true"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="14sp"
         android:textStyle="bold" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_weight="4"
+        android:ellipsize="marquee"
+        android:fontFamily="@font/raleway_medium"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical"
+        android:fontFamily="@font/raleway"
         android:paddingStart="8dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="16dp">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="marquee"
-            android:fontFamily="@font/raleway_medium"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/duration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/raleway"
-            android:singleLine="true"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="12sp" />
-    </LinearLayout>
+        android:paddingEnd="8dp"
+        android:singleLine="true"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="12sp" />
 </LinearLayout>

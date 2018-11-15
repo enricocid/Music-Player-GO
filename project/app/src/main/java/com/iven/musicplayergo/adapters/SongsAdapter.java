@@ -93,7 +93,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
         @Override
         public boolean onLongClick(@NonNull final View v) {
             if (!sSongLongPressed) {
-                title.setSelected(true);
+                itemView.setSelected(true);
                 sSongLongPressed = true;
             }
             return true;
@@ -103,7 +103,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SimpleViewHo
         @SuppressLint("ClickableViewAccessibility")
         public boolean onTouch(@NonNull final View v, @NonNull final MotionEvent event) {
             if (sSongLongPressed && event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_OUTSIDE || event.getAction() == MotionEvent.ACTION_MOVE) {
-                title.setSelected(false);
+                itemView.setSelected(false);
                 sSongLongPressed = false;
             }
             return false;
