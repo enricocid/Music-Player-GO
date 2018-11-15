@@ -3,17 +3,26 @@ package com.iven.musicplayergo;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Build;
 import android.text.Html;
 import android.text.Spanned;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.card.MaterialCardView;
+import com.iven.musicplayergo.adapters.ArtistsAdapter;
 import com.iven.musicplayergo.models.Album;
+import com.iven.musicplayergo.models.Artist;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 public class Utils {
@@ -22,6 +31,8 @@ public class Utils {
     private static final String ACCENT_VALUE = "com.iven.musicplayergo.pref_accent_value";
     private static final String THEME_PREF = "com.iven.musicplayergo.pref_theme";
     private static final String THEME_VALUE = "com.iven.musicplayergo.pref_theme_value";
+    private static final String SEARCH_BAR_PREF = "com.iven.musicplayergo.pref_search_bar";
+    private static final String SEARCH_BAR_VALUE = "com.iven.musicplayergo.pref_search_bar_value";
 
     static boolean isMarshmallow() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
@@ -178,7 +189,61 @@ public class Utils {
         return accent;
     }
 
+    static void hideSearchToolbar(@NonNull final Activity activity, @NonNull final Toolbar toolbar, @NonNull final ImageView searchPrefButton, final boolean isThemeInverted) {
+        final boolean isVisible = isSearchBarVisible(activity);
+        toolbar.setVisibility(isVisible ? View.GONE : View.VISIBLE);
+        searchPrefButton.setColorFilter(isVisible ? isThemeInverted ? Color.WHITE : Color.BLACK : Color.GRAY, PorterDuff.Mode.SRC_IN);
+        final boolean newVisibility = !isVisible;
+        final SharedPreferences preferences = activity.getSharedPreferences(SEARCH_BAR_PREF, Context.MODE_PRIVATE);
+        preferences.edit().putBoolean(SEARCH_BAR_VALUE, newVisibility).apply();
+    }
+
+    static boolean isSearchBarVisible(@NonNull final Context context) {
+        boolean isSearchBarHidden;
+        try {
+            isSearchBarHidden = context.getSharedPreferences(SEARCH_BAR_PREF, Context.MODE_PRIVATE).getBoolean(SEARCH_BAR_VALUE, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            isSearchBarHidden = false;
+        }
+        return isSearchBarHidden;
+    }
+
     static void updateTextView(@NonNull final TextView textView, @NonNull final String text) {
         textView.post(() -> textView.setText(text));
+    }
+
+    static void setupSearch(@NonNull final SearchView searchView, @NonNull final ArtistsAdapter artistsAdapter, @NonNull final List<Artist> artists) {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                processQuery(newText, artistsAdapter, artists);
+                return false;
+            }
+        });
+    }
+
+    private static void processQuery(@NonNull final String query, @NonNull final ArtistsAdapter artistsAdapter, @NonNull final List<Artist> artists) {
+        // in real app you'd have it instantiated just once
+        final List<Artist> result = new ArrayList<>();
+
+        try {
+            // case insensitive search
+            for (Artist artist : artists) {
+                if (artist.getName().toLowerCase().startsWith(query.toLowerCase())) {
+                    result.add(artist);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (result.size() > 0) {
+            artistsAdapter.setArtists(result);
+        }
     }
 }

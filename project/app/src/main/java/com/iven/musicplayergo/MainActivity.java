@@ -19,6 +19,8 @@ import android.os.IBinder;
 import android.os.Parcelable;
 import android.text.Spanned;
 import android.util.Pair;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -58,6 +60,8 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.ColorUtils;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -69,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
     private LinearLayoutManager mArtistsLayoutManager, mAlbumsLayoutManager, mSongsLayoutManager;
     private int mAccent;
     private boolean sThemeInverted;
+    private boolean sSearchBarVisible;
+    private Toolbar mSearchToolbar;
     private IndexBarRecyclerView mArtistsRecyclerView;
     private RecyclerView mAlbumsRecyclerView, mSongsRecyclerView;
     private ArtistsAdapter mArtistsAdapter;
@@ -79,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
     private LinearLayout mControlsContainer;
     private BottomSheetBehavior mBottomSheetBehaviour;
     private View mPlayerInfoView, mArtistDetails;
-    private ImageView mPlayPauseButton, mSkipPrevButton;
+    private ImageView mPlayPauseButton, mSkipPrevButton, mSearchPrefButton;
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
     private List<Artist> mArtists;
@@ -116,6 +122,20 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
             mMusicService = null;
         }
     };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+
+        final MenuItem search = menu.findItem(R.id.search);
+        final SearchView searchView = (SearchView) search.getActionView();
+
+        searchView.setIconifiedByDefault(false);
+        Utils.setupSearch(searchView, mArtistsAdapter, mArtists);
+
+        return true;
+    }
 
     @Override
     public void onResume() {
@@ -209,6 +229,7 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
         super.onCreate(savedInstanceState);
 
         sThemeInverted = Utils.isThemeInverted(this);
+        sSearchBarVisible = Utils.isSearchBarVisible(this);
         mAccent = Utils.getAccent(this);
 
         Utils.setTheme(this, sThemeInverted, mAccent);
@@ -234,6 +255,14 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
 
         final MaterialCardView bottomSheetLayout = findViewById(R.id.design_bottom_sheet);
         mBottomSheetBehaviour = BottomSheetBehavior.from(bottomSheetLayout);
+
+        mSearchToolbar = findViewById(R.id.search_toolbar);
+        mSearchToolbar.setVisibility(sSearchBarVisible ? View.VISIBLE : View.GONE);
+        if (sSearchBarVisible) {
+            setSupportActionBar(mSearchToolbar);
+        }
+
+        mSearchPrefButton = findViewById(R.id.search);
         mArtistDetails = findViewById(R.id.artist_details);
         mPlayerInfoView = findViewById(R.id.player_info);
         mPlayingSong = findViewById(R.id.playing_song);
@@ -324,6 +353,9 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
         if (!EqualizerUtils.hasEqualizer(this)) {
             final ImageView eqButton = findViewById(R.id.eq);
             eqButton.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+        }
+        if (!sSearchBarVisible) {
+            mSearchPrefButton.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
         }
         initializeColorsSettings();
     }
@@ -438,6 +470,10 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
             Toast.makeText(this, getString(R.string.no_browser), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
+    }
+
+    public void handleSearchBarVisibility(@NonNull final View v) {
+        Utils.hideSearchToolbar(this, mSearchToolbar, mSearchPrefButton, sThemeInverted);
     }
 
     public void switchTheme(@NonNull final View v) {
@@ -730,6 +766,9 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
                     viewToReveal.setVisibility(View.VISIBLE);
                     viewToHide.setVisibility(View.INVISIBLE);
                     viewToReveal.setClickable(false);
+                    if (getSupportActionBar() != null && sSearchBarVisible && getSupportActionBar().isShowing()) {
+                        getSupportActionBar().hide();
+                    }
                 }
 
                 @Override
@@ -763,6 +802,9 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
                     viewToHide.setVisibility(View.VISIBLE);
                     viewToReveal.setClickable(true);
                     sArtistDiscographyExpanded = false;
+                    if (getSupportActionBar() != null && sSearchBarVisible && !getSupportActionBar().isShowing()) {
+                        getSupportActionBar().show();
+                    }
                 }
 
                 @Override

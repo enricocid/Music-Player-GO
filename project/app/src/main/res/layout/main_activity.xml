@@ -6,20 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <!-- ARTISTS LIST -->
-        <com.iven.musicplayergo.indexbar.IndexBarRecyclerView
-            android:id="@+id/artists_rv"
+        <include layout="@layout/search_toolbar" />
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".MainActivity" />
+            android:layout_height="match_parent">
 
-        <!-- ARTIST'S DISCOGRAPHY -->
-        <include layout="@layout/artist_details" />
-    </FrameLayout>
+            <!-- ARTISTS LIST -->
+            <com.iven.musicplayergo.indexbar.IndexBarRecyclerView
+                android:id="@+id/artists_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".MainActivity" />
+
+            <!-- ARTIST'S DISCOGRAPHY -->
+            <include layout="@layout/artist_details" />
+        </FrameLayout>
+    </LinearLayout>
 
     <!-- CONTROLS PANEL -->
     <include layout="@layout/player_controls_panel" />

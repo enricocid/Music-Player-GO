@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.models;
 
+import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -43,7 +44,10 @@ public class Song {
         if (trackNumber >= 1000) {
             formatted = trackNumber % 1000;
         }
-        return formatted;
+
+        DecimalFormat df = new DecimalFormat("00");
+
+        return Integer.valueOf(df.format(formatted));
     }
 
     @NonNull

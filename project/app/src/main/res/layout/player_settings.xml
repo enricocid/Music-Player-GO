@@ -43,6 +43,17 @@
             android:src="@drawable/ic_github" />
 
         <ImageView
+            android:id="@+id/search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/app_name"
+            android:foreground="?android:attr/actionBarItemBackground"
+            android:onClick="handleSearchBarVisibility"
+            android:padding="12dp"
+            android:src="@drawable/ic_round_search" />
+
+        <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
