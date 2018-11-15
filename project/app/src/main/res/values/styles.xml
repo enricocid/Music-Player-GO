@@ -30,4 +30,8 @@
         <item name="android:progressBackgroundTint">?attr/colorAccent</item>
         <item name="android:progressTint">?attr/colorAccent</item>
     </style>
+
+    <style name="SearchBarStyle" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorAccent">?attr/icon_color</item>
+    </style>
 </resources>
