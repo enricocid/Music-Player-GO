@@ -24,9 +24,9 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.SimpleViewHolder> {
 
     private final Context mContext;
-    private List<Artist> mArtists;
     private final ArtistSelectedListener mArtistSelectedListener;
     private final HashMap<Integer, String> mIndexedPositions = new LinkedHashMap<>();
+    private List<Artist> mArtists;
 
     public ArtistsAdapter(@NonNull final Context context, @NonNull final List<Artist> artists) {
         mContext = context;
