@@ -80,12 +80,11 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
     private ArtistsAdapter mArtistsAdapter;
     private SongsAdapter mSongsAdapter;
     private TextView mPlayingAlbum, mPlayingSong, mDuration, mSongPosition, mSelectedDiscographyArtist, mSelectedArtistDiscCount, mSelectedDiscographyDisc, mSelectedDiscographyDiscYear;
-
     private SeekBar mSeekBarAudio;
     private LinearLayout mControlsContainer;
     private BottomSheetBehavior mBottomSheetBehaviour;
     private View mPlayerInfoView, mArtistDetails;
-    private ImageView mPlayPauseButton, mSkipPrevButton, mSearchPrefButton;
+    private ImageView mPlayPauseButton, mSkipPrevButton;
     private PlayerAdapter mPlayerAdapter;
     private boolean mUserIsSeeking = false;
     private List<Artist> mArtists;
@@ -122,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
             mMusicService = null;
         }
     };
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -229,8 +229,8 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
         super.onCreate(savedInstanceState);
 
         sThemeInverted = Utils.isThemeInverted(this);
-        sSearchBarVisible = Utils.isSearchBarVisible(this);
         mAccent = Utils.getAccent(this);
+        sSearchBarVisible = Utils.isSearchBarVisible(this);
 
         Utils.setTheme(this, sThemeInverted, mAccent);
 
@@ -262,7 +262,6 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
             setSupportActionBar(mSearchToolbar);
         }
 
-        mSearchPrefButton = findViewById(R.id.search);
         mArtistDetails = findViewById(R.id.artist_details);
         mPlayerInfoView = findViewById(R.id.player_info);
         mPlayingSong = findViewById(R.id.playing_song);
@@ -355,7 +354,8 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
             eqButton.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
         }
         if (!sSearchBarVisible) {
-            mSearchPrefButton.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+            final ImageView searchPrefButton = findViewById(R.id.search);
+            searchPrefButton.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
         }
         initializeColorsSettings();
     }
@@ -473,7 +473,7 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
     }
 
     public void handleSearchBarVisibility(@NonNull final View v) {
-        Utils.hideSearchToolbar(this, mSearchToolbar, mSearchPrefButton, sThemeInverted);
+        Utils.hideSearchToolbar(this, mSearchToolbar);
     }
 
     public void switchTheme(@NonNull final View v) {
@@ -525,6 +525,10 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
                     mAlbumsLayoutManager.onRestoreInstanceState(mSavedAlbumsRecyclerLayoutState);
                     mSongsLayoutManager.onRestoreInstanceState(mSavedSongRecyclerLayoutState);
                 }
+                // calling invalidate options menu we force onCreateOptionsMenu method to be
+                // executed. This way mArtists list is populated and the search function works
+                // even on the first app run
+                invalidateOptionsMenu();
             }
         }
     }

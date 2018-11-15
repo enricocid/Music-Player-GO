@@ -3,13 +3,9 @@ package com.iven.musicplayergo;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Build;
 import android.text.Html;
 import android.text.Spanned;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.card.MaterialCardView;
@@ -189,13 +185,12 @@ public class Utils {
         return accent;
     }
 
-    static void hideSearchToolbar(@NonNull final Activity activity, @NonNull final Toolbar toolbar, @NonNull final ImageView searchPrefButton, final boolean isThemeInverted) {
+    static void hideSearchToolbar(@NonNull final Activity activity, @NonNull final Toolbar toolbar) {
         final boolean isVisible = isSearchBarVisible(activity);
-        toolbar.setVisibility(isVisible ? View.GONE : View.VISIBLE);
-        searchPrefButton.setColorFilter(isVisible ? isThemeInverted ? Color.WHITE : Color.BLACK : Color.GRAY, PorterDuff.Mode.SRC_IN);
         final boolean newVisibility = !isVisible;
         final SharedPreferences preferences = activity.getSharedPreferences(SEARCH_BAR_PREF, Context.MODE_PRIVATE);
         preferences.edit().putBoolean(SEARCH_BAR_VALUE, newVisibility).apply();
+        activity.recreate();
     }
 
     static boolean isSearchBarVisible(@NonNull final Context context) {
