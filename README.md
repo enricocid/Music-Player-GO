@@ -42,6 +42,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 - Music organized by Artist (the Artists names are scrollable on long click);
 - 'Revealable' Artist's page: albums + songs (the selected album title and songs titles are scrollable on long click);
 - Colorful alphabetic scrollbar;
+- Search bar;
 - Dark status bar icons (available from Android Marshmallow);
 
 ### Settings at hand: 

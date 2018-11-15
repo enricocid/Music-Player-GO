@@ -10,5 +10,4 @@
     <string name="no_browser">No browser found!</string>
     <string name="perm_rationale">Music Player GO needs access to your files to play music!</string>
     <string name="error_no_music">No music found on your phone!</string>
-    <string name="track_title" translatable="false">&lt;b>&#160;%1d&#160;%1s</string>
 </resources>
