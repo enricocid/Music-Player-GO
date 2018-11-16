@@ -332,7 +332,7 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
         observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                int controlsContainerHeight = mControlsContainer.getHeight();
+                final int controlsContainerHeight = mControlsContainer.getHeight();
 
                 //add bottom margin to those recycler view to avoid they are covered by bottom sheet
                 final FrameLayout.LayoutParams artistsLayoutParams = (FrameLayout.LayoutParams) mArtistsRecyclerView.getLayoutParams();
@@ -495,7 +495,7 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
 
     private void initializeColorsSettings() {
         final RecyclerView colorsRecyclerView = findViewById(R.id.colors_rv);
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         colorsRecyclerView.setLayoutManager(linearLayoutManager);
         colorsRecyclerView.setAdapter(new ColorsAdapter(this, mAccent));
     }
@@ -622,7 +622,7 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
         if (isNewArtist) {
             mAlbumsRecyclerView.scrollToPosition(0);
         }
-        mAlbumsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mAlbumsLayoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         mAlbumsRecyclerView.setLayoutManager(mAlbumsLayoutManager);
         final AlbumsAdapter albumsAdapter = new AlbumsAdapter(this, mPlayerAdapter, artistAlbums, showPlayedArtist, Utils.getColorFromResource(this, mAccent, R.color.blue));
         mAlbumsRecyclerView.setAdapter(albumsAdapter);

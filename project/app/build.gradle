@@ -7,8 +7,8 @@ android {
         applicationId "com.iven.musicplayergo"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 95
-        versionName "3.4.1"
+        versionCode 96
+        versionName "3.4.2"
     }
     buildTypes {
         release {
