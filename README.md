@@ -65,12 +65,6 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
 *Based on nothing: it was written from scratch besides few snippets here and there*
 
-### For developers:
-Want to help, but You **get stuck** during the build process at **'Configuration on demand is not supported by the current version'** on Android Studio 3.x.x?
-
-
-Here is the fix: https://stackoverflow.com/a/49996317
-
 ### What does this cost?
 *Music Player GO will always be free! Anyway, you can still buy me a beer, an ice cream or something via [PayPal](https://www.paypal.me/enricocid) if You really liked it! :)*
 
