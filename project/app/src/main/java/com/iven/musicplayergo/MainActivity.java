@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
     private int mAccent;
     private boolean sThemeInverted;
     private boolean sSearchBarVisible;
-    private Toolbar mSearchToolbar;
     private IndexBarRecyclerView mArtistsRecyclerView;
     private RecyclerView mAlbumsRecyclerView, mSongsRecyclerView;
     private ArtistsAdapter mArtistsAdapter;
@@ -256,10 +255,10 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
         final MaterialCardView bottomSheetLayout = findViewById(R.id.design_bottom_sheet);
         mBottomSheetBehaviour = BottomSheetBehavior.from(bottomSheetLayout);
 
-        mSearchToolbar = findViewById(R.id.search_toolbar);
-        mSearchToolbar.setVisibility(sSearchBarVisible ? View.VISIBLE : View.GONE);
+        final Toolbar searchToolbar = findViewById(R.id.search_toolbar);
+        searchToolbar.setVisibility(sSearchBarVisible ? View.VISIBLE : View.GONE);
         if (sSearchBarVisible) {
-            setSupportActionBar(mSearchToolbar);
+            setSupportActionBar(searchToolbar);
         }
 
         mArtistDetails = findViewById(R.id.artist_details);
@@ -473,7 +472,7 @@ public class MainActivity extends AppCompatActivity implements SongsAdapter.Song
     }
 
     public void handleSearchBarVisibility(@NonNull final View v) {
-        Utils.hideSearchToolbar(this, mSearchToolbar);
+        Utils.hideSearchToolbar(this);
     }
 
     public void switchTheme(@NonNull final View v) {

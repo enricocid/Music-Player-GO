@@ -20,7 +20,6 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 public class Utils {
@@ -187,7 +186,7 @@ public class Utils {
         return accent;
     }
 
-    static void hideSearchToolbar(@NonNull final Activity activity, @NonNull final Toolbar toolbar) {
+    static void hideSearchToolbar(@NonNull final Activity activity) {
         final boolean isVisible = isSearchBarVisible(activity);
         final boolean newVisibility = !isVisible;
         final SharedPreferences preferences = activity.getSharedPreferences(SEARCH_BAR_PREF, Context.MODE_PRIVATE);
