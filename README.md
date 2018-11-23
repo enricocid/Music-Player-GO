@@ -33,7 +33,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 ### Unifield UI, the way I'd like it to be:
 
 - Colorful, simple and 'unified' UI: no need to navigate between screens;
-- Awesome typeface: Raleway + Roboto condensed
+- Awesome typeface: Raleway + Roboto condensed;
 - Expandable bottom panel containing the player controls and the settings (if expanded):
   - Played song info: clicking on it You can open the played Artist's page/album or open/close the Artist's page You're exploring (when not playing). The text is scrollable on long click;
   - Skip to previous song (long click to enable reset 1x);
@@ -49,7 +49,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
 - Dynamic shuffle button: randomly plays the device or the Artist songs (when the Artist's page is 'revealed');
 - System equalizer (if present on the device);
-- Themes (light and inverted)
+- Themes (light and inverted);
 - Search bar visibility;
 - Link to git page;
 - 16 awesome UI accents!;
@@ -70,7 +70,9 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
 ### Dependencies/API used: 
 
-  - Android Support Design (Material Design Components)
+  - AndroidX;
+  - ViewModel/LiveData;
+  - Android Support Design (Material Design Components);
   - Android Support Library v4 core-utils;
   - Android Support Library v4 media-compat;
 
