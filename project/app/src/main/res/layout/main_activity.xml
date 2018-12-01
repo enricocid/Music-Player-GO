@@ -1,34 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/context_view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <include layout="@layout/search_toolbar" />
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <!-- ARTISTS LIST -->
-            <com.iven.musicplayergo.indexbar.IndexBarRecyclerView
-                android:id="@+id/artists_rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".MainActivity" />
-
-            <!-- ARTIST'S DISCOGRAPHY -->
-            <include layout="@layout/artist_details" />
-        </FrameLayout>
-    </LinearLayout>
-
-    <!-- CONTROLS PANEL -->
-    <include layout="@layout/player_controls_panel" />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_height="match_parent"
+             android:layout_width="match_parent"
+             android:id="@+id/fragment_container"/>

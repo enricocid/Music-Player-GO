@@ -8,7 +8,6 @@
         <item name="theme_icon">@drawable/ic_invert_theme</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:navigationBarColor">@color/black</item>
-        <item name="android:alertDialogTheme">@style/AlertDialogStyle</item>
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
     </style>
 
@@ -20,18 +19,34 @@
         <item name="android:windowBackground">@color/black</item>
         <item name="theme_icon">@drawable/ic_invert_theme_off</item>
         <item name="android:navigationBarColor">@color/black</item>
-        <item name="android:alertDialogTheme">@style/AlertDialogStyle</item>
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
     </style>
-
-    <style name="AlertDialogStyle" parent="Theme.MaterialComponents.Light.Dialog.Alert" />
 
     <style name="SeekBarStyle" parent="Widget.AppCompat.SeekBar">
         <item name="android:progressBackgroundTint">?attr/colorAccent</item>
         <item name="android:progressTint">?attr/colorAccent</item>
     </style>
 
-    <style name="SearchBarStyle" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="colorAccent">?attr/icon_color</item>
+    <style name="SearchBarStyle" parent="Widget.MaterialComponents.Toolbar">
+        <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="searchViewStyle">@style/SearchViewStyle</item>
     </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView.ActionBar">
+        <item name="searchIcon">@drawable/ic_round_search</item>
+        <item name="queryBackground">@color/transparent</item>
+    </style>
+
+    <!-- set the rounded drawable as background to your bottom sheet -->
+    <style name="BottomSheet" parent="@style/Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_permission_dialog_fragment</item>
+    </style>
+
+    <style name="BaseBottomSheetDialog" parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog"/>
 </resources>

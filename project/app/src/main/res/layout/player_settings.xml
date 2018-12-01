@@ -1,74 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <!-- OPTIONS -->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:contentDescription="@string/app_name"
-            android:foreground="?android:attr/actionBarItemBackground"
-            android:onClick="shuffleSongs"
-            android:padding="12dp"
-            android:src="@drawable/ic_shuffle" />
+                android:id="@+id/shuffle_option"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:foreground="?android:attr/actionBarItemBackground"
+                android:padding="12dp"
+                android:src="@drawable/ic_shuffle"/>
 
         <ImageView
-            android:id="@+id/eq"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:contentDescription="@string/app_name"
-            android:foreground="?android:attr/actionBarItemBackground"
-            android:onClick="openEqualizer"
-            android:padding="12dp"
-            android:src="@drawable/ic_equalizer" />
+                android:id="@+id/eq_option"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:foreground="?android:attr/actionBarItemBackground"
+                android:padding="12dp"
+                android:src="@drawable/ic_equalizer"/>
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:contentDescription="@string/app_name"
-            android:foreground="?android:attr/actionBarItemBackground"
-            android:onClick="openGitPage"
-            android:padding="12dp"
-            android:src="@drawable/ic_github" />
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:foreground="?android:attr/actionBarItemBackground"
+                android:onClick="openGitPage"
+                android:padding="12dp"
+                android:src="@drawable/ic_github"/>
 
         <ImageView
-            android:id="@+id/search"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:contentDescription="@string/app_name"
-            android:foreground="?android:attr/actionBarItemBackground"
-            android:onClick="handleSearchBarVisibility"
-            android:padding="12dp"
-            android:src="@drawable/ic_round_search" />
+                android:id="@+id/search_option"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:foreground="?android:attr/actionBarItemBackground"
+                android:padding="12dp"
+                android:src="@drawable/ic_round_search"/>
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:contentDescription="@string/app_name"
-            android:foreground="?android:attr/actionBarItemBackground"
-            android:onClick="switchTheme"
-            android:padding="12dp"
-            android:src="?attr/theme_icon" />
+                android:id="@+id/invert_option"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:foreground="?android:attr/actionBarItemBackground"
+                android:padding="12dp"
+                android:src="?attr/theme_icon"/>
     </LinearLayout>
 
     <!-- COLORS OPTIONS -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/colors_rv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:overScrollMode="never"
-        tools:context=".MainActivity" />
+            android:id="@+id/colors_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            tools:context=".MainActivity"/>
 </LinearLayout>

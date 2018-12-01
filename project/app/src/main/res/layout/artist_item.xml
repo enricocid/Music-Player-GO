@@ -1,44 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="4dp"
-    android:layout_marginTop="2dp"
-    android:layout_marginEnd="4dp"
-    android:layout_marginBottom="2dp"
-    card_view:cardBackgroundColor="?attr/card_color"
-    card_view:cardCornerRadius="8dp"
-    card_view:cardElevation="0dp">
-
-    <LinearLayout
+<com.google.android.material.card.MaterialCardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:foreground="?android:attr/selectableItemBackgroundBorderless"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="2dp"
+        app:cardBackgroundColor="?attr/card_color"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp">
 
-        <TextView
-            android:id="@+id/artist"
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="marquee"
-            android:fontFamily="@font/raleway_medium"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="16sp" />
+            android:layout_gravity="center_vertical"
+            android:foreground="@drawable/ripple"
+            android:orientation="vertical"
+            android:padding="16dp">
 
         <TextView
-            android:id="@+id/album_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/raleway"
-            android:singleLine="true"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="12sp" />
+                android:id="@+id/artist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:fontFamily="@font/raleway_medium"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="16sp"/>
+
+        <TextView
+                android:id="@+id/album_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/raleway"
+                android:singleLine="true"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="12sp"/>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

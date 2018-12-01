@@ -1,129 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/design_bottom_sheet"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-    card_view:cardBackgroundColor="?attr/card_color"
-    card_view:cardCornerRadius="@dimen/bottom_sheet_corner_radius"
-    card_view:cardElevation="24dp"
-    card_view:strokeColor="?attr/controls_panel_stroke"
-    card_view:strokeWidth="0.1dp">
-
-    <LinearLayout
+<com.google.android.material.card.MaterialCardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/design_bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        app:cardBackgroundColor="?attr/card_color"
+        app:cardCornerRadius="@dimen/bottom_sheet_corner_radius"
+        app:cardElevation="24dp"
+        app:strokeColor="?attr/controls_panel_stroke"
+        app:strokeWidth="0.1dp"
+        tools:context=".MainActivity">
 
-        <LinearLayout
-            android:id="@+id/controls_container"
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical"
-            android:paddingBottom="16dp">
+            android:orientation="vertical">
 
-            <LinearLayout
+        <LinearLayout
+                android:id="@+id/controls_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:baselineAligned="false"
-                android:orientation="horizontal">
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:paddingBottom="16dp">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/player_info"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="2dp"
-                    android:layout_weight="1"
-                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                    android:onClick="expandArtistDetails"
-                    android:orientation="vertical"
-                    android:paddingStart="8dp"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="2dp"
-                    android:paddingBottom="8dp">
+                        android:id="@+id/player_info"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="2dp"
+                        android:layout_weight="1"
+                        android:foreground="@drawable/ripple"
+                        android:orientation="vertical"
+                        android:paddingStart="8dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="2dp"
+                        android:paddingBottom="8dp">
 
                     <TextView
-                        android:id="@+id/playing_song"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="marquee"
-                        android:fontFamily="@font/raleway_medium"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:scrollHorizontally="true"
-                        android:singleLine="true"
-                        android:text="@string/app_name"
-                        android:textAlignment="textStart"
-                        android:textColor="?android:attr/textColorPrimary"
-                        android:textSize="14sp" />
+                            android:id="@+id/playing_song"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="marquee"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:fontFamily="@font/raleway_medium"
+                            android:text="@string/app_name"
+                            android:textAlignment="textStart"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="14sp"/>
 
                     <TextView
-                        android:id="@+id/playing_album"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="marquee"
-                        android:fontFamily="@font/raleway"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:scrollHorizontally="true"
-                        android:singleLine="true"
-                        android:text="@string/version"
-                        android:textAlignment="textStart"
-                        android:textColor="?android:attr/textColorPrimary"
-                        android:textSize="12sp" />
+                            android:id="@+id/playing_album"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="marquee"
+                            android:fontFamily="@font/raleway"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:text="@string/version"
+                            android:textAlignment="textStart"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="12sp"/>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/skip_prev"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/app_name"
-                        android:foreground="?android:attr/actionBarItemBackground"
-                        android:onClick="skipPrev"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_skip_previous" />
+                            android:id="@+id/skip_prev_button"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/app_name"
+                            android:foreground="?android:attr/actionBarItemBackground"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_skip_previous"/>
 
                     <ImageView
-                        android:id="@+id/play_pause"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/app_name"
-                        android:foreground="?android:attr/actionBarItemBackground"
-                        android:onClick="resumeOrPause"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_play" />
+                            android:id="@+id/play_pause_button"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/app_name"
+                            android:foreground="?android:attr/actionBarItemBackground"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_play"/>
 
                     <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/app_name"
-                        android:foreground="?android:attr/actionBarItemBackground"
-                        android:onClick="skipNext"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_skip_next" />
+                            android:id="@+id/skip_next_button"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/app_name"
+                            android:foreground="?android:attr/actionBarItemBackground"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_skip_next"/>
 
                 </LinearLayout>
             </LinearLayout>
 
             <!-- PLAYER SEEK TO BAR -->
-            <include layout="@layout/player_seek" />
+            <include layout="@layout/player_seek"/>
 
         </LinearLayout>
 
-        <include layout="@layout/player_settings" />
+        <include layout="@layout/player_settings"/>
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

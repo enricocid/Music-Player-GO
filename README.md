@@ -2,10 +2,13 @@
 
 [FAQ](https://github.com/enricocid/Music-Player-GO/blob/master/FAQ.md) -  [Privacy policy](https://github.com/enricocid/Music-Player-GO/blob/master/Privacy.md)
 
+[![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin)
+
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3a808914b73d45f299e1a808ce3aa8b3)](https://app.codacy.com/app/enricocid/Music-Player-GO?utm_source=github.com&utm_medium=referral&utm_content=enricocid/Music-Player-GO&utm_campaign=Badge_Grade_Settings)
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
 
 ###### Very slim music player with low memory footprint!
+###### Now available in Kotlin language
 ###### Current version: (96) 3.4.2
 ###### Material Design Icon by Julian Javier Gomez, Axinen Design (https://plus.google.com/u/0/+AxinenDesign)
 
@@ -71,7 +74,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 ### Dependencies/API used: 
 
   - AndroidX;
-  - ViewModel/LiveData;
+  - ViewModel and LiveData;
   - Android Support Design (Material Design Components);
   - Android Support Library v4 core-utils;
   - Android Support Library v4 media-compat;
