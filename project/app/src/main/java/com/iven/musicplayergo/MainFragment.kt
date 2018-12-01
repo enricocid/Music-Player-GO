@@ -279,6 +279,12 @@ class MainFragment : Fragment() {
         }
         mPlayPauseButton.setOnClickListener { resumeOrPause() }
         mSkipNextButton.setOnClickListener { skipNext() }
+        shuffle_button.setOnClickListener {
+            if (::mMediaPlayerHolder.isInitialized) {
+                if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
+                mSongsAdapter.randomPlaySelectedAlbum(mMediaPlayerHolder)
+            }
+        }
     }
 
     private fun setupSettings() {

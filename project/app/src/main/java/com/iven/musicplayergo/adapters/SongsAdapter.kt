@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
+import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.uihelpers.UIUtils
 import kotlinx.android.synthetic.main.song_item.view.*
 
@@ -16,6 +17,14 @@ class SongsAdapter(private val music: MutableList<Music>) : RecyclerView.Adapter
 
     init {
         music.sortBy { it.track }
+    }
+
+    fun randomPlaySelectedAlbum(mediaPlayerHolder: MediaPlayerHolder) {
+        val currentAlbum = music
+        currentAlbum.shuffle()
+        val song = currentAlbum[0]
+        mediaPlayerHolder.setCurrentSong(song, music)
+        mediaPlayerHolder.initMediaPlayer(song)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongsHolder {

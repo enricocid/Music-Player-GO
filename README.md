@@ -73,6 +73,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
 ### Dependencies/API used: 
 
+  - kotlin-stdlib;
   - AndroidX;
   - ViewModel and LiveData;
   - Android Support Design (Material Design Components);
