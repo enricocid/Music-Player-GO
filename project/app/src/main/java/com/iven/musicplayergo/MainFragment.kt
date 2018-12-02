@@ -226,6 +226,7 @@ class MainFragment : Fragment() {
                     restorePlayerStatus()
                 } else {
                     Toast.makeText(mActivity, getString(R.string.error_no_music), Toast.LENGTH_SHORT).show()
+                    mActivity.finish()
                 }
             })
     }
