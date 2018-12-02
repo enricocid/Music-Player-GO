@@ -4,6 +4,6 @@
         android:id="@+id/search_toolbar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="?attr/card_color"
+        android:background="?attr/colorAccent"
         android:elevation="2dp"
         android:theme="@style/SearchBarStyle"/>

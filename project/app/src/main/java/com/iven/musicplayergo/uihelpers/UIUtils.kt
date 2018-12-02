@@ -32,6 +32,7 @@ object UIUtils {
 
         searchView.setOnQueryTextFocusChangeListener { _: View, hasFocus: Boolean ->
             indexBarRecyclerView.setIndexingEnabled(!hasFocus)
+            if (!hasFocus) searchView.isIconified = true
         }
     }
 

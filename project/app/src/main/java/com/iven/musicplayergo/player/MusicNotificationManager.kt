@@ -41,19 +41,19 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     //https://gist.github.com/Gnzlt/6ddc846ef68c587d559f1e1fcd0900d3
     private fun getLargeIcon(): Bitmap {
 
-            val vectorDrawable = playerService.getDrawable(R.drawable.music_notification) as VectorDrawable
+        val vectorDrawable = playerService.getDrawable(R.drawable.music_notification) as VectorDrawable
 
-            val largeIconSize = playerService.resources.getDimensionPixelSize(R.dimen.notification_large_dim)
-            val bitmap = Bitmap.createBitmap(largeIconSize, largeIconSize, Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(bitmap)
+        val largeIconSize = playerService.resources.getDimensionPixelSize(R.dimen.notification_large_dim)
+        val bitmap = Bitmap.createBitmap(largeIconSize, largeIconSize, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
 
-            vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
-            vectorDrawable.setTint(mAccent)
-            vectorDrawable.alpha = 150
-            vectorDrawable.draw(canvas)
+        vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
+        vectorDrawable.setTint(mAccent)
+        vectorDrawable.alpha = 150
+        vectorDrawable.draw(canvas)
 
-            return bitmap
-        }
+        return bitmap
+    }
 
     private fun playerAction(action: String): PendingIntent {
 
@@ -117,19 +117,16 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
     @RequiresApi(26)
     private fun createNotificationChannel() {
-
         if (notificationManager.getNotificationChannel(CHANNEL_ID) == null) {
             val notificationChannel = NotificationChannel(
                 CHANNEL_ID,
                 playerService.getString(R.string.app_name),
                 NotificationManager.IMPORTANCE_LOW
             )
-
             notificationChannel.description = playerService.getString(R.string.app_name)
             notificationChannel.enableLights(false)
             notificationChannel.enableVibration(false)
             notificationChannel.setShowBadge(false)
-
             notificationManager.createNotificationChannel(notificationChannel)
         }
     }

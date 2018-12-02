@@ -97,10 +97,8 @@ class PreferencesHelper(private val activity: Activity) {
         return accent!!
     }
 
-    fun hideSearchToolbar() {
-        val newVisibility = !isSearchBarEnabled()
-        getPreference(TAG_SEARCH_BAR_PREF).edit().putBoolean(TAG_SEARCH_BAR_VALUE, newVisibility).apply()
-        activity.recreate()
+    fun setSearchToolbarVisibility(isVisible: Boolean) {
+        getPreference(TAG_SEARCH_BAR_PREF).edit().putBoolean(TAG_SEARCH_BAR_VALUE, isVisible).apply()
     }
 
     fun isSearchBarEnabled(): Boolean {

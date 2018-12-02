@@ -28,8 +28,8 @@
     </style>
 
     <style name="SearchBarStyle" parent="Widget.MaterialComponents.Toolbar">
-        <item name="colorAccent">?attr/colorPrimary</item>
         <item name="searchViewStyle">@style/SearchViewStyle</item>
+        <item name="colorControlActivated">?attr/icon_color</item>
     </style>
 
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView.ActionBar">

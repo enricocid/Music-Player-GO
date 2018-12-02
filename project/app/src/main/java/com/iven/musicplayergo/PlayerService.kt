@@ -9,6 +9,7 @@ import com.iven.musicplayergo.player.MusicNotificationManager
 
 class PlayerService : Service() {
 
+    //service
     private val mIBinder = LocalBinder()
     var isRestoredFromPause = false
 

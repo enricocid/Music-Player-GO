@@ -12,6 +12,7 @@ import android.os.IBinder
 import android.os.Parcelable
 import android.view.*
 import android.widget.*
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -76,6 +77,9 @@ class MainFragment : Fragment() {
     private lateinit var mSavedAlbumsRecyclerLayoutState: Parcelable
     private lateinit var mSavedSongsRecyclerLayoutState: Parcelable
 
+    //search bar
+    private lateinit var mSupportActionBar: ActionBar
+
     //settings/controls panel
     private lateinit var mControlsContainer: LinearLayout
     private lateinit var mColorsRecyclerView: RecyclerView
@@ -89,6 +93,7 @@ class MainFragment : Fragment() {
     private lateinit var mSkipPrevButton: ImageView
     private lateinit var mPlayPauseButton: ImageView
     private lateinit var mSkipNextButton: ImageView
+    private lateinit var mSearchToggleButton: ImageView
 
     //artists details
     private lateinit var mArtistDetails: LinearLayout
@@ -124,16 +129,23 @@ class MainFragment : Fragment() {
         doUnbindService()
     }
 
+    //method to handle the navigation bar back feedback
     fun onBackPressed(): Boolean {
         //if the bottom sheet is expanded collapse it
-        if (mBottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
-            mBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            return false
-        } else if (sArtistDiscographyExpanded) {
-            revealArtistDetails(false)
-            return false
-        } else {
-            return true
+        return when (mBottomSheetBehavior.state) {
+            BottomSheetBehavior.STATE_EXPANDED -> {
+                mBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                false
+            }
+            else -> {
+                return when (sArtistDiscographyExpanded) {
+                    true -> {
+                        revealArtistDetails(false)
+                        false
+                    }
+                    else -> true
+                }
+            }
         }
     }
 
@@ -160,7 +172,6 @@ class MainFragment : Fragment() {
             mSavedSongsRecyclerLayoutState = mSongsLayoutManager.onSaveInstanceState()!!
         }
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -241,20 +252,26 @@ class MainFragment : Fragment() {
         mSkipPrevButton = skip_prev_button
         mPlayPauseButton = play_pause_button
         mSkipNextButton = skip_next_button
+        mSearchToggleButton = search_option
 
         //setup horizontal scrolling text
         UIUtils.setHorizontalScrollBehavior(mPlayerInfoView, playing_song, playing_album)
 
         //recycler views
         mArtistsRecyclerView = artists_rv
-
         mAlbumsRecyclerView = albums_rv
         mSongsRecyclerView = songs_rv
         mColorsRecyclerView = colors_rv
 
         //search view
-        search_toolbar.visibility = if (sSearchEnabled) View.VISIBLE else View.GONE
-        if (sSearchEnabled) mActivity.setSupportActionBar(search_toolbar)
+        mActivity.setSupportActionBar(search_toolbar)
+        mSupportActionBar = mActivity.supportActionBar!!
+
+        if (sSearchEnabled) {
+            mSupportActionBar.show()
+        } else {
+            mSupportActionBar.hide()
+        }
 
         //artist details
         mArtistDetails = artist_details
@@ -291,7 +308,7 @@ class MainFragment : Fragment() {
 
         shuffle_option.setOnClickListener { shuffleSongs() }
         eq_option.setOnClickListener { openEqualizer() }
-        search_option.setOnClickListener { mPreferencesHelper.hideSearchToolbar() }
+        mSearchToggleButton.setOnClickListener { handleSearchBarVisibility() }
         invert_option.setOnClickListener {
             invertTheme()
         }
@@ -307,7 +324,8 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun enableIndexesIfRecyclerViewScrollable() {
+    private fun continueLoadingOnArtistsConfigured() {
+        //set indexes if artists rv is scrollable
         mArtistsRecyclerView.afterMeasured {
             if (mArtistsRecyclerView.computeVerticalScrollRange() > height) {
                 val indexBarView = IndexBarView(
@@ -320,14 +338,18 @@ class MainFragment : Fragment() {
                 )
                 mArtistsRecyclerView.setFastScroller(indexBarView)
             }
+            //set artist details on artists rv loaded
+            setArtistDetails()
         }
     }
 
     private fun setArtistsRecyclerView() {
 
         mArtists = MusicUtils.getArtists(mMusic)
-
         mNavigationArtist = mArtists[0]
+
+        //set the search menu
+        setHasOptionsMenu(sSearchEnabled)
 
         //set the artists list
         mArtistsRecyclerView.setHasFixedSize(true)
@@ -336,16 +358,8 @@ class MainFragment : Fragment() {
         mArtistsAdapter = ArtistsAdapter(resources, mArtists, mMusic)
         mArtistsRecyclerView.adapter = mArtistsAdapter
 
-        //set the search menu
-        setHasOptionsMenu(sSearchEnabled)
-
-        enableIndexesIfRecyclerViewScrollable()
-
-        setArtistDetails()
-
         mArtistsAdapter.onArtistClick = { artist ->
             if (mNavigationArtist != artist) {
-
                 mNavigationArtist = artist
                 setArtistDetails()
                 revealArtistDetails(true)
@@ -353,6 +367,8 @@ class MainFragment : Fragment() {
                 revealArtistDetails(true)
             }
         }
+
+        continueLoadingOnArtistsConfigured()
     }
 
     private fun setArtistDetails() {
@@ -499,6 +515,7 @@ class MainFragment : Fragment() {
         }
     }
 
+    //method to update info on controls panel
     private fun updatePlayingInfo(restore: Boolean, startPlay: Boolean) {
         if (startPlay) {
             mMediaPlayerHolder.mediaPlayer!!.start()
@@ -575,6 +592,7 @@ class MainFragment : Fragment() {
         }
     }
 
+    //method to reveal/hide artist details, it is a simple reveal animation
     private fun revealArtistDetails(show: Boolean) {
 
         val viewToRevealHeight = mArtistsRecyclerView.height
@@ -592,7 +610,7 @@ class MainFragment : Fragment() {
                     mArtistDetails.visibility = View.VISIBLE
                     mArtistsRecyclerView.visibility = View.INVISIBLE
                     mArtistDetails.isClickable = false
-                    if (sSearchEnabled && mActivity.supportActionBar != null && mActivity.supportActionBar!!.isShowing) mActivity.supportActionBar!!.hide()
+                    if (sSearchEnabled && ::mSupportActionBar.isInitialized && mSupportActionBar.isShowing) mSupportActionBar.hide()
                 }
 
                 override fun onAnimationEnd(animator: Animator) {
@@ -619,7 +637,7 @@ class MainFragment : Fragment() {
                     mArtistsRecyclerView.visibility = View.VISIBLE
                     mArtistDetails.isClickable = true
                     sArtistDiscographyExpanded = false
-                    if (sSearchEnabled && mActivity.supportActionBar != null && !mActivity.supportActionBar!!.isShowing) mActivity.supportActionBar!!.show()
+                    if (sSearchEnabled && ::mSupportActionBar.isInitialized && !mSupportActionBar.isShowing) mSupportActionBar.show()
                 }
 
                 override fun onAnimationCancel(animator: Animator) {}
@@ -630,11 +648,14 @@ class MainFragment : Fragment() {
         }
     }
 
+    //method to handle player info click
     private fun handlePlayerInfo() {
+        //if we are playing a song the go to the played artist/album details
         if (::mMediaPlayerHolder.isInitialized && mMediaPlayerHolder.currentSong != null) {
             val currentSong = mMediaPlayerHolder.currentSong
             val album = currentSong!!.album
             val artist = currentSong.artist
+            //do only if we are not on played artist/album details
             if (mNavigationArtist != artist) {
                 mArtistsAdapter.onArtistClick?.invoke(artist)
                 val playingAlbumPosition = MusicUtils.getAlbumPositionInList(album, mSelectedArtistAlbums)
@@ -649,6 +670,28 @@ class MainFragment : Fragment() {
         }
     }
 
+    //hide/show search bar dynamically
+    private fun handleSearchBarVisibility() {
+        if (::mSupportActionBar.isInitialized) {
+            val newVisibility = !mSupportActionBar.isShowing
+            mPreferencesHelper.setSearchToolbarVisibility(newVisibility)
+            setHasOptionsMenu(newVisibility)
+            val searchToggleButtonColor = when (newVisibility) {
+                false -> Color.GRAY
+                true -> if (sThemeInverted!!) Color.WHITE else Color.BLACK
+            }
+            mSearchToggleButton.setColorFilter(searchToggleButtonColor, PorterDuff.Mode.SRC_IN)
+            if (mSupportActionBar.isShowing) {
+                mSupportActionBar.hide()
+            } else {
+                mSupportActionBar.show()
+            }
+            sSearchEnabled = newVisibility
+        }
+    }
+
+    //viewTreeObserver extension to measure layout params
+    //https://antonioleiva.com/kotlin-ongloballayoutlistener/
     private inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
         viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -679,7 +722,6 @@ class MainFragment : Fragment() {
         // class name because we want a specific service implementation that
         // we know will be running in our own process (and thus won't be
         // supporting component replacement by other applications).
-
         val startNotStickyIntent = Intent(mActivity, PlayerService::class.java)
         mActivity.bindService(startNotStickyIntent, mConnection, Context.BIND_AUTO_CREATE)
         sBound = true

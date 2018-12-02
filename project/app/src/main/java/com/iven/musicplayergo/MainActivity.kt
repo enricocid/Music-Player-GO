@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun openGitPage(view: View) {
+    fun openGitPage(@Suppress("UNUSED_PARAMETER") view: View) {
         try {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/enricocid/Music-Player-GO")))
         } catch (e: ActivityNotFoundException) {
