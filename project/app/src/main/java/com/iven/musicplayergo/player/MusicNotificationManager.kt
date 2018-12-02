@@ -39,8 +39,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     var mAccent: Int = R.color.blue
 
     //https://gist.github.com/Gnzlt/6ddc846ef68c587d559f1e1fcd0900d3
-    private val largeIcon: Bitmap
-        get() {
+    private fun getLargeIcon(): Bitmap {
 
             val vectorDrawable = playerService.getDrawable(R.drawable.music_notification) as VectorDrawable
 
@@ -50,7 +49,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
             vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
             vectorDrawable.setTint(mAccent)
-            vectorDrawable.alpha = 100
+            vectorDrawable.alpha = 150
             vectorDrawable.draw(canvas)
 
             return bitmap
@@ -89,7 +88,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         notificationBuilder!!
             .setShowWhen(false)
             .setSmallIcon(R.drawable.music_notification)
-            .setLargeIcon(largeIcon)
+            .setLargeIcon(getLargeIcon())
             .setColor(mAccent)
             .setContentTitle(spanned)
             .setContentText(song.album)
