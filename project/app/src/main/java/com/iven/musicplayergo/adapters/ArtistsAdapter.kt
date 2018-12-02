@@ -31,13 +31,10 @@ class ArtistsAdapter(
 
     private fun generateIndexes() {
         try {
-            var i = 0
-            while (i < mArtists.size) {
-                val section = mArtists[i].substring(0, 1).toUpperCase(Locale.getDefault())
-                if (!mIndexedPositions.containsValue(section)) {
-                    mIndexedPositions[i] = section
+            mArtists.forEachIndexed { index, artist ->
+                if (!mIndexedPositions.containsValue(artist.substring(0,1))) {
+                    mIndexedPositions[index] = artist.substring(0,1).toUpperCase()
                 }
-                i++
             }
         } catch (e: Exception) {
             e.printStackTrace()
