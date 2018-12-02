@@ -44,6 +44,7 @@ class IndexBarRecyclerView : RecyclerView {
             if (mGestureDetector == null) {
                 mGestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
 
+                    @Suppress("OVERRIDE")
                     override fun onFling(
                         e1: MotionEvent?,
                         e2: MotionEvent?,
