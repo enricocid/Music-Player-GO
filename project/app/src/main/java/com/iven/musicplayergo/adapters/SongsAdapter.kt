@@ -18,11 +18,11 @@ class SongsAdapter(music: MutableList<Music>) : RecyclerView.Adapter<SongsAdapte
     private var mMusic = music
 
     init {
-        mMusic.sortBy { it.year }
+        mMusic.sortBy { it.track }
     }
     fun swapSongs(music: MutableList<Music>) {
         mMusic = music
-        mMusic.sortBy { it.year }
+        mMusic.sortBy { it.track }
         notifyDataSetChanged()
     }
 
