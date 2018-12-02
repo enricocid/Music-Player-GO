@@ -381,24 +381,28 @@ class MainFragment : Fragment() {
         mArtistsDetailsDiscCount.text = getString(R.string.albums, MusicUtils.getArtistDiscsCount(notSortedArtistDiscs))
 
         //set the albums list
-        mAlbumsRecyclerView.setHasFixedSize(true)
-        mAlbumsLayoutManager = LinearLayoutManager(mActivity, RecyclerView.HORIZONTAL, false)
-        mAlbumsRecyclerView.layoutManager = mAlbumsLayoutManager
-
-        mAlbumsAdapter = AlbumsAdapter(
-            mSelectedArtistAlbums,
-            ContextCompat.getColor(mActivity, mAccent!!)
-        )
-        mSelectedArtistSongs = MusicUtils.getArtistSongs(notSortedArtistDiscs)
-
-        mAlbumsRecyclerView.adapter = mAlbumsAdapter
-        val placeholderAlbum = mSelectedArtistAlbums[0]
-
-        setAlbumSongs(placeholderAlbum.title)
+        if (!::mAlbumsAdapter.isInitialized) {
+            //one-time adapter initialization
+            mAlbumsRecyclerView.setHasFixedSize(true)
+            mAlbumsLayoutManager = LinearLayoutManager(mActivity, RecyclerView.HORIZONTAL, false)
+            mAlbumsRecyclerView.layoutManager = mAlbumsLayoutManager
+            mAlbumsAdapter = AlbumsAdapter(
+                mSelectedArtistAlbums,
+                ContextCompat.getColor(mActivity, mAccent!!)
+            )
+            mAlbumsRecyclerView.adapter = mAlbumsAdapter
+        } else {
+            mAlbumsAdapter.swapAlbums(mSelectedArtistAlbums)
+        }
 
         mAlbumsAdapter.onAlbumClick = { album ->
             setAlbumSongs(album)
         }
+
+        mSelectedArtistSongs = MusicUtils.getArtistSongs(notSortedArtistDiscs)
+
+        val placeholderAlbum = mSelectedArtistAlbums[0]
+        setAlbumSongs(placeholderAlbum.title)
     }
 
     private fun setAlbumSongs(selectedAlbum: String) {
@@ -407,13 +411,17 @@ class MainFragment : Fragment() {
         mArtistDetailsSelectedDiscYear.text = MusicUtils.getYearForAlbum(resources, album!![0].year)
 
         //set the songs list
-        mSongsRecyclerView.setHasFixedSize(true)
-        mSongsLayoutManager = LinearLayoutManager(mActivity)
-        mSongsRecyclerView.layoutManager = mSongsLayoutManager
-        mSongsAdapter = SongsAdapter(album.toMutableList())
-        mSongsRecyclerView.adapter = mSongsAdapter
+        if (!::mSongsAdapter.isInitialized) {
+            //one-time adapter initialization
+            mSongsRecyclerView.setHasFixedSize(true)
+            mSongsLayoutManager = LinearLayoutManager(mActivity)
+            mSongsRecyclerView.layoutManager = mSongsLayoutManager
+            mSongsAdapter = SongsAdapter(album.toMutableList())
+            mSongsRecyclerView.adapter = mSongsAdapter
+        } else {
+            mSongsAdapter.swapSongs(album.toMutableList())
+        }
         mSongsAdapter.onSongClick = { music ->
-
             if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
             mMediaPlayerHolder.setCurrentSong(music, album)
             mMediaPlayerHolder.initMediaPlayer(music)

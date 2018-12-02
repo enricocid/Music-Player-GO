@@ -11,19 +11,22 @@ import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.uihelpers.UIUtils
 import kotlinx.android.synthetic.main.song_item.view.*
 
-class SongsAdapter(private val music: MutableList<Music>) : RecyclerView.Adapter<SongsAdapter.SongsHolder>() {
+class SongsAdapter(music: MutableList<Music>) : RecyclerView.Adapter<SongsAdapter.SongsHolder>() {
 
     var onSongClick: ((Music) -> Unit)? = null
 
-    init {
-        music.sortBy { it.track }
+    private var mMusic = music
+
+    fun swapSongs(music: MutableList<Music>) {
+        mMusic = music
+        notifyDataSetChanged()
     }
 
     fun randomPlaySelectedAlbum(mediaPlayerHolder: MediaPlayerHolder) {
-        val currentAlbum = music
+        val currentAlbum = mMusic
         currentAlbum.shuffle()
         val song = currentAlbum[0]
-        mediaPlayerHolder.setCurrentSong(song, music)
+        mediaPlayerHolder.setCurrentSong(song, mMusic)
         mediaPlayerHolder.initMediaPlayer(song)
     }
 
@@ -32,13 +35,13 @@ class SongsAdapter(private val music: MutableList<Music>) : RecyclerView.Adapter
     }
 
     override fun getItemCount(): Int {
-        return music.size
+        return mMusic.size
     }
 
     override fun onBindViewHolder(holder: SongsHolder, position: Int) {
-        val track = music[holder.adapterPosition].track
-        val title = music[holder.adapterPosition].title
-        val duration = music[holder.adapterPosition].duration
+        val track = mMusic[holder.adapterPosition].track
+        val title = mMusic[holder.adapterPosition].title
+        val duration = mMusic[holder.adapterPosition].duration
 
         holder.bindItems(track, title, duration)
     }
@@ -49,7 +52,7 @@ class SongsAdapter(private val music: MutableList<Music>) : RecyclerView.Adapter
             itemView.track.text = MusicUtils.formatSongTrack(track).toString()
             itemView.title.text = title
             itemView.duration.text = MusicUtils.formatSongDuration(duration)
-            itemView.setOnClickListener { onSongClick?.invoke(music[adapterPosition]) }
+            itemView.setOnClickListener { onSongClick?.invoke(mMusic[adapterPosition]) }
             UIUtils.setHorizontalScrollBehavior(itemView, itemView.title)
         }
     }

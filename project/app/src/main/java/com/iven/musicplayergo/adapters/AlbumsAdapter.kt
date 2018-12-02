@@ -11,11 +11,12 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.music.Album
 import kotlinx.android.synthetic.main.album_item.view.*
 
-class AlbumsAdapter(private val albums: List<Album>, private val accent: Int) :
+class AlbumsAdapter(albums: List<Album>, private val accent: Int) :
     RecyclerView.Adapter<AlbumsAdapter.AlbumsHolder>() {
 
     var onAlbumClick: ((String) -> Unit)? = null
 
+    private var mAlbums = albums
     private var mSelectedAlbum: String? = null
 
     private var mSelectedPosition = 0
@@ -28,17 +29,22 @@ class AlbumsAdapter(private val albums: List<Album>, private val accent: Int) :
         mSelectedPosition = newSelectedPosition
     }
 
+    fun swapAlbums(albums: List<Album>) {
+        mAlbums = albums
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumsHolder {
         return AlbumsHolder(LayoutInflater.from(parent.context).inflate(R.layout.album_item, parent, false))
     }
 
     override fun getItemCount(): Int {
-        return albums.size
+        return mAlbums.size
     }
 
     override fun onBindViewHolder(holder: AlbumsHolder, position: Int) {
-        val title = albums[holder.adapterPosition].title
-        val year = albums[holder.adapterPosition].year
+        val title = mAlbums[holder.adapterPosition].title
+        val year = mAlbums[holder.adapterPosition].year
         holder.bindItems(title, year)
     }
 
