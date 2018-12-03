@@ -11,6 +11,7 @@ This frequently asked questions will be continually updated to accommodate new i
 It is a lightweight and ads free music player that plays music from local library. It has colorful, simple and 'unified' UI.
 
 **What about features requests?**
+
 Not all requests will be taken into consideration as the player mainly reflects my needs! If I add the label 'feature request' on a issue then it will be worked, but it may require time!
 
 **Does Music Player GO uses equalizer?**
