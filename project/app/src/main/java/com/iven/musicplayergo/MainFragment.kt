@@ -222,7 +222,6 @@ class MainFragment : Fragment() {
                 mMusic = music
                 if (mMusic.isNotEmpty()) {
                     setArtistsRecyclerView()
-                    mNavigationArtist = mArtists[0]
                     restorePlayerStatus()
                 } else {
                     Toast.makeText(mActivity, getString(R.string.error_no_music), Toast.LENGTH_SHORT).show()
