@@ -92,7 +92,7 @@ class PreferencesHelper(private val activity: Activity) {
     fun getAccent(): Int {
         accent = getPreference(TAG_ACCENT_PREF).getInt(
             TAG_ACCENT_VALUE,
-            R.color.red
+            R.color.blue
         )
         return accent!!
     }

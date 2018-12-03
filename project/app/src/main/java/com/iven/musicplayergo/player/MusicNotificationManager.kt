@@ -12,6 +12,7 @@ import android.graphics.drawable.VectorDrawable
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.PlayerService
@@ -36,7 +37,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     var notificationBuilder: NotificationCompat.Builder? = null
 
     //accent
-    var mAccent: Int = R.color.blue
+    var accent: Int = R.color.blue
 
     //https://gist.github.com/Gnzlt/6ddc846ef68c587d559f1e1fcd0900d3
     private fun getLargeIcon(): Bitmap {
@@ -48,7 +49,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         val canvas = Canvas(bitmap)
 
         vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
-        vectorDrawable.setTint(mAccent)
+        vectorDrawable.setTint(accent)
         vectorDrawable.alpha = 150
         vectorDrawable.draw(canvas)
 
@@ -89,7 +90,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             .setShowWhen(false)
             .setSmallIcon(R.drawable.music_notification)
             .setLargeIcon(getLargeIcon())
-            .setColor(mAccent)
+            .setColor(accent)
             .setContentTitle(spanned)
             .setContentText(song.album)
             .setContentIntent(contentIntent)

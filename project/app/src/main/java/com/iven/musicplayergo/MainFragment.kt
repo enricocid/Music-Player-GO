@@ -321,6 +321,13 @@ class MainFragment : Fragment() {
         mColorsRecyclerView.adapter = colorsAdapter
 
         colorsAdapter.onColorClick = { accent ->
+            mMusicNotificationManager.accent = ContextCompat.getColor(mActivity, accent)
+            if (mMediaPlayerHolder.isMediaPlayer) {
+                mMusicNotificationManager.notificationManager.notify(
+                    NOTIFICATION_ID,
+                    mMusicNotificationManager.createNotification()
+                )
+            }
             PreferencesHelper(mActivity).setThemeAccent(accent)
         }
     }
@@ -382,19 +389,15 @@ class MainFragment : Fragment() {
         mArtistsDetailsDiscCount.text = getString(R.string.albums, MusicUtils.getArtistDiscsCount(notSortedArtistDiscs))
 
         //set the albums list
-        if (!::mAlbumsAdapter.isInitialized) {
-            //one-time adapter initialization
-            mAlbumsRecyclerView.setHasFixedSize(true)
-            mAlbumsLayoutManager = LinearLayoutManager(mActivity, RecyclerView.HORIZONTAL, false)
-            mAlbumsRecyclerView.layoutManager = mAlbumsLayoutManager
-            mAlbumsAdapter = AlbumsAdapter(
-                mSelectedArtistAlbums,
-                ContextCompat.getColor(mActivity, mAccent!!)
-            )
-            mAlbumsRecyclerView.adapter = mAlbumsAdapter
-        } else {
-            mAlbumsAdapter.swapAlbums(mSelectedArtistAlbums)
-        }
+        //one-time adapter initialization
+        mAlbumsRecyclerView.setHasFixedSize(true)
+        mAlbumsLayoutManager = LinearLayoutManager(mActivity, RecyclerView.HORIZONTAL, false)
+        mAlbumsRecyclerView.layoutManager = mAlbumsLayoutManager
+        mAlbumsAdapter = AlbumsAdapter(
+            mSelectedArtistAlbums,
+            ContextCompat.getColor(mActivity, mAccent!!)
+        )
+        mAlbumsRecyclerView.adapter = mAlbumsAdapter
 
         mAlbumsAdapter.onAlbumClick = { album ->
             setAlbumSongs(album)
@@ -718,7 +721,7 @@ class MainFragment : Fragment() {
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder!!
             mMediaPlayerHolder.mainFragment = this@MainFragment
             mMusicNotificationManager = mPlayerService.musicNotificationManager
-            mMusicNotificationManager.mAccent = ContextCompat.getColor(mActivity, mAccent!!)
+            mMusicNotificationManager.accent = ContextCompat.getColor(mActivity, mAccent!!)
             loadMusic()
         }
 

@@ -12,6 +12,7 @@ import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Build
+import android.os.Handler
 import android.os.PowerManager
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.MainFragment
@@ -55,6 +56,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
     //audio focus
     private var mAudioManager: AudioManager = playerService.getSystemService(AUDIO_SERVICE) as AudioManager
     private lateinit var mAudioFocusRequestOreo: AudioFocusRequest
+    private val mHandler = Handler()
 
     private var mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
     private var sPlayOnFocusGain: Boolean = false
@@ -168,16 +170,16 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
     }
 
     private fun getAudioFocusResult(): Int {
-
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mAudioFocusRequestOreo = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
-                .setAudioAttributes(
-                    AudioAttributes.Builder()
-                        .setUsage(AudioAttributes.USAGE_MEDIA)
+            mAudioFocusRequestOreo = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN).run {
+                setAudioAttributes(AudioAttributes.Builder().run {
+                    setUsage(AudioAttributes.USAGE_MEDIA)
                         .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                         .build()
-                )
-                .build()
+                })
+                setOnAudioFocusChangeListener(mOnAudioFocusChangeListener, mHandler)
+                build()
+            }
             mAudioManager.requestAudioFocus(mAudioFocusRequestOreo)
         } else {
             mAudioManager.requestAudioFocus(
@@ -378,22 +380,18 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
      */
     private fun configurePlayerState() {
 
-        if (mCurrentAudioFocusState == AUDIO_NO_FOCUS_NO_DUCK) {
-            // We don't have audio focus and can't duck, so we have to pause
-            pauseMediaPlayer()
-        } else {
-
-            if (mCurrentAudioFocusState == AUDIO_NO_FOCUS_CAN_DUCK) {
-                // We're permitted to play, but only if we 'duck', ie: play softly
-                mediaPlayer!!.setVolume(VOLUME_DUCK, VOLUME_DUCK)
-            } else {
-                mediaPlayer!!.setVolume(VOLUME_NORMAL, VOLUME_NORMAL)
-            }
-
-            // If we were playing when we lost focus, we need to resume playing.
-            if (sPlayOnFocusGain) {
-                resumeMediaPlayer()
-                sPlayOnFocusGain = false
+        when (mCurrentAudioFocusState) {
+            AUDIO_NO_FOCUS_NO_DUCK -> pauseMediaPlayer()
+            else -> {
+                when (mCurrentAudioFocusState) {
+                    AUDIO_NO_FOCUS_CAN_DUCK -> mediaPlayer!!.setVolume(VOLUME_DUCK, VOLUME_DUCK)
+                    else -> mediaPlayer!!.setVolume(VOLUME_NORMAL, VOLUME_NORMAL)
+                }
+                // If we were playing when we lost focus, we need to resume playing.
+                if (sPlayOnFocusGain) {
+                    resumeMediaPlayer()
+                    sPlayOnFocusGain = false
+                }
             }
         }
     }
