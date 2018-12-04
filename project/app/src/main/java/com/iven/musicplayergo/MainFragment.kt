@@ -621,6 +621,7 @@ class MainFragment : Fragment() {
                     mArtistDetails.visibility = View.VISIBLE
                     mArtistsRecyclerView.visibility = View.INVISIBLE
                     mArtistDetails.isClickable = false
+                    mSearchToggleButton.visibility = View.GONE
                     if (sSearchEnabled && ::mSupportActionBar.isInitialized && mSupportActionBar.isShowing) mSupportActionBar.hide()
                 }
 
@@ -647,8 +648,9 @@ class MainFragment : Fragment() {
                     mArtistDetails.visibility = View.INVISIBLE
                     mArtistsRecyclerView.visibility = View.VISIBLE
                     mArtistDetails.isClickable = true
-                    sArtistDiscographyExpanded = false
                     if (sSearchEnabled && ::mSupportActionBar.isInitialized && !mSupportActionBar.isShowing) mSupportActionBar.show()
+                    mSearchToggleButton.visibility = View.VISIBLE
+                    sArtistDiscographyExpanded = false
                 }
 
                 override fun onAnimationCancel(animator: Animator) {}
