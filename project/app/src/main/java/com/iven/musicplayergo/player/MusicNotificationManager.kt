@@ -12,7 +12,6 @@ import android.graphics.drawable.VectorDrawable
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.PlayerService
