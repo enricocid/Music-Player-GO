@@ -14,9 +14,6 @@ private const val TAG_SEARCH_BAR_VALUE = "com.iven.musicplayergo.pref_search_bar
 
 class PreferencesHelper(private val activity: Activity) {
 
-    var themeInverted: Boolean? = false
-    var accent: Int? = R.color.blue
-
     private fun getPreference(key: String): SharedPreferences {
         return activity.getSharedPreferences(key, Context.MODE_PRIVATE)
     }
@@ -28,8 +25,7 @@ class PreferencesHelper(private val activity: Activity) {
     }
 
     fun isThemeInverted(): Boolean {
-        themeInverted = getPreference(TAG_THEME_PREF).getBoolean(TAG_THEME_VALUE, false)
-        return themeInverted!!
+        return getPreference(TAG_THEME_PREF).getBoolean(TAG_THEME_VALUE, false)
     }
 
     fun applyTheme(accent: Int, isThemeInverted: Boolean) {
@@ -90,11 +86,10 @@ class PreferencesHelper(private val activity: Activity) {
     }
 
     fun getAccent(): Int {
-        accent = getPreference(TAG_ACCENT_PREF).getInt(
+        return getPreference(TAG_ACCENT_PREF).getInt(
             TAG_ACCENT_VALUE,
             R.color.blue
         )
-        return accent!!
     }
 
     fun setSearchToolbarVisibility(isVisible: Boolean) {

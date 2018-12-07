@@ -12,7 +12,7 @@ class IndexBarRecyclerView : RecyclerView {
 
     private var mScroller: IndexBarView? = null
     private var mGestureDetector: GestureDetector? = null
-    private var sIndexingEnabled = true
+    var indexingEnabled = true
 
     constructor(context: Context) : super(context)
 
@@ -36,7 +36,7 @@ class IndexBarRecyclerView : RecyclerView {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(ev: MotionEvent): Boolean {
-        if (sIndexingEnabled) {
+        if (indexingEnabled) {
             // Intercept RecyclerView's touch event
             if (mScroller != null && mScroller!!.onTouchEvent(ev)) {
                 return true
@@ -62,9 +62,5 @@ class IndexBarRecyclerView : RecyclerView {
 
     override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
         return mScroller != null && mScroller!!.contains(ev.x, ev.y) || super.onInterceptTouchEvent(ev)
-    }
-
-    fun setIndexingEnabled(indexingEnabled: Boolean) {
-        sIndexingEnabled = indexingEnabled
     }
 }

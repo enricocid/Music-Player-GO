@@ -263,14 +263,12 @@ class MainFragment : Fragment() {
         mSongsRecyclerView = songs_rv
         mColorsRecyclerView = colors_rv
 
-        //search view
-        mActivity.setSupportActionBar(search_toolbar)
-        mSupportActionBar = mActivity.supportActionBar!!
-
         if (sSearchEnabled) {
-            mSupportActionBar.show()
+            //search view
+            mActivity.setSupportActionBar(search_toolbar)
+            mSupportActionBar = mActivity.supportActionBar!!
         } else {
-            mSupportActionBar.hide()
+            search_toolbar.visibility = View.GONE
         }
 
         //artist details
@@ -611,53 +609,51 @@ class MainFragment : Fragment() {
         val viewToRevealHalfWidth = viewToRevealWidth / 2
         val radius = Math.hypot(viewToRevealWidth.toDouble(), viewToRevealHeight.toDouble()).toFloat()
         val fromY = mArtistsRecyclerView.top / 2
-        val animationDuration: Long = 500
+        val startRadius = if (show) 0f else radius
+        val finalRadius = if (show) radius else 0f
 
-        if (show) {
-            val anim = ViewAnimationUtils.createCircularReveal(mArtistDetails, viewToRevealHalfWidth, fromY, 0f, radius)
-            anim.duration = animationDuration
-            anim.addListener(object : Animator.AnimatorListener {
-                override fun onAnimationStart(animator: Animator) {
+        val anim = ViewAnimationUtils.createCircularReveal(
+            mArtistDetails,
+            viewToRevealHalfWidth,
+            fromY,
+            startRadius,
+            finalRadius
+        )
+        anim.duration = 500
+        anim.addListener(revealAnimationListener(show))
+        anim.start()
+    }
+
+    private fun revealAnimationListener(show: Boolean): Animator.AnimatorListener {
+
+        return object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator?) {
+                if (show) {
+                    sArtistDiscographyExpanded = true
                     mArtistDetails.visibility = View.VISIBLE
                     mArtistsRecyclerView.visibility = View.INVISIBLE
                     mArtistDetails.isClickable = false
                     mSearchToggleButton.visibility = View.GONE
                     if (sSearchEnabled && ::mSupportActionBar.isInitialized && mSupportActionBar.isShowing) mSupportActionBar.hide()
                 }
+            }
 
-                override fun onAnimationEnd(animator: Animator) {
-                    sArtistDiscographyExpanded = true
-                }
-
-                override fun onAnimationCancel(animator: Animator) {}
-
-                override fun onAnimationRepeat(animator: Animator) {}
-            })
-            anim.start()
-
-        } else {
-
-            val anim = ViewAnimationUtils.createCircularReveal(mArtistDetails, viewToRevealHalfWidth, fromY, radius, 0f)
-            anim.duration = animationDuration
-            anim.addListener(object : Animator.AnimatorListener {
-                override fun onAnimationStart(animator: Animator) {
+            override fun onAnimationEnd(animation: Animator?) {
+                if (!show) {
                     sArtistDiscographyExpanded = false
-                }
-
-                override fun onAnimationEnd(animator: Animator) {
                     mArtistDetails.visibility = View.INVISIBLE
                     mArtistsRecyclerView.visibility = View.VISIBLE
                     mArtistDetails.isClickable = true
                     if (sSearchEnabled && ::mSupportActionBar.isInitialized && !mSupportActionBar.isShowing) mSupportActionBar.show()
                     mSearchToggleButton.visibility = View.VISIBLE
-                    sArtistDiscographyExpanded = false
                 }
+            }
 
-                override fun onAnimationCancel(animator: Animator) {}
+            override fun onAnimationCancel(animation: Animator?) {
+            }
 
-                override fun onAnimationRepeat(animator: Animator) {}
-            })
-            anim.start()
+            override fun onAnimationRepeat(animation: Animator?) {
+            }
         }
     }
 

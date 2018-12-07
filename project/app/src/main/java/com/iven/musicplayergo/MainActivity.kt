@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.iven.musicplayergo.uihelpers.PreferencesHelper
@@ -43,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         mAccent = mPreferencesHelper.getAccent()
         sThemeInverted = mPreferencesHelper.isThemeInverted()
 
-        mPreferencesHelper.applyTheme(mPreferencesHelper.accent!!, mPreferencesHelper.themeInverted!!)
+        mPreferencesHelper.applyTheme(mAccent!!, sThemeInverted)
 
         setContentView(R.layout.main_activity)
 
