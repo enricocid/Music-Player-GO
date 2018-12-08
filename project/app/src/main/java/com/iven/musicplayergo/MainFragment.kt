@@ -183,7 +183,7 @@ class MainFragment : Fragment() {
         val searchView = search.actionView as SearchView
 
         searchView.setIconifiedByDefault(false)
-        UIUtils.setupSearch(searchView, mArtistsAdapter, mArtists, mArtistsRecyclerView)
+        UIUtils.setupSearch(searchView, mArtistsAdapter, mArtists, mWaveSideBarView)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

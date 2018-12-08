@@ -4,7 +4,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
-import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.adapters.ArtistsAdapter
 
 object UIUtils {
@@ -13,7 +12,7 @@ object UIUtils {
         searchView: SearchView,
         artistsAdapter: ArtistsAdapter,
         artists: List<String>,
-        indexBarRecyclerView: RecyclerView
+        waveSideBarView: WaveSideBarView
     ) {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -31,7 +30,7 @@ object UIUtils {
         })
 
         searchView.setOnQueryTextFocusChangeListener { _: View, hasFocus: Boolean ->
-            indexBarRecyclerView.isVerticalScrollBarEnabled = !hasFocus
+            waveSideBarView.visibility = if (hasFocus) View.GONE else View.VISIBLE
             if (!hasFocus) searchView.isIconified = true
         }
     }
