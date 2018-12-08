@@ -6,7 +6,7 @@
 
 ###### Very slim and nice music player with low memory footprint!
 ###### Now available in Kotlin language
-###### Current version: (100) 3.5.0.3
+###### Current version: (101) 3.5.1
 ###### Material Design Icon by Julian Javier Gomez, Axinen Design (https://plus.google.com/u/0/+AxinenDesign)
 
 
@@ -15,7 +15,7 @@
 
 # Screenshots
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v3-5.png) 
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v3-5-1.png) 
 
 
 # Download
