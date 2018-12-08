@@ -263,12 +263,14 @@ class MainFragment : Fragment() {
         mSongsRecyclerView = songs_rv
         mColorsRecyclerView = colors_rv
 
-        if (sSearchEnabled) {
-            //search view
-            mActivity.setSupportActionBar(search_toolbar)
+        //search view
+        mActivity.setSupportActionBar(search_toolbar)
+        if (mActivity.supportActionBar != null) {
             mSupportActionBar = mActivity.supportActionBar!!
-        } else {
-            search_toolbar.visibility = View.GONE
+        }
+
+        if (!sSearchEnabled) {
+            mSupportActionBar.hide()
         }
 
         //artist details
