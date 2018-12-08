@@ -4,4 +4,9 @@
     <attr name="theme_icon" format="color" />
     <attr name="card_color" format="color" />
     <attr name="controls_panel_stroke" format="color" />
+
+    <declare-styleable name="WaveSideBarView">
+        <attr name="sidebarBackgroundColor" format="color|reference"/>
+        <attr name="sidebarChooseTextColor" format="color|reference"/>
+    </declare-styleable>
 </resources>

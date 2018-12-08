@@ -5,4 +5,11 @@
     <dimen name="album_width">120dp</dimen>
     <dimen name="bottom_sheet_corner_radius">16dp</dimen>
     <dimen name="selected_card_stroke_width">0.5dp</dimen>
+    <!-- Fast scroller -->
+    <dimen name="textSize_sidebar">10sp</dimen>
+    <dimen name="large_textSize_sidebar">32sp</dimen>
+    <dimen name="textSize_sidebar_choose">12sp</dimen>
+    <dimen name="textSize_sidebar_padding">20sp</dimen>
+    <dimen name="radius_sidebar">20dp</dimen>
+    <dimen name="ball_radius_sidebar">24dp</dimen>
 </resources>

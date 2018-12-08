@@ -32,8 +32,8 @@ class ArtistsAdapter(
     private fun generateIndexes() {
         try {
             mArtists.forEachIndexed { index, artist ->
-                if (!mIndexedPositions.containsValue(artist.substring(0,1))) {
-                    mIndexedPositions[index] = artist.substring(0,1).toUpperCase()
+                if (!mIndexedPositions.containsValue(artist.substring(0, 1))) {
+                    mIndexedPositions[index] = artist.substring(0, 1).toUpperCase()
                 }
             }
         } catch (e: Exception) {
@@ -45,8 +45,14 @@ class ArtistsAdapter(
         return mIndexedPositions.values.toTypedArray()
     }
 
-    fun getIndexPosition(currentSection: Int): Int {
-        return mIndexedPositions.keys.toTypedArray()[currentSection]
+    fun getLetterPosition(letter: String): Int {
+
+        mArtists.forEachIndexed { index, _ ->
+            if (mArtists[index].substring(0, 1) == letter) {
+                return index
+            }
+        }
+        return -1
     }
 
     fun setQueryResults(artists: MutableList<String>) {

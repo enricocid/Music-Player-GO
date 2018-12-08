@@ -27,8 +27,6 @@ import com.iven.musicplayergo.adapters.AlbumsAdapter
 import com.iven.musicplayergo.adapters.ArtistsAdapter
 import com.iven.musicplayergo.adapters.ColorsAdapter
 import com.iven.musicplayergo.adapters.SongsAdapter
-import com.iven.musicplayergo.indexbar.IndexBarRecyclerView
-import com.iven.musicplayergo.indexbar.IndexBarView
 import com.iven.musicplayergo.music.Album
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
@@ -36,6 +34,7 @@ import com.iven.musicplayergo.music.MusicViewModel
 import com.iven.musicplayergo.player.*
 import com.iven.musicplayergo.uihelpers.PreferencesHelper
 import com.iven.musicplayergo.uihelpers.UIUtils
+import com.iven.musicplayergo.uihelpers.WaveSideBarView
 import kotlinx.android.synthetic.main.artist_details.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.player_controls_panel.*
@@ -60,8 +59,11 @@ class MainFragment : Fragment() {
 
     //views
 
+    //wave view
+    private lateinit var mWaveSideBarView: WaveSideBarView
+
     //RecyclerViews
-    private lateinit var mArtistsRecyclerView: IndexBarRecyclerView
+    private lateinit var mArtistsRecyclerView: RecyclerView
     private lateinit var mAlbumsRecyclerView: RecyclerView
     private lateinit var mSongsRecyclerView: RecyclerView
 
@@ -240,6 +242,15 @@ class MainFragment : Fragment() {
             )
         )
 
+        //wave view
+        mWaveSideBarView = side_view
+
+        //recycler views
+        mArtistsRecyclerView = artists_rv
+        mAlbumsRecyclerView = albums_rv
+        mSongsRecyclerView = songs_rv
+        mColorsRecyclerView = colors_rv
+
         //controls panel
         mControlsContainer = controls_container
         mBottomSheetBehavior = BottomSheetBehavior.from(design_bottom_sheet)
@@ -256,12 +267,6 @@ class MainFragment : Fragment() {
 
         //setup horizontal scrolling text
         UIUtils.setHorizontalScrollBehavior(mPlayerInfoView, playing_song, playing_album)
-
-        //recycler views
-        mArtistsRecyclerView = artists_rv
-        mAlbumsRecyclerView = albums_rv
-        mSongsRecyclerView = songs_rv
-        mColorsRecyclerView = colors_rv
 
         //search view
         mActivity.setSupportActionBar(search_toolbar)
@@ -335,15 +340,9 @@ class MainFragment : Fragment() {
         //set indexes if artists rv is scrollable
         mArtistsRecyclerView.afterMeasured {
             if (mArtistsRecyclerView.computeVerticalScrollRange() > height) {
-                val indexBarView = IndexBarView(
-                    mActivity,
-                    mArtistsRecyclerView,
-                    mArtistsAdapter,
-                    mArtistsLayoutManager,
-                    sThemeInverted!!,
-                    ContextCompat.getColor(mActivity, mAccent!!)
-                )
-                mArtistsRecyclerView.setFastScroller(indexBarView)
+                mWaveSideBarView.setOnWaveTouchListener(mArtistsRecyclerView, mArtistsAdapter, mArtistsLayoutManager)
+            } else {
+                mWaveSideBarView.visibility = View.GONE
             }
             //set artist details on artists rv loaded
             setArtistDetails()
@@ -360,10 +359,13 @@ class MainFragment : Fragment() {
 
         //set the artists list
         mArtistsRecyclerView.setHasFixedSize(true)
+
         mArtistsLayoutManager = LinearLayoutManager(mActivity)
         mArtistsRecyclerView.layoutManager = mArtistsLayoutManager
         mArtistsAdapter = ArtistsAdapter(resources, mArtists, mMusic)
+
         mArtistsRecyclerView.adapter = mArtistsAdapter
+        mWaveSideBarView.letters = mArtistsAdapter.getIndexes()
 
         mArtistsAdapter.onArtistClick = { artist ->
             if (mNavigationArtist != artist) {
@@ -636,6 +638,7 @@ class MainFragment : Fragment() {
                     mArtistsRecyclerView.visibility = View.INVISIBLE
                     mArtistDetails.isClickable = false
                     mSearchToggleButton.visibility = View.GONE
+                    mWaveSideBarView.visibility = View.GONE
                     if (sSearchEnabled && ::mSupportActionBar.isInitialized && mSupportActionBar.isShowing) mSupportActionBar.hide()
                 }
             }
@@ -648,6 +651,7 @@ class MainFragment : Fragment() {
                     mArtistDetails.isClickable = true
                     if (sSearchEnabled && ::mSupportActionBar.isInitialized && !mSupportActionBar.isShowing) mSupportActionBar.show()
                     mSearchToggleButton.visibility = View.VISIBLE
+                    mWaveSideBarView.visibility = View.VISIBLE
                 }
             }
 

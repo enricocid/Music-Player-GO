@@ -41,7 +41,7 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
   - Skip to next song;
 - Music organized by Artist;
 - Revealable Artist's page: albums/songs;
-- Colorful alphabetic scrollbar;
+- Colorful WaveSideBar;
 - Search bar (which can be disabled);
 - Dark status bar icons (available from Android Marshmallow);
 
@@ -93,8 +93,8 @@ You can also get the app from **IzzyOnDroid** repository! To add this repo to Yo
 
 - **olayhemy** (ttps://github.com/olayhemy) for FAQ
 
-- **Prabhakar Thota** (@myinnos - https://github.com/myinnos) for part of the alphabetic index bar code:
-https://github.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView
+- **solartcc** (@solartcc - https://github.com/solartcc) for part of the WaveSideBar:
+https://github.com/Solartisan/WaveSideBar
 
 - **Malte Kiefer** (beli3ver - https://github.com/beli3ver) for German translations
 
