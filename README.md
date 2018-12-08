@@ -1,4 +1,4 @@
-# Music-Player-GO
+# <img src ="https://upload.wikimedia.org/wikipedia/commons/b/b5/Kotlin-logo.png" width=24> Music-Player-GO
 
 [FAQ](https://github.com/enricocid/Music-Player-GO/blob/master/FAQ.md) -  [Privacy policy](https://github.com/enricocid/Music-Player-GO/blob/master/Privacy.md)
 
