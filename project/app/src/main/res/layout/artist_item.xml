@@ -39,7 +39,7 @@
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/raleway"
                 android:singleLine="true"
-                android:textColor="?android:attr/textColorPrimary"
+                android:textColor="?android:attr/textColorSecondary"
                 android:textSize="12sp"/>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

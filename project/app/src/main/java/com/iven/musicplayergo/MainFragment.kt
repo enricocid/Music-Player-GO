@@ -389,7 +389,7 @@ class MainFragment : Fragment() {
 
         //set the titles and subtitles
         mArtistDetailsTitle.text = mNavigationArtist
-        mArtistsDetailsDiscCount.text = getString(R.string.albums, MusicUtils.getArtistDiscsCount(notSortedArtistDiscs))
+        mArtistsDetailsDiscCount.text = getString(R.string.artist_info, mSelectedArtistAlbums.size, MusicUtils.getArtistSongsCount(notSortedArtistDiscs))
 
         //set the albums list
         //one-time adapter initialization

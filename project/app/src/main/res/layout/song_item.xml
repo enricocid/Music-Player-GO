@@ -47,6 +47,6 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:singleLine="true"
-            android:textColor="?android:attr/textColorPrimary"
+            android:textColor="?android:attr/textColorSecondary"
             android:textSize="12sp"/>
 </LinearLayout>

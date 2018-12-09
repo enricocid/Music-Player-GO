@@ -1,9 +1,8 @@
 <resources>
-    <string name="albums">dischi: %d</string>
     <string name="no_eq">Nessun equalizzatore trovato!</string>
     <string name="bad_id">Magari esegui una canzone!</string>
     <string name="no_browser">Nessun browser trovato!</string>
     <string name="perm_rationale">Music Player GO deve poter accedere ai tuoi file per eseguire la musica!</string>
     <string name="error_no_music">Musica non trovata sul telefono!</string>
-    <string name="artist_info">&lt;b>Dischi:&lt;/b>&#160;%1d&#160;&lt;b>Canzoni:&lt;/b>&#160;%2d</string>
+    <string name="artist_info">%1d&#160;Album,&#160;%2d&#160;Canzoni</string>
 </resources>

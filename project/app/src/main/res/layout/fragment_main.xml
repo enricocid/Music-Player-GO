@@ -17,7 +17,6 @@
 
         <include layout="@layout/search_toolbar"/>
 
-
         <FrameLayout
                 android:layout_width="match_parent"
                 android:id="@+id/container"
