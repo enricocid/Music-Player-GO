@@ -567,7 +567,7 @@ class MainFragment : Fragment() {
     private fun updateResetStatus(onPlaybackCompletion: Boolean) {
         val themeColor = if (sThemeInverted) R.color.white else R.color.black
         val color = if (onPlaybackCompletion) themeColor else if (mMediaPlayerHolder.isReset) mAccent else themeColor
-        mSkipPrevButton.setColorFilter(ContextCompat.getColor(mActivity, color!!), PorterDuff.Mode.SRC_IN)
+        mSkipPrevButton.setColorFilter(ContextCompat.getColor(mActivity, color), PorterDuff.Mode.SRC_IN)
     }
 
     private fun updatePlayingStatus() {
