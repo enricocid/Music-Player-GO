@@ -76,6 +76,7 @@
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/songs_card_margin_bottom"
             android:layout_marginEnd="16dp"
             android:layout_weight="1"
             app:cardBackgroundColor="?android:attr/windowBackground"

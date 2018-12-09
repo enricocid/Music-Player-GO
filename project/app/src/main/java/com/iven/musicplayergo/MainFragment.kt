@@ -428,6 +428,7 @@ class MainFragment : Fragment() {
         } else {
             mSongsAdapter.swapSongs(album.toMutableList())
         }
+        mSongsRecyclerView.setPadding(0,0,0, -resources.getDimensionPixelSize(R.dimen.songs_card_margin_bottom))
         mSongsAdapter.onSongClick = { music ->
             if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
             mMediaPlayerHolder.setCurrentSong(music, album)
