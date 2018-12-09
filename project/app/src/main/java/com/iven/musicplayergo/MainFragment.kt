@@ -53,8 +53,8 @@ class MainFragment : Fragment() {
 
     //preferences
     private lateinit var mPreferencesHelper: PreferencesHelper
-    private var sThemeInverted: Boolean? = false
-    private var mAccent: Int? = R.color.blue
+    private var sThemeInverted: Boolean = false
+    private var mAccent: Int = R.color.blue
     private var sSearchEnabled: Boolean = true
 
     //views
@@ -192,8 +192,6 @@ class MainFragment : Fragment() {
             sThemeInverted = it.getBoolean(ARG_INVERTED)
             mAccent = it.getInt(ARG_ACCENT)
         }
-        mPreferencesHelper = PreferencesHelper(activity!!)
-        sSearchEnabled = mPreferencesHelper.isSearchBarEnabled()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -205,6 +203,10 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         mActivity = activity as AppCompatActivity
+
+        mPreferencesHelper = PreferencesHelper(mActivity)
+        sSearchEnabled = mPreferencesHelper.isSearchBarEnabled()
+
         setViews()
         mControlsContainer.afterMeasured {
             container.setPadding(0, 0, 0, height)
@@ -237,8 +239,8 @@ class MainFragment : Fragment() {
         //main
         main.setBackgroundColor(
             ColorUtils.setAlphaComponent(
-                ContextCompat.getColor(mActivity, mAccent!!),
-                if (sThemeInverted!!) 10 else 40
+                ContextCompat.getColor(mActivity, mAccent),
+                if (sThemeInverted) 10 else 40
             )
         )
 
@@ -321,7 +323,7 @@ class MainFragment : Fragment() {
         if (!sSearchEnabled) search_option.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN)
 
         mColorsRecyclerView.layoutManager = LinearLayoutManager(mActivity, RecyclerView.HORIZONTAL, false)
-        val colorsAdapter = ColorsAdapter(mActivity, mAccent!!)
+        val colorsAdapter = ColorsAdapter(mActivity, mAccent)
         mColorsRecyclerView.adapter = colorsAdapter
 
         colorsAdapter.onColorClick = { accent ->
@@ -396,7 +398,7 @@ class MainFragment : Fragment() {
         mAlbumsRecyclerView.layoutManager = mAlbumsLayoutManager
         mAlbumsAdapter = AlbumsAdapter(
             mSelectedArtistAlbums,
-            ContextCompat.getColor(mActivity, mAccent!!)
+            ContextCompat.getColor(mActivity, mAccent)
         )
         mAlbumsRecyclerView.adapter = mAlbumsAdapter
 
@@ -445,7 +447,7 @@ class MainFragment : Fragment() {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
                     userSelectedPosition = progress
-                    mSongPosition.setTextColor(ContextCompat.getColor(mActivity, mAccent!!))
+                    mSongPosition.setTextColor(ContextCompat.getColor(mActivity, mAccent))
                 }
                 mSongPosition.text = MusicUtils.formatSongDuration(progress.toLong())
             }
@@ -563,7 +565,7 @@ class MainFragment : Fragment() {
     }
 
     private fun updateResetStatus(onPlaybackCompletion: Boolean) {
-        val themeColor = if (sThemeInverted!!) R.color.white else R.color.black
+        val themeColor = if (sThemeInverted) R.color.white else R.color.black
         val color = if (onPlaybackCompletion) themeColor else if (mMediaPlayerHolder.isReset) mAccent else themeColor
         mSkipPrevButton.setColorFilter(ContextCompat.getColor(mActivity, color!!), PorterDuff.Mode.SRC_IN)
     }
@@ -693,7 +695,7 @@ class MainFragment : Fragment() {
             setHasOptionsMenu(newVisibility)
             val searchToggleButtonColor = when (newVisibility) {
                 false -> Color.GRAY
-                true -> if (sThemeInverted!!) Color.WHITE else Color.BLACK
+                true -> if (sThemeInverted) Color.WHITE else Color.BLACK
             }
             mSearchToggleButton.setColorFilter(searchToggleButtonColor, PorterDuff.Mode.SRC_IN)
             if (mSupportActionBar.isShowing) {
@@ -724,7 +726,7 @@ class MainFragment : Fragment() {
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder!!
             mMediaPlayerHolder.mainFragment = this@MainFragment
             mMusicNotificationManager = mPlayerService.musicNotificationManager
-            mMusicNotificationManager.accent = ContextCompat.getColor(mActivity, mAccent!!)
+            mMusicNotificationManager.accent = ContextCompat.getColor(mActivity, mAccent)
             loadMusic()
         }
 
