@@ -10,7 +10,6 @@ import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.uihelpers.UIUtils
 import kotlinx.android.synthetic.main.artist_item.view.*
-import java.util.*
 
 class ArtistsAdapter(
     private val resources: Resources,
@@ -22,18 +21,18 @@ class ArtistsAdapter(
     var onArtistClick: ((String) -> Unit)? = null
     private var mArtists = artists
 
-    private var mIndexedPositions = LinkedHashMap<Int, String>()
+    private var mLetters = LinkedHashMap<String, Int>()
 
     init {
         mArtists.sort()
-        generateIndexes()
+        generateLetters()
     }
 
-    private fun generateIndexes() {
+    private fun generateLetters() {
         try {
             mArtists.forEachIndexed { index, artist ->
-                if (!mIndexedPositions.containsValue(artist.substring(0, 1))) {
-                    mIndexedPositions[index] = artist.substring(0, 1).toUpperCase()
+                if (!mLetters.containsKey(artist.substring(0, 1))) {
+                    mLetters[artist.substring(0, 1)] = index
                 }
             }
         } catch (e: Exception) {
@@ -41,18 +40,15 @@ class ArtistsAdapter(
         }
     }
 
-    fun getIndexes(): Array<String> {
-        return mIndexedPositions.values.toTypedArray()
-    }
-
     fun getLetterPosition(letter: String): Int {
-
-        mArtists.forEachIndexed { index, _ ->
-            if (mArtists[index].substring(0, 1) == letter) {
-                return index
-            }
+        if (mLetters.containsKey(letter)) {
+            return mLetters[letter]!!
         }
         return -1
+    }
+
+    fun getLetters(): Array<String> {
+        return mLetters.keys.toTypedArray()
     }
 
     fun setQueryResults(artists: MutableList<String>) {

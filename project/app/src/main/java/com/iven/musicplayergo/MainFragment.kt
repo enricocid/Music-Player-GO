@@ -365,7 +365,7 @@ class MainFragment : Fragment() {
         mArtistsAdapter = ArtistsAdapter(resources, mArtists, mMusic)
 
         mArtistsRecyclerView.adapter = mArtistsAdapter
-        mWaveSideBarView.letters = mArtistsAdapter.getIndexes()
+        mWaveSideBarView.letters = mArtistsAdapter.getLetters()
 
         mArtistsAdapter.onArtistClick = { artist ->
             if (mNavigationArtist != artist) {
