@@ -25,65 +25,14 @@ import com.iven.musicplayergo.adapters.ArtistsAdapter
 private const val ANGLE = Math.PI * 45 / 180
 private const val ANGLE_R = Math.PI * 90 / 180
 
-class WaveSideBarView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
+class WaveView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
     View(context, attrs, defStyle) {
     private var listener: OnTouchLetterChangeListener? = null
 
-    // 渲染字母表
+    //RecyclerView letters
     private lateinit var mLetters: Array<String>
 
-    // 当前选中的位置
-    private var mChoose = -1
-
-    private var oldChoose: Int = 0
-
-    private var newChoose: Int = 0
-
-    // 字母列表画笔
-    private val mLettersPaint = Paint()
-
-    // 提示字母画笔
-    private val mTextPaint = Paint()
-    // 波浪画笔
-    private var mWavePaint = Paint()
-
-    private var mTextSize: Float = 0.toFloat()
-    private var mLargeTextSize: Float = 0.toFloat()
-
-    private var mWaveColor: Int = 0
-    private var mTextColorChoose: Int = 0
-    private var mWidth: Int = 0
-    private var mHeight: Int = 0
-    private var mItemHeight: Int = 0
-    private var mPadding: Int = 0
-
-    // 波浪路径
-    private val mWavePath = Path()
-
-    // 圆形路径
-    private val mBallPath = Path()
-
-    // 手指滑动的Y点作为中心点
-    private var mCenterY: Int = 0 //中心点Y
-
-    // 贝塞尔曲线的分布半径
-    private val mRadius: Int?
-
-    // 圆形半径
-    private val mBallRadius: Int?
-    // 用于过渡效果计算
-    private var mRatioAnimator: ValueAnimator? = null
-
-    // 用于绘制贝塞尔曲线的比率
-    private var mRatio: Float = 0f
-
-    // 选中字体的坐标
-    private var mPosX: Float = 0f
-    private var mPosY: Float = 0f
-
-    // 圆形中心点X
-    private var mBallCentreX: Float = 0.toFloat()
-
+    //function to set and get letters
     var letters: Array<String>
         get() = mLetters
         set(letters) {
@@ -91,30 +40,51 @@ class WaveSideBarView @JvmOverloads constructor(context: Context, attrs: Attribu
             invalidate()
         }
 
+    //navigation
+    private var mChoose = -1
+    private var oldChoose: Int = 0
+    private var newChoose: Int = 0
+
+    //paints
+    private val mLetterPaint = Paint()
+    private var mWavePaint = Paint()
+
+    //paths
+    private val mWavePath = Path()
+    private val mBallPath = Path()
+
+    //specs
+    private var mBallLetterSize = context.resources.getDimensionPixelSize(R.dimen.wave_ball_textSize).toFloat()
+    private var mWaveColor: Int = 0
+    private var mLettersColor: Int = 0
+    private val mRadius = context.resources.getDimensionPixelSize(R.dimen.wave_radius)
+    private val mBallRadius = context.resources.getDimensionPixelSize(R.dimen.wave_ball_radius)
+    private var mRatioAnimator: ValueAnimator? = null
+    private var mRatio: Float = 0f
+    private var mCenterY: Int = 0
+    private var mBallCentreX: Float = 0.toFloat()
+    private var mWidth: Int = 0
+    private var mHeight: Int = 0
+
     init {
-        mLargeTextSize = context.resources.getDimensionPixelSize(R.dimen.large_textSize_sidebar).toFloat()
-        mPadding = context.resources.getDimensionPixelSize(R.dimen.textSize_sidebar_padding)
         if (attrs != null) {
-            val a = getContext().obtainStyledAttributes(attrs, R.styleable.WaveSideBarView)
-            mTextColorChoose = a.getColor(R.styleable.WaveSideBarView_sidebarChooseTextColor, mTextColorChoose)
-            mWaveColor = a.getColor(R.styleable.WaveSideBarView_sidebarBackgroundColor, mWaveColor)
+            val a = getContext().obtainStyledAttributes(attrs, R.styleable.WaveView)
+            mLettersColor = a.getColor(R.styleable.WaveView_sidebarLettersColor, mLettersColor)
+            mWaveColor = a.getColor(R.styleable.WaveView_sidebarAccentColor, mWaveColor)
             a.recycle()
         }
-
-        mRadius = context.resources.getDimensionPixelSize(R.dimen.radius_sidebar)
-        mBallRadius = context.resources.getDimensionPixelSize(R.dimen.ball_radius_sidebar)
 
         mWavePaint = Paint()
         mWavePaint.isAntiAlias = true
         mWavePaint.style = Paint.Style.FILL
         mWavePaint.color = mWaveColor
 
-        mTextPaint.isAntiAlias = true
-        mTextPaint.color = mTextColorChoose
-        mTextPaint.style = Paint.Style.FILL
-        mTextPaint.textSize = mLargeTextSize
-        mTextPaint.textAlign = Paint.Align.CENTER
-        mTextPaint.typeface = ResourcesCompat.getFont(context, R.font.raleway_black)
+        mLetterPaint.isAntiAlias = true
+        mLetterPaint.color = mLettersColor
+        mLetterPaint.style = Paint.Style.FILL
+        mLetterPaint.textSize = mBallLetterSize
+        mLetterPaint.textAlign = Paint.Align.CENTER
+        mLetterPaint.typeface = ResourcesCompat.getFont(context, R.font.raleway_black)
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
@@ -127,7 +97,7 @@ class WaveSideBarView @JvmOverloads constructor(context: Context, attrs: Attribu
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
 
-                if (x < mWidth - 2 * mRadius!!) {
+                if (x < mWidth - 2 * mRadius) {
                     return false
                 }
                 mCenterY = y.toInt()
@@ -161,10 +131,6 @@ class WaveSideBarView @JvmOverloads constructor(context: Context, attrs: Attribu
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         mHeight = View.MeasureSpec.getSize(heightMeasureSpec)
         mWidth = measuredWidth
-        if (::mLetters.isInitialized && mLetters.isNotEmpty()) {
-            mItemHeight = (mHeight - mPadding) / mLetters.size
-            mPosX = mWidth - 1.6f * mTextSize
-        }
     }
 
     internal fun setOnWaveTouchListener(
@@ -172,7 +138,7 @@ class WaveSideBarView @JvmOverloads constructor(context: Context, attrs: Attribu
         artistsAdapter: ArtistsAdapter,
         artistsLayoutManager: LinearLayoutManager
     ) {
-        listener = object : WaveSideBarView.OnTouchLetterChangeListener {
+        listener = object : OnTouchLetterChangeListener {
             override fun onLetterChange(letter: String) {
 
                 val pos = artistsAdapter.getLetterPosition(letter)
@@ -195,28 +161,18 @@ class WaveSideBarView @JvmOverloads constructor(context: Context, attrs: Attribu
         drawBallPath(canvas)
 
         //绘制选中的字体
-        drawChooseText(canvas)
-
+        drawBallLetter(canvas)
     }
 
-    private fun drawChooseText(canvas: Canvas) {
-        if (mChoose != -1) {
-            // 绘制右侧选中字符
-            mLettersPaint.reset()
-            mLettersPaint.color = mTextColorChoose
-            mLettersPaint.textSize = mTextSize
-            mLettersPaint.textAlign = Paint.Align.CENTER
-            canvas.drawText(mLetters[mChoose], mPosX, mPosY, mLettersPaint)
-
+    private fun drawBallLetter(canvas: Canvas) {
+        if (mChoose != -1 && mRatio >= 0.9f) {
             // 绘制提示字符
-            if (mRatio >= 0.9f) {
-                val target = mLetters[mChoose]
-                val fontMetrics = mTextPaint.fontMetrics
-                val baseline = Math.abs(-fontMetrics.bottom - fontMetrics.top)
-                val x = mBallCentreX
-                val y = mCenterY + baseline / 2
-                canvas.drawText(target, x, y, mTextPaint)
-            }
+            val target = mLetters[mChoose]
+            val fontMetrics = mLetterPaint.fontMetrics
+            val baseline = Math.abs(-fontMetrics.bottom - fontMetrics.top)
+            val x = mBallCentreX
+            val y = mCenterY + baseline / 2
+            canvas.drawText(target, x, y, mLetterPaint)
         }
     }
 
@@ -228,7 +184,7 @@ class WaveSideBarView @JvmOverloads constructor(context: Context, attrs: Attribu
     private fun drawWavePath(canvas: Canvas) {
         mWavePath.reset()
         // 移动到起始点
-        mWavePath.moveTo(mWidth.toFloat(), (mCenterY - 3 * mRadius!!).toFloat())
+        mWavePath.moveTo(mWidth.toFloat(), (mCenterY - 3 * mRadius).toFloat())
         //计算上部控制点的Y轴位置
         val controlTopY = mCenterY - 2 * mRadius
 
@@ -258,14 +214,13 @@ class WaveSideBarView @JvmOverloads constructor(context: Context, attrs: Attribu
 
     private fun drawBallPath(canvas: Canvas) {
         //x轴的移动路径
-        mBallCentreX = mWidth + mBallRadius!! - (2.0f * mRadius!! + 2.0f * mBallRadius) * mRatio
+        mBallCentreX = mWidth + mBallRadius - (2.0f * mRadius + 2.0f * mBallRadius) * mRatio
 
         mBallPath.reset()
         mBallPath.addCircle(mBallCentreX, mCenterY.toFloat(), mBallRadius.toFloat(), Path.Direction.CW)
         mBallPath.op(mWavePath, Path.Op.DIFFERENCE)
         mBallPath.close()
         canvas.drawPath(mBallPath, mWavePaint)
-
     }
 
 

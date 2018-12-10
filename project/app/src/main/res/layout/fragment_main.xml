@@ -33,11 +33,11 @@
             <!-- ARTIST'S DISCOGRAPHY -->
             <include layout="@layout/artist_details"/>
 
-            <com.iven.musicplayergo.uihelpers.WaveSideBarView
-                    android:id="@+id/side_view"
+            <com.iven.musicplayergo.uihelpers.WaveView
+                    android:id="@+id/wave_view"
                     android:layout_width="match_parent"
-                    wave:sidebarChooseTextColor="?attr/icon_color"
-                    wave:sidebarBackgroundColor="?attr/colorAccent"
+                    wave:sidebarAccentColor="?attr/colorAccent"
+                    wave:sidebarLettersColor="?attr/icon_color"
                     android:layout_height="match_parent"/>
         </FrameLayout>
     </LinearLayout>

@@ -36,7 +36,7 @@
   - Skip to next song;
 - Music organized by Artist;
 - Revealable Artist's page: albums/songs;
-- Colorful WaveSideBar;
+- Colorful Wave scroller;
 - Search bar (which can be disabled);
 - Dark status bar icons (available from Android Marshmallow);
 

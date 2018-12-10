@@ -8,8 +8,7 @@
     <dimen name="songs_card_margin_bottom">-8dp</dimen>
 
     <!-- WaveSideBar -->
-    <dimen name="large_textSize_sidebar">32sp</dimen>
-    <dimen name="textSize_sidebar_padding">20sp</dimen>
-    <dimen name="radius_sidebar">20dp</dimen>
-    <dimen name="ball_radius_sidebar">24dp</dimen>
+    <dimen name="wave_ball_textSize">32sp</dimen>
+    <dimen name="wave_radius">24dp</dimen>
+    <dimen name="wave_ball_radius">32dp</dimen>
 </resources>

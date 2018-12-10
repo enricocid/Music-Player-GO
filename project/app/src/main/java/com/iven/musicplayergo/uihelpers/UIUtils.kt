@@ -12,7 +12,7 @@ object UIUtils {
         searchView: SearchView,
         artistsAdapter: ArtistsAdapter,
         artists: List<String>,
-        waveSideBarView: WaveSideBarView
+        waveView: WaveView
     ) {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -30,7 +30,7 @@ object UIUtils {
         })
 
         searchView.setOnQueryTextFocusChangeListener { _: View, hasFocus: Boolean ->
-            waveSideBarView.visibility = if (hasFocus) View.GONE else View.VISIBLE
+            waveView.visibility = if (hasFocus) View.GONE else View.VISIBLE
             if (!hasFocus) searchView.isIconified = true
         }
     }
