@@ -19,10 +19,6 @@ object MusicUtils {
         return artists
     }
 
-    fun getArtistDiscsCount(albums: Map<String, List<Music>>): Int {
-        return albums.size
-    }
-
     fun getArtistSongsCount(albums: Map<String, List<Music>>): Int {
         var songsCount = 0
         try {
@@ -32,7 +28,6 @@ object MusicUtils {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
         return songsCount
     }
 
