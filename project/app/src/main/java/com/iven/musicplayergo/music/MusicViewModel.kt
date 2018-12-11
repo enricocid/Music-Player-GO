@@ -12,7 +12,7 @@ class MusicViewModel : ViewModel() {
     private class LoadMusicTask(private val musicCursor: Cursor) :
         AsyncTask<Void, Void, Pair<MutableList<Music>, Map<String, Map<String, List<Music>>>>>() {
 
-        var allDeviceSongs = mutableListOf<Music>()
+        private var allDeviceSongs = mutableListOf<Music>()
 
         init {
             execute()
