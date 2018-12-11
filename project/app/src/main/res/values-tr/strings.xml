@@ -4,6 +4,7 @@
     <string name="bad_id">Oynatmak için şarkı seçin!</string>
     <string name="artist_info">%1d Albümler, %2d Şarkılar</string>
     <string name="no_browser">Tarayıcı uygulaması bulunamadı!</string>
-    <string name="perm_rationale">Music Player GO\'nun müziklerizi oynatması için dosyalarınıza erişmesi gerekiyor!</string>
+    <string name="perm_rationale">Music Player GO\'nun müziklerinizi 
+oynatması için dosyalarınıza erişmesi gerekiyor!</string>
     <string name="error_no_music">Telefonda müzik bulunamadı!</string>
 </resources>
