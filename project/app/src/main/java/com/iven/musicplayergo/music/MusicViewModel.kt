@@ -1,83 +1,98 @@
 package com.iven.musicplayergo.music
 
 import android.database.Cursor
+import android.os.AsyncTask
 import android.provider.MediaStore
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class MusicViewModel : ViewModel() {
 
-    private lateinit var music: MutableLiveData<Map<String, Map<String, List<Music>>>>
-    lateinit var allDeviceSongs: MutableList<Music>
+    //Async task to load music from the device
+    private class LoadMusicTask(private val musicCursor: Cursor) :
+        AsyncTask<Void, Void, Pair<MutableList<Music>, Map<String, Map<String, List<Music>>>>>() {
 
-    fun getMusic(musicCursor: Cursor): MutableLiveData<Map<String, Map<String, List<Music>>>> {
+        var allDeviceSongs = mutableListOf<Music>()
 
-        if (!::music.isInitialized) {
-            music = MutableLiveData()
-            loadMusic(musicCursor)
+        init {
+            execute()
         }
-        return music
-    }
 
-    // Extension method to get all music files list from external storage/sd card
-    private fun loadMusic(musicCursor: Cursor) {
-        // Initialize an empty mutable list of music
-        allDeviceSongs = mutableListOf()
+        override fun doInBackground(vararg params: Void?): Pair<MutableList<Music>, Map<String, Map<String, List<Music>>>>? {
+            // Initialize an empty mutable list of music
 
-        // Query the external storage for music files
+            // Query the external storage for music files
+            // If query result is not empty
+            if (musicCursor.moveToFirst()) {
+                val artist = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)
+                val year = musicCursor.getColumnIndex(MediaStore.Audio.Media.YEAR)
+                val track = musicCursor.getColumnIndex(MediaStore.Audio.Media.TRACK)
+                val title = musicCursor.getColumnIndex(MediaStore.Audio.Media.TITLE)
+                val duration = musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION)
+                val album = musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)
+                val path = musicCursor.getColumnIndex(MediaStore.Audio.Media.DATA)
 
-        // If query result is not empty
-        if (musicCursor.moveToFirst()) {
-            val artist = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)
-            val year = musicCursor.getColumnIndex(MediaStore.Audio.Media.YEAR)
-            val track = musicCursor.getColumnIndex(MediaStore.Audio.Media.TRACK)
-            val title = musicCursor.getColumnIndex(MediaStore.Audio.Media.TITLE)
-            val duration = musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION)
-            val album = musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)
-            val path = musicCursor.getColumnIndex(MediaStore.Audio.Media.DATA)
+                // Now loop through the music files
+                do {
+                    val audioArtist = musicCursor.getString(artist)
+                    val audioYear = musicCursor.getInt(year)
+                    val audioTrack = musicCursor.getInt(track)
+                    val audioTitle = musicCursor.getString(title)
+                    val audioDuration = musicCursor.getLong(duration)
+                    val audioAlbum = musicCursor.getString(album)
+                    val audioPath = musicCursor.getString(path)
 
-            // Now loop through the music files
-            do {
-                val audioArtist = musicCursor.getString(artist)
-                val audioYear = musicCursor.getInt(year)
-                val audioTrack = musicCursor.getInt(track)
-                val audioTitle = musicCursor.getString(title)
-                val audioDuration = musicCursor.getLong(duration)
-                val audioAlbum = musicCursor.getString(album)
-                val audioPath = musicCursor.getString(path)
-
-                // Add the current music to the list
-                allDeviceSongs.add(
-                    Music(
-                        audioArtist,
-                        audioYear,
-                        audioTrack,
-                        audioTitle,
-                        audioDuration,
-                        audioAlbum,
-                        audioPath
+                    // Add the current music to the list
+                    allDeviceSongs.add(
+                        Music(
+                            audioArtist,
+                            audioYear,
+                            audioTrack,
+                            audioTitle,
+                            audioDuration,
+                            audioAlbum,
+                            audioPath
+                        )
                     )
-                )
-            } while (musicCursor.moveToNext())
-            musicCursor.close()
+                } while (musicCursor.moveToNext())
+                musicCursor.close()
+            }
+
+            val categorizedMusic = categorizeMusicByArtistAndAlbums(allDeviceSongs)
+            // Finally, return the music files list
+            return Pair(allDeviceSongs, categorizedMusic)
         }
 
-        // Finally, return the music files list
-        music.value = categorizeMusicByArtistAndAlbums(allDeviceSongs)
+        private fun categorizeMusicByArtistAndAlbums(music: MutableList<Music>): Map<String, Map<String, List<Music>>> {
+
+            val musicSortedByArtist = music.groupBy { it.artist }
+
+            val categorizedMusicByAlbum = hashMapOf<String, Map<String, List<Music>>>()
+            val artists = musicSortedByArtist.keys.toMutableList()
+
+            artists.forEachIndexed { _, artist ->
+                val songsForArtist = musicSortedByArtist[artist]!!.toMutableList()
+                val albums = songsForArtist.groupBy { it.album }
+                categorizedMusicByAlbum[artist] = albums
+            }
+            return categorizedMusicByAlbum
+        }
     }
 
-    private fun categorizeMusicByArtistAndAlbums(music: MutableList<Music>): Map<String, Map<String, List<Music>>> {
+    class MusicLiveData(private val musicCursor: Cursor) :
+        MutableLiveData<Pair<MutableList<Music>, Map<String, Map<String, List<Music>>>>>() {
 
-        val musicSortedByArtist = music.groupBy { it.artist }
-
-        val categorizedMusicByAlbum = hashMapOf<String, Map<String, List<Music>>>()
-        val artists = musicSortedByArtist.keys.toMutableList()
-
-        artists.forEachIndexed { _, artist ->
-            val songsForArtist = musicSortedByArtist[artist]!!.toMutableList()
-            val albums = songsForArtist.groupBy { it.album }
-            categorizedMusicByAlbum[artist] = albums
+        init {
+            loadMusic()
         }
-        return categorizedMusicByAlbum
+
+        // Extension method to get all music files list from external storage/sd card
+        private fun loadMusic() {
+            value = LoadMusicTask(musicCursor).get()
+        }
+    }
+
+    fun getMusic(musicCursor: Cursor): MutableLiveData<Pair<MutableList<Music>, Map<String, Map<String, List<Music>>>>> {
+        return MusicLiveData(musicCursor)
     }
 }

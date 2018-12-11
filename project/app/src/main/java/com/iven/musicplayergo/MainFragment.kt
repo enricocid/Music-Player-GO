@@ -106,6 +106,7 @@ class MainFragment : Fragment() {
 
     //view model
     private lateinit var mViewModel: MusicViewModel
+    private lateinit var mAllDeviceSongs: MutableList<Music>
 
     //booleans
     private var sBound: Boolean = false
@@ -219,11 +220,13 @@ class MainFragment : Fragment() {
     }
 
     private fun loadMusic() {
+
         mViewModel = ViewModelProviders.of(this).get(MusicViewModel::class.java)
 
         mViewModel.getMusic(MusicUtils.getMusicCursor(mActivity.contentResolver)!!)
-            .observe(this, Observer<Map<String, Map<String, List<Music>>>> { music ->
-                mMusic = music
+            .observe(this, Observer<Pair<MutableList<Music>, Map<String, Map<String, List<Music>>>>> { music ->
+                mAllDeviceSongs = music.first
+                mMusic = music.second
                 if (mMusic.isNotEmpty()) {
                     setArtistsRecyclerView()
                     restorePlayerStatus()
@@ -469,7 +472,7 @@ class MainFragment : Fragment() {
 
     private fun shuffleSongs() {
         if (::mMediaPlayerHolder.isInitialized) {
-            val songs = if (sArtistDiscographyExpanded) mSelectedArtistSongs else mViewModel.allDeviceSongs
+            val songs = if (sArtistDiscographyExpanded) mSelectedArtistSongs else mAllDeviceSongs
             songs.shuffle()
             val song = songs[0]
             mMediaPlayerHolder.setCurrentSong(song, songs)
