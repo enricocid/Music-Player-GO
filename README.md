@@ -91,7 +91,7 @@
 - **solartcc** (@solartcc - https://github.com/solartcc) for part of the WaveSideBar:
 https://github.com/Solartisan/WaveSideBar
 
-- **Adem Furkan ÖZCAN** for Turkish translations
+- **Adem Furkan ÖZCAN** (ozcanfurkan - https://github.com/ozcanfurkan) for Turkish translations
 
 - **Malte Kiefer** (beli3ver - https://github.com/beli3ver) for German translations
 
