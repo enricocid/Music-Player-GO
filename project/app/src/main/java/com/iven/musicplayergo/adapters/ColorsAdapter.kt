@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.uihelpers.UIUtils
 
 class ColorsAdapter(private val context: Context, private val accent: Int) :
     RecyclerView.Adapter<ColorsAdapter.ColorsHolder>() {
@@ -51,7 +51,7 @@ class ColorsAdapter(private val context: Context, private val accent: Int) :
         fun bindItems(color: Int) {
             val colorOption = itemView as ImageView
             val drawable = if (color != accent) R.drawable.ic_checkbox_blank else R.drawable.ic_checkbox_marked
-            val colorFromInt = ContextCompat.getColor(context, color)
+            val colorFromInt = UIUtils.getColor(context, color, R.color.blue)
             colorOption.setImageResource(drawable)
             colorOption.setColorFilter(colorFromInt)
             itemView.setOnClickListener { onColorClick?.invoke(color) }

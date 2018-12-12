@@ -15,7 +15,6 @@ import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -242,7 +241,7 @@ class MainFragment : Fragment() {
         //main
         main.setBackgroundColor(
             ColorUtils.setAlphaComponent(
-                ContextCompat.getColor(mActivity, mAccent),
+                UIUtils.getColor(mActivity, mAccent, R.color.blue),
                 if (sThemeInverted) 10 else 40
             )
         )
@@ -330,7 +329,7 @@ class MainFragment : Fragment() {
         mColorsRecyclerView.adapter = colorsAdapter
 
         colorsAdapter.onColorClick = { accent ->
-            mMusicNotificationManager.accent = ContextCompat.getColor(mActivity, accent)
+            mMusicNotificationManager.accent = UIUtils.getColor(mActivity, mAccent, R.color.blue)
             if (mMediaPlayerHolder.isMediaPlayer) {
                 mMusicNotificationManager.notificationManager.notify(
                     NOTIFICATION_ID,
@@ -405,7 +404,7 @@ class MainFragment : Fragment() {
         mAlbumsRecyclerView.layoutManager = mAlbumsLayoutManager
         mAlbumsAdapter = AlbumsAdapter(
             mSelectedArtistAlbums,
-            ContextCompat.getColor(mActivity, mAccent)
+            UIUtils.getColor(mActivity, mAccent, R.color.blue)
         )
         mAlbumsRecyclerView.adapter = mAlbumsAdapter
 
@@ -445,7 +444,7 @@ class MainFragment : Fragment() {
 
     private fun initializeSeekBar() {
         mSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            val currentPositionColor = mSongPosition.currentTextColor
+            val defaultPositionColor = mSongPosition.currentTextColor
             var userSelectedPosition = 0
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -455,14 +454,14 @@ class MainFragment : Fragment() {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
                     userSelectedPosition = progress
-                    mSongPosition.setTextColor(ContextCompat.getColor(mActivity, mAccent))
+                    mSongPosition.setTextColor(UIUtils.getColor(mActivity, mAccent, R.color.blue))
                 }
                 mSongPosition.text = MusicUtils.formatSongDuration(progress.toLong())
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 if (sUserIsSeeking) {
-                    mSongPosition.setTextColor(currentPositionColor)
+                    mSongPosition.setTextColor(defaultPositionColor)
                 }
                 sUserIsSeeking = false
                 mMediaPlayerHolder.seekTo(userSelectedPosition)
@@ -575,7 +574,13 @@ class MainFragment : Fragment() {
     private fun updateResetStatus(onPlaybackCompletion: Boolean) {
         val themeColor = if (sThemeInverted) R.color.white else R.color.black
         val color = if (onPlaybackCompletion) themeColor else if (mMediaPlayerHolder.isReset) mAccent else themeColor
-        mSkipPrevButton.setColorFilter(ContextCompat.getColor(mActivity, color), PorterDuff.Mode.SRC_IN)
+        mSkipPrevButton.setColorFilter(
+            UIUtils.getColor(
+                mActivity,
+                color,
+                if (onPlaybackCompletion) themeColor else R.color.blue
+            ), PorterDuff.Mode.SRC_IN
+        )
     }
 
     private fun updatePlayingStatus() {
@@ -734,7 +739,7 @@ class MainFragment : Fragment() {
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder!!
             mMediaPlayerHolder.mainFragment = this@MainFragment
             mMusicNotificationManager = mPlayerService.musicNotificationManager
-            mMusicNotificationManager.accent = ContextCompat.getColor(mActivity, mAccent)
+            mMusicNotificationManager.accent = UIUtils.getColor(mActivity, mAccent, R.color.blue)
             loadMusic()
         }
 

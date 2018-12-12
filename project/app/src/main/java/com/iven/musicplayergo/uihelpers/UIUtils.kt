@@ -1,12 +1,22 @@
 package com.iven.musicplayergo.uihelpers
 
+import android.content.Context
 import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import com.iven.musicplayergo.adapters.ArtistsAdapter
 
 object UIUtils {
+
+    fun getColor(context: Context, color: Int, emergencyColor: Int): Int {
+        return try {
+            ContextCompat.getColor(context, color)
+        } catch (e: Exception) {
+            ContextCompat.getColor(context, emergencyColor)
+        }
+    }
 
     fun setupSearch(
         searchView: SearchView,

@@ -20,6 +20,7 @@ class SongsAdapter(music: MutableList<Music>) : RecyclerView.Adapter<SongsAdapte
     init {
         mMusic.sortBy { it.track }
     }
+
     fun swapSongs(music: MutableList<Music>) {
         mMusic = music
         mMusic.sortBy { it.track }
