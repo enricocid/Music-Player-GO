@@ -86,10 +86,14 @@ class PreferencesHelper(private val activity: Activity) {
     }
 
     fun getAccent(): Int {
-        return getPreference(TAG_ACCENT_PREF).getInt(
-            TAG_ACCENT_VALUE,
+        return try {
+            getPreference(TAG_ACCENT_PREF).getInt(
+                TAG_ACCENT_VALUE,
+                R.color.blue
+            )
+        } catch (e: Exception) {
             R.color.blue
-        )
+        }
     }
 
     fun setSearchToolbarVisibility(isVisible: Boolean) {
