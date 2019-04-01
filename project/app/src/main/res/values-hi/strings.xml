@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_eq">कोई इक्वलैज़र नहीं मिला!</string>
+    <string name="artist_info">%1d&#160;एलबम,&#160;%2d&#160;गीत</string>
+    <string name="bad_id">पहले एक गाना बजाये!</string>
+    <string name="no_browser">कोई ब्राउज़र नहीं मिला!</string>
+    <string name="perm_rationale">Music Player GO को संगीत बजाने के लिये फ़ाइलों को एक्सेस करने की अनुमति चाहिये!</string>
+    <string name="error_no_music">आपके फ़ोन पर कोई संगीत नहीं मिला!</string>
+</resources>
