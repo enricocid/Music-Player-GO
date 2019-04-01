@@ -91,7 +91,9 @@
 - **solartcc** (@solartcc - https://github.com/solartcc) for part of the WaveSideBar:
 https://github.com/Solartisan/WaveSideBar
 
-- **Adem Furkan ÖZCAN** (ozcanfurkan - https://github.com/ozcanfurkan) for Turkish translations
+# Big thanks to translators:
+
+- **Adem Furkan Ã–ZCAN** (ozcanfurkan - https://github.com/ozcanfurkan) for Turkish translations
 
 - **Malte Kiefer** (beli3ver - https://github.com/beli3ver) for German translations
 
@@ -99,4 +101,6 @@ https://github.com/Solartisan/WaveSideBar
 
 - **Stanislav** (STWheel - https://github.com/STWheel) for Ukrainian and Russian translations and other strings/ui refinements
 
-- **KowalskiOmniROM** (https://github.com/KowalskiOmniROM) for French translations 
+- **KowalskiOmniROM** (https://github.com/KowalskiOmniROM) for French translations
+
+- **Somesh Kumar** (https://github.com/TheSomeshKumar) for Hindi translations
