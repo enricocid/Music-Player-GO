@@ -30,11 +30,10 @@ class PermissionDialogFragment : BottomSheetDialogFragment() {
         isCancelable = false
     }
 
-    override fun onDismiss(dialog: DialogInterface?) {
-        super.onDismiss(dialog)
+    override fun onDismiss(dialog: DialogInterface) {
         requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 2588)
+        super.onDismiss(dialog)
     }
-
     companion object {
         fun newInstance() = PermissionDialogFragment()
     }
