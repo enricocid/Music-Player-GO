@@ -175,11 +175,11 @@ class MainFragment : Fragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         mActivity.menuInflater.inflate(R.menu.search_menu, menu)
 
-        val search = menu!!.findItem(R.id.search)
+        val search = menu.findItem(R.id.search)
         val searchView = search.actionView as SearchView
 
         searchView.setIconifiedByDefault(false)
