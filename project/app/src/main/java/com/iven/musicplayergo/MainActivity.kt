@@ -25,13 +25,28 @@ class MainActivity : AppCompatActivity() {
     private var sThemeInverted: Boolean = false
     private lateinit var mMainFragment: MainFragment
 
+    //boolean
+    //https://stackoverflow.com/a/42262467
+    private var sRequestPermissionsWithResult = false
+
     override fun onBackPressed() {
         if (!mMainFragment.onBackPressed()) else super.onBackPressed()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED) showPermissionRationale() else
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED)
+            showPermissionRationale() else
+            sRequestPermissionsWithResult = true
+    }
+
+    //https://stackoverflow.com/a/42262467
+    override fun onPostResume() {
+        super.onPostResume()
+        if (sRequestPermissionsWithResult) {
             initMainFragment()
+        }
+        sRequestPermissionsWithResult = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
