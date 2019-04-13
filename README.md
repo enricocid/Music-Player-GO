@@ -6,7 +6,7 @@
 
 ###### Very slim and nice music player with low memory footprint!
 ###### Now available in Kotlin language
-###### Current version: (106) 3.5.2.4
+###### Current version: (107) 3.5.2.5
 ###### Material Design Icon by Julian Javier Gomez, Axinen Design (https://plus.google.com/u/0/+AxinenDesign)
 
 
@@ -78,29 +78,33 @@
 
 - https://material.io/tools/icons/?style=round for icons
 
-- **IzzySoft** (https://github.com/IzzySoft) and **Poussinou** (https://github.com/Poussinou) for setting up the F-Droid repository
+- **IzzySoft** (@IzzySoft https://github.com/IzzySoft) and **Poussinou** (@Poussinou https://github.com/Poussinou) for setting up the F-Droid repository
 
-- **TacoTheDank** (@acoTheDank - https://github.com/TacoTheDank) for updates to gradle/java 1.8
+- **TacoTheDank** (@TacoTheDank - https://github.com/TacoTheDank) for updates to gradle/java 1.8
 
 - **Dankan1890** (@dankan1890 - https://github.com/dankan1890) for some fixes to bluetooth devices
 
 - **Harry** (@HarryHeights - https://github.com/HarryHeights) for Privacy policy
 
-- **olayhemy** (ttps://github.com/olayhemy) for FAQ
+- **olayhemy** (@olayhemy ttps://github.com/olayhemy) for FAQ
 
 - **solartcc** (@solartcc - https://github.com/solartcc) for part of the WaveSideBar:
 https://github.com/Solartisan/WaveSideBar
 
+- **sagorahmed** (@sagorahmed - https://github.com/sagorahmed) for an important bug report #62
+
+- **Alex Lockwood** (@alexjlockwood - https://github.com/alexjlockwood) for his important efforts on explaining Android patterns (https://www.androiddesignpatterns.com)
+
 # Big thanks to translators:
 
-- **Adem Furkan ÖZCAN** (ozcanfurkan - https://github.com/ozcanfurkan) for Turkish translations
+- **Adem Furkan ÖZCAN** (@ozcanfurkan - https://github.com/ozcanfurkan) for Turkish translations
 
-- **Malte Kiefer** (beli3ver - https://github.com/beli3ver) for German translations
+- **Malte Kiefer** (@beli3ver - https://github.com/beli3ver) for German translations
 
-- **Luis F. Uceta** (uzluisf - https://github.com/uzluisf) for Spanish translations
+- **Luis F. Uceta** (@uzluisf - https://github.com/uzluisf) for Spanish translations
 
-- **Stanislav** (STWheel - https://github.com/STWheel) for Ukrainian and Russian translations and other strings/ui refinements
+- **Stanislav** (@STWheel - https://github.com/STWheel) for Ukrainian and Russian translations and other strings/ui refinements
 
-- **KowalskiOmniROM** (https://github.com/KowalskiOmniROM) for French translations
+- **KowalskiOmniROM** (@KowalskiOmniROM https://github.com/KowalskiOmniROM) for French translations
 
-- **Somesh Kumar** (https://github.com/TheSomeshKumar) for Hindi translations
+- **Somesh Kumar** (@TheSomeshKumar https://github.com/TheSomeshKumar) for Hindi translations
