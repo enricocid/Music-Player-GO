@@ -386,8 +386,8 @@ class MainFragment : Fragment() {
 
     private fun setArtistDetails() {
 
-        val notSortedArtistDiscs = mMusic[mNavigationArtist]!!
-        mSelectedArtistAlbums = MusicUtils.buildSortedArtistAlbums(resources, mMusic[mNavigationArtist]!!)
+        val notSortedArtistDiscs = mMusic.getValue(mNavigationArtist)
+        mSelectedArtistAlbums = MusicUtils.buildSortedArtistAlbums(resources, notSortedArtistDiscs)
 
         //set the titles and subtitles
         mArtistDetailsTitle.text = mNavigationArtist
@@ -419,9 +419,9 @@ class MainFragment : Fragment() {
     }
 
     private fun setAlbumSongs(selectedAlbum: String) {
-        val album = mMusic[mNavigationArtist]!![selectedAlbum]
+        val album = mMusic.getValue(mNavigationArtist).getValue(selectedAlbum)
         mArtistsDetailsSelectedDisc.text = selectedAlbum
-        mArtistDetailsSelectedDiscYear.text = MusicUtils.getYearForAlbum(resources, album!![0].year)
+        mArtistDetailsSelectedDiscYear.text = MusicUtils.getYearForAlbum(resources, album[0].year)
 
         //set the songs list
         if (!::mSongsAdapter.isInitialized) {

@@ -66,7 +66,7 @@ class ArtistsAdapter(
 
     override fun onBindViewHolder(holder: ArtistsHolder, position: Int) {
         val artist = mArtists[holder.adapterPosition]
-        val albums = music[artist]!!
+        val albums = music.getValue(artist)
         holder.bindItems(mArtists[holder.adapterPosition], albums.keys.size, MusicUtils.getArtistSongsCount(albums))
     }
 

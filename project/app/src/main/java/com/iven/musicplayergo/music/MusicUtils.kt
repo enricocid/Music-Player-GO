@@ -23,7 +23,7 @@ object MusicUtils {
         var songsCount = 0
         try {
             albums.keys.toMutableList().forEach {
-                songsCount += albums[it]!!.size
+                songsCount += albums.getValue(it).size
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -45,7 +45,7 @@ object MusicUtils {
         val artistSongs = mutableListOf<Music>()
         try {
             albums.keys.toMutableList().forEach {
-                artistSongs.addAll(albums[it]!!)
+                artistSongs.addAll(albums.getValue(it))
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -63,7 +63,7 @@ object MusicUtils {
 
         try {
             albums.keys.toMutableList().forEach {
-                sortedAlbums.add(Album(it, getYearForAlbum(resources, albums[it]!![0].year)))
+                sortedAlbums.add(Album(it, getYearForAlbum(resources, albums.getValue(it)[0].year)))
             }
 
         } catch (e: Exception) {

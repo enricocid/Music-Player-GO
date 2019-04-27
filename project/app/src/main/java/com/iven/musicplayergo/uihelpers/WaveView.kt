@@ -129,7 +129,7 @@ class WaveView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        mHeight = View.MeasureSpec.getSize(heightMeasureSpec)
+        mHeight = MeasureSpec.getSize(heightMeasureSpec)
         mWidth = measuredWidth
     }
 

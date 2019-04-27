@@ -84,7 +84,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
     }
 
     //media player
-    var mediaPlayer: MediaPlayer? = null
+    private var mediaPlayer: MediaPlayer? = null
     private var mExecutor: ScheduledExecutorService? = null
     private var mSeekBarPositionUpdateTask: Runnable? = null
     private lateinit var mPlayingAlbumSongs: List<Music>
