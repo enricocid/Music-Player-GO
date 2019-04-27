@@ -68,7 +68,7 @@
 
 ### Just a notice about features request:
 
-1. As stated in FAQ,Not all requests will be taken into consideration as the player mainly reflects my needs! If I add the label 'feature request' on a issue then it will be worked, but it may require time!
+1. As stated in [FAQ](https://github.com/enricocid/Music-Player-GO/blob/master/FAQ.md), not all requests will be taken into consideration as the player mainly reflects my needs! If I add the label 'feature request' on a issue then it will be worked, but it may require time!
 
 2. Giving *1 star* on Google PlayStore:
 - Won't accelerate the implementation process.
