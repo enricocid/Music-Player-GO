@@ -14,6 +14,14 @@ It is a lightweight and ads free music player that plays music from local librar
 
 Not all requests will be taken into consideration as the player mainly reflects my needs! If I add the label 'feature request' on a issue then it will be worked, but it may require time!
 
+1. As stated in FAQ,Not all requests will be taken into consideration as the player mainly reflects my needs! If I add the label 'feature request' on a issue then it will be worked, but it may require time!
+
+2. Giving *1 star* on Google PlayStore:
+- Won't accelerate the implementation process.
+- Won't give priority to Your request.
+- Won't let Your feature request to be approved (probably quite the opposite).
+
+
 **Does Music Player GO uses equalizer?**
 
 Yes, Music Player GO uses the system (default) equalizer, that is the inbuilt equalizer.

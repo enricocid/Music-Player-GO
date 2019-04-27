@@ -7,7 +7,7 @@
 ###### Very slim and nice music player with low memory footprint!
 ###### Now available in Kotlin language
 ###### Current version: (108) 3.5.2.6
-###### Material Design Icon by Julian Javier Gomez, Axinen Design (https://plus.google.com/u/0/+AxinenDesign)
+###### Material Design Icon by Julian Javier Gomez, Axinen Design (https://plus.google.com/u/0/+AxinenDesign
 
 
 ![ScreenShot](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/icon2.png) 
@@ -60,9 +60,22 @@
 
 *Based on nothing: it was written from scratch besides few snippets here and there*
 
+
 ### What does this cost?
+
 *Music Player GO will always be free! Anyway, you can still buy me a beer, an ice cream or something via [PayPal](https://www.paypal.me/enricocid) if You really liked it! :)*
 
+
+### Just a notice about features request:
+
+1. As stated in FAQ,Not all requests will be taken into consideration as the player mainly reflects my needs! If I add the label 'feature request' on a issue then it will be worked, but it may require time!
+
+2. Giving *1 star* on Google PlayStore:
+- Won't accelerate the implementation process.
+- Won't give priority to Your request.
+- Won't let Your feature request to be approved (probably quite the opposite).
+
+ 
 ### Dependencies/API used: 
 
   - kotlin-stdlib;
