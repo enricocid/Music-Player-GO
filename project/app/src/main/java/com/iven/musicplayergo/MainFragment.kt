@@ -517,7 +517,7 @@ class MainFragment : Fragment() {
     fun onStateChanged() {
         updatePlayingStatus()
         if (mMediaPlayerHolder.state != RESUMED && mMediaPlayerHolder.state != PAUSED) {
-            updatePlayingInfo(false, true)
+            updatePlayingInfo(false)
         }
     }
 
@@ -532,24 +532,20 @@ class MainFragment : Fragment() {
             //update the controls panel
             if (mMediaPlayerHolder.isMediaPlayer) {
                 mMediaPlayerHolder.onResumeActivity()
-                updatePlayingInfo(true, false)
+                updatePlayingInfo(true)
             }
         }
     }
 
     //method to update info on controls panel
-    private fun updatePlayingInfo(restore: Boolean, startPlay: Boolean) {
-        if (startPlay) {
-            mMediaPlayerHolder.mediaPlayer!!.start()
-            mPlayerService.startForeground(NOTIFICATION_ID, mMusicNotificationManager.createNotification())
-        }
+    private fun updatePlayingInfo(restore: Boolean) {
 
         val selectedSong = mMediaPlayerHolder.currentSong
         val duration = selectedSong!!.duration
         mSeekBar.max = duration.toInt()
         mSongDuration.text = MusicUtils.formatSongDuration(duration)
         mPlayingSong.text =
-                MusicUtils.buildSpanned(getString(R.string.playing_song, selectedSong.artist, selectedSong.title))
+            MusicUtils.buildSpanned(getString(R.string.playing_song, selectedSong.artist, selectedSong.title))
         mPlayingAlbum.text = selectedSong.album
 
         if (restore) {

@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() {
     private var sRequestPermissionsWithResult = false
 
     override fun onBackPressed() {
-        if (!mMainFragment.onBackPressed()) else super.onBackPressed()
+        if (::mMainFragment.isInitialized && !mMainFragment.onBackPressed()
+        ) else super.onBackPressed()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

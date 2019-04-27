@@ -87,7 +87,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
     var mediaPlayer: MediaPlayer? = null
     private var mExecutor: ScheduledExecutorService? = null
     private var mSeekBarPositionUpdateTask: Runnable? = null
-    private var mPlayingAlbumSongs: List<Music>? = null
+    private lateinit var mPlayingAlbumSongs: List<Music>
     var currentSong: Music? = null
     val playerPosition: Int get() = mediaPlayer!!.currentPosition
 
@@ -139,7 +139,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
     }
 
     override fun onCompletion(mediaPlayer: MediaPlayer) {
-        if (::mainFragment.isInitialized) {
+        if (::mainFragment.isInitialized && mainFragment.isAdded) {
             mainFragment.onStateChanged()
             mainFragment.onPlaybackCompleted()
         }
@@ -202,7 +202,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
 
     private fun setStatus(status: Int) {
         state = status
-        if (::mainFragment.isInitialized) {
+        if (::mainFragment.isInitialized && mainFragment.isAdded) {
             mainFragment.onStateChanged()
         }
     }
@@ -263,7 +263,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
     private fun updateProgressCallbackTask() {
         if (isMediaPlayer && mediaPlayer!!.isPlaying) {
             val currentPosition = mediaPlayer!!.currentPosition
-            if (::mainFragment.isInitialized) {
+            if (::mainFragment.isInitialized && mainFragment.isAdded) {
                 mainFragment.onPositionChanged(currentPosition)
             }
         }
@@ -318,6 +318,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
     override fun onPrepared(mediaPlayer: MediaPlayer) {
         startUpdatingCallbackWithPosition()
         setStatus(PLAYING)
+        mediaPlayer.start()
+        playerService.startForeground(NOTIFICATION_ID, mMusicNotificationManager!!.createNotification())
     }
 
     fun openEqualizer(activity: Activity) {
@@ -351,15 +353,14 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
     }
 
     private fun getSkipSong(isNext: Boolean) {
-        val currentIndex = mPlayingAlbumSongs!!.indexOf(currentSong)
+        val currentIndex = mPlayingAlbumSongs.indexOf(currentSong)
         val index: Int
-
         try {
             index = if (isNext) currentIndex + 1 else currentIndex - 1
-            currentSong = mPlayingAlbumSongs!![index]
+            currentSong = mPlayingAlbumSongs[index]
         } catch (e: IndexOutOfBoundsException) {
             currentSong =
-                    if (currentIndex != 0) mPlayingAlbumSongs!![0] else mPlayingAlbumSongs!![mPlayingAlbumSongs!!.size - 1]
+                if (currentIndex != 0) mPlayingAlbumSongs[0] else mPlayingAlbumSongs[mPlayingAlbumSongs.size - 1]
             e.printStackTrace()
         }
         initMediaPlayer(currentSong!!)
