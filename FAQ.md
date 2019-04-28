@@ -10,7 +10,7 @@ This frequently asked questions will be continually updated to accommodate new i
 
 It is a lightweight and ads free music player that plays music from local library. It has colorful, simple and 'unified' UI.
 
-**What about features requests?**
+**What about features requests/crash reports?**
 
 Not all requests will be taken into consideration as the player mainly reflects my needs! If I add the label 'feature request' on a issue then it will be worked, but it may require time!
 
@@ -19,8 +19,9 @@ Not all requests will be taken into consideration as the player mainly reflects 
 2. Giving *1 star* on Google PlayStore:
 - Won't accelerate the implementation process.
 - Won't give priority to Your request.
-- Won't let Your feature request to be approved (probably quite the opposite).
+- Won't let Your feature request to be approved (probably quite the opposite). Guess what? I'm the boss of the team behind the app. Who is the team? Me! Hahaha 😜
 
+A crash report is useful only when logcat and detailed explanation on how to reproduce bug is provided.
 
 **Does Music Player GO uses equalizer?**
 
