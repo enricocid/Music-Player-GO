@@ -21,7 +21,7 @@ Not all requests will be taken into consideration as the player mainly reflects 
 - Won't give priority to Your request.
 - Won't let Your feature request to be approved (probably quite the opposite). Guess what? I'm the boss of the team behind the app. Who is the team? Me! Hahaha 😜
 
-A crash report is useful only when logcat and detailed explanation on how to reproduce bug is provided.
+3. A crash report is useful only when logcat and detailed explanation on how to reproduce bug is provided.
 
 **Does Music Player GO uses equalizer?**
 
