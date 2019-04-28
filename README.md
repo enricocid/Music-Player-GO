@@ -66,14 +66,16 @@
 *Music Player GO will always be free! Anyway, you can still buy me a beer, an ice cream or something via [PayPal](https://www.paypal.me/enricocid) if You really liked it! :)*
 
 
-### Just a notice about features request:
+### Just a notice about features requests/crash reports:
 
 1. As stated in [FAQ](https://github.com/enricocid/Music-Player-GO/blob/master/FAQ.md), not all requests will be taken into consideration as the player mainly reflects my needs! If I add the label 'feature request' on a issue then it will be worked, but it may require time!
 
 2. Giving *1 star* on Google PlayStore:
 - Won't accelerate the implementation process.
 - Won't give priority to Your request.
-- Won't let Your feature request to be approved (probably quite the opposite).
+- Won't let Your feature request to be approved (probably quite the opposite). Guess what? I'm the boss of the team behind the app. Who is the team? Me! Hahaha 😜
+
+3. A crash report is useful only when logcat and detailed explanation on how to reproduce bug is provided.
 
  
 ### Dependencies/API used: 
