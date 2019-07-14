@@ -25,5 +25,5 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
     implementation 'androidx.media:media:1.0.1'
-    api 'com.google.android.material:material:1.1.0-alpha05'
+    api 'com.google.android.material:material:1.1.0-alpha08'
 }
