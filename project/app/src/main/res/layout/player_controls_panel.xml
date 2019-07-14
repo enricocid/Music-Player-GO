@@ -71,7 +71,7 @@
                             android:scrollHorizontally="true"
                             android:singleLine="true"
                             android:marqueeRepeatLimit="marquee_forever"
-                            android:text="@string/version"
+                            android:text="@string/versionName"
                             android:textAlignment="textStart"
                             android:textColor="?android:attr/textColorPrimary"
                             android:textSize="12sp"/>

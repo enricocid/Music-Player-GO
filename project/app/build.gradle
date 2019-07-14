@@ -11,6 +11,12 @@ android {
         versionCode 108
         versionName "3.5.2.6"
     }
+
+    //retrieve version number
+    applicationVariants.all { variant ->
+        variant.resValue "string", "versionName", variant.versionName
+    }
+
     buildTypes {
         release {
             minifyEnabled true
