@@ -6,7 +6,7 @@
 
 ###### Very slim and nice music player with low memory footprint!
 ###### Now available in Kotlin language
-###### Current version: (109) 3.5.2.7
+###### Current version: (110) 3.5.2.8
 ###### Material Design Icon by Julian Javier Gomez, Axinen Design (https://plus.google.com/u/0/+AxinenDesign
 
 
