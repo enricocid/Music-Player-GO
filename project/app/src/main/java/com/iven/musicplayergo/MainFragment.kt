@@ -40,6 +40,7 @@ import kotlinx.android.synthetic.main.player_controls_panel.*
 import kotlinx.android.synthetic.main.player_seek.*
 import kotlinx.android.synthetic.main.player_settings.*
 import kotlinx.android.synthetic.main.search_toolbar.*
+import kotlin.math.hypot
 
 // the fragment initialization parameters
 private const val ARG_INVERTED = "param_inverted"
@@ -113,7 +114,7 @@ class MainFragment : Fragment() {
     private var sUserIsSeeking = false
 
     //strings
-    private lateinit var mNavigationArtist: String
+    private var mNavigationArtist: String? = "unknown"
 
     //music
     private lateinit var mMusic: Map<String, Map<String, List<Music>>>
@@ -386,7 +387,7 @@ class MainFragment : Fragment() {
 
     private fun setArtistDetails() {
 
-        val notSortedArtistDiscs = mMusic.getValue(mNavigationArtist)
+        val notSortedArtistDiscs = mMusic.getValue(mNavigationArtist!!)
         mSelectedArtistAlbums = MusicUtils.buildSortedArtistAlbums(resources, notSortedArtistDiscs)
 
         //set the titles and subtitles
@@ -419,7 +420,7 @@ class MainFragment : Fragment() {
     }
 
     private fun setAlbumSongs(selectedAlbum: String) {
-        val album = mMusic.getValue(mNavigationArtist).getValue(selectedAlbum)
+        val album = mMusic.getValue(mNavigationArtist!!).getValue(selectedAlbum)
         mArtistsDetailsSelectedDisc.text = selectedAlbum
         mArtistDetailsSelectedDiscYear.text = MusicUtils.getYearForAlbum(resources, album[0].year)
 
@@ -622,7 +623,7 @@ class MainFragment : Fragment() {
         val viewToRevealHeight = mArtistsRecyclerView.height
         val viewToRevealWidth = mAlbumsRecyclerView.width
         val viewToRevealHalfWidth = viewToRevealWidth / 2
-        val radius = Math.hypot(viewToRevealWidth.toDouble(), viewToRevealHeight.toDouble()).toFloat()
+        val radius = hypot(viewToRevealWidth.toDouble(), viewToRevealHeight.toDouble()).toFloat()
         val fromY = mArtistsRecyclerView.top / 2
         val startRadius = if (show) 0f else radius
         val finalRadius = if (show) radius else 0f
@@ -684,7 +685,7 @@ class MainFragment : Fragment() {
             //do only if we are not on played artist/album details
             if (mNavigationArtist != artist) {
                 mArtistsAdapter.onArtistClick?.invoke(artist)
-                val playingAlbumPosition = MusicUtils.getAlbumPositionInList(album, mSelectedArtistAlbums)
+                val playingAlbumPosition = MusicUtils.getAlbumPositionInList(album!!, mSelectedArtistAlbums)
                 mAlbumsAdapter.swapSelectedAlbum(playingAlbumPosition)
                 mAlbumsRecyclerView.scrollToPosition(playingAlbumPosition)
                 mAlbumsAdapter.onAlbumClick?.invoke(album)

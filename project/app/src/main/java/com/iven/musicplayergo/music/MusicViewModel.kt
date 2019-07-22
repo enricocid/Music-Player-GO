@@ -5,7 +5,6 @@ import android.os.AsyncTask
 import android.provider.MediaStore
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import java.util.concurrent.ExecutionException
 
 class MusicViewModel : ViewModel() {
 
@@ -14,7 +13,7 @@ class MusicViewModel : ViewModel() {
         AsyncTask<Void, Void, Pair<MutableList<Music>, Map<String, Map<String, List<Music>>>>>() {
 
         private var mAllDeviceSongs = mutableListOf<Music>()
-        private lateinit var mCategorizedMusic: Map<String, Map<String, List<Music>>>
+        private var mCategorizedMusic: Map<String, Map<String, List<Music>>> = mapOf()
 
         init {
             execute()
@@ -63,7 +62,7 @@ class MusicViewModel : ViewModel() {
 
                 mCategorizedMusic = categorizeMusicByArtistAndAlbums(mAllDeviceSongs)
 
-            } catch (e: ExecutionException) {
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
 
@@ -79,9 +78,9 @@ class MusicViewModel : ViewModel() {
             val artists = musicSortedByArtist.keys.toMutableList()
 
             artists.forEachIndexed { _, artist ->
-                val songsForArtist = musicSortedByArtist[artist]!!.toMutableList()
-                val albums = songsForArtist.groupBy { it.album }
-                categorizedMusicByAlbum[artist] = albums
+                val songsForArtist = musicSortedByArtist[artist]?.toMutableList()
+                val albums = songsForArtist?.groupBy { it.album!! }
+                categorizedMusicByAlbum[artist.toString()] = albums!!
             }
             return categorizedMusicByAlbum
         }
