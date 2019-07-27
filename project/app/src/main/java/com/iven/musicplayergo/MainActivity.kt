@@ -295,7 +295,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setViews() {
 
-        //main
+        //set custom color to background
         main.setBackgroundColor(
             ColorUtils.setAlphaComponent(
                 UIUtils.getColor(this, mAccent, R.color.blue),
@@ -445,6 +445,9 @@ class MainActivity : AppCompatActivity() {
                 mIndicatorFastScrollerView.textColor =
                     ColorStateList.valueOf(ContextCompat.getColor(this@MainActivity, mAccent))
                 mIndicatorFastScrollerView.afterMeasured {
+
+                    //set margin for artists recycler to improve fast scroller visibility
+                    mArtistsRecyclerView.setPadding(0,0,width,0)
 
                     //set margin for thumb view
                     val newLayoutParams = mIndicatorFastScrollThumb.layoutParams as FrameLayout.LayoutParams
