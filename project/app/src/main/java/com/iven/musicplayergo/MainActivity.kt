@@ -295,7 +295,8 @@ class MainActivity : AppCompatActivity() {
 
         //set custom color to background
         val accent = Utils.getColor(this, mAccent, R.color.blue)
-        val backgroundColor = if (sThemeInverted) Utils.darkenColor(accent) else Utils.lightenColor(accent)
+        val backgroundColor =
+            if (sThemeInverted) Utils.darkenColor(accent, 0.95F) else Utils.lightenColor(accent, 0.90F)
         main.setBackgroundColor(backgroundColor)
 
         //indicator fast scroller view
@@ -509,7 +510,8 @@ class MainActivity : AppCompatActivity() {
         mAlbumsRecyclerView.layoutManager = mAlbumsLayoutManager
         mAlbumsAdapter = AlbumsAdapter(
             mSelectedArtistAlbums,
-            Utils.getColor(this, mAccent, R.color.blue)
+            Utils.getColor(this, mAccent, R.color.blue),
+            sThemeInverted
         )
         mAlbumsRecyclerView.adapter = mAlbumsAdapter
 

@@ -4,14 +4,14 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.Utils
 import com.iven.musicplayergo.music.Album
 import kotlinx.android.synthetic.main.album_item.view.*
 
-class AlbumsAdapter(private val albums: List<Album>, private val accent: Int) :
+class AlbumsAdapter(private val albums: List<Album>, private val accent: Int, private val isThemeInverted: Boolean) :
     RecyclerView.Adapter<AlbumsAdapter.AlbumsHolder>() {
 
     var onAlbumClick: ((String) -> Unit)? = null
@@ -28,7 +28,14 @@ class AlbumsAdapter(private val albums: List<Album>, private val accent: Int) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumsHolder {
-        return AlbumsHolder(LayoutInflater.from(parent.context).inflate(R.layout.album_item, parent, false))
+
+        val albumView = LayoutInflater.from(parent.context).inflate(R.layout.album_item, parent, false)
+        val materialCardView = albumView as MaterialCardView
+        val backgroundColor =
+            if (isThemeInverted) Utils.darkenColor(accent, 0.85F) else Utils.lightenColor(accent, 0.80F)
+        materialCardView.setCardBackgroundColor(backgroundColor)
+
+        return AlbumsHolder(albumView)
     }
 
     override fun getItemCount(): Int {
@@ -44,8 +51,8 @@ class AlbumsAdapter(private val albums: List<Album>, private val accent: Int) :
     inner class AlbumsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindItems(title: String, year: String) {
+
             val albumCard = itemView as MaterialCardView
-            albumCard.setCardBackgroundColor(ColorUtils.setAlphaComponent(accent, 25))
 
             if (mSelectedPosition != adapterPosition) {
                 albumCard.strokeColor = Color.TRANSPARENT

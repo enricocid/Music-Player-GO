@@ -159,12 +159,12 @@ object Utils {
     }
 
     @JvmStatic
-    fun darkenColor(color: Int): Int {
-        return ColorUtils.blendARGB(color, Color.BLACK, 0.95f)
+    fun darkenColor(color: Int, factor: Float): Int {
+        return ColorUtils.blendARGB(color, Color.BLACK, factor)
     }
 
     @JvmStatic
-    fun lightenColor(color: Int): Int {
-        return ColorUtils.blendARGB(color, Color.WHITE, 0.90f)
+    fun lightenColor(color: Int, factor: Float): Int {
+        return ColorUtils.blendARGB(color, Color.WHITE, factor)
     }
 }
