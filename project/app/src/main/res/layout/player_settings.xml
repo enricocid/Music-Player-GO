@@ -59,7 +59,7 @@
                 android:contentDescription="@string/app_name"
                 android:background="?android:attr/actionBarItemBackground"
                 android:padding="12dp"
-                android:src="@drawable/ic_invert_theme" />
+                android:src="@drawable/ic_invert_theme"/>
     </LinearLayout>
 
     <!-- COLORS OPTIONS -->

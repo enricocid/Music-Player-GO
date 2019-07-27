@@ -30,7 +30,6 @@
 ### Unifield UI, the way I'd like it to be:
 
 - Colorful, simple and 'unified' UI: no need to navigate between screens;
-- Awesome typeface: Raleway + Roboto condensed;
 - Expandable bottom panel: player controls/settings:
   - Played song info: a click opens the played Artist's page;
   - Skip to previous song (long click enables 1x);

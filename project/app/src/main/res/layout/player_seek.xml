@@ -35,6 +35,7 @@
             android:clickable="true"
             android:focusable="true"
             android:fontFamily="sans-serif-condensed"
+            android:textAppearance="@android:style/TextAppearance.Material.Small"
             android:singleLine="true"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="14sp"/>
