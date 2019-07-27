@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.Utils
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
-import com.iven.musicplayergo.Utils
 import kotlinx.android.synthetic.main.artist_item.view.*
 
 class ArtistsAdapter(
