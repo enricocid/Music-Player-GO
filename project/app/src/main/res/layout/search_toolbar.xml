@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/search_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorAccent"
         android:elevation="2dp"
         android:theme="@style/SearchBarStyle"/>

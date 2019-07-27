@@ -330,6 +330,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(search_toolbar)
         if (supportActionBar != null) {
             mSupportActionBar = supportActionBar!!
+            mSupportActionBar.setDisplayShowTitleEnabled(false)
         }
 
         if (!sSearchEnabled) {
