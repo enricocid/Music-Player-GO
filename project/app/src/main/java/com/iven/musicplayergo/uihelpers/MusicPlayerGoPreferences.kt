@@ -1,40 +1,35 @@
 package com.iven.musicplayergo.uihelpers
 
-import android.app.Activity
 import android.content.Context
-import android.content.SharedPreferences
 import com.iven.musicplayergo.R
 
-private const val TAG_ACCENT_PREF = "com.iven.musicplayergo.pref_accent"
-private const val TAG_ACCENT_VALUE = "com.iven.musicplayergo.pref_accent_value"
-private const val TAG_THEME_PREF = "com.iven.musicplayergo.pref_theme"
-private const val TAG_THEME_VALUE = "com.iven.musicplayergo.pref_theme_value"
-private const val TAG_SEARCH_BAR_PREF = "com.iven.musicplayergo.pref_search_bar"
-private const val TAG_SEARCH_BAR_VALUE = "com.iven.musicplayergo.pref_search_bar_value"
+class MusicPlayerGoPreferences(context: Context) {
 
-class PreferencesHelper(private val activity: Activity) {
+    private val prefsAccent = context.getString(R.string.prefs_accent)
+    private val prefsAccentValue = context.getString(R.string.prefs_accent_value)
+    private val prefsTheme = context.getString(R.string.prefs_theme)
+    private val prefsThemeValue = context.getString(R.string.prefs_theme_value)
+    private val prefsSearchBar = context.getString(R.string.prefs_search_bar)
+    private val prefsSearchBarValue = context.getString(R.string.prefs_search_bar_value)
 
-    private fun getPreference(key: String): SharedPreferences {
-        return activity.getSharedPreferences(key, Context.MODE_PRIVATE)
-    }
+    private val accentPref = context.getSharedPreferences(prefsAccent, Context.MODE_PRIVATE)
+    private val themePref = context.getSharedPreferences(prefsTheme, Context.MODE_PRIVATE)
+    private val searchBarPref = context.getSharedPreferences(prefsSearchBar, Context.MODE_PRIVATE)
 
-    fun invertTheme() {
-        val value = !isThemeInverted()
-        getPreference(TAG_THEME_PREF).edit().putBoolean(TAG_THEME_VALUE, value).apply()
-        activity.recreate()
-    }
+    var accent: Int
+        get() = accentPref.getInt(prefsAccentValue, R.color.blue)
+        set(value) = accentPref.edit().putInt(prefsAccentValue, value).apply()
 
-    fun isThemeInverted(): Boolean {
-        return getPreference(TAG_THEME_PREF).getBoolean(TAG_THEME_VALUE, false)
-    }
+    var isThemeInverted: Boolean
+        get() = themePref.getBoolean(prefsTheme, false)
+        set(value) = themePref.edit().putBoolean(prefsThemeValue, value).apply()
 
-    fun applyTheme(accent: Int, isThemeInverted: Boolean) {
-        val theme = resolveTheme(isThemeInverted, accent)
-        activity.setTheme(theme)
-    }
+    var isSearchBarEnabled: Boolean
+        get() = searchBarPref.getBoolean(prefsSearchBar, false)
+        set(value) = searchBarPref.edit().putBoolean(prefsSearchBarValue, value).apply()
 
     //get theme
-    private fun resolveTheme(isThemeDark: Boolean, accent: Int): Int {
+    fun resolveTheme(isThemeDark: Boolean, accent: Int?): Int {
 
         return when (accent) {
 
@@ -52,6 +47,7 @@ class PreferencesHelper(private val activity: Activity) {
                 if (isThemeDark) R.style.AppThemeIndigoInverted else R.style.AppThemeIndigo
 
             R.color.blue -> if (isThemeDark) R.style.AppThemeBlueInverted else R.style.AppThemeBlue
+
             R.color.light_blue ->
                 if (isThemeDark) R.style.AppThemeLightBlueInverted else R.style.AppThemeLightBlue
 
@@ -76,31 +72,9 @@ class PreferencesHelper(private val activity: Activity) {
 
             R.color.blue_gray ->
                 if (isThemeDark) R.style.AppThemeBlueGrayInverted else R.style.AppThemeBlueGray
+
             else -> R.color.blue
         }
     }
-
-    fun setThemeAccent(accent: Int) {
-        getPreference(TAG_ACCENT_PREF).edit().putInt(TAG_ACCENT_VALUE, accent).apply()
-        activity.recreate()
-    }
-
-    fun getAccent(): Int {
-        return try {
-            getPreference(TAG_ACCENT_PREF).getInt(
-                TAG_ACCENT_VALUE,
-                R.color.blue
-            )
-        } catch (e: Exception) {
-            R.color.blue
-        }
-    }
-
-    fun setSearchToolbarVisibility(isVisible: Boolean) {
-        getPreference(TAG_SEARCH_BAR_PREF).edit().putBoolean(TAG_SEARCH_BAR_VALUE, isVisible).apply()
-    }
-
-    fun isSearchBarEnabled(): Boolean {
-        return getPreference(TAG_SEARCH_BAR_PREF).getBoolean(TAG_SEARCH_BAR_VALUE, true)
-    }
 }
+

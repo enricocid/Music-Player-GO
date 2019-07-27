@@ -48,7 +48,7 @@ class SongsAdapter(music: MutableList<Music>) : RecyclerView.Adapter<SongsAdapte
         val title = mMusic[holder.adapterPosition].title
         val duration = mMusic[holder.adapterPosition].duration
 
-        holder.bindItems(track, title, duration)
+        holder.bindItems(track, title!!, duration)
     }
 
     inner class SongsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

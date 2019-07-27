@@ -31,7 +31,6 @@ import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.music.MusicViewModel
 import com.iven.musicplayergo.player.*
-import com.iven.musicplayergo.uihelpers.PreferencesHelper
 import com.iven.musicplayergo.uihelpers.UIUtils
 import com.iven.musicplayergo.uihelpers.WaveView
 import kotlinx.android.synthetic.main.artist_details.*
@@ -52,7 +51,6 @@ class MainFragment : Fragment() {
     private lateinit var mActivity: AppCompatActivity
 
     //preferences
-    private lateinit var mPreferencesHelper: PreferencesHelper
     private var sThemeInverted: Boolean = false
     private var mAccent: Int = R.color.blue
     private var sSearchEnabled: Boolean = true
@@ -205,8 +203,7 @@ class MainFragment : Fragment() {
 
         mActivity = activity as AppCompatActivity
 
-        mPreferencesHelper = PreferencesHelper(mActivity)
-        sSearchEnabled = mPreferencesHelper.isSearchBarEnabled()
+        sSearchEnabled = mMusicPlayerGoPreferences.isSearchBarEnabled
 
         setViews()
         mControlsContainer.afterMeasured {
@@ -337,7 +334,8 @@ class MainFragment : Fragment() {
                     mMusicNotificationManager.createNotification()
                 )
             }
-            PreferencesHelper(mActivity).setThemeAccent(accent)
+            mMusicPlayerGoPreferences.accent = accent
+            mActivity.recreate()
         }
     }
 
@@ -596,7 +594,8 @@ class MainFragment : Fragment() {
                 mPlayerService.isRestoredFromPause = true
             }
         }
-        mPreferencesHelper.invertTheme()
+        mMusicPlayerGoPreferences.isThemeInverted = !mMusicPlayerGoPreferences.isThemeInverted
+        mActivity.recreate()
     }
 
     private fun checkIsPlayer(): Boolean {
@@ -684,7 +683,7 @@ class MainFragment : Fragment() {
             val artist = currentSong.artist
             //do only if we are not on played artist/album details
             if (mNavigationArtist != artist) {
-                mArtistsAdapter.onArtistClick?.invoke(artist)
+                mArtistsAdapter.onArtistClick?.invoke(artist!!)
                 val playingAlbumPosition = MusicUtils.getAlbumPositionInList(album!!, mSelectedArtistAlbums)
                 mAlbumsAdapter.swapSelectedAlbum(playingAlbumPosition)
                 mAlbumsRecyclerView.scrollToPosition(playingAlbumPosition)
@@ -701,7 +700,7 @@ class MainFragment : Fragment() {
     private fun handleSearchBarVisibility() {
         if (::mSupportActionBar.isInitialized) {
             val newVisibility = !mSupportActionBar.isShowing
-            mPreferencesHelper.setSearchToolbarVisibility(newVisibility)
+            mMusicPlayerGoPreferences.isSearchBarEnabled = newVisibility
             setHasOptionsMenu(newVisibility)
             val searchToggleButtonColor = when (newVisibility) {
                 false -> Color.GRAY

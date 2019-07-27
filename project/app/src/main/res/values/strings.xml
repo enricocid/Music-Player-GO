@@ -8,4 +8,12 @@
     <string name="no_browser">No browser found!</string>
     <string name="perm_rationale">Music Player GO needs access to your files to play music!</string>
     <string name="error_no_music">No music found on your phone!</string>
+
+    <!-- Preferences keys -->
+    <string name="prefs_accent" translatable="false">com.iven.musicplayergo.pref_accent</string>
+    <string name="prefs_accent_value" translatable="false">com.iven.musicplayergo.pref_accent_value</string>
+    <string name="prefs_theme" translatable="false">com.iven.musicplayergo.pref_theme</string>
+    <string name="prefs_theme_value" translatable="false">com.iven.musicplayergo.pref_theme_value</string>
+    <string name="prefs_search_bar" translatable="false">com.iven.musicplayergo.pref_search_bar</string>
+    <string name="prefs_search_bar_value" translatable="false">com.iven.musicplayergo.pref_search_bar_value</string>
 </resources>

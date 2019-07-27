@@ -13,14 +13,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import com.iven.musicplayergo.uihelpers.PreferencesHelper
 
 private const val TAG_PERMISSION_RATIONALE = "com.iven.musicplayergo.rationale"
 
 class MainActivity : AppCompatActivity() {
 
     //preferences
-    private lateinit var mPreferencesHelper: PreferencesHelper
     private var mAccent: Int? = R.color.blue
     private var sThemeInverted: Boolean = false
     private lateinit var mMainFragment: MainFragment
@@ -53,12 +51,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mPreferencesHelper = PreferencesHelper(this)
-
-        mAccent = mPreferencesHelper.getAccent()
-        sThemeInverted = mPreferencesHelper.isThemeInverted()
-
-        mPreferencesHelper.applyTheme(mAccent!!, sThemeInverted)
+        mAccent = mMusicPlayerGoPreferences.accent
+        sThemeInverted = mMusicPlayerGoPreferences.isThemeInverted
+        setTheme(mMusicPlayerGoPreferences.resolveTheme(sThemeInverted, mAccent))
 
         setContentView(R.layout.main_activity)
 
