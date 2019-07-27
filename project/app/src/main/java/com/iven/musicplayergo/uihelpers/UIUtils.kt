@@ -1,15 +1,19 @@
 package com.iven.musicplayergo.uihelpers
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.adapters.ArtistsAdapter
 
 object UIUtils {
 
+    @JvmStatic
     fun getColor(context: Context, color: Int, emergencyColor: Int): Int {
         return try {
             ContextCompat.getColor(context, color)
@@ -18,6 +22,7 @@ object UIUtils {
         }
     }
 
+    @JvmStatic
     fun setupSearch(
         searchView: SearchView,
         artistsAdapter: ArtistsAdapter,
@@ -45,6 +50,7 @@ object UIUtils {
         }
     }
 
+    @JvmStatic
     private fun processQuery(query: String, artistsAdapter: ArtistsAdapter, artists: List<String>) {
         // in real app you'd have it instantiated just once
         val results = mutableListOf<String>()
@@ -65,6 +71,7 @@ object UIUtils {
         }
     }
 
+    @JvmStatic
     fun setHorizontalScrollBehavior(parentView: View, vararg textViews: TextView) {
         var isLongPressed = false
 
@@ -88,5 +95,14 @@ object UIUtils {
             }
             return@setOnTouchListener false
         }
+    }
+
+    //update theme
+    @JvmStatic
+    fun applyNewThemeSmoothly(activity: Activity) {
+        //smoothly set app theme
+        val intent = Intent(activity, MainActivity::class.java)
+        activity.startActivity(intent)
+        activity.finish()
     }
 }

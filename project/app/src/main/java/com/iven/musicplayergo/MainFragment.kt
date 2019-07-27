@@ -335,7 +335,7 @@ class MainFragment : Fragment() {
                 )
             }
             mMusicPlayerGoPreferences.accent = accent
-            mActivity.recreate()
+            UIUtils.applyNewThemeSmoothly(mActivity)
         }
     }
 
@@ -594,8 +594,9 @@ class MainFragment : Fragment() {
                 mPlayerService.isRestoredFromPause = true
             }
         }
-        mMusicPlayerGoPreferences.isThemeInverted = !mMusicPlayerGoPreferences.isThemeInverted
-        mActivity.recreate()
+
+        mMusicPlayerGoPreferences.isThemeInverted = !sThemeInverted
+        UIUtils.applyNewThemeSmoothly(mActivity)
     }
 
     private fun checkIsPlayer(): Boolean {

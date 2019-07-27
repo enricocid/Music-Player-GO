@@ -10,6 +10,7 @@
         <item name="card_color">@color/white</item>
         <item name="controls_panel_stroke">@color/gray_50</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 
     <!-- INVERTED THEME -->
@@ -22,5 +23,6 @@
         <item name="card_color">@color/black</item>
         <item name="controls_panel_stroke">@color/gray_900</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 </resources>
