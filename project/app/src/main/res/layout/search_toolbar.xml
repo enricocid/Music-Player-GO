@@ -3,7 +3,8 @@
         xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/search_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="48dp"
         android:background="?attr/colorAccent"
         android:elevation="2dp"
+        android:layout_marginBottom="8dp"
         android:theme="@style/SearchBarStyle"/>
