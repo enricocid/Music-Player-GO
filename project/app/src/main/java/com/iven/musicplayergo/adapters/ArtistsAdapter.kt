@@ -21,34 +21,8 @@ class ArtistsAdapter(
     var onArtistClick: ((String) -> Unit)? = null
     private var mArtists = artists
 
-    private var mLetters = LinkedHashMap<String, Int>()
-
     init {
         mArtists.sort()
-        generateLetters()
-    }
-
-    private fun generateLetters() {
-        try {
-            mArtists.forEachIndexed { index, artist ->
-                if (!mLetters.containsKey(artist.substring(0, 1))) {
-                    mLetters[artist.substring(0, 1)] = index
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    fun getLetterPosition(letter: String): Int {
-        if (mLetters.containsKey(letter)) {
-            return mLetters[letter]!!
-        }
-        return -1
-    }
-
-    fun getLetters(): Array<String> {
-        return mLetters.keys.toTypedArray()
     }
 
     fun setQueryResults(artists: MutableList<String>) {

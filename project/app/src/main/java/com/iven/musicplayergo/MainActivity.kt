@@ -5,6 +5,7 @@ import android.animation.Animator
 import android.annotation.TargetApi
 import android.content.*
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.net.Uri
@@ -20,6 +21,7 @@ import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -36,7 +38,9 @@ import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.music.MusicViewModel
 import com.iven.musicplayergo.player.*
 import com.iven.musicplayergo.uihelpers.UIUtils
-import com.iven.musicplayergo.uihelpers.WaveView
+import com.reddit.indicatorfastscroll.FastScrollItemIndicator
+import com.reddit.indicatorfastscroll.FastScrollerThumbView
+import com.reddit.indicatorfastscroll.FastScrollerView
 import kotlinx.android.synthetic.main.artist_details.*
 import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.player_controls_panel.*
@@ -57,8 +61,9 @@ class MainActivity : AppCompatActivity() {
 
     ////views
 
-    //wave view
-    private lateinit var mWaveView: WaveView
+    //indicator fast scroller by reddit
+    private lateinit var mIndicatorFastScrollerView: FastScrollerView
+    private lateinit var mIndicatorFastScrollThumb: FastScrollerThumbView
 
     //RecyclerViews
     private lateinit var mArtistsRecyclerView: RecyclerView
@@ -132,7 +137,6 @@ class MainActivity : AppCompatActivity() {
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder!!
             mMediaPlayerHolder.mediaPlayerInterface = mediaPlayerInterface
 
-            // mMediaPlayerHolder.mainFragment = this@MainFragment
             mMusicNotificationManager = mPlayerService.musicNotificationManager
             mMusicNotificationManager.accent = UIUtils.getColor(this@MainActivity, mAccent, R.color.blue)
             loadMusic()
@@ -210,7 +214,7 @@ class MainActivity : AppCompatActivity() {
             val searchView = search.actionView as SearchView
 
             searchView.setIconifiedByDefault(false)
-            UIUtils.setupSearch(searchView, mArtistsAdapter, mArtists, mWaveView)
+            UIUtils.setupSearch(searchView, mArtistsAdapter, mArtists, mIndicatorFastScrollerView)
         }
         return super.onCreateOptionsMenu(menu)
     }
@@ -299,8 +303,9 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        //wave view
-        mWaveView = wave_view
+        //indicator fast scroller view
+        mIndicatorFastScrollerView = fastscroller
+        mIndicatorFastScrollThumb = fastscroller_thumb
 
         //recycler views
         mArtistsRecyclerView = artists_rv
@@ -425,9 +430,30 @@ class MainActivity : AppCompatActivity() {
         //set indexes if artists rv is scrollable
         mArtistsRecyclerView.afterMeasured {
             if (mArtistsRecyclerView.computeVerticalScrollRange() > height) {
-                mWaveView.setOnWaveTouchListener(mArtistsRecyclerView, mArtistsAdapter, mArtistsLayoutManager)
+
+                mIndicatorFastScrollerView.setupWithRecyclerView(
+                    mArtistsRecyclerView,
+                    { position ->
+                        val item = mArtists[position] // Get your model object
+                        // or fetch the section at [position] from your database
+                        FastScrollItemIndicator.Text(
+                            item.substring(0, 1).toUpperCase() // Grab the first letter and capitalize it
+                        ) // Return a text indicator
+                    }
+                )
+
+                mIndicatorFastScrollerView.textColor =
+                    ColorStateList.valueOf(ContextCompat.getColor(this@MainActivity, mAccent))
+                mIndicatorFastScrollerView.afterMeasured {
+
+                    //set margin for thumb view
+                    val newLayoutParams = mIndicatorFastScrollThumb.layoutParams as FrameLayout.LayoutParams
+                    newLayoutParams.marginEnd = width
+                    mIndicatorFastScrollThumb.layoutParams = newLayoutParams
+                }
+                mIndicatorFastScrollThumb.setupWithFastScroller(mIndicatorFastScrollerView)
             } else {
-                mWaveView.visibility = View.GONE
+                mIndicatorFastScrollerView.visibility = View.GONE
             }
             //set artist details on artists rv loaded
             setArtistDetails()
@@ -451,7 +477,6 @@ class MainActivity : AppCompatActivity() {
         mArtistsAdapter = ArtistsAdapter(resources, mArtists, mMusic)
 
         mArtistsRecyclerView.adapter = mArtistsAdapter
-        mWaveView.letters = mArtistsAdapter.getLetters()
 
         mArtistsAdapter.onArtistClick = { artist ->
             if (mNavigationArtist != artist) {
@@ -694,7 +719,7 @@ class MainActivity : AppCompatActivity() {
                     mArtistsRecyclerView.visibility = View.INVISIBLE
                     mArtistDetails.isClickable = false
                     mSearchToggleButton.visibility = View.GONE
-                    mWaveView.visibility = View.GONE
+                    mIndicatorFastScrollerView.visibility = View.GONE
                     if (sSearchEnabled && ::mSupportActionBar.isInitialized && mSupportActionBar.isShowing) mSupportActionBar.hide()
                 }
             }
@@ -707,7 +732,7 @@ class MainActivity : AppCompatActivity() {
                     mArtistDetails.isClickable = true
                     if (sSearchEnabled && ::mSupportActionBar.isInitialized && !mSupportActionBar.isShowing) mSupportActionBar.show()
                     mSearchToggleButton.visibility = View.VISIBLE
-                    mWaveView.visibility = View.VISIBLE
+                    mIndicatorFastScrollerView.visibility = View.VISIBLE
                 }
             }
 

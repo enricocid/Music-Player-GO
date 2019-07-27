@@ -11,6 +11,8 @@ import androidx.core.content.ContextCompat
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.ArtistsAdapter
+import com.reddit.indicatorfastscroll.FastScrollItemIndicator
+import com.reddit.indicatorfastscroll.FastScrollerView
 
 object UIUtils {
 
@@ -28,7 +30,7 @@ object UIUtils {
         searchView: SearchView,
         artistsAdapter: ArtistsAdapter,
         artists: List<String>,
-        waveView: WaveView
+        indicator: FastScrollerView
     ) {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -46,7 +48,7 @@ object UIUtils {
         })
 
         searchView.setOnQueryTextFocusChangeListener { _: View, hasFocus: Boolean ->
-            waveView.visibility = if (hasFocus) View.GONE else View.VISIBLE
+            indicator.visibility = if (hasFocus) View.GONE else View.VISIBLE
             if (!hasFocus) searchView.isIconified = true
         }
     }

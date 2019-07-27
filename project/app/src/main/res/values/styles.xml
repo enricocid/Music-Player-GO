@@ -1,5 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <attr name="icon_color" format="color" />
+    <attr name="card_color" format="color" />
+    <attr name="controls_panel_stroke" format="color" />
+
     <!-- LIGHT THEME -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="icon_color">@color/black</item>

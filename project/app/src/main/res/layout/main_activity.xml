@@ -3,7 +3,6 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        xmlns:wave="http://schemas.android.com/apk/res-auto"
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -28,16 +27,20 @@
                     android:layout_height="match_parent"
                     tools:context=".MainActivity"/>
 
-
             <!-- ARTIST'S DISCOGRAPHY -->
             <include layout="@layout/artist_details"/>
 
-            <com.iven.musicplayergo.uihelpers.WaveView
-                    android:id="@+id/wave_view"
-                    android:layout_width="match_parent"
-                    wave:sidebarAccentColor="?attr/colorAccent"
-                    wave:sidebarLettersColor="?attr/icon_color"
+            <com.reddit.indicatorfastscroll.FastScrollerView
+                    android:id="@+id/fastscroller"
+                    android:layout_width="32dp"
+                    android:layout_gravity="end"
                     android:layout_height="match_parent"/>
+
+            <com.reddit.indicatorfastscroll.FastScrollerThumbView
+                    android:id="@+id/fastscroller_thumb"
+                    android:layout_width="56dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"/>
         </FrameLayout>
     </LinearLayout>
 

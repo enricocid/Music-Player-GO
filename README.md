@@ -38,7 +38,7 @@
   - Skip to next song;
 - Music organized by Artist;
 - Revealable Artist's page: albums/songs;
-- Colorful Wave scroller;
+- Indicator fast scroll by Reddit;
 - Search bar (which can be disabled);
 - Dark status bar icons (available from Android Marshmallow);
 
@@ -82,6 +82,7 @@
  
 ### Dependencies/API used: 
 
+  - Reddit's Indicator Fast Scroll;
   - kotlin-stdlib;
   - AndroidX;
   - ViewModel and LiveData;
@@ -92,6 +93,9 @@
 # Credits:
 
 - **Julian Javier Gomez - Axinen Design** (https://plus.google.com/u/0/+AxinenDesign) for the wonderful **material design icon**
+
+- **Reddit** (@reddit - https://github.com/reddit) for Indicator Fast Scroll:
+https://github.com/reddit/IndicatorFastScroll
 
 - https://material.io/tools/icons/?style=round for icons
 
@@ -104,9 +108,6 @@
 - **Harry** (@HarryHeights - https://github.com/HarryHeights) for Privacy policy
 
 - **olayhemy** (@olayhemy ttps://github.com/olayhemy) for FAQ
-
-- **solartcc** (@solartcc - https://github.com/solartcc) for part of the WaveSideBar:
-https://github.com/Solartisan/WaveSideBar
 
 - **sagorahmed** (@sagorahmed - https://github.com/sagorahmed) for an important bug report #62
 

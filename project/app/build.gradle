@@ -39,4 +39,5 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
     implementation 'androidx.media:media:1.0.1'
     api 'com.google.android.material:material:1.0.0'
+    implementation 'com.reddit:indicator-fast-scroll:1.1.0'
 }
