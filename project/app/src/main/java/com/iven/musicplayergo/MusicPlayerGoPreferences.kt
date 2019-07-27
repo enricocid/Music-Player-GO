@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.uihelpers
+package com.iven.musicplayergo
 
 import android.content.Context
 import android.content.SharedPreferences

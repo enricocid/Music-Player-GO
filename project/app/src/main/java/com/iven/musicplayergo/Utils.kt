@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.uihelpers
+package com.iven.musicplayergo
 
 import android.app.Activity
 import android.content.Context
@@ -8,13 +8,10 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
-import com.iven.musicplayergo.MainActivity
-import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.ArtistsAdapter
-import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerView
 
-object UIUtils {
+object Utils {
 
     @JvmStatic
     fun getColor(context: Context, color: Int, emergencyColor: Int): Int {

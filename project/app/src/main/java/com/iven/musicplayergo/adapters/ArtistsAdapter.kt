@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
-import com.iven.musicplayergo.uihelpers.UIUtils
+import com.iven.musicplayergo.Utils
 import kotlinx.android.synthetic.main.artist_item.view.*
 
 class ArtistsAdapter(
@@ -51,7 +51,7 @@ class ArtistsAdapter(
             itemView.album_count.text =
                 MusicUtils.buildSpanned(resources.getString(R.string.artist_info, albumCount, songCount))
             itemView.setOnClickListener { onArtistClick?.invoke(mArtists[adapterPosition]) }
-            UIUtils.setHorizontalScrollBehavior(itemView, itemView.artist)
+            Utils.setHorizontalScrollBehavior(itemView, itemView.artist)
         }
     }
 }

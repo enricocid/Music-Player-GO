@@ -37,7 +37,6 @@ import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.music.MusicViewModel
 import com.iven.musicplayergo.player.*
-import com.iven.musicplayergo.uihelpers.UIUtils
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerThumbView
 import com.reddit.indicatorfastscroll.FastScrollerView
@@ -138,7 +137,7 @@ class MainActivity : AppCompatActivity() {
             mMediaPlayerHolder.mediaPlayerInterface = mediaPlayerInterface
 
             mMusicNotificationManager = mPlayerService.musicNotificationManager
-            mMusicNotificationManager.accent = UIUtils.getColor(this@MainActivity, mAccent, R.color.blue)
+            mMusicNotificationManager.accent = Utils.getColor(this@MainActivity, mAccent, R.color.blue)
             loadMusic()
         }
 
@@ -214,7 +213,7 @@ class MainActivity : AppCompatActivity() {
             val searchView = search.actionView as SearchView
 
             searchView.setIconifiedByDefault(false)
-            UIUtils.setupSearch(searchView, mArtistsAdapter, mArtists, mIndicatorFastScrollerView)
+            Utils.setupSearch(searchView, mArtistsAdapter, mArtists, mIndicatorFastScrollerView)
         }
         return super.onCreateOptionsMenu(menu)
     }
@@ -231,7 +230,7 @@ class MainActivity : AppCompatActivity() {
         //set ui theme
         sThemeInverted = mMusicPlayerGoPreferences.isThemeInverted
         mAccent = mMusicPlayerGoPreferences.accent
-        setTheme(UIUtils.resolveTheme(sThemeInverted, mMusicPlayerGoPreferences.accent))
+        setTheme(Utils.resolveTheme(sThemeInverted, mMusicPlayerGoPreferences.accent))
 
         setContentView(R.layout.main_activity)
 
@@ -298,7 +297,7 @@ class MainActivity : AppCompatActivity() {
         //set custom color to background
         main.setBackgroundColor(
             ColorUtils.setAlphaComponent(
-                UIUtils.getColor(this, mAccent, R.color.blue),
+                Utils.getColor(this, mAccent, R.color.blue),
                 if (sThemeInverted) 10 else 40
             )
         )
@@ -328,7 +327,7 @@ class MainActivity : AppCompatActivity() {
         mSearchToggleButton = search_option
 
         //setup horizontal scrolling text
-        UIUtils.setHorizontalScrollBehavior(mPlayerInfoView, playing_song, playing_album)
+        Utils.setHorizontalScrollBehavior(mPlayerInfoView, playing_song, playing_album)
 
         //search view
         setSupportActionBar(search_toolbar)
@@ -347,8 +346,8 @@ class MainActivity : AppCompatActivity() {
         mArtistsDetailsSelectedDisc = selected_disc
 
         //setup horizontal scrolling text for artist details title and album title
-        UIUtils.setHorizontalScrollBehavior(discs_artist_container, mArtistDetailsTitle)
-        UIUtils.setHorizontalScrollBehavior(disc_title_container, mArtistsDetailsSelectedDisc)
+        Utils.setHorizontalScrollBehavior(discs_artist_container, mArtistDetailsTitle)
+        Utils.setHorizontalScrollBehavior(disc_title_container, mArtistsDetailsSelectedDisc)
 
         mArtistDetailsSelectedDiscYear = selected_disc_year
         close_button.setOnClickListener { revealArtistDetails(!sArtistDiscographyExpanded) }
@@ -383,7 +382,7 @@ class MainActivity : AppCompatActivity() {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
                     userSelectedPosition = progress
-                    mSongPosition.setTextColor(UIUtils.getColor(this@MainActivity, mAccent, R.color.blue))
+                    mSongPosition.setTextColor(Utils.getColor(this@MainActivity, mAccent, R.color.blue))
                 }
                 mSongPosition.text = MusicUtils.formatSongDuration(progress.toLong())
             }
@@ -414,7 +413,7 @@ class MainActivity : AppCompatActivity() {
         mColorsRecyclerView.adapter = colorsAdapter
 
         colorsAdapter.onColorClick = { accent ->
-            mMusicNotificationManager.accent = UIUtils.getColor(this, mAccent, R.color.blue)
+            mMusicNotificationManager.accent = Utils.getColor(this, mAccent, R.color.blue)
             if (mMediaPlayerHolder.isMediaPlayer) {
                 mMusicNotificationManager.notificationManager.notify(
                     NOTIFICATION_ID,
@@ -422,7 +421,7 @@ class MainActivity : AppCompatActivity() {
                 )
             }
             mMusicPlayerGoPreferences.accent = accent
-            UIUtils.applyNewThemeSmoothly(this)
+            Utils.applyNewThemeSmoothly(this)
         }
     }
 
@@ -514,7 +513,7 @@ class MainActivity : AppCompatActivity() {
         mAlbumsRecyclerView.layoutManager = mAlbumsLayoutManager
         mAlbumsAdapter = AlbumsAdapter(
             mSelectedArtistAlbums,
-            UIUtils.getColor(this, mAccent, R.color.blue)
+            Utils.getColor(this, mAccent, R.color.blue)
         )
         mAlbumsRecyclerView.adapter = mAlbumsAdapter
 
@@ -657,7 +656,7 @@ class MainActivity : AppCompatActivity() {
         val themeColor = if (sThemeInverted) R.color.white else R.color.black
         val color = if (onPlaybackCompletion) themeColor else if (mMediaPlayerHolder.isReset) mAccent else themeColor
         mSkipPrevButton.setColorFilter(
-            UIUtils.getColor(
+            Utils.getColor(
                 this,
                 color,
                 if (onPlaybackCompletion) themeColor else R.color.blue
@@ -783,7 +782,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         mMusicPlayerGoPreferences.isThemeInverted = !sThemeInverted
-        UIUtils.applyNewThemeSmoothly(this)
+        Utils.applyNewThemeSmoothly(this)
     }
 
     //hide/show search bar dynamically

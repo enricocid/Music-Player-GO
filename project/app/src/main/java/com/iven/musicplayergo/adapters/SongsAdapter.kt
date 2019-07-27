@@ -8,7 +8,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.player.MediaPlayerHolder
-import com.iven.musicplayergo.uihelpers.UIUtils
+import com.iven.musicplayergo.Utils
 import kotlinx.android.synthetic.main.song_item.view.*
 
 class SongsAdapter(music: MutableList<Music>) : RecyclerView.Adapter<SongsAdapter.SongsHolder>() {
@@ -58,7 +58,7 @@ class SongsAdapter(music: MutableList<Music>) : RecyclerView.Adapter<SongsAdapte
             itemView.title.text = title
             itemView.duration.text = MusicUtils.formatSongDuration(duration)
             itemView.setOnClickListener { onSongClick?.invoke(mMusic[adapterPosition]) }
-            UIUtils.setHorizontalScrollBehavior(itemView, itemView.title)
+            Utils.setHorizontalScrollBehavior(itemView, itemView.title)
         }
     }
 }
