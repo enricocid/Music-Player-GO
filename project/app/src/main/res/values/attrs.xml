@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="icon_color" format="color" />
-    <attr name="theme_icon" format="color" />
     <attr name="card_color" format="color" />
     <attr name="controls_panel_stroke" format="color" />
 
