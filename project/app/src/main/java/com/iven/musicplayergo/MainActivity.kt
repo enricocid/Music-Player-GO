@@ -22,7 +22,6 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -295,12 +294,9 @@ class MainActivity : AppCompatActivity() {
     private fun setViews() {
 
         //set custom color to background
-        main.setBackgroundColor(
-            ColorUtils.setAlphaComponent(
-                Utils.getColor(this, mAccent, R.color.blue),
-                if (sThemeInverted) 10 else 40
-            )
-        )
+        val accent = Utils.getColor(this, mAccent, R.color.blue)
+        val backgroundColor = if (sThemeInverted) Utils.darkenColor(accent) else Utils.lightenColor(accent)
+        main.setBackgroundColor(backgroundColor)
 
         //indicator fast scroller view
         mIndicatorFastScrollerView = fastscroller
@@ -446,7 +442,7 @@ class MainActivity : AppCompatActivity() {
                 mIndicatorFastScrollerView.afterMeasured {
 
                     //set margin for artists recycler to improve fast scroller visibility
-                    mArtistsRecyclerView.setPadding(0,0,width,0)
+                    mArtistsRecyclerView.setPadding(0, 0, width, 0)
 
                     //set margin for thumb view
                     val newLayoutParams = mIndicatorFastScrollThumb.layoutParams as FrameLayout.LayoutParams

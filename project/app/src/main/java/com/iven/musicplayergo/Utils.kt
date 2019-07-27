@@ -3,11 +3,13 @@ package com.iven.musicplayergo
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import com.iven.musicplayergo.adapters.ArtistsAdapter
 import com.reddit.indicatorfastscroll.FastScrollerView
 
@@ -154,5 +156,15 @@ object Utils {
         val intent = Intent(activity, MainActivity::class.java)
         activity.startActivity(intent)
         activity.finish()
+    }
+
+    @JvmStatic
+    fun darkenColor(color: Int): Int {
+        return ColorUtils.blendARGB(color, Color.BLACK, 0.95f)
+    }
+
+    @JvmStatic
+    fun lightenColor(color: Int): Int {
+        return ColorUtils.blendARGB(color, Color.WHITE, 0.90f)
     }
 }
