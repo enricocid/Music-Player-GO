@@ -38,7 +38,7 @@ import com.iven.musicplayergo.player.*
 import com.iven.musicplayergo.uihelpers.UIUtils
 import com.iven.musicplayergo.uihelpers.WaveView
 import kotlinx.android.synthetic.main.artist_details.*
-import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.player_controls_panel.*
 import kotlinx.android.synthetic.main.player_seek.*
 import kotlinx.android.synthetic.main.player_settings.*
@@ -126,6 +126,41 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mMediaPlayerHolder: MediaPlayerHolder
     private lateinit var mMusicNotificationManager: MusicNotificationManager
 
+    private val mConnection = object : ServiceConnection {
+        override fun onServiceConnected(componentName: ComponentName, iBinder: IBinder) {
+            mPlayerService = (iBinder as PlayerService.LocalBinder).instance
+            mMediaPlayerHolder = mPlayerService.mediaPlayerHolder!!
+            mMediaPlayerHolder.mediaPlayerInterface = mediaPlayerInterface
+
+            // mMediaPlayerHolder.mainFragment = this@MainFragment
+            mMusicNotificationManager = mPlayerService.musicNotificationManager
+            mMusicNotificationManager.accent = UIUtils.getColor(this@MainActivity, mAccent, R.color.blue)
+            loadMusic()
+        }
+
+        override fun onServiceDisconnected(componentName: ComponentName) {
+        }
+    }
+
+    private fun doBindService() {
+        // Establish a connection with the service.  We use an explicit
+        // class name because we want a specific service implementation that
+        // we know will be running in our own process (and thus won't be
+        // supporting component replacement by other applications).
+        val startNotStickyIntent = Intent(this, PlayerService::class.java)
+        bindService(startNotStickyIntent, mConnection, Context.BIND_AUTO_CREATE)
+        sBound = true
+        startService(startNotStickyIntent)
+    }
+
+    private fun doUnbindService() {
+        if (sBound) {
+            // Detach our existing connection.
+            unbindService(mConnection)
+            sBound = false
+        }
+    }
+
     //unbind service on destroy
     override fun onDestroy() {
         super.onDestroy()
@@ -194,7 +229,7 @@ class MainActivity : AppCompatActivity() {
         mAccent = mMusicPlayerGoPreferences.accent
         setTheme(UIUtils.resolveTheme(sThemeInverted, mMusicPlayerGoPreferences.accent))
 
-        setContentView(R.layout.fragment_main)
+        setContentView(R.layout.main_activity)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else initMusicPlayerGO()
     }
@@ -215,7 +250,6 @@ class MainActivity : AppCompatActivity() {
         initializeSeekBar()
         doBindService()
     }
-
 
     @TargetApi(23)
     private fun checkPermission() {
@@ -330,6 +364,33 @@ class MainActivity : AppCompatActivity() {
                 mSongsAdapter.randomPlaySelectedAlbum(mMediaPlayerHolder)
             }
         }
+    }
+
+    private fun initializeSeekBar() {
+        mSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            val defaultPositionColor = mSongPosition.currentTextColor
+            var userSelectedPosition = 0
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                sUserIsSeeking = true
+            }
+
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser) {
+                    userSelectedPosition = progress
+                    mSongPosition.setTextColor(UIUtils.getColor(this@MainActivity, mAccent, R.color.blue))
+                }
+                mSongPosition.text = MusicUtils.formatSongDuration(progress.toLong())
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                if (sUserIsSeeking) {
+                    mSongPosition.setTextColor(defaultPositionColor)
+                }
+                sUserIsSeeking = false
+                mMediaPlayerHolder.seekTo(userSelectedPosition)
+            }
+        })
     }
 
     private fun setupSettings() {
@@ -463,33 +524,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initializeSeekBar() {
-        mSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            val defaultPositionColor = mSongPosition.currentTextColor
-            var userSelectedPosition = 0
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                sUserIsSeeking = true
-            }
-
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (fromUser) {
-                    userSelectedPosition = progress
-                    mSongPosition.setTextColor(UIUtils.getColor(this@MainActivity, mAccent, R.color.blue))
-                }
-                mSongPosition.text = MusicUtils.formatSongDuration(progress.toLong())
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                if (sUserIsSeeking) {
-                    mSongPosition.setTextColor(defaultPositionColor)
-                }
-                sUserIsSeeking = false
-                mMediaPlayerHolder.seekTo(userSelectedPosition)
-            }
-        })
-    }
-
     private fun shuffleSongs() {
         if (::mMediaPlayerHolder.isInitialized) {
             val songs = if (sArtistDiscographyExpanded) mSelectedArtistSongs else mAllDeviceSongs
@@ -529,7 +563,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    //interface to let MediaPlayerHolder update the UI media player controls
     val mediaPlayerInterface = object : MediaPlayerInterface {
         override fun onPlaybackCompleted() {
             updateResetStatus(true)
@@ -548,27 +582,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-/*    override
-    fun onPositionChanged(position: Int) {
-        if (!sUserIsSeeking) {
-            mSeekBar.progress = position
-        }
-    }
-
-    override
-    fun onStateChanged() {
-        updatePlayingStatus()
-        if (mMediaPlayerHolder.state != RESUMED && mMediaPlayerHolder.state != PAUSED) {
-            updatePlayingInfo(false)
-        }
-    }
-
-    override
-    fun onPlaybackCompleted() {
-        updateResetStatus(true)
-    }*/
-
 
     private fun restorePlayerStatus() {
         if (::mMediaPlayerHolder.isInitialized) {
@@ -629,22 +642,6 @@ class MainActivity : AppCompatActivity() {
         mPlayPauseButton.setImageResource(drawable)
     }
 
-    private fun invertTheme() {
-        //avoid service killing when the player is in paused state
-        if (::mMediaPlayerHolder.isInitialized && mMediaPlayerHolder.isPlaying) {
-            if (mMediaPlayerHolder.state == PAUSED) {
-                mPlayerService.startForeground(
-                    NOTIFICATION_ID,
-                    mPlayerService.musicNotificationManager.createNotification()
-                )
-                mPlayerService.isRestoredFromPause = true
-            }
-        }
-
-        mMusicPlayerGoPreferences.isThemeInverted = !sThemeInverted
-        UIUtils.applyNewThemeSmoothly(this)
-    }
-
     private fun checkIsPlayer(): Boolean {
         val isPlayer = mMediaPlayerHolder.isMediaPlayer
         if (!isPlayer) {
@@ -686,6 +683,7 @@ class MainActivity : AppCompatActivity() {
         anim.start()
     }
 
+    //reveal animation
     private fun revealAnimationListener(show: Boolean): Animator.AnimatorListener {
 
         return object : Animator.AnimatorListener {
@@ -743,13 +741,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //handle theme changes
+    private fun invertTheme() {
+        //avoid service killing when the player is in paused state
+        if (::mMediaPlayerHolder.isInitialized && mMediaPlayerHolder.isPlaying) {
+            if (mMediaPlayerHolder.state == PAUSED) {
+                mPlayerService.startForeground(
+                    NOTIFICATION_ID,
+                    mPlayerService.musicNotificationManager.createNotification()
+                )
+                mPlayerService.isRestoredFromPause = true
+            }
+        }
+
+        mMusicPlayerGoPreferences.isThemeInverted = !sThemeInverted
+        UIUtils.applyNewThemeSmoothly(this)
+    }
+
     //hide/show search bar dynamically
     private fun handleSearchBarVisibility() {
         if (::mSupportActionBar.isInitialized) {
             val newVisibility = !mSupportActionBar.isShowing
             mMusicPlayerGoPreferences.isSearchBarEnabled = newVisibility
-
-            // setHasOptionsMenu(newVisibility)
 
             val searchToggleButtonColor = when (newVisibility) {
                 false -> Color.GRAY
@@ -776,40 +789,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-    }
-
-    private val mConnection = object : ServiceConnection {
-        override fun onServiceConnected(componentName: ComponentName, iBinder: IBinder) {
-            mPlayerService = (iBinder as PlayerService.LocalBinder).instance
-            mMediaPlayerHolder = mPlayerService.mediaPlayerHolder!!
-            mMediaPlayerHolder.mediaPlayerInterface = mediaPlayerInterface
-
-            // mMediaPlayerHolder.mainFragment = this@MainFragment
-            mMusicNotificationManager = mPlayerService.musicNotificationManager
-            mMusicNotificationManager.accent = UIUtils.getColor(this@MainActivity, mAccent, R.color.blue)
-            loadMusic()
-        }
-
-        override fun onServiceDisconnected(componentName: ComponentName) {
-        }
-    }
-
-    private fun doBindService() {
-        // Establish a connection with the service.  We use an explicit
-        // class name because we want a specific service implementation that
-        // we know will be running in our own process (and thus won't be
-        // supporting component replacement by other applications).
-        val startNotStickyIntent = Intent(this, PlayerService::class.java)
-        bindService(startNotStickyIntent, mConnection, Context.BIND_AUTO_CREATE)
-        sBound = true
-        startService(startNotStickyIntent)
-    }
-
-    private fun doUnbindService() {
-        if (sBound) {
-            // Detach our existing connection.
-            unbindService(mConnection)
-            sBound = false
-        }
     }
 }
