@@ -9,6 +9,7 @@ val mMusicPlayerGoPreferences: MusicPlayerGoPreferences by lazy {
 }
 
 class MusicPlayerGoApp : Application() {
+
     companion object {
         lateinit var prefs: MusicPlayerGoPreferences
     }
@@ -17,4 +18,5 @@ class MusicPlayerGoApp : Application() {
         prefs = MusicPlayerGoPreferences(applicationContext)
         super.onCreate()
     }
+
 }

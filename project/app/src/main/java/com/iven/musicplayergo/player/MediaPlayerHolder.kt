@@ -15,7 +15,6 @@ import android.os.Build
 import android.os.Handler
 import android.os.PowerManager
 import com.iven.musicplayergo.MainActivity
-import com.iven.musicplayergo.MainFragment
 import com.iven.musicplayergo.PlayerService
 import com.iven.musicplayergo.music.Music
 import java.util.concurrent.Executors
@@ -50,8 +49,7 @@ const val RESUMED = 2
 class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.OnCompletionListener,
     MediaPlayer.OnPreparedListener {
 
-    //context
-    lateinit var mainFragment: MainFragment
+    lateinit var mediaPlayerInterface: MediaPlayerInterface
 
     //audio focus
     private var mAudioManager: AudioManager = playerService.getSystemService(AUDIO_SERVICE) as AudioManager
@@ -139,10 +137,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
     }
 
     override fun onCompletion(mediaPlayer: MediaPlayer) {
-        if (::mainFragment.isInitialized && mainFragment.isAdded) {
-            mainFragment.onStateChanged()
-            mainFragment.onPlaybackCompleted()
-        }
+
+        mediaPlayerInterface.onStateChanged()
+        mediaPlayerInterface.onPlaybackCompleted()
+
 
         if (isReset) {
             if (isMediaPlayer) {
@@ -202,9 +200,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
 
     private fun setStatus(status: Int) {
         state = status
-        if (::mainFragment.isInitialized && mainFragment.isAdded) {
-            mainFragment.onStateChanged()
-        }
+        mediaPlayerInterface.onStateChanged()
     }
 
     private fun resumeMediaPlayer() {
@@ -263,9 +259,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
     private fun updateProgressCallbackTask() {
         if (isMediaPlayer && mediaPlayer!!.isPlaying) {
             val currentPosition = mediaPlayer!!.currentPosition
-            if (::mainFragment.isInitialized && mainFragment.isAdded) {
-                mainFragment.onPositionChanged(currentPosition)
-            }
+            mediaPlayerInterface.onPositionChanged(currentPosition)
         }
     }
 

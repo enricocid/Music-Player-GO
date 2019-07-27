@@ -75,7 +75,7 @@ class ArtistsAdapter(
         fun bindItems(title: String, albumCount: Int, songCount: Int) {
             itemView.artist.text = title
             itemView.album_count.text =
-                    MusicUtils.buildSpanned(resources.getString(R.string.artist_info, albumCount, songCount))
+                MusicUtils.buildSpanned(resources.getString(R.string.artist_info, albumCount, songCount))
             itemView.setOnClickListener { onArtistClick?.invoke(mArtists[adapterPosition]) }
             UIUtils.setHorizontalScrollBehavior(itemView, itemView.artist)
         }

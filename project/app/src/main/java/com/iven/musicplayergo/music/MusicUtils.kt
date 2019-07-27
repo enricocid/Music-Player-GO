@@ -13,12 +13,14 @@ import java.util.concurrent.TimeUnit
 
 object MusicUtils {
 
+    @JvmStatic
     fun getArtists(music: Map<String, Map<String, List<Music>>>): MutableList<String> {
         val artists = music.keys.toMutableList()
         artists.sort()
         return artists
     }
 
+    @JvmStatic
     fun getArtistSongsCount(albums: Map<String, List<Music>>): Int {
         var songsCount = 0
         try {
@@ -31,6 +33,7 @@ object MusicUtils {
         return songsCount
     }
 
+    @JvmStatic
     fun getAlbumPositionInList(album: String, albums: List<Album>): Int {
         var returnedPosition = 0
         try {
@@ -41,6 +44,7 @@ object MusicUtils {
         return returnedPosition
     }
 
+    @JvmStatic
     fun getArtistSongs(albums: Map<String, List<Music>>): MutableList<Music> {
         val artistSongs = mutableListOf<Music>()
         try {
@@ -53,10 +57,12 @@ object MusicUtils {
         return artistSongs
     }
 
+    @JvmStatic
     fun getYearForAlbum(resources: Resources, year: Int): String {
         return if (year == 0) resources.getString(R.string.unknown_year) else year.toString()
     }
 
+    @JvmStatic
     fun buildSortedArtistAlbums(resources: Resources, albums: Map<String, List<Music>>): List<Album> {
 
         val sortedAlbums = mutableListOf<Album>()
@@ -73,6 +79,7 @@ object MusicUtils {
         return sortedAlbums
     }
 
+    @JvmStatic
     fun formatSongDuration(duration: Long): String {
         return String.format(
             Locale.getDefault(), "%02d:%02d",
@@ -85,6 +92,7 @@ object MusicUtils {
         )
     }
 
+    @JvmStatic
     fun formatSongTrack(trackNumber: Int): Int {
         var formatted = trackNumber
         if (trackNumber >= 1000) {
@@ -93,6 +101,7 @@ object MusicUtils {
         return formatted
     }
 
+    @JvmStatic
     fun buildSpanned(res: String): Spanned {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             Html.fromHtml(res, Html.FROM_HTML_MODE_LEGACY)
@@ -100,6 +109,7 @@ object MusicUtils {
             Html.fromHtml(res)
     }
 
+    @JvmStatic
     fun getMusicCursor(contentResolver: ContentResolver): Cursor? {
         return contentResolver.query(
             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, // Uri

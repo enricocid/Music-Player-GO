@@ -34,6 +34,7 @@ class PermissionDialogFragment : BottomSheetDialogFragment() {
         requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 2588)
         super.onDismiss(dialog)
     }
+
     companion object {
         fun newInstance() = PermissionDialogFragment()
     }
