@@ -23,7 +23,7 @@
             android:paddingEnd="2dp"
             android:singleLine="true"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textStyle="bold"/>
 
     <TextView
@@ -37,7 +37,7 @@
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="14sp"/>
+            android:textSize="16sp"/>
 
     <TextView
             android:id="@+id/duration"
@@ -49,5 +49,5 @@
             android:singleLine="true"
             android:textAppearance="@android:style/TextAppearance.Material.Body1"
             android:textColor="?android:attr/textColorSecondary"
-            android:textSize="12sp"/>
+            android:textSize="14sp"/>
 </LinearLayout>

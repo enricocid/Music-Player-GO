@@ -45,7 +45,7 @@
                     android:textAppearance="@android:style/TextAppearance.Material.Headline"
                     android:textAlignment="textStart"
                     android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="22sp"/>
+                    android:textSize="24sp"/>
 
             <!-- ALBUM COUNT -->
             <TextView
@@ -57,7 +57,7 @@
                     android:textAppearance="@android:style/TextAppearance.Material.Subhead"
                     android:textAlignment="textStart"
                     android:textColor="?android:attr/textColorSecondary"
-                    android:textSize="12sp"/>
+                    android:textSize="14sp"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -119,7 +119,7 @@
                             android:marqueeRepeatLimit="marquee_forever"
                             android:paddingBottom="2dp"
                             android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="16sp"/>
+                            android:textSize="18sp"/>
 
                     <!-- ALBUM YEAR -->
                     <TextView
@@ -131,7 +131,7 @@
                             android:textAppearance="@android:style/TextAppearance.Material.Subhead"
                             android:textAlignment="center"
                             android:textColor="?android:attr/textColorSecondary"
-                            android:textSize="12sp"/>
+                            android:textSize="14sp"/>
                 </LinearLayout>
             </LinearLayout>
 

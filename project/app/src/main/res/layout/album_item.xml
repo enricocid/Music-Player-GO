@@ -28,7 +28,7 @@
                 android:padding="2dp"
                 android:textAlignment="center"
                 android:textColor="?android:attr/textColorPrimary"
-                android:textSize="14sp"/>
+                android:textSize="16sp"/>
 
         <TextView
                 android:id="@+id/year"
@@ -40,6 +40,6 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Small"
                 android:textAlignment="center"
                 android:textColor="?attr/colorAccent"
-                android:textSize="12sp"/>
+                android:textSize="14sp"/>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
