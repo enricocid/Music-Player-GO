@@ -17,7 +17,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:contentDescription="@string/app_name"
-                android:foreground="?android:attr/actionBarItemBackground"
+                android:background="?android:attr/actionBarItemBackground"
                 android:padding="12dp"
                 android:src="@drawable/ic_shuffle"/>
 
@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:contentDescription="@string/app_name"
-                android:foreground="?android:attr/actionBarItemBackground"
+                android:background="?android:attr/actionBarItemBackground"
                 android:padding="12dp"
                 android:src="@drawable/ic_equalizer"/>
 
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:contentDescription="@string/app_name"
-                android:foreground="?android:attr/actionBarItemBackground"
+                android:background="?android:attr/actionBarItemBackground"
                 android:onClick="openGitPage"
                 android:padding="12dp"
                 android:src="@drawable/ic_github"/>
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:contentDescription="@string/app_name"
-                android:foreground="?android:attr/actionBarItemBackground"
+                android:background="?android:attr/actionBarItemBackground"
                 android:padding="12dp"
                 android:src="@drawable/ic_round_search"/>
 
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:contentDescription="@string/app_name"
-                android:foreground="?android:attr/actionBarItemBackground"
+                android:background="?android:attr/actionBarItemBackground"
                 android:padding="12dp"
                 android:src="@drawable/ic_invert_theme" />
     </LinearLayout>

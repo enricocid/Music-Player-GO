@@ -4,7 +4,7 @@
               android:layout_height="wrap_content"
               android:layout_gravity="center"
               android:baselineAligned="false"
-              android:foreground="@drawable/ripple"
+              android:background="@drawable/ripple"
               android:gravity="center"
               android:orientation="horizontal"
               android:paddingTop="24dp"

@@ -3,6 +3,6 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:contentDescription="@string/app_name"
-           android:foreground="?android:attr/actionBarItemBackground"
+           android:background="?android:attr/actionBarItemBackground"
            android:orientation="vertical"
            android:padding="8dp"/>
