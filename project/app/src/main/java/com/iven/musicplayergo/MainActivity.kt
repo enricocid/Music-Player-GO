@@ -278,9 +278,9 @@ class MainActivity : AppCompatActivity() {
         mViewModel = ViewModelProviders.of(this).get(MusicViewModel::class.java)
 
         mViewModel.getMusic(MusicUtils.getMusicCursor(contentResolver)!!)
-            .observe(this, Observer<Pair<MutableList<Music>, Map<String, Map<String, List<Music>>>>> { music ->
-                mAllDeviceSongs = music.first
-                mMusic = music.second
+            .observe(this, Observer {
+                mAllDeviceSongs = it.first
+                mMusic = it.second
                 if (mMusic.isNotEmpty()) {
                     setArtistsRecyclerView()
                     restorePlayerStatus()
@@ -526,8 +526,8 @@ class MainActivity : AppCompatActivity() {
         setAlbumSongs(placeholderAlbum.title)
     }
 
-    private fun setAlbumSongs(selectedAlbum: String) {
-        val album = mMusic.getValue(mNavigationArtist!!).getValue(selectedAlbum)
+    private fun setAlbumSongs(selectedAlbum: String?) {
+        val album = mMusic.getValue(mNavigationArtist!!).getValue(selectedAlbum!!)
         mArtistsDetailsSelectedDisc.text = selectedAlbum
         mArtistDetailsSelectedDiscYear.text = MusicUtils.getYearForAlbum(resources, album[0].year)
 
@@ -754,8 +754,8 @@ class MainActivity : AppCompatActivity() {
             val artist = currentSong.artist
             //do only if we are not on played artist/album details
             if (mNavigationArtist != artist) {
-                mArtistsAdapter.onArtistClick?.invoke(artist!!)
-                val playingAlbumPosition = MusicUtils.getAlbumPositionInList(album!!, mSelectedArtistAlbums)
+                mArtistsAdapter.onArtistClick?.invoke(artist)
+                val playingAlbumPosition = MusicUtils.getAlbumPositionInList(album, mSelectedArtistAlbums)
                 mAlbumsAdapter.swapSelectedAlbum(playingAlbumPosition)
                 mAlbumsRecyclerView.scrollToPosition(playingAlbumPosition)
                 mAlbumsAdapter.onAlbumClick?.invoke(album)

@@ -9,18 +9,22 @@ import androidx.lifecycle.ViewModel
 class MusicViewModel : ViewModel() {
 
     //Async task to load music from the device
-    private class LoadMusicTask(private val musicCursor: Cursor) :
+    private class LoadMusicTask internal constructor(
+        private val musicCursor: Cursor,
+        private val musicLiveData: MusicLiveData
+    ) :
         AsyncTask<Void, Void, Pair<MutableList<Music>, Map<String, Map<String, List<Music>>>>>() {
 
-        private var mAllDeviceSongs = mutableListOf<Music>()
-        private var mCategorizedMusic: Map<String, Map<String, List<Music>>> = mapOf()
+        override fun onPostExecute(result: Pair<MutableList<Music>, Map<String, Map<String, List<Music>>>>?) {
+            super.onPostExecute(result)
 
-        init {
-            execute()
+            musicLiveData.value = result
         }
 
         override fun doInBackground(vararg params: Void?): Pair<MutableList<Music>, Map<String, Map<String, List<Music>>>>? {
+
             // Initialize an empty mutable list of music
+            val mAllDeviceSongs = mutableListOf<Music>()
 
             try {
                 // Query the external storage for music files
@@ -60,17 +64,15 @@ class MusicViewModel : ViewModel() {
                     musicCursor.close()
                 }
 
-                mCategorizedMusic = categorizeMusicByArtistAndAlbums(mAllDeviceSongs)
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }
 
             // Finally, return the music files list
-            return Pair(mAllDeviceSongs, mCategorizedMusic)
+            return Pair(mAllDeviceSongs, categorizeMusicByArtistAndAlbums(mAllDeviceSongs))
         }
 
-        private fun categorizeMusicByArtistAndAlbums(music: MutableList<Music>): Map<String, Map<String, List<Music>>> {
+        private fun categorizeMusicByArtistAndAlbums(music: List<Music>): Map<String, Map<String, List<Music>>> {
 
             val musicSortedByArtist = music.groupBy { it.artist }
 
@@ -95,7 +97,7 @@ class MusicViewModel : ViewModel() {
 
         // Extension method to get all music files list from external storage/sd card
         private fun loadMusic() {
-            value = LoadMusicTask(musicCursor).get()
+            LoadMusicTask(musicCursor, this).execute()
         }
     }
 

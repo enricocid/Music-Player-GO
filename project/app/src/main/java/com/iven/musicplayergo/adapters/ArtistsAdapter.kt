@@ -18,7 +18,7 @@ class ArtistsAdapter(
 ) :
     RecyclerView.Adapter<ArtistsAdapter.ArtistsHolder>() {
 
-    var onArtistClick: ((String) -> Unit)? = null
+    var onArtistClick: ((String?) -> Unit)? = null
     private var mArtists = artists
 
     init {

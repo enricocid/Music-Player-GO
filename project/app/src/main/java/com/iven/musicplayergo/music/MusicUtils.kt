@@ -5,6 +5,7 @@ import android.content.res.Resources
 import android.database.Cursor
 import android.os.Build
 import android.provider.MediaStore
+import android.provider.MediaStore.Audio.AudioColumns
 import android.text.Html
 import android.text.Spanned
 import com.iven.musicplayergo.R
@@ -34,7 +35,7 @@ object MusicUtils {
     }
 
     @JvmStatic
-    fun getAlbumPositionInList(album: String, albums: List<Album>): Int {
+    fun getAlbumPositionInList(album: String?, albums: List<Album>): Int {
         var returnedPosition = 0
         try {
             returnedPosition = albums.indexOfFirst { it.title == album }
@@ -110,13 +111,26 @@ object MusicUtils {
     }
 
     @JvmStatic
+    private val BASE_PROJECTION = arrayOf(
+        AudioColumns.ARTIST, // 0
+        AudioColumns.YEAR, // 1
+        AudioColumns.TRACK, // 2
+        AudioColumns.TITLE, // 3
+        AudioColumns.DURATION, // 4
+        AudioColumns.ALBUM, // 5
+        AudioColumns.DATA // 6
+    )
+
+    @JvmStatic
+    private fun getSongLoaderSortOrder(): String {
+        return MediaStore.Audio.Artists.DEFAULT_SORT_ORDER + ", " + MediaStore.Audio.Albums.DEFAULT_SORT_ORDER + ", " + MediaStore.Audio.Media.DEFAULT_SORT_ORDER
+    }
+
+    @JvmStatic
     fun getMusicCursor(contentResolver: ContentResolver): Cursor? {
         return contentResolver.query(
-            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, // Uri
-            null, // Projection
-            null, // Selection
-            null, // Selection arguments
-            null // Sort order
+            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+            BASE_PROJECTION, null, null, getSongLoaderSortOrder()
         )
     }
 }

@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.album_item.view.*
 class AlbumsAdapter(private val albums: List<Album>, private val accent: Int, private val isThemeInverted: Boolean) :
     RecyclerView.Adapter<AlbumsAdapter.AlbumsHolder>() {
 
-    var onAlbumClick: ((String) -> Unit)? = null
+    var onAlbumClick: ((String?) -> Unit)? = null
 
     private var mSelectedAlbum: String? = null
     private var mSelectedPosition = 0
@@ -50,7 +50,7 @@ class AlbumsAdapter(private val albums: List<Album>, private val accent: Int, pr
 
     inner class AlbumsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindItems(title: String, year: String) {
+        fun bindItems(title: String?, year: String?) {
 
             val albumCard = itemView as MaterialCardView
 
