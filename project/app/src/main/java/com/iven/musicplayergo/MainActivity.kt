@@ -277,18 +277,19 @@ class MainActivity : AppCompatActivity() {
 
         mViewModel = ViewModelProviders.of(this).get(MusicViewModel::class.java)
 
-        mViewModel.getMusic(MusicUtils.getMusicCursor(contentResolver)!!)
-            .observe(this, Observer {
-                mAllDeviceSongs = it.first
-                mMusic = it.second
-                if (mMusic.isNotEmpty()) {
-                    setArtistsRecyclerView()
-                    restorePlayerStatus()
-                } else {
-                    Toast.makeText(this, getString(R.string.error_no_music), Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-            })
+
+        mViewModel.getMusic(MusicUtils.getMusicCursor(contentResolver)!!).observe(this, Observer {
+
+            mAllDeviceSongs = it.first
+            mMusic = it.second
+            if (mMusic.isNotEmpty()) {
+                setArtistsRecyclerView()
+                restorePlayerStatus()
+            } else {
+                Toast.makeText(this, getString(R.string.error_no_music), Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        })
     }
 
     private fun setViews() {
@@ -633,6 +634,7 @@ class MainActivity : AppCompatActivity() {
         mPlayingAlbum.text = selectedSong.album
 
         if (restore) {
+
             mSongPosition.text = MusicUtils.formatSongDuration(mMediaPlayerHolder.playerPosition.toLong())
             mSeekBar.progress = mMediaPlayerHolder.playerPosition
 
@@ -670,20 +672,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkIsPlayer(): Boolean {
         val isPlayer = mMediaPlayerHolder.isMediaPlayer
-        if (!isPlayer) {
-            EqualizerUtils.notifyNoSessionId(this)
-        }
+        if (!isPlayer) EqualizerUtils.notifyNoSessionId(this)
         return isPlayer
     }
 
     private fun openEqualizer() {
-        if (EqualizerUtils.hasEqualizer(this)) {
-            if (checkIsPlayer()) {
-                mMediaPlayerHolder.openEqualizer(this)
-            }
-        } else {
-            Toast.makeText(this, getString(R.string.no_eq), Toast.LENGTH_SHORT).show()
-        }
+        if (EqualizerUtils.hasEqualizer(this))
+            if (checkIsPlayer()) mMediaPlayerHolder.openEqualizer(this)
+            else Toast.makeText(this, getString(R.string.no_eq), Toast.LENGTH_SHORT).show()
     }
 
     //method to reveal/hide artist details, it is a simple reveal animation
@@ -795,11 +791,7 @@ class MainActivity : AppCompatActivity() {
                 true -> if (sThemeInverted) Color.WHITE else Color.BLACK
             }
             mSearchToggleButton.setColorFilter(searchToggleButtonColor, PorterDuff.Mode.SRC_IN)
-            if (mSupportActionBar.isShowing) {
-                mSupportActionBar.hide()
-            } else {
-                mSupportActionBar.show()
-            }
+            if (mSupportActionBar.isShowing) mSupportActionBar.hide() else mSupportActionBar.show()
             sSearchEnabled = newVisibility
         }
     }

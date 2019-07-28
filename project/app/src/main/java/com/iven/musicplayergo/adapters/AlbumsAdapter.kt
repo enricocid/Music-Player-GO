@@ -54,11 +54,8 @@ class AlbumsAdapter(private val albums: List<Album>, private val accent: Int, pr
 
             val albumCard = itemView as MaterialCardView
 
-            if (mSelectedPosition != adapterPosition) {
-                albumCard.strokeColor = Color.TRANSPARENT
-            } else {
-                albumCard.strokeColor = accent
-            }
+            if (mSelectedPosition != adapterPosition) albumCard.strokeColor =
+                Color.TRANSPARENT else albumCard.strokeColor = accent
 
             itemView.album.text = title
             itemView.year.text = year
