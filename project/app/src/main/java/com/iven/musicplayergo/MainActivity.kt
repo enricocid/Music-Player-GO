@@ -127,16 +127,12 @@ class MainActivity : AppCompatActivity() {
     //player
     private lateinit var mPlayerService: PlayerService
     private lateinit var mMediaPlayerHolder: MediaPlayerHolder
-    private lateinit var mMusicNotificationManager: MusicNotificationManager
 
     private val mConnection = object : ServiceConnection {
         override fun onServiceConnected(componentName: ComponentName, iBinder: IBinder) {
             mPlayerService = (iBinder as PlayerService.LocalBinder).instance
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder!!
             mMediaPlayerHolder.mediaPlayerInterface = mediaPlayerInterface
-
-            mMusicNotificationManager = mPlayerService.musicNotificationManager
-            mMusicNotificationManager.accent = Utils.getColor(this@MainActivity, mAccent, R.color.blue)
             loadMusic()
         }
 
@@ -277,7 +273,6 @@ class MainActivity : AppCompatActivity() {
 
         mViewModel = ViewModelProviders.of(this).get(MusicViewModel::class.java)
 
-
         mViewModel.getMusic(MusicUtils.getMusicCursor(contentResolver)!!).observe(this, Observer {
 
             mAllDeviceSongs = it.first
@@ -412,13 +407,6 @@ class MainActivity : AppCompatActivity() {
         mColorsRecyclerView.adapter = colorsAdapter
 
         colorsAdapter.onColorClick = { accent ->
-            mMusicNotificationManager.accent = Utils.getColor(this, mAccent, R.color.blue)
-            if (mMediaPlayerHolder.isMediaPlayer) {
-                mMusicNotificationManager.notificationManager.notify(
-                    NOTIFICATION_ID,
-                    mMusicNotificationManager.createNotification()
-                )
-            }
             mMusicPlayerGoPreferences.accent = accent
             Utils.applyNewThemeSmoothly(this)
         }

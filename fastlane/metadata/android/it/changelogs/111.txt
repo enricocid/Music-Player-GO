@@ -1,0 +1,6 @@
+- Nuovo indicatore scroll by Reddit
+- Revisione maggiore della UI
+- I temi e gli accenti sono applicati in maniera più dolce
+- Uso della font di default del tema material
+- La gestione delle preferenze è cambiata, quindi le devi reimpostare
+- Miglioramenti codice

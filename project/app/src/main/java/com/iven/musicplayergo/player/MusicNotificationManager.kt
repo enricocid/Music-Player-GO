@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.drawable.VectorDrawable
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -35,9 +36,6 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         playerService.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     var notificationBuilder: NotificationCompat.Builder? = null
 
-    //accent
-    var accent: Int = R.color.blue
-
     //https://gist.github.com/Gnzlt/6ddc846ef68c587d559f1e1fcd0900d3
     private fun getLargeIcon(): Bitmap {
 
@@ -48,7 +46,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         val canvas = Canvas(bitmap)
 
         vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
-        vectorDrawable.setTint(accent)
+        vectorDrawable.setTint(Color.LTGRAY)
         vectorDrawable.alpha = 150
         vectorDrawable.draw(canvas)
 
@@ -87,7 +85,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             .setShowWhen(false)
             .setSmallIcon(R.drawable.music_notification)
             .setLargeIcon(getLargeIcon())
-            .setColor(accent)
+            .setColor(Color.LTGRAY)
             .setContentTitle(spanned)
             .setContentText(song.album)
             .setContentIntent(contentIntent)
