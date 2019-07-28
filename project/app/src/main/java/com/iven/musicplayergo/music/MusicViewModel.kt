@@ -7,26 +7,20 @@ import androidx.lifecycle.ViewModel
 
 class MusicViewModel : ViewModel() {
 
+    private val musicLiveData: MutableLiveData<Pair<MutableList<Music>, Map<String, Map<String, List<Music>>>>> =
+        MutableLiveData()
+    private val allDeviceSongs: MutableList<Music> = mutableListOf()
+    private val categorizedMusicByAlbum = hashMapOf<String, Map<String, List<Music>>>()
+
     //Load music from the device
-
-    private lateinit var music: MutableLiveData<Pair<MutableList<Music>, Map<String, Map<String, List<Music>>>>>
-    private lateinit var allDeviceSongs: MutableList<Music>
-
-
     fun getMusic(musicCursor: Cursor): MutableLiveData<Pair<MutableList<Music>, Map<String, Map<String, List<Music>>>>> {
-
-        if (!::music.isInitialized) {
-            music = MutableLiveData()
-            loadMusic(musicCursor)
-        }
-        return music
+        return loadMusic(musicCursor)
     }
 
     private fun categorizeMusicByArtistAndAlbums(music: List<Music>): Map<String, Map<String, List<Music>>> {
 
         val musicSortedByArtist = music.groupBy { it.artist }
 
-        val categorizedMusicByAlbum = hashMapOf<String, Map<String, List<Music>>>()
         val artists = musicSortedByArtist.keys.toMutableList()
 
         artists.forEachIndexed { _, artist ->
@@ -38,9 +32,7 @@ class MusicViewModel : ViewModel() {
     }
 
     // Extension method to get all music files list from external storage/sd card
-    private fun loadMusic(musicCursor: Cursor) {
-        // Initialize an empty mutable list of music
-        allDeviceSongs = mutableListOf()
+    private fun loadMusic(musicCursor: Cursor): MutableLiveData<Pair<MutableList<Music>, Map<String, Map<String, List<Music>>>>> {
 
         // Query the external storage for music files
 
@@ -81,6 +73,8 @@ class MusicViewModel : ViewModel() {
         }
 
         // Finally, return the music files list
-        music.value = Pair(allDeviceSongs, categorizeMusicByArtistAndAlbums(allDeviceSongs))
+        musicLiveData.value = Pair(allDeviceSongs, categorizeMusicByArtistAndAlbums(allDeviceSongs))
+
+        return musicLiveData
     }
 }
