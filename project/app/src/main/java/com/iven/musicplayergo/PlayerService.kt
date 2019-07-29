@@ -9,13 +9,13 @@ import com.iven.musicplayergo.player.MusicNotificationManager
 
 class PlayerService : Service() {
 
-    //service
-    private val mIBinder = LocalBinder()
-    var isRestoredFromPause = false
+    // Binder given to clients
+    private val binder = LocalBinder()
 
     //media player
     var mediaPlayerHolder: MediaPlayerHolder? = null
     lateinit var musicNotificationManager: MusicNotificationManager
+    var isRestoredFromPause = false
 
     override fun onDestroy() {
         super.onDestroy()
@@ -26,20 +26,23 @@ class PlayerService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        return START_NOT_STICKY
+        /*This mode makes sense for things that will be explicitly started
+        and stopped to run for arbitrary periods of time, such as a service
+        performing background music playback.*/
+        return START_STICKY
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
+    override fun onBind(intent: Intent): IBinder {
         if (mediaPlayerHolder == null) {
             mediaPlayerHolder = MediaPlayerHolder(this)
             musicNotificationManager = MusicNotificationManager(this)
             mediaPlayerHolder!!.registerNotificationActionsReceiver(true)
         }
-        return mIBinder
+        return binder
     }
 
     inner class LocalBinder : Binder() {
-        val instance: PlayerService
-            get() = this@PlayerService
+        // Return this instance of PlayerService so we can call public methods
+        fun getService(): PlayerService = this@PlayerService
     }
 }

@@ -115,7 +115,6 @@ class MainActivity : AppCompatActivity() {
     //booleans
     private var sUserIsSeeking = false
     private var sArtistDiscographyExpanded: Boolean = false
-    private var sBound: Boolean = false
 
     //music
     private lateinit var mMusic: Map<String, Map<String, List<Music>>>
@@ -125,44 +124,43 @@ class MainActivity : AppCompatActivity() {
     private var mNavigationArtist: String? = "unknown"
 
     //player
-    private lateinit var mPlayerService: PlayerService
     private lateinit var mMediaPlayerHolder: MediaPlayerHolder
 
-    private val mConnection = object : ServiceConnection {
-        override fun onServiceConnected(componentName: ComponentName, iBinder: IBinder) {
-            mPlayerService = (iBinder as PlayerService.LocalBinder).instance
+    //our PlayerService shit
+    private lateinit var mPlayerService: PlayerService
+    private var sBound: Boolean = false
+    private lateinit var mBindingIntent: Intent
+
+    /** Defines callbacks for service binding, passed to bindService()  */
+    private val connection = object : ServiceConnection {
+        override fun onServiceConnected(componentName: ComponentName, service: IBinder) {
+            val binder = service as PlayerService.LocalBinder
+            mPlayerService = binder.getService()
+            sBound = true
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder!!
             mMediaPlayerHolder.mediaPlayerInterface = mediaPlayerInterface
-            loadMusic()
+
+            startService(mBindingIntent)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else loadMusic()
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
-        }
-    }
-
-    private fun doBindService() {
-        // Establish a connection with the service.  We use an explicit
-        // class name because we want a specific service implementation that
-        // we know will be running in our own process (and thus won't be
-        // supporting component replacement by other applications).
-        val startNotStickyIntent = Intent(this, PlayerService::class.java)
-        bindService(startNotStickyIntent, mConnection, Context.BIND_AUTO_CREATE)
-        sBound = true
-        startService(startNotStickyIntent)
-    }
-
-    private fun doUnbindService() {
-        if (sBound) {
-            // Detach our existing connection.
-            unbindService(mConnection)
             sBound = false
         }
     }
 
-    //unbind service on destroy
+    override fun onStart() {
+        super.onStart()
+        // Bind to LocalService
+        mBindingIntent = Intent(this, PlayerService::class.java).also { intent ->
+            bindService(intent, connection, Context.BIND_AUTO_CREATE)
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        doUnbindService()
+        unbindService(connection)
     }
 
     //restore recycler views state
@@ -216,7 +214,7 @@ class MainActivity : AppCompatActivity() {
     //manage request permission result, continue loading ui if permissions was granted
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED) showPermissionRationale() else initMusicPlayerGO()
+        if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED) showPermissionRationale() else loadMusic()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -225,35 +223,23 @@ class MainActivity : AppCompatActivity() {
         //set ui theme
         sThemeInverted = mMusicPlayerGoPreferences.isThemeInverted
         mAccent = mMusicPlayerGoPreferences.accent
+        sSearchEnabled = mMusicPlayerGoPreferences.isSearchBarEnabled
+        mViewModel = ViewModelProviders.of(this).get(MusicViewModel::class.java)
+
         setTheme(Utils.resolveTheme(sThemeInverted, mMusicPlayerGoPreferences.accent))
 
         setContentView(R.layout.main_activity)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else initMusicPlayerGO()
-    }
-
-    private fun initMusicPlayerGO() {
-
-        //init everything!!!
-        sSearchEnabled = mMusicPlayerGoPreferences.isSearchBarEnabled
-
-        setViews()
-
-        mControlsContainer.afterMeasured {
-            container.setPadding(0, 0, 0, height)
-            mBottomSheetBehavior.peekHeight = height
-        }
-        setupPlayerControls()
-        setupSettings()
-        initializeSeekBar()
-        doBindService()
+        //init views
+        getViews()
+        setupViews()
     }
 
     @TargetApi(23)
     private fun checkPermission() {
 
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-            showPermissionRationale() else initMusicPlayerGO()
+            showPermissionRationale() else loadMusic()
     }
 
     private fun showPermissionRationale() {
@@ -271,12 +257,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadMusic() {
 
-        mViewModel = ViewModelProviders.of(this).get(MusicViewModel::class.java)
-
         mViewModel.getMusic(MusicUtils.getMusicCursor(contentResolver)!!).observe(this, Observer {
 
             mAllDeviceSongs = it.first
             mMusic = it.second
+
+            //setup all the views if there's something
             if (mMusic.isNotEmpty()) {
                 setArtistsRecyclerView()
                 restorePlayerStatus()
@@ -287,13 +273,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun setViews() {
-
-        //set custom color to background
-        val accent = Utils.getColor(this, mAccent, R.color.blue)
-        val backgroundColor =
-            if (sThemeInverted) Utils.darkenColor(accent, 0.95F) else Utils.lightenColor(accent, 0.90F)
-        main.setBackgroundColor(backgroundColor)
+    private fun getViews() {
 
         //indicator fast scroller view
         mIndicatorFastScrollerView = fastscroller
@@ -319,32 +299,47 @@ class MainActivity : AppCompatActivity() {
         mSkipNextButton = skip_next_button
         mSearchToggleButton = search_option
 
-        //setup horizontal scrolling text
-        Utils.setHorizontalScrollBehavior(mPlayerInfoView, playing_song, playing_album)
-
-        //search view
-        setSupportActionBar(search_toolbar)
-        if (supportActionBar != null) {
-            mSupportActionBar = supportActionBar!!
-            mSupportActionBar.setDisplayShowTitleEnabled(false)
-        }
-
-        if (!sSearchEnabled) {
-            mSupportActionBar.hide()
-        }
-
         //artist details
         mArtistDetails = artist_details
         mArtistDetailsTitle = selected_discography_artist
         mArtistsDetailsDiscCount = selected_artist_album_count
         mArtistsDetailsSelectedDisc = selected_disc
+        mArtistDetailsSelectedDiscYear = selected_disc_year
+    }
+
+    private fun setupViews() {
+        //set custom color to background
+        val accent = Utils.getColor(this, mAccent, R.color.blue)
+        main.setBackgroundColor(
+            if (sThemeInverted) Utils.darkenColor(accent, 0.95F) else Utils.lightenColor(
+                accent,
+                0.90F
+            )
+        )
+
+        //setup search view
+        setSupportActionBar(search_toolbar)
+        if (supportActionBar != null) {
+            mSupportActionBar = supportActionBar!!
+            mSupportActionBar.setDisplayShowTitleEnabled(false)
+            if (!sSearchEnabled) mSupportActionBar.hide()
+        }
 
         //setup horizontal scrolling text for artist details title and album title
+        Utils.setHorizontalScrollBehavior(mPlayerInfoView, playing_song, playing_album)
         Utils.setHorizontalScrollBehavior(discs_artist_container, mArtistDetailsTitle)
         Utils.setHorizontalScrollBehavior(disc_title_container, mArtistsDetailsSelectedDisc)
 
-        mArtistDetailsSelectedDiscYear = selected_disc_year
         close_button.setOnClickListener { revealArtistDetails(!sArtistDiscographyExpanded) }
+
+        mControlsContainer.afterMeasured {
+            container.setPadding(0, 0, 0, height)
+            mBottomSheetBehavior.peekHeight = height
+        }
+
+        setupPlayerControls()
+        setupSettings()
+        initializeSeekBar()
     }
 
     private fun setupPlayerControls() {
@@ -412,7 +407,40 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun continueLoadingOnArtistsConfigured() {
+    private fun setArtistsRecyclerView() {
+
+        mArtists = MusicUtils.getArtists(mMusic)
+        mNavigationArtist = mArtists[0]
+
+        //set the search menu
+        invalidateOptionsMenu()
+        //setHasOptionsMenu(sSearchEnabled)
+
+        //set the artists list
+        mArtistsRecyclerView.setHasFixedSize(true)
+
+        mArtistsLayoutManager = LinearLayoutManager(this)
+        mArtistsRecyclerView.layoutManager = mArtistsLayoutManager
+        mArtistsAdapter = ArtistsAdapter(resources, mArtists, mMusic)
+
+        mArtistsRecyclerView.adapter = mArtistsAdapter
+
+        mArtistsAdapter.onArtistClick = { artist ->
+            if (mNavigationArtist != artist) {
+                mNavigationArtist = artist
+                setArtistDetails()
+                revealArtistDetails(true)
+            } else {
+                revealArtistDetails(true)
+            }
+        }
+
+        setupIndicatorFastScrollerView()
+
+        setArtistDetails()
+    }
+
+    private fun setupIndicatorFastScrollerView() {
         //set indexes if artists rv is scrollable
         mArtistsRecyclerView.afterMeasured {
             if (mArtistsRecyclerView.computeVerticalScrollRange() > height) {
@@ -444,40 +472,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 mIndicatorFastScrollerView.visibility = View.GONE
             }
-            //set artist details on artists rv loaded
-            setArtistDetails()
         }
-    }
-
-    private fun setArtistsRecyclerView() {
-
-        mArtists = MusicUtils.getArtists(mMusic)
-        mNavigationArtist = mArtists[0]
-
-        //set the search menu
-        invalidateOptionsMenu()
-        //setHasOptionsMenu(sSearchEnabled)
-
-        //set the artists list
-        mArtistsRecyclerView.setHasFixedSize(true)
-
-        mArtistsLayoutManager = LinearLayoutManager(this)
-        mArtistsRecyclerView.layoutManager = mArtistsLayoutManager
-        mArtistsAdapter = ArtistsAdapter(resources, mArtists, mMusic)
-
-        mArtistsRecyclerView.adapter = mArtistsAdapter
-
-        mArtistsAdapter.onArtistClick = { artist ->
-            if (mNavigationArtist != artist) {
-                mNavigationArtist = artist
-                setArtistDetails()
-                revealArtistDetails(true)
-            } else {
-                revealArtistDetails(true)
-            }
-        }
-
-        continueLoadingOnArtistsConfigured()
     }
 
     private fun setArtistDetails() {
