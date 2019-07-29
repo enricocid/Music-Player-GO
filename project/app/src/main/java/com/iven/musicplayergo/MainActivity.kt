@@ -140,7 +140,11 @@ class MainActivity : AppCompatActivity() {
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder!!
             mMediaPlayerHolder.mediaPlayerInterface = mediaPlayerInterface
 
-            startService(mBindingIntent)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) ContextCompat.startForegroundService(
+                this@MainActivity,
+                mBindingIntent
+            )
+            else startService(mBindingIntent)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else loadMusic()
         }
