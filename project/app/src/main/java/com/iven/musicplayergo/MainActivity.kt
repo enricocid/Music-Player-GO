@@ -140,13 +140,7 @@ class MainActivity : AppCompatActivity() {
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder!!
             mMediaPlayerHolder.mediaPlayerInterface = mediaPlayerInterface
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) ContextCompat.startForegroundService(
-                this@MainActivity,
-                mBindingIntent
-            )
-            else startService(mBindingIntent)
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else loadMusic()
+            loadMusic()
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
@@ -154,13 +148,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
+    private fun doBindService() {
         // Bind to LocalService
         mBindingIntent = Intent(this, PlayerService::class.java).also { intent ->
             bindService(intent, connection, Context.BIND_AUTO_CREATE)
         }
     }
+
+    /*   override fun onStart() {
+           super.onStart()
+
+       }*/
 
     override fun onDestroy() {
         super.onDestroy()
@@ -218,7 +216,7 @@ class MainActivity : AppCompatActivity() {
     //manage request permission result, continue loading ui if permissions was granted
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED) showPermissionRationale() else loadMusic()
+        if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED) showPermissionRationale() else doBindService()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -237,13 +235,15 @@ class MainActivity : AppCompatActivity() {
         //init views
         getViews()
         setupViews()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else doBindService()
     }
 
     @TargetApi(23)
     private fun checkPermission() {
 
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-            showPermissionRationale() else loadMusic()
+            showPermissionRationale() else doBindService()
     }
 
     private fun showPermissionRationale() {
@@ -533,6 +533,9 @@ class MainActivity : AppCompatActivity() {
         mSongsRecyclerView.setPadding(0, 0, 0, -resources.getDimensionPixelSize(R.dimen.songs_card_margin_bottom))
         mSongsAdapter.onSongClick = { music ->
             if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
+
+            if (!mPlayerService.isRunning) startService(mBindingIntent)
+
             mMediaPlayerHolder.setCurrentSong(music, album)
             mMediaPlayerHolder.initMediaPlayer(music)
         }

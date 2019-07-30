@@ -12,6 +12,9 @@ class PlayerService : Service() {
     // Binder given to clients
     private val binder = LocalBinder()
 
+    // Check if is already running
+    var isRunning: Boolean = false
+
     //media player
     var mediaPlayerHolder: MediaPlayerHolder? = null
     lateinit var musicNotificationManager: MusicNotificationManager
@@ -19,6 +22,7 @@ class PlayerService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
+        isRunning = false
         if (mediaPlayerHolder != null) {
             mediaPlayerHolder!!.registerNotificationActionsReceiver(false)
             mediaPlayerHolder!!.release()
@@ -29,6 +33,7 @@ class PlayerService : Service() {
         /*This mode makes sense for things that will be explicitly started
         and stopped to run for arbitrary periods of time, such as a service
         performing background music playback.*/
+        isRunning = true
         return START_STICKY
     }
 
