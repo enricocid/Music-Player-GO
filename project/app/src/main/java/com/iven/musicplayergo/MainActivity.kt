@@ -13,6 +13,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.os.Parcelable
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.view.ViewAnimationUtils
@@ -268,8 +269,26 @@ class MainActivity : AppCompatActivity() {
 
             //setup all the views if there's something
             if (mMusic.isNotEmpty()) {
+
                 setArtistsRecyclerView()
-                restorePlayerStatus()
+
+                //let's get intent from external app and open the song,
+                //else restore the player (normal usage)
+                if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null) {
+
+                    val uri = intent.data
+                    val path = MusicUtils.getRealPathFromURI(this, uri!!)
+
+                    if (uri.toString().isNotEmpty() && MusicUtils.getSongForIntent(path, mAllDeviceSongs) != null) {
+                        mSongsAdapter.onSongClick!!.invoke(MusicUtils.getSongForIntent(path, mAllDeviceSongs)!!)
+                    } else {
+                        Toast.makeText(this, getString(R.string.error_not_supported), Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                } else {
+                    restorePlayerStatus()
+                }
+
             } else {
                 Toast.makeText(this, getString(R.string.error_no_music), Toast.LENGTH_SHORT).show()
                 finish()
@@ -532,6 +551,8 @@ class MainActivity : AppCompatActivity() {
         }
         mSongsRecyclerView.setPadding(0, 0, 0, -resources.getDimensionPixelSize(R.dimen.songs_card_margin_bottom))
         mSongsAdapter.onSongClick = { music ->
+            Log.d("urri", music.path!!)
+
             if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
 
             if (::mPlayerService.isInitialized && !mPlayerService.isRunning) startService(mBindingIntent)
