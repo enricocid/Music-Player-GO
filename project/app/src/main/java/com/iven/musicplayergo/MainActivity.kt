@@ -13,7 +13,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.os.Parcelable
-import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.view.ViewAnimationUtils
@@ -551,7 +550,6 @@ class MainActivity : AppCompatActivity() {
         }
         mSongsRecyclerView.setPadding(0, 0, 0, -resources.getDimensionPixelSize(R.dimen.songs_card_margin_bottom))
         mSongsAdapter.onSongClick = { music ->
-            Log.d("urri", music.path!!)
 
             if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
 
