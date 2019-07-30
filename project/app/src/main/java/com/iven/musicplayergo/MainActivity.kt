@@ -534,7 +534,7 @@ class MainActivity : AppCompatActivity() {
         mSongsAdapter.onSongClick = { music ->
             if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
 
-            if (!mPlayerService.isRunning) startService(mBindingIntent)
+            if (::mPlayerService.isInitialized && !mPlayerService.isRunning) startService(mBindingIntent)
 
             mMediaPlayerHolder.setCurrentSong(music, album)
             mMediaPlayerHolder.initMediaPlayer(music)
