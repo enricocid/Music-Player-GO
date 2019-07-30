@@ -1,0 +1,1 @@
+Aggiunta la possibilità di aprire file musicali in MPGO da altre app (es un file manager)

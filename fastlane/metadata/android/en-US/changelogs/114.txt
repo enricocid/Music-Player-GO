@@ -1,0 +1,1 @@
+Added possibility to play music files in MPGO from other apps (e.g. a File Manager)
