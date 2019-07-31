@@ -411,7 +411,22 @@ class MainActivity : AppCompatActivity() {
     private fun setupSettings() {
 
         shuffle_option.setOnClickListener { shuffleSongs() }
-        eq_option.setOnClickListener { openEqualizer() }
+        audio_option.setOnClickListener {
+            val audioMenu = PopupMenu(this, it) // don't even know what it means
+            audioMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.vol -> {
+                        Toast.makeText(this, "No, not yet", Toast.LENGTH_SHORT).show() // provisory
+                        true }
+                    R.id.eq  -> {
+                        openEqualizer()
+                        true }
+                    else -> false
+                }
+            }
+            audioMenu.inflate(R.menu.audio_menu)
+            audioMenu.show()
+        }
         mSearchToggleButton.setOnClickListener { handleSearchBarVisibility() }
         invert_option.setOnClickListener {
             invertTheme()

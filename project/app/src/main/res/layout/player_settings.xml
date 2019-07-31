@@ -22,7 +22,7 @@
                 android:src="@drawable/ic_shuffle"/>
 
         <ImageView
-                android:id="@+id/eq_option"
+                android:id="@+id/audio_option"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
