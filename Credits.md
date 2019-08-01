@@ -23,14 +23,14 @@
 
 # Big thanks to translators:
 
-- [**Adem Furkan ÖZCAN**](https://github.com/ozcanfurkan) for Turkish translations
+- [**Adem Furkan ÖZCAN**](https://github.com/ozcanfurkan) for **Turkish** translations
 
-- [**Malte Kiefer**](https://github.com/beli3ver) for German translations
+- [**Malte Kiefer**](https://github.com/beli3ver) for **German** translations
 
-- [**Luis F. Uceta**](https://github.com/uzluisf) for Spanish translations
+- [**Luis F. Uceta**](https://github.com/uzluisf) for **Spanish** translations
 
-- [**Stanislav**](https://github.com/STWheel) for Ukrainian and Russian translations and other strings/ui refinements
+- [**Stanislav**](https://github.com/STWheel) for **Ukrainian** and **Russian** translations and other strings/ui refinements
 
-- [**KowalskiOmniROM**](https://github.com/KowalskiOmniROM) for French translations
+- [**KowalskiOmniROM**](https://github.com/KowalskiOmniROM) for **French** translations
 
-- [**Somesh Kumar**](https://github.com/TheSomeshKumar) for Hindi translations
+- [**Somesh Kumar**](https://github.com/TheSomeshKumar) for **Hindi** translations
