@@ -8,6 +8,8 @@
 ###### Current version: 3.6.1.2
 ###### Material Design Icon by Julian Javier Gomez
 
+# Material icon by [Julian Javier Gomez - AxinenDesign](https://github.com/AxinenDesign)
+
 
 # Screenshots
 
