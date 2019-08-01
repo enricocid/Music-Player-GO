@@ -1,37 +1,36 @@
 # Credits:
 
-- **Julian Javier Gomez - Axinen Design** (https://plus.google.com/u/0/+AxinenDesign) for the wonderful **material design icon**
+- [**Julian Javier Gomez - Axinen Design**](https://github.com/AxinenDesign) for the wonderful **material design icon**
 
-- **Reddit** (@reddit - https://github.com/reddit) for Indicator Fast Scroll:
-https://github.com/reddit/IndicatorFastScroll
+- [**Reddit**](https://github.com/reddit) for the wonderful [**Indicator Fast Scroll**](https://github.com/reddit/IndicatorFastScroll)
 
-- https://material.io/tools/icons/?style=round for icons
+- [**material.io**](https://material.io/tools/icons/?style=round) for the **wonderful round icons**
 
-- **IzzySoft** (@IzzySoft https://github.com/IzzySoft) and **Poussinou** (@Poussinou https://github.com/Poussinou) for setting up the F-Droid repository
+- [**IzzySoft**](https://github.com/IzzySoft) and [**Poussinou**](https://github.com/Poussinou) for setting up the **F-Droid** repository
 
-- **TacoTheDank** (@TacoTheDank - https://github.com/TacoTheDank) for updates to gradle/java 1.8
+- [**Somesh Kumar**](https://github.com/TheSomeshKumar) for Hindi translations
 
-- **Dankan1890** (@dankan1890 - https://github.com/dankan1890) for some fixes to bluetooth devices
+- [**TancoTheDank**](https://github.com/TacoTheDank) for upgrades to gradle and java 1.8
 
-- **Harry** (@HarryHeights - https://github.com/HarryHeights) for Privacy policy
+- [**Dankan1890**](https://github.com/dankan1890) for some fixes to bluetooth devices
 
-- **olayhemy** (@olayhemy ttps://github.com/olayhemy) for FAQ
+- [**Harry**](https://github.com/HarryHeights) for privacy policy
 
-- **sagorahmed** (@sagorahmed - https://github.com/sagorahmed) for an important bug report #62
+- [**olayhemy**](https://github.com/olayhemy) for FAQ
+
+- [**andOTP**](https://github.com/andOTP) for "GET IN ON GitHub" download badge
 
 
 # Big thanks to translators:
 
-- **Adem Furkan ÖZCAN** (@ozcanfurkan - https://github.com/ozcanfurkan) for Turkish translations
+- [**Adem Furkan ÖZCAN**](https://github.com/ozcanfurkan) for Turkish translations
 
-- **Malte Kiefer** (@beli3ver - https://github.com/beli3ver) for German translations
+- [**Malte Kiefer**](https://github.com/beli3ver) for German translations
 
-- **Luis F. Uceta** (@uzluisf - https://github.com/uzluisf) for Spanish translations
+- [**Luis F. Uceta**](https://github.com/uzluisf) for Spanish translations
 
-- **Stanislav** (@STWheel - https://github.com/STWheel) for Ukrainian and Russian translations and other strings/ui refinements
+- [**Stanislav**](https://github.com/STWheel) for Ukrainian and Russian translations and other strings/ui refinements
 
-- **KowalskiOmniROM** (@KowalskiOmniROM https://github.com/KowalskiOmniROM) for French translations
+- [**KowalskiOmniROM**](https://github.com/KowalskiOmniROM) for French translations
 
-- **Somesh Kumar** (@TheSomeshKumar https://github.com/TheSomeshKumar) for Hindi translations
-
-- **andOTP** (@andOTP https://github.com/andOTP) for "GET IN ON GitHub" download badge
+- [**Somesh Kumar**](https://github.com/TheSomeshKumar) for Hindi translations
