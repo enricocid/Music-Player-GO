@@ -1,0 +1,3 @@
+- Aggiunto pulsante per interrompere il playback nella notifica
+- I duplicati di canzoni (salvate in copia in altri percorsi) saranno rimossi
+- Pulizia e miglioramenti del codice

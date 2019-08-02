@@ -124,7 +124,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             val notificationChannel = NotificationChannel(
                 CHANNEL_ID,
                 playerService.getString(R.string.app_name),
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_LOW
             )
             notificationChannel.description = playerService.getString(R.string.app_name)
             notificationChannel.enableLights(false)

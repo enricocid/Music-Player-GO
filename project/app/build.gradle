@@ -3,13 +3,13 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.iven.musicplayergo"
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 114
-        versionName "3.6.1.2"
+        targetSdkVersion 29
+        versionCode 115
+        versionName "3.6.2"
     }
 
     //retrieve version number
