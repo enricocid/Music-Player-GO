@@ -254,9 +254,40 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //method to handle intent to play audio file from external app
+    private fun handleIntent(intent: Intent) {
+
+        val uri = intent.data
+
+        if (uri.toString().isNotEmpty()) {
+
+            val path = MusicUtils.getRealPathFromURI(this, uri!!)
+
+            //if we were able to get the song play it!
+            if (MusicUtils.getSongForIntent(
+                    path,
+                    mSelectedArtistSongs,
+                    mAllDeviceSongs
+                ) != null
+            ) {
+
+                val song = MusicUtils.getSongForIntent(path, mSelectedArtistSongs, mAllDeviceSongs)!!
+
+                //get album songs and sort them
+                val albumSongs = mMusic[song.artist]!![song.album]?.sortedBy { albumSong -> albumSong.track }
+
+                startPlayback(song, albumSongs)
+
+            } else {
+                Toast.makeText(this, getString(R.string.error_not_supported), Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
+    }
+
     private fun loadMusic() {
 
-        mViewModel.getMusic(MusicUtils.getMusicCursor(contentResolver)!!).observe(this, Observer {
+        mViewModel.getMusic(this).observe(this, Observer {
 
             mAllDeviceSongs = it.first
             mMusic = it.second
@@ -268,20 +299,10 @@ class MainActivity : AppCompatActivity() {
 
                 //let's get intent from external app and open the song,
                 //else restore the player (normal usage)
-                if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null) {
-
-                    val uri = intent.data
-                    val path = MusicUtils.getRealPathFromURI(this, uri!!)
-
-                    if (uri.toString().isNotEmpty() && MusicUtils.getSongForIntent(path, mAllDeviceSongs) != null) {
-                        mSongsAdapter.onSongClick!!.invoke(MusicUtils.getSongForIntent(path, mAllDeviceSongs)!!)
-                    } else {
-                        Toast.makeText(this, getString(R.string.error_not_supported), Toast.LENGTH_SHORT).show()
-                        finish()
-                    }
-                } else {
+                if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null)
+                    handleIntent(intent)
+                else
                     restorePlayerStatus()
-                }
 
             } else {
                 Toast.makeText(this, getString(R.string.error_no_music), Toast.LENGTH_SHORT).show()
@@ -431,7 +452,6 @@ class MainActivity : AppCompatActivity() {
 
         //set the search menu
         invalidateOptionsMenu()
-        //setHasOptionsMenu(sSearchEnabled)
 
         //set the artists list
         mArtistsRecyclerView.setHasFixedSize(true)
@@ -545,14 +565,17 @@ class MainActivity : AppCompatActivity() {
         }
         mSongsRecyclerView.setPadding(0, 0, 0, -resources.getDimensionPixelSize(R.dimen.songs_card_margin_bottom))
         mSongsAdapter.onSongClick = { music ->
-
-            if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
-
-            if (::mPlayerService.isInitialized && !mPlayerService.isRunning) startService(mBindingIntent)
-
-            mMediaPlayerHolder.setCurrentSong(music, album)
-            mMediaPlayerHolder.initMediaPlayer(music)
+            startPlayback(music, album)
         }
+    }
+
+    private fun startPlayback(song: Music, album: List<Music>?) {
+        if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
+
+        if (::mPlayerService.isInitialized && !mPlayerService.isRunning) startService(mBindingIntent)
+
+        mMediaPlayerHolder.setCurrentSong(song, album!!)
+        mMediaPlayerHolder.initMediaPlayer(song)
     }
 
     private fun shuffleSongs() {

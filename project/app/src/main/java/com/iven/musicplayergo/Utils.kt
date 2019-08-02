@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
@@ -166,5 +167,10 @@ object Utils {
     @JvmStatic
     fun lightenColor(color: Int, factor: Float): Int {
         return ColorUtils.blendARGB(color, Color.WHITE, factor)
+    }
+
+    @JvmStatic
+    fun makeUnknownErrorToast(context: Context) {
+        Toast.makeText(context, context.getString(R.string.error_unknown), Toast.LENGTH_SHORT).show()
     }
 }

@@ -12,8 +12,8 @@ import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
 import android.text.Html
 import android.text.Spanned
-import android.util.Log
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.Utils
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -50,8 +50,13 @@ object MusicUtils {
     }
 
     @JvmStatic
-    fun getSongForIntent(path: String?, songs: List<Music>): Music? {
-        return songs.firstOrNull { s -> s.path == path }
+    fun getSongForIntent(path: String?, selectedArtistSongs: List<Music>, allDeviceSongs: List<Music>): Music? {
+
+        return try {
+            selectedArtistSongs.first { s -> s.path == path }
+        } catch (e: Exception) {
+            allDeviceSongs.firstOrNull { s -> s.path == path }
+        }
     }
 
     @JvmStatic
@@ -165,7 +170,11 @@ object MusicUtils {
                 val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                 val type = split[0]
 
-                if ("primary".equals(type, ignoreCase = true)) return Environment.getExternalStorageDirectory().toString() + "/" + split[1]
+                if ("primary".equals(
+                        type,
+                        ignoreCase = true
+                    )
+                ) return Environment.getExternalStorageDirectory().toString() + "/" + split[1]
 
             } else if (isMediaDocument(uri)) {
 
@@ -207,20 +216,27 @@ object MusicUtils {
         selectionArgs: Array<String>?
     ): String? {
 
-        var cursor: Cursor? = null
-        val column = "_data"
-        val projection = arrayOf(column)
+        var returnedString: String? = null
 
         try {
-            cursor = context.contentResolver.query(uri!!, projection, selection, selectionArgs, null)
-            if (cursor != null && cursor.moveToFirst()) {
+
+            val column = "_data"
+            val projection = arrayOf(column)
+
+            val cursor = context.contentResolver.query(uri!!, projection, selection, selectionArgs, null)
+
+            if (cursor!!.moveToFirst()) {
                 val index = cursor.getColumnIndexOrThrow(column)
-                return cursor.getString(index)
+                do {
+                    returnedString = cursor.getString(index)
+                } while (cursor.moveToNext())
+                cursor.close()
             }
-        } finally {
-            cursor?.close()
+        } catch (e: Exception) {
+            Utils.makeUnknownErrorToast(context)
+            e.printStackTrace()
         }
-        return null
+        return returnedString
     }
 
     /**
