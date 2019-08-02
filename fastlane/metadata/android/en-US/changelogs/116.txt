@@ -1,0 +1,5 @@
+Fix playback from intent
+
+- Set played album properly from so user can navigate through songs using skip buttons also from intent
+- Fix playback of duplicated songs filtered
+- Simplifications
