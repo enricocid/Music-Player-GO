@@ -19,6 +19,7 @@ import com.iven.musicplayergo.PlayerService
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.music.MusicUtils
 
+
 // Notification params
 private const val CHANNEL_ID = "com.iven.musicplayergo.CHANNEL_ID"
 private const val REQUEST_CODE = 100
@@ -28,6 +29,7 @@ const val NOTIFICATION_ID = 101
 const val PLAY_PAUSE_ACTION = "com.iven.musicplayergo.PLAYPAUSE"
 const val NEXT_ACTION = "com.iven.musicplayergo.NEXT"
 const val PREV_ACTION = "com.iven.musicplayergo.PREV"
+const val CLOSE_ACTION = "com.iven.musicplayergo.CLOSE"
 
 class MusicNotificationManager(private val playerService: PlayerService) {
 
@@ -81,8 +83,12 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
         val spanned = MusicUtils.buildSpanned(playerService.getString(R.string.playing_song, artist, songTitle))
 
+        val style = MediaStyle()
+        style.setShowActionsInCompactView(0, 1, 2)
+
         notificationBuilder!!
             .setShowWhen(false)
+            .setStyle(style)
             .setSmallIcon(R.drawable.music_notification)
             .setLargeIcon(getLargeIcon())
             .setColor(Color.LTGRAY)
@@ -92,9 +98,9 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             .addAction(notificationAction(PREV_ACTION))
             .addAction(notificationAction(PLAY_PAUSE_ACTION))
             .addAction(notificationAction(NEXT_ACTION))
+            .addAction(notificationAction(CLOSE_ACTION))
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
-        notificationBuilder!!.setStyle(MediaStyle().setShowActionsInCompactView(0, 1, 2))
         return notificationBuilder!!.build()
     }
 
@@ -106,6 +112,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         when (action) {
             PREV_ACTION -> icon = R.drawable.ic_skip_previous_notification
             NEXT_ACTION -> icon = R.drawable.ic_skip_next_notification
+            CLOSE_ACTION -> icon = R.drawable.ic_round_close
         }
 
         return NotificationCompat.Action.Builder(icon, action, playerAction(action)).build()
@@ -117,7 +124,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             val notificationChannel = NotificationChannel(
                 CHANNEL_ID,
                 playerService.getString(R.string.app_name),
-                NotificationManager.IMPORTANCE_LOW
+                NotificationManager.IMPORTANCE_DEFAULT
             )
             notificationChannel.description = playerService.getString(R.string.app_name)
             notificationChannel.enableLights(false)

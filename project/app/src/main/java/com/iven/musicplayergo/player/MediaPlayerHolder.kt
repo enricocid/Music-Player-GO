@@ -104,6 +104,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
         intentFilter.addAction(PREV_ACTION)
         intentFilter.addAction(PLAY_PAUSE_ACTION)
         intentFilter.addAction(NEXT_ACTION)
+        intentFilter.addAction(CLOSE_ACTION)
         intentFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED)
         intentFilter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED)
         intentFilter.addAction(Intent.ACTION_HEADSET_PLUG)
@@ -382,6 +383,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
                     PREV_ACTION -> instantReset()
                     PLAY_PAUSE_ACTION -> resumeOrPause()
                     NEXT_ACTION -> skip(true)
+                    CLOSE_ACTION -> {
+                        if (playerService.isRunning && mediaPlayer != null) {
+                            mediaPlayer!!.stop()
+                            playerService.stopForeground(true)
+                            mediaPlayerInterface.onClose()
+                        }
+                    }
 
                     BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (currentSong != null) pauseMediaPlayer()
                     BluetoothDevice.ACTION_ACL_CONNECTED -> if (currentSong != null) resumeMediaPlayer()
