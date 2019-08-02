@@ -12,6 +12,7 @@ import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
 import android.text.Html
 import android.text.Spanned
+import android.util.Log
 import com.iven.musicplayergo.R
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -118,7 +119,7 @@ object MusicUtils {
     }
 
     @JvmStatic
-    private val BASE_PROJECTION = arrayOf(
+    private val COLUMNS = arrayOf(
         AudioColumns.ARTIST, // 0
         AudioColumns.YEAR, // 1
         AudioColumns.TRACK, // 2
@@ -138,10 +139,9 @@ object MusicUtils {
     fun getMusicCursor(contentResolver: ContentResolver): Cursor? {
         return contentResolver.query(
             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-            BASE_PROJECTION, null, null, getSongLoaderSortOrder()
+            COLUMNS, null, null, getSongLoaderSortOrder()
         )
     }
-
 
     /**
      * Get a file path from a Uri. This will get the the path for Storage Access
@@ -157,17 +157,18 @@ object MusicUtils {
     fun getRealPathFromURI(context: Context, uri: Uri): String? {
         // DocumentProvider
         if (DocumentsContract.isDocumentUri(context, uri)) {
+
             // ExternalStorageProvider
             if (isExternalStorageDocument(uri)) {
+
                 val docId = DocumentsContract.getDocumentId(uri)
                 val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                 val type = split[0]
 
-                if ("primary".equals(type, ignoreCase = true)) {
-                    return Environment.getExternalStorageDirectory().toString() + "/" + split[1]
-                }
+                if ("primary".equals(type, ignoreCase = true)) return Environment.getExternalStorageDirectory().toString() + "/" + split[1]
 
             } else if (isMediaDocument(uri)) {
+
                 val docId = DocumentsContract.getDocumentId(uri)
                 val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 

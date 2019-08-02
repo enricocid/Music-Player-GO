@@ -7,9 +7,13 @@ import androidx.lifecycle.ViewModel
 
 class MusicViewModel : ViewModel() {
 
+    //first: all device songs, second: Map with key: artist, value: Map with key: album, value: songs
     private val musicLiveData: MutableLiveData<Pair<MutableList<Music>, Map<String, Map<String?, List<Music>>>>> =
         MutableLiveData()
+
     private val allDeviceSongs: MutableList<Music> = mutableListOf()
+
+    //key: artist || key: album, value: album songs
     private val categorizedMusicByAlbum = hashMapOf<String, Map<String?, List<Music>>>()
 
     //Load music from the device
@@ -17,15 +21,13 @@ class MusicViewModel : ViewModel() {
         return loadMusic(musicCursor)
     }
 
+    //Build a Map with key: artist, value: Map with key: album, value: songs
     private fun categorizeMusicByArtistAndAlbums(music: List<Music>): Map<String, Map<String?, List<Music>>> {
 
         val musicSortedByArtist = music.groupBy { it.artist }
 
-        val artists = musicSortedByArtist.keys.toMutableList()
-
-        artists.iterator().forEach {
-            val songsForArtist = musicSortedByArtist[it]?.toMutableList()
-            val albums = songsForArtist?.groupBy { song -> song.album }
+        musicSortedByArtist.keys.iterator().forEach {
+            val albums = musicSortedByArtist[it]?.groupBy { song -> song.album }
             categorizedMusicByAlbum[it.toString()] = albums!!
         }
 
