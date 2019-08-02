@@ -46,6 +46,7 @@ const val PLAYING = 0
 const val PAUSED = 1
 const val RESUMED = 2
 
+@Suppress("DEPRECATION")
 class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.OnCompletionListener,
     MediaPlayer.OnPreparedListener {
 

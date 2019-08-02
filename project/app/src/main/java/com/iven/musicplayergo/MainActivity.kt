@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity() {
     private var sArtistDiscographyExpanded: Boolean = false
 
     //music
-    private lateinit var mMusic: Map<String, Map<String, List<Music>>>
+    private lateinit var mMusic: Map<String, Map<String?, List<Music>>>
     private lateinit var mArtists: MutableList<String>
     private lateinit var mSelectedArtistSongs: MutableList<Music>
     private lateinit var mSelectedArtistAlbums: List<Album>
@@ -154,11 +154,6 @@ class MainActivity : AppCompatActivity() {
             bindService(intent, connection, Context.BIND_AUTO_CREATE)
         }
     }
-
-    /*   override fun onStart() {
-           super.onStart()
-
-       }*/
 
     override fun onDestroy() {
         super.onDestroy()

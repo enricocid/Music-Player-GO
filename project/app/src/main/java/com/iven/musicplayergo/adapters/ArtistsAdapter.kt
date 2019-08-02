@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.artist_item.view.*
 class ArtistsAdapter(
     private val resources: Resources,
     artists: MutableList<String>,
-    private val music: Map<String, Map<String, List<Music>>>
+    private val music: Map<String, Map<String?, List<Music>>>
 ) :
     RecyclerView.Adapter<ArtistsAdapter.ArtistsHolder>() {
 

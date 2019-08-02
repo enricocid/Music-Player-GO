@@ -7,5 +7,6 @@ data class Music(
     val title: String?,
     val duration: Long,
     val album: String?,
-    val path: String?
+    val path: String?,
+    val albumId: String?
 )

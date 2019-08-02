@@ -59,7 +59,7 @@ object Utils {
 
         try {
             // case insensitive search
-            artists.forEach {
+            artists.iterator().forEach {
                 if (it.toLowerCase().startsWith(query.toLowerCase())) {
                     results.add(it)
                 }
@@ -129,8 +129,8 @@ object Utils {
 
         parentView.setOnLongClickListener {
             if (!isLongPressed) {
-                textViews.forEachIndexed { _, textView ->
-                    textView.isSelected = true
+                textViews.iterator().forEach {
+                    it.isSelected = true
                 }
                 isLongPressed = true
             }
@@ -140,7 +140,7 @@ object Utils {
         parentView.setOnTouchListener { _, e ->
             if (isLongPressed && e.action == MotionEvent.ACTION_UP || e.action == MotionEvent.ACTION_OUTSIDE || e.action == MotionEvent.ACTION_MOVE) {
 
-                textViews.forEach {
+                textViews.iterator().forEach {
                     it.isSelected = false
                 }
                 isLongPressed = false

@@ -19,17 +19,17 @@ import java.util.concurrent.TimeUnit
 object MusicUtils {
 
     @JvmStatic
-    fun getArtists(music: Map<String, Map<String, List<Music>>>): MutableList<String> {
+    fun getArtists(music: Map<String, Map<String?, List<Music>>>): MutableList<String> {
         val artists = music.keys.toMutableList()
         artists.sort()
         return artists
     }
 
     @JvmStatic
-    fun getArtistSongsCount(albums: Map<String, List<Music>>): Int {
+    fun getArtistSongsCount(albums: Map<String?, List<Music>>): Int {
         var songsCount = 0
         try {
-            albums.keys.toMutableList().forEach {
+            albums.keys.iterator().forEach {
                 songsCount += albums.getValue(it).size
             }
         } catch (e: Exception) {
@@ -40,13 +40,12 @@ object MusicUtils {
 
     @JvmStatic
     fun getAlbumPositionInList(album: String?, albums: List<Album>): Int {
-        var returnedPosition = 0
-        try {
-            returnedPosition = albums.indexOfFirst { it.title == album }
+        return try {
+            albums.indexOfFirst { it.title == album }
         } catch (e: Exception) {
             e.printStackTrace()
+            0
         }
-        return returnedPosition
     }
 
     @JvmStatic
@@ -55,10 +54,10 @@ object MusicUtils {
     }
 
     @JvmStatic
-    fun getArtistSongs(albums: Map<String, List<Music>>): MutableList<Music> {
+    fun getArtistSongs(albums: Map<String?, List<Music>>): MutableList<Music> {
         val artistSongs = mutableListOf<Music>()
         try {
-            albums.keys.toMutableList().forEach {
+            albums.keys.iterator().forEach {
                 artistSongs.addAll(albums.getValue(it))
             }
         } catch (e: Exception) {
@@ -73,12 +72,12 @@ object MusicUtils {
     }
 
     @JvmStatic
-    fun buildSortedArtistAlbums(resources: Resources, albums: Map<String, List<Music>>): List<Album> {
+    fun buildSortedArtistAlbums(resources: Resources, albums: Map<String?, List<Music>>): List<Album> {
 
         val sortedAlbums = mutableListOf<Album>()
 
         try {
-            albums.keys.toMutableList().forEach {
+            albums.keys.iterator().forEach {
                 sortedAlbums.add(Album(it, getYearForAlbum(resources, albums.getValue(it)[0].year)))
             }
 
@@ -111,6 +110,7 @@ object MusicUtils {
 
     @JvmStatic
     fun buildSpanned(res: String): Spanned {
+        @Suppress("DEPRECATION")
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             Html.fromHtml(res, Html.FROM_HTML_MODE_LEGACY)
         else
@@ -125,7 +125,8 @@ object MusicUtils {
         AudioColumns.TITLE, // 3
         AudioColumns.DURATION, // 4
         AudioColumns.ALBUM, // 5
-        AudioColumns.DATA // 6
+        AudioColumns.DATA, // 6
+        AudioColumns.ALBUM_ID //7
     )
 
     @JvmStatic
