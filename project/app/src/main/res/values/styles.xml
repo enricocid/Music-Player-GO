@@ -44,17 +44,29 @@
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
+    <!-- SeekBar style -->
     <style name="SeekBarStyle" parent="Widget.AppCompat.SeekBar">
         <item name="android:progressBackgroundTint">?attr/colorAccent</item>
         <item name="android:progressTint">?attr/colorAccent</item>
     </style>
 
+    <!-- Style for color theme option -->
+    <style name="ColorOptionStyle">
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:background">?android:attr/actionBarItemBackground</item>
+    </style>
+
+    <!-- Style for search bar -->
     <style name="SearchBarStyle" parent="Widget.MaterialComponents.Toolbar">
         <item name="searchViewStyle">@style/SearchViewStyle</item>
         <item name="colorControlActivated">?attr/icon_color</item>
         <item name="android:background">?attr/colorAccent</item>
     </style>
 
+    <!-- Style for search view -->
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView.ActionBar">
         <item name="searchIcon">@drawable/ic_round_search</item>
         <item name="queryBackground">@color/transparent</item>
