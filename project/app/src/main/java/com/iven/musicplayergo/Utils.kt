@@ -4,9 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.view.MotionEvent
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -121,32 +119,6 @@ object Utils {
                 if (isThemeDark) R.style.AppThemeBlueGrayInverted else R.style.AppThemeBlueGray
 
             else -> R.color.blue
-        }
-    }
-
-    @JvmStatic
-    fun setHorizontalScrollBehavior(parentView: View, vararg textViews: TextView) {
-        var isLongPressed = false
-
-        parentView.setOnLongClickListener {
-            if (!isLongPressed) {
-                textViews.iterator().forEach {
-                    it.isSelected = true
-                }
-                isLongPressed = true
-            }
-            return@setOnLongClickListener true
-        }
-
-        parentView.setOnTouchListener { _, e ->
-            if (isLongPressed && e.action == MotionEvent.ACTION_UP || e.action == MotionEvent.ACTION_OUTSIDE || e.action == MotionEvent.ACTION_MOVE) {
-
-                textViews.iterator().forEach {
-                    it.isSelected = false
-                }
-                isLongPressed = false
-            }
-            return@setOnTouchListener false
         }
     }
 

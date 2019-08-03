@@ -367,11 +367,6 @@ class MainActivity : AppCompatActivity() {
             if (!sSearchEnabled) mSupportActionBar.hide()
         }
 
-        //setup horizontal scrolling text for artist details title and album title
-        Utils.setHorizontalScrollBehavior(mPlayerInfoView, playing_song, playing_album)
-        Utils.setHorizontalScrollBehavior(discs_artist_container, mArtistDetailsTitle)
-        Utils.setHorizontalScrollBehavior(disc_title_container, mArtistsDetailsSelectedDisc)
-
         close_button.setOnClickListener { revealArtistDetails(!sArtistDiscographyExpanded) }
 
         mControlsContainer.afterMeasured {
@@ -386,6 +381,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupPlayerControls() {
         mPlayerInfoView.setOnClickListener { handlePlayerInfo() }
+
+        //this makes the text scrolling when too long
+        mPlayingSong.isSelected = true
+        mPlayingAlbum.isSelected = true
+
         mSkipPrevButton.setOnClickListener { skipPrev() }
         mSkipPrevButton.setOnLongClickListener {
             setRepeat()

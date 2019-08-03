@@ -52,29 +52,33 @@
                             android:id="@+id/playing_song"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ellipsize="marquee"
-                            android:scrollHorizontally="true"
-                            android:singleLine="true"
                             android:textAppearance="@android:style/TextAppearance.Material.Title"
-                            android:marqueeRepeatLimit="marquee_forever"
                             android:text="@string/app_name"
                             android:textAlignment="textStart"
                             android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:singleLine="true"
+                            android:scrollHorizontally="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit ="marquee_forever"/>
 
                     <TextView
                             android:id="@+id/playing_album"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ellipsize="marquee"
-                            android:scrollHorizontally="true"
-                            android:singleLine="true"
                             android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-                            android:marqueeRepeatLimit="marquee_forever"
                             android:text="@string/versionName"
                             android:textAlignment="textStart"
                             android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="14sp"/>
+                            android:textSize="14sp"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:singleLine="true"
+                            android:scrollHorizontally="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit ="marquee_forever"/>
                 </LinearLayout>
 
                 <LinearLayout
