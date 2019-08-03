@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.music
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.provider.MediaStore.Audio.AudioColumns
 import androidx.lifecycle.MutableLiveData
@@ -36,6 +37,8 @@ class MusicViewModel : ViewModel() {
     }
 
     // Extension method to get all music files list from external storage/sd card
+    @Suppress("DEPRECATION")
+    @SuppressLint("InlinedApi")
     private fun loadMusic(context: Context): MutableLiveData<Pair<MutableList<Music>, Map<String, Map<String?, List<Music>>>>> {
 
         val musicCursor = MusicUtils.getMusicCursor(context.contentResolver)!!

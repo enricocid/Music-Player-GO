@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.music
 
+import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.Context
 import android.content.res.Resources
@@ -17,6 +18,7 @@ import com.iven.musicplayergo.Utils
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+@Suppress("DEPRECATION")
 object MusicUtils {
 
     @JvmStatic
@@ -116,7 +118,6 @@ object MusicUtils {
 
     @JvmStatic
     fun buildSpanned(res: String): Spanned {
-        @Suppress("DEPRECATION")
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             Html.fromHtml(res, Html.FROM_HTML_MODE_LEGACY)
         else
@@ -124,6 +125,7 @@ object MusicUtils {
     }
 
     @JvmStatic
+    @SuppressLint("InlinedApi")
     private val COLUMNS = arrayOf(
         AudioColumns.ARTIST, // 0
         AudioColumns.YEAR, // 1
