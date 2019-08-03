@@ -440,7 +440,7 @@ class MainActivity : AppCompatActivity() {
         if (!sSearchEnabled) search_option.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN)
 
         mColorsRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        val colorsAdapter = ColorsAdapter(this, mAccent)
+        val colorsAdapter = ColorsAdapter(this)
         mColorsRecyclerView.adapter = colorsAdapter
     }
 

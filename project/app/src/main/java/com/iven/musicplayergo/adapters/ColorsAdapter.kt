@@ -11,7 +11,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.Utils
 import com.iven.musicplayergo.mMusicPlayerGoPreferences
 
-class ColorsAdapter(private val activity: Activity, private val accent: Int) :
+class ColorsAdapter(private val activity: Activity) :
     RecyclerView.Adapter<ColorsAdapter.ColorsHolder>() {
 
     //fixed int array of accent colors
