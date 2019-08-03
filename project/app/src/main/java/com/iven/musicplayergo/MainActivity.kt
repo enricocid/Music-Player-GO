@@ -279,8 +279,7 @@ class MainActivity : AppCompatActivity() {
                 startPlayback(song, albumSongs)
 
             } else {
-                Toast.makeText(this, getString(R.string.error_not_supported), Toast.LENGTH_SHORT).show()
-                finish()
+                Utils.makeUnknownErrorToast(this)
             }
         }
     }
