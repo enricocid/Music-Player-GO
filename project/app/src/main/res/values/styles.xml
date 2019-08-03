@@ -52,6 +52,7 @@
     <style name="SearchBarStyle" parent="Widget.MaterialComponents.Toolbar">
         <item name="searchViewStyle">@style/SearchViewStyle</item>
         <item name="colorControlActivated">?attr/icon_color</item>
+        <item name="android:background">?attr/colorAccent</item>
     </style>
 
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView.ActionBar">
