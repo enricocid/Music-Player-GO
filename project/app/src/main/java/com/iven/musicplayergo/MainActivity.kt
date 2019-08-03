@@ -259,28 +259,33 @@ class MainActivity : AppCompatActivity() {
 
         val uri = intent.data
 
-        if (uri.toString().isNotEmpty()) {
+        try {
+            if (uri.toString().isNotEmpty()) {
 
-            val path = MusicUtils.getRealPathFromURI(this, uri!!)
+                val path = MusicUtils.getRealPathFromURI(this, uri!!)
 
-            //if we were able to get the song play it!
-            if (MusicUtils.getSongForIntent(
-                    path,
-                    mSelectedArtistSongs,
-                    mAllDeviceSongs
-                ) != null
-            ) {
+                //if we were able to get the song play it!
+                if (MusicUtils.getSongForIntent(
+                        path,
+                        mSelectedArtistSongs,
+                        mAllDeviceSongs
+                    ) != null
+                ) {
 
-                val song = MusicUtils.getSongForIntent(path, mSelectedArtistSongs, mAllDeviceSongs)!!
+                    val song = MusicUtils.getSongForIntent(path, mSelectedArtistSongs, mAllDeviceSongs)!!
 
-                //get album songs and sort them
-                val albumSongs = mMusic[song.artist]!![song.album]?.sortedBy { albumSong -> albumSong.track }
+                    //get album songs and sort them
+                    val albumSongs = mMusic[song.artist]!![song.album]?.sortedBy { albumSong -> albumSong.track }
 
-                startPlayback(song, albumSongs)
-
-            } else {
-                Utils.makeUnknownErrorToast(this)
+                    startPlayback(song, albumSongs)
+                } else {
+                    Utils.makeUnknownErrorToast(this)
+                    finishAndRemoveTask()
+                }
             }
+        } catch (e: Exception) {
+            Utils.makeUnknownErrorToast(this)
+            finishAndRemoveTask()
         }
     }
 
@@ -687,7 +692,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateResetStatus(onPlaybackCompletion: Boolean) {
         val themeColor = if (sThemeInverted) R.color.white else R.color.black
-        val color = if (onPlaybackCompletion) themeColor else if (mMediaPlayerHolder.isReset) mAccent else themeColor
+        val color =
+            if (onPlaybackCompletion) themeColor else if (mMediaPlayerHolder.isReset) mAccent else themeColor
         mSkipPrevButton.setColorFilter(
             Utils.getColor(
                 this,
