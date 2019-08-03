@@ -442,11 +442,6 @@ class MainActivity : AppCompatActivity() {
         mColorsRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         val colorsAdapter = ColorsAdapter(this, mAccent)
         mColorsRecyclerView.adapter = colorsAdapter
-
-        colorsAdapter.onColorClick = { accent ->
-            mMusicPlayerGoPreferences.accent = accent
-            Utils.applyNewThemeSmoothly(this)
-        }
     }
 
     private fun setArtistsRecyclerView() {
