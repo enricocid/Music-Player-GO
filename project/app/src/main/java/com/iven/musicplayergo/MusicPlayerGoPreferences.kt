@@ -2,7 +2,7 @@ package com.iven.musicplayergo
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 
 class MusicPlayerGoPreferences(context: Context) {
 

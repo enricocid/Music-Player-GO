@@ -28,7 +28,7 @@
                 android:textSize="18sp"
                 android:singleLine="true"
                 android:ellipsize="marquee"
-                android:marqueeRepeatLimit ="marquee_forever"/>
+                android:marqueeRepeatLimit="marquee_forever"/>
 
         <TextView
                 android:id="@+id/album_count"
