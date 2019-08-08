@@ -2,7 +2,7 @@
 
 - [**Julian Javier Gomez - Axinen Design**](https://github.com/AxinenDesign) for the wonderful **material design icon**
 
-- [**Reddit**](https://github.com/reddit) for the wonderful [**Indicator Fast Scroll**](https://github.com/reddit/IndicatorFastScroll)
+- [**Reddit**](https://github.com/reddit) for the wonderful [**Indicator Fast Scroll**](https://github.com/reddit/IndicatorFastScroll) library
 
 - [**material.io**](https://material.io/tools/icons/?style=round) for the **wonderful round icons**
 
@@ -10,7 +10,7 @@
 
 - [**Somesh Kumar**](https://github.com/TheSomeshKumar) for Hindi translations
 
-- [**TancoTheDank**](https://github.com/TacoTheDank) for upgrades to gradle and java 1.8
+- [**TacoTheDank**](https://github.com/TacoTheDank) for upgrades to gradle and java 1.8
 
 - [**Dankan1890**](https://github.com/dankan1890) for some fixes to bluetooth devices
 
@@ -18,7 +18,7 @@
 
 - [**olayhemy**](https://github.com/olayhemy) for FAQ
 
-- [**andOTP**](https://github.com/andOTP) for "GET IN ON GitHub" download badge
+- [**andOTP**](https://github.com/andOTP) for "Get it on GitHub" download badge
 
 
 # Big thanks to translators:
