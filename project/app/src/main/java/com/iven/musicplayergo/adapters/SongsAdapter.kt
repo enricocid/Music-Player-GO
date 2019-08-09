@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.Utils
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.player.MediaPlayerHolder
@@ -58,7 +57,6 @@ class SongsAdapter(music: MutableList<Music>) : RecyclerView.Adapter<SongsAdapte
             itemView.title.text = title
             itemView.duration.text = MusicUtils.formatSongDuration(duration)
             itemView.setOnClickListener { onSongClick?.invoke(mMusic[adapterPosition]) }
-            Utils.setHorizontalScrollBehavior(itemView, itemView.title)
         }
     }
 }
