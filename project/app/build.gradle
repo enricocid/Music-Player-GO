@@ -24,24 +24,32 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     // Configure only for each module that uses Java 8
     // language features (either in its source code or
     // through dependencies).
     compileOptions {
+        encoding = 'UTF-8'
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    lintOptions{
+    lintOptions {
         disable 'MissingTranslation'
     }
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    implementation 'androidx.annotation:annotation:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.core:core-ktx:1.0.2'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-    implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
     implementation 'androidx.media:media:1.0.1'
+    implementation 'androidx.preference:preference-ktx:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
     api 'com.google.android.material:material:1.0.0'
+
     implementation 'com.reddit:indicator-fast-scroll:1.1.0'
 }

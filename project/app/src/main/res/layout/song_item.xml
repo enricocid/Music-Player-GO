@@ -35,7 +35,7 @@
             android:textSize="16sp"
             android:singleLine="true"
             android:ellipsize="marquee"
-            android:marqueeRepeatLimit ="marquee_forever"/>
+            android:marqueeRepeatLimit="marquee_forever"/>
 
     <TextView
             android:id="@+id/duration"

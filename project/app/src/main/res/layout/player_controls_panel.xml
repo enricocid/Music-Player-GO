@@ -62,7 +62,7 @@
                             android:singleLine="true"
                             android:scrollHorizontally="true"
                             android:ellipsize="marquee"
-                            android:marqueeRepeatLimit ="marquee_forever"/>
+                            android:marqueeRepeatLimit="marquee_forever"/>
 
                     <TextView
                             android:id="@+id/playing_album"
@@ -78,7 +78,7 @@
                             android:singleLine="true"
                             android:scrollHorizontally="true"
                             android:ellipsize="marquee"
-                            android:marqueeRepeatLimit ="marquee_forever"/>
+                            android:marqueeRepeatLimit="marquee_forever"/>
                 </LinearLayout>
 
                 <LinearLayout
