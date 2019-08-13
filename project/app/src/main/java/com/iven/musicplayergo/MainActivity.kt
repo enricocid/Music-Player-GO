@@ -19,6 +19,7 @@ import android.view.ViewAnimationUtils
 import android.view.ViewTreeObserver
 import android.widget.*
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -416,7 +417,11 @@ class MainActivity : AppCompatActivity() {
             audioMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.vol -> {
-                        Toast.makeText(this, "No, not yet", Toast.LENGTH_SHORT).show() // provisory
+                        val volDialog = AlertDialog.Builder(this)
+                        val volDialogView = layoutInflater.inflate(R.layout.precise_volume_dialog,null)
+                        val volSeekbar = volDialogView.findViewById<SeekBar>(R.id.vol_seekBar)
+                        volDialog.setView(volDialogView)
+                        volDialog.show()
                         true }
                     R.id.eq  -> {
                         openEqualizer()
