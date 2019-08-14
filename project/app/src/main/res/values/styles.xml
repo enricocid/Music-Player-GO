@@ -6,22 +6,22 @@
 
     <!-- LIGHT THEME -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="icon_color">@color/black</item>
-        <item name="card_color">@color/white</item>
+        <item name="icon_color">@android:color/black</item>
+        <item name="card_color">@android:color/white</item>
         <item name="controls_panel_stroke">@color/gray_50</item>
-        <item name="android:windowBackground">@color/white</item>
-        <item name="android:navigationBarColor">@color/black</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 
     <!-- INVERTED THEME -->
     <style name="AppThemeInverted" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="icon_color">@color/white</item>
-        <item name="card_color">@color/black</item>
+        <item name="icon_color">@android:color/white</item>
+        <item name="card_color">@android:color/black</item>
         <item name="controls_panel_stroke">@color/gray_900</item>
-        <item name="android:windowBackground">@color/black</item>
-        <item name="android:navigationBarColor">@color/black</item>
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>

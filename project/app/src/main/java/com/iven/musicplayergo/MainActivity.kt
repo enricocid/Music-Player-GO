@@ -709,15 +709,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateResetStatus(onPlaybackCompletion: Boolean) {
-        val themeColor = if (sThemeInverted) R.color.white else R.color.black
+        val themeColor = if (sThemeInverted) Color.WHITE else Color.BLACK
         val color =
-            if (onPlaybackCompletion) themeColor else if (mMediaPlayerHolder.isReset) mAccent else themeColor
-        mSkipPrevButton.setColorFilter(
-            Utils.getColor(
+            if (onPlaybackCompletion) themeColor else if (mMediaPlayerHolder.isReset) Utils.getColor(
                 this,
-                color,
+                mAccent,
                 if (onPlaybackCompletion) themeColor else R.color.blue
-            ), PorterDuff.Mode.SRC_IN
+            ) else themeColor
+
+        mSkipPrevButton.setColorFilter(
+            color, PorterDuff.Mode.SRC_IN
         )
     }
 
