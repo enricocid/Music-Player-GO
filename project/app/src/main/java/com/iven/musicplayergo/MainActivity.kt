@@ -409,13 +409,13 @@ class MainActivity : AppCompatActivity() {
         mPlayingSong.isSelected = true
         mPlayingAlbum.isSelected = true
 
-        mSkipPrevButton.setOnClickListener { skipPrev() }
+        mSkipPrevButton.setOnClickListener { skip(false) }
         mSkipPrevButton.setOnLongClickListener {
             setRepeat()
             return@setOnLongClickListener false
         }
         mPlayPauseButton.setOnClickListener { resumeOrPause() }
-        mSkipNextButton.setOnClickListener { skipNext() }
+        mSkipNextButton.setOnClickListener { skip(true) }
         shuffle_button.setOnClickListener {
             if (::mMediaPlayerHolder.isInitialized) {
                 if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
@@ -617,27 +617,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun skipPrev() {
-        if (checkIsPlayer()) {
-            mMediaPlayerHolder.instantReset()
-            if (mMediaPlayerHolder.isReset) {
-                mMediaPlayerHolder.reset()
-                updateResetStatus(false)
-            }
-        }
-    }
-
     private fun resumeOrPause() {
         if (checkIsPlayer()) {
             mMediaPlayerHolder.resumeOrPause()
         }
     }
 
-    private fun skipNext() {
+    private fun skip(isNext: Boolean) {
         if (checkIsPlayer()) {
-            mMediaPlayerHolder.skip(true)
+            if (isNext) mMediaPlayerHolder.skip(true) else mMediaPlayerHolder.instantReset()
         }
     }
+
+/*    private fun handleReset() {
+        if (mMediaPlayerHolder.isReset) {
+            mMediaPlayerHolder.reset()
+            updateResetStatus(false)
+        }
+    }*/
 
     //interface to let MediaPlayerHolder update the UI media player controls
     val mediaPlayerInterface = object : MediaPlayerInterface {
@@ -688,13 +685,14 @@ class MainActivity : AppCompatActivity() {
             MusicUtils.buildSpanned(getString(R.string.playing_song, selectedSong.artist, selectedSong.title))
         mPlayingAlbum.text = selectedSong.album
 
+        updateResetStatus(false)
+
         if (restore) {
 
             mSongPosition.text = MusicUtils.formatSongDuration(mMediaPlayerHolder.playerPosition.toLong())
             mSeekBar.progress = mMediaPlayerHolder.playerPosition
 
             updatePlayingStatus()
-            updateResetStatus(false)
 
             //stop foreground if coming from pause state
             if (mPlayerService.isRestoredFromPause) {

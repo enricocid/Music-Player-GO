@@ -138,12 +138,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
         mediaPlayerInterface.onPlaybackCompleted()
 
 
-        if (isReset) {
-            if (isMediaPlayer) resetSong()
-            isReset = false
-        } else {
-            skip(true)
-        }
+        if (isReset) if (isMediaPlayer) resetSong() else skip(true)
     }
 
     fun onResumeActivity() {
@@ -217,6 +212,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
     }
 
     private fun resetSong() {
+        isReset = false
         mediaPlayer!!.seekTo(0)
         mediaPlayer!!.start()
         setStatus(PLAYING)
@@ -297,6 +293,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
 
     override fun onPrepared(mediaPlayer: MediaPlayer) {
         startUpdatingCallbackWithPosition()
+        if (isReset) isReset = false
         setStatus(PLAYING)
         mediaPlayer.start()
         playerService.startForeground(NOTIFICATION_ID, mMusicNotificationManager.createNotification())
@@ -325,10 +322,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
     }
 
     fun skip(isNext: Boolean) {
-        getSkipSong(isNext)
-    }
-
-    private fun getSkipSong(isNext: Boolean) {
         val currentIndex = mPlayingAlbumSongs.indexOf(currentSong)
         val index: Int
         try {
