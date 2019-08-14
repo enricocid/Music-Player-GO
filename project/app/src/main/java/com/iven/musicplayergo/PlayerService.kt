@@ -34,7 +34,7 @@ class PlayerService : Service() {
         and stopped to run for arbitrary periods of time, such as a service
         performing background music playback.*/
         isRunning = true
-        return START_STICKY
+        return START_NOT_STICKY
     }
 
     override fun onBind(intent: Intent): IBinder {
