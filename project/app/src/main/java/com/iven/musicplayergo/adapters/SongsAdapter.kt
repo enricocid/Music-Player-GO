@@ -10,27 +10,22 @@ import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import kotlinx.android.synthetic.main.song_item.view.*
 
-class SongsAdapter(music: MutableList<Music>) : RecyclerView.Adapter<SongsAdapter.SongsHolder>() {
+class SongsAdapter(albumMusic: MutableList<Music>) : RecyclerView.Adapter<SongsAdapter.SongsHolder>() {
 
     var onSongClick: ((Music) -> Unit)? = null
 
-    private var mMusic = music
+    private var mAlbumMusic = albumMusic
 
-    init {
-        mMusic.sortBy { it.track }
-    }
-
-    fun swapSongs(music: MutableList<Music>) {
-        mMusic = music
-        mMusic.sortBy { it.track }
+    fun swapSongs(albumMusic: MutableList<Music>) {
+        mAlbumMusic = albumMusic
         notifyDataSetChanged()
     }
 
     fun randomPlaySelectedAlbum(mediaPlayerHolder: MediaPlayerHolder) {
-        val currentAlbum = mMusic
+        val currentAlbum = mAlbumMusic
         currentAlbum.shuffle()
         val song = currentAlbum[0]
-        mediaPlayerHolder.setCurrentSong(song, mMusic)
+        mediaPlayerHolder.setCurrentSong(song, mAlbumMusic)
         mediaPlayerHolder.initMediaPlayer(song)
     }
 
@@ -39,13 +34,13 @@ class SongsAdapter(music: MutableList<Music>) : RecyclerView.Adapter<SongsAdapte
     }
 
     override fun getItemCount(): Int {
-        return mMusic.size
+        return mAlbumMusic.size
     }
 
     override fun onBindViewHolder(holder: SongsHolder, position: Int) {
-        val track = mMusic[holder.adapterPosition].track
-        val title = mMusic[holder.adapterPosition].title
-        val duration = mMusic[holder.adapterPosition].duration
+        val track = mAlbumMusic[holder.adapterPosition].track
+        val title = mAlbumMusic[holder.adapterPosition].title
+        val duration = mAlbumMusic[holder.adapterPosition].duration
 
         holder.bindItems(track, title!!, duration)
     }
@@ -56,7 +51,7 @@ class SongsAdapter(music: MutableList<Music>) : RecyclerView.Adapter<SongsAdapte
             itemView.track.text = MusicUtils.formatSongTrack(track).toString()
             itemView.title.text = title
             itemView.duration.text = MusicUtils.formatSongDuration(duration)
-            itemView.setOnClickListener { onSongClick?.invoke(mMusic[adapterPosition]) }
+            itemView.setOnClickListener { onSongClick?.invoke(mAlbumMusic[adapterPosition]) }
         }
     }
 }

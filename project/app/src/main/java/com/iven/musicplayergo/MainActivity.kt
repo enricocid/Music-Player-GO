@@ -570,7 +570,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setAlbumSongs(selectedAlbum: String?) {
-        val album = mMusic.getValue(mNavigationArtist!!).getValue(selectedAlbum!!)
+        val album = mMusic.getValue(mNavigationArtist!!).getValue(selectedAlbum!!).toMutableList()
+        album.sortBy { it.track }
         mArtistsDetailsSelectedDisc.text = selectedAlbum
         mArtistDetailsSelectedDiscYear.text = MusicUtils.getYearForAlbum(resources, album[0].year)
 
@@ -580,10 +581,10 @@ class MainActivity : AppCompatActivity() {
             mSongsRecyclerView.setHasFixedSize(true)
             mSongsLayoutManager = LinearLayoutManager(this)
             mSongsRecyclerView.layoutManager = mSongsLayoutManager
-            mSongsAdapter = SongsAdapter(album.toMutableList())
+            mSongsAdapter = SongsAdapter(album)
             mSongsRecyclerView.adapter = mSongsAdapter
         } else {
-            mSongsAdapter.swapSongs(album.toMutableList())
+            mSongsAdapter.swapSongs(album)
         }
         mSongsRecyclerView.setPadding(0, 0, 0, -resources.getDimensionPixelSize(R.dimen.songs_card_margin_bottom))
         mSongsAdapter.onSongClick = { music ->
