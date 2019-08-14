@@ -232,7 +232,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
             Runnable { this.updateProgressCallbackTask() }
 
         mExecutor!!.scheduleAtFixedRate(
-            mSeekBarPositionUpdateTask,
+            mSeekBarPositionUpdateTask!!,
             0,
             1000,
             TimeUnit.MILLISECONDS
