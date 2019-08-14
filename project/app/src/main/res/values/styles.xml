@@ -64,12 +64,11 @@
     <style name="SearchBarStyle" parent="Widget.MaterialComponents.Toolbar">
         <item name="searchViewStyle">@style/SearchViewStyle</item>
         <item name="colorControlActivated">?attr/icon_color</item>
-        <item name="android:background">?attr/colorAccent</item>
+        <item name="android:textColorHighlight">@color/highlight</item>
     </style>
 
     <!-- Style for search view -->
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView.ActionBar">
         <item name="searchIcon">@drawable/ic_round_search</item>
-        <item name="queryBackground">@color/transparent</item>
     </style>
 </resources>
