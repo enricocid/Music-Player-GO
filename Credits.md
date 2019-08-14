@@ -4,6 +4,8 @@
 
 - [**Reddit**](https://github.com/reddit) for the wonderful [**Indicator Fast Scroll**](https://github.com/reddit/IndicatorFastScroll) library
 
+- [**Aidan Afollestad**](https://github.com/afollestad) for the incredible [**material-dialogs**](https://github.com/afollestad/material-dialogs) library
+
 - [**material.io**](https://material.io/tools/icons/?style=round) for the **wonderful round icons**
 
 - [**IzzySoft**](https://github.com/IzzySoft) and [**Poussinou**](https://github.com/Poussinou) for setting up the **F-Droid** repository

@@ -41,12 +41,11 @@
                     android:layout_marginBottom="2dp"
                     android:ellipsize="marquee"
                     android:marqueeRepeatLimit="marquee_forever"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/raleway_black"
+                    android:textSize="22sp"
                     android:singleLine="true"
-                    android:textAppearance="@android:style/TextAppearance.Material.Headline"
                     android:textAlignment="textStart"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="24sp"/>
+                    android:textColor="?android:attr/textColorPrimary"/>
 
             <!-- ALBUM COUNT -->
             <TextView
@@ -54,11 +53,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
+                    android:fontFamily="@font/raleway_regular"
                     android:singleLine="true"
-                    android:textAppearance="@android:style/TextAppearance.Material.Subhead"
                     android:textAlignment="textStart"
-                    android:textColor="?android:attr/textColorSecondary"
-                    android:textSize="14sp"/>
+                    android:textColor="?android:attr/textColorSecondary"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -116,10 +114,10 @@
                             android:ellipsize="marquee"
                             android:marqueeRepeatLimit="marquee_forever"
                             android:singleLine="true"
-                            android:textAppearance="@android:style/TextAppearance.Material.Title"
+                            android:fontFamily="@font/raleway_black_italic"
+                            android:textSize="16sp"
                             android:paddingBottom="2dp"
-                            android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="18sp"/>
+                            android:textColor="?android:attr/textColorPrimary"/>
 
                     <!-- ALBUM YEAR -->
                     <TextView
@@ -128,10 +126,10 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:singleLine="true"
-                            android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-                            android:textAlignment="center"
-                            android:textColor="?android:attr/textColorSecondary"
-                            android:textSize="14sp"/>
+                            android:fontFamily="@font/raleway_medium"
+                            android:textSize="12sp"
+                            android:textAlignment="textStart"
+                            android:textColor="?android:attr/textColorSecondary"/>
                 </LinearLayout>
             </LinearLayout>
 

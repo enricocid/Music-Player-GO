@@ -30,12 +30,13 @@
     <style name="IndicatorTextAppearance" parent="@android:style/TextAppearance.Material">
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/raleway_regular</item>
     </style>
 
     <!-- Indicator thumb text style -->
     <style name="IndicatorThumbTextAppearance" parent="@android:style/TextAppearance.Material">
-        <item name="android:textSize">32sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/raleway_black</item>
     </style>
 
     <!-- This will set the fade in animation on all the activities by default -->

@@ -20,7 +20,7 @@
             android:fontFamily="sans-serif-condensed"
             android:textAppearance="@android:style/TextAppearance.Material.Small"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="16sp"/>
+            android:textSize="14sp"/>
 
     <SeekBar
             android:id="@+id/seekTo"
@@ -41,5 +41,5 @@
             android:textAppearance="@android:style/TextAppearance.Material.Small"
             android:singleLine="true"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="16sp"/>
+            android:textSize="14sp"/>
 </LinearLayout>
