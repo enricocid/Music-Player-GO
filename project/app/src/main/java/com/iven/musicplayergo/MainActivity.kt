@@ -21,11 +21,13 @@ import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.iven.musicplayergo.adapters.AlbumsAdapter
 import com.iven.musicplayergo.adapters.ArtistsAdapter
@@ -46,8 +48,6 @@ import kotlinx.android.synthetic.main.player_seek.*
 import kotlinx.android.synthetic.main.player_settings.*
 import kotlinx.android.synthetic.main.search_toolbar.*
 import kotlin.math.hypot
-
-private const val TAG_PERMISSION_RATIONALE = "com.iven.musicplayergo.rationale"
 
 class MainActivity : AppCompatActivity() {
 
@@ -157,7 +157,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        unbindService(connection)
+        if (sBound) unbindService(connection)
     }
 
     //restore recycler views state
@@ -237,12 +237,35 @@ class MainActivity : AppCompatActivity() {
     @TargetApi(23)
     private fun checkPermission() {
 
-        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        )
             showPermissionRationale() else doBindService()
     }
 
     private fun showPermissionRationale() {
-        PermissionDialogFragment.newInstance().show(supportFragmentManager, TAG_PERMISSION_RATIONALE)
+
+        MaterialDialog(this).show {
+
+            cornerRadius(res = R.dimen.md_corner_radius)
+            title(R.string.app_name)
+            message(R.string.perm_rationale)
+            positiveButton {
+                ActivityCompat.requestPermissions(
+                    this@MainActivity,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    2588
+                )
+            }
+            negativeButton {
+                Toast.makeText(this@MainActivity, getString(R.string.perm_rationale), Toast.LENGTH_LONG)
+                    .show()
+                dismiss()
+                finishAndRemoveTask()
+            }
+        }
     }
 
     fun openGitPage(@Suppress("UNUSED_PARAMETER") view: View) {

@@ -71,17 +71,4 @@
         <item name="searchIcon">@drawable/ic_round_search</item>
         <item name="queryBackground">@color/transparent</item>
     </style>
-
-    <!-- set the rounded drawable as background to your bottom sheet -->
-    <style name="BottomSheet" parent="@style/Widget.MaterialComponents.BottomSheet.Modal">
-        <item name="android:background">@drawable/bg_permission_dialog_fragment</item>
-    </style>
-
-    <style name="BaseBottomSheetDialog" parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:statusBarColor">@color/transparent</item>
-        <item name="bottomSheetStyle">@style/BottomSheet</item>
-    </style>
-
-    <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog"/>
 </resources>
