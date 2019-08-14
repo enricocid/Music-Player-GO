@@ -5,7 +5,7 @@
 [![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin) [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
 
 ###### Very slim, nice and **original** music player
-###### Current version: 3.6.4.1
+###### Current version: 3.6.4.2
 
 
 
@@ -14,7 +14,7 @@
 
 # Screenshots
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v3-6-2.png) 
+![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v3-6-4-2.png) 
 
 
 # Download

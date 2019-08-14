@@ -53,10 +53,10 @@
 
     <!-- Style for color theme option -->
     <style name="ColorOptionStyle">
-        <item name="android:layout_marginTop">8dp</item>
-        <item name="android:layout_marginBottom">8dp</item>
         <item name="android:layout_marginStart">4dp</item>
         <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
         <item name="android:background">?android:attr/actionBarItemBackground</item>
     </style>
 
