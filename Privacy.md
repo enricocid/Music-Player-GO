@@ -6,6 +6,7 @@ The objective of this policy document is to provide an open environment between 
 
 ## Information Collection And Use
 
+**We don't store any data. Period. We physically can't. We have nowhere to store it. We are very poor so we don't even have a server database to store any kind of information.**
 
 For better and enhanced utilization of Music-Player-GO, the software is designed to request only the storage permission on the device on which the software's services is intended.
 
@@ -29,7 +30,9 @@ The developer doesn't collect personally identifiable data while the software is
 
 ## Children's Privacy
 
-This software is intended for general use and has no restrictions on utilization by children. <hr>
+The app do not address anyone under the age of 13. I do not knowingly collect personally identifiable information from children under 13. In the case I discover that a child under 13 has provided me with personal information (by email), I immediately delete it. If you are a parent or guardian and you are aware that your child has provided us with personal information by email, please contact me so that I will be able to do necessary actions.
+
+This software is intended for general use and has no restrictions on utilization by children. Music Player GO **DOES NOT** contain any hazardous, violent or any other content (e.g. augment reality) that may require parental supervision. <hr>
 
 ## Links To Other Sites
 
