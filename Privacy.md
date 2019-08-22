@@ -32,7 +32,7 @@ The developer doesn't collect personally identifiable data while the software is
 
 The app do not address anyone under the age of 13. I do not knowingly collect personally identifiable information from children under 13. In the case I discover that a child under 13 has provided me with personal information (by email), I immediately delete it. If you are a parent or guardian and you are aware that your child has provided us with personal information by email, please contact me so that I will be able to do necessary actions.
 
-This software is intended for general use and has no restrictions on utilization by children. Music Player GO **DOES NOT** contain any hazardous, violent or any other content (e.g. augment reality) that may require parental supervision. <hr>
+This software is intended for general use and has no restrictions on utilization by children. Music-Player-GO **DOES NOT** contain any hazardous, violent or any other content (e.g. augment reality) that may require parental supervision. <hr>
 
 ## Links To Other Sites
 
