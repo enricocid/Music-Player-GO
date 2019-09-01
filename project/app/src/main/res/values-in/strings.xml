@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">Music Player GO</string>
-    <string name="unknown_year" translatable="false">N&#x2F;A</string>
     <string name="no_eq">Equalizer tidak ditemukan!</string>
     <string name="bad_id">Putar lagu terlebih dahulu!</string>
     <string name="artist_info">%1d&#160;Album,&#160;%2d&#160;Lagu</string>
@@ -9,9 +7,4 @@
     <string name="perm_rationale">Music Player GO membutuhkan akses ke berkas untuk dapat memutar musik!</string>
     <string name="error_no_music">Tidak ada musik yang ditemukan di perangkat anda!</string>
     <string name="error_unknown">Telah terjadi kesalahan! :(</string>
-
-    <!-- Preferences keys -->
-    <string name="prefs_accent" translatable="false">com.iven.musicplayergo.pref_accent</string>
-    <string name="prefs_theme" translatable="false">com.iven.musicplayergo.pref_theme</string>
-    <string name="prefs_search_bar" translatable="false">com.iven.musicplayergo.pref_search_bar</string>
 </resources>
