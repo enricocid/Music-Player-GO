@@ -29,6 +29,8 @@
 
 - [**Adem Furkan ÖZCAN**](https://github.com/ozcanfurkan) for **Turkish** translations
 
+- [**zmni**](https://github.com/zmni) for **Indonesian** translations
+
 - [**Malte Kiefer**](https://github.com/beli3ver) for **German** translations
 
 - [**Luis F. Uceta**](https://github.com/uzluisf) for **Spanish** translations
