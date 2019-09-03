@@ -1,0 +1,10 @@
+<resources>
+    <string name="no_eq">Equalizer tidak ditemukan!</string>
+    <string name="bad_id">Putar lagu terlebih dahulu!</string>
+    <string name="artist_info">%1d&#160;Album,&#160;%2d&#160;Lagu</string>
+    <string name="playing_song" translatable="false">&lt;b>%1s&lt;/b>&lt;br/>%2s</string>
+    <string name="no_browser">Peramban tidak temukan!</string>
+    <string name="perm_rationale">Music Player GO membutuhkan akses ke berkas untuk dapat memutar musik!</string>
+    <string name="error_no_music">Tidak ada musik yang ditemukan di perangkat anda!</string>
+    <string name="error_unknown">Telah terjadi kesalahan! :(</string>
+</resources>
