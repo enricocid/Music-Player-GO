@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -422,6 +423,24 @@ class MainActivity : AppCompatActivity() {
                         val volSeekbar = volDialogView.findViewById<SeekBar>(R.id.vol_seekBar)
                         volDialog.setView(volDialogView)
                         volDialog.show()
+                        volSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+                            override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
+                                mMediaPlayerHolder.setPreciseVolume(i)
+                                Toast.makeText(applicationContext,"current val: " + i,Toast.LENGTH_LONG).show()
+
+                            }
+
+                            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                                // Do something
+                                Toast.makeText(applicationContext,"start tracking",Toast.LENGTH_SHORT).show()
+                            }
+
+                            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                                // Do something
+                                Toast.makeText(applicationContext,"stop tracking",Toast.LENGTH_SHORT).show()
+                            }
+                        })
                         true }
                     R.id.eq  -> {
                         openEqualizer()
