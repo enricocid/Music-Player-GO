@@ -371,6 +371,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
         }
     }
 
+    fun setPreciseVolume(v: Int) {
+        mediaPlayer!!.setVolume(v.toFloat(),v.toFloat())
+    }
+
     private inner class NotificationReceiver : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
