@@ -427,18 +427,14 @@ class MainActivity : AppCompatActivity() {
 
                             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
                                 mMediaPlayerHolder.setPreciseVolume(i)
-                                Toast.makeText(applicationContext,"current val: " + i,Toast.LENGTH_LONG).show()
-
                             }
 
                             override fun onStartTrackingTouch(seekBar: SeekBar) {
-                                // Do something
-                                Toast.makeText(applicationContext,"start tracking",Toast.LENGTH_SHORT).show()
+                                // nothing happens but I still have to override this apparently
                             }
 
                             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                                // Do something
-                                Toast.makeText(applicationContext,"stop tracking",Toast.LENGTH_SHORT).show()
+                                // nothing happens but I still have to override this apparently
                             }
                         })
                         true }
