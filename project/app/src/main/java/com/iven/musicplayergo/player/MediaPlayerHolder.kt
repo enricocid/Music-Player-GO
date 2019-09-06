@@ -86,6 +86,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
     private var mSeekBarPositionUpdateTask: Runnable? = null
     private lateinit var mPlayingAlbumSongs: List<Music>
     var currentSong: Music? = null
+    var currentVolumeInPercent = 100
     val playerPosition: Int get() = mediaPlayer!!.currentPosition
 
     //media player state/booleans
@@ -378,6 +379,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
             if (percent == 100) return 1f
             return (1 - (ln((101 - percent).toFloat()) / ln(101f)))
         }
+        currentVolumeInPercent = percent
         val new = volFromPercent(percent)
         mediaPlayer!!.setVolume(new,new)
     }
