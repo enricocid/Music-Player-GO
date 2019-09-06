@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.Utils
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import kotlinx.android.synthetic.main.artist_item.view.*
@@ -14,7 +13,7 @@ import kotlinx.android.synthetic.main.artist_item.view.*
 class ArtistsAdapter(
     private val resources: Resources,
     artists: MutableList<String>,
-    private val music: Map<String, Map<String, List<Music>>>
+    private val music: Map<String, Map<String?, List<Music>>>
 ) :
     RecyclerView.Adapter<ArtistsAdapter.ArtistsHolder>() {
 
@@ -51,7 +50,6 @@ class ArtistsAdapter(
             itemView.album_count.text =
                 MusicUtils.buildSpanned(resources.getString(R.string.artist_info, albumCount, songCount))
             itemView.setOnClickListener { onArtistClick?.invoke(mArtists[adapterPosition]) }
-            Utils.setHorizontalScrollBehavior(itemView, itemView.artist)
         }
     }
 }

@@ -1,37 +1,40 @@
 # Credits:
 
-- **Julian Javier Gomez - Axinen Design** (https://plus.google.com/u/0/+AxinenDesign) for the wonderful **material design icon**
+- [**Julian Javier Gomez - Axinen Design**](https://github.com/AxinenDesign) for the wonderful **material design icon**
 
-- **Reddit** (@reddit - https://github.com/reddit) for Indicator Fast Scroll:
-https://github.com/reddit/IndicatorFastScroll
+- [**Reddit**](https://github.com/reddit) for the wonderful [**Indicator Fast Scroll**](https://github.com/reddit/IndicatorFastScroll) library
 
-- https://material.io/tools/icons/?style=round for icons
+- [**Toastcode**](https://toastco.de/) for the wunderbar [**Screener - Better screenshots**](https://play.google.com/store/apps/details?id=de.toastcode.screener) app
 
-- **IzzySoft** (@IzzySoft https://github.com/IzzySoft) and **Poussinou** (@Poussinou https://github.com/Poussinou) for setting up the F-Droid repository
+- [**Aidan Afollestad**](https://github.com/afollestad) for the incredible [**material-dialogs**](https://github.com/afollestad/material-dialogs) library
 
-- **TacoTheDank** (@TacoTheDank - https://github.com/TacoTheDank) for updates to gradle/java 1.8
+- [**material.io**](https://material.io/tools/icons/?style=round) for the **wonderful round icons**
 
-- **Dankan1890** (@dankan1890 - https://github.com/dankan1890) for some fixes to bluetooth devices
+- [**IzzySoft**](https://github.com/IzzySoft) and [**Poussinou**](https://github.com/Poussinou) for setting up the **F-Droid** repository
 
-- **Harry** (@HarryHeights - https://github.com/HarryHeights) for Privacy policy
+- [**Somesh Kumar**](https://github.com/TheSomeshKumar) for Hindi translations
 
-- **olayhemy** (@olayhemy ttps://github.com/olayhemy) for FAQ
+- [**TacoTheDank**](https://github.com/TacoTheDank) for upgrades to gradle and java 1.8
 
-- **sagorahmed** (@sagorahmed - https://github.com/sagorahmed) for an important bug report #62
+- [**Dankan1890**](https://github.com/dankan1890) for some fixes to bluetooth devices
+
+- [**Harry**](https://github.com/HarryHeights) for privacy policy
+
+- [**olayhemy**](https://github.com/olayhemy) for FAQ
+
+- [**andOTP**](https://github.com/andOTP) for "Get it on GitHub" download badge
 
 
 # Big thanks to translators:
 
-- **Adem Furkan ÖZCAN** (@ozcanfurkan - https://github.com/ozcanfurkan) for Turkish translations
+- [**Adem Furkan ÖZCAN**](https://github.com/ozcanfurkan) for **Turkish** translations
 
-- **Malte Kiefer** (@beli3ver - https://github.com/beli3ver) for German translations
+- [**Malte Kiefer**](https://github.com/beli3ver) for **German** translations
 
-- **Luis F. Uceta** (@uzluisf - https://github.com/uzluisf) for Spanish translations
+- [**Luis F. Uceta**](https://github.com/uzluisf) for **Spanish** translations
 
-- **Stanislav** (@STWheel - https://github.com/STWheel) for Ukrainian and Russian translations and other strings/ui refinements
+- [**Stanislav**](https://github.com/STWheel) for **Ukrainian** and **Russian** translations and other strings/ui refinements
 
-- **KowalskiOmniROM** (@KowalskiOmniROM https://github.com/KowalskiOmniROM) for French translations
+- [**KowalskiOmniROM**](https://github.com/KowalskiOmniROM) for **French** translations
 
-- **Somesh Kumar** (@TheSomeshKumar https://github.com/TheSomeshKumar) for Hindi translations
-
-- **andOTP** (@andOTP https://github.com/andOTP) for "GET IN ON GitHub" download badge
+- [**Somesh Kumar**](https://github.com/TheSomeshKumar) for **Hindi** translations

@@ -23,11 +23,13 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.iven.musicplayergo.adapters.AlbumsAdapter
 import com.iven.musicplayergo.adapters.ArtistsAdapter
@@ -48,8 +50,6 @@ import kotlinx.android.synthetic.main.player_seek.*
 import kotlinx.android.synthetic.main.player_settings.*
 import kotlinx.android.synthetic.main.search_toolbar.*
 import kotlin.math.hypot
-
-private const val TAG_PERMISSION_RATIONALE = "com.iven.musicplayergo.rationale"
 
 class MainActivity : AppCompatActivity() {
 
@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity() {
     private var sArtistDiscographyExpanded: Boolean = false
 
     //music
-    private lateinit var mMusic: Map<String, Map<String, List<Music>>>
+    private lateinit var mMusic: Map<String, Map<String?, List<Music>>>
     private lateinit var mArtists: MutableList<String>
     private lateinit var mSelectedArtistSongs: MutableList<Music>
     private lateinit var mSelectedArtistAlbums: List<Album>
@@ -157,14 +157,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /*   override fun onStart() {
-           super.onStart()
-
-       }*/
-
     override fun onDestroy() {
         super.onDestroy()
-        unbindService(connection)
+        if (sBound) unbindService(connection)
     }
 
     //restore recycler views state
@@ -244,12 +239,35 @@ class MainActivity : AppCompatActivity() {
     @TargetApi(23)
     private fun checkPermission() {
 
-        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        )
             showPermissionRationale() else doBindService()
     }
 
     private fun showPermissionRationale() {
-        PermissionDialogFragment.newInstance().show(supportFragmentManager, TAG_PERMISSION_RATIONALE)
+
+        MaterialDialog(this).show {
+
+            cornerRadius(res = R.dimen.md_corner_radius)
+            title(R.string.app_name)
+            message(R.string.perm_rationale)
+            positiveButton {
+                ActivityCompat.requestPermissions(
+                    this@MainActivity,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    2588
+                )
+            }
+            negativeButton {
+                Toast.makeText(this@MainActivity, getString(R.string.perm_rationale), Toast.LENGTH_LONG)
+                    .show()
+                dismiss()
+                finishAndRemoveTask()
+            }
+        }
     }
 
     fun openGitPage(@Suppress("UNUSED_PARAMETER") view: View) {
@@ -261,9 +279,44 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //method to handle intent to play audio file from external app
+    private fun handleIntent(intent: Intent) {
+
+        val uri = intent.data
+
+        try {
+            if (uri.toString().isNotEmpty()) {
+
+                val path = MusicUtils.getRealPathFromURI(this, uri!!)
+
+                //if we were able to get the song play it!
+                if (MusicUtils.getSongForIntent(
+                        path,
+                        mSelectedArtistSongs,
+                        mAllDeviceSongs
+                    ) != null
+                ) {
+
+                    val song = MusicUtils.getSongForIntent(path, mSelectedArtistSongs, mAllDeviceSongs)!!
+
+                    //get album songs and sort them
+                    val albumSongs = mMusic[song.artist]!![song.album]?.sortedBy { albumSong -> albumSong.track }
+
+                    startPlayback(song, albumSongs)
+                } else {
+                    Utils.makeUnknownErrorToast(this)
+                    finishAndRemoveTask()
+                }
+            }
+        } catch (e: Exception) {
+            Utils.makeUnknownErrorToast(this)
+            finishAndRemoveTask()
+        }
+    }
+
     private fun loadMusic() {
 
-        mViewModel.getMusic(MusicUtils.getMusicCursor(contentResolver)!!).observe(this, Observer {
+        mViewModel.getMusic(this).observe(this, Observer {
 
             mAllDeviceSongs = it.first
             mMusic = it.second
@@ -275,20 +328,10 @@ class MainActivity : AppCompatActivity() {
 
                 //let's get intent from external app and open the song,
                 //else restore the player (normal usage)
-                if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null) {
-
-                    val uri = intent.data
-                    val path = MusicUtils.getRealPathFromURI(this, uri!!)
-
-                    if (uri.toString().isNotEmpty() && MusicUtils.getSongForIntent(path, mAllDeviceSongs) != null) {
-                        mSongsAdapter.onSongClick!!.invoke(MusicUtils.getSongForIntent(path, mAllDeviceSongs)!!)
-                    } else {
-                        Toast.makeText(this, getString(R.string.error_not_supported), Toast.LENGTH_SHORT).show()
-                        finish()
-                    }
-                } else {
+                if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null)
+                    handleIntent(intent)
+                else
                     restorePlayerStatus()
-                }
 
             } else {
                 Toast.makeText(this, getString(R.string.error_no_music), Toast.LENGTH_SHORT).show()
@@ -349,11 +392,6 @@ class MainActivity : AppCompatActivity() {
             if (!sSearchEnabled) mSupportActionBar.hide()
         }
 
-        //setup horizontal scrolling text for artist details title and album title
-        Utils.setHorizontalScrollBehavior(mPlayerInfoView, playing_song, playing_album)
-        Utils.setHorizontalScrollBehavior(discs_artist_container, mArtistDetailsTitle)
-        Utils.setHorizontalScrollBehavior(disc_title_container, mArtistsDetailsSelectedDisc)
-
         close_button.setOnClickListener { revealArtistDetails(!sArtistDiscographyExpanded) }
 
         mControlsContainer.afterMeasured {
@@ -368,13 +406,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupPlayerControls() {
         mPlayerInfoView.setOnClickListener { handlePlayerInfo() }
-        mSkipPrevButton.setOnClickListener { skipPrev() }
+
+        //this makes the text scrolling when too long
+        mPlayingSong.isSelected = true
+        mPlayingAlbum.isSelected = true
+
+        mSkipPrevButton.setOnClickListener { skip(false) }
         mSkipPrevButton.setOnLongClickListener {
             setRepeat()
             return@setOnLongClickListener false
         }
         mPlayPauseButton.setOnClickListener { resumeOrPause() }
-        mSkipNextButton.setOnClickListener { skipNext() }
+        mSkipNextButton.setOnClickListener { skip(true) }
         shuffle_button.setOnClickListener {
             if (::mMediaPlayerHolder.isInitialized) {
                 if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
@@ -456,13 +499,8 @@ class MainActivity : AppCompatActivity() {
         if (!sSearchEnabled) search_option.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN)
 
         mColorsRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        val colorsAdapter = ColorsAdapter(this, mAccent)
+        val colorsAdapter = ColorsAdapter(this)
         mColorsRecyclerView.adapter = colorsAdapter
-
-        colorsAdapter.onColorClick = { accent ->
-            mMusicPlayerGoPreferences.accent = accent
-            Utils.applyNewThemeSmoothly(this)
-        }
     }
 
     private fun setArtistsRecyclerView() {
@@ -472,7 +510,6 @@ class MainActivity : AppCompatActivity() {
 
         //set the search menu
         invalidateOptionsMenu()
-        //setHasOptionsMenu(sSearchEnabled)
 
         //set the artists list
         mArtistsRecyclerView.setHasFixedSize(true)
@@ -569,7 +606,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setAlbumSongs(selectedAlbum: String?) {
-        val album = mMusic.getValue(mNavigationArtist!!).getValue(selectedAlbum!!)
+        val album = mMusic.getValue(mNavigationArtist!!).getValue(selectedAlbum!!).toMutableList()
+        album.sortBy { it.track }
         mArtistsDetailsSelectedDisc.text = selectedAlbum
         mArtistDetailsSelectedDiscYear.text = MusicUtils.getYearForAlbum(resources, album[0].year)
 
@@ -579,21 +617,24 @@ class MainActivity : AppCompatActivity() {
             mSongsRecyclerView.setHasFixedSize(true)
             mSongsLayoutManager = LinearLayoutManager(this)
             mSongsRecyclerView.layoutManager = mSongsLayoutManager
-            mSongsAdapter = SongsAdapter(album.toMutableList())
+            mSongsAdapter = SongsAdapter(album)
             mSongsRecyclerView.adapter = mSongsAdapter
         } else {
-            mSongsAdapter.swapSongs(album.toMutableList())
+            mSongsAdapter.swapSongs(album)
         }
         mSongsRecyclerView.setPadding(0, 0, 0, -resources.getDimensionPixelSize(R.dimen.songs_card_margin_bottom))
         mSongsAdapter.onSongClick = { music ->
-
-            if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
-
-            if (::mPlayerService.isInitialized && !mPlayerService.isRunning) startService(mBindingIntent)
-
-            mMediaPlayerHolder.setCurrentSong(music, album)
-            mMediaPlayerHolder.initMediaPlayer(music)
+            startPlayback(music, album)
         }
+    }
+
+    private fun startPlayback(song: Music, album: List<Music>?) {
+        if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
+
+        if (::mPlayerService.isInitialized && !mPlayerService.isRunning) startService(mBindingIntent)
+
+        mMediaPlayerHolder.setCurrentSong(song, album!!)
+        mMediaPlayerHolder.initMediaPlayer(song)
     }
 
     private fun shuffleSongs() {
@@ -613,30 +654,33 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun skipPrev() {
-        if (checkIsPlayer()) {
-            mMediaPlayerHolder.instantReset()
-            if (mMediaPlayerHolder.isReset) {
-                mMediaPlayerHolder.reset()
-                updateResetStatus(false)
-            }
-        }
-    }
-
     private fun resumeOrPause() {
         if (checkIsPlayer()) {
             mMediaPlayerHolder.resumeOrPause()
         }
     }
 
-    private fun skipNext() {
+    private fun skip(isNext: Boolean) {
         if (checkIsPlayer()) {
-            mMediaPlayerHolder.skip(true)
+            if (isNext) mMediaPlayerHolder.skip(true) else mMediaPlayerHolder.instantReset()
         }
     }
 
+/*    private fun handleReset() {
+        if (mMediaPlayerHolder.isReset) {
+            mMediaPlayerHolder.reset()
+            updateResetStatus(false)
+        }
+    }*/
+
     //interface to let MediaPlayerHolder update the UI media player controls
     val mediaPlayerInterface = object : MediaPlayerInterface {
+
+        override fun onClose() {
+            //finish activity if visible
+            finishAndRemoveTask()
+        }
+
         override fun onPlaybackCompleted() {
             updateResetStatus(true)
         }
@@ -678,13 +722,14 @@ class MainActivity : AppCompatActivity() {
             MusicUtils.buildSpanned(getString(R.string.playing_song, selectedSong.artist, selectedSong.title))
         mPlayingAlbum.text = selectedSong.album
 
+        updateResetStatus(false)
+
         if (restore) {
 
             mSongPosition.text = MusicUtils.formatSongDuration(mMediaPlayerHolder.playerPosition.toLong())
             mSeekBar.progress = mMediaPlayerHolder.playerPosition
 
             updatePlayingStatus()
-            updateResetStatus(false)
 
             //stop foreground if coming from pause state
             if (mPlayerService.isRestoredFromPause) {
@@ -699,14 +744,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateResetStatus(onPlaybackCompletion: Boolean) {
-        val themeColor = if (sThemeInverted) R.color.white else R.color.black
-        val color = if (onPlaybackCompletion) themeColor else if (mMediaPlayerHolder.isReset) mAccent else themeColor
+        val themeColor = if (sThemeInverted) Color.WHITE else Color.BLACK
+        val accent = Utils.getColor(
+            this,
+            mAccent,
+            R.color.blue
+        )
+        val finalColor =
+            if (onPlaybackCompletion) themeColor else if (mMediaPlayerHolder.isReset) accent else themeColor
+
         mSkipPrevButton.setColorFilter(
-            Utils.getColor(
-                this,
-                color,
-                if (onPlaybackCompletion) themeColor else R.color.blue
-            ), PorterDuff.Mode.SRC_IN
+            finalColor, PorterDuff.Mode.SRC_IN
         )
     }
 

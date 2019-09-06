@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-           android:layout_width="32dp"
-           android:layout_height="32dp"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
            android:contentDescription="@string/app_name"
-           android:background="?android:attr/actionBarItemBackground"
            android:orientation="vertical"
-           android:layout_marginTop="8dp"
-           android:layout_marginBottom="8dp"
-           android:layout_marginStart="4dp"
-           android:layout_marginEnd="4dp"/>
+           style="@style/ColorOptionStyle"/>

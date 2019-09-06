@@ -6,22 +6,22 @@
 
     <!-- LIGHT THEME -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="icon_color">@color/black</item>
-        <item name="card_color">@color/white</item>
+        <item name="icon_color">@android:color/black</item>
+        <item name="card_color">@android:color/white</item>
         <item name="controls_panel_stroke">@color/gray_50</item>
-        <item name="android:windowBackground">@color/white</item>
-        <item name="android:navigationBarColor">@color/black</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 
     <!-- INVERTED THEME -->
     <style name="AppThemeInverted" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="icon_color">@color/white</item>
-        <item name="card_color">@color/black</item>
+        <item name="icon_color">@android:color/white</item>
+        <item name="card_color">@android:color/black</item>
         <item name="controls_panel_stroke">@color/gray_900</item>
-        <item name="android:windowBackground">@color/black</item>
-        <item name="android:navigationBarColor">@color/black</item>
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
@@ -30,12 +30,13 @@
     <style name="IndicatorTextAppearance" parent="@android:style/TextAppearance.Material">
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/raleway_regular</item>
     </style>
 
     <!-- Indicator thumb text style -->
     <style name="IndicatorThumbTextAppearance" parent="@android:style/TextAppearance.Material">
-        <item name="android:textSize">32sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/raleway_black</item>
     </style>
 
     <!-- This will set the fade in animation on all the activities by default -->
@@ -44,31 +45,30 @@
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
+    <!-- SeekBar style -->
     <style name="SeekBarStyle" parent="Widget.AppCompat.SeekBar">
         <item name="android:progressBackgroundTint">?attr/colorAccent</item>
         <item name="android:progressTint">?attr/colorAccent</item>
     </style>
 
+    <!-- Style for color theme option -->
+    <style name="ColorOptionStyle">
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:background">?android:attr/actionBarItemBackground</item>
+    </style>
+
+    <!-- Style for search bar -->
     <style name="SearchBarStyle" parent="Widget.MaterialComponents.Toolbar">
         <item name="searchViewStyle">@style/SearchViewStyle</item>
         <item name="colorControlActivated">?attr/icon_color</item>
+        <item name="android:textColorHighlight">@color/highlight</item>
     </style>
 
+    <!-- Style for search view -->
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView.ActionBar">
         <item name="searchIcon">@drawable/ic_round_search</item>
-        <item name="queryBackground">@color/transparent</item>
     </style>
-
-    <!-- set the rounded drawable as background to your bottom sheet -->
-    <style name="BottomSheet" parent="@style/Widget.MaterialComponents.BottomSheet.Modal">
-        <item name="android:background">@drawable/bg_permission_dialog_fragment</item>
-    </style>
-
-    <style name="BaseBottomSheetDialog" parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:statusBarColor">@color/transparent</item>
-        <item name="bottomSheetStyle">@style/BottomSheet</item>
-    </style>
-
-    <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog"/>
 </resources>

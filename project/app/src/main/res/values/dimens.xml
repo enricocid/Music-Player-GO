@@ -3,12 +3,7 @@
     <dimen name="notification_large_dim">256dp</dimen>
     <dimen name="album_height">104dp</dimen>
     <dimen name="album_width">120dp</dimen>
-    <dimen name="bottom_sheet_corner_radius">16dp</dimen>
+    <dimen name="md_corner_radius">16dp</dimen>
     <dimen name="selected_card_stroke_width">1dp</dimen>
     <dimen name="songs_card_margin_bottom">-8dp</dimen>
-
-    <!-- WaveSideBar -->
-    <dimen name="wave_ball_textSize">32sp</dimen>
-    <dimen name="wave_radius">24dp</dimen>
-    <dimen name="wave_ball_radius">32dp</dimen>
 </resources>

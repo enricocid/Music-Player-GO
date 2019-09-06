@@ -1,0 +1,5 @@
+Corretta apertura musica da app esterne
+
+- L'album della canzone viene impostato correttamente cosi puoi usare i pulsanti di skip anche quando apri la musica da app esterne
+- Corretto il playback delle canzoni duplicate filtrate
+- Semplificazioni

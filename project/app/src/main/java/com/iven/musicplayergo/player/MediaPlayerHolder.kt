@@ -47,6 +47,7 @@ const val PLAYING = 0
 const val PAUSED = 1
 const val RESUMED = 2
 
+@Suppress("DEPRECATION")
 class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.OnCompletionListener,
     MediaPlayer.OnPreparedListener {
 
@@ -105,6 +106,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
         intentFilter.addAction(PREV_ACTION)
         intentFilter.addAction(PLAY_PAUSE_ACTION)
         intentFilter.addAction(NEXT_ACTION)
+        intentFilter.addAction(CLOSE_ACTION)
         intentFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED)
         intentFilter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED)
         intentFilter.addAction(Intent.ACTION_HEADSET_PLUG)
@@ -138,12 +140,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
         mediaPlayerInterface.onPlaybackCompleted()
 
 
-        if (isReset) {
-            if (isMediaPlayer) resetSong()
-            isReset = false
-        } else {
-            skip(true)
-        }
+        if (isReset) if (isMediaPlayer) resetSong() else skip(true)
     }
 
     fun onResumeActivity() {
@@ -217,6 +214,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
     }
 
     private fun resetSong() {
+        isReset = false
         mediaPlayer!!.seekTo(0)
         mediaPlayer!!.start()
         setStatus(PLAYING)
@@ -232,7 +230,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
             Runnable { this.updateProgressCallbackTask() }
 
         mExecutor!!.scheduleAtFixedRate(
-            mSeekBarPositionUpdateTask,
+            mSeekBarPositionUpdateTask!!,
             0,
             1000,
             TimeUnit.MILLISECONDS
@@ -297,6 +295,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
 
     override fun onPrepared(mediaPlayer: MediaPlayer) {
         startUpdatingCallbackWithPosition()
+        if (isReset) isReset = false
         setStatus(PLAYING)
         mediaPlayer.start()
         playerService.startForeground(NOTIFICATION_ID, mMusicNotificationManager.createNotification())
@@ -325,10 +324,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
     }
 
     fun skip(isNext: Boolean) {
-        getSkipSong(isNext)
-    }
-
-    private fun getSkipSong(isNext: Boolean) {
         val currentIndex = mPlayingAlbumSongs.indexOf(currentSong)
         val index: Int
         try {
@@ -394,6 +389,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
                     PREV_ACTION -> instantReset()
                     PLAY_PAUSE_ACTION -> resumeOrPause()
                     NEXT_ACTION -> skip(true)
+                    CLOSE_ACTION -> {
+                        if (playerService.isRunning && mediaPlayer != null) {
+                            mediaPlayer!!.stop()
+                            playerService.stopForeground(true)
+                            mediaPlayerInterface.onClose()
+                        }
+                    }
 
                     BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (currentSong != null) pauseMediaPlayer()
                     BluetoothDevice.ACTION_ACL_CONNECTED -> if (currentSong != null) resumeMediaPlayer()

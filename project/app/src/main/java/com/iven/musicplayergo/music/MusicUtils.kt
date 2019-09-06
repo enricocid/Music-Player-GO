@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.music
 
+import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.Context
 import android.content.res.Resources
@@ -13,23 +14,25 @@ import android.provider.MediaStore.Audio.AudioColumns
 import android.text.Html
 import android.text.Spanned
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.Utils
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+@Suppress("DEPRECATION")
 object MusicUtils {
 
     @JvmStatic
-    fun getArtists(music: Map<String, Map<String, List<Music>>>): MutableList<String> {
+    fun getArtists(music: Map<String, Map<String?, List<Music>>>): MutableList<String> {
         val artists = music.keys.toMutableList()
         artists.sort()
         return artists
     }
 
     @JvmStatic
-    fun getArtistSongsCount(albums: Map<String, List<Music>>): Int {
+    fun getArtistSongsCount(albums: Map<String?, List<Music>>): Int {
         var songsCount = 0
         try {
-            albums.keys.toMutableList().forEach {
+            albums.keys.iterator().forEach {
                 songsCount += albums.getValue(it).size
             }
         } catch (e: Exception) {
@@ -40,25 +43,29 @@ object MusicUtils {
 
     @JvmStatic
     fun getAlbumPositionInList(album: String?, albums: List<Album>): Int {
-        var returnedPosition = 0
-        try {
-            returnedPosition = albums.indexOfFirst { it.title == album }
+        return try {
+            albums.indexOfFirst { it.title == album }
         } catch (e: Exception) {
             e.printStackTrace()
+            0
         }
-        return returnedPosition
     }
 
     @JvmStatic
-    fun getSongForIntent(path: String?, songs: List<Music>): Music? {
-        return songs.firstOrNull { s -> s.path == path }
+    fun getSongForIntent(path: String?, selectedArtistSongs: List<Music>, allDeviceSongs: List<Music>): Music? {
+
+        return try {
+            selectedArtistSongs.first { s -> s.path == path }
+        } catch (e: Exception) {
+            allDeviceSongs.firstOrNull { s -> s.path == path }
+        }
     }
 
     @JvmStatic
-    fun getArtistSongs(albums: Map<String, List<Music>>): MutableList<Music> {
+    fun getArtistSongs(albums: Map<String?, List<Music>>): MutableList<Music> {
         val artistSongs = mutableListOf<Music>()
         try {
-            albums.keys.toMutableList().forEach {
+            albums.keys.iterator().forEach {
                 artistSongs.addAll(albums.getValue(it))
             }
         } catch (e: Exception) {
@@ -73,12 +80,12 @@ object MusicUtils {
     }
 
     @JvmStatic
-    fun buildSortedArtistAlbums(resources: Resources, albums: Map<String, List<Music>>): List<Album> {
+    fun buildSortedArtistAlbums(resources: Resources, albums: Map<String?, List<Music>>): List<Album> {
 
         val sortedAlbums = mutableListOf<Album>()
 
         try {
-            albums.keys.toMutableList().forEach {
+            albums.keys.iterator().forEach {
                 sortedAlbums.add(Album(it, getYearForAlbum(resources, albums.getValue(it)[0].year)))
             }
 
@@ -118,14 +125,16 @@ object MusicUtils {
     }
 
     @JvmStatic
-    private val BASE_PROJECTION = arrayOf(
+    @SuppressLint("InlinedApi")
+    private val COLUMNS = arrayOf(
         AudioColumns.ARTIST, // 0
         AudioColumns.YEAR, // 1
         AudioColumns.TRACK, // 2
         AudioColumns.TITLE, // 3
         AudioColumns.DURATION, // 4
         AudioColumns.ALBUM, // 5
-        AudioColumns.DATA // 6
+        AudioColumns.DATA, // 6
+        AudioColumns.ALBUM_ID //7
     )
 
     @JvmStatic
@@ -137,10 +146,9 @@ object MusicUtils {
     fun getMusicCursor(contentResolver: ContentResolver): Cursor? {
         return contentResolver.query(
             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-            BASE_PROJECTION, null, null, getSongLoaderSortOrder()
+            COLUMNS, null, null, getSongLoaderSortOrder()
         )
     }
-
 
     /**
      * Get a file path from a Uri. This will get the the path for Storage Access
@@ -156,17 +164,22 @@ object MusicUtils {
     fun getRealPathFromURI(context: Context, uri: Uri): String? {
         // DocumentProvider
         if (DocumentsContract.isDocumentUri(context, uri)) {
+
             // ExternalStorageProvider
             if (isExternalStorageDocument(uri)) {
+
                 val docId = DocumentsContract.getDocumentId(uri)
                 val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                 val type = split[0]
 
-                if ("primary".equals(type, ignoreCase = true)) {
-                    return Environment.getExternalStorageDirectory().toString() + "/" + split[1]
-                }
+                if ("primary".equals(
+                        type,
+                        ignoreCase = true
+                    )
+                ) return Environment.getExternalStorageDirectory().toString() + "/" + split[1]
 
             } else if (isMediaDocument(uri)) {
+
                 val docId = DocumentsContract.getDocumentId(uri)
                 val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 
@@ -205,20 +218,27 @@ object MusicUtils {
         selectionArgs: Array<String>?
     ): String? {
 
-        var cursor: Cursor? = null
-        val column = "_data"
-        val projection = arrayOf(column)
+        var returnedString: String? = null
 
         try {
-            cursor = context.contentResolver.query(uri!!, projection, selection, selectionArgs, null)
-            if (cursor != null && cursor.moveToFirst()) {
+
+            val column = "_data"
+            val projection = arrayOf(column)
+
+            val cursor = context.contentResolver.query(uri!!, projection, selection, selectionArgs, null)
+
+            if (cursor!!.moveToFirst()) {
                 val index = cursor.getColumnIndexOrThrow(column)
-                return cursor.getString(index)
+                do {
+                    returnedString = cursor.getString(index)
+                } while (cursor.moveToNext())
+                cursor.close()
             }
-        } finally {
-            cursor?.close()
+        } catch (e: Exception) {
+            Utils.makeUnknownErrorToast(context)
+            e.printStackTrace()
         }
-        return null
+        return returnedString
     }
 
     /**

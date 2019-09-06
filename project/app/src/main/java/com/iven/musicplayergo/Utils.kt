@@ -4,9 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.view.MotionEvent
 import android.view.View
-import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
@@ -59,7 +58,7 @@ object Utils {
 
         try {
             // case insensitive search
-            artists.forEach {
+            artists.iterator().forEach {
                 if (it.toLowerCase().startsWith(query.toLowerCase())) {
                     results.add(it)
                 }
@@ -123,32 +122,6 @@ object Utils {
         }
     }
 
-    @JvmStatic
-    fun setHorizontalScrollBehavior(parentView: View, vararg textViews: TextView) {
-        var isLongPressed = false
-
-        parentView.setOnLongClickListener {
-            if (!isLongPressed) {
-                textViews.forEachIndexed { _, textView ->
-                    textView.isSelected = true
-                }
-                isLongPressed = true
-            }
-            return@setOnLongClickListener true
-        }
-
-        parentView.setOnTouchListener { _, e ->
-            if (isLongPressed && e.action == MotionEvent.ACTION_UP || e.action == MotionEvent.ACTION_OUTSIDE || e.action == MotionEvent.ACTION_MOVE) {
-
-                textViews.forEach {
-                    it.isSelected = false
-                }
-                isLongPressed = false
-            }
-            return@setOnTouchListener false
-        }
-    }
-
     //update theme
     @JvmStatic
     fun applyNewThemeSmoothly(activity: Activity) {
@@ -166,5 +139,10 @@ object Utils {
     @JvmStatic
     fun lightenColor(color: Int, factor: Float): Int {
         return ColorUtils.blendARGB(color, Color.WHITE, factor)
+    }
+
+    @JvmStatic
+    fun makeUnknownErrorToast(context: Context) {
+        Toast.makeText(context, context.getString(R.string.error_unknown), Toast.LENGTH_SHORT).show()
     }
 }
