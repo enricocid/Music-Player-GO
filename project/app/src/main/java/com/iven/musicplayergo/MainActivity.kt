@@ -20,7 +20,6 @@ import android.view.ViewAnimationUtils
 import android.view.ViewTreeObserver
 import android.widget.*
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
@@ -30,6 +29,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.iven.musicplayergo.adapters.AlbumsAdapter
 import com.iven.musicplayergo.adapters.ArtistsAdapter
@@ -803,31 +804,29 @@ class MainActivity : AppCompatActivity() {
 
     private fun openVolumeDialog() {
         if (checkIsPlayer()) {
-            var isUserSeeking = false
-            val volDialog = AlertDialog.Builder(this)
-            val volDialogView =
-                View.inflate(this, R.layout.precise_volume_dialog, null)
-            val volSeekbar = volDialogView.findViewById<SeekBar>(R.id.vol_seekBar)
+            MaterialDialog(this).show {
+                var isUserSeeking = false
+                cornerRadius(res = R.dimen.md_corner_radius)
+                title(R.string.volume)
+                customView(R.layout.precise_volume_dialog)
+                val volSeekBar = getCustomView().findViewById<SeekBar>(R.id.vol_seekBar)
+                volSeekBar.progress = mMediaPlayerHolder.getNormalizedVolume(0, false)
+                volSeekBar.setOnSeekBarChangeListener(object :
+                    SeekBar.OnSeekBarChangeListener {
 
-            volSeekbar.progress = mMediaPlayerHolder.getNormalizedVolume(0, false)
-            volDialog.setView(volDialogView)
-            volDialog.show()
-            volSeekbar.setOnSeekBarChangeListener(object :
-                SeekBar.OnSeekBarChangeListener {
+                    override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
+                        if (isUserSeeking) mMediaPlayerHolder.setPreciseVolume(i)
+                    }
 
-                override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-                    isUserSeeking = true
-                    if (isUserSeeking) mMediaPlayerHolder.setPreciseVolume(i)
-                }
+                    override fun onStartTrackingTouch(seekBar: SeekBar) {
+                        isUserSeeking = true
+                    }
 
-                override fun onStartTrackingTouch(seekBar: SeekBar) {
-                    isUserSeeking = true
-                }
-
-                override fun onStopTrackingTouch(seekBar: SeekBar) {
-                    isUserSeeking = false
-                }
-            })
+                    override fun onStopTrackingTouch(seekBar: SeekBar) {
+                        isUserSeeking = false
+                    }
+                })
+            }
         }
     }
 
