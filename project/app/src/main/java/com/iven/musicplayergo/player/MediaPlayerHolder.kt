@@ -20,7 +20,6 @@ import com.iven.musicplayergo.music.Music
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
-import kotlin.math.ln
 
 /**
  * Exposes the functionality of the [MediaPlayer]
@@ -48,38 +47,40 @@ const val PAUSED = 1
 const val RESUMED = 2
 
 @Suppress("DEPRECATION")
-class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.OnCompletionListener,
+class MediaPlayerHolder(private val playerService: PlayerService) :
+    MediaPlayer.OnCompletionListener,
     MediaPlayer.OnPreparedListener {
 
     lateinit var mediaPlayerInterface: MediaPlayerInterface
 
     //audio focus
-    private var mAudioManager: AudioManager = playerService.getSystemService(AUDIO_SERVICE) as AudioManager
+    private var mAudioManager = playerService.getSystemService(AUDIO_SERVICE) as AudioManager
     private lateinit var mAudioFocusRequestOreo: AudioFocusRequest
     private val mHandler = Handler()
 
     private var mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
     private var sPlayOnFocusGain: Boolean = false
 
-    private val mOnAudioFocusChangeListener = AudioManager.OnAudioFocusChangeListener { focusChange ->
-        when (focusChange) {
-            AudioManager.AUDIOFOCUS_GAIN -> mCurrentAudioFocusState = AUDIO_FOCUSED
-            AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK ->
-                // Audio focus was lost, but it's possible to duck (i.e.: play quietly)
-                mCurrentAudioFocusState = AUDIO_NO_FOCUS_CAN_DUCK
-            AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
-                // Lost audio focus, but will gain it back (shortly), so note whether
-                // playback should resume
-                mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
-                sPlayOnFocusGain = isMediaPlayer && state == PLAYING || state == RESUMED
+    private val mOnAudioFocusChangeListener =
+        AudioManager.OnAudioFocusChangeListener { focusChange ->
+            when (focusChange) {
+                AudioManager.AUDIOFOCUS_GAIN -> mCurrentAudioFocusState = AUDIO_FOCUSED
+                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK ->
+                    // Audio focus was lost, but it's possible to duck (i.e.: play quietly)
+                    mCurrentAudioFocusState = AUDIO_NO_FOCUS_CAN_DUCK
+                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
+                    // Lost audio focus, but will gain it back (shortly), so note whether
+                    // playback should resume
+                    mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
+                    sPlayOnFocusGain = isMediaPlayer && state == PLAYING || state == RESUMED
+                }
+                AudioManager.AUDIOFOCUS_LOSS ->
+                    // Lost audio focus, probably "permanently"
+                    mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
             }
-            AudioManager.AUDIOFOCUS_LOSS ->
-                // Lost audio focus, probably "permanently"
-                mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
+            // Update the player state based on the change
+            if (mediaPlayer != null) configurePlayerState()
         }
-        // Update the player state based on the change
-        if (mediaPlayer != null) configurePlayerState()
-    }
 
     //media player
     private var mediaPlayer: MediaPlayer? = null
@@ -87,7 +88,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
     private var mSeekBarPositionUpdateTask: Runnable? = null
     private lateinit var mPlayingAlbumSongs: List<Music>
     var currentSong: Music? = null
-    var currentVolumeInPercent = 100
+    private var currentVolumeInPercent = 100
     val playerPosition: Int get() = mediaPlayer!!.currentPosition
 
     //media player state/booleans
@@ -271,7 +272,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
                 mediaPlayer!!.reset()
             } else {
                 mediaPlayer = MediaPlayer()
-                EqualizerUtils.openAudioEffectSession(playerService.applicationContext, mediaPlayer!!.audioSessionId)
+                EqualizerUtils.openAudioEffectSession(
+                    playerService.applicationContext,
+                    mediaPlayer!!.audioSessionId
+                )
 
                 mediaPlayer!!.setOnPreparedListener(this)
                 mediaPlayer!!.setOnCompletionListener(this)
@@ -298,7 +302,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
         if (isReset) isReset = false
         setStatus(PLAYING)
         mediaPlayer.start()
-        playerService.startForeground(NOTIFICATION_ID, mMusicNotificationManager.createNotification())
+        playerService.startForeground(
+            NOTIFICATION_ID,
+            mMusicNotificationManager.createNotification()
+        )
     }
 
     fun openEqualizer(activity: Activity) {
@@ -307,7 +314,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
 
     fun release() {
         if (isMediaPlayer) {
-            EqualizerUtils.closeAudioEffectSession(playerService.applicationContext, mediaPlayer!!.audioSessionId)
+            EqualizerUtils.closeAudioEffectSession(
+                playerService.applicationContext,
+                mediaPlayer!!.audioSessionId
+            )
             mediaPlayer!!.release()
             mediaPlayer = null
             giveUpAudioFocus()
@@ -368,15 +378,25 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
         }
     }
 
+    fun getNormalizedVolume(percent: Int, isFromUser: Boolean): Int {
+        val maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+        return if (isFromUser) {
+            currentVolumeInPercent = (percent * maxVolume) / 100
+            return currentVolumeInPercent
+        } else {
+            (mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC) * 100) / maxVolume
+        }
+    }
+
     /* Sets the volume of the media player (scale is 1-100) */
     fun setPreciseVolume(percent: Int) {
-        fun volFromPercent(percent: Int): Float {
-            if (percent == 100) return 1f
-            return (1 - (ln((101 - percent).toFloat()) / ln(101f)))
-        }
-        currentVolumeInPercent = percent
-        val new = volFromPercent(percent)
-        mediaPlayer!!.setVolume(new,new)
+        val maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+        currentVolumeInPercent = (percent * maxVolume) / 100
+        mAudioManager.setStreamVolume(
+            AudioManager.STREAM_MUSIC,
+            getNormalizedVolume(percent, true),
+            0
+        )
     }
 
     private inner class NotificationReceiver : BroadcastReceiver() {

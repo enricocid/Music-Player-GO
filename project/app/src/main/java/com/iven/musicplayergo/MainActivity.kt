@@ -803,26 +803,29 @@ class MainActivity : AppCompatActivity() {
 
     private fun openVolumeDialog() {
         if (checkIsPlayer()) {
+            var isUserSeeking = false
             val volDialog = AlertDialog.Builder(this)
             val volDialogView =
                 View.inflate(this, R.layout.precise_volume_dialog, null)
             val volSeekbar = volDialogView.findViewById<SeekBar>(R.id.vol_seekBar)
-            volSeekbar.progress = mMediaPlayerHolder.currentVolumeInPercent
+
+            volSeekbar.progress = mMediaPlayerHolder.getNormalizedVolume(0, false)
             volDialog.setView(volDialogView)
             volDialog.show()
             volSeekbar.setOnSeekBarChangeListener(object :
                 SeekBar.OnSeekBarChangeListener {
 
                 override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-                    mMediaPlayerHolder.setPreciseVolume(i)
+                    isUserSeeking = true
+                    if (isUserSeeking) mMediaPlayerHolder.setPreciseVolume(i)
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar) {
-                    // nothing happens but I still have to override this apparently
+                    isUserSeeking = true
                 }
 
                 override fun onStopTrackingTouch(seekBar: SeekBar) {
-                    // nothing happens but I still have to override this apparently
+                    isUserSeeking = false
                 }
             })
         }
