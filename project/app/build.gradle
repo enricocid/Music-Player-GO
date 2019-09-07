@@ -51,5 +51,5 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     api 'com.google.android.material:material:1.0.0'
     implementation 'com.afollestad.material-dialogs:core:3.1.1'
-    implementation 'com.reddit:indicator-fast-scroll:1.1.0'
+    implementation 'com.reddit:indicator-fast-scroll:1.1.1'
 }
