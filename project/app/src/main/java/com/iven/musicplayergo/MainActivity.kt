@@ -483,7 +483,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.vol -> {
                         val volDialog = AlertDialog.Builder(this)
                         val volDialogView =
-                            layoutInflater.inflate(R.layout.precise_volume_dialog, null)
+                            View.inflate(this, R.layout.precise_volume_dialog, null)
                         val volSeekbar = volDialogView.findViewById<SeekBar>(R.id.vol_seekBar)
                         volSeekbar.progress = mMediaPlayerHolder.currentVolumeInPercent
                         volDialog.setView(volDialogView)
