@@ -9,8 +9,8 @@
 
 
 
-# Material icon by [Julian Javier Gomez - AxinenDesign](https://github.com/AxinenDesign)
-
+### Material icon by [Julian Javier Gomez - AxinenDesign](https://github.com/AxinenDesign)
+### Special thanks goes to [Arianna Masciolini](https://github.com/harisont)
 
 # Screenshots
 
