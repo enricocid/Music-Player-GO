@@ -809,13 +809,28 @@ class MainActivity : AppCompatActivity() {
                 cornerRadius(res = R.dimen.md_corner_radius)
                 title(R.string.volume)
                 customView(R.layout.precise_volume_dialog)
+                val volText = getCustomView().findViewById<TextView>(R.id.vol_text)
                 val volSeekBar = getCustomView().findViewById<SeekBar>(R.id.vol_seekBar)
-                volSeekBar.progress = mMediaPlayerHolder.getNormalizedVolume(0, false)
+                val currentProgress = mMediaPlayerHolder.getNormalizedVolume(0, false)
+                volSeekBar.progress = currentProgress
+                volText.text = currentProgress.toString()
                 volSeekBar.setOnSeekBarChangeListener(object :
                     SeekBar.OnSeekBarChangeListener {
 
+                    val defaultVolTextColor = volText.currentTextColor
+
                     override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-                        if (isUserSeeking) mMediaPlayerHolder.setPreciseVolume(i)
+                        if (isUserSeeking) {
+                            mMediaPlayerHolder.setPreciseVolume(i)
+                            volText.setTextColor(
+                                Utils.getColor(
+                                    this@MainActivity,
+                                    mAccent,
+                                    R.color.blue
+                                )
+                            )
+                            volText.text = i.toString()
+                        }
                     }
 
                     override fun onStartTrackingTouch(seekBar: SeekBar) {
@@ -823,6 +838,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     override fun onStopTrackingTouch(seekBar: SeekBar) {
+                        if (isUserSeeking) volText.setTextColor(defaultVolTextColor)
                         isUserSeeking = false
                     }
                 })
