@@ -639,8 +639,7 @@ class MainActivity : AppCompatActivity() {
             val songs = if (sArtistDiscographyExpanded) mSelectedArtistSongs else mAllDeviceSongs
             songs.shuffle()
             val song = songs[0]
-            mMediaPlayerHolder.setCurrentSong(song, songs)
-            mMediaPlayerHolder.initMediaPlayer(song)
+            startPlayback(song, songs)
         }
     }
 
