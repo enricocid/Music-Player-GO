@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <!-- OPTIONS -->
     <LinearLayout
@@ -16,50 +16,51 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
                 android:background="?android:attr/actionBarItemBackground"
+                android:contentDescription="@string/app_name"
                 android:padding="12dp"
-                android:src="@drawable/ic_shuffle"/>
+                android:src="@drawable/ic_shuffle" />
 
         <ImageView
-                android:id="@+id/audio_option"
+                android:id="@+id/equalizer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
                 android:background="?android:attr/actionBarItemBackground"
+                android:contentDescription="@string/app_name"
+                android:onClick="openEqualizer"
                 android:padding="12dp"
-                android:src="@drawable/ic_equalizer"/>
+                android:src="@drawable/ic_equalizer" />
 
         <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
                 android:background="?android:attr/actionBarItemBackground"
+                android:contentDescription="@string/app_name"
                 android:onClick="openGitPage"
                 android:padding="12dp"
-                android:src="@drawable/ic_github"/>
+                android:src="@drawable/ic_github" />
 
         <ImageView
                 android:id="@+id/search_option"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
                 android:background="?android:attr/actionBarItemBackground"
+                android:contentDescription="@string/app_name"
                 android:padding="12dp"
-                android:src="@drawable/ic_round_search"/>
+                android:src="@drawable/ic_round_search" />
 
         <ImageView
                 android:id="@+id/invert_option"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
                 android:background="?android:attr/actionBarItemBackground"
+                android:contentDescription="@string/app_name"
                 android:padding="12dp"
-                android:src="@drawable/ic_invert_theme"/>
+                android:src="@drawable/ic_invert_theme" />
     </LinearLayout>
 
     <!-- COLORS OPTIONS -->
@@ -68,5 +69,5 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:overScrollMode="never"
-            tools:context=".MainActivity"/>
+            tools:context=".MainActivity" />
 </LinearLayout>

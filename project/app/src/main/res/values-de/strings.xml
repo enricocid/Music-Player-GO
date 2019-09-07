@@ -5,5 +5,5 @@
     <string name="perm_rationale">Damit du Musik auf deinem Handy wiedergeben kannst, benötigt Music Player GO Zugriff auf deine Dateien</string>
     <string name="error_no_music">Keine Musik auf deinem Handy!</string>
     <string name="artist_info">%1d&#160;Alben,&#160;%2d&#160;Lieder</string>
-    <string name="volume">Volumen</string>
+    <string name="volume">Volumen %1s</string>
 </resources>

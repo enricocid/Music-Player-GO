@@ -5,6 +5,6 @@
     <string name="perm_rationale">Music Player GO deve poter accedere ai tuoi file per eseguire la musica!</string>
     <string name="error_no_music">Musica non trovata sul telefono!</string>
     <string name="artist_info">%1d&#160;Album,&#160;%2d&#160;Canzoni</string>
-    <string name="volume">Volume</string>
+    <string name="volume">Volume %1s</string>
     <string name="error_unknown">Qualcosa è andato storto! :(</string>
 </resources>
