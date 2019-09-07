@@ -2,6 +2,7 @@ package com.iven.musicplayergo
 
 import android.Manifest
 import android.animation.Animator
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.*
 import android.content.pm.PackageManager
@@ -560,6 +561,7 @@ class MainActivity : AppCompatActivity() {
         setArtistDetails()
     }
 
+    @SuppressLint("DefaultLocale")
     private fun setupIndicatorFastScrollerView() {
         //set indexes if artists rv is scrollable
         mArtistsRecyclerView.afterMeasured {
@@ -570,6 +572,7 @@ class MainActivity : AppCompatActivity() {
                     { position ->
                         val item = mArtists[position] // Get your model object
                         // or fetch the section at [position] from your database
+
                         FastScrollItemIndicator.Text(
                             item.substring(
                                 0,

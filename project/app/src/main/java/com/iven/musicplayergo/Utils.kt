@@ -1,5 +1,6 @@
 package com.iven.musicplayergo
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -51,6 +52,7 @@ object Utils {
         }
     }
 
+    @SuppressLint("DefaultLocale")
     @JvmStatic
     private fun processQuery(query: String, artistsAdapter: ArtistsAdapter, artists: List<String>) {
         // in real app you'd have it instantiated just once
