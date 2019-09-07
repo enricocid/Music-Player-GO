@@ -477,13 +477,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupSettings() {
 
-        shuffle_option.setOnClickListener { shuffleSongs() }
-        mSearchToggleButton.setOnClickListener { handleSearchBarVisibility() }
-        invert_option.setOnClickListener {
-            invertTheme()
-        }
-
         if (!sSearchEnabled) search_option.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN)
+        if (!EqualizerUtils.hasEqualizer(this)) equalizer.setColorFilter(
+            Color.GRAY,
+            PorterDuff.Mode.SRC_IN
+        )
 
         mColorsRecyclerView.layoutManager =
             LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
@@ -636,7 +634,7 @@ class MainActivity : AppCompatActivity() {
         mMediaPlayerHolder.initMediaPlayer(song)
     }
 
-    private fun shuffleSongs() {
+    fun shuffleSongs(view: View) {
         if (::mMediaPlayerHolder.isInitialized) {
             val songs = if (sArtistDiscographyExpanded) mSelectedArtistSongs else mAllDeviceSongs
             songs.shuffle()
@@ -903,7 +901,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     //handle theme changes
-    private fun invertTheme() {
+    fun invertTheme(view: View) {
         //avoid service killing when the player is in paused state
         if (::mMediaPlayerHolder.isInitialized && mMediaPlayerHolder.isPlaying) {
             if (mMediaPlayerHolder.state == PAUSED) {
@@ -920,7 +918,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     //hide/show search bar dynamically
-    private fun handleSearchBarVisibility() {
+    fun handleSearchBarVisibility(view: View) {
         if (::mSupportActionBar.isInitialized) {
             val newVisibility = !mSupportActionBar.isShowing
             mMusicPlayerGoPreferences.isSearchBarEnabled = newVisibility

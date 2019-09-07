@@ -18,6 +18,7 @@
                 android:layout_weight="1"
                 android:background="?android:attr/actionBarItemBackground"
                 android:contentDescription="@string/app_name"
+                android:onClick="shuffleSongs"
                 android:padding="12dp"
                 android:src="@drawable/ic_shuffle" />
 
@@ -49,16 +50,17 @@
                 android:layout_weight="1"
                 android:background="?android:attr/actionBarItemBackground"
                 android:contentDescription="@string/app_name"
+                android:onClick="handleSearchBarVisibility"
                 android:padding="12dp"
                 android:src="@drawable/ic_round_search" />
 
         <ImageView
-                android:id="@+id/invert_option"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="?android:attr/actionBarItemBackground"
                 android:contentDescription="@string/app_name"
+                android:onClick="invertTheme"
                 android:padding="12dp"
                 android:src="@drawable/ic_invert_theme" />
     </LinearLayout>
