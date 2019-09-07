@@ -657,13 +657,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-/*    private fun handleReset() {
-        if (mMediaPlayerHolder.isReset) {
-            mMediaPlayerHolder.reset()
-            updateResetStatus(false)
-        }
-    }*/
-
     //interface to let MediaPlayerHolder update the UI media player controls
     val mediaPlayerInterface = object : MediaPlayerInterface {
 
