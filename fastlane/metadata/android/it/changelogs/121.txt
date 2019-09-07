@@ -1,0 +1,6 @@
+- Aggiunto un dialog per il controllo preciso del volume (grazie Arianna Masciolini, https://github.com/harisont)
+- Aggiunti toast di notifica colorati!
+- Aggiunte traduzioni Indonesiano (grazie zmni, https://github.com/zmni)
+- Aggiornate le traduzioni Turche (grazie Adem Furkan ÖZCAN, https://github.com/ozcanfurkan)
+- Corretto progress bar che non si abilitava quando si usava la funzione shuffle
+- Aggiornate le dipendenze (librerie etc)
