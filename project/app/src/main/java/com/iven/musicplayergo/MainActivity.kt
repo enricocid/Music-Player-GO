@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -211,7 +210,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     //manage request permission result, continue loading ui if permissions was granted
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED) showPermissionRationale() else doBindService()
     }
@@ -262,7 +265,11 @@ class MainActivity : AppCompatActivity() {
                 )
             }
             negativeButton {
-                Toast.makeText(this@MainActivity, getString(R.string.perm_rationale), Toast.LENGTH_LONG)
+                Toast.makeText(
+                    this@MainActivity,
+                    getString(R.string.perm_rationale),
+                    Toast.LENGTH_LONG
+                )
                     .show()
                 dismiss()
                 finishAndRemoveTask()
@@ -272,7 +279,12 @@ class MainActivity : AppCompatActivity() {
 
     fun openGitPage(@Suppress("UNUSED_PARAMETER") view: View) {
         try {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/enricocid/Music-Player-GO")))
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://github.com/enricocid/Music-Player-GO")
+                )
+            )
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(this, getString(R.string.no_browser), Toast.LENGTH_SHORT).show()
             e.printStackTrace()
@@ -297,10 +309,12 @@ class MainActivity : AppCompatActivity() {
                     ) != null
                 ) {
 
-                    val song = MusicUtils.getSongForIntent(path, mSelectedArtistSongs, mAllDeviceSongs)!!
+                    val song =
+                        MusicUtils.getSongForIntent(path, mSelectedArtistSongs, mAllDeviceSongs)!!
 
                     //get album songs and sort them
-                    val albumSongs = mMusic[song.artist]!![song.album]?.sortedBy { albumSong -> albumSong.track }
+                    val albumSongs =
+                        mMusic[song.artist]!![song.album]?.sortedBy { albumSong -> albumSong.track }
 
                     startPlayback(song, albumSongs)
                 } else {
@@ -438,7 +452,13 @@ class MainActivity : AppCompatActivity() {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
                     userSelectedPosition = progress
-                    mSongPosition.setTextColor(Utils.getColor(this@MainActivity, mAccent, R.color.blue))
+                    mSongPosition.setTextColor(
+                        Utils.getColor(
+                            this@MainActivity,
+                            mAccent,
+                            R.color.blue
+                        )
+                    )
                 }
                 mSongPosition.text = MusicUtils.formatSongDuration(progress.toLong())
             }
@@ -462,12 +482,14 @@ class MainActivity : AppCompatActivity() {
                 when (item.itemId) {
                     R.id.vol -> {
                         val volDialog = AlertDialog.Builder(this)
-                        val volDialogView = layoutInflater.inflate(R.layout.precise_volume_dialog,null)
+                        val volDialogView =
+                            layoutInflater.inflate(R.layout.precise_volume_dialog, null)
                         val volSeekbar = volDialogView.findViewById<SeekBar>(R.id.vol_seekBar)
                         volSeekbar.progress = mMediaPlayerHolder.currentVolumeInPercent
                         volDialog.setView(volDialogView)
                         volDialog.show()
-                        volSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                        volSeekbar.setOnSeekBarChangeListener(object :
+                            SeekBar.OnSeekBarChangeListener {
 
                             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
                                 mMediaPlayerHolder.setPreciseVolume(i)
@@ -481,10 +503,12 @@ class MainActivity : AppCompatActivity() {
                                 // nothing happens but I still have to override this apparently
                             }
                         })
-                        true }
-                    R.id.eq  -> {
+                        true
+                    }
+                    R.id.eq -> {
                         openEqualizer()
-                        true }
+                        true
+                    }
                     else -> false
                 }
             }
@@ -498,7 +522,8 @@ class MainActivity : AppCompatActivity() {
 
         if (!sSearchEnabled) search_option.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN)
 
-        mColorsRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+        mColorsRecyclerView.layoutManager =
+            LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         val colorsAdapter = ColorsAdapter(this)
         mColorsRecyclerView.adapter = colorsAdapter
     }
@@ -546,7 +571,10 @@ class MainActivity : AppCompatActivity() {
                         val item = mArtists[position] // Get your model object
                         // or fetch the section at [position] from your database
                         FastScrollItemIndicator.Text(
-                            item.substring(0, 1).toUpperCase() // Grab the first letter and capitalize it
+                            item.substring(
+                                0,
+                                1
+                            ).toUpperCase() // Grab the first letter and capitalize it
                         ) // Return a text indicator
                     }
                 )
@@ -559,7 +587,8 @@ class MainActivity : AppCompatActivity() {
                     mArtistsRecyclerView.setPadding(0, 0, width, 0)
 
                     //set margin for thumb view
-                    val newLayoutParams = mIndicatorFastScrollThumb.layoutParams as FrameLayout.LayoutParams
+                    val newLayoutParams =
+                        mIndicatorFastScrollThumb.layoutParams as FrameLayout.LayoutParams
                     newLayoutParams.marginEnd = width
                     mIndicatorFastScrollThumb.layoutParams = newLayoutParams
                 }
@@ -622,7 +651,12 @@ class MainActivity : AppCompatActivity() {
         } else {
             mSongsAdapter.swapSongs(album)
         }
-        mSongsRecyclerView.setPadding(0, 0, 0, -resources.getDimensionPixelSize(R.dimen.songs_card_margin_bottom))
+        mSongsRecyclerView.setPadding(
+            0,
+            0,
+            0,
+            -resources.getDimensionPixelSize(R.dimen.songs_card_margin_bottom)
+        )
         mSongsAdapter.onSongClick = { music ->
             startPlayback(music, album)
         }
@@ -719,14 +753,21 @@ class MainActivity : AppCompatActivity() {
         mSeekBar.max = duration.toInt()
         mSongDuration.text = MusicUtils.formatSongDuration(duration)
         mPlayingSong.text =
-            MusicUtils.buildSpanned(getString(R.string.playing_song, selectedSong.artist, selectedSong.title))
+            MusicUtils.buildSpanned(
+                getString(
+                    R.string.playing_song,
+                    selectedSong.artist,
+                    selectedSong.title
+                )
+            )
         mPlayingAlbum.text = selectedSong.album
 
         updateResetStatus(false)
 
         if (restore) {
 
-            mSongPosition.text = MusicUtils.formatSongDuration(mMediaPlayerHolder.playerPosition.toLong())
+            mSongPosition.text =
+                MusicUtils.formatSongDuration(mMediaPlayerHolder.playerPosition.toLong())
             mSeekBar.progress = mMediaPlayerHolder.playerPosition
 
             updatePlayingStatus()
@@ -759,7 +800,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updatePlayingStatus() {
-        val drawable = if (mMediaPlayerHolder.state != PAUSED) R.drawable.ic_pause else R.drawable.ic_play
+        val drawable =
+            if (mMediaPlayerHolder.state != PAUSED) R.drawable.ic_pause else R.drawable.ic_play
         mPlayPauseButton.setImageResource(drawable)
     }
 
@@ -844,7 +886,8 @@ class MainActivity : AppCompatActivity() {
             //do only if we are not on played artist/album details
             if (mNavigationArtist != artist) {
                 mArtistsAdapter.onArtistClick?.invoke(artist)
-                val playingAlbumPosition = MusicUtils.getAlbumPositionInList(album, mSelectedArtistAlbums)
+                val playingAlbumPosition =
+                    MusicUtils.getAlbumPositionInList(album, mSelectedArtistAlbums)
                 mAlbumsAdapter.swapSelectedAlbum(playingAlbumPosition)
                 mAlbumsRecyclerView.scrollToPosition(playingAlbumPosition)
                 mAlbumsAdapter.onAlbumClick?.invoke(album)
@@ -892,7 +935,8 @@ class MainActivity : AppCompatActivity() {
     //viewTreeObserver extension to measure layout params
     //https://antonioleiva.com/kotlin-ongloballayoutlistener/
     private inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
-        viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 if (measuredWidth > 0 && measuredHeight > 0) {
                     viewTreeObserver.removeOnGlobalLayoutListener(this)
