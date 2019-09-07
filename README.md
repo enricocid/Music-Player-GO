@@ -37,6 +37,7 @@
   - System equalizer (if present on the device)
   - Dark and light themes + 16 accents
   - Enable/disable search bar
+- Precise volume control dialog
 - **Indicator fast scroll** by Reddit
 - **Search bar**
 - Open audio files from outside the app
