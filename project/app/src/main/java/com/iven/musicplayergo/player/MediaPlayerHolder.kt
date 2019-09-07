@@ -20,6 +20,7 @@ import com.iven.musicplayergo.music.Music
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
+import kotlin.math.ln
 
 /**
  * Exposes the functionality of the [MediaPlayer]
@@ -86,6 +87,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
     private var mSeekBarPositionUpdateTask: Runnable? = null
     private lateinit var mPlayingAlbumSongs: List<Music>
     var currentSong: Music? = null
+    var currentVolumeInPercent = 100
     val playerPosition: Int get() = mediaPlayer!!.currentPosition
 
     //media player state/booleans
@@ -364,6 +366,17 @@ class MediaPlayerHolder(private val playerService: PlayerService) : MediaPlayer.
                 }
             }
         }
+    }
+
+    /* Sets the volume of the media player (scale is 1-100) */
+    fun setPreciseVolume(percent: Int) {
+        fun volFromPercent(percent: Int): Float {
+            if (percent == 100) return 1f
+            return (1 - (ln((101 - percent).toFloat()) / ln(101f)))
+        }
+        currentVolumeInPercent = percent
+        val new = volFromPercent(percent)
+        mediaPlayer!!.setVolume(new,new)
     }
 
     private inner class NotificationReceiver : BroadcastReceiver() {

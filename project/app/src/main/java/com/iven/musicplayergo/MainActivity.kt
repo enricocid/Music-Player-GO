@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -19,6 +20,7 @@ import android.view.ViewAnimationUtils
 import android.view.ViewTreeObserver
 import android.widget.*
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
@@ -454,7 +456,41 @@ class MainActivity : AppCompatActivity() {
     private fun setupSettings() {
 
         shuffle_option.setOnClickListener { shuffleSongs() }
-        eq_option.setOnClickListener { openEqualizer() }
+        audio_option.setOnClickListener {
+            val audioMenu = PopupMenu(this, it) // don't even know what it means
+            audioMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.vol -> {
+                        val volDialog = AlertDialog.Builder(this)
+                        val volDialogView = layoutInflater.inflate(R.layout.precise_volume_dialog,null)
+                        val volSeekbar = volDialogView.findViewById<SeekBar>(R.id.vol_seekBar)
+                        volSeekbar.progress = mMediaPlayerHolder.currentVolumeInPercent
+                        volDialog.setView(volDialogView)
+                        volDialog.show()
+                        volSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+                            override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
+                                mMediaPlayerHolder.setPreciseVolume(i)
+                            }
+
+                            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                                // nothing happens but I still have to override this apparently
+                            }
+
+                            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                                // nothing happens but I still have to override this apparently
+                            }
+                        })
+                        true }
+                    R.id.eq  -> {
+                        openEqualizer()
+                        true }
+                    else -> false
+                }
+            }
+            audioMenu.inflate(R.menu.audio_menu)
+            audioMenu.show()
+        }
         mSearchToggleButton.setOnClickListener { handleSearchBarVisibility() }
         invert_option.setOnClickListener {
             invertTheme()
