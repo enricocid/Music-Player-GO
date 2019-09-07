@@ -482,28 +482,7 @@ class MainActivity : AppCompatActivity() {
             audioMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.vol -> {
-                        val volDialog = AlertDialog.Builder(this)
-                        val volDialogView =
-                            View.inflate(this, R.layout.precise_volume_dialog, null)
-                        val volSeekbar = volDialogView.findViewById<SeekBar>(R.id.vol_seekBar)
-                        volSeekbar.progress = mMediaPlayerHolder.currentVolumeInPercent
-                        volDialog.setView(volDialogView)
-                        volDialog.show()
-                        volSeekbar.setOnSeekBarChangeListener(object :
-                            SeekBar.OnSeekBarChangeListener {
-
-                            override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-                                mMediaPlayerHolder.setPreciseVolume(i)
-                            }
-
-                            override fun onStartTrackingTouch(seekBar: SeekBar) {
-                                // nothing happens but I still have to override this apparently
-                            }
-
-                            override fun onStopTrackingTouch(seekBar: SeekBar) {
-                                // nothing happens but I still have to override this apparently
-                            }
-                        })
+                        openVolumeDialog()
                         true
                     }
                     R.id.eq -> {
@@ -815,9 +794,38 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openEqualizer() {
-        if (EqualizerUtils.hasEqualizer(this))
+        if (EqualizerUtils.hasEqualizer(this)) {
             if (checkIsPlayer()) mMediaPlayerHolder.openEqualizer(this)
-            else Toast.makeText(this, getString(R.string.no_eq), Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, getString(R.string.no_eq), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun openVolumeDialog() {
+        if (checkIsPlayer()) {
+            val volDialog = AlertDialog.Builder(this)
+            val volDialogView =
+                View.inflate(this, R.layout.precise_volume_dialog, null)
+            val volSeekbar = volDialogView.findViewById<SeekBar>(R.id.vol_seekBar)
+            volSeekbar.progress = mMediaPlayerHolder.currentVolumeInPercent
+            volDialog.setView(volDialogView)
+            volDialog.show()
+            volSeekbar.setOnSeekBarChangeListener(object :
+                SeekBar.OnSeekBarChangeListener {
+
+                override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
+                    mMediaPlayerHolder.setPreciseVolume(i)
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar) {
+                    // nothing happens but I still have to override this apparently
+                }
+
+                override fun onStopTrackingTouch(seekBar: SeekBar) {
+                    // nothing happens but I still have to override this apparently
+                }
+            })
+        }
     }
 
     //method to reveal/hide artist details, it is a simple reveal animation
