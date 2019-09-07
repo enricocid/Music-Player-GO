@@ -5,6 +5,7 @@ import android.content.Context
 import android.provider.MediaStore.Audio.AudioColumns
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.iven.musicplayergo.R
 import com.iven.musicplayergo.Utils
 
 class MusicViewModel : ViewModel() {
@@ -93,7 +94,7 @@ class MusicViewModel : ViewModel() {
             // Finally, return the music files list
             musicLiveData.value = Pair(allDeviceSongs, categorizeMusicByArtistAndAlbums(filteredSongs))
         } catch (e: Exception) {
-            Utils.makeUnknownErrorToast(context)
+            Utils.makeUnknownErrorToast(context, R.string.error_unknown)
             e.printStackTrace()
         }
         return musicLiveData

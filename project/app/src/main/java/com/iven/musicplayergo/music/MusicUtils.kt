@@ -52,7 +52,11 @@ object MusicUtils {
     }
 
     @JvmStatic
-    fun getSongForIntent(path: String?, selectedArtistSongs: List<Music>, allDeviceSongs: List<Music>): Music? {
+    fun getSongForIntent(
+        path: String?,
+        selectedArtistSongs: List<Music>,
+        allDeviceSongs: List<Music>
+    ): Music? {
 
         return try {
             selectedArtistSongs.first { s -> s.path == path }
@@ -80,7 +84,10 @@ object MusicUtils {
     }
 
     @JvmStatic
-    fun buildSortedArtistAlbums(resources: Resources, albums: Map<String?, List<Music>>): List<Album> {
+    fun buildSortedArtistAlbums(
+        resources: Resources,
+        albums: Map<String?, List<Music>>
+    ): List<Album> {
 
         val sortedAlbums = mutableListOf<Album>()
 
@@ -225,7 +232,8 @@ object MusicUtils {
             val column = "_data"
             val projection = arrayOf(column)
 
-            val cursor = context.contentResolver.query(uri!!, projection, selection, selectionArgs, null)
+            val cursor =
+                context.contentResolver.query(uri!!, projection, selection, selectionArgs, null)
 
             if (cursor!!.moveToFirst()) {
                 val index = cursor.getColumnIndexOrThrow(column)
@@ -235,7 +243,7 @@ object MusicUtils {
                 cursor.close()
             }
         } catch (e: Exception) {
-            Utils.makeUnknownErrorToast(context)
+            Utils.makeUnknownErrorToast(context, R.string.error_unknown)
             e.printStackTrace()
         }
         return returnedString

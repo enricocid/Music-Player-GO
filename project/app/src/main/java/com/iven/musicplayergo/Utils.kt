@@ -11,6 +11,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import com.iven.musicplayergo.adapters.ArtistsAdapter
+import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import com.reddit.indicatorfastscroll.FastScrollerView
 
 object Utils {
@@ -144,7 +145,8 @@ object Utils {
     }
 
     @JvmStatic
-    fun makeUnknownErrorToast(context: Context) {
-        Toast.makeText(context, context.getString(R.string.error_unknown), Toast.LENGTH_SHORT).show()
+    fun makeUnknownErrorToast(context: Context, message: Int) {
+        DynamicToast.makeError(context, context.getString(message), Toast.LENGTH_LONG)
+            .show()
     }
 }

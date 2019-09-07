@@ -267,12 +267,7 @@ class MainActivity : AppCompatActivity() {
                 )
             }
             negativeButton {
-                Toast.makeText(
-                    this@MainActivity,
-                    getString(R.string.perm_rationale),
-                    Toast.LENGTH_LONG
-                )
-                    .show()
+                Utils.makeUnknownErrorToast(this@MainActivity, R.string.perm_rationale)
                 dismiss()
                 finishAndRemoveTask()
             }
@@ -288,7 +283,7 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(this, getString(R.string.no_browser), Toast.LENGTH_SHORT).show()
+            Utils.makeUnknownErrorToast(this, R.string.no_browser)
             e.printStackTrace()
         }
     }
@@ -320,12 +315,12 @@ class MainActivity : AppCompatActivity() {
 
                     startPlayback(song, albumSongs)
                 } else {
-                    Utils.makeUnknownErrorToast(this)
+                    Utils.makeUnknownErrorToast(this, R.string.error_unknown)
                     finishAndRemoveTask()
                 }
             }
         } catch (e: Exception) {
-            Utils.makeUnknownErrorToast(this)
+            Utils.makeUnknownErrorToast(this, R.string.error_unknown)
             finishAndRemoveTask()
         }
     }
@@ -350,7 +345,7 @@ class MainActivity : AppCompatActivity() {
                     restorePlayerStatus()
 
             } else {
-                Toast.makeText(this, getString(R.string.error_no_music), Toast.LENGTH_SHORT).show()
+                Utils.makeUnknownErrorToast(this, R.string.error_no_music)
                 finish()
             }
         })
@@ -777,7 +772,7 @@ class MainActivity : AppCompatActivity() {
         if (EqualizerUtils.hasEqualizer(this)) {
             if (checkIsPlayer()) mMediaPlayerHolder.openEqualizer(this)
         } else {
-            Toast.makeText(this, getString(R.string.no_eq), Toast.LENGTH_SHORT).show()
+            Utils.makeUnknownErrorToast(this, R.string.no_eq)
         }
     }
 

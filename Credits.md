@@ -2,11 +2,17 @@
 
 - [**Julian Javier Gomez - Axinen Design**](https://github.com/AxinenDesign) for the wonderful **material design icon**
 
+- [**Arianna Masciolini**](https://github.com/harisont) for the original precise volume control implementation
+
 - [**Reddit**](https://github.com/reddit) for the wonderful [**Indicator Fast Scroll**](https://github.com/reddit/IndicatorFastScroll) library
 
-- [**Toastcode**](https://toastco.de/) for the wunderbar [**Screener - Better screenshots**](https://play.google.com/store/apps/details?id=de.toastcode.screener) app
+- [**Arianna Masciolini**](https://github.com/harisont) for the original precise volume control implementation
 
 - [**Aidan Afollestad**](https://github.com/afollestad) for the incredible [**material-dialogs**](https://github.com/afollestad/material-dialogs) library
+
+- [**Pranav Pandey**](https://github.com/pranavpandey) for beautiful [Dynamic toasts](https://github.com/pranavpandey/dynamic-toasts) library!
+
+- [**Toastcode**](https://toastco.de/) for the wunderbar [**Screener - Better screenshots**](https://play.google.com/store/apps/details?id=de.toastcode.screener) app
 
 - [**material.io**](https://material.io/tools/icons/?style=round) for the **wonderful round icons**
 
