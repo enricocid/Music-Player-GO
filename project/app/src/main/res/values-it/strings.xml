@@ -7,5 +7,4 @@
     <string name="artist_info">%1d&#160;Album,&#160;%2d&#160;Canzoni</string>
     <string name="volume">Volume</string>
     <string name="error_unknown">Qualcosa è andato storto! :(</string>
-    <string name="equalizer">Equalizzatore</string>
 </resources>

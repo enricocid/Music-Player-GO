@@ -6,5 +6,4 @@
     <string name="error_no_music">No se encontró música en tu teléfono!</string>
     <string name="artist_info">%1d&#160;Álbumes,&#160;%2d&#160;Canciones</string>
     <string name="volume">Volumen</string>
-    <string name="equalizer">Ecualizador</string>
 </resources>

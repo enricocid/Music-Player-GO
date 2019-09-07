@@ -52,6 +52,7 @@ import kotlinx.android.synthetic.main.player_settings.*
 import kotlinx.android.synthetic.main.search_toolbar.*
 import kotlin.math.hypot
 
+@Suppress("UNUSED_PARAMETER")
 class MainActivity : AppCompatActivity() {
 
     ////preferences
@@ -107,7 +108,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mArtistsDetailsDiscCount: TextView
     private lateinit var mArtistsDetailsSelectedDisc: TextView
     private lateinit var mArtistDetailsSelectedDiscYear: TextView
-
 
     ////music player things
 
@@ -478,24 +478,6 @@ class MainActivity : AppCompatActivity() {
     private fun setupSettings() {
 
         shuffle_option.setOnClickListener { shuffleSongs() }
-        audio_option.setOnClickListener {
-            val audioMenu = PopupMenu(this, it) // don't even know what it means
-            audioMenu.setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.vol -> {
-                        openVolumeDialog()
-                        true
-                    }
-                    R.id.eq -> {
-                        openEqualizer()
-                        true
-                    }
-                    else -> false
-                }
-            }
-            audioMenu.inflate(R.menu.audio_menu)
-            audioMenu.show()
-        }
         mSearchToggleButton.setOnClickListener { handleSearchBarVisibility() }
         invert_option.setOnClickListener {
             invertTheme()
@@ -794,7 +776,7 @@ class MainActivity : AppCompatActivity() {
         return isPlayer
     }
 
-    private fun openEqualizer() {
+    fun openEqualizer(view: View) {
         if (EqualizerUtils.hasEqualizer(this)) {
             if (checkIsPlayer()) mMediaPlayerHolder.openEqualizer(this)
         } else {
@@ -802,13 +784,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun openVolumeDialog() {
+    fun openVolDialog(view: View) {
+
         if (checkIsPlayer()) {
+
             MaterialDialog(this).show {
                 var isUserSeeking = false
                 cornerRadius(res = R.dimen.md_corner_radius)
                 title(R.string.volume)
                 customView(R.layout.precise_volume_dialog)
+
                 val volText = getCustomView().findViewById<TextView>(R.id.vol_text)
                 val volSeekBar = getCustomView().findViewById<SeekBar>(R.id.vol_seekBar)
                 val currentProgress = mMediaPlayerHolder.getNormalizedVolume(0, false)
