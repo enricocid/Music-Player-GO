@@ -8,4 +8,5 @@
     <string name="error_not_supported">Formato non supportato in Android MediaPlayer!</string>
     <string name="volume">Volume</string>
     <string name="error_unknown">Qualcosa è andato storto! :(</string>
+    <string name="equalizer">Equalizzatore</string>
 </resources>
