@@ -607,6 +607,7 @@ class MainActivity : AppCompatActivity() {
             mSongsAdapter = SongsAdapter(album)
             mSongsRecyclerView.adapter = mSongsAdapter
         } else {
+            mSongsRecyclerView.scrollToPosition(0)
             mSongsAdapter.swapSongs(album)
         }
         mSongsRecyclerView.setPadding(
