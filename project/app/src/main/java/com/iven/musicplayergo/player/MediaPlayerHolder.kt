@@ -258,7 +258,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun instantReset() {
-        if (isMediaPlayer) if (mediaPlayer!!.currentPosition < 5000) skip(false) else resetSong()
+        if (isMediaPlayer) {
+            if (mediaPlayer!!.currentPosition < 5000) skip(false) else resetSong()
+        }
     }
 
     /**
