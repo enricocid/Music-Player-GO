@@ -2,7 +2,7 @@
 
 [FAQ](https://github.com/enricocid/Music-Player-GO/blob/master/FAQ.md) -  [Privacy policy](https://github.com/enricocid/Music-Player-GO/blob/master/Privacy.md) - [CREDITS](https://github.com/enricocid/Music-Player-GO/blob/master/Credits.md)
 
-[![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin) [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
+[![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
 
 ###### Very slim, nice and **original** music player
 ###### Current version: [3.6.6.1](https://github.com/enricocid/Music-Player-GO/releases/tag/v3.6.6.1)
