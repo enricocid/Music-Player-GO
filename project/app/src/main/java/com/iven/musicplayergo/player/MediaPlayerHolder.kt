@@ -140,8 +140,11 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         mediaPlayerInterface.onStateChanged()
         mediaPlayerInterface.onPlaybackCompleted()
 
-
-        if (isReset) if (isMediaPlayer) resetSong() else skip(true)
+        if (isReset) {
+            if (isMediaPlayer) resetSong()
+        } else {
+            skip(true)
+        }
     }
 
     fun onResumeActivity() {
