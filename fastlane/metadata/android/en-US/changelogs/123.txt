@@ -1,0 +1,2 @@
+- Fix next song not being played automatically after song reproduction completion
+- Update Turkish translations
