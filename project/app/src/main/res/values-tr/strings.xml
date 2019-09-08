@@ -6,5 +6,6 @@
     <string name="no_browser">Tarayıcı uygulaması bulunamadı!</string>
     <string name="perm_rationale">Music Player GO\'nun müziklerinizi oynatması için dosyalarınıza erişmesi gerekiyor!</string>
     <string name="error_no_music">Müzik bulunamadı!</string>
+    <string name="volume">Ses %1s</string>
     <string name="error_unknown">Bir şeyler yanlış gitti! :(</string>
 </resources>
