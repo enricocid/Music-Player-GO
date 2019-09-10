@@ -17,7 +17,7 @@ import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.PlayerService
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.music.MusicUtils
+import com.iven.musicplayergo.MusicUtils
 
 
 // Notification params

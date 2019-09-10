@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.music.Music
-import com.iven.musicplayergo.music.MusicUtils
+import com.iven.musicplayergo.MusicUtils
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import kotlinx.android.synthetic.main.song_item.view.*
 

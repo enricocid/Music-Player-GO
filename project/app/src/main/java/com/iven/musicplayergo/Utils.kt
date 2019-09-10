@@ -1,3 +1,5 @@
+@file:JvmName("Utils")
+
 package com.iven.musicplayergo
 
 import android.annotation.SuppressLint

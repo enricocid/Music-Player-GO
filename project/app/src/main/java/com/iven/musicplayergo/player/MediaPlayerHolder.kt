@@ -2,20 +2,20 @@ package com.iven.musicplayergo.player
 
 import android.app.Activity
 import android.bluetooth.BluetoothDevice
-import android.content.BroadcastReceiver
-import android.content.Context
+import android.content.*
 import android.content.Context.AUDIO_SERVICE
-import android.content.Intent
-import android.content.IntentFilter
 import android.media.AudioAttributes
 import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.media.audiofx.AudioEffect
 import android.os.Build
 import android.os.Handler
 import android.os.PowerManager
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.PlayerService
+import com.iven.musicplayergo.R
+import com.iven.musicplayergo.Utils
 import com.iven.musicplayergo.music.Music
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -263,6 +263,21 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
+    private fun openAudioEffectSession(context: Context, sessionId: Int) {
+        val intent = Intent(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION)
+        intent.putExtra(AudioEffect.EXTRA_AUDIO_SESSION, sessionId)
+        intent.putExtra(AudioEffect.EXTRA_PACKAGE_NAME, context.packageName)
+        intent.putExtra(AudioEffect.EXTRA_CONTENT_TYPE, AudioEffect.CONTENT_TYPE_MUSIC)
+        context.sendBroadcast(intent)
+    }
+
+    private fun closeAudioEffectSession(context: Context, sessionId: Int) {
+        val audioEffectsIntent = Intent(AudioEffect.ACTION_CLOSE_AUDIO_EFFECT_CONTROL_SESSION)
+        audioEffectsIntent.putExtra(AudioEffect.EXTRA_AUDIO_SESSION, sessionId)
+        audioEffectsIntent.putExtra(AudioEffect.EXTRA_PACKAGE_NAME, context.packageName)
+        context.sendBroadcast(audioEffectsIntent)
+    }
+
     /**
      * Once the [MediaPlayer] is released, it can't be used again, and another one has to be
      * created. In the onStop() method of the [MainActivity] the [MediaPlayer] is
@@ -277,7 +292,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 mediaPlayer!!.reset()
             } else {
                 mediaPlayer = MediaPlayer()
-                EqualizerUtils.openAudioEffectSession(
+                openAudioEffectSession(
                     playerService.applicationContext,
                     mediaPlayer!!.audioSessionId
                 )
@@ -314,12 +329,31 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun openEqualizer(activity: Activity) {
-        EqualizerUtils.openEqualizer(activity, mediaPlayer!!)
+        if (mediaPlayer != null) {
+            val sessionId = mediaPlayer!!.audioSessionId
+
+            if (sessionId == AudioEffect.ERROR_BAD_VALUE) {
+                Utils.makeUnknownErrorToast(activity, R.string.bad_id)
+            } else {
+                try {
+                    val effects = Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL)
+                    effects.putExtra(AudioEffect.EXTRA_AUDIO_SESSION, sessionId)
+                    effects.putExtra(AudioEffect.EXTRA_CONTENT_TYPE, AudioEffect.CONTENT_TYPE_MUSIC)
+                    activity.startActivityForResult(effects, 0)
+                } catch (notFound: ActivityNotFoundException) {
+                    notFound.printStackTrace()
+                }
+            }
+        }
+    }
+
+    internal fun openEqualizer(activity: Activity, mediaPlayer: MediaPlayer) {
+
     }
 
     fun release() {
         if (isMediaPlayer) {
-            EqualizerUtils.closeAudioEffectSession(
+            closeAudioEffectSession(
                 playerService.applicationContext,
                 mediaPlayer!!.audioSessionId
             )

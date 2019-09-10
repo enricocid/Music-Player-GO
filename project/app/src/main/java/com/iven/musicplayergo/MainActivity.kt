@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.media.audiofx.AudioEffect
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -38,8 +39,6 @@ import com.iven.musicplayergo.adapters.ColorsAdapter
 import com.iven.musicplayergo.adapters.SongsAdapter
 import com.iven.musicplayergo.music.Album
 import com.iven.musicplayergo.music.Music
-import com.iven.musicplayergo.music.MusicUtils
-import com.iven.musicplayergo.music.MusicViewModel
 import com.iven.musicplayergo.player.*
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerThumbView
@@ -112,7 +111,10 @@ class MainActivity : AppCompatActivity() {
     ////music player things
 
     //view model
-    private lateinit var mViewModel: MusicViewModel
+    private val mMainViewModel by lazy {
+        ViewModelProviders.of(this).get(MainViewModel::class.java)
+    }
+
     private lateinit var mAllDeviceSongs: MutableList<Music>
 
     //booleans
@@ -228,7 +230,6 @@ class MainActivity : AppCompatActivity() {
         sThemeInverted = mMusicPlayerGoPreferences.isThemeInverted
         mAccent = mMusicPlayerGoPreferences.accent
         sSearchEnabled = mMusicPlayerGoPreferences.isSearchBarEnabled
-        mViewModel = ViewModelProviders.of(this).get(MusicViewModel::class.java)
 
         setTheme(Utils.resolveTheme(sThemeInverted, mMusicPlayerGoPreferences.accent))
 
@@ -327,7 +328,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadMusic() {
 
-        mViewModel.getMusic(this).observe(this, Observer {
+        mMainViewModel.getMusic(this).observe(this, Observer {
 
             mAllDeviceSongs = it.first
             mMusic = it.second
@@ -473,7 +474,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupSettings() {
 
         if (!sSearchEnabled) search_option.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN)
-        if (!EqualizerUtils.hasEqualizer(this)) equalizer.setColorFilter(
+        if (!hasEqualizer(this)) equalizer.setColorFilter(
             Color.GRAY,
             PorterDuff.Mode.SRC_IN
         )
@@ -758,16 +759,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkIsPlayer(): Boolean {
         val isPlayer = mMediaPlayerHolder.isMediaPlayer
-        if (!isPlayer) EqualizerUtils.notifyNoSessionId(this)
+        if (!isPlayer) Utils.makeUnknownErrorToast(this, R.string.bad_id)
         return isPlayer
     }
 
     fun openEqualizer(view: View) {
-        if (EqualizerUtils.hasEqualizer(this)) {
+        if (hasEqualizer(this)) {
             if (checkIsPlayer()) mMediaPlayerHolder.openEqualizer(this)
         } else {
             Utils.makeUnknownErrorToast(this, R.string.no_eq)
         }
+    }
+
+    private fun hasEqualizer(context: Context): Boolean {
+        val effects = Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL)
+        val pm = context.packageManager
+        val ri = pm.resolveActivity(effects, 0)
+        return ri != null
     }
 
     fun openVolDialog(view: View) {
