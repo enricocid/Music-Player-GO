@@ -9,7 +9,6 @@ import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.media.audiofx.AudioEffect
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -33,7 +32,14 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.iven.musicplayergo.adapters.*
+import com.iven.musicplayergo.adapters.AlbumsAdapter
+import com.iven.musicplayergo.adapters.ArtistsAdapter
+import com.iven.musicplayergo.adapters.ColorsAdapter
+import com.iven.musicplayergo.adapters.SongsAdapter
+import com.iven.musicplayergo.music.Album
+import com.iven.musicplayergo.music.Music
+import com.iven.musicplayergo.music.MusicUtils
+import com.iven.musicplayergo.music.MusicViewModel
 import com.iven.musicplayergo.player.*
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerThumbView
@@ -106,10 +112,7 @@ class MainActivity : AppCompatActivity() {
     ////music player things
 
     //view model
-    private val mMainViewModel by lazy {
-        ViewModelProviders.of(this).get(MainViewModel::class.java)
-    }
-
+    private lateinit var mViewModel: MusicViewModel
     private lateinit var mAllDeviceSongs: MutableList<Music>
 
     //booleans
@@ -126,18 +129,18 @@ class MainActivity : AppCompatActivity() {
     //player
     private lateinit var mMediaPlayerHolder: MediaPlayerHolder
 
-    //our MusicPlayerService shit
-    private lateinit var mMusicPlayerService: MusicPlayerService
+    //our PlayerService shit
+    private lateinit var mPlayerService: PlayerService
     private var sBound: Boolean = false
     private lateinit var mBindingIntent: Intent
 
     /** Defines callbacks for service binding, passed to bindService()  */
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(componentName: ComponentName, service: IBinder) {
-            val binder = service as MusicPlayerService.LocalBinder
-            mMusicPlayerService = binder.getService()
+            val binder = service as PlayerService.LocalBinder
+            mPlayerService = binder.getService()
             sBound = true
-            mMediaPlayerHolder = mMusicPlayerService.mediaPlayerHolder!!
+            mMediaPlayerHolder = mPlayerService.mediaPlayerHolder!!
             mMediaPlayerHolder.mediaPlayerInterface = mediaPlayerInterface
 
             loadMusic()
@@ -150,7 +153,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun doBindService() {
         // Bind to LocalService
-        mBindingIntent = Intent(this, MusicPlayerService::class.java).also { intent ->
+        mBindingIntent = Intent(this, PlayerService::class.java).also { intent ->
             bindService(intent, connection, Context.BIND_AUTO_CREATE)
         }
     }
@@ -225,6 +228,7 @@ class MainActivity : AppCompatActivity() {
         sThemeInverted = mMusicPlayerGoPreferences.isThemeInverted
         mAccent = mMusicPlayerGoPreferences.accent
         sSearchEnabled = mMusicPlayerGoPreferences.isSearchBarEnabled
+        mViewModel = ViewModelProviders.of(this).get(MusicViewModel::class.java)
 
         setTheme(Utils.resolveTheme(sThemeInverted, mMusicPlayerGoPreferences.accent))
 
@@ -323,7 +327,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadMusic() {
 
-        mMainViewModel.getMusic(this).observe(this, Observer {
+        mViewModel.getMusic(this).observe(this, Observer {
 
             mAllDeviceSongs = it.first
             mMusic = it.second
@@ -469,7 +473,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupSettings() {
 
         if (!sSearchEnabled) search_option.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN)
-        if (!hasEqualizer(this)) equalizer.setColorFilter(
+        if (!EqualizerUtils.hasEqualizer(this)) equalizer.setColorFilter(
             Color.GRAY,
             PorterDuff.Mode.SRC_IN
         )
@@ -620,9 +624,7 @@ class MainActivity : AppCompatActivity() {
     private fun startPlayback(song: Music, album: List<Music>?) {
         if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
 
-        if (::mMusicPlayerService.isInitialized && !mMusicPlayerService.isRunning) startService(
-            mBindingIntent
-        )
+        if (::mPlayerService.isInitialized && !mPlayerService.isRunning) startService(mBindingIntent)
 
         mMediaPlayerHolder.setCurrentSong(song, album!!)
         mMediaPlayerHolder.initMediaPlayer(song)
@@ -722,13 +724,13 @@ class MainActivity : AppCompatActivity() {
             updatePlayingStatus()
 
             //stop foreground if coming from pause state
-            if (mMusicPlayerService.isRestoredFromPause) {
-                mMusicPlayerService.stopForeground(false)
-                mMusicPlayerService.musicNotificationManager.notificationManager.notify(
+            if (mPlayerService.isRestoredFromPause) {
+                mPlayerService.stopForeground(false)
+                mPlayerService.musicNotificationManager.notificationManager.notify(
                     NOTIFICATION_ID,
-                    mMusicPlayerService.musicNotificationManager.notificationBuilder!!.build()
+                    mPlayerService.musicNotificationManager.notificationBuilder!!.build()
                 )
-                mMusicPlayerService.isRestoredFromPause = false
+                mPlayerService.isRestoredFromPause = false
             }
         }
     }
@@ -756,23 +758,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkIsPlayer(): Boolean {
         val isPlayer = mMediaPlayerHolder.isMediaPlayer
-        if (!isPlayer) Utils.makeUnknownErrorToast(this, R.string.bad_id)
+        if (!isPlayer) EqualizerUtils.notifyNoSessionId(this)
         return isPlayer
     }
 
     fun openEqualizer(view: View) {
-        if (hasEqualizer(this)) {
+        if (EqualizerUtils.hasEqualizer(this)) {
             if (checkIsPlayer()) mMediaPlayerHolder.openEqualizer(this)
         } else {
             Utils.makeUnknownErrorToast(this, R.string.no_eq)
         }
-    }
-
-    private fun hasEqualizer(context: Context): Boolean {
-        val effects = Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL)
-        val pm = context.packageManager
-        val ri = pm.resolveActivity(effects, 0)
-        return ri != null
     }
 
     fun openVolDialog(view: View) {
@@ -898,11 +893,11 @@ class MainActivity : AppCompatActivity() {
         //avoid service killing when the player is in paused state
         if (::mMediaPlayerHolder.isInitialized && mMediaPlayerHolder.isPlaying) {
             if (mMediaPlayerHolder.state == PAUSED) {
-                mMusicPlayerService.startForeground(
+                mPlayerService.startForeground(
                     NOTIFICATION_ID,
-                    mMusicPlayerService.musicNotificationManager.createNotification()
+                    mPlayerService.musicNotificationManager.createNotification()
                 )
-                mMusicPlayerService.isRestoredFromPause = true
+                mPlayerService.isRestoredFromPause = true
             }
         }
 

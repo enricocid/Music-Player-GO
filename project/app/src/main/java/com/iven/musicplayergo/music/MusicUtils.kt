@@ -1,18 +1,20 @@
-@file:JvmName("MusicUtils")
+package com.iven.musicplayergo.music
 
-package com.iven.musicplayergo
-
+import android.annotation.SuppressLint
+import android.content.ContentResolver
 import android.content.Context
 import android.content.res.Resources
+import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.provider.MediaStore.Audio.AudioColumns
 import android.text.Html
 import android.text.Spanned
-import com.iven.musicplayergo.adapters.Album
-import com.iven.musicplayergo.adapters.Music
+import com.iven.musicplayergo.R
+import com.iven.musicplayergo.Utils
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -91,15 +93,7 @@ object MusicUtils {
 
         try {
             albums.keys.iterator().forEach {
-                sortedAlbums.add(
-                    Album(
-                        it,
-                        getYearForAlbum(
-                            resources,
-                            albums.getValue(it)[0].year
-                        )
-                    )
-                )
+                sortedAlbums.add(Album(it, getYearForAlbum(resources, albums.getValue(it)[0].year)))
             }
 
         } catch (e: Exception) {
@@ -135,6 +129,32 @@ object MusicUtils {
             Html.fromHtml(res, Html.FROM_HTML_MODE_LEGACY)
         else
             Html.fromHtml(res)
+    }
+
+    @JvmStatic
+    @SuppressLint("InlinedApi")
+    private val COLUMNS = arrayOf(
+        AudioColumns.ARTIST, // 0
+        AudioColumns.YEAR, // 1
+        AudioColumns.TRACK, // 2
+        AudioColumns.TITLE, // 3
+        AudioColumns.DURATION, // 4
+        AudioColumns.ALBUM, // 5
+        AudioColumns.DATA, // 6
+        AudioColumns.ALBUM_ID //7
+    )
+
+    @JvmStatic
+    private fun getSongLoaderSortOrder(): String {
+        return MediaStore.Audio.Artists.DEFAULT_SORT_ORDER + ", " + MediaStore.Audio.Albums.DEFAULT_SORT_ORDER + ", " + MediaStore.Audio.Media.DEFAULT_SORT_ORDER
+    }
+
+    @JvmStatic
+    fun getMusicCursor(contentResolver: ContentResolver): Cursor? {
+        return contentResolver.query(
+            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+            COLUMNS, null, null, getSongLoaderSortOrder()
+        )
     }
 
     /**
@@ -175,12 +195,7 @@ object MusicUtils {
                 val selection = "_id=?"
                 val selectionArgs = arrayOf(split[1])
 
-                return getDataColumn(
-                    context,
-                    contentUri,
-                    selection,
-                    selectionArgs
-                )
+                return getDataColumn(context, contentUri, selection, selectionArgs)
             }// MediaProvider
             // DownloadsProvider
         } else if ("content".equals(uri.scheme!!, ignoreCase = true)) {

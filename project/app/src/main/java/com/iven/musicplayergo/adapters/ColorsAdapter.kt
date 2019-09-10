@@ -49,13 +49,7 @@ class ColorsAdapter(private val activity: Activity) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ColorsHolder {
-        return ColorsHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.color_option,
-                parent,
-                false
-            )
-        )
+        return ColorsHolder(LayoutInflater.from(parent.context).inflate(R.layout.color_option, parent, false))
     }
 
     override fun getItemCount(): Int {

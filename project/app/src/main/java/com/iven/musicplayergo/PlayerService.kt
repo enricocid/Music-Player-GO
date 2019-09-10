@@ -1,11 +1,13 @@
-package com.iven.musicplayergo.player
+package com.iven.musicplayergo
 
 import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
+import com.iven.musicplayergo.player.MediaPlayerHolder
+import com.iven.musicplayergo.player.MusicNotificationManager
 
-class MusicPlayerService : Service() {
+class PlayerService : Service() {
 
     // Binder given to clients
     private val binder = LocalBinder()
@@ -45,7 +47,7 @@ class MusicPlayerService : Service() {
     }
 
     inner class LocalBinder : Binder() {
-        // Return this instance of MusicPlayerService so we can call public methods
-        fun getService(): MusicPlayerService = this@MusicPlayerService
+        // Return this instance of PlayerService so we can call public methods
+        fun getService(): PlayerService = this@PlayerService
     }
 }

@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.iven.musicplayergo.MusicUtils
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.music.Music
+import com.iven.musicplayergo.music.MusicUtils
 import kotlinx.android.synthetic.main.artist_item.view.*
 
 class ArtistsAdapter(
@@ -29,13 +30,7 @@ class ArtistsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistsHolder {
-        return ArtistsHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.artist_item,
-                parent,
-                false
-            )
-        )
+        return ArtistsHolder(LayoutInflater.from(parent.context).inflate(R.layout.artist_item, parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -45,11 +40,7 @@ class ArtistsAdapter(
     override fun onBindViewHolder(holder: ArtistsHolder, position: Int) {
         val artist = mArtists[holder.adapterPosition]
         val albums = music.getValue(artist)
-        holder.bindItems(
-            mArtists[holder.adapterPosition],
-            albums.keys.size,
-            MusicUtils.getArtistSongsCount(albums)
-        )
+        holder.bindItems(mArtists[holder.adapterPosition], albums.keys.size, MusicUtils.getArtistSongsCount(albums))
     }
 
     inner class ArtistsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -57,13 +48,7 @@ class ArtistsAdapter(
         fun bindItems(title: String, albumCount: Int, songCount: Int) {
             itemView.artist.text = title
             itemView.album_count.text =
-                MusicUtils.buildSpanned(
-                    resources.getString(
-                        R.string.artist_info,
-                        albumCount,
-                        songCount
-                    )
-                )
+                MusicUtils.buildSpanned(resources.getString(R.string.artist_info, albumCount, songCount))
             itemView.setOnClickListener { onArtistClick?.invoke(mArtists[adapterPosition]) }
         }
     }

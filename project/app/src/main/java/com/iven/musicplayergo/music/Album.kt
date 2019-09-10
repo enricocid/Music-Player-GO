@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.adapters
+package com.iven.musicplayergo.music
 
 data class Album(
     val title: String?,
