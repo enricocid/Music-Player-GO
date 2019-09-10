@@ -8,7 +8,7 @@ import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.iven.musicplayergo.music.Music
+import com.iven.musicplayergo.adapters.Music
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async

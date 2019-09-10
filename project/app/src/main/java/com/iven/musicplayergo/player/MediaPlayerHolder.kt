@@ -13,10 +13,9 @@ import android.os.Build
 import android.os.Handler
 import android.os.PowerManager
 import com.iven.musicplayergo.MainActivity
-import com.iven.musicplayergo.PlayerService
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.Utils
-import com.iven.musicplayergo.music.Music
+import com.iven.musicplayergo.adapters.Music
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -47,14 +46,14 @@ const val PAUSED = 1
 const val RESUMED = 2
 
 @Suppress("DEPRECATION")
-class MediaPlayerHolder(private val playerService: PlayerService) :
+class MediaPlayerHolder(private val musicPlayerService: MusicPlayerService) :
     MediaPlayer.OnCompletionListener,
     MediaPlayer.OnPreparedListener {
 
     lateinit var mediaPlayerInterface: MediaPlayerInterface
 
     //audio focus
-    private var mAudioManager = playerService.getSystemService(AUDIO_SERVICE) as AudioManager
+    private var mAudioManager = musicPlayerService.getSystemService(AUDIO_SERVICE) as AudioManager
     private lateinit var mAudioFocusRequestOreo: AudioFocusRequest
     private val mHandler = Handler()
 
@@ -113,13 +112,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         intentFilter.addAction(Intent.ACTION_HEADSET_PLUG)
         intentFilter.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
 
-        playerService.registerReceiver(mNotificationActionsReceiver, intentFilter)
+        musicPlayerService.registerReceiver(mNotificationActionsReceiver, intentFilter)
     }
 
     private fun unregisterActionsReceiver() {
         if (mNotificationActionsReceiver != null) {
             try {
-                playerService.unregisterReceiver(mNotificationActionsReceiver)
+                musicPlayerService.unregisterReceiver(mNotificationActionsReceiver)
             } catch (e: IllegalArgumentException) {
                 e.printStackTrace()
             }
@@ -202,7 +201,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (!isPlaying) {
             if (isMediaPlayer) mediaPlayer!!.start()
             setStatus(RESUMED)
-            playerService.startForeground(
+            musicPlayerService.startForeground(
                 NOTIFICATION_ID,
                 mMusicNotificationManager.createNotification()
             )
@@ -212,7 +211,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private fun pauseMediaPlayer() {
         setStatus(PAUSED)
         mediaPlayer!!.pause()
-        playerService.stopForeground(false)
+        musicPlayerService.stopForeground(false)
         mMusicNotificationManager.notificationManager
             .notify(NOTIFICATION_ID, mMusicNotificationManager.createNotification())
     }
@@ -293,20 +292,20 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             } else {
                 mediaPlayer = MediaPlayer()
                 openAudioEffectSession(
-                    playerService.applicationContext,
+                    musicPlayerService.applicationContext,
                     mediaPlayer!!.audioSessionId
                 )
 
                 mediaPlayer!!.setOnPreparedListener(this)
                 mediaPlayer!!.setOnCompletionListener(this)
-                mediaPlayer!!.setWakeMode(playerService, PowerManager.PARTIAL_WAKE_LOCK)
+                mediaPlayer!!.setWakeMode(musicPlayerService, PowerManager.PARTIAL_WAKE_LOCK)
                 mediaPlayer!!.setAudioAttributes(
                     AudioAttributes.Builder()
                         .setUsage(AudioAttributes.USAGE_MEDIA)
                         .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                         .build()
                 )
-                mMusicNotificationManager = playerService.musicNotificationManager
+                mMusicNotificationManager = musicPlayerService.musicNotificationManager
             }
             tryToGetAudioFocus()
             mediaPlayer!!.setDataSource(song.path)
@@ -322,7 +321,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (isReset) isReset = false
         setStatus(PLAYING)
         mediaPlayer.start()
-        playerService.startForeground(
+        musicPlayerService.startForeground(
             NOTIFICATION_ID,
             mMusicNotificationManager.createNotification()
         )
@@ -354,7 +353,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun release() {
         if (isMediaPlayer) {
             closeAudioEffectSession(
-                playerService.applicationContext,
+                musicPlayerService.applicationContext,
                 mediaPlayer!!.audioSessionId
             )
             mediaPlayer!!.release()
@@ -449,9 +448,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     PLAY_PAUSE_ACTION -> resumeOrPause()
                     NEXT_ACTION -> skip(true)
                     CLOSE_ACTION -> {
-                        if (playerService.isRunning && mediaPlayer != null) {
+                        if (musicPlayerService.isRunning && mediaPlayer != null) {
                             mediaPlayer!!.stop()
-                            playerService.stopForeground(true)
+                            musicPlayerService.stopForeground(true)
                             mediaPlayerInterface.onClose()
                         }
                     }

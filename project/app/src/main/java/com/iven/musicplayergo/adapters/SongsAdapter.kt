@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.iven.musicplayergo.R
-import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.MusicUtils
+import com.iven.musicplayergo.R
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import kotlinx.android.synthetic.main.song_item.view.*
 
-class SongsAdapter(albumMusic: MutableList<Music>) : RecyclerView.Adapter<SongsAdapter.SongsHolder>() {
+class SongsAdapter(albumMusic: MutableList<Music>) :
+    RecyclerView.Adapter<SongsAdapter.SongsHolder>() {
 
     var onSongClick: ((Music) -> Unit)? = null
 
@@ -30,7 +30,13 @@ class SongsAdapter(albumMusic: MutableList<Music>) : RecyclerView.Adapter<SongsA
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongsHolder {
-        return SongsHolder(LayoutInflater.from(parent.context).inflate(R.layout.song_item, parent, false))
+        return SongsHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.song_item,
+                parent,
+                false
+            )
+        )
     }
 
     override fun getItemCount(): Int {

@@ -33,12 +33,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.iven.musicplayergo.adapters.AlbumsAdapter
-import com.iven.musicplayergo.adapters.ArtistsAdapter
-import com.iven.musicplayergo.adapters.ColorsAdapter
-import com.iven.musicplayergo.adapters.SongsAdapter
-import com.iven.musicplayergo.music.Album
-import com.iven.musicplayergo.music.Music
+import com.iven.musicplayergo.adapters.*
 import com.iven.musicplayergo.player.*
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerThumbView
@@ -131,18 +126,18 @@ class MainActivity : AppCompatActivity() {
     //player
     private lateinit var mMediaPlayerHolder: MediaPlayerHolder
 
-    //our PlayerService shit
-    private lateinit var mPlayerService: PlayerService
+    //our MusicPlayerService shit
+    private lateinit var mMusicPlayerService: MusicPlayerService
     private var sBound: Boolean = false
     private lateinit var mBindingIntent: Intent
 
     /** Defines callbacks for service binding, passed to bindService()  */
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(componentName: ComponentName, service: IBinder) {
-            val binder = service as PlayerService.LocalBinder
-            mPlayerService = binder.getService()
+            val binder = service as MusicPlayerService.LocalBinder
+            mMusicPlayerService = binder.getService()
             sBound = true
-            mMediaPlayerHolder = mPlayerService.mediaPlayerHolder!!
+            mMediaPlayerHolder = mMusicPlayerService.mediaPlayerHolder!!
             mMediaPlayerHolder.mediaPlayerInterface = mediaPlayerInterface
 
             loadMusic()
@@ -155,7 +150,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun doBindService() {
         // Bind to LocalService
-        mBindingIntent = Intent(this, PlayerService::class.java).also { intent ->
+        mBindingIntent = Intent(this, MusicPlayerService::class.java).also { intent ->
             bindService(intent, connection, Context.BIND_AUTO_CREATE)
         }
     }
@@ -625,7 +620,9 @@ class MainActivity : AppCompatActivity() {
     private fun startPlayback(song: Music, album: List<Music>?) {
         if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
 
-        if (::mPlayerService.isInitialized && !mPlayerService.isRunning) startService(mBindingIntent)
+        if (::mMusicPlayerService.isInitialized && !mMusicPlayerService.isRunning) startService(
+            mBindingIntent
+        )
 
         mMediaPlayerHolder.setCurrentSong(song, album!!)
         mMediaPlayerHolder.initMediaPlayer(song)
@@ -725,13 +722,13 @@ class MainActivity : AppCompatActivity() {
             updatePlayingStatus()
 
             //stop foreground if coming from pause state
-            if (mPlayerService.isRestoredFromPause) {
-                mPlayerService.stopForeground(false)
-                mPlayerService.musicNotificationManager.notificationManager.notify(
+            if (mMusicPlayerService.isRestoredFromPause) {
+                mMusicPlayerService.stopForeground(false)
+                mMusicPlayerService.musicNotificationManager.notificationManager.notify(
                     NOTIFICATION_ID,
-                    mPlayerService.musicNotificationManager.notificationBuilder!!.build()
+                    mMusicPlayerService.musicNotificationManager.notificationBuilder!!.build()
                 )
-                mPlayerService.isRestoredFromPause = false
+                mMusicPlayerService.isRestoredFromPause = false
             }
         }
     }
@@ -901,11 +898,11 @@ class MainActivity : AppCompatActivity() {
         //avoid service killing when the player is in paused state
         if (::mMediaPlayerHolder.isInitialized && mMediaPlayerHolder.isPlaying) {
             if (mMediaPlayerHolder.state == PAUSED) {
-                mPlayerService.startForeground(
+                mMusicPlayerService.startForeground(
                     NOTIFICATION_ID,
-                    mPlayerService.musicNotificationManager.createNotification()
+                    mMusicPlayerService.musicNotificationManager.createNotification()
                 )
-                mPlayerService.isRestoredFromPause = true
+                mMusicPlayerService.isRestoredFromPause = true
             }
         }
 

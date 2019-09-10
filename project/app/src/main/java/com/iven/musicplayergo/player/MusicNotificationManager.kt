@@ -15,9 +15,8 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.MainActivity
-import com.iven.musicplayergo.PlayerService
-import com.iven.musicplayergo.R
 import com.iven.musicplayergo.MusicUtils
+import com.iven.musicplayergo.R
 
 
 // Notification params
@@ -31,19 +30,21 @@ const val NEXT_ACTION = "com.iven.musicplayergo.NEXT"
 const val PREV_ACTION = "com.iven.musicplayergo.PREV"
 const val CLOSE_ACTION = "com.iven.musicplayergo.CLOSE"
 
-class MusicNotificationManager(private val playerService: PlayerService) {
+class MusicNotificationManager(private val musicPlayerService: MusicPlayerService) {
 
     //notification manager/builder
     val notificationManager: NotificationManager =
-        playerService.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        musicPlayerService.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     var notificationBuilder: NotificationCompat.Builder? = null
 
     //https://gist.github.com/Gnzlt/6ddc846ef68c587d559f1e1fcd0900d3
     private fun getLargeIcon(): Bitmap {
 
-        val vectorDrawable = playerService.getDrawable(R.drawable.music_notification) as VectorDrawable
+        val vectorDrawable =
+            musicPlayerService.getDrawable(R.drawable.music_notification) as VectorDrawable
 
-        val largeIconSize = playerService.resources.getDimensionPixelSize(R.dimen.notification_large_dim)
+        val largeIconSize =
+            musicPlayerService.resources.getDimensionPixelSize(R.dimen.notification_large_dim)
         val bitmap = Bitmap.createBitmap(largeIconSize, largeIconSize, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
 
@@ -60,28 +61,39 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         val pauseIntent = Intent()
         pauseIntent.action = action
 
-        return PendingIntent.getBroadcast(playerService, REQUEST_CODE, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        return PendingIntent.getBroadcast(
+            musicPlayerService,
+            REQUEST_CODE,
+            pauseIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
     }
 
     fun createNotification(): Notification {
 
-        val song = playerService.mediaPlayerHolder!!.currentSong
+        val song = musicPlayerService.mediaPlayerHolder!!.currentSong
 
-        notificationBuilder = NotificationCompat.Builder(playerService, CHANNEL_ID)
+        notificationBuilder = NotificationCompat.Builder(musicPlayerService, CHANNEL_ID)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) createNotificationChannel()
 
-        val openPlayerIntent = Intent(playerService, MainActivity::class.java)
+        val openPlayerIntent = Intent(musicPlayerService, MainActivity::class.java)
         openPlayerIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         val contentIntent = PendingIntent.getActivity(
-            playerService, REQUEST_CODE,
+            musicPlayerService, REQUEST_CODE,
             openPlayerIntent, 0
         )
 
         val artist = song!!.artist
         val songTitle = song.title
 
-        val spanned = MusicUtils.buildSpanned(playerService.getString(R.string.playing_song, artist, songTitle))
+        val spanned = MusicUtils.buildSpanned(
+            musicPlayerService.getString(
+                R.string.playing_song,
+                artist,
+                songTitle
+            )
+        )
 
         val style = MediaStyle()
         style.setShowActionsInCompactView(0, 1, 2)
@@ -107,7 +119,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     private fun notificationAction(action: String): NotificationCompat.Action {
 
         var icon: Int =
-            if (playerService.mediaPlayerHolder!!.state != PAUSED) R.drawable.ic_pause_notification else R.drawable.ic_play_notification
+            if (musicPlayerService.mediaPlayerHolder!!.state != PAUSED) R.drawable.ic_pause_notification else R.drawable.ic_play_notification
 
         when (action) {
             PREV_ACTION -> icon = R.drawable.ic_skip_previous_notification
@@ -123,10 +135,10 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         if (notificationManager.getNotificationChannel(CHANNEL_ID) == null) {
             val notificationChannel = NotificationChannel(
                 CHANNEL_ID,
-                playerService.getString(R.string.app_name),
+                musicPlayerService.getString(R.string.app_name),
                 NotificationManager.IMPORTANCE_LOW
             )
-            notificationChannel.description = playerService.getString(R.string.app_name)
+            notificationChannel.description = musicPlayerService.getString(R.string.app_name)
             notificationChannel.enableLights(false)
             notificationChannel.enableVibration(false)
             notificationChannel.setShowBadge(false)

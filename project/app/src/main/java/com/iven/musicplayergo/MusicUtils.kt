@@ -11,8 +11,8 @@ import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.text.Html
 import android.text.Spanned
-import com.iven.musicplayergo.music.Album
-import com.iven.musicplayergo.music.Music
+import com.iven.musicplayergo.adapters.Album
+import com.iven.musicplayergo.adapters.Music
 import java.util.*
 import java.util.concurrent.TimeUnit
 
