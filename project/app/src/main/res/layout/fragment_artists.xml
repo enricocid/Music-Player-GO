@@ -14,8 +14,30 @@
         android:text="@string/artists"
         android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/main_rv"
+    <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/main_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.reddit.indicatorfastscroll.FastScrollerView
+            android:id="@+id/fastscroller"
+            android:layout_width="32dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:textAppearance="@style/IndicatorTextAppearance" />
+
+        <com.reddit.indicatorfastscroll.FastScrollerThumbView
+            android:id="@+id/fastscroller_thumb"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:textAppearance="@style/IndicatorThumbTextAppearance" />
+
+    </FrameLayout>
+
 </LinearLayout>
