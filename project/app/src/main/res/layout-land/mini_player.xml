@@ -2,10 +2,9 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/controls_container"
-    android:layout_width="match_parent"
+    android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:background="@android:color/background_light"
-    android:elevation="6dp"
+    android:layout_weight="2"
     android:orientation="vertical">
 
     <SeekBar
@@ -24,6 +23,16 @@
         android:background="@android:color/background_light"
         android:orientation="horizontal"
         android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/play_pause_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="?android:attr/actionBarItemBackground"
+            android:contentDescription="@string/app_name"
+            android:padding="8dp"
+            android:src="@drawable/ic_play" />
 
         <LinearLayout
             android:id="@+id/player_info"
@@ -69,15 +78,5 @@
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="12sp" />
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/play_pause_button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="?android:attr/actionBarItemBackground"
-            android:contentDescription="@string/app_name"
-            android:padding="8dp"
-            android:src="@drawable/ic_play" />
     </LinearLayout>
 </LinearLayout>
