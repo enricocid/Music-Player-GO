@@ -5,14 +5,18 @@ import android.annotation.TargetApi
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.tabs.TabLayout
+import com.iven.musicplayergo.music.MusicViewModel
 import kotlinx.android.synthetic.main.main_activity.*
 
 
@@ -31,6 +35,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mPager: ViewPager
     private lateinit var mTabLayout: TabLayout
+
+
+    // music shit related
+    private val mMusicViewModel: MusicViewModel by lazy {
+        ViewModelProviders.of(this).get(MusicViewModel::class.java)
+    }
 
     private fun handleOnNavigationItemSelected(itemId: Int): Fragment {
 
@@ -69,19 +79,6 @@ class MainActivity : AppCompatActivity() {
         if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED) showPermissionRationale() else setupUI()
     }
 
-    private fun setupUI() {
-        mPager = pager
-        mTabLayout = tab_layout
-        mTabLayout.setupWithViewPager(mPager)
-
-        val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
-        mPager.adapter = pagerAdapter
-        mPager.setPageTransformer(true, ZoomOutPageTransformer())
-        mTabLayout.getTabAt(0)?.setIcon(R.drawable.ic_music)
-        mTabLayout.getTabAt(1)?.setIcon(R.drawable.ic_folder)
-        mTabLayout.getTabAt(2)?.setIcon(R.drawable.ic_settings)
-    }
-
     @TargetApi(23)
     private fun checkPermission() {
 
@@ -113,6 +110,25 @@ class MainActivity : AppCompatActivity() {
                 finishAndRemoveTask()
             }
         }
+    }
+
+    private fun setupUI() {
+        mPager = pager
+        mTabLayout = tab_layout
+        mTabLayout.setupWithViewPager(mPager)
+
+        val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
+        mPager.adapter = pagerAdapter
+        mPager.setPageTransformer(true, ZoomOutPageTransformer())
+        mTabLayout.getTabAt(0)?.setIcon(R.drawable.ic_music)
+        mTabLayout.getTabAt(1)?.setIcon(R.drawable.ic_folder)
+        mTabLayout.getTabAt(2)?.setIcon(R.drawable.ic_settings)
+
+        mMusicViewModel.loadMusic(this).observe(this, Observer {
+            if (it.first.isNotEmpty()) {
+                it.first.iterator().forEach { itt -> Log.d(itt.title, itt.artist!!) }
+            }
+        })
     }
 
     /**
