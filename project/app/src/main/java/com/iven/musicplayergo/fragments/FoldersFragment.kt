@@ -1,4 +1,4 @@
-package com.iven.musicplayergo
+package com.iven.musicplayergo.fragments
 
 import android.content.Context
 import android.net.Uri
@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.iven.musicplayergo.R
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,12 +17,12 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [MusicFragment.OnFragmentInteractionListener] interface
+ * [NowPlaying.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [MusicFragment.newInstance] factory method to
+ * Use the [NowPlaying.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MusicFragment : Fragment() {
+class FoldersFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -40,7 +41,7 @@ class MusicFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_music, container, false)
+        return inflater.inflate(R.layout.fragment_folders, container, false)
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -85,12 +86,12 @@ class MusicFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment MusicFragment.
+         * @return A new instance of fragment NowPlaying.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            MusicFragment().apply {
+            FoldersFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

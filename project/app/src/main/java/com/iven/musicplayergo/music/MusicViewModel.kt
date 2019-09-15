@@ -2,7 +2,6 @@ package com.iven.musicplayergo.music
 
 import android.content.Context
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.iven.musicplayergo.musicRepo
 import kotlinx.coroutines.*
@@ -12,9 +11,6 @@ class MusicViewModel : ViewModel(), CoroutineScope {
 
     private val job = Job()
 
-    private var musicLiveData: MutableLiveData<Pair<MutableList<Music>, Map<String, Map<String?, List<Music>>>>> =
-        MutableLiveData()
-
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main + handler
 
@@ -22,13 +18,11 @@ class MusicViewModel : ViewModel(), CoroutineScope {
         Log.d("TAG", "$exception handled !")
     }
 
-    fun loadMusic(context: Context): MutableLiveData<Pair<MutableList<Music>, Map<String, Map<String?, List<Music>>>>> {
+    fun loadMusic(context: Context) {
         launch(Dispatchers.Main) {
-            val music = withContext(Dispatchers.Main) {
+            withContext(Dispatchers.Main) {
                 musicRepo.loadMusic(context)
             }
-            musicLiveData.value = music
         }
-        return musicLiveData
     }
 }

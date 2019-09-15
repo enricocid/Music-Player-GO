@@ -1,4 +1,4 @@
-package com.iven.musicplayergo
+package com.iven.musicplayergo.ui
 
 import android.view.View
 import androidx.viewpager.widget.ViewPager

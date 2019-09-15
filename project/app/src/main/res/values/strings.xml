@@ -2,9 +2,10 @@
     <string name="app_name" translatable="false">Music Player GO EX</string>
 
     <!-- Fragments titles -->
-    <string name="music">Music</string>
+    <string name="artists">Artists</string>
+    <string name="music">All songs</string>
     <string name="folders">Folders</string>
-    <string name="settings">Settings</string>
+    <string name="settings">Settings &amp; info</string>
 
     <!-- Permissions -->
     <string name="perm_rationale">Music Player GO EX needs access to your files to play music!</string>
@@ -13,5 +14,8 @@
     <string name="error_unknown">Something went wrong! :(</string>
     <string name="unknown_year" translatable="false">N&#x2F;A</string>
     <string name="error_no_music">No music found on your phone!</string>
+
+    <!-- UI titles -->
+    <string name="artist_and_album">%1s / %1s</string>
 
 </resources>

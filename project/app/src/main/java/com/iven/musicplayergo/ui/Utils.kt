@@ -1,4 +1,4 @@
-package com.iven.musicplayergo
+package com.iven.musicplayergo.ui
 
 import android.content.Context
 import android.widget.Toast

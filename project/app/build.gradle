@@ -41,17 +41,23 @@ android {
 }
 
 dependencies {
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    implementation 'androidx.annotation:annotation:1.1.0'
+    api 'com.google.android.material:material:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.preference:preference-ktx:1.1.0'
+
+    implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1"
     implementation 'androidx.media:media:1.1.0'
-    implementation 'androidx.preference:preference-ktx:1.1.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    api 'com.google.android.material:material:1.0.0'
+
     implementation 'com.afollestad.material-dialogs:core:3.1.1'
+    implementation 'com.afollestad:recyclical:1.1.0'
     implementation 'com.reddit:indicator-fast-scroll:1.1.0'
     implementation 'com.pranavpandey.android:dynamic-toasts:2.3.0'
 }

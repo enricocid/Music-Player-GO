@@ -5,18 +5,22 @@ import android.annotation.TargetApi
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.tabs.TabLayout
+import com.iven.musicplayergo.fragments.AllMusicFragment
+import com.iven.musicplayergo.fragments.ArtistsFragment
+import com.iven.musicplayergo.fragments.FoldersFragment
+import com.iven.musicplayergo.fragments.SettingsFragment
 import com.iven.musicplayergo.music.MusicViewModel
+import com.iven.musicplayergo.ui.Utils
+import com.iven.musicplayergo.ui.ZoomOutPageTransformer
 import kotlinx.android.synthetic.main.main_activity.*
 
 
@@ -24,9 +28,10 @@ import kotlinx.android.synthetic.main.main_activity.*
 class MainActivity : AppCompatActivity() {
 
     //default
-    private lateinit var mMusicFragment: Fragment
+    private lateinit var mArtistsFragment: Fragment
 
-    private lateinit var mNowPlayingFragment: Fragment
+    private lateinit var mAllMusicFragment: Fragment
+    private lateinit var mFoldersFragment: Fragment
     private lateinit var mSettingsFragment: Fragment
 
     private lateinit var mFragmentManager: FragmentManager
@@ -45,9 +50,10 @@ class MainActivity : AppCompatActivity() {
     private fun handleOnNavigationItemSelected(itemId: Int): Fragment {
 
         when (itemId) {
-            0 -> mActiveFragment = mMusicFragment
-            1 -> mActiveFragment = mNowPlayingFragment
-            2 -> mActiveFragment = mSettingsFragment
+            0 -> mActiveFragment = mArtistsFragment
+            1 -> mActiveFragment = mAllMusicFragment
+            2 -> mActiveFragment = mFoldersFragment
+            3 -> mActiveFragment = mSettingsFragment
         }
         return mActiveFragment
     }
@@ -56,10 +62,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
 
-        mMusicFragment = MusicFragment.newInstance("", "")
-        mActiveFragment = mMusicFragment
+        mArtistsFragment = ArtistsFragment.newInstance("", "")
+        mActiveFragment = mArtistsFragment
 
-        mNowPlayingFragment = NowPlayingFragment.newInstance("", "")
+        mAllMusicFragment = AllMusicFragment.newInstance("", "")
+        mFoldersFragment = FoldersFragment.newInstance("", "")
         mSettingsFragment = SettingsFragment.newInstance("", "")
 
         mFragmentManager = supportFragmentManager
@@ -120,15 +127,12 @@ class MainActivity : AppCompatActivity() {
         val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
         mPager.adapter = pagerAdapter
         mPager.setPageTransformer(true, ZoomOutPageTransformer())
-        mTabLayout.getTabAt(0)?.setIcon(R.drawable.ic_music)
-        mTabLayout.getTabAt(1)?.setIcon(R.drawable.ic_folder)
-        mTabLayout.getTabAt(2)?.setIcon(R.drawable.ic_settings)
+        mTabLayout.getTabAt(0)?.setIcon(R.drawable.ic_person)
+        mTabLayout.getTabAt(1)?.setIcon(R.drawable.ic_music)
+        mTabLayout.getTabAt(2)?.setIcon(R.drawable.ic_folder)
+        mTabLayout.getTabAt(3)?.setIcon(R.drawable.ic_settings)
 
-        mMusicViewModel.loadMusic(this).observe(this, Observer {
-            if (it.first.isNotEmpty()) {
-                it.first.iterator().forEach { itt -> Log.d(itt.title, itt.artist!!) }
-            }
-        })
+        mMusicViewModel.loadMusic(this)
     }
 
     /**
@@ -137,7 +141,7 @@ class MainActivity : AppCompatActivity() {
      */
     private inner class ScreenSlidePagerAdapter(fm: FragmentManager) :
         FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        override fun getCount(): Int = 3
+        override fun getCount(): Int = 4
 
         override fun getItem(position: Int): Fragment {
             return handleOnNavigationItemSelected(position)

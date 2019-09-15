@@ -1,6 +1,7 @@
 package com.iven.musicplayergo
 
 import android.app.Application
+import com.iven.musicplayergo.music.MusicRepo
 
 val musicRepo: MusicRepo by lazy {
     MusicPlayerGoExApp.musicRepo
