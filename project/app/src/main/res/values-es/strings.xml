@@ -1,9 +1,0 @@
-<resources>
-    <string name="no_eq">No se encontró un ecualizador!</string>
-    <string name="bad_id">¡Primero reproduce una canción!</string>
-    <string name="no_browser">No se encontró un navegador!</string>
-    <string name="perm_rationale">Para reproducir la música en tu teléfono, Music Player Go necesita acceso a tus archivos</string>
-    <string name="error_no_music">No se encontró música en tu teléfono!</string>
-    <string name="artist_info">%1d&#160;Álbumes,&#160;%2d&#160;Canciones</string>
-    <string name="volume">Volumen %1s</string>
-</resources>

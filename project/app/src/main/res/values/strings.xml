@@ -1,18 +1,9 @@
 <resources>
-    <string name="app_name" translatable="false">Music Player GO</string>
-    <string name="unknown_year" translatable="false">N&#x2F;A</string>
-    <string name="no_eq">No equalizer found!</string>
-    <string name="bad_id">Play a song first!</string>
-    <string name="artist_info">%1d&#160;Albums,&#160;%2d&#160;Tracks</string>
-    <string name="playing_song" translatable="false">&lt;b>%1s&lt;/b>&lt;br/>%2s</string>
-    <string name="no_browser">No browser found!</string>
-    <string name="perm_rationale">Music Player GO needs access to your files to play music!</string>
-    <string name="error_no_music">No music found on your phone!</string>
-    <string name="volume">Volume %1s</string>
-    <string name="error_unknown">Something went wrong! :(</string>
+    <string name="app_name" translatable="false">Music Player GO EX</string>
 
-    <!-- Preferences keys -->
-    <string name="prefs_accent" translatable="false">com.iven.musicplayergo.pref_accent</string>
-    <string name="prefs_theme" translatable="false">com.iven.musicplayergo.pref_theme</string>
-    <string name="prefs_search_bar" translatable="false">com.iven.musicplayergo.pref_search_bar</string>
+    <!-- Fragments titles -->
+    <string name="music">Music</string>
+    <string name="now_playing">Playing</string>
+    <string name="settings">Settings</string>
+
 </resources>

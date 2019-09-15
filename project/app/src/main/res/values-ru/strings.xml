@@ -1,8 +1,0 @@
-<resources>
-    <string name="no_eq">Эквалайзер не обнаружен!</string>
-    <string name="bad_id">Сначала выберите песню!</string>
-    <string name="no_browser">Браузер не найден!</string>
-    <string name="perm_rationale">Для воспроизведения музыки нужен доступ Music Player-GO к Вашим файлам</string>
-    <string name="error_no_music">Музыка отсутствует!</string>
-    <string name="artist_info">%1d&#160;Aльбомов,&#160;%2d&#160;Песен</string>
-</resources>
