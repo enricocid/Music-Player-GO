@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@android:id/progress"
+        android:gravity="center_vertical|fill_horizontal">
+        <selector>
+            <item>
+                <shape
+                android:shape="rectangle"
+                android:tint="?attr/colorPrimary">
+
+                <size android:height="4dp" />
+            </shape>
+            </item>
+        </selector>
+
+    </item>
+</layer-list>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/controls_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/background_light"
+    android:elevation="6dp"
+    android:orientation="vertical">
+
+    <SeekBar
+        android:id="@+id/seekTo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:padding="0dp"
+        android:progressDrawable="@drawable/seekbar"
+        android:splitTrack="false"
+        android:thumb="@drawable/seekbar_thumb" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/background_light"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+
+        <LinearLayout
+            android:id="@+id/player_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="2dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingStart="8dp"
+            android:paddingEnd="2dp">
+
+            <TextView
+                android:id="@+id/playing_song"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingBottom="4dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="@string/app_name"
+                android:textAlignment="textStart"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/playing_album"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="@string/versionName"
+                android:textAlignment="textStart"
+                android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/play_pause_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="?android:attr/actionBarItemBackground"
+            android:contentDescription="@string/app_name"
+            android:padding="8dp"
+            android:src="@drawable/ic_play" />
+    </LinearLayout>
+</LinearLayout>
