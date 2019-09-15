@@ -6,4 +6,12 @@
     <string name="folders">Folders</string>
     <string name="settings">Settings</string>
 
+    <!-- Permissions -->
+    <string name="perm_rationale">Music Player GO EX needs access to your files to play music!</string>
+
+    <!-- Error strings-->
+    <string name="error_unknown">Something went wrong! :(</string>
+    <string name="unknown_year" translatable="false">N&#x2F;A</string>
+    <string name="error_no_music">No music found on your phone!</string>
+
 </resources>
