@@ -40,7 +40,7 @@ class NowPlayingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_now_playing, container, false)
+        return inflater.inflate(R.layout.fragment_folders, container, false)
     }
 
     // TODO: Rename method, update argument and hook method into UI event

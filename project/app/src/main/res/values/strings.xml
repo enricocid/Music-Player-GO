@@ -3,7 +3,7 @@
 
     <!-- Fragments titles -->
     <string name="music">Music</string>
-    <string name="now_playing">Playing</string>
+    <string name="folders">Folders</string>
     <string name="settings">Settings</string>
 
 </resources>

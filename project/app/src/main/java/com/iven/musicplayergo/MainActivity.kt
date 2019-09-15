@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         mPager.adapter = pagerAdapter
         mPager.setPageTransformer(true, ZoomOutPageTransformer())
         mTabLayout.getTabAt(0)?.setIcon(R.drawable.ic_music)
-        mTabLayout.getTabAt(1)?.setIcon(R.drawable.ic_np)
+        mTabLayout.getTabAt(1)?.setIcon(R.drawable.ic_folder)
         mTabLayout.getTabAt(2)?.setIcon(R.drawable.ic_settings)
     }
 
@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         override fun getCount(): Int = 3
 
-        val icons = listOf(R.drawable.ic_music, R.drawable.ic_np, R.drawable.ic_settings)
+        val icons = listOf(R.drawable.ic_music, R.drawable.ic_folder, R.drawable.ic_settings)
 
         override fun getItem(position: Int): Fragment {
             return handleOnNavigationItemSelected(position)
