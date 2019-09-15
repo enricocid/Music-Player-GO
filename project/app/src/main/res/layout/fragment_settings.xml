@@ -9,6 +9,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:textAppearance="@android:style/TextAppearance.Material.Title"
+        android:padding="16dp"
         android:text="@string/settings" />
 
 </FrameLayout>
