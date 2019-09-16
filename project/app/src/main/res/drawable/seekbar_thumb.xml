@@ -4,6 +4,5 @@
     android:thickness="4dp"
     android:useLevel="true">
 
-    <size
-        android:height="4dp" />
+    <size android:height="4dp" />
 </shape>

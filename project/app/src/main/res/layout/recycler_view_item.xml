@@ -10,12 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
+        android:fontFamily="@font/raleway_medium"
         android:marqueeRepeatLimit="marquee_forever"
         android:scrollHorizontally="true"
         android:singleLine="true"
-        android:fontFamily="@font/raleway_medium"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        android:textColor="?android:attr/textColorPrimary" />
 
     <TextView
         android:id="@+id/subtitle"
@@ -27,7 +27,7 @@
         android:marqueeRepeatLimit="marquee_forever"
         android:scrollHorizontally="true"
         android:singleLine="true"
-        android:textColor="?android:attr/textColorSecondary"
-        android:textAppearance="@android:style/TextAppearance.Material.Small" />
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textColor="?android:attr/textColorSecondary" />
 </LinearLayout>
 

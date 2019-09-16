@@ -1,9 +1,7 @@
 <resources>
 
     <!-- LIGHT THEME -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:windowBackground">@android:color/white</item>
-        <item name="android:navigationBarColor">@android:color/black</item>
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 

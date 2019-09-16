@@ -9,10 +9,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fontFamily="@font/raleway_black"
         android:padding="16dp"
         android:text="@string/folders"
-        android:fontFamily="@font/raleway_black"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textAppearance="@android:style/TextAppearance.Material.Title" />
+        android:textAppearance="@android:style/TextAppearance.Material.Title"
+        android:textColor="?android:attr/textColorPrimary" />
 
 </FrameLayout>
