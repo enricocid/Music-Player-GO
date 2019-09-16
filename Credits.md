@@ -33,7 +33,7 @@
 
 # Big thanks to translators:
 
-- [**Adem Furkan ÖZCAN**](https://github.com/ozcanfurkan) for **Turkish** translations
+- [**Adem Furkan ÖZCAN**](https://github.com/Adem68) for **Turkish** translations
 
 - [**zmni**](https://github.com/zmni) for **Indonesian** translations
 
