@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mPager: ViewPager
     private lateinit var mTabLayout: TabLayout
 
-
     // music shit related
     private val mMusicViewModel: MusicViewModel by lazy {
         ViewModelProviders.of(this).get(MusicViewModel::class.java)
@@ -62,12 +61,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
 
-        mArtistsFragment = ArtistsFragment.newInstance("", "")
+        mArtistsFragment = ArtistsFragment.newInstance()
         mActiveFragment = mArtistsFragment
 
-        mAllMusicFragment = AllMusicFragment.newInstance("", "")
-        mFoldersFragment = FoldersFragment.newInstance("", "")
-        mSettingsFragment = SettingsFragment.newInstance("", "")
+        mAllMusicFragment = AllMusicFragment.newInstance()
+        mFoldersFragment = FoldersFragment.newInstance()
+        mSettingsFragment = SettingsFragment.newInstance()
 
         mFragmentManager = supportFragmentManager
 
