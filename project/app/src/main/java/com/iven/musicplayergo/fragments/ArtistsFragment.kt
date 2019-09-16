@@ -139,6 +139,18 @@ class ArtistsFragment : Fragment() {
                     mIndicatorFastScrollThumb.layoutParams = newLayoutParams
                 }
                 mIndicatorFastScrollThumb.setupWithFastScroller(mIndicatorFastScrollerView)
+
+                mIndicatorFastScrollerView.useDefaultScroller = false
+                mIndicatorFastScrollerView.itemIndicatorSelectedCallbacks += object :
+                    FastScrollerView.ItemIndicatorSelectedCallback {
+                    override fun onItemIndicatorSelected(
+                        indicator: FastScrollItemIndicator,
+                        indicatorCenterY: Int,
+                        itemPosition: Int
+                    ) {
+                        mArtistsRecyclerView.scrollToPosition(itemPosition)
+                    }
+                }
             } else {
                 mIndicatorFastScrollerView.visibility = View.GONE
             }
