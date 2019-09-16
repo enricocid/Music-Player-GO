@@ -58,7 +58,7 @@ class ArtistsFragment : Fragment() {
             mArtistsRecyclerView.setup {
                 withDataSource(dataSource)
                 withItem<String, ArtistsViewHolder>(R.layout.artist_item) {
-                    onBind(::ArtistsViewHolder) { index, item ->
+                    onBind(::ArtistsViewHolder) { _, item ->
                         // PersonViewHolder is `this` here
                         name.text = item
                         name.isSelected = true

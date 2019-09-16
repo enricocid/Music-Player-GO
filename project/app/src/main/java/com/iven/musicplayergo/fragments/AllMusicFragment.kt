@@ -10,7 +10,6 @@ import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.fragments.AllMusicFragment.Companion.newInstance
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.musicRepo
 import com.iven.musicplayergo.ui.AllMusicHolder
@@ -41,7 +40,7 @@ class AllMusicFragment : Fragment() {
             songs_rv.setup {
                 withDataSource(dataSource)
                 withItem<Music, AllMusicHolder>(R.layout.song_item) {
-                    onBind(::AllMusicHolder) { index, item ->
+                    onBind(::AllMusicHolder) { _, item ->
                         // PersonViewHolder is `this` here
                         songTitle.text = item.title
                         artistName.text =
