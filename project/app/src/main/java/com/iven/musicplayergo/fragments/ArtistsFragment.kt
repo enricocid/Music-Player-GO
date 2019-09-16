@@ -59,7 +59,7 @@ class ArtistsFragment : Fragment() {
                 withDataSource(dataSource)
                 withItem<String, ArtistsViewHolder>(R.layout.artist_item) {
                     onBind(::ArtistsViewHolder) { _, item ->
-                        // PersonViewHolder is `this` here
+                        // ArtistsViewHolder is `this` here
                         name.text = item
                         name.isSelected = true
                     }

@@ -41,7 +41,7 @@ class AllMusicFragment : Fragment() {
                 withDataSource(dataSource)
                 withItem<Music, AllMusicHolder>(R.layout.song_item) {
                     onBind(::AllMusicHolder) { _, item ->
-                        // PersonViewHolder is `this` here
+                        // AllMusicHolder is `this` here
                         songTitle.text = item.title
                         artistName.text =
                             getString(R.string.artist_and_album, item.artist, item.album)
