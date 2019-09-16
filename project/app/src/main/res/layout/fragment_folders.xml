@@ -11,6 +11,8 @@
         android:layout_height="match_parent"
         android:padding="16dp"
         android:text="@string/folders"
+        android:fontFamily="@font/raleway_black"
+        android:textColor="?android:attr/textColorPrimary"
         android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
 </FrameLayout>

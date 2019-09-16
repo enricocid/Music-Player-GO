@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="@string/artists"
+        android:fontFamily="@font/raleway_black"
+        android:textColor="?android:attr/textColorPrimary"
         android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
     <FrameLayout

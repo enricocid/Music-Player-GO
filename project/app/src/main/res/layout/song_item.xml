@@ -13,7 +13,8 @@
         android:marqueeRepeatLimit="marquee_forever"
         android:scrollHorizontally="true"
         android:singleLine="true"
-        android:text="CACCA"
+        android:fontFamily="@font/raleway_medium"
+        android:textColor="?android:attr/textColorPrimary"
         android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
     <TextView
@@ -22,10 +23,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:ellipsize="marquee"
+        android:fontFamily="@font/cabin"
         android:marqueeRepeatLimit="marquee_forever"
         android:scrollHorizontally="true"
         android:singleLine="true"
-        android:text="CACCA"
+        android:textColor="?android:attr/textColorSecondary"
         android:textAppearance="@android:style/TextAppearance.Material.Small" />
 </LinearLayout>
 
