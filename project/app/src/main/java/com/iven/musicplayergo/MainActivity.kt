@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.afollestad.materialdialogs.MaterialDialog
@@ -59,14 +60,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-        mArtistsFragment = ArtistsFragment.newInstance()
-        mActiveFragment = mArtistsFragment
-
-        mAllMusicFragment = AllMusicFragment.newInstance()
-        mFoldersFragment = FoldersFragment.newInstance()
-        mSettingsFragment = SettingsFragment.newInstance()
 
         mFragmentManager = supportFragmentManager
 
@@ -119,19 +112,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
-        mPager = pager
-        mTabLayout = tab_layout
-        mTabLayout.setupWithViewPager(mPager)
 
-        val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
-        mPager.adapter = pagerAdapter
-        mPager.setPageTransformer(true, ZoomOutPageTransformer())
-        mTabLayout.getTabAt(0)?.setIcon(R.drawable.ic_person)
-        mTabLayout.getTabAt(1)?.setIcon(R.drawable.ic_music)
-        mTabLayout.getTabAt(2)?.setIcon(R.drawable.ic_folder)
-        mTabLayout.getTabAt(3)?.setIcon(R.drawable.ic_settings)
+        mMusicViewModel.loadMusic(this).observe(this, Observer { hasLoaded ->
 
-        mMusicViewModel.loadMusic(this)
+            if (hasLoaded) {
+
+                mArtistsFragment = ArtistsFragment.newInstance()
+                mActiveFragment = mArtistsFragment
+
+                mAllMusicFragment = AllMusicFragment.newInstance()
+                mFoldersFragment = FoldersFragment.newInstance()
+                mSettingsFragment = SettingsFragment.newInstance()
+
+                mPager = pager
+                mTabLayout = tab_layout
+                mTabLayout.setupWithViewPager(mPager)
+
+                val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
+                mPager.adapter = pagerAdapter
+                mPager.setPageTransformer(true, ZoomOutPageTransformer())
+                mTabLayout.getTabAt(0)?.setIcon(R.drawable.ic_person)
+                mTabLayout.getTabAt(1)?.setIcon(R.drawable.ic_music)
+                mTabLayout.getTabAt(2)?.setIcon(R.drawable.ic_folder)
+                mTabLayout.getTabAt(3)?.setIcon(R.drawable.ic_settings)
+            }
+        })
     }
 
     /**
