@@ -14,8 +14,9 @@ import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.musicRepo
-import com.iven.musicplayergo.ui.ArtistsViewHolder
+import com.iven.musicplayergo.ui.GenericViewHolder
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerThumbView
 import com.reddit.indicatorfastscroll.FastScrollerView
@@ -57,11 +58,18 @@ class ArtistsFragment : Fragment() {
             // setup{} is an extension method on RecyclerView
             mArtistsRecyclerView.setup {
                 withDataSource(dataSource)
-                withItem<String, ArtistsViewHolder>(R.layout.artist_item) {
-                    onBind(::ArtistsViewHolder) { _, item ->
+                withItem<String, GenericViewHolder>(R.layout.recycler_view_item) {
+                    onBind(::GenericViewHolder) { _, item ->
                         // ArtistsViewHolder is `this` here
-                        name.text = item
-                        name.isSelected = true
+                        title.text = item
+                        val albums = musicRepo.allCategorizedMusic.getValue(item)
+                        subtitle.text =
+                            getString(
+                                R.string.artist_count,
+                                albums.keys.size,
+                                MusicUtils.getArtistSongsCount(albums)
+                            )
+                        title.isSelected = true
                     }
                     onClick { index ->
                         // item is a `val` in `this` here

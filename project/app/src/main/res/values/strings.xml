@@ -16,6 +16,7 @@
     <string name="error_no_music">No music found on your phone!</string>
 
     <!-- UI titles -->
-    <string name="artist_and_album">%1s / %1s</string>
+    <string name="artist_and_album">%1s&#160;-&#160;%2s</string>
+    <string name="artist_count">%1d&#160;Albums&#160;-&#160;%2d&#160;Tracks</string>
 
 </resources>

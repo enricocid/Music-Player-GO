@@ -12,7 +12,7 @@ import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.musicRepo
-import com.iven.musicplayergo.ui.AllMusicHolder
+import com.iven.musicplayergo.ui.GenericViewHolder
 import kotlinx.android.synthetic.main.fragment_all_music.*
 
 /**
@@ -39,14 +39,14 @@ class AllMusicFragment : Fragment() {
             // setup{} is an extension method on RecyclerView
             songs_rv.setup {
                 withDataSource(dataSource)
-                withItem<Music, AllMusicHolder>(R.layout.song_item) {
-                    onBind(::AllMusicHolder) { _, item ->
-                        // AllMusicHolder is `this` here
-                        songTitle.text = item.title
-                        artistName.text =
+                withItem<Music, GenericViewHolder>(R.layout.recycler_view_item) {
+                    onBind(::GenericViewHolder) { _, item ->
+                        // GenericHolder is `this` here
+                        title.text = item.title
+                        subtitle.text =
                             getString(R.string.artist_and_album, item.artist, item.album)
-                        songTitle.isSelected = true
-                        artistName.isSelected = true
+                        title.isSelected = true
+                        subtitle.isSelected = true
                     }
                     onClick { index ->
                         // item is a `val` in `this` here
