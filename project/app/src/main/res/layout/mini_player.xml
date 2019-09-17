@@ -38,6 +38,7 @@
                 android:text="@string/app_name"
                 android:textAlignment="textStart"
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="14sp" />
 
             <TextView
@@ -52,6 +53,7 @@
                 android:text="@string/versionName"
                 android:textAlignment="textStart"
                 android:textAppearance="@android:style/TextAppearance.Material.Small"
+                android:textColor="?android:attr/textColorSecondary"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -68,13 +70,13 @@
 
     <ProgressBar
         android:id="@+id/songProgress"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:clickable="false"
-        style="?android:attr/progressBarStyleHorizontal"
         android:indeterminate="false"
         android:indeterminateTint="?attr/colorPrimary"
-        android:progressBackgroundTint="?attr/colorSurface"
         android:max="100"
-        android:progress="50" />
+        android:progress="50"
+        android:progressBackgroundTint="?attr/colorSurface" />
 </LinearLayout>

@@ -75,13 +75,13 @@
 
     <ProgressBar
         android:id="@+id/songProgress"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:clickable="false"
-        style="?android:attr/progressBarStyleHorizontal"
         android:indeterminate="false"
         android:indeterminateTint="?attr/colorPrimary"
-        android:progressBackgroundTint="?attr/colorSurface"
         android:max="100"
-        android:progress="50" />
+        android:progress="50"
+        android:progressBackgroundTint="?attr/colorSurface" />
 </LinearLayout>
