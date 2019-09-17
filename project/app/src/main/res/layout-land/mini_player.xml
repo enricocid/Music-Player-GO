@@ -9,16 +9,6 @@
     android:elevation="6dp"
     android:orientation="vertical">
 
-    <SeekBar
-        android:id="@+id/seekTo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="false"
-        android:padding="0dp"
-        android:progressDrawable="@drawable/seekbar"
-        android:splitTrack="false"
-        android:thumb="@drawable/seekbar_thumb" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -82,4 +72,16 @@
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/songProgress"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:clickable="false"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:indeterminate="false"
+        android:indeterminateTint="?attr/colorPrimary"
+        android:progressBackgroundTint="?attr/colorSurface"
+        android:max="100"
+        android:progress="50" />
 </LinearLayout>
