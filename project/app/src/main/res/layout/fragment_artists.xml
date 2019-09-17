@@ -13,8 +13,7 @@
         android:fontFamily="@font/raleway_black"
         android:padding="16dp"
         android:text="@string/artists"
-        android:textAppearance="@android:style/TextAppearance.Material.Title"
-        android:textColor="?android:attr/textColorPrimary" />
+        android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
     <FrameLayout
         android:id="@+id/container"
@@ -32,6 +31,7 @@
             android:layout_width="32dp"
             android:layout_height="match_parent"
             android:layout_gravity="end"
+            android:textColor="?attr/colorAccent"
             android:textAppearance="@style/IndicatorTextAppearance" />
 
         <com.reddit.indicatorfastscroll.FastScrollerThumbView

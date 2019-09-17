@@ -12,7 +12,6 @@
         android:fontFamily="@font/raleway_black"
         android:padding="16dp"
         android:text="@string/folders"
-        android:textAppearance="@android:style/TextAppearance.Material.Title"
-        android:textColor="?android:attr/textColorPrimary" />
+        android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
 </FrameLayout>
