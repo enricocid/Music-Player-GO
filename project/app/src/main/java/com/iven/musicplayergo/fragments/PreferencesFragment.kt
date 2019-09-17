@@ -17,15 +17,19 @@ class PreferencesFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
 
-        if (context != null) {
+        if (activity != null) {
             val themePreference = findPreference<ListPreference>("theme_pref")
             themePreference?.setOnPreferenceChangeListener { _, newValue ->
                 val themeOption = newValue as String
-                ThemeHelper.applyTheme(context!!, themeOption)
+                ThemeHelper.applyTheme(activity!!, themeOption)
                 return@setOnPreferenceChangeListener true
             }
 
             val accentPreference = findPreference<Preference>("accent_pref")
+            accentPreference?.summary = String.format(
+                getString(R.string.hex),
+                0xFFFFFF and musicPlayerGoExAppPreferences.accent
+            )
             accentPreference?.setOnPreferenceClickListener {
                 showAccentDialog(it)
                 return@setOnPreferenceClickListener true
@@ -34,8 +38,8 @@ class PreferencesFragment : PreferenceFragmentCompat() {
     }
 
     private fun showAccentDialog(accentPreference: Preference) {
-        if (context != null) {
-            MaterialDialog(context!!).show {
+        if (activity != null) {
+            MaterialDialog(activity!!).show {
                 cornerRadius(res = R.dimen.md_corner_radius)
                 title(text = accentPreference.title.toString())
                 customListAdapter(AccentsAdapter(activity!!))

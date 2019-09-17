@@ -36,4 +36,5 @@
     <string name="accent_pref" translatable="false">accent_pref</string>
     <string name="accent_pref_title" translatable="false">Accent</string>
 
+    <string name="hex" translatable="false">&#35;%06X</string>
 </resources>
