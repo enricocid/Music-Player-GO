@@ -20,6 +20,9 @@
     <string name="artist_count">%1d&#160;Albums&#160;-&#160;%2d&#160;Tracks</string>
 
     <!-- Preferences -->
+
+    <string name="category_theme">Theme</string>
+
     <string name="theme_pref_light_title">Light</string>
     <string name="theme_pref_dark_title">Dark</string>
     <string name="theme_pref_auto_title">Automatic</string>
