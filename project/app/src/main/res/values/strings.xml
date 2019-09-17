@@ -21,16 +21,19 @@
 
     <!-- Preferences -->
 
-    <string name="category_theme">Theme</string>
+    <string name="category_appearance">Appearance</string>
 
+    <string name="theme_pref" translatable="false">theme_pref</string>
+    <string name="theme_pref_title" translatable="false">Theme</string>
     <string name="theme_pref_light_title">Light</string>
     <string name="theme_pref_dark_title">Dark</string>
     <string name="theme_pref_auto_title">Automatic</string>
 
-    <string name="theme_pref" translatable="false">theme_pref</string>
-    <string name="accent_pref" translatable="false">accent_pref</string>
     <string name="theme_pref_light" translatable="false">theme_pref_light</string>
     <string name="theme_pref_dark" translatable="false">theme_pref_dark</string>
     <string name="theme_pref_auto" translatable="false">theme_pref_auto</string>
+
+    <string name="accent_pref" translatable="false">accent_pref</string>
+    <string name="accent_pref_title" translatable="false">Accent</string>
 
 </resources>

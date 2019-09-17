@@ -17,24 +17,22 @@
 <androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        app:title="@string/category_theme">
+        app:title="@string/category_appearance">
 
         <ListPreference
             app:defaultValue="@string/theme_pref_light"
-            app:dialogTitle="Choose theme"
+            app:dialogTitle="@string/theme_pref_title"
             app:entries="@array/themeListArray"
             app:entryValues="@array/themeEntryArray"
             app:key="@string/theme_pref"
-            app:title="Choose theme"
+            app:title="@string/theme_pref_title"
             app:useSimpleSummaryProvider="true" />
 
         <Preference
-            app:defaultValue="default"
-            app:dialogTitle="Choose accent"
+            app:dialogTitle="@string/accent_pref_title"
             app:icon="@drawable/ic_colorize"
             app:key="@string/accent_pref"
-            app:title="Choose accent"
+            app:title="@string/accent_pref_title"
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
-
 </androidx.preference.PreferenceScreen>
