@@ -3,15 +3,15 @@
 <resources>
 
     <string-array name="themeListArray">
-        <item>Light</item>
-        <item>Dark</item>
-        <item>Set by Battery Saver</item>
+        <item>@string/theme_pref_light_title</item>
+        <item>@string/theme_pref_dark_title</item>
+        <item>@string/theme_pref_auto_title</item>
     </string-array>
 
     <string-array name="themeEntryArray">
-        <item>light</item>
-        <item>dark</item>
-        <item>default</item>
+        <item>@string/theme_pref_light</item>
+        <item>@string/theme_pref_dark</item>
+        <item>@string/theme_pref_auto</item>
     </string-array>
 
 </resources>

@@ -27,8 +27,10 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
             activity!!.supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_layout,
-                    PreferencesFragment.newInstance(), PreferencesFragment.TAG)
+                .replace(
+                    R.id.fragment_layout,
+                    PreferencesFragment.newInstance(), PreferencesFragment.TAG
+                )
                 .commit()
         }
     }

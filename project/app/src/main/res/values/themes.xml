@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BaseTheme.Red" parent="BaseTheme">
+        <item name="colorAccent">@color/red</item>
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
+    </style>
+
+    <style name="BaseTheme.Pink" parent="BaseTheme">
+        <item name="colorAccent">@color/pink</item>
+        <item name="colorPrimary">@color/pink</item>
+        <item name="colorPrimaryDark">@color/pinkPrimaryDark</item>
+    </style>
+
+    <style name="BaseTheme.Purple" parent="BaseTheme">
+        <item name="colorAccent">@color/purple</item>
+        <item name="colorPrimary">@color/purple</item>
+        <item name="colorPrimaryDark">@color/purplePrimaryDark</item>
+    </style>
+
+    <style name="BaseTheme.DeepPurple" parent="BaseTheme">
+        <item name="colorAccent">@color/deepPurple</item>
+        <item name="colorPrimary">@color/deepPurple</item>
+        <item name="colorPrimaryDark">@color/deepPurplePrimaryDark</item>
+    </style>
+
+    <style name="BaseTheme.Indigo" parent="BaseTheme">
+        <item name="colorAccent">@color/indigo</item>
+        <item name="colorPrimary">@color/indigo</item>
+        <item name="colorPrimaryDark">@color/indigoPrimaryDark</item>
+    </style>
+
+    <style name="BaseTheme.Blue" parent="BaseTheme">
+        <item name="colorAccent">@color/blue</item>
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+    </style>
+
+    <style name="BaseTheme.LightBlue" parent="BaseTheme">
+        <item name="colorAccent">@color/lightBlue</item>
+        <item name="colorPrimary">@color/lightBlue</item>
+        <item name="colorPrimaryDark">@color/lightBluePrimaryDark</item>
+    </style>
+
+    <style name="BaseTheme.Cyan" parent="BaseTheme">
+        <item name="colorAccent">@color/cyan</item>
+        <item name="colorPrimary">@color/cyan</item>
+        <item name="colorPrimaryDark">@color/cyanPrimaryDark</item>
+    </style>
+
+    <style name="BaseTheme.Teal" parent="BaseTheme">
+        <item name="colorAccent">@color/teal</item>
+        <item name="colorPrimary">@color/teal</item>
+        <item name="colorPrimaryDark">@color/tealPrimaryDark</item>
+    </style>
+
+    <style name="BaseTheme.Green" parent="BaseTheme">
+        <item name="colorAccent">@color/green</item>
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
+    </style>
+
+    <style name="BaseTheme.LightGreen" parent="BaseTheme">
+        <item name="colorAccent">@color/lightGreen</item>
+        <item name="colorPrimary">@color/lightGreen</item>
+        <item name="colorPrimaryDark">@color/lightGreenPrimaryDark</item>
+    </style>
+
+    <style name="BaseTheme.Lime" parent="BaseTheme">
+        <item name="colorAccent">@color/lime</item>
+        <item name="colorPrimary">@color/lime</item>
+        <item name="colorPrimaryDark">@color/limePrimaryDark</item>
+    </style>
+
+    <style name="BaseTheme.Yellow" parent="BaseTheme">
+        <item name="colorAccent">@color/yellow</item>
+        <item name="colorPrimary">@color/yellow</item>
+        <item name="colorPrimaryDark">@color/yellowPrimaryDark</item>
+    </style>
+
+    <style name="BaseTheme.Amber" parent="BaseTheme">
+        <item name="colorAccent">@color/amber</item>
+        <item name="colorPrimary">@color/amber</item>
+        <item name="colorPrimaryDark">@color/amberPrimaryDark</item>
+    </style>
+
+    <style name="BaseTheme.Orange" parent="BaseTheme">
+        <item name="colorAccent">@color/orange</item>
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorPrimaryDark">@color/orangePrimaryDark</item>
+    </style>
+
+    <style name="BaseTheme.DeepOrange" parent="BaseTheme">
+        <item name="colorAccent">@color/deepOrange</item>
+        <item name="colorPrimary">@color/deepOrangePrimaryDark</item>
+    </style>
+
+    <style name="BaseTheme.Brown" parent="BaseTheme">
+        <item name="colorAccent">@color/brown</item>
+        <item name="colorPrimary">@color/brown</item>
+        <item name="colorPrimaryDark">@color/brownPrimaryDark</item>
+    </style>
+
+    <style name="BaseTheme.Grey" parent="BaseTheme">
+        <item name="colorAccent">@color/grey</item>
+        <item name="colorPrimary">@color/grey</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+    </style>
+
+    <style name="BaseTheme.BlueGrey" parent="BaseTheme">
+        <item name="colorAccent">@color/blueGrey</item>
+        <item name="colorPrimary">@color/blueGrey</item>
+        <item name="colorPrimaryDark">@color/blueGreyPrimaryDark</item>
+    </style>
+</resources>

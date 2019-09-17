@@ -1,8 +1,9 @@
 <resources>
 
     <!-- LIGHT THEME -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="BaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="colorPrimaryDark">?attr/colorOnSecondary</item>
     </style>
 
     <!-- This will set the fade in animation on all the activities by default -->

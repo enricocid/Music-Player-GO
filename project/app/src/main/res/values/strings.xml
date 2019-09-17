@@ -19,4 +19,15 @@
     <string name="artist_and_album">%1s&#160;-&#160;%2s</string>
     <string name="artist_count">%1d&#160;Albums&#160;-&#160;%2d&#160;Tracks</string>
 
+    <!-- Preferences -->
+    <string name="theme_pref_light_title">Light</string>
+    <string name="theme_pref_dark_title">Dark</string>
+    <string name="theme_pref_auto_title">Automatic</string>
+
+    <string name="theme_pref" translatable="false">theme_pref</string>
+    <string name="accent_pref" translatable="false">accent_pref</string>
+    <string name="theme_pref_light" translatable="false">theme_pref_light</string>
+    <string name="theme_pref_dark" translatable="false">theme_pref_dark</string>
+    <string name="theme_pref_auto" translatable="false">theme_pref_auto</string>
+
 </resources>

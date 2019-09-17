@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.tabs.TabLayout
@@ -26,7 +25,6 @@ import com.iven.musicplayergo.ui.Utils
 import com.iven.musicplayergo.ui.ZoomOutPageTransformer
 import kotlinx.android.synthetic.main.main_activity.*
 
-@Suppress("UNUSED_PARAMETER")
 class MainActivity : AppCompatActivity() {
 
     //default
@@ -60,10 +58,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val themePref = sharedPreferences.getString("themePref", ThemeHelper.DEFAULT_MODE)
-        ThemeHelper.applyTheme(themePref!!)
 
+        ThemeHelper.applyTheme(this, musicPlayerGoExAppPreferences.theme)
+
+        setTheme(ThemeHelper.getAccent(musicPlayerGoExAppPreferences.accent).first)
 
         mFragmentManager = supportFragmentManager
 
