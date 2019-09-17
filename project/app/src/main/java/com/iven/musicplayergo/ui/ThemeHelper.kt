@@ -65,10 +65,14 @@ object ThemeHelper {
     //finds theme and its position in accents array and returns a pair(theme, position)
     @JvmStatic
     fun getAccent(accent: Int): Pair<Int, Int> {
-        val pair = accents.find { pair -> pair.first == accent }
-        val theme = pair!!.second
-        val position = accents.indexOf(pair)
-        return Pair(theme, position)
+        return try {
+            val pair = accents.find { pair -> pair.first == accent }
+            val theme = pair!!.second
+            val position = accents.indexOf(pair)
+            Pair(theme, position)
+        } catch (e: Exception) {
+            Pair(R.style.BaseTheme_DeepPurple, 3)
+        }
     }
 
     @JvmStatic
