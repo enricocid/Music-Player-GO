@@ -37,9 +37,8 @@
                 android:singleLine="true"
                 android:text="@string/app_name"
                 android:textAlignment="textStart"
-                android:textAppearance="@android:style/TextAppearance.Material.Medium"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textSize="14sp" />
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textColor="?android:attr/textColorPrimary" />
 
             <TextView
                 android:id="@+id/playing_album"
@@ -53,8 +52,7 @@
                 android:text="@string/versionName"
                 android:textAlignment="textStart"
                 android:textAppearance="@android:style/TextAppearance.Material.Small"
-                android:textColor="?android:attr/textColorSecondary"
-                android:textSize="12sp" />
+                android:textColor="?android:attr/textColorSecondary" />
         </LinearLayout>
 
         <ImageView

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fontFamily="@font/raleway_black"
-        android:padding="16dp"
+        android:padding="@dimen/md_radius"
         android:text="@string/folders"
         android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
