@@ -60,8 +60,9 @@ class ArtistsFragment : Fragment() {
                 withDataSource(dataSource)
                 withItem<String, GenericViewHolder>(R.layout.recycler_view_item) {
                     onBind(::GenericViewHolder) { _, item ->
-                        // ArtistsViewHolder is `this` here
+                        // GenericViewHolder is `this` here
                         title.text = item
+                        title.isSelected = true
                         val albums = musicRepo.allCategorizedMusic.getValue(item)
                         subtitle.text =
                             getString(
@@ -69,7 +70,7 @@ class ArtistsFragment : Fragment() {
                                 albums.keys.size,
                                 MusicUtils.getArtistSongsCount(albums)
                             )
-                        title.isSelected = true
+                        subtitle.isSelected = true
                     }
                     onClick { index ->
                         // item is a `val` in `this` here

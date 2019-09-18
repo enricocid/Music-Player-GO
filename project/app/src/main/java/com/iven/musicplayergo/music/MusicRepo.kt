@@ -5,14 +5,17 @@ import android.content.Context
 import android.provider.MediaStore
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.ui.Utils
+import java.io.File
 
 class MusicRepo {
 
-    val allSongsUnfiltered: MutableList<Music> = mutableListOf()
+    val allSongsUnfiltered = mutableListOf<Music>()
     lateinit var allSongsFiltered: MutableList<Music>
 
     //keys: artist || keys: album, value: album songs
     val allCategorizedMusic = hashMapOf<String, Map<String?, List<Music>>>()
+
+    lateinit var allCategorizedMusicByFolder: Map<String, List<Music>>
 
     //Build a Map with key: artist, value: Map with key: album, value: songs
     private fun categorizeMusicByArtistAndAlbums(music: List<Music>) {
@@ -22,6 +25,15 @@ class MusicRepo {
         musicSortedByArtist.keys.iterator().forEach {
             val albums = musicSortedByArtist[it]?.groupBy { song -> song.album }
             allCategorizedMusic[it.toString()] = albums!!
+        }
+    }
+
+    //Build a Map with key: directory name, value: songs list
+    private fun categorizeMusicByFolder(music: List<Music>) {
+
+        allCategorizedMusicByFolder = music.groupBy {
+            val file = File(it.path!!).parentFile
+            file!!.name
         }
     }
 
@@ -45,6 +57,7 @@ class MusicRepo {
                 val album = musicCursor.getColumnIndex(MediaStore.Audio.AudioColumns.ALBUM)
                 val path = musicCursor.getColumnIndex(MediaStore.Audio.AudioColumns.DATA)
                 val albumId = musicCursor.getColumnIndex(MediaStore.Audio.AudioColumns.ALBUM_ID)
+
                 // Now loop through the music files
                 do {
                     val audioArtist = musicCursor.getString(artist)
@@ -80,6 +93,8 @@ class MusicRepo {
                     .toMutableList()
 
             categorizeMusicByArtistAndAlbums(allSongsFiltered)
+
+            categorizeMusicByFolder(allSongsFiltered)
 
         } catch (e: Exception) {
             Utils.makeUnknownErrorToast(

@@ -41,11 +41,11 @@ class AllMusicFragment : Fragment() {
                 withDataSource(dataSource)
                 withItem<Music, GenericViewHolder>(R.layout.recycler_view_item) {
                     onBind(::GenericViewHolder) { _, item ->
-                        // GenericHolder is `this` here
+                        // GenericViewHolder is `this` here
                         title.text = item.title
+                        title.isSelected = true
                         subtitle.text =
                             getString(R.string.artist_and_album, item.artist, item.album)
-                        title.isSelected = true
                         subtitle.isSelected = true
                     }
                     onClick { index ->
