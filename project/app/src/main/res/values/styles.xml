@@ -4,6 +4,7 @@
     <style name="BaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <item name="colorPrimaryDark">?attr/colorOnSecondary</item>
+        <item name="android:fontFamily">@font/raleway</item>
     </style>
 
     <!-- This will set the fade in animation on all the activities by default -->
@@ -15,7 +16,6 @@
     <!-- Indicator text style -->
     <style name="IndicatorTextAppearance" parent="@android:style/TextAppearance.Material">
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">@font/raleway</item>
     </style>
 
     <!-- Indicator thumb text style -->
