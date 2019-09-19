@@ -7,7 +7,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.ui.Utils
 import java.io.File
 
-class MusicRepo {
+class MusicLibrary {
 
     val allSongsUnfiltered = mutableListOf<Music>()
     lateinit var allSongsFiltered: MutableList<Music>

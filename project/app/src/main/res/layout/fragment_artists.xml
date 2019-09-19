@@ -20,7 +20,7 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/main_rv"
+            android:id="@+id/artists_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:overScrollMode="never" />

@@ -40,7 +40,7 @@ class PreferencesFragment : PreferenceFragmentCompat() {
     private fun showAccentDialog(accentPreference: Preference) {
         if (activity != null) {
             MaterialDialog(activity!!).show {
-                cornerRadius(res = R.dimen.md_corner_radius)
+                cornerRadius(res = R.dimen.md_radius)
                 title(text = accentPreference.title.toString())
                 customListAdapter(AccentsAdapter(activity!!))
                 getRecyclerView().scrollToPosition(

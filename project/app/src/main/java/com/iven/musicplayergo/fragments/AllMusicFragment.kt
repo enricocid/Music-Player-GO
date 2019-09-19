@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,8 +12,9 @@ import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.music.Music
-import com.iven.musicplayergo.musicRepo
+import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.ui.GenericViewHolder
+import com.iven.musicplayergo.ui.SongsSheetInterface
 import kotlinx.android.synthetic.main.fragment_all_music.*
 
 /**
@@ -21,6 +23,19 @@ import kotlinx.android.synthetic.main.fragment_all_music.*
  * create an instance of this fragment.
  */
 class AllMusicFragment : Fragment() {
+
+    lateinit var mSongsSheetInterface: SongsSheetInterface
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mSongsSheetInterface = activity as SongsSheetInterface
+        } catch (e: ClassCastException) {
+            throw ClassCastException(activity.toString() + " must implement MyInterface ")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,9 +50,10 @@ class AllMusicFragment : Fragment() {
 
         if (context != null) {
 
-            val dataSource = dataSourceOf(musicRepo.allSongsFiltered)
+            val dataSource = dataSourceOf(musicLibrary.allSongsFiltered)
             // setup{} is an extension method on RecyclerView
-            songs_rv.setup {
+            all_music_rv.setup {
+                // item is a `val` in `this` here
                 withDataSource(dataSource)
                 withItem<Music, GenericViewHolder>(R.layout.recycler_view_item) {
                     onBind(::GenericViewHolder) { _, item ->
@@ -48,13 +64,14 @@ class AllMusicFragment : Fragment() {
                             getString(R.string.artist_and_album, item.artist, item.album)
                         subtitle.isSelected = true
                     }
-                    onClick { index ->
-                        // item is a `val` in `this` here
-                        Log.d("yo", "Clicked $index: ${item}")
+
+                    onClick { _ ->
+                        mSongsSheetInterface.onSongSelected(item)
                     }
+
                     onLongClick { index ->
                         // item is a `val` in `this` here
-                        Log.d("yo2", "Clicked $index: ${item}")
+                        Log.d("doSomething", "Clicked $index: ${item}")
                     }
                 }
             }

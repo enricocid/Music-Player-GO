@@ -1,10 +1,10 @@
 package com.iven.musicplayergo
 
 import android.app.Application
-import com.iven.musicplayergo.music.MusicRepo
+import com.iven.musicplayergo.music.MusicLibrary
 
-val musicRepo: MusicRepo by lazy {
-    MusicPlayerGoExApp.musicRepo
+val musicLibrary: MusicLibrary by lazy {
+    MusicPlayerGoExApp.musicLibrary
 }
 
 val musicPlayerGoExAppPreferences: MusicPlayerGoExPreferences by lazy {
@@ -14,12 +14,12 @@ val musicPlayerGoExAppPreferences: MusicPlayerGoExPreferences by lazy {
 class MusicPlayerGoExApp : Application() {
     companion object {
         lateinit var prefs: MusicPlayerGoExPreferences
-        lateinit var musicRepo: MusicRepo
+        lateinit var musicLibrary: MusicLibrary
     }
 
     override fun onCreate() {
         prefs = MusicPlayerGoExPreferences(applicationContext)
-        musicRepo = MusicRepo()
+        musicLibrary = MusicLibrary()
         super.onCreate()
     }
 }

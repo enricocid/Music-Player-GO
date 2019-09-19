@@ -1,6 +1,7 @@
 package com.iven.musicplayergo.fragments
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,12 +16,14 @@ import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.music.MusicUtils
-import com.iven.musicplayergo.musicRepo
+import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.ui.GenericViewHolder
+import com.iven.musicplayergo.ui.SongsSheetInterface
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerThumbView
 import com.reddit.indicatorfastscroll.FastScrollerView
 import kotlinx.android.synthetic.main.fragment_artists.*
+import kotlinx.android.synthetic.main.recycler_view_item.*
 
 /**
  * A simple [Fragment] subclass.
@@ -36,6 +39,21 @@ class ArtistsFragment : Fragment() {
     private lateinit var mIndicatorFastScrollerView: FastScrollerView
     private lateinit var mIndicatorFastScrollThumb: FastScrollerThumbView
 
+    private lateinit var mSongsSheetInterface: SongsSheetInterface
+
+    private var mSelectedArtist = ""
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mSongsSheetInterface = activity as SongsSheetInterface
+        } catch (e: ClassCastException) {
+            throw ClassCastException(activity.toString() + " must implement MyInterface ")
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,36 +67,55 @@ class ArtistsFragment : Fragment() {
 
         if (context != null) {
 
-            mArtistsRecyclerView = main_rv
+            mArtistsRecyclerView = artists_rv
 
-            mArtists = musicRepo.allCategorizedMusic.keys.toMutableList()
+            mArtists = musicLibrary.allCategorizedMusic.keys.toMutableList()
             mArtists.sort()
             val dataSource = dataSourceOf(mArtists)
 
             // setup{} is an extension method on RecyclerView
             mArtistsRecyclerView.setup {
+                // item is a `val` in `this` here
                 withDataSource(dataSource)
                 withItem<String, GenericViewHolder>(R.layout.recycler_view_item) {
                     onBind(::GenericViewHolder) { _, item ->
                         // GenericViewHolder is `this` here
                         title.text = item
                         title.isSelected = true
-                        val albums = musicRepo.allCategorizedMusic.getValue(item)
-                        subtitle.text =
-                            getString(
-                                R.string.artist_count,
-                                albums.keys.size,
-                                MusicUtils.getArtistSongsCount(albums)
-                            )
+                        val albums = musicLibrary.allCategorizedMusic.getValue(item)
+
+                        subtitle.text = getString(
+                            R.string.artist_count,
+                            albums.keys.size,
+                            MusicUtils.getArtistSongsCount(albums)
+                        )
                         subtitle.isSelected = true
                     }
-                    onClick { index ->
-                        // item is a `val` in `this` here
-                        Log.d("yo", "Clicked $index: ${item}")
+
+                    onClick { _ ->
+                        if (::mSongsSheetInterface.isInitialized) {
+
+                            if (mSelectedArtist != item) {
+
+                                mSelectedArtist = item
+
+                                mSongsSheetInterface.onPopulateAndShowSheet(
+                                    false,
+                                    item,
+                                    subtitle.text.toString(),
+                                    MusicUtils.buildSortedArtistAlbums(
+                                        resources,
+                                        musicLibrary.allCategorizedMusic.getValue(item)
+                                    )[0].music!!
+                                )
+                            } else {
+                                mSongsSheetInterface.onShowSheet()
+                            }
+                        }
                     }
                     onLongClick { index ->
                         // item is a `val` in `this` here
-                        Log.d("yo2", "Clicked $index: ${item}")
+                        Log.d("doSomething", "Clicked $index: ${item}")
                     }
                 }
             }
@@ -93,6 +130,7 @@ class ArtistsFragment : Fragment() {
 
     @SuppressLint("DefaultLocale")
     private fun setupIndicatorFastScrollerView() {
+
         //set indexes if artists rv is scrollable
         mArtistsRecyclerView.afterMeasured {
             if (mArtistsRecyclerView.computeVerticalScrollRange() > height) {
@@ -112,8 +150,6 @@ class ArtistsFragment : Fragment() {
                     }
                 )
 
-                /*   mIndicatorFastScrollerView.textColor =
-                       ColorStateList.valueOf(ContextCompat.getColor(this@MainActivity, mAccent))*/
                 mIndicatorFastScrollerView.afterMeasured {
 
                     //set margin for artists recycler to improve fast scroller visibility
@@ -146,7 +182,7 @@ class ArtistsFragment : Fragment() {
 
     //viewTreeObserver extension to measure layout params
     //https://antonioleiva.com/kotlin-ongloballayoutlistener/
-    private inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
+    inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
         viewTreeObserver.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {

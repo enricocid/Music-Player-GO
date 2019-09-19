@@ -93,7 +93,14 @@ object MusicUtils {
 
         try {
             albums.keys.iterator().forEach {
-                sortedAlbums.add(Album(it, getYearForAlbum(resources, albums.getValue(it)[0].year)))
+                val albumSongs = albums.getValue(it)
+                sortedAlbums.add(
+                    Album(
+                        it,
+                        getYearForAlbum(resources, albumSongs[0].year),
+                        albumSongs
+                    )
+                )
             }
 
         } catch (e: Exception) {

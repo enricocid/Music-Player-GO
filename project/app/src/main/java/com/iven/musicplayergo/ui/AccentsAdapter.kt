@@ -22,7 +22,7 @@ class AccentsAdapter(private val activity: Activity) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccentsHolder {
         return AccentsHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.accent_item,
+                R.layout.recycler_view_accent_item,
                 parent,
                 false
             )
