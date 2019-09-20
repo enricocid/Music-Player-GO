@@ -33,12 +33,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimaryDark"
-        android:fontFamily="@font/raleway"
         android:paddingStart="@dimen/md_radius"
         android:paddingEnd="@dimen/md_radius"
         android:paddingBottom="8dp"
         android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-        android:textColor="?android:attr/textColorSecondary" />
+        android:textColor="?android:attr/textColorSecondary"
+        android:textStyle="bold" />
 
 
     <androidx.core.widget.NestedScrollView

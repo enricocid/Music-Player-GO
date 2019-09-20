@@ -77,7 +77,7 @@ class ArtistsFragment : Fragment() {
             mArtistsRecyclerView.setup {
                 // item is a `val` in `this` here
                 withDataSource(dataSource)
-                withItem<String, GenericViewHolder>(R.layout.recycler_view_item) {
+                withItem<String, GenericViewHolder>(R.layout.recycler_view_main_item) {
                     onBind(::GenericViewHolder) { _, item ->
                         // GenericViewHolder is `this` here
                         title.text = item

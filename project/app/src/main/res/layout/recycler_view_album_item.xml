@@ -4,7 +4,7 @@
     android:layout_width="@dimen/album_width"
     android:layout_height="@dimen/album_height"
     android:layout_margin="4dp"
-    card_view:cardCornerRadius="8dp"
+    card_view:cardCornerRadius="4dp"
     card_view:cardElevation="2dp"
     card_view:strokeWidth="@dimen/selected_card_stroke_width">
 

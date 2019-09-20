@@ -3,8 +3,10 @@ package com.iven.musicplayergo.ui
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.os.BuildCompat
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
@@ -18,6 +20,16 @@ object ThemeHelper {
         val intent = Intent(activity, MainActivity::class.java)
         activity.startActivity(intent)
         activity.finish()
+    }
+
+    @JvmStatic
+    fun darkenColor(color: Int, factor: Float): Int {
+        return ColorUtils.blendARGB(color, Color.BLACK, factor)
+    }
+
+    @JvmStatic
+    fun lightenColor(color: Int, factor: Float): Int {
+        return ColorUtils.blendARGB(color, Color.WHITE, factor)
     }
 
     @JvmStatic

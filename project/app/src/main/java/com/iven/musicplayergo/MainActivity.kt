@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
@@ -57,7 +58,8 @@ class MainActivity : AppCompatActivity(), SongsSheetInterface {
     private lateinit var mCoverView: View
     private lateinit var mBottomSheetBehavior: BottomSheetBehavior<View>
 
-    private var mAccent: Int = R.color.deepPurple
+    private lateinit var mTheme: String
+    private var mAccent = R.color.deepPurple
 
     //music management
     private lateinit var mSelectedAlbum: String
@@ -81,10 +83,10 @@ class MainActivity : AppCompatActivity(), SongsSheetInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        ThemeHelper.applyTheme(this, musicPlayerGoExAppPreferences.theme)
-
+        mTheme = musicPlayerGoExAppPreferences.theme!!
         mAccent = musicPlayerGoExAppPreferences.accent
 
+        ThemeHelper.applyTheme(this, mTheme)
         setTheme(ThemeHelper.getAccent(mAccent).first)
 
         mFragmentManager = supportFragmentManager
@@ -139,6 +141,15 @@ class MainActivity : AppCompatActivity(), SongsSheetInterface {
     }
 
     private fun setupUI() {
+
+        val mainActivity = main_activity
+        val isModeNight =
+            AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
+        val accent = ThemeHelper.getColor(this, mAccent, R.color.deepPurple)
+        mainActivity.setBackgroundColor(
+            if (isModeNight)
+                ThemeHelper.darkenColor(accent, 0.90F) else ThemeHelper.lightenColor(accent, 0.95F)
+        )
 
         mMusicViewModel.loadMusic(this).observe(this, Observer { hasLoaded ->
 

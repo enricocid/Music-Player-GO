@@ -59,7 +59,7 @@ class FoldersFragment : Fragment() {
             // setup{} is an extension method on RecyclerView
             folders_rv.setup {
                 withDataSource(dataSource)
-                withItem<String, GenericViewHolder>(R.layout.recycler_view_item) {
+                withItem<String, GenericViewHolder>(R.layout.recycler_view_main_item) {
                     onBind(::GenericViewHolder) { _, item ->
 
                         // GenericViewHolder is `this` here

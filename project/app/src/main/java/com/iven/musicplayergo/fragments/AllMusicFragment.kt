@@ -55,7 +55,7 @@ class AllMusicFragment : Fragment() {
             all_music_rv.setup {
                 // item is a `val` in `this` here
                 withDataSource(dataSource)
-                withItem<Music, GenericViewHolder>(R.layout.recycler_view_item) {
+                withItem<Music, GenericViewHolder>(R.layout.recycler_view_main_item) {
                     onBind(::GenericViewHolder) { _, item ->
                         // GenericViewHolder is `this` here
                         title.text = item.title

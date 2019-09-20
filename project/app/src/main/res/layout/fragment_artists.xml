@@ -30,8 +30,7 @@
             android:layout_width="32dp"
             android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:textAppearance="@style/IndicatorTextAppearance"
-            android:textColor="?attr/colorPrimary" />
+            android:textAppearance="@style/IndicatorTextAppearance" />
 
         <com.reddit.indicatorfastscroll.FastScrollerThumbView
             android:id="@+id/fastscroller_thumb"

@@ -19,6 +19,7 @@
     <!-- Indicator text style -->
     <style name="IndicatorTextAppearance" parent="@android:style/TextAppearance.Material">
         <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/raleway_semibold</item>
     </style>
 
     <!-- Indicator thumb text style -->
