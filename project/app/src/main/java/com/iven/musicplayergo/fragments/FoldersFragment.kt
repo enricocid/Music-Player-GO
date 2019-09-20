@@ -64,7 +64,6 @@ class FoldersFragment : Fragment() {
 
                         // GenericViewHolder is `this` here
                         title.text = item
-                        title.isSelected = true
 
                         //getting parent path of the first song
                         val songRootPath =
@@ -72,7 +71,6 @@ class FoldersFragment : Fragment() {
                         val parentPath = File(songRootPath!!).parentFile?.parent
 
                         subtitle.text = getString(R.string.in_directory, parentPath)
-                        subtitle.isSelected = true
                     }
 
                     onClick {

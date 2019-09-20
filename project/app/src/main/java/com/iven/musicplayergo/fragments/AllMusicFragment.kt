@@ -59,10 +59,8 @@ class AllMusicFragment : Fragment() {
                     onBind(::GenericViewHolder) { _, item ->
                         // GenericViewHolder is `this` here
                         title.text = item.title
-                        title.isSelected = true
                         subtitle.text =
                             getString(R.string.artist_and_album, item.artist, item.album)
-                        subtitle.isSelected = true
                     }
 
                     onClick {

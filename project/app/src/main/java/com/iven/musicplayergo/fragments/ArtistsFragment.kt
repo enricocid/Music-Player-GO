@@ -81,7 +81,6 @@ class ArtistsFragment : Fragment() {
                     onBind(::GenericViewHolder) { _, item ->
                         // GenericViewHolder is `this` here
                         title.text = item
-                        title.isSelected = true
                         val albums = musicLibrary.allCategorizedMusic.getValue(item)
 
                         subtitle.text = getString(
@@ -89,7 +88,6 @@ class ArtistsFragment : Fragment() {
                             albums.keys.size,
                             MusicUtils.getArtistSongsCount(albums)
                         )
-                        subtitle.isSelected = true
                     }
 
                     onClick {

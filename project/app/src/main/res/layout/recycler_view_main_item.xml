@@ -23,7 +23,6 @@
         android:ellipsize="marquee"
         android:fontFamily="@font/raleway_medium"
         android:marqueeRepeatLimit="marquee_forever"
-        android:scrollHorizontally="true"
         android:singleLine="true"
         android:textSize="16sp"
         android:textAppearance="@android:style/TextAppearance.Material.Medium"
@@ -36,7 +35,6 @@
         android:layout_marginTop="4dp"
         android:ellipsize="marquee"
         android:marqueeRepeatLimit="marquee_forever"
-        android:scrollHorizontally="true"
         android:singleLine="true"
         android:textAppearance="@android:style/TextAppearance.Material.Small"
         android:textColor="?android:attr/textColorSecondary" />

@@ -338,7 +338,6 @@ class MainActivity : AppCompatActivity(), SongsSheetInterface {
                         MusicUtils.formatSongTrack(item.track),
                         item.title
                     )
-                    title.isSelected = true
                     subtitle.text = MusicUtils.formatSongDuration(item.duration)
                 }
 
