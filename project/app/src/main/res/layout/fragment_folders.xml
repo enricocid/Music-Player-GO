@@ -6,13 +6,7 @@
     android:orientation="vertical"
     tools:context=".fragments.FoldersFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/raleway_black"
-        android:padding="@dimen/md_radius"
-        android:text="@string/folders"
-        android:textAppearance="@android:style/TextAppearance.Material.Title" />
+    <include layout="@layout/search_toolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/folders_rv"

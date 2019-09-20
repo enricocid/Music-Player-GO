@@ -6,13 +6,7 @@
     android:orientation="vertical"
     tools:context=".fragments.AllMusicFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/raleway_black"
-        android:padding="@dimen/md_radius"
-        android:text="@string/music"
-        android:textAppearance="@android:style/TextAppearance.Material.Title" />
+    <include layout="@layout/search_toolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/all_music_rv"

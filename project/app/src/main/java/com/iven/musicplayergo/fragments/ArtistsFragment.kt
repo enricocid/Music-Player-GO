@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceOf
@@ -19,10 +20,12 @@ import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.ui.GenericViewHolder
 import com.iven.musicplayergo.ui.SongsSheetInterface
+import com.iven.musicplayergo.ui.Utils
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerThumbView
 import com.reddit.indicatorfastscroll.FastScrollerView
 import kotlinx.android.synthetic.main.fragment_artists.*
+import kotlinx.android.synthetic.main.search_toolbar.*
 
 /**
  * A simple [Fragment] subclass.
@@ -31,16 +34,17 @@ import kotlinx.android.synthetic.main.fragment_artists.*
  */
 class ArtistsFragment : Fragment() {
 
-    private lateinit var mArtists: MutableList<String>
+    //views
     private lateinit var mArtistsRecyclerView: RecyclerView
 
     //indicator fast scroller by reddit
     private lateinit var mIndicatorFastScrollerView: FastScrollerView
     private lateinit var mIndicatorFastScrollThumb: FastScrollerThumbView
 
-    private lateinit var mSongsSheetInterface: SongsSheetInterface
-
+    private lateinit var mArtists: MutableList<String>
     private var mSelectedArtist = ""
+
+    private lateinit var mSongsSheetInterface: SongsSheetInterface
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -65,6 +69,10 @@ class ArtistsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (context != null) {
+            val searchToolbar = search_toolbar
+            searchToolbar.inflateMenu(R.menu.menu_search)
+            searchToolbar.title = getString(R.string.artists)
+            val itemSearch = searchToolbar.menu.findItem(R.id.action_search)
 
             mArtistsRecyclerView = artists_rv
 
@@ -90,16 +98,15 @@ class ArtistsFragment : Fragment() {
 
                                 mSelectedArtist = item
 
-                                val subTitle =
-                                    mSongsSheetInterface.onPopulateAndShowSheet(
-                                        false,
-                                        item,
-                                        getArtistSubtitle(item),
-                                        MusicUtils.buildSortedArtistAlbums(
-                                            resources,
-                                            musicLibrary.allCategorizedMusic.getValue(item)
-                                        )[0].music!!
-                                    )
+                                mSongsSheetInterface.onPopulateAndShowSheet(
+                                    false,
+                                    item,
+                                    getArtistSubtitle(item),
+                                    MusicUtils.buildSortedArtistAlbums(
+                                        resources,
+                                        musicLibrary.allCategorizedMusic.getValue(item)
+                                    )[0].music!!
+                                )
                             } else {
                                 mSongsSheetInterface.onShowSheet()
                             }
@@ -117,6 +124,10 @@ class ArtistsFragment : Fragment() {
             mIndicatorFastScrollThumb = fastscroller_thumb
 
             setupIndicatorFastScrollerView()
+
+            val searchView = itemSearch.actionView as SearchView
+
+            Utils.setupSearchViewForStringLists(searchView, mArtists, dataSource)
         }
     }
 
@@ -176,6 +187,7 @@ class ArtistsFragment : Fragment() {
                         mArtistsRecyclerView.scrollToPosition(itemPosition)
                     }
                 }
+
             } else {
                 mIndicatorFastScrollerView.visibility = View.GONE
             }
@@ -184,7 +196,7 @@ class ArtistsFragment : Fragment() {
 
     //viewTreeObserver extension to measure layout params
     //https://antonioleiva.com/kotlin-ongloballayoutlistener/
-    inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
+    private inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
         viewTreeObserver.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {

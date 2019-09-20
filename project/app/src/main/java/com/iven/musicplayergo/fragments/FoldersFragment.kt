@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
@@ -14,7 +15,9 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.ui.GenericViewHolder
 import com.iven.musicplayergo.ui.SongsSheetInterface
+import com.iven.musicplayergo.ui.Utils
 import kotlinx.android.synthetic.main.fragment_folders.*
+import kotlinx.android.synthetic.main.search_toolbar.*
 import java.io.File
 
 /**
@@ -51,6 +54,11 @@ class FoldersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (context != null) {
+
+            val searchToolbar = search_toolbar
+            searchToolbar.inflateMenu(R.menu.menu_search)
+            searchToolbar.title = getString(R.string.folders)
+            val itemSearch = searchToolbar.menu.findItem(R.id.action_search)
 
             val folders = musicLibrary.allCategorizedMusicByFolder.keys.toMutableList()
             val dataSource = dataSourceOf(folders)
@@ -90,6 +98,10 @@ class FoldersFragment : Fragment() {
                     }
                 }
             }
+
+            val searchView = itemSearch.actionView as SearchView
+
+            Utils.setupSearchViewForStringLists(searchView, folders, dataSource)
         }
     }
 

@@ -252,7 +252,6 @@ class MainActivity : AppCompatActivity(), SongsSheetInterface {
         val albumsRecyclerView = albums_rv
         albumsRecyclerView.visibility = if (isFolder) View.GONE else View.VISIBLE
 
-
         if (!isFolder) {
 
             songs.sortedBy { it.track }

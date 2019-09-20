@@ -1,12 +1,15 @@
 package com.iven.musicplayergo.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import com.afollestad.recyclical.datasource.DataSource
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
@@ -16,6 +19,7 @@ import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.ui.GenericViewHolder
 import com.iven.musicplayergo.ui.SongsSheetInterface
 import kotlinx.android.synthetic.main.fragment_all_music.*
+import kotlinx.android.synthetic.main.search_toolbar.*
 
 /**
  * A simple [Fragment] subclass.
@@ -24,7 +28,10 @@ import kotlinx.android.synthetic.main.fragment_all_music.*
  */
 class AllMusicFragment : Fragment() {
 
-    lateinit var mSongsSheetInterface: SongsSheetInterface
+    private lateinit var mSongsSheetInterface: SongsSheetInterface
+
+    private lateinit var mAllMusic: List<Music>
+    private lateinit var mDataSource: DataSource<Any>
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -50,12 +57,19 @@ class AllMusicFragment : Fragment() {
 
         if (context != null) {
 
-            val dataSource = dataSourceOf(musicLibrary.allSongsFiltered)
+            val searchToolbar = search_toolbar
+            searchToolbar.inflateMenu(R.menu.menu_search)
+            searchToolbar.title = getString(R.string.music)
+            val itemSearch = searchToolbar.menu.findItem(R.id.action_search)
+
+            mAllMusic = musicLibrary.allSongsFiltered
+
+            mDataSource = dataSourceOf(mAllMusic)
             // setup{} is an extension method on RecyclerView
             all_music_rv.setup {
                 // item is a `val` in `this` here
-                withDataSource(dataSource)
-                withItem<Music, GenericViewHolder>(R.layout.recycler_view_main_item) {
+                withDataSource(mDataSource)
+                withItem<Music, GenericViewHolder>(R.layout.recycler_view_item) {
                     onBind(::GenericViewHolder) { _, item ->
                         // GenericViewHolder is `this` here
                         title.text = item.title
@@ -73,6 +87,46 @@ class AllMusicFragment : Fragment() {
                     }
                 }
             }
+
+            val searchView = itemSearch.actionView as SearchView
+            setupSearchViewForMusic(searchView)
+        }
+    }
+
+    private fun setupSearchViewForMusic(searchView: SearchView) {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override
+            fun onQueryTextChange(newText: String): Boolean {
+                processQuery(newText)
+                return false
+            }
+
+            override
+            fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+        })
+    }
+
+    @SuppressLint("DefaultLocale")
+    private fun processQuery(query: String) {
+        // in real app you'd have it instantiated just once
+        val results = mutableListOf<Any>()
+
+        try {
+            // case insensitive search
+            mAllMusic.iterator().forEach {
+                if (it.title?.toLowerCase()!!.startsWith(query.toLowerCase())) {
+                    results.add(it)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        if (results.size > 0) {
+            mDataSource.set(results)
         }
     }
 

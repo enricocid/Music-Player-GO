@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.iven.musicplayergo.R
+import kotlinx.android.synthetic.main.search_toolbar.*
 
 /**
  * A simple [Fragment] subclass.
@@ -26,6 +27,7 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
+            search_toolbar.title = getString(R.string.settings)
             activity!!.supportFragmentManager.beginTransaction()
                 .replace(
                     R.id.fragment_layout,

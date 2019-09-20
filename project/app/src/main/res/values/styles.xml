@@ -27,4 +27,9 @@
         <item name="android:textSize">24sp</item>
         <item name="android:fontFamily">@font/raleway_black</item>
     </style>
+
+    <!-- Style for search bar -->
+    <style name="SearchBarStyle" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="android:fontFamily">@font/raleway_black</item>
+    </style>
 </resources>
