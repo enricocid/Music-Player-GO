@@ -75,7 +75,7 @@ class FoldersFragment : Fragment() {
                         subtitle.isSelected = true
                     }
 
-                    onClick { _ ->
+                    onClick {
                         // item is a `val` in `this` here
                         if (::mSongsSheetInterface.isInitialized) {
 

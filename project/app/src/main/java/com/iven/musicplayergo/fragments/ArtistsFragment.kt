@@ -92,7 +92,7 @@ class ArtistsFragment : Fragment() {
                         subtitle.isSelected = true
                     }
 
-                    onClick { _ ->
+                    onClick {
                         if (::mSongsSheetInterface.isInitialized) {
 
                             if (mSelectedArtist != item) {

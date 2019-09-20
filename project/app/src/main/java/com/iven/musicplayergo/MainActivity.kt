@@ -331,7 +331,7 @@ class MainActivity : AppCompatActivity(), SongsSheetInterface {
                     subtitle.text = MusicUtils.formatSongDuration(item.duration)
                 }
 
-                onClick { index ->
+                onClick {
                     onSongSelected(item)
                 }
                 onLongClick { index ->

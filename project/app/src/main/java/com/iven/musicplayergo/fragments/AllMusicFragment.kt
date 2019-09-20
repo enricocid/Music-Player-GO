@@ -65,7 +65,7 @@ class AllMusicFragment : Fragment() {
                         subtitle.isSelected = true
                     }
 
-                    onClick { _ ->
+                    onClick {
                         mSongsSheetInterface.onSongSelected(item)
                     }
 
