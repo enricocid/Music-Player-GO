@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity(), SongsSheetInterface {
 
     //music management
     private lateinit var mSelectedAlbum: String
+    private lateinit var mAlbumSongsDataSource: DataSource<Any>
 
     // music shit related
     private val mMusicViewModel: MusicViewModel by lazy {
@@ -301,42 +302,25 @@ class MainActivity : AppCompatActivity(), SongsSheetInterface {
                                 )
                             )
                             mSelectedAlbum = item.title!!
-                            //  albumCard.strokeColor = accent
-                            setupSongsRecyclerView(dataSourceOf(albums[index].music!!))
+                            mAlbumSongsDataSource.set(albums[index].music!!)
                         }
                     }
                 }
             }
         }
 
-        setupSongsRecyclerView(dataSourceOf(songs))
-    }
-
-    override fun onShowSheet() {
-        if (mBottomSheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
-            toggleBottomSheetVisibility(View.VISIBLE)
-            mBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-        }
-    }
-
-    override fun onSongSelected(song: Music) {
-        Log.d(song.title, song.title!!)
-        mSelectedAlbum = song.album!!
-    }
-
-    private fun setupSongsRecyclerView(dataSource: DataSource<Any>) {
-
         val songsRecyclerView = songs_rv
         ViewCompat.setNestedScrollingEnabled(songsRecyclerView, false)
+
+        mAlbumSongsDataSource = dataSourceOf(songs)
 
         // setup{} is an extension method on RecyclerView
         songsRecyclerView.setup {
             // item is a `val` in `this` here
-            withDataSource(dataSource)
+            withDataSource(mAlbumSongsDataSource)
             withItem<Music, GenericViewHolder>(R.layout.recycler_view_item) {
                 onBind(::GenericViewHolder) { _, item ->
                     // GenericViewHolder is `this` here
-
                     title.text = getString(
                         R.string.track_song,
                         MusicUtils.formatSongTrack(item.track),
@@ -354,5 +338,17 @@ class MainActivity : AppCompatActivity(), SongsSheetInterface {
                 }
             }
         }
+    }
+
+    override fun onShowSheet() {
+        if (mBottomSheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
+            toggleBottomSheetVisibility(View.VISIBLE)
+            mBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+    }
+
+    override fun onSongSelected(song: Music) {
+        Log.d(song.title, song.title!!)
+        mSelectedAlbum = song.album!!
     }
 }
