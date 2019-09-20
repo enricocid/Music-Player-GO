@@ -59,11 +59,12 @@ class AllMusicFragment : Fragment() {
         if (context != null) {
 
             val searchToolbar = search_toolbar
-            if (!musicPlayerGoExAppPreferences.isSearchBarEnabled) searchToolbar.visibility =
-                View.GONE
             searchToolbar.inflateMenu(R.menu.menu_search)
             searchToolbar.title = getString(R.string.music)
             val itemSearch = searchToolbar.menu.findItem(R.id.action_search)
+
+            val isSearchBarEnabled = musicPlayerGoExAppPreferences.isSearchBarEnabled
+            itemSearch.isVisible = isSearchBarEnabled
 
             mAllMusic = musicLibrary.allSongsFiltered
 
@@ -91,8 +92,10 @@ class AllMusicFragment : Fragment() {
                 }
             }
 
-            val searchView = itemSearch.actionView as SearchView
-            setupSearchViewForMusic(searchView)
+            if (isSearchBarEnabled) {
+                val searchView = itemSearch.actionView as SearchView
+                setupSearchViewForMusic(searchView)
+            }
         }
     }
 

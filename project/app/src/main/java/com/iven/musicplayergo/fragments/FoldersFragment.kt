@@ -57,11 +57,12 @@ class FoldersFragment : Fragment() {
         if (context != null) {
 
             val searchToolbar = search_toolbar
-            if (!musicPlayerGoExAppPreferences.isSearchBarEnabled) searchToolbar.visibility =
-                View.GONE
             searchToolbar.inflateMenu(R.menu.menu_search)
             searchToolbar.title = getString(R.string.folders)
             val itemSearch = searchToolbar.menu.findItem(R.id.action_search)
+
+            val isSearchBarEnabled = musicPlayerGoExAppPreferences.isSearchBarEnabled
+            itemSearch.isVisible = isSearchBarEnabled
 
             val folders = musicLibrary.allCategorizedMusicByFolder.keys.toMutableList()
             val dataSource = dataSourceOf(folders)
@@ -102,9 +103,10 @@ class FoldersFragment : Fragment() {
                 }
             }
 
-            val searchView = itemSearch.actionView as SearchView
-
-            Utils.setupSearchViewForStringLists(searchView, folders, dataSource)
+            if (isSearchBarEnabled) {
+                val searchView = itemSearch.actionView as SearchView
+                Utils.setupSearchViewForStringLists(searchView, folders, dataSource)
+            }
         }
     }
 
