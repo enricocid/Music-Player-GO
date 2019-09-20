@@ -27,6 +27,7 @@ import com.reddit.indicatorfastscroll.FastScrollerThumbView
 import com.reddit.indicatorfastscroll.FastScrollerView
 import kotlinx.android.synthetic.main.fragment_artists.*
 import kotlinx.android.synthetic.main.search_toolbar.*
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -81,7 +82,8 @@ class ArtistsFragment : Fragment() {
             mArtistsRecyclerView = artists_rv
 
             mArtists = musicLibrary.allCategorizedMusic.keys.toMutableList()
-            mArtists.sort()
+            Collections.sort(mArtists, String.CASE_INSENSITIVE_ORDER)
+
             val dataSource = dataSourceOf(mArtists)
 
             // setup{} is an extension method on RecyclerView

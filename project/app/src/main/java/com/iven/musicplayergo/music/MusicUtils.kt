@@ -22,13 +22,6 @@ import java.util.concurrent.TimeUnit
 object MusicUtils {
 
     @JvmStatic
-    fun getArtists(music: Map<String, Map<String?, List<Music>>>): MutableList<String> {
-        val artists = music.keys.toMutableList()
-        artists.sort()
-        return artists
-    }
-
-    @JvmStatic
     fun getArtistSongsCount(albums: Map<String?, List<Music>>): Int {
         var songsCount = 0
         try {
