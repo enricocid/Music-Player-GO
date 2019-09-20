@@ -192,7 +192,6 @@ class MainActivity : AppCompatActivity(), SongsSheetInterface {
 
                 val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
                 mPager.adapter = pagerAdapter
-                mPager.setPageTransformer(true, ZoomOutPageTransformer())
 
                 setupTabLayoutTabs(0)
                 setupTabLayoutTabs(1)
