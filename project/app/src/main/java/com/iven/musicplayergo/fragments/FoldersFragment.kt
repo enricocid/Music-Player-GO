@@ -15,7 +15,6 @@ import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.ui.GenericViewHolder
 import com.iven.musicplayergo.ui.SongsSheetInterface
 import kotlinx.android.synthetic.main.fragment_folders.*
-import kotlinx.android.synthetic.main.recycler_view_item.*
 import java.io.File
 
 /**
@@ -65,12 +64,7 @@ class FoldersFragment : Fragment() {
                         // GenericViewHolder is `this` here
                         title.text = item
 
-                        //getting parent path of the first song
-                        val songRootPath =
-                            musicLibrary.allCategorizedMusicByFolder.getValue(item)[0].path
-                        val parentPath = File(songRootPath!!).parentFile?.parent
-
-                        subtitle.text = getString(R.string.in_directory, parentPath)
+                        subtitle.text = getString(R.string.in_directory, getParentFolder(item))
                     }
 
                     onClick {
@@ -81,7 +75,7 @@ class FoldersFragment : Fragment() {
                                 mSongsSheetInterface.onPopulateAndShowSheet(
                                     true,
                                     item,
-                                    subtitle.text.toString(),
+                                    getString(R.string.in_directory, getParentFolder(item)),
                                     musicLibrary.allCategorizedMusicByFolder.getValue(item)
                                 )
                             } else {
@@ -97,6 +91,13 @@ class FoldersFragment : Fragment() {
                 }
             }
         }
+    }
+
+    //getting parent path of the first song
+    private fun getParentFolder(item: String): String {
+        val songRootPath =
+            musicLibrary.allCategorizedMusicByFolder.getValue(item)[0].path
+        return File(songRootPath!!).parentFile?.parent.toString()
     }
 
     companion object {

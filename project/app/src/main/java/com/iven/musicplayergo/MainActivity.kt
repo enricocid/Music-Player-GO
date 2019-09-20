@@ -241,8 +241,14 @@ class MainActivity : AppCompatActivity(), SongsSheetInterface {
         toggleBottomSheetVisibility(View.VISIBLE)
 
         mBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-        songs_sheet_title.text = header
-        songs_sheet_subtitle.text = subheading
+
+        val songsSheetTitle = songs_sheet_title
+        songsSheetTitle.text = header
+        songsSheetTitle.isSelected = true
+
+        val songsSheetSubtitle = songs_sheet_subtitle
+        songsSheetSubtitle.text = subheading
+        songsSheetSubtitle.isSelected = true
 
         val albumsRecyclerView = albums_rv
         albumsRecyclerView.visibility = if (isFolder) View.GONE else View.VISIBLE
