@@ -23,7 +23,6 @@ import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerThumbView
 import com.reddit.indicatorfastscroll.FastScrollerView
 import kotlinx.android.synthetic.main.fragment_artists.*
-import kotlinx.android.synthetic.main.recycler_view_item.*
 
 /**
  * A simple [Fragment] subclass.
@@ -81,13 +80,7 @@ class ArtistsFragment : Fragment() {
                     onBind(::GenericViewHolder) { _, item ->
                         // GenericViewHolder is `this` here
                         title.text = item
-                        val albums = musicLibrary.allCategorizedMusic.getValue(item)
-
-                        subtitle.text = getString(
-                            R.string.artist_count,
-                            albums.keys.size,
-                            MusicUtils.getArtistSongsCount(albums)
-                        )
+                        subtitle.text = getArtistSubtitle(item)
                     }
 
                     onClick {
@@ -97,15 +90,16 @@ class ArtistsFragment : Fragment() {
 
                                 mSelectedArtist = item
 
-                                mSongsSheetInterface.onPopulateAndShowSheet(
-                                    false,
-                                    item,
-                                    subtitle.text.toString(),
-                                    MusicUtils.buildSortedArtistAlbums(
-                                        resources,
-                                        musicLibrary.allCategorizedMusic.getValue(item)
-                                    )[0].music!!
-                                )
+                                val subTitle =
+                                    mSongsSheetInterface.onPopulateAndShowSheet(
+                                        false,
+                                        item,
+                                        getArtistSubtitle(item),
+                                        MusicUtils.buildSortedArtistAlbums(
+                                            resources,
+                                            musicLibrary.allCategorizedMusic.getValue(item)
+                                        )[0].music!!
+                                    )
                             } else {
                                 mSongsSheetInterface.onShowSheet()
                             }
@@ -124,6 +118,16 @@ class ArtistsFragment : Fragment() {
 
             setupIndicatorFastScrollerView()
         }
+    }
+
+    private fun getArtistSubtitle(item: String): String {
+        val albums = musicLibrary.allCategorizedMusic.getValue(item)
+
+        return getString(
+            R.string.artist_count,
+            albums.keys.size,
+            MusicUtils.getArtistSongsCount(albums)
+        )
     }
 
     @SuppressLint("DefaultLocale")
