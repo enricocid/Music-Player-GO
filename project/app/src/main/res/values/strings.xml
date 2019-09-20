@@ -23,9 +23,10 @@
 
     <!-- Preferences -->
     <string name="category_appearance">Appearance</string>
+    <string name="category_general">General</string>
 
     <string name="theme_pref" translatable="false">theme_pref</string>
-    <string name="theme_pref_title" translatable="false">Theme</string>
+    <string name="theme_pref_title">Theme</string>
     <string name="theme_pref_light_title">Light</string>
     <string name="theme_pref_dark_title">Dark</string>
     <string name="theme_pref_auto_title">Automatic</string>
@@ -36,6 +37,11 @@
 
     <string name="accent_pref" translatable="false">accent_pref</string>
     <string name="accent_pref_title" translatable="false">Accent</string>
+
+    <string name="search_bar_pref" translatable="false">search_bar_pref</string>
+    <string name="search_bar_pref_title">Search bar</string>
+    <string name="search_bar_pref_summary_on">Disable search bar</string>
+    <string name="search_bar_pref_summary_off">Enable search bar</string>
 
     <string name="hex" translatable="false">&#35;%06X</string>
 </resources>

@@ -62,13 +62,15 @@ class MainActivity : AppCompatActivity(), SongsSheetInterface {
     private var mAccent = R.color.deepPurple
 
     //music management
-    private lateinit var mSelectedAlbum: String
-    private lateinit var mAlbumSongsDataSource: DataSource<Any>
+
 
     // music shit related
     private val mMusicViewModel: MusicViewModel by lazy {
         ViewModelProviders.of(this).get(MusicViewModel::class.java)
     }
+
+    private lateinit var mSelectedAlbum: String
+    private lateinit var mAlbumSongsDataSource: DataSource<Any>
 
     private fun handleOnNavigationItemSelected(itemId: Int): Fragment {
 
@@ -95,6 +97,7 @@ class MainActivity : AppCompatActivity(), SongsSheetInterface {
         setContentView(R.layout.main_activity)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else setupUI()
+
         super.onCreate(savedInstanceState)
     }
 
@@ -187,18 +190,18 @@ class MainActivity : AppCompatActivity(), SongsSheetInterface {
                             }
                         }
                     }
-
-                mTabLayout = tab_layout
-                mTabLayout.setupWithViewPager(mPager)
-
-                val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
-                mPager.adapter = pagerAdapter
-
-                setupTabLayoutTabs(0)
-                setupTabLayoutTabs(1)
-                setupTabLayoutTabs(2)
-                setupTabLayoutTabs(3)
             }
+
+            mTabLayout = tab_layout
+            mTabLayout.setupWithViewPager(mPager)
+
+            val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
+            mPager.adapter = pagerAdapter
+
+            setupTabLayoutTabs(0)
+            setupTabLayoutTabs(1)
+            setupTabLayoutTabs(2)
+            setupTabLayoutTabs(3)
         })
     }
 

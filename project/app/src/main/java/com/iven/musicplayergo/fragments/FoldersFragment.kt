@@ -13,6 +13,7 @@ import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.musicLibrary
+import com.iven.musicplayergo.musicPlayerGoExAppPreferences
 import com.iven.musicplayergo.ui.GenericViewHolder
 import com.iven.musicplayergo.ui.SongsSheetInterface
 import com.iven.musicplayergo.ui.Utils
@@ -56,6 +57,8 @@ class FoldersFragment : Fragment() {
         if (context != null) {
 
             val searchToolbar = search_toolbar
+            if (!musicPlayerGoExAppPreferences.isSearchBarEnabled) searchToolbar.visibility =
+                View.GONE
             searchToolbar.inflateMenu(R.menu.menu_search)
             searchToolbar.title = getString(R.string.folders)
             val itemSearch = searchToolbar.menu.findItem(R.id.action_search)

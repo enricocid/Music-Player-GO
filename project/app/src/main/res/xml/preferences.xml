@@ -14,7 +14,8 @@
   ~ limitations under the License.
   -->
 
-<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
         app:title="@string/category_appearance">
@@ -34,5 +35,18 @@
             app:key="@string/accent_pref"
             app:title="@string/accent_pref_title"
             app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="@string/category_general">
+
+        <SwitchPreference
+            app:defaultValue="true"
+            app:dialogTitle="@string/search_bar_pref_title"
+            app:key="@string/search_bar_pref"
+            app:title="@string/search_bar_pref_title"
+            app:summaryOn="@string/search_bar_pref_summary_on"
+            android:summaryOff="@string/search_bar_pref_summary_off"/>
+
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>

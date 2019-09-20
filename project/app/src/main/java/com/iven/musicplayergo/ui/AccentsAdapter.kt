@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.musicPlayerGoExAppPreferences
 
-class AccentsAdapter(private val activity: Activity) :
+class AccentsAdapter(private val activity: Activity, private val materialDialog: MaterialDialog) :
     RecyclerView.Adapter<AccentsAdapter.AccentsHolder>() {
 
     private var mSelectedAccent = R.color.deepPurple
@@ -61,9 +63,7 @@ class AccentsAdapter(private val activity: Activity) :
                     colorOption.setImageResource(R.drawable.ic_check)
                     musicPlayerGoExAppPreferences.accent = mSelectedAccent
 
-                    Handler().postDelayed({
-                        ThemeHelper.applyNewThemeSmoothly(activity)
-                    }, 250)
+                    materialDialog.dismiss()
                 }
             }
         }
