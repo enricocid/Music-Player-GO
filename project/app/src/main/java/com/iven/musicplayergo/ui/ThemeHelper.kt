@@ -1,14 +1,29 @@
 package com.iven.musicplayergo.ui
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.os.Handler
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.os.BuildCompat
+import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
 
 object ThemeHelper {
+
+    //update theme
+    @JvmStatic
+    fun applyNewThemeSmoothly(activity: Activity) {
+        //smoothly set app theme
+        Handler().postDelayed({
+            val intent = Intent(activity, MainActivity::class.java)
+            activity.startActivity(intent)
+            activity.finish()
+        }, 250)
+    }
 
     @JvmStatic
     fun darkenColor(color: Int, factor: Float): Int {

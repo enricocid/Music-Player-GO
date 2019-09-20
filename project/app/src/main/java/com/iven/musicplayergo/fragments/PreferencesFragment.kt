@@ -6,7 +6,6 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
 import com.iven.musicplayergo.R
@@ -15,6 +14,8 @@ import com.iven.musicplayergo.ui.AccentsAdapter
 import com.iven.musicplayergo.ui.ThemeHelper
 
 class PreferencesFragment : PreferenceFragmentCompat() {
+
+    private lateinit var mAccentsDialog: MaterialDialog
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
@@ -39,7 +40,7 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 
             val searchBarPreference = findPreference<SwitchPreference>("search_bar_pref")
             searchBarPreference?.setOnPreferenceChangeListener { _, _ ->
-                activity?.recreate()
+                ThemeHelper.applyNewThemeSmoothly(activity!!)
                 return@setOnPreferenceChangeListener true
             }
         }
@@ -47,20 +48,22 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 
     private fun showAccentDialog(accentPreference: Preference) {
         if (activity != null) {
-            MaterialDialog(activity!!).show {
+            mAccentsDialog = MaterialDialog(activity!!).show {
                 cornerRadius(res = R.dimen.md_radius)
                 title(text = accentPreference.title.toString())
-                customListAdapter(AccentsAdapter(activity!!, this))
+                customListAdapter(AccentsAdapter(activity!!))
                 getRecyclerView().scrollToPosition(
                     ThemeHelper.getAccent(
                         musicPlayerGoExAppPreferences.accent
                     ).second
                 )
-                noAutoDismiss()
-                cancelOnTouchOutside(false)
-                onDismiss { activity?.recreate() }
             }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (::mAccentsDialog.isInitialized && mAccentsDialog.isShowing) mAccentsDialog.dismiss()
     }
 
     companion object {

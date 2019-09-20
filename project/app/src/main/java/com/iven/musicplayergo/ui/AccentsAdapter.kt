@@ -1,18 +1,15 @@
 package com.iven.musicplayergo.ui
 
 import android.app.Activity
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.musicPlayerGoExAppPreferences
 
-class AccentsAdapter(private val activity: Activity, private val materialDialog: MaterialDialog) :
+class AccentsAdapter(private val activity: Activity) :
     RecyclerView.Adapter<AccentsAdapter.AccentsHolder>() {
 
     private var mSelectedAccent = R.color.deepPurple
@@ -63,7 +60,7 @@ class AccentsAdapter(private val activity: Activity, private val materialDialog:
                     colorOption.setImageResource(R.drawable.ic_check)
                     musicPlayerGoExAppPreferences.accent = mSelectedAccent
 
-                    materialDialog.dismiss()
+                    ThemeHelper.applyNewThemeSmoothly(activity)
                 }
             }
         }
