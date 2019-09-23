@@ -560,7 +560,9 @@ class MainActivity : AppCompatActivity() {
                         indicatorCenterY: Int,
                         itemPosition: Int
                     ) {
-                        mArtistsRecyclerView.scrollToPosition(itemPosition)
+                        val artistsLayoutManager =
+                            mArtistsRecyclerView.layoutManager as LinearLayoutManager
+                        artistsLayoutManager.scrollToPositionWithOffset(itemPosition, 0)
                     }
                 }
 
