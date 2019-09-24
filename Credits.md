@@ -10,7 +10,7 @@
 
 - [**Aidan Afollestad**](https://github.com/afollestad) for the incredible [**material-dialogs**](https://github.com/afollestad/material-dialogs) library
 
-- [**Pranav Pandey**](https://github.com/pranavpandey) for beautiful [Dynamic toasts](https://github.com/pranavpandey/dynamic-toasts) library!
+- [**Pranav Pandey**](https://github.com/pranavpandey) for beautiful [**Dynamic toasts**](https://github.com/pranavpandey/dynamic-toasts) library!
 
 - [**Toastcode**](https://toastco.de/) for the wunderbar [**Screener - Better screenshots**](https://play.google.com/store/apps/details?id=de.toastcode.screener) app
 
@@ -19,6 +19,8 @@
 - [**IzzySoft**](https://github.com/IzzySoft) and [**Poussinou**](https://github.com/Poussinou) for setting up the **F-Droid** repository
 
 - [**Somesh Kumar**](https://github.com/TheSomeshKumar) for Hindi translations
+
+- [**Steven Schoen**](https://github.com/DSteve595) for the search function [fixes](https://github.com/enricocid/Music-Player-GO/commit/1c27ff3421dbf7820608237dc60a974955efb022)
 
 - [**TacoTheDank**](https://github.com/TacoTheDank) for upgrades to gradle and java 1.8
 
