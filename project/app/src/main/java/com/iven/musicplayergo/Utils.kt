@@ -5,13 +5,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import com.pranavpandey.android.dynamic.toasts.DynamicToast
-import com.reddit.indicatorfastscroll.FastScrollerView
 
 object Utils {
 
@@ -28,7 +26,6 @@ object Utils {
     fun setupSearch(
         searchView: SearchView,
         artists: List<String>,
-        indicator: FastScrollerView,
         onResultsChanged: (List<String>) -> Unit
     ) {
 
@@ -45,11 +42,6 @@ object Utils {
                 return false
             }
         })
-
-        searchView.setOnQueryTextFocusChangeListener { _: View, hasFocus: Boolean ->
-            indicator.visibility = if (hasFocus) View.GONE else View.VISIBLE
-            if (!hasFocus) searchView.isIconified = true
-        }
     }
 
     @SuppressLint("DefaultLocale")

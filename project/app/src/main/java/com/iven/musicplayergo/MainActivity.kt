@@ -207,7 +207,7 @@ class MainActivity : AppCompatActivity() {
             val searchView = search.actionView as SearchView
 
             searchView.setIconifiedByDefault(false)
-            Utils.setupSearch(searchView, mArtists, mIndicatorFastScrollerView, onResultsChanged = { newResults ->
+            Utils.setupSearch(searchView, mArtists, onResultsChanged = { newResults ->
                 mFilteredArtists = if (newResults.isEmpty()) {
                     null
                 } else {
