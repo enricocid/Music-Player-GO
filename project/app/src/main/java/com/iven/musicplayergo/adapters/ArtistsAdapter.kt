@@ -19,13 +19,13 @@ class ArtistsAdapter(
     RecyclerView.Adapter<ArtistsAdapter.ArtistsHolder>() {
 
     var onArtistClick: ((String?) -> Unit)? = null
-    private var mArtists = artists
+    private var mArtists: List<String> = artists
 
     init {
         Collections.sort(mArtists, String.CASE_INSENSITIVE_ORDER)
     }
 
-    fun setQueryResults(artists: MutableList<String>) {
+    fun setArtists(artists: List<String>) {
         mArtists = artists
         notifyDataSetChanged()
     }

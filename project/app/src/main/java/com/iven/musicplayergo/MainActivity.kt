@@ -125,6 +125,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mSelectedArtistSongs: MutableList<Music>
     private lateinit var mSelectedArtistAlbums: List<Album>
     private var mNavigationArtist: String? = "unknown"
+    private var mFilteredArtists: List<String>? = null
 
     //player
     private lateinit var mMediaPlayerHolder: MediaPlayerHolder
@@ -206,7 +207,14 @@ class MainActivity : AppCompatActivity() {
             val searchView = search.actionView as SearchView
 
             searchView.setIconifiedByDefault(false)
-            Utils.setupSearch(searchView, mArtistsAdapter, mArtists, mIndicatorFastScrollerView)
+            Utils.setupSearch(searchView, mArtists, mIndicatorFastScrollerView, onResultsChanged = { newResults ->
+                mFilteredArtists = if (newResults.isEmpty()) {
+                    null
+                } else {
+                    newResults
+                }
+                mArtistsAdapter.setArtists(mFilteredArtists ?: mArtists)
+            })
         }
         return super.onCreateOptionsMenu(menu)
     }
@@ -525,7 +533,7 @@ class MainActivity : AppCompatActivity() {
                 mIndicatorFastScrollerView.setupWithRecyclerView(
                     mArtistsRecyclerView,
                     { position ->
-                        val item = mArtists[position] // Get your model object
+                        val item = (mFilteredArtists ?: mArtists)[position] // Get your model object
                         // or fetch the section at [position] from your database
 
                         FastScrollItemIndicator.Text(

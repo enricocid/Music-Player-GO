@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
-import com.iven.musicplayergo.adapters.ArtistsAdapter
 import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import com.reddit.indicatorfastscroll.FastScrollerView
 
@@ -28,16 +27,16 @@ object Utils {
     @JvmStatic
     fun setupSearch(
         searchView: SearchView,
-        artistsAdapter: ArtistsAdapter,
         artists: List<String>,
-        indicator: FastScrollerView
+        indicator: FastScrollerView,
+        onResultsChanged: (List<String>) -> Unit
     ) {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override
             fun onQueryTextChange(newText: String): Boolean {
-                processQuery(newText, artistsAdapter, artists)
+                onResultsChanged(processQuery(newText, artists))
                 return false
             }
 
@@ -55,7 +54,7 @@ object Utils {
 
     @SuppressLint("DefaultLocale")
     @JvmStatic
-    private fun processQuery(query: String, artistsAdapter: ArtistsAdapter, artists: List<String>) {
+    private fun processQuery(query: String, artists: List<String>): List<String> {
         // in real app you'd have it instantiated just once
         val results = mutableListOf<String>()
 
@@ -70,9 +69,7 @@ object Utils {
             e.printStackTrace()
         }
 
-        if (results.size > 0) {
-            artistsAdapter.setQueryResults(results)
-        }
+        return results
     }
 
     //get theme
