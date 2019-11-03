@@ -799,7 +799,7 @@ class MainActivity : AppCompatActivity() {
 
             MaterialDialog(this).show {
                 var isUserSeeking = false
-                val currentProgress = mMediaPlayerHolder.getNormalizedVolume(0, false)
+                val currentProgress = mMediaPlayerHolder.currentVolumeInPercent
 
                 cornerRadius(res = R.dimen.md_corner_radius)
                 title(text = getString(R.string.volume, currentProgress.toString()))
