@@ -20,6 +20,7 @@ import com.iven.musicplayergo.music.Music
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
+import kotlin.math.ln
 
 /**
  * Exposes the functionality of the [MediaPlayer]
@@ -48,8 +49,8 @@ const val RESUMED = 2
 
 @Suppress("DEPRECATION")
 class MediaPlayerHolder(private val playerService: PlayerService) :
-    MediaPlayer.OnCompletionListener,
-    MediaPlayer.OnPreparedListener {
+        MediaPlayer.OnCompletionListener,
+        MediaPlayer.OnPreparedListener {
 
     lateinit var mediaPlayerInterface: MediaPlayerInterface
 
@@ -62,25 +63,25 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private var sPlayOnFocusGain: Boolean = false
 
     private val mOnAudioFocusChangeListener =
-        AudioManager.OnAudioFocusChangeListener { focusChange ->
-            when (focusChange) {
-                AudioManager.AUDIOFOCUS_GAIN -> mCurrentAudioFocusState = AUDIO_FOCUSED
-                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK ->
-                    // Audio focus was lost, but it's possible to duck (i.e.: play quietly)
-                    mCurrentAudioFocusState = AUDIO_NO_FOCUS_CAN_DUCK
-                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
-                    // Lost audio focus, but will gain it back (shortly), so note whether
-                    // playback should resume
-                    mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
-                    sPlayOnFocusGain = isMediaPlayer && state == PLAYING || state == RESUMED
+            AudioManager.OnAudioFocusChangeListener { focusChange ->
+                when (focusChange) {
+                    AudioManager.AUDIOFOCUS_GAIN -> mCurrentAudioFocusState = AUDIO_FOCUSED
+                    AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK ->
+                        // Audio focus was lost, but it's possible to duck (i.e.: play quietly)
+                        mCurrentAudioFocusState = AUDIO_NO_FOCUS_CAN_DUCK
+                    AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
+                        // Lost audio focus, but will gain it back (shortly), so note whether
+                        // playback should resume
+                        mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
+                        sPlayOnFocusGain = isMediaPlayer && state == PLAYING || state == RESUMED
+                    }
+                    AudioManager.AUDIOFOCUS_LOSS ->
+                        // Lost audio focus, probably "permanently"
+                        mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
                 }
-                AudioManager.AUDIOFOCUS_LOSS ->
-                    // Lost audio focus, probably "permanently"
-                    mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
+                // Update the player state based on the change
+                if (mediaPlayer != null) configurePlayerState()
             }
-            // Update the player state based on the change
-            if (mediaPlayer != null) configurePlayerState()
-        }
 
     //media player
     private var mediaPlayer: MediaPlayer? = null
@@ -167,8 +168,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             mAudioFocusRequestOreo = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN).run {
                 setAudioAttributes(AudioAttributes.Builder().run {
                     setUsage(AudioAttributes.USAGE_MEDIA)
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .build()
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .build()
                 })
                 setOnAudioFocusChangeListener(mOnAudioFocusChangeListener, mHandler)
                 build()
@@ -176,9 +177,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             mAudioManager.requestAudioFocus(mAudioFocusRequestOreo)
         } else {
             mAudioManager.requestAudioFocus(
-                mOnAudioFocusChangeListener,
-                AudioManager.STREAM_MUSIC,
-                AudioManager.AUDIOFOCUS_GAIN
+                    mOnAudioFocusChangeListener,
+                    AudioManager.STREAM_MUSIC,
+                    AudioManager.AUDIOFOCUS_GAIN
             )
         }
     }
@@ -186,7 +187,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private fun giveUpAudioFocus() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) mAudioManager.abandonAudioFocusRequest(
-            mAudioFocusRequestOreo
+                mAudioFocusRequestOreo
         )
         else
             mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener)
@@ -203,8 +204,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             if (isMediaPlayer) mediaPlayer!!.start()
             setStatus(RESUMED)
             playerService.startForeground(
-                NOTIFICATION_ID,
-                mMusicNotificationManager.createNotification()
+                    NOTIFICATION_ID,
+                    mMusicNotificationManager.createNotification()
             )
         }
     }
@@ -214,7 +215,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         mediaPlayer!!.pause()
         playerService.stopForeground(false)
         mMusicNotificationManager.notificationManager
-            .notify(NOTIFICATION_ID, mMusicNotificationManager.createNotification())
+                .notify(NOTIFICATION_ID, mMusicNotificationManager.createNotification())
     }
 
     private fun resetSong() {
@@ -231,13 +232,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         if (mExecutor == null) mExecutor = Executors.newSingleThreadScheduledExecutor()
         if (mSeekBarPositionUpdateTask == null) mSeekBarPositionUpdateTask =
-            Runnable { this.updateProgressCallbackTask() }
+                Runnable { this.updateProgressCallbackTask() }
 
         mExecutor!!.scheduleAtFixedRate(
-            mSeekBarPositionUpdateTask!!,
-            0,
-            1000,
-            TimeUnit.MILLISECONDS
+                mSeekBarPositionUpdateTask!!,
+                0,
+                1000,
+                TimeUnit.MILLISECONDS
         )
     }
 
@@ -278,18 +279,18 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             } else {
                 mediaPlayer = MediaPlayer()
                 EqualizerUtils.openAudioEffectSession(
-                    playerService.applicationContext,
-                    mediaPlayer!!.audioSessionId
+                        playerService.applicationContext,
+                        mediaPlayer!!.audioSessionId
                 )
 
                 mediaPlayer!!.setOnPreparedListener(this)
                 mediaPlayer!!.setOnCompletionListener(this)
                 mediaPlayer!!.setWakeMode(playerService, PowerManager.PARTIAL_WAKE_LOCK)
                 mediaPlayer!!.setAudioAttributes(
-                    AudioAttributes.Builder()
-                        .setUsage(AudioAttributes.USAGE_MEDIA)
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .build()
+                        AudioAttributes.Builder()
+                                .setUsage(AudioAttributes.USAGE_MEDIA)
+                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                .build()
                 )
                 mMusicNotificationManager = playerService.musicNotificationManager
             }
@@ -308,8 +309,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         setStatus(PLAYING)
         mediaPlayer.start()
         playerService.startForeground(
-            NOTIFICATION_ID,
-            mMusicNotificationManager.createNotification()
+                NOTIFICATION_ID,
+                mMusicNotificationManager.createNotification()
         )
     }
 
@@ -320,8 +321,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun release() {
         if (isMediaPlayer) {
             EqualizerUtils.closeAudioEffectSession(
-                playerService.applicationContext,
-                mediaPlayer!!.audioSessionId
+                    playerService.applicationContext,
+                    mediaPlayer!!.audioSessionId
             )
             mediaPlayer!!.release()
             mediaPlayer = null
@@ -346,7 +347,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             currentSong = mPlayingAlbumSongs[index]
         } catch (e: IndexOutOfBoundsException) {
             currentSong =
-                if (currentIndex != 0) mPlayingAlbumSongs[0] else mPlayingAlbumSongs[mPlayingAlbumSongs.size - 1]
+                    if (currentIndex != 0) mPlayingAlbumSongs[0] else mPlayingAlbumSongs[mPlayingAlbumSongs.size - 1]
             e.printStackTrace()
         }
         initMediaPlayer(currentSong!!)
@@ -395,13 +396,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     /* Sets the volume of the media player (scale is 1-100) */
     fun setPreciseVolume(percent: Int) {
-        val maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
-        currentVolumeInPercent = (percent * maxVolume) / 100
-        mAudioManager.setStreamVolume(
-            AudioManager.STREAM_MUSIC,
-            getNormalizedVolume(percent, true),
-            0
-        )
+        fun volFromPercent(percent: Int): Float {
+            if (percent == 100) return 1f
+            return (1 - (ln((101 - percent).toFloat()) / ln(101f)))
+        }
+        currentVolumeInPercent = percent
+        val new = volFromPercent(percent)
+        mediaPlayer!!.setVolume(new, new)
     }
 
     private inner class NotificationReceiver : BroadcastReceiver() {
