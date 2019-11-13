@@ -162,6 +162,10 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         if (sBound) unbindService(connection)
+        if (!mMediaPlayerHolder.isPlaying && mPlayerService.isRunning) {
+            mPlayerService.stopForeground(true)
+            stopService(mBindingIntent)
+        }
     }
 
     //restore recycler views state
@@ -685,6 +689,10 @@ class MainActivity : AppCompatActivity() {
     val mediaPlayerInterface = object : MediaPlayerInterface {
 
         override fun onClose() {
+            //stop service
+            mPlayerService.stopForeground(true)
+            stopService(mBindingIntent)
+
             //finish activity if visible
             finishAndRemoveTask()
         }
