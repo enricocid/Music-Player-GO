@@ -1,0 +1,4 @@
+Release di manutenzione che porta con se:
+- Correzioni al focus e al dialog di richiesta permessi
+- L'aggiornamento della libreria Indicator Fast Scroll by Reddit
+- Migliorie al meccanismo di caricamento della musica

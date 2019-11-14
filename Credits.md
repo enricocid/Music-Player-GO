@@ -6,7 +6,7 @@
 
 - [**Reddit**](https://github.com/reddit) for the wonderful [**Indicator Fast Scroll**](https://github.com/reddit/IndicatorFastScroll) library
 
-- [**Arianna Masciolini**](https://github.com/harisont) for the original precise volume control implementation
+- [**Steven Schoen**](https://github.com/DSteve595) for the search function [fixes](https://github.com/enricocid/Music-Player-GO/commit/1c27ff3421dbf7820608237dc60a974955efb022)
 
 - [**Aidan Afollestad**](https://github.com/afollestad) for the incredible [**material-dialogs**](https://github.com/afollestad/material-dialogs) library
 
@@ -19,8 +19,6 @@
 - [**IzzySoft**](https://github.com/IzzySoft) and [**Poussinou**](https://github.com/Poussinou) for setting up the **F-Droid** repository
 
 - [**Somesh Kumar**](https://github.com/TheSomeshKumar) for Hindi translations
-
-- [**Steven Schoen**](https://github.com/DSteve595) for the search function [fixes](https://github.com/enricocid/Music-Player-GO/commit/1c27ff3421dbf7820608237dc60a974955efb022)
 
 - [**TacoTheDank**](https://github.com/TacoTheDank) for upgrades to gradle and java 1.8
 
