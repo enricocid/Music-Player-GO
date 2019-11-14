@@ -9,7 +9,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.Utils
-import com.iven.musicplayergo.mMusicPlayerGoPreferences
+import com.iven.musicplayergo.musicPlayerGoPreferences
 
 class ColorsAdapter(private val activity: Activity) :
     RecyclerView.Adapter<ColorsAdapter.ColorsHolder>() {
@@ -37,7 +37,7 @@ class ColorsAdapter(private val activity: Activity) :
     private var mSelectedColor = R.color.blue
 
     init {
-        mSelectedColor = mMusicPlayerGoPreferences.accent
+        mSelectedColor = musicPlayerGoPreferences.accent
     }
 
     private fun getColorPosition(color: Int): Int {
@@ -77,7 +77,7 @@ class ColorsAdapter(private val activity: Activity) :
                     notifyItemChanged(getColorPosition(mSelectedColor))
                     mSelectedColor = mColors[adapterPosition]
                     colorOption.setImageResource(R.drawable.ic_checkbox_marked)
-                    mMusicPlayerGoPreferences.accent = mSelectedColor
+                    musicPlayerGoPreferences.accent = mSelectedColor
 
                     Handler().postDelayed({
                         Utils.applyNewThemeSmoothly(activity)

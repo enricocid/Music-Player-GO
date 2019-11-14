@@ -112,7 +112,9 @@ class MainActivity : AppCompatActivity() {
     ////music player things
 
     //view model
-    private lateinit var mViewModel: MusicViewModel
+    private val mViewModel: MusicViewModel by lazy {
+        ViewModelProviders.of(this).get(MusicViewModel::class.java)
+    }
     private lateinit var mAllDeviceSongs: MutableList<Music>
 
     //booleans
@@ -237,12 +239,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         //set ui theme
-        sThemeInverted = mMusicPlayerGoPreferences.isThemeInverted
-        mAccent = mMusicPlayerGoPreferences.accent
-        sSearchEnabled = mMusicPlayerGoPreferences.isSearchBarEnabled
-        mViewModel = ViewModelProviders.of(this).get(MusicViewModel::class.java)
+        sThemeInverted = musicPlayerGoPreferences.isThemeInverted
+        mAccent = musicPlayerGoPreferences.accent
+        sSearchEnabled = musicPlayerGoPreferences.isSearchBarEnabled
 
-        setTheme(Utils.resolveTheme(sThemeInverted, mMusicPlayerGoPreferences.accent))
+        setTheme(Utils.resolveTheme(sThemeInverted, musicPlayerGoPreferences.accent))
 
         setContentView(R.layout.main_activity)
 
@@ -339,13 +340,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadMusic() {
 
-        mViewModel.getMusic(this).observe(this, Observer {
-
-            mAllDeviceSongs = it.first
-            mMusic = it.second
+        mViewModel.loadMusic(this).observe(this, Observer { hasLoaded ->
 
             //setup all the views if there's something
-            if (mMusic.isNotEmpty()) {
+            if (hasLoaded && musicLibrary.allCategorizedMusic.isNotEmpty()) {
+
+                mAllDeviceSongs = musicLibrary.allSongsUnfiltered
+                mMusic = musicLibrary.allCategorizedMusic
 
                 setArtistsRecyclerView()
 
@@ -932,7 +933,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        mMusicPlayerGoPreferences.isThemeInverted = !sThemeInverted
+        musicPlayerGoPreferences.isThemeInverted = !sThemeInverted
         Utils.applyNewThemeSmoothly(this)
     }
 
@@ -940,7 +941,7 @@ class MainActivity : AppCompatActivity() {
     fun handleSearchBarVisibility(view: View) {
         if (::mSupportActionBar.isInitialized) {
             val newVisibility = !mSupportActionBar.isShowing
-            mMusicPlayerGoPreferences.isSearchBarEnabled = newVisibility
+            musicPlayerGoPreferences.isSearchBarEnabled = newVisibility
 
             val searchToggleButtonColor = when (newVisibility) {
                 false -> Color.GRAY
