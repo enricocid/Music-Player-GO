@@ -1,4 +1,4 @@
-Maintanance release that brings:
+Maintenance release that brings:
 - Fixes to focus and permissions dialog
 - Indicator Fast Scroll by Reddit version upgrade
 - Enhancements to music loading mechanism
