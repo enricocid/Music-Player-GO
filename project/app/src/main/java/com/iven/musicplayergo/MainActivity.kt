@@ -269,6 +269,7 @@ class MainActivity : AppCompatActivity() {
 
         MaterialDialog(this).show {
 
+            cancelOnTouchOutside(false)
             cornerRadius(res = R.dimen.md_corner_radius)
             title(R.string.app_name)
             message(R.string.perm_rationale)
