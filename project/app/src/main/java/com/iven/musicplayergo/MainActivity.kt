@@ -164,7 +164,7 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         if (sBound) unbindService(connection)
-        if (!mMediaPlayerHolder.isPlaying && mPlayerService.isRunning) {
+        if (::mMediaPlayerHolder.isInitialized && !mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning) {
             mPlayerService.stopForeground(true)
             stopService(mBindingIntent)
         }
