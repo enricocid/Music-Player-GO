@@ -9,8 +9,8 @@ android {
         applicationId "com.iven.musicplayergo"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 129
-        versionName "3.6.9"
+        versionCode 130
+        versionName "3.6.9.1"
     }
 
     //retrieve version number
