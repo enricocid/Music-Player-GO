@@ -2,95 +2,87 @@ package com.iven.musicplayergo
 
 import android.Manifest
 import android.animation.Animator
-import android.annotation.SuppressLint
 import android.annotation.TargetApi
-import android.content.*
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
 import android.content.pm.PackageManager
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.os.Parcelable
-import android.view.Menu
 import android.view.View
 import android.view.ViewAnimationUtils
-import android.view.ViewTreeObserver
-import android.widget.*
-import androidx.appcompat.app.ActionBar
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.SeekBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.iven.musicplayergo.adapters.AlbumsAdapter
-import com.iven.musicplayergo.adapters.ArtistsAdapter
-import com.iven.musicplayergo.adapters.ColorsAdapter
 import com.iven.musicplayergo.adapters.SongsAdapter
+import com.iven.musicplayergo.fragments.AllMusicFragment
+import com.iven.musicplayergo.fragments.ArtistsFragment
+import com.iven.musicplayergo.fragments.SettingsFragment
 import com.iven.musicplayergo.music.Album
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.music.MusicViewModel
 import com.iven.musicplayergo.player.*
-import com.reddit.indicatorfastscroll.FastScrollItemIndicator
-import com.reddit.indicatorfastscroll.FastScrollerThumbView
-import com.reddit.indicatorfastscroll.FastScrollerView
+import com.iven.musicplayergo.ui.ThemeHelper
+import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.ui.Utils
 import kotlinx.android.synthetic.main.artist_details.*
 import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.player_controls_panel.*
 import kotlinx.android.synthetic.main.player_seek.*
-import kotlinx.android.synthetic.main.player_settings.*
-import kotlinx.android.synthetic.main.search_toolbar.*
 import kotlin.math.hypot
 
 @Suppress("UNUSED_PARAMETER")
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), UIControlInterface {
+
+    //fragments
+    private lateinit var mArtistsFragment: ArtistsFragment
+    private lateinit var mAllMusicFragment: AllMusicFragment
+    private lateinit var mSettingsFragment: SettingsFragment
 
     ////preferences
     private var sThemeInverted: Boolean = false
     private var mAccent: Int = R.color.blue
-    private var sSearchEnabled: Boolean = true
-
 
     ////views
-
-    //indicator fast scroller by reddit
-    private lateinit var mIndicatorFastScrollerView: FastScrollerView
-    private lateinit var mIndicatorFastScrollThumb: FastScrollerThumbView
+    private lateinit var mViewPager: ViewPager
 
     //RecyclerViews
-    private lateinit var mArtistsRecyclerView: RecyclerView
     private lateinit var mAlbumsRecyclerView: RecyclerView
     private lateinit var mSongsRecyclerView: RecyclerView
 
-    private lateinit var mArtistsAdapter: ArtistsAdapter
     private lateinit var mAlbumsAdapter: AlbumsAdapter
     private lateinit var mSongsAdapter: SongsAdapter
 
-    private lateinit var mArtistsLayoutManager: LinearLayoutManager
     private lateinit var mAlbumsLayoutManager: LinearLayoutManager
     private lateinit var mSongsLayoutManager: LinearLayoutManager
 
-    private lateinit var mSavedArtistRecyclerLayoutState: Parcelable
     private lateinit var mSavedAlbumsRecyclerLayoutState: Parcelable
     private lateinit var mSavedSongsRecyclerLayoutState: Parcelable
 
-    //search bar
-    private lateinit var mSupportActionBar: ActionBar
-
     //settings/controls panel
     private lateinit var mControlsContainer: LinearLayout
-    private lateinit var mColorsRecyclerView: RecyclerView
-    private lateinit var mBottomSheetBehavior: BottomSheetBehavior<View>
+
     private lateinit var mPlayerInfoView: View
     private lateinit var mPlayingAlbum: TextView
     private lateinit var mPlayingSong: TextView
@@ -100,7 +92,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mSkipPrevButton: ImageView
     private lateinit var mPlayPauseButton: ImageView
     private lateinit var mSkipNextButton: ImageView
-    private lateinit var mSearchToggleButton: ImageView
 
     //artists details
     private lateinit var mArtistDetails: LinearLayout
@@ -115,6 +106,7 @@ class MainActivity : AppCompatActivity() {
     private val mViewModel: MusicViewModel by lazy {
         ViewModelProviders.of(this).get(MusicViewModel::class.java)
     }
+
     private lateinit var mAllDeviceSongs: MutableList<Music>
 
     //booleans
@@ -123,11 +115,9 @@ class MainActivity : AppCompatActivity() {
 
     //music
     private lateinit var mMusic: Map<String, Map<String?, List<Music>>>
-    private lateinit var mArtists: MutableList<String>
     private lateinit var mSelectedArtistSongs: MutableList<Music>
     private lateinit var mSelectedArtistAlbums: List<Album>
     private var mNavigationArtist: String? = "unknown"
-    private var mFilteredArtists: List<String>? = null
 
     //player
     private lateinit var mMediaPlayerHolder: MediaPlayerHolder
@@ -137,7 +127,7 @@ class MainActivity : AppCompatActivity() {
     private var sBound: Boolean = false
     private lateinit var mBindingIntent: Intent
 
-    /** Defines callbacks for service binding, passed to bindService()  */
+    // Defines callbacks for service binding, passed to bindService()
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(componentName: ComponentName, service: IBinder) {
             val binder = service as PlayerService.LocalBinder
@@ -173,8 +163,7 @@ class MainActivity : AppCompatActivity() {
     //restore recycler views state
     override fun onResume() {
         super.onResume()
-        if (::mSavedArtistRecyclerLayoutState.isInitialized && ::mSavedAlbumsRecyclerLayoutState.isInitialized && ::mSavedSongsRecyclerLayoutState.isInitialized) {
-            mArtistsLayoutManager.onRestoreInstanceState(mSavedArtistRecyclerLayoutState)
+        if (::mSavedAlbumsRecyclerLayoutState.isInitialized && ::mSavedSongsRecyclerLayoutState.isInitialized) {
             mAlbumsLayoutManager.onRestoreInstanceState(mSavedAlbumsRecyclerLayoutState)
             mSongsLayoutManager.onRestoreInstanceState(mSavedSongsRecyclerLayoutState)
         }
@@ -185,8 +174,7 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         if (::mMediaPlayerHolder.isInitialized && mMediaPlayerHolder.isMediaPlayer) mMediaPlayerHolder.onPauseActivity()
-        if (::mArtistsLayoutManager.isInitialized && ::mAlbumsLayoutManager.isInitialized && ::mSongsLayoutManager.isInitialized) {
-            mSavedArtistRecyclerLayoutState = mArtistsLayoutManager.onSaveInstanceState()!!
+        if (::mAlbumsLayoutManager.isInitialized && ::mSongsLayoutManager.isInitialized) {
             mSavedAlbumsRecyclerLayoutState = mAlbumsLayoutManager.onSaveInstanceState()!!
             mSavedSongsRecyclerLayoutState = mSongsLayoutManager.onSaveInstanceState()!!
         }
@@ -194,35 +182,7 @@ class MainActivity : AppCompatActivity() {
 
     //manage bottom panel state on back pressed
     override fun onBackPressed() {
-        when (mBottomSheetBehavior.state) {
-            BottomSheetBehavior.STATE_EXPANDED -> {
-                mBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            }
-            else -> {
-                if (sArtistDiscographyExpanded) revealArtistDetails(false) else super.onBackPressed()
-            }
-        }
-    }
-
-    //inflate search menu
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        if (::mArtistsAdapter.isInitialized) {
-            menuInflater.inflate(R.menu.search_menu, menu)
-
-            val search = menu!!.findItem(R.id.search)
-            val searchView = search.actionView as SearchView
-
-            searchView.setIconifiedByDefault(false)
-            Utils.setupSearch(searchView, mArtists, onResultsChanged = { newResults ->
-                mFilteredArtists = if (newResults.isEmpty()) {
-                    null
-                } else {
-                    newResults
-                }
-                mArtistsAdapter.setArtists(mFilteredArtists ?: mArtists)
-            })
-        }
-        return super.onCreateOptionsMenu(menu)
+        if (sArtistDiscographyExpanded) revealArtistDetails(false) else super.onBackPressed()
     }
 
     //manage request permission result, continue loading ui if permissions was granted
@@ -235,15 +195,38 @@ class MainActivity : AppCompatActivity() {
         if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED) showPermissionRationale() else doBindService()
     }
 
+    override fun onSongSelected(song: Music, album: List<Music>) {
+        startPlayback(song, album)
+    }
+
+    override fun onArtistSelected(artist: String) {
+
+        if (mNavigationArtist != artist) {
+            mNavigationArtist = artist
+            setArtistDetails()
+            revealArtistDetails(true)
+        } else {
+            revealArtistDetails(true)
+        }
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus && goPreferences.isImmersive) ThemeHelper.goImmersive(
+            this,
+            hasFocus
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //set ui theme
-        sThemeInverted = musicPlayerGoPreferences.isThemeInverted
-        mAccent = musicPlayerGoPreferences.accent
-        sSearchEnabled = musicPlayerGoPreferences.isSearchBarEnabled
+        sThemeInverted = ThemeHelper.isThemeNight()
+        mAccent = goPreferences.accent
 
-        setTheme(Utils.resolveTheme(sThemeInverted, musicPlayerGoPreferences.accent))
+        setTheme(ThemeHelper.getAccent(mAccent).first)
+        ThemeHelper.applyTheme(this, goPreferences.theme!!)
 
         setContentView(R.layout.main_activity)
 
@@ -281,24 +264,15 @@ class MainActivity : AppCompatActivity() {
                 )
             }
             negativeButton {
-                Utils.makeUnknownErrorToast(this@MainActivity, R.string.perm_rationale)
+                Utils.makeToast(
+                    this@MainActivity,
+                    R.string.perm_rationale,
+                    R.drawable.ic_error,
+                    R.color.red
+                )
                 dismiss()
                 finishAndRemoveTask()
             }
-        }
-    }
-
-    fun openGitPage(@Suppress("UNUSED_PARAMETER") view: View) {
-        try {
-            startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("https://github.com/enricocid/Music-Player-GO")
-                )
-            )
-        } catch (e: ActivityNotFoundException) {
-            Utils.makeUnknownErrorToast(this, R.string.no_browser)
-            e.printStackTrace()
         }
     }
 
@@ -329,12 +303,22 @@ class MainActivity : AppCompatActivity() {
 
                     startPlayback(song, albumSongs)
                 } else {
-                    Utils.makeUnknownErrorToast(this, R.string.error_unknown)
+                    Utils.makeToast(
+                        this@MainActivity,
+                        R.string.error_unknown,
+                        R.drawable.ic_error,
+                        R.color.red
+                    )
                     finishAndRemoveTask()
                 }
             }
         } catch (e: Exception) {
-            Utils.makeUnknownErrorToast(this, R.string.error_unknown)
+            Utils.makeToast(
+                this@MainActivity,
+                R.string.error_unknown,
+                R.drawable.ic_error,
+                R.color.red
+            )
             finishAndRemoveTask()
         }
     }
@@ -346,10 +330,18 @@ class MainActivity : AppCompatActivity() {
             //setup all the views if there's something
             if (hasLoaded && musicLibrary.allCategorizedMusic.isNotEmpty()) {
 
+                mArtistsFragment = ArtistsFragment.newInstance()
+                mAllMusicFragment = AllMusicFragment.newInstance()
+                mSettingsFragment = SettingsFragment.newInstance()
+
+                val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
+                mViewPager.adapter = pagerAdapter
+
                 mAllDeviceSongs = musicLibrary.allSongsUnfiltered
                 mMusic = musicLibrary.allCategorizedMusic
 
-                setArtistsRecyclerView()
+                mNavigationArtist = MusicUtils.getArtists(mMusic)[0]
+                setArtistDetails()
 
                 //let's get intent from external app and open the song,
                 //else restore the player (normal usage)
@@ -359,7 +351,12 @@ class MainActivity : AppCompatActivity() {
                     restorePlayerStatus()
 
             } else {
-                Utils.makeUnknownErrorToast(this, R.string.error_no_music)
+                Utils.makeToast(
+                    this@MainActivity,
+                    R.string.error_no_music,
+                    R.drawable.ic_error,
+                    R.color.red
+                )
                 finish()
             }
         })
@@ -367,19 +364,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun getViews() {
 
-        //indicator fast scroller view
-        mIndicatorFastScrollerView = fastscroller
-        mIndicatorFastScrollThumb = fastscroller_thumb
+        mViewPager = pager
 
         //recycler views
-        mArtistsRecyclerView = artists_rv
         mAlbumsRecyclerView = albums_rv
         mSongsRecyclerView = songs_rv
-        mColorsRecyclerView = colors_rv
 
         //controls panel
         mControlsContainer = controls_container
-        mBottomSheetBehavior = BottomSheetBehavior.from(design_bottom_sheet)
+        //mBottomSheetBehavior = BottomSheetBehavior.from(design_bottom_sheet)
         mPlayerInfoView = player_info
         mPlayingSong = playing_song
         mPlayingAlbum = playing_album
@@ -389,7 +382,6 @@ class MainActivity : AppCompatActivity() {
         mSkipPrevButton = skip_prev_button
         mPlayPauseButton = play_pause_button
         mSkipNextButton = skip_next_button
-        mSearchToggleButton = search_option
 
         //artist details
         mArtistDetails = artist_details
@@ -399,33 +391,33 @@ class MainActivity : AppCompatActivity() {
         mArtistDetailsSelectedDiscYear = selected_disc_year
     }
 
-    private fun setupViews() {
-        //set custom color to background
-        val accent = Utils.getColor(this, mAccent, R.color.blue)
-        main.setBackgroundColor(
-            if (sThemeInverted) Utils.darkenColor(accent, 0.95F) else Utils.lightenColor(
-                accent,
-                0.90F
-            )
-        )
+    private fun handleOnNavigationItemSelected(itemId: Int): Fragment {
 
-        //setup search view
-        setSupportActionBar(search_toolbar)
-        if (supportActionBar != null) {
-            mSupportActionBar = supportActionBar!!
-            mSupportActionBar.setDisplayShowTitleEnabled(false)
-            if (!sSearchEnabled) mSupportActionBar.hide()
+        return when (itemId) {
+            0 -> mArtistsFragment
+            1 -> mAllMusicFragment
+            else -> mSettingsFragment
         }
+    }
+
+    /**
+     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+     * sequence.
+     */
+    private inner class ScreenSlidePagerAdapter(fm: FragmentManager) :
+        FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        override fun getCount(): Int = 3
+
+        override fun getItem(position: Int): Fragment {
+            return handleOnNavigationItemSelected(position)
+        }
+    }
+
+    private fun setupViews() {
 
         close_button.setOnClickListener { revealArtistDetails(!sArtistDiscographyExpanded) }
 
-        mControlsContainer.afterMeasured {
-            container.setPadding(0, 0, 0, height)
-            mBottomSheetBehavior.peekHeight = height
-        }
-
         setupPlayerControls()
-        setupSettings()
         initializeSeekBar()
     }
 
@@ -448,6 +440,11 @@ class MainActivity : AppCompatActivity() {
                 if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
                 mSongsAdapter.randomPlaySelectedAlbum(mMediaPlayerHolder)
             }
+        }
+
+        volume.setOnLongClickListener {
+            openEqualizer()
+            return@setOnLongClickListener true
         }
     }
 
@@ -482,108 +479,6 @@ class MainActivity : AppCompatActivity() {
                 mMediaPlayerHolder.seekTo(userSelectedPosition)
             }
         })
-    }
-
-    private fun setupSettings() {
-
-        if (!sSearchEnabled) search_option.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN)
-        if (!EqualizerUtils.hasEqualizer(this)) equalizer.setColorFilter(
-            Color.GRAY,
-            PorterDuff.Mode.SRC_IN
-        )
-
-        mColorsRecyclerView.layoutManager =
-            LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        val colorsAdapter = ColorsAdapter(this)
-        mColorsRecyclerView.adapter = colorsAdapter
-    }
-
-    private fun setArtistsRecyclerView() {
-
-        mArtists = MusicUtils.getArtists(mMusic)
-        mNavigationArtist = mArtists[0]
-
-        //set the search menu
-        invalidateOptionsMenu()
-
-        //set the artists list
-        mArtistsRecyclerView.setHasFixedSize(true)
-
-        mArtistsLayoutManager = LinearLayoutManager(this)
-        mArtistsRecyclerView.layoutManager = mArtistsLayoutManager
-        mArtistsAdapter = ArtistsAdapter(resources, mArtists, mMusic)
-
-        mArtistsRecyclerView.adapter = mArtistsAdapter
-
-        mArtistsAdapter.onArtistClick = { artist ->
-            if (mNavigationArtist != artist) {
-                mNavigationArtist = artist
-                setArtistDetails()
-                revealArtistDetails(true)
-            } else {
-                revealArtistDetails(true)
-            }
-        }
-
-        setupIndicatorFastScrollerView()
-
-        setArtistDetails()
-    }
-
-    @SuppressLint("DefaultLocale")
-    private fun setupIndicatorFastScrollerView() {
-        //set indexes if artists rv is scrollable
-        mArtistsRecyclerView.afterMeasured {
-            if (mArtistsRecyclerView.computeVerticalScrollRange() > height) {
-
-                mIndicatorFastScrollerView.setupWithRecyclerView(
-                    mArtistsRecyclerView,
-                    { position ->
-                        val item = (mFilteredArtists ?: mArtists)[position] // Get your model object
-                        // or fetch the section at [position] from your database
-
-                        FastScrollItemIndicator.Text(
-                            item.substring(
-                                0,
-                                1
-                            ).toUpperCase() // Grab the first letter and capitalize it
-                        ) // Return a text indicator
-                    }
-                )
-
-                mIndicatorFastScrollerView.textColor =
-                    ColorStateList.valueOf(ContextCompat.getColor(this@MainActivity, mAccent))
-                mIndicatorFastScrollerView.afterMeasured {
-
-                    //set margin for artists recycler to improve fast scroller visibility
-                    mArtistsRecyclerView.setPadding(0, 0, width, 0)
-
-                    //set margin for thumb view
-                    val newLayoutParams =
-                        mIndicatorFastScrollThumb.layoutParams as FrameLayout.LayoutParams
-                    newLayoutParams.marginEnd = width
-                    mIndicatorFastScrollThumb.layoutParams = newLayoutParams
-                }
-                mIndicatorFastScrollThumb.setupWithFastScroller(mIndicatorFastScrollerView)
-
-                mIndicatorFastScrollerView.useDefaultScroller = false
-                mIndicatorFastScrollerView.itemIndicatorSelectedCallbacks += object :
-                    FastScrollerView.ItemIndicatorSelectedCallback {
-                    override fun onItemIndicatorSelected(
-                        indicator: FastScrollItemIndicator,
-                        indicatorCenterY: Int,
-                        itemPosition: Int
-                    ) {
-                        val artistsLayoutManager =
-                            mArtistsRecyclerView.layoutManager as LinearLayoutManager
-                        artistsLayoutManager.scrollToPositionWithOffset(itemPosition, 0)
-                    }
-                }
-
-            } else {
-                mIndicatorFastScrollerView.visibility = View.GONE
-            }
-        }
     }
 
     private fun setArtistDetails() {
@@ -659,7 +554,7 @@ class MainActivity : AppCompatActivity() {
         mMediaPlayerHolder.initMediaPlayer(song)
     }
 
-    fun shuffleSongs(view: View) {
+    override fun onShuffleSongs() {
         if (::mMediaPlayerHolder.isInitialized) {
             val songs = if (sArtistDiscographyExpanded) mSelectedArtistSongs else mAllDeviceSongs
             songs.shuffle()
@@ -795,16 +690,20 @@ class MainActivity : AppCompatActivity() {
         return isPlayer
     }
 
-    fun openEqualizer(view: View) {
+    private fun openEqualizer() {
         if (EqualizerUtils.hasEqualizer(this)) {
             if (checkIsPlayer()) mMediaPlayerHolder.openEqualizer(this)
         } else {
-            Utils.makeUnknownErrorToast(this, R.string.no_eq)
+            Utils.makeToast(
+                this@MainActivity,
+                R.string.no_eq,
+                R.drawable.ic_error,
+                R.color.red
+            )
         }
     }
 
     fun openVolDialog(view: View) {
-
         if (checkIsPlayer()) {
 
             MaterialDialog(this).show {
@@ -842,11 +741,11 @@ class MainActivity : AppCompatActivity() {
     //method to reveal/hide artist details, it is a simple reveal animation
     private fun revealArtistDetails(show: Boolean) {
 
-        val viewToRevealHeight = mArtistsRecyclerView.height
+        val viewToRevealHeight = mViewPager.height
         val viewToRevealWidth = mAlbumsRecyclerView.width
         val viewToRevealHalfWidth = viewToRevealWidth / 2
         val radius = hypot(viewToRevealWidth.toDouble(), viewToRevealHeight.toDouble()).toFloat()
-        val fromY = mArtistsRecyclerView.top / 2
+        val fromY = mViewPager.top / 2
         val startRadius = if (show) 0f else radius
         val finalRadius = if (show) radius else 0f
 
@@ -870,11 +769,8 @@ class MainActivity : AppCompatActivity() {
                 if (show) {
                     sArtistDiscographyExpanded = true
                     mArtistDetails.visibility = View.VISIBLE
-                    mArtistsRecyclerView.visibility = View.INVISIBLE
+                    mViewPager.visibility = View.INVISIBLE
                     mArtistDetails.isClickable = false
-                    mSearchToggleButton.visibility = View.GONE
-                    mIndicatorFastScrollerView.visibility = View.GONE
-                    if (sSearchEnabled && ::mSupportActionBar.isInitialized && mSupportActionBar.isShowing) mSupportActionBar.hide()
                 }
             }
 
@@ -882,11 +778,8 @@ class MainActivity : AppCompatActivity() {
                 if (!show) {
                     sArtistDiscographyExpanded = false
                     mArtistDetails.visibility = View.INVISIBLE
-                    mArtistsRecyclerView.visibility = View.VISIBLE
+                    mViewPager.visibility = View.VISIBLE
                     mArtistDetails.isClickable = true
-                    if (sSearchEnabled && ::mSupportActionBar.isInitialized && !mSupportActionBar.isShowing) mSupportActionBar.show()
-                    mSearchToggleButton.visibility = View.VISIBLE
-                    mIndicatorFastScrollerView.visibility = View.VISIBLE
                 }
             }
 
@@ -906,8 +799,9 @@ class MainActivity : AppCompatActivity() {
             val album = currentSong!!.album
             val artist = currentSong.artist
             //do only if we are not on played artist/album details
+
             if (mNavigationArtist != artist) {
-                mArtistsAdapter.onArtistClick?.invoke(artist)
+                // mArtistsAdapter.onArtistClick?.invoke(artist)
                 val playingAlbumPosition =
                     MusicUtils.getAlbumPositionInList(album, mSelectedArtistAlbums)
                 mAlbumsAdapter.swapSelectedAlbum(playingAlbumPosition)
@@ -921,50 +815,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //handle theme changes
-    fun invertTheme(view: View) {
-        //avoid service killing when the player is in paused state
-        if (::mMediaPlayerHolder.isInitialized && mMediaPlayerHolder.isPlaying) {
-            if (mMediaPlayerHolder.state == PAUSED) {
-                mPlayerService.startForeground(
-                    NOTIFICATION_ID,
-                    mPlayerService.musicNotificationManager.createNotification()
-                )
-                mPlayerService.isRestoredFromPause = true
-            }
-        }
-
-        musicPlayerGoPreferences.isThemeInverted = !sThemeInverted
-        Utils.applyNewThemeSmoothly(this)
-    }
-
-    //hide/show search bar dynamically
-    fun handleSearchBarVisibility(view: View) {
-        if (::mSupportActionBar.isInitialized) {
-            val newVisibility = !mSupportActionBar.isShowing
-            musicPlayerGoPreferences.isSearchBarEnabled = newVisibility
-
-            val searchToggleButtonColor = when (newVisibility) {
-                false -> Color.GRAY
-                true -> if (sThemeInverted) Color.WHITE else Color.BLACK
-            }
-            mSearchToggleButton.setColorFilter(searchToggleButtonColor, PorterDuff.Mode.SRC_IN)
-            if (mSupportActionBar.isShowing) mSupportActionBar.hide() else mSupportActionBar.show()
-            sSearchEnabled = newVisibility
-        }
-    }
-
-    //viewTreeObserver extension to measure layout params
-    //https://antonioleiva.com/kotlin-ongloballayoutlistener/
-    private inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
-        viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                if (measuredWidth > 0 && measuredHeight > 0) {
-                    viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    f()
-                }
-            }
-        })
+    override fun onVisibleItemsUpdated() {
+        if (::mArtistsFragment.isInitialized && mArtistsFragment.isAdded) mArtistsFragment.updateArtistsList()
     }
 }

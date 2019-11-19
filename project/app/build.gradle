@@ -9,8 +9,8 @@ android {
         applicationId "com.iven.musicplayergo"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 130
-        versionName "3.6.9.1"
+        versionCode 129
+        versionName "3.6.9"
     }
 
     //retrieve version number
@@ -50,10 +50,11 @@ dependencies {
     implementation 'androidx.media:media:1.1.0'
     implementation 'androidx.preference:preference-ktx:1.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    api 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.afollestad.material-dialogs:core:3.1.1'
     implementation 'com.reddit:indicator-fast-scroll:1.2.1'
     implementation 'com.pranavpandey.android:dynamic-toasts:3.0.1'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1"
+    implementation 'com.afollestad:recyclical:1.1.1'
 }

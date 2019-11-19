@@ -14,7 +14,7 @@ import android.provider.MediaStore.Audio.AudioColumns
 import android.text.Html
 import android.text.Spanned
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.Utils
+import com.iven.musicplayergo.ui.Utils
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -243,7 +243,7 @@ object MusicUtils {
                 cursor.close()
             }
         } catch (e: Exception) {
-            Utils.makeUnknownErrorToast(context, R.string.error_unknown)
+            Utils.makeToast(context, R.string.error_unknown, R.drawable.ic_error, R.color.red)
             e.printStackTrace()
         }
         return returnedString

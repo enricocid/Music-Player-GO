@@ -1,17 +1,20 @@
 package com.iven.musicplayergo.adapters
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.card.MaterialCardView
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.Utils
 import com.iven.musicplayergo.music.Album
+import com.iven.musicplayergo.ui.Utils
 import kotlinx.android.synthetic.main.album_item.view.*
 
-class AlbumsAdapter(private val albums: List<Album>, private val accent: Int, private val isThemeInverted: Boolean) :
+class AlbumsAdapter(
+    private val albums: List<Album>,
+    private val accent: Int,
+    private val isThemeInverted: Boolean
+) :
     RecyclerView.Adapter<AlbumsAdapter.AlbumsHolder>() {
 
     var onAlbumClick: ((String?) -> Unit)? = null
@@ -29,10 +32,14 @@ class AlbumsAdapter(private val albums: List<Album>, private val accent: Int, pr
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumsHolder {
 
-        val albumView = LayoutInflater.from(parent.context).inflate(R.layout.album_item, parent, false)
-        val materialCardView = albumView as MaterialCardView
+        val albumView =
+            LayoutInflater.from(parent.context).inflate(R.layout.album_item, parent, false)
+        val materialCardView = albumView as CardView
         val backgroundColor =
-            if (isThemeInverted) Utils.darkenColor(accent, 0.85F) else Utils.lightenColor(accent, 0.80F)
+            if (isThemeInverted) Utils.darkenColor(accent, 0.85F) else Utils.lightenColor(
+                accent,
+                0.80F
+            )
         materialCardView.setCardBackgroundColor(backgroundColor)
 
         return AlbumsHolder(albumView)
@@ -52,10 +59,10 @@ class AlbumsAdapter(private val albums: List<Album>, private val accent: Int, pr
 
         fun bindItems(title: String?, year: String?) {
 
-            val albumCard = itemView as MaterialCardView
+            val albumCard = itemView as CardView
 
-            if (mSelectedPosition != adapterPosition) albumCard.strokeColor =
-                Color.TRANSPARENT else albumCard.strokeColor = accent
+            /*         if (mSelectedPosition != adapterPosition) albumCard.strokeColor =
+                         Color.TRANSPARENT else albumCard.strokeColor = accent*/
 
             itemView.album.text = title
             itemView.year.text = year
@@ -63,7 +70,7 @@ class AlbumsAdapter(private val albums: List<Album>, private val accent: Int, pr
                 if (adapterPosition != mSelectedPosition) {
                     notifyItemChanged(mSelectedPosition)
                     mSelectedPosition = adapterPosition
-                    albumCard.strokeColor = accent
+                    //   albumCard.strokeColor = accent
                     mSelectedAlbum = title
                     onAlbumClick?.invoke(title)
                 }

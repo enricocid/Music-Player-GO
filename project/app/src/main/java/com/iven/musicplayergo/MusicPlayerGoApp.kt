@@ -3,7 +3,7 @@ package com.iven.musicplayergo
 import android.app.Application
 import com.iven.musicplayergo.music.MusicLibrary
 
-val musicPlayerGoPreferences: MusicPlayerGoPreferences by lazy {
+val goPreferences: MusicPlayerGoPreferences by lazy {
     MusicPlayerGoApp.prefs
 }
 

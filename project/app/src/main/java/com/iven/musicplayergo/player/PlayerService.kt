@@ -1,11 +1,9 @@
-package com.iven.musicplayergo
+package com.iven.musicplayergo.player
 
 import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
-import com.iven.musicplayergo.player.MediaPlayerHolder
-import com.iven.musicplayergo.player.MusicNotificationManager
 
 class PlayerService : Service() {
 

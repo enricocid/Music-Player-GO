@@ -1,51 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/main"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+    <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <LinearLayout
+        <!-- ARTIST'S DISCOGRAPHY -->
+        <include layout="@layout/artist_details" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent" />
 
-        <include layout="@layout/search_toolbar"/>
+    </FrameLayout>
 
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:id="@+id/container"
-                android:layout_height="match_parent">
 
-            <!-- ARTISTS LIST -->
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/artists_rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:context=".MainActivity"/>
-
-            <!-- ARTIST'S DISCOGRAPHY -->
-            <include layout="@layout/artist_details"/>
-
-            <com.reddit.indicatorfastscroll.FastScrollerView
-                    android:id="@+id/fastscroller"
-                    android:layout_width="32dp"
-                    android:layout_gravity="end"
-                    android:layout_height="match_parent"
-                    android:textAppearance="@style/IndicatorTextAppearance"/>
-
-            <com.reddit.indicatorfastscroll.FastScrollerThumbView
-                    android:id="@+id/fastscroller_thumb"
-                    android:layout_width="56dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="end"
-                    android:textAppearance="@style/IndicatorThumbTextAppearance"/>
-        </FrameLayout>
-    </LinearLayout>
+    <!-- <com.google.android.material.tabs.TabLayout
+         android:id="@+id/tab_layout"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:elevation="6dp" />
+ </androidx.viewpager.widget.ViewPager>-->
 
     <!-- CONTROLS PANEL -->
-    <include layout="@layout/player_controls_panel"/>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <include layout="@layout/player_controls_panel" />
+</LinearLayout>

@@ -15,7 +15,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.PowerManager
 import com.iven.musicplayergo.MainActivity
-import com.iven.musicplayergo.PlayerService
+import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.music.Music
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -80,7 +80,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
             }
             // Update the player state based on the change
-            if (mediaPlayer != null) configurePlayerState()
+            if (mediaPlayer != null && goPreferences.isFocusEnabled) configurePlayerState()
         }
 
     //media player
@@ -413,17 +413,24 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                         }
                     }
 
-                    BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (currentSong != null) pauseMediaPlayer()
-                    BluetoothDevice.ACTION_ACL_CONNECTED -> if (currentSong != null) resumeMediaPlayer()
-                    Intent.ACTION_HEADSET_PLUG -> if (currentSong != null) {
+                    BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (currentSong != null && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
+                    BluetoothDevice.ACTION_ACL_CONNECTED -> if (currentSong != null && goPreferences.isHeadsetPlugEnabled) resumeMediaPlayer()
+
+                    AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED ->
+                        when (intent.getIntExtra(AudioManager.EXTRA_SCO_AUDIO_STATE, -1)) {
+                            AudioManager.SCO_AUDIO_STATE_CONNECTED -> if (currentSong != null && goPreferences.isHeadsetPlugEnabled) resumeMediaPlayer()
+                            AudioManager.SCO_AUDIO_STATE_DISCONNECTED -> if (currentSong != null && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
+                        }
+
+                    Intent.ACTION_HEADSET_PLUG -> if (currentSong != null && goPreferences.isHeadsetPlugEnabled) {
                         when (intent.getIntExtra("state", -1)) {
                             //0 means disconnected
-                            HEADSET_DISCONNECTED -> pauseMediaPlayer()
+                            HEADSET_DISCONNECTED -> if (currentSong != null && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
                             //1 means connected
-                            HEADSET_CONNECTED -> resumeMediaPlayer()
+                            HEADSET_CONNECTED -> if (currentSong != null && goPreferences.isHeadsetPlugEnabled) resumeMediaPlayer()
                         }
                     }
-                    AudioManager.ACTION_AUDIO_BECOMING_NOISY -> if (isPlaying) pauseMediaPlayer()
+                    AudioManager.ACTION_AUDIO_BECOMING_NOISY -> if (isPlaying && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
                 }
             }
         }

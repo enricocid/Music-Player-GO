@@ -1,18 +1,85 @@
 <resources>
+
     <string name="app_name" translatable="false">Music Player GO</string>
-    <string name="unknown_year" translatable="false">N&#x2F;A</string>
-    <string name="no_eq">No equalizer found!</string>
-    <string name="bad_id">Play a song first!</string>
+    <string name="space_delimiter" translatable="false">&#160;</string>
+    <string name="underscore_delimiter" translatable="false">&#95;</string>
+
+    <!-- Main - Artists -->
+    <string name="artists">Artists</string>
     <string name="artist_info">%1d&#160;Albums,&#160;%2d&#160;Tracks</string>
     <string name="playing_song" translatable="false">&lt;b>%1s&lt;/b>&lt;br/>%2s</string>
-    <string name="no_browser">No browser found!</string>
-    <string name="perm_rationale">Music Player GO needs access to your files to play music!</string>
-    <string name="error_no_music">No music found on your phone!</string>
-    <string name="volume">Volume %1s</string>
-    <string name="error_unknown">Something went wrong! :(</string>
 
-    <!-- Preferences keys -->
-    <string name="prefs_accent" translatable="false">com.iven.musicplayergo.pref_accent</string>
-    <string name="prefs_theme" translatable="false">com.iven.musicplayergo.pref_theme</string>
-    <string name="prefs_search_bar" translatable="false">com.iven.musicplayergo.pref_search_bar</string>
+    <!-- Main - All songs -->
+    <string name="songs">All songs</string>
+    <string name="artist_and_album">%1s&#160;-&#160;%2s</string>
+
+    <!-- Details -->
+    <string name="unknown_year" translatable="false">N&#x2F;A</string>
+    <string name="volume">Volume %1s</string>
+
+    <!-- Messages -->
+    <string name="perm_rationale">Music Player GO needs access to your files to play music!</string>
+    <string name="no_browser">No browser found!</string>
+    <string name="bad_id">Play a song first!</string>
+    <string name="no_eq">No equalizer found!</string>
+    <string name="error_no_music">No music found on your phone!</string>
+    <string name="error_unknown">Something went wrong! :(</string>
+    <string name="error_get_resource">Oops!! Not found!</string>
+
+    <!-- Settings -->
+    <!-- Preferences -->
+    <string name="settings">Settings</string>
+    <string name="category_appearance">Appearance</string>
+    <string name="category_general">General</string>
+
+    <string name="theme_pref" translatable="false">theme_pref</string>
+    <string name="theme_pref_title">Theme</string>
+    <string name="theme_pref_light_title">Light</string>
+    <string name="theme_pref_dark_title">Dark</string>
+    <string name="theme_pref_auto_title">Automatic</string>
+
+    <string name="theme_pref_light" translatable="false">theme_pref_light</string>
+    <string name="theme_pref_dark" translatable="false">theme_pref_dark</string>
+    <string name="theme_pref_auto" translatable="false">theme_pref_auto</string>
+
+    <string name="accent_pref" translatable="false">accent_pref</string>
+    <string name="accent_pref_title">Accent</string>
+
+    <string name="immersive_pref" translatable="false">immersive_pref</string>
+    <string name="immersive_pref_title">Immersive mode</string>
+    <string name="immersive_pref_summary_on">Disable immersive mode</string>
+    <string name="immersive_pref_summary_off">Enable immersive mode</string>
+
+    <string name="fast_scroll_pref" translatable="false">fast_scroll_pref</string>
+    <string name="fast_scroll_pref_title">Indicator fast scroll</string>
+    <string name="fast_scroll_pref_summary_on">Disable indicator fast scroll</string>
+    <string name="fast_scroll_pref_summary_off">Enable indicator fast scroll</string>
+
+    <string name="search_bar_pref" translatable="false">search_bar_pref</string>
+    <string name="search_bar_pref_title">Search bar</string>
+    <string name="search_bar_pref_summary_on">Disable search bar</string>
+    <string name="search_bar_pref_summary_off">Enable search bar</string>
+
+    <string name="artists_sorting_pref" translatable="false">artists_sorting_pref</string>
+    <string name="sorting_pref_default">Default</string>
+    <string name="sorting_pref_ascending">Ascending</string>
+    <string name="sorting_pref_descending">Descending</string>
+
+    <string name="hidden_items_pref" translatable="false">hidden_items_pref</string>
+    <string name="hidden_items_pref_title">Hidden items</string>
+    <string name="hidden_items_pref_message">%1s will be hidden. Are you sure?</string>
+    <string name="hidden_items_pref_empty">No hidden items found!</string>
+
+    <string name="focus_pref" translatable="false">focus_pref</string>
+    <string name="focus_pref_title">Audio focus</string>
+    <string name="focus_pref_summary_on">Disable audio focus management</string>
+    <string name="focus_pref_summary_off">Enable audio focus management</string>
+
+    <string name="headset_pref" translatable="false">headsets_pref</string>
+    <string name="headset_pref_title">Headset plug</string>
+    <string name="headset_pref_summary_on">Disable headset plug management</string>
+    <string name="headset_pref_summary_off">Enable headset plug management</string>
+
+    <string name="hex" translatable="false">&#35;%06X</string>
+
 </resources>

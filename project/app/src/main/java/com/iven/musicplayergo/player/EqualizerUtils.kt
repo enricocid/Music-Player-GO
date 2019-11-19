@@ -7,7 +7,7 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.media.audiofx.AudioEffect
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.Utils
+import com.iven.musicplayergo.ui.Utils
 
 object EqualizerUtils {
 
@@ -52,6 +52,6 @@ object EqualizerUtils {
     }
 
     fun notifyNoSessionId(context: Context) {
-        Utils.makeUnknownErrorToast(context, R.string.bad_id)
+        Utils.makeToast(context, R.string.bad_id, R.drawable.ic_error, R.color.red)
     }
 }

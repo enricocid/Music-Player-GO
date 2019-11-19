@@ -15,7 +15,6 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.MainActivity
-import com.iven.musicplayergo.PlayerService
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.music.MusicUtils
 
@@ -41,9 +40,11 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     //https://gist.github.com/Gnzlt/6ddc846ef68c587d559f1e1fcd0900d3
     private fun getLargeIcon(): Bitmap {
 
-        val vectorDrawable = playerService.getDrawable(R.drawable.music_notification) as VectorDrawable
+        val vectorDrawable =
+            playerService.getDrawable(R.drawable.music_notification) as VectorDrawable
 
-        val largeIconSize = playerService.resources.getDimensionPixelSize(R.dimen.notification_large_dim)
+        val largeIconSize =
+            playerService.resources.getDimensionPixelSize(R.dimen.notification_large_dim)
         val bitmap = Bitmap.createBitmap(largeIconSize, largeIconSize, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
 
@@ -60,7 +61,12 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         val pauseIntent = Intent()
         pauseIntent.action = action
 
-        return PendingIntent.getBroadcast(playerService, REQUEST_CODE, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        return PendingIntent.getBroadcast(
+            playerService,
+            REQUEST_CODE,
+            pauseIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
     }
 
     fun createNotification(): Notification {
@@ -81,7 +87,13 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         val artist = song!!.artist
         val songTitle = song.title
 
-        val spanned = MusicUtils.buildSpanned(playerService.getString(R.string.playing_song, artist, songTitle))
+        val spanned = MusicUtils.buildSpanned(
+            playerService.getString(
+                R.string.playing_song,
+                artist,
+                songTitle
+            )
+        )
 
         val style = MediaStyle()
         style.setShowActionsInCompactView(0, 1, 2)

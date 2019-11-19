@@ -4,12 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.provider.MediaStore
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.Utils
+import com.iven.musicplayergo.ui.Utils
 
 class MusicLibrary {
 
     val allSongsUnfiltered = mutableListOf<Music>()
-    private lateinit var allSongsFiltered: MutableList<Music>
+    lateinit var allSongsFiltered: MutableList<Music>
 
     //keys: artist || keys: album, value: album songs
     val allCategorizedMusic = hashMapOf<String, Map<String?, List<Music>>>()
@@ -84,7 +84,7 @@ class MusicLibrary {
             categorizeMusicByArtistAndAlbums(allSongsFiltered)
 
         } catch (e: Exception) {
-            Utils.makeUnknownErrorToast(context, R.string.error_unknown)
+            Utils.makeToast(context, R.string.error_unknown, R.drawable.ic_error, R.color.red)
             e.printStackTrace()
         }
     }
