@@ -33,8 +33,10 @@ import androidx.viewpager.widget.ViewPager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
-import com.iven.musicplayergo.adapters.AlbumsAdapter
-import com.iven.musicplayergo.adapters.SongsAdapter
+import com.afollestad.recyclical.datasource.DataSource
+import com.afollestad.recyclical.datasource.dataSourceOf
+import com.afollestad.recyclical.setup
+import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.fragments.AllMusicFragment
 import com.iven.musicplayergo.fragments.ArtistsFragment
 import com.iven.musicplayergo.fragments.SettingsFragment
@@ -43,9 +45,7 @@ import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.music.MusicViewModel
 import com.iven.musicplayergo.player.*
-import com.iven.musicplayergo.ui.ThemeHelper
-import com.iven.musicplayergo.ui.UIControlInterface
-import com.iven.musicplayergo.ui.Utils
+import com.iven.musicplayergo.ui.*
 import kotlinx.android.synthetic.main.artist_details.*
 import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.player_controls_panel.*
@@ -70,9 +70,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     //RecyclerViews
     private lateinit var mAlbumsRecyclerView: RecyclerView
     private lateinit var mSongsRecyclerView: RecyclerView
-
-    private lateinit var mAlbumsAdapter: AlbumsAdapter
-    private lateinit var mSongsAdapter: SongsAdapter
 
     private lateinit var mAlbumsLayoutManager: LinearLayoutManager
     private lateinit var mSongsLayoutManager: LinearLayoutManager
@@ -118,6 +115,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mSelectedArtistSongs: MutableList<Music>
     private lateinit var mSelectedArtistAlbums: List<Album>
     private var mNavigationArtist: String? = "unknown"
+
+    private lateinit var mSelectedAlbum: String
+    private lateinit var mAlbumSongsDataSource: DataSource<Any>
 
     //player
     private lateinit var mMediaPlayerHolder: MediaPlayerHolder
@@ -435,12 +435,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
         mPlayPauseButton.setOnClickListener { resumeOrPause() }
         mSkipNextButton.setOnClickListener { skip(true) }
-        shuffle_button.setOnClickListener {
+/*        shuffle_button.setOnClickListener {
             if (::mMediaPlayerHolder.isInitialized) {
                 if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
                 mSongsAdapter.randomPlaySelectedAlbum(mMediaPlayerHolder)
             }
-        }
+        }*/
 
         volume.setOnLongClickListener {
             openEqualizer()
@@ -461,7 +461,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 if (fromUser) {
                     userSelectedPosition = progress
                     mSongPosition.setTextColor(
-                        Utils.getColor(
+                        ThemeHelper.getColor(
                             this@MainActivity,
                             mAccent,
                             R.color.blue
@@ -496,53 +496,92 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         //set the albums list
         //one-time adapter initialization
-        mAlbumsRecyclerView.setHasFixedSize(true)
-        mAlbumsLayoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        mAlbumsRecyclerView.layoutManager = mAlbumsLayoutManager
-        mAlbumsAdapter = AlbumsAdapter(
-            mSelectedArtistAlbums,
-            Utils.getColor(this, mAccent, R.color.blue),
-            sThemeInverted
-        )
-        mAlbumsRecyclerView.adapter = mAlbumsAdapter
 
-        mAlbumsAdapter.onAlbumClick = { album ->
-            setAlbumSongs(album)
+        mSelectedAlbum = mSelectedArtistAlbums[0].title!!
+
+        val selectedAlbumsDataSource = dataSourceOf(mSelectedArtistAlbums)
+
+        val accent = ThemeHelper.getColor(
+            this@MainActivity,
+            mAccent,
+            R.color.deep_purple
+        )
+
+        mAlbumsRecyclerView.setup {
+            withDataSource(selectedAlbumsDataSource)
+            withLayoutManager(
+                LinearLayoutManager(
+                    this@MainActivity,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+            )
+
+            withItem<Album, AlbumsViewHolder>(R.layout.album_item) {
+                onBind(::AlbumsViewHolder) { _, item ->
+                    // AlbumsViewHolder is `this` here
+                    album.text = item.title
+                    year.text = item.year
+
+                    /*if (mSelectedAlbum != item.title) [not_selected] else [selected]*/
+                }
+
+                onClick {
+
+                    if (mSelectedAlbum != item.title) {
+
+                        mAlbumsRecyclerView.adapter?.notifyItemChanged(
+                            MusicUtils.getAlbumPositionInList(
+                                mSelectedAlbum,
+                                mSelectedArtistAlbums
+                            )
+                        )
+
+                        mAlbumsRecyclerView.adapter?.notifyItemChanged(
+                            MusicUtils.getAlbumPositionInList(
+                                item.title,
+                                mSelectedArtistAlbums
+                            )
+                        )
+                        mSelectedAlbum = item.title!!
+                        swapSelectedSongs(false)
+                    }
+                }
+            }
         }
 
-        mSelectedArtistSongs = MusicUtils.getArtistSongs(notSortedArtistDiscs)
+        swapSelectedSongs(true)
 
-        val placeholderAlbum = mSelectedArtistAlbums[0]
-        setAlbumSongs(placeholderAlbum.title)
+        // setup{} is an extension method on RecyclerView
+        mSongsRecyclerView.setup {
+            // item is a `val` in `this` here
+            withDataSource(mAlbumSongsDataSource)
+            withItem<Music, GenericViewHolder>(R.layout.generic_item) {
+                onBind(::GenericViewHolder) { _, item ->
+                    // GenericViewHolder is `this` here
+                    title.text = getString(
+                        R.string.track_song,
+                        MusicUtils.formatSongTrack(item.track),
+                        item.title
+                    )
+                    subtitle.text = MusicUtils.formatSongDuration(item.duration)
+                }
+
+                onClick {
+                    onSongSelected(
+                        item,
+                        musicLibrary.allCategorizedMusic.getValue(item.artist!!).getValue(item.album).toList()
+                    )
+                }
+            }
+        }
     }
 
-    private fun setAlbumSongs(selectedAlbum: String?) {
-        val album = mMusic.getValue(mNavigationArtist!!).getValue(selectedAlbum!!).toMutableList()
-        album.sortBy { it.track }
-        mArtistsDetailsSelectedDisc.text = selectedAlbum
-        mArtistDetailsSelectedDiscYear.text = MusicUtils.getYearForAlbum(resources, album[0].year)
-
-        //set the songs list
-        if (!::mSongsAdapter.isInitialized) {
-            //one-time adapter initialization
-            mSongsRecyclerView.setHasFixedSize(true)
-            mSongsLayoutManager = LinearLayoutManager(this)
-            mSongsRecyclerView.layoutManager = mSongsLayoutManager
-            mSongsAdapter = SongsAdapter(album)
-            mSongsRecyclerView.adapter = mSongsAdapter
-        } else {
-            mSongsRecyclerView.scrollToPosition(0)
-            mSongsAdapter.swapSongs(album)
-        }
-        mSongsRecyclerView.setPadding(
-            0,
-            0,
-            0,
-            -resources.getDimensionPixelSize(R.dimen.songs_card_margin_bottom)
-        )
-        mSongsAdapter.onSongClick = { music ->
-            startPlayback(music, album)
-        }
+    private fun swapSelectedSongs(sCreateDataSource: Boolean) {
+        val songs = mMusic.getValue(mNavigationArtist!!).getValue(mSelectedAlbum).toMutableList()
+        if (sCreateDataSource) mAlbumSongsDataSource = dataSourceOf(songs)
+        if (songs.size > 1) songs.sortBy { it.track }
+        mAlbumSongsDataSource.set(songs)
     }
 
     private fun startPlayback(song: Music, album: List<Music>?) {
@@ -639,6 +678,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     selectedSong.title
                 )
             )
+
+        mSelectedAlbum = selectedSong.album!!
         mPlayingAlbum.text = selectedSong.album
 
         updateResetStatus(false)
@@ -665,7 +706,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun updateResetStatus(onPlaybackCompletion: Boolean) {
         val themeColor = if (sThemeInverted) Color.WHITE else Color.BLACK
-        val accent = Utils.getColor(
+        val accent = ThemeHelper.getColor(
             this,
             mAccent,
             R.color.blue
@@ -801,12 +842,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             //do only if we are not on played artist/album details
 
             if (mNavigationArtist != artist) {
-                // mArtistsAdapter.onArtistClick?.invoke(artist)
+
                 val playingAlbumPosition =
                     MusicUtils.getAlbumPositionInList(album, mSelectedArtistAlbums)
-                mAlbumsAdapter.swapSelectedAlbum(playingAlbumPosition)
+
+                mSelectedAlbum = album!!
+                swapSelectedSongs(false)
                 mAlbumsRecyclerView.scrollToPosition(playingAlbumPosition)
-                mAlbumsAdapter.onAlbumClick?.invoke(album)
+
             } else {
                 revealArtistDetails(!sArtistDiscographyExpanded)
             }

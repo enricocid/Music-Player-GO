@@ -3,10 +3,7 @@ package com.iven.musicplayergo.ui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
-import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.ColorUtils
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.recyclical.datasource.DataSource
 import com.iven.musicplayergo.R
@@ -28,8 +25,7 @@ object Utils {
         context: Context,
         item: Pair<Int, String>,
         stringsList: MutableList<String>,
-        dataSource: DataSource<Any>,
-        snackBarContextView: View
+        dataSource: DataSource<Any>
     ): MaterialDialog {
 
         return MaterialDialog(context).show {
@@ -64,15 +60,6 @@ object Utils {
             errorColor
         )
             .show()
-    }
-
-    @JvmStatic
-    fun getColor(context: Context, color: Int, emergencyColor: Int): Int {
-        return try {
-            ContextCompat.getColor(context, color)
-        } catch (e: Exception) {
-            ContextCompat.getColor(context, emergencyColor)
-        }
     }
 
     @JvmStatic
@@ -145,15 +132,5 @@ object Utils {
             }
             else -> defaultList
         }
-    }
-
-    @JvmStatic
-    fun darkenColor(color: Int, factor: Float): Int {
-        return ColorUtils.blendARGB(color, Color.BLACK, factor)
-    }
-
-    @JvmStatic
-    fun lightenColor(color: Int, factor: Float): Int {
-        return ColorUtils.blendARGB(color, Color.WHITE, factor)
     }
 }

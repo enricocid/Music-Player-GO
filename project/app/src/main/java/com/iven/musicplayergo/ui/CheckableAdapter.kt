@@ -11,9 +11,7 @@ import com.iven.musicplayergo.R
 import java.util.*
 
 class CheckableAdapter(
-    private val context: Context,
-    private val listItems: MutableList<String>,
-    private val isHiddenItemsDialog: Boolean
+    private val listItems: MutableList<String>
 ) :
     RecyclerView.Adapter<CheckableAdapter.HiddenItemsHolder>() {
 
@@ -58,37 +56,21 @@ class CheckableAdapter(
             title.isSelected = true
 
             val checkBox = itemView.findViewById<CheckBox>(R.id.checkbox)
-            if (!isHiddenItemsDialog) {
+            /*if (!isHiddenItemsDialog) {
                 itemView.isEnabled = adapterPosition != listItems.size - 1
                 checkBox.isEnabled = itemView.isEnabled
                 checkBox.isChecked = mCheckableItems.contains(adapterPosition.toString())
-            } else {
+            } else {*/
                 checkBox.isChecked = listItems.contains(item)
-            }
+            /*}*/
 
             itemView.setOnClickListener {
                 checkBox.isChecked = !checkBox.isChecked
-                if (isHiddenItemsDialog) {
-                    if (!checkBox.isChecked) {
+                 if (!checkBox.isChecked) {
                         mItemsToRemove.add(item)
                     } else {
                         if (mItemsToRemove.contains(item)) mItemsToRemove.remove(item)
                     }
-                } else {
-                    if (!checkBox.isChecked) mCheckableItems.remove(adapterPosition.toString()) else mCheckableItems.add(
-                        adapterPosition.toString()
-                    )
-                    if (mCheckableItems.size < listItems.size - 2) {
-                        Utils.makeToast(
-                            context,
-                            R.string.active_fragments_pref_warning,
-                            R.drawable.ic_warning,
-                            R.color.orange
-                        )
-                        mCheckableItems.add(adapterPosition.toString())
-                        checkBox.isChecked = true
-                    }
-                }
             }
         }
     }
