@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mSelectedArtistAlbums: List<Album>
     private var mNavigationArtist: String? = "unknown"
 
-    private var mSelectedAlbum: String? = ""
+    private var mSelectedAlbum: Album? = null
     private lateinit var mAlbumSongsDataSource: DataSource<Any>
 
     //player
@@ -518,23 +518,23 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     year.text = item.year
 
                     checkbox.visibility =
-                        if (mSelectedAlbum != item.title) View.GONE else View.VISIBLE
+                        if (mSelectedAlbum?.title != item.title) View.GONE else View.VISIBLE
                 }
 
                 onClick {
 
-                    if (mSelectedAlbum != item.title) {
+                    if (mSelectedAlbum?.title != item.title) {
 
                         mAlbumsRecyclerView.adapter?.notifyItemChanged(
-                            MusicUtils.getAlbumPositionInList(
-                                mSelectedAlbum,
+                            MusicUtils.getAlbumFromList(
+                                item.title,
                                 mSelectedArtistAlbums
                             ).second
                         )
 
                         mAlbumsRecyclerView.adapter?.notifyItemChanged(
-                            MusicUtils.getAlbumPositionInList(
-                                item.title,
+                            MusicUtils.getAlbumFromList(
+                                mSelectedAlbum?.title,
                                 mSelectedArtistAlbums
                             ).second
                         )
@@ -573,14 +573,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun swapSelectedSongs(sCreateDataSource: Boolean, album: Album) {
 
-        mSelectedAlbum = album.title
-        mArtistsDetailsSelectedDisc.text = mSelectedAlbum
+        mSelectedAlbum = album
+        mArtistsDetailsSelectedDisc.text = mSelectedAlbum?.title
         mArtistDetailsSelectedDiscYear.text = album.year
 
-        val songs = mMusic.getValue(mNavigationArtist!!).getValue(mSelectedAlbum).toMutableList()
-        if (sCreateDataSource) mAlbumSongsDataSource = dataSourceOf(songs)
+        val songs = mSelectedAlbum?.music!!
         if (songs.size > 1) songs.sortBy { it.track }
-        mAlbumSongsDataSource.set(songs)
+        if (sCreateDataSource) mAlbumSongsDataSource =
+            dataSourceOf(songs) else mAlbumSongsDataSource.set(songs)
     }
 
     private fun startPlayback(song: Music, album: List<Music>?) {
@@ -678,7 +678,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 )
             )
 
-        mSelectedAlbum = selectedSong.album!!
+        mSelectedAlbum =
+            MusicUtils.getAlbumFromList(selectedSong.album, mSelectedArtistAlbums).first
         mPlayingAlbum.text = selectedSong.album
 
         updateResetStatus(false)
@@ -843,9 +844,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             if (mNavigationArtist != artist) {
 
                 val playingAlbumInfo =
-                    MusicUtils.getAlbumPositionInList(album, mSelectedArtistAlbums)
+                    MusicUtils.getAlbumFromList(album, mSelectedArtistAlbums)
 
-                mSelectedAlbum = album!!
                 swapSelectedSongs(false, playingAlbumInfo.first)
                 mAlbumsRecyclerView.scrollToPosition(playingAlbumInfo.second)
 

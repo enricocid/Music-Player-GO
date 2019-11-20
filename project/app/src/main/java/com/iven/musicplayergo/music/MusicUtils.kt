@@ -18,6 +18,7 @@ import com.iven.musicplayergo.ui.Utils
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+
 @Suppress("DEPRECATION")
 object MusicUtils {
 
@@ -43,10 +44,10 @@ object MusicUtils {
 
     @JvmStatic
     //returns a pair of album and its position given a list of albums
-    fun getAlbumPositionInList(album: String?, albums: List<Album>): Pair<Album, Int> {
+    fun getAlbumFromList(album: String?, albums: List<Album>): Pair<Album, Int> {
         return try {
-            val albumPosition = albums.indexOfFirst { it.title == album }
-            Pair(albums[albumPosition], albumPosition)
+            val position = albums.indexOfFirst { it.title == album }
+            Pair(albums[position], position)
         } catch (e: Exception) {
             e.printStackTrace()
             Pair(albums[0], 0)
@@ -94,8 +95,16 @@ object MusicUtils {
         val sortedAlbums = mutableListOf<Album>()
 
         try {
+
             albums.keys.iterator().forEach {
-                sortedAlbums.add(Album(it, getYearForAlbum(resources, albums.getValue(it)[0].year)))
+                val albumSongs = albums.getValue(it)
+                sortedAlbums.add(
+                    Album(
+                        it,
+                        getYearForAlbum(resources, albums.getValue(it)[0].year),
+                        albumSongs.toMutableList()
+                    )
+                )
             }
 
         } catch (e: Exception) {
