@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mSelectedArtistAlbums: List<Album>
     private var mNavigationArtist: String? = "unknown"
 
-    private lateinit var mSelectedAlbum: String
+    private var mSelectedAlbum: String? = ""
     private lateinit var mAlbumSongsDataSource: DataSource<Any>
 
     //player
@@ -498,8 +498,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         //set the albums list
         //one-time adapter initialization
 
-        mSelectedAlbum = mSelectedArtistAlbums[0].title!!
-
+        swapSelectedSongs(true, mSelectedArtistAlbums[0])
         val selectedAlbumsDataSource = dataSourceOf(mSelectedArtistAlbums)
 
         mAlbumsRecyclerView.setup {
@@ -530,25 +529,22 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                             MusicUtils.getAlbumPositionInList(
                                 mSelectedAlbum,
                                 mSelectedArtistAlbums
-                            )
+                            ).second
                         )
-
-                        mSelectedAlbum = item.title!!
 
                         mAlbumsRecyclerView.adapter?.notifyItemChanged(
                             MusicUtils.getAlbumPositionInList(
                                 item.title,
                                 mSelectedArtistAlbums
-                            )
+                            ).second
                         )
 
-                        swapSelectedSongs(false)
+                        swapSelectedSongs(false, item)
                     }
                 }
             }
         }
 
-        swapSelectedSongs(true)
 
         // setup{} is an extension method on RecyclerView
         mSongsRecyclerView.setup {
@@ -575,7 +571,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    private fun swapSelectedSongs(sCreateDataSource: Boolean) {
+    private fun swapSelectedSongs(sCreateDataSource: Boolean, album: Album) {
+
+        mSelectedAlbum = album.title
+        mArtistsDetailsSelectedDisc.text = mSelectedAlbum
+        mArtistDetailsSelectedDiscYear.text = album.year
+
         val songs = mMusic.getValue(mNavigationArtist!!).getValue(mSelectedAlbum).toMutableList()
         if (sCreateDataSource) mAlbumSongsDataSource = dataSourceOf(songs)
         if (songs.size > 1) songs.sortBy { it.track }
@@ -841,12 +842,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
             if (mNavigationArtist != artist) {
 
-                val playingAlbumPosition =
+                val playingAlbumInfo =
                     MusicUtils.getAlbumPositionInList(album, mSelectedArtistAlbums)
 
                 mSelectedAlbum = album!!
-                swapSelectedSongs(false)
-                mAlbumsRecyclerView.scrollToPosition(playingAlbumPosition)
+                swapSelectedSongs(false, playingAlbumInfo.first)
+                mAlbumsRecyclerView.scrollToPosition(playingAlbumInfo.second)
 
             } else {
                 revealArtistDetails(!sArtistDiscographyExpanded)

@@ -42,12 +42,14 @@ object MusicUtils {
     }
 
     @JvmStatic
-    fun getAlbumPositionInList(album: String?, albums: List<Album>): Int {
+    //returns a pair of album and its position given a list of albums
+    fun getAlbumPositionInList(album: String?, albums: List<Album>): Pair<Album, Int> {
         return try {
-            albums.indexOfFirst { it.title == album }
+            val albumPosition = albums.indexOfFirst { it.title == album }
+            Pair(albums[albumPosition], albumPosition)
         } catch (e: Exception) {
             e.printStackTrace()
-            0
+            Pair(albums[0], 0)
         }
     }
 
