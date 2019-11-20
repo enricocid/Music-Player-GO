@@ -1,8 +1,8 @@
 package com.iven.musicplayergo.ui
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import com.afollestad.recyclical.ViewHolder
 import com.iven.musicplayergo.R
 
@@ -12,7 +12,7 @@ class GenericViewHolder(itemView: View) : ViewHolder(itemView) {
 }
 
 class AlbumsViewHolder(itemView: View) : ViewHolder(itemView) {
-    val albumCard = itemView as CardView
     val album: TextView = itemView.findViewById(R.id.album)
     val year: TextView = itemView.findViewById(R.id.year)
+    val checkbox: ImageView = itemView.findViewById(R.id.checkbox)
 }

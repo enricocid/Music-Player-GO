@@ -435,6 +435,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
         mPlayPauseButton.setOnClickListener { resumeOrPause() }
         mSkipNextButton.setOnClickListener { skip(true) }
+
 /*        shuffle_button.setOnClickListener {
             if (::mMediaPlayerHolder.isInitialized) {
                 if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
@@ -501,12 +502,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         val selectedAlbumsDataSource = dataSourceOf(mSelectedArtistAlbums)
 
-        val accent = ThemeHelper.getColor(
-            this@MainActivity,
-            mAccent,
-            R.color.deep_purple
-        )
-
         mAlbumsRecyclerView.setup {
             withDataSource(selectedAlbumsDataSource)
             withLayoutManager(
@@ -523,7 +518,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     album.text = item.title
                     year.text = item.year
 
-                    /*if (mSelectedAlbum != item.title) [not_selected] else [selected]*/
+                    checkbox.visibility =
+                        if (mSelectedAlbum != item.title) View.GONE else View.VISIBLE
                 }
 
                 onClick {
@@ -537,13 +533,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                             )
                         )
 
+                        mSelectedAlbum = item.title!!
+
                         mAlbumsRecyclerView.adapter?.notifyItemChanged(
                             MusicUtils.getAlbumPositionInList(
                                 item.title,
                                 mSelectedArtistAlbums
                             )
                         )
-                        mSelectedAlbum = item.title!!
+
                         swapSelectedSongs(false)
                     }
                 }

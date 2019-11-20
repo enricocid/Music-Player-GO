@@ -8,6 +8,13 @@
     card_view:cardCornerRadius="8dp"
     card_view:cardElevation="2dp">
 
+    <ImageView
+        android:id="@+id/checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_check" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,4 +45,5 @@
             android:textColor="?attr/colorAccent"
             android:textSize="12sp" />
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>
