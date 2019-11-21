@@ -88,7 +88,7 @@ class AllMusicFragment : Fragment() {
                             item,
                             MusicUtils.getAlbumFromList(
                                 item.album,
-                                musicLibrary.allCategorizedMusic.getValue(item.artist!!)
+                                musicLibrary.allAlbumsForArtist.getValue(item.artist!!)
                             )
                                 .first.music!!.toList()
                         )

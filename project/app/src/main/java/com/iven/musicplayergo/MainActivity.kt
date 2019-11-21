@@ -316,7 +316,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mViewModel.loadMusic(this).observe(this, Observer { hasLoaded ->
 
             //setup all the views if there's something
-            if (hasLoaded && musicLibrary.allCategorizedMusic.isNotEmpty()) {
+            if (hasLoaded && musicLibrary.allAlbumsForArtist.isNotEmpty()) {
 
                 mArtistsFragment = ArtistsFragment.newInstance()
                 mAllMusicFragment = AllMusicFragment.newInstance()
@@ -326,12 +326,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mViewPager.adapter = pagerAdapter
 
                 mAllDeviceSongs = musicLibrary.allSongsUnfiltered
-                mMusic = musicLibrary.allCategorizedMusic
+                mMusic = musicLibrary.allAlbumsForArtist
 
                 mNavigationArtist = Utils.getSortedList(
                     goPreferences.artistsSorting,
-                    musicLibrary.allCategorizedMusic.keys.toMutableList(),
-                    musicLibrary.allCategorizedMusic.keys.toMutableList()
+                    musicLibrary.allAlbumsForArtist.keys.toMutableList(),
+                    musicLibrary.allAlbumsForArtist.keys.toMutableList()
                 )[0]
 
                 setArtistDetails()
@@ -479,14 +479,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun setArtistDetails() {
 
-        mSelectedArtistAlbums = musicLibrary.allCategorizedMusic[mNavigationArtist]!!
+        mSelectedArtistAlbums = musicLibrary.allAlbumsForArtist[mNavigationArtist]!!
 
         //set the titles and subtitles
         mArtistDetailsTitle.text = mNavigationArtist
         mArtistsDetailsDiscCount.text = getString(
             R.string.artist_info,
             mSelectedArtistAlbums.size,
-            musicLibrary.allCategorizedMusicByArtist.getValue(mNavigationArtist).size
+            musicLibrary.allSongsForArtist.getValue(mNavigationArtist).size
         )
 
         //set the albums list
@@ -849,7 +849,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 onArtistSelected(artist!!)
 
                 val playingAlbumInfo =
-                    MusicUtils.getAlbumFromList(album, musicLibrary.allCategorizedMusic[artist])
+                    MusicUtils.getAlbumFromList(album, musicLibrary.allAlbumsForArtist[artist])
 
                 swapAlbums(false, playingAlbumInfo.first)
                 mAlbumsRecyclerView.scrollToPosition(playingAlbumInfo.second)

@@ -13,10 +13,11 @@ class MusicLibrary {
 
     lateinit var allSongsFiltered: MutableList<Music>
 
-    lateinit var allCategorizedMusicByArtist: Map<String?, List<Music>>
+    //keys: artist || value: its songs
+    lateinit var allSongsForArtist: Map<String?, List<Music>>
 
-    //keys: artist || keys: album, value: album songs
-    val allCategorizedMusic = hashMapOf<String, List<Album>>()
+    //keys: artist || value: albums
+    val allAlbumsForArtist = hashMapOf<String, List<Album>>()
 
     // Extension method to get all music files list from external storage/sd card
     @Suppress("DEPRECATION")
@@ -74,13 +75,13 @@ class MusicLibrary {
                 allSongsUnfiltered.distinctBy { it.artist to it.year to it.track to it.title to it.duration to it.album to it.albumId }
                     .toMutableList()
 
-            allCategorizedMusicByArtist = allSongsFiltered.groupBy { it.artist }
+            allSongsForArtist = allSongsFiltered.groupBy { it.artist }
 
-            allCategorizedMusicByArtist.keys.iterator().forEach {
+            allSongsForArtist.keys.iterator().forEach {
 
-                allCategorizedMusic[it!!] = MusicUtils.buildSortedArtistAlbums(
+                allAlbumsForArtist[it!!] = MusicUtils.buildSortedArtistAlbums(
                     context.resources,
-                    allCategorizedMusicByArtist.getValue(it)
+                    allSongsForArtist.getValue(it)
                 )
             }
 

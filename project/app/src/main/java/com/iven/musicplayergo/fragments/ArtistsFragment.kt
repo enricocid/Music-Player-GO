@@ -21,7 +21,6 @@ import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.ui.GenericViewHolder
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -175,8 +174,8 @@ class ArtistsFragment : Fragment() {
     private fun getArtistSubtitle(item: String): String {
         return getString(
             R.string.artist_info,
-            musicLibrary.allCategorizedMusic.getValue(item).size,
-            musicLibrary.allCategorizedMusicByArtist.getValue(item).size
+            musicLibrary.allAlbumsForArtist.getValue(item).size,
+            musicLibrary.allSongsForArtist.getValue(item).size
         )
     }
 
@@ -241,7 +240,7 @@ class ArtistsFragment : Fragment() {
             mArtists = Utils.getSortedList(
                 it.itemId,
                 mArtists,
-                musicLibrary.allCategorizedMusic.keys.toMutableList()
+                musicLibrary.allAlbumsForArtist.keys.toMutableList()
             )
 
             mDataSource.set(mArtists)
@@ -262,8 +261,8 @@ class ArtistsFragment : Fragment() {
     private fun setupFilteredArtists() {
         mArtists = Utils.getSortedList(
             goPreferences.artistsSorting,
-            musicLibrary.allCategorizedMusic.keys.toMutableList(),
-            musicLibrary.allCategorizedMusic.keys.toMutableList()
+            musicLibrary.allAlbumsForArtist.keys.toMutableList(),
+            musicLibrary.allAlbumsForArtist.keys.toMutableList()
         )
 
         goPreferences.hiddenItems?.iterator()?.forEach {
