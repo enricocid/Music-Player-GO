@@ -23,13 +23,6 @@ import java.util.concurrent.TimeUnit
 object MusicUtils {
 
     @JvmStatic
-    fun getArtists(music: Map<String, List<Album>>): MutableList<String> {
-        val artists = music.keys.toMutableList()
-        artists.sort()
-        return artists
-    }
-
-    @JvmStatic
     //returns a pair of album and its position given a list of albums
     fun getAlbumFromList(album: String?, albums: List<Album>?): Pair<Album, Int> {
         return try {
@@ -53,19 +46,6 @@ object MusicUtils {
         } catch (e: Exception) {
             allDeviceSongs.firstOrNull { s -> s.path == path }
         }
-    }
-
-    @JvmStatic
-    fun getArtistSongs(albums: Map<String?, List<Music>>): MutableList<Music> {
-        val artistSongs = mutableListOf<Music>()
-        try {
-            albums.keys.iterator().forEach {
-                artistSongs.addAll(albums.getValue(it))
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return artistSongs
     }
 
     @JvmStatic
