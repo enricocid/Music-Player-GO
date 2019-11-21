@@ -115,6 +115,12 @@ class ArtistsFragment : Fragment() {
 
             mArtistsRecyclerView = artists_rv
 
+            mArtists = Utils.getSortedList(
+                goPreferences.artistsSorting,
+                musicLibrary.allAlbumsForArtist.keys.toMutableList(),
+                musicLibrary.allAlbumsForArtist.keys.toMutableList()
+            )
+
             setupFilteredArtists()
 
             mDataSource = dataSourceOf(mArtists)
@@ -251,22 +257,11 @@ class ArtistsFragment : Fragment() {
         }
     }
 
-    fun updateArtistsList() {
-        if (::mDataSource.isInitialized) {
-            setupFilteredArtists()
-            mDataSource.set(mArtists)
-        }
-    }
-
     private fun setupFilteredArtists() {
-        mArtists = Utils.getSortedList(
-            goPreferences.artistsSorting,
-            musicLibrary.allAlbumsForArtist.keys.toMutableList(),
-            musicLibrary.allAlbumsForArtist.keys.toMutableList()
-        )
 
-        goPreferences.hiddenItems?.iterator()?.forEach {
-            if (mArtists.contains(it)) mArtists.remove(it)
+        val iterator = mArtists.iterator()
+        for (i in iterator) {
+            if (goPreferences.hiddenItems?.contains(i)!!) iterator.remove()
         }
     }
 

@@ -861,8 +861,4 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             revealArtistDetails(!sArtistDiscographyExpanded)
         }
     }
-
-    override fun onVisibleItemsUpdated() {
-        if (::mArtistsFragment.isInitialized && mArtistsFragment.isAdded) mArtistsFragment.updateArtistsList()
-    }
 }

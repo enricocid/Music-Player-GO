@@ -32,7 +32,7 @@ class AllMusicFragment : Fragment() {
 
     private lateinit var mUIControlInterface: UIControlInterface
 
-    private lateinit var mAllMusic: List<Music>
+    private lateinit var mAllMusic: MutableList<Music>
     private lateinit var mDataSource: DataSource<Any>
 
     override fun onAttach(context: Context) {
@@ -71,6 +71,7 @@ class AllMusicFragment : Fragment() {
             mAllMusic = musicLibrary.allSongsFiltered
 
             mDataSource = dataSourceOf(mAllMusic)
+
             // setup{} is an extension method on RecyclerView
             all_music_rv.setup {
                 // item is a `val` in `this` here

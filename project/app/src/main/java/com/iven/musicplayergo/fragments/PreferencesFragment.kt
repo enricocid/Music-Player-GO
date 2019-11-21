@@ -133,7 +133,6 @@ class PreferencesFragment : PreferenceFragmentCompat() {
                 customListAdapter(checkableAdapter)
                 positiveButton {
                     Utils.removeCheckableItems(checkableAdapter.getUpdatedItems())
-                    mUIControlInterface.onVisibleItemsUpdated()
                 }
                 negativeButton {}
             }
