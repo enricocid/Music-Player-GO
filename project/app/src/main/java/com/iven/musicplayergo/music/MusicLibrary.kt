@@ -12,18 +12,7 @@ class MusicLibrary {
     lateinit var allSongsFiltered: MutableList<Music>
 
     //keys: artist || keys: album, value: album songs
-    val allCategorizedMusic = hashMapOf<String, Map<String?, List<Music>>>()
-
-    //Build a Map with key: artist, value: Map with key: album, value: songs
-    private fun categorizeMusicByArtistAndAlbums(music: List<Music>) {
-
-        val musicSortedByArtist = music.groupBy { it.artist }
-
-        musicSortedByArtist.keys.iterator().forEach {
-            val albums = musicSortedByArtist[it]?.groupBy { song -> song.album }
-            allCategorizedMusic[it.toString()] = albums!!
-        }
-    }
+    val allCategorizedMusic = hashMapOf<String, List<Album>>()
 
     // Extension method to get all music files list from external storage/sd card
     @Suppress("DEPRECATION")
@@ -81,7 +70,15 @@ class MusicLibrary {
                 allSongsUnfiltered.distinctBy { it.artist to it.year to it.track to it.title to it.duration to it.album to it.albumId }
                     .toMutableList()
 
-            categorizeMusicByArtistAndAlbums(allSongsFiltered)
+            val musicSortedByArtist = allSongsFiltered.groupBy { it.artist }
+
+            musicSortedByArtist.keys.iterator().forEach {
+
+                allCategorizedMusic[it!!] = MusicUtils.buildSortedArtistAlbums(
+                    context.resources,
+                    musicSortedByArtist.getValue(it)
+                )
+            }
 
         } catch (e: Exception) {
             Utils.makeToast(context, R.string.error_unknown, R.drawable.ic_error, R.color.red)

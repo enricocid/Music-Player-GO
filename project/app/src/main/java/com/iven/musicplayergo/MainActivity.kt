@@ -60,11 +60,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mAllMusicFragment: AllMusicFragment
     private lateinit var mSettingsFragment: SettingsFragment
 
-    ////preferences
+    //preferences
     private var sThemeInverted: Boolean = false
     private var mAccent: Int = R.color.blue
 
-    ////views
+    //views
     private lateinit var mViewPager: ViewPager
 
     //RecyclerViews
@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mArtistsDetailsSelectedDisc: TextView
     private lateinit var mArtistDetailsSelectedDiscYear: TextView
 
-    ////music player things
+    //music player things
 
     //view model
     private val mViewModel: MusicViewModel by lazy {
@@ -111,15 +111,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private var sArtistDiscographyExpanded: Boolean = false
 
     //music
-    private lateinit var mMusic: Map<String, Map<String?, List<Music>>>
-    private lateinit var mSelectedArtistSongs: MutableList<Music>
-    private lateinit var mSelectedArtistAlbums: List<Album>
+    private lateinit var mMusic: Map<String, List<Album>>
+
     private var mNavigationArtist: String? = "unknown"
 
-    private var mSelectedAlbum: Album? = null
+    private lateinit var mSelectedArtistSongs: MutableList<Music>
+    private lateinit var mSelectedArtistAlbums: List<Album>
+    private lateinit var mSelectedAlbumsDataSource: DataSource<Any>
     private lateinit var mAlbumSongsDataSource: DataSource<Any>
+    private var mSelectedAlbum: Album? = null
 
-    //player
+    //the player
     private lateinit var mMediaPlayerHolder: MediaPlayerHolder
 
     //our PlayerService shit
@@ -127,7 +129,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private var sBound: Boolean = false
     private lateinit var mBindingIntent: Intent
 
-    // Defines callbacks for service binding, passed to bindService()
+    //Defines callbacks for service binding, passed to bindService()
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(componentName: ComponentName, service: IBinder) {
             val binder = service as PlayerService.LocalBinder
@@ -299,7 +301,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                     //get album songs and sort them
                     val albumSongs =
-                        mMusic[song.artist]!![song.album]?.sortedBy { albumSong -> albumSong.track }
+                        MusicUtils.getAlbumFromList(song.album, mMusic[song.artist]!!).first
+                            .music?.sortedBy { albumSong -> albumSong.track }
+                    mMusic[song.artist]?.iterator()?.forEach {
+
+                    }
 
                     startPlayback(song, albumSongs)
                 } else {
@@ -341,6 +347,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mMusic = musicLibrary.allCategorizedMusic
 
                 mNavigationArtist = MusicUtils.getArtists(mMusic)[0]
+
                 setArtistDetails()
 
                 //let's get intent from external app and open the song,
@@ -436,12 +443,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mPlayPauseButton.setOnClickListener { resumeOrPause() }
         mSkipNextButton.setOnClickListener { skip(true) }
 
-/*        shuffle_button.setOnClickListener {
+        shuffle_button.setOnClickListener {
             if (::mMediaPlayerHolder.isInitialized) {
                 if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
-                mSongsAdapter.randomPlaySelectedAlbum(mMediaPlayerHolder)
+                val albumSongs = mSelectedAlbum?.music
+                albumSongs?.shuffle()
+                startPlayback(albumSongs!![0], albumSongs)
             }
-        }*/
+        }
 
         volume.setOnLongClickListener {
             openEqualizer()
@@ -484,103 +493,111 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun setArtistDetails() {
 
-        val notSortedArtistDiscs = mMusic.getValue(mNavigationArtist!!)
-        mSelectedArtistAlbums = MusicUtils.buildSortedArtistAlbums(resources, notSortedArtistDiscs)
+        mSelectedArtistAlbums = musicLibrary.allCategorizedMusic[mNavigationArtist]!!
 
         //set the titles and subtitles
         mArtistDetailsTitle.text = mNavigationArtist
         mArtistsDetailsDiscCount.text = getString(
             R.string.artist_info,
             mSelectedArtistAlbums.size,
-            MusicUtils.getArtistSongsCount(notSortedArtistDiscs)
+            MusicUtils.getArtistSongsCount(mMusic.getValue(mNavigationArtist!!))
         )
 
         //set the albums list
         //one-time adapter initialization
 
-        swapSelectedSongs(true, mSelectedArtistAlbums[0])
-        val selectedAlbumsDataSource = dataSourceOf(mSelectedArtistAlbums)
-
-        mAlbumsRecyclerView.setup {
-            withDataSource(selectedAlbumsDataSource)
-            withLayoutManager(
-                LinearLayoutManager(
-                    this@MainActivity,
-                    LinearLayoutManager.HORIZONTAL,
-                    false
-                )
-            )
-
-            withItem<Album, AlbumsViewHolder>(R.layout.album_item) {
-                onBind(::AlbumsViewHolder) { _, item ->
-                    // AlbumsViewHolder is `this` here
-                    album.text = item.title
-                    year.text = item.year
-
-                    checkbox.visibility =
-                        if (mSelectedAlbum?.title != item.title) View.GONE else View.VISIBLE
-                }
-
-                onClick {
-
-                    if (mSelectedAlbum?.title != item.title) {
-
-                        mAlbumsRecyclerView.adapter?.notifyItemChanged(
-                            MusicUtils.getAlbumFromList(
-                                item.title,
-                                mSelectedArtistAlbums
-                            ).second
-                        )
-
-                        mAlbumsRecyclerView.adapter?.notifyItemChanged(
-                            MusicUtils.getAlbumFromList(
-                                mSelectedAlbum?.title,
-                                mSelectedArtistAlbums
-                            ).second
-                        )
-
-                        swapSelectedSongs(false, item)
-                    }
-                }
-            }
-        }
-
-
-        // setup{} is an extension method on RecyclerView
-        mSongsRecyclerView.setup {
-            // item is a `val` in `this` here
-            withDataSource(mAlbumSongsDataSource)
-            withItem<Music, GenericViewHolder>(R.layout.generic_item) {
-                onBind(::GenericViewHolder) { _, item ->
-                    // GenericViewHolder is `this` here
-                    title.text = getString(
-                        R.string.track_song,
-                        MusicUtils.formatSongTrack(item.track),
-                        item.title
-                    )
-                    subtitle.text = MusicUtils.formatSongDuration(item.duration)
-                }
-
-                onClick {
-                    onSongSelected(
-                        item,
-                        musicLibrary.allCategorizedMusic.getValue(item.artist!!).getValue(item.album).toList()
-                    )
-                }
-            }
-        }
+        swapAlbums(true, mSelectedArtistAlbums[0])
     }
 
-    private fun swapSelectedSongs(sCreateDataSource: Boolean, album: Album) {
+    private fun swapAlbums(sCreateDataSource: Boolean, selectedAlbum: Album?) {
 
-        mSelectedAlbum = album
+        mSelectedAlbum = selectedAlbum
         mArtistsDetailsSelectedDisc.text = mSelectedAlbum?.title
-        mArtistDetailsSelectedDiscYear.text = album.year
+        mArtistDetailsSelectedDiscYear.text = selectedAlbum?.year
 
         val songs = mSelectedAlbum?.music!!
         if (songs.size > 1) songs.sortBy { it.track }
-        if (sCreateDataSource) mAlbumSongsDataSource =
-            dataSourceOf(songs) else mAlbumSongsDataSource.set(songs)
+
+        if (sCreateDataSource) {
+
+            mAlbumSongsDataSource = dataSourceOf(songs)
+            mSelectedAlbumsDataSource = dataSourceOf(mSelectedArtistAlbums)
+
+            mAlbumsRecyclerView.setup {
+                withDataSource(mSelectedAlbumsDataSource)
+                withLayoutManager(
+                    LinearLayoutManager(
+                        this@MainActivity,
+                        LinearLayoutManager.HORIZONTAL,
+                        false
+                    )
+                )
+
+                withItem<Album, AlbumsViewHolder>(R.layout.album_item) {
+                    onBind(::AlbumsViewHolder) { _, item ->
+                        // AlbumsViewHolder is `this` here
+                        album.text = item.title
+                        year.text = item.year
+
+                        checkbox.visibility =
+                            if (mSelectedAlbum?.title != item.title) View.GONE else View.VISIBLE
+                    }
+
+                    onClick {
+
+                        if (mSelectedAlbum?.title != item.title) {
+
+                            mAlbumsRecyclerView.adapter?.notifyItemChanged(
+                                MusicUtils.getAlbumFromList(
+                                    item.title,
+                                    mSelectedArtistAlbums
+                                ).second
+                            )
+
+                            mAlbumsRecyclerView.adapter?.notifyItemChanged(
+                                MusicUtils.getAlbumFromList(
+                                    mSelectedAlbum?.title,
+                                    mSelectedArtistAlbums
+                                ).second
+                            )
+                            swapAlbums(false, item)
+                        }
+                    }
+                }
+            }
+
+
+            // setup{} is an extension method on RecyclerView
+            mSongsRecyclerView.setup {
+                // item is a `val` in `this` here
+                withDataSource(mAlbumSongsDataSource)
+                withItem<Music, GenericViewHolder>(R.layout.generic_item) {
+                    onBind(::GenericViewHolder) { _, item ->
+                        // GenericViewHolder is `this` here
+                        title.text = getString(
+                            R.string.track_song,
+                            MusicUtils.formatSongTrack(item.track),
+                            item.title
+                        )
+                        subtitle.text = MusicUtils.formatSongDuration(item.duration)
+                    }
+
+                    onClick {
+                        onSongSelected(
+                            item,
+                            MusicUtils.getAlbumFromList(
+                                item.album,
+                                mSelectedArtistAlbums
+                            ).first.music!!.toList()
+                        )
+                    }
+                }
+            }
+        } else {
+            mSelectedAlbumsDataSource.set(mSelectedArtistAlbums)
+            mAlbumSongsDataSource.set(songs)
+            mSongsRecyclerView.scrollToPosition(0)
+        }
     }
 
     private fun startPlayback(song: Music, album: List<Music>?) {
@@ -843,10 +860,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
             if (mNavigationArtist != artist) {
 
-                val playingAlbumInfo =
-                    MusicUtils.getAlbumFromList(album, mSelectedArtistAlbums)
+                onArtistSelected(artist!!)
 
-                swapSelectedSongs(false, playingAlbumInfo.first)
+                val playingAlbumInfo =
+                    MusicUtils.getAlbumFromList(album, musicLibrary.allCategorizedMusic[artist])
+
+                swapAlbums(false, playingAlbumInfo.first)
                 mAlbumsRecyclerView.scrollToPosition(playingAlbumInfo.second)
 
             } else {

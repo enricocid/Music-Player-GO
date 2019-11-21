@@ -23,18 +23,18 @@ import java.util.concurrent.TimeUnit
 object MusicUtils {
 
     @JvmStatic
-    fun getArtists(music: Map<String, Map<String?, List<Music>>>): MutableList<String> {
+    fun getArtists(music: Map<String, List<Album>>): MutableList<String> {
         val artists = music.keys.toMutableList()
         artists.sort()
         return artists
     }
 
     @JvmStatic
-    fun getArtistSongsCount(albums: Map<String?, List<Music>>): Int {
+    fun getArtistSongsCount(albums: List<Album>): Int {
         var songsCount = 0
         try {
-            albums.keys.iterator().forEach {
-                songsCount += albums.getValue(it).size
+            albums.iterator().forEach {
+                songsCount += it.music!!.size
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -44,13 +44,13 @@ object MusicUtils {
 
     @JvmStatic
     //returns a pair of album and its position given a list of albums
-    fun getAlbumFromList(album: String?, albums: List<Album>): Pair<Album, Int> {
+    fun getAlbumFromList(album: String?, albums: List<Album>?): Pair<Album, Int> {
         return try {
-            val position = albums.indexOfFirst { it.title == album }
+            val position = albums?.indexOfFirst { it.title == album }!!
             Pair(albums[position], position)
         } catch (e: Exception) {
             e.printStackTrace()
-            Pair(albums[0], 0)
+            Pair(albums!![0], 0)
         }
     }
 
@@ -89,19 +89,23 @@ object MusicUtils {
     @JvmStatic
     fun buildSortedArtistAlbums(
         resources: Resources,
-        albums: Map<String?, List<Music>>
+        artistSongs: List<Music>
     ): List<Album> {
 
         val sortedAlbums = mutableListOf<Album>()
 
         try {
 
-            albums.keys.iterator().forEach {
-                val albumSongs = albums.getValue(it)
+            val groupedSongs = artistSongs.groupBy { song -> song.album }
+
+            groupedSongs.keys.iterator().forEach {
+
+                val albumSongs = groupedSongs.getValue(it)
+
                 sortedAlbums.add(
                     Album(
                         it,
-                        getYearForAlbum(resources, albums.getValue(it)[0].year),
+                        getYearForAlbum(resources, albumSongs[0].year),
                         albumSongs.toMutableList()
                     )
                 )

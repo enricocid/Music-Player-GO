@@ -16,6 +16,7 @@ import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.music.Music
+import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.ui.GenericViewHolder
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -85,7 +86,11 @@ class AllMusicFragment : Fragment() {
                     onClick {
                         mUIControlInterface.onSongSelected(
                             item,
-                            musicLibrary.allCategorizedMusic.getValue(item.artist!!).getValue(item.album).toList()
+                            MusicUtils.getAlbumFromList(
+                                item.album,
+                                musicLibrary.allCategorizedMusic.getValue(item.artist!!)
+                            )
+                                .first.music!!.toList()
                         )
                     }
 

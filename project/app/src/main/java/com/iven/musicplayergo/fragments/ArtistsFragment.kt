@@ -141,8 +141,7 @@ class ArtistsFragment : Fragment() {
                             activity!!,
                             Pair(index, item),
                             mArtists,
-                            mDataSource,
-                            context_view
+                            mDataSource
                         )
                     }
                 }
@@ -178,7 +177,7 @@ class ArtistsFragment : Fragment() {
 
         return getString(
             R.string.artist_info,
-            albums.keys.size,
+            albums.size,
             MusicUtils.getArtistSongsCount(albums)
         )
     }
