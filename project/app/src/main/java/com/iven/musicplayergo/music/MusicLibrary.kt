@@ -6,10 +6,14 @@ import android.provider.MediaStore
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.ui.Utils
 
+
 class MusicLibrary {
 
     val allSongsUnfiltered = mutableListOf<Music>()
+
     lateinit var allSongsFiltered: MutableList<Music>
+
+    lateinit var allCategorizedMusicByArtist: Map<String?, List<Music>>
 
     //keys: artist || keys: album, value: album songs
     val allCategorizedMusic = hashMapOf<String, List<Album>>()
@@ -70,13 +74,13 @@ class MusicLibrary {
                 allSongsUnfiltered.distinctBy { it.artist to it.year to it.track to it.title to it.duration to it.album to it.albumId }
                     .toMutableList()
 
-            val musicSortedByArtist = allSongsFiltered.groupBy { it.artist }
+            allCategorizedMusicByArtist = allSongsFiltered.groupBy { it.artist }
 
-            musicSortedByArtist.keys.iterator().forEach {
+            allCategorizedMusicByArtist.keys.iterator().forEach {
 
                 allCategorizedMusic[it!!] = MusicUtils.buildSortedArtistAlbums(
                     context.resources,
-                    musicSortedByArtist.getValue(it)
+                    allCategorizedMusicByArtist.getValue(it)
                 )
             }
 

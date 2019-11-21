@@ -30,19 +30,6 @@ object MusicUtils {
     }
 
     @JvmStatic
-    fun getArtistSongsCount(albums: List<Album>): Int {
-        var songsCount = 0
-        try {
-            albums.iterator().forEach {
-                songsCount += it.music!!.size
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return songsCount
-    }
-
-    @JvmStatic
     //returns a pair of album and its position given a list of albums
     fun getAlbumFromList(album: String?, albums: List<Album>?): Pair<Album, Int> {
         return try {

@@ -173,12 +173,10 @@ class ArtistsFragment : Fragment() {
     }
 
     private fun getArtistSubtitle(item: String): String {
-        val albums = musicLibrary.allCategorizedMusic.getValue(item)
-
         return getString(
             R.string.artist_info,
-            albums.size,
-            MusicUtils.getArtistSongsCount(albums)
+            musicLibrary.allCategorizedMusic.getValue(item).size,
+            musicLibrary.allCategorizedMusicByArtist.getValue(item).size
         )
     }
 
@@ -242,8 +240,7 @@ class ArtistsFragment : Fragment() {
 
             mArtists = Utils.getSortedList(
                 it.itemId,
-                mArtists,
-                musicLibrary.allCategorizedMusic.keys.toMutableList()
+                mArtists
             )
 
             mDataSource.set(mArtists)
@@ -264,7 +261,6 @@ class ArtistsFragment : Fragment() {
     private fun setupFilteredArtists() {
         mArtists = Utils.getSortedList(
             goPreferences.artistsSorting,
-            musicLibrary.allCategorizedMusic.keys.toMutableList(),
             musicLibrary.allCategorizedMusic.keys.toMutableList()
         )
 

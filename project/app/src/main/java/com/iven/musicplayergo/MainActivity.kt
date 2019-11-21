@@ -288,9 +288,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     val albumSongs =
                         MusicUtils.getAlbumFromList(song.album, mMusic[song.artist]!!).first
                             .music?.sortedBy { albumSong -> albumSong.track }
-                    mMusic[song.artist]?.iterator()?.forEach {
-
-                    }
 
                     startPlayback(song, albumSongs)
                 } else {
@@ -331,7 +328,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mAllDeviceSongs = musicLibrary.allSongsUnfiltered
                 mMusic = musicLibrary.allCategorizedMusic
 
-                mNavigationArtist = MusicUtils.getArtists(mMusic)[0]
+                mNavigationArtist = Utils.getSortedList(
+                    goPreferences.artistsSorting,
+                    musicLibrary.allCategorizedMusic.keys.toMutableList()
+                )[0]
 
                 setArtistDetails()
 
@@ -485,7 +485,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mArtistsDetailsDiscCount.text = getString(
             R.string.artist_info,
             mSelectedArtistAlbums.size,
-            MusicUtils.getArtistSongsCount(mMusic.getValue(mNavigationArtist!!))
+            musicLibrary.allCategorizedMusicByArtist.getValue(mNavigationArtist).size
         )
 
         //set the albums list
