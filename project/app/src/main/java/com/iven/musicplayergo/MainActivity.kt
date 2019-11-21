@@ -13,7 +13,6 @@ import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
-import android.os.Parcelable
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.widget.ImageView
@@ -70,12 +69,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     //RecyclerViews
     private lateinit var mAlbumsRecyclerView: RecyclerView
     private lateinit var mSongsRecyclerView: RecyclerView
-
-    private lateinit var mAlbumsLayoutManager: LinearLayoutManager
-    private lateinit var mSongsLayoutManager: LinearLayoutManager
-
-    private lateinit var mSavedAlbumsRecyclerLayoutState: Parcelable
-    private lateinit var mSavedSongsRecyclerLayoutState: Parcelable
 
     //settings/controls panel
     private lateinit var mControlsContainer: LinearLayout
@@ -165,10 +158,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     //restore recycler views state
     override fun onResume() {
         super.onResume()
-        if (::mSavedAlbumsRecyclerLayoutState.isInitialized && ::mSavedSongsRecyclerLayoutState.isInitialized) {
-            mAlbumsLayoutManager.onRestoreInstanceState(mSavedAlbumsRecyclerLayoutState)
-            mSongsLayoutManager.onRestoreInstanceState(mSavedSongsRecyclerLayoutState)
-        }
         if (::mMediaPlayerHolder.isInitialized && mMediaPlayerHolder.isMediaPlayer) mMediaPlayerHolder.onResumeActivity()
     }
 
@@ -176,10 +165,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     override fun onPause() {
         super.onPause()
         if (::mMediaPlayerHolder.isInitialized && mMediaPlayerHolder.isMediaPlayer) mMediaPlayerHolder.onPauseActivity()
-        if (::mAlbumsLayoutManager.isInitialized && ::mSongsLayoutManager.isInitialized) {
-            mSavedAlbumsRecyclerLayoutState = mAlbumsLayoutManager.onSaveInstanceState()!!
-            mSavedSongsRecyclerLayoutState = mSongsLayoutManager.onSaveInstanceState()!!
-        }
     }
 
     //manage bottom panel state on back pressed
