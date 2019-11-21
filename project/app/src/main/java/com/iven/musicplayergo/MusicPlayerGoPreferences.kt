@@ -37,7 +37,7 @@ class MusicPlayerGoPreferences(context: Context) {
         set(value) = mPrefs.edit().putBoolean(prefsFastScroll, value).apply()
 
     var isSearchBarEnabled: Boolean
-        get() = mPrefs.getBoolean(prefsSearchBar, false)
+        get() = mPrefs.getBoolean(prefsSearchBar, true)
         set(value) = mPrefs.edit().putBoolean(prefsSearchBar, value).apply()
 
     var artistsSorting: Int
