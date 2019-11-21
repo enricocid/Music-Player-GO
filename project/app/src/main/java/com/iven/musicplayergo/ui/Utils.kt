@@ -8,6 +8,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.recyclical.datasource.DataSource
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.musicLibrary
 import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import java.util.*
 
@@ -114,7 +115,8 @@ object Utils {
     @JvmStatic
     fun getSortedList(
         id: Int,
-        list: MutableList<String>
+        list: MutableList<String>,
+        defaultList: MutableList<String>
     ): MutableList<String> {
         return when (id) {
 
@@ -129,7 +131,7 @@ object Utils {
                 Collections.sort(list, String.CASE_INSENSITIVE_ORDER)
                 list.asReversed()
             }
-            else -> list
+            else -> defaultList
         }
     }
 }

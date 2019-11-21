@@ -330,6 +330,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 mNavigationArtist = Utils.getSortedList(
                     goPreferences.artistsSorting,
+                    musicLibrary.allCategorizedMusic.keys.toMutableList(),
                     musicLibrary.allCategorizedMusic.keys.toMutableList()
                 )[0]
 

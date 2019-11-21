@@ -128,9 +128,7 @@ class PreferencesFragment : PreferenceFragmentCompat() {
                 cornerRadius(res = R.dimen.md_corner_radius)
                 title(R.string.hidden_items_pref_title)
                 val checkableAdapter = CheckableAdapter(
-                    activity!!,
-                    goPreferences.hiddenItems!!.toMutableList(),
-                    true
+                    goPreferences.hiddenItems!!.toMutableList()
                 )
                 customListAdapter(checkableAdapter)
                 positiveButton {

@@ -12,6 +12,7 @@
     <!-- Main - All songs -->
     <string name="songs">All songs</string>
     <string name="artist_and_album">%1s&#160;-&#160;%2s</string>
+    <string name="track_song">%1d&#160;-&#160;%2s</string>
 
     <!-- Details -->
     <string name="unknown_year" translatable="false">N&#x2F;A</string>

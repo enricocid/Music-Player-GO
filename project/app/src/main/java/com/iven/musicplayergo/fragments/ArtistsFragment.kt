@@ -240,7 +240,8 @@ class ArtistsFragment : Fragment() {
 
             mArtists = Utils.getSortedList(
                 it.itemId,
-                mArtists
+                mArtists,
+                musicLibrary.allCategorizedMusic.keys.toMutableList()
             )
 
             mDataSource.set(mArtists)
@@ -261,6 +262,7 @@ class ArtistsFragment : Fragment() {
     private fun setupFilteredArtists() {
         mArtists = Utils.getSortedList(
             goPreferences.artistsSorting,
+            musicLibrary.allCategorizedMusic.keys.toMutableList(),
             musicLibrary.allCategorizedMusic.keys.toMutableList()
         )
 
