@@ -8,7 +8,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.recyclical.datasource.DataSource
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.musicLibrary
 import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import java.util.*
 
