@@ -128,7 +128,7 @@ class ArtistsFragment : Fragment() {
             mArtistsRecyclerView.setup {
                 // item is a `val` in `this` here
                 withDataSource(mDataSource)
-                withItem<String, GenericViewHolder>(R.layout.artist_item) {
+                withItem<String, GenericViewHolder>(if (goPreferences.isFastScrollEnabled) R.layout.artist_item else R.layout.generic_item) {
                     onBind(::GenericViewHolder) { _, item ->
                         // GenericViewHolder is `this` here
                         title.text = item
