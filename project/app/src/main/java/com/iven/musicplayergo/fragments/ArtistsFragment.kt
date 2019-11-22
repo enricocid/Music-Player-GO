@@ -3,7 +3,6 @@ package com.iven.musicplayergo.fragments
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,10 +42,6 @@ class ArtistsFragment : Fragment() {
     private lateinit var mSearchToolbar: Toolbar
     private lateinit var mHideItemDialog: MaterialDialog
 
-    private lateinit var mArtistsLayoutManager: LinearLayoutManager
-
-    private lateinit var mSavedArtistRecyclerLayoutState: Parcelable
-
     //indicator fast scroller by reddit
     private lateinit var mIndicatorFastScrollerView: FastScrollerView
     private lateinit var mIndicatorFastScrollThumb: FastScrollerThumbView
@@ -61,19 +56,8 @@ class ArtistsFragment : Fragment() {
 
     private var sSearchEnabled: Boolean = true
 
-
-    override fun onResume() {
-        super.onResume()
-        if (::mSavedArtistRecyclerLayoutState.isInitialized) {
-            mArtistsLayoutManager.onRestoreInstanceState(mSavedArtistRecyclerLayoutState)
-        }
-    }
-
     override fun onPause() {
         super.onPause()
-        if (::mArtistsLayoutManager.isInitialized) {
-            mSavedArtistRecyclerLayoutState = mArtistsLayoutManager.onSaveInstanceState()!!
-        }
         if (::mHideItemDialog.isInitialized && mHideItemDialog.isShowing) mHideItemDialog.dismiss()
     }
 
