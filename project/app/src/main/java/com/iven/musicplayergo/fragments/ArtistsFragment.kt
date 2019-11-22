@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import android.widget.FrameLayout
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -207,17 +206,6 @@ class ArtistsFragment : Fragment() {
                     }
                 )
 
-                mIndicatorFastScrollerView.afterMeasured {
-
-                    //set margin for artists recycler to improve fast scroller visibility
-                    mArtistsRecyclerView.setPadding(0, 0, width, 0)
-
-                    //set margin for thumb view
-                    val newLayoutParams =
-                        mIndicatorFastScrollThumb.layoutParams as FrameLayout.LayoutParams
-                    newLayoutParams.marginEnd = width
-                    mIndicatorFastScrollThumb.layoutParams = newLayoutParams
-                }
                 mIndicatorFastScrollThumb.setupWithFastScroller(mIndicatorFastScrollerView)
 
                 mIndicatorFastScrollerView.useDefaultScroller = false
