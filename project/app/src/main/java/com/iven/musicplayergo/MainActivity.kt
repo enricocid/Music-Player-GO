@@ -577,6 +577,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun setFixedMusicBarProgressListener() {
+
         mFixedMusicBar.setProgressChangeListener(
             object : MusicBar.OnMusicBarProgressChangeListener {
 
@@ -607,7 +608,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         mSongSeekTextNP.setTextColor(defaultPositionColor)
                     }
                     sUserIsSeeking = false
-                    //mSongProgress.progress = userSelectedPosition
+                    if (mMediaPlayerHolder.state != PLAYING) {
+                        mSeekProgressBar.progress = userSelectedPosition
+                        mFixedMusicBar.setProgress(userSelectedPosition)
+                    }
                     mMediaPlayerHolder.seekTo(userSelectedPosition)
                 }
             })
