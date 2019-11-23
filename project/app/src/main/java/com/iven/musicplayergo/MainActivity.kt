@@ -213,9 +213,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             negativeButton {
                 Utils.makeToast(
                     this@MainActivity,
-                    R.string.perm_rationale,
-                    R.drawable.ic_error,
-                    R.color.red
+                    R.string.perm_rationale
                 )
                 dismiss()
                 finishAndRemoveTask()
@@ -253,9 +251,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 } else {
                     Utils.makeToast(
                         this@MainActivity,
-                        R.string.error_unknown,
-                        R.drawable.ic_error,
-                        R.color.red
+                        R.string.error_unknown
                     )
                     finishAndRemoveTask()
                 }
@@ -263,9 +259,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         } catch (e: Exception) {
             Utils.makeToast(
                 this@MainActivity,
-                R.string.error_unknown,
-                R.drawable.ic_error,
-                R.color.red
+                R.string.error_unknown
             )
             finishAndRemoveTask()
         }
@@ -304,9 +298,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             } else {
                 Utils.makeToast(
                     this@MainActivity,
-                    R.string.error_no_music,
-                    R.drawable.ic_error,
-                    R.color.red
+                    R.string.error_no_music
                 )
                 finish()
             }
@@ -627,9 +619,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         } else {
             Utils.makeToast(
                 this@MainActivity,
-                R.string.no_eq,
-                R.drawable.ic_error,
-                R.color.red
+                R.string.no_eq
             )
         }
     }

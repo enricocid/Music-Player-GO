@@ -10,8 +10,6 @@
 
 - [**Aidan Afollestad**](https://github.com/afollestad) for the incredible [**material-dialogs**](https://github.com/afollestad/material-dialogs) library
 
-- [**Pranav Pandey**](https://github.com/pranavpandey) for beautiful [**Dynamic toasts**](https://github.com/pranavpandey/dynamic-toasts) library!
-
 - [**Toastcode**](https://toastco.de/) for the wunderbar [**Screener - Better screenshots**](https://play.google.com/store/apps/details?id=de.toastcode.screener) app
 
 - [**material.io**](https://material.io/tools/icons/?style=round) for the **wonderful round icons**

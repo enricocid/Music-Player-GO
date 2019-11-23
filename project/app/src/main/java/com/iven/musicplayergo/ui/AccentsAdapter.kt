@@ -86,7 +86,7 @@ class AccentsAdapter(private val activity: Activity) :
                 ).capitalize()
         } catch (e: Exception) {
             e.printStackTrace()
-            Utils.makeToast(activity, R.string.error_get_resource, R.drawable.ic_error, R.color.red)
+            Utils.makeToast(activity, R.string.error_get_resource)
             ""
         }
     }

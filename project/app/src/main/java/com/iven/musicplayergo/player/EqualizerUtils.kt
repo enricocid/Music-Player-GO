@@ -52,6 +52,6 @@ object EqualizerUtils {
     }
 
     fun notifyNoSessionId(context: Context) {
-        Utils.makeToast(context, R.string.bad_id, R.drawable.ic_error, R.color.red)
+        Utils.makeToast(context, R.string.bad_id)
     }
 }

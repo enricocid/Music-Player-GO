@@ -2,14 +2,12 @@ package com.iven.musicplayergo.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
-import androidx.appcompat.content.res.AppCompatResources
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.recyclical.datasource.DataSource
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
-import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import java.util.*
 
 object Utils {
@@ -50,16 +48,8 @@ object Utils {
     }
 
     @JvmStatic
-    fun makeToast(context: Context, message: Int, icon: Int, color: Int) {
-        val errorColor = ThemeHelper.getColor(context, color, color)
-        val tintColor = if (ThemeHelper.isThemeNight()) Color.BLACK else Color.WHITE
-        DynamicToast.make(
-            context,
-            context.getString(message),
-            AppCompatResources.getDrawable(context, icon),
-            tintColor,
-            errorColor
-        )
+    fun makeToast(context: Context, message: Int) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG)
             .show()
     }
 

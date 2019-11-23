@@ -72,9 +72,7 @@ class PreferencesFragment : PreferenceFragmentCompat() {
                 if (goPreferences.hiddenItems?.isNotEmpty()!!) showHiddenItemsDialog()
                 else Utils.makeToast(
                     activity!!,
-                    R.string.hidden_items_pref_empty,
-                    R.drawable.ic_warning,
-                    R.color.orange
+                    R.string.hidden_items_pref_empty
                 )
                 return@setOnPreferenceClickListener true
             }
