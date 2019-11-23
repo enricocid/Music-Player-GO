@@ -548,7 +548,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mVolumeNP = getCustomView().findViewById(R.id.np_volume)
 
                 setupPreciseVolumeHandler()
-
                 setFixedMusicBarProgressListener()
 
                 updateNowPlayingInfo()
@@ -573,11 +572,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     selectedSong.album
                 )
             )
+
         mSongDurationTextNP.text = MusicUtils.formatSongDuration(selectedSongDuration)
 
         mFixedMusicBar.loadFrom(selectedSong.path, selectedSong.duration.toInt())
+
         updatePlayingStatus(true)
-        mFixedMusicBar.setProgress(mMediaPlayerHolder.playerPosition)
     }
 
     private fun isNowPlaying(): Boolean {
