@@ -85,6 +85,7 @@ class ArtistDetailsFragment : Fragment() {
             artistDetailsToolbar.inflateMenu(R.menu.menu_artist_details)
             artistDetailsToolbar.overflowIcon =
                 AppCompatResources.getDrawable(context!!, R.drawable.ic_shuffle)
+            artistDetailsToolbar.setNavigationOnClickListener { activity?.onBackPressed() }
             artistDetailsToolbar.title = mSelectedArtist
             artistDetailsToolbar.subtitle = getString(
                 R.string.artist_info,
@@ -108,8 +109,6 @@ class ArtistDetailsFragment : Fragment() {
 
             mAlbumsRecyclerView = albums_rv
             mSongsRecyclerView = songs_rv
-
-            // close_button.setOnClickListener { activity?.onBackPressed() }
 
             mSelectedAlbumsDataSource = dataSourceOf(mSelectedArtistAlbums)
 
