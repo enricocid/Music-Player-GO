@@ -108,9 +108,7 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 
                 customListAdapter(AccentsAdapter(activity!!))
                 getRecyclerView().scrollToPosition(
-                    ThemeHelper.getAccent(
-                        goPreferences.accent
-                    ).second
+                    ThemeHelper.getAccentedTheme().second
                 )
             }
         }

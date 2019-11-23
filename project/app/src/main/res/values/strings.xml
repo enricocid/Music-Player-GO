@@ -8,17 +8,17 @@
     <string name="artists">Artists</string>
     <string name="artist_info">%1d&#160;Albums,&#160;%2d&#160;Tracks</string>
     <string name="playing_song" translatable="false">&lt;b>%1s&lt;/b>&lt;br/>%2s</string>
+    <string name="artist_and_album_np" translatable="false">&lt;b>%1s&lt;/b>&lt;br/>&#160;-&#160;%2s</string>
 
     <!-- Main - All songs -->
     <string name="songs">All songs</string>
-    <string name="artist_and_album">%1s&#160;-&#160;%2s</string>
-    <string name="track_song">%1d&#160;-&#160;%2s</string>
+    <string name="artist_and_album" translatable="false">%1s&#160;-&#160;%2s</string>
+    <string name="track_song" translatable="false">%1d&#160;-&#160;%2s</string>
     <string name="shuffle_am">Shuffle all songs</string>
     <string name="shuffle_sa">Shuffle selected album</string>
 
     <!-- Details -->
     <string name="unknown_year" translatable="false">N&#x2F;A</string>
-    <string name="volume">Volume %1s</string>
 
     <!-- Messages -->
     <string name="perm_rationale">Music Player GO needs access to your files to play music!</string>

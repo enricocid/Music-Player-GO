@@ -60,16 +60,16 @@ class CheckableAdapter(
                 checkBox.isEnabled = itemView.isEnabled
                 checkBox.isChecked = mCheckableItems.contains(adapterPosition.toString())
             } else {*/
-                checkBox.isChecked = listItems.contains(item)
+            checkBox.isChecked = listItems.contains(item)
             /*}*/
 
             itemView.setOnClickListener {
                 checkBox.isChecked = !checkBox.isChecked
-                 if (!checkBox.isChecked) {
-                        mItemsToRemove.add(item)
-                    } else {
-                        if (mItemsToRemove.contains(item)) mItemsToRemove.remove(item)
-                    }
+                if (!checkBox.isChecked) {
+                    mItemsToRemove.add(item)
+                } else {
+                    if (mItemsToRemove.contains(item)) mItemsToRemove.remove(item)
+                }
             }
         }
     }

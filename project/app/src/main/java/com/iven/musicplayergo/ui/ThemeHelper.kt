@@ -3,12 +3,20 @@ package com.iven.musicplayergo.ui
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Handler
+import android.util.TypedValue
+import android.widget.ImageView
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.goPreferences
+
 
 object ThemeHelper {
 
@@ -81,9 +89,9 @@ object ThemeHelper {
 
     //finds theme and its position in accents array and returns a pair(theme, position)
     @JvmStatic
-    fun getAccent(accent: Int): Pair<Int, Int> {
+    fun getAccentedTheme(): Pair<Int, Int> {
         return try {
-            val pair = accents.find { pair -> pair.first == accent }
+            val pair = accents.find { pair -> pair.first == goPreferences.accent }
             val theme = pair!!.second
             val position = accents.indexOf(pair)
             Pair(theme, position)
@@ -99,5 +107,35 @@ object ThemeHelper {
         } catch (e: Exception) {
             ContextCompat.getColor(context, emergencyColor)
         }
+    }
+
+    @JvmStatic
+    fun updateIconTint(imageView: ImageView, tint: Int) {
+        ImageViewCompat.setImageTintList(
+            imageView, ColorStateList.valueOf(tint)
+        )
+    }
+
+    @ColorInt
+    @JvmStatic
+    fun resolveThemeAccent(context: Context): Int {
+        return getColor(context, goPreferences.accent, R.color.deep_purple)
+    }
+
+    @ColorInt
+    @JvmStatic
+    fun resolveColorAttr(context: Context, @AttrRes colorAttr: Int): Int {
+        val resolvedAttr: TypedValue = resolveThemeAttr(context, colorAttr)
+        // resourceId is used if it's a ColorStateList, and data if it's a color reference or a hex color
+        val colorRes =
+            if (resolvedAttr.resourceId != 0) resolvedAttr.resourceId else resolvedAttr.data
+        return ContextCompat.getColor(context, colorRes)
+    }
+
+    private fun resolveThemeAttr(context: Context, @AttrRes attrRes: Int): TypedValue {
+        val theme = context.theme
+        val typedValue = TypedValue()
+        theme.resolveAttribute(attrRes, typedValue, true)
+        return typedValue
     }
 }

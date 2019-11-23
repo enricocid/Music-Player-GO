@@ -4,29 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="-16dp"
-    android:clickable="true"
-    android:focusable="true"
-    android:orientation="vertical"
-    android:paddingBottom="32dp"
-    android:elevation="4dp"
     android:background="?android:attr/windowBackground"
+    android:clickable="true"
+    android:elevation="4dp"
+    android:focusable="true"
+    android:onClick="openNowPlaying"
+    android:orientation="vertical"
     tools:context=".MainActivity">
+
+    <ProgressBar
+        android:id="@+id/song_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:clickable="false"
+        android:indeterminate="false"
+        android:indeterminateTint="?attr/colorPrimary"
+        android:progressBackgroundTint="?attr/colorControlNormal" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:baselineAligned="false"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="8dp">
 
         <LinearLayout
-            android:id="@+id/player_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
-            android:background="@drawable/ripple"
             android:orientation="vertical"
             android:paddingStart="8dp"
             android:paddingTop="8dp"
@@ -65,64 +73,16 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/skip_prev_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="?android:attr/actionBarItemBackground"
-                android:contentDescription="@string/app_name"
-                android:padding="8dp"
-                android:src="@drawable/ic_skip_previous" />
-
-            <ImageView
-                android:id="@+id/play_pause_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="?android:attr/actionBarItemBackground"
-                android:contentDescription="@string/app_name"
-                android:padding="8dp"
-                android:src="@drawable/ic_play" />
-
-            <ImageView
-                android:id="@+id/skip_next_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="?android:attr/actionBarItemBackground"
-                android:contentDescription="@string/app_name"
-                android:padding="8dp"
-                android:src="@drawable/ic_skip_next" />
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <!-- PLAYER SEEK TO BAR -->
-        <include layout="@layout/player_seek" />
-
         <ImageView
-            android:id="@+id/volume"
+            android:id="@+id/play_pause_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="?android:attr/actionBarItemBackground"
             android:contentDescription="@string/app_name"
-            android:onClick="openVolDialog"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:src="@drawable/ic_volume" />
+            android:padding="8dp"
+            android:src="@drawable/ic_play" />
 
     </LinearLayout>
+
 </LinearLayout>

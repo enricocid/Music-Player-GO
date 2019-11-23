@@ -23,8 +23,8 @@
         android:id="@+id/albums_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:overScrollMode="never"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"
+        android:overScrollMode="never" />
 
     <!-- DISC SONGS -->
     <androidx.recyclerview.widget.RecyclerView

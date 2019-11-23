@@ -22,21 +22,9 @@
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
-    <!-- SeekBar style -->
-    <style name="SeekBarStyle" parent="Widget.AppCompat.SeekBar">
-        <item name="android:progressBackgroundTint">?attr/colorAccent</item>
-        <item name="android:progressTint">?attr/colorAccent</item>
-    </style>
-
     <!-- Style for search bar -->
     <style name="SearchBarStyle" parent="Widget.AppCompat.ActionBar.Solid">
         <item name="searchViewStyle">@style/SearchViewStyle</item>
-        <item name="actionOverflowButtonStyle">@style/ActionButtonOverflow</item>
-    </style>
-
-    <!-- This style is where you define the tint color of your overflow menu button -->
-    <style name="ActionButtonOverflow" parent="Widget.AppCompat.ActionButton.Overflow">
-        <item name="android:src">@drawable/ic_sort</item>
     </style>
 
     <!-- Style for search view -->
