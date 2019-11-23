@@ -16,6 +16,7 @@ import android.widget.ProgressBar
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.animation.doOnEnd
 import androidx.core.app.ActivityCompat
 import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mArtistsFragment: ArtistsFragment
     private lateinit var mAllMusicFragment: AllMusicFragment
     private lateinit var mSettingsFragment: SettingsFragment
+    private lateinit var mArtistDetailsFragment: ArtistDetailsFragment
 
     //views
     private lateinit var mViewPager: ViewPager
@@ -127,6 +129,16 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         // Bind to LocalService
         mBindingIntent = Intent(this, PlayerService::class.java).also { intent ->
             bindService(intent, connection, Context.BIND_AUTO_CREATE)
+        }
+    }
+
+    override fun onBackPressed() {
+        if (::mArtistDetailsFragment.isInitialized && mArtistDetailsFragment.isAdded) {
+            mArtistDetailsFragment.onHandleBackPressed().doOnEnd {
+                super.onBackPressed()
+            }
+        } else {
+            super.onBackPressed()
         }
     }
 
@@ -352,10 +364,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         mNavigationArtist = selectedArtist
 
+        mArtistDetailsFragment = ArtistDetailsFragment.newInstance(mNavigationArtist)
         supportFragmentManager.beginTransaction()
             .replace(
                 R.id.container,
-                ArtistDetailsFragment.newInstance(mNavigationArtist), ArtistDetailsFragment.TAG
+                mArtistDetailsFragment, ArtistDetailsFragment.TAG
             )
             .addToBackStack(null)
             .commit()
@@ -522,7 +535,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mArtistTextNP = getCustomView().findViewById(R.id.np_artist_album)
                 mArtistTextNP.isSelected = true
                 mFixedMusicBar = getCustomView().findViewById(R.id.np_fixed_music_bar)
-                mFixedMusicBar.setBackgroundBarPrimeColor(ColorUtils.setAlphaComponent(ThemeHelper.resolveThemeAccent(this@MainActivity), 40))
+                mFixedMusicBar.setBackgroundBarPrimeColor(
+                    ColorUtils.setAlphaComponent(
+                        ThemeHelper.resolveThemeAccent(
+                            this@MainActivity
+                        ), 40
+                    )
+                )
                 mSongSeekTextNP = getCustomView().findViewById(R.id.np_seek)
                 mSongDurationTextNP = getCustomView().findViewById(R.id.np_duration)
 

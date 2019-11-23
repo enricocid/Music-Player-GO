@@ -30,6 +30,7 @@ import com.reddit.indicatorfastscroll.FastScrollerView
 import kotlinx.android.synthetic.main.fragment_artists.*
 import kotlinx.android.synthetic.main.search_toolbar.*
 
+
 /**
  * A simple [Fragment] subclass.
  * Use the [ArtistsFragment.newInstance] factory method to
@@ -117,6 +118,7 @@ class ArtistsFragment : Fragment() {
                 // item is a `val` in `this` here
                 withDataSource(mDataSource)
                 withItem<String, GenericViewHolder>(if (goPreferences.isFastScrollEnabled) R.layout.artist_item else R.layout.generic_item) {
+
                     onBind(::GenericViewHolder) { _, item ->
                         // GenericViewHolder is `this` here
                         title.text = item

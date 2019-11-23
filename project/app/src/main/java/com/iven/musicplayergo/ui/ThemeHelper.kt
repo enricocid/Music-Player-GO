@@ -17,7 +17,6 @@ import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
 
-
 object ThemeHelper {
 
     //update theme
@@ -29,11 +28,6 @@ object ThemeHelper {
             activity.startActivity(intent)
             activity.finish()
         }, 250)
-    }
-
-    @JvmStatic
-    fun isThemeNight(): Boolean {
-        return AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
     }
 
     @JvmStatic

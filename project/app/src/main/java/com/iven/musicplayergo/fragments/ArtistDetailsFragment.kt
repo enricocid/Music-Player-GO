@@ -1,14 +1,16 @@
 package com.iven.musicplayergo.fragments
 
+import android.animation.Animator
+import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.vectordrawable.graphics.drawable.ArgbEvaluator
 import com.afollestad.recyclical.datasource.DataSource
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
@@ -20,15 +22,23 @@ import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.ui.AlbumsViewHolder
 import com.iven.musicplayergo.ui.GenericViewHolder
+import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 import kotlinx.android.synthetic.main.fragment_artist_details.*
+import kotlin.math.max
 
 /**
  * A simple [Fragment] subclass.
  * Use the [ArtistDetailsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+const val REVEAL_DURATION: Long = 1000
+
 class ArtistDetailsFragment : Fragment() {
+
+    private lateinit var mArtistDetailsView: View
+    private lateinit var mArtistDetailsAnimator: Animator
 
     private lateinit var mSelectedAlbumsDataSource: DataSource<Any>
     private lateinit var mAlbumSongsDataSource: DataSource<Any>
@@ -79,19 +89,27 @@ class ArtistDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mArtistDetailsView = view
+
         if (context != null) {
 
             val artistDetailsToolbar = artist_details_toolbar
-            artistDetailsToolbar.inflateMenu(R.menu.menu_artist_details)
-            artistDetailsToolbar.overflowIcon =
-                AppCompatResources.getDrawable(context!!, R.drawable.ic_shuffle)
-            artistDetailsToolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+
             artistDetailsToolbar.title = mSelectedArtist
             artistDetailsToolbar.subtitle = getString(
                 R.string.artist_info,
                 mSelectedArtistAlbums.size,
                 mSongsForArtist.size
             )
+
+            artistDetailsToolbar.inflateMenu(R.menu.menu_artist_details)
+            artistDetailsToolbar.overflowIcon =
+                AppCompatResources.getDrawable(context!!, R.drawable.ic_shuffle)
+
+            artistDetailsToolbar.setNavigationOnClickListener {
+                activity?.onBackPressed()
+            }
+
             val itemShuffle = artistDetailsToolbar.menu.findItem(R.id.action_shuffle_am)
 
             itemShuffle.setOnMenuItemClickListener {
@@ -186,6 +204,69 @@ class ArtistDetailsFragment : Fragment() {
                 }
             }
         }
+        view.afterMeasured {
+            revealFragment(true)
+        }
+    }
+
+    private fun revealFragment(show: Boolean) {
+
+        val radius = max(mArtistDetailsView.width, mArtistDetailsView.height).toFloat()
+
+        val startRadius = if (show) 0f else radius
+        val finalRadius = if (show) radius else 0f
+
+        mArtistDetailsAnimator =
+            ViewAnimationUtils.createCircularReveal(
+                mArtistDetailsView,
+                0,
+                0,
+                startRadius,
+                finalRadius
+            )
+        mArtistDetailsAnimator.interpolator = FastOutSlowInInterpolator()
+        mArtistDetailsAnimator.duration = REVEAL_DURATION
+        mArtistDetailsAnimator.start()
+
+        val accent = ThemeHelper.resolveThemeAccent(context!!)
+        val backgroundColor =
+            ThemeHelper.resolveColorAttr(context!!, android.R.attr.windowBackground)
+        val startColor = if (show) accent else backgroundColor
+        val endColor = if (show) backgroundColor else accent
+
+        startColorAnimation(
+            mArtistDetailsView,
+            startColor,
+            endColor
+        )
+    }
+
+    private fun startColorAnimation(
+        view: View,
+        startColor: Int,
+        endColor: Int
+    ) {
+        val anim = ValueAnimator()
+        anim.setIntValues(startColor, endColor)
+        anim.setEvaluator(ArgbEvaluator())
+        anim.addUpdateListener { valueAnimator -> view.setBackgroundColor((valueAnimator.animatedValue as Int)) }
+        anim.duration = REVEAL_DURATION
+        anim.start()
+    }
+
+
+    //viewTreeObserver extension to measure layout params
+    //https://antonioleiva.com/kotlin-ongloballayoutlistener/
+    private inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
+        viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                if (measuredWidth > 0 && measuredHeight > 0) {
+                    viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    f()
+                }
+            }
+        })
     }
 
     companion object {
@@ -204,5 +285,10 @@ class ArtistDetailsFragment : Fragment() {
 
         @JvmStatic
         val TAG = "SELECTED_ARTIST"
+    }
+
+    fun onHandleBackPressed(): Animator {
+        revealFragment(false)
+        return mArtistDetailsAnimator
     }
 }
