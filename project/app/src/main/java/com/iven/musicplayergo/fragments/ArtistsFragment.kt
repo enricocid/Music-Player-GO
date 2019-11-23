@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -87,6 +88,9 @@ class ArtistsFragment : Fragment() {
         if (context != null) {
             mSearchToolbar = search_toolbar
             mSearchToolbar.inflateMenu(R.menu.menu_search)
+            mSearchToolbar.overflowIcon =
+                AppCompatResources.getDrawable(context!!, R.drawable.ic_sort)
+
             mSearchToolbar.title = getString(R.string.artists)
 
             val itemSearch = mSearchToolbar.menu.findItem(R.id.action_search)

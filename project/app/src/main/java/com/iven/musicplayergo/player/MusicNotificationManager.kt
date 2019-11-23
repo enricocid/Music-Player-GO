@@ -9,9 +9,9 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.drawable.VectorDrawable
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.NotificationCompat
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.MainActivity
@@ -41,17 +41,17 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     private fun getLargeIcon(): Bitmap {
 
         val vectorDrawable =
-            playerService.getDrawable(R.drawable.music_notification) as VectorDrawable
+            AppCompatResources.getDrawable(playerService, R.drawable.music_notification)
 
         val largeIconSize =
             playerService.resources.getDimensionPixelSize(R.dimen.notification_large_dim)
         val bitmap = Bitmap.createBitmap(largeIconSize, largeIconSize, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
 
-        vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
-        vectorDrawable.setTint(Color.LTGRAY)
-        vectorDrawable.alpha = 150
-        vectorDrawable.draw(canvas)
+        vectorDrawable?.setBounds(0, 0, canvas.width, canvas.height)
+        vectorDrawable?.setTint(Color.LTGRAY)
+        vectorDrawable?.alpha = 150
+        vectorDrawable?.draw(canvas)
 
         return bitmap
     }

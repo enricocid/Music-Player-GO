@@ -3,6 +3,7 @@ package com.iven.musicplayergo.ui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.recyclical.datasource.DataSource
@@ -55,7 +56,7 @@ object Utils {
         DynamicToast.make(
             context,
             context.getString(message),
-            context.getDrawable(icon),
+            AppCompatResources.getDrawable(context, icon),
             tintColor,
             errorColor
         )

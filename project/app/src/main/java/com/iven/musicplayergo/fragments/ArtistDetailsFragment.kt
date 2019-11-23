@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -82,28 +83,31 @@ class ArtistDetailsFragment : Fragment() {
 
             val artistDetailsToolbar = artist_details_toolbar
             artistDetailsToolbar.inflateMenu(R.menu.menu_artist_details)
+            artistDetailsToolbar.overflowIcon =
+                AppCompatResources.getDrawable(context!!, R.drawable.ic_shuffle)
             artistDetailsToolbar.title = mSelectedArtist
             artistDetailsToolbar.subtitle = getString(
                 R.string.artist_info,
                 mSelectedArtistAlbums.size,
                 mSongsForArtist.size
             )
-            val itemShuffle = artistDetailsToolbar.menu.findItem(R.id.action_shuffle_ad)
+            val itemShuffle = artistDetailsToolbar.menu.findItem(R.id.action_shuffle_am)
 
             itemShuffle.setOnMenuItemClickListener {
                 mUIControlInterface.onShuffleSongs(mSongsForArtist.toMutableList())
                 return@setOnMenuItemClickListener true
             }
 
+            artistDetailsToolbar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.action_shuffle_am -> mUIControlInterface.onShuffleSongs(mSongsForArtist.toMutableList())
+                    else -> mUIControlInterface.onShuffleSongs(mSelectedAlbum.music!!)
+                }
+                return@setOnMenuItemClickListener true
+            }
+
             mAlbumsRecyclerView = albums_rv
             mSongsRecyclerView = songs_rv
-
-            selected_disc.text = mSelectedAlbum.title
-            selected_disc_year.text = mSelectedAlbum.year
-
-            shuffle_button.setOnClickListener {
-                mUIControlInterface.onShuffleSongs(mSelectedAlbum.music!!)
-            }
 
             // close_button.setOnClickListener { activity?.onBackPressed() }
 

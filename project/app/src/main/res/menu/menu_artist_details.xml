@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/action_shuffle_ad"
-        android:title="@string/shuffle"
-        android:icon="@drawable/ic_shuffle"
-        app:showAsAction="ifRoom" />
+    
+    <group>
+
+        <!-- am = all artist music, sa = selected album -->
+        <item
+            android:id="@+id/action_shuffle_am"
+            android:orderInCategory="0"
+            android:title="@string/shuffle_am"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/action_shuffle_sa"
+            android:orderInCategory="1"
+            android:title="@string/shuffle_sa"
+            app:showAsAction="never" />
+    </group>
 </menu>
