@@ -6,9 +6,8 @@
     android:layout_height="wrap_content"
     android:background="?android:attr/windowBackground"
     android:clickable="true"
-    android:elevation="4dp"
+    android:elevation="2dp"
     android:focusable="true"
-    android:onClick="openNowPlaying"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -27,6 +26,7 @@
         android:layout_height="wrap_content"
         android:baselineAligned="false"
         android:orientation="horizontal"
+        android:onClick="openNowPlaying"
         android:padding="8dp">
 
         <LinearLayout
