@@ -79,7 +79,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     //booleans
     private var sUserIsSeeking = false
-    private var sArtistDiscographyExpanded: Boolean = false
 
     //music
     private lateinit var mMusic: Map<String, List<Album>>
