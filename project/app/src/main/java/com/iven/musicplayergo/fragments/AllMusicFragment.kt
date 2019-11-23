@@ -61,14 +61,14 @@ class AllMusicFragment : Fragment() {
         if (context != null) {
 
             val searchToolbar = search_toolbar
-            searchToolbar.inflateMenu(R.menu.menu_songs)
+            searchToolbar.inflateMenu(R.menu.menu_all_music)
             searchToolbar.title = getString(R.string.songs)
             val itemSearch = searchToolbar.menu.findItem(R.id.action_search)
 
             val isSearchBarEnabled = goPreferences.isSearchBarEnabled
             itemSearch.isVisible = isSearchBarEnabled
 
-            val itemShuffle = searchToolbar.menu.findItem(R.id.action_shuffle)
+            val itemShuffle = searchToolbar.menu.findItem(R.id.action_shuffle_am)
             itemShuffle.setOnMenuItemClickListener {
                 mUIControlInterface.onShuffleSongs(mAllMusic)
                 return@setOnMenuItemClickListener true

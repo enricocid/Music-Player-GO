@@ -2,7 +2,6 @@ package com.iven.musicplayergo.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,6 +36,8 @@ class ArtistDetailsFragment : Fragment() {
     private lateinit var mSongsRecyclerView: RecyclerView
 
     private lateinit var mSelectedArtistAlbums: List<Album>
+    private lateinit var mSongsForArtist: List<Music>
+
     private var mSelectedArtist = "unknown"
     private lateinit var mUIControlInterface: UIControlInterface
     private lateinit var mSelectedAlbum: Album
@@ -45,9 +46,9 @@ class ArtistDetailsFragment : Fragment() {
         super.onAttach(context)
 
         arguments?.getString(TAG)?.let {
-            Log.d(it, it)
             mSelectedArtist = it
             mSelectedArtistAlbums = musicLibrary.allAlbumsForArtist[mSelectedArtist]!!
+            mSongsForArtist = musicLibrary.allSongsForArtist.getValue(mSelectedArtist)
             mSelectedAlbum = mSelectedArtistAlbums[0]
         }
 
@@ -79,30 +80,32 @@ class ArtistDetailsFragment : Fragment() {
 
         if (context != null) {
 
-            mAlbumsRecyclerView = albums_rv
-            mSongsRecyclerView = songs_rv
-
-            selected_discography_artist.text = mSelectedArtist
-
-            selected_artist_album_count.text = getString(
+            val artistDetailsToolbar = artist_details_toolbar
+            artistDetailsToolbar.inflateMenu(R.menu.menu_artist_details)
+            artistDetailsToolbar.title = mSelectedArtist
+            artistDetailsToolbar.subtitle = getString(
                 R.string.artist_info,
                 mSelectedArtistAlbums.size,
-                musicLibrary.allSongsForArtist.getValue(mSelectedArtist).size
+                mSongsForArtist.size
             )
+            val itemShuffle = artistDetailsToolbar.menu.findItem(R.id.action_shuffle_ad)
+
+            itemShuffle.setOnMenuItemClickListener {
+                mUIControlInterface.onShuffleSongs(mSongsForArtist.toMutableList())
+                return@setOnMenuItemClickListener true
+            }
+
+            mAlbumsRecyclerView = albums_rv
+            mSongsRecyclerView = songs_rv
 
             selected_disc.text = mSelectedAlbum.title
             selected_disc_year.text = mSelectedAlbum.year
 
-            /*       shuffle_button.setOnClickListener {
-                       if (::mMediaPlayerHolder.isInitialized) {
-                           if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
-                           val albumSongs = mSelectedAlbum?.music
-                           albumSongs?.shuffle()
-                           startPlayback(albumSongs!![0], albumSongs)
-                       }
-                   }*/
+            shuffle_button.setOnClickListener {
+                mUIControlInterface.onShuffleSongs(mSelectedAlbum.music!!)
+            }
 
-            close_button.setOnClickListener { activity?.onBackPressed() }
+            // close_button.setOnClickListener { activity?.onBackPressed() }
 
             mSelectedAlbumsDataSource = dataSourceOf(mSelectedArtistAlbums)
 
