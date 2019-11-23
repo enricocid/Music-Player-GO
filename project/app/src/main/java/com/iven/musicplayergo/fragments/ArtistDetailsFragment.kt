@@ -119,6 +119,7 @@ class ArtistDetailsFragment : Fragment() {
                 withItem<Album, AlbumsViewHolder>(R.layout.album_item) {
                     onBind(::AlbumsViewHolder) { _, item ->
                         // AlbumsViewHolder is `this` here
+                        itemView.background.alpha = 20
                         album.text = item.title
                         year.text = item.year
 
