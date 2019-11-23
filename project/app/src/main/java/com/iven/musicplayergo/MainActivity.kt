@@ -511,6 +511,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 )
             )
 
+        mPlayingAlbum.text = selectedSong.album
+
         updateResetStatus(false)
 
         if (restore) {
