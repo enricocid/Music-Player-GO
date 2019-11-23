@@ -151,8 +151,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED) showPermissionRationale() else doBindService()
     }
 
-    override fun onSongSelected(song: Music, album: List<Music>) {
-        startPlayback(song, album)
+    override fun onSongSelected(song: Music, songs: List<Music>) {
+        startPlayback(song, songs)
     }
 
     override fun onArtistSelected(artist: String) {
@@ -427,9 +427,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mMediaPlayerHolder.initMediaPlayer(song)
     }
 
-    override fun onShuffleSongs() {
+    override fun onShuffleSongs(songs: MutableList<Music>) {
         if (::mMediaPlayerHolder.isInitialized) {
-            val songs = if (sArtistDiscographyExpanded) mSelectedArtistSongs else mAllDeviceSongs
             songs.shuffle()
             val song = songs[0]
             startPlayback(song, songs)

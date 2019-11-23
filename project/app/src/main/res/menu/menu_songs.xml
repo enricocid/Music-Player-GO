@@ -6,4 +6,10 @@
         android:title=""
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_shuffle"
+        android:title="@string/shuffle"
+        android:icon="@drawable/ic_shuffle"
+        app:showAsAction="ifRoom" />
 </menu>
