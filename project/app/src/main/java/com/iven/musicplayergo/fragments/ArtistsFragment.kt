@@ -10,6 +10,7 @@ import android.view.ViewTreeObserver
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -117,7 +118,7 @@ class ArtistsFragment : Fragment() {
             mArtistsRecyclerView.setup {
                 // item is a `val` in `this` here
                 withDataSource(mDataSource)
-                withItem<String, GenericViewHolder>(if (goPreferences.isFastScrollEnabled) R.layout.artist_item else R.layout.generic_item) {
+                withItem<String, GenericViewHolder>(R.layout.generic_item) {
 
                     onBind(::GenericViewHolder) { _, item ->
                         // GenericViewHolder is `this` here
@@ -141,13 +142,7 @@ class ArtistsFragment : Fragment() {
                 }
             }
 
-            if (goPreferences.isFastScrollEnabled) {
-                //indicator fast scroller view
-                mIndicatorFastScrollerView = fastscroller
-                mIndicatorFastScrollThumb = fastscroller_thumb
-
-                setupIndicatorFastScrollerView()
-            }
+            setupIndicatorFastScrollerView()
 
             if (sSearchEnabled) {
                 val searchView = itemSearch.actionView as SearchView
@@ -177,43 +172,50 @@ class ArtistsFragment : Fragment() {
     @SuppressLint("DefaultLocale")
     private fun setupIndicatorFastScrollerView() {
 
-        //set indexes if artists rv is scrollable
-        mArtistsRecyclerView.afterMeasured {
-            if (mArtistsRecyclerView.computeVerticalScrollRange() > height) {
+        if (goPreferences.isFastScrollEnabled && goPreferences.artistsSorting != R.id.default_sorting) {
 
-                mIndicatorFastScrollerView.setupWithRecyclerView(
-                    mArtistsRecyclerView,
-                    { position ->
-                        val item = (mFilteredArtists ?: mArtists)[position] // Get your model object
-                        // or fetch the section at [position] from your database
+            mIndicatorFastScrollerView = fastscroller
+            mIndicatorFastScrollThumb = fastscroller_thumb
 
-                        FastScrollItemIndicator.Text(
-                            item.substring(
-                                0,
-                                1
-                            ).toUpperCase() // Grab the first letter and capitalize it
-                        ) // Return a text indicator
+            //set indexes if artists rv is scrollable
+            mArtistsRecyclerView.afterMeasured {
+                if (mArtistsRecyclerView.computeVerticalScrollRange() > height) {
+
+                    mIndicatorFastScrollerView.setupWithRecyclerView(
+                        mArtistsRecyclerView,
+                        { position ->
+                            val item =
+                                (mFilteredArtists ?: mArtists)[position] // Get your model object
+                            // or fetch the section at [position] from your database
+
+                            FastScrollItemIndicator.Text(
+                                item.substring(
+                                    0,
+                                    1
+                                ).toUpperCase() // Grab the first letter and capitalize it
+                            ) // Return a text indicator
+                        }
+                    )
+
+                    mIndicatorFastScrollThumb.setupWithFastScroller(mIndicatorFastScrollerView)
+
+                    mIndicatorFastScrollerView.useDefaultScroller = false
+                    mIndicatorFastScrollerView.itemIndicatorSelectedCallbacks += object :
+                        FastScrollerView.ItemIndicatorSelectedCallback {
+                        override fun onItemIndicatorSelected(
+                            indicator: FastScrollItemIndicator,
+                            indicatorCenterY: Int,
+                            itemPosition: Int
+                        ) {
+                            val artistsLayoutManager =
+                                mArtistsRecyclerView.layoutManager as LinearLayoutManager
+                            artistsLayoutManager.scrollToPositionWithOffset(itemPosition, 0)
+                        }
                     }
-                )
 
-                mIndicatorFastScrollThumb.setupWithFastScroller(mIndicatorFastScrollerView)
-
-                mIndicatorFastScrollerView.useDefaultScroller = false
-                mIndicatorFastScrollerView.itemIndicatorSelectedCallbacks += object :
-                    FastScrollerView.ItemIndicatorSelectedCallback {
-                    override fun onItemIndicatorSelected(
-                        indicator: FastScrollItemIndicator,
-                        indicatorCenterY: Int,
-                        itemPosition: Int
-                    ) {
-                        val artistsLayoutManager =
-                            mArtistsRecyclerView.layoutManager as LinearLayoutManager
-                        artistsLayoutManager.scrollToPositionWithOffset(itemPosition, 0)
-                    }
+                } else {
+                    mIndicatorFastScrollerView.removeAllViewsInLayout()
                 }
-
-            } else {
-                mIndicatorFastScrollerView.visibility = View.GONE
             }
         }
     }
@@ -227,8 +229,25 @@ class ArtistsFragment : Fragment() {
                 musicLibrary.allAlbumsForArtist.keys.toMutableList()
             )
 
-            mDataSource.set(mArtists)
+            if (it.itemId == R.id.default_sorting) {
 
+                if (mIndicatorFastScrollerView.isVisible) mIndicatorFastScrollerView.visibility =
+                    View.GONE
+
+            } else {
+
+                if (!::mIndicatorFastScrollerView.isInitialized) {
+                    //indicator fast scroller view
+                    mIndicatorFastScrollerView = fastscroller
+                    mIndicatorFastScrollThumb = fastscroller_thumb
+                    setupIndicatorFastScrollerView()
+                }
+
+                if (!mIndicatorFastScrollerView.isVisible) mIndicatorFastScrollerView.visibility =
+                    View.VISIBLE
+            }
+
+            mDataSource.set(mArtists)
             goPreferences.artistsSorting = it.itemId
 
             return@setOnMenuItemClickListener true
