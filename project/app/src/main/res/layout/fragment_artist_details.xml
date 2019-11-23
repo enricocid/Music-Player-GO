@@ -26,7 +26,6 @@
             android:src="@drawable/ic_round_expand_less" />
 
         <LinearLayout
-            android:id="@+id/discs_artist_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
