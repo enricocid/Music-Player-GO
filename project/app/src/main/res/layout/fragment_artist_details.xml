@@ -15,7 +15,6 @@
         android:layout_marginBottom="8dp"
         android:background="?android:attr/windowBackground"
         android:elevation="1dp"
-        android:theme="@style/SearchBarStyle"
         app:navigationIcon="@drawable/ic_round_close_red"
         app:titleTextColor="?attr/colorPrimary" />
 
