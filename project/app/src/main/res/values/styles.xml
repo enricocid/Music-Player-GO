@@ -5,17 +5,6 @@
         <item name="colorPrimaryDark">?attr/colorPrimary</item>
     </style>
 
-    <!-- Indicator text style -->
-    <style name="IndicatorTextAppearance" parent="@android:style/TextAppearance.Material">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <!-- Indicator thumb text style -->
-    <style name="IndicatorThumbTextAppearance" parent="@android:style/TextAppearance.Material">
-        <item name="android:textSize">24sp</item>
-    </style>
-
     <!-- This will set the fade in animation on all the activities by default -->
     <style name="WindowAnimationTransition">
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
