@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Handler
-import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import com.iven.musicplayergo.MainActivity
@@ -90,40 +89,6 @@ object ThemeHelper {
             Pair(theme, position)
         } catch (e: Exception) {
             Pair(R.style.BaseTheme_DeepPurple, 3)
-        }
-    }
-
-    //immersive mode
-    //https://developer.android.com/training/system-ui/immersive
-    @JvmStatic
-    fun goImmersive(activity: Activity, onWindowFocusChanged: Boolean) {
-        // Enables regular immersive mode.
-        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
-        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        val decorView = activity.window.decorView
-
-        var newUiOptions = decorView.systemUiVisibility
-
-        if (onWindowFocusChanged) {
-            decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    // Set the content to appear under the system bars so that the
-                    // content doesn't resize when the system bars hide and show.
-                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    // Hide the nav bar and status bar
-                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    or View.SYSTEM_UI_FLAG_FULLSCREEN)
-        } else {
-            newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-            newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-
-            newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_FULLSCREEN
-            newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_IMMERSIVE
-            newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-            decorView.systemUiVisibility = newUiOptions
         }
     }
 

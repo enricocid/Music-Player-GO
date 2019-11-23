@@ -29,14 +29,6 @@
             app:icon="@drawable/ic_colorize"
             app:key="@string/accent_pref"
             app:title="@string/accent_pref_title" />
-
-        <SwitchPreference
-            android:summaryOff="@string/immersive_pref_summary_off"
-            app:defaultValue="false"
-            app:dialogTitle="@string/immersive_pref_title"
-            app:key="@string/immersive_pref"
-            app:summaryOn="@string/immersive_pref_summary_on"
-            app:title="@string/immersive_pref_title" />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/category_general">

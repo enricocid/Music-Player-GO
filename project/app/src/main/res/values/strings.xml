@@ -46,11 +46,6 @@
     <string name="accent_pref" translatable="false">accent_pref</string>
     <string name="accent_pref_title">Accent</string>
 
-    <string name="immersive_pref" translatable="false">immersive_pref</string>
-    <string name="immersive_pref_title">Immersive mode</string>
-    <string name="immersive_pref_summary_on">Disable immersive mode</string>
-    <string name="immersive_pref_summary_off">Enable immersive mode</string>
-
     <string name="fast_scroll_pref" translatable="false">fast_scroll_pref</string>
     <string name="fast_scroll_pref_title">Indicator fast scroll</string>
     <string name="fast_scroll_pref_summary_on">Disable indicator fast scroll</string>

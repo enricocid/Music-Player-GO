@@ -61,12 +61,6 @@ class PreferencesFragment : PreferenceFragmentCompat() {
                 return@setOnPreferenceClickListener true
             }
 
-            val immersivePreference = findPreference<SwitchPreference>("immersive_pref")
-            immersivePreference?.setOnPreferenceChangeListener { _, _ ->
-                ThemeHelper.goImmersive(activity!!, false)
-                return@setOnPreferenceChangeListener true
-            }
-
             val searchBarPreference = findPreference<SwitchPreference>("search_bar_pref")
             searchBarPreference?.setOnPreferenceChangeListener { _, _ ->
                 ThemeHelper.applyNewThemeSmoothly(activity!!)

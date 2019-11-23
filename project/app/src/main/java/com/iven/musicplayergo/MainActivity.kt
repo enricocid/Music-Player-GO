@@ -159,14 +159,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         openArtistDetailsFragment(artist)
     }
 
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus && goPreferences.isImmersive) ThemeHelper.goImmersive(
-            this,
-            hasFocus
-        )
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
