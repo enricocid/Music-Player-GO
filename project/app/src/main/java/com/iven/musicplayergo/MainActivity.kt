@@ -1,7 +1,6 @@
 package com.iven.musicplayergo
 
 import android.Manifest
-import android.animation.Animator
 import android.annotation.TargetApi
 import android.content.ComponentName
 import android.content.Context
@@ -14,9 +13,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.view.View
-import android.view.ViewAnimationUtils
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -26,17 +23,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
-import com.afollestad.recyclical.datasource.DataSource
-import com.afollestad.recyclical.datasource.dataSourceOf
-import com.afollestad.recyclical.setup
-import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.fragments.AllMusicFragment
+import com.iven.musicplayergo.fragments.ArtistDetailsFragment
 import com.iven.musicplayergo.fragments.ArtistsFragment
 import com.iven.musicplayergo.fragments.SettingsFragment
 import com.iven.musicplayergo.music.Album
@@ -44,12 +36,12 @@ import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.music.MusicViewModel
 import com.iven.musicplayergo.player.*
-import com.iven.musicplayergo.ui.*
-import kotlinx.android.synthetic.main.artist_details.*
+import com.iven.musicplayergo.ui.ThemeHelper
+import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.ui.Utils
 import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.player_controls_panel.*
 import kotlinx.android.synthetic.main.player_seek.*
-import kotlin.math.hypot
 
 @Suppress("UNUSED_PARAMETER")
 class MainActivity : AppCompatActivity(), UIControlInterface {
@@ -66,14 +58,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     //views
     private lateinit var mViewPager: ViewPager
 
-    //RecyclerViews
-    private lateinit var mAlbumsRecyclerView: RecyclerView
-    private lateinit var mSongsRecyclerView: RecyclerView
-
     //settings/controls panel
-    private lateinit var mControlsContainer: LinearLayout
-
-    private lateinit var mPlayerInfoView: View
     private lateinit var mPlayingAlbum: TextView
     private lateinit var mPlayingSong: TextView
     private lateinit var mSeekBar: SeekBar
@@ -82,13 +67,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mSkipPrevButton: ImageView
     private lateinit var mPlayPauseButton: ImageView
     private lateinit var mSkipNextButton: ImageView
-
-    //artists details
-    private lateinit var mArtistDetails: LinearLayout
-    private lateinit var mArtistDetailsTitle: TextView
-    private lateinit var mArtistsDetailsDiscCount: TextView
-    private lateinit var mArtistsDetailsSelectedDisc: TextView
-    private lateinit var mArtistDetailsSelectedDiscYear: TextView
 
     //music player things
 
@@ -106,13 +84,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     //music
     private lateinit var mMusic: Map<String, List<Album>>
 
-    private var mNavigationArtist: String? = "unknown"
+    private var mNavigationArtist: String = "unknown"
 
     private lateinit var mSelectedArtistSongs: MutableList<Music>
-    private lateinit var mSelectedArtistAlbums: List<Album>
-    private lateinit var mSelectedAlbumsDataSource: DataSource<Any>
-    private lateinit var mAlbumSongsDataSource: DataSource<Any>
-    private var mSelectedAlbum: Album? = null
 
     //the player
     private lateinit var mMediaPlayerHolder: MediaPlayerHolder
@@ -167,11 +141,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         if (::mMediaPlayerHolder.isInitialized && mMediaPlayerHolder.isMediaPlayer) mMediaPlayerHolder.onPauseActivity()
     }
 
-    //manage bottom panel state on back pressed
-    override fun onBackPressed() {
-        if (sArtistDiscographyExpanded) revealArtistDetails(false) else super.onBackPressed()
-    }
-
     //manage request permission result, continue loading ui if permissions was granted
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -187,14 +156,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onArtistSelected(artist: String) {
-
-        if (mNavigationArtist != artist) {
-            mNavigationArtist = artist
-            setArtistDetails()
-            revealArtistDetails(true)
-        } else {
-            revealArtistDetails(true)
-        }
+        openArtistDetailsFragment(artist)
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -334,8 +296,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     musicLibrary.allAlbumsForArtist.keys.toMutableList()
                 )[0]
 
-                setArtistDetails()
-
                 //let's get intent from external app and open the song,
                 //else restore the player (normal usage)
                 if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null)
@@ -359,14 +319,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         mViewPager = pager
 
-        //recycler views
-        mAlbumsRecyclerView = albums_rv
-        mSongsRecyclerView = songs_rv
-
         //controls panel
-        mControlsContainer = controls_container
-        //mBottomSheetBehavior = BottomSheetBehavior.from(design_bottom_sheet)
-        mPlayerInfoView = player_info
         mPlayingSong = playing_song
         mPlayingAlbum = playing_album
         mSeekBar = seekTo
@@ -375,13 +328,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mSkipPrevButton = skip_prev_button
         mPlayPauseButton = play_pause_button
         mSkipNextButton = skip_next_button
-
-        //artist details
-        mArtistDetails = artist_details
-        mArtistDetailsTitle = selected_discography_artist
-        mArtistsDetailsDiscCount = selected_artist_album_count
-        mArtistsDetailsSelectedDisc = selected_disc
-        mArtistDetailsSelectedDiscYear = selected_disc_year
     }
 
     private fun handleOnNavigationItemSelected(itemId: Int): Fragment {
@@ -408,14 +354,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun setupViews() {
 
-        close_button.setOnClickListener { revealArtistDetails(!sArtistDiscographyExpanded) }
+        //close_button.setOnClickListener { revealArtistDetails(!sArtistDiscographyExpanded) }
 
         setupPlayerControls()
         initializeSeekBar()
     }
 
     private fun setupPlayerControls() {
-        mPlayerInfoView.setOnClickListener { handlePlayerInfo() }
 
         //this makes the text scrolling when too long
         mPlayingSong.isSelected = true
@@ -428,15 +373,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
         mPlayPauseButton.setOnClickListener { resumeOrPause() }
         mSkipNextButton.setOnClickListener { skip(true) }
-
-        shuffle_button.setOnClickListener {
-            if (::mMediaPlayerHolder.isInitialized) {
-                if (!mSeekBar.isEnabled) mSeekBar.isEnabled = true
-                val albumSongs = mSelectedAlbum?.music
-                albumSongs?.shuffle()
-                startPlayback(albumSongs!![0], albumSongs)
-            }
-        }
 
         volume.setOnLongClickListener {
             openEqualizer()
@@ -477,113 +413,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         })
     }
 
-    private fun setArtistDetails() {
+    private fun openArtistDetailsFragment(selectedArtist: String) {
 
-        mSelectedArtistAlbums = musicLibrary.allAlbumsForArtist[mNavigationArtist]!!
+        mNavigationArtist = selectedArtist
 
-        //set the titles and subtitles
-        mArtistDetailsTitle.text = mNavigationArtist
-        mArtistsDetailsDiscCount.text = getString(
-            R.string.artist_info,
-            mSelectedArtistAlbums.size,
-            musicLibrary.allSongsForArtist.getValue(mNavigationArtist).size
-        )
-
-        //set the albums list
-        //one-time adapter initialization
-
-        swapAlbums(true, mSelectedArtistAlbums[0])
-    }
-
-    private fun swapAlbums(sCreateDataSource: Boolean, selectedAlbum: Album?) {
-
-        mSelectedAlbum = selectedAlbum
-        mArtistsDetailsSelectedDisc.text = mSelectedAlbum?.title
-        mArtistDetailsSelectedDiscYear.text = selectedAlbum?.year
-
-        val songs = mSelectedAlbum?.music!!
-        if (songs.size > 1) songs.sortBy { it.track }
-
-        if (sCreateDataSource) {
-
-            mAlbumSongsDataSource = dataSourceOf(songs)
-            mSelectedAlbumsDataSource = dataSourceOf(mSelectedArtistAlbums)
-
-            mAlbumsRecyclerView.setup {
-                withDataSource(mSelectedAlbumsDataSource)
-                withLayoutManager(
-                    LinearLayoutManager(
-                        this@MainActivity,
-                        LinearLayoutManager.HORIZONTAL,
-                        false
-                    )
-                )
-
-                withItem<Album, AlbumsViewHolder>(R.layout.album_item) {
-                    onBind(::AlbumsViewHolder) { _, item ->
-                        // AlbumsViewHolder is `this` here
-                        album.text = item.title
-                        year.text = item.year
-
-                        checkbox.visibility =
-                            if (mSelectedAlbum?.title != item.title) View.GONE else View.VISIBLE
-                    }
-
-                    onClick {
-
-                        if (mSelectedAlbum?.title != item.title) {
-
-                            mAlbumsRecyclerView.adapter?.notifyItemChanged(
-                                MusicUtils.getAlbumFromList(
-                                    item.title,
-                                    mSelectedArtistAlbums
-                                ).second
-                            )
-
-                            mAlbumsRecyclerView.adapter?.notifyItemChanged(
-                                MusicUtils.getAlbumFromList(
-                                    mSelectedAlbum?.title,
-                                    mSelectedArtistAlbums
-                                ).second
-                            )
-                            swapAlbums(false, item)
-                        }
-                    }
-                }
-            }
-
-
-            // setup{} is an extension method on RecyclerView
-            mSongsRecyclerView.setup {
-                // item is a `val` in `this` here
-                withDataSource(mAlbumSongsDataSource)
-                withItem<Music, GenericViewHolder>(R.layout.generic_item) {
-                    onBind(::GenericViewHolder) { _, item ->
-                        // GenericViewHolder is `this` here
-                        title.text = getString(
-                            R.string.track_song,
-                            MusicUtils.formatSongTrack(item.track),
-                            item.title
-                        )
-                        subtitle.text = MusicUtils.formatSongDuration(item.duration)
-                    }
-
-                    onClick {
-                        onSongSelected(
-                            item,
-                            MusicUtils.getAlbumFromList(
-                                item.album,
-                                mSelectedArtistAlbums
-                            ).first.music!!.toList()
-                        )
-                    }
-                }
-            }
-        } else {
-            mSelectedAlbumsDataSource.set(mSelectedArtistAlbums)
-            mAlbumSongsDataSource.set(songs)
-            mSongsRecyclerView.scrollToPosition(0)
-        }
+        supportFragmentManager.beginTransaction()
+            .replace(
+                R.id.container,
+                ArtistDetailsFragment.newInstance(mNavigationArtist), ArtistDetailsFragment.TAG
+            )
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun startPlayback(song: Music, album: List<Music>?) {
@@ -681,10 +521,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 )
             )
 
-        mSelectedAlbum =
-            MusicUtils.getAlbumFromList(selectedSong.album, mSelectedArtistAlbums).first
-        mPlayingAlbum.text = selectedSong.album
-
         updateResetStatus(false)
 
         if (restore) {
@@ -779,86 +615,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     }
                 })
             }
-        }
-    }
-
-    //method to reveal/hide artist details, it is a simple reveal animation
-    private fun revealArtistDetails(show: Boolean) {
-
-        val viewToRevealHeight = mViewPager.height
-        val viewToRevealWidth = mAlbumsRecyclerView.width
-        val viewToRevealHalfWidth = viewToRevealWidth / 2
-        val radius = hypot(viewToRevealWidth.toDouble(), viewToRevealHeight.toDouble()).toFloat()
-        val fromY = mViewPager.top / 2
-        val startRadius = if (show) 0f else radius
-        val finalRadius = if (show) radius else 0f
-
-        val anim = ViewAnimationUtils.createCircularReveal(
-            mArtistDetails,
-            viewToRevealHalfWidth,
-            fromY,
-            startRadius,
-            finalRadius
-        )
-        anim.duration = 500
-        anim.addListener(revealAnimationListener(show))
-        anim.start()
-    }
-
-    //reveal animation
-    private fun revealAnimationListener(show: Boolean): Animator.AnimatorListener {
-
-        return object : Animator.AnimatorListener {
-            override fun onAnimationStart(animation: Animator?) {
-                if (show) {
-                    sArtistDiscographyExpanded = true
-                    mArtistDetails.visibility = View.VISIBLE
-                    mViewPager.visibility = View.INVISIBLE
-                    mArtistDetails.isClickable = false
-                }
-            }
-
-            override fun onAnimationEnd(animation: Animator?) {
-                if (!show) {
-                    sArtistDiscographyExpanded = false
-                    mArtistDetails.visibility = View.INVISIBLE
-                    mViewPager.visibility = View.VISIBLE
-                    mArtistDetails.isClickable = true
-                }
-            }
-
-            override fun onAnimationCancel(animation: Animator?) {
-            }
-
-            override fun onAnimationRepeat(animation: Animator?) {
-            }
-        }
-    }
-
-    //method to handle player info click
-    private fun handlePlayerInfo() {
-        //if we are playing a song the go to the played artist/album details
-        if (::mMediaPlayerHolder.isInitialized && mMediaPlayerHolder.currentSong != null) {
-            val currentSong = mMediaPlayerHolder.currentSong
-            val album = currentSong!!.album
-            val artist = currentSong.artist
-            //do only if we are not on played artist/album details
-
-            if (mNavigationArtist != artist) {
-
-                onArtistSelected(artist!!)
-
-                val playingAlbumInfo =
-                    MusicUtils.getAlbumFromList(album, musicLibrary.allAlbumsForArtist[artist])
-
-                swapAlbums(false, playingAlbumInfo.first)
-                mAlbumsRecyclerView.scrollToPosition(playingAlbumInfo.second)
-
-            } else {
-                revealArtistDetails(!sArtistDiscographyExpanded)
-            }
-        } else {
-            revealArtistDetails(!sArtistDiscographyExpanded)
         }
     }
 }

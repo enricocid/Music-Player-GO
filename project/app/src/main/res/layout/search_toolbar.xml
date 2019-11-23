@@ -4,7 +4,7 @@
     android:id="@+id/search_toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:theme="@style/SearchBarStyle"
-    android:elevation="1dp"
     android:background="?android:attr/windowBackground"
+    android:elevation="1dp"
+    android:theme="@style/SearchBarStyle"
     app:titleTextColor="?attr/colorPrimary" />

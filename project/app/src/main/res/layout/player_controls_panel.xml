@@ -10,7 +10,6 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/controls_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
