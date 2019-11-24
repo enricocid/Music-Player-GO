@@ -184,11 +184,11 @@ class ArtistDetailsFragment : Fragment() {
                 withItem<Music, GenericViewHolder>(R.layout.generic_item) {
                     onBind(::GenericViewHolder) { _, item ->
                         // GenericViewHolder is `this` here
-                        title.text = getString(
+                        title.text = MusicUtils.buildSpanned(getString(
                             R.string.track_song,
                             MusicUtils.formatSongTrack(item.track),
                             item.title
-                        )
+                        ))
                         subtitle.text = MusicUtils.formatSongDuration(item.duration)
                     }
 

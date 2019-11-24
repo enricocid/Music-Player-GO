@@ -13,7 +13,7 @@
     <!-- Main - All songs -->
     <string name="songs">All songs</string>
     <string name="artist_and_album" translatable="false">%1s&#160;-&#160;%2s</string>
-    <string name="track_song" translatable="false">%1d&#160;-&#160;%2s</string>
+    <string name="track_song" translatable="false">&lt;b>%1d&lt;/b>&lt;br/>-&#160;%2s</string>
     <string name="shuffle_am">Shuffle all songs</string>
     <string name="shuffle_sa">Shuffle selected album</string>
 
