@@ -4,6 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
+import com.iven.musicplayergo.goPreferences
 
 class PlayerService : Service() {
 
@@ -22,6 +23,9 @@ class PlayerService : Service() {
         super.onDestroy()
         isRunning = false
         if (mediaPlayerHolder != null) {
+            //saves last played song and its position
+            goPreferences.lastPlayedSong =
+                Pair(mediaPlayerHolder?.currentSong!!, mediaPlayerHolder?.playerPosition!!)
             mediaPlayerHolder!!.registerNotificationActionsReceiver(false)
             mediaPlayerHolder!!.release()
         }

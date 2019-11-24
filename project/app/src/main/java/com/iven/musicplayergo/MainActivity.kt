@@ -146,12 +146,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         super.onDestroy()
         if (sBound) unbindService(connection)
         if (::mMediaPlayerHolder.isInitialized && !mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning) {
-
-            //saves last played song and its position
-            goPreferences.lastPlayedSong =
-                Pair(mMediaPlayerHolder.currentSong!!, mMediaPlayerHolder.playerPosition)
-            //goPreferences.lastPlayedSongPosition = mMediaPlayerHolder.playerPosition
-
             mPlayerService.stopForeground(true)
             stopService(mBindingIntent)
         }
@@ -180,7 +174,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onSongSelected(song: Music, songs: List<Music>) {
-        startPlayback(song, songs, false)
+        mMediaPlayerHolder.isSongRestoredFromPrefs = false
+        startPlayback(song, songs)
     }
 
     override fun onArtistSelected(artist: String) {
@@ -383,9 +378,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             .commit()
     }
 
-    private fun startPlayback(song: Music, album: List<Music>?, isSongRestoredFromPrefs: Boolean) {
+    private fun startPlayback(song: Music, album: List<Music>?) {
         if (::mPlayerService.isInitialized && !mPlayerService.isRunning) startService(mBindingIntent)
-
         mMediaPlayerHolder.setCurrentSong(song, album!!)
         mMediaPlayerHolder.initMediaPlayer(song)
     }
@@ -394,7 +388,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         if (::mMediaPlayerHolder.isInitialized) {
             songs.shuffle()
             val song = songs[0]
-            startPlayback(song, songs, false)
+            onSongSelected(song, songs)
         }
     }
 
@@ -410,12 +404,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mMediaPlayerHolder.resumeOrPause()
         } else {
             if (mMediaPlayerHolder.currentSong != null) {
-                val currentSong = mMediaPlayerHolder.currentSong!!
-                val albumSongs =
-                    MusicUtils.getAlbumFromList(currentSong.album, mMusic[currentSong.artist]!!)
+                val song = mMediaPlayerHolder.currentSong!!
+                val songs =
+                    MusicUtils.getAlbumFromList(song.album, mMusic[song.artist]!!)
                         .first
                         .music?.sortedBy { albumSong -> albumSong.track }
-                startPlayback(currentSong, albumSongs, true)
+                startPlayback(song, songs)
             }
         }
     }

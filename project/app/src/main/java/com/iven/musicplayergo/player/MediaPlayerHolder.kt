@@ -14,6 +14,7 @@ import android.media.MediaPlayer
 import android.os.Build
 import android.os.Handler
 import android.os.PowerManager
+import android.util.Log
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.music.Music
@@ -276,6 +277,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         try {
             if (isMediaPlayer) {
+                Log.d("cacac", "cacca")
                 mediaPlayer!!.reset()
             } else {
                 mediaPlayer = MediaPlayer()
@@ -347,8 +349,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun skip(isNext: Boolean) {
-
-        isSongRestoredFromPrefs = false
         val currentIndex = mPlayingAlbumSongs.indexOf(currentSong)
         val index: Int
         try {
