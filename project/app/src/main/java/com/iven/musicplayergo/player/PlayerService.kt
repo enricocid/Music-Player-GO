@@ -22,7 +22,7 @@ class PlayerService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         isRunning = false
-        if (mediaPlayerHolder != null) {
+        if (mediaPlayerHolder != null && mediaPlayerHolder?.currentSong != null) {
             //saves last played song and its position
             goPreferences.lastPlayedSong =
                 Pair(mediaPlayerHolder?.currentSong!!, mediaPlayerHolder?.playerPosition!!)
