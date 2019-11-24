@@ -80,7 +80,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
             }
             // Update the player state based on the change
-            if (mediaPlayer != null && goPreferences.isFocusEnabled) configurePlayerState()
+            if (isMediaPlayer && goPreferences.isFocusEnabled) configurePlayerState()
         }
 
     //media player
@@ -275,7 +275,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun initMediaPlayer(song: Music) {
 
         try {
-            if (mediaPlayer != null) {
+            if (isMediaPlayer) {
                 mediaPlayer!!.reset()
             } else {
                 mediaPlayer = MediaPlayer()
@@ -309,7 +309,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (isReset) isReset = false
         setStatus(PLAYING)
 
-        if (isSongRestoredFromPrefs) mediaPlayer.seekTo(goPreferences.lastPlayedSong?.second!!)
+        if (isSongRestoredFromPrefs) {
+            setPreciseVolume(currentVolumeInPercent)
+            mediaPlayer.seekTo(goPreferences.lastPlayedSong?.second!!)
+        }
 
         mediaPlayer.start()
         playerService.startForeground(
@@ -392,13 +395,18 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     /* Sets the volume of the media player (scale is 1-100) */
     fun setPreciseVolume(percent: Int) {
-        fun volFromPercent(percent: Int): Float {
-            if (percent == 100) return 1f
-            return (1 - (ln((101 - percent).toFloat()) / ln(101f)))
-        }
+
         currentVolumeInPercent = percent
-        val new = volFromPercent(percent)
-        mediaPlayer!!.setVolume(new, new)
+
+        if (isMediaPlayer) {
+            fun volFromPercent(percent: Int): Float {
+                if (percent == 100) return 1f
+                return (1 - (ln((101 - percent).toFloat()) / ln(101f)))
+            }
+
+            val new = volFromPercent(percent)
+            mediaPlayer!!.setVolume(new, new)
+        }
     }
 
     private inner class NotificationReceiver : BroadcastReceiver() {

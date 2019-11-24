@@ -680,41 +680,37 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun setupPreciseVolumeHandler() {
-        if (checkIsPlayer()) {
 
-            var isUserSeeking = false
-            val currentProgress = mMediaPlayerHolder.currentVolumeInPercent
+        var isUserSeeking = false
 
-            mVolumeSeekBarNP.progress = currentProgress
-            mVolumeSeekBarNP.setOnSeekBarChangeListener(object :
-                SeekBar.OnSeekBarChangeListener {
+        mVolumeSeekBarNP.progress = mMediaPlayerHolder.currentVolumeInPercent
+        mVolumeSeekBarNP.setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
 
-                override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-                    if (isUserSeeking) {
-
-                        mMediaPlayerHolder.setPreciseVolume(i)
-                        ThemeHelper.updateIconTint(
-                            mVolumeNP,
-                            ThemeHelper.resolveThemeAccent(this@MainActivity)
-                        )
-                    }
-                }
-
-                override fun onStartTrackingTouch(seekBar: SeekBar) {
-                    isUserSeeking = true
-                }
-
-                override fun onStopTrackingTouch(seekBar: SeekBar) {
-                    isUserSeeking = false
+            override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
+                if (isUserSeeking) {
+                    mMediaPlayerHolder.setPreciseVolume(i)
                     ThemeHelper.updateIconTint(
                         mVolumeNP,
-                        ThemeHelper.resolveColorAttr(
-                            this@MainActivity,
-                            android.R.attr.textColorPrimary
-                        )
+                        ThemeHelper.resolveThemeAccent(this@MainActivity)
                     )
                 }
-            })
-        }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                isUserSeeking = true
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                isUserSeeking = false
+                ThemeHelper.updateIconTint(
+                    mVolumeNP,
+                    ThemeHelper.resolveColorAttr(
+                        this@MainActivity,
+                        android.R.attr.textColorPrimary
+                    )
+                )
+            }
+        })
     }
 }
