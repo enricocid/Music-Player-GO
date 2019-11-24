@@ -25,8 +25,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:baselineAligned="false"
-        android:orientation="horizontal"
         android:onClick="openNowPlaying"
+        android:orientation="horizontal"
         android:padding="8dp">
 
         <LinearLayout
@@ -57,7 +57,7 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/playing_album"
+                android:id="@+id/playing_artist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"

@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mViewPager: ViewPager
 
     //settings/controls panel
-    private lateinit var mPlayingAlbum: TextView
+    private lateinit var mPlayingArtist: TextView
     private lateinit var mPlayingSong: TextView
     private lateinit var mSeekProgressBar: ProgressBar
     private lateinit var mPlayPauseButton: ImageView
@@ -327,7 +327,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         //controls panel
         mPlayingSong = playing_song
-        mPlayingAlbum = playing_album
+        mPlayingArtist = playing_artist
         mSeekProgressBar = song_progress
         mPlayPauseButton = play_pause_button
     }
@@ -358,7 +358,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         //this makes the text scrolling when too long
         mPlayingSong.isSelected = true
-        mPlayingAlbum.isSelected = true
+        mPlayingArtist.isSelected = true
 
         mPlayPauseButton.setOnClickListener { resumeOrPause() }
     }
@@ -481,12 +481,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             MusicUtils.buildSpanned(
                 getString(
                     R.string.playing_song,
-                    selectedSong.artist,
-                    selectedSong.title
+                    selectedSong.title,
+                    selectedSong.album
                 )
             )
 
-        mPlayingAlbum.text = selectedSong.album
+        mPlayingArtist.text = selectedSong.artist
 
         updateResetStatus(false)
 
@@ -612,7 +612,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mSongTextNP.text =
             MusicUtils.buildSpanned(
                 getString(
-                    R.string.song_and_album_np,
+                    R.string.playing_song,
                     selectedSong.title,
                     selectedSong.album
                 )
