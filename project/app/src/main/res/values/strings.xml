@@ -35,6 +35,8 @@
     <string name="category_appearance">Appearance</string>
     <string name="category_general">General</string>
 
+    <string name="last_played_song_pref" translatable="false">last_played_song_pref</string>
+
     <string name="theme_pref" translatable="false">theme_pref</string>
     <string name="theme_pref_title">Theme</string>
     <string name="theme_pref_light_title">Light</string>

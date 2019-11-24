@@ -3,8 +3,15 @@ package com.iven.musicplayergo
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
+import com.iven.musicplayergo.music.Music
+import java.lang.reflect.Type
+
 
 class MusicPlayerGoPreferences(context: Context) {
+
+    private val prefsLastPlayedSong = context.getString(R.string.last_played_song_pref)
 
     private val prefsTheme = context.getString(R.string.theme_pref)
     private val prefsThemeDefault = context.getString(R.string.theme_pref_light)
@@ -18,6 +25,17 @@ class MusicPlayerGoPreferences(context: Context) {
     private val prefsHeadsetPlug = context.getString(R.string.headset_pref)
 
     private val mPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    private val mGson = GsonBuilder().create()
+
+    private val typeMusic: Type = object : TypeToken<Pair<Music, Int>>() {}.type
+
+    var lastPlayedSong: Pair<Music, Int>?
+        get() = getObject(
+            prefsLastPlayedSong,
+            typeMusic
+        )
+        set(value) = putObject(prefsLastPlayedSong, value)
+
 
     var theme: String?
         get() = mPrefs.getString(prefsTheme, prefsThemeDefault)
@@ -50,5 +68,32 @@ class MusicPlayerGoPreferences(context: Context) {
     var isHeadsetPlugEnabled: Boolean
         get() = mPrefs.getBoolean(prefsHeadsetPlug, true)
         set(value) = mPrefs.edit().putBoolean(prefsHeadsetPlug, value).apply()
+
+    /**
+     * Saves object into the Preferences.
+     * Only the fields are stored. Methods, Inner classes, Nested classes and inner interfaces are not stored.
+     **/
+    private fun <T> putObject(key: String, y: T) {
+        //Convert object to JSON String.
+        val inString = mGson.toJson(y)
+        //Save that String in SharedPreferences
+        mPrefs.edit().putString(key, inString).apply()
+    }
+
+    /**
+     * Get object from the Preferences.
+     **/
+    private fun <T> getObject(key: String, t: Type): T? {
+        //We read JSON String which was saved.
+        val value = mPrefs.getString(key, null)
+        if (value != null) {
+            //JSON String was found which means object can be read.
+            //We convert this JSON String to model object. Parameter "c" (of type Class<T>" is used to cast.
+            return mGson.fromJson(value, t)
+        } else {
+            //No JSON String with this key was found which means key is invalid or object was not saved.
+            throw IllegalArgumentException("No object with key: $key was saved")
+        }
+    }
 }
 

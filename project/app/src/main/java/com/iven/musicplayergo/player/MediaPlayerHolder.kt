@@ -97,6 +97,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     val isMediaPlayer: Boolean get() = mediaPlayer != null
     var isReset = false
     var state: Int? = PAUSED
+    var isSongRestoredFromPrefs = false
 
     //notifications
     private var mNotificationActionsReceiver: NotificationReceiver? = null
@@ -307,6 +308,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         startUpdatingCallbackWithPosition()
         if (isReset) isReset = false
         setStatus(PLAYING)
+
+        if (isSongRestoredFromPrefs) mediaPlayer.seekTo(goPreferences.lastPlayedSong?.second!!)
+
         mediaPlayer.start()
         playerService.startForeground(
             NOTIFICATION_ID,
@@ -340,6 +344,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun skip(isNext: Boolean) {
+
+        isSongRestoredFromPrefs = false
         val currentIndex = mPlayingAlbumSongs.indexOf(currentSong)
         val index: Int
         try {

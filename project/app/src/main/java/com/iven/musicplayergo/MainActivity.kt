@@ -146,6 +146,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         super.onDestroy()
         if (sBound) unbindService(connection)
         if (::mMediaPlayerHolder.isInitialized && !mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning) {
+
+            //saves last played song and its position
+            goPreferences.lastPlayedSong =
+                Pair(mMediaPlayerHolder.currentSong!!, mMediaPlayerHolder.playerPosition)
+            //goPreferences.lastPlayedSongPosition = mMediaPlayerHolder.playerPosition
+
             mPlayerService.stopForeground(true)
             stopService(mBindingIntent)
         }
@@ -174,7 +180,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onSongSelected(song: Music, songs: List<Music>) {
-        startPlayback(song, songs)
+        startPlayback(song, songs, false)
     }
 
     override fun onArtistSelected(artist: String) {
@@ -260,7 +266,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         MusicUtils.getAlbumFromList(song.album, mMusic[song.artist]!!).first
                             .music?.sortedBy { albumSong -> albumSong.track }
 
-                    startPlayback(song, albumSongs)
+                    mMediaPlayerHolder.setCurrentSong(song, albumSongs!!)
+                    mMediaPlayerHolder.initMediaPlayer(song)
+
+
                 } else {
                     Utils.makeToast(
                         this@MainActivity,
@@ -374,7 +383,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             .commit()
     }
 
-    private fun startPlayback(song: Music, album: List<Music>?) {
+    private fun startPlayback(song: Music, album: List<Music>?, isSongRestoredFromPrefs: Boolean) {
         if (::mPlayerService.isInitialized && !mPlayerService.isRunning) startService(mBindingIntent)
 
         mMediaPlayerHolder.setCurrentSong(song, album!!)
@@ -385,7 +394,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         if (::mMediaPlayerHolder.isInitialized) {
             songs.shuffle()
             val song = songs[0]
-            startPlayback(song, songs)
+            startPlayback(song, songs, false)
         }
     }
 
@@ -399,6 +408,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun resumeOrPause() {
         if (checkIsPlayer()) {
             mMediaPlayerHolder.resumeOrPause()
+        } else {
+            if (mMediaPlayerHolder.currentSong != null) {
+                val currentSong = mMediaPlayerHolder.currentSong!!
+                val albumSongs =
+                    MusicUtils.getAlbumFromList(currentSong.album, mMusic[currentSong.artist]!!)
+                        .first
+                        .music?.sortedBy { albumSong -> albumSong.track }
+                startPlayback(currentSong, albumSongs, true)
+            }
         }
     }
 
@@ -447,6 +465,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             if (mMediaPlayerHolder.isMediaPlayer) {
                 mMediaPlayerHolder.onResumeActivity()
                 updatePlayingInfo(true)
+            } else {
+                if (goPreferences.lastPlayedSong != null
+                ) {
+                    mMediaPlayerHolder.isSongRestoredFromPrefs = true
+                    mMediaPlayerHolder.currentSong = goPreferences.lastPlayedSong?.first
+
+                    updatePlayingInfo(false)
+                    mSeekProgressBar.progress = goPreferences.lastPlayedSong?.second!!
+                }
             }
         }
     }
@@ -516,13 +543,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun checkIsPlayer(): Boolean {
         val isPlayer = mMediaPlayerHolder.isMediaPlayer
-        if (!isPlayer) EqualizerUtils.notifyNoSessionId(this)
+        if (!isPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs) EqualizerUtils.notifyNoSessionId(
+            this
+        )
         return isPlayer
     }
 
     fun openNowPlaying(view: View) {
 
-        if (checkIsPlayer()) {
+        if (::mMediaPlayerHolder.isInitialized && mMediaPlayerHolder.currentSong != null) {
 
             mNowPlayingDialog = MaterialDialog(this, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
@@ -573,6 +602,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun updateNowPlayingInfo() {
+
         val selectedSong = mMediaPlayerHolder.currentSong
         val selectedSongDuration = selectedSong?.duration!!
 
