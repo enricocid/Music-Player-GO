@@ -8,7 +8,7 @@
     <string name="artists">Artists</string>
     <string name="artist_info">%1d&#160;Albums,&#160;%2d&#160;Tracks</string>
     <string name="playing_song" translatable="false">&lt;b>%1s&lt;/b>&lt;br/>%2s</string>
-    <string name="artist_and_album_np" translatable="false">&lt;b>%1s&lt;/b>&lt;br/>&#160;-&#160;%2s</string>
+    <string name="song_and_album_np" translatable="false">&lt;b>%1s&lt;/b>&lt;br/>-&#160;%2s</string>
 
     <!-- Main - All songs -->
     <string name="songs">All songs</string>

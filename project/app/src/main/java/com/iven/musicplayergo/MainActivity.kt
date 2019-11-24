@@ -64,14 +64,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mPlayingAlbum: TextView
     private lateinit var mPlayingSong: TextView
     private lateinit var mSeekProgressBar: ProgressBar
-
     private lateinit var mPlayPauseButton: ImageView
 
     //now playing
     private lateinit var mNowPlayingDialog: MaterialDialog
     private lateinit var mFixedMusicBar: FixedMusicBar
-    private lateinit var mSongTextNP: TextView
     private lateinit var mArtistTextNP: TextView
+    private lateinit var mSongTextNP: TextView
     private lateinit var mSongSeekTextNP: TextView
     private lateinit var mSongDurationTextNP: TextView
     private lateinit var mSkipPrevButtonNP: ImageView
@@ -553,10 +552,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 customView(R.layout.now_playing)
 
-                mSongTextNP = getCustomView().findViewById(R.id.np_song)
-                mSongTextNP.isSelected = true
-                mArtistTextNP = getCustomView().findViewById(R.id.np_artist_album)
+                mArtistTextNP = getCustomView().findViewById(R.id.np_artist)
                 mArtistTextNP.isSelected = true
+                mSongTextNP = getCustomView().findViewById(R.id.np_song_album)
+                mSongTextNP.isSelected = true
                 mFixedMusicBar = getCustomView().findViewById(R.id.np_fixed_music_bar)
                 mFixedMusicBar.setBackgroundBarPrimeColor(
                     ColorUtils.setAlphaComponent(
@@ -600,12 +599,21 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         val selectedSong = mMediaPlayerHolder.currentSong
         val selectedSongDuration = selectedSong?.duration!!
 
-        mSongTextNP.text = selectedSong.title
-        mArtistTextNP.text =
+        mArtistTextNP.text = selectedSong.artist
+        mArtistTextNP.setOnClickListener {
+            if (::mArtistDetailsFragment.isInitialized && mArtistDetailsFragment.isAdded)
+                mArtistDetailsFragment.updateView(selectedSong.artist!!)
+            else
+                openArtistDetailsFragment(selectedSong.artist!!)
+
+            mNowPlayingDialog.dismiss()
+        }
+
+        mSongTextNP.text =
             MusicUtils.buildSpanned(
                 getString(
-                    R.string.artist_and_album_np,
-                    selectedSong.artist,
+                    R.string.song_and_album_np,
+                    selectedSong.title,
                     selectedSong.album
                 )
             )

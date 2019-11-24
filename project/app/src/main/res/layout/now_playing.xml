@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/np_song"
+        android:id="@+id/np_artist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
@@ -19,11 +19,12 @@
         android:scrollHorizontally="true"
         android:singleLine="true"
         android:textAlignment="center"
+        android:textStyle="italic"
         android:textAppearance="@android:style/TextAppearance.Material.Title"
         android:textColor="?android:attr/textColorPrimary" />
 
     <TextView
-        android:id="@+id/np_artist_album"
+        android:id="@+id/np_song_album"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
@@ -43,7 +44,6 @@
         android:layout_height="80dp"
         android:padding="8dp"
         app:LoadedBarPrimeColor="?attr/colorPrimary"
-        app:backgroundBarPrimeColor="?attr/colorControlNormal"
         app:barWidth="10"
         app:spaceBetweenBar="1" />
 

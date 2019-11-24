@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,6 +40,8 @@ class ArtistDetailsFragment : Fragment() {
 
     private lateinit var mArtistDetailsView: View
     private lateinit var mArtistDetailsAnimator: Animator
+
+    private lateinit var mArtistDetailsToolbar: Toolbar
 
     private lateinit var mSelectedAlbumsDataSource: DataSource<Any>
     private lateinit var mAlbumSongsDataSource: DataSource<Any>
@@ -93,31 +96,31 @@ class ArtistDetailsFragment : Fragment() {
 
         if (context != null) {
 
-            val artistDetailsToolbar = artist_details_toolbar
+            mArtistDetailsToolbar = artist_details_toolbar
 
-            artistDetailsToolbar.title = mSelectedArtist
-            artistDetailsToolbar.subtitle = getString(
+            mArtistDetailsToolbar.title = mSelectedArtist
+            mArtistDetailsToolbar.subtitle = getString(
                 R.string.artist_info,
                 mSelectedArtistAlbums.size,
                 mSongsForArtist.size
             )
 
-            artistDetailsToolbar.inflateMenu(R.menu.menu_artist_details)
-            artistDetailsToolbar.overflowIcon =
+            mArtistDetailsToolbar.inflateMenu(R.menu.menu_artist_details)
+            mArtistDetailsToolbar.overflowIcon =
                 AppCompatResources.getDrawable(context!!, R.drawable.ic_shuffle)
 
-            artistDetailsToolbar.setNavigationOnClickListener {
+            mArtistDetailsToolbar.setNavigationOnClickListener {
                 activity?.onBackPressed()
             }
 
-            val itemShuffle = artistDetailsToolbar.menu.findItem(R.id.action_shuffle_am)
+            val itemShuffle = mArtistDetailsToolbar.menu.findItem(R.id.action_shuffle_am)
 
             itemShuffle.setOnMenuItemClickListener {
                 mUIControlInterface.onShuffleSongs(mSongsForArtist.toMutableList())
                 return@setOnMenuItemClickListener true
             }
 
-            artistDetailsToolbar.setOnMenuItemClickListener {
+            mArtistDetailsToolbar.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.action_shuffle_am -> mUIControlInterface.onShuffleSongs(mSongsForArtist.toMutableList())
                     else -> mUIControlInterface.onShuffleSongs(mSelectedAlbum.music!!)
@@ -184,11 +187,13 @@ class ArtistDetailsFragment : Fragment() {
                 withItem<Music, GenericViewHolder>(R.layout.generic_item) {
                     onBind(::GenericViewHolder) { _, item ->
                         // GenericViewHolder is `this` here
-                        title.text = MusicUtils.buildSpanned(getString(
-                            R.string.track_song,
-                            MusicUtils.formatSongTrack(item.track),
-                            item.title
-                        ))
+                        title.text = MusicUtils.buildSpanned(
+                            getString(
+                                R.string.track_song,
+                                MusicUtils.formatSongTrack(item.track),
+                                item.title
+                            )
+                        )
                         subtitle.text = MusicUtils.formatSongDuration(item.duration)
                     }
 
@@ -254,6 +259,24 @@ class ArtistDetailsFragment : Fragment() {
         anim.start()
     }
 
+    fun updateView(selectedArtist: String) {
+        if (selectedArtist != mSelectedArtist) {
+            mSelectedArtist = selectedArtist
+            mSelectedArtistAlbums = musicLibrary.allAlbumsForArtist[mSelectedArtist]!!
+            mSongsForArtist = musicLibrary.allSongsForArtist.getValue(mSelectedArtist)
+            mSelectedAlbum = mSelectedArtistAlbums[0]
+
+            mArtistDetailsToolbar.title = mSelectedArtist
+            mArtistDetailsToolbar.subtitle = getString(
+                R.string.artist_info,
+                mSelectedArtistAlbums.size,
+                mSongsForArtist.size
+            )
+
+            mSelectedAlbumsDataSource.set(mSelectedArtistAlbums)
+            mAlbumSongsDataSource.set(mSelectedAlbum.music!!)
+        }
+    }
 
     //viewTreeObserver extension to measure layout params
     //https://antonioleiva.com/kotlin-ongloballayoutlistener/
