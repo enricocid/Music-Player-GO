@@ -192,7 +192,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         //init views
         getViews()
-        setupPlayerControls()
+        mPlayPauseButton.setOnClickListener { resumeOrPause() }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else doBindService()
     }
@@ -352,15 +352,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         override fun getItem(position: Int): Fragment {
             return handleOnNavigationItemSelected(position)
         }
-    }
-
-    private fun setupPlayerControls() {
-
-        //this makes the text scrolling when too long
-        mPlayingSong.isSelected = true
-        mPlayingArtist.isSelected = true
-
-        mPlayPauseButton.setOnClickListener { resumeOrPause() }
     }
 
     private fun openArtistDetailsFragment(selectedArtist: String) {
