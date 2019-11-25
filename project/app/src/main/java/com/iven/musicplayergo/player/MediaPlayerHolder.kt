@@ -98,6 +98,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     val isMediaPlayer: Boolean get() = mediaPlayer != null
     var isReset = false
     var state: Int? = PAUSED
+    var isPlay = false
     var isSongRestoredFromPrefs = false
     var isSongFromLovedSongs = Pair(false, 0)
 
@@ -205,11 +206,15 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private fun resumeMediaPlayer() {
         if (!isPlaying) {
             if (isMediaPlayer) mediaPlayer!!.start()
-            setStatus(RESUMED)
+            setStatus(if (isSongRestoredFromPrefs) PLAYING else RESUMED)
+
             playerService.startForeground(
                 NOTIFICATION_ID,
                 mMusicNotificationManager.createNotification()
             )
+
+            isSongRestoredFromPrefs = false
+            isPlay = false
         }
     }
 
@@ -303,13 +308,11 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     override fun onPrepared(mediaPlayer: MediaPlayer) {
         startUpdatingCallbackWithPosition()
         if (isReset) isReset = false
-        setStatus(PLAYING)
 
         if (isSongRestoredFromPrefs) {
             setPreciseVolume(currentVolumeInPercent)
@@ -319,11 +322,14 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             isSongFromLovedSongs = Pair(false, 0)
         }
 
-        mediaPlayer.start()
-        playerService.startForeground(
-            NOTIFICATION_ID,
-            mMusicNotificationManager.createNotification()
-        )
+        if (isPlay) {
+            setStatus(PLAYING)
+            mediaPlayer.start()
+            playerService.startForeground(
+                NOTIFICATION_ID,
+                mMusicNotificationManager.createNotification()
+            )
+        }
     }
 
     fun openEqualizer(activity: Activity) {

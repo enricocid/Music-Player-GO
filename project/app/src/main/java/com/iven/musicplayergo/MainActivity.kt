@@ -190,6 +190,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onSongSelected(song: Music, songs: List<Music>) {
         mMediaPlayerHolder.isSongRestoredFromPrefs = false
+        mMediaPlayerHolder.isPlay = true
         startPlayback(song, songs)
     }
 
@@ -249,18 +250,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun resumeOrPause() {
-        if (checkIsPlayer()) {
-            mMediaPlayerHolder.resumeOrPause()
-        } else {
-            if (mMediaPlayerHolder.currentSong != null) {
-                val song = mMediaPlayerHolder.currentSong!!
-                val songs =
-                    MusicUtils.getAlbumFromList(song.album, mMusic[song.artist]!!)
-                        .first
-                        .music?.sortedBy { albumSong -> albumSong.track }
-                startPlayback(song, songs)
-            }
-        }
+        if (checkIsPlayer()) mMediaPlayerHolder.resumeOrPause()
     }
 
     private fun skip(isNext: Boolean) {
@@ -311,11 +301,22 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             } else {
                 if (goPreferences.lastPlayedSong != null
                 ) {
+                    val lastPlayedSong = goPreferences.lastPlayedSong
+                    val song = lastPlayedSong?.first!!
+
+                    val songs =
+                        MusicUtils.getAlbumFromList(song.album, mMusic[song.artist]!!)
+                            .first
+                            .music?.sortedBy { albumSong -> albumSong.track }!!
+
                     mMediaPlayerHolder.isSongRestoredFromPrefs = true
-                    mMediaPlayerHolder.currentSong = goPreferences.lastPlayedSong?.first
+                    mMediaPlayerHolder.isPlay = false
+
+                    startPlayback(song, songs)
 
                     updatePlayingInfo(false)
-                    mSeekProgressBar.progress = goPreferences.lastPlayedSong?.second!!
+
+                    mSeekProgressBar.progress = lastPlayedSong.second
                 }
             }
         }
@@ -399,6 +400,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 )
             )
 
+        mSongSeekTextNP.text =
+            MusicUtils.formatSongDuration(mMediaPlayerHolder.playerPosition.toLong())
         mSongDurationTextNP.text = MusicUtils.formatSongDuration(selectedSongDuration)
 
         mFixedMusicBar.loadFrom(selectedSong.path, selectedSong.duration.toInt())
@@ -484,7 +487,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                     mMediaPlayerHolder.setCurrentSong(song, albumSongs!!)
                     mMediaPlayerHolder.initMediaPlayer(song)
-
 
                 } else {
                     Utils.makeToast(
