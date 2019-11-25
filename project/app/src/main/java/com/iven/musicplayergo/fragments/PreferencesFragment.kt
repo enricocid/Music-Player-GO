@@ -1,6 +1,9 @@
 package com.iven.musicplayergo.fragments
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -27,6 +30,10 @@ class PreferencesFragment : PreferenceFragmentCompat() {
     private var mSelectedAccent = R.color.deep_purple
 
     private lateinit var mUIControlInterface: UIControlInterface
+
+    override fun setDivider(divider: Drawable?) {
+        super.setDivider(ColorDrawable(Color.TRANSPARENT))
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
