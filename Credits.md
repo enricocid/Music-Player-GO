@@ -8,6 +8,8 @@
 
 - [**Steven Schoen**](https://github.com/DSteve595) for the search function [fixes](https://github.com/enricocid/Music-Player-GO/commit/1c27ff3421dbf7820608237dc60a974955efb022)
 
+- [**Robin H.**](https://github.com/r2binx) for the Android 10's playback issues [**fix**](https://github.com/enricocid/Music-Player-GO/commit/237281e601d5d120ed250bb1a10c94e554165b48)
+
 - [**Aidan Afollestad**](https://github.com/afollestad) for the incredible [**material-dialogs**](https://github.com/afollestad/material-dialogs) library
 
 - [**Pranav Pandey**](https://github.com/pranavpandey) for beautiful [**Dynamic toasts**](https://github.com/pranavpandey/dynamic-toasts) library!
