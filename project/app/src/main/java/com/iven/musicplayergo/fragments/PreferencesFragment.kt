@@ -1,9 +1,12 @@
 package com.iven.musicplayergo.fragments
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -60,13 +63,25 @@ class PreferencesFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.preferences, rootKey)
 
         if (activity != null) {
-            val themePreference = findPreference<Preference>("theme_pref")
 
-            themePreference?.setOnPreferenceClickListener {
-                showThemesDialog()
+            val openGitPreference = findPreference<Preference>("open_git_pref")
+
+            openGitPreference?.setOnPreferenceClickListener {
+                try {
+                    startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://github.com/enricocid/Music-Player-GO")
+                        )
+                    )
+                } catch (e: ActivityNotFoundException) {
+                    Utils.makeToast(activity!!, getString(R.string.no_browser))
+                    e.printStackTrace()
+                }
                 return@setOnPreferenceClickListener true
             }
 
+            val themePreference = findPreference<Preference>("theme_pref")
             themePreference?.summary =
                 ThemeHelper.getAppliedThemeName(activity!!, goPreferences.theme)
 
