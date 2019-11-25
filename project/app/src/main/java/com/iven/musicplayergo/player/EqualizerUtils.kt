@@ -52,6 +52,6 @@ object EqualizerUtils {
     }
 
     fun notifyNoSessionId(context: Context) {
-        Utils.makeToast(context, R.string.bad_id)
+        Utils.makeToast(context, context.getString(R.string.bad_id))
     }
 }

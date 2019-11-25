@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.ui
+package com.iven.musicplayergo.adapters
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -11,6 +11,8 @@ import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.ui.ThemeHelper
+import com.iven.musicplayergo.ui.Utils
 
 class AccentsAdapter(private val activity: Activity) :
     RecyclerView.Adapter<AccentsAdapter.AccentsHolder>() {
@@ -49,7 +51,11 @@ class AccentsAdapter(private val activity: Activity) :
 
             val radioButton = itemView.findViewById<AppCompatRadioButton>(R.id.radiobutton)
 
-            val accent = ThemeHelper.getColor(activity, color, R.color.deep_purple)
+            val accent = ThemeHelper.getColor(
+                activity,
+                color,
+                R.color.deep_purple
+            )
             radioButton.isChecked = color == mSelectedAccent
 
             val widgetColor = ColorStateList(
@@ -70,7 +76,9 @@ class AccentsAdapter(private val activity: Activity) :
                     mSelectedAccent = ThemeHelper.accents[adapterPosition].first
                     goPreferences.accent = mSelectedAccent
 
-                    ThemeHelper.applyNewThemeSmoothly(activity)
+                    ThemeHelper.applyNewThemeSmoothly(
+                        activity
+                    )
                 }
             }
         }
@@ -86,7 +94,9 @@ class AccentsAdapter(private val activity: Activity) :
                 ).capitalize()
         } catch (e: Exception) {
             e.printStackTrace()
-            Utils.makeToast(activity, R.string.error_get_resource)
+            Utils.makeToast(
+                activity, activity.getString(R.string.error_get_resource)
+            )
             ""
         }
     }

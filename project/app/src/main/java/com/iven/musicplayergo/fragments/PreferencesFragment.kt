@@ -9,8 +9,14 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.adapters.AccentsAdapter
+import com.iven.musicplayergo.adapters.CheckableAdapter
+import com.iven.musicplayergo.adapters.ThemesAdapter
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.ui.*
+import com.iven.musicplayergo.ui.ThemeHelper
+import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.ui.Utils
+import java.util.*
 
 class PreferencesFragment : PreferenceFragmentCompat() {
 
@@ -72,7 +78,12 @@ class PreferencesFragment : PreferenceFragmentCompat() {
                 if (goPreferences.hiddenItems?.isNotEmpty()!!) showHiddenItemsDialog()
                 else Utils.makeToast(
                     activity!!,
-                    R.string.hidden_items_pref_empty
+                    getString(
+                        R.string.error_nothing,
+                        getString(R.string.hidden_items_pref_title).toLowerCase(
+                            Locale.getDefault()
+                        )
+                    )
                 )
                 return@setOnPreferenceClickListener true
             }
@@ -92,7 +103,11 @@ class PreferencesFragment : PreferenceFragmentCompat() {
                 cornerRadius(res = R.dimen.md_corner_radius)
                 title(R.string.theme_pref_title)
 
-                customListAdapter(ThemesAdapter(activity!!))
+                customListAdapter(
+                    ThemesAdapter(
+                        activity!!
+                    )
+                )
             }
         }
     }
@@ -104,7 +119,11 @@ class PreferencesFragment : PreferenceFragmentCompat() {
                 cornerRadius(res = R.dimen.md_corner_radius)
                 title(R.string.accent_pref_title)
 
-                customListAdapter(AccentsAdapter(activity!!))
+                customListAdapter(
+                    AccentsAdapter(
+                        activity!!
+                    )
+                )
                 getRecyclerView().scrollToPosition(
                     ThemeHelper.getAccentedTheme().second
                 )
@@ -117,12 +136,13 @@ class PreferencesFragment : PreferenceFragmentCompat() {
             mMultiListDialog = MaterialDialog(activity!!).show {
                 cornerRadius(res = R.dimen.md_corner_radius)
                 title(R.string.hidden_items_pref_title)
-                val checkableAdapter = CheckableAdapter(
-                    goPreferences.hiddenItems!!.toMutableList()
-                )
+                val checkableAdapter =
+                    CheckableAdapter(
+                        goPreferences.hiddenItems!!.toMutableList()
+                    )
                 customListAdapter(checkableAdapter)
                 positiveButton {
-                    Utils.removeCheckableItems(checkableAdapter.getUpdatedItems())
+                    Utils.updateCheckableItems(checkableAdapter.getUpdatedItems())
                 }
                 negativeButton {}
             }

@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.ui
+package com.iven.musicplayergo.adapters
 
 import android.view.LayoutInflater
 import android.view.View

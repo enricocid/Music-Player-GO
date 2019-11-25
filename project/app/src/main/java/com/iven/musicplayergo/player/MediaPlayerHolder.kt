@@ -14,7 +14,6 @@ import android.media.MediaPlayer
 import android.os.Build
 import android.os.Handler
 import android.os.PowerManager
-import android.util.Log
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.music.Music
@@ -90,8 +89,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private var mSeekBarPositionUpdateTask: Runnable? = null
     private lateinit var mPlayingAlbumSongs: List<Music>
     var currentSong: Music? = null
+
     var currentVolumeInPercent = 100
-    val playerPosition: Int get() = mediaPlayer!!.currentPosition
+    val playerPosition: Int get() = if (!isMediaPlayer) goPreferences.lastPlayedSong?.second!! else mediaPlayer!!.currentPosition
 
     //media player state/booleans
     val isPlaying: Boolean get() = isMediaPlayer && mediaPlayer!!.isPlaying
@@ -99,6 +99,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     var isReset = false
     var state: Int? = PAUSED
     var isSongRestoredFromPrefs = false
+    var isSongFromLovedSongs = Pair(false, 0)
 
     //notifications
     private var mNotificationActionsReceiver: NotificationReceiver? = null
@@ -277,7 +278,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         try {
             if (isMediaPlayer) {
-                Log.d("cacac", "cacca")
                 mediaPlayer!!.reset()
             } else {
                 mediaPlayer = MediaPlayer()
@@ -314,6 +314,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (isSongRestoredFromPrefs) {
             setPreciseVolume(currentVolumeInPercent)
             mediaPlayer.seekTo(goPreferences.lastPlayedSong?.second!!)
+        } else if (isSongFromLovedSongs.first) {
+            mediaPlayer.seekTo(isSongFromLovedSongs.second)
+            isSongFromLovedSongs = Pair(false, 0)
         }
 
         mediaPlayer.start()

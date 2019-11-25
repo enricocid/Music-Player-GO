@@ -3,6 +3,7 @@
     <string name="app_name" translatable="false">Music Player GO</string>
     <string name="space_delimiter" translatable="false">&#160;</string>
     <string name="underscore_delimiter" translatable="false">&#95;</string>
+    <string name="music">music</string>
 
     <!-- Main - Artists -->
     <string name="artists">Artists</string>
@@ -12,9 +13,15 @@
     <!-- Main - All songs -->
     <string name="songs">All songs</string>
     <string name="artist_and_album" translatable="false">%1s&#160;-&#160;%2s</string>
-    <string name="track_song" translatable="false">&lt;b>%1d&lt;/b>&lt;br/>-&#160;%2s</string>
     <string name="shuffle_am">Shuffle all songs</string>
     <string name="shuffle_sa">Shuffle selected album</string>
+    <string name="track_song" translatable="false">&lt;b>%1d&lt;/b>&lt;br/>-&#160;%2s</string>
+
+    <!-- Loved songs -->
+    <string name="loved_songs">Loved songs</string>
+    <string name="loved_song_subtitle" translatable="false">%1s&#160;-&#160;&lt;b>%2s&lt;/b>&lt;br/>/&#160;%3s</string>
+    <string name="loved_song_added">%1s (%2s) added to loved songs</string>
+    <string name="loved_song_remove">%1s (%2s) will be deleted from loved songs. Are You sure?</string>
 
     <!-- Details -->
     <string name="unknown_year" translatable="false">N&#x2F;A</string>
@@ -24,9 +31,9 @@
     <string name="no_browser">No browser found!</string>
     <string name="bad_id">Play a song first!</string>
     <string name="no_eq">No equalizer found!</string>
-    <string name="error_no_music">No music found on your phone!</string>
     <string name="error_unknown">Something went wrong! :(</string>
     <string name="error_get_resource">Oops!! Not found!</string>
+    <string name="error_nothing">No %1s found!</string>
 
     <!-- Settings -->
     <!-- Preferences -->
@@ -35,6 +42,7 @@
     <string name="category_general">General</string>
 
     <string name="last_played_song_pref" translatable="false">last_played_song_pref</string>
+    <string name="loved_songs_pref">loved_songs_pref</string>
 
     <string name="theme_pref" translatable="false">theme_pref</string>
     <string name="theme_pref_title">Theme</string>
@@ -67,7 +75,6 @@
     <string name="hidden_items_pref" translatable="false">hidden_items_pref</string>
     <string name="hidden_items_pref_title">Hidden items</string>
     <string name="hidden_items_pref_message">%1s will be hidden. Are you sure?</string>
-    <string name="hidden_items_pref_empty">No hidden items found!</string>
 
     <string name="focus_pref" translatable="false">focus_pref</string>
     <string name="focus_pref_title">Audio focus</string>

@@ -12,6 +12,7 @@ import java.lang.reflect.Type
 class MusicPlayerGoPreferences(context: Context) {
 
     private val prefsLastPlayedSong = context.getString(R.string.last_played_song_pref)
+    private val prefsLovedSongs = context.getString(R.string.loved_songs_pref)
 
     private val prefsTheme = context.getString(R.string.theme_pref)
     private val prefsThemeDefault = context.getString(R.string.theme_pref_light)
@@ -28,6 +29,7 @@ class MusicPlayerGoPreferences(context: Context) {
     private val mGson = GsonBuilder().create()
 
     private val typeMusic: Type = object : TypeToken<Pair<Music, Int>>() {}.type
+    private val typeLovedSong: Type = object : TypeToken<MutableList<Pair<Music, Int>>>() {}.type
 
     var lastPlayedSong: Pair<Music, Int>?
         get() = getObject(
@@ -36,6 +38,12 @@ class MusicPlayerGoPreferences(context: Context) {
         )
         set(value) = putObject(prefsLastPlayedSong, value)
 
+    var lovedSongs: MutableList<Pair<Music, Int>>?
+        get() = getObject(
+            prefsLovedSongs,
+            typeLovedSong
+        )
+        set(value) = putObject(prefsLovedSongs, value)
 
     var theme: String?
         get() = mPrefs.getString(prefsTheme, prefsThemeDefault)
@@ -86,14 +94,10 @@ class MusicPlayerGoPreferences(context: Context) {
     private fun <T> getObject(key: String, t: Type): T? {
         //We read JSON String which was saved.
         val value = mPrefs.getString(key, null)
-        if (value != null) {
-            //JSON String was found which means object can be read.
-            //We convert this JSON String to model object. Parameter "c" (of type Class<T>" is used to cast.
-            return mGson.fromJson(value, t)
-        } else {
-            //No JSON String with this key was found which means key is invalid or object was not saved.
-            throw IllegalArgumentException("No object with key: $key was saved")
-        }
+
+        //JSON String was found which means object can be read.
+        //We convert this JSON String to model object. Parameter "c" (of type Class<T>" is used to cast.
+        return mGson.fromJson(value, t)
     }
 }
 

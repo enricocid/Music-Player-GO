@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.ui
+package com.iven.musicplayergo.adapters
 
 import android.app.Activity
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.ui.ThemeHelper
 
 class ThemesAdapter(private val activity: Activity) :
     RecyclerView.Adapter<ThemesAdapter.ThemesHolder>() {
@@ -57,7 +58,9 @@ class ThemesAdapter(private val activity: Activity) :
                     mSelectedTheme = mThemesValues[adapterPosition]
                     goPreferences.theme = mSelectedTheme
 
-                    ThemeHelper.applyNewThemeSmoothly(activity)
+                    ThemeHelper.applyNewThemeSmoothly(
+                        activity
+                    )
                 }
             }
         }

@@ -77,6 +77,33 @@
             android:padding="8dp"
             android:src="@drawable/ic_play" />
 
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="?android:attr/actionBarItemBackground"
+            android:onClick="openLovedSongsDialog"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/loved_songs_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_favorite" />
+
+            <TextView
+                android:id="@+id/loved_songs_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textAppearance="@android:style/TextAppearance.Material.Caption"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:textSize="12sp" />
+
+        </FrameLayout>
+
     </LinearLayout>
 
 </LinearLayout>

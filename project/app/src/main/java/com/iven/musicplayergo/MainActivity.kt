@@ -47,6 +47,7 @@ import com.oze.music.musicbar.FixedMusicBar
 import com.oze.music.musicbar.MusicBar
 import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.player_controls_panel.*
+import java.util.*
 
 @Suppress("UNUSED_PARAMETER")
 class MainActivity : AppCompatActivity(), UIControlInterface {
@@ -65,6 +66,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mPlayingSong: TextView
     private lateinit var mSeekProgressBar: ProgressBar
     private lateinit var mPlayPauseButton: ImageView
+    private lateinit var mLovedSongsButton: ImageView
+    private lateinit var mLoveSongsNumber: TextView
 
     //now playing
     private lateinit var mNowPlayingDialog: MaterialDialog
@@ -78,6 +81,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mSkipNextButtonNP: ImageView
     private lateinit var mReplayNP: ImageView
     private lateinit var mVolumeSeekBarNP: SeekBar
+    private lateinit var mLoveButtonNP: ImageView
     private lateinit var mVolumeNP: ImageView
 
     //music player things
@@ -106,6 +110,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mPlayerService: PlayerService
     private var sBound: Boolean = false
     private lateinit var mBindingIntent: Intent
+
+    private fun isNowPlaying(): Boolean {
+        return ::mNowPlayingDialog.isInitialized && mNowPlayingDialog.isShowing
+    }
+
+    private fun checkIsPlayer(): Boolean {
+        val isPlayer = mMediaPlayerHolder.isMediaPlayer
+        if (!isPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs) EqualizerUtils.notifyNoSessionId(
+            this
+        )
+        return isPlayer
+    }
 
     //Defines callbacks for service binding, passed to bindService()
     private val connection = object : ServiceConnection {
@@ -181,6 +197,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         openArtistDetailsFragment(artist)
     }
 
+    override fun onShuffleSongs(songs: MutableList<Music>) {
+        if (::mMediaPlayerHolder.isInitialized) {
+            songs.shuffle()
+            val song = songs[0]
+            onSongSelected(song, songs)
+        }
+    }
+
+    override fun onLovedSongsUpdate() {
+        updateLovedSongsButton()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -193,193 +221,24 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         //init views
         getViews()
         mPlayPauseButton.setOnClickListener { resumeOrPause() }
+        updateLovedSongsButton()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else doBindService()
     }
 
-    @TargetApi(23)
-    private fun checkPermission() {
-
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
+    private fun updatePlayingStatus(isNowPlaying: Boolean) {
+        val isPlaying = mMediaPlayerHolder.state != PAUSED
+        val drawable =
+            if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play
+        if (isNowPlaying) mPlayPauseButtonNP.setImageResource(drawable) else mPlayPauseButton.setImageResource(
+            drawable
         )
-            showPermissionRationale() else doBindService()
-    }
-
-    private fun showPermissionRationale() {
-
-        MaterialDialog(this).show {
-
-            cancelOnTouchOutside(false)
-            cornerRadius(res = R.dimen.md_corner_radius)
-            title(R.string.app_name)
-            message(R.string.perm_rationale)
-            positiveButton {
-                ActivityCompat.requestPermissions(
-                    this@MainActivity,
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    2588
-                )
-            }
-            negativeButton {
-                Utils.makeToast(
-                    this@MainActivity,
-                    R.string.perm_rationale
-                )
-                dismiss()
-                finishAndRemoveTask()
-            }
-        }
-    }
-
-    //method to handle intent to play audio file from external app
-    private fun handleIntent(intent: Intent) {
-
-        val uri = intent.data
-
-        try {
-            if (uri.toString().isNotEmpty()) {
-
-                val path = MusicUtils.getRealPathFromURI(this, uri!!)
-
-                //if we were able to get the song play it!
-                if (MusicUtils.getSongForIntent(
-                        path,
-                        mSelectedArtistSongs,
-                        mAllDeviceSongs
-                    ) != null
-                ) {
-
-                    val song =
-                        MusicUtils.getSongForIntent(path, mSelectedArtistSongs, mAllDeviceSongs)!!
-
-                    //get album songs and sort them
-                    val albumSongs =
-                        MusicUtils.getAlbumFromList(song.album, mMusic[song.artist]!!).first
-                            .music?.sortedBy { albumSong -> albumSong.track }
-
-                    mMediaPlayerHolder.setCurrentSong(song, albumSongs!!)
-                    mMediaPlayerHolder.initMediaPlayer(song)
-
-
-                } else {
-                    Utils.makeToast(
-                        this@MainActivity,
-                        R.string.error_unknown
-                    )
-                    finishAndRemoveTask()
-                }
-            }
-        } catch (e: Exception) {
-            Utils.makeToast(
-                this@MainActivity,
-                R.string.error_unknown
-            )
-            finishAndRemoveTask()
-        }
-    }
-
-    private fun loadMusic() {
-
-        mViewModel.loadMusic(this).observe(this, Observer { hasLoaded ->
-
-            //setup all the views if there's something
-            if (hasLoaded && musicLibrary.allAlbumsForArtist.isNotEmpty()) {
-
-                mArtistsFragment = ArtistsFragment.newInstance()
-                mAllMusicFragment = AllMusicFragment.newInstance()
-                mSettingsFragment = SettingsFragment.newInstance()
-
-                val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
-                mViewPager.adapter = pagerAdapter
-
-                mAllDeviceSongs = musicLibrary.allSongsUnfiltered
-                mMusic = musicLibrary.allAlbumsForArtist
-
-                mNavigationArtist = Utils.getSortedList(
-                    goPreferences.artistsSorting,
-                    musicLibrary.allAlbumsForArtist.keys.toMutableList(),
-                    musicLibrary.allAlbumsForArtist.keys.toMutableList()
-                )[0]
-
-                //let's get intent from external app and open the song,
-                //else restore the player (normal usage)
-                if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null)
-                    handleIntent(intent)
-                else
-                    restorePlayerStatus()
-
-            } else {
-                Utils.makeToast(
-                    this@MainActivity,
-                    R.string.error_no_music
-                )
-                finish()
-            }
-        })
-    }
-
-    private fun getViews() {
-
-        mViewPager = pager
-
-        //controls panel
-        mPlayingSong = playing_song
-        mPlayingArtist = playing_artist
-        mSeekProgressBar = song_progress
-        mPlayPauseButton = play_pause_button
-    }
-
-    private fun handleOnNavigationItemSelected(itemId: Int): Fragment {
-
-        return when (itemId) {
-            0 -> mArtistsFragment
-            1 -> mAllMusicFragment
-            else -> mSettingsFragment
-        }
-    }
-
-    /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
-     * sequence.
-     */
-    private inner class ScreenSlidePagerAdapter(fm: FragmentManager) :
-        FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        override fun getCount(): Int = 3
-
-        override fun getItem(position: Int): Fragment {
-            return handleOnNavigationItemSelected(position)
-        }
-    }
-
-    private fun openArtistDetailsFragment(selectedArtist: String) {
-
-        mNavigationArtist = selectedArtist
-
-        mArtistDetailsFragment = ArtistDetailsFragment.newInstance(mNavigationArtist)
-        supportFragmentManager.beginTransaction()
-            .replace(
-                R.id.container,
-                mArtistDetailsFragment, ArtistDetailsFragment.TAG
-            )
-            .addToBackStack(null)
-            .commit()
     }
 
     private fun startPlayback(song: Music, album: List<Music>?) {
         if (::mPlayerService.isInitialized && !mPlayerService.isRunning) startService(mBindingIntent)
         mMediaPlayerHolder.setCurrentSong(song, album!!)
         mMediaPlayerHolder.initMediaPlayer(song)
-    }
-
-    override fun onShuffleSongs(songs: MutableList<Music>) {
-        if (::mMediaPlayerHolder.isInitialized) {
-            songs.shuffle()
-            val song = songs[0]
-            onSongSelected(song, songs)
-        }
     }
 
     private fun setRepeat() {
@@ -516,75 +375,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    private fun updatePlayingStatus(isNowPlaying: Boolean) {
-        val isPlaying = mMediaPlayerHolder.state != PAUSED
-        val drawable =
-            if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play
-        if (isNowPlaying) mPlayPauseButtonNP.setImageResource(drawable) else mPlayPauseButton.setImageResource(
-            drawable
-        )
-    }
-
-    private fun checkIsPlayer(): Boolean {
-        val isPlayer = mMediaPlayerHolder.isMediaPlayer
-        if (!isPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs) EqualizerUtils.notifyNoSessionId(
-            this
-        )
-        return isPlayer
-    }
-
-    fun openNowPlaying(view: View) {
-
-        if (::mMediaPlayerHolder.isInitialized && mMediaPlayerHolder.currentSong != null) {
-
-            mNowPlayingDialog = MaterialDialog(this, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
-
-                cornerRadius(res = R.dimen.md_corner_radius)
-
-                customView(R.layout.now_playing)
-
-                mArtistTextNP = getCustomView().findViewById(R.id.np_artist)
-                mArtistTextNP.isSelected = true
-                mSongTextNP = getCustomView().findViewById(R.id.np_song_album)
-                mSongTextNP.isSelected = true
-                mFixedMusicBar = getCustomView().findViewById(R.id.np_fixed_music_bar)
-                mFixedMusicBar.setBackgroundBarPrimeColor(
-                    ColorUtils.setAlphaComponent(
-                        ThemeHelper.resolveThemeAccent(
-                            this@MainActivity
-                        ), 40
-                    )
-                )
-                mSongSeekTextNP = getCustomView().findViewById(R.id.np_seek)
-                mSongDurationTextNP = getCustomView().findViewById(R.id.np_duration)
-
-                mSkipPrevButtonNP = getCustomView().findViewById(R.id.np_skip_prev)
-                mSkipPrevButtonNP.setOnClickListener { skip(false) }
-
-                mPlayPauseButtonNP = getCustomView().findViewById(R.id.np_play)
-                mPlayPauseButtonNP.setOnClickListener { resumeOrPause() }
-
-                mSkipNextButtonNP = getCustomView().findViewById(R.id.np_skip_next)
-                mSkipNextButtonNP.setOnClickListener { skip(true) }
-
-                mReplayNP = getCustomView().findViewById(R.id.np_replay)
-                mReplayNP.setOnClickListener { setRepeat() }
-
-                mVolumeSeekBarNP = getCustomView().findViewById(R.id.np_volume_seek)
-                mVolumeNP = getCustomView().findViewById(R.id.np_volume)
-
-                setupPreciseVolumeHandler()
-                setFixedMusicBarProgressListener()
-
-                updateNowPlayingInfo()
-
-                onDismiss {
-                    mFixedMusicBar.removeAllListener()
-                }
-            }
-        }
-    }
-
     private fun updateNowPlayingInfo() {
 
         val selectedSong = mMediaPlayerHolder.currentSong
@@ -616,8 +406,187 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         updatePlayingStatus(true)
     }
 
-    private fun isNowPlaying(): Boolean {
-        return ::mNowPlayingDialog.isInitialized && mNowPlayingDialog.isShowing
+    fun openLovedSongsDialog(view: View) {
+        if (goPreferences.lovedSongs != null && goPreferences.lovedSongs!!.isNotEmpty())
+            Utils.showLovedSongsDialog(this, this, mMediaPlayerHolder)
+        else
+            Utils.makeToast(
+                this, getString(
+                    R.string.error_nothing, getString(R.string.loved_songs).toLowerCase(
+                        Locale.getDefault()
+                    )
+                )
+            )
+    }
+
+    @TargetApi(23)
+    private fun checkPermission() {
+
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        )
+            showPermissionRationale() else doBindService()
+    }
+
+    private fun showPermissionRationale() {
+
+        MaterialDialog(this).show {
+
+            cancelOnTouchOutside(false)
+            cornerRadius(res = R.dimen.md_corner_radius)
+            title(R.string.app_name)
+            message(R.string.perm_rationale)
+            positiveButton {
+                ActivityCompat.requestPermissions(
+                    this@MainActivity,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    2588
+                )
+            }
+            negativeButton {
+                Utils.makeToast(
+                    this@MainActivity,
+                    getString(R.string.perm_rationale)
+                )
+                dismiss()
+                finishAndRemoveTask()
+            }
+        }
+    }
+
+    //method to handle intent to play audio file from external app
+    private fun handleIntent(intent: Intent) {
+
+        val uri = intent.data
+
+        try {
+            if (uri.toString().isNotEmpty()) {
+
+                val path = MusicUtils.getRealPathFromURI(this, uri!!)
+
+                //if we were able to get the song play it!
+                if (MusicUtils.getSongForIntent(
+                        path,
+                        mSelectedArtistSongs,
+                        mAllDeviceSongs
+                    ) != null
+                ) {
+
+                    val song =
+                        MusicUtils.getSongForIntent(path, mSelectedArtistSongs, mAllDeviceSongs)!!
+
+                    //get album songs and sort them
+                    val albumSongs =
+                        MusicUtils.getAlbumFromList(song.album, mMusic[song.artist]!!).first
+                            .music?.sortedBy { albumSong -> albumSong.track }
+
+                    mMediaPlayerHolder.setCurrentSong(song, albumSongs!!)
+                    mMediaPlayerHolder.initMediaPlayer(song)
+
+
+                } else {
+                    Utils.makeToast(
+                        this@MainActivity,
+                        getString(R.string.error_unknown)
+                    )
+                    finishAndRemoveTask()
+                }
+            }
+        } catch (e: Exception) {
+            Utils.makeToast(
+                this@MainActivity,
+                getString(R.string.error_unknown)
+            )
+            finishAndRemoveTask()
+        }
+    }
+
+    private fun loadMusic() {
+
+        mViewModel.loadMusic(this).observe(this, Observer { hasLoaded ->
+
+            //setup all the views if there's something
+            if (hasLoaded && musicLibrary.allAlbumsForArtist.isNotEmpty()) {
+
+                mArtistsFragment = ArtistsFragment.newInstance()
+                mAllMusicFragment = AllMusicFragment.newInstance()
+                mSettingsFragment = SettingsFragment.newInstance()
+
+                val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
+                mViewPager.adapter = pagerAdapter
+
+                mAllDeviceSongs = musicLibrary.allSongsUnfiltered
+                mMusic = musicLibrary.allAlbumsForArtist
+
+                mNavigationArtist = Utils.getSortedList(
+                    goPreferences.artistsSorting,
+                    musicLibrary.allAlbumsForArtist.keys.toMutableList(),
+                    musicLibrary.allAlbumsForArtist.keys.toMutableList()
+                )[0]
+
+                //let's get intent from external app and open the song,
+                //else restore the player (normal usage)
+                if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null)
+                    handleIntent(intent)
+                else
+                    restorePlayerStatus()
+
+            } else {
+                Utils.makeToast(
+                    this@MainActivity,
+                    getString(R.string.error_nothing, getString(R.string.music))
+                )
+                finish()
+            }
+        })
+    }
+
+    private fun getViews() {
+
+        mViewPager = pager
+
+        //controls panel
+        mPlayingSong = playing_song
+        mPlayingArtist = playing_artist
+        mSeekProgressBar = song_progress
+        mPlayPauseButton = play_pause_button
+
+        mLovedSongsButton = loved_songs_button
+        mLoveSongsNumber = loved_songs_number
+    }
+
+    private fun handleOnNavigationItemSelected(itemId: Int): Fragment {
+
+        return when (itemId) {
+            0 -> mArtistsFragment
+            1 -> mAllMusicFragment
+            else -> mSettingsFragment
+        }
+    }
+
+    private fun openArtistDetailsFragment(selectedArtist: String) {
+
+        mNavigationArtist = selectedArtist
+
+        mArtistDetailsFragment = ArtistDetailsFragment.newInstance(mNavigationArtist)
+        supportFragmentManager.beginTransaction()
+            .replace(
+                R.id.container,
+                mArtistDetailsFragment, ArtistDetailsFragment.TAG
+            )
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun updateLovedSongsButton() {
+        val lovedSongs = goPreferences.lovedSongs
+        val lovedSongsButtonColor = if (lovedSongs == null || lovedSongs.isEmpty())
+            ThemeHelper.resolveColorAttr(this, android.R.attr.colorButtonNormal) else
+            ThemeHelper.resolveThemeAccent(this)
+        ThemeHelper.updateIconTint(mLovedSongsButton, lovedSongsButtonColor)
+        mLoveSongsNumber.text = lovedSongs?.size.toString()
     }
 
     private fun setFixedMusicBarProgressListener() {
@@ -661,17 +630,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             })
     }
 
-    fun openEqualizer(view: View) {
-        if (EqualizerUtils.hasEqualizer(this)) {
-            if (checkIsPlayer()) mMediaPlayerHolder.openEqualizer(this)
-        } else {
-            Utils.makeToast(
-                this@MainActivity,
-                R.string.no_eq
-            )
-        }
-    }
-
     private fun setupPreciseVolumeHandler() {
 
         var isUserSeeking = false
@@ -705,5 +663,98 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 )
             }
         })
+    }
+
+    fun openNowPlaying(view: View) {
+
+        if (::mMediaPlayerHolder.isInitialized && mMediaPlayerHolder.currentSong != null) {
+
+            mNowPlayingDialog = MaterialDialog(this, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
+
+                cornerRadius(res = R.dimen.md_corner_radius)
+
+                customView(R.layout.now_playing)
+
+                mArtistTextNP = getCustomView().findViewById(R.id.np_artist)
+                mArtistTextNP.isSelected = true
+                mSongTextNP = getCustomView().findViewById(R.id.np_song_album)
+                mSongTextNP.isSelected = true
+                mFixedMusicBar = getCustomView().findViewById(R.id.np_fixed_music_bar)
+                mFixedMusicBar.setBackgroundBarPrimeColor(
+                    ColorUtils.setAlphaComponent(
+                        ThemeHelper.resolveThemeAccent(
+                            this@MainActivity
+                        ), 40
+                    )
+                )
+                mSongSeekTextNP = getCustomView().findViewById(R.id.np_seek)
+                mSongDurationTextNP = getCustomView().findViewById(R.id.np_duration)
+
+                mSkipPrevButtonNP = getCustomView().findViewById(R.id.np_skip_prev)
+                mSkipPrevButtonNP.setOnClickListener { skip(false) }
+
+                mPlayPauseButtonNP = getCustomView().findViewById(R.id.np_play)
+                mPlayPauseButtonNP.setOnClickListener { resumeOrPause() }
+
+                mSkipNextButtonNP = getCustomView().findViewById(R.id.np_skip_next)
+                mSkipNextButtonNP.setOnClickListener { skip(true) }
+
+                mReplayNP = getCustomView().findViewById(R.id.np_replay)
+                mReplayNP.setOnClickListener { setRepeat() }
+
+                mLoveButtonNP = getCustomView().findViewById(R.id.np_love)
+                mLoveButtonNP.setOnClickListener {
+                    Utils.addToLovedSongs(
+                        mMediaPlayerHolder.currentSong!!,
+                        mMediaPlayerHolder.playerPosition
+                    )
+                    updateLovedSongsButton()
+                    Utils.makeToast(
+                        this@MainActivity,
+                        getString(
+                            R.string.loved_song_added,
+                            mMediaPlayerHolder.currentSong!!.title!!,
+                            MusicUtils.formatSongDuration(mMediaPlayerHolder.playerPosition.toLong())
+                        )
+                    )
+                }
+
+                mVolumeSeekBarNP = getCustomView().findViewById(R.id.np_volume_seek)
+                mVolumeNP = getCustomView().findViewById(R.id.np_volume)
+
+                setupPreciseVolumeHandler()
+                setFixedMusicBarProgressListener()
+
+                updateNowPlayingInfo()
+
+                onDismiss {
+                    mFixedMusicBar.removeAllListener()
+                }
+            }
+        }
+    }
+
+    fun openEqualizer(view: View) {
+        if (EqualizerUtils.hasEqualizer(this)) {
+            if (checkIsPlayer()) mMediaPlayerHolder.openEqualizer(this)
+        } else {
+            Utils.makeToast(
+                this@MainActivity,
+                getString(R.string.no_eq)
+            )
+        }
+    }
+
+    /**
+     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+     * sequence.
+     */
+    private inner class ScreenSlidePagerAdapter(fm: FragmentManager) :
+        FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        override fun getCount(): Int = 3
+
+        override fun getItem(position: Int): Fragment {
+            return handleOnNavigationItemSelected(position)
+        }
     }
 }

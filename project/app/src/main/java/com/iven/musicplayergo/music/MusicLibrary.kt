@@ -86,7 +86,7 @@ class MusicLibrary {
             }
 
         } catch (e: Exception) {
-            Utils.makeToast(context, R.string.error_unknown)
+            Utils.makeToast(context, context.getString(R.string.error_unknown))
             e.printStackTrace()
         }
     }

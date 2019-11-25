@@ -3,12 +3,12 @@ package com.iven.musicplayergo.fragments
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.DataSource
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
@@ -34,6 +34,8 @@ class AllMusicFragment : Fragment() {
 
     private lateinit var mAllMusic: MutableList<Music>
     private lateinit var mDataSource: DataSource<Any>
+
+    private lateinit var mSongsRecyclerView: RecyclerView
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -78,8 +80,10 @@ class AllMusicFragment : Fragment() {
 
             mDataSource = dataSourceOf(mAllMusic)
 
+            mSongsRecyclerView = all_music_rv
+
             // setup{} is an extension method on RecyclerView
-            all_music_rv.setup {
+            mSongsRecyclerView.setup {
                 // item is a `val` in `this` here
                 withDataSource(mDataSource)
                 withItem<Music, GenericViewHolder>(R.layout.generic_item) {
@@ -99,11 +103,6 @@ class AllMusicFragment : Fragment() {
                             )
                                 .first.music!!.toList()
                         )
-                    }
-
-                    onLongClick { index ->
-                        // item is a `val` in `this` here
-                        Log.d("doSomething", "Clicked $index: $item")
                     }
                 }
             }
