@@ -214,7 +214,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             )
 
             isSongRestoredFromPrefs = false
-            isPlay = false
+            if (!isPlay) isPlay = true
         }
     }
 

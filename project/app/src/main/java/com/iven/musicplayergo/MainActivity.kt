@@ -189,7 +189,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onSongSelected(song: Music, songs: List<Music>) {
         mMediaPlayerHolder.isSongRestoredFromPrefs = false
-        mMediaPlayerHolder.isPlay = true
+        if (!mMediaPlayerHolder.isPlay) mMediaPlayerHolder.isPlay = true
         startPlayback(song, songs)
     }
 
@@ -254,6 +254,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun skip(isNext: Boolean) {
         if (checkIsPlayer()) {
+            if (!mMediaPlayerHolder.isPlay) mMediaPlayerHolder.isPlay = true
+            if (mMediaPlayerHolder.isSongRestoredFromPrefs) mMediaPlayerHolder.isSongRestoredFromPrefs = false
             if (isNext) mMediaPlayerHolder.skip(true) else mMediaPlayerHolder.instantReset()
         }
     }
