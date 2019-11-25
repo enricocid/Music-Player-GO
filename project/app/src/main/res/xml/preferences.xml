@@ -31,7 +31,7 @@
             app:title="@string/accent_pref_title" />
 
         <SwitchPreference
-            android:summaryOff="@string/divider_pref_summary_on"
+            android:summaryOff="@string/divider_pref_summary_off"
             app:defaultValue="false"
             app:dialogTitle="@string/divider_pref_title"
             app:key="@string/divider_pref"
