@@ -8,7 +8,13 @@
 
 - [**Steven Schoen**](https://github.com/DSteve595) for the search function [fixes](https://github.com/enricocid/Music-Player-GO/commit/1c27ff3421dbf7820608237dc60a974955efb022)
 
+<<<<<<< HEAD
 - [**emad**](https://github.com/emadabdalrahman) for the awesome [**MusicBar**](https://github.com/emadabdalrahman/MusicBar) library
+=======
+- [**Robin H.**](https://github.com/r2binx) for the Android 10's playback issues [**fix**](https://github.com/enricocid/Music-Player-GO/commit/237281e601d5d120ed250bb1a10c94e554165b48)
+
+- [**Aidan Afollestad**](https://github.com/afollestad) for the incredible [**material-dialogs**](https://github.com/afollestad/material-dialogs) library
+>>>>>>> f7cf5e389bcbb9f3999e854cb1e566bcabfce003
 
 - [**Aidan Afollestad**](https://github.com/afollestad) for the incredible [**material-dialogs**](https://github.com/afollestad/material-dialogs) and [**recyclical**](https://github.com/afollestad/recyclical) libraries
 
