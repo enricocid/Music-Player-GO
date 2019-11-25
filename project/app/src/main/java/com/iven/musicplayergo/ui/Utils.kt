@@ -8,6 +8,7 @@ import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.list.customListAdapter
+import com.afollestad.materialdialogs.list.getRecyclerView
 import com.afollestad.recyclical.datasource.DataSource
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.LovedSongsAdapter
@@ -159,6 +160,11 @@ object Utils {
 
             customListAdapter(
                 LovedSongsAdapter(context, this, uiControlInterface, mediaPlayerHolder)
+            )
+            if (goPreferences.isDividerEnabled) getRecyclerView().addItemDecoration(
+                ThemeHelper.getRecyclerViewDivider(
+                    context
+                )
             )
         }
     }

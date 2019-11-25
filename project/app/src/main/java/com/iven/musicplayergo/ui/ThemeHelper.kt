@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Handler
 import android.util.TypedValue
@@ -12,7 +13,9 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.widget.ImageViewCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
@@ -131,5 +134,19 @@ object ThemeHelper {
         val typedValue = TypedValue()
         theme.resolveAttribute(attrRes, typedValue, true)
         return typedValue
+    }
+
+    @JvmStatic
+    fun getRecyclerViewDivider(context: Context): DividerItemDecoration {
+        val dividerItemDecoration = DividerItemDecoration(
+            context,
+            DividerItemDecoration.VERTICAL
+        )
+        dividerItemDecoration.setDrawable(ColorDrawable(getAlphaAccent(context, 50)))
+        return dividerItemDecoration
+    }
+
+    fun getAlphaAccent(context: Context, alpha: Int): Int {
+        return ColorUtils.setAlphaComponent(resolveThemeAccent(context), alpha)
     }
 }

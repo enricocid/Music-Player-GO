@@ -23,6 +23,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.ui.GenericViewHolder
+import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.ui.Utils
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
@@ -116,6 +117,7 @@ class ArtistsFragment : Fragment() {
 
             // setup{} is an extension method on RecyclerView
             mArtistsRecyclerView.setup {
+
                 // item is a `val` in `this` here
                 withDataSource(mDataSource)
                 withItem<String, GenericViewHolder>(R.layout.generic_item) {
@@ -141,6 +143,12 @@ class ArtistsFragment : Fragment() {
                     }
                 }
             }
+
+            if (goPreferences.isDividerEnabled) mArtistsRecyclerView.addItemDecoration(
+                ThemeHelper.getRecyclerViewDivider(
+                    context!!
+                )
+            )
 
             setupIndicatorFastScrollerView()
 

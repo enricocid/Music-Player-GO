@@ -32,7 +32,14 @@ class PreferencesFragment : PreferenceFragmentCompat() {
     private lateinit var mUIControlInterface: UIControlInterface
 
     override fun setDivider(divider: Drawable?) {
-        super.setDivider(ColorDrawable(Color.TRANSPARENT))
+        val newDivider = if (context != null && goPreferences.isDividerEnabled) ColorDrawable(
+            ThemeHelper.getAlphaAccent(
+                context!!,
+                50
+            )
+        )
+        else ColorDrawable(Color.TRANSPARENT)
+        super.setDivider(newDivider)
     }
 
     override fun onAttach(context: Context) {
@@ -72,6 +79,12 @@ class PreferencesFragment : PreferenceFragmentCompat() {
             accentPreference?.setOnPreferenceClickListener {
                 showAccentDialog()
                 return@setOnPreferenceClickListener true
+            }
+
+            val dividersPreference = findPreference<SwitchPreference>("divider_pref")
+            dividersPreference?.setOnPreferenceChangeListener { _, _ ->
+                ThemeHelper.applyNewThemeSmoothly(activity!!)
+                return@setOnPreferenceChangeListener true
             }
 
             val searchBarPreference = findPreference<SwitchPreference>("search_bar_pref")

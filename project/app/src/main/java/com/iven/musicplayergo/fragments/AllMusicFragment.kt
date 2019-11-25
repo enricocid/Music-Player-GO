@@ -19,6 +19,7 @@ import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.ui.GenericViewHolder
+import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 import kotlinx.android.synthetic.main.fragment_all_music.*
 import kotlinx.android.synthetic.main.search_toolbar.*
@@ -86,7 +87,7 @@ class AllMusicFragment : Fragment() {
             mSongsRecyclerView.setup {
                 // item is a `val` in `this` here
                 withDataSource(mDataSource)
-                withItem<Music, GenericViewHolder>(R.layout.generic_item) {
+                withItem<Music, GenericViewHolder>(R.layout.song_item) {
                     onBind(::GenericViewHolder) { _, item ->
                         // GenericViewHolder is `this` here
                         title.text = item.title
@@ -106,6 +107,10 @@ class AllMusicFragment : Fragment() {
                     }
                 }
             }
+
+            if (goPreferences.isDividerEnabled) mSongsRecyclerView.addItemDecoration(
+                ThemeHelper.getRecyclerViewDivider(context!!)
+            )
 
             if (isSearchBarEnabled) {
                 val searchView = itemSearch.actionView as SearchView

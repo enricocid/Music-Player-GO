@@ -17,6 +17,7 @@ import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.music.Album
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
@@ -184,7 +185,7 @@ class ArtistDetailsFragment : Fragment() {
             mSongsRecyclerView.setup {
                 // item is a `val` in `this` here
                 withDataSource(mAlbumSongsDataSource)
-                withItem<Music, GenericViewHolder>(R.layout.generic_item) {
+                withItem<Music, GenericViewHolder>(R.layout.song_item) {
                     onBind(::GenericViewHolder) { _, item ->
                         // GenericViewHolder is `this` here
                         title.text = MusicUtils.buildSpanned(
@@ -208,6 +209,12 @@ class ArtistDetailsFragment : Fragment() {
                     }
                 }
             }
+
+            if (goPreferences.isDividerEnabled) mSongsRecyclerView.addItemDecoration(
+                ThemeHelper.getRecyclerViewDivider(
+                    context!!
+                )
+            )
         }
         view.afterMeasured {
             revealFragment(true)

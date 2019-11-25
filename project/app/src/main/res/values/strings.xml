@@ -57,6 +57,11 @@
     <string name="accent_pref" translatable="false">accent_pref</string>
     <string name="accent_pref_title">Accent</string>
 
+    <string name="divider_pref" translatable="false">divider_pref</string>
+    <string name="divider_pref_title">Dividers</string>
+    <string name="divider_pref_summary_on">Disable dividers between the items in a list</string>
+    <string name="divider_pref_summary_off">Enable dividers between the items in a list</string>
+
     <string name="fast_scroll_pref" translatable="false">fast_scroll_pref</string>
     <string name="fast_scroll_pref_title">Indicator fast scroll</string>
     <string name="fast_scroll_pref_summary_on">Disable indicator fast scroll</string>

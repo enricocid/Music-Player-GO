@@ -18,7 +18,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import androidx.core.app.ActivityCompat
-import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -683,12 +682,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mSongTextNP.isSelected = true
                 mFixedMusicBar = getCustomView().findViewById(R.id.np_fixed_music_bar)
                 mFixedMusicBar.setBackgroundBarPrimeColor(
-                    ColorUtils.setAlphaComponent(
-                        ThemeHelper.resolveThemeAccent(
-                            this@MainActivity
-                        ), 40
+                    ThemeHelper.getAlphaAccent(
+                        this@MainActivity,
+                        40
                     )
                 )
+
                 mSongSeekTextNP = getCustomView().findViewById(R.id.np_seek)
                 mSongDurationTextNP = getCustomView().findViewById(R.id.np_duration)
 
