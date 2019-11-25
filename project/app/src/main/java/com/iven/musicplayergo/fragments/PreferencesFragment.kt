@@ -81,6 +81,11 @@ class PreferencesFragment : PreferenceFragmentCompat() {
             }
 
             val themePreference = findPreference<Preference>("theme_pref")
+            themePreference?.setOnPreferenceClickListener {
+                showThemesDialog()
+                return@setOnPreferenceClickListener true
+            }
+
             themePreference?.summary =
                 ThemeHelper.getAppliedThemeName(activity!!, goPreferences.theme)
 
