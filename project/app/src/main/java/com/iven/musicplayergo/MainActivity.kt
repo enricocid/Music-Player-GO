@@ -255,7 +255,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun skip(isNext: Boolean) {
         if (checkIsPlayer()) {
             if (!mMediaPlayerHolder.isPlay) mMediaPlayerHolder.isPlay = true
-            if (mMediaPlayerHolder.isSongRestoredFromPrefs) mMediaPlayerHolder.isSongRestoredFromPrefs = false
+            if (mMediaPlayerHolder.isSongRestoredFromPrefs) mMediaPlayerHolder.isSongRestoredFromPrefs =
+                false
             if (isNext) mMediaPlayerHolder.skip(true) else mMediaPlayerHolder.instantReset()
         }
     }
@@ -585,11 +586,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun updateLovedSongsButton() {
         val lovedSongs = goPreferences.lovedSongs
-        val lovedSongsButtonColor = if (lovedSongs == null || lovedSongs.isEmpty())
+        val lovedSongsButtonColor = if (lovedSongs.isNullOrEmpty())
             ThemeHelper.resolveColorAttr(this, android.R.attr.colorButtonNormal) else
             ThemeHelper.resolveThemeAccent(this)
         ThemeHelper.updateIconTint(mLovedSongsButton, lovedSongsButtonColor)
-        mLoveSongsNumber.text = lovedSongs?.size.toString()
+        val songsNumber = if (lovedSongs.isNullOrEmpty()) 0 else lovedSongs.size
+        mLoveSongsNumber.text = songsNumber.toString()
     }
 
     private fun setFixedMusicBarProgressListener() {
