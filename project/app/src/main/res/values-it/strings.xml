@@ -1,8 +1,69 @@
 <resources>
-    <string name="no_eq">Nessun equalizzatore trovato!</string>
-    <string name="bad_id">Magari esegui una canzone!</string>
-    <string name="no_browser">Nessun browser trovato!</string>
-    <string name="perm_rationale">Music Player GO deve poter accedere ai tuoi file per eseguire la musica!</string>
+
+    <!-- Main - Artists -->
+    <string name="artists">Artisti</string>
     <string name="artist_info">%1d&#160;Album,&#160;%2d&#160;Canzoni</string>
+
+    <!-- Main - All songs -->
+    <string name="songs">Tutte le canzoni</string>
+    <string name="shuffle_am">Mescola tutte le canzoni</string>
+    <string name="shuffle_sa">Mescola l\'abum selezionato</string>
+
+    <!-- Loved songs -->
+    <string name="loved_songs">Canzoni preferite</string>
+    <string name="loved_song_added">%1s (%2s) aggiunta alle canzoni preferite</string>
+    <string name="loved_song_remove">%1s (%2s) sarà cancellata dalle canzoni preferite. Sei sicuro?</string>
+
+    <!-- Messages -->
+    <string name="perm_rationale">Music Player GO deve poter accedere ai tuoi file per eseguire la musica!</string>
+    <string name="no_browser">Nessun browser trovato!</string>
+    <string name="bad_id">Magari esegui una canzone!</string>
+    <string name="no_eq">Nessun equalizzatore trovato!</string>
     <string name="error_unknown">Qualcosa è andato storto! :(</string>
+    <string name="error_get_resource">Oops!! Non trovata!</string>
+    <string name="error_no_music">Nessuna canzone trovata</string>
+    <string name="error_no_hidden_item">Nessun artista nascosto trovato!</string>
+    <string name="error_no_loved_songs">Nessuna canzone preferita trovata!</string>
+
+    <!-- Settings -->
+    <!-- Preferences -->
+    <string name="settings">Opzioni</string>
+    <string name="category_appearance">Aspetto</string>
+    <string name="category_general">Generali</string>
+
+    <string name="open_git_pref_title">Pagina GitHub</string>
+    <string name="open_git_pref_summary">Apri la pagina del progetto per maggiori info :)</string>
+
+    <string name="theme_pref_title">Tema</string>
+    <string name="theme_pref_light_title">Chiaro</string>
+    <string name="theme_pref_dark_title">Scuro</string>
+    <string name="theme_pref_auto_title">Automatico</string>
+
+    <string name="accent_pref_title">Accento</string>
+
+    <string name="divider_pref_title">Divisori</string>
+    <string name="divider_pref_summary_on">Disabilita i divisori delle liste</string>
+    <string name="divider_pref_summary_off">Abilita i divisori delle liste</string>
+
+    <string name="fast_scroll_pref_summary_on">Disabilita indicator fast scroll</string>
+    <string name="fast_scroll_pref_summary_off">Abilita indicator fast scroll</string>
+
+    <string name="search_bar_pref_title">Barra di ricerca</string>
+    <string name="search_bar_pref_summary_on">Disabilita barra di ricerca</string>
+    <string name="search_bar_pref_summary_off">Abilita barra di ricerca</string>
+
+    <string name="sorting_pref_default">Predefinito</string>
+    <string name="sorting_pref_ascending">Ascendente</string>
+    <string name="sorting_pref_descending">Discendente</string>
+
+    <string name="hidden_items_pref_title">Artisti nascosti</string>
+    <string name="hidden_items_pref_message">%1s sarà nascosto. Sei sicuro?</string>
+
+    <string name="focus_pref_title">Focus audio</string>
+    <string name="focus_pref_summary_on">Disabilita gestione focus audio</string>
+    <string name="focus_pref_summary_off">Abilita gestione focus audio</string>
+
+    <string name="headset_pref_title">Inserimento cuffie</string>
+    <string name="headset_pref_summary_on">Disabilità gestione inserimento cuffie</string>
+    <string name="headset_pref_summary_off">Abilita gestione inserimento cuffie</string>
 </resources>

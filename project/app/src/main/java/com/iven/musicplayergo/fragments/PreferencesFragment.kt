@@ -22,7 +22,6 @@ import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.ui.Utils
-import java.util.*
 
 class PreferencesFragment : PreferenceFragmentCompat() {
 
@@ -113,12 +112,7 @@ class PreferencesFragment : PreferenceFragmentCompat() {
                 if (goPreferences.hiddenItems?.isNotEmpty()!!) showHiddenItemsDialog()
                 else Utils.makeToast(
                     activity!!,
-                    getString(
-                        R.string.error_nothing,
-                        getString(R.string.hidden_items_pref_title).toLowerCase(
-                            Locale.getDefault()
-                        )
-                    )
+                    getString(R.string.error_no_hidden_item)
                 )
                 return@setOnPreferenceClickListener true
             }

@@ -46,7 +46,6 @@ import com.oze.music.musicbar.FixedMusicBar
 import com.oze.music.musicbar.MusicBar
 import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.player_controls_panel.*
-import java.util.*
 
 @Suppress("UNUSED_PARAMETER")
 class MainActivity : AppCompatActivity(), UIControlInterface {
@@ -416,11 +415,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             Utils.showLovedSongsDialog(this, this, mMediaPlayerHolder)
         else
             Utils.makeToast(
-                this, getString(
-                    R.string.error_nothing, getString(R.string.loved_songs).toLowerCase(
-                        Locale.getDefault()
-                    )
-                )
+                this, getString(R.string.error_no_loved_songs)
             )
     }
 
@@ -540,7 +535,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             } else {
                 Utils.makeToast(
                     this@MainActivity,
-                    getString(R.string.error_nothing, getString(R.string.music))
+                    getString(R.string.error_no_music)
                 )
                 finish()
             }

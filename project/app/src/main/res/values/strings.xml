@@ -3,7 +3,6 @@
     <string name="app_name" translatable="false">Music Player GO</string>
     <string name="space_delimiter" translatable="false">&#160;</string>
     <string name="underscore_delimiter" translatable="false">&#95;</string>
-    <string name="music">music</string>
 
     <!-- Main - Artists -->
     <string name="artists">Artists</string>
@@ -33,7 +32,9 @@
     <string name="no_eq">No equalizer found!</string>
     <string name="error_unknown">Something went wrong! :(</string>
     <string name="error_get_resource">Oops!! Not found!</string>
-    <string name="error_nothing">No %1s found!</string>
+    <string name="error_no_music">No music found!</string>
+    <string name="error_no_hidden_item">No hidden items found!</string>
+    <string name="error_no_loved_songs">No loved songs found!</string>
 
     <!-- Settings -->
     <!-- Preferences -->
@@ -67,7 +68,7 @@
     <string name="divider_pref_summary_off">Enable dividers between the items in a list</string>
 
     <string name="fast_scroll_pref" translatable="false">fast_scroll_pref</string>
-    <string name="fast_scroll_pref_title">Indicator fast scroll</string>
+    <string name="fast_scroll_pref_title" translatable="false">Indicator fast scroll</string>
     <string name="fast_scroll_pref_summary_on">Disable indicator fast scroll</string>
     <string name="fast_scroll_pref_summary_off">Enable indicator fast scroll</string>
 
