@@ -17,7 +17,6 @@ import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.music.Album
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
@@ -84,9 +83,9 @@ class ArtistDetailsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_artist_details, container, false)
     }
 
-    private fun swapAlbum(songs: MutableList<Music>) {
+    private fun swapAlbum(songs: MutableList<Music>?) {
         mSelectedAlbumsDataSource.set(mSelectedArtistAlbums)
-        mAlbumSongsDataSource.set(songs)
+        mAlbumSongsDataSource.set(songs!!)
         mSongsRecyclerView.scrollToPosition(0)
     }
 
@@ -173,7 +172,7 @@ class ArtistDetailsFragment : Fragment() {
                                 ).second
                             )
                             mSelectedAlbum = item
-                            swapAlbum(item.music!!)
+                            swapAlbum(item.music)
                         }
                     }
                 }
@@ -210,7 +209,7 @@ class ArtistDetailsFragment : Fragment() {
                 }
             }
 
-            if (goPreferences.isDividerEnabled) mSongsRecyclerView.addItemDecoration(
+            mSongsRecyclerView.addItemDecoration(
                 ThemeHelper.getRecyclerViewDivider(
                     context!!
                 )

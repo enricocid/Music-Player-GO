@@ -84,7 +84,7 @@ class LovedSongsAdapter(
                         musicLibrary.allAlbumsForArtist[song.artist]!!
                     )
                         .first
-                        .music?.sortedBy { albumSong -> albumSong.track }!!
+                        .music!!
                 )
             }
             itemView.setOnLongClickListener {

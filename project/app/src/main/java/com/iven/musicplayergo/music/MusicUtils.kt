@@ -67,13 +67,14 @@ object MusicUtils {
 
             groupedSongs.keys.iterator().forEach {
 
-                val albumSongs = groupedSongs.getValue(it)
+                val albumSongs = groupedSongs.getValue(it).toMutableList()
+                albumSongs.sortBy { song -> song.track }
 
                 sortedAlbums.add(
                     Album(
                         it,
                         getYearForAlbum(resources, albumSongs[0].year),
-                        albumSongs.toMutableList()
+                        albumSongs
                     )
                 )
             }

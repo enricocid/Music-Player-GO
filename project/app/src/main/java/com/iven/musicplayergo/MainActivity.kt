@@ -308,7 +308,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     val songs =
                         MusicUtils.getAlbumFromList(song.album, mMusic[song.artist]!!)
                             .first
-                            .music?.sortedBy { albumSong -> albumSong.track }!!
+                            .music
 
                     mMediaPlayerHolder.isSongRestoredFromPrefs = true
                     mMediaPlayerHolder.isPlay = false
@@ -480,7 +480,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     //get album songs and sort them
                     val albumSongs =
                         MusicUtils.getAlbumFromList(song.album, mMusic[song.artist]!!).first
-                            .music?.sortedBy { albumSong -> albumSong.track }
+                            .music
 
                     mMediaPlayerHolder.setCurrentSong(song, albumSongs!!)
                     mMediaPlayerHolder.initMediaPlayer(song)
