@@ -20,13 +20,6 @@
 
     </FrameLayout>
 
-    <!-- <com.google.android.material.tabs.TabLayout
-         android:id="@+id/tab_layout"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:elevation="6dp" />
- </androidx.viewpager.widget.ViewPager>-->
-
     <!-- CONTROLS PANEL -->
     <include layout="@layout/player_controls_panel" />
 </LinearLayout>
