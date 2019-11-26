@@ -28,6 +28,8 @@ class PreferencesFragment : PreferenceFragmentCompat() {
     private lateinit var mAccentsDialog: MaterialDialog
     private lateinit var mMultiListDialog: MaterialDialog
 
+    private lateinit var mHiddenItemsPreference: Preference
+
     private var mSelectedAccent = R.color.deep_purple
 
     private lateinit var mUIControlInterface: UIControlInterface
@@ -98,8 +100,10 @@ class PreferencesFragment : PreferenceFragmentCompat() {
                 return@setOnPreferenceClickListener true
             }
 
-            val hiddenItemsPreference = findPreference<Preference>("hidden_items_pref")
-            hiddenItemsPreference?.setOnPreferenceClickListener {
+            mHiddenItemsPreference = findPreference("hidden_items_pref")!!
+
+            mHiddenItemsPreference.summary = goPreferences.hiddenItems?.size.toString()
+            mHiddenItemsPreference.setOnPreferenceClickListener {
                 if (goPreferences.hiddenItems?.isNotEmpty()!!) showHiddenItemsDialog()
                 else Utils.makeToast(
                     activity!!,
@@ -163,6 +167,7 @@ class PreferencesFragment : PreferenceFragmentCompat() {
                 customListAdapter(checkableAdapter)
                 positiveButton {
                     Utils.updateCheckableItems(checkableAdapter.getUpdatedItems())
+                    mHiddenItemsPreference.summary = goPreferences.hiddenItems?.size.toString()
                 }
                 negativeButton {}
             }
