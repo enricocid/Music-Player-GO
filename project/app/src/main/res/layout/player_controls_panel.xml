@@ -98,12 +98,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:scaleX="0.50"
+                android:scaleY="0.50"
                 android:textAppearance="@android:style/TextAppearance.Material.Caption"
                 android:textColor="?android:attr/textColorPrimaryInverse"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
         </FrameLayout>
-
     </LinearLayout>
-
 </LinearLayout>

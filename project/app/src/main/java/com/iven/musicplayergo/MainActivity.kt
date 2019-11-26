@@ -205,7 +205,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onLovedSongsUpdate() {
-        updateLovedSongsButton()
+        val lovedSongs = goPreferences.lovedSongs
+        val lovedSongsButtonColor = if (lovedSongs.isNullOrEmpty())
+            ThemeHelper.resolveColorAttr(this, android.R.attr.colorButtonNormal) else
+            ThemeHelper.resolveThemeAccent(this)
+        ThemeHelper.updateIconTint(mLovedSongsButton, lovedSongsButtonColor)
+        val songsNumber = if (lovedSongs.isNullOrEmpty()) 0 else lovedSongs.size
+        mLoveSongsNumber.text = songsNumber.toString()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -220,7 +226,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         //init views
         getViews()
         mPlayPauseButton.setOnClickListener { resumeOrPause() }
-        updateLovedSongsButton()
+
+        mPlayPauseButton.setOnLongClickListener {
+
+            return@setOnLongClickListener true
+        }
+
+        onLovedSongsUpdate()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else doBindService()
     }
@@ -579,16 +591,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             .commit()
     }
 
-    private fun updateLovedSongsButton() {
-        val lovedSongs = goPreferences.lovedSongs
-        val lovedSongsButtonColor = if (lovedSongs.isNullOrEmpty())
-            ThemeHelper.resolveColorAttr(this, android.R.attr.colorButtonNormal) else
-            ThemeHelper.resolveThemeAccent(this)
-        ThemeHelper.updateIconTint(mLovedSongsButton, lovedSongsButtonColor)
-        val songsNumber = if (lovedSongs.isNullOrEmpty()) 0 else lovedSongs.size
-        mLoveSongsNumber.text = songsNumber.toString()
-    }
-
     private fun setFixedMusicBarProgressListener() {
 
         mFixedMusicBar.setProgressChangeListener(
@@ -709,7 +711,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         mMediaPlayerHolder.currentSong!!,
                         mMediaPlayerHolder.playerPosition
                     )
-                    updateLovedSongsButton()
+                    onLovedSongsUpdate()
                 }
 
                 mVolumeSeekBarNP = getCustomView().findViewById(R.id.np_volume_seek)
