@@ -21,10 +21,7 @@ import com.iven.musicplayergo.music.Album
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.musicLibrary
-import com.iven.musicplayergo.ui.AlbumsViewHolder
-import com.iven.musicplayergo.ui.GenericViewHolder
-import com.iven.musicplayergo.ui.ThemeHelper
-import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.ui.*
 import kotlinx.android.synthetic.main.fragment_artist_details.*
 import kotlin.math.max
 
@@ -204,6 +201,17 @@ class ArtistDetailsFragment : Fragment() {
                                 item.album,
                                 mSelectedArtistAlbums
                             ).first.music!!.toList()
+                        )
+                    }
+
+                    onLongClick { index ->
+                        val itemViewHolder =
+                            mSongsRecyclerView.findViewHolderForAdapterPosition(index)
+                        Utils.showAddToLovedSongsPopup(
+                            context!!,
+                            itemViewHolder?.itemView!!,
+                            item,
+                            mUIControlInterface
                         )
                     }
                 }

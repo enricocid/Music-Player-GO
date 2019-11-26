@@ -705,18 +705,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mLoveButtonNP = getCustomView().findViewById(R.id.np_love)
                 mLoveButtonNP.setOnClickListener {
                     Utils.addToLovedSongs(
+                        this@MainActivity,
                         mMediaPlayerHolder.currentSong!!,
                         mMediaPlayerHolder.playerPosition
                     )
                     updateLovedSongsButton()
-                    Utils.makeToast(
-                        this@MainActivity,
-                        getString(
-                            R.string.loved_song_added,
-                            mMediaPlayerHolder.currentSong!!.title!!,
-                            MusicUtils.formatSongDuration(mMediaPlayerHolder.playerPosition.toLong())
-                        )
-                    )
                 }
 
                 mVolumeSeekBarNP = getCustomView().findViewById(R.id.np_volume_seek)

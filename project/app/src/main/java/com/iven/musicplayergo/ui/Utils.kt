@@ -2,7 +2,10 @@ package com.iven.musicplayergo.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.view.Gravity
+import android.view.View
 import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
@@ -135,16 +138,26 @@ object Utils {
     }
 
     @JvmStatic
-    fun addToLovedSongs(song: Music, currentPosition: Int) {
+    fun addToLovedSongs(context: Context, song: Music, currentPosition: Int) {
         val lovedSongs =
             if (goPreferences.lovedSongs != null) goPreferences.lovedSongs else mutableListOf()
-        if (!lovedSongs?.contains(Pair(song, currentPosition))!!) lovedSongs.add(
-            Pair(
-                song,
-                currentPosition
+        if (!lovedSongs?.contains(Pair(song, currentPosition))!!) {
+            lovedSongs.add(
+                Pair(
+                    song,
+                    currentPosition
+                )
             )
-        )
-        goPreferences.lovedSongs = lovedSongs
+            makeToast(
+                context,
+                context.getString(
+                    R.string.loved_song_added,
+                    song.title!!,
+                    MusicUtils.formatSongDuration(currentPosition.toLong())
+                )
+            )
+            goPreferences.lovedSongs = lovedSongs
+        }
     }
 
     fun showLovedSongsDialog(
@@ -196,5 +209,27 @@ object Utils {
             }
             negativeButton {}
         }
+    }
+
+    fun showAddToLovedSongsPopup(
+        context: Context,
+        itemView: View,
+        song: Music,
+        uiControlInterface: UIControlInterface
+    ) {
+        val popup = PopupMenu(context, itemView)
+        popup.setOnMenuItemClickListener {
+
+            addToLovedSongs(
+                context,
+                song,
+                0
+            )
+            uiControlInterface.onLovedSongsUpdate()
+            return@setOnMenuItemClickListener true
+        }
+        popup.inflate(R.menu.menu_show_love)
+        popup.gravity = Gravity.END
+        popup.show()
     }
 }

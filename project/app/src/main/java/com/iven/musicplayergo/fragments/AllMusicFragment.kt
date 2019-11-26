@@ -21,6 +21,7 @@ import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.ui.GenericViewHolder
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.ui.Utils
 import kotlinx.android.synthetic.main.fragment_all_music.*
 import kotlinx.android.synthetic.main.search_toolbar.*
 
@@ -103,6 +104,17 @@ class AllMusicFragment : Fragment() {
                                 musicLibrary.allAlbumsForArtist.getValue(item.artist!!)
                             )
                                 .first.music!!.toList()
+                        )
+                    }
+
+                    onLongClick { index ->
+                        val itemViewHolder =
+                            mSongsRecyclerView.findViewHolderForAdapterPosition(index)
+                        Utils.showAddToLovedSongsPopup(
+                            context!!,
+                            itemViewHolder?.itemView!!,
+                            item,
+                            mUIControlInterface
                         )
                     }
                 }
