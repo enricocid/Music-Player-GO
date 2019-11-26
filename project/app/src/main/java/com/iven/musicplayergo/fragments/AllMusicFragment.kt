@@ -14,7 +14,6 @@ import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.musicLibrary
@@ -67,10 +66,6 @@ class AllMusicFragment : Fragment() {
             val searchToolbar = search_toolbar
             searchToolbar.inflateMenu(R.menu.menu_all_music)
             searchToolbar.title = getString(R.string.songs)
-            val itemSearch = searchToolbar.menu.findItem(R.id.action_search)
-
-            val isSearchBarEnabled = goPreferences.isSearchBarEnabled
-            itemSearch.isVisible = isSearchBarEnabled
 
             val itemShuffle = searchToolbar.menu.findItem(R.id.action_shuffle_am)
             itemShuffle.setOnMenuItemClickListener {
@@ -124,10 +119,9 @@ class AllMusicFragment : Fragment() {
                 ThemeHelper.getRecyclerViewDivider(context!!)
             )
 
-            if (isSearchBarEnabled) {
-                val searchView = itemSearch.actionView as SearchView
-                setupSearchViewForMusic(searchView)
-            }
+            val itemSearch = searchToolbar.menu.findItem(R.id.action_search)
+            val searchView = itemSearch.actionView as SearchView
+            setupSearchViewForMusic(searchView)
         }
     }
 

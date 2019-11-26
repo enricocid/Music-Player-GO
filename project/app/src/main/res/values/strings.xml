@@ -63,11 +63,6 @@
     <string name="accent_pref" translatable="false">accent_pref</string>
     <string name="accent_pref_title">Accent</string>
 
-    <string name="search_bar_pref" translatable="false">search_bar_pref</string>
-    <string name="search_bar_pref_title">Search bar</string>
-    <string name="search_bar_pref_summary_on">Disable search bar</string>
-    <string name="search_bar_pref_summary_off">Enable search bar</string>
-
     <string name="artists_sorting_pref" translatable="false">artists_sorting_pref</string>
     <string name="sorting_pref_default">Default</string>
     <string name="sorting_pref_ascending">Ascending</string>

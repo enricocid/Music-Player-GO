@@ -98,18 +98,6 @@ class PreferencesFragment : PreferenceFragmentCompat() {
                 return@setOnPreferenceClickListener true
             }
 
-            val dividersPreference = findPreference<SwitchPreference>("divider_pref")
-            dividersPreference?.setOnPreferenceChangeListener { _, _ ->
-                ThemeHelper.applyNewThemeSmoothly(activity!!)
-                return@setOnPreferenceChangeListener true
-            }
-
-            val searchBarPreference = findPreference<SwitchPreference>("search_bar_pref")
-            searchBarPreference?.setOnPreferenceChangeListener { _, _ ->
-                ThemeHelper.applyNewThemeSmoothly(activity!!)
-                return@setOnPreferenceChangeListener true
-            }
-
             val hiddenItemsPreference = findPreference<Preference>("hidden_items_pref")
             hiddenItemsPreference?.setOnPreferenceClickListener {
                 if (goPreferences.hiddenItems?.isNotEmpty()!!) showHiddenItemsDialog()

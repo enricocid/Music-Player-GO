@@ -39,14 +39,6 @@
 
     <PreferenceCategory app:title="@string/category_general">
 
-        <SwitchPreference
-            android:summaryOff="@string/search_bar_pref_summary_off"
-            app:defaultValue="true"
-            app:dialogTitle="@string/search_bar_pref_title"
-            app:key="@string/search_bar_pref"
-            app:summaryOn="@string/search_bar_pref_summary_on"
-            app:title="@string/search_bar_pref_title" />
-
         <Preference
             app:key="@string/hidden_items_pref"
             app:title="@string/hidden_items_pref_title" />

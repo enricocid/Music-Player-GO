@@ -53,12 +53,9 @@ class ArtistsFragment : Fragment() {
     private lateinit var mArtists: MutableList<String>
     private var mFilteredArtists: List<String>? = null
 
-
     private lateinit var mDataSource: DataSource<Any>
 
     private lateinit var mUIControlInterface: UIControlInterface
-
-    private var sSearchEnabled: Boolean = true
 
     override fun onPause() {
         super.onPause()
@@ -95,11 +92,6 @@ class ArtistsFragment : Fragment() {
                 AppCompatResources.getDrawable(context!!, R.drawable.ic_sort)
 
             mSearchToolbar.title = getString(R.string.artists)
-
-            val itemSearch = mSearchToolbar.menu.findItem(R.id.action_search)
-
-            sSearchEnabled = goPreferences.isSearchBarEnabled
-            itemSearch.isVisible = sSearchEnabled
 
             setMenuOnItemClickListener()
 
@@ -152,20 +144,19 @@ class ArtistsFragment : Fragment() {
 
             setupIndicatorFastScrollerView()
 
-            if (sSearchEnabled) {
-                val searchView = itemSearch.actionView as SearchView
-                Utils.setupSearchViewForStringLists(
-                    searchView,
-                    mArtists,
-                    onResultsChanged = { newResults ->
-                        mFilteredArtists = if (newResults.isEmpty()) {
-                            null
-                        } else {
-                            newResults
-                        }
-                        mDataSource.set(mFilteredArtists ?: mArtists)
-                    })
-            }
+            val itemSearch = mSearchToolbar.menu.findItem(R.id.action_search)
+            val searchView = itemSearch.actionView as SearchView
+            Utils.setupSearchViewForStringLists(
+                searchView,
+                mArtists,
+                onResultsChanged = { newResults ->
+                    mFilteredArtists = if (newResults.isEmpty()) {
+                        null
+                    } else {
+                        newResults
+                    }
+                    mDataSource.set(mFilteredArtists ?: mArtists)
+                })
         }
     }
 

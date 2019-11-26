@@ -42,10 +42,6 @@
 
     <string name="accent_pref_title">Accento</string>
 
-    <string name="search_bar_pref_title">Barra di ricerca</string>
-    <string name="search_bar_pref_summary_on">Disabilita barra di ricerca</string>
-    <string name="search_bar_pref_summary_off">Abilita barra di ricerca</string>
-
     <string name="sorting_pref_default">Predefinito</string>
     <string name="sorting_pref_ascending">Ascendente</string>
     <string name="sorting_pref_descending">Discendente</string>
