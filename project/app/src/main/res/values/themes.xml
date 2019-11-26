@@ -113,4 +113,10 @@
         <item name="colorPrimary">@color/blue_grey</item>
         <item name="colorPrimaryDark">@color/blueGreyPrimaryDark</item>
     </style>
+
+    <style name="BaseTheme.Default" parent="BaseTheme">
+        <item name="colorAccent">@android:color/background_dark</item>
+        <item name="colorPrimary">@android:color/background_dark</item>
+        <item name="colorPrimaryDark">@android:color/background_dark</item>
+    </style>
 </resources>
