@@ -62,16 +62,6 @@
     <string name="accent_pref" translatable="false">accent_pref</string>
     <string name="accent_pref_title">Accent</string>
 
-    <string name="divider_pref" translatable="false">divider_pref</string>
-    <string name="divider_pref_title">Dividers</string>
-    <string name="divider_pref_summary_on">Disable dividers between the items in a list</string>
-    <string name="divider_pref_summary_off">Enable dividers between the items in a list</string>
-
-    <string name="fast_scroll_pref" translatable="false">fast_scroll_pref</string>
-    <string name="fast_scroll_pref_title" translatable="false">Indicator fast scroll</string>
-    <string name="fast_scroll_pref_summary_on">Disable indicator fast scroll</string>
-    <string name="fast_scroll_pref_summary_off">Enable indicator fast scroll</string>
-
     <string name="search_bar_pref" translatable="false">search_bar_pref</string>
     <string name="search_bar_pref_title">Search bar</string>
     <string name="search_bar_pref_summary_on">Disable search bar</string>

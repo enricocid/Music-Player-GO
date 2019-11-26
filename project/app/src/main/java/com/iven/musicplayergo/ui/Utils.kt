@@ -161,7 +161,7 @@ object Utils {
             customListAdapter(
                 LovedSongsAdapter(context, this, uiControlInterface, mediaPlayerHolder)
             )
-            if (goPreferences.isDividerEnabled) getRecyclerView().addItemDecoration(
+            getRecyclerView().addItemDecoration(
                 ThemeHelper.getRecyclerViewDivider(
                     context
                 )

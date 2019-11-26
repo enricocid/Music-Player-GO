@@ -144,7 +144,7 @@ class ArtistsFragment : Fragment() {
                 }
             }
 
-            if (goPreferences.isDividerEnabled) mArtistsRecyclerView.addItemDecoration(
+            mArtistsRecyclerView.addItemDecoration(
                 ThemeHelper.getRecyclerViewDivider(
                     context!!
                 )
@@ -180,7 +180,7 @@ class ArtistsFragment : Fragment() {
     @SuppressLint("DefaultLocale")
     private fun setupIndicatorFastScrollerView() {
 
-        if (goPreferences.isFastScrollEnabled && goPreferences.artistsSorting != R.id.default_sorting) {
+        if (goPreferences.artistsSorting != R.id.default_sorting) {
 
             mIndicatorFastScrollerView = fastscroller
             mIndicatorFastScrollThumb = fastscroller_thumb
@@ -222,7 +222,8 @@ class ArtistsFragment : Fragment() {
                     }
 
                 } else {
-                    mIndicatorFastScrollerView.removeAllViewsInLayout()
+                    if (mIndicatorFastScrollerView.isVisible) mIndicatorFastScrollerView.visibility =
+                        View.GONE
                 }
             }
         }

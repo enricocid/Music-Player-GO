@@ -17,9 +17,7 @@ class MusicPlayerGoPreferences(context: Context) {
     private val prefsTheme = context.getString(R.string.theme_pref)
     private val prefsThemeDefault = context.getString(R.string.theme_pref_light)
     private val prefsAccent = context.getString(R.string.accent_pref)
-    private val prefsDividers = context.getString(R.string.divider_pref)
 
-    private val prefsFastScroll = context.getString(R.string.fast_scroll_pref)
     private val prefsSearchBar = context.getString(R.string.search_bar_pref)
     private val prefsArtistsSorting = context.getString(R.string.artists_sorting_pref)
     private val prefsHiddenArtistsFolders = context.getString(R.string.hidden_items_pref)
@@ -53,14 +51,6 @@ class MusicPlayerGoPreferences(context: Context) {
     var accent: Int
         get() = mPrefs.getInt(prefsAccent, R.color.deep_purple)
         set(value) = mPrefs.edit().putInt(prefsAccent, value).apply()
-
-    var isDividerEnabled: Boolean
-        get() = mPrefs.getBoolean(prefsDividers, false)
-        set(value) = mPrefs.edit().putBoolean(prefsAccent, value).apply()
-
-    var isFastScrollEnabled: Boolean
-        get() = mPrefs.getBoolean(prefsFastScroll, true)
-        set(value) = mPrefs.edit().putBoolean(prefsFastScroll, value).apply()
 
     var isSearchBarEnabled: Boolean
         get() = mPrefs.getBoolean(prefsSearchBar, true)

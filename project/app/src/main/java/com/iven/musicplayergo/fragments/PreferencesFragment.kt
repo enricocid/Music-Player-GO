@@ -3,7 +3,6 @@ package com.iven.musicplayergo.fragments
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -34,13 +33,12 @@ class PreferencesFragment : PreferenceFragmentCompat() {
     private lateinit var mUIControlInterface: UIControlInterface
 
     override fun setDivider(divider: Drawable?) {
-        val newDivider = if (context != null && goPreferences.isDividerEnabled) ColorDrawable(
+        val newDivider = ColorDrawable(
             ThemeHelper.getAlphaAccent(
                 context!!,
                 50
             )
         )
-        else ColorDrawable(Color.TRANSPARENT)
         super.setDivider(newDivider)
     }
 

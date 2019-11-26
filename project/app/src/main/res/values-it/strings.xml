@@ -41,13 +41,6 @@
 
     <string name="accent_pref_title">Accento</string>
 
-    <string name="divider_pref_title">Divisori</string>
-    <string name="divider_pref_summary_on">Disabilita i divisori delle liste</string>
-    <string name="divider_pref_summary_off">Abilita i divisori delle liste</string>
-
-    <string name="fast_scroll_pref_summary_on">Disabilita indicator fast scroll</string>
-    <string name="fast_scroll_pref_summary_off">Abilita indicator fast scroll</string>
-
     <string name="search_bar_pref_title">Barra di ricerca</string>
     <string name="search_bar_pref_summary_on">Disabilita barra di ricerca</string>
     <string name="search_bar_pref_summary_off">Abilita barra di ricerca</string>

@@ -108,7 +108,7 @@ class AllMusicFragment : Fragment() {
                 }
             }
 
-            if (goPreferences.isDividerEnabled) mSongsRecyclerView.addItemDecoration(
+            mSongsRecyclerView.addItemDecoration(
                 ThemeHelper.getRecyclerViewDivider(context!!)
             )
 
