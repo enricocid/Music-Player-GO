@@ -143,7 +143,7 @@ class AllMusicFragment : Fragment() {
         try {
             // case insensitive search
             mAllMusic.iterator().forEach {
-                if (it.title?.toLowerCase()!!.startsWith(query.toLowerCase())) {
+                if (it.title?.toLowerCase()!!.contains(query.toLowerCase())) {
                     results.add(it)
                 }
             }
