@@ -7,4 +7,5 @@
     android:background="?android:attr/windowBackground"
     android:elevation="1dp"
     android:theme="@style/SearchBarStyle"
-    app:titleTextColor="?attr/colorPrimary"/>
+    app:collapseIcon="@drawable/ic_navigate_before"
+    app:titleTextColor="?attr/colorPrimary" />

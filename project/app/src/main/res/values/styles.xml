@@ -18,7 +18,6 @@
 
     <!-- Style for search view -->
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView.ActionBar">
-        <item name="searchIcon">@drawable/ic_round_search</item>
         <item name="closeIcon">@drawable/ic_round_close_red</item>
     </style>
 </resources>

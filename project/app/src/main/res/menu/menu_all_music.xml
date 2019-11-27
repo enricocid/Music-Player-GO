@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_search"
+        android:icon="@drawable/ic_round_search"
         android:title=""
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="collapseActionView|ifRoom" />
 
     <item
         android:id="@+id/action_shuffle_am"
-        android:title="@string/shuffle_am"
         android:icon="@drawable/ic_shuffle"
+        android:title="@string/shuffle_am"
         app:showAsAction="ifRoom" />
 </menu>
