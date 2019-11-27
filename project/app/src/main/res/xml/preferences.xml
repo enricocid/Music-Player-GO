@@ -18,15 +18,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
+        android:summary="@string/open_git_pref_summary"
         app:icon="@drawable/ic_github_circle"
         app:key="@string/open_git_pref"
-        app:title="@string/open_git_pref_title"
-        android:summary="@string/open_git_pref_summary"/>
+        app:title="@string/open_git_pref_title" />
 
     <PreferenceCategory app:title="@string/category_appearance">
 
-        <Preference
+        <ListPreference
             app:dialogTitle="@string/theme_pref_title"
+            app:entries="@array/themeListArray"
+            app:entryValues="@array/themeEntryArray"
             app:key="@string/theme_pref"
             app:title="@string/theme_pref_title"
             app:useSimpleSummaryProvider="true" />
@@ -39,7 +41,7 @@
 
     <PreferenceCategory app:title="@string/category_general">
 
-        <Preference
+        <MultiSelectListPreference
             app:key="@string/hidden_items_pref"
             app:title="@string/hidden_items_pref_title" />
 

@@ -7,16 +7,12 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreference
+import androidx.preference.*
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.AccentsAdapter
-import com.iven.musicplayergo.adapters.CheckableAdapter
-import com.iven.musicplayergo.adapters.ThemesAdapter
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -28,7 +24,7 @@ class PreferencesFragment : PreferenceFragmentCompat() {
     private lateinit var mAccentsDialog: MaterialDialog
     private lateinit var mMultiListDialog: MaterialDialog
 
-    private lateinit var mHiddenItemsPreference: Preference
+    private lateinit var mHiddenItemsPreference: MultiSelectListPreference
 
     private var mSelectedAccent = R.color.deep_purple
 
@@ -80,14 +76,14 @@ class PreferencesFragment : PreferenceFragmentCompat() {
                 return@setOnPreferenceClickListener true
             }
 
-            val themePreference = findPreference<Preference>("theme_pref")
-            themePreference?.setOnPreferenceClickListener {
-                showThemesDialog()
-                return@setOnPreferenceClickListener true
-            }
+            val themePreference = findPreference<ListPreference>("theme_pref")
 
-            themePreference?.summary =
-                ThemeHelper.getAppliedThemeName(activity!!, goPreferences.theme)
+            themePreference?.setOnPreferenceChangeListener { _, _ ->
+                ThemeHelper.applyNewThemeSmoothly(
+                    activity!!
+                )
+                return@setOnPreferenceChangeListener true
+            }
 
             val accentPreference = findPreference<Preference>("accent_pref")
             accentPreference?.summary = String.format(
@@ -102,36 +98,36 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 
             mHiddenItemsPreference = findPreference("hidden_items_pref")!!
 
-            mHiddenItemsPreference.summary = goPreferences.hiddenItems?.size.toString()
-            mHiddenItemsPreference.setOnPreferenceClickListener {
-                if (goPreferences.hiddenItems?.isNotEmpty()!!) showHiddenItemsDialog()
-                else Utils.makeToast(
-                    activity!!,
-                    getString(R.string.error_no_hidden_item)
-                )
-                return@setOnPreferenceClickListener true
+            val hiddenItems = goPreferences.hiddenItems
+
+            if (hiddenItems?.isNotEmpty()!!) {
+
+                mHiddenItemsPreference.isEnabled = true
+                mHiddenItemsPreference.entries = hiddenItems.toTypedArray()
+                mHiddenItemsPreference.entryValues = hiddenItems.toTypedArray()
+
+                mHiddenItemsPreference.summary = hiddenItems.size.toString()
+
+                mHiddenItemsPreference.setOnPreferenceChangeListener { _, _ ->
+                    ThemeHelper.applyNewThemeSmoothly(activity!!)
+                    return@setOnPreferenceChangeListener true
+                }
+            } else {
+                mHiddenItemsPreference.summary = hiddenItems.size.toString()
+                mHiddenItemsPreference.isEnabled = false
+                mHiddenItemsPreference.setOnPreferenceClickListener {
+                    Utils.makeToast(
+                        activity!!,
+                        getString(R.string.error_no_hidden_item)
+                    )
+                    return@setOnPreferenceClickListener true
+                }
             }
 
             val focusPreference = findPreference<SwitchPreference>("focus_pref")
             focusPreference?.setOnPreferenceChangeListener { _, _ ->
 
                 return@setOnPreferenceChangeListener true
-            }
-        }
-    }
-
-    private fun showThemesDialog() {
-        if (activity != null) {
-            mThemesDialog = MaterialDialog(activity!!).show {
-
-                cornerRadius(res = R.dimen.md_corner_radius)
-                title(R.string.theme_pref_title)
-
-                customListAdapter(
-                    ThemesAdapter(
-                        activity!!
-                    )
-                )
             }
         }
     }
@@ -151,25 +147,6 @@ class PreferencesFragment : PreferenceFragmentCompat() {
                 getRecyclerView().scrollToPosition(
                     ThemeHelper.getAccentedTheme().second
                 )
-            }
-        }
-    }
-
-    private fun showHiddenItemsDialog() {
-        if (activity != null) {
-            mMultiListDialog = MaterialDialog(activity!!).show {
-                cornerRadius(res = R.dimen.md_corner_radius)
-                title(R.string.hidden_items_pref_title)
-                val checkableAdapter =
-                    CheckableAdapter(
-                        goPreferences.hiddenItems!!.toMutableList()
-                    )
-                customListAdapter(checkableAdapter)
-                positiveButton {
-                    Utils.updateCheckableItems(checkableAdapter.getUpdatedItems())
-                    mHiddenItemsPreference.summary = goPreferences.hiddenItems?.size.toString()
-                }
-                negativeButton {}
             }
         }
     }

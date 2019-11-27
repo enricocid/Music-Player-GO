@@ -21,7 +21,6 @@ import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import java.util.*
 
-
 object Utils {
 
     @JvmStatic
