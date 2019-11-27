@@ -60,5 +60,5 @@
         android:background="?android:attr/actionBarItemBackground"
         android:contentDescription="@string/app_name"
         android:padding="8dp"
-        android:src="@drawable/ic_replay" />
+        android:src="@drawable/ic_repeat_one" />
 </LinearLayout>
