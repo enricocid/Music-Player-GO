@@ -51,15 +51,6 @@ object ThemeHelper {
         }
     }
 
-    @JvmStatic
-    fun getAppliedThemeName(context: Context, themePref: String?): String? {
-        return when (themePref) {
-            context.getString(R.string.theme_pref_light) -> context.getString(R.string.theme_pref_light_title)
-            context.getString(R.string.theme_pref_dark) -> context.getString(R.string.theme_pref_dark_title)
-            else -> context.getString(R.string.theme_pref_auto_title)
-        }
-    }
-
     //fixed array of pairs (first: accent, second: theme)
     @JvmStatic
     val accents = arrayOf(

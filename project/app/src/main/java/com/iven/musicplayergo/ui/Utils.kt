@@ -54,11 +54,6 @@ object Utils {
     }
 
     @JvmStatic
-    fun updateCheckableItems(newCheckableItems: Set<String>) {
-        goPreferences.hiddenItems = newCheckableItems
-    }
-
-    @JvmStatic
     fun makeToast(context: Context, message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG)
             .show()
