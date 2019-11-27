@@ -3,11 +3,15 @@
     <!-- Main - Artists -->
     <string name="artists">Artisti</string>
     <string name="artist_info">%1d&#160;Album,&#160;%2d&#160;Canzoni</string>
+    <string name="folder_info">%2d&#160;Canzoni</string>
 
     <!-- Main - All songs -->
     <string name="songs">Tutte le canzoni</string>
     <string name="shuffle_am">Mescola tutte le canzoni</string>
     <string name="shuffle_sa">Mescola l\'abum selezionato</string>
+
+    <!-- Main - Folders -->
+    <string name="folders">Cartelle</string>
 
     <!-- Loved songs -->
     <string name="loved_songs">Canzoni preferite</string>

@@ -28,19 +28,20 @@ import com.iven.musicplayergo.ui.Utils
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerThumbView
 import com.reddit.indicatorfastscroll.FastScrollerView
-import kotlinx.android.synthetic.main.fragment_artists.*
+import kotlinx.android.synthetic.main.fragment_folders.*
 import kotlinx.android.synthetic.main.search_toolbar.*
+import java.io.File
 
 
 /**
  * A simple [Fragment] subclass.
- * Use the [ArtistsFragment.newInstance] factory method to
+ * Use the [FoldersFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ArtistsFragment : Fragment() {
+class FoldersFragment : Fragment() {
 
     //views
-    private lateinit var mArtistsRecyclerView: RecyclerView
+    private lateinit var mFoldersRecyclerView: RecyclerView
 
     private lateinit var mSearchToolbar: Toolbar
 
@@ -48,8 +49,8 @@ class ArtistsFragment : Fragment() {
     private lateinit var mIndicatorFastScrollerView: FastScrollerView
     private lateinit var mIndicatorFastScrollThumb: FastScrollerThumbView
 
-    private lateinit var mArtists: MutableList<String>
-    private var mFilteredArtists: List<String>? = null
+    private lateinit var mFolders: MutableList<String>
+    private var mFilteredFolders: List<String>? = null
 
     private lateinit var mDataSource: DataSource<Any>
 
@@ -72,53 +73,49 @@ class ArtistsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_artists, container, false)
+        return inflater.inflate(R.layout.fragment_folders, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         if (context != null) {
+
             mSearchToolbar = search_toolbar
             mSearchToolbar.inflateMenu(R.menu.menu_search)
             mSearchToolbar.overflowIcon =
                 AppCompatResources.getDrawable(context!!, R.drawable.ic_sort)
 
-            mSearchToolbar.title = getString(R.string.artists)
+            mSearchToolbar.title = getString(R.string.folders)
 
             setMenuOnItemClickListener()
 
-            mArtistsRecyclerView = artists_rv
+            mFoldersRecyclerView = folders_rv
 
-            mArtists = Utils.getSortedList(
-                goPreferences.artistsSorting,
-                musicLibrary.allAlbumsForArtist.keys.toMutableList(),
-                musicLibrary.allAlbumsForArtist.keys.toMutableList()
-            )
+            setupFilteredFolders()
 
-            mDataSource = dataSourceOf(mArtists)
+            mDataSource = dataSourceOf(mFolders)
 
             // setup{} is an extension method on RecyclerView
-            mArtistsRecyclerView.setup {
-
-                // item is a `val` in `this` here
+            mFoldersRecyclerView.setup {
                 withDataSource(mDataSource)
-                withItem<String, GenericViewHolder>(R.layout.generic_item) {
-
+                withItem<String, GenericViewHolder>(R.layout.folder_item) {
                     onBind(::GenericViewHolder) { _, item ->
+
                         // GenericViewHolder is `this` here
                         title.text = item
-                        subtitle.text = getArtistSubtitle(item)
+                        subtitle.text = getParentFolder(item)
                     }
 
                     onClick {
+                        // item is a `val` in `this` here
                         if (::mUIControlInterface.isInitialized)
-                            mUIControlInterface.onArtistOrFolderSelected(item, false)
+                            mUIControlInterface.onArtistOrFolderSelected(item, true)
                     }
                 }
             }
 
-            mArtistsRecyclerView.addItemDecoration(
+            mFoldersRecyclerView.addItemDecoration(
                 ThemeHelper.getRecyclerViewDivider(
                     context!!
                 )
@@ -130,24 +127,24 @@ class ArtistsFragment : Fragment() {
             val searchView = itemSearch.actionView as SearchView
             Utils.setupSearchViewForStringLists(
                 searchView,
-                mArtists,
+                mFolders,
                 onResultsChanged = { newResults ->
-                    mFilteredArtists = if (newResults.isEmpty()) {
+                    mFilteredFolders = if (newResults.isEmpty()) {
                         null
                     } else {
                         newResults
                     }
-                    mDataSource.set(mFilteredArtists ?: mArtists)
+                    mDataSource.set(mFilteredFolders ?: mFolders)
                 })
+
         }
     }
 
-    private fun getArtistSubtitle(item: String): String {
-        return getString(
-            R.string.artist_info,
-            musicLibrary.allAlbumsForArtist.getValue(item).size,
-            musicLibrary.allSongsForArtist.getValue(item).size
-        )
+    //getting parent path of the first song
+    private fun getParentFolder(item: String): String {
+        val songRootPath =
+            musicLibrary.allSongsForFolder.getValue(item)[0].path
+        return File(songRootPath!!).parentFile?.parent.toString()
     }
 
     @SuppressLint("DefaultLocale")
@@ -159,14 +156,14 @@ class ArtistsFragment : Fragment() {
             mIndicatorFastScrollThumb = fastscroller_thumb
 
             //set indexes if artists rv is scrollable
-            mArtistsRecyclerView.afterMeasured {
-                if (mArtistsRecyclerView.computeVerticalScrollRange() > height) {
+            mFoldersRecyclerView.afterMeasured {
+                if (mFoldersRecyclerView.computeVerticalScrollRange() > height) {
 
                     mIndicatorFastScrollerView.setupWithRecyclerView(
-                        mArtistsRecyclerView,
+                        mFoldersRecyclerView,
                         { position ->
                             val item =
-                                (mFilteredArtists ?: mArtists)[position] // Get your model object
+                                (mFilteredFolders ?: mFolders)[position] // Get your model object
                             // or fetch the section at [position] from your database
 
                             FastScrollItemIndicator.Text(
@@ -189,7 +186,7 @@ class ArtistsFragment : Fragment() {
                             itemPosition: Int
                         ) {
                             val artistsLayoutManager =
-                                mArtistsRecyclerView.layoutManager as LinearLayoutManager
+                                mFoldersRecyclerView.layoutManager as LinearLayoutManager
                             artistsLayoutManager.scrollToPositionWithOffset(itemPosition, 0)
                         }
                     }
@@ -205,10 +202,10 @@ class ArtistsFragment : Fragment() {
     private fun setMenuOnItemClickListener() {
         mSearchToolbar.setOnMenuItemClickListener {
 
-            mArtists = Utils.getSortedList(
+            mFolders = Utils.getSortedList(
                 it.itemId,
-                mArtists,
-                musicLibrary.allAlbumsForArtist.keys.toMutableList()
+                mFolders,
+                musicLibrary.allSongsForFolder.keys.toMutableList()
             )
 
             if (it.itemId == R.id.default_sorting) {
@@ -229,11 +226,20 @@ class ArtistsFragment : Fragment() {
                     View.VISIBLE
             }
 
-            mDataSource.set(mArtists)
-            goPreferences.artistsSorting = it.itemId
+            mDataSource.set(mFolders)
+
+            goPreferences.foldersSorting = it.itemId
 
             return@setOnMenuItemClickListener true
         }
+    }
+
+    private fun setupFilteredFolders() {
+        mFolders = Utils.getSortedList(
+            goPreferences.foldersSorting,
+            musicLibrary.allSongsForFolder.keys.toMutableList(),
+            musicLibrary.allSongsForFolder.keys.toMutableList()
+        )
     }
 
     //viewTreeObserver extension to measure layout params
@@ -255,9 +261,9 @@ class ArtistsFragment : Fragment() {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @return A new instance of fragment MusicFragment.
+         * @return A new instance of fragment NowPlaying.
          */
         @JvmStatic
-        fun newInstance() = ArtistsFragment()
+        fun newInstance() = FoldersFragment()
     }
 }

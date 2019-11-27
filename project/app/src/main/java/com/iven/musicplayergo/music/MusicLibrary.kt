@@ -5,6 +5,7 @@ import android.content.Context
 import android.provider.MediaStore
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.ui.Utils
+import java.io.File
 
 
 class MusicLibrary {
@@ -18,6 +19,9 @@ class MusicLibrary {
 
     //keys: artist || value: albums
     val allAlbumsForArtist = hashMapOf<String, List<Album>>()
+
+    //keys: artist || value: songs contained in the folder
+    lateinit var allSongsForFolder: Map<String, List<Music>>
 
     // Extension method to get all music files list from external storage/sd card
     @Suppress("DEPRECATION")
@@ -83,6 +87,11 @@ class MusicLibrary {
                     context.resources,
                     allSongsForArtist.getValue(it)
                 )
+            }
+
+            allSongsForFolder = allSongsFiltered.groupBy {
+                val file = File(it.path!!).parentFile
+                file!!.name
             }
 
         } catch (e: Exception) {

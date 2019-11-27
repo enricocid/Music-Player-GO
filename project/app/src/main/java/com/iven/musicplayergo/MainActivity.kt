@@ -30,10 +30,7 @@ import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
-import com.iven.musicplayergo.fragments.AllMusicFragment
-import com.iven.musicplayergo.fragments.ArtistDetailsFragment
-import com.iven.musicplayergo.fragments.ArtistsFragment
-import com.iven.musicplayergo.fragments.SettingsFragment
+import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.music.Album
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
@@ -53,8 +50,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     //fragments
     private lateinit var mArtistsFragment: ArtistsFragment
     private lateinit var mAllMusicFragment: AllMusicFragment
+    private lateinit var mFoldersFragment: FoldersFragment
     private lateinit var mSettingsFragment: SettingsFragment
-    private lateinit var mArtistDetailsFragment: ArtistDetailsFragment
+    private lateinit var mDetailsFragment: DetailsFragment
 
     //views
     private lateinit var mViewPager: ViewPager
@@ -96,8 +94,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     //music
     private lateinit var mMusic: Map<String, List<Album>>
-
-    private var mNavigationArtist: String = "unknown"
 
     private lateinit var mSelectedArtistSongs: MutableList<Music>
 
@@ -146,8 +142,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onBackPressed() {
-        if (::mArtistDetailsFragment.isInitialized && mArtistDetailsFragment.isAdded) {
-            mArtistDetailsFragment.onHandleBackPressed().doOnEnd {
+        if (::mDetailsFragment.isInitialized && mDetailsFragment.isAdded) {
+            mDetailsFragment.onHandleBackPressed().doOnEnd {
                 super.onBackPressed()
             }
         } else {
@@ -192,8 +188,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         startPlayback(song, songs)
     }
 
-    override fun onArtistSelected(artist: String) {
-        openArtistDetailsFragment(artist)
+    override fun onArtistOrFolderSelected(artistOrFolder: String, isFolder: Boolean) {
+        openDetailsFragment(artistOrFolder, isFolder)
     }
 
     override fun onShuffleSongs(songs: MutableList<Music>) {
@@ -396,10 +392,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         mArtistTextNP.text = selectedSong.artist
         mArtistTextNP.setOnClickListener {
-            if (::mArtistDetailsFragment.isInitialized && mArtistDetailsFragment.isAdded)
-                mArtistDetailsFragment.updateView(selectedSong.artist!!)
+
+            if (::mDetailsFragment.isInitialized && mDetailsFragment.isAdded && !mDetailsFragment.isFolder)
+                mDetailsFragment.updateView(selectedSong.artist!!)
             else
-                openArtistDetailsFragment(selectedSong.artist!!)
+                openDetailsFragment(selectedSong.artist!!, false)
 
             mNowPlayingDialog.dismiss()
         }
@@ -523,6 +520,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 mArtistsFragment = ArtistsFragment.newInstance()
                 mAllMusicFragment = AllMusicFragment.newInstance()
+                mFoldersFragment = FoldersFragment.newInstance()
                 mSettingsFragment = SettingsFragment.newInstance()
 
                 val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
@@ -530,12 +528,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 mAllDeviceSongs = musicLibrary.allSongsUnfiltered
                 mMusic = musicLibrary.allAlbumsForArtist
-
-                mNavigationArtist = Utils.getSortedList(
-                    goPreferences.artistsSorting,
-                    musicLibrary.allAlbumsForArtist.keys.toMutableList(),
-                    musicLibrary.allAlbumsForArtist.keys.toMutableList()
-                )[0]
 
                 //let's get intent from external app and open the song,
                 //else restore the player (normal usage)
@@ -573,19 +565,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         return when (itemId) {
             0 -> mArtistsFragment
             1 -> mAllMusicFragment
+            2 -> mFoldersFragment
             else -> mSettingsFragment
         }
     }
 
-    private fun openArtistDetailsFragment(selectedArtist: String) {
+    private fun openDetailsFragment(selectedArtistOrFolder: String, isFolder: Boolean) {
 
-        mNavigationArtist = selectedArtist
-
-        mArtistDetailsFragment = ArtistDetailsFragment.newInstance(mNavigationArtist)
+        mDetailsFragment = DetailsFragment.newInstance(selectedArtistOrFolder, isFolder)
         supportFragmentManager.beginTransaction()
             .replace(
                 R.id.container,
-                mArtistDetailsFragment, ArtistDetailsFragment.TAG
+                mDetailsFragment, DetailsFragment.TAG_ARTIST_FOLDER
             )
             .addToBackStack(null)
             .commit()
@@ -746,7 +737,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
      */
     private inner class ScreenSlidePagerAdapter(fm: FragmentManager) :
         FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        override fun getCount(): Int = 3
+        override fun getCount(): Int = 4
 
         override fun getItem(position: Int): Fragment {
             return handleOnNavigationItemSelected(position)

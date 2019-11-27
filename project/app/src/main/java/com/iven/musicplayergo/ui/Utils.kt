@@ -66,7 +66,7 @@ object Utils {
         try {
             // case insensitive search
             list.iterator().forEach {
-                if (it.toLowerCase().startsWith(query.toLowerCase())) {
+                if (it.toLowerCase().contains(query.toLowerCase())) {
                     results.add(it)
                 }
             }

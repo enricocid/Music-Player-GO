@@ -7,12 +7,14 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/artist_details_toolbar"
+        android:id="@+id/details_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_marginBottom="8dp"
         android:background="?android:attr/windowBackground"
-        app:navigationIcon="@drawable/ic_round_close_red"
+        android:theme="@style/SearchBarStyle"
+        app:collapseIcon="@drawable/ic_navigate_before"
+        app:navigationIcon="@drawable/ic_navigate_before"
         app:titleTextColor="?attr/colorPrimary" />
 
     <!-- ALBUMS -->
@@ -29,5 +31,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:overScrollMode="never" />
+        android:overScrollMode="never"
+        android:scrollbars="none" />
 </LinearLayout>
