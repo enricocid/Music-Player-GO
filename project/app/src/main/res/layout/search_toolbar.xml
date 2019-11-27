@@ -7,4 +7,4 @@
     android:background="?android:attr/windowBackground"
     android:elevation="1dp"
     android:theme="@style/SearchBarStyle"
-    app:titleTextColor="?attr/colorPrimary" />
+    app:titleTextColor="?attr/colorPrimary"/>
