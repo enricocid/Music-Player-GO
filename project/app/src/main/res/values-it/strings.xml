@@ -21,7 +21,6 @@
     <string name="bad_id">Magari esegui una canzone!</string>
     <string name="no_eq">Nessun equalizzatore trovato!</string>
     <string name="error_unknown">Qualcosa è andato storto! :(</string>
-    <string name="error_get_resource">Oops!! Non trovata!</string>
     <string name="error_no_music">Nessuna canzone trovata</string>
     <string name="error_no_hidden_item">Nessun artista nascosto trovato!</string>
     <string name="error_no_loved_songs">Nessuna canzone preferita trovata!</string>

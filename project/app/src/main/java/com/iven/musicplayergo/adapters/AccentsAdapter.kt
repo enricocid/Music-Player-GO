@@ -1,18 +1,14 @@
 package com.iven.musicplayergo.adapters
 
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatRadioButton
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.ui.ThemeHelper
-import com.iven.musicplayergo.ui.Utils
 
 class AccentsAdapter(private val activity: Activity) :
     RecyclerView.Adapter<AccentsAdapter.AccentsHolder>() {
@@ -26,7 +22,7 @@ class AccentsAdapter(private val activity: Activity) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccentsHolder {
         return AccentsHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.theming_item,
+                R.layout.accent_item,
                 parent,
                 false
             )
@@ -45,29 +41,17 @@ class AccentsAdapter(private val activity: Activity) :
 
         fun bindItems(color: Int) {
 
-            val title = itemView.findViewById<TextView>(R.id.title)
-            title.text = getResourceName(color)
-            title.isSelected = true
-
-            val radioButton = itemView.findViewById<AppCompatRadioButton>(R.id.radiobutton)
+            val circle = itemView.findViewById<ImageView>(R.id.circle)
 
             val accent = ThemeHelper.getColor(
                 activity,
                 color,
                 R.color.deep_purple
             )
-            radioButton.isChecked = color == mSelectedAccent
+            ThemeHelper.updateIconTint(circle, accent)
 
-            val widgetColor = ColorStateList(
-                arrayOf(
-                    intArrayOf(android.R.attr.state_enabled), //enabled
-                    intArrayOf(android.R.attr.state_enabled) //disabled
-                ),
-                intArrayOf(accent, accent)
-            )
-
-            title.setTextColor(widgetColor)
-            radioButton.buttonTintList = widgetColor
+            val check = itemView.findViewById<ImageView>(R.id.check)
+            check.visibility = if (color != mSelectedAccent) View.GONE else View.VISIBLE
 
             itemView.setOnClickListener {
 
@@ -81,23 +65,6 @@ class AccentsAdapter(private val activity: Activity) :
                     )
                 }
             }
-        }
-    }
-
-    @SuppressLint("DefaultLocale")
-    private fun getResourceName(res: Int): String {
-        return try {
-            activity.resources.getResourceEntryName(res)
-                .replace(
-                    activity.getString(R.string.underscore_delimiter),
-                    activity.getString(R.string.space_delimiter)
-                ).capitalize()
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Utils.makeToast(
-                activity, activity.getString(R.string.error_get_resource)
-            )
-            ""
         }
     }
 }

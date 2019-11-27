@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import androidx.preference.*
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
@@ -136,7 +137,6 @@ class PreferencesFragment : PreferenceFragmentCompat() {
         if (activity != null) {
             mAccentsDialog = MaterialDialog(activity!!).show {
 
-                cornerRadius(res = R.dimen.md_corner_radius)
                 title(R.string.accent_pref_title)
 
                 customListAdapter(
@@ -144,6 +144,9 @@ class PreferencesFragment : PreferenceFragmentCompat() {
                         activity!!
                     )
                 )
+                getRecyclerView().layoutManager =
+                    LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
                 getRecyclerView().scrollToPosition(
                     ThemeHelper.getAccentedTheme().second
                 )

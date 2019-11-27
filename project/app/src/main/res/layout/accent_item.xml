@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@android:dimen/app_icon_size"
+    android:layout_height="@android:dimen/app_icon_size"
+    android:background="?android:attr/selectableItemBackground"
+    android:padding="6dp">
+
+    <ImageView
+        android:id="@+id/circle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_circle" />
+
+    <ImageView
+        android:id="@+id/check"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:scaleX="0.50"
+        android:scaleY="0.50"
+        android:src="@drawable/ic_check" />
+</FrameLayout>

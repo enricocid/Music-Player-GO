@@ -34,7 +34,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <Preference
-            app:icon="@drawable/ic_colorize"
+            app:icon="@drawable/ic_circle"
             app:key="@string/accent_pref"
             app:title="@string/accent_pref_title" />
     </PreferenceCategory>
