@@ -45,7 +45,7 @@
     <string name="loved_songs_pref" translatable="false">loved_songs_pref</string>
 
     <string name="open_git_pref" translatable="false">open_git_pref</string>
-    <string name="open_git_pref_title">Open GitHub page</string>
+    <string name="open_git_pref_title">GitHub page</string>
     <string name="open_git_pref_summary">&#8230; for more info :)</string>
 
     <string name="theme_pref" translatable="false">theme_pref</string>
