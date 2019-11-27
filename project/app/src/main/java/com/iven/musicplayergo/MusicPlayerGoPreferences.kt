@@ -19,7 +19,6 @@ class MusicPlayerGoPreferences(context: Context) {
     private val prefsAccent = context.getString(R.string.accent_pref)
 
     private val prefsArtistsSorting = context.getString(R.string.artists_sorting_pref)
-    private val prefsHiddenArtists = context.getString(R.string.hidden_items_pref)
     private val prefsFocus = context.getString(R.string.focus_pref)
     private val prefsHeadsetPlug = context.getString(R.string.headset_pref)
 
@@ -54,10 +53,6 @@ class MusicPlayerGoPreferences(context: Context) {
     var artistsSorting: Int
         get() = mPrefs.getInt(prefsArtistsSorting, R.id.ascending_sorting)
         set(value) = mPrefs.edit().putInt(prefsArtistsSorting, value).apply()
-
-    var hiddenItems: Set<String>?
-        get() = mPrefs.getStringSet(prefsHiddenArtists, setOf())
-        set(value) = mPrefs.edit().putStringSet(prefsHiddenArtists, value).apply()
 
     var isFocusEnabled: Boolean
         get() = mPrefs.getBoolean(prefsFocus, true)

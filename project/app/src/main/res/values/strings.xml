@@ -33,7 +33,6 @@
     <string name="no_eq">No equalizer found!</string>
     <string name="error_unknown">Something went wrong! :(</string>
     <string name="error_no_music">No music found!</string>
-    <string name="error_no_hidden_item">No hidden items found!</string>
     <string name="error_no_loved_songs">No loved songs found!</string>
 
     <!-- Settings -->
@@ -66,10 +65,6 @@
     <string name="sorting_pref_default">Default</string>
     <string name="sorting_pref_ascending">Ascending</string>
     <string name="sorting_pref_descending">Descending</string>
-
-    <string name="hidden_items_pref" translatable="false">hidden_items_pref</string>
-    <string name="hidden_items_pref_title">Hidden items</string>
-    <string name="hidden_items_pref_message">%1s will be hidden. Are you sure?</string>
 
     <string name="focus_pref" translatable="false">focus_pref</string>
     <string name="focus_pref_title">Audio focus</string>

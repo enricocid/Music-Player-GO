@@ -7,7 +7,10 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import androidx.preference.*
+import androidx.preference.ListPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreference
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
@@ -23,9 +26,6 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 
     private lateinit var mThemesDialog: MaterialDialog
     private lateinit var mAccentsDialog: MaterialDialog
-    private lateinit var mMultiListDialog: MaterialDialog
-
-    private lateinit var mHiddenItemsPreference: MultiSelectListPreference
 
     private var mSelectedAccent = R.color.deep_purple
 
@@ -97,34 +97,6 @@ class PreferencesFragment : PreferenceFragmentCompat() {
                 return@setOnPreferenceClickListener true
             }
 
-            mHiddenItemsPreference = findPreference("hidden_items_pref")!!
-
-            val hiddenItems = goPreferences.hiddenItems
-
-            if (hiddenItems?.isNotEmpty()!!) {
-
-                mHiddenItemsPreference.isEnabled = true
-                mHiddenItemsPreference.entries = hiddenItems.toTypedArray()
-                mHiddenItemsPreference.entryValues = hiddenItems.toTypedArray()
-
-                mHiddenItemsPreference.summary = hiddenItems.size.toString()
-
-                mHiddenItemsPreference.setOnPreferenceChangeListener { _, _ ->
-                    ThemeHelper.applyNewThemeSmoothly(activity!!)
-                    return@setOnPreferenceChangeListener true
-                }
-            } else {
-                mHiddenItemsPreference.summary = hiddenItems.size.toString()
-                mHiddenItemsPreference.isEnabled = false
-                mHiddenItemsPreference.setOnPreferenceClickListener {
-                    Utils.makeToast(
-                        activity!!,
-                        getString(R.string.error_no_hidden_item)
-                    )
-                    return@setOnPreferenceClickListener true
-                }
-            }
-
             val focusPreference = findPreference<SwitchPreference>("focus_pref")
             focusPreference?.setOnPreferenceChangeListener { _, _ ->
 
@@ -158,7 +130,6 @@ class PreferencesFragment : PreferenceFragmentCompat() {
         super.onPause()
         if (::mThemesDialog.isInitialized && mThemesDialog.isShowing) mThemesDialog.dismiss()
         if (::mAccentsDialog.isInitialized && mAccentsDialog.isShowing) mAccentsDialog.dismiss()
-        if (::mMultiListDialog.isInitialized && mMultiListDialog.isShowing) mMultiListDialog.dismiss()
     }
 
     companion object {

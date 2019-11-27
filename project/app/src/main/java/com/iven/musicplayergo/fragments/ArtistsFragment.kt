@@ -103,8 +103,6 @@ class ArtistsFragment : Fragment() {
                 musicLibrary.allAlbumsForArtist.keys.toMutableList()
             )
 
-            setupFilteredArtists()
-
             mDataSource = dataSourceOf(mArtists)
 
             // setup{} is an extension method on RecyclerView
@@ -123,14 +121,6 @@ class ArtistsFragment : Fragment() {
                     onClick {
                         if (::mUIControlInterface.isInitialized) mUIControlInterface.onArtistSelected(
                             item
-                        )
-                    }
-                    onLongClick { index ->
-                        mHideItemDialog = Utils.makeHideItemDialog(
-                            activity!!,
-                            Pair(index, item),
-                            mArtists,
-                            mDataSource
                         )
                     }
                 }
@@ -251,14 +241,6 @@ class ArtistsFragment : Fragment() {
             goPreferences.artistsSorting = it.itemId
 
             return@setOnMenuItemClickListener true
-        }
-    }
-
-    private fun setupFilteredArtists() {
-
-        val iterator = mArtists.iterator()
-        for (i in iterator) {
-            if (goPreferences.hiddenItems?.contains(i)!!) iterator.remove()
         }
     }
 

@@ -12,7 +12,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
-import com.afollestad.recyclical.datasource.DataSource
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.goPreferences
@@ -22,36 +21,6 @@ import com.iven.musicplayergo.player.MediaPlayerHolder
 import java.util.*
 
 object Utils {
-
-    @JvmStatic
-    fun addToHiddenItems(item: String) {
-        val hiddenArtistsFolders = goPreferences.hiddenItems?.toMutableList()
-        hiddenArtistsFolders?.add(item)
-        goPreferences.hiddenItems = hiddenArtistsFolders?.toSet()
-    }
-
-    @JvmStatic
-    fun makeHideItemDialog(
-        context: Context,
-        item: Pair<Int, String>,
-        stringsList: MutableList<String>,
-        dataSource: DataSource<Any>
-    ): MaterialDialog {
-
-        return MaterialDialog(context).show {
-
-            cornerRadius(res = R.dimen.md_corner_radius)
-            title(text = item.second)
-            message(text = context.getString(R.string.hidden_items_pref_message, item.second))
-            positiveButton {
-
-                stringsList.remove(item.second)
-                dataSource.set(stringsList)
-                addToHiddenItems(item.second)
-            }
-            negativeButton {}
-        }
-    }
 
     @JvmStatic
     fun makeToast(context: Context, message: String) {

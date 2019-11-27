@@ -41,10 +41,6 @@
 
     <PreferenceCategory app:title="@string/category_general">
 
-        <MultiSelectListPreference
-            app:key="@string/hidden_items_pref"
-            app:title="@string/hidden_items_pref_title" />
-
         <SwitchPreference
             android:summaryOff="@string/focus_pref_summary_off"
             app:defaultValue="true"

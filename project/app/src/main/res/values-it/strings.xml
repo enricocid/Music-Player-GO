@@ -22,7 +22,6 @@
     <string name="no_eq">Nessun equalizzatore trovato!</string>
     <string name="error_unknown">Qualcosa è andato storto! :(</string>
     <string name="error_no_music">Nessuna canzone trovata</string>
-    <string name="error_no_hidden_item">Nessun artista nascosto trovato!</string>
     <string name="error_no_loved_songs">Nessuna canzone preferita trovata!</string>
 
     <!-- Settings -->
@@ -44,9 +43,6 @@
     <string name="sorting_pref_default">Predefinito</string>
     <string name="sorting_pref_ascending">Ascendente</string>
     <string name="sorting_pref_descending">Discendente</string>
-
-    <string name="hidden_items_pref_title">Artisti nascosti</string>
-    <string name="hidden_items_pref_message">%1s sarà nascosto. Sei sicuro?</string>
 
     <string name="focus_pref_title">Focus audio</string>
     <string name="focus_pref_summary_on">Disabilita gestione focus audio</string>
