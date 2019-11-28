@@ -550,6 +550,20 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         mControlsPaddingNormal
                     )
 
+                    mTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+
+                        override fun onTabSelected(tab: TabLayout.Tab) {
+                            tab.icon?.setTint(ThemeHelper.resolveThemeAccent(this@MainActivity))
+                        }
+
+                        override fun onTabUnselected(tab: TabLayout.Tab) {
+                            tab.icon?.setTint(ThemeHelper.getAlphaAccent(this@MainActivity, 50))
+                        }
+
+                        override fun onTabReselected(tab: TabLayout.Tab) {
+                        }
+                    })
+
                 } else {
                     mTabLayout.visibility = View.GONE
                     mPlayerControlsContainer.setPadding(
@@ -630,7 +644,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             2 -> R.drawable.ic_folder
             else -> R.drawable.ic_more_horiz
         }
+
         mTabLayout.getTabAt(tabIndex)?.setIcon(icon)
+
+        if (tabIndex != 0)
+            mTabLayout.getTabAt(tabIndex)?.icon?.setTint(ThemeHelper.getAlphaAccent(this, 50))
+        else mTabLayout.getTabAt(tabIndex)?.icon?.setTint(ThemeHelper.resolveThemeAccent(this))
     }
 
     private fun openDetailsFragment(selectedArtistOrFolder: String, isFolder: Boolean) {
