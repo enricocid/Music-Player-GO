@@ -418,6 +418,17 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
+    fun stopPlaybackService(stopPlayback: Boolean) {
+        if (playerService.isRunning && mediaPlayer != null && stopPlayback) {
+            mediaPlayer!!.stop()
+            val bindingIntent = Intent(playerService, PlayerService::class.java)
+            playerService.stopService(bindingIntent)
+            playerService.stopForeground(true)
+            mediaPlayerInterface.onClose(true)
+        }
+        mediaPlayerInterface.onClose(true)
+    }
+
     private inner class NotificationReceiver : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
@@ -428,13 +439,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     PREV_ACTION -> instantReset()
                     PLAY_PAUSE_ACTION -> resumeOrPause()
                     NEXT_ACTION -> skip(true)
-                    CLOSE_ACTION -> {
-                        if (playerService.isRunning && mediaPlayer != null) {
-                            mediaPlayer!!.stop()
-                            playerService.stopForeground(true)
-                            mediaPlayerInterface.onClose()
-                        }
-                    }
+                    CLOSE_ACTION -> if (playerService.isRunning && mediaPlayer != null) stopPlaybackService(
+                        true
+                    )
 
                     BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (currentSong != null && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
                     BluetoothDevice.ACTION_ACL_CONNECTED -> if (currentSong != null && goPreferences.isHeadsetPlugEnabled) resumeMediaPlayer()

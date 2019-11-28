@@ -7,4 +7,5 @@ interface UIControlInterface {
     fun onSongSelected(song: Music, songs: List<Music>)
     fun onShuffleSongs(songs: MutableList<Music>)
     fun onLovedSongsUpdate()
+    fun onCloseActivity()
 }

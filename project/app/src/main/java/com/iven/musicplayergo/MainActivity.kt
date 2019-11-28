@@ -219,6 +219,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mLoveSongsNumber.text = songsNumber.toString()
     }
 
+    override fun onCloseActivity() {
+        if (::mMediaPlayerHolder.isInitialized && mMediaPlayerHolder.isPlaying) Utils.stopPlaybackDialog(
+            this,
+            mMediaPlayerHolder
+        ) else onBackPressed()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -286,10 +293,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     //interface to let MediaPlayerHolder update the UI media player controls
     val mediaPlayerInterface = object : MediaPlayerInterface {
 
-        override fun onClose() {
-            //stop service
-            mPlayerService.stopForeground(true)
-            stopService(mBindingIntent)
+        override fun onClose(stopPlayback: Boolean) {
 
             //finish activity if visible
             finishAndRemoveTask()

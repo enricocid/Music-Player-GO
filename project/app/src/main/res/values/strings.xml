@@ -36,6 +36,7 @@
     <string name="error_unknown">Something went wrong! :(</string>
     <string name="error_no_music">No music found!</string>
     <string name="error_no_loved_songs">No loved songs found!</string>
+    <string name="on_close_activity">Do You want to stop playback?</string>
 
     <!-- Settings -->
     <!-- Preferences -->

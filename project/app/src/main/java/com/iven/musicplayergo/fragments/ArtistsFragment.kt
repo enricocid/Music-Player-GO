@@ -86,6 +86,10 @@ class ArtistsFragment : Fragment() {
 
             mSearchToolbar.title = getString(R.string.artists)
 
+            mSearchToolbar.setNavigationOnClickListener {
+                mUIControlInterface.onCloseActivity()
+            }
+
             setMenuOnItemClickListener()
 
             mArtistsRecyclerView = artists_rv

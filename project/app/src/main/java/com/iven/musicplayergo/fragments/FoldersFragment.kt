@@ -88,6 +88,10 @@ class FoldersFragment : Fragment() {
 
             mSearchToolbar.title = getString(R.string.folders)
 
+            mSearchToolbar.setNavigationOnClickListener {
+                mUIControlInterface.onCloseActivity()
+            }
+
             setMenuOnItemClickListener()
 
             mFoldersRecyclerView = folders_rv

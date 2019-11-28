@@ -8,4 +8,5 @@
     android:elevation="@dimen/search_bar_elevation"
     android:theme="@style/SearchBarStyle"
     app:collapseIcon="@drawable/ic_navigate_before"
+    app:navigationIcon="@drawable/ic_round_close"
     app:titleTextColor="?attr/colorPrimary" />

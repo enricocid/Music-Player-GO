@@ -1,11 +1,13 @@
 package com.iven.musicplayergo.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.ui.UIControlInterface
 import kotlinx.android.synthetic.main.search_toolbar.*
 
 /**
@@ -14,6 +16,20 @@ import kotlinx.android.synthetic.main.search_toolbar.*
  * create an instance of this fragment.
  */
 class SettingsFragment : Fragment() {
+
+    private lateinit var mUIControlInterface: UIControlInterface
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mUIControlInterface = activity as UIControlInterface
+        } catch (e: ClassCastException) {
+            throw ClassCastException(activity.toString() + " must implement MyInterface ")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +43,13 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            search_toolbar.title = getString(R.string.settings)
+
+            val searchToolbar = search_toolbar
+            searchToolbar.title = getString(R.string.settings)
+            searchToolbar.setNavigationOnClickListener {
+                mUIControlInterface.onCloseActivity()
+            }
+
             childFragmentManager.beginTransaction()
                 .replace(
                     R.id.fragment_layout,

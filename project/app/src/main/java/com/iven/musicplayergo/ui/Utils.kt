@@ -195,4 +195,23 @@ object Utils {
         popup.gravity = Gravity.END
         popup.show()
     }
+
+    fun stopPlaybackDialog(
+        context: Context,
+        mediaPlayerHolder: MediaPlayerHolder
+    ) {
+
+        MaterialDialog(context).show {
+
+            cornerRadius(res = R.dimen.md_corner_radius)
+            title(text = context.getString(R.string.app_name))
+            message(text = context.getString(R.string.on_close_activity))
+            positiveButton {
+                mediaPlayerHolder.stopPlaybackService(true)
+            }
+            negativeButton(text = context.getString(android.R.string.no)) {
+                mediaPlayerHolder.stopPlaybackService(false)
+            }
+        }
+    }
 }
