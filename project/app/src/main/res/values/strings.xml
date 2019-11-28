@@ -1,6 +1,7 @@
 <resources>
 
     <string name="app_name" translatable="false">Music Player GO</string>
+    <string name="app_git" translatable="false">https://github.com/enricocid/Music-Player-GO</string>
 
     <!-- Main - Artists -->
     <string name="artists">Artists</string>

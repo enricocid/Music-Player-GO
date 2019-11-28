@@ -3,6 +3,7 @@ package com.iven.musicplayergo.fragments
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -10,7 +11,6 @@ import android.os.Bundle
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreference
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
@@ -23,7 +23,8 @@ import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.ui.Utils
 
-class PreferencesFragment : PreferenceFragmentCompat() {
+class PreferencesFragment : PreferenceFragmentCompat(),
+    SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var mThemesDialog: MaterialDialog
     private lateinit var mAccentsDialog: MaterialDialog
@@ -41,6 +42,19 @@ class PreferencesFragment : PreferenceFragmentCompat() {
             )
         )
         super.setDivider(newDivider)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        if (::mThemesDialog.isInitialized && mThemesDialog.isShowing) mThemesDialog.dismiss()
+        if (::mAccentsDialog.isInitialized && mAccentsDialog.isShowing) mAccentsDialog.dismiss()
+        if (::mMultiListDialog.isInitialized && mMultiListDialog.isShowing) mMultiListDialog.dismiss()
     }
 
     override fun onAttach(context: Context) {
@@ -62,14 +76,14 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 
         if (activity != null) {
 
-            val openGitPreference = findPreference<Preference>("open_git_pref")
+            val openGitPreference = findPreference<Preference>(getString(R.string.open_git_pref))
 
             openGitPreference?.setOnPreferenceClickListener {
                 try {
                     startActivity(
                         Intent(
                             Intent.ACTION_VIEW,
-                            Uri.parse("https://github.com/enricocid/Music-Player-GO")
+                            Uri.parse(getString(R.string.app_git))
                         )
                     )
                 } catch (e: ActivityNotFoundException) {
@@ -79,16 +93,14 @@ class PreferencesFragment : PreferenceFragmentCompat() {
                 return@setOnPreferenceClickListener true
             }
 
-            val themePreference = findPreference<ListPreference>("theme_pref")
-
-            themePreference?.setOnPreferenceChangeListener { _, _ ->
+            findPreference<ListPreference>(getString(R.string.theme_pref))?.setOnPreferenceChangeListener { _, _ ->
                 ThemeHelper.applyNewThemeSmoothly(
                     activity!!
                 )
                 return@setOnPreferenceChangeListener true
             }
 
-            val accentPreference = findPreference<Preference>("accent_pref")
+            val accentPreference = findPreference<Preference>(getString(R.string.accent_pref))
             accentPreference?.summary = String.format(
                 getString(R.string.hex),
                 0xFFFFFF and goPreferences.accent
@@ -99,31 +111,21 @@ class PreferencesFragment : PreferenceFragmentCompat() {
                 return@setOnPreferenceClickListener true
             }
 
-            val tabsPreference = findPreference<SwitchPreference>("tabs_pref")
-            tabsPreference?.setOnPreferenceChangeListener { _, _ ->
-                ThemeHelper.applyNewThemeSmoothly(activity!!)
-                return@setOnPreferenceChangeListener true
-            }
-
-            val activeFragmentsPreference = findPreference<Preference>("active_fragments_pref")
+            val activeFragmentsPreference =
+                findPreference<Preference>(getString(R.string.active_fragments_pref))
 
             activeFragmentsPreference?.summary = goPreferences.activeFragments?.size.toString()
             activeFragmentsPreference?.setOnPreferenceClickListener {
                 showActiveFragmentsDialog()
                 return@setOnPreferenceClickListener true
             }
-
-            activeFragmentsPreference?.setOnPreferenceChangeListener { _, _ ->
-                ThemeHelper.applyNewThemeSmoothly(activity!!)
-                return@setOnPreferenceChangeListener true
-            }
-
-            val focusPreference = findPreference<SwitchPreference>("focus_pref")
-            focusPreference?.setOnPreferenceChangeListener { _, _ ->
-
-                return@setOnPreferenceChangeListener true
-            }
         }
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (activity != null && key == getString(R.string.theme_pref) || key == getString(R.string.tabs_pref)) ThemeHelper.applyNewThemeSmoothly(
+            activity!!
+        )
     }
 
     private fun showAccentDialog() {
@@ -168,13 +170,6 @@ class PreferencesFragment : PreferenceFragmentCompat() {
                 negativeButton {}
             }
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (::mThemesDialog.isInitialized && mThemesDialog.isShowing) mThemesDialog.dismiss()
-        if (::mAccentsDialog.isInitialized && mAccentsDialog.isShowing) mAccentsDialog.dismiss()
-        if (::mMultiListDialog.isInitialized && mMultiListDialog.isShowing) mMultiListDialog.dismiss()
     }
 
     companion object {
