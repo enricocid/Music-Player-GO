@@ -63,7 +63,7 @@ class ArtistsFragment : Fragment() {
         try {
             mUIControlInterface = activity as UIControlInterface
         } catch (e: ClassCastException) {
-            throw ClassCastException(activity.toString() + " must implement MyInterface ")
+            e.printStackTrace()
         }
     }
 

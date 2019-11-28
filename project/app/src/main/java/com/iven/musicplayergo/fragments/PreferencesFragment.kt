@@ -67,7 +67,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         try {
             mUIControlInterface = activity as UIControlInterface
         } catch (e: ClassCastException) {
-            throw ClassCastException(activity.toString() + " must implement MyInterface ")
+            e.printStackTrace()
         }
     }
 

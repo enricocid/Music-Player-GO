@@ -1,7 +1,6 @@
 package com.iven.musicplayergo.music
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.iven.musicplayergo.musicLibrary
@@ -18,7 +17,7 @@ class MusicViewModel : ViewModel(), CoroutineScope {
         get() = job + Dispatchers.Main + handler
 
     private val handler = CoroutineExceptionHandler { _, exception ->
-        Log.d("TAG", "$exception handled !")
+        exception.printStackTrace()
     }
 
     fun loadMusic(context: Context): MutableLiveData<Boolean> {
