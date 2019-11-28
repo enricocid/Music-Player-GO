@@ -56,14 +56,17 @@ class CheckableTabsAdapter(
 
             itemView.isEnabled = adapterPosition != listItems.size - 1
 
-            indicator.visibility =
-                if (mCheckableItems.contains(adapterPosition.toString()) || !itemView.isEnabled) View.VISIBLE else View.GONE
-
-            manageIndicatorsStatus(
-                itemView.isEnabled && mCheckableItems.contains(adapterPosition.toString()),
-                icon,
-                indicator
-            )
+            if (itemView.isEnabled) {
+                manageIndicatorsStatus(
+                    mCheckableItems.contains(adapterPosition.toString()),
+                    icon,
+                    indicator
+                )
+            } else {
+                indicator.visibility = View.VISIBLE
+                indicator.drawable.alpha = 50
+                ThemeHelper.updateIconTint(icon, ThemeHelper.getAlphaAccent(context, 50))
+            }
 
             itemView.setOnClickListener {
 
