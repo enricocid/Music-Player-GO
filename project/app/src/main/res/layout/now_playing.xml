@@ -41,9 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:padding="8dp"
-        app:LoadedBarPrimeColor="?attr/colorPrimary"
-        app:barWidth="10"
-        app:spaceBetweenBar="1" />
+        app:LoadedBarPrimeColor="?attr/colorPrimary" />
 
     <LinearLayout
         android:layout_width="match_parent"
