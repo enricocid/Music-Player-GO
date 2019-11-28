@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="@dimen/album_width"
     android:layout_height="@dimen/album_height"
     android:layout_margin="4dp"
-    android:background="?attr/colorPrimary"
-    android:elevation="1dp">
+    app:cardBackgroundColor="?attr/colorPrimary"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="0dp">
 
     <ImageView
         android:id="@+id/checkbox"
@@ -44,4 +46,4 @@
             android:textColor="?attr/colorAccent"
             android:textSize="12sp" />
     </LinearLayout>
-</FrameLayout>
+</androidx.cardview.widget.CardView>
