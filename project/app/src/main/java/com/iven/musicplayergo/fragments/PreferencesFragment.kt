@@ -106,6 +106,8 @@ class PreferencesFragment : PreferenceFragmentCompat() {
             }
 
             val activeFragmentsPreference = findPreference<Preference>("active_fragments_pref")
+
+            activeFragmentsPreference?.summary = goPreferences.activeFragments?.size.toString()
             activeFragmentsPreference?.setOnPreferenceClickListener {
                 showActiveFragmentsDialog()
                 return@setOnPreferenceClickListener true
