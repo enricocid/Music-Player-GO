@@ -63,6 +63,16 @@
     <string name="accent_pref" translatable="false">accent_pref</string>
     <string name="accent_pref_title">Accent</string>
 
+
+    <string name="tabs_pref" translatable="false">tabs_pref</string>
+    <string name="tabs_pref_title">Tabs</string>
+    <string name="tabs_pref_summary_on">Disable tabs</string>
+    <string name="tabs_pref_summary_off">Show tabs to navigate sections</string>
+
+    <string name="active_fragments_pref" translatable="false">active_fragments_pref</string>
+    <string name="active_fragments_pref_title">Active tabs</string>
+    <string name="active_fragments_pref_warning">You just can\'t remove all tabs! :P</string>
+
     <string name="artists_sorting_pref" translatable="false">artists_sorting_pref</string>
     <string name="folders_sorting_pref" translatable="false">folders_sorting_pref</string>
     <string name="sorting_pref_default">Default</string>

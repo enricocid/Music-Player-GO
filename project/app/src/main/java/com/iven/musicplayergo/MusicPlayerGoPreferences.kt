@@ -18,6 +18,12 @@ class MusicPlayerGoPreferences(context: Context) {
     private val prefsThemeDefault = context.getString(R.string.theme_pref_light)
     private val prefsAccent = context.getString(R.string.accent_pref)
 
+    private val prefsTabs = context.getString(R.string.tabs_pref)
+
+    private val prefsActiveFragments = context.getString(R.string.active_fragments_pref)
+    private val prefsActiveFragmentsDefault =
+        context.resources.getStringArray(R.array.activeFragmentsEntryArray).toMutableSet()
+
     private val prefsArtistsSorting = context.getString(R.string.artists_sorting_pref)
     private val prefsFoldersSorting = context.getString(R.string.folders_sorting_pref)
 
@@ -51,6 +57,14 @@ class MusicPlayerGoPreferences(context: Context) {
     var accent: Int
         get() = mPrefs.getInt(prefsAccent, R.color.deep_purple)
         set(value) = mPrefs.edit().putInt(prefsAccent, value).apply()
+
+    var isTabsEnabled: Boolean
+        get() = mPrefs.getBoolean(prefsTabs, true)
+        set(value) = mPrefs.edit().putBoolean(prefsTabs, value).apply()
+
+    var activeFragments: Set<String>?
+        get() = mPrefs.getStringSet(prefsActiveFragments, prefsActiveFragmentsDefault)
+        set(value) = mPrefs.edit().putStringSet(prefsActiveFragments, value).apply()
 
     var artistsSorting: Int
         get() = mPrefs.getInt(prefsArtistsSorting, R.id.ascending_sorting)

@@ -43,6 +43,12 @@
     <string name="theme_pref_auto_title">Automatico</string>
 
     <string name="accent_pref_title">Accento</string>
+    <string name="tabs_pref_title">Tabs</string>
+    <string name="tabs_pref_summary_on">Disabilita tabs</string>
+    <string name="tabs_pref_summary_off">Mostra tabs per navigare le sezioni</string>
+
+    <string name="active_fragments_pref_title">Tab attive</string>
+    <string name="active_fragments_pref_warning">Non puoi rimuovere tutte le tabs! :P</string>
 
     <string name="sorting_pref_default">Predefinito</string>
     <string name="sorting_pref_ascending">Ascendente</string>

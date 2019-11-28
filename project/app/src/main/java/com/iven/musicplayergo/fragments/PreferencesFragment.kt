@@ -17,6 +17,7 @@ import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.AccentsAdapter
+import com.iven.musicplayergo.adapters.CheckableAdapter
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -26,6 +27,7 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 
     private lateinit var mThemesDialog: MaterialDialog
     private lateinit var mAccentsDialog: MaterialDialog
+    private lateinit var mMultiListDialog: MaterialDialog
 
     private var mSelectedAccent = R.color.deep_purple
 
@@ -97,6 +99,23 @@ class PreferencesFragment : PreferenceFragmentCompat() {
                 return@setOnPreferenceClickListener true
             }
 
+            val tabsPreference = findPreference<SwitchPreference>("tabs_pref")
+            tabsPreference?.setOnPreferenceChangeListener { _, _ ->
+                ThemeHelper.applyNewThemeSmoothly(activity!!)
+                return@setOnPreferenceChangeListener true
+            }
+
+            val activeFragmentsPreference = findPreference<Preference>("active_fragments_pref")
+            activeFragmentsPreference?.setOnPreferenceClickListener {
+                showActiveFragmentsDialog()
+                return@setOnPreferenceClickListener true
+            }
+
+            activeFragmentsPreference?.setOnPreferenceChangeListener { _, _ ->
+                ThemeHelper.applyNewThemeSmoothly(activity!!)
+                return@setOnPreferenceChangeListener true
+            }
+
             val focusPreference = findPreference<SwitchPreference>("focus_pref")
             focusPreference?.setOnPreferenceChangeListener { _, _ ->
 
@@ -126,10 +145,30 @@ class PreferencesFragment : PreferenceFragmentCompat() {
         }
     }
 
+    private fun showActiveFragmentsDialog() {
+        if (activity != null) {
+            mMultiListDialog = MaterialDialog(activity!!).show {
+                cornerRadius(res = R.dimen.md_corner_radius)
+                title(R.string.active_fragments_pref_title)
+                val checkableAdapter = CheckableAdapter(
+                    activity!!,
+                    resources.getStringArray(R.array.activeFragmentsListArray).toMutableList()
+                )
+                customListAdapter(checkableAdapter)
+                positiveButton {
+                    goPreferences.activeFragments = checkableAdapter.getUpdatedItems()
+                    ThemeHelper.applyNewThemeSmoothly(activity!!)
+                }
+                negativeButton {}
+            }
+        }
+    }
+
     override fun onPause() {
         super.onPause()
         if (::mThemesDialog.isInitialized && mThemesDialog.isShowing) mThemesDialog.dismiss()
         if (::mAccentsDialog.isInitialized && mAccentsDialog.isShowing) mAccentsDialog.dismiss()
+        if (::mMultiListDialog.isInitialized && mMultiListDialog.isShowing) mMultiListDialog.dismiss()
     }
 
     companion object {

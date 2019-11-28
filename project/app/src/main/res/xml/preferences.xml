@@ -41,6 +41,18 @@
 
     <PreferenceCategory app:title="@string/category_general">
 
+        <Preference
+            app:key="@string/active_fragments_pref"
+            app:title="@string/active_fragments_pref_title" />
+
+        <SwitchPreference
+            android:summaryOff="@string/tabs_pref_summary_off"
+            app:defaultValue="true"
+            app:dialogTitle="@string/tabs_pref_title"
+            app:key="@string/tabs_pref"
+            app:summaryOn="@string/tabs_pref_summary_on"
+            app:title="@string/tabs_pref_title" />
+
         <SwitchPreference
             android:summaryOff="@string/focus_pref_summary_off"
             app:defaultValue="true"

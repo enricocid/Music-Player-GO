@@ -25,19 +25,15 @@
         android:baselineAligned="false"
         android:onClick="openNowPlaying"
         android:orientation="horizontal"
-        android:padding="8dp">
+        android:padding="4dp">
 
         <LinearLayout
+            android:id="@+id/playing_songs_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginEnd="2dp"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingStart="8dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="2dp"
-            android:paddingBottom="8dp">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/playing_song"
@@ -105,4 +101,9 @@
 
         </FrameLayout>
     </LinearLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="32dp" />
 </LinearLayout>

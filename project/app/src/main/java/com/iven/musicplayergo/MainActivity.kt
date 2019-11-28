@@ -30,6 +30,7 @@ import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
+import com.google.android.material.tabs.TabLayout
 import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.music.Album
 import com.iven.musicplayergo.music.Music
@@ -54,8 +55,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mSettingsFragment: SettingsFragment
     private lateinit var mDetailsFragment: DetailsFragment
 
+    private lateinit var mActiveFragments: MutableList<String>
+
     //views
     private lateinit var mViewPager: ViewPager
+    private lateinit var mTabLayout: TabLayout
+    private lateinit var mPlayerControlsContainer: View
 
     //settings/controls panel
     private lateinit var mPlayingArtist: TextView
@@ -64,6 +69,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mPlayPauseButton: ImageView
     private lateinit var mLovedSongsButton: ImageView
     private lateinit var mLoveSongsNumber: TextView
+
+    private var mControlsPaddingNoTabs = 0
+    private var mControlsPaddingNormal = 0
+    private var mControlsPaddingEnd = 0
 
     //now playing
     private lateinit var mNowPlayingDialog: MaterialDialog
@@ -218,6 +227,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         ThemeHelper.applyTheme(this, goPreferences.theme!!)
 
         setContentView(R.layout.main_activity)
+
+        mControlsPaddingNormal =
+            resources.getDimensionPixelSize(R.dimen.player_controls_padding_normal)
+        mControlsPaddingEnd = resources.getDimensionPixelSize(R.dimen.player_controls_padding_end)
+        mControlsPaddingNoTabs =
+            resources.getDimensionPixelSize(R.dimen.player_controls_padding_no_tabs)
 
         //init views
         getViews()
@@ -523,8 +538,35 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mFoldersFragment = FoldersFragment.newInstance()
                 mSettingsFragment = SettingsFragment.newInstance()
 
+                mActiveFragments =
+                    goPreferences.activeFragments?.toMutableList()!!
+
+                if (goPreferences.isTabsEnabled) {
+                    mTabLayout.setupWithViewPager(mViewPager)
+                    mPlayerControlsContainer.setPadding(
+                        mControlsPaddingNoTabs,
+                        mControlsPaddingNormal,
+                        mControlsPaddingEnd,
+                        mControlsPaddingNormal
+                    )
+
+                } else {
+                    mTabLayout.visibility = View.GONE
+                    mPlayerControlsContainer.setPadding(
+                        mControlsPaddingNoTabs,
+                        mControlsPaddingNoTabs,
+                        mControlsPaddingEnd,
+                        mControlsPaddingNoTabs
+                    )
+                }
+
                 val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
                 mViewPager.adapter = pagerAdapter
+
+                if (goPreferences.isTabsEnabled)
+                    mActiveFragments.iterator().forEach {
+                        setupTabLayoutTabs(mActiveFragments.indexOf(it), it.toInt())
+                    }
 
                 mAllDeviceSongs = musicLibrary.allSongsUnfiltered
                 mMusic = musicLibrary.allAlbumsForArtist
@@ -549,6 +591,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun getViews() {
 
         mViewPager = pager
+        mTabLayout = tab_layout
+        mPlayerControlsContainer = playing_songs_container
 
         //controls panel
         mPlayingSong = playing_song
@@ -563,11 +607,30 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun handleOnNavigationItemSelected(itemId: Int): Fragment {
 
         return when (itemId) {
+            0 -> getFragmentForIndex(mActiveFragments[0].toInt())
+            1 -> getFragmentForIndex(mActiveFragments[1].toInt())
+            2 -> getFragmentForIndex(mActiveFragments[2].toInt())
+            else -> getFragmentForIndex(mActiveFragments[3].toInt())
+        }
+    }
+
+    private fun getFragmentForIndex(index: Int): Fragment {
+        return when (index) {
             0 -> mArtistsFragment
             1 -> mAllMusicFragment
             2 -> mFoldersFragment
             else -> mSettingsFragment
         }
+    }
+
+    private fun setupTabLayoutTabs(tabIndex: Int, iconIndex: Int) {
+        val icon = when (iconIndex) {
+            0 -> R.drawable.ic_person
+            1 -> R.drawable.ic_music_note
+            2 -> R.drawable.ic_folder
+            else -> R.drawable.ic_more_horiz
+        }
+        mTabLayout.getTabAt(tabIndex)?.setIcon(icon)
     }
 
     private fun openDetailsFragment(selectedArtistOrFolder: String, isFolder: Boolean) {
@@ -737,7 +800,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
      */
     private inner class ScreenSlidePagerAdapter(fm: FragmentManager) :
         FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        override fun getCount(): Int = 4
+        override fun getCount(): Int = mActiveFragments.size
 
         override fun getItem(position: Int): Fragment {
             return handleOnNavigationItemSelected(position)
