@@ -4,18 +4,18 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.TextView
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.Utils
 
-class CheckableAdapter(
+class CheckableTabsAdapter(
     private val context: Context,
     private val listItems: MutableList<String>
 ) :
-    RecyclerView.Adapter<CheckableAdapter.CheckableItemsHolder>() {
+    RecyclerView.Adapter<CheckableTabsAdapter.CheckableItemsHolder>() {
 
     private val mItemsToRemove = mutableListOf<String>()
 
@@ -29,7 +29,7 @@ class CheckableAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckableItemsHolder {
         return CheckableItemsHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.checkable_item,
+                R.layout.checkable_tab_item,
                 parent,
                 false
             )
@@ -41,27 +41,35 @@ class CheckableAdapter(
     }
 
     override fun onBindViewHolder(holder: CheckableItemsHolder, position: Int) {
-        holder.bindItems(listItems[holder.adapterPosition])
+        holder.bindItems()
     }
 
     inner class CheckableItemsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindItems(item: String) {
+        fun bindItems() {
 
-            val title = itemView.findViewById<TextView>(R.id.title)
-            title.text = item
-            title.isSelected = true
+            val icon = itemView.findViewById<ImageView>(R.id.tab_image)
 
-            val checkBox = itemView.findViewById<CheckBox>(R.id.checkbox)
+            icon.setImageResource(ThemeHelper.getTabIcon(adapterPosition))
+
+            val indicator = itemView.findViewById<ImageView>(R.id.tab_indicator)
 
             itemView.isEnabled = adapterPosition != listItems.size - 1
-            checkBox.isEnabled = itemView.isEnabled
-            checkBox.isChecked = mCheckableItems.contains(adapterPosition.toString())
+
+            indicator.visibility =
+                if (mCheckableItems.contains(adapterPosition.toString()) || !itemView.isEnabled) View.VISIBLE else View.GONE
+
+            manageIndicatorsStatus(
+                itemView.isEnabled && mCheckableItems.contains(adapterPosition.toString()),
+                icon,
+                indicator
+            )
 
             itemView.setOnClickListener {
-                checkBox.isChecked = !checkBox.isChecked
 
-                if (!checkBox.isChecked) mCheckableItems.remove(adapterPosition.toString()) else mCheckableItems.add(
+                manageIndicatorsStatus(indicator.visibility != View.VISIBLE, icon, indicator)
+
+                if (indicator.visibility != View.VISIBLE) mCheckableItems.remove(adapterPosition.toString()) else mCheckableItems.add(
                     adapterPosition.toString()
                 )
                 if (mCheckableItems.size < listItems.size - 2) {
@@ -70,9 +78,19 @@ class CheckableAdapter(
                         context.getString(R.string.active_fragments_pref_warning)
                     )
                     mCheckableItems.add(adapterPosition.toString())
-                    checkBox.isChecked = true
+                    manageIndicatorsStatus(true, icon, indicator)
                 }
             }
+        }
+    }
+
+    private fun manageIndicatorsStatus(condition: Boolean, icon: ImageView, indicator: ImageView) {
+        if (condition) {
+            indicator.visibility = View.VISIBLE
+            ThemeHelper.updateIconTint(icon, ThemeHelper.resolveThemeAccent(context))
+        } else {
+            indicator.visibility = View.GONE
+            ThemeHelper.updateIconTint(icon, ThemeHelper.getAlphaAccent(context, 50))
         }
     }
 }

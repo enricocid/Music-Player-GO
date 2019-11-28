@@ -17,7 +17,7 @@ import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.AccentsAdapter
-import com.iven.musicplayergo.adapters.CheckableAdapter
+import com.iven.musicplayergo.adapters.CheckableTabsAdapter
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -150,11 +150,15 @@ class PreferencesFragment : PreferenceFragmentCompat() {
             mMultiListDialog = MaterialDialog(activity!!).show {
                 cornerRadius(res = R.dimen.md_corner_radius)
                 title(R.string.active_fragments_pref_title)
-                val checkableAdapter = CheckableAdapter(
+                val checkableAdapter = CheckableTabsAdapter(
                     activity!!,
                     resources.getStringArray(R.array.activeFragmentsListArray).toMutableList()
                 )
                 customListAdapter(checkableAdapter)
+
+                getRecyclerView().layoutManager =
+                    LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
                 positiveButton {
                     goPreferences.activeFragments = checkableAdapter.getUpdatedItems()
                     ThemeHelper.applyNewThemeSmoothly(activity!!)

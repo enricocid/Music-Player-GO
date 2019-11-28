@@ -120,6 +120,7 @@ object ThemeHelper {
         return ContextCompat.getColor(context, colorRes)
     }
 
+    @JvmStatic
     private fun resolveThemeAttr(context: Context, @AttrRes attrRes: Int): TypedValue {
         val theme = context.theme
         val typedValue = TypedValue()
@@ -137,7 +138,18 @@ object ThemeHelper {
         return dividerItemDecoration
     }
 
+    @JvmStatic
     fun getAlphaAccent(context: Context, alpha: Int): Int {
         return ColorUtils.setAlphaComponent(resolveThemeAccent(context), alpha)
+    }
+
+    @JvmStatic
+    fun getTabIcon(iconIndex: Int): Int {
+        return when (iconIndex) {
+            0 -> R.drawable.ic_person
+            1 -> R.drawable.ic_music_note
+            2 -> R.drawable.ic_folder
+            else -> R.drawable.ic_more_horiz
+        }
     }
 }

@@ -638,14 +638,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun setupTabLayoutTabs(tabIndex: Int, iconIndex: Int) {
-        val icon = when (iconIndex) {
-            0 -> R.drawable.ic_person
-            1 -> R.drawable.ic_music_note
-            2 -> R.drawable.ic_folder
-            else -> R.drawable.ic_more_horiz
-        }
 
-        mTabLayout.getTabAt(tabIndex)?.setIcon(icon)
+        mTabLayout.getTabAt(tabIndex)?.setIcon(ThemeHelper.getTabIcon(iconIndex))
 
         if (tabIndex != 0)
             mTabLayout.getTabAt(tabIndex)?.icon?.setTint(ThemeHelper.getAlphaAccent(this, 50))
