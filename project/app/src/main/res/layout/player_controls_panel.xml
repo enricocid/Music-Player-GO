@@ -120,7 +120,7 @@
         android:layout_width="match_parent"
         android:layout_height="32dp"
         app:tabGravity="fill"
-        app:tabIndicator="@drawable/indicator"
+        app:tabIndicator="@drawable/tab_indicator"
         app:tabMode="fixed"
         app:tabRippleColor="?attr/colorPrimary" />
 </LinearLayout>
