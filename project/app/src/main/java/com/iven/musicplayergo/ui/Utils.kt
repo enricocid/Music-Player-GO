@@ -17,6 +17,7 @@ import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
+import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import java.util.*
 
@@ -183,15 +184,24 @@ object Utils {
         val popup = PopupMenu(context, itemView)
         popup.setOnMenuItemClickListener {
 
-            addToLovedSongs(
-                context,
-                song,
-                0
-            )
-            uiControlInterface.onLovedSongsUpdate()
+            when (it.itemId) {
+                R.id.loved_songs_add -> {
+                    addToLovedSongs(
+                        context,
+                        song,
+                        0
+                    )
+                    uiControlInterface.onLovedSongsUpdate()
+                }
+                R.id.queue_add -> {
+
+                    uiControlInterface.onAddToQueue(song)
+                }
+            }
+
             return@setOnMenuItemClickListener true
         }
-        popup.inflate(R.menu.menu_show_love)
+        popup.inflate(R.menu.menu_do_something)
         popup.gravity = Gravity.END
         popup.show()
     }

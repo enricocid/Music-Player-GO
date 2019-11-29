@@ -87,8 +87,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private var mediaPlayer: MediaPlayer? = null
     private var mExecutor: ScheduledExecutorService? = null
     private var mSeekBarPositionUpdateTask: Runnable? = null
-    private lateinit var mPlayingAlbumSongs: List<Music>
+
     var currentSong: Music? = null
+    private lateinit var mPlayingAlbumSongs: List<Music>
 
     var currentVolumeInPercent = 100
     val playerPosition: Int get() = if (!isMediaPlayer) goPreferences.lastPlayedSong?.second!! else mediaPlayer!!.currentPosition
@@ -97,10 +98,17 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     val isPlaying: Boolean get() = isMediaPlayer && mediaPlayer!!.isPlaying
     val isMediaPlayer: Boolean get() = mediaPlayer != null
     var isReset = false
-    var state: Int? = PAUSED
-    var isPlay = false
+
+    private var isQueue = false
+    private lateinit var preQueueSong: Pair<Music, List<Music>>
+    var queueSongs = mutableListOf<Music>()
+    private var currentQueueIndex = -1
+
     var isSongRestoredFromPrefs = false
     var isSongFromLovedSongs = Pair(false, 0)
+
+    var state: Int? = PAUSED
+    var isPlay = false
 
     //notifications
     private var mNotificationActionsReceiver: NotificationReceiver? = null
@@ -147,6 +155,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         if (isReset) {
             if (isMediaPlayer) resetSong()
+        } else if (isQueue) {
+            manageQueue(true)
         } else {
             skip(true)
         }
@@ -231,6 +241,31 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         mediaPlayer!!.seekTo(0)
         mediaPlayer!!.start()
         setStatus(PLAYING)
+    }
+
+    private fun manageQueue(skip: Boolean) {
+        try {
+            val currentIndex = if (skip) currentQueueIndex + 1 else currentQueueIndex - 1
+            currentQueueIndex = currentIndex
+            val queueSong = queueSongs[currentIndex]
+            setCurrentSong(queueSong, queueSongs)
+            initMediaPlayer(currentSong!!)
+
+        } catch (e: Exception) {
+
+            setCurrentSong(preQueueSong.first, preQueueSong.second)
+
+            if (skip) {
+                currentQueueIndex = -1
+                isQueue = false
+                queueSongs.clear()
+                skip(skip)
+            } else {
+                initMediaPlayer(preQueueSong.first)
+            }
+
+            e.printStackTrace()
+        }
     }
 
     /**
@@ -357,18 +392,28 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         isReset = !isReset
     }
 
+    fun setQueueEnabled() {
+        preQueueSong = Pair(currentSong!!, mPlayingAlbumSongs)
+        isQueue = true
+    }
+
     fun skip(isNext: Boolean) {
-        val currentIndex = mPlayingAlbumSongs.indexOf(currentSong)
-        val index: Int
-        try {
-            index = if (isNext) currentIndex + 1 else currentIndex - 1
-            currentSong = mPlayingAlbumSongs[index]
-        } catch (e: IndexOutOfBoundsException) {
-            currentSong =
-                if (currentIndex != 0) mPlayingAlbumSongs[0] else mPlayingAlbumSongs[mPlayingAlbumSongs.size - 1]
-            e.printStackTrace()
+
+        if (isQueue) {
+            manageQueue(isNext)
+        } else {
+            val currentIndex = mPlayingAlbumSongs.indexOf(currentSong)
+            val index: Int
+            try {
+                index = if (isNext) currentIndex + 1 else currentIndex - 1
+                currentSong = mPlayingAlbumSongs[index]
+            } catch (e: IndexOutOfBoundsException) {
+                currentSong =
+                    if (currentIndex != 0) mPlayingAlbumSongs[0] else mPlayingAlbumSongs[mPlayingAlbumSongs.size - 1]
+                e.printStackTrace()
+            }
+            initMediaPlayer(currentSong!!)
         }
-        initMediaPlayer(currentSong!!)
     }
 
     fun seekTo(position: Int) {

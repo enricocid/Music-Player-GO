@@ -197,6 +197,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         startPlayback(song, songs)
     }
 
+    override fun onAddToQueue(song: Music) {
+        if (checkIsPlayer()) {
+            if (mMediaPlayerHolder.queueSongs.isEmpty()) mMediaPlayerHolder.setQueueEnabled()
+            mMediaPlayerHolder.queueSongs.add(song)
+            mMediaPlayerHolder.setCurrentSong(song, mMediaPlayerHolder.queueSongs)
+        }
+    }
+
     override fun onArtistOrFolderSelected(artistOrFolder: String, isFolder: Boolean) {
         openDetailsFragment(artistOrFolder, isFolder)
     }

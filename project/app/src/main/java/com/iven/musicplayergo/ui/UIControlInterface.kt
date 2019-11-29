@@ -8,4 +8,5 @@ interface UIControlInterface {
     fun onShuffleSongs(songs: MutableList<Music>)
     fun onLovedSongsUpdate()
     fun onCloseActivity()
+    fun onAddToQueue(song: Music)
 }
