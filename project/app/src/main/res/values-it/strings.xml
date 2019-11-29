@@ -8,7 +8,7 @@
     <string name="folder_info">%2d&#160;Canzoni</string>
 
     <!-- Main - All songs -->
-    <string name="songs">Tutte le canzoni</string>
+    <string name="songs">Canzoni</string>
     <string name="shuffle_am">Mescola tutte le canzoni</string>
     <string name="shuffle_sa">Mescola l\'abum selezionato</string>
 
