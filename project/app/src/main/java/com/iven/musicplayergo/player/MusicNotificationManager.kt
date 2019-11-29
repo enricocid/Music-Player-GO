@@ -18,7 +18,6 @@ import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.music.MusicUtils
 
-
 // Notification params
 private const val CHANNEL_ID = "com.iven.musicplayergo.CHANNEL_ID"
 private const val REQUEST_CODE = 100
@@ -84,17 +83,6 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             openPlayerIntent, 0
         )
 
-        val artist = song!!.artist
-        val songTitle = song.title
-
-        val spanned = MusicUtils.buildSpanned(
-            playerService.getString(
-                R.string.playing_song,
-                artist,
-                songTitle
-            )
-        )
-
         val style = MediaStyle()
         style.setShowActionsInCompactView(0, 1, 2)
 
@@ -104,8 +92,23 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             .setSmallIcon(R.drawable.music_notification)
             .setLargeIcon(getLargeIcon())
             .setColor(Color.LTGRAY)
-            .setContentTitle(spanned)
-            .setContentText(song.album)
+            .setContentTitle(
+                MusicUtils.buildSpanned(
+                    playerService.getString(
+                        R.string.song_title_notification,
+                        song?.title
+                    )
+                )
+            )
+            .setContentText(
+                MusicUtils.buildSpanned(
+                    playerService.getString(
+                        R.string.artist_and_album,
+                        song?.artist,
+                        song?.album
+                    )
+                )
+            )
             .setContentIntent(contentIntent)
             .addAction(notificationAction(PREV_ACTION))
             .addAction(notificationAction(PLAY_PAUSE_ACTION))

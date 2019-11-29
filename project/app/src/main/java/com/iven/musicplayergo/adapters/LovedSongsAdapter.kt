@@ -61,7 +61,7 @@ class LovedSongsAdapter(
             val song = lovedSong.first
             title.text = MusicUtils.buildSpanned(
                 context.getString(
-                    R.string.playing_song,
+                    R.string.loved_song_title,
                     song.title,
                     song.artist
                 )
@@ -87,7 +87,7 @@ class LovedSongsAdapter(
                 )
             }
             itemView.setOnLongClickListener {
-                Utils.makeDeleteLovedSongDialog(context, lovedSong, this@LovedSongsAdapter)
+                Utils.showDeleteLovedSongDialog(context, lovedSong, this@LovedSongsAdapter)
                 return@setOnLongClickListener true
             }
         }

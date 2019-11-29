@@ -5,4 +5,7 @@ interface MediaPlayerInterface {
     fun onStateChanged()
     fun onPlaybackCompleted()
     fun onClose(stopPlayback: Boolean)
+    fun onQueueEnabled()
+    fun onQueueCleared()
+    fun onQueueStartedOrEnded(started: Boolean)
 }

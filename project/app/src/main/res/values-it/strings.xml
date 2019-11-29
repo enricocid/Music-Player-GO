@@ -1,7 +1,5 @@
 <resources>
 
-    <string name="queue_add">Aggiungi alla coda</string>
-
     <!-- Main - Artists -->
     <string name="artists">Artisti</string>
     <string name="artist_info">%1d&#160;Album,&#160;%2d&#160;Canzoni</string>
@@ -15,11 +13,18 @@
     <!-- Main - Folders -->
     <string name="folders">Cartelle</string>
 
+    <!-- Queue -->
+    <string name="queue">Coda</string>
+    <string name="queue_add">Aggiungi alla coda</string>
+    <string name="queue_song_remove">%1s sarà rimossa dalla coda. Continuare?</string>
+    <string name="error_no_queue">Nessuna canzone in coda!</string>
+
     <!-- Loved songs -->
     <string name="loved_songs">Canzoni preferite</string>
     <string name="loved_song_added">%1s (%2s) aggiunta alle canzoni preferite</string>
-    <string name="loved_song_remove">%1s (%2s) sarà cancellata dalle canzoni preferite. Sei sicuro?</string>
+    <string name="loved_song_remove">%1s (%2s) sarà rimossa dalle canzoni preferite. Continuare?</string>
     <string name="loved_song_add">Aggiungi a canzoni preferite</string>
+    <string name="error_no_loved_songs">Nessuna canzone preferita trovata!</string>
 
     <!-- Messages -->
     <string name="perm_rationale">Music Player GO deve poter accedere ai tuoi file per eseguire la musica!</string>
@@ -28,7 +33,6 @@
     <string name="no_eq">Nessun equalizzatore trovato!</string>
     <string name="error_unknown">Qualcosa è andato storto! :(</string>
     <string name="error_no_music">Nessuna canzone trovata</string>
-    <string name="error_no_loved_songs">Nessuna canzone preferita trovata!</string>
     <string name="on_close_activity">Vuoi interrompere la riproduzione?</string>
 
     <!-- Settings -->

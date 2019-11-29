@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/np_artist"
+        android:id="@+id/np_song"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
@@ -22,7 +22,7 @@
         android:textStyle="italic" />
 
     <TextView
-        android:id="@+id/np_song_album"
+        android:id="@+id/np_artist_album"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"

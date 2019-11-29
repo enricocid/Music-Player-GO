@@ -99,10 +99,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     val isMediaPlayer: Boolean get() = mediaPlayer != null
     var isReset = false
 
-    private var isQueue = false
+    var isQueue = false
     private lateinit var preQueueSong: Pair<Music, List<Music>>
     var queueSongs = mutableListOf<Music>()
-    private var currentQueueIndex = -1
+    var currentQueueIndex = -1
 
     var isSongRestoredFromPrefs = false
     var isSongFromLovedSongs = Pair(false, 0)
@@ -244,12 +244,16 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     private fun manageQueue(skip: Boolean) {
+
+        if (isSongRestoredFromPrefs) isSongRestoredFromPrefs = false
+
         try {
             val currentIndex = if (skip) currentQueueIndex + 1 else currentQueueIndex - 1
             currentQueueIndex = currentIndex
             val queueSong = queueSongs[currentIndex]
             setCurrentSong(queueSong, queueSongs)
             initMediaPlayer(currentSong!!)
+            if (currentQueueIndex == 0) mediaPlayerInterface.onQueueStartedOrEnded(true)
 
         } catch (e: Exception) {
 
@@ -259,6 +263,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 currentQueueIndex = -1
                 isQueue = false
                 queueSongs.clear()
+                mediaPlayerInterface.onQueueCleared()
+                mediaPlayerInterface.onQueueStartedOrEnded(false)
                 skip(skip)
             } else {
                 initMediaPlayer(preQueueSong.first)
@@ -347,6 +353,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     override fun onPrepared(mediaPlayer: MediaPlayer) {
         startUpdatingCallbackWithPosition()
+
         if (isReset) isReset = false
 
         if (isSongRestoredFromPrefs) {
@@ -356,6 +363,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             mediaPlayer.seekTo(isSongFromLovedSongs.second)
             isSongFromLovedSongs = Pair(false, 0)
         }
+
+        if (isQueue) mediaPlayerInterface.onQueueStartedOrEnded(true)
 
         if (isPlay) {
             setStatus(PLAYING)
@@ -395,6 +404,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun setQueueEnabled() {
         preQueueSong = Pair(currentSong!!, mPlayingAlbumSongs)
         isQueue = true
+        mediaPlayerInterface.onQueueEnabled()
     }
 
     fun skip(isNext: Boolean) {

@@ -31,6 +31,7 @@ import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.google.android.material.tabs.TabLayout
+import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.music.Album
 import com.iven.musicplayergo.music.Music
@@ -69,6 +70,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mPlayPauseButton: ImageView
     private lateinit var mLovedSongsButton: ImageView
     private lateinit var mLoveSongsNumber: TextView
+    private lateinit var mQueueButton: ImageView
 
     private var mControlsPaddingNoTabs = 0
     private var mControlsPaddingNormal = 0
@@ -77,8 +79,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     //now playing
     private lateinit var mNowPlayingDialog: MaterialDialog
     private lateinit var mFixedMusicBar: FixedMusicBar
-    private lateinit var mArtistTextNP: TextView
     private lateinit var mSongTextNP: TextView
+    private lateinit var mArtistAlbumTextNP: TextView
     private lateinit var mSongSeekTextNP: TextView
     private lateinit var mSongDurationTextNP: TextView
     private lateinit var mSkipPrevButtonNP: ImageView
@@ -105,6 +107,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mMusic: Map<String, List<Album>>
 
     private lateinit var mSelectedArtistSongs: MutableList<Music>
+
+    private lateinit var mQueueDialog: Pair<MaterialDialog, QueueAdapter>
 
     //the player
     private lateinit var mMediaPlayerHolder: MediaPlayerHolder
@@ -201,7 +205,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         if (checkIsPlayer()) {
             if (mMediaPlayerHolder.queueSongs.isEmpty()) mMediaPlayerHolder.setQueueEnabled()
             mMediaPlayerHolder.queueSongs.add(song)
-            mMediaPlayerHolder.setCurrentSong(song, mMediaPlayerHolder.queueSongs)
         }
     }
 
@@ -323,7 +326,33 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             updatePlayingStatus(isNowPlaying())
             if (mMediaPlayerHolder.state != RESUMED && mMediaPlayerHolder.state != PAUSED) {
                 updatePlayingInfo(false)
+                if (::mQueueDialog.isInitialized && mQueueDialog.first.isShowing && mMediaPlayerHolder.isQueue)
+                    mQueueDialog.second.swapIndex(
+                        mMediaPlayerHolder.currentQueueIndex
+                    )
             }
+        }
+
+        override fun onQueueEnabled() {
+            ThemeHelper.updateIconTint(
+                mQueueButton,
+                ThemeHelper.resolveColorAttr(this@MainActivity, android.R.attr.textColorPrimary)
+            )
+        }
+
+        override fun onQueueCleared() {
+            if (::mQueueDialog.isInitialized && mQueueDialog.first.isShowing) mQueueDialog.first.dismiss()
+        }
+
+        override fun onQueueStartedOrEnded(started: Boolean) {
+            ThemeHelper.updateIconTint(
+                mQueueButton, if (started) ThemeHelper.resolveThemeAccent(this@MainActivity)
+                else
+                    ThemeHelper.resolveColorAttr(
+                        this@MainActivity,
+                        android.R.attr.colorButtonNormal
+                    )
+            )
         }
     }
 
@@ -364,16 +393,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         val selectedSong = mMediaPlayerHolder.currentSong
         mSeekProgressBar.max = selectedSong!!.duration.toInt()
 
-        mPlayingSong.text =
-            MusicUtils.buildSpanned(
-                getString(
-                    R.string.playing_song,
-                    selectedSong.title,
-                    selectedSong.album
-                )
-            )
+        mPlayingSong.text = selectedSong.title
 
-        mPlayingArtist.text = selectedSong.artist
+        mPlayingArtist.text = MusicUtils.buildSpanned(
+            getString(
+                R.string.artist_and_album,
+                selectedSong.artist,
+                selectedSong.album
+            )
+        )
 
         updateResetStatus(false)
 
@@ -417,9 +445,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         val selectedSong = mMediaPlayerHolder.currentSong
         val selectedSongDuration = selectedSong?.duration!!
 
-        mArtistTextNP.text = selectedSong.artist
-        mArtistTextNP.setOnClickListener {
+        mSongTextNP.text = selectedSong.title
 
+        mSongTextNP.setOnClickListener {
             if (::mDetailsFragment.isInitialized && mDetailsFragment.isAdded && !mDetailsFragment.isFolder)
                 mDetailsFragment.updateView(selectedSong.artist!!)
             else
@@ -428,11 +456,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mNowPlayingDialog.dismiss()
         }
 
-        mSongTextNP.text =
+        mArtistAlbumTextNP.text =
             MusicUtils.buildSpanned(
                 getString(
-                    R.string.playing_song,
-                    selectedSong.title,
+                    R.string.artist_and_album,
+                    selectedSong.artist,
                     selectedSong.album
                 )
             )
@@ -444,6 +472,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mFixedMusicBar.loadFrom(selectedSong.path, selectedSong.duration.toInt())
 
         updatePlayingStatus(true)
+    }
+
+    fun openQueueDialog(view: View) {
+        if (checkIsPlayer() && mMediaPlayerHolder.queueSongs.isNotEmpty())
+            mQueueDialog = Utils.showQueueSongsDialog(this, mMediaPlayerHolder)
+        else
+            Utils.makeToast(
+                this, getString(R.string.error_no_queue)
+            )
     }
 
     fun openLovedSongsDialog(view: View) {
@@ -628,6 +665,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         mLovedSongsButton = loved_songs_button
         mLoveSongsNumber = loved_songs_number
+        mQueueButton = queue_button
     }
 
     private fun handleOnNavigationItemSelected(itemId: Int): Fragment {
@@ -756,10 +794,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 customView(R.layout.now_playing)
 
-                mArtistTextNP = getCustomView().findViewById(R.id.np_artist)
-                mArtistTextNP.isSelected = true
-                mSongTextNP = getCustomView().findViewById(R.id.np_song_album)
+                mSongTextNP = getCustomView().findViewById(R.id.np_song)
                 mSongTextNP.isSelected = true
+                mArtistAlbumTextNP = getCustomView().findViewById(R.id.np_artist_album)
+                mArtistAlbumTextNP.isSelected = true
                 mFixedMusicBar = getCustomView().findViewById(R.id.np_fixed_music_bar)
                 mFixedMusicBar.setBackgroundBarPrimeColor(
                     ThemeHelper.getAlphaAccent(

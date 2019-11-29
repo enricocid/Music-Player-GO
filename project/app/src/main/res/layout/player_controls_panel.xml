@@ -46,7 +46,8 @@
                 android:text="@string/app_name"
                 android:textAlignment="textStart"
                 android:textColor="?android:attr/textColorPrimary"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/playing_artist"
@@ -71,6 +72,17 @@
             android:contentDescription="@string/app_name"
             android:padding="8dp"
             android:src="@drawable/ic_play" />
+
+        <ImageView
+            android:id="@+id/queue_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="?android:attr/actionBarItemBackground"
+            android:contentDescription="@string/app_name"
+            android:onClick="openQueueDialog"
+            android:padding="8dp"
+            android:src="@drawable/ic_queue_music" />
 
         <FrameLayout
             android:layout_width="wrap_content"

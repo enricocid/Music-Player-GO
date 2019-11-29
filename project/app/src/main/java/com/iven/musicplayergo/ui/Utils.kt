@@ -11,9 +11,11 @@ import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.list.customListAdapter
+import com.afollestad.materialdialogs.list.getListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.LovedSongsAdapter
+import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
@@ -123,6 +125,62 @@ object Utils {
         }
     }
 
+    @JvmStatic
+    fun showQueueSongsDialog(
+        context: Context,
+        mediaPlayerHolder: MediaPlayerHolder
+    ): Pair<MaterialDialog, QueueAdapter> {
+
+        val dialog = MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
+
+            cornerRadius(res = R.dimen.md_corner_radius)
+            title(R.string.queue)
+
+            customListAdapter(
+                QueueAdapter(context, this, mediaPlayerHolder)
+            )
+            getRecyclerView().addItemDecoration(
+                ThemeHelper.getRecyclerViewDivider(
+                    context
+                )
+            )
+        }
+        return Pair(dialog, dialog.getListAdapter() as QueueAdapter)
+    }
+
+    @JvmStatic
+    fun showDeleteQueueSongDialog(
+        context: Context,
+        song: Pair<Music, Int>,
+        queueSongsDialog: MaterialDialog,
+        queueAdapter: QueueAdapter,
+        mediaPlayerHolder: MediaPlayerHolder
+    ): MaterialDialog {
+
+        return MaterialDialog(context).show {
+
+            cornerRadius(res = R.dimen.md_corner_radius)
+            title(res = R.string.app_name)
+            message(
+                text = context.getString(
+                    R.string.queue_song_remove,
+                    song.first.title
+                )
+            )
+            positiveButton {
+                mediaPlayerHolder.queueSongs.removeAt(song.second)
+                queueAdapter.notifyDataSetChanged()
+                if (mediaPlayerHolder.queueSongs.isEmpty()) {
+                    mediaPlayerHolder.isQueue = false
+                    mediaPlayerHolder.mediaPlayerInterface.onQueueStartedOrEnded(false)
+                    queueSongsDialog.dismiss()
+                }
+            }
+            negativeButton {}
+        }
+    }
+
+    @JvmStatic
     fun showLovedSongsDialog(
         context: Context,
         uiControlInterface: UIControlInterface,
@@ -146,7 +204,7 @@ object Utils {
     }
 
     @JvmStatic
-    fun makeDeleteLovedSongDialog(
+    fun showDeleteLovedSongDialog(
         context: Context,
         item: Pair<Music, Int>,
         lovedSongsAdapter: LovedSongsAdapter
@@ -157,7 +215,7 @@ object Utils {
         return MaterialDialog(context).show {
 
             cornerRadius(res = R.dimen.md_corner_radius)
-            title(text = item.first.artist)
+            title(res = R.string.app_name)
             message(
                 text = context.getString(
                     R.string.loved_song_remove,
@@ -174,6 +232,7 @@ object Utils {
         }
     }
 
+    @JvmStatic
     fun showAddToLovedSongsPopup(
         context: Context,
         itemView: View,
@@ -205,6 +264,7 @@ object Utils {
         popup.show()
     }
 
+    @JvmStatic
     fun stopPlaybackDialog(
         context: Context,
         mediaPlayerHolder: MediaPlayerHolder
