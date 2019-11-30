@@ -144,6 +144,7 @@ object Utils {
                     context
                 )
             )
+            ThemeHelper.handleEdgeToEdge(this.window!!, view)
         }
         return Pair(dialog, dialog.getListAdapter() as QueueAdapter)
     }
@@ -202,6 +203,7 @@ object Utils {
                     context
                 )
             )
+            ThemeHelper.handleEdgeToEdge(this.window!!, view)
         }
     }
 

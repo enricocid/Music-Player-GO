@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Handler
 import android.util.TypedValue
 import android.view.View
+import android.view.Window
 import android.widget.ImageView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
@@ -59,25 +60,28 @@ object ThemeHelper {
     }
 
     @JvmStatic
-    fun handleEdgeToEdge(activity: Activity) {
-        if (goPreferences.isEdgeToEdge && activity.window != null) {
-            val window = activity.window
+    fun handleEdgeToEdge(window: Window?, view: View) {
+
+        if (goPreferences.isEdgeToEdge && window != null) {
+
             window.statusBarColor = Color.TRANSPARENT
             window.navigationBarColor = Color.TRANSPARENT
+
+            var flags =
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
             when {
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 -> {
-                    val statusBarFlag =
-                        if (isThemeNight()) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                    val navBarFlag =
-                        if (isThemeNight()) 0 else View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-                    window.decorView.systemUiVisibility =
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or statusBarFlag or navBarFlag
+                    val systemBarsFlag =
+                        if (isThemeNight()) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                    flags =
+                        flags or systemBarsFlag
                 }
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
-                    window.decorView.systemUiVisibility =
+                    flags =
                         View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 }
             }
+            view.systemUiVisibility = flags
         }
     }
 

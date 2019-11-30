@@ -240,7 +240,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        ThemeHelper.handleEdgeToEdge(this)
+        ThemeHelper.handleEdgeToEdge(window, mainView)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -849,6 +849,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     mFixedMusicBar.removeAllListener()
                 }
             }
+
+            ThemeHelper.handleEdgeToEdge(mNowPlayingDialog.window, mNowPlayingDialog.view)
         }
     }
 
