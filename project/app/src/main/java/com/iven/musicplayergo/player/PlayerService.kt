@@ -25,7 +25,7 @@ class PlayerService : Service() {
         if (mediaPlayerHolder != null && mediaPlayerHolder?.currentSong != null) {
             //saves last played song and its position
             goPreferences.lastPlayedSong =
-                Pair(mediaPlayerHolder?.currentSong!!, mediaPlayerHolder?.playerPosition!!)
+                Pair(mediaPlayerHolder?.currentSong?.first!!, mediaPlayerHolder?.playerPosition!!)
             mediaPlayerHolder!!.registerNotificationActionsReceiver(false)
             mediaPlayerHolder!!.release()
         }

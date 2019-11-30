@@ -44,7 +44,7 @@ class ArtistsFragment : Fragment() {
 
     private lateinit var mSearchToolbar: Toolbar
 
-    //indicator fast scroller by reddit
+    //tab_indicator fast scroller by reddit
     private lateinit var mIndicatorFastScrollerView: FastScrollerView
     private lateinit var mIndicatorFastScrollThumb: FastScrollerThumbView
 
@@ -178,7 +178,7 @@ class ArtistsFragment : Fragment() {
                                     0,
                                     1
                                 ).toUpperCase() // Grab the first letter and capitalize it
-                            ) // Return a text indicator
+                            ) // Return a text tab_indicator
                         }
                     )
 
@@ -223,7 +223,7 @@ class ArtistsFragment : Fragment() {
             } else {
 
                 if (!::mIndicatorFastScrollerView.isInitialized) {
-                    //indicator fast scroller view
+                    //tab_indicator fast scroller view
                     mIndicatorFastScrollerView = fastscroller
                     mIndicatorFastScrollThumb = fastscroller_thumb
                     setupIndicatorFastScrollerView()

@@ -129,7 +129,7 @@ object Utils {
     fun showQueueSongsDialog(
         context: Context,
         mediaPlayerHolder: MediaPlayerHolder
-    ): Pair<MaterialDialog, QueueAdapter> {
+    ): Pair<MaterialDialog, QueueAdapter>? {
 
         val dialog = MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
@@ -168,8 +168,10 @@ object Utils {
                 )
             )
             positiveButton {
+
                 mediaPlayerHolder.queueSongs.removeAt(song.second)
-                queueAdapter.notifyDataSetChanged()
+                queueAdapter.swapQueueSongs(mediaPlayerHolder.queueSongs)
+
                 if (mediaPlayerHolder.queueSongs.isEmpty()) {
                     mediaPlayerHolder.isQueue = false
                     mediaPlayerHolder.mediaPlayerInterface.onQueueStartedOrEnded(false)

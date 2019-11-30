@@ -21,12 +21,20 @@ class QueueAdapter(
     RecyclerView.Adapter<QueueAdapter.QueueHolder>() {
 
     private var mQueueSongs = mediaPlayerHolder.queueSongs
-    private var mCurrentQueueIndex = mediaPlayerHolder.currentQueueIndex
+    private var mSelectedSong = mediaPlayerHolder.currentSong!!
 
-    fun swapIndex(currentQueueIndex: Int) {
-        notifyItemChanged(mCurrentQueueIndex)
-        notifyItemChanged(currentQueueIndex)
-        mCurrentQueueIndex = currentQueueIndex
+    private val mDefaultTextColor =
+        ThemeHelper.resolveColorAttr(context, android.R.attr.textColorPrimary)
+
+    fun swapSelectedSong(song: Music) {
+        notifyItemChanged(mQueueSongs.indexOf(mSelectedSong.first))
+        mSelectedSong = Pair(song, true)
+        notifyItemChanged(mQueueSongs.indexOf(mSelectedSong.first))
+    }
+
+    fun swapQueueSongs(queueSongs: MutableList<Music>) {
+        mQueueSongs = queueSongs
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QueueHolder {
@@ -58,17 +66,22 @@ class QueueAdapter(
             subtitle.text =
                 context.getString(R.string.artist_and_album, song.artist, song.album)
 
-            val defaultTextColor = title.currentTextColor
             val themeAccent = ThemeHelper.resolveThemeAccent(context)
 
-            if (mCurrentQueueIndex != adapterPosition) title.setTextColor(defaultTextColor) else title.setTextColor(
+            if (mQueueSongs.indexOf(mSelectedSong.first) == adapterPosition && mSelectedSong.second) title.setTextColor(
                 themeAccent
+            ) else title.setTextColor(
+                mDefaultTextColor
             )
 
             itemView.setOnClickListener {
-                mediaPlayerHolder.setCurrentSong(song, mediaPlayerHolder.queueSongs)
-                mediaPlayerHolder.currentQueueIndex = adapterPosition
+
                 if (mediaPlayerHolder.isSongRestoredFromPrefs) mediaPlayerHolder.isPlay = true
+
+                if (!mediaPlayerHolder.isQueueStarted)
+                    mediaPlayerHolder.setCurrentSong(song, mediaPlayerHolder.queueSongs, true) else
+                    mediaPlayerHolder.currentSong = Pair(song, true)
+
                 mediaPlayerHolder.initMediaPlayer(song)
             }
 

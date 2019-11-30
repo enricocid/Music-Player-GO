@@ -198,12 +198,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     override fun onSongSelected(song: Music, songs: List<Music>) {
         mMediaPlayerHolder.isSongRestoredFromPrefs = false
         if (!mMediaPlayerHolder.isPlay) mMediaPlayerHolder.isPlay = true
+        if (mMediaPlayerHolder.isQueue) mMediaPlayerHolder.setQueueEnabled(false)
         startPlayback(song, songs)
     }
 
     override fun onAddToQueue(song: Music) {
         if (checkIsPlayer()) {
-            if (mMediaPlayerHolder.queueSongs.isEmpty()) mMediaPlayerHolder.setQueueEnabled()
+            if (mMediaPlayerHolder.queueSongs.isEmpty()) mMediaPlayerHolder.setQueueEnabled(true)
             mMediaPlayerHolder.queueSongs.add(song)
         }
     }
@@ -277,7 +278,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun startPlayback(song: Music, album: List<Music>?) {
         if (::mPlayerService.isInitialized && !mPlayerService.isRunning) startService(mBindingIntent)
-        mMediaPlayerHolder.setCurrentSong(song, album!!)
+        mMediaPlayerHolder.setCurrentSong(song, album!!, false)
         mMediaPlayerHolder.initMediaPlayer(song)
     }
 
@@ -327,8 +328,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             if (mMediaPlayerHolder.state != RESUMED && mMediaPlayerHolder.state != PAUSED) {
                 updatePlayingInfo(false)
                 if (::mQueueDialog.isInitialized && mQueueDialog.first.isShowing && mMediaPlayerHolder.isQueue)
-                    mQueueDialog.second.swapIndex(
-                        mMediaPlayerHolder.currentQueueIndex
+                    mQueueDialog.second.swapSelectedSong(
+                        mMediaPlayerHolder.currentSong?.first!!
                     )
             }
         }
@@ -390,8 +391,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     //method to update info on controls panel
     private fun updatePlayingInfo(restore: Boolean) {
 
-        val selectedSong = mMediaPlayerHolder.currentSong
-        mSeekProgressBar.max = selectedSong!!.duration.toInt()
+        val selectedSong = mMediaPlayerHolder.currentSong?.first
+        mSeekProgressBar.max = selectedSong?.duration!!.toInt()
 
         mPlayingSong.text = selectedSong.title
 
@@ -442,7 +443,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun updateNowPlayingInfo() {
 
-        val selectedSong = mMediaPlayerHolder.currentSong
+        val selectedSong = mMediaPlayerHolder.currentSong?.first
         val selectedSongDuration = selectedSong?.duration!!
 
         mSongTextNP.text = selectedSong.title
@@ -476,7 +477,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     fun openQueueDialog(view: View) {
         if (checkIsPlayer() && mMediaPlayerHolder.queueSongs.isNotEmpty())
-            mQueueDialog = Utils.showQueueSongsDialog(this, mMediaPlayerHolder)
+            mQueueDialog = Utils.showQueueSongsDialog(this, mMediaPlayerHolder)!!
         else
             Utils.makeToast(
                 this, getString(R.string.error_no_queue)
@@ -555,7 +556,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         MusicUtils.getAlbumFromList(song.album, mMusic[song.artist]!!).first
                             .music
 
-                    mMediaPlayerHolder.setCurrentSong(song, albumSongs!!)
+                    mMediaPlayerHolder.setCurrentSong(song, albumSongs!!, false)
                     mMediaPlayerHolder.initMediaPlayer(song)
 
                 } else {
@@ -825,7 +826,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mLoveButtonNP.setOnClickListener {
                     Utils.addToLovedSongs(
                         this@MainActivity,
-                        mMediaPlayerHolder.currentSong!!,
+                        mMediaPlayerHolder.currentSong?.first!!,
                         mMediaPlayerHolder.playerPosition
                     )
                     onLovedSongsUpdate()

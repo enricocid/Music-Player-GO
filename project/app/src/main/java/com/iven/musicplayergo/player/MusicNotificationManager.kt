@@ -70,7 +70,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
     fun createNotification(): Notification {
 
-        val song = playerService.mediaPlayerHolder!!.currentSong
+        val song = playerService.mediaPlayerHolder?.currentSong?.first
 
         notificationBuilder = NotificationCompat.Builder(playerService, CHANNEL_ID)
 
