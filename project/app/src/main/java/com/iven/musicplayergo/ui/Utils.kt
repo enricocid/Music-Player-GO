@@ -118,7 +118,7 @@ object Utils {
                 context.getString(
                     R.string.loved_song_added,
                     song.title!!,
-                    MusicUtils.formatSongDuration(currentPosition.toLong())
+                    MusicUtils.formatSongDuration(currentPosition.toLong(), false)
                 )
             )
             goPreferences.lovedSongs = lovedSongs
@@ -222,7 +222,7 @@ object Utils {
                 text = context.getString(
                     R.string.loved_song_remove,
                     item.first.title,
-                    MusicUtils.formatSongDuration(item.second.toLong())
+                    MusicUtils.formatSongDuration(item.second.toLong(), false)
                 )
             )
             positiveButton {

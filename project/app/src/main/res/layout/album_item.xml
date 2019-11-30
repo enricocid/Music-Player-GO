@@ -35,15 +35,35 @@
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/year"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="2dp"
-            android:singleLine="true"
-            android:textAlignment="center"
-            android:textColor="?attr/colorAccent"
-            android:textSize="12sp" />
+            android:orientation="horizontal"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            android:paddingBottom="2dp">
+
+            <TextView
+                android:id="@+id/total_duration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:textAlignment="textStart"
+                android:textAppearance="@android:style/TextAppearance.Material.Caption"
+                android:textColor="?android:attr/textColorSecondary" />
+
+            <TextView
+                android:id="@+id/year"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:textAlignment="textEnd"
+                android:textAppearance="@android:style/TextAppearance.Material.Caption"
+                android:textColor="?attr/colorAccent" />
+
+        </LinearLayout>
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>

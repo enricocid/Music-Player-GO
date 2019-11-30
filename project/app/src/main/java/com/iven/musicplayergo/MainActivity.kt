@@ -472,8 +472,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             )
 
         mSongSeekTextNP.text =
-            MusicUtils.formatSongDuration(mMediaPlayerHolder.playerPosition.toLong())
-        mSongDurationTextNP.text = MusicUtils.formatSongDuration(selectedSongDuration)
+            MusicUtils.formatSongDuration(mMediaPlayerHolder.playerPosition.toLong(), false)
+        mSongDurationTextNP.text = MusicUtils.formatSongDuration(selectedSongDuration, false)
 
         mFixedMusicBar.loadFrom(selectedSong.path, selectedSong.duration.toInt())
 
@@ -734,7 +734,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         )
                     }
                     mSongSeekTextNP.text =
-                        MusicUtils.formatSongDuration(musicBar.position.toLong())
+                        MusicUtils.formatSongDuration(musicBar.position.toLong(), false)
                 }
 
                 override fun onStartTrackingTouch(musicBar: MusicBar?) {

@@ -74,7 +74,8 @@ object MusicUtils {
                     Album(
                         it,
                         getYearForAlbum(resources, albumSongs[0].year),
-                        albumSongs
+                        albumSongs,
+                        albumSongs.map { song -> song.duration }.sum()
                     )
                 )
             }
@@ -87,16 +88,25 @@ object MusicUtils {
     }
 
     @JvmStatic
-    fun formatSongDuration(duration: Long): String {
-        return String.format(
-            Locale.getDefault(), "%02d:%02d",
-            TimeUnit.MILLISECONDS.toMinutes(duration),
-            TimeUnit.MILLISECONDS.toSeconds(duration) - TimeUnit.MINUTES.toSeconds(
-                TimeUnit.MILLISECONDS.toMinutes(
-                    duration
-                )
+    fun formatSongDuration(duration: Long, isAlbum: Boolean): String {
+        val defaultFormat = if (isAlbum) "%02dm:%02ds" else "%02d:%02d"
+
+        val hours = TimeUnit.MILLISECONDS.toHours(duration)
+        val minutes = TimeUnit.MILLISECONDS.toMinutes(duration)
+        val seconds = TimeUnit.MILLISECONDS.toSeconds(duration)
+
+        return if (minutes < 60) String.format(
+            Locale.getDefault(), defaultFormat,
+            minutes,
+            seconds - TimeUnit.MINUTES.toSeconds(minutes)
+        ) else
+        //https://stackoverflow.com/a/9027379
+            String.format(
+                "%02dh:%02dm",
+                hours,
+                minutes - TimeUnit.HOURS.toMinutes(hours), // The change is in this line
+                seconds - TimeUnit.MINUTES.toSeconds(minutes)
             )
-        )
     }
 
     @JvmStatic

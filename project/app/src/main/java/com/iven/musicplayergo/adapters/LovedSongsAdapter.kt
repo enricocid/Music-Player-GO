@@ -69,8 +69,8 @@ class LovedSongsAdapter(
             subtitle.text = MusicUtils.buildSpanned(
                 context.getString(
                     R.string.loved_song_subtitle,
-                    MusicUtils.formatSongDuration(lovedSong.second.toLong()),
-                    MusicUtils.formatSongDuration(song.duration)
+                    MusicUtils.formatSongDuration(lovedSong.second.toLong(), false),
+                    MusicUtils.formatSongDuration(song.duration, false)
                 )
             )
 

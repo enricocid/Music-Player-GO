@@ -163,7 +163,8 @@ class DetailsFragment : Fragment() {
                             itemView.background.alpha = 20
                             album.text = item.title
                             year.text = item.year
-
+                            totalDuration.text =
+                                MusicUtils.formatSongDuration(item.totalDuration!!, true)
                             checkbox.visibility =
                                 if (mSelectedAlbum.title != item.title) View.GONE else View.VISIBLE
                         }
@@ -188,6 +189,13 @@ class DetailsFragment : Fragment() {
                                 mSelectedAlbum = item
                                 swapAlbum(item.music)
                             }
+                        }
+
+                        onLongClick {
+                            Utils.makeToast(
+                                context!!,
+                                MusicUtils.formatSongDuration(item.totalDuration!!, true)
+                            )
                         }
                     }
                 }
@@ -228,7 +236,7 @@ class DetailsFragment : Fragment() {
                                 item.title
                             )
                         )
-                        subtitle.text = MusicUtils.formatSongDuration(item.duration)
+                        subtitle.text = MusicUtils.formatSongDuration(item.duration, false)
                     }
 
                     onClick {

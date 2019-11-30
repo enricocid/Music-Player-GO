@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import androidx.preference.ListPreference
 import androidx.preference.Preference
@@ -111,6 +112,10 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 return@setOnPreferenceClickListener true
             }
 
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O_MR1) preferenceScreen.removePreference(
+                findPreference<Preference>(getString(R.string.edge_pref))
+            )
+
             val activeFragmentsPreference =
                 findPreference<Preference>(getString(R.string.active_fragments_pref))
 
@@ -123,7 +128,10 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (activity != null && key == getString(R.string.theme_pref) || key == getString(R.string.tabs_pref)) ThemeHelper.applyNewThemeSmoothly(
+        if (activity != null && key == getString(R.string.theme_pref) || key == getString(R.string.tabs_pref) || key == getString(
+                R.string.edge_pref
+            )
+        ) ThemeHelper.applyNewThemeSmoothly(
             activity!!
         )
     }
