@@ -225,7 +225,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         val lovedSongs = goPreferences.lovedSongs
         val lovedSongsButtonColor = if (lovedSongs.isNullOrEmpty())
             ThemeHelper.resolveColorAttr(this, android.R.attr.colorButtonNormal) else
-            ThemeHelper.resolveThemeAccent(this)
+            ThemeHelper.getColor(this, R.color.red, ThemeHelper.resolveThemeAccent(this))
         ThemeHelper.updateIconTint(mLovedSongsButton, lovedSongsButtonColor)
         val songsNumber = if (lovedSongs.isNullOrEmpty()) 0 else lovedSongs.size
         mLoveSongsNumber.text = songsNumber.toString()
