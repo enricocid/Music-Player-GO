@@ -18,14 +18,14 @@
         android:ellipsize="marquee"
         android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textSize="16sp" />
+        android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+        android:textColor="?android:attr/textColorPrimary" />
 
     <TextView
         android:id="@+id/subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:textColor="?android:attr/textColorSecondary"
-        android:textSize="12sp" />
+        android:textAppearance="@android:style/TextAppearance.Material.Caption"
+        android:textColor="?android:attr/textColorSecondary" />
 </LinearLayout>

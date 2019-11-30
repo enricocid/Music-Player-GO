@@ -45,8 +45,8 @@
                 android:singleLine="true"
                 android:text="@string/app_name"
                 android:textAlignment="textStart"
+                android:textAppearance="@android:style/TextAppearance.Material.Small"
                 android:textColor="?android:attr/textColorPrimary"
-                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -58,9 +58,8 @@
                 android:singleLine="true"
                 android:text="@string/versionName"
                 android:textAlignment="textStart"
-                android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textSize="12sp" />
+                android:textAppearance="@android:style/TextAppearance.Material.Caption"
+                android:textColor="?android:attr/textColorPrimary" />
         </LinearLayout>
 
         <ImageView
@@ -109,7 +108,6 @@
                 android:scaleY="0.50"
                 android:textAppearance="@android:style/TextAppearance.Material.Caption"
                 android:textColor="?android:attr/textColorPrimaryInverse"
-                android:textSize="12sp"
                 android:textStyle="bold" />
 
         </FrameLayout>

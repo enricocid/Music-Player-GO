@@ -18,8 +18,7 @@
         android:singleLine="true"
         android:textAlignment="center"
         android:textAppearance="@android:style/TextAppearance.Material.Title"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textStyle="italic" />
+        android:textColor="?android:attr/textColorPrimary" />
 
     <TextView
         android:id="@+id/np_artist_album"
@@ -58,7 +57,7 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:textAlignment="textStart"
-            android:textAppearance="@android:style/TextAppearance.Material.Small"
+            android:textAppearance="@android:style/TextAppearance.Material.Caption"
             android:textColor="?android:attr/textColorSecondary" />
 
         <TextView
@@ -69,7 +68,7 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:textAlignment="textEnd"
-            android:textAppearance="@android:style/TextAppearance.Material.Small"
+            android:textAppearance="@android:style/TextAppearance.Material.Caption"
             android:textColor="?android:attr/textColorSecondary" />
 
     </LinearLayout>
