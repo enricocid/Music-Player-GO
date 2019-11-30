@@ -154,12 +154,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         mediaPlayerInterface.onStateChanged()
         mediaPlayerInterface.onPlaybackCompleted()
 
-        if (isReset) {
-            if (isMediaPlayer) resetSong()
-        } else if (isQueue) {
-            manageQueue(true)
-        } else {
-            skip(true)
+        when {
+            isReset -> if (isMediaPlayer) resetSong()
+            isQueue -> manageQueue(true)
+            else -> skip(true)
         }
     }
 
@@ -179,6 +177,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     private fun getAudioFocusResult(): Int {
+
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mAudioFocusRequestOreo = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN).run {
                 setAudioAttributes(AudioAttributes.Builder().run {
@@ -266,12 +265,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         } catch (e: IndexOutOfBoundsException) {
             e.printStackTrace()
             return if (isQueue) {
-                setCurrentSong(preQueueSong.first, preQueueSong.second, true)
+
                 if (isNext) {
                     setQueueEnabled(false)
+                    setCurrentSong(preQueueSong.first, preQueueSong.second, false)
                     getSkipSong(true)
                 } else {
-                    isQueueStarted = false
                     preQueueSong.first
                 }
             } else {
@@ -420,11 +419,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             isQueue = true
             mediaPlayerInterface.onQueueEnabled()
         } else {
-            //setCurrentSong(preQueueSong.first, preQueueSong.second)
             queueSongs.clear()
             mediaPlayerInterface.onQueueCleared()
             mediaPlayerInterface.onQueueStartedOrEnded(false)
-            // skip(true)
         }
 
     }
