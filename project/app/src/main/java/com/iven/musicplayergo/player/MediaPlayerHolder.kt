@@ -178,19 +178,21 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private fun getAudioFocusResult(): Int {
 
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mAudioFocusRequestOreo = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN).run {
-                setAudioAttributes(AudioAttributes.Builder().run {
-                    setUsage(AudioAttributes.USAGE_MEDIA)
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .build()
-                })
-                setOnAudioFocusChangeListener(mOnAudioFocusChangeListener, mHandler)
-                build()
+        return when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
+                mAudioFocusRequestOreo =
+                    AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN).run {
+                        setAudioAttributes(AudioAttributes.Builder().run {
+                            setUsage(AudioAttributes.USAGE_MEDIA)
+                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                .build()
+                        })
+                        setOnAudioFocusChangeListener(mOnAudioFocusChangeListener, mHandler)
+                        build()
+                    }
+                mAudioManager.requestAudioFocus(mAudioFocusRequestOreo)
             }
-            mAudioManager.requestAudioFocus(mAudioFocusRequestOreo)
-        } else {
-            mAudioManager.requestAudioFocus(
+            else -> mAudioManager.requestAudioFocus(
                 mOnAudioFocusChangeListener,
                 AudioManager.STREAM_MUSIC,
                 AudioManager.AUDIOFOCUS_GAIN
@@ -199,12 +201,16 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     private fun giveUpAudioFocus() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) mAudioManager.abandonAudioFocusRequest(
-            mAudioFocusRequestOreo
-        )
-        else
-            mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener)
-        mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
+
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> mAudioManager.abandonAudioFocusRequest(
+                mAudioFocusRequestOreo
+            )
+            else -> {
+                mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener)
+                mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
+            }
+        }
     }
 
     private fun setStatus(status: Int) {
@@ -246,11 +252,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         if (isSongRestoredFromPrefs) isSongRestoredFromPrefs = false
 
-        if (isQueueStarted) {
-            currentSong = Pair(getSkipSong(isNext), true)
-        } else {
-            setCurrentSong(queueSongs[0], queueSongs, true)
-            isQueueStarted = true
+        when {
+            isQueueStarted -> currentSong = Pair(getSkipSong(isNext), true)
+            else -> {
+                setCurrentSong(queueSongs[0], queueSongs, true)
+                isQueueStarted = true
+            }
         }
         initMediaPlayer(currentSong?.first!!)
 
@@ -264,19 +271,17 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             return mPlayingAlbumSongs[index]
         } catch (e: IndexOutOfBoundsException) {
             e.printStackTrace()
-            return if (isQueue) {
-
-                if (isNext) {
-                    setQueueEnabled(false)
-                    setCurrentSong(preQueueSong.first, preQueueSong.second, false)
-                    getSkipSong(true)
-                } else {
-                    preQueueSong.first
+            return when {
+                isQueue -> when {
+                    isNext -> {
+                        setQueueEnabled(false)
+                        setCurrentSong(preQueueSong.first, preQueueSong.second, false)
+                        getSkipSong(true)
+                    }
+                    else -> preQueueSong.first
                 }
-            } else {
-                if (currentIndex != 0) mPlayingAlbumSongs[0] else mPlayingAlbumSongs[mPlayingAlbumSongs.size - 1]
+                else -> if (currentIndex != 0) mPlayingAlbumSongs[0] else mPlayingAlbumSongs[mPlayingAlbumSongs.size - 1]
             }
-
         }
     }
 
@@ -414,25 +419,27 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         isQueue = enabled
         isQueueStarted = false
 
-        if (isQueue) {
-            preQueueSong = Pair(currentSong!!.first, mPlayingAlbumSongs)
-            isQueue = true
-            mediaPlayerInterface.onQueueEnabled()
-        } else {
-            queueSongs.clear()
-            mediaPlayerInterface.onQueueCleared()
-            mediaPlayerInterface.onQueueStartedOrEnded(false)
+        when {
+            isQueue -> {
+                preQueueSong = Pair(currentSong!!.first, mPlayingAlbumSongs)
+                isQueue = true
+                mediaPlayerInterface.onQueueEnabled()
+            }
+            else -> {
+                queueSongs.clear()
+                mediaPlayerInterface.onQueueCleared()
+                mediaPlayerInterface.onQueueStartedOrEnded(false)
+            }
         }
-
     }
 
     fun skip(isNext: Boolean) {
-
-        if (isQueue) {
-            manageQueue(isNext)
-        } else {
-            currentSong = Pair(getSkipSong(isNext), false)
-            initMediaPlayer(currentSong?.first!!)
+        when {
+            isQueue -> manageQueue(isNext)
+            else -> {
+                currentSong = Pair(getSkipSong(isNext), false)
+                initMediaPlayer(currentSong?.first!!)
+            }
         }
     }
 

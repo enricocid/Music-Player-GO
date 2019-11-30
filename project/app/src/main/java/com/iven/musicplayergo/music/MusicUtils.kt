@@ -108,10 +108,13 @@ object MusicUtils {
 
     @JvmStatic
     fun buildSpanned(res: String): Spanned {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            Html.fromHtml(res, Html.FROM_HTML_MODE_LEGACY)
-        else
-            Html.fromHtml(res)
+        return when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> Html.fromHtml(
+                res,
+                Html.FROM_HTML_MODE_LEGACY
+            )
+            else -> Html.fromHtml(res)
+        }
     }
 
     @JvmStatic

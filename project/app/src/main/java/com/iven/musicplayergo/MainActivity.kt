@@ -848,10 +848,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     fun openEqualizer(view: View) {
-        if (EqualizerUtils.hasEqualizer(this)) {
-            if (checkIsPlayer()) mMediaPlayerHolder.openEqualizer(this)
-        } else {
-            Utils.makeToast(
+        when {
+            EqualizerUtils.hasEqualizer(this) -> if (checkIsPlayer()) mMediaPlayerHolder.openEqualizer(
+                this
+            )
+            else -> Utils.makeToast(
                 this@MainActivity,
                 getString(R.string.no_eq)
             )
