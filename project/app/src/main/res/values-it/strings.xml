@@ -50,6 +50,10 @@
     <string name="theme_pref_auto_title">Automatico</string>
 
     <string name="accent_pref_title">Accento</string>
+
+    <string name="edge_pref_summary_on">Disabilita edge-to-edge</string>
+    <string name="edge_pref_summary_off">Abilita edge-to-edge</string>
+
     <string name="tabs_pref_title">Tabs</string>
     <string name="tabs_pref_summary_on">Disabilita tabs</string>
     <string name="tabs_pref_summary_off">Mostra tabs per navigare le sezioni</string>

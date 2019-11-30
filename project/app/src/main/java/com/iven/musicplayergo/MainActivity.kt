@@ -238,6 +238,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         ) else onBackPressed()
     }
 
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        ThemeHelper.handleEdgeToEdge(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

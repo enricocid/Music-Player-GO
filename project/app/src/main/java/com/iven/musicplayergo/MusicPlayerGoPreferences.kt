@@ -17,6 +17,7 @@ class MusicPlayerGoPreferences(context: Context) {
     private val prefsTheme = context.getString(R.string.theme_pref)
     private val prefsThemeDefault = context.getString(R.string.theme_pref_light)
     private val prefsAccent = context.getString(R.string.accent_pref)
+    private val prefsEdgeToEdge = context.getString(R.string.edge_pref)
 
     private val prefsTabs = context.getString(R.string.tabs_pref)
 
@@ -57,6 +58,10 @@ class MusicPlayerGoPreferences(context: Context) {
     var accent: Int
         get() = mPrefs.getInt(prefsAccent, R.color.deep_purple)
         set(value) = mPrefs.edit().putInt(prefsAccent, value).apply()
+
+    var isEdgeToEdge: Boolean
+        get() = mPrefs.getBoolean(prefsEdgeToEdge, false)
+        set(value) = mPrefs.edit().putBoolean(prefsEdgeToEdge, value).apply()
 
     var isTabsEnabled: Boolean
         get() = mPrefs.getBoolean(prefsTabs, true)
