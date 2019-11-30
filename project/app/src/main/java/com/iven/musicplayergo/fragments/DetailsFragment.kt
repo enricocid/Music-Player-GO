@@ -190,13 +190,6 @@ class DetailsFragment : Fragment() {
                                 swapAlbum(item.music)
                             }
                         }
-
-                        onLongClick {
-                            Utils.makeToast(
-                                context!!,
-                                MusicUtils.formatSongDuration(item.totalDuration!!, true)
-                            )
-                        }
                     }
                 }
 
