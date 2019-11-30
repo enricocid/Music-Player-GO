@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.music.Music
+import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.Utils
@@ -40,7 +41,7 @@ class QueueAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QueueHolder {
         return QueueHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.generic_item,
+                R.layout.song_item_alt,
                 parent,
                 false
             )
@@ -60,9 +61,11 @@ class QueueAdapter(
         fun bindItems(song: Music) {
 
             val title = itemView.findViewById<TextView>(R.id.title)
+            val duration = itemView.findViewById<TextView>(R.id.duration)
             val subtitle = itemView.findViewById<TextView>(R.id.subtitle)
 
             title.text = song.title
+            duration.text = MusicUtils.formatSongDuration(song.duration, false)
             subtitle.text =
                 context.getString(R.string.artist_and_album, song.artist, song.album)
 

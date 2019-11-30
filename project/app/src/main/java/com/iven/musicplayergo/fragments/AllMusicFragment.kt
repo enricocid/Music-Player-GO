@@ -17,7 +17,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.musicLibrary
-import com.iven.musicplayergo.ui.GenericViewHolder
+import com.iven.musicplayergo.ui.SongsViewHolder
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.ui.Utils
@@ -86,10 +86,11 @@ class AllMusicFragment : Fragment() {
             mSongsRecyclerView.setup {
                 // item is a `val` in `this` here
                 withDataSource(mDataSource)
-                withItem<Music, GenericViewHolder>(R.layout.song_item) {
-                    onBind(::GenericViewHolder) { _, item ->
+                withItem<Music, SongsViewHolder>(R.layout.song_item_alt) {
+                    onBind(::SongsViewHolder) { _, item ->
                         // GenericViewHolder is `this` here
                         title.text = item.title
+                        duration.text = MusicUtils.formatSongDuration(item.duration, false)
                         subtitle.text =
                             getString(R.string.artist_and_album, item.artist, item.album)
                     }

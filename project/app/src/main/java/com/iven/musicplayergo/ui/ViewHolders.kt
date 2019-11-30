@@ -17,3 +17,9 @@ class AlbumsViewHolder(itemView: View) : ViewHolder(itemView) {
     val totalDuration: TextView = itemView.findViewById(R.id.total_duration)
     val checkbox: ImageView = itemView.findViewById(R.id.checkbox)
 }
+
+class SongsViewHolder(itemView: View) : ViewHolder(itemView) {
+    val title: TextView = itemView.findViewById(R.id.title)
+    val duration: TextView = itemView.findViewById(R.id.duration)
+    val subtitle: TextView = itemView.findViewById(R.id.subtitle)
+}
