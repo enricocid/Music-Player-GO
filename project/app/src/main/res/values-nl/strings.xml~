@@ -1,0 +1,84 @@
+<resources>
+
+    <string name="app_name" translatable="false">Music Player GO</string>
+
+    <!-- Main - Artists -->
+    <string name="artists">Artiesten</string>
+    <string name="artist_info">%1d&#160;albums,&#160;%2d&#160;nummers</string>
+    <string name="folder_info">%2d&#160;nummers</string>
+    <string name="playing_song" translatable="false">&lt;b>%1s&lt;/b>&lt;br/>&#160;&lt;b>/&lt;/b>&lt;br/>&#160;%2s</string>
+
+    <!-- Main - All songs -->
+    <string name="songs">Alle nummers</string>
+    <string name="artist_and_album" translatable="false">%1s&#160;-&#160;%2s</string>
+    <string name="shuffle_am">Alle nummers willekeurig afspelen</string>
+    <string name="shuffle_sa">Geselecteerd album willekeurig afspelen</string>
+    <string name="track_song" translatable="false">&lt;b>%1d&lt;/b>&lt;br/>-&#160;%2s</string>
+
+    <!-- Main - Folders -->
+    <string name="folders">Mappen</string>
+
+    <!-- Loved songs -->
+    <string name="loved_songs">Favorieten</string>
+    <string name="loved_song_subtitle" translatable="false">&lt;b>%2s&lt;/b>&lt;br/>/&#160;%3s</string>
+    <string name="loved_song_added">%1s (%2s) is toegevoegd aan je favorieten</string>
+    <string name="loved_song_remove">%1s (%2s) wordt verwijderd uit je favorieten. Weet je het zeker?</string>
+    <string name="loved_song_add">Toevoegen aan favorieten</string>
+
+    <!-- Details -->
+    <string name="unknown_year" translatable="false">N&#x2F;A</string>
+
+    <!-- Messages -->
+    <string name="perm_rationale">Music Player GO heeft toegang nodig tot je bestanden om muziek af te spelen!</string>
+    <string name="no_browser">Geen browser aangetroffen!</string>
+    <string name="bad_id">Speel eerst een nummer af!</string>
+    <string name="no_eq">Geen equalizer aangetroffen!</string>
+    <string name="error_unknown">Er is iets misgegaan! :(</string>
+    <string name="error_no_music">Geen muziek aangetroffen!</string>
+    <string name="error_no_loved_songs">Geen favorieten aangetroffen!</string>
+
+    <!-- Settings -->
+    <!-- Preferences -->
+    <string name="settings">Instellingen</string>
+    <string name="category_appearance">Uiterlijk</string>
+    <string name="category_general">Algemeen</string>
+
+    <string name="last_played_song_pref" translatable="false">last_played_song_pref</string>
+    <string name="loved_songs_pref" translatable="false">loved_songs_pref</string>
+
+    <string name="open_git_pref" translatable="false">open_git_pref</string>
+    <string name="open_git_pref_title">GitHub-pagina</string>
+    <string name="open_git_pref_summary">&#8230; voor meer informatie :)</string>
+
+    <string name="theme_pref" translatable="false">theme_pref</string>
+    <string name="theme_pref_title">Thema</string>
+    <string name="theme_pref_light_title">Licht</string>
+    <string name="theme_pref_dark_title">Donker</string>
+    <string name="theme_pref_auto_title">Automatisch</string>
+
+    <string name="theme_pref_light" translatable="false">theme_pref_light</string>
+    <string name="theme_pref_dark" translatable="false">theme_pref_dark</string>
+    <string name="theme_pref_auto" translatable="false">theme_pref_auto</string>
+
+    <string name="accent_pref" translatable="false">accent_pref</string>
+    <string name="accent_pref_title">Kleurenschema</string>
+
+    <string name="artists_sorting_pref" translatable="false">artists_sorting_pref</string>
+    <string name="folders_sorting_pref" translatable="false">folders_sorting_pref</string>
+    <string name="sorting_pref_default">Standaard</string>
+    <string name="sorting_pref_ascending">Oplopend</string>
+    <string name="sorting_pref_descending">Aflopend</string>
+
+    <string name="focus_pref" translatable="false">focus_pref</string>
+    <string name="focus_pref_title">Audiofocus</string>
+    <string name="focus_pref_summary_on">Audiofocusbeheer uitschakelen</string>
+    <string name="focus_pref_summary_off">Audiofocusbeheer inschakelen</string>
+
+    <string name="headset_pref" translatable="false">headsets_pref</string>
+    <string name="headset_pref_title">Headset plug</string>
+    <string name="headset_pref_summary_on">Disable headset plug management</string>
+    <string name="headset_pref_summary_off">Enable headset plug management</string>
+
+    <string name="hex" translatable="false">&#35;%06X</string>
+
+</resources>
