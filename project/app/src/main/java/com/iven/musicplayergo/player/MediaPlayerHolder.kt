@@ -527,9 +527,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             val bindingIntent = Intent(playerService, PlayerService::class.java)
             playerService.stopService(bindingIntent)
             playerService.stopForeground(true)
-            mediaPlayerInterface.onClose(true)
+            mediaPlayerInterface.onClose()
         }
-        mediaPlayerInterface.onClose(true)
+        mediaPlayerInterface.onClose()
     }
 
     private inner class NotificationReceiver : BroadcastReceiver() {
@@ -583,10 +583,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             if (action == KeyEvent.ACTION_DOWN) { // do something
                 when (event.keyCode) {
                     KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> resumeOrPause()
-                    KeyEvent.KEYCODE_MEDIA_CLOSE -> mediaPlayerInterface.onClose(true)
+                    KeyEvent.KEYCODE_MEDIA_CLOSE -> stopPlaybackService(true)
                     KeyEvent.KEYCODE_MEDIA_PREVIOUS -> skip(false)
                     KeyEvent.KEYCODE_MEDIA_NEXT -> skip(false)
-                    KeyEvent.KEYCODE_MEDIA_STOP -> mediaPlayerInterface.onClose(true)
+                    KeyEvent.KEYCODE_MEDIA_STOP -> stopPlaybackService(true)
                     KeyEvent.KEYCODE_MEDIA_REWIND -> resetSong()
                     KeyEvent.KEYCODE_MEDIA_PAUSE -> pauseMediaPlayer()
                     KeyEvent.KEYCODE_MEDIA_PLAY -> resumeMediaPlayer()

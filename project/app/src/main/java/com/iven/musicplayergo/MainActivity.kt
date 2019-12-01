@@ -342,7 +342,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     //interface to let MediaPlayerHolder update the UI media player controls
     val mediaPlayerInterface = object : MediaPlayerInterface {
 
-        override fun onClose(stopPlayback: Boolean) {
+        override fun onClose() {
 
             //finish activity if visible
             finishAndRemoveTask()
