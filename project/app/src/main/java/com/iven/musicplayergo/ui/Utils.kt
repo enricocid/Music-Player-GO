@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import com.afollestad.materialdialogs.LayoutMode
@@ -103,29 +104,6 @@ object Utils {
     }
 
     @JvmStatic
-    fun addToLovedSongs(context: Context, song: Music, currentPosition: Int) {
-        val lovedSongs =
-            if (goPreferences.lovedSongs != null) goPreferences.lovedSongs else mutableListOf()
-        if (!lovedSongs?.contains(Pair(song, currentPosition))!!) {
-            lovedSongs.add(
-                Pair(
-                    song,
-                    currentPosition
-                )
-            )
-            makeToast(
-                context,
-                context.getString(
-                    R.string.loved_song_added,
-                    song.title!!,
-                    MusicUtils.formatSongDuration(currentPosition.toLong(), false)
-                )
-            )
-            goPreferences.lovedSongs = lovedSongs
-        }
-    }
-
-    @JvmStatic
     fun showQueueSongsDialog(
         context: Context,
         mediaPlayerHolder: MediaPlayerHolder
@@ -134,7 +112,13 @@ object Utils {
         val dialog = MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
             cornerRadius(res = R.dimen.md_corner_radius)
+
             title(R.string.queue)
+
+            val icon = AppCompatResources.getDrawable(context, R.drawable.ic_queue_music)
+            icon?.mutate()
+            icon?.setTint(ThemeHelper.resolveColorAttr(context, android.R.attr.textColorPrimary))
+            icon(drawable = icon)
 
             customListAdapter(
                 QueueAdapter(context, this, mediaPlayerHolder)
@@ -161,7 +145,10 @@ object Utils {
         MaterialDialog(context).show {
 
             cornerRadius(res = R.dimen.md_corner_radius)
+
             title(res = R.string.app_name)
+            icon(res = R.drawable.ic_delete_forever)
+
             message(
                 text = context.getString(
                     R.string.queue_song_remove,
@@ -184,7 +171,7 @@ object Utils {
     }
 
     @JvmStatic
-    fun showClearQueueSongDialog(
+    fun showClearQueueDialog(
         context: Context,
         mediaPlayerHolder: MediaPlayerHolder
     ) {
@@ -192,7 +179,10 @@ object Utils {
         MaterialDialog(context).show {
 
             cornerRadius(res = R.dimen.md_corner_radius)
+
             title(res = R.string.app_name)
+            icon(res = R.drawable.ic_delete_forever)
+
             message(
                 text = context.getString(R.string.queue_songs_clear)
             )
@@ -213,6 +203,29 @@ object Utils {
     }
 
     @JvmStatic
+    fun addToLovedSongs(context: Context, song: Music, currentPosition: Int) {
+        val lovedSongs =
+            if (goPreferences.lovedSongs != null) goPreferences.lovedSongs else mutableListOf()
+        if (!lovedSongs?.contains(Pair(song, currentPosition))!!) {
+            lovedSongs.add(
+                Pair(
+                    song,
+                    currentPosition
+                )
+            )
+            makeToast(
+                context,
+                context.getString(
+                    R.string.loved_song_added,
+                    song.title!!,
+                    MusicUtils.formatSongDuration(currentPosition.toLong(), false)
+                )
+            )
+            goPreferences.lovedSongs = lovedSongs
+        }
+    }
+
+    @JvmStatic
     fun showLovedSongsDialog(
         context: Context,
         uiControlInterface: UIControlInterface,
@@ -223,6 +236,7 @@ object Utils {
 
             cornerRadius(res = R.dimen.md_corner_radius)
             title(R.string.loved_songs)
+            icon(res = R.drawable.ic_favorite)
 
             customListAdapter(
                 LovedSongsAdapter(context, this, uiControlInterface, mediaPlayerHolder)
@@ -248,7 +262,10 @@ object Utils {
         MaterialDialog(context).show {
 
             cornerRadius(res = R.dimen.md_corner_radius)
+
             title(res = R.string.app_name)
+            icon(res = R.drawable.ic_delete_forever)
+
             message(
                 text = context.getString(
                     R.string.loved_song_remove,
@@ -266,7 +283,7 @@ object Utils {
     }
 
     @JvmStatic
-    fun showAddToLovedSongsPopup(
+    fun showAddToLovedQueueSongsPopup(
         context: Context,
         itemView: View,
         song: Music,
@@ -285,15 +302,7 @@ object Utils {
                     uiControlInterface.onLovedSongsUpdate(false)
                 }
                 R.id.queue_add -> {
-
                     uiControlInterface.onAddToQueue(song)
-                    makeToast(
-                        context,
-                        context.getString(
-                            R.string.queue_song_add,
-                            song.title!!
-                        )
-                    )
                 }
             }
 
@@ -313,7 +322,10 @@ object Utils {
         MaterialDialog(context).show {
 
             cornerRadius(res = R.dimen.md_corner_radius)
+
             title(res = R.string.app_name)
+            icon(res = R.drawable.ic_delete_forever)
+
             message(
                 text = context.getString(R.string.loved_songs_clear)
             )
@@ -333,7 +345,10 @@ object Utils {
         MaterialDialog(context).show {
 
             cornerRadius(res = R.dimen.md_corner_radius)
+
             title(text = context.getString(R.string.app_name))
+            icon(res = R.drawable.ic_stop)
+
             message(text = context.getString(R.string.on_close_activity))
             positiveButton {
                 mediaPlayerHolder.stopPlaybackService(true)

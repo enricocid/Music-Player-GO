@@ -109,7 +109,7 @@ class AllMusicFragment : Fragment() {
                     onLongClick { index ->
                         val itemViewHolder =
                             mSongsRecyclerView.findViewHolderForAdapterPosition(index)
-                        Utils.showAddToLovedSongsPopup(
+                        Utils.showAddToLovedQueueSongsPopup(
                             context!!,
                             itemViewHolder?.itemView!!,
                             item,

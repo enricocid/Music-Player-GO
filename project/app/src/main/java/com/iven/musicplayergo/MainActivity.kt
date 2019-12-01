@@ -205,6 +205,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         if (checkIsPlayer(true)) {
             if (mMediaPlayerHolder.queueSongs.isEmpty()) mMediaPlayerHolder.setQueueEnabled(true)
             mMediaPlayerHolder.queueSongs.add(song)
+            Utils.makeToast(
+                this,
+                getString(
+                    R.string.queue_song_add,
+                    song.title!!
+                )
+            )
         }
     }
 
@@ -284,7 +291,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
 
         mQueueButton.setOnLongClickListener {
-            if (checkIsPlayer(true) && mMediaPlayerHolder.isQueue) Utils.showClearQueueSongDialog(
+            if (checkIsPlayer(true) && mMediaPlayerHolder.isQueue) Utils.showClearQueueDialog(
                 this,
                 mMediaPlayerHolder
             )
@@ -539,7 +546,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
             cancelOnTouchOutside(false)
             cornerRadius(res = R.dimen.md_corner_radius)
+
             title(R.string.app_name)
+            icon(res = R.drawable.ic_folder)
+
             message(R.string.perm_rationale)
             positiveButton {
                 ActivityCompat.requestPermissions(
