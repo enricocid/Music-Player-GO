@@ -27,6 +27,7 @@
 
         <ListPreference
             app:dialogTitle="@string/theme_pref_title"
+            android:defaultValue="@string/theme_pref_light"
             app:entries="@array/themeListArray"
             app:entryValues="@array/themeEntryArray"
             app:key="@string/theme_pref"
