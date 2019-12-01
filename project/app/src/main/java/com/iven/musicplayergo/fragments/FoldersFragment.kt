@@ -10,7 +10,6 @@ import android.view.ViewTreeObserver
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -154,50 +153,46 @@ class FoldersFragment : Fragment() {
     @SuppressLint("DefaultLocale")
     private fun setupIndicatorFastScrollerView() {
 
-        if (goPreferences.artistsSorting != R.id.default_sorting) {
+        mIndicatorFastScrollerView = fastscroller
+        mIndicatorFastScrollThumb = fastscroller_thumb
 
-            mIndicatorFastScrollerView = fastscroller
-            mIndicatorFastScrollThumb = fastscroller_thumb
+        if (goPreferences.foldersSorting == R.id.default_sorting) mIndicatorFastScrollerView.visibility =
+            View.GONE
 
-            //set indexes if artists rv is scrollable
-            mFoldersRecyclerView.afterMeasured {
-                if (mFoldersRecyclerView.computeVerticalScrollRange() > height) {
+        //set indexes if artists rv is scrollable
+        mFoldersRecyclerView.afterMeasured {
+            if (mFoldersRecyclerView.computeVerticalScrollRange() > height) {
 
-                    mIndicatorFastScrollerView.setupWithRecyclerView(
-                        mFoldersRecyclerView,
-                        { position ->
-                            val item =
-                                (mFilteredFolders ?: mFolders)[position] // Get your model object
-                            // or fetch the section at [position] from your database
+                mIndicatorFastScrollerView.setupWithRecyclerView(
+                    mFoldersRecyclerView,
+                    { position ->
+                        val item =
+                            (mFilteredFolders ?: mFolders)[position] // Get your model object
+                        // or fetch the section at [position] from your database
 
-                            FastScrollItemIndicator.Text(
-                                item.substring(
-                                    0,
-                                    1
-                                ).toUpperCase() // Grab the first letter and capitalize it
-                            ) // Return a text tab_indicator
-                        }
-                    )
-
-                    mIndicatorFastScrollThumb.setupWithFastScroller(mIndicatorFastScrollerView)
-
-                    mIndicatorFastScrollerView.useDefaultScroller = false
-                    mIndicatorFastScrollerView.itemIndicatorSelectedCallbacks += object :
-                        FastScrollerView.ItemIndicatorSelectedCallback {
-                        override fun onItemIndicatorSelected(
-                            indicator: FastScrollItemIndicator,
-                            indicatorCenterY: Int,
-                            itemPosition: Int
-                        ) {
-                            val artistsLayoutManager =
-                                mFoldersRecyclerView.layoutManager as LinearLayoutManager
-                            artistsLayoutManager.scrollToPositionWithOffset(itemPosition, 0)
-                        }
+                        FastScrollItemIndicator.Text(
+                            item.substring(
+                                0,
+                                1
+                            ).toUpperCase() // Grab the first letter and capitalize it
+                        ) // Return a text tab_indicator
                     }
+                )
 
-                } else {
-                    if (mIndicatorFastScrollerView.isVisible) mIndicatorFastScrollerView.visibility =
-                        View.GONE
+                mIndicatorFastScrollThumb.setupWithFastScroller(mIndicatorFastScrollerView)
+
+                mIndicatorFastScrollerView.useDefaultScroller = false
+                mIndicatorFastScrollerView.itemIndicatorSelectedCallbacks += object :
+                    FastScrollerView.ItemIndicatorSelectedCallback {
+                    override fun onItemIndicatorSelected(
+                        indicator: FastScrollItemIndicator,
+                        indicatorCenterY: Int,
+                        itemPosition: Int
+                    ) {
+                        val artistsLayoutManager =
+                            mFoldersRecyclerView.layoutManager as LinearLayoutManager
+                        artistsLayoutManager.scrollToPositionWithOffset(itemPosition, 0)
+                    }
                 }
             }
         }
@@ -212,23 +207,8 @@ class FoldersFragment : Fragment() {
                 musicLibrary.allSongsForFolder.keys.toMutableList()
             )
 
-            if (it.itemId == R.id.default_sorting) {
-
-                if (mIndicatorFastScrollerView.isVisible) mIndicatorFastScrollerView.visibility =
-                    View.GONE
-
-            } else {
-
-                if (!::mIndicatorFastScrollerView.isInitialized) {
-                    //tab_indicator fast scroller view
-                    mIndicatorFastScrollerView = fastscroller
-                    mIndicatorFastScrollThumb = fastscroller_thumb
-                    setupIndicatorFastScrollerView()
-                }
-
-                if (!mIndicatorFastScrollerView.isVisible) mIndicatorFastScrollerView.visibility =
-                    View.VISIBLE
-            }
+            mIndicatorFastScrollerView.visibility =
+                if (it.itemId == R.id.default_sorting) View.GONE else View.VISIBLE
 
             mDataSource.set(mFolders)
 
