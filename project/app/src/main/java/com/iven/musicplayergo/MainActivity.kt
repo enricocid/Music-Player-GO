@@ -413,6 +413,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         if (restore) {
 
+            if (mMediaPlayerHolder.currentSong?.second!!) mediaPlayerInterface.onQueueStartedOrEnded(
+                true
+            )
+            else if (mMediaPlayerHolder.queueSongs.isNotEmpty()) mediaPlayerInterface.onQueueEnabled()
+
             updatePlayingStatus(false)
 
             //stop foreground if coming from pause state
