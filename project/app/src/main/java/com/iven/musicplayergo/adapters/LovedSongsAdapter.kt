@@ -17,9 +17,6 @@ import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.ui.Utils
 
-const val UNKNOWN = "<unknown>"
-const val UNKNOWN_REPLACE = "unknown"
-
 class LovedSongsAdapter(
     private val context: Context,
     private val lovedSongsDialog: MaterialDialog,
@@ -33,14 +30,14 @@ class LovedSongsAdapter(
     fun swapSongs(lovedSongs: MutableList<Pair<Music, Int>>) {
         mLovedSongs = lovedSongs
         notifyDataSetChanged()
-        uiControlInterface.onLovedSongsUpdate()
+        uiControlInterface.onLovedSongsUpdate(false)
         if (mLovedSongs!!.isEmpty()) lovedSongsDialog.dismiss()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LoveHolder {
         return LoveHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.generic_item,
+                R.layout.song_item_alt,
                 parent,
                 false
             )
@@ -60,23 +57,21 @@ class LovedSongsAdapter(
         fun bindItems(lovedSong: Pair<Music, Int>) {
 
             val title = itemView.findViewById<TextView>(R.id.title)
+            val duration = itemView.findViewById<TextView>(R.id.duration)
             val subtitle = itemView.findViewById<TextView>(R.id.subtitle)
 
             val song = lovedSong.first
-            title.text = ThemeHelper.buildSpanned(
-                context.getString(
-                    R.string.loved_song_title,
-                    song.title,
-                    if (song.artist != UNKNOWN) song.artist else UNKNOWN_REPLACE
-                )
-            )
-            subtitle.text = ThemeHelper.buildSpanned(
+
+            title.text = song.title
+            duration.text = ThemeHelper.buildSpanned(
                 context.getString(
                     R.string.loved_song_subtitle,
                     MusicUtils.formatSongDuration(lovedSong.second.toLong(), false),
                     MusicUtils.formatSongDuration(song.duration, false)
                 )
             )
+            subtitle.text =
+                context.getString(R.string.artist_and_album, song.artist, song.album)
 
             itemView.setOnClickListener {
                 mediaPlayerHolder.isSongFromLovedSongs = Pair(true, lovedSong.second)
