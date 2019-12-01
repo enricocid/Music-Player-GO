@@ -18,6 +18,7 @@
     <string name="queue_add">Aggiungi alla coda</string>
     <string name="queue_song_add">%1s added to queue!</string>
     <string name="queue_song_remove">%1s sarà rimossa dalla coda. Continuare?</string>
+    <string name="queue_songs_clear">La coda verrà cancellata. Continuare?</string>
     <string name="error_no_queue">Nessuna canzone in coda!</string>
 
     <!-- Loved songs -->
@@ -25,6 +26,7 @@
     <string name="loved_song_added">%1s (%2s) aggiunta alle canzoni preferite</string>
     <string name="loved_song_remove">%1s (%2s) sarà rimossa dalle canzoni preferite. Continuare?</string>
     <string name="loved_song_add">Aggiungi a canzoni preferite</string>
+    <string name="loved_songs_clear">Le canzoni preferite saranno cancellate. Continuare?</string>
     <string name="error_no_loved_songs">Nessuna canzone preferita trovata!</string>
 
     <!-- Messages -->

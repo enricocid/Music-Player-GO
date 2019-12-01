@@ -220,8 +220,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    override fun onLovedSongsUpdate() {
+    override fun onLovedSongsUpdate(clear: Boolean) {
+
         val lovedSongs = goPreferences.lovedSongs
+
+        if (clear) {
+            lovedSongs?.clear()
+            goPreferences.lovedSongs = lovedSongs
+        }
+
         val lovedSongsButtonColor = if (lovedSongs.isNullOrEmpty())
             ThemeHelper.resolveColorAttr(this, android.R.attr.colorButtonNormal) else
             ThemeHelper.getColor(this, R.color.red, ThemeHelper.resolveThemeAccent(this))
@@ -266,7 +273,23 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             return@setOnLongClickListener true
         }
 
-        onLovedSongsUpdate()
+        onLovedSongsUpdate(false)
+
+        mLovedSongsButton.setOnLongClickListener {
+            if (!goPreferences.lovedSongs.isNullOrEmpty()) Utils.showClearLovedSongDialog(
+                this,
+                this
+            )
+            return@setOnLongClickListener true
+        }
+
+        mQueueButton.setOnLongClickListener {
+            if (checkIsPlayer() && mMediaPlayerHolder.isQueue) Utils.showClearQueueSongDialog(
+                this,
+                mMediaPlayerHolder
+            )
+            return@setOnLongClickListener true
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else doBindService()
     }
@@ -835,7 +858,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         mMediaPlayerHolder.currentSong?.first!!,
                         mMediaPlayerHolder.playerPosition
                     )
-                    onLovedSongsUpdate()
+                    onLovedSongsUpdate(false)
                 }
 
                 mVolumeSeekBarNP = getCustomView().findViewById(R.id.np_volume_seek)

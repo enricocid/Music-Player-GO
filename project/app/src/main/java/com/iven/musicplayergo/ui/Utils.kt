@@ -156,9 +156,9 @@ object Utils {
         queueSongsDialog: MaterialDialog,
         queueAdapter: QueueAdapter,
         mediaPlayerHolder: MediaPlayerHolder
-    ): MaterialDialog {
+    ) {
 
-        return MaterialDialog(context).show {
+        MaterialDialog(context).show {
 
             cornerRadius(res = R.dimen.md_corner_radius)
             title(res = R.string.app_name)
@@ -178,6 +178,35 @@ object Utils {
                     mediaPlayerHolder.mediaPlayerInterface.onQueueStartedOrEnded(false)
                     queueSongsDialog.dismiss()
                 }
+            }
+            negativeButton {}
+        }
+    }
+
+    @JvmStatic
+    fun showClearQueueSongDialog(
+        context: Context,
+        mediaPlayerHolder: MediaPlayerHolder
+    ) {
+
+        MaterialDialog(context).show {
+
+            cornerRadius(res = R.dimen.md_corner_radius)
+            title(res = R.string.app_name)
+            message(
+                text = context.getString(R.string.queue_songs_clear)
+            )
+            positiveButton {
+
+                if (mediaPlayerHolder.isQueueStarted && mediaPlayerHolder.isPlaying) {
+
+                    mediaPlayerHolder.restorePreQueueSongs()
+                    mediaPlayerHolder.skip(
+                        true
+                    )
+                }
+
+                mediaPlayerHolder.setQueueEnabled(false)
             }
             negativeButton {}
         }
@@ -212,11 +241,11 @@ object Utils {
         context: Context,
         item: Pair<Music, Int>,
         lovedSongsAdapter: LovedSongsAdapter
-    ): MaterialDialog {
+    ) {
 
         val lovedSongs = goPreferences.lovedSongs?.toMutableList()
 
-        return MaterialDialog(context).show {
+        MaterialDialog(context).show {
 
             cornerRadius(res = R.dimen.md_corner_radius)
             title(res = R.string.app_name)
@@ -253,7 +282,7 @@ object Utils {
                         song,
                         0
                     )
-                    uiControlInterface.onLovedSongsUpdate()
+                    uiControlInterface.onLovedSongsUpdate(false)
                 }
                 R.id.queue_add -> {
 
@@ -273,6 +302,26 @@ object Utils {
         popup.inflate(R.menu.menu_do_something)
         popup.gravity = Gravity.END
         popup.show()
+    }
+
+    @JvmStatic
+    fun showClearLovedSongDialog(
+        context: Context,
+        uiControlInterface: UIControlInterface
+    ) {
+
+        MaterialDialog(context).show {
+
+            cornerRadius(res = R.dimen.md_corner_radius)
+            title(res = R.string.app_name)
+            message(
+                text = context.getString(R.string.loved_songs_clear)
+            )
+            positiveButton {
+                uiControlInterface.onLovedSongsUpdate(true)
+            }
+            negativeButton {}
+        }
     }
 
     @JvmStatic

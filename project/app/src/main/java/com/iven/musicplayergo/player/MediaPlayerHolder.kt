@@ -263,6 +263,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     }
 
+    fun restorePreQueueSongs() {
+        setCurrentSong(preQueueSong.first, preQueueSong.second, false)
+    }
+
     private fun getSkipSong(isNext: Boolean): Music {
         val currentIndex = mPlayingAlbumSongs.indexOf(currentSong?.first)
         val index: Int
@@ -275,7 +279,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 isQueue -> when {
                     isNext -> {
                         setQueueEnabled(false)
-                        setCurrentSong(preQueueSong.first, preQueueSong.second, false)
+                        restorePreQueueSongs()
                         getSkipSong(true)
                     }
                     else -> preQueueSong.first

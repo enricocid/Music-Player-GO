@@ -6,7 +6,7 @@ interface UIControlInterface {
     fun onArtistOrFolderSelected(artistOrFolder: String, isFolder: Boolean)
     fun onSongSelected(song: Music, songs: List<Music>)
     fun onShuffleSongs(songs: MutableList<Music>)
-    fun onLovedSongsUpdate()
+    fun onLovedSongsUpdate(clear: Boolean)
     fun onCloseActivity()
     fun onAddToQueue(song: Music)
 }

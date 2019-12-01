@@ -24,6 +24,7 @@
     <string name="queue_add">Add to queue</string>
     <string name="queue_song_add">%1s added to queue!</string>
     <string name="queue_song_remove">%1s will be deleted from queue. Continue?</string>
+    <string name="queue_songs_clear">Queue will be cleared. Continue?</string>
     <string name="error_no_queue">No songs queued!</string>
 
     <!-- Loved songs -->
@@ -32,6 +33,7 @@
     <string name="loved_song_subtitle" translatable="false">&lt;b>%2s&lt;/b>&lt;br/>/&#160;%3s</string>
     <string name="loved_song_added">%1s (%2s) added to loved songs</string>
     <string name="loved_song_remove">%1s (%2s) will be deleted from loved songs. Continue?</string>
+    <string name="loved_songs_clear">Loved songs will be cleared. Continue?</string>
     <string name="loved_song_add">Add to loved songs</string>
     <string name="error_no_loved_songs">No loved songs found!</string>
 
