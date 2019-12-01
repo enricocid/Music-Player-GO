@@ -128,7 +128,10 @@ object Utils {
                     context
                 )
             )
-            ThemeHelper.handleEdgeToEdge(this.window!!, view)
+            if (goPreferences.isEdgeToEdge && window != null) ThemeHelper.handleEdgeToEdge(
+                this.window!!,
+                view
+            )
         }
         return Pair(dialog, dialog.getListAdapter() as QueueAdapter)
     }
@@ -246,7 +249,10 @@ object Utils {
                     context
                 )
             )
-            ThemeHelper.handleEdgeToEdge(this.window!!, view)
+            if (goPreferences.isEdgeToEdge && window != null) ThemeHelper.handleEdgeToEdge(
+                this.window!!,
+                view
+            )
         }
     }
 

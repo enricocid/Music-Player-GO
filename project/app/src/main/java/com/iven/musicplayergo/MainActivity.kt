@@ -253,7 +253,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        ThemeHelper.handleEdgeToEdge(window, mainView)
+        if (goPreferences.isEdgeToEdge && window != null) ThemeHelper.handleEdgeToEdge(
+            window,
+            mainView
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -884,7 +887,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 }
             }
 
-            ThemeHelper.handleEdgeToEdge(mNowPlayingDialog.window, mNowPlayingDialog.view)
+            if (goPreferences.isEdgeToEdge && mNowPlayingDialog.window != null) ThemeHelper.handleEdgeToEdge(
+                mNowPlayingDialog.window,
+                mNowPlayingDialog.view
+            )
         }
     }
 
