@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -105,8 +106,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     //music
     private lateinit var mMusic: Map<String, List<Album>>
-
-    private lateinit var mSelectedArtistSongs: MutableList<Music>
 
     private lateinit var mQueueDialog: Pair<MaterialDialog, QueueAdapter>
 
@@ -543,29 +542,29 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 val path = MusicUtils.getRealPathFromURI(this, uri!!)
 
+                Log.d("path", path.toString())
+
                 //if we were able to get the song play it!
                 if (MusicUtils.getSongForIntent(
                         path,
-                        mSelectedArtistSongs,
                         mAllDeviceSongs
                     ) != null
                 ) {
 
                     val song =
-                        MusicUtils.getSongForIntent(path, mSelectedArtistSongs, mAllDeviceSongs)!!
+                        MusicUtils.getSongForIntent(path, mAllDeviceSongs)!!
 
                     //get album songs and sort them
                     val albumSongs =
                         MusicUtils.getAlbumFromList(song.album, mMusic[song.artist]!!).first
                             .music
 
-                    mMediaPlayerHolder.setCurrentSong(song, albumSongs!!, false)
-                    mMediaPlayerHolder.initMediaPlayer(song)
+                    onSongSelected(song, albumSongs!!)
 
                 } else {
                     Utils.makeToast(
                         this@MainActivity,
-                        getString(R.string.error_unknown)
+                        getString(R.string.error_unknown_unsupported)
                     )
                     finishAndRemoveTask()
                 }
@@ -573,7 +572,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         } catch (e: Exception) {
             Utils.makeToast(
                 this@MainActivity,
-                getString(R.string.error_unknown)
+                getString(R.string.error_unknown_unsupported)
             )
             finishAndRemoveTask()
         }

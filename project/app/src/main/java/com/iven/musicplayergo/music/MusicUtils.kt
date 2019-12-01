@@ -34,15 +34,9 @@ object MusicUtils {
     @JvmStatic
     fun getSongForIntent(
         path: String?,
-        selectedArtistSongs: List<Music>,
         allDeviceSongs: List<Music>
     ): Music? {
-
-        return try {
-            selectedArtistSongs.first { s -> s.path == path }
-        } catch (e: Exception) {
-            allDeviceSongs.firstOrNull { s -> s.path == path }
-        }
+        return allDeviceSongs.firstOrNull { s -> s.path == path }
     }
 
     @JvmStatic
@@ -225,7 +219,7 @@ object MusicUtils {
                 cursor.close()
             }
         } catch (e: Exception) {
-            Utils.makeToast(context, context.getString(R.string.error_unknown))
+            Utils.makeToast(context, context.getString(R.string.error_unknown_unsupported))
             e.printStackTrace()
         }
         return returnedString
