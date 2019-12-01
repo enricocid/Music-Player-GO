@@ -13,7 +13,9 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Handler
+import android.os.Parcelable
 import android.os.PowerManager
+import android.view.KeyEvent
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.music.Music
@@ -111,6 +113,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     var state: Int? = PAUSED
     var isPlay = false
 
+    //receivers
+    private var mMediaButtonsReceiver: MediaButtonIntentReceiver? = null
+
     //notifications
     private var mNotificationActionsReceiver: NotificationReceiver? = null
     private lateinit var mMusicNotificationManager: MusicNotificationManager
@@ -134,13 +139,32 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (mNotificationActionsReceiver != null) {
             try {
                 playerService.unregisterReceiver(mNotificationActionsReceiver)
+                playerService.unregisterReceiver(mMediaButtonsReceiver)
             } catch (e: IllegalArgumentException) {
                 e.printStackTrace()
             }
         }
     }
 
-    fun registerNotificationActionsReceiver(isReceiver: Boolean) {
+    //https://stackoverflow.com/a/44709784
+    private fun registerMediaButtonsReceiver() {
+        mMediaButtonsReceiver = MediaButtonIntentReceiver()
+        val mediaFilter = IntentFilter(Intent.ACTION_MEDIA_BUTTON)
+        mediaFilter.priority = 10000
+        playerService.registerReceiver(mMediaButtonsReceiver, mediaFilter)
+    }
+
+    fun unregisterMediaButtonsReceiver() {
+        if (mMediaButtonsReceiver != null) {
+            try {
+                playerService.unregisterReceiver(mMediaButtonsReceiver)
+            } catch (e: IllegalArgumentException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun registerActionsReceiver(isReceiver: Boolean) {
         if (isReceiver) registerActionsReceiver() else unregisterActionsReceiver()
     }
 
@@ -358,7 +382,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 )
                 mMusicNotificationManager = playerService.musicNotificationManager
             }
+
             tryToGetAudioFocus()
+            registerMediaButtonsReceiver()
+
             mediaPlayer!!.setDataSource(song.path)
             mediaPlayer!!.prepare()
         } catch (e: Exception) {
@@ -538,7 +565,34 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     }
                     AudioManager.ACTION_AUDIO_BECOMING_NOISY -> if (isPlaying && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
                 }
+                abortBroadcast()
             }
+        }
+    }
+
+    private inner class MediaButtonIntentReceiver : BroadcastReceiver() {
+
+        override fun onReceive(context: Context, intent: Intent) {
+            val intentAction = intent.action
+            if (Intent.ACTION_MEDIA_BUTTON != intentAction) {
+                return
+            }
+            val event: KeyEvent =
+                intent.getParcelableExtra<Parcelable>(Intent.EXTRA_KEY_EVENT) as KeyEvent
+            val action: Int = event.action
+            if (action == KeyEvent.ACTION_DOWN) { // do something
+                when (event.keyCode) {
+                    KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> resumeOrPause()
+                    KeyEvent.KEYCODE_MEDIA_CLOSE -> mediaPlayerInterface.onClose(true)
+                    KeyEvent.KEYCODE_MEDIA_PREVIOUS -> skip(false)
+                    KeyEvent.KEYCODE_MEDIA_NEXT -> skip(false)
+                    KeyEvent.KEYCODE_MEDIA_STOP -> mediaPlayerInterface.onClose(true)
+                    KeyEvent.KEYCODE_MEDIA_REWIND -> resetSong()
+                    KeyEvent.KEYCODE_MEDIA_PAUSE -> pauseMediaPlayer()
+                    KeyEvent.KEYCODE_MEDIA_PLAY -> resumeMediaPlayer()
+                }
+            }
+            abortBroadcast()
         }
     }
 }

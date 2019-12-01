@@ -26,7 +26,8 @@ class PlayerService : Service() {
             //saves last played song and its position
             goPreferences.lastPlayedSong =
                 Pair(mediaPlayerHolder?.currentSong?.first!!, mediaPlayerHolder?.playerPosition!!)
-            mediaPlayerHolder!!.registerNotificationActionsReceiver(false)
+            mediaPlayerHolder?.registerActionsReceiver(false)
+            mediaPlayerHolder?.unregisterMediaButtonsReceiver()
             mediaPlayerHolder!!.release()
         }
     }
@@ -43,7 +44,7 @@ class PlayerService : Service() {
         if (mediaPlayerHolder == null) {
             mediaPlayerHolder = MediaPlayerHolder(this)
             musicNotificationManager = MusicNotificationManager(this)
-            mediaPlayerHolder!!.registerNotificationActionsReceiver(true)
+            mediaPlayerHolder!!.registerActionsReceiver(true)
         }
         return binder
     }
