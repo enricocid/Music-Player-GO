@@ -17,6 +17,9 @@ import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.ui.Utils
 
+const val UNKNOWN = "<unknown>"
+const val UNKNOWN_REPLACE = "unknown"
+
 class LovedSongsAdapter(
     private val context: Context,
     private val lovedSongsDialog: MaterialDialog,
@@ -64,7 +67,7 @@ class LovedSongsAdapter(
                 context.getString(
                     R.string.loved_song_title,
                     song.title,
-                    song.artist
+                    if (song.artist != UNKNOWN) song.artist else UNKNOWN_REPLACE
                 )
             )
             subtitle.text = ThemeHelper.buildSpanned(
