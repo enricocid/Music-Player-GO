@@ -400,13 +400,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         mPlayingSong.text = selectedSong.title
 
-        mPlayingArtist.text = ThemeHelper.buildSpanned(
+        mPlayingArtist.text =
             getString(
                 R.string.artist_and_album,
                 selectedSong.artist,
                 selectedSong.album
             )
-        )
 
         updateResetStatus(false)
 
