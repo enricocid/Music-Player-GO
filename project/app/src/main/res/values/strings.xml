@@ -22,6 +22,7 @@
     <!-- Queue -->
     <string name="queue">Queue</string>
     <string name="queue_add">Add to queue</string>
+    <string name="queue_song_add">%1s added to queue!</string>
     <string name="queue_song_remove">%1s will be deleted from queue. Continue?</string>
     <string name="error_no_queue">No songs queued!</string>
 

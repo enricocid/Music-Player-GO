@@ -258,6 +258,13 @@ object Utils {
                 R.id.queue_add -> {
 
                     uiControlInterface.onAddToQueue(song)
+                    makeToast(
+                        context,
+                        context.getString(
+                            R.string.queue_song_add,
+                            song.title!!
+                        )
+                    )
                 }
             }
 

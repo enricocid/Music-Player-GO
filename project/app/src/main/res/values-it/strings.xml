@@ -16,6 +16,7 @@
     <!-- Queue -->
     <string name="queue">Coda</string>
     <string name="queue_add">Aggiungi alla coda</string>
+    <string name="queue_song_add">%1s added to queue!</string>
     <string name="queue_song_remove">%1s sarà rimossa dalla coda. Continuare?</string>
     <string name="error_no_queue">Nessuna canzone in coda!</string>
 
