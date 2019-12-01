@@ -3,10 +3,7 @@ package com.iven.musicplayergo.fragments
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver
+import android.view.*
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -54,6 +51,9 @@ class ArtistsFragment : Fragment() {
 
     private lateinit var mUIControlInterface: UIControlInterface
 
+    private lateinit var mSortMenuItem: MenuItem
+    private var mSorting = R.id.ascending_sorting
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -89,12 +89,19 @@ class ArtistsFragment : Fragment() {
                 mUIControlInterface.onCloseActivity()
             }
 
-            setMenuOnItemClickListener()
+            val menu = mSearchToolbar.menu
+
+            mSorting = goPreferences.artistsSorting
+            mSortMenuItem = menu.findItem(mSorting)
+
+            mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(context!!))
+
+            setMenuOnItemClickListener(menu)
 
             mArtistsRecyclerView = artists_rv
 
             mArtists = Utils.getSortedList(
-                goPreferences.artistsSorting,
+                mSorting,
                 musicLibrary.allAlbumsForArtist.keys.toMutableList(),
                 musicLibrary.allAlbumsForArtist.keys.toMutableList()
             )
@@ -158,7 +165,7 @@ class ArtistsFragment : Fragment() {
 
         mIndicatorFastScrollerView = fastscroller
 
-        if (goPreferences.artistsSorting == R.id.default_sorting) mIndicatorFastScrollerView.visibility =
+        if (mSorting == R.id.default_sorting) mIndicatorFastScrollerView.visibility =
             View.GONE
 
         mIndicatorFastScrollThumb = fastscroller_thumb
@@ -202,7 +209,7 @@ class ArtistsFragment : Fragment() {
         }
     }
 
-    private fun setMenuOnItemClickListener() {
+    private fun setMenuOnItemClickListener(menu: Menu) {
         mSearchToolbar.setOnMenuItemClickListener {
 
             mArtists = Utils.getSortedList(
@@ -215,10 +222,30 @@ class ArtistsFragment : Fragment() {
                 if (it.itemId == R.id.default_sorting) View.GONE else View.VISIBLE
 
             mDataSource.set(mArtists)
-            goPreferences.artistsSorting = it.itemId
+
+            mSortMenuItem.setTitleColor(
+                ThemeHelper.resolveColorAttr(
+                    context!!,
+                    android.R.attr.textColorPrimary
+                )
+            )
+
+            mSorting = it.itemId
+
+            mSortMenuItem = menu.findItem(mSorting)
+
+            mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(context!!))
+
+            goPreferences.artistsSorting = mSorting
 
             return@setOnMenuItemClickListener true
         }
+    }
+
+    private fun MenuItem.setTitleColor(color: Int) {
+        val hexColor = Integer.toHexString(color).substring(2)
+        val html = "<font color='#$hexColor'>$title</font>"
+        this.title = ThemeHelper.buildSpanned(html)
     }
 
     //viewTreeObserver extension to measure layout params

@@ -13,6 +13,7 @@ import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.player.MediaPlayerHolder
+import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.ui.Utils
 
@@ -59,14 +60,14 @@ class LovedSongsAdapter(
             val subtitle = itemView.findViewById<TextView>(R.id.subtitle)
 
             val song = lovedSong.first
-            title.text = MusicUtils.buildSpanned(
+            title.text = ThemeHelper.buildSpanned(
                 context.getString(
                     R.string.loved_song_title,
                     song.title,
                     song.artist
                 )
             )
-            subtitle.text = MusicUtils.buildSpanned(
+            subtitle.text = ThemeHelper.buildSpanned(
                 context.getString(
                     R.string.loved_song_subtitle,
                     MusicUtils.formatSongDuration(lovedSong.second.toLong(), false),

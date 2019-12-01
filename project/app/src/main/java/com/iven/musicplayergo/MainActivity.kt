@@ -401,7 +401,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         mPlayingSong.text = selectedSong.title
 
-        mPlayingArtist.text = MusicUtils.buildSpanned(
+        mPlayingArtist.text = ThemeHelper.buildSpanned(
             getString(
                 R.string.artist_and_album,
                 selectedSong.artist,
@@ -463,7 +463,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
 
         mArtistAlbumTextNP.text =
-            MusicUtils.buildSpanned(
+            ThemeHelper.buildSpanned(
                 getString(
                     R.string.artist_and_album,
                     selectedSong.artist,

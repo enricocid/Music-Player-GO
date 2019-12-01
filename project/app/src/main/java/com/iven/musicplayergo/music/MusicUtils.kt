@@ -6,13 +6,10 @@ import android.content.Context
 import android.content.res.Resources
 import android.database.Cursor
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
-import android.text.Html
-import android.text.Spanned
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.ui.Utils
 import java.util.*
@@ -114,17 +111,6 @@ object MusicUtils {
         var formatted = trackNumber
         if (trackNumber >= 1000) formatted = trackNumber % 1000
         return formatted
-    }
-
-    @JvmStatic
-    fun buildSpanned(res: String): Spanned {
-        return when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> Html.fromHtml(
-                res,
-                Html.FROM_HTML_MODE_LEGACY
-            )
-            else -> Html.fromHtml(res)
-        }
     }
 
     @JvmStatic

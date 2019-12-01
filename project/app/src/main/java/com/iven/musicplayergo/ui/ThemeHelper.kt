@@ -8,6 +8,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Handler
+import android.text.Html
+import android.text.Spanned
 import android.util.TypedValue
 import android.view.View
 import android.view.Window
@@ -184,6 +186,17 @@ object ThemeHelper {
             1 -> R.drawable.ic_music_note
             2 -> R.drawable.ic_folder
             else -> R.drawable.ic_more_horiz
+        }
+    }
+
+    @JvmStatic
+    fun buildSpanned(res: String): Spanned {
+        return when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> Html.fromHtml(
+                res,
+                Html.FROM_HTML_MODE_LEGACY
+            )
+            else -> Html.fromHtml(res)
         }
     }
 }

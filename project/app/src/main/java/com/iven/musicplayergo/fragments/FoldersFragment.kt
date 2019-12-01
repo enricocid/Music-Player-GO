@@ -3,10 +3,7 @@ package com.iven.musicplayergo.fragments
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver
+import android.view.*
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -55,6 +52,9 @@ class FoldersFragment : Fragment() {
 
     private lateinit var mUIControlInterface: UIControlInterface
 
+    private lateinit var mSortMenuItem: MenuItem
+    private var mSorting = R.id.ascending_sorting
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -91,7 +91,14 @@ class FoldersFragment : Fragment() {
                 mUIControlInterface.onCloseActivity()
             }
 
-            setMenuOnItemClickListener()
+            val menu = mSearchToolbar.menu
+
+            mSorting = goPreferences.artistsSorting
+            mSortMenuItem = menu.findItem(mSorting)
+
+            mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(context!!))
+
+            setMenuOnItemClickListener(menu)
 
             mFoldersRecyclerView = folders_rv
 
@@ -198,7 +205,7 @@ class FoldersFragment : Fragment() {
         }
     }
 
-    private fun setMenuOnItemClickListener() {
+    private fun setMenuOnItemClickListener(menu: Menu) {
         mSearchToolbar.setOnMenuItemClickListener {
 
             mFolders = Utils.getSortedList(
@@ -212,6 +219,19 @@ class FoldersFragment : Fragment() {
 
             mDataSource.set(mFolders)
 
+            mSortMenuItem.setTitleColor(
+                ThemeHelper.resolveColorAttr(
+                    context!!,
+                    android.R.attr.textColorPrimary
+                )
+            )
+
+            mSorting = it.itemId
+
+            mSortMenuItem = menu.findItem(mSorting)
+
+            mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(context!!))
+
             goPreferences.foldersSorting = it.itemId
 
             return@setOnMenuItemClickListener true
@@ -224,6 +244,12 @@ class FoldersFragment : Fragment() {
             musicLibrary.allSongsForFolder.keys.toMutableList(),
             musicLibrary.allSongsForFolder.keys.toMutableList()
         )
+    }
+
+    private fun MenuItem.setTitleColor(color: Int) {
+        val hexColor = Integer.toHexString(color).substring(2)
+        val html = "<font color='#$hexColor'>$title</font>"
+        this.title = ThemeHelper.buildSpanned(html)
     }
 
     //viewTreeObserver extension to measure layout params

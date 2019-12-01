@@ -222,7 +222,7 @@ class DetailsFragment : Fragment() {
                 withItem<Music, GenericViewHolder>(R.layout.song_item) {
                     onBind(::GenericViewHolder) { _, item ->
                         // GenericViewHolder is `this` here
-                        title.text = MusicUtils.buildSpanned(
+                        title.text = ThemeHelper.buildSpanned(
                             getString(
                                 R.string.track_song,
                                 MusicUtils.formatSongTrack(item.track),

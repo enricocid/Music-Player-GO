@@ -16,7 +16,7 @@ import androidx.core.app.NotificationCompat
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.music.MusicUtils
+import com.iven.musicplayergo.ui.ThemeHelper
 
 // Notification params
 private const val CHANNEL_ID = "com.iven.musicplayergo.CHANNEL_ID"
@@ -93,7 +93,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             .setLargeIcon(getLargeIcon())
             .setColor(Color.LTGRAY)
             .setContentTitle(
-                MusicUtils.buildSpanned(
+                ThemeHelper.buildSpanned(
                     playerService.getString(
                         R.string.song_title_notification,
                         song?.title
@@ -101,7 +101,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                 )
             )
             .setContentText(
-                MusicUtils.buildSpanned(
+                ThemeHelper.buildSpanned(
                     playerService.getString(
                         R.string.artist_and_album,
                         song?.artist,
