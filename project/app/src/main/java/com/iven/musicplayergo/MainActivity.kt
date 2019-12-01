@@ -463,12 +463,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
 
         mArtistAlbumTextNP.text =
-            ThemeHelper.buildSpanned(
-                getString(
-                    R.string.artist_and_album,
-                    selectedSong.artist,
-                    selectedSong.album
-                )
+            getString(
+                R.string.artist_and_album,
+                selectedSong.artist,
+                selectedSong.album
             )
 
         mSongSeekTextNP.text =
