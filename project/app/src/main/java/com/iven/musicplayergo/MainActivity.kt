@@ -121,9 +121,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         return ::mNowPlayingDialog.isInitialized && mNowPlayingDialog.isShowing
     }
 
-    private fun checkIsPlayer(): Boolean {
+    private fun checkIsPlayer(showError: Boolean): Boolean {
         val isPlayer = mMediaPlayerHolder.isMediaPlayer
-        if (!isPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs) EqualizerUtils.notifyNoSessionId(
+        if (!isPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs && showError) EqualizerUtils.notifyNoSessionId(
             this
         )
         return isPlayer
@@ -202,7 +202,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onAddToQueue(song: Music) {
-        if (checkIsPlayer()) {
+        if (checkIsPlayer(true)) {
             if (mMediaPlayerHolder.queueSongs.isEmpty()) mMediaPlayerHolder.setQueueEnabled(true)
             mMediaPlayerHolder.queueSongs.add(song)
         }
@@ -284,7 +284,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
 
         mQueueButton.setOnLongClickListener {
-            if (checkIsPlayer() && mMediaPlayerHolder.isQueue) Utils.showClearQueueSongDialog(
+            if (checkIsPlayer(true) && mMediaPlayerHolder.isQueue) Utils.showClearQueueSongDialog(
                 this,
                 mMediaPlayerHolder
             )
@@ -310,18 +310,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun setRepeat() {
-        if (checkIsPlayer()) {
+        if (checkIsPlayer(true)) {
             mMediaPlayerHolder.reset()
             updateResetStatus(false)
         }
     }
 
     private fun resumeOrPause() {
-        if (checkIsPlayer()) mMediaPlayerHolder.resumeOrPause()
+        if (checkIsPlayer(true)) mMediaPlayerHolder.resumeOrPause()
     }
 
     private fun skip(isNext: Boolean) {
-        if (checkIsPlayer()) {
+        if (checkIsPlayer(true)) {
             if (!mMediaPlayerHolder.isPlay) mMediaPlayerHolder.isPlay = true
             if (mMediaPlayerHolder.isSongRestoredFromPrefs) mMediaPlayerHolder.isSongRestoredFromPrefs =
                 false
@@ -505,7 +505,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     fun openQueueDialog(view: View) {
-        if (checkIsPlayer() && mMediaPlayerHolder.queueSongs.isNotEmpty())
+        if (checkIsPlayer(false) && mMediaPlayerHolder.queueSongs.isNotEmpty())
             mQueueDialog = Utils.showQueueSongsDialog(this, mMediaPlayerHolder)!!
         else
             Utils.makeToast(
@@ -514,7 +514,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     fun openLovedSongsDialog(view: View) {
-        if (goPreferences.lovedSongs != null && goPreferences.lovedSongs!!.isNotEmpty())
+        if (!goPreferences.lovedSongs.isNullOrEmpty())
             Utils.showLovedSongsDialog(this, this, mMediaPlayerHolder)
         else
             Utils.makeToast(
@@ -880,7 +880,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     fun openEqualizer(view: View) {
         when {
-            EqualizerUtils.hasEqualizer(this) -> if (checkIsPlayer()) mMediaPlayerHolder.openEqualizer(
+            EqualizerUtils.hasEqualizer(this) -> if (checkIsPlayer(true)) mMediaPlayerHolder.openEqualizer(
                 this
             )
             else -> Utils.makeToast(
