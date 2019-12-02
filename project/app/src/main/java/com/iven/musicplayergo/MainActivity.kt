@@ -220,7 +220,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onArtistOrFolderSelected(artistOrFolder: String, isFolder: Boolean) {
-        openDetailsFragment(artistOrFolder, isFolder)
+        openDetailsFragment(
+            artistOrFolder,
+            isFolder,
+            mMediaPlayerHolder.isPlaying && mMediaPlayerHolder.currentSong?.first?.artist == artistOrFolder
+        )
     }
 
     override fun onShuffleSongs(songs: MutableList<Music>) {
@@ -497,7 +501,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             if (::mDetailsFragment.isInitialized && mDetailsFragment.isAdded && !mDetailsFragment.isFolder)
                 mDetailsFragment.updateView(selectedSong.artist!!)
             else
-                openDetailsFragment(selectedSong.artist!!, false)
+                openDetailsFragment(selectedSong.artist!!, isFolder = false, showPlaying = true)
 
             mNowPlayingDialog.dismiss()
         }
@@ -743,9 +747,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         else mTabLayout.getTabAt(tabIndex)?.icon?.setTint(ThemeHelper.resolveThemeAccent(this))
     }
 
-    private fun openDetailsFragment(selectedArtistOrFolder: String, isFolder: Boolean) {
+    private fun openDetailsFragment(
+        selectedArtistOrFolder: String,
+        isFolder: Boolean,
+        showPlaying: Boolean
+    ) {
 
-        mDetailsFragment = DetailsFragment.newInstance(selectedArtistOrFolder, isFolder)
+        mDetailsFragment =
+            DetailsFragment.newInstance(selectedArtistOrFolder, isFolder)
         supportFragmentManager.beginTransaction()
             .replace(
                 R.id.container,
