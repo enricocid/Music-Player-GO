@@ -10,7 +10,6 @@
         android:id="@+id/details_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:layout_marginBottom="8dp"
         android:background="?android:attr/windowBackground"
         android:theme="@style/SearchBarStyle"
         app:collapseIcon="@drawable/ic_navigate_before"
@@ -22,8 +21,43 @@
         android:id="@+id/albums_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:overScrollMode="never" />
+
+    <!-- SELECTED ALBUM -->
+    <LinearLayout
+        android:id="@+id/selected_album_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/selected_album"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textAlignment="textEnd"
+            android:textAppearance="@android:style/TextAppearance.Material.Widget.Toolbar.Subtitle"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/album_year_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:singleLine="true"
+            android:textAlignment="textEnd"
+            android:textAppearance="@android:style/TextAppearance.Material.Caption"
+            android:textColor="?android:attr/textColorSecondary" />
+    </LinearLayout>
 
     <!-- DISC SONGS -->
     <androidx.recyclerview.widget.RecyclerView

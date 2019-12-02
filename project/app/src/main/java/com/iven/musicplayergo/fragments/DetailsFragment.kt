@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -43,6 +44,9 @@ class DetailsFragment : Fragment() {
     private lateinit var mArtistDetailsAnimator: Animator
 
     private lateinit var mDetailsToolbar: Toolbar
+
+    private lateinit var mSelectedAlbumTitle: TextView
+    private lateinit var mSelectedAlbumYearDuration: TextView
 
     private lateinit var mSelectedAlbumsDataSource: DataSource<Any>
     private lateinit var mSongsDataSource: DataSource<Any>
@@ -130,6 +134,8 @@ class DetailsFragment : Fragment() {
             }
 
             mAlbumsRecyclerView = albums_rv
+            mSelectedAlbumTitle = selected_album
+            mSelectedAlbumYearDuration = album_year_duration
             mSongsRecyclerView = songs_rv
 
             if (!isFolder) {
@@ -138,6 +144,18 @@ class DetailsFragment : Fragment() {
                 mSongsForArtistOrFolder =
                     musicLibrary.allSongsForArtist.getValue(mSelectedArtistOrFolder)
                 mSelectedAlbum = mSelectedArtistAlbums[0]
+
+                selected_album_container.setOnClickListener {
+                    mAlbumsRecyclerView.scrollToPosition(
+                        mSelectedArtistAlbums.indexOf(
+                            mSelectedAlbum
+                        )
+                    )
+                }
+
+                mSelectedAlbumTitle.isSelected = true
+
+                updateSelectedAlbumTitle()
 
                 mSelectedAlbumsDataSource = dataSourceOf(mSelectedArtistAlbums)
 
@@ -187,6 +205,7 @@ class DetailsFragment : Fragment() {
                                     ).second
                                 )
                                 mSelectedAlbum = item
+                                updateSelectedAlbumTitle()
                                 swapAlbum(item.music)
                             }
                         }
@@ -196,6 +215,8 @@ class DetailsFragment : Fragment() {
             } else {
 
                 mAlbumsRecyclerView.visibility = View.GONE
+                mSelectedAlbumTitle.visibility = View.GONE
+                mSelectedAlbumYearDuration.visibility = View.GONE
 
                 mSongsForArtistOrFolder =
                     musicLibrary.allSongsForFolder.getValue(mSelectedArtistOrFolder)
@@ -294,6 +315,15 @@ class DetailsFragment : Fragment() {
             mSelectedAlbumsDataSource.set(mSelectedArtistAlbums)
             mSongsDataSource.set(mSelectedAlbum.music!!)
         }
+    }
+
+    private fun updateSelectedAlbumTitle() {
+        mSelectedAlbumTitle.text = mSelectedAlbum.title
+        mSelectedAlbumYearDuration.text = getString(
+            R.string.year_and_duration,
+            mSelectedAlbum.year,
+            MusicUtils.formatSongDuration(mSelectedAlbum.totalDuration!!, true)
+        )
     }
 
     private fun swapAlbum(songs: MutableList<Music>?) {
