@@ -88,7 +88,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         notificationBuilder!!
             .setShowWhen(false)
             .setStyle(style)
-            .setSmallIcon(R.drawable.music_notification)
+            .setSmallIcon(R.drawable.ic_music_note)
             .setLargeIcon(getLargeIcon())
             .setColor(ThemeHelper.resolveThemeAccent(playerService))
             .setContentTitle(
