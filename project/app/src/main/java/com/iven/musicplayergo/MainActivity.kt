@@ -194,6 +194,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED) showPermissionRationale() else doBindService()
     }
 
+    override fun onAccentUpdated() {
+        if (mMediaPlayerHolder.isPlaying) mMediaPlayerHolder.updateNotification()
+    }
+
     override fun onSongSelected(song: Music, songs: List<Music>) {
         mMediaPlayerHolder.isSongRestoredFromPrefs = false
         if (!mMediaPlayerHolder.isPlay) mMediaPlayerHolder.isPlay = true

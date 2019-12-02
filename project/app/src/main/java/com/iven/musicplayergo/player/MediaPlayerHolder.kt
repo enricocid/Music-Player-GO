@@ -120,6 +120,18 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private var mNotificationActionsReceiver: NotificationReceiver? = null
     private lateinit var mMusicNotificationManager: MusicNotificationManager
 
+    private fun startForeground() {
+        playerService.startForeground(
+            NOTIFICATION_ID,
+            mMusicNotificationManager.createNotification()
+        )
+    }
+
+    fun updateNotification() {
+        mMusicNotificationManager.notificationManager
+            .notify(NOTIFICATION_ID, mMusicNotificationManager.createNotification())
+    }
+
     private fun registerActionsReceiver() {
         mNotificationActionsReceiver = NotificationReceiver()
         val intentFilter = IntentFilter()
@@ -247,10 +259,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             if (isMediaPlayer) mediaPlayer!!.start()
             setStatus(if (isSongRestoredFromPrefs) PLAYING else RESUMED)
 
-            playerService.startForeground(
-                NOTIFICATION_ID,
-                mMusicNotificationManager.createNotification()
-            )
+            startForeground()
 
             isSongRestoredFromPrefs = false
             if (!isPlay) isPlay = true
@@ -261,8 +270,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         setStatus(PAUSED)
         mediaPlayer!!.pause()
         playerService.stopForeground(false)
-        mMusicNotificationManager.notificationManager
-            .notify(NOTIFICATION_ID, mMusicNotificationManager.createNotification())
+        updateNotification()
     }
 
     private fun resetSong() {
@@ -414,10 +422,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (isPlay) {
             setStatus(PLAYING)
             mediaPlayer.start()
-            playerService.startForeground(
-                NOTIFICATION_ID,
-                mMusicNotificationManager.createNotification()
-            )
+            startForeground()
         }
     }
 

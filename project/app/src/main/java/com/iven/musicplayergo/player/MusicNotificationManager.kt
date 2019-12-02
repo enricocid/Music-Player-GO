@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.appcompat.content.res.AppCompatResources
@@ -48,7 +47,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         val canvas = Canvas(bitmap)
 
         vectorDrawable?.setBounds(0, 0, canvas.width, canvas.height)
-        vectorDrawable?.setTint(Color.LTGRAY)
+        vectorDrawable?.setTint(ThemeHelper.resolveThemeAccent(playerService))
         vectorDrawable?.alpha = 150
         vectorDrawable?.draw(canvas)
 
@@ -91,7 +90,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             .setStyle(style)
             .setSmallIcon(R.drawable.music_notification)
             .setLargeIcon(getLargeIcon())
-            .setColor(Color.LTGRAY)
+            .setColor(ThemeHelper.resolveThemeAccent(playerService))
             .setContentTitle(
                 ThemeHelper.buildSpanned(
                     playerService.getString(
@@ -122,11 +121,11 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     private fun notificationAction(action: String): NotificationCompat.Action {
 
         var icon: Int =
-            if (playerService.mediaPlayerHolder!!.state != PAUSED) R.drawable.ic_pause_notification else R.drawable.ic_play_notification
+            if (playerService.mediaPlayerHolder!!.state != PAUSED) R.drawable.ic_pause else R.drawable.ic_play
 
         when (action) {
-            PREV_ACTION -> icon = R.drawable.ic_skip_previous_notification
-            NEXT_ACTION -> icon = R.drawable.ic_skip_next_notification
+            PREV_ACTION -> icon = R.drawable.ic_skip_previous
+            NEXT_ACTION -> icon = R.drawable.ic_skip_next
             CLOSE_ACTION -> icon = R.drawable.ic_round_close
         }
 

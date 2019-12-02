@@ -24,6 +24,7 @@ import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.ui.Utils
 
+
 class PreferencesFragment : PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -128,12 +129,13 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+
         if (activity != null && key == getString(R.string.theme_pref) || key == getString(R.string.tabs_pref) || key == getString(
                 R.string.edge_pref
             )
         ) ThemeHelper.applyNewThemeSmoothly(
             activity!!
-        )
+        ) else if (key == getString(R.string.accent_pref)) mUIControlInterface.onAccentUpdated()
     }
 
     private fun showAccentDialog() {
