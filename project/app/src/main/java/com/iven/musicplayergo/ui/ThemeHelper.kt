@@ -102,7 +102,7 @@ object ThemeHelper {
         Pair(R.color.yellow, R.style.BaseTheme_Yellow),
         Pair(R.color.amber, R.style.BaseTheme_Amber),
         Pair(R.color.orange, R.style.BaseTheme_Orange),
-        Pair(R.color.deep_orange, R.style.BaseTheme_DeepOrange),
+        Pair(R.color.deepOrange, R.style.BaseTheme_DeepOrange),
         Pair(R.color.brown, R.style.BaseTheme_Brown),
         Pair(R.color.grey, R.style.BaseTheme_Grey),
         Pair(R.color.blue_grey, R.style.BaseTheme_BlueGrey)
@@ -187,6 +187,7 @@ object ThemeHelper {
     }
 
     @JvmStatic
+    @Suppress("DEPRECATION")
     fun buildSpanned(res: String): Spanned {
         return when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> Html.fromHtml(

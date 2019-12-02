@@ -92,8 +92,9 @@
     </style>
 
     <style name="BaseTheme.DeepOrange" parent="BaseTheme">
-        <item name="colorAccent">@color/deep_orange</item>
-        <item name="colorPrimary">@color/deepOrangePrimaryDark</item>
+        <item name="colorAccent">@color/deepOrange</item>
+        <item name="colorPrimary">@color/deepOrange</item>
+        <item name="colorPrimaryDark">@color/deepOrangePrimaryDark</item>
     </style>
 
     <style name="BaseTheme.Brown" parent="BaseTheme">
