@@ -6,11 +6,8 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.NotificationCompat
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.MainActivity
@@ -18,15 +15,15 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.ui.ThemeHelper
 
 // Notification params
-private const val CHANNEL_ID = "com.iven.musicplayergo.CHANNEL_ID"
+private const val CHANNEL_ID = "CHANNEL_ID_GO"
 private const val REQUEST_CODE = 100
 const val NOTIFICATION_ID = 101
 
 // Notification actions
-const val PLAY_PAUSE_ACTION = "com.iven.musicplayergo.PLAYPAUSE"
-const val NEXT_ACTION = "com.iven.musicplayergo.NEXT"
-const val PREV_ACTION = "com.iven.musicplayergo.PREV"
-const val CLOSE_ACTION = "com.iven.musicplayergo.CLOSE"
+const val PLAY_PAUSE_ACTION = "PLAY_PAUSE_GO"
+const val NEXT_ACTION = "NEXT_GO"
+const val PREV_ACTION = "PREV_GO"
+const val CLOSE_ACTION = "CLOSE_GO"
 
 class MusicNotificationManager(private val playerService: PlayerService) {
 
@@ -34,25 +31,6 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     val notificationManager: NotificationManager =
         playerService.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     var notificationBuilder: NotificationCompat.Builder? = null
-
-    //https://gist.github.com/Gnzlt/6ddc846ef68c587d559f1e1fcd0900d3
-    private fun getLargeIcon(): Bitmap {
-
-        val vectorDrawable =
-            AppCompatResources.getDrawable(playerService, R.drawable.music_notification)
-
-        val largeIconSize =
-            playerService.resources.getDimensionPixelSize(R.dimen.notification_large_dim)
-        val bitmap = Bitmap.createBitmap(largeIconSize, largeIconSize, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-
-        vectorDrawable?.setBounds(0, 0, canvas.width, canvas.height)
-        vectorDrawable?.setTint(ThemeHelper.resolveThemeAccent(playerService))
-        vectorDrawable?.alpha = 150
-        vectorDrawable?.draw(canvas)
-
-        return bitmap
-    }
 
     private fun playerAction(action: String): PendingIntent {
 
@@ -89,7 +67,6 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             .setShowWhen(false)
             .setStyle(style)
             .setSmallIcon(R.drawable.ic_music_note)
-            .setLargeIcon(getLargeIcon())
             .setColor(ThemeHelper.resolveThemeAccent(playerService))
             .setContentTitle(
                 ThemeHelper.buildSpanned(
@@ -128,7 +105,6 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             NEXT_ACTION -> icon = R.drawable.ic_skip_next
             CLOSE_ACTION -> icon = R.drawable.ic_round_close
         }
-
         return NotificationCompat.Action.Builder(icon, action, playerAction(action)).build()
     }
 
