@@ -585,9 +585,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> resumeOrPause()
                     KeyEvent.KEYCODE_MEDIA_CLOSE -> stopPlaybackService(true)
                     KeyEvent.KEYCODE_MEDIA_PREVIOUS -> skip(false)
-                    KeyEvent.KEYCODE_MEDIA_NEXT -> skip(false)
+                    KeyEvent.KEYCODE_MEDIA_NEXT -> skip(true)
                     KeyEvent.KEYCODE_MEDIA_STOP -> stopPlaybackService(true)
-                    KeyEvent.KEYCODE_MEDIA_REWIND -> instantReset()
+                    KeyEvent.KEYCODE_MEDIA_REWIND -> resetSong()
                     KeyEvent.KEYCODE_MEDIA_PAUSE -> pauseMediaPlayer()
                     KeyEvent.KEYCODE_MEDIA_PLAY -> resumeMediaPlayer()
                 }
