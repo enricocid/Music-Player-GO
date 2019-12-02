@@ -11,7 +11,7 @@ import com.iven.musicplayergo.ui.Utils
 
 object EqualizerUtils {
 
-    fun hasEqualizer(context: Context): Boolean {
+    private fun hasEqualizer(context: Context): Boolean {
         val effects = Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL)
         val pm = context.packageManager
         val ri = pm.resolveActivity(effects, 0)
@@ -34,19 +34,30 @@ object EqualizerUtils {
     }
 
     internal fun openEqualizer(activity: Activity, mediaPlayer: MediaPlayer) {
-        when (mediaPlayer.audioSessionId) {
-            AudioEffect.ERROR_BAD_VALUE -> notifyNoSessionId(activity)
-            else -> {
-                try {
-                    val effects = Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL)
-                    effects.putExtra(AudioEffect.EXTRA_AUDIO_SESSION, mediaPlayer.audioSessionId)
-                    effects.putExtra(AudioEffect.EXTRA_CONTENT_TYPE, AudioEffect.CONTENT_TYPE_MUSIC)
-                    activity.startActivityForResult(effects, 0)
-                } catch (notFound: ActivityNotFoundException) {
-                    notFound.printStackTrace()
+        if (hasEqualizer(activity))
+            when (mediaPlayer.audioSessionId) {
+                AudioEffect.ERROR_BAD_VALUE -> notifyNoSessionId(activity)
+                else -> {
+                    try {
+                        val effects = Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL)
+                        effects.putExtra(
+                            AudioEffect.EXTRA_AUDIO_SESSION,
+                            mediaPlayer.audioSessionId
+                        )
+                        effects.putExtra(
+                            AudioEffect.EXTRA_CONTENT_TYPE,
+                            AudioEffect.CONTENT_TYPE_MUSIC
+                        )
+                        activity.startActivityForResult(effects, 0)
+                    } catch (notFound: ActivityNotFoundException) {
+                        notFound.printStackTrace()
+                    }
                 }
-            }
-        }
+            } else
+            Utils.makeToast(
+                activity,
+                activity.getString(R.string.no_eq)
+            )
     }
 
     fun notifyNoSessionId(context: Context) {

@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mSkipPrevButtonNP: ImageView
     private lateinit var mPlayPauseButtonNP: ImageView
     private lateinit var mSkipNextButtonNP: ImageView
-    private lateinit var mReplayNP: ImageView
+    private lateinit var mRepeatNP: ImageView
     private lateinit var mVolumeSeekBarNP: SeekBar
     private lateinit var mLoveButtonNP: ImageView
     private lateinit var mVolumeNP: ImageView
@@ -350,14 +350,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     //interface to let MediaPlayerHolder update the UI media player controls
     val mediaPlayerInterface = object : MediaPlayerInterface {
 
-        override fun onClose() {
-
-            //finish activity if visible
-            finishAndRemoveTask()
-        }
-
         override fun onPlaybackCompleted() {
             updateResetStatus(true)
+        }
+
+        override fun onUpdateResetStatus() {
+            updateResetStatus(false)
+        }
+
+        override fun onClose() {
+            //finish activity if visible
+            finishAndRemoveTask()
         }
 
         override fun onPositionChanged(position: Int) {
@@ -478,14 +481,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
             val defaultIconsColor =
                 ThemeHelper.resolveColorAttr(this, android.R.attr.textColorPrimary)
+
             when {
-                onPlaybackCompletion -> ThemeHelper.updateIconTint(mReplayNP, defaultIconsColor)
+                onPlaybackCompletion -> ThemeHelper.updateIconTint(mRepeatNP, defaultIconsColor)
                 mMediaPlayerHolder.isReset -> ThemeHelper.updateIconTint(
-                    mReplayNP,
+                    mRepeatNP,
                     ThemeHelper.resolveThemeAccent(this)
                 )
-
-                else -> ThemeHelper.updateIconTint(mReplayNP, defaultIconsColor)
+                else -> ThemeHelper.updateIconTint(mRepeatNP, defaultIconsColor)
             }
         }
     }
@@ -874,8 +877,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mSkipNextButtonNP = getCustomView().findViewById(R.id.np_skip_next)
                 mSkipNextButtonNP.setOnClickListener { skip(true) }
 
-                mReplayNP = getCustomView().findViewById(R.id.np_replay)
-                mReplayNP.setOnClickListener { setRepeat() }
+                mRepeatNP = getCustomView().findViewById(R.id.np_repeat)
+
+                ThemeHelper.updateIconTint(
+                    mRepeatNP,
+                    if (mMediaPlayerHolder.isReset) ThemeHelper.resolveThemeAccent(this@MainActivity) else
+                        ThemeHelper.resolveColorAttr(
+                            this@MainActivity,
+                            android.R.attr.textColorPrimary
+                        )
+                )
+
+                mRepeatNP.setOnClickListener { setRepeat() }
 
                 mLoveButtonNP = getCustomView().findViewById(R.id.np_love)
                 mLoveButtonNP.setOnClickListener {
@@ -908,15 +921,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     fun openEqualizer(view: View) {
-        when {
-            EqualizerUtils.hasEqualizer(this) -> if (checkIsPlayer(true)) mMediaPlayerHolder.openEqualizer(
-                this
-            )
-            else -> Utils.makeToast(
-                this@MainActivity,
-                getString(R.string.no_eq)
-            )
-        }
+        if (checkIsPlayer(true)) mMediaPlayerHolder.openEqualizer(this)
     }
 
     /**

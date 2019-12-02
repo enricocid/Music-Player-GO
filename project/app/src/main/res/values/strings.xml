@@ -49,6 +49,8 @@
     <string name="error_unknown_unsupported">Something went wrong! :( Probably the chosen format is not supported or folder is not accessible (not an app\'s fault!)</string>
     <string name="error_no_music">No music found!</string>
     <string name="on_close_activity">Do You want to stop playback?</string>
+    <string name="repeat_enabled">Repeat 1x enabled!</string>
+    <string name="repeat_disabled">Repeat 1x disabled!</string>
 
     <!-- Settings -->
     <!-- Preferences -->

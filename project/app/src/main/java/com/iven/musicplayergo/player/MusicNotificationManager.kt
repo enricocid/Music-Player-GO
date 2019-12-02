@@ -20,9 +20,10 @@ private const val REQUEST_CODE = 100
 const val NOTIFICATION_ID = 101
 
 // Notification actions
+const val PREV_ACTION = "PREV_GO"
 const val PLAY_PAUSE_ACTION = "PLAY_PAUSE_GO"
 const val NEXT_ACTION = "NEXT_GO"
-const val PREV_ACTION = "PREV_GO"
+const val REPEAT_ACTION = "REPEAT_GO"
 const val CLOSE_ACTION = "CLOSE_GO"
 
 class MusicNotificationManager(private val playerService: PlayerService) {
@@ -61,7 +62,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         )
 
         val style = MediaStyle()
-        style.setShowActionsInCompactView(0, 1, 2)
+        style.setShowActionsInCompactView(1, 2, 3)
 
         notificationBuilder!!
             .setShowWhen(false)
@@ -86,6 +87,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                 )
             )
             .setContentIntent(contentIntent)
+            .addAction(notificationAction(REPEAT_ACTION))
             .addAction(notificationAction(PREV_ACTION))
             .addAction(notificationAction(PLAY_PAUSE_ACTION))
             .addAction(notificationAction(NEXT_ACTION))
@@ -101,6 +103,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             if (playerService.mediaPlayerHolder!!.state != PAUSED) R.drawable.ic_pause else R.drawable.ic_play
 
         when (action) {
+            REPEAT_ACTION -> icon = R.drawable.ic_repeat_one
             PREV_ACTION -> icon = R.drawable.ic_skip_previous
             NEXT_ACTION -> icon = R.drawable.ic_skip_next
             CLOSE_ACTION -> icon = R.drawable.ic_round_close

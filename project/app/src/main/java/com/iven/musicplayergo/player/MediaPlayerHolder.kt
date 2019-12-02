@@ -17,8 +17,10 @@ import android.os.Parcelable
 import android.os.PowerManager
 import android.view.KeyEvent
 import com.iven.musicplayergo.MainActivity
+import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.music.Music
+import com.iven.musicplayergo.ui.Utils
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -132,9 +134,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             .notify(NOTIFICATION_ID, mMusicNotificationManager.createNotification())
     }
 
-    private fun registerActionsReceiver() {
+    fun registerActionsReceiver() {
         mNotificationActionsReceiver = NotificationReceiver()
         val intentFilter = IntentFilter()
+        intentFilter.addAction(REPEAT_ACTION)
         intentFilter.addAction(PREV_ACTION)
         intentFilter.addAction(PLAY_PAUSE_ACTION)
         intentFilter.addAction(NEXT_ACTION)
@@ -147,11 +150,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         playerService.registerReceiver(mNotificationActionsReceiver, intentFilter)
     }
 
-    private fun unregisterActionsReceiver() {
+    fun unregisterActionsReceiver() {
         if (mNotificationActionsReceiver != null) {
             try {
                 playerService.unregisterReceiver(mNotificationActionsReceiver)
-                playerService.unregisterReceiver(mMediaButtonsReceiver)
             } catch (e: IllegalArgumentException) {
                 e.printStackTrace()
             }
@@ -174,10 +176,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 e.printStackTrace()
             }
         }
-    }
-
-    fun registerActionsReceiver(isReceiver: Boolean) {
-        if (isReceiver) registerActionsReceiver() else unregisterActionsReceiver()
     }
 
     fun setCurrentSong(song: Music, songs: List<Music>, isFromQueue: Boolean) {
@@ -392,6 +390,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             }
 
             tryToGetAudioFocus()
+
             registerMediaButtonsReceiver()
 
             mediaPlayer!!.setDataSource(song.path)
@@ -449,6 +448,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun reset() {
         isReset = !isReset
+        Utils.makeToast(
+            playerService,
+            playerService.getString(if (isReset) R.string.repeat_enabled else R.string.repeat_disabled)
+        )
     }
 
     fun setQueueEnabled(enabled: Boolean) {
@@ -547,6 +550,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     PREV_ACTION -> instantReset()
                     PLAY_PAUSE_ACTION -> resumeOrPause()
                     NEXT_ACTION -> skip(true)
+                    REPEAT_ACTION -> {
+                        reset()
+                        mediaPlayerInterface.onUpdateResetStatus()
+                    }
                     CLOSE_ACTION -> if (playerService.isRunning && mediaPlayer != null) stopPlaybackService(
                         true
                     )
