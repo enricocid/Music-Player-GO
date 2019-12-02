@@ -42,9 +42,8 @@
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:textAlignment="textEnd"
-            android:textAppearance="@android:style/TextAppearance.Material.Widget.Toolbar.Subtitle"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textStyle="bold" />
+            android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+            android:textColor="?colorPrimary" />
 
         <TextView
             android:id="@+id/album_year_duration"
