@@ -93,7 +93,7 @@ class FoldersFragment : Fragment() {
 
             val menu = mSearchToolbar.menu
 
-            mSorting = goPreferences.artistsSorting
+            mSorting = goPreferences.foldersSorting
             mSortMenuItem = menu.findItem(mSorting)
 
             mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(context!!))
@@ -163,7 +163,7 @@ class FoldersFragment : Fragment() {
         mIndicatorFastScrollerView = fastscroller
         mIndicatorFastScrollThumb = fastscroller_thumb
 
-        if (goPreferences.foldersSorting == R.id.default_sorting) mIndicatorFastScrollerView.visibility =
+        if (mSorting == R.id.default_sorting) mIndicatorFastScrollerView.visibility =
             View.GONE
 
         //set indexes if artists rv is scrollable
@@ -240,7 +240,7 @@ class FoldersFragment : Fragment() {
 
     private fun setupFilteredFolders() {
         mFolders = Utils.getSortedList(
-            goPreferences.foldersSorting,
+            mSorting,
             musicLibrary.allSongsForFolder.keys.toMutableList(),
             musicLibrary.allSongsForFolder.keys.toMutableList()
         )
