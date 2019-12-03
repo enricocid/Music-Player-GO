@@ -10,7 +10,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -19,6 +18,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -49,6 +49,12 @@ import kotlinx.android.synthetic.main.player_controls_panel.*
 
 @Suppress("UNUSED_PARAMETER")
 class MainActivity : AppCompatActivity(), UIControlInterface {
+
+    //colors
+    private var mResolvedAccentColor = 0
+    private var mResolvedAlphaAccentColor = 0
+    private var mResolvedIconsColor = 0
+    private var mResolvedDisabledIconsColor = 0
 
     //fragments
     private lateinit var mArtistsFragment: ArtistsFragment
@@ -194,6 +200,57 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED) showPermissionRationale() else doBindService()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        //set ui theme
+        setTheme(ThemeHelper.getAccentedTheme().first)
+        ThemeHelper.applyTheme(this, goPreferences.theme!!)
+
+        mResolvedAccentColor = ThemeHelper.resolveThemeAccent(this)
+        mResolvedAlphaAccentColor = ThemeHelper.getAlphaAccent(this, 50)
+        mResolvedIconsColor = ThemeHelper.resolveColorAttr(this, android.R.attr.textColorPrimary)
+        mResolvedDisabledIconsColor =
+            ThemeHelper.resolveColorAttr(this, android.R.attr.colorButtonNormal)
+
+        setContentView(R.layout.main_activity)
+
+        mControlsPaddingNormal =
+            resources.getDimensionPixelSize(R.dimen.player_controls_padding_normal)
+        mControlsPaddingEnd = resources.getDimensionPixelSize(R.dimen.player_controls_padding_end)
+        mControlsPaddingNoTabs =
+            resources.getDimensionPixelSize(R.dimen.player_controls_padding_no_tabs)
+
+        //init views
+        getViews()
+        mPlayPauseButton.setOnClickListener { resumeOrPause() }
+
+        mPlayPauseButton.setOnLongClickListener {
+
+            return@setOnLongClickListener true
+        }
+
+        onLovedSongsUpdate(false)
+
+        mLovedSongsButton.setOnLongClickListener {
+            if (!goPreferences.lovedSongs.isNullOrEmpty()) Utils.showClearLovedSongDialog(
+                this,
+                this
+            )
+            return@setOnLongClickListener true
+        }
+
+        mQueueButton.setOnLongClickListener {
+            if (checkIsPlayer(true) && mMediaPlayerHolder.isQueue) Utils.showClearQueueDialog(
+                this,
+                mMediaPlayerHolder
+            )
+            return@setOnLongClickListener true
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else doBindService()
+    }
+
     override fun onAccentUpdated() {
         if (mMediaPlayerHolder.isPlaying) mMediaPlayerHolder.updateNotification()
     }
@@ -245,8 +302,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
 
         val lovedSongsButtonColor = if (lovedSongs.isNullOrEmpty())
-            ThemeHelper.resolveColorAttr(this, android.R.attr.colorButtonNormal) else
-            ThemeHelper.getColor(this, R.color.red, ThemeHelper.resolveThemeAccent(this))
+            mResolvedDisabledIconsColor else
+            ContextCompat.getColor(this, R.color.red)
         ThemeHelper.updateIconTint(mLovedSongsButton, lovedSongsButtonColor)
         val songsNumber = if (lovedSongs.isNullOrEmpty()) 0 else lovedSongs.size
         mLoveSongsNumber.text = songsNumber.toString()
@@ -265,51 +322,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             window,
             mainView
         )
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        //set ui theme
-        setTheme(ThemeHelper.getAccentedTheme().first)
-        ThemeHelper.applyTheme(this, goPreferences.theme!!)
-
-        setContentView(R.layout.main_activity)
-
-        mControlsPaddingNormal =
-            resources.getDimensionPixelSize(R.dimen.player_controls_padding_normal)
-        mControlsPaddingEnd = resources.getDimensionPixelSize(R.dimen.player_controls_padding_end)
-        mControlsPaddingNoTabs =
-            resources.getDimensionPixelSize(R.dimen.player_controls_padding_no_tabs)
-
-        //init views
-        getViews()
-        mPlayPauseButton.setOnClickListener { resumeOrPause() }
-
-        mPlayPauseButton.setOnLongClickListener {
-
-            return@setOnLongClickListener true
-        }
-
-        onLovedSongsUpdate(false)
-
-        mLovedSongsButton.setOnLongClickListener {
-            if (!goPreferences.lovedSongs.isNullOrEmpty()) Utils.showClearLovedSongDialog(
-                this,
-                this
-            )
-            return@setOnLongClickListener true
-        }
-
-        mQueueButton.setOnLongClickListener {
-            if (checkIsPlayer(true) && mMediaPlayerHolder.isQueue) Utils.showClearQueueDialog(
-                this,
-                mMediaPlayerHolder
-            )
-            return@setOnLongClickListener true
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else doBindService()
     }
 
     private fun updatePlayingStatus(isNowPlaying: Boolean) {
@@ -385,7 +397,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         override fun onQueueEnabled() {
             ThemeHelper.updateIconTint(
                 mQueueButton,
-                ThemeHelper.resolveColorAttr(this@MainActivity, android.R.attr.textColorPrimary)
+                mResolvedIconsColor
             )
         }
 
@@ -395,12 +407,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         override fun onQueueStartedOrEnded(started: Boolean) {
             ThemeHelper.updateIconTint(
-                mQueueButton, if (started) ThemeHelper.resolveThemeAccent(this@MainActivity)
+                mQueueButton, if (started) mResolvedAccentColor
                 else
-                    ThemeHelper.resolveColorAttr(
-                        this@MainActivity,
-                        android.R.attr.colorButtonNormal
-                    )
+                    mResolvedDisabledIconsColor
             )
         }
     }
@@ -479,16 +488,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun updateResetStatus(onPlaybackCompletion: Boolean) {
         if (isNowPlaying()) {
 
-            val defaultIconsColor =
-                ThemeHelper.resolveColorAttr(this, android.R.attr.textColorPrimary)
-
             when {
-                onPlaybackCompletion -> ThemeHelper.updateIconTint(mRepeatNP, defaultIconsColor)
+                onPlaybackCompletion -> ThemeHelper.updateIconTint(mRepeatNP, mResolvedIconsColor)
                 mMediaPlayerHolder.isReset -> ThemeHelper.updateIconTint(
                     mRepeatNP,
                     ThemeHelper.resolveThemeAccent(this)
                 )
-                else -> ThemeHelper.updateIconTint(mRepeatNP, defaultIconsColor)
+                else -> ThemeHelper.updateIconTint(mRepeatNP, mResolvedIconsColor)
             }
         }
     }
@@ -593,8 +599,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 val path = MusicUtils.getRealPathFromURI(this, uri!!)
 
-                Log.d("path", path.toString())
-
                 //if we were able to get the song play it!
                 if (MusicUtils.getSongForIntent(
                         path,
@@ -656,11 +660,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     mTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
                         override fun onTabSelected(tab: TabLayout.Tab) {
-                            tab.icon?.setTint(ThemeHelper.resolveThemeAccent(this@MainActivity))
+                            tab.icon?.setTint(mResolvedAccentColor)
                         }
 
                         override fun onTabUnselected(tab: TabLayout.Tab) {
-                            tab.icon?.setTint(ThemeHelper.getAlphaAccent(this@MainActivity, 50))
+                            tab.icon?.setTint(mResolvedAlphaAccentColor)
                         }
 
                         override fun onTabReselected(tab: TabLayout.Tab) {
@@ -746,8 +750,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mTabLayout.getTabAt(tabIndex)?.setIcon(ThemeHelper.getTabIcon(iconIndex))
 
         if (tabIndex != 0)
-            mTabLayout.getTabAt(tabIndex)?.icon?.setTint(ThemeHelper.getAlphaAccent(this, 50))
-        else mTabLayout.getTabAt(tabIndex)?.icon?.setTint(ThemeHelper.resolveThemeAccent(this))
+            mTabLayout.getTabAt(tabIndex)?.icon?.setTint(mResolvedAlphaAccentColor)
+        else mTabLayout.getTabAt(tabIndex)?.icon?.setTint(mResolvedAccentColor)
     }
 
     private fun openDetailsFragment(
@@ -783,7 +787,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     if (sUserIsSeeking) {
                         userSelectedPosition = musicBar.position
                         mSongSeekTextNP.setTextColor(
-                            ThemeHelper.resolveThemeAccent(this@MainActivity)
+                            mResolvedAccentColor
                         )
                     }
                     mSongSeekTextNP.text =
@@ -821,7 +825,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     mMediaPlayerHolder.setPreciseVolume(i)
                     ThemeHelper.updateIconTint(
                         mVolumeNP,
-                        ThemeHelper.resolveThemeAccent(this@MainActivity)
+                        mResolvedAccentColor
                     )
                 }
             }
@@ -834,10 +838,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 isUserSeeking = false
                 ThemeHelper.updateIconTint(
                     mVolumeNP,
-                    ThemeHelper.resolveColorAttr(
-                        this@MainActivity,
-                        android.R.attr.textColorPrimary
-                    )
+                    mResolvedDisabledIconsColor
                 )
             }
         })
@@ -859,10 +860,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mArtistAlbumTextNP.isSelected = true
                 mFixedMusicBar = getCustomView().findViewById(R.id.np_fixed_music_bar)
                 mFixedMusicBar.setBackgroundBarPrimeColor(
-                    ThemeHelper.getAlphaAccent(
-                        this@MainActivity,
-                        40
-                    )
+                    mResolvedAlphaAccentColor
                 )
 
                 mSongSeekTextNP = getCustomView().findViewById(R.id.np_seek)
@@ -881,11 +879,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 ThemeHelper.updateIconTint(
                     mRepeatNP,
-                    if (mMediaPlayerHolder.isReset) ThemeHelper.resolveThemeAccent(this@MainActivity) else
-                        ThemeHelper.resolveColorAttr(
-                            this@MainActivity,
-                            android.R.attr.textColorPrimary
-                        )
+                    if (mMediaPlayerHolder.isReset) mResolvedAccentColor else
+                        mResolvedIconsColor
                 )
 
                 mRepeatNP.setOnClickListener { setRepeat() }
