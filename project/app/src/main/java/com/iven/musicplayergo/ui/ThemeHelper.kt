@@ -167,7 +167,14 @@ object ThemeHelper {
             context,
             DividerItemDecoration.VERTICAL
         )
-        dividerItemDecoration.setDrawable(ColorDrawable(getAlphaAccent(context, 85)))
+        dividerItemDecoration.setDrawable(
+            ColorDrawable(
+                getAlphaAccent(
+                    context,
+                    if (isThemeNight()) 45 else 85
+                )
+            )
+        )
         return dividerItemDecoration
     }
 
