@@ -113,7 +113,7 @@ object Utils {
 
             cornerRadius(res = R.dimen.md_corner_radius)
 
-            title(R.string.queue)
+            title(res = R.string.queue)
 
             val icon = AppCompatResources.getDrawable(context, R.drawable.ic_queue_music)
             icon?.mutate()
@@ -238,7 +238,7 @@ object Utils {
         MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
             cornerRadius(res = R.dimen.md_corner_radius)
-            title(R.string.loved_songs)
+            title(res = R.string.loved_songs)
             icon(res = R.drawable.ic_favorite)
 
             customListAdapter(
@@ -352,7 +352,7 @@ object Utils {
 
             cornerRadius(res = R.dimen.md_corner_radius)
 
-            title(text = context.getString(R.string.app_name))
+            title(res = R.string.app_name)
             icon(res = R.drawable.ic_stop)
 
             message(text = context.getString(R.string.on_close_activity))

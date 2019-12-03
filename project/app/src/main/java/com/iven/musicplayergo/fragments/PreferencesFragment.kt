@@ -142,7 +142,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         if (activity != null) {
             mAccentsDialog = MaterialDialog(activity!!).show {
 
-                title(R.string.accent_pref_title)
+                title(res = R.string.accent_pref_title)
 
                 customListAdapter(
                     AccentsAdapter(
@@ -162,8 +162,10 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     private fun showActiveFragmentsDialog() {
         if (activity != null) {
             mMultiListDialog = MaterialDialog(activity!!).show {
+
                 cornerRadius(res = R.dimen.md_corner_radius)
-                title(R.string.active_fragments_pref_title)
+                title(res = R.string.active_fragments_pref_title)
+
                 val checkableAdapter = CheckableTabsAdapter(
                     activity!!,
                     resources.getStringArray(R.array.activeFragmentsListArray).toMutableList()

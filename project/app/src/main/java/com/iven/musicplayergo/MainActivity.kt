@@ -570,7 +570,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             cancelOnTouchOutside(false)
             cornerRadius(res = R.dimen.md_corner_radius)
 
-            title(R.string.app_name)
+            title(res = R.string.app_name)
             icon(res = R.drawable.ic_folder)
 
             message(R.string.perm_rationale)
