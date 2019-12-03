@@ -312,7 +312,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                         restorePreQueueSongs()
                         getSkipSong(true)
                     }
-                    else -> preQueueSong.first
+                    else -> {
+                        isQueueStarted = false
+                        preQueueSong.first
+                    }
                 }
                 else -> if (currentIndex != 0) mPlayingAlbumSongs[0] else mPlayingAlbumSongs[mPlayingAlbumSongs.size - 1]
             }
@@ -414,8 +417,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
 
         if (isQueue) {
-            mediaPlayerInterface.onQueueStartedOrEnded(true)
-            isQueueStarted = true
+            mediaPlayerInterface.onQueueStartedOrEnded(isQueueStarted)
+            if (!isQueueStarted) isQueueStarted = true
         }
 
         if (isPlay) {

@@ -407,9 +407,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         override fun onQueueStartedOrEnded(started: Boolean) {
             ThemeHelper.updateIconTint(
-                mQueueButton, if (started) mResolvedAccentColor
-                else
-                    mResolvedDisabledIconsColor
+                mQueueButton,
+                when {
+                    started -> mResolvedAccentColor
+                    mMediaPlayerHolder.isQueue -> mResolvedIconsColor
+                    else -> mResolvedDisabledIconsColor
+                }
             )
         }
     }
