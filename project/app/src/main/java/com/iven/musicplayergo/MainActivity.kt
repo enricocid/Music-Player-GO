@@ -760,7 +760,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             DetailsFragment.newInstance(selectedArtistOrFolder, isFolder)
         supportFragmentManager.beginTransaction()
             .replace(
-                R.id.container,
+                if (isFolder) R.id.folders_container else R.id.artists_container,
                 mDetailsFragment, DetailsFragment.TAG_ARTIST_FOLDER
             )
             .addToBackStack(null)
