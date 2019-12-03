@@ -1,8 +1,113 @@
 <resources>
-    <string name="no_eq">Equalizer tidak ditemukan!</string>
-    <string name="bad_id">Putar lagu terlebih dahulu!</string>
+
+
+
+
+
+    <!-- Main - Artists -->
+    <string name="artists">Artis</string>
     <string name="artist_info">%1d&#160;Album,&#160;%2d&#160;Lagu</string>
-    <string name="no_browser">Peramban tidak temukan!</string>
-    <string name="perm_rationale">Music Player GO membutuhkan akses ke berkas untuk dapat memutar musik!</string>
+    <string name="folder_info">%2d&#160;Lagu</string>
+
+    <!-- Main - All songs -->
+    <string name="songs">Lagu</string>
+
+    <string name="shuffle_am">Acak semua lagu</string>
+    <string name="shuffle_sa">Acak album yang dipilih</string>
+
+
+
+    <!-- Main - Folders -->
+    <string name="folders">Folder</string>
+
+    <!-- Queue -->
+    <string name="queue">Antrean</string>
+    <string name="queue_add">Tambahkan ke antrean</string>
+    <string name="queue_song_add">%1s ditambahkan ke antrean!</string>
+    <string name="queue_song_remove">%1s akan dihapus dari antrean. Lanjutkan?</string>
+    <string name="queue_songs_clear">Antrean akan dikosongkan. Lanjutkan?</string>
+    <string name="error_no_queue">Tidak ada lagu dalam antrean!</string>
+
+    <!-- Loved songs -->
+    <string name="loved_songs">Favorit</string>
+
+    <string name="loved_song_added">%1s (%2s) ditambahkan ke favorit</string>
+    <string name="loved_song_remove">%1s (%2s) akan dihapus dari favorit. Lanjutkan?</string>
+    <string name="loved_songs_clear">Favorit akan dikosongkan. Lanjutkan?</string>
+    <string name="loved_song_add">Tambahkan ke favorit</string>
+    <string name="error_no_loved_songs">Tidak ada favorit yang ditemukan!</string>
+
+    <!-- Details -->
+
+
+    <!-- Messages -->
+    <string name="perm_rationale">Music Player GO membutuhkan akses ke berkas musik untuk dapat memutar musik!</string>
+    <string name="no_browser">Peramban tidak ditemukan!</string>
+    <string name="bad_id">Putar lagu terlebih dahulu!</string>
+    <string name="no_eq">Equalizer tidak ditemukan!</string>
     <string name="error_unknown">Telah terjadi kesalahan! :(</string>
+    <string name="error_unknown_unsupported">Telah terjadi kesalahan! :( Mungkin format yang dipilih tidak didukung atau folder tidak bisa diakses (bukan kesalahan aplikasi!)</string>
+    <string name="error_no_music">Musik tidak ditemukan!</string>
+    <string name="on_close_activity">Apakah anda ingin berhenti memutar musik?</string>
+    <string name="repeat_enabled">1x pengulangan diaktifkan!</string>
+    <string name="repeat_disabled">1x pengulangan dinonaktifkan!</string>
+
+    <!-- Settings -->
+    <!-- Preferences -->
+    <string name="settings">Pengaturan</string>
+    <string name="category_appearance">Tampilan</string>
+    <string name="category_general">Umum</string>
+
+
+
+
+
+    <string name="open_git_pref_title">Halaman GitHub</string>
+    <string name="open_git_pref_summary">Silakan buka halaman proyek untuk informasi lebih lanjut :)</string>
+
+
+    <string name="theme_pref_title">Tema</string>
+    <string name="theme_pref_light_title">Terang</string>
+    <string name="theme_pref_dark_title">Gelap</string>
+    <string name="theme_pref_auto_title">Otomatis</string>
+
+
+
+
+
+
+    <string name="accent_pref_title">Aksen</string>
+
+
+
+    <string name="edge_pref_summary_on">Menonaktifkan edge-to-edge</string>
+    <string name="edge_pref_summary_off">Mengaktifkan edge-to-edge</string>
+
+
+    <string name="tabs_pref_title">Tab</string>
+    <string name="tabs_pref_summary_on">Menonaktifkan tab</string>
+    <string name="tabs_pref_summary_off">Menampilkan tab untuk navigasi</string>
+
+
+    <string name="active_fragments_pref_title">Tab aktif</string>
+    <string name="active_fragments_pref_warning">Anda tidak bisa membuang semua tab! :P</string>
+
+
+
+    <string name="sorting_pref_default">Default</string>
+    <string name="sorting_pref_ascending">Naik</string>
+    <string name="sorting_pref_descending">Turun</string>
+
+
+    <string name="focus_pref_title">Fokus audio</string>
+    <string name="focus_pref_summary_on">Menonaktifkan manajemen fokus audio</string>
+    <string name="focus_pref_summary_off">Mengaktifkan manajemen fokus audio</string>
+
+
+    <string name="headset_pref_title">Headset</string>
+    <string name="headset_pref_summary_on">Menonaktifkan manajemen headset</string>
+    <string name="headset_pref_summary_off">Mengaktifkan manajemen headset</string>
+
+
+
 </resources>
