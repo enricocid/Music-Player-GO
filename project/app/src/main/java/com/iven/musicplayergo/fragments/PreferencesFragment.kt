@@ -40,7 +40,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         val newDivider = ColorDrawable(
             ThemeHelper.getAlphaAccent(
                 context!!,
-                50
+                85
             )
         )
         super.setDivider(newDivider)

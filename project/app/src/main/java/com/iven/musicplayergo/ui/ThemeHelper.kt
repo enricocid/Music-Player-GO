@@ -167,7 +167,7 @@ object ThemeHelper {
             context,
             DividerItemDecoration.VERTICAL
         )
-        dividerItemDecoration.setDrawable(ColorDrawable(getAlphaAccent(context, 50)))
+        dividerItemDecoration.setDrawable(ColorDrawable(getAlphaAccent(context, 85)))
         return dividerItemDecoration
     }
 
