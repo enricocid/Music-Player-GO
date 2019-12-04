@@ -2,12 +2,16 @@ package com.iven.musicplayergo.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.net.Uri
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
@@ -22,6 +26,7 @@ import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import java.util.*
+
 
 object Utils {
 
@@ -363,5 +368,25 @@ object Utils {
                 mediaPlayerHolder.stopPlaybackService(false)
             }
         }
+    }
+
+    @JvmStatic
+    fun openCustomTab(
+        context: Context
+    ) {
+
+        val accent = ThemeHelper.resolveThemeAccent(context)
+        val builder = CustomTabsIntent.Builder()
+        builder.setSecondaryToolbarColor(accent)
+        builder.addDefaultShareMenuItem()
+        builder.setShowTitle(true)
+
+        // https://stackoverflow.com/a/55260049
+        AppCompatResources.getDrawable(context, R.drawable.ic_navigate_before)?.let {
+            DrawableCompat.setTint(it, accent)
+            builder.setCloseButtonIcon(it.toBitmap())
+        }
+
+        builder.build().launchUrl(context, Uri.parse(context.getString(R.string.app_git)))
     }
 }

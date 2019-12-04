@@ -1,12 +1,9 @@
 package com.iven.musicplayergo.fragments
 
-import android.content.ActivityNotFoundException
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.preference.ListPreference
@@ -82,13 +79,8 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             openGitPreference?.setOnPreferenceClickListener {
                 try {
-                    startActivity(
-                        Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse(getString(R.string.app_git))
-                        )
-                    )
-                } catch (e: ActivityNotFoundException) {
+                    Utils.openCustomTab(activity!!)
+                } catch (e: Exception) {
                     Utils.makeToast(activity!!, getString(R.string.no_browser))
                     e.printStackTrace()
                 }
