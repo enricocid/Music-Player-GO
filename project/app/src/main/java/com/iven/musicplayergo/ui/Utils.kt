@@ -372,21 +372,50 @@ object Utils {
 
     @JvmStatic
     fun openCustomTab(
-        context: Context
+        context: Context,
+        link: String
     ) {
 
-        val accent = ThemeHelper.resolveThemeAccent(context)
-        val builder = CustomTabsIntent.Builder()
-        builder.setSecondaryToolbarColor(accent)
-        builder.addDefaultShareMenuItem()
-        builder.setShowTitle(true)
+        try {
+            val accent = ThemeHelper.resolveThemeAccent(context)
+            val builder = CustomTabsIntent.Builder()
+            builder.setSecondaryToolbarColor(accent)
+            builder.addDefaultShareMenuItem()
+            builder.setShowTitle(true)
 
-        // https://stackoverflow.com/a/55260049
-        AppCompatResources.getDrawable(context, R.drawable.ic_navigate_before)?.let {
-            DrawableCompat.setTint(it, accent)
-            builder.setCloseButtonIcon(it.toBitmap())
+            // https://stackoverflow.com/a/55260049
+            AppCompatResources.getDrawable(context, R.drawable.ic_navigate_before)?.let {
+                DrawableCompat.setTint(it, accent)
+                builder.setCloseButtonIcon(it.toBitmap())
+            }
+
+            builder.build().launchUrl(context, Uri.parse(link))
+        } catch (e: Exception) {
+            makeToast(context, context.getString(R.string.no_browser))
+            e.printStackTrace()
         }
+    }
 
-        builder.build().launchUrl(context, Uri.parse(context.getString(R.string.app_git)))
+    @JvmStatic
+    fun showSupportedFormatsDialog(
+        context: Context
+    ): MaterialDialog {
+
+        return MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
+            title(R.string.supported_formats_title)
+            message(R.string.supportedFormats) {
+                html { openCustomTab(context, it) }
+                lineSpacing(1.4f)
+            }
+
+            cornerRadius(res = R.dimen.md_corner_radius)
+
+            icon(res = R.drawable.ic_music_note)
+
+            if (goPreferences.isEdgeToEdge && window != null) ThemeHelper.handleEdgeToEdge(
+                this.window!!,
+                view
+            )
+        }
     }
 }

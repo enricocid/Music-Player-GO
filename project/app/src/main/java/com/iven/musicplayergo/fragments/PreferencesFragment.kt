@@ -28,6 +28,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     private lateinit var mThemesDialog: MaterialDialog
     private lateinit var mAccentsDialog: MaterialDialog
     private lateinit var mMultiListDialog: MaterialDialog
+    private lateinit var mSupportedFormatsDialog: MaterialDialog
 
     private var mSelectedAccent = R.color.deep_purple
 
@@ -54,6 +55,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         if (::mThemesDialog.isInitialized && mThemesDialog.isShowing) mThemesDialog.dismiss()
         if (::mAccentsDialog.isInitialized && mAccentsDialog.isShowing) mAccentsDialog.dismiss()
         if (::mMultiListDialog.isInitialized && mMultiListDialog.isShowing) mMultiListDialog.dismiss()
+        if (::mSupportedFormatsDialog.isInitialized && mSupportedFormatsDialog.isShowing) mSupportedFormatsDialog.dismiss()
     }
 
     override fun onAttach(context: Context) {
@@ -78,12 +80,15 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             val openGitPreference = findPreference<Preference>(getString(R.string.open_git_pref))
 
             openGitPreference?.setOnPreferenceClickListener {
-                try {
-                    Utils.openCustomTab(activity!!)
-                } catch (e: Exception) {
-                    Utils.makeToast(activity!!, getString(R.string.no_browser))
-                    e.printStackTrace()
-                }
+                Utils.openCustomTab(activity!!, getString(R.string.app_git))
+                return@setOnPreferenceClickListener true
+            }
+
+            val supportedMediaPreference =
+                findPreference<Preference>(getString(R.string.supported_formats_pref))
+
+            supportedMediaPreference?.setOnPreferenceClickListener {
+                mSupportedFormatsDialog = Utils.showSupportedFormatsDialog(activity!!)
                 return@setOnPreferenceClickListener true
             }
 

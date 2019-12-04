@@ -50,6 +50,21 @@
     <string name="open_git_pref_title">Pagina GitHub</string>
     <string name="open_git_pref_summary">Apri la pagina del progetto per maggiori info :)</string>
 
+    <string name="supported_formats_title">Formati media supportati</string>
+    <string name="supported_formats_summary">Apri questa pagina se stai sperimentando problemi collegati ai formati media supportati :P</string>
+
+    <string name="supportedFormats"><![CDATA[
+    Music Player GO utilizza l\'<a href="https://developer.android.com/guide/topics/media/mediaplayer">API MediaPlayer</a> nativa,
+    che supporta i seguenti <a href="https://developer.android.com/guide/topics/media/media-formats">formati multimediali</a>.<br/><br/>
+    Istruzioni per far funzionare alcuni codec:<br/>
+    Opus, ad es., è supportato nativamente da Android 5.0, ma solo nel container Matroska (.mkv). Il tipo di file/container Opus non è rilevato
+    e non supportato dall\'API MediaPlayer. Una semplice soluzione per rilevare e riprodurre i file codificati Opus è quella di sostituire
+    la loro estensione (.opus) con il container supportato (.mkv).<br/>
+    Controlla la colonna "Supported File Type(s) / Container Formats" dalla pagina
+    <a href="https://developer.android.com/guide/topics/media/media-formats">supported media formats</a> per sapere quali sono i container supportati da un determinato formato/codec.<br/><br/>
+    <i><font color="#F38596">Grazie per utilizzare Music Player GO ♥</font></i>
+  ]]></string>
+
     <string name="theme_pref_title">Tema</string>
     <string name="theme_pref_light_title">Chiaro</string>
     <string name="theme_pref_dark_title">Scuro</string>
