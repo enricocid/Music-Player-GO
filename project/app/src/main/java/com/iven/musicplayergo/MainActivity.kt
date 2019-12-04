@@ -841,7 +841,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 isUserSeeking = false
                 ThemeHelper.updateIconTint(
                     mVolumeNP,
-                    mResolvedDisabledIconsColor
+                    mResolvedIconsColor
                 )
             }
         })
