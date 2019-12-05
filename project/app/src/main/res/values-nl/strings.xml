@@ -1,0 +1,98 @@
+<resources>
+
+    <!-- Main - Artists -->
+    <string name="artists">Artiesten</string>
+    <string name="artist_info">%1d&#160;Albums,&#160;%2d&#160;Nummers</string>
+    <string name="folder_info">%2d&#160;Nummers</string>
+
+    <!-- Main - All songs -->
+    <string name="songs">Nummers</string>
+    <string name="shuffle_am">Alle nummers willkeurig afspelen</string>
+    <string name="shuffle_sa">Geselecteerd album willkeurig afspelen</string>
+
+    <!-- Main - Folders -->
+    <string name="folders">Mappen</string>
+
+    <!-- Queue -->
+    <string name="queue">Wachtrij</string>
+    <string name="queue_add">Toevoegen aan wachtrij</string>
+    <string name="queue_song_add">%1s is toegevoegd aan de wachtrij!</string>
+    <string name="queue_song_remove">%1s wordt verwijderd uit de wachtrij. Wil je doorgaan?</string>
+    <string name="queue_songs_clear">De wachtrij wordt leeggemaakt. Wil je doorgaan?</string>
+    <string name="error_no_queue">Er staan geen nummers in de wachtrij.</string>
+
+    <!-- Loved songs -->
+    <string name="loved_songs">Favorieten</string>
+    <string name="loved_song_added">%1s (%2s) is toegevoegd aan je favorieten</string>
+    <string name="loved_song_remove">%1s (%2s) worhdt verwijderd uit je favorieten. Wil je doorgaan?</string>
+    <string name="loved_songs_clear">Je favorieten worden gewist. Wil je doorgaan?</string>
+    <string name="loved_song_add">Toevoegen aan favorieten</string>
+    <string name="error_no_loved_songs">Je hebt nog geen favorieten!</string>
+
+    <!-- Messages -->
+    <string name="perm_rationale">Music Player GO heeft toegang nodig tot je bestanden om muziek af te spelen!</string>
+    <string name="no_browser">Geen browser aangetroffen!</string>
+    <string name="bad_id">Start eerst een nummer!</string>
+    <string name="no_eq">Geen equalizer aangetroffen!</string>
+    <string name="error_unknown">Er is iets misgegaan! :(</string>
+    <string name="error_unknown_unsupported">Er is iets misgegaan! :( Het gekozen bestandstype wordt mogelijk niet ondersteund of de map is ontoegankelijk (wat niet de schuld van de app is!)</string>
+    <string name="error_no_music">Geen muziek aangetroffen!</string>
+    <string name="on_close_activity">Wil je het afspelen stoppen?</string>
+    <string name="repeat_enabled">1x herhalen ingeschakeld!</string>
+    <string name="repeat_disabled">1x herhalen uitgeschakeld!</string>
+
+    <!-- Settings -->
+    <!-- Preferences -->
+    <string name="settings">Instellingen</string>
+    <string name="category_appearance">Uiterlijk</string>
+    <string name="category_general">Algemeen</string>
+
+    <string name="open_git_pref_title">GitHub-pagina</string>
+    <string name="open_git_pref_summary">Bekijk de projectpagina voor meer informatie :)</string>
+
+    <string name="supported_formats_title">Ondersteunde mediaformaten</string>
+
+    <string name="supported_formats_summary">Open deze pagina als je problemen ervaart met ondersteunde mediaformaten</string>
+
+    <string name="supportedFormats"><![CDATA[
+    Music Player GO implementeert de Android-API <a href="https://developer.android.com/guide/topics/media/mediaplayer">MediaPlayer</a>,
+    die de volgende <a href="https://developer.android.com/guide/topics/media/media-formats">mediaformaten</a> ondersteunt.<br/><br/>
+    Hier volgen instructies om bepaalde codecs aan de praat te krijgen:<br/>
+    Opus, bijvoorbeeld, wordt ondersteund sinds Android 5.0, maar alleen binnen de Matroska (.mkv)-container. Het Opus-bestandstype/de container wordt niet gedetecteerd
+    en ondersteund door de MediaPlayer-API. Hier is een eenvoudige tussenoplossing voor: vervang de
+    bestandsextensie (.opus) door die van de ondersteunde container (.mkv).<br/>
+    Ga naar 'Supported File Type(s) / Container Formats' op de
+    <a href="https://developer.android.com/guide/topics/media/media-formats">ondersteunde mediaformaten</a>-pagina om de ondersteunde container bij het formaat/de codec op te zoeken.<br/><br/>
+    <i><font color="#F38596">Bedankt voor het kiezen voor Music Player GO ♥</font></i>
+  ]]></string>
+
+    <string name="theme_pref_title">Thema</string>
+    <string name="theme_pref_light_title">Licht</string>
+    <string name="theme_pref_dark_title">Donker</string>
+    <string name="theme_pref_auto_title">Automatisch</string>
+
+    <string name="accent_pref_title">Accent</string>
+
+    <string name="edge_pref_summary_on">Beeldvullende modus uitschakelen</string>
+    <string name="edge_pref_summary_off">Beeldvullende modus uitschakelen</string>
+
+    <string name="tabs_pref_title">Tabbladen</string>
+    <string name="tabs_pref_summary_on">Tabbladen uitschakelen</string>
+    <string name="tabs_pref_summary_off">Tabbladen gebruiken om door secties te navigeren</string>
+
+    <string name="active_fragments_pref_title">Actieve tabbladen</string>
+    <string name="active_fragments_pref_warning">Je kunt niet álle tabbladen verwijderen! :P</string>
+
+    <string name="sorting_pref_default">Standaard</string>
+    <string name="sorting_pref_ascending">Oplopend</string>
+    <string name="sorting_pref_descending">Aflopend</string>
+
+    <string name="focus_pref_title">Audiofocus</string>
+    <string name="focus_pref_summary_on">Audiofocusbeheer uitschakelen</string>
+    <string name="focus_pref_summary_off">Audiofocusbeheer inschakelen</string>
+
+    <string name="headset_pref_title">Headset-pluggen</string>
+    <string name="headset_pref_summary_on">Headset-plugbeheer uitschakelen</string>
+    <string name="headset_pref_summary_off">Headset-plugbeheer inschakelen</string>
+
+</resources>

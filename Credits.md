@@ -43,6 +43,8 @@
 
 - [**zmni**](https://github.com/zmni) for **Indonesian** translations
 
+- [**Heimen Stoffels**](https://github.com/Vistaus) for **Dutch** translations
+
 - [**Malte Kiefer**](https://github.com/beli3ver) for **German** translations
 
 - [**Luis F. Uceta**](https://github.com/uzluisf) for **Spanish** translations
