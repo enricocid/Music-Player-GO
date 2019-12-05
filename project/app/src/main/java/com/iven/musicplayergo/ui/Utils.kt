@@ -1,6 +1,8 @@
 package com.iven.musicplayergo.ui
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.net.Uri
 import android.view.Gravity
@@ -10,6 +12,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.app.ActivityCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.afollestad.materialdialogs.LayoutMode
@@ -29,6 +32,38 @@ import java.util.*
 
 
 object Utils {
+
+    @JvmStatic
+    fun showPermissionRationale(activity: Activity) {
+
+        activity.apply {
+            MaterialDialog(this).show {
+
+                cancelOnTouchOutside(false)
+                cornerRadius(res = R.dimen.md_corner_radius)
+
+                title(res = R.string.app_name)
+                icon(res = R.drawable.ic_folder)
+
+                message(R.string.perm_rationale)
+                positiveButton {
+                    ActivityCompat.requestPermissions(
+                        this@apply,
+                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                        2588
+                    )
+                }
+                negativeButton {
+                    makeToast(
+                        this@apply,
+                        getString(R.string.perm_rationale)
+                    )
+                    dismiss()
+                    finishAndRemoveTask()
+                }
+            }
+        }
+    }
 
     @JvmStatic
     fun makeToast(context: Context, message: String) {
@@ -112,7 +147,7 @@ object Utils {
     fun showQueueSongsDialog(
         context: Context,
         mediaPlayerHolder: MediaPlayerHolder
-    ): Pair<MaterialDialog, QueueAdapter>? {
+    ): Pair<MaterialDialog, QueueAdapter> {
 
         val dialog = MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
@@ -120,10 +155,11 @@ object Utils {
 
             title(res = R.string.queue)
 
-            val icon = AppCompatResources.getDrawable(context, R.drawable.ic_queue_music)
-            icon?.mutate()
-            icon?.setTint(ThemeHelper.resolveColorAttr(context, android.R.attr.textColorPrimary))
-            icon(drawable = icon)
+            AppCompatResources.getDrawable(context, R.drawable.ic_queue_music)?.apply {
+                mutate()
+                setTint(ThemeHelper.resolveColorAttr(context, android.R.attr.textColorPrimary))
+                icon(drawable = this)
+            }
 
             customListAdapter(
                 QueueAdapter(context, this, mediaPlayerHolder)
@@ -134,7 +170,7 @@ object Utils {
                 )
             )
             if (goPreferences.isEdgeToEdge && window != null) ThemeHelper.handleEdgeToEdge(
-                this.window!!,
+                window,
                 view
             )
         }
@@ -165,13 +201,15 @@ object Utils {
             )
             positiveButton {
 
-                mediaPlayerHolder.queueSongs.removeAt(song.second)
-                queueAdapter.swapQueueSongs(mediaPlayerHolder.queueSongs)
+                mediaPlayerHolder.apply {
+                    queueSongs.removeAt(song.second)
+                    queueAdapter.swapQueueSongs(queueSongs)
 
-                if (mediaPlayerHolder.queueSongs.isEmpty()) {
-                    mediaPlayerHolder.isQueue = false
-                    mediaPlayerHolder.mediaPlayerInterface.onQueueStartedOrEnded(false)
-                    queueSongsDialog.dismiss()
+                    if (queueSongs.isEmpty()) {
+                        isQueue = false
+                        mediaPlayerInterface.onQueueStartedOrEnded(false)
+                        queueSongsDialog.dismiss()
+                    }
                 }
             }
             negativeButton {}
@@ -191,20 +229,20 @@ object Utils {
             title(res = R.string.app_name)
             icon(res = R.drawable.ic_delete_forever)
 
-            message(
-                text = context.getString(R.string.queue_songs_clear)
-            )
+            message(text = context.getString(R.string.queue_songs_clear))
+
             positiveButton {
 
-                if (mediaPlayerHolder.isQueueStarted && mediaPlayerHolder.isPlaying) {
+                mediaPlayerHolder.apply {
+                    if (isQueueStarted && isPlaying) {
 
-                    mediaPlayerHolder.restorePreQueueSongs()
-                    mediaPlayerHolder.skip(
-                        true
-                    )
+                        restorePreQueueSongs()
+                        skip(
+                            true
+                        )
+                    }
+                    setQueueEnabled(false)
                 }
-
-                mediaPlayerHolder.setQueueEnabled(false)
             }
             negativeButton {}
         }
@@ -255,7 +293,7 @@ object Utils {
                 )
             )
             if (goPreferences.isEdgeToEdge && window != null) ThemeHelper.handleEdgeToEdge(
-                this.window!!,
+                window,
                 view
             )
         }
@@ -300,28 +338,29 @@ object Utils {
         song: Music,
         uiControlInterface: UIControlInterface
     ) {
-        val popup = PopupMenu(context, itemView)
-        popup.setOnMenuItemClickListener {
+        PopupMenu(context, itemView).apply {
+            setOnMenuItemClickListener {
 
-            when (it.itemId) {
-                R.id.loved_songs_add -> {
-                    addToLovedSongs(
-                        context,
-                        song,
-                        0
-                    )
-                    uiControlInterface.onLovedSongsUpdate(false)
+                when (it.itemId) {
+                    R.id.loved_songs_add -> {
+                        addToLovedSongs(
+                            context,
+                            song,
+                            0
+                        )
+                        uiControlInterface.onLovedSongsUpdate(false)
+                    }
+                    R.id.queue_add -> {
+                        uiControlInterface.onAddToQueue(song)
+                    }
                 }
-                R.id.queue_add -> {
-                    uiControlInterface.onAddToQueue(song)
-                }
+
+                return@setOnMenuItemClickListener true
             }
-
-            return@setOnMenuItemClickListener true
+            inflate(R.menu.menu_do_something)
+            gravity = Gravity.END
+            show()
         }
-        popup.inflate(R.menu.menu_do_something)
-        popup.gravity = Gravity.END
-        popup.show()
     }
 
     @JvmStatic
@@ -378,18 +417,20 @@ object Utils {
 
         try {
             val accent = ThemeHelper.resolveThemeAccent(context)
-            val builder = CustomTabsIntent.Builder()
-            builder.setSecondaryToolbarColor(accent)
-            builder.addDefaultShareMenuItem()
-            builder.setShowTitle(true)
 
-            // https://stackoverflow.com/a/55260049
-            AppCompatResources.getDrawable(context, R.drawable.ic_navigate_before)?.let {
-                DrawableCompat.setTint(it, accent)
-                builder.setCloseButtonIcon(it.toBitmap())
+            CustomTabsIntent.Builder().apply {
+                setSecondaryToolbarColor(accent)
+                addDefaultShareMenuItem()
+                setShowTitle(true)
+
+                // https://stackoverflow.com/a/55260049
+                AppCompatResources.getDrawable(context, R.drawable.ic_navigate_before)?.let {
+                    DrawableCompat.setTint(it, accent)
+                    setCloseButtonIcon(it.toBitmap())
+                }
+
+                build().launchUrl(context, Uri.parse(link))
             }
-
-            builder.build().launchUrl(context, Uri.parse(link))
         } catch (e: Exception) {
             makeToast(context, context.getString(R.string.no_browser))
             e.printStackTrace()
@@ -413,7 +454,7 @@ object Utils {
             icon(res = R.drawable.ic_music_note)
 
             if (goPreferences.isEdgeToEdge && window != null) ThemeHelper.handleEdgeToEdge(
-                this.window!!,
+                window,
                 view
             )
         }

@@ -22,7 +22,7 @@ class QueueAdapter(
     RecyclerView.Adapter<QueueAdapter.QueueHolder>() {
 
     private var mQueueSongs = mediaPlayerHolder.queueSongs
-    private var mSelectedSong = mediaPlayerHolder.currentSong!!
+    private var mSelectedSong = mediaPlayerHolder.currentSong
 
     private val mDefaultTextColor =
         ThemeHelper.resolveColorAttr(context, android.R.attr.textColorPrimary)
@@ -71,34 +71,46 @@ class QueueAdapter(
 
             val themeAccent = ThemeHelper.resolveThemeAccent(context)
 
-            if (mQueueSongs.indexOf(mSelectedSong.first) == adapterPosition && mSelectedSong.second) title.setTextColor(
-                themeAccent
-            ) else title.setTextColor(
-                mDefaultTextColor
-            )
-
-            itemView.setOnClickListener {
-
-                if (mediaPlayerHolder.isSongRestoredFromPrefs) mediaPlayerHolder.isPlay = true
-
-                if (!mediaPlayerHolder.isQueueStarted)
-                    mediaPlayerHolder.setCurrentSong(song, mediaPlayerHolder.queueSongs, true) else
-                    mediaPlayerHolder.currentSong = Pair(song, true)
-
-                mediaPlayerHolder.initMediaPlayer(song)
+            title.apply {
+                when {
+                    mQueueSongs.indexOf(mSelectedSong.first) == adapterPosition && mSelectedSong.second -> setTextColor(
+                        themeAccent
+                    )
+                    else -> setTextColor(mDefaultTextColor)
+                }
             }
 
-            itemView.setOnLongClickListener {
-                if (title.currentTextColor != ThemeHelper.resolveThemeAccent(context))
-                    Utils.showDeleteQueueSongDialog(
-                        context,
-                        Pair(song, adapterPosition),
-                        queueSongsDialog,
-                        this@QueueAdapter,
-                        mediaPlayerHolder
-                    )
+            itemView.apply {
+                setOnClickListener {
 
-                return@setOnLongClickListener true
+                    mediaPlayerHolder.apply {
+                        when {
+                            isSongRestoredFromPrefs -> isPlay = true
+                            else -> if (!mediaPlayerHolder.isQueueStarted)
+                                mediaPlayerHolder.setCurrentSong(
+                                    song,
+                                    queueSongs,
+                                    true
+                                ) else
+                                currentSong = Pair(song, true)
+                        }
+                        initMediaPlayer(song)
+
+                    }
+                }
+
+                setOnLongClickListener {
+                    if (title.currentTextColor != ThemeHelper.resolveThemeAccent(context))
+                        Utils.showDeleteQueueSongDialog(
+                            context,
+                            Pair(song, adapterPosition),
+                            queueSongsDialog,
+                            this@QueueAdapter,
+                            mediaPlayerHolder
+                        )
+
+                    return@setOnLongClickListener true
+                }
             }
         }
     }

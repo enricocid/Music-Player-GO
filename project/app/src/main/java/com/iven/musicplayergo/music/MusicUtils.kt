@@ -21,13 +21,13 @@ object MusicUtils {
 
     @JvmStatic
     //returns a pair of album and its position given a list of albums
-    fun getAlbumFromList(album: String?, albums: List<Album>?): Pair<Album, Int> {
+    fun getAlbumFromList(album: String?, albums: List<Album>): Pair<Album, Int> {
         return try {
-            val position = albums?.indexOfFirst { it.title == album }!!
+            val position = albums.indexOfFirst { it.title == album }
             Pair(albums[position], position)
         } catch (e: Exception) {
             e.printStackTrace()
-            Pair(albums!![0], 0)
+            Pair(albums[0], 0)
         }
     }
 
@@ -41,7 +41,7 @@ object MusicUtils {
 
     @JvmStatic
     fun getYearForAlbum(resources: Resources, year: Int): String {
-        return if (year == 0) resources.getString(R.string.unknown_year) else year.toString()
+        return if (year != 0) year.toString() else resources.getString(R.string.unknown_year)
     }
 
     @JvmStatic
@@ -211,13 +211,17 @@ object MusicUtils {
             val cursor =
                 context.contentResolver.query(uri!!, projection, selection, selectionArgs, null)
 
-            if (cursor!!.moveToFirst()) {
-                val index = cursor.getColumnIndexOrThrow(column)
-                do {
-                    returnedString = cursor.getString(index)
-                } while (cursor.moveToNext())
-                cursor.close()
+            cursor?.let {
+                if (cursor.moveToFirst()) {
+                    val index = cursor.getColumnIndexOrThrow(column)
+                    do {
+                        returnedString = cursor.getString(index)
+                    } while (cursor.moveToNext())
+                    cursor.close()
+                }
             }
+
+
         } catch (e: Exception) {
             Utils.makeToast(context, context.getString(R.string.error_unknown_unsupported))
             e.printStackTrace()

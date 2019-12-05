@@ -78,75 +78,80 @@ class FoldersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (context != null) {
+        mSorting = goPreferences.foldersSorting
+
+        mFolders = Utils.getSortedList(
+            mSorting,
+            musicLibrary.allSongsForFolder.keys.toMutableList(),
+            musicLibrary.allSongsForFolder.keys.toMutableList()
+        )
+
+        context?.let {
 
             mSearchToolbar = search_toolbar
-            mSearchToolbar.inflateMenu(R.menu.menu_search)
-            mSearchToolbar.overflowIcon =
-                AppCompatResources.getDrawable(context!!, R.drawable.ic_sort)
 
-            mSearchToolbar.title = getString(R.string.folders)
+            mSearchToolbar.apply {
 
-            mSearchToolbar.setNavigationOnClickListener {
-                mUIControlInterface.onCloseActivity()
-            }
+                inflateMenu(R.menu.menu_search)
 
-            val menu = mSearchToolbar.menu
+                overflowIcon =
+                    AppCompatResources.getDrawable(it, R.drawable.ic_sort)
 
-            mSorting = goPreferences.foldersSorting
-            mSortMenuItem = menu.findItem(mSorting)
+                title = getString(R.string.folders)
 
-            mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(context!!))
+                setNavigationOnClickListener {
+                    mUIControlInterface.onCloseActivity()
+                }
 
-            setMenuOnItemClickListener(menu)
+                menu.apply {
+                    mSortMenuItem = findItem(mSorting)
+                    mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(it))
 
-            mFoldersRecyclerView = folders_rv
+                    setMenuOnItemClickListener(it, this)
 
-            setupFilteredFolders()
-
-            mDataSource = dataSourceOf(mFolders)
-
-            // setup{} is an extension method on RecyclerView
-            mFoldersRecyclerView.setup {
-                withDataSource(mDataSource)
-                withItem<String, GenericViewHolder>(R.layout.folder_item) {
-                    onBind(::GenericViewHolder) { _, item ->
-
-                        // GenericViewHolder is `this` here
-                        title.text = item
-                        subtitle.text = getParentFolder(item)
-                    }
-
-                    onClick {
-                        // item is a `val` in `this` here
-                        if (::mUIControlInterface.isInitialized)
-                            mUIControlInterface.onArtistOrFolderSelected(item, true)
-                    }
+                    Utils.setupSearchViewForStringLists(
+                        findItem(R.id.action_search).actionView as SearchView,
+                        mFolders,
+                        onResultsChanged = { newResults ->
+                            mFilteredFolders = if (newResults.isEmpty()) {
+                                null
+                            } else {
+                                newResults
+                            }
+                            mDataSource.set(mFilteredFolders ?: mFolders)
+                        })
                 }
             }
 
-            mFoldersRecyclerView.addItemDecoration(
-                ThemeHelper.getRecyclerViewDivider(
-                    context!!
-                )
-            )
+            mFoldersRecyclerView = folders_rv
 
-            setupIndicatorFastScrollerView()
+            mDataSource = dataSourceOf(mFolders)
 
-            val itemSearch = mSearchToolbar.menu.findItem(R.id.action_search)
-            val searchView = itemSearch.actionView as SearchView
-            Utils.setupSearchViewForStringLists(
-                searchView,
-                mFolders,
-                onResultsChanged = { newResults ->
-                    mFilteredFolders = if (newResults.isEmpty()) {
-                        null
-                    } else {
-                        newResults
+            mFoldersRecyclerView.apply {
+
+                // setup{} is an extension method on RecyclerView
+                setup {
+                    withDataSource(mDataSource)
+                    withItem<String, GenericViewHolder>(R.layout.folder_item) {
+                        onBind(::GenericViewHolder) { _, item ->
+
+                            // GenericViewHolder is `this` here
+                            title.text = item
+                            subtitle.text = getParentFolder(item)
+                        }
+
+                        onClick {
+                            // item is a `val` in `this` here
+                            if (::mUIControlInterface.isInitialized)
+                                mUIControlInterface.onArtistOrFolderSelected(item, true)
+                        }
                     }
-                    mDataSource.set(mFilteredFolders ?: mFolders)
-                })
+                }
 
+                addItemDecoration(ThemeHelper.getRecyclerViewDivider(it))
+
+                setupIndicatorFastScrollerView()
+            }
         }
     }
 
@@ -205,7 +210,7 @@ class FoldersFragment : Fragment() {
         }
     }
 
-    private fun setMenuOnItemClickListener(menu: Menu) {
+    private fun setMenuOnItemClickListener(context: Context, menu: Menu) {
         mSearchToolbar.setOnMenuItemClickListener {
 
             mFolders = Utils.getSortedList(
@@ -221,7 +226,7 @@ class FoldersFragment : Fragment() {
 
             mSortMenuItem.setTitleColor(
                 ThemeHelper.resolveColorAttr(
-                    context!!,
+                    context,
                     android.R.attr.textColorPrimary
                 )
             )
@@ -230,20 +235,12 @@ class FoldersFragment : Fragment() {
 
             mSortMenuItem = menu.findItem(mSorting)
 
-            mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(context!!))
+            mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(context))
 
             goPreferences.foldersSorting = it.itemId
 
             return@setOnMenuItemClickListener true
         }
-    }
-
-    private fun setupFilteredFolders() {
-        mFolders = Utils.getSortedList(
-            mSorting,
-            musicLibrary.allSongsForFolder.keys.toMutableList(),
-            musicLibrary.allSongsForFolder.keys.toMutableList()
-        )
     }
 
     private fun MenuItem.setTitleColor(color: Int) {

@@ -41,12 +41,13 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (activity != null) {
 
-            val searchToolbar = search_toolbar
-            searchToolbar.title = getString(R.string.settings)
-            searchToolbar.setNavigationOnClickListener {
-                mUIControlInterface.onCloseActivity()
+        activity?.let {
+            search_toolbar.apply {
+                title = getString(R.string.settings)
+                setNavigationOnClickListener {
+                    mUIControlInterface.onCloseActivity()
+                }
             }
 
             childFragmentManager.beginTransaction()

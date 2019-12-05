@@ -77,78 +77,83 @@ class ArtistsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (context != null) {
+        mSorting = goPreferences.artistsSorting
+
+        mArtists = Utils.getSortedList(
+            mSorting,
+            musicLibrary.allAlbumsForArtist.keys.toMutableList(),
+            musicLibrary.allAlbumsForArtist.keys.toMutableList()
+        )
+
+        context?.let {
+
             mSearchToolbar = search_toolbar
-            mSearchToolbar.inflateMenu(R.menu.menu_search)
-            mSearchToolbar.overflowIcon =
-                AppCompatResources.getDrawable(context!!, R.drawable.ic_sort)
 
-            mSearchToolbar.title = getString(R.string.artists)
+            mSearchToolbar.apply {
 
-            mSearchToolbar.setNavigationOnClickListener {
-                mUIControlInterface.onCloseActivity()
-            }
+                inflateMenu(R.menu.menu_search)
 
-            val menu = mSearchToolbar.menu
+                overflowIcon =
+                    AppCompatResources.getDrawable(it, R.drawable.ic_sort)
 
-            mSorting = goPreferences.artistsSorting
-            mSortMenuItem = menu.findItem(mSorting)
+                title = getString(R.string.artists)
 
-            mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(context!!))
+                setNavigationOnClickListener {
+                    mUIControlInterface.onCloseActivity()
+                }
 
-            setMenuOnItemClickListener(menu)
+                menu.apply {
+                    mSortMenuItem = findItem(mSorting)
+                    mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(it))
 
-            mArtistsRecyclerView = artists_rv
+                    setMenuOnItemClickListener(it, this)
 
-            mArtists = Utils.getSortedList(
-                mSorting,
-                musicLibrary.allAlbumsForArtist.keys.toMutableList(),
-                musicLibrary.allAlbumsForArtist.keys.toMutableList()
-            )
-
-            mDataSource = dataSourceOf(mArtists)
-
-            // setup{} is an extension method on RecyclerView
-            mArtistsRecyclerView.setup {
-
-                // item is a `val` in `this` here
-                withDataSource(mDataSource)
-                withItem<String, GenericViewHolder>(R.layout.generic_item) {
-
-                    onBind(::GenericViewHolder) { _, item ->
-                        // GenericViewHolder is `this` here
-                        title.text = item
-                        subtitle.text = getArtistSubtitle(item)
-                    }
-
-                    onClick {
-                        if (::mUIControlInterface.isInitialized)
-                            mUIControlInterface.onArtistOrFolderSelected(item, false)
-                    }
+                    Utils.setupSearchViewForStringLists(
+                        findItem(R.id.action_search).actionView as SearchView,
+                        mArtists,
+                        onResultsChanged = { newResults ->
+                            mFilteredArtists = if (newResults.isEmpty()) {
+                                null
+                            } else {
+                                newResults
+                            }
+                            mDataSource.set(mFilteredArtists ?: mArtists)
+                        })
                 }
             }
 
-            mArtistsRecyclerView.addItemDecoration(
-                ThemeHelper.getRecyclerViewDivider(
-                    context!!
-                )
-            )
+            mArtistsRecyclerView = artists_rv
+
+            mDataSource = dataSourceOf(mArtists)
+
+            mArtistsRecyclerView.apply {
+
+                // setup{} is an extension method on RecyclerView
+                setup {
+
+                    // item is a `val` in `this` here
+                    withDataSource(mDataSource)
+                    withItem<String, GenericViewHolder>(R.layout.generic_item) {
+
+                        onBind(::GenericViewHolder) { _, item ->
+                            // GenericViewHolder is `this` here
+                            title.text = item
+                            subtitle.text = getArtistSubtitle(item)
+                        }
+
+                        onClick {
+                            if (::mUIControlInterface.isInitialized)
+                                mUIControlInterface.onArtistOrFolderSelected(item, false)
+                        }
+                    }
+
+                    addItemDecoration(
+                        ThemeHelper.getRecyclerViewDivider(it)
+                    )
+                }
+            }
 
             setupIndicatorFastScrollerView()
-
-            val itemSearch = mSearchToolbar.menu.findItem(R.id.action_search)
-            val searchView = itemSearch.actionView as SearchView
-            Utils.setupSearchViewForStringLists(
-                searchView,
-                mArtists,
-                onResultsChanged = { newResults ->
-                    mFilteredArtists = if (newResults.isEmpty()) {
-                        null
-                    } else {
-                        newResults
-                    }
-                    mDataSource.set(mFilteredArtists ?: mArtists)
-                })
         }
     }
 
@@ -209,7 +214,7 @@ class ArtistsFragment : Fragment() {
         }
     }
 
-    private fun setMenuOnItemClickListener(menu: Menu) {
+    private fun setMenuOnItemClickListener(context: Context, menu: Menu) {
         mSearchToolbar.setOnMenuItemClickListener {
 
             mArtists = Utils.getSortedList(
@@ -225,7 +230,7 @@ class ArtistsFragment : Fragment() {
 
             mSortMenuItem.setTitleColor(
                 ThemeHelper.resolveColorAttr(
-                    context!!,
+                    context,
                     android.R.attr.textColorPrimary
                 )
             )
@@ -234,7 +239,7 @@ class ArtistsFragment : Fragment() {
 
             mSortMenuItem = menu.findItem(mSorting)
 
-            mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(context!!))
+            mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(context))
 
             goPreferences.artistsSorting = mSorting
 

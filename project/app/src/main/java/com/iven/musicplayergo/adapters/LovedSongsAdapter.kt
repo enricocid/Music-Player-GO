@@ -31,7 +31,7 @@ class LovedSongsAdapter(
         mLovedSongs = lovedSongs
         notifyDataSetChanged()
         uiControlInterface.onLovedSongsUpdate(false)
-        if (mLovedSongs!!.isEmpty()) lovedSongsDialog.dismiss()
+        if (mLovedSongs?.isEmpty()!!) lovedSongsDialog.dismiss()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LoveHolder {
@@ -45,7 +45,7 @@ class LovedSongsAdapter(
     }
 
     override fun getItemCount(): Int {
-        return mLovedSongs!!.size
+        return mLovedSongs?.size!!
     }
 
     override fun onBindViewHolder(holder: LoveHolder, position: Int) {
@@ -73,21 +73,23 @@ class LovedSongsAdapter(
             subtitle.text =
                 context.getString(R.string.artist_and_album, song.artist, song.album)
 
-            itemView.setOnClickListener {
-                mediaPlayerHolder.isSongFromLovedSongs = Pair(true, lovedSong.second)
-                uiControlInterface.onSongSelected(
-                    song,
-                    MusicUtils.getAlbumFromList(
-                        song.album,
-                        musicLibrary.allAlbumsForArtist[song.artist]!!
+            itemView.apply {
+                setOnClickListener {
+                    mediaPlayerHolder.isSongFromLovedSongs = Pair(true, lovedSong.second)
+                    uiControlInterface.onSongSelected(
+                        song,
+                        MusicUtils.getAlbumFromList(
+                            song.album,
+                            musicLibrary.allAlbumsForArtist[song.artist]!!
+                        )
+                            .first
+                            .music!!
                     )
-                        .first
-                        .music!!
-                )
-            }
-            itemView.setOnLongClickListener {
-                Utils.showDeleteLovedSongDialog(context, lovedSong, this@LovedSongsAdapter)
-                return@setOnLongClickListener true
+                }
+                setOnLongClickListener {
+                    Utils.showDeleteLovedSongDialog(context, lovedSong, this@LovedSongsAdapter)
+                    return@setOnLongClickListener true
+                }
             }
         }
     }

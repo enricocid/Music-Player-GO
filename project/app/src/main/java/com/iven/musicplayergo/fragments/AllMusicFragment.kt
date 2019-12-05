@@ -61,19 +61,24 @@ class AllMusicFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (context != null) {
+        context?.let {
+            search_toolbar.apply {
 
-            val searchToolbar = search_toolbar
-            searchToolbar.inflateMenu(R.menu.menu_all_music)
-            searchToolbar.title = getString(R.string.songs)
-            searchToolbar.setNavigationOnClickListener {
-                mUIControlInterface.onCloseActivity()
-            }
+                inflateMenu(R.menu.menu_all_music)
+                title = getString(R.string.songs)
+                setNavigationOnClickListener {
+                    mUIControlInterface.onCloseActivity()
+                }
 
-            val itemShuffle = searchToolbar.menu.findItem(R.id.action_shuffle_am)
-            itemShuffle.setOnMenuItemClickListener {
-                mUIControlInterface.onShuffleSongs(mAllMusic)
-                return@setOnMenuItemClickListener true
+                menu.apply {
+                    findItem(R.id.action_shuffle_am).setOnMenuItemClickListener {
+                        mUIControlInterface.onShuffleSongs(mAllMusic)
+                        return@setOnMenuItemClickListener true
+                    }
+                    findItem(R.id.action_search).apply {
+                        setupSearchViewForMusic(actionView as SearchView)
+                    }
+                }
             }
 
             mAllMusic = musicLibrary.allSongsFiltered
@@ -82,50 +87,46 @@ class AllMusicFragment : Fragment() {
 
             mSongsRecyclerView = all_music_rv
 
-            // setup{} is an extension method on RecyclerView
-            mSongsRecyclerView.setup {
-                // item is a `val` in `this` here
-                withDataSource(mDataSource)
-                withItem<Music, SongsViewHolder>(R.layout.song_item_alt) {
-                    onBind(::SongsViewHolder) { _, item ->
-                        // GenericViewHolder is `this` here
-                        title.text = item.title
-                        duration.text = MusicUtils.formatSongDuration(item.duration, false)
-                        subtitle.text =
-                            getString(R.string.artist_and_album, item.artist, item.album)
-                    }
+            mSongsRecyclerView.apply {
 
-                    onClick {
-                        mUIControlInterface.onSongSelected(
-                            item,
-                            MusicUtils.getAlbumFromList(
-                                item.album,
-                                musicLibrary.allAlbumsForArtist.getValue(item.artist!!)
+                // setup{} is an extension method on RecyclerView
+                setup {
+                    // item is a `val` in `this` here
+                    withDataSource(mDataSource)
+                    withItem<Music, SongsViewHolder>(R.layout.song_item_alt) {
+                        onBind(::SongsViewHolder) { _, item ->
+                            // GenericViewHolder is `this` here
+                            title.text = item.title
+                            duration.text = MusicUtils.formatSongDuration(item.duration, false)
+                            subtitle.text =
+                                getString(R.string.artist_and_album, item.artist, item.album)
+                        }
+
+                        onClick {
+                            mUIControlInterface.onSongSelected(
+                                item,
+                                MusicUtils.getAlbumFromList(
+                                    item.album,
+                                    musicLibrary.allAlbumsForArtist.getValue(item.artist!!)
+                                )
+                                    .first.music!!.toList()
                             )
-                                .first.music!!.toList()
-                        )
-                    }
+                        }
 
-                    onLongClick { index ->
-                        val itemViewHolder =
-                            mSongsRecyclerView.findViewHolderForAdapterPosition(index)
-                        Utils.showAddToLovedQueueSongsPopup(
-                            context!!,
-                            itemViewHolder?.itemView!!,
-                            item,
-                            mUIControlInterface
-                        )
+                        onLongClick { index ->
+                            Utils.showAddToLovedQueueSongsPopup(
+                                it,
+                                findViewHolderForAdapterPosition(index)?.itemView!!,
+                                item,
+                                mUIControlInterface
+                            )
+                        }
                     }
                 }
+                addItemDecoration(
+                    ThemeHelper.getRecyclerViewDivider(it)
+                )
             }
-
-            mSongsRecyclerView.addItemDecoration(
-                ThemeHelper.getRecyclerViewDivider(context!!)
-            )
-
-            val itemSearch = searchToolbar.menu.findItem(R.id.action_search)
-            val searchView = itemSearch.actionView as SearchView
-            setupSearchViewForMusic(searchView)
         }
     }
 

@@ -19,11 +19,11 @@ class CheckableTabsAdapter(
 
     private val mItemsToRemove = mutableListOf<String>()
 
-    private val mCheckableItems = goPreferences.activeFragments!!.toMutableList()
+    private var mCheckableItems = goPreferences.activeFragments?.toMutableList()
 
-    fun getUpdatedItems(): Set<String> {
-        mCheckableItems.removeAll(mItemsToRemove.toSet())
-        return mCheckableItems.toSet()
+    fun getUpdatedItems(): Set<String>? {
+        mCheckableItems?.removeAll(mItemsToRemove.toSet())
+        return mCheckableItems?.toSet()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckableItemsHolder {
@@ -58,13 +58,15 @@ class CheckableTabsAdapter(
 
             if (itemView.isEnabled) {
                 manageIndicatorsStatus(
-                    mCheckableItems.contains(adapterPosition.toString()),
+                    mCheckableItems?.contains(adapterPosition.toString()),
                     icon,
                     indicator
                 )
             } else {
-                indicator.visibility = View.VISIBLE
-                indicator.drawable.alpha = 50
+                indicator.apply {
+                    visibility = View.VISIBLE
+                    drawable.alpha = 50
+                }
                 ThemeHelper.updateIconTint(icon, ThemeHelper.getAlphaAccent(context, 50))
             }
 
@@ -72,28 +74,31 @@ class CheckableTabsAdapter(
 
                 manageIndicatorsStatus(indicator.visibility != View.VISIBLE, icon, indicator)
 
-                if (indicator.visibility != View.VISIBLE) mCheckableItems.remove(adapterPosition.toString()) else mCheckableItems.add(
+                if (indicator.visibility != View.VISIBLE) mCheckableItems?.remove(adapterPosition.toString()) else mCheckableItems?.add(
                     adapterPosition.toString()
                 )
-                if (mCheckableItems.size < listItems.size - 2) {
+                if (mCheckableItems?.size!! < listItems.size - 2) {
                     Utils.makeToast(
                         context,
                         context.getString(R.string.active_fragments_pref_warning)
                     )
-                    mCheckableItems.add(adapterPosition.toString())
+                    mCheckableItems?.add(adapterPosition.toString())
                     manageIndicatorsStatus(true, icon, indicator)
                 }
             }
         }
     }
 
-    private fun manageIndicatorsStatus(condition: Boolean, icon: ImageView, indicator: ImageView) {
-        if (condition) {
-            indicator.visibility = View.VISIBLE
-            ThemeHelper.updateIconTint(icon, ThemeHelper.resolveThemeAccent(context))
-        } else {
-            indicator.visibility = View.GONE
-            ThemeHelper.updateIconTint(icon, ThemeHelper.getAlphaAccent(context, 50))
+    private fun manageIndicatorsStatus(condition: Boolean?, icon: ImageView, indicator: ImageView) {
+        when {
+            condition!! -> {
+                indicator.visibility = View.VISIBLE
+                ThemeHelper.updateIconTint(icon, ThemeHelper.resolveThemeAccent(context))
+            }
+            else -> {
+                indicator.visibility = View.GONE
+                ThemeHelper.updateIconTint(icon, ThemeHelper.getAlphaAccent(context, 50))
+            }
         }
     }
 }

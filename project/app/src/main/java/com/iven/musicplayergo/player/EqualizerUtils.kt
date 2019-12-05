@@ -12,25 +12,27 @@ import com.iven.musicplayergo.ui.Utils
 object EqualizerUtils {
 
     private fun hasEqualizer(context: Context): Boolean {
-        val effects = Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL)
         val pm = context.packageManager
-        val ri = pm.resolveActivity(effects, 0)
+        val ri =
+            pm.resolveActivity(Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL), 0)
         return ri != null
     }
 
     internal fun openAudioEffectSession(context: Context, sessionId: Int) {
-        val intent = Intent(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION)
-        intent.putExtra(AudioEffect.EXTRA_AUDIO_SESSION, sessionId)
-        intent.putExtra(AudioEffect.EXTRA_PACKAGE_NAME, context.packageName)
-        intent.putExtra(AudioEffect.EXTRA_CONTENT_TYPE, AudioEffect.CONTENT_TYPE_MUSIC)
-        context.sendBroadcast(intent)
+        Intent(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION).apply {
+            putExtra(AudioEffect.EXTRA_AUDIO_SESSION, sessionId)
+            putExtra(AudioEffect.EXTRA_PACKAGE_NAME, context.packageName)
+            putExtra(AudioEffect.EXTRA_CONTENT_TYPE, AudioEffect.CONTENT_TYPE_MUSIC)
+            context.sendBroadcast(this)
+        }
     }
 
     internal fun closeAudioEffectSession(context: Context, sessionId: Int) {
-        val audioEffectsIntent = Intent(AudioEffect.ACTION_CLOSE_AUDIO_EFFECT_CONTROL_SESSION)
-        audioEffectsIntent.putExtra(AudioEffect.EXTRA_AUDIO_SESSION, sessionId)
-        audioEffectsIntent.putExtra(AudioEffect.EXTRA_PACKAGE_NAME, context.packageName)
-        context.sendBroadcast(audioEffectsIntent)
+        Intent(AudioEffect.ACTION_CLOSE_AUDIO_EFFECT_CONTROL_SESSION).apply {
+            putExtra(AudioEffect.EXTRA_AUDIO_SESSION, sessionId)
+            putExtra(AudioEffect.EXTRA_PACKAGE_NAME, context.packageName)
+            context.sendBroadcast(this)
+        }
     }
 
     internal fun openEqualizer(activity: Activity, mediaPlayer: MediaPlayer) {
@@ -39,16 +41,17 @@ object EqualizerUtils {
                 AudioEffect.ERROR_BAD_VALUE -> notifyNoSessionId(activity)
                 else -> {
                     try {
-                        val effects = Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL)
-                        effects.putExtra(
-                            AudioEffect.EXTRA_AUDIO_SESSION,
-                            mediaPlayer.audioSessionId
-                        )
-                        effects.putExtra(
-                            AudioEffect.EXTRA_CONTENT_TYPE,
-                            AudioEffect.CONTENT_TYPE_MUSIC
-                        )
-                        activity.startActivityForResult(effects, 0)
+                        Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL).apply {
+                            putExtra(
+                                AudioEffect.EXTRA_AUDIO_SESSION,
+                                mediaPlayer.audioSessionId
+                            )
+                            putExtra(
+                                AudioEffect.EXTRA_CONTENT_TYPE,
+                                AudioEffect.CONTENT_TYPE_MUSIC
+                            )
+                            activity.startActivityForResult(this, 0)
+                        }
                     } catch (notFound: ActivityNotFoundException) {
                         notFound.printStackTrace()
                     }

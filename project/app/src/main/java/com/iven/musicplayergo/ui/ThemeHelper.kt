@@ -32,8 +32,9 @@ object ThemeHelper {
     fun applyNewThemeSmoothly(activity: Activity) {
         //smoothly set app theme
         Handler().postDelayed({
-            val intent = Intent(activity, MainActivity::class.java)
-            activity.startActivity(intent)
+            Intent(activity, MainActivity::class.java).apply {
+                activity.startActivity(this)
+            }
             activity.finish()
         }, 250)
     }
@@ -64,24 +65,30 @@ object ThemeHelper {
     @JvmStatic
     fun handleEdgeToEdge(window: Window?, view: View) {
 
-        window?.statusBarColor = Color.TRANSPARENT
-        window?.navigationBarColor = Color.TRANSPARENT
+        window?.apply {
+            statusBarColor = Color.TRANSPARENT
+            navigationBarColor = Color.TRANSPARENT
+        }
 
         var flags =
             View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 -> {
-                val systemBarsFlag =
-                    if (isThemeNight()) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-                flags =
-                    flags or systemBarsFlag
+
+        view.apply {
+            when {
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 -> {
+                    val systemBarsFlag =
+                        if (isThemeNight()) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                    flags =
+                        flags or systemBarsFlag
+                }
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
+                    flags =
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                }
             }
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
-                flags =
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-            }
+
+            systemUiVisibility = flags
         }
-        view.systemUiVisibility = flags
     }
 
     //fixed array of pairs (first: accent, second: theme)
@@ -155,27 +162,24 @@ object ThemeHelper {
 
     @JvmStatic
     private fun resolveThemeAttr(context: Context, @AttrRes attrRes: Int): TypedValue {
-        val theme = context.theme
-        val typedValue = TypedValue()
-        theme.resolveAttribute(attrRes, typedValue, true)
-        return typedValue
+        return TypedValue().apply { context.theme.resolveAttribute(attrRes, this, true) }
     }
 
     @JvmStatic
     fun getRecyclerViewDivider(context: Context): DividerItemDecoration {
-        val dividerItemDecoration = DividerItemDecoration(
+        return DividerItemDecoration(
             context,
             DividerItemDecoration.VERTICAL
-        )
-        dividerItemDecoration.setDrawable(
-            ColorDrawable(
-                getAlphaAccent(
-                    context,
-                    if (isThemeNight()) 45 else 85
+        ).apply {
+            setDrawable(
+                ColorDrawable(
+                    getAlphaAccent(
+                        context,
+                        if (isThemeNight()) 45 else 85
+                    )
                 )
             )
-        )
-        return dividerItemDecoration
+        }
     }
 
     @JvmStatic

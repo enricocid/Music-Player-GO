@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.fragments
 
+import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
@@ -20,6 +21,7 @@ import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.ui.Utils
+import kotlin.properties.Delegates
 
 
 class PreferencesFragment : PreferenceFragmentCompat(),
@@ -30,7 +32,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     private lateinit var mMultiListDialog: MaterialDialog
     private lateinit var mSupportedFormatsDialog: MaterialDialog
 
-    private var mSelectedAccent = R.color.deep_purple
+    private var mSelectedAccent: Int by Delegates.notNull()
 
     private lateinit var mUIControlInterface: UIControlInterface
 
@@ -75,12 +77,11 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
 
-        if (activity != null) {
-
+        activity?.let { fragmentActivity ->
             val openGitPreference = findPreference<Preference>(getString(R.string.open_git_pref))
 
             openGitPreference?.setOnPreferenceClickListener {
-                Utils.openCustomTab(activity!!, getString(R.string.app_git))
+                Utils.openCustomTab(fragmentActivity, getString(R.string.app_git))
                 return@setOnPreferenceClickListener true
             }
 
@@ -88,13 +89,13 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 findPreference<Preference>(getString(R.string.supported_formats_pref))
 
             supportedMediaPreference?.setOnPreferenceClickListener {
-                mSupportedFormatsDialog = Utils.showSupportedFormatsDialog(activity!!)
+                mSupportedFormatsDialog = Utils.showSupportedFormatsDialog(fragmentActivity)
                 return@setOnPreferenceClickListener true
             }
 
             findPreference<ListPreference>(getString(R.string.theme_pref))?.setOnPreferenceChangeListener { _, _ ->
                 ThemeHelper.applyNewThemeSmoothly(
-                    activity!!
+                    fragmentActivity
                 )
                 return@setOnPreferenceChangeListener true
             }
@@ -106,7 +107,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             )
 
             accentPreference?.setOnPreferenceClickListener {
-                showAccentDialog()
+                showAccentDialog(fragmentActivity)
                 return@setOnPreferenceClickListener true
             }
 
@@ -119,7 +120,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             activeFragmentsPreference?.summary = goPreferences.activeFragments?.size.toString()
             activeFragmentsPreference?.setOnPreferenceClickListener {
-                showActiveFragmentsDialog()
+                showActiveFragmentsDialog(fragmentActivity)
                 return@setOnPreferenceClickListener true
             }
         }
@@ -127,57 +128,58 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
 
-        if (activity != null && key == getString(R.string.theme_pref) || key == getString(R.string.tabs_pref) || key == getString(
-                R.string.edge_pref
-            )
-        ) ThemeHelper.applyNewThemeSmoothly(
-            activity!!
-        ) else if (key == getString(R.string.accent_pref)) mUIControlInterface.onAccentUpdated()
+        activity?.let {
+
+            if (key == getString(R.string.theme_pref) || key == getString(R.string.tabs_pref) || key == getString(
+                    R.string.edge_pref
+                )
+            ) ThemeHelper.applyNewThemeSmoothly(
+                it
+            ) else if (key == getString(R.string.accent_pref)) mUIControlInterface.onAccentUpdated()
+        }
+
     }
 
-    private fun showAccentDialog() {
-        if (activity != null) {
-            mAccentsDialog = MaterialDialog(activity!!).show {
+    private fun showAccentDialog(activity: Activity) {
 
-                title(res = R.string.accent_pref_title)
+        mAccentsDialog = MaterialDialog(activity).show {
 
-                customListAdapter(
-                    AccentsAdapter(
-                        activity!!
-                    )
+            title(res = R.string.accent_pref_title)
+
+            customListAdapter(
+                AccentsAdapter(
+                    activity
                 )
-                getRecyclerView().layoutManager =
-                    LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            )
 
-                getRecyclerView().scrollToPosition(
-                    ThemeHelper.getAccentedTheme().second
-                )
+            getRecyclerView().apply {
+                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                scrollToPosition(ThemeHelper.getAccentedTheme().second)
             }
         }
     }
 
-    private fun showActiveFragmentsDialog() {
-        if (activity != null) {
-            mMultiListDialog = MaterialDialog(activity!!).show {
+    private fun showActiveFragmentsDialog(activity: Activity) {
 
-                cornerRadius(res = R.dimen.md_corner_radius)
-                title(res = R.string.active_fragments_pref_title)
+        mMultiListDialog = MaterialDialog(activity).show {
 
-                val checkableAdapter = CheckableTabsAdapter(
-                    activity!!,
-                    resources.getStringArray(R.array.activeFragmentsListArray).toMutableList()
-                )
-                customListAdapter(checkableAdapter)
+            cornerRadius(res = R.dimen.md_corner_radius)
+            title(res = R.string.active_fragments_pref_title)
 
-                getRecyclerView().layoutManager =
-                    LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            val checkableAdapter = CheckableTabsAdapter(
+                activity,
+                resources.getStringArray(R.array.activeFragmentsListArray).toMutableList()
+            )
+            customListAdapter(checkableAdapter)
 
-                positiveButton {
-                    goPreferences.activeFragments = checkableAdapter.getUpdatedItems()
-                    ThemeHelper.applyNewThemeSmoothly(activity!!)
-                }
-                negativeButton {}
+            getRecyclerView().layoutManager =
+                LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
+            positiveButton {
+                goPreferences.activeFragments = checkableAdapter.getUpdatedItems()
+                ThemeHelper.applyNewThemeSmoothly(activity)
             }
+            negativeButton {}
         }
     }
 

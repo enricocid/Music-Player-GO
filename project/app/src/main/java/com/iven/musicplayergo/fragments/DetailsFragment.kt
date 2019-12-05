@@ -27,6 +27,7 @@ import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.ui.*
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlin.math.max
+import kotlin.properties.Delegates
 
 /**
  * A simple [Fragment] subclass.
@@ -34,7 +35,7 @@ import kotlin.math.max
  * create an instance of this fragment.
  */
 
-const val REVEAL_DURATION: Long = 1000
+private const val REVEAL_DURATION: Long = 1000
 
 class DetailsFragment : Fragment() {
 
@@ -57,11 +58,9 @@ class DetailsFragment : Fragment() {
     private lateinit var mSelectedArtistAlbums: List<Album>
     private lateinit var mSongsForArtistOrFolder: List<Music>
 
-    private var mSelectedArtistOrFolder = "unknown"
+    private var mSelectedArtistOrFolder: String by Delegates.notNull()
     private lateinit var mUIControlInterface: UIControlInterface
     private lateinit var mSelectedAlbum: Album
-
-    private lateinit var mToolbarSubtitle: String
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -72,6 +71,16 @@ class DetailsFragment : Fragment() {
 
         arguments?.getBoolean(TAG_IS_FOLDER)?.let {
             isFolder = it
+        }
+
+        if (!isFolder) {
+            mSelectedArtistAlbums = musicLibrary.allAlbumsForArtist[mSelectedArtistOrFolder]!!
+            mSongsForArtistOrFolder =
+                musicLibrary.allSongsForArtist.getValue(mSelectedArtistOrFolder)
+            mSelectedAlbum = mSelectedArtistAlbums[0]
+        } else {
+            mSongsForArtistOrFolder =
+                musicLibrary.allSongsForFolder.getValue(mSelectedArtistOrFolder)
         }
 
         // This makes sure that the container activity has implemented
@@ -92,7 +101,9 @@ class DetailsFragment : Fragment() {
     }
 
     fun onHandleBackPressed(): Animator {
-        revealFragment(false)
+        context?.let {
+            revealFragment(it, false)
+        }
         return mArtistDetailsAnimator
     }
 
@@ -101,36 +112,40 @@ class DetailsFragment : Fragment() {
 
         mArtistDetailsView = view
 
-        if (context != null) {
+        context?.let {
 
             mDetailsToolbar = details_toolbar
 
-            mDetailsToolbar.title = mSelectedArtistOrFolder
+            mDetailsToolbar.apply {
 
-            if (isFolder) mDetailsToolbar.elevation =
-                resources.getDimensionPixelSize(R.dimen.search_bar_elevation).toFloat()
+                val menuToInflate =
+                    if (isFolder) R.menu.menu_folder_details else R.menu.menu_artist_details
+                inflateMenu(menuToInflate)
 
-            mDetailsToolbar.setNavigationOnClickListener {
-                activity?.onBackPressed()
-            }
+                overflowIcon = AppCompatResources.getDrawable(it, R.drawable.ic_shuffle)
 
-            val menu = if (isFolder) R.menu.menu_folder_details else R.menu.menu_artist_details
-            mDetailsToolbar.inflateMenu(menu)
-            mDetailsToolbar.overflowIcon =
-                AppCompatResources.getDrawable(context!!, R.drawable.ic_shuffle)
+                title = mSelectedArtistOrFolder
 
-            val itemShuffle = mDetailsToolbar.menu.findItem(R.id.action_shuffle_sa)
+                if (isFolder) elevation =
+                    resources.getDimensionPixelSize(R.dimen.search_bar_elevation).toFloat()
 
-            itemShuffle.isVisible = !isFolder
-
-            mDetailsToolbar.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.action_shuffle_am -> mUIControlInterface.onShuffleSongs(
-                        mSongsForArtistOrFolder.toMutableList()
-                    )
-                    R.id.action_shuffle_sa -> mUIControlInterface.onShuffleSongs(mSelectedAlbum.music!!)
+                setNavigationOnClickListener {
+                    activity?.onBackPressed()
                 }
-                return@setOnMenuItemClickListener true
+
+                menu.apply {
+                    findItem(R.id.action_shuffle_sa).isVisible = !isFolder
+                }
+
+                setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.action_shuffle_am -> mUIControlInterface.onShuffleSongs(
+                            mSongsForArtistOrFolder.toMutableList()
+                        )
+                        R.id.action_shuffle_sa -> mUIControlInterface.onShuffleSongs(mSelectedAlbum.music!!)
+                    }
+                    return@setOnMenuItemClickListener true
+                }
             }
 
             mAlbumsRecyclerView = albums_rv
@@ -139,11 +154,6 @@ class DetailsFragment : Fragment() {
             mSongsRecyclerView = songs_rv
 
             if (!isFolder) {
-
-                mSelectedArtistAlbums = musicLibrary.allAlbumsForArtist[mSelectedArtistOrFolder]!!
-                mSongsForArtistOrFolder =
-                    musicLibrary.allSongsForArtist.getValue(mSelectedArtistOrFolder)
-                mSelectedAlbum = mSelectedArtistAlbums[0]
 
                 selected_album_container.setOnClickListener {
                     mAlbumsRecyclerView.scrollToPosition(
@@ -159,59 +169,65 @@ class DetailsFragment : Fragment() {
 
                 mSelectedAlbumsDataSource = dataSourceOf(mSelectedArtistAlbums)
 
-                mToolbarSubtitle = getString(
+                mDetailsToolbar.subtitle = getString(
                     R.string.artist_info,
                     mSelectedArtistAlbums.size,
                     mSongsForArtistOrFolder.size
                 )
 
-                mAlbumsRecyclerView.setup {
-                    withDataSource(mSelectedAlbumsDataSource)
-                    withLayoutManager(
-                        LinearLayoutManager(
-                            context,
-                            LinearLayoutManager.HORIZONTAL,
-                            false
+                mAlbumsRecyclerView.apply {
+
+                    setup {
+                        withDataSource(mSelectedAlbumsDataSource)
+                        withLayoutManager(
+                            LinearLayoutManager(
+                                context,
+                                LinearLayoutManager.HORIZONTAL,
+                                false
+                            )
                         )
-                    )
 
-                    withItem<Album, AlbumsViewHolder>(R.layout.album_item) {
-                        onBind(::AlbumsViewHolder) { _, item ->
-                            // AlbumsViewHolder is `this` here
-                            itemView.background.alpha = 20
-                            album.text = item.title
-                            year.text = item.year
-                            totalDuration.text =
-                                MusicUtils.formatSongDuration(item.totalDuration!!, true)
-                            checkbox.visibility =
-                                if (mSelectedAlbum.title != item.title) View.GONE else View.VISIBLE
-                        }
+                        withItem<Album, AlbumsViewHolder>(R.layout.album_item) {
+                            onBind(::AlbumsViewHolder) { _, item ->
+                                // AlbumsViewHolder is `this` here
+                                itemView.background.alpha = 20
+                                album.text = item.title
+                                year.text = item.year
+                                totalDuration.text =
+                                    MusicUtils.formatSongDuration(item.totalDuration!!, true)
+                                checkbox.visibility =
+                                    if (mSelectedAlbum.title != item.title) View.GONE else View.VISIBLE
+                            }
 
-                        onClick {
+                            onClick {
 
-                            if (mSelectedAlbum.title != item.title) {
+                                if (mSelectedAlbum.title != item.title) {
 
-                                mAlbumsRecyclerView.adapter?.notifyItemChanged(
-                                    MusicUtils.getAlbumFromList(
-                                        item.title,
-                                        mSelectedArtistAlbums
-                                    ).second
-                                )
+                                    mAlbumsRecyclerView.adapter?.apply {
+                                        notifyItemChanged(
+                                            MusicUtils.getAlbumFromList(
+                                                item.title,
+                                                mSelectedArtistAlbums
+                                            ).second
+                                        )
 
-                                mAlbumsRecyclerView.adapter?.notifyItemChanged(
-                                    MusicUtils.getAlbumFromList(
-                                        mSelectedAlbum.title,
-                                        mSelectedArtistAlbums
-                                    ).second
-                                )
-                                mSelectedAlbum = item
-                                updateSelectedAlbumTitle()
-                                swapAlbum(item.music)
+                                        notifyItemChanged(
+                                            MusicUtils.getAlbumFromList(
+                                                mSelectedAlbum.title,
+                                                mSelectedArtistAlbums
+                                            ).second
+                                        )
+
+                                        mSelectedAlbum = item
+                                        updateSelectedAlbumTitle()
+                                        swapAlbum(item.music)
+                                    }
+                                }
                             }
                         }
                     }
-                }
 
+                }
             } else {
 
                 mAlbumsRecyclerView.visibility = View.GONE
@@ -221,78 +237,73 @@ class DetailsFragment : Fragment() {
                 mSongsForArtistOrFolder =
                     musicLibrary.allSongsForFolder.getValue(mSelectedArtistOrFolder)
 
-                mToolbarSubtitle = getString(
+                mDetailsToolbar.subtitle = getString(
                     R.string.folder_info,
                     mSongsForArtistOrFolder.size
                 )
 
                 val itemSearch = mDetailsToolbar.menu.findItem(R.id.action_search)
-                val searchView = itemSearch.actionView as SearchView
-                setupSearchViewForMusic(searchView)
+                setupSearchViewForMusic(itemSearch.actionView as SearchView)
             }
-
-            mDetailsToolbar.subtitle = mToolbarSubtitle
 
             mSongsDataSource =
                 dataSourceOf(if (isFolder) mSongsForArtistOrFolder else mSelectedAlbum.music!!)
 
-            // setup{} is an extension method on RecyclerView
-            mSongsRecyclerView.setup {
-                // item is a `val` in `this` here
-                withDataSource(mSongsDataSource)
-                withItem<Music, GenericViewHolder>(R.layout.song_item) {
-                    onBind(::GenericViewHolder) { _, item ->
-                        // GenericViewHolder is `this` here
-                        title.text = ThemeHelper.buildSpanned(
-                            getString(
-                                R.string.track_song,
-                                MusicUtils.formatSongTrack(item.track),
-                                item.title
+            mSongsRecyclerView.apply {
+
+                // setup{} is an extension method on RecyclerView
+                setup {
+                    // item is a `val` in `this` here
+                    withDataSource(mSongsDataSource)
+                    withItem<Music, GenericViewHolder>(R.layout.song_item) {
+                        onBind(::GenericViewHolder) { _, item ->
+                            // GenericViewHolder is `this` here
+                            title.text = ThemeHelper.buildSpanned(
+                                getString(
+                                    R.string.track_song,
+                                    MusicUtils.formatSongTrack(item.track),
+                                    item.title
+                                )
                             )
-                        )
-                        subtitle.text = MusicUtils.formatSongDuration(item.duration, false)
-                    }
+                            subtitle.text = MusicUtils.formatSongDuration(item.duration, false)
+                        }
 
-                    onClick {
-                        val selectedArtistAlbums =
+                        onClick {
+                            val selectedArtistAlbums =
 
-                            if (isFolder) MusicUtils.getAlbumFromList(
-                                item.album,
-                                musicLibrary.allAlbumsForArtist[item.artist]!!
-                            ).first.music!!.toList()
-                            else
-                                MusicUtils.getAlbumFromList(
+                                if (isFolder) MusicUtils.getAlbumFromList(
                                     item.album,
-                                    mSelectedArtistAlbums
+                                    musicLibrary.allAlbumsForArtist[item.artist]!!
                                 ).first.music!!.toList()
+                                else
+                                    MusicUtils.getAlbumFromList(
+                                        item.album,
+                                        mSelectedArtistAlbums
+                                    ).first.music!!.toList()
 
-                        mUIControlInterface.onSongSelected(
-                            item,
-                            selectedArtistAlbums
-                        )
-                    }
+                            mUIControlInterface.onSongSelected(
+                                item,
+                                selectedArtistAlbums
+                            )
+                        }
 
-                    onLongClick { index ->
-                        val itemViewHolder =
-                            mSongsRecyclerView.findViewHolderForAdapterPosition(index)
-                        Utils.showAddToLovedQueueSongsPopup(
-                            context!!,
-                            itemViewHolder?.itemView!!,
-                            item,
-                            mUIControlInterface
-                        )
+                        onLongClick { index ->
+                            Utils.showAddToLovedQueueSongsPopup(
+                                it,
+                                findViewHolderForAdapterPosition(index)?.itemView!!,
+                                item,
+                                mUIControlInterface
+                            )
+                        }
                     }
                 }
+
+                addItemDecoration(ThemeHelper.getRecyclerViewDivider(it))
             }
 
-            mSongsRecyclerView.addItemDecoration(
-                ThemeHelper.getRecyclerViewDivider(
-                    context!!
-                )
-            )
-        }
-        view.afterMeasured {
-            revealFragment(true)
+            view.afterMeasured {
+                revealFragment(it, true)
+            }
         }
     }
 
@@ -305,12 +316,14 @@ class DetailsFragment : Fragment() {
                 musicLibrary.allSongsForArtist.getValue(mSelectedArtistOrFolder)
             mSelectedAlbum = mSelectedArtistAlbums[0]
 
-            mDetailsToolbar.title = mSelectedArtistOrFolder
-            mDetailsToolbar.subtitle = getString(
-                R.string.artist_info,
-                mSelectedArtistAlbums.size,
-                mSongsForArtistOrFolder.size
-            )
+            mDetailsToolbar.apply {
+                title = mSelectedArtistOrFolder
+                subtitle = getString(
+                    R.string.artist_info,
+                    mSelectedArtistAlbums.size,
+                    mSongsForArtistOrFolder.size
+                )
+            }
 
             mSelectedAlbumsDataSource.set(mSelectedArtistAlbums)
             mSongsDataSource.set(mSelectedAlbum.music!!)
@@ -332,7 +345,7 @@ class DetailsFragment : Fragment() {
         mSongsRecyclerView.scrollToPosition(0)
     }
 
-    private fun revealFragment(show: Boolean) {
+    private fun revealFragment(context: Context, show: Boolean) {
 
         val radius = max(mArtistDetailsView.width, mArtistDetailsView.height).toFloat()
 
@@ -346,15 +359,15 @@ class DetailsFragment : Fragment() {
                 0,
                 startRadius,
                 finalRadius
-            )
+            ).apply {
+                interpolator = FastOutSlowInInterpolator()
+                duration = REVEAL_DURATION
+                start()
+            }
 
-        mArtistDetailsAnimator.interpolator = FastOutSlowInInterpolator()
-        mArtistDetailsAnimator.duration = REVEAL_DURATION
-        mArtistDetailsAnimator.start()
-
-        val accent = ThemeHelper.resolveThemeAccent(context!!)
+        val accent = ThemeHelper.resolveThemeAccent(context)
         val backgroundColor =
-            ThemeHelper.resolveColorAttr(context!!, android.R.attr.windowBackground)
+            ThemeHelper.resolveColorAttr(context, android.R.attr.windowBackground)
         val startColor = if (show) accent else backgroundColor
         val endColor = if (show) backgroundColor else accent
 
@@ -370,12 +383,13 @@ class DetailsFragment : Fragment() {
         startColor: Int,
         endColor: Int
     ) {
-        val anim = ValueAnimator()
-        anim.setIntValues(startColor, endColor)
-        anim.setEvaluator(ArgbEvaluator())
-        anim.addUpdateListener { valueAnimator -> view.setBackgroundColor((valueAnimator.animatedValue as Int)) }
-        anim.duration = REVEAL_DURATION
-        anim.start()
+        ValueAnimator().apply {
+            setIntValues(startColor, endColor)
+            setEvaluator(ArgbEvaluator())
+            addUpdateListener { valueAnimator -> view.setBackgroundColor((valueAnimator.animatedValue as Int)) }
+            duration = REVEAL_DURATION
+            start()
+        }
     }
 
     private fun setupSearchViewForMusic(searchView: SearchView) {

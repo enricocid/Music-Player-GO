@@ -15,20 +15,20 @@ class PlayerService : Service() {
     var isRunning: Boolean = false
 
     //media player
-    var mediaPlayerHolder: MediaPlayerHolder? = null
+    lateinit var mediaPlayerHolder: MediaPlayerHolder
     lateinit var musicNotificationManager: MusicNotificationManager
     var isRestoredFromPause = false
 
     override fun onDestroy() {
         super.onDestroy()
         isRunning = false
-        if (mediaPlayerHolder != null && mediaPlayerHolder?.currentSong != null) {
+        if (::mediaPlayerHolder.isInitialized && mediaPlayerHolder.isCurrentSong) {
             //saves last played song and its position
             goPreferences.lastPlayedSong =
-                Pair(mediaPlayerHolder?.currentSong?.first!!, mediaPlayerHolder?.playerPosition!!)
-            mediaPlayerHolder?.unregisterActionsReceiver()
-            mediaPlayerHolder?.unregisterMediaButtonsReceiver()
-            mediaPlayerHolder!!.release()
+                Pair(mediaPlayerHolder.currentSong.first, mediaPlayerHolder.playerPosition)
+            mediaPlayerHolder.unregisterActionsReceiver()
+            mediaPlayerHolder.unregisterMediaButtonsReceiver()
+            mediaPlayerHolder.release()
         }
     }
 
@@ -41,16 +41,17 @@ class PlayerService : Service() {
     }
 
     override fun onBind(intent: Intent): IBinder {
-        if (mediaPlayerHolder == null) {
-            mediaPlayerHolder = MediaPlayerHolder(this)
+        if (!::mediaPlayerHolder.isInitialized) {
+            mediaPlayerHolder = MediaPlayerHolder(this).apply {
+                registerActionsReceiver()
+            }
             musicNotificationManager = MusicNotificationManager(this)
-            mediaPlayerHolder?.registerActionsReceiver()
         }
         return binder
     }
 
     inner class LocalBinder : Binder() {
         // Return this instance of PlayerService so we can call public methods
-        fun getService(): PlayerService = this@PlayerService
+        fun getService() = this@PlayerService
     }
 }
