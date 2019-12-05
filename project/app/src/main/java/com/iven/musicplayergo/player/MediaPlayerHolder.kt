@@ -89,8 +89,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     //media player
     private lateinit var mediaPlayer: MediaPlayer
-    private lateinit var mExecutor: ScheduledExecutorService
-    private lateinit var mSeekBarPositionUpdateTask: Runnable
+    private var mExecutor: ScheduledExecutorService? = null
+    private var mSeekBarPositionUpdateTask: Runnable? = null
 
     //first: current song, second: isFromQueue
     lateinit var currentSong: Pair<Music, Boolean>
@@ -328,12 +328,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
      */
     private fun startUpdatingCallbackWithPosition() {
 
-        if (!::mExecutor.isInitialized) mExecutor = Executors.newSingleThreadScheduledExecutor()
-        if (!::mSeekBarPositionUpdateTask.isInitialized) mSeekBarPositionUpdateTask =
+        if (mExecutor == null) mExecutor = Executors.newSingleThreadScheduledExecutor()
+        if (mSeekBarPositionUpdateTask == null) mSeekBarPositionUpdateTask =
             Runnable { this.updateProgressCallbackTask() }
 
-        mExecutor.scheduleAtFixedRate(
-            mSeekBarPositionUpdateTask,
+        mExecutor?.scheduleAtFixedRate(
+            mSeekBarPositionUpdateTask!!,
             0,
             1000,
             TimeUnit.MILLISECONDS
@@ -342,10 +342,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     // Reports media playback position to mPlaybackProgressCallback.
     private fun stopUpdatingCallbackWithPosition() {
-        if (::mExecutor.isInitialized) {
-            mExecutor.let {
-                mExecutor.shutdownNow()
-            }
+        if (mExecutor != null) {
+            mExecutor!!.shutdownNow()
+            mExecutor = null
+            mSeekBarPositionUpdateTask = null
         }
     }
 

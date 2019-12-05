@@ -174,7 +174,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     override fun onDestroy() {
         super.onDestroy()
         if (sBound) unbindService(connection)
-        if (::mMediaPlayerHolder.isInitialized && !mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning) {
+        if (isMediaPlayerHolder && !mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning) {
             mPlayerService.stopForeground(true)
             stopService(mBindingIntent)
         }
@@ -183,13 +183,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     //restore recycler views state
     override fun onResume() {
         super.onResume()
-        if (::mMediaPlayerHolder.isInitialized && mMediaPlayerHolder.isMediaPlayer) mMediaPlayerHolder.onResumeActivity()
+        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) mMediaPlayerHolder.onResumeActivity()
     }
 
     //save recycler views state
     override fun onPause() {
         super.onPause()
-        if (::mMediaPlayerHolder.isInitialized && mMediaPlayerHolder.isMediaPlayer) mMediaPlayerHolder.onPauseActivity()
+        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) mMediaPlayerHolder.onPauseActivity()
     }
 
     //manage request permission result, continue loading ui if permissions was granted
