@@ -1,9 +1,5 @@
 <resources>
 
-
-
-
-
     <!-- Main - Artists -->
     <string name="artists">Artis</string>
     <string name="artist_info">%1d&#160;Album,&#160;%2d&#160;Lagu</string>
@@ -14,8 +10,6 @@
 
     <string name="shuffle_am">Acak semua lagu</string>
     <string name="shuffle_sa">Acak album yang dipilih</string>
-
-
 
     <!-- Main - Folders -->
     <string name="folders">Folder</string>
@@ -37,9 +31,6 @@
     <string name="loved_song_add">Tambahkan ke favorit</string>
     <string name="error_no_loved_songs">Tidak ada favorit yang ditemukan!</string>
 
-    <!-- Details -->
-
-
     <!-- Messages -->
     <string name="perm_rationale">Music Player GO membutuhkan akses ke berkas musik untuk dapat memutar musik!</string>
     <string name="no_browser">Peramban tidak ditemukan!</string>
@@ -58,56 +49,49 @@
     <string name="category_appearance">Tampilan</string>
     <string name="category_general">Umum</string>
 
-
-
-
-
     <string name="open_git_pref_title">Halaman GitHub</string>
     <string name="open_git_pref_summary">Silakan buka halaman proyek untuk informasi lebih lanjut :)</string>
 
+    <string name="supported_formats_title">Format media yang didukung</string>
+    <string name="supported_formats_summary">Buka halaman ini jika anda mengalami masalah terkait dengan format media yang didukung :P</string>
+    <string name="supportedFormats"><![CDATA[
+    Music Player GO mengimplementasikan <a href="https://developer.android.com/guide/topics/media/mediaplayer">API MediaPlayer</a> bawaan android,
+    yang mendukung banyak <a href="https://developer.android.com/guide/topics/media/media-formats">format media</a>.<br/><br/>
+    Instruksi untuk membuat codec tertentu berfungsi dengan baik:<br/>
+    Sebagai contoh, Opus, didukung secara bawaan sejak Android 5.0, tetapi hanya dalam kontainer Matroska (.mkv). Kontainer/tipe berkas Opus tidak bisa dideteksi
+    dan tidak didukung oleh API MediaPlayer. Solusi sederhana untuk mendeteksi dan memutar berkas Opus adalah dengan mengganti
+    ekstensinya (.opus) dengan ekstensi yang didukung (.mkv).<br/>
+    Lihat tabel "Format Kontainer / Tipe Berkas yang Didukung" di halaman pengembang android tentang
+    <a href="https://developer.android.com/guide/topics/media/media-formats">format media yang didukung</a> untuk mengetahui kontainer yang didukung untuk format/codec yang ada.<br/><br/>
+    <i><font color="#F38596">Terima kasih telah menggunakan Music Player GO ♥</font></i>
+  ]]></string>
 
     <string name="theme_pref_title">Tema</string>
     <string name="theme_pref_light_title">Terang</string>
     <string name="theme_pref_dark_title">Gelap</string>
     <string name="theme_pref_auto_title">Otomatis</string>
 
-
-
-
-
-
     <string name="accent_pref_title">Aksen</string>
-
-
 
     <string name="edge_pref_summary_on">Menonaktifkan edge-to-edge</string>
     <string name="edge_pref_summary_off">Mengaktifkan edge-to-edge</string>
-
 
     <string name="tabs_pref_title">Tab</string>
     <string name="tabs_pref_summary_on">Menonaktifkan tab</string>
     <string name="tabs_pref_summary_off">Menampilkan tab untuk navigasi</string>
 
-
     <string name="active_fragments_pref_title">Tab aktif</string>
     <string name="active_fragments_pref_warning">Anda tidak bisa membuang semua tab! :P</string>
-
-
 
     <string name="sorting_pref_default">Default</string>
     <string name="sorting_pref_ascending">Naik</string>
     <string name="sorting_pref_descending">Turun</string>
 
-
     <string name="focus_pref_title">Fokus audio</string>
     <string name="focus_pref_summary_on">Menonaktifkan manajemen fokus audio</string>
     <string name="focus_pref_summary_off">Mengaktifkan manajemen fokus audio</string>
 
-
     <string name="headset_pref_title">Headset</string>
     <string name="headset_pref_summary_on">Menonaktifkan manajemen headset</string>
     <string name="headset_pref_summary_off">Mengaktifkan manajemen headset</string>
-
-
-
 </resources>
