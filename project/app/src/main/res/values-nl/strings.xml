@@ -61,7 +61,7 @@
     Opus, bijvoorbeeld, wordt ondersteund sinds Android 5.0, maar alleen binnen de Matroska (.mkv)-container. Het Opus-bestandstype/de container wordt niet gedetecteerd
     en ondersteund door de MediaPlayer-API. Hier is een eenvoudige tussenoplossing voor: vervang de
     bestandsextensie (.opus) door die van de ondersteunde container (.mkv).<br/>
-    Ga naar 'Supported File Type(s) / Container Formats' op de
+    Ga naar "Supported File Type(s) / Container Formats" op de
     <a href="https://developer.android.com/guide/topics/media/media-formats">ondersteunde mediaformaten</a>-pagina om de ondersteunde container bij het formaat/de codec op te zoeken.<br/><br/>
     <i><font color="#F38596">Bedankt voor het kiezen voor Music Player GO ♥</font></i>
   ]]></string>
