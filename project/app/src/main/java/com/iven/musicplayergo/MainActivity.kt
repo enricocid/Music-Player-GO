@@ -703,7 +703,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) Utils.stopPlaybackDialog(
             this,
             mMediaPlayerHolder
-        ) else onBackPressed()
+        ) else super.onBackPressed()
     }
 
     override fun onArtistOrFolderSelected(artistOrFolder: String, isFolder: Boolean) {
