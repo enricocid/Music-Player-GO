@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.view.Gravity
 import android.view.View
@@ -32,6 +33,14 @@ import java.util.*
 
 
 object Utils {
+
+    @JvmStatic
+    fun hasToShowPermissionRationale(context: Context): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            context,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        ) != PackageManager.PERMISSION_GRANTED
+    }
 
     @JvmStatic
     fun showPermissionRationale(activity: Activity) {

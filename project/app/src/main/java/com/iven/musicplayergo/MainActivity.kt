@@ -1,6 +1,5 @@
 package com.iven.musicplayergo
 
-import android.Manifest
 import android.annotation.TargetApi
 import android.content.ComponentName
 import android.content.Context
@@ -17,7 +16,6 @@ import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -800,12 +798,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     @TargetApi(23)
     private fun checkPermission() {
 
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        )
-            Utils.showPermissionRationale(this) else doBindService()
+        if (Utils.hasToShowPermissionRationale(this)) Utils.showPermissionRationale(this) else doBindService()
     }
 
     //method to handle intent to play audio file from external app
