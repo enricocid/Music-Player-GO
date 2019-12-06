@@ -300,10 +300,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private fun getSkipSong(isNext: Boolean): Music {
         val currentIndex = mPlayingAlbumSongs.indexOf(currentSong.first)
-        val index: Int
         try {
-            index = if (isNext) currentIndex + 1 else currentIndex - 1
-            return mPlayingAlbumSongs[index]
+            return mPlayingAlbumSongs[if (isNext) currentIndex + 1 else currentIndex - 1]
         } catch (e: IndexOutOfBoundsException) {
             e.printStackTrace()
             return when {
