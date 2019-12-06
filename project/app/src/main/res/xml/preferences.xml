@@ -23,6 +23,11 @@
         app:key="@string/open_git_pref"
         app:title="@string/open_git_pref_title" />
 
+    <Preference
+        android:summary="@string/supported_formats_summary"
+        app:key="@string/supported_formats_pref"
+        app:title="@string/supported_formats_title" />
+
     <PreferenceCategory app:title="@string/category_appearance">
 
         <ListPreference
