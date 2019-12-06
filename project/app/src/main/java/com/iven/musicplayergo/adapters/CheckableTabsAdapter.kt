@@ -48,50 +48,51 @@ class CheckableTabsAdapter(
 
         fun bindItems() {
 
-            val icon = itemView.findViewById<ImageView>(R.id.tab_image)
+            itemView.apply {
 
-            icon.setImageResource(ThemeHelper.getTabIcon(adapterPosition))
+                val icon = findViewById<ImageView>(R.id.tab_image)
+                icon.setImageResource(ThemeHelper.getTabIcon(adapterPosition))
+                val indicator = findViewById<ImageView>(R.id.tab_indicator)
 
-            val indicator = itemView.findViewById<ImageView>(R.id.tab_indicator)
-
-            itemView.isEnabled = adapterPosition != listItems.size - 1
-
-            if (itemView.isEnabled) {
-                manageIndicatorsStatus(
-                    mCheckableItems?.contains(adapterPosition.toString()),
-                    icon,
-                    indicator
-                )
-            } else {
-                indicator.apply {
-                    visibility = View.VISIBLE
-                    drawable.alpha = 50
-                }
-                ThemeHelper.updateIconTint(icon, ThemeHelper.getAlphaAccent(context, 50))
-            }
-
-            itemView.setOnClickListener {
-
-                manageIndicatorsStatus(indicator.visibility != View.VISIBLE, icon, indicator)
-
-                if (indicator.visibility != View.VISIBLE) mCheckableItems?.remove(adapterPosition.toString()) else mCheckableItems?.add(
-                    adapterPosition.toString()
-                )
-                if (mCheckableItems?.size!! < listItems.size - 2) {
-                    Utils.makeToast(
-                        context,
-                        context.getString(R.string.active_fragments_pref_warning)
+                if (adapterPosition != listItems.size - 1) {
+                    manageIndicatorsStatus(
+                        mCheckableItems?.contains(adapterPosition.toString())!!,
+                        icon,
+                        indicator
                     )
-                    mCheckableItems?.add(adapterPosition.toString())
-                    manageIndicatorsStatus(true, icon, indicator)
+                } else {
+                    indicator.apply {
+                        visibility = View.VISIBLE
+                        drawable.alpha = 50
+                    }
+                    ThemeHelper.updateIconTint(icon, ThemeHelper.getAlphaAccent(context, 50))
+                }
+
+                setOnClickListener {
+
+                    manageIndicatorsStatus(indicator.visibility != View.VISIBLE, icon, indicator)
+
+                    if (indicator.visibility != View.VISIBLE) mCheckableItems?.remove(
+                        adapterPosition.toString()
+                    ) else mCheckableItems?.add(
+                        adapterPosition.toString()
+                    )
+                    if (mCheckableItems?.size!! < listItems.size - 2) {
+                        Utils.makeToast(
+                            context,
+                            context.getString(R.string.active_fragments_pref_warning)
+                        )
+                        mCheckableItems?.add(adapterPosition.toString())
+                        manageIndicatorsStatus(true, icon, indicator)
+                    }
                 }
             }
         }
     }
 
-    private fun manageIndicatorsStatus(condition: Boolean?, icon: ImageView, indicator: ImageView) {
+    private fun manageIndicatorsStatus(condition: Boolean, icon: ImageView, indicator: ImageView) {
         when {
-            condition!! -> {
+            condition -> {
                 indicator.visibility = View.VISIBLE
                 ThemeHelper.updateIconTint(icon, ThemeHelper.resolveThemeAccent(context))
             }

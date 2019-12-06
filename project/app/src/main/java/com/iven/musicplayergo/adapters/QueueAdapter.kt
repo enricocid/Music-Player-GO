@@ -15,7 +15,7 @@ import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.Utils
 
 class QueueAdapter(
-    private val context: Context,
+    context: Context,
     private val queueSongsDialog: MaterialDialog,
     private val mediaPlayerHolder: MediaPlayerHolder
 ) :
@@ -60,27 +60,28 @@ class QueueAdapter(
 
         fun bindItems(song: Music) {
 
-            val title = itemView.findViewById<TextView>(R.id.title)
-            val duration = itemView.findViewById<TextView>(R.id.duration)
-            val subtitle = itemView.findViewById<TextView>(R.id.subtitle)
-
-            title.text = song.title
-            duration.text = MusicUtils.formatSongDuration(song.duration, false)
-            subtitle.text =
-                context.getString(R.string.artist_and_album, song.artist, song.album)
-
-            val themeAccent = ThemeHelper.resolveThemeAccent(context)
-
-            title.apply {
-                when {
-                    mQueueSongs.indexOf(mSelectedSong.first) == adapterPosition && mSelectedSong.second -> setTextColor(
-                        themeAccent
-                    )
-                    else -> setTextColor(mDefaultTextColor)
-                }
-            }
-
             itemView.apply {
+
+                val title = findViewById<TextView>(R.id.title)
+                val duration = findViewById<TextView>(R.id.duration)
+                val subtitle = findViewById<TextView>(R.id.subtitle)
+
+                title.apply {
+
+                    text = song.title
+
+                    when {
+                        mQueueSongs.indexOf(mSelectedSong.first) == adapterPosition && mSelectedSong.second -> setTextColor(
+                            ThemeHelper.resolveThemeAccent(context)
+                        )
+                        else -> setTextColor(mDefaultTextColor)
+                    }
+                }
+
+                duration.text = MusicUtils.formatSongDuration(song.duration, false)
+                subtitle.text =
+                    context.getString(R.string.artist_and_album, song.artist, song.album)
+
                 setOnClickListener {
 
                     mediaPlayerHolder.apply {
