@@ -52,7 +52,7 @@
         android:tint="?android:attr/textColorPrimary" />
 
     <ImageView
-        android:id="@+id/np_replay"
+        android:id="@+id/np_repeat"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
