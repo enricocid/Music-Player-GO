@@ -41,14 +41,19 @@ class AccentsAdapter(private val activity: Activity) :
 
         fun bindItems(color: Int) {
 
-            ThemeHelper.getColor(
-                activity,
-                color,
-                R.color.deep_purple
-            ).apply { ThemeHelper.updateIconTint(itemView.findViewById(R.id.circle), this) }
+            itemView.apply {
 
-            itemView.findViewById<ImageView>(R.id.check).apply {
-                visibility = if (color != mSelectedAccent) View.GONE else View.VISIBLE
+                ThemeHelper.getColor(
+                    activity,
+                    color,
+                    R.color.deep_purple
+                ).apply { ThemeHelper.updateIconTint(findViewById(R.id.circle), this) }
+
+
+                findViewById<ImageView>(R.id.check).apply {
+                    visibility = if (color != mSelectedAccent) View.GONE else View.VISIBLE
+                }
+
                 setOnClickListener {
 
                     if (ThemeHelper.accents[adapterPosition].first != mSelectedAccent) {
