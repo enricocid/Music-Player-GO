@@ -387,11 +387,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mDetailsFragment =
             DetailsFragment.newInstance(selectedArtistOrFolder, isFolder)
         supportFragmentManager.beginTransaction()
-            .replace(
+            .addToBackStack(null)
+            .add(
                 R.id.container,
                 mDetailsFragment, DetailsFragment.TAG_ARTIST_FOLDER
             )
-            .addToBackStack(null)
             .commit()
     }
 
