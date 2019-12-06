@@ -340,7 +340,6 @@ class DetailsFragment : Fragment() {
     }
 
     private fun swapAlbum(songs: MutableList<Music>?) {
-        mSelectedAlbumsDataSource.set(mSelectedArtistAlbums)
         mSongsDataSource.set(songs!!)
         mSongsRecyclerView.scrollToPosition(0)
     }
