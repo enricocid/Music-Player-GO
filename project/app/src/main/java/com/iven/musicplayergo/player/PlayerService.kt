@@ -21,13 +21,14 @@ class PlayerService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
+
         isRunning = false
+
         if (::mediaPlayerHolder.isInitialized && mediaPlayerHolder.isCurrentSong) {
             //saves last played song and its position
             goPreferences.lastPlayedSong =
                 Pair(mediaPlayerHolder.currentSong.first, mediaPlayerHolder.playerPosition)
-            mediaPlayerHolder.unregisterActionsReceiver()
-            mediaPlayerHolder.unregisterMediaButtonsReceiver()
+
             mediaPlayerHolder.release()
         }
     }

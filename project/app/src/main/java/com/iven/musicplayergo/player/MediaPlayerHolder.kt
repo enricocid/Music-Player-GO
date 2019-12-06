@@ -151,7 +151,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         playerService.registerReceiver(mNotificationActionsReceiver, intentFilter)
     }
 
-    fun unregisterActionsReceiver() {
+    private fun unregisterActionsReceiver() {
         if (::mNotificationActionsReceiver.isInitialized) {
             try {
                 playerService.unregisterReceiver(mNotificationActionsReceiver)
@@ -170,7 +170,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         playerService.registerReceiver(mMediaButtonsReceiver, mediaFilter)
     }
 
-    fun unregisterMediaButtonsReceiver() {
+    private fun unregisterMediaButtonsReceiver() {
         if (::mMediaButtonsReceiver.isInitialized) {
             try {
                 playerService.unregisterReceiver(mMediaButtonsReceiver)
@@ -438,12 +438,14 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun release() {
         if (isMediaPlayer) {
             EqualizerUtils.closeAudioEffectSession(
-                playerService.applicationContext,
+                playerService,
                 mediaPlayer.audioSessionId
             )
             mediaPlayer.release()
             giveUpAudioFocus()
             unregisterActionsReceiver()
+            unregisterMediaButtonsReceiver()
+            stopUpdatingCallbackWithPosition()
         }
     }
 
@@ -536,11 +538,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun stopPlaybackService(stopPlayback: Boolean) {
         if (playerService.isRunning && isMediaPlayer && stopPlayback) {
-            mediaPlayer.stop()
-            val bindingIntent = Intent(playerService, PlayerService::class.java)
-            playerService.stopService(bindingIntent)
             playerService.stopForeground(true)
-            mediaPlayerInterface.onClose()
+            playerService.stopSelf()
         }
         mediaPlayerInterface.onClose()
     }
@@ -582,7 +581,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     }
                     AudioManager.ACTION_AUDIO_BECOMING_NOISY -> if (isPlaying && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
                 }
-                abortBroadcast()
             }
         }
     }
@@ -609,7 +607,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     KeyEvent.KEYCODE_MEDIA_PLAY -> resumeMediaPlayer()
                 }
             }
-            abortBroadcast()
         }
     }
 }
