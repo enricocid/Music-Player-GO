@@ -167,7 +167,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 super.onBackPressed()
             }
         } else {
-            super.onBackPressed()
+            if (mViewPager.currentItem != 0) mViewPager.currentItem = 0 else
+                if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) Utils.stopPlaybackDialog(
+                    this,
+                    mMediaPlayerHolder
+                ) else super.onBackPressed()
         }
     }
 
