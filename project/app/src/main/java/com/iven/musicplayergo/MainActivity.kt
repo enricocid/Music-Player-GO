@@ -320,6 +320,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mAllDeviceSongs = musicLibrary.allSongsUnfiltered
                 mMusic = musicLibrary.allAlbumsForArtist
 
+                mPlayerControlsContainer.setOnLongClickListener {
+                    openPlayingArtistAlbum(it)
+                    return@setOnLongClickListener true
+                }
+
                 //let's get intent from external app and open the song,
                 //else restore the player (normal usage)
                 if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null)
@@ -674,19 +679,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         mSongTextNP.text = selectedSong.title
 
-        mSongTextNP.setOnClickListener {
-            val selectedArtistOrFolder = selectedSong.artist!!
-            if (::mDetailsFragment.isInitialized && mDetailsFragment.isAdded && !mDetailsFragment.isFolder)
-                mDetailsFragment.updateView(
-                    selectedArtistOrFolder,
-                    MusicUtils.getPlayingAlbumPosition(selectedArtistOrFolder, mMediaPlayerHolder)
-                )
-            else
-                openDetailsFragment(selectedArtistOrFolder, isFolder = false)
-
-            mNowPlayingDialog.dismiss()
-        }
-
         mArtistAlbumTextNP.text =
             getString(
                 R.string.artist_and_album,
@@ -701,6 +693,23 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mFixedMusicBar.loadFrom(selectedSong.path, selectedSong.duration.toInt())
 
         updatePlayingStatus(true)
+    }
+
+    fun openPlayingArtistAlbum(view: View) {
+        if (isMediaPlayerHolder && mMediaPlayerHolder.isCurrentSong) {
+
+            val selectedSong = mMediaPlayerHolder.currentSong.first
+            val selectedArtistOrFolder = selectedSong.artist!!
+            if (::mDetailsFragment.isInitialized && mDetailsFragment.isAdded && !mDetailsFragment.isFolder)
+                mDetailsFragment.updateView(
+                    selectedArtistOrFolder,
+                    MusicUtils.getPlayingAlbumPosition(selectedArtistOrFolder, mMediaPlayerHolder)
+                )
+            else
+                openDetailsFragment(selectedArtistOrFolder, isFolder = false)
+
+            if (isNowPlaying()) mNowPlayingDialog.dismiss()
+        }
     }
 
     /**
