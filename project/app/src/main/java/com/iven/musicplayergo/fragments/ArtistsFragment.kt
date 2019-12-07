@@ -102,7 +102,7 @@ class ArtistsFragment : Fragment() {
 
                 menu.apply {
 
-                    mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, this)
+                    mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, this, false)
                     mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(it))
 
                     setMenuOnItemClickListener(it, this)
@@ -238,7 +238,7 @@ class ArtistsFragment : Fragment() {
 
             mSorting = it.order
 
-            mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, menu)
+            mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, menu, false)
 
             mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(context))
 

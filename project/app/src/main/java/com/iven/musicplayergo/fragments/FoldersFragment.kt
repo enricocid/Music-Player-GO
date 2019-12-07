@@ -93,7 +93,7 @@ class FoldersFragment : Fragment() {
 
             mSearchToolbar.apply {
 
-                inflateMenu(R.menu.menu_search)
+                inflateMenu(R.menu.menu_search_folders)
 
                 overflowIcon =
                     AppCompatResources.getDrawable(it, R.drawable.ic_sort)
@@ -106,7 +106,7 @@ class FoldersFragment : Fragment() {
 
                 menu.apply {
 
-                    mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, this)
+                    mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, this, true)
                     mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(it))
 
                     setMenuOnItemClickListener(it, this)
@@ -172,7 +172,7 @@ class FoldersFragment : Fragment() {
         mIndicatorFastScrollerView = fastscroller
         mIndicatorFastScrollThumb = fastscroller_thumb
 
-        if (mSorting == R.id.default_sorting) mIndicatorFastScrollerView.visibility =
+        if (mSorting == DEFAULT_SORTING) mIndicatorFastScrollerView.visibility =
             View.GONE
 
         //set indexes if artists rv is scrollable
@@ -237,7 +237,7 @@ class FoldersFragment : Fragment() {
 
             mSorting = it.order
 
-            mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, menu)
+            mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, menu, true)
             mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(context))
 
             goPreferences.foldersSorting = mSorting
