@@ -23,5 +23,4 @@ class MusicPlayerGoApp : Application() {
         musicLibrary = MusicLibrary()
         super.onCreate()
     }
-
 }

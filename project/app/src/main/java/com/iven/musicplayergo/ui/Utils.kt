@@ -151,11 +151,11 @@ object Utils {
     }
 
     @JvmStatic
-    fun getSelectedSortingMenuItem(sorting: Int, menu: Menu): MenuItem {
+    fun getSelectedSortingMenuItem(sorting: Int, menu: Menu, isFolders: Boolean): MenuItem {
         return when (sorting) {
-            DEFAULT_SORTING -> menu.findItem(R.id.default_sorting)
-            ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
-            else -> menu.findItem(R.id.descending_sorting)
+            DEFAULT_SORTING -> menu.findItem(if (isFolders) R.id.default_sorting_folders else R.id.default_sorting)
+            ASCENDING_SORTING -> menu.findItem(if (isFolders) R.id.ascending_sorting_folders else R.id.ascending_sorting)
+            else -> menu.findItem(if (isFolders) R.id.descending_sorting_folders else R.id.descending_sorting)
         }
     }
 
