@@ -31,8 +31,8 @@
     <PreferenceCategory app:title="@string/category_appearance">
 
         <ListPreference
-            app:dialogTitle="@string/theme_pref_title"
             android:defaultValue="@string/theme_pref_light"
+            app:dialogTitle="@string/theme_pref_title"
             app:entries="@array/themeListArray"
             app:entryValues="@array/themeEntryArray"
             app:key="@string/theme_pref"
