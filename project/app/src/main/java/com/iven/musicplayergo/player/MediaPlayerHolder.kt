@@ -580,6 +580,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     AudioManager.ACTION_AUDIO_BECOMING_NOISY -> if (isPlaying && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
                 }
             }
+            if (isOrderedBroadcast) abortBroadcast()
         }
     }
 
@@ -605,6 +606,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     KeyEvent.KEYCODE_MEDIA_PLAY -> resumeMediaPlayer()
                 }
             }
+            if (isOrderedBroadcast) abortBroadcast()
         }
     }
 }
