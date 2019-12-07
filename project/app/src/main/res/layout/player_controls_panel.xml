@@ -69,9 +69,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="?android:attr/actionBarItemBackground"
-            android:contentDescription="@string/app_name"
             android:padding="8dp"
-            android:src="@drawable/ic_play" />
+            android:src="@drawable/ic_play"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/queue_button"
@@ -79,10 +79,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="?android:attr/actionBarItemBackground"
-            android:contentDescription="@string/app_name"
             android:onClick="openQueueDialog"
             android:padding="8dp"
-            android:src="@drawable/ic_queue_music" />
+            android:src="@drawable/ic_queue_music"
+            tools:ignore="ContentDescription" />
 
         <FrameLayout
             android:layout_width="wrap_content"
@@ -95,9 +95,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/actionBarItemBackground"
-                android:contentDescription="@string/app_name"
                 android:onClick="openLovedSongsDialog"
-                android:src="@drawable/ic_favorite" />
+                android:src="@drawable/ic_favorite"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/loved_songs_number"

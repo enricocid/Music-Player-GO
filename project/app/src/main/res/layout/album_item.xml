@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/album_width"
     android:layout_height="@dimen/album_height"
     android:layout_marginStart="4dp"
@@ -16,8 +17,8 @@
         android:layout_width="@android:dimen/app_icon_size"
         android:layout_height="@android:dimen/app_icon_size"
         android:layout_gravity="center"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_check_circle" />
+        android:src="@drawable/ic_check_circle"
+        tools:ignore="ContentDescription" />
 
     <LinearLayout
         android:layout_width="match_parent"

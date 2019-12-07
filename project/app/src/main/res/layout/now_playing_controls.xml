@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -13,10 +14,10 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:background="?android:attr/actionBarItemBackground"
-        android:contentDescription="@string/app_name"
         android:onClick="openEqualizer"
         android:padding="8dp"
-        android:src="@drawable/ic_equalizer" />
+        android:src="@drawable/ic_equalizer"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/np_skip_prev"
@@ -25,10 +26,10 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:background="?android:attr/actionBarItemBackground"
-        android:contentDescription="@string/app_name"
         android:padding="8dp"
         android:src="@drawable/ic_skip_previous"
-        android:tint="?android:attr/textColorPrimary" />
+        android:tint="?android:attr/textColorPrimary"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/np_play"
@@ -36,8 +37,8 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="?android:attr/actionBarItemBackground"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_play" />
+        android:src="@drawable/ic_play"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/np_skip_next"
@@ -46,10 +47,10 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:background="?android:attr/actionBarItemBackground"
-        android:contentDescription="@string/app_name"
         android:padding="8dp"
         android:src="@drawable/ic_skip_next"
-        android:tint="?android:attr/textColorPrimary" />
+        android:tint="?android:attr/textColorPrimary"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/np_repeat"
@@ -58,7 +59,7 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:background="?android:attr/actionBarItemBackground"
-        android:contentDescription="@string/app_name"
         android:padding="8dp"
-        android:src="@drawable/ic_repeat_one" />
+        android:src="@drawable/ic_repeat_one"
+        tools:ignore="ContentDescription" />
 </LinearLayout>
