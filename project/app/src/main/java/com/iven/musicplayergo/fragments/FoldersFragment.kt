@@ -14,6 +14,7 @@ import com.afollestad.recyclical.datasource.DataSource
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
+import com.iven.musicplayergo.DEFAULT_SORTING
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.musicLibrary
@@ -53,7 +54,7 @@ class FoldersFragment : Fragment() {
     private lateinit var mUIControlInterface: UIControlInterface
 
     private lateinit var mSortMenuItem: MenuItem
-    private var mSorting = R.id.ascending_sorting
+    private var mSorting = DEFAULT_SORTING
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -104,7 +105,8 @@ class FoldersFragment : Fragment() {
                 }
 
                 menu.apply {
-                    mSortMenuItem = findItem(mSorting)
+
+                    mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, this)
                     mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(it))
 
                     setMenuOnItemClickListener(it, this)
@@ -118,7 +120,9 @@ class FoldersFragment : Fragment() {
                             } else {
                                 newResults
                             }
-                            mDataSource.set(mFilteredFolders ?: mFolders)
+                            if (mSorting != DEFAULT_SORTING) mDataSource.set(
+                                mFilteredFolders ?: mFolders
+                            )
                         })
                 }
             }
@@ -214,13 +218,13 @@ class FoldersFragment : Fragment() {
         mSearchToolbar.setOnMenuItemClickListener {
 
             mFolders = Utils.getSortedList(
-                it.itemId,
+                it.order,
                 mFolders,
                 musicLibrary.allSongsForFolder.keys.toMutableList()
             )
 
             mIndicatorFastScrollerView.visibility =
-                if (it.itemId == R.id.default_sorting) View.GONE else View.VISIBLE
+                if (it.order != DEFAULT_SORTING) View.VISIBLE else View.GONE
 
             mDataSource.set(mFolders)
 
@@ -231,13 +235,12 @@ class FoldersFragment : Fragment() {
                 )
             )
 
-            mSorting = it.itemId
+            mSorting = it.order
 
-            mSortMenuItem = menu.findItem(mSorting)
-
+            mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, menu)
             mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(context))
 
-            goPreferences.foldersSorting = it.itemId
+            goPreferences.foldersSorting = mSorting
 
             return@setOnMenuItemClickListener true
         }

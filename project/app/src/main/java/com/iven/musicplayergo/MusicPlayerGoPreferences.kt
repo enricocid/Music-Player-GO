@@ -8,6 +8,9 @@ import com.google.gson.reflect.TypeToken
 import com.iven.musicplayergo.music.Music
 import java.lang.reflect.Type
 
+const val DEFAULT_SORTING = 0
+const val ASCENDING_SORTING = 1
+const val DESCENDING_SORTING = 2
 
 class MusicPlayerGoPreferences(context: Context) {
 
@@ -72,11 +75,11 @@ class MusicPlayerGoPreferences(context: Context) {
         set(value) = mPrefs.edit().putStringSet(prefsActiveFragments, value).apply()
 
     var artistsSorting: Int
-        get() = mPrefs.getInt(prefsArtistsSorting, R.id.ascending_sorting)
+        get() = mPrefs.getInt(prefsArtistsSorting, ASCENDING_SORTING)
         set(value) = mPrefs.edit().putInt(prefsArtistsSorting, value).apply()
 
     var foldersSorting: Int
-        get() = mPrefs.getInt(prefsFoldersSorting, R.id.default_sorting)
+        get() = mPrefs.getInt(prefsFoldersSorting, DEFAULT_SORTING)
         set(value) = mPrefs.edit().putInt(prefsFoldersSorting, value).apply()
 
     var isFocusEnabled: Boolean

@@ -7,6 +7,8 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
@@ -22,15 +24,13 @@ import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
-import com.iven.musicplayergo.R
+import com.iven.musicplayergo.*
 import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.adapters.QueueAdapter
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import java.util.*
-
 
 object Utils {
 
@@ -137,18 +137,25 @@ object Utils {
     ): MutableList<String> {
         return when (id) {
 
-            R.id.ascending_sorting -> {
-
+            ASCENDING_SORTING -> {
                 Collections.sort(list, String.CASE_INSENSITIVE_ORDER)
                 list
             }
 
-            R.id.descending_sorting -> {
-
+            DESCENDING_SORTING -> {
                 Collections.sort(list, String.CASE_INSENSITIVE_ORDER)
                 list.asReversed()
             }
             else -> defaultList
+        }
+    }
+
+    @JvmStatic
+    fun getSelectedSortingMenuItem(sorting: Int, menu: Menu): MenuItem {
+        return when (sorting) {
+            DEFAULT_SORTING -> menu.findItem(R.id.default_sorting)
+            ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
+            else -> menu.findItem(R.id.descending_sorting)
         }
     }
 

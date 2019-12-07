@@ -14,9 +14,7 @@ import com.afollestad.recyclical.datasource.DataSource
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
-import com.iven.musicplayergo.R
-import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.musicLibrary
+import com.iven.musicplayergo.*
 import com.iven.musicplayergo.ui.GenericViewHolder
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -52,7 +50,7 @@ class ArtistsFragment : Fragment() {
     private lateinit var mUIControlInterface: UIControlInterface
 
     private lateinit var mSortMenuItem: MenuItem
-    private var mSorting = R.id.ascending_sorting
+    private var mSorting = ASCENDING_SORTING
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -103,7 +101,8 @@ class ArtistsFragment : Fragment() {
                 }
 
                 menu.apply {
-                    mSortMenuItem = findItem(mSorting)
+
+                    mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, this)
                     mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(it))
 
                     setMenuOnItemClickListener(it, this)
@@ -117,7 +116,9 @@ class ArtistsFragment : Fragment() {
                             } else {
                                 newResults
                             }
-                            mDataSource.set(mFilteredArtists ?: mArtists)
+                            if (mSorting != DEFAULT_SORTING) mDataSource.set(
+                                mFilteredArtists ?: mArtists
+                            )
                         })
                 }
             }
@@ -170,7 +171,7 @@ class ArtistsFragment : Fragment() {
 
         mIndicatorFastScrollerView = fastscroller
 
-        if (mSorting == R.id.default_sorting) mIndicatorFastScrollerView.visibility =
+        if (mSorting == DEFAULT_SORTING) mIndicatorFastScrollerView.visibility =
             View.GONE
 
         mIndicatorFastScrollThumb = fastscroller_thumb
@@ -218,13 +219,13 @@ class ArtistsFragment : Fragment() {
         mSearchToolbar.setOnMenuItemClickListener {
 
             mArtists = Utils.getSortedList(
-                it.itemId,
+                it.order,
                 mArtists,
                 musicLibrary.allAlbumsForArtist.keys.toMutableList()
             )
 
             mIndicatorFastScrollerView.visibility =
-                if (it.itemId == R.id.default_sorting) View.GONE else View.VISIBLE
+                if (it.order != DEFAULT_SORTING) View.VISIBLE else View.GONE
 
             mDataSource.set(mArtists)
 
@@ -235,9 +236,9 @@ class ArtistsFragment : Fragment() {
                 )
             )
 
-            mSorting = it.itemId
+            mSorting = it.order
 
-            mSortMenuItem = menu.findItem(mSorting)
+            mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, menu)
 
             mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(context))
 
