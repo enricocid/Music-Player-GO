@@ -321,7 +321,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mMusic = musicLibrary.allAlbumsForArtist
 
                 mPlayerControlsContainer.setOnLongClickListener {
-                    openPlayingArtistAlbum(it)
+                    if (checkIsPlayer(true)) openPlayingArtistAlbum(it)
                     return@setOnLongClickListener true
                 }
 
@@ -483,7 +483,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     fun openNowPlaying(view: View) {
 
-        if (isMediaPlayerHolder && mMediaPlayerHolder.isCurrentSong) {
+        if (checkIsPlayer(true) && mMediaPlayerHolder.isCurrentSong) {
 
             mNowPlayingDialog = MaterialDialog(this, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
