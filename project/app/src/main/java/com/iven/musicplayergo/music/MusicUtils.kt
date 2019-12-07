@@ -11,6 +11,8 @@ import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.musicLibrary
+import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.Utils
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -18,6 +20,23 @@ import java.util.concurrent.TimeUnit
 
 @Suppress("DEPRECATION")
 object MusicUtils {
+
+    @JvmStatic
+    //returns the position in list of the current played album
+    //pass selected artist from artists adapter and not from current song
+    //so when played artist is selected the album position will be returned
+    //if selected artist differs from played artist -1 will be returned
+    fun getPlayingAlbumPosition(selectedArtist: String, mediaPlayerHolder: MediaPlayerHolder): Int {
+        return try {
+            val currentSong = mediaPlayerHolder.currentSong.first
+            val albumsForArtist = musicLibrary.allAlbumsForArtist[selectedArtist]!!
+            val album = getAlbumFromList(currentSong.album, albumsForArtist)
+            album.second
+        } catch (e: Exception) {
+            e.printStackTrace()
+            -1
+        }
+    }
 
     @JvmStatic
     //returns a pair of album and its position given a list of albums

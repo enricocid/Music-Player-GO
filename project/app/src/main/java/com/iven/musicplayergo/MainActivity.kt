@@ -382,12 +382,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun openDetailsFragment(
         selectedArtistOrFolder: String,
-        isFolder: Boolean,
-        showPlaying: Boolean
+        isFolder: Boolean
     ) {
 
         mDetailsFragment =
-            DetailsFragment.newInstance(selectedArtistOrFolder, isFolder)
+            DetailsFragment.newInstance(
+                selectedArtistOrFolder,
+                isFolder,
+                MusicUtils.getPlayingAlbumPosition(selectedArtistOrFolder, mMediaPlayerHolder)
+            )
         supportFragmentManager.beginTransaction()
             .addToBackStack(null)
             .add(
@@ -672,10 +675,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mSongTextNP.text = selectedSong.title
 
         mSongTextNP.setOnClickListener {
+            val selectedArtistOrFolder = selectedSong.artist!!
             if (::mDetailsFragment.isInitialized && mDetailsFragment.isAdded && !mDetailsFragment.isFolder)
-                mDetailsFragment.updateView(selectedSong.artist!!)
+                mDetailsFragment.updateView(
+                    selectedArtistOrFolder,
+                    MusicUtils.getPlayingAlbumPosition(selectedArtistOrFolder, mMediaPlayerHolder)
+                )
             else
-                openDetailsFragment(selectedSong.artist!!, isFolder = false, showPlaying = true)
+                openDetailsFragment(selectedArtistOrFolder, isFolder = false)
 
             mNowPlayingDialog.dismiss()
         }
@@ -709,8 +716,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     override fun onArtistOrFolderSelected(artistOrFolder: String, isFolder: Boolean) {
         openDetailsFragment(
             artistOrFolder,
-            isFolder,
-            mMediaPlayerHolder.isPlaying && mMediaPlayerHolder.currentSong.first.artist == artistOrFolder
+            isFolder
         )
     }
 
