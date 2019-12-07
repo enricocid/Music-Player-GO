@@ -43,6 +43,14 @@
             app:icon="@drawable/ic_circle"
             app:key="@string/accent_pref"
             app:title="@string/accent_pref_title" />
+
+        <SwitchPreference
+            android:summaryOff="@string/edge_pref_summary_off"
+            app:defaultValue="false"
+            app:dialogTitle="@string/edge_pref_title"
+            app:key="@string/edge_pref"
+            app:summaryOn="@string/edge_pref_summary_on"
+            app:title="@string/edge_pref_title" />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/category_general">

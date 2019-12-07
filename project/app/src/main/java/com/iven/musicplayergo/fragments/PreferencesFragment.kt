@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import androidx.preference.ListPreference
 import androidx.preference.Preference
@@ -110,10 +109,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 showAccentDialog(fragmentActivity)
                 return@setOnPreferenceClickListener true
             }
-
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O_MR1) preferenceScreen.removePreference(
-                findPreference<Preference>(getString(R.string.edge_pref))
-            )
 
             val activeFragmentsPreference =
                 findPreference<Preference>(getString(R.string.active_fragments_pref))
