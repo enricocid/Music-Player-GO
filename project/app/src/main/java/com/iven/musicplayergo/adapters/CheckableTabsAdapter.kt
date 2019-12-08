@@ -54,7 +54,8 @@ class CheckableTabsAdapter(
                 icon.setImageResource(ThemeHelper.getTabIcon(adapterPosition))
                 val indicator = findViewById<ImageView>(R.id.tab_indicator)
 
-                if (adapterPosition != listItems.size - 1) {
+                isEnabled = adapterPosition != listItems.size - 1
+                if (isEnabled) {
                     manageIndicatorsStatus(
                         mCheckableItems?.contains(adapterPosition.toString())!!,
                         icon,
