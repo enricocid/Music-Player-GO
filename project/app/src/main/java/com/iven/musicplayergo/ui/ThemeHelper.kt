@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.ui
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -109,11 +110,25 @@ object ThemeHelper {
         Pair(R.color.yellow, R.style.BaseTheme_Yellow),
         Pair(R.color.amber, R.style.BaseTheme_Amber),
         Pair(R.color.orange, R.style.BaseTheme_Orange),
-        Pair(R.color.deepOrange, R.style.BaseTheme_DeepOrange),
+        Pair(R.color.deep_orange, R.style.BaseTheme_DeepOrange),
         Pair(R.color.brown, R.style.BaseTheme_Brown),
         Pair(R.color.grey, R.style.BaseTheme_Grey),
         Pair(R.color.blue_grey, R.style.BaseTheme_BlueGrey)
     )
+
+    @JvmStatic
+    @SuppressLint("DefaultLocale")
+    fun getAccentName(accent: Int, context: Context): String {
+        val hexValue = String.format(
+            context.getString(R.string.hex),
+            0xFFFFFF and accent
+        )
+        val accentName = context.resources.getResourceEntryName(accent).replace(
+            context.getString(R.string.underscore_delimiter),
+            context.getString(R.string.space_delimiter)
+        ).capitalize()
+        return context.getString(R.string.year_and_duration, hexValue, accentName)
+    }
 
     //finds theme and its position in accents array and returns a pair(theme, position)
     @JvmStatic

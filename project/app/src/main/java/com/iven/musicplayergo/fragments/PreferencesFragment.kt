@@ -92,10 +92,8 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             }
 
             val accentPreference = findPreference<Preference>(getString(R.string.accent_pref))
-            accentPreference?.summary = String.format(
-                getString(R.string.hex),
-                0xFFFFFF and goPreferences.accent
-            )
+            accentPreference?.summary =
+                ThemeHelper.getAccentName(goPreferences.accent, fragmentActivity)
 
             accentPreference?.setOnPreferenceClickListener {
                 showAccentDialog(fragmentActivity)
