@@ -1,6 +1,5 @@
 package com.iven.musicplayergo.fragments
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -29,7 +28,7 @@ import kotlinx.android.synthetic.main.search_toolbar.*
  * Use the [AllMusicFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AllMusicFragment : Fragment() {
+class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private lateinit var mUIControlInterface: UIControlInterface
 
@@ -61,31 +60,12 @@ class AllMusicFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mSongsRecyclerView = all_music_rv
+
+        mAllMusic = musicLibrary.allSongsFiltered
+        mDataSource = dataSourceOf(mAllMusic)
+
         context?.let {
-            search_toolbar.apply {
-
-                inflateMenu(R.menu.menu_all_music)
-                title = getString(R.string.songs)
-                setNavigationOnClickListener {
-                    mUIControlInterface.onCloseActivity()
-                }
-
-                menu.apply {
-                    findItem(R.id.action_shuffle_am).setOnMenuItemClickListener {
-                        mUIControlInterface.onShuffleSongs(mAllMusic)
-                        return@setOnMenuItemClickListener true
-                    }
-                    findItem(R.id.action_search).apply {
-                        setupSearchViewForMusic(actionView as SearchView)
-                    }
-                }
-            }
-
-            mAllMusic = musicLibrary.allSongsFiltered
-
-            mDataSource = dataSourceOf(mAllMusic)
-
-            mSongsRecyclerView = all_music_rv
 
             mSongsRecyclerView.apply {
 
@@ -127,44 +107,34 @@ class AllMusicFragment : Fragment() {
                     ThemeHelper.getRecyclerViewDivider(it)
                 )
             }
-        }
-    }
 
-    private fun setupSearchViewForMusic(searchView: SearchView) {
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            search_toolbar.apply {
 
-            override
-            fun onQueryTextChange(newText: String): Boolean {
-                processQuery(newText)
-                return false
-            }
+                inflateMenu(R.menu.menu_all_music)
+                title = getString(R.string.songs)
+                setNavigationOnClickListener {
+                    mUIControlInterface.onCloseActivity()
+                }
 
-            override
-            fun onQueryTextSubmit(query: String): Boolean {
-                return false
-            }
-        })
-    }
-
-    @SuppressLint("DefaultLocale")
-    private fun processQuery(query: String) {
-        // in real app you'd have it instantiated just once
-        val results = mutableListOf<Any>()
-
-        try {
-            // case insensitive search
-            mAllMusic.iterator().forEach {
-                if (it.title?.toLowerCase()!!.contains(query.toLowerCase())) {
-                    results.add(it)
+                menu.apply {
+                    findItem(R.id.action_shuffle_am).setOnMenuItemClickListener {
+                        mUIControlInterface.onShuffleSongs(mAllMusic)
+                        return@setOnMenuItemClickListener true
+                    }
+                    val searchView = findItem(R.id.action_search).actionView as SearchView
+                    searchView.setOnQueryTextListener(this@AllMusicFragment)
                 }
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
+    }
 
-        if (results.size > 0) {
-            mDataSource.set(results)
-        }
+    override fun onQueryTextChange(newText: String?): Boolean {
+        mDataSource.set(Utils.processQueryForMusic(newText, mAllMusic) ?: mAllMusic)
+        return false
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return false
     }
 
     companion object {

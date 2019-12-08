@@ -13,7 +13,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
-import androidx.appcompat.widget.SearchView
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ActivityCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -32,6 +31,7 @@ import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import java.util.*
 
+@SuppressLint("DefaultLocale")
 object Utils {
 
     @JvmStatic
@@ -81,52 +81,44 @@ object Utils {
     }
 
     @JvmStatic
-    fun setupSearchViewForStringLists(
-        searchView: SearchView,
-        list: List<String>,
-        onResultsChanged: (List<String>) -> Unit
-    ) {
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+    fun processQueryForStringsLists(
+        query: String?,
+        list: List<String>
+    ): List<String>? {
+        // in real app you'd have it instantiated just once
+        val filteredStrings = mutableListOf<String>()
 
-            override
-            fun onQueryTextChange(newText: String): Boolean {
-                onResultsChanged(
-                    processQueryForStringsLists(
-                        newText,
-                        list
-                    )
-                )
-                return false
+        return try {
+            // case insensitive search
+            list.iterator().forEach {
+                if (it.toLowerCase().contains(query?.toLowerCase()!!)) {
+                    filteredStrings.add(it)
+                }
             }
-
-            override
-            fun onQueryTextSubmit(query: String): Boolean {
-                return false
-            }
-        })
+            return filteredStrings
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
     }
 
     @JvmStatic
-    @SuppressLint("DefaultLocale")
-    private fun processQueryForStringsLists(
-        query: String,
-        list: List<String>
-    ): List<String> {
+    fun processQueryForMusic(query: String?, musicList: List<Music>): List<Any>? {
         // in real app you'd have it instantiated just once
-        val results = mutableListOf<String>()
+        val filteredSongs = mutableListOf<Any>()
 
-        try {
+        return try {
             // case insensitive search
-            list.iterator().forEach {
-                if (it.toLowerCase().contains(query.toLowerCase())) {
-                    results.add(it)
+            musicList.iterator().forEach {
+                if (it.title?.toLowerCase()!!.contains(query?.toLowerCase()!!)) {
+                    filteredSongs.add(it)
                 }
             }
+            return filteredSongs
         } catch (e: Exception) {
             e.printStackTrace()
+            null
         }
-
-        return results.toList()
     }
 
     @JvmStatic
@@ -151,11 +143,11 @@ object Utils {
     }
 
     @JvmStatic
-    fun getSelectedSortingMenuItem(sorting: Int, menu: Menu, isFolders: Boolean): MenuItem {
+    fun getSelectedSortingMenuItem(sorting: Int, menu: Menu): MenuItem {
         return when (sorting) {
-            DEFAULT_SORTING -> menu.findItem(if (isFolders) R.id.default_sorting_folders else R.id.default_sorting)
-            ASCENDING_SORTING -> menu.findItem(if (isFolders) R.id.ascending_sorting_folders else R.id.ascending_sorting)
-            else -> menu.findItem(if (isFolders) R.id.descending_sorting_folders else R.id.descending_sorting)
+            DEFAULT_SORTING -> menu.findItem(R.id.default_sorting)
+            ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
+            else -> menu.findItem(R.id.descending_sorting)
         }
     }
 

@@ -85,6 +85,7 @@ class DetailsFragment : Fragment() {
             mSelectedArtistAlbums = musicLibrary.allAlbumsForArtist[mSelectedArtistOrFolder]!!
             mSongsForArtistOrFolder =
                 musicLibrary.allSongsForArtist.getValue(mSelectedArtistOrFolder)
+
             mSelectedAlbum =
                 if (mSelectedAlbumPosition != -1) {
                     mSelectedArtistAlbums[mSelectedAlbumPosition]
@@ -125,10 +126,13 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mArtistDetailsView = view
+        mDetailsToolbar = details_toolbar
+        mAlbumsRecyclerView = albums_rv
+        mSelectedAlbumTitle = selected_album
+        mSelectedAlbumYearDuration = album_year_duration
+        mSongsRecyclerView = songs_rv
 
         context?.let {
-
-            mDetailsToolbar = details_toolbar
 
             mDetailsToolbar.apply {
 
@@ -161,11 +165,6 @@ class DetailsFragment : Fragment() {
                     return@setOnMenuItemClickListener true
                 }
             }
-
-            mAlbumsRecyclerView = albums_rv
-            mSelectedAlbumTitle = selected_album
-            mSelectedAlbumYearDuration = album_year_duration
-            mSongsRecyclerView = songs_rv
 
             if (!isFolder) {
 

@@ -35,7 +35,7 @@ import java.io.File
  * Use the [FoldersFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FoldersFragment : Fragment() {
+class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
 
     //views
     private lateinit var mFoldersRecyclerView: RecyclerView
@@ -76,65 +76,34 @@ class FoldersFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_folders, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        mSorting = goPreferences.foldersSorting
-
-        mFolders = Utils.getSortedList(
+    private fun getSortedFolders(): MutableList<String> {
+        return Utils.getSortedList(
             mSorting,
             musicLibrary.allSongsForFolder.keys.toMutableList(),
             musicLibrary.allSongsForFolder.keys.toMutableList()
         )
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        mSearchToolbar = search_toolbar
+        mFoldersRecyclerView = folders_rv
+        mIndicatorFastScrollerView = fastscroller
+        mIndicatorFastScrollThumb = fastscroller_thumb
+
+        mSorting = goPreferences.foldersSorting
+
+        mFolders = getSortedFolders()
+        mDataSource = dataSourceOf(mFolders)
 
         context?.let {
-
-            mSearchToolbar = search_toolbar
-
-            mSearchToolbar.apply {
-
-                inflateMenu(R.menu.menu_search_folders)
-
-                overflowIcon =
-                    AppCompatResources.getDrawable(it, R.drawable.ic_sort)
-
-                title = getString(R.string.folders)
-
-                setNavigationOnClickListener {
-                    mUIControlInterface.onCloseActivity()
-                }
-
-                menu.apply {
-
-                    mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, this, true)
-                    mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(it))
-
-                    setMenuOnItemClickListener(it, this)
-
-                    Utils.setupSearchViewForStringLists(
-                        findItem(R.id.action_search).actionView as SearchView,
-                        mFolders,
-                        onResultsChanged = { newResults ->
-                            mFilteredFolders = if (newResults.isEmpty()) {
-                                null
-                            } else {
-                                newResults
-                            }
-                            if (mSorting != DEFAULT_SORTING) mDataSource.set(
-                                mFilteredFolders ?: mFolders
-                            )
-                        })
-                }
-            }
-
-            mFoldersRecyclerView = folders_rv
-
-            mDataSource = dataSourceOf(mFolders)
 
             mFoldersRecyclerView.apply {
 
                 // setup{} is an extension method on RecyclerView
                 setup {
+
                     withDataSource(mDataSource)
                     withItem<String, GenericViewHolder>(R.layout.folder_item) {
                         onBind(::GenericViewHolder) { _, item ->
@@ -150,13 +119,47 @@ class FoldersFragment : Fragment() {
                                 mUIControlInterface.onArtistOrFolderSelected(item, true)
                         }
                     }
+                    addItemDecoration(ThemeHelper.getRecyclerViewDivider(it))
+                }
+            }
+
+            setupIndicatorFastScrollerView()
+
+            mSearchToolbar.apply {
+
+                inflateMenu(R.menu.menu_search)
+
+                overflowIcon =
+                    AppCompatResources.getDrawable(it, R.drawable.ic_sort)
+
+                title = getString(R.string.folders)
+
+                setNavigationOnClickListener {
+                    mUIControlInterface.onCloseActivity()
                 }
 
-                addItemDecoration(ThemeHelper.getRecyclerViewDivider(it))
+                menu.apply {
 
-                setupIndicatorFastScrollerView()
+                    mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, this)
+                    mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(it))
+
+                    val searchView = findItem(R.id.action_search).actionView as SearchView
+
+                    searchView.setOnQueryTextListener(this@FoldersFragment)
+
+                    setMenuOnItemClickListener(it, this)
+                }
             }
         }
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        mDataSource.set(Utils.processQueryForStringsLists(newText, mFolders) ?: mFolders)
+        return false
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return false
     }
 
     //getting parent path of the first song
@@ -168,9 +171,6 @@ class FoldersFragment : Fragment() {
 
     @SuppressLint("DefaultLocale")
     private fun setupIndicatorFastScrollerView() {
-
-        mIndicatorFastScrollerView = fastscroller
-        mIndicatorFastScrollThumb = fastscroller_thumb
 
         if (mSorting == DEFAULT_SORTING) mIndicatorFastScrollerView.visibility =
             View.GONE
@@ -217,30 +217,30 @@ class FoldersFragment : Fragment() {
     private fun setMenuOnItemClickListener(context: Context, menu: Menu) {
         mSearchToolbar.setOnMenuItemClickListener {
 
-            mFolders = Utils.getSortedList(
-                it.order,
-                mFolders,
-                musicLibrary.allSongsForFolder.keys.toMutableList()
-            )
+            if (it.itemId != R.id.action_search) {
 
-            mIndicatorFastScrollerView.visibility =
-                if (it.order != DEFAULT_SORTING) View.VISIBLE else View.GONE
+                mSorting = it.order
 
-            mDataSource.set(mFolders)
+                mFolders = getSortedFolders()
 
-            mSortMenuItem.setTitleColor(
-                ThemeHelper.resolveColorAttr(
-                    context,
-                    android.R.attr.textColorPrimary
+                mIndicatorFastScrollerView.visibility =
+                    if (mSorting != DEFAULT_SORTING) View.VISIBLE else View.GONE
+
+                mDataSource.set(mFolders)
+
+                mSortMenuItem.setTitleColor(
+                    ThemeHelper.resolveColorAttr(
+                        context,
+                        android.R.attr.textColorPrimary
+                    )
                 )
-            )
 
-            mSorting = it.order
+                mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, menu)
 
-            mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, menu, true)
-            mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(context))
+                mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(context))
 
-            goPreferences.foldersSorting = mSorting
+                goPreferences.foldersSorting = mSorting
+            }
 
             return@setOnMenuItemClickListener true
         }
