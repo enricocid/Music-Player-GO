@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="album_height">104dp</dimen>
+    <dimen name="album_height">96dp</dimen>
     <dimen name="album_width">128dp</dimen>
     <dimen name="md_corner_radius">16dp</dimen>
     <dimen name="search_bar_elevation">1dp</dimen>
