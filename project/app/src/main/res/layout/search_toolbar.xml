@@ -6,7 +6,7 @@
     android:layout_height="?attr/actionBarSize"
     android:background="?android:attr/windowBackground"
     android:elevation="@dimen/search_bar_elevation"
-    android:theme="@style/SearchBarStyle"
+    android:theme="@style/ToolbarStyle"
     app:collapseIcon="@drawable/ic_navigate_before"
     app:navigationIcon="@drawable/ic_round_close"
     app:titleTextColor="?attr/colorPrimary" />
