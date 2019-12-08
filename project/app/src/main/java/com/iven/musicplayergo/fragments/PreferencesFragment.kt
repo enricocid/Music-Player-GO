@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -90,13 +89,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             supportedMediaPreference?.setOnPreferenceClickListener {
                 mSupportedFormatsDialog = Utils.showSupportedFormatsDialog(fragmentActivity)
                 return@setOnPreferenceClickListener true
-            }
-
-            findPreference<ListPreference>(getString(R.string.theme_pref))?.setOnPreferenceChangeListener { _, _ ->
-                ThemeHelper.applyNewThemeSmoothly(
-                    fragmentActivity
-                )
-                return@setOnPreferenceChangeListener true
             }
 
             val accentPreference = findPreference<Preference>(getString(R.string.accent_pref))
