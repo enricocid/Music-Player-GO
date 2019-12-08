@@ -13,6 +13,7 @@ import com.iven.musicplayergo.ui.ThemeHelper
 class AccentsAdapter(private val activity: Activity) :
     RecyclerView.Adapter<AccentsAdapter.AccentsHolder>() {
 
+    private val mAccents = ThemeHelper.accents
     private var mSelectedAccent = R.color.deep_purple
 
     init {
@@ -30,11 +31,11 @@ class AccentsAdapter(private val activity: Activity) :
     }
 
     override fun getItemCount(): Int {
-        return ThemeHelper.accents.size
+        return mAccents.size
     }
 
     override fun onBindViewHolder(holder: AccentsHolder, position: Int) {
-        holder.bindItems(ThemeHelper.accents[holder.adapterPosition].first)
+        holder.bindItems(mAccents[holder.adapterPosition].first)
     }
 
     inner class AccentsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -56,9 +57,9 @@ class AccentsAdapter(private val activity: Activity) :
 
                 setOnClickListener {
 
-                    if (ThemeHelper.accents[adapterPosition].first != mSelectedAccent) {
+                    if (mAccents[adapterPosition].first != mSelectedAccent) {
 
-                        mSelectedAccent = ThemeHelper.accents[adapterPosition].first
+                        mSelectedAccent = mAccents[adapterPosition].first
                         goPreferences.accent = mSelectedAccent
 
                         ThemeHelper.applyNewThemeSmoothly(
