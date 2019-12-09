@@ -116,10 +116,9 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         activity?.let {
 
             when (key) {
-                getString(R.string.theme_pref) -> ThemeHelper.applyNewThemeSmoothly(it, true)
+                getString(R.string.theme_pref) -> ThemeHelper.applyTheme(it, goPreferences.theme)
                 getString(R.string.tabs_pref), getString(R.string.edge_pref) -> ThemeHelper.applyNewThemeSmoothly(
-                    it,
-                    false
+                    it
                 )
                 getString(R.string.accent_pref) -> mUIControlInterface.onAccentUpdated()
             }
@@ -164,7 +163,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             positiveButton {
                 goPreferences.activeFragments = checkableAdapter.getUpdatedItems()
-                ThemeHelper.applyNewThemeSmoothly(activity, false)
+                ThemeHelper.applyNewThemeSmoothly(activity)
             }
             negativeButton {}
         }

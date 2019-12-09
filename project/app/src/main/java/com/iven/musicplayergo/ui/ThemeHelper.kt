@@ -30,17 +30,13 @@ object ThemeHelper {
 
     //update theme
     @JvmStatic
-    fun applyNewThemeSmoothly(activity: Activity, isMainTheme: Boolean) {
+    fun applyNewThemeSmoothly(activity: Activity) {
         //smoothly set app theme
         Handler().postDelayed({
-            if (isMainTheme) {
-                applyTheme(activity, goPreferences.theme)
-            } else {
-                Intent(activity, MainActivity::class.java).apply {
-                    activity.startActivity(this)
-                }
-                activity.finish()
+            Intent(activity, MainActivity::class.java).apply {
+                activity.startActivity(this)
             }
+            activity.finish()
         }, 250)
     }
 
