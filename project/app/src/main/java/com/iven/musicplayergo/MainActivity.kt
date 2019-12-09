@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     //views
     private lateinit var mViewPager: ViewPager
-    private lateinit var mTabLayout: TabLayout
+    private lateinit var mTabsLayout: TabLayout
     private lateinit var mPlayerControlsContainer: View
 
     //settings/controls panel
@@ -154,8 +154,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun doBindService() {
         // Bind to LocalService
-        mBindingIntent = Intent(this, PlayerService::class.java).also { intent ->
-            bindService(intent, connection, Context.BIND_AUTO_CREATE)
+        mBindingIntent = Intent(this, PlayerService::class.java).also {
+            bindService(it, connection, Context.BIND_AUTO_CREATE)
         }
     }
 
@@ -219,44 +219,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         //set ui theme
         setTheme(ThemeHelper.getAccentedTheme().first)
-        ThemeHelper.applyTheme(this, goPreferences.theme)
-
-        mResolvedAccentColor = ThemeHelper.resolveThemeAccent(this)
-        mResolvedAlphaAccentColor = ThemeHelper.getAlphaAccent(this, 50)
-        mResolvedIconsColor = ThemeHelper.resolveColorAttr(this, android.R.attr.textColorPrimary)
-        mResolvedDisabledIconsColor =
-            ThemeHelper.resolveColorAttr(this, android.R.attr.colorButtonNormal)
-
-        resources.apply {
-            mControlsPaddingNormal = getDimensionPixelSize(R.dimen.player_controls_padding_normal)
-            mControlsPaddingEnd = getDimensionPixelSize(R.dimen.player_controls_padding_end)
-            mControlsPaddingNoTabs = getDimensionPixelSize(R.dimen.player_controls_padding_no_tabs)
-        }
 
         setContentView(R.layout.main_activity)
 
         //init views
-        getViews()
-
-        mPlayPauseButton.setOnClickListener { resumeOrPause() }
-
-        mLovedSongsButton.setOnLongClickListener {
-            if (!goPreferences.lovedSongs.isNullOrEmpty()) Utils.showClearLovedSongDialog(
-                this,
-                this
-            )
-            return@setOnLongClickListener true
-        }
-
-        mQueueButton.setOnLongClickListener {
-            if (checkIsPlayer(true) && mMediaPlayerHolder.isQueue) Utils.showClearQueueDialog(
-                this,
-                mMediaPlayerHolder
-            )
-            return@setOnLongClickListener true
-        }
-
-        onLovedSongsUpdate(false)
+        getViewsAndResources()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else doBindService()
     }
@@ -268,62 +235,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             //setup all the views if there's something
             if (hasLoaded && musicLibrary.allAlbumsForArtist.isNotEmpty()) {
 
-                mArtistsFragment = ArtistsFragment.newInstance()
-                mAllMusicFragment = AllMusicFragment.newInstance()
-                mFoldersFragment = FoldersFragment.newInstance()
-                mSettingsFragment = SettingsFragment.newInstance()
-
-                mActiveFragments =
-                    goPreferences.activeFragments?.toMutableList()!!
-
-                if (goPreferences.isTabsEnabled) {
-                    mTabLayout.setupWithViewPager(mViewPager)
-                    mPlayerControlsContainer.setPadding(
-                        mControlsPaddingNoTabs,
-                        mControlsPaddingNormal,
-                        mControlsPaddingEnd,
-                        mControlsPaddingNormal
-                    )
-
-                    mTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-
-                        override fun onTabSelected(tab: TabLayout.Tab) {
-                            tab.icon?.setTint(mResolvedAccentColor)
-                        }
-
-                        override fun onTabUnselected(tab: TabLayout.Tab) {
-                            tab.icon?.setTint(mResolvedAlphaAccentColor)
-                        }
-
-                        override fun onTabReselected(tab: TabLayout.Tab) {
-                        }
-                    })
-
-                } else {
-                    mTabLayout.visibility = View.GONE
-                    mPlayerControlsContainer.setPadding(
-                        mControlsPaddingNoTabs,
-                        mControlsPaddingNoTabs,
-                        mControlsPaddingEnd,
-                        mControlsPaddingNoTabs
-                    )
-                }
-
-                val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
-                mViewPager.adapter = pagerAdapter
-
-                if (goPreferences.isTabsEnabled)
-                    mActiveFragments.iterator().forEach {
-                        setupTabLayoutTabs(mActiveFragments.indexOf(it), it.toInt())
-                    }
-
                 mAllDeviceSongs = musicLibrary.allSongsUnfiltered
                 mMusic = musicLibrary.allAlbumsForArtist
 
-                mPlayerControlsContainer.setOnLongClickListener {
-                    if (checkIsPlayer(true)) openPlayingArtistAlbum(it)
-                    return@setOnLongClickListener true
-                }
+                initializeFragments()
+
+                initializeMediaButtons()
 
                 //let's get intent from external app and open the song,
                 //else restore the player (normal usage)
@@ -342,10 +259,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         })
     }
 
-    private fun getViews() {
+    private fun getViewsAndResources() {
 
         mViewPager = pager
-        mTabLayout = tab_layout
+        mTabsLayout = tab_layout
         mPlayerControlsContainer = playing_songs_container
 
         //controls panel
@@ -357,6 +274,105 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mLovedSongsButton = loved_songs_button
         mLoveSongsNumber = loved_songs_number
         mQueueButton = queue_button
+
+        mResolvedAccentColor = ThemeHelper.resolveThemeAccent(this)
+        mResolvedAlphaAccentColor = ThemeHelper.getAlphaAccent(this, 50)
+        mResolvedIconsColor =
+            ThemeHelper.resolveColorAttr(this, android.R.attr.textColorPrimary)
+        mResolvedDisabledIconsColor =
+            ThemeHelper.resolveColorAttr(this, android.R.attr.colorButtonNormal)
+
+        resources.apply {
+            mControlsPaddingNormal =
+                getDimensionPixelSize(R.dimen.player_controls_padding_normal)
+            mControlsPaddingEnd = getDimensionPixelSize(R.dimen.player_controls_padding_end)
+            mControlsPaddingNoTabs =
+                getDimensionPixelSize(R.dimen.player_controls_padding_no_tabs)
+        }
+    }
+
+    private fun initializeFragments() {
+
+        mArtistsFragment = ArtistsFragment.newInstance()
+        mAllMusicFragment = AllMusicFragment.newInstance()
+        mFoldersFragment = FoldersFragment.newInstance()
+        mSettingsFragment = SettingsFragment.newInstance()
+
+        mActiveFragments = goPreferences.activeFragments?.toMutableList()!!
+
+        mTabsLayout.apply {
+
+            if (goPreferences.isTabsEnabled) {
+
+                setupWithViewPager(mViewPager)
+
+                mPlayerControlsContainer.setPadding(
+                    mControlsPaddingNoTabs,
+                    mControlsPaddingNormal,
+                    mControlsPaddingEnd,
+                    mControlsPaddingNormal
+                )
+
+                addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+
+                    override fun onTabSelected(tab: TabLayout.Tab) {
+                        tab.icon?.setTint(mResolvedAccentColor)
+                    }
+
+                    override fun onTabUnselected(tab: TabLayout.Tab) {
+                        tab.icon?.setTint(mResolvedAlphaAccentColor)
+                    }
+
+                    override fun onTabReselected(tab: TabLayout.Tab) {
+                    }
+                })
+
+            } else {
+                visibility = View.GONE
+                mPlayerControlsContainer.setPadding(
+                    mControlsPaddingNoTabs,
+                    mControlsPaddingNoTabs,
+                    mControlsPaddingEnd,
+                    mControlsPaddingNoTabs
+                )
+            }
+        }
+
+        val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
+        mViewPager.adapter = pagerAdapter
+
+        if (goPreferences.isTabsEnabled)
+            mActiveFragments.iterator().forEach {
+                setupTabLayoutTabs(mActiveFragments.indexOf(it), it.toInt())
+            }
+    }
+
+    private fun initializeMediaButtons() {
+
+        mPlayPauseButton.setOnClickListener { resumeOrPause() }
+
+        mQueueButton.setOnLongClickListener {
+            if (checkIsPlayer(true) && mMediaPlayerHolder.isQueue) Utils.showClearQueueDialog(
+                this,
+                mMediaPlayerHolder
+            )
+            return@setOnLongClickListener true
+        }
+
+        mLovedSongsButton.setOnLongClickListener {
+            if (!goPreferences.lovedSongs.isNullOrEmpty()) Utils.showClearLovedSongDialog(
+                this,
+                this
+            )
+            return@setOnLongClickListener true
+        }
+
+        onLovedSongsUpdate(false)
+
+        mPlayerControlsContainer.setOnLongClickListener {
+            if (checkIsPlayer(true)) openPlayingArtistAlbum(it)
+            return@setOnLongClickListener true
+        }
     }
 
     private fun handleOnNavigationItemSelected(itemId: Int): Fragment {
@@ -378,7 +394,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun setupTabLayoutTabs(tabIndex: Int, iconIndex: Int) {
-        mTabLayout.apply {
+        mTabsLayout.apply {
             getTabAt(tabIndex)?.setIcon(ThemeHelper.getTabIcon(iconIndex))
             if (tabIndex != 0) getTabAt(tabIndex)?.icon?.setTint(mResolvedAlphaAccentColor)
             else getTabAt(tabIndex)?.icon?.setTint(mResolvedAccentColor)
@@ -812,7 +828,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     @TargetApi(23)
     private fun checkPermission() {
-
         if (Utils.hasToShowPermissionRationale(this)) Utils.showPermissionRationale(this) else doBindService()
     }
 

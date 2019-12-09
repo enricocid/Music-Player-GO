@@ -152,12 +152,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     private fun unregisterActionsReceiver() {
-        if (::mNotificationActionsReceiver.isInitialized) {
-            try {
-                playerService.unregisterReceiver(mNotificationActionsReceiver)
-            } catch (e: IllegalArgumentException) {
-                e.printStackTrace()
-            }
+        try {
+            playerService.unregisterReceiver(mNotificationActionsReceiver)
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
         }
     }
 
@@ -441,10 +439,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             )
             mediaPlayer.release()
             giveUpAudioFocus()
-            unregisterActionsReceiver()
-            unregisterMediaButtonsReceiver()
             stopUpdatingCallbackWithPosition()
+            unregisterMediaButtonsReceiver()
         }
+        unregisterActionsReceiver()
     }
 
     fun resumeOrPause() {

@@ -24,9 +24,9 @@ class PlayerService : Service() {
 
         isRunning = false
 
-        if (::mediaPlayerHolder.isInitialized && mediaPlayerHolder.isCurrentSong) {
+        if (::mediaPlayerHolder.isInitialized) {
             //saves last played song and its position
-            goPreferences.lastPlayedSong =
+            if (mediaPlayerHolder.isCurrentSong) goPreferences.lastPlayedSong =
                 Pair(mediaPlayerHolder.currentSong.first, mediaPlayerHolder.playerPosition)
 
             mediaPlayerHolder.release()

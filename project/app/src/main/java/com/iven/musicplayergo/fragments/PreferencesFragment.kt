@@ -115,14 +115,15 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
         activity?.let {
 
-            if (key == getString(R.string.theme_pref) || key == getString(R.string.tabs_pref) || key == getString(
-                    R.string.edge_pref
+            when (key) {
+                getString(R.string.theme_pref) -> ThemeHelper.applyNewThemeSmoothly(it, true)
+                getString(R.string.tabs_pref), getString(R.string.edge_pref) -> ThemeHelper.applyNewThemeSmoothly(
+                    it,
+                    false
                 )
-            ) ThemeHelper.applyNewThemeSmoothly(
-                it
-            ) else if (key == getString(R.string.accent_pref)) mUIControlInterface.onAccentUpdated()
+                getString(R.string.accent_pref) -> mUIControlInterface.onAccentUpdated()
+            }
         }
-
     }
 
     private fun showAccentDialog(activity: Activity) {
@@ -163,7 +164,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             positiveButton {
                 goPreferences.activeFragments = checkableAdapter.getUpdatedItems()
-                ThemeHelper.applyNewThemeSmoothly(activity)
+                ThemeHelper.applyNewThemeSmoothly(activity, false)
             }
             negativeButton {}
         }

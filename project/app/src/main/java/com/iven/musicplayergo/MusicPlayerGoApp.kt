@@ -2,6 +2,7 @@ package com.iven.musicplayergo
 
 import android.app.Application
 import com.iven.musicplayergo.music.MusicLibrary
+import com.iven.musicplayergo.ui.ThemeHelper
 
 val goPreferences: MusicPlayerGoPreferences by lazy {
     MusicPlayerGoApp.prefs
@@ -21,6 +22,7 @@ class MusicPlayerGoApp : Application() {
     override fun onCreate() {
         prefs = MusicPlayerGoPreferences(applicationContext)
         musicLibrary = MusicLibrary()
+        ThemeHelper.applyTheme(this, goPreferences.theme)
         super.onCreate()
     }
 }
