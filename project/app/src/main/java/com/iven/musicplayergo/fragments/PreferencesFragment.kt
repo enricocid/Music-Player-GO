@@ -129,6 +129,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
         mAccentsDialog = MaterialDialog(activity).show {
 
+            cornerRadius(res = R.dimen.md_corner_radius)
             title(res = R.string.accent_pref_title)
 
             customListAdapter(
