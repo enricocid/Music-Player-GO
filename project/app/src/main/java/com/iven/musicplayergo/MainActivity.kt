@@ -19,7 +19,7 @@ import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
@@ -81,6 +81,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private var mControlsPaddingNoTabs: Int by Delegates.notNull()
     private var mControlsPaddingNormal: Int by Delegates.notNull()
     private var mControlsPaddingEnd: Int by Delegates.notNull()
+    private val sTabsEnabled = goPreferences.isTabsEnabled
 
     //now playing
     private lateinit var mNowPlayingDialog: MaterialDialog
@@ -144,7 +145,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder
             mMediaPlayerHolder.mediaPlayerInterface = mMediaPlayerInterface
 
-            loadMusicAndSetupUI()
+            loadMusicAndFinishSetupUI()
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
@@ -225,10 +226,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         //init views
         getViewsAndResources()
 
+        setupControlsContainerSpecs()
+
+        initializeMediaButtons()
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else doBindService()
     }
 
-    private fun loadMusicAndSetupUI() {
+    private fun loadMusicAndFinishSetupUI() {
 
         mViewModel.loadMusic(this).observe(this, Observer { hasLoaded ->
 
@@ -239,8 +244,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mMusic = musicLibrary.allAlbumsForArtist
 
                 initializeViewPager()
-
-                initializeMediaButtons()
 
                 //let's get intent from external app and open the song,
                 //else restore the player (normal usage)
@@ -299,16 +302,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         mTabsLayout.apply {
 
-            if (goPreferences.isTabsEnabled) {
+            if (sTabsEnabled) {
 
                 setupWithViewPager(mViewPager)
-
-                mPlayerControlsContainer.setPadding(
-                    mControlsPaddingNoTabs,
-                    mControlsPaddingNormal,
-                    mControlsPaddingEnd,
-                    mControlsPaddingNormal
-                )
 
                 addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
@@ -323,22 +319,24 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     override fun onTabReselected(tab: TabLayout.Tab) {
                     }
                 })
-
-            } else {
-                visibility = View.GONE
-                mPlayerControlsContainer.setPadding(
-                    mControlsPaddingNoTabs,
-                    mControlsPaddingNoTabs,
-                    mControlsPaddingEnd,
-                    mControlsPaddingNoTabs
-                )
             }
         }
 
         val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
+        mViewPager.offscreenPageLimit = mActiveFragments.size
         mViewPager.adapter = pagerAdapter
 
         initializeActiveTabs(false)
+    }
+
+    private fun setupControlsContainerSpecs() {
+        if (!sTabsEnabled) mTabsLayout.visibility = View.GONE
+        mPlayerControlsContainer.setPadding(
+            mControlsPaddingNoTabs,
+            if (sTabsEnabled) mControlsPaddingNormal else mControlsPaddingNoTabs,
+            mControlsPaddingEnd,
+            if (sTabsEnabled) mControlsPaddingNormal else mControlsPaddingNoTabs
+        )
     }
 
     private fun initializeActiveTabs(onInitializeFragments: Boolean) {
@@ -952,7 +950,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
      * sequence.
      */
     private inner class ScreenSlidePagerAdapter(fm: FragmentManager) :
-        FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         override fun getCount(): Int = mActiveFragments.size
 
         override fun getItem(position: Int): Fragment {
