@@ -233,35 +233,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else doBindService()
     }
 
-    private fun loadMusicAndFinishSetupUI() {
-
-        mViewModel.loadMusic(this).observe(this, Observer { hasLoaded ->
-
-            //setup all the views if there's something
-            if (hasLoaded && musicLibrary.allAlbumsForArtist.isNotEmpty()) {
-
-                mAllDeviceSongs = musicLibrary.allSongsUnfiltered
-                mMusic = musicLibrary.allAlbumsForArtist
-
-                initializeViewPager()
-
-                //let's get intent from external app and open the song,
-                //else restore the player (normal usage)
-                if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null)
-                    handleIntent(intent)
-                else
-                    restorePlayerStatus()
-
-            } else {
-                Utils.makeToast(
-                    this@MainActivity,
-                    getString(R.string.error_no_music)
-                )
-                finish()
-            }
-        })
-    }
-
     private fun getViewsAndResources() {
 
         mViewPager = pager
@@ -292,6 +263,35 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mControlsPaddingNoTabs =
                 getDimensionPixelSize(R.dimen.player_controls_padding_no_tabs)
         }
+    }
+
+    private fun loadMusicAndFinishSetupUI() {
+
+        mViewModel.loadMusic(this).observe(this, Observer { hasLoaded ->
+
+            //setup all the views if there's something
+            if (hasLoaded && musicLibrary.allAlbumsForArtist.isNotEmpty()) {
+
+                mAllDeviceSongs = musicLibrary.allSongsUnfiltered
+                mMusic = musicLibrary.allAlbumsForArtist
+
+                initializeViewPager()
+
+                //let's get intent from external app and open the song,
+                //else restore the player (normal usage)
+                if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null)
+                    handleIntent(intent)
+                else
+                    restorePlayerStatus()
+
+            } else {
+                Utils.makeToast(
+                    this@MainActivity,
+                    getString(R.string.error_no_music)
+                )
+                finish()
+            }
+        })
     }
 
     private fun initializeViewPager() {

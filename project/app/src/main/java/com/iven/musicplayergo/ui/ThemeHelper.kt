@@ -35,8 +35,8 @@ object ThemeHelper {
         Handler().postDelayed({
             Intent(activity, MainActivity::class.java).apply {
                 activity.startActivity(this)
+                activity.finish()
             }
-            activity.finish()
         }, 250)
     }
 
