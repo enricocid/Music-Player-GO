@@ -226,7 +226,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         //init views
         getViewsAndResources()
 
-        setupControlsContainerSpecs()
+        setupControlsPanelSpecs()
 
         initializeMediaButtons()
 
@@ -329,7 +329,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         initializeActiveTabs(false)
     }
 
-    private fun setupControlsContainerSpecs() {
+    private fun setupControlsPanelSpecs() {
+
         if (!sTabsEnabled) mTabsLayout.visibility = View.GONE
         mPlayerControlsContainer.setPadding(
             mControlsPaddingNoTabs,
