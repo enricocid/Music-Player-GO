@@ -20,9 +20,9 @@ class MusicPlayerGoApp : Application() {
     }
 
     override fun onCreate() {
+        super.onCreate()
         prefs = MusicPlayerGoPreferences(applicationContext)
         musicLibrary = MusicLibrary()
         ThemeHelper.applyTheme(this, goPreferences.theme)
-        super.onCreate()
     }
 }
