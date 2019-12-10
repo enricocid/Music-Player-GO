@@ -91,6 +91,6 @@
     <string name="focus_pref_summary_off">Abilita gestione focus audio</string>
 
     <string name="headset_pref_title">Inserimento cuffie</string>
-    <string name="headset_pref_summary_on">Disabilità gestione inserimento cuffie</string>
+    <string name="headset_pref_summary_on">Disabilita gestione inserimento cuffie</string>
     <string name="headset_pref_summary_off">Abilita gestione inserimento cuffie</string>
 </resources>
