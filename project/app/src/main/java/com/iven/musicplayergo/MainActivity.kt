@@ -323,7 +323,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
 
         val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
-        mViewPager.offscreenPageLimit = mActiveFragments.size
+        mViewPager.offscreenPageLimit = mActiveFragments.size - 1
         mViewPager.adapter = pagerAdapter
 
         initializeActiveTabs(false)
