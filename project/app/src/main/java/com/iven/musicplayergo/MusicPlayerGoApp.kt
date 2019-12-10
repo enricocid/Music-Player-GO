@@ -1,6 +1,7 @@
 package com.iven.musicplayergo
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import com.iven.musicplayergo.music.MusicLibrary
 import com.iven.musicplayergo.ui.ThemeHelper
 
@@ -23,6 +24,6 @@ class MusicPlayerGoApp : Application() {
         super.onCreate()
         prefs = MusicPlayerGoPreferences(applicationContext)
         musicLibrary = MusicLibrary()
-        ThemeHelper.applyTheme(this, goPreferences.theme)
+        AppCompatDelegate.setDefaultNightMode(ThemeHelper.getDefaultNightMode(applicationContext))
     }
 }

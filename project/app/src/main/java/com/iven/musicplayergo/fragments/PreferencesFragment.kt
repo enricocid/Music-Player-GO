@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -116,7 +117,11 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         activity?.let {
 
             when (key) {
-                getString(R.string.theme_pref) -> ThemeHelper.applyTheme(it, goPreferences.theme)
+                getString(R.string.theme_pref) -> AppCompatDelegate.setDefaultNightMode(
+                    ThemeHelper.getDefaultNightMode(
+                        it
+                    )
+                )
                 getString(R.string.tabs_pref), getString(R.string.edge_pref) -> ThemeHelper.applyNewThemeSmoothly(
                     it
                 )

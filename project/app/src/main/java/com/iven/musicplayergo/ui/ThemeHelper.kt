@@ -41,20 +41,11 @@ object ThemeHelper {
     }
 
     @JvmStatic
-    fun applyTheme(context: Context, themePref: String?) {
-
-        when (themePref) {
-            context.getString(R.string.theme_pref_light) -> AppCompatDelegate.setDefaultNightMode(
-                AppCompatDelegate.MODE_NIGHT_NO
-            )
-            context.getString(R.string.theme_pref_dark) -> AppCompatDelegate.setDefaultNightMode(
-                AppCompatDelegate.MODE_NIGHT_YES
-            )
-            else -> {
-                val mode =
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM else AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
-                AppCompatDelegate.setDefaultNightMode(mode)
-            }
+    fun getDefaultNightMode(context: Context): Int {
+        return when (goPreferences.theme) {
+            context.getString(R.string.theme_pref_light) -> AppCompatDelegate.MODE_NIGHT_NO
+            context.getString(R.string.theme_pref_dark) -> AppCompatDelegate.MODE_NIGHT_YES
+            else -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM else AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
         }
     }
 
