@@ -238,7 +238,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mAllDeviceSongs = musicLibrary.allSongsUnfiltered
                 mMusic = musicLibrary.allAlbumsForArtist
 
-                initializeFragments()
+                initializeViewPager()
 
                 initializeMediaButtons()
 
@@ -291,14 +291,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    private fun initializeFragments() {
-
-        mArtistsFragment = ArtistsFragment.newInstance()
-        mAllMusicFragment = AllMusicFragment.newInstance()
-        mFoldersFragment = FoldersFragment.newInstance()
-        mSettingsFragment = SettingsFragment.newInstance()
+    private fun initializeViewPager() {
 
         mActiveFragments = goPreferences.activeFragments?.toMutableList()!!
+
+        initializeActiveTabs(true)
 
         mTabsLayout.apply {
 
@@ -341,10 +338,16 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
         mViewPager.adapter = pagerAdapter
 
-        if (goPreferences.isTabsEnabled)
-            mActiveFragments.iterator().forEach {
-                setupTabLayoutTabs(mActiveFragments.indexOf(it), it.toInt())
-            }
+        initializeActiveTabs(false)
+    }
+
+    private fun initializeActiveTabs(onInitializeFragments: Boolean) {
+        mActiveFragments.iterator().forEach {
+            if (onInitializeFragments) initializeActiveFragments(it.toInt()) else if (goPreferences.isTabsEnabled) setupTabLayoutTabs(
+                mActiveFragments.indexOf(it),
+                it.toInt()
+            )
+        }
     }
 
     private fun initializeMediaButtons() {
@@ -398,6 +401,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             getTabAt(tabIndex)?.setIcon(ThemeHelper.getTabIcon(iconIndex))
             if (tabIndex != 0) getTabAt(tabIndex)?.icon?.setTint(mResolvedAlphaAccentColor)
             else getTabAt(tabIndex)?.icon?.setTint(mResolvedAccentColor)
+        }
+    }
+
+    private fun initializeActiveFragments(index: Int) {
+        when (index) {
+            0 -> mArtistsFragment = ArtistsFragment.newInstance()
+            1 -> mAllMusicFragment = AllMusicFragment.newInstance()
+            2 -> mFoldersFragment = FoldersFragment.newInstance()
+            else -> mSettingsFragment = SettingsFragment.newInstance()
         }
     }
 
