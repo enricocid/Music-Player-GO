@@ -254,10 +254,13 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
             val menuToInflate =
                 if (sFolder && !onUpdateView) R.menu.menu_folder_details else R.menu.menu_artist_details
+
             inflateMenu(menuToInflate)
 
             menu.apply {
-                findItem(R.id.action_shuffle_sa).isVisible = !sFolder
+                findItem(R.id.action_shuffle_sa).isEnabled = !sFolder
+                if (!sFolder) findItem(R.id.action_shuffle_am).isEnabled =
+                    mSelectedArtistAlbums.size >= 2
             }
 
             setOnMenuItemClickListener {
