@@ -147,12 +147,12 @@ class DetailsFragment : Fragment() {
                     activity?.onBackPressed()
                 }
 
-                setupMenu(false, this)
+                setupMenu(false)
             }
 
             if (!sFolder) {
 
-                setupAlbumsContainer()
+                setupAlbumsContainer(false)
 
             } else {
 
@@ -230,14 +230,14 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun setupMenu(isUpdateView: Boolean, toolbar: Toolbar) {
+    private fun setupMenu(onUpdateView: Boolean) {
 
-        toolbar.apply {
+        mDetailsToolbar.apply {
 
-            if (isUpdateView) mDetailsToolbar.menu.clear()
+            if (onUpdateView) mDetailsToolbar.menu.clear()
 
             val menuToInflate =
-                if (sFolder && !isUpdateView) R.menu.menu_folder_details else R.menu.menu_artist_details
+                if (sFolder && !onUpdateView) R.menu.menu_folder_details else R.menu.menu_artist_details
             inflateMenu(menuToInflate)
 
             menu.apply {
@@ -257,7 +257,7 @@ class DetailsFragment : Fragment() {
 
     }
 
-    private fun setupAlbumsContainer() {
+    private fun setupAlbumsContainer(onUpdateView: Boolean) {
 
         selected_album_container.setOnClickListener {
             mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
@@ -298,7 +298,7 @@ class DetailsFragment : Fragment() {
                         album.text = item.title
                         year.text = item.year
                         totalDuration.text =
-                            MusicUtils.formatSongDuration(item.totalDuration!!, true)
+                            MusicUtils.formatSongDuration(item.totalDuration, true)
                         checkbox.visibility =
                             if (mSelectedAlbum.title != item.title) View.GONE else View.VISIBLE
                     }
@@ -323,7 +323,7 @@ class DetailsFragment : Fragment() {
                     }
                 }
             }
-            if (mSelectedAlbumPosition != -1 or 0) mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
+            if (mSelectedAlbumPosition != -1 or 0 && !onUpdateView) mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
                 mSelectedAlbumPosition,
                 0
             )
@@ -335,7 +335,7 @@ class DetailsFragment : Fragment() {
         if (selectedArtist != mSelectedArtistOrFolder) {
 
             mSelectedArtistOrFolder = selectedArtist
-            mSelectedArtistAlbums = musicLibrary.allAlbumsForArtist[mSelectedArtistOrFolder]!!
+            mSelectedArtistAlbums = musicLibrary.allAlbumsForArtist.getValue(mSelectedArtistOrFolder)
 
             //restore album position
             if (playedAlbumPosition != -1) {
@@ -351,8 +351,8 @@ class DetailsFragment : Fragment() {
                 mSelectedAlbumYearDuration.visibility = View.VISIBLE
                 mSelectedAlbumsDataSource = dataSourceOf(mSelectedArtistAlbums)
 
-                setupMenu(true, mDetailsToolbar)
-                setupAlbumsContainer()
+                setupMenu(true)
+                setupAlbumsContainer(true)
 
             } else {
 
@@ -386,7 +386,7 @@ class DetailsFragment : Fragment() {
         mSelectedAlbumYearDuration.text = getString(
             R.string.year_and_duration,
             mSelectedAlbum.year,
-            MusicUtils.formatSongDuration(mSelectedAlbum.totalDuration!!, true)
+            MusicUtils.formatSongDuration(mSelectedAlbum.totalDuration, true)
         )
     }
 
