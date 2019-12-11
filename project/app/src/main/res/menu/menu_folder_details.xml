@@ -11,7 +11,7 @@
         app:showAsAction="collapseActionView|always"
         tools:ignore="AlwaysShowAction" />
 
-    <group>
+    <group android:id="@+id/shuffle_options_folder">
 
         <!-- am = all artist music, sa = selected album -->
         <item

@@ -144,8 +144,12 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
                     mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(it))
 
                     val searchView = findItem(R.id.action_search).actionView as SearchView
-
-                    searchView.setOnQueryTextListener(this@FoldersFragment)
+                    searchView.apply {
+                        setOnQueryTextListener(this@FoldersFragment)
+                        setOnQueryTextFocusChangeListener { _, hasFocus ->
+                            menu.setGroupVisible(R.id.sorting, !hasFocus)
+                        }
+                    }
 
                     setMenuOnItemClickListener(it, this)
                 }

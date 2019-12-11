@@ -144,7 +144,12 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                     val searchView = findItem(R.id.action_search).actionView as SearchView
 
-                    searchView.setOnQueryTextListener(this@ArtistsFragment)
+                    searchView.apply {
+                        setOnQueryTextListener(this@ArtistsFragment)
+                        setOnQueryTextFocusChangeListener { _, hasFocus ->
+                            menu.setGroupVisible(R.id.sorting, !hasFocus)
+                        }
+                    }
 
                     setMenuOnItemClickListener(it, this)
                 }

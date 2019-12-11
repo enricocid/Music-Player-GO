@@ -122,7 +122,12 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                         return@setOnMenuItemClickListener true
                     }
                     val searchView = findItem(R.id.action_search).actionView as SearchView
-                    searchView.setOnQueryTextListener(this@AllMusicFragment)
+                    searchView.apply {
+                        setOnQueryTextListener(this@AllMusicFragment)
+                        setOnQueryTextFocusChangeListener { _, hasFocus ->
+                            menu.findItem(R.id.action_shuffle_am).isVisible = !hasFocus
+                        }
+                    }
                 }
             }
         }

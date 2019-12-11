@@ -2,7 +2,6 @@ package com.iven.musicplayergo.fragments
 
 import android.animation.Animator
 import android.animation.ValueAnimator
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.*
@@ -37,7 +36,7 @@ import kotlin.properties.Delegates
 
 private const val REVEAL_DURATION: Long = 1000
 
-class DetailsFragment : Fragment() {
+class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private var sFolder = false
 
@@ -168,8 +167,14 @@ class DetailsFragment : Fragment() {
                     mSongsForArtistOrFolder.size
                 )
 
-                val itemSearch = mDetailsToolbar.menu.findItem(R.id.action_search)
-                setupSearchViewForMusic(itemSearch.actionView as SearchView)
+                val searchView =
+                    mDetailsToolbar.menu.findItem(R.id.action_search).actionView as SearchView
+                searchView.apply {
+                    setOnQueryTextListener(this@DetailsFragment)
+                    setOnQueryTextFocusChangeListener { _, hasFocus ->
+                        mDetailsToolbar.menu.setGroupVisible(R.id.shuffle_options_folder, !hasFocus)
+                    }
+                }
             }
 
             mSongsDataSource =
@@ -228,6 +233,17 @@ class DetailsFragment : Fragment() {
                 revealFragment(it, true)
             }
         }
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        mSongsDataSource.set(
+            Utils.processQueryForMusic(newText, mSongsForArtistOrFolder) ?: mSongsForArtistOrFolder
+        )
+        return false
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return false
     }
 
     private fun setupMenu(onUpdateView: Boolean) {
@@ -335,7 +351,8 @@ class DetailsFragment : Fragment() {
         if (selectedArtist != mSelectedArtistOrFolder) {
 
             mSelectedArtistOrFolder = selectedArtist
-            mSelectedArtistAlbums = musicLibrary.allAlbumsForArtist.getValue(mSelectedArtistOrFolder)
+            mSelectedArtistAlbums =
+                musicLibrary.allAlbumsForArtist.getValue(mSelectedArtistOrFolder)
 
             //restore album position
             if (playedAlbumPosition != -1) {
@@ -439,43 +456,6 @@ class DetailsFragment : Fragment() {
             addUpdateListener { valueAnimator -> view.setBackgroundColor((valueAnimator.animatedValue as Int)) }
             duration = REVEAL_DURATION
             start()
-        }
-    }
-
-    private fun setupSearchViewForMusic(searchView: SearchView) {
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
-            override
-            fun onQueryTextChange(newText: String): Boolean {
-                processQuery(newText)
-                return false
-            }
-
-            override
-            fun onQueryTextSubmit(query: String): Boolean {
-                return false
-            }
-        })
-    }
-
-    @SuppressLint("DefaultLocale")
-    private fun processQuery(query: String) {
-        // in real app you'd have it instantiated just once
-        val results = mutableListOf<Any>()
-
-        try {
-            // case insensitive search
-            mSongsForArtistOrFolder.iterator().forEach {
-                if (it.title?.toLowerCase()!!.contains(query.toLowerCase())) {
-                    results.add(it)
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        if (results.size > 0) {
-            mSongsDataSource.set(results)
         }
     }
 

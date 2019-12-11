@@ -11,7 +11,7 @@
         app:showAsAction="collapseActionView|always"
         tools:ignore="AlwaysShowAction" />
 
-    <group>
+    <group android:id="@+id/sorting">
 
         <item
             android:id="@+id/default_sorting"
