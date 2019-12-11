@@ -39,7 +39,7 @@ private const val REVEAL_DURATION: Long = 1000
 
 class DetailsFragment : Fragment() {
 
-    var isFolder = false
+    private var sFolder = false
 
     private lateinit var mArtistDetailsView: View
     private lateinit var mArtistDetailsAnimator: Animator
@@ -73,10 +73,10 @@ class DetailsFragment : Fragment() {
         }
 
         arguments?.getBoolean(TAG_IS_FOLDER)?.let {
-            isFolder = it
+            sFolder = it
         }
 
-        if (!isFolder) {
+        if (!sFolder) {
 
             arguments?.getInt(TAG_SELECTED_ALBUM_POSITION)?.let {
                 mSelectedAlbumPosition = it
@@ -136,107 +136,23 @@ class DetailsFragment : Fragment() {
 
             mDetailsToolbar.apply {
 
-                val menuToInflate =
-                    if (isFolder) R.menu.menu_folder_details else R.menu.menu_artist_details
-                inflateMenu(menuToInflate)
-
                 overflowIcon = AppCompatResources.getDrawable(it, R.drawable.ic_shuffle)
 
                 title = mSelectedArtistOrFolder
 
-                if (isFolder) elevation =
+                if (sFolder) elevation =
                     resources.getDimensionPixelSize(R.dimen.search_bar_elevation).toFloat()
 
                 setNavigationOnClickListener {
                     activity?.onBackPressed()
                 }
 
-                menu.apply {
-                    findItem(R.id.action_shuffle_sa).isVisible = !isFolder
-                }
-
-                setOnMenuItemClickListener {
-                    when (it.itemId) {
-                        R.id.action_shuffle_am -> mUIControlInterface.onShuffleSongs(
-                            mSongsForArtistOrFolder.toMutableList()
-                        )
-                        R.id.action_shuffle_sa -> mUIControlInterface.onShuffleSongs(mSelectedAlbum.music!!)
-                    }
-                    return@setOnMenuItemClickListener true
-                }
+                setupMenu(false, this)
             }
 
-            if (!isFolder) {
+            if (!sFolder) {
 
-                selected_album_container.setOnClickListener {
-                    mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
-                        mSelectedAlbumPosition,
-                        0
-                    )
-                }
-
-                mSelectedAlbumTitle.isSelected = true
-
-                updateSelectedAlbumTitle()
-
-                mSelectedAlbumsDataSource = dataSourceOf(mSelectedArtistAlbums)
-
-                mDetailsToolbar.subtitle = getString(
-                    R.string.artist_info,
-                    mSelectedArtistAlbums.size,
-                    mSongsForArtistOrFolder.size
-                )
-
-                mAlbumsRecyclerView.apply {
-
-                    setup {
-
-                        withDataSource(mSelectedAlbumsDataSource)
-
-                        mAlbumsRecyclerViewLayoutManager = LinearLayoutManager(
-                            context,
-                            LinearLayoutManager.HORIZONTAL,
-                            false
-                        )
-                        withLayoutManager(mAlbumsRecyclerViewLayoutManager)
-
-                        withItem<Album, AlbumsViewHolder>(R.layout.album_item) {
-                            onBind(::AlbumsViewHolder) { _, item ->
-                                // AlbumsViewHolder is `this` here
-                                itemView.background.alpha = 20
-                                album.text = item.title
-                                year.text = item.year
-                                totalDuration.text =
-                                    MusicUtils.formatSongDuration(item.totalDuration!!, true)
-                                checkbox.visibility =
-                                    if (mSelectedAlbum.title != item.title) View.GONE else View.VISIBLE
-                            }
-
-                            onClick { index ->
-
-                                if (index != mSelectedAlbumPosition) {
-
-                                    mAlbumsRecyclerView.adapter?.apply {
-                                        notifyItemChanged(
-                                            mSelectedAlbumPosition
-                                        )
-
-                                        notifyItemChanged(index)
-
-                                        mSelectedAlbum = item
-                                        mSelectedAlbumPosition = index
-                                        updateSelectedAlbumTitle()
-                                        swapAlbum(item.music)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    if (mSelectedAlbumPosition != -1 && mSelectedAlbumPosition != 0) mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
-                        mSelectedAlbumPosition,
-                        0
-                    )
-                }
+                setupAlbumsContainer()
 
             } else {
 
@@ -257,7 +173,7 @@ class DetailsFragment : Fragment() {
             }
 
             mSongsDataSource =
-                dataSourceOf(if (isFolder) mSongsForArtistOrFolder else mSelectedAlbum.music!!)
+                dataSourceOf(if (sFolder) mSongsForArtistOrFolder else mSelectedAlbum.music!!)
 
             mSongsRecyclerView.apply {
 
@@ -279,12 +195,9 @@ class DetailsFragment : Fragment() {
                         }
 
                         onClick {
-                            val selectedArtistAlbums =
+                            val selectedPlaylist =
 
-                                if (isFolder) MusicUtils.getAlbumFromList(
-                                    item.album,
-                                    musicLibrary.allAlbumsForArtist[item.artist]!!
-                                ).first.music!!.toList()
+                                if (sFolder) mSongsForArtistOrFolder
                                 else
                                     MusicUtils.getAlbumFromList(
                                         item.album,
@@ -293,7 +206,7 @@ class DetailsFragment : Fragment() {
 
                             mUIControlInterface.onSongSelected(
                                 item,
-                                selectedArtistAlbums
+                                selectedPlaylist
                             )
                         }
 
@@ -317,36 +230,153 @@ class DetailsFragment : Fragment() {
         }
     }
 
+    private fun setupMenu(isUpdateView: Boolean, toolbar: Toolbar) {
+
+        toolbar.apply {
+
+            if (isUpdateView) mDetailsToolbar.menu.clear()
+
+            val menuToInflate =
+                if (sFolder && !isUpdateView) R.menu.menu_folder_details else R.menu.menu_artist_details
+            inflateMenu(menuToInflate)
+
+            menu.apply {
+                findItem(R.id.action_shuffle_sa).isVisible = !sFolder
+            }
+
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.action_shuffle_am -> mUIControlInterface.onShuffleSongs(
+                        mSongsForArtistOrFolder.toMutableList()
+                    )
+                    R.id.action_shuffle_sa -> mUIControlInterface.onShuffleSongs(mSelectedAlbum.music!!)
+                }
+                return@setOnMenuItemClickListener true
+            }
+        }
+
+    }
+
+    private fun setupAlbumsContainer() {
+
+        selected_album_container.setOnClickListener {
+            mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
+                mSelectedAlbumPosition,
+                0
+            )
+        }
+
+        mSelectedAlbumTitle.isSelected = true
+
+        updateSelectedAlbumTitle()
+
+        mSelectedAlbumsDataSource = dataSourceOf(mSelectedArtistAlbums)
+
+        mDetailsToolbar.subtitle = getString(
+            R.string.artist_info,
+            mSelectedArtistAlbums.size,
+            mSongsForArtistOrFolder.size
+        )
+
+        mAlbumsRecyclerView.apply {
+
+            setup {
+
+                withDataSource(mSelectedAlbumsDataSource)
+
+                mAlbumsRecyclerViewLayoutManager = LinearLayoutManager(
+                    context,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+                withLayoutManager(mAlbumsRecyclerViewLayoutManager)
+
+                withItem<Album, AlbumsViewHolder>(R.layout.album_item) {
+                    onBind(::AlbumsViewHolder) { _, item ->
+                        // AlbumsViewHolder is `this` here
+                        itemView.background.alpha = 20
+                        album.text = item.title
+                        year.text = item.year
+                        totalDuration.text =
+                            MusicUtils.formatSongDuration(item.totalDuration!!, true)
+                        checkbox.visibility =
+                            if (mSelectedAlbum.title != item.title) View.GONE else View.VISIBLE
+                    }
+
+                    onClick { index ->
+
+                        if (index != mSelectedAlbumPosition) {
+
+                            mAlbumsRecyclerView.adapter?.apply {
+                                notifyItemChanged(
+                                    mSelectedAlbumPosition
+                                )
+
+                                notifyItemChanged(index)
+
+                                mSelectedAlbum = item
+                                mSelectedAlbumPosition = index
+                                updateSelectedAlbumTitle()
+                                swapAlbum(item.music)
+                            }
+                        }
+                    }
+                }
+            }
+            if (mSelectedAlbumPosition != -1 or 0) mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
+                mSelectedAlbumPosition,
+                0
+            )
+        }
+    }
+
     fun updateView(selectedArtist: String, playedAlbumPosition: Int) {
+
         if (selectedArtist != mSelectedArtistOrFolder) {
 
             mSelectedArtistOrFolder = selectedArtist
             mSelectedArtistAlbums = musicLibrary.allAlbumsForArtist[mSelectedArtistOrFolder]!!
+
+            //restore album position
+            if (playedAlbumPosition != -1) {
+                mSelectedAlbumPosition = playedAlbumPosition
+                mSelectedAlbum = mSelectedArtistAlbums[mSelectedAlbumPosition]
+            }
+
+            if (sFolder) {
+                sFolder = false
+                mDetailsToolbar.title = mSelectedArtistOrFolder
+                mAlbumsRecyclerView.visibility = View.VISIBLE
+                mSelectedAlbumTitle.visibility = View.VISIBLE
+                mSelectedAlbumYearDuration.visibility = View.VISIBLE
+                mSelectedAlbumsDataSource = dataSourceOf(mSelectedArtistAlbums)
+
+                setupMenu(true, mDetailsToolbar)
+                setupAlbumsContainer()
+
+            } else {
+
+                mDetailsToolbar.apply {
+                    title = mSelectedArtistOrFolder
+                    subtitle = getString(
+                        R.string.artist_info,
+                        mSelectedArtistAlbums.size,
+                        mSongsForArtistOrFolder.size
+                    )
+                }
+
+                mSelectedAlbumsDataSource.set(mSelectedArtistAlbums)
+                updateSelectedAlbumTitle()
+            }
+
+            mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
+                mSelectedAlbumPosition,
+                0
+            )
+
             mSongsForArtistOrFolder =
                 musicLibrary.allSongsForArtist.getValue(mSelectedArtistOrFolder)
 
-            if (playedAlbumPosition != -1 && !isFolder) {
-                mSelectedAlbumPosition = playedAlbumPosition
-                mSelectedAlbum = mSelectedArtistAlbums[mSelectedAlbumPosition]
-                mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
-                    mSelectedAlbumPosition,
-                    0
-                )
-                updateSelectedAlbumTitle()
-            } else {
-                mSelectedAlbum = mSelectedArtistAlbums[0]
-            }
-
-            mDetailsToolbar.apply {
-                title = mSelectedArtistOrFolder
-                subtitle = getString(
-                    R.string.artist_info,
-                    mSelectedArtistAlbums.size,
-                    mSongsForArtistOrFolder.size
-                )
-            }
-
-            mSelectedAlbumsDataSource.set(mSelectedArtistAlbums)
             mSongsDataSource.set(mSelectedAlbum.music!!)
         }
     }
@@ -464,13 +494,13 @@ class DetailsFragment : Fragment() {
         @JvmStatic
         fun newInstance(
             selectedArtistOrFolder: String,
-            isFolder: Boolean,
+            sFolder: Boolean,
             playedAlbumPosition: Int
         ) =
             DetailsFragment().apply {
                 arguments = Bundle().apply {
                     putString(TAG_ARTIST_FOLDER, selectedArtistOrFolder)
-                    putBoolean(TAG_IS_FOLDER, isFolder)
+                    putBoolean(TAG_IS_FOLDER, sFolder)
                     putInt(TAG_SELECTED_ALBUM_POSITION, playedAlbumPosition)
                 }
             }
