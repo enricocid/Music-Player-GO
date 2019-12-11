@@ -47,7 +47,6 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var mIndicatorFastScrollThumb: FastScrollerThumbView
 
     private lateinit var mFolders: MutableList<String>
-    private var mFilteredFolders: List<String>? = null
 
     private lateinit var mDataSource: DataSource<Any>
 
@@ -147,6 +146,12 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
                     searchView.apply {
                         setOnQueryTextListener(this@FoldersFragment)
                         setOnQueryTextFocusChangeListener { _, hasFocus ->
+                            if (mSorting != DEFAULT_SORTING) {
+                                val fastScrollerVisibility =
+                                    if (!hasFocus) View.VISIBLE else View.GONE
+                                mIndicatorFastScrollerView.visibility = fastScrollerVisibility
+                                mIndicatorFastScrollThumb.visibility = fastScrollerVisibility
+                            }
                             menu.setGroupVisible(R.id.sorting, !hasFocus)
                         }
                     }
@@ -186,8 +191,7 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
                 mIndicatorFastScrollerView.setupWithRecyclerView(
                     mFoldersRecyclerView,
                     { position ->
-                        val item =
-                            (mFilteredFolders ?: mFolders)[position] // Get your model object
+                        val item = mFolders[position] // Get your model object
                         // or fetch the section at [position] from your database
 
                         FastScrollItemIndicator.Text(

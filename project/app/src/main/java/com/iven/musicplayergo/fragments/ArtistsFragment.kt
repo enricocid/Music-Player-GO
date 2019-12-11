@@ -43,7 +43,6 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var mIndicatorFastScrollThumb: FastScrollerThumbView
 
     private lateinit var mArtists: MutableList<String>
-    private var mFilteredArtists: List<String>? = null
 
     private lateinit var mDataSource: DataSource<Any>
 
@@ -147,6 +146,12 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                     searchView.apply {
                         setOnQueryTextListener(this@ArtistsFragment)
                         setOnQueryTextFocusChangeListener { _, hasFocus ->
+                            if (mSorting != DEFAULT_SORTING) {
+                                val fastScrollerVisibility =
+                                    if (!hasFocus) View.VISIBLE else View.GONE
+                                mIndicatorFastScrollerView.visibility = fastScrollerVisibility
+                                mIndicatorFastScrollThumb.visibility = fastScrollerVisibility
+                            }
                             menu.setGroupVisible(R.id.sorting, !hasFocus)
                         }
                     }
@@ -187,8 +192,7 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                 mIndicatorFastScrollerView.setupWithRecyclerView(
                     mArtistsRecyclerView,
                     { position ->
-                        val item =
-                            (mFilteredArtists ?: mArtists)[position] // Get your model object
+                        val item = mArtists[position] // Get your model object
                         // or fetch the section at [position] from your database
 
                         FastScrollItemIndicator.Text(
