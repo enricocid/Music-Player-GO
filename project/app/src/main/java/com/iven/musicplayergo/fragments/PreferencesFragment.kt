@@ -15,7 +15,7 @@ import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.AccentsAdapter
-import com.iven.musicplayergo.adapters.CheckableTabsAdapter
+import com.iven.musicplayergo.adapters.ActiveTabsAdapter
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -157,17 +157,15 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             cornerRadius(res = R.dimen.md_corner_radius)
             title(res = R.string.active_fragments_pref_title)
 
-            val checkableAdapter = CheckableTabsAdapter(
-                activity,
-                resources.getStringArray(R.array.activeFragmentsListArray).toMutableList()
-            )
-            customListAdapter(checkableAdapter)
+            val activeTabsAdapter = ActiveTabsAdapter(activity)
+
+            customListAdapter(activeTabsAdapter)
 
             getRecyclerView().layoutManager =
                 LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
             positiveButton {
-                goPreferences.activeFragments = checkableAdapter.getUpdatedItems()
+                goPreferences.activeFragments = activeTabsAdapter.getUpdatedItems()
                 ThemeHelper.applyNewThemeSmoothly(activity)
             }
             negativeButton {}

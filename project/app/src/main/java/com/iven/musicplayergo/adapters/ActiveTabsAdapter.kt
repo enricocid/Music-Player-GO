@@ -11,19 +11,20 @@ import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.Utils
 
-class CheckableTabsAdapter(
-    private val context: Context,
-    private val listItems: MutableList<String>
+class ActiveTabsAdapter(
+    private val context: Context
 ) :
-    RecyclerView.Adapter<CheckableTabsAdapter.CheckableItemsHolder>() {
+    RecyclerView.Adapter<ActiveTabsAdapter.CheckableItemsHolder>() {
 
     private val mItemsToRemove = mutableListOf<String>()
 
-    private var mCheckableItems = goPreferences.activeFragments?.toMutableList()
+    private val mAvailableItems =
+        context.resources.getStringArray(R.array.activeFragmentsListArray).toMutableList()
+    private val mActiveItems = goPreferences.activeFragments?.toMutableList()
 
     fun getUpdatedItems(): Set<String>? {
-        mCheckableItems?.removeAll(mItemsToRemove.toSet())
-        return mCheckableItems?.toSet()
+        mActiveItems?.removeAll(mItemsToRemove.toSet())
+        return mActiveItems?.toSet()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckableItemsHolder {
@@ -37,7 +38,7 @@ class CheckableTabsAdapter(
     }
 
     override fun getItemCount(): Int {
-        return listItems.size
+        return mAvailableItems.size
     }
 
     override fun onBindViewHolder(holder: CheckableItemsHolder, position: Int) {
@@ -54,10 +55,10 @@ class CheckableTabsAdapter(
                 icon.setImageResource(ThemeHelper.getTabIcon(adapterPosition))
                 val indicator = findViewById<ImageView>(R.id.tab_indicator)
 
-                isEnabled = adapterPosition != listItems.size - 1
+                isEnabled = adapterPosition != mAvailableItems.size - 1
                 if (isEnabled) {
                     manageIndicatorsStatus(
-                        mCheckableItems?.contains(adapterPosition.toString())!!,
+                        mActiveItems?.contains(adapterPosition.toString())!!,
                         icon,
                         indicator
                     )
@@ -73,17 +74,17 @@ class CheckableTabsAdapter(
 
                     manageIndicatorsStatus(indicator.visibility != View.VISIBLE, icon, indicator)
 
-                    if (indicator.visibility != View.VISIBLE) mCheckableItems?.remove(
+                    if (indicator.visibility != View.VISIBLE) mActiveItems?.remove(
                         adapterPosition.toString()
-                    ) else mCheckableItems?.add(
+                    ) else mActiveItems?.add(
                         adapterPosition.toString()
                     )
-                    if (mCheckableItems?.size!! < listItems.size - 2) {
+                    if (mActiveItems?.size!! < 2) {
                         Utils.makeToast(
                             context,
                             context.getString(R.string.active_fragments_pref_warning)
                         )
-                        mCheckableItems?.add(adapterPosition.toString())
+                        mActiveItems.add(adapterPosition.toString())
                         manageIndicatorsStatus(true, icon, indicator)
                     }
                 }
