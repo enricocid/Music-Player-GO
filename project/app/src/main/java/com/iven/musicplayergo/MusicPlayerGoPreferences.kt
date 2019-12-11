@@ -1,7 +1,6 @@
 package com.iven.musicplayergo
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -34,11 +33,11 @@ class MusicPlayerGoPreferences(context: Context) {
     private val prefsFocus = context.getString(R.string.focus_pref)
     private val prefsHeadsetPlug = context.getString(R.string.headset_pref)
 
-    private val mPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
     private val mGson = GsonBuilder().create()
 
-    private val typeMusic: Type = object : TypeToken<Pair<Music, Int>>() {}.type
-    private val typeLovedSong: Type = object : TypeToken<MutableList<Pair<Music, Int>>>() {}.type
+    private val typeMusic = object : TypeToken<Pair<Music, Int>>() {}.type
+    private val typeLovedSong = object : TypeToken<MutableList<Pair<Music, Int>>>() {}.type
 
     var lastPlayedSong: Pair<Music, Int>?
         get() = getObject(
@@ -54,19 +53,19 @@ class MusicPlayerGoPreferences(context: Context) {
         )
         set(value) = putObject(prefsLovedSongs, value)
 
-    var theme: String?
+    var theme
         get() = mPrefs.getString(prefsTheme, prefsThemeDefault)
         set(value) = mPrefs.edit().putString(prefsTheme, value).apply()
 
-    var accent: Int
+    var accent
         get() = mPrefs.getInt(prefsAccent, R.color.deep_purple)
         set(value) = mPrefs.edit().putInt(prefsAccent, value).apply()
 
-    var isEdgeToEdge: Boolean
+    var isEdgeToEdge
         get() = mPrefs.getBoolean(prefsEdgeToEdge, false)
         set(value) = mPrefs.edit().putBoolean(prefsEdgeToEdge, value).apply()
 
-    var isTabsEnabled: Boolean
+    var isTabsEnabled
         get() = mPrefs.getBoolean(prefsTabs, true)
         set(value) = mPrefs.edit().putBoolean(prefsTabs, value).apply()
 
@@ -74,19 +73,19 @@ class MusicPlayerGoPreferences(context: Context) {
         get() = mPrefs.getStringSet(prefsActiveFragments, prefsActiveFragmentsDefault)
         set(value) = mPrefs.edit().putStringSet(prefsActiveFragments, value).apply()
 
-    var artistsSorting: Int
+    var artistsSorting
         get() = mPrefs.getInt(prefsArtistsSorting, ASCENDING_SORTING)
         set(value) = mPrefs.edit().putInt(prefsArtistsSorting, value).apply()
 
-    var foldersSorting: Int
+    var foldersSorting
         get() = mPrefs.getInt(prefsFoldersSorting, DEFAULT_SORTING)
         set(value) = mPrefs.edit().putInt(prefsFoldersSorting, value).apply()
 
-    var isFocusEnabled: Boolean
+    var isFocusEnabled
         get() = mPrefs.getBoolean(prefsFocus, true)
         set(value) = mPrefs.edit().putBoolean(prefsFocus, value).apply()
 
-    var isHeadsetPlugEnabled: Boolean
+    var isHeadsetPlugEnabled
         get() = mPrefs.getBoolean(prefsHeadsetPlug, true)
         set(value) = mPrefs.edit().putBoolean(prefsHeadsetPlug, value).apply()
 

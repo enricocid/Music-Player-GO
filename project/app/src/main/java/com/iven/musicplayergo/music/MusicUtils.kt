@@ -21,11 +21,11 @@ import java.util.concurrent.TimeUnit
 @Suppress("DEPRECATION")
 object MusicUtils {
 
-    @JvmStatic
     //returns the position in list of the current played album
     //pass selected artist from artists adapter and not from current song
     //so when played artist is selected the album position will be returned
     //if selected artist differs from played artist -1 will be returned
+    @JvmStatic
     fun getPlayingAlbumPosition(selectedArtist: String, mediaPlayerHolder: MediaPlayerHolder): Int {
         return try {
             val currentSong = mediaPlayerHolder.currentSong.first

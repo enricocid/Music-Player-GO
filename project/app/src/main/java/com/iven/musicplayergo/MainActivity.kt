@@ -118,15 +118,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     //the player
     private lateinit var mMediaPlayerHolder: MediaPlayerHolder
     private val isMediaPlayerHolder get() = ::mMediaPlayerHolder.isInitialized
+    private val isNowPlaying get() = ::mNowPlayingDialog.isInitialized && mNowPlayingDialog.isShowing
 
     //our PlayerService shit
     private lateinit var mPlayerService: PlayerService
-    private var sBound: Boolean = false
+    private var sBound = false
     private lateinit var mBindingIntent: Intent
-
-    private fun isNowPlaying(): Boolean {
-        return ::mNowPlayingDialog.isInitialized && mNowPlayingDialog.isShowing
-    }
 
     private fun checkIsPlayer(showError: Boolean): Boolean {
         return mMediaPlayerHolder.apply {
@@ -660,7 +657,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         updateResetStatus(false)
 
-        if (isNowPlaying()) updateNowPlayingInfo()
+        if (isNowPlaying) updateNowPlayingInfo()
 
         if (restore) {
 
@@ -686,7 +683,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun updateResetStatus(onPlaybackCompletion: Boolean) {
-        if (isNowPlaying()) {
+        if (isNowPlaying) {
 
             when {
                 onPlaybackCompletion -> ThemeHelper.updateIconTint(mRepeatNP, mResolvedIconsColor)
@@ -735,7 +732,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             else
                 openDetailsFragment(selectedArtistOrFolder, isFolder = false)
 
-            if (isNowPlaying()) mNowPlayingDialog.dismiss()
+            if (isNowPlaying) mNowPlayingDialog.dismiss()
         }
     }
 
@@ -907,13 +904,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         override fun onPositionChanged(position: Int) {
             if (!sUserIsSeeking) {
                 mSeekProgressBar.progress = position
-                if (isNowPlaying()) mFixedMusicBar.setProgress(position)
+                if (isNowPlaying) mFixedMusicBar.setProgress(position)
             }
         }
 
         override fun onStateChanged() {
             updatePlayingStatus(false)
-            updatePlayingStatus(isNowPlaying())
+            updatePlayingStatus(isNowPlaying)
             if (mMediaPlayerHolder.state != RESUMED && mMediaPlayerHolder.state != PAUSED) {
                 updatePlayingInfo(false)
                 if (::mQueueDialog.isInitialized && mQueueDialog.first.isShowing && mMediaPlayerHolder.isQueue)

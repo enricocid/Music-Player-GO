@@ -29,7 +29,7 @@ const val CLOSE_ACTION = "CLOSE_GO"
 class MusicNotificationManager(private val playerService: PlayerService) {
 
     //notification manager/builder
-    val notificationManager: NotificationManager =
+    val notificationManager =
         playerService.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     lateinit var notificationBuilder: NotificationCompat.Builder
 
@@ -127,7 +127,6 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                 setShowBadge(false)
                 notificationManager.createNotificationChannel(this)
             }
-
         }
     }
 }

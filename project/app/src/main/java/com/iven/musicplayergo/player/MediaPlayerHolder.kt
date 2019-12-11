@@ -64,7 +64,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private val mHandler = Handler()
 
     private var mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
-    private var sPlayOnFocusGain: Boolean = false
+    private var sPlayOnFocusGain = false
 
     private val mOnAudioFocusChangeListener =
         AudioManager.OnAudioFocusChangeListener { focusChange ->
@@ -113,7 +113,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     var isSongRestoredFromPrefs = false
     var isSongFromLovedSongs = Pair(false, 0)
 
-    var state: Int = PAUSED
+    var state = PAUSED
     var isPlay = false
 
     //receivers

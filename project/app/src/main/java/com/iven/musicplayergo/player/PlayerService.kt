@@ -12,7 +12,7 @@ class PlayerService : Service() {
     private val binder = LocalBinder()
 
     // Check if is already running
-    var isRunning: Boolean = false
+    var isRunning = false
 
     //media player
     lateinit var mediaPlayerHolder: MediaPlayerHolder
