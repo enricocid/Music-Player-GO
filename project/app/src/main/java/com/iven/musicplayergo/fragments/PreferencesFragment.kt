@@ -26,7 +26,6 @@ import kotlin.properties.Delegates
 class PreferencesFragment : PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private lateinit var mThemesDialog: MaterialDialog
     private lateinit var mAccentsDialog: MaterialDialog
     private lateinit var mMultiListDialog: MaterialDialog
     private lateinit var mSupportedFormatsDialog: MaterialDialog
@@ -53,7 +52,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     override fun onPause() {
         super.onPause()
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
-        if (::mThemesDialog.isInitialized && mThemesDialog.isShowing) mThemesDialog.dismiss()
         if (::mAccentsDialog.isInitialized && mAccentsDialog.isShowing) mAccentsDialog.dismiss()
         if (::mMultiListDialog.isInitialized && mMultiListDialog.isShowing) mMultiListDialog.dismiss()
         if (::mSupportedFormatsDialog.isInitialized && mSupportedFormatsDialog.isShowing) mSupportedFormatsDialog.dismiss()
