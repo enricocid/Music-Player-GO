@@ -949,7 +949,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
      */
     private inner class ScreenSlidePagerAdapter(fm: FragmentManager) :
         FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        override fun getCount(): Int = mActiveFragments.size
+        override fun getCount() = mActiveFragments.size
 
         override fun getItem(position: Int): Fragment {
             return handleOnNavigationItemSelected(position)
