@@ -116,8 +116,8 @@
     </style>
 
     <style name="BaseTheme.Default" parent="BaseTheme">
-        <item name="colorAccent">@android:color/background_dark</item>
-        <item name="colorPrimary">@android:color/background_dark</item>
-        <item name="colorPrimaryDark">@android:color/background_dark</item>
+        <item name="colorAccent">@android:color/black</item>
+        <item name="colorPrimary">@android:color/black</item>
+        <item name="colorPrimaryDark">@android:color/black</item>
     </style>
 </resources>
