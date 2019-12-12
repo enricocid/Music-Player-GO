@@ -561,7 +561,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 ThemeHelper.updateIconTint(
                     mRepeatNP,
-                    if (mMediaPlayerHolder.isReset) mResolvedAccentColor else
+                    if (mMediaPlayerHolder.isRepeat) mResolvedAccentColor else
                         mResolvedIconsColor
                 )
 
@@ -676,7 +676,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 selectedSong.album
             )
 
-        updateResetStatus(false)
+        updateRepeatStatus(false)
 
         if (isNowPlaying) updateNowPlayingInfo()
 
@@ -703,12 +703,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    private fun updateResetStatus(onPlaybackCompletion: Boolean) {
+    private fun updateRepeatStatus(onPlaybackCompletion: Boolean) {
         if (isNowPlaying) {
-
             when {
                 onPlaybackCompletion -> ThemeHelper.updateIconTint(mRepeatNP, mResolvedIconsColor)
-                mMediaPlayerHolder.isReset -> ThemeHelper.updateIconTint(
+                mMediaPlayerHolder.isRepeat -> ThemeHelper.updateIconTint(
                     mRepeatNP,
                     ThemeHelper.resolveThemeAccent(this)
                 )
@@ -807,7 +806,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun setRepeat() {
         if (checkIsPlayer(true)) {
             mMediaPlayerHolder.reset()
-            updateResetStatus(false)
+            updateRepeatStatus(false)
         }
     }
 
@@ -910,11 +909,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private val mMediaPlayerInterface = object : MediaPlayerInterface {
 
         override fun onPlaybackCompleted() {
-            updateResetStatus(true)
+            updateRepeatStatus(true)
         }
 
-        override fun onUpdateResetStatus() {
-            updateResetStatus(false)
+        override fun onUpdateRepeatStatus() {
+            updateRepeatStatus(false)
         }
 
         override fun onClose() {

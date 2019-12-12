@@ -103,7 +103,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     val isPlaying get() = isMediaPlayer && mediaPlayer.isPlaying
     val isMediaPlayer get() = ::mediaPlayer.isInitialized
     val isCurrentSong get() = ::currentSong.isInitialized
-    var isReset = false
+    var isRepeat = false
 
     var isQueue = false
     var isQueueStarted = false
@@ -189,7 +189,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         mediaPlayerInterface.onPlaybackCompleted()
 
         when {
-            isReset -> if (isMediaPlayer) resetSong()
+            isRepeat -> if (isMediaPlayer) resetSong()
             isQueue -> manageQueue(true)
             else -> skip(true)
         }
@@ -272,7 +272,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     private fun resetSong() {
-        isReset = false
+        isRepeat = false
         mediaPlayer.seekTo(0)
         mediaPlayer.start()
         setStatus(PLAYING)
@@ -405,7 +405,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     override fun onPrepared(mediaPlayer: MediaPlayer) {
         startUpdatingCallbackWithPosition()
 
-        if (isReset) isReset = false
+        if (isRepeat) isRepeat = false
 
         if (isSongRestoredFromPrefs) {
             setPreciseVolume(currentVolumeInPercent)
@@ -450,10 +450,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun reset() {
-        isReset = !isReset
+        isRepeat = !isRepeat
         Utils.makeToast(
             playerService,
-            playerService.getString(if (isReset) R.string.repeat_enabled else R.string.repeat_disabled)
+            playerService.getString(if (isRepeat) R.string.repeat_enabled else R.string.repeat_disabled)
         )
     }
 
@@ -552,7 +552,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     NEXT_ACTION -> skip(true)
                     REPEAT_ACTION -> {
                         reset()
-                        mediaPlayerInterface.onUpdateResetStatus()
+                        mediaPlayerInterface.onUpdateRepeatStatus()
                     }
                     CLOSE_ACTION -> if (playerService.isRunning && isMediaPlayer) stopPlaybackService(
                         true
