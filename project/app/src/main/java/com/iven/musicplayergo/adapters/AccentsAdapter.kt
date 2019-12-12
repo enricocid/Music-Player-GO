@@ -55,7 +55,7 @@ class AccentsAdapter(private val activity: Activity) :
                     visibility = if (color != mSelectedAccent) {
                         View.GONE
                     } else {
-                        if (ThemeHelper.isThemeNight() and ThemeHelper.isAccentBlack()) ThemeHelper.updateIconTint(
+                        if (ThemeHelper.isThemeNight() && ThemeHelper.isAccentBlack()) ThemeHelper.updateIconTint(
                             this,
                             ThemeHelper.resolveColorAttr(
                                 context,

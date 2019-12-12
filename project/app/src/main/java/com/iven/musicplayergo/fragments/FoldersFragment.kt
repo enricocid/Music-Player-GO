@@ -57,8 +57,8 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var mSortMenuItem: MenuItem
     private var mSorting = DEFAULT_SORTING
 
-    private val sBlackAccentLight = ThemeHelper.isAccentBlack() and ThemeHelper.isThemeLight()
-    private val sBlackAccentDark = ThemeHelper.isAccentBlack() and ThemeHelper.isThemeNight()
+    private val sBlackAccentLight = ThemeHelper.isAccentBlack() && ThemeHelper.isThemeLight()
+    private val sBlackAccentDark = ThemeHelper.isAccentBlack() && ThemeHelper.isThemeNight()
 
     private var mSelectedSortItemColor: Int by Delegates.notNull()
 
