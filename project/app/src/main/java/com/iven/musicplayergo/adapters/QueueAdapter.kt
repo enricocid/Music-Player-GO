@@ -27,6 +27,8 @@ class QueueAdapter(
     private val mDefaultTextColor =
         ThemeHelper.resolveColorAttr(context, android.R.attr.textColorPrimary)
 
+    private val sBlackAccentLight = ThemeHelper.isAccentBlack() && ThemeHelper.isThemeLight()
+
     fun swapSelectedSong(song: Music) {
         notifyItemChanged(mQueueSongs.indexOf(mSelectedSong.first))
         mSelectedSong = Pair(song, true)
@@ -72,7 +74,7 @@ class QueueAdapter(
 
                     when {
                         mQueueSongs.indexOf(mSelectedSong.first) == adapterPosition && mSelectedSong.second -> setTextColor(
-                            ThemeHelper.resolveThemeAccent(context)
+                            ThemeHelper.getAccentForBlackAccentLight(sBlackAccentLight, context)
                         )
                         else -> setTextColor(mDefaultTextColor)
                     }

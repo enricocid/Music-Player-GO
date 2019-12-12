@@ -52,6 +52,15 @@ object ThemeHelper {
     }
 
     @JvmStatic
+    fun getAccentForBlackAccentLight(isBlackAccentLight: Boolean, context: Context): Int {
+        return if (isBlackAccentLight) getColor(
+            context,
+            R.color.greyPrimaryDark,
+            R.color.deep_purple
+        ) else resolveThemeAccent(context)
+    }
+
+    @JvmStatic
     fun isThemeNight(): Boolean {
         return AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
     }

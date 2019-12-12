@@ -101,11 +101,7 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
 
         context?.let {
 
-            mSelectedSortItemColor = if (sBlackAccentLight) ThemeHelper.getColor(
-                it,
-                R.color.greyPrimaryDark,
-                R.color.deep_purple
-            ) else ThemeHelper.resolveThemeAccent(it)
+            mSelectedSortItemColor = ThemeHelper.getAccentForBlackAccentLight(sBlackAccentLight, it)
 
             mArtistsRecyclerView.apply {
 
