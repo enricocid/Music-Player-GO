@@ -24,6 +24,7 @@ import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.RESTORE_SETTINGS_FRAGMENT
 import com.iven.musicplayergo.goPreferences
 
 object ThemeHelper {
@@ -34,8 +35,9 @@ object ThemeHelper {
         //smoothly set app theme
         Handler().postDelayed({
             Intent(activity, MainActivity::class.java).apply {
-                activity.startActivity(this)
+                putExtra(RESTORE_SETTINGS_FRAGMENT, true)
                 activity.finish()
+                activity.startActivity(this)
             }
         }, 250)
     }

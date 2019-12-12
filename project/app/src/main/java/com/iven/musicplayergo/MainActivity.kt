@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
@@ -46,6 +47,8 @@ import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.player_controls_panel.*
 import kotlin.properties.Delegates
 
+const val RESTORE_SETTINGS_FRAGMENT = "restore_settings_fragment_key"
+
 @Suppress("UNUSED_PARAMETER")
 class MainActivity : AppCompatActivity(), UIControlInterface {
 
@@ -56,6 +59,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private var mResolvedDisabledIconsColor: Int by Delegates.notNull()
 
     //fragments
+
     private lateinit var mArtistsFragment: ArtistsFragment
     private lateinit var mAllMusicFragment: AllMusicFragment
     private lateinit var mFoldersFragment: FoldersFragment
@@ -63,6 +67,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mDetailsFragment: DetailsFragment
 
     private lateinit var mActiveFragments: MutableList<String>
+
+    private var sRestoreSettingsFragment = false
 
     //views
     private lateinit var mViewPager: ViewPager
@@ -171,6 +177,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(RESTORE_SETTINGS_FRAGMENT, true)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         if (sBound) unbindService(connection)
@@ -225,7 +236,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         setupControlsPanelSpecs()
 
-        initializeMediaButtons()
+        initMediaButtons()
+
+        sRestoreSettingsFragment =
+            savedInstanceState?.getBoolean(RESTORE_SETTINGS_FRAGMENT) ?: intent.getBooleanExtra(
+                RESTORE_SETTINGS_FRAGMENT,
+                false
+            )
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else doBindService()
     }
@@ -272,7 +289,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mAllDeviceSongs = musicLibrary.allSongsUnfiltered
                 mMusic = musicLibrary.allAlbumsForArtist
 
-                initializeViewPager()
+                initViewPager()
 
                 //let's get intent from external app and open the song,
                 //else restore the player (normal usage)
@@ -291,17 +308,33 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         })
     }
 
-    private fun initializeViewPager() {
+    private fun initViewPager() {
 
         mActiveFragments = goPreferences.activeFragments?.toMutableList()!!
 
-        initializeActiveTabs(true)
+        initActiveFragmentsOrTabs(true)
 
-        mTabsLayout.apply {
+        val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
+        mViewPager.offscreenPageLimit = mActiveFragments.size - 1
+        mViewPager.adapter = pagerAdapter
 
-            if (sTabsEnabled) {
+        if (sTabsEnabled) {
+            mTabsLayout.apply {
 
                 setupWithViewPager(mViewPager)
+
+                tabIconTint = ColorStateList.valueOf(mResolvedAlphaAccentColor)
+                initActiveFragmentsOrTabs(false)
+
+                when {
+                    sRestoreSettingsFragment -> {
+                        mViewPager.currentItem =
+                            mActiveFragments.size - 1
+
+                        getTabAt(mViewPager.currentItem)?.icon?.setTint(mResolvedAccentColor)
+                    }
+                    else -> getTabAt(0)?.icon?.setTint(mResolvedAccentColor)
+                }
 
                 addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
@@ -318,12 +351,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 })
             }
         }
-
-        val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
-        mViewPager.offscreenPageLimit = mActiveFragments.size - 1
-        mViewPager.adapter = pagerAdapter
-
-        initializeActiveTabs(false)
     }
 
     private fun setupControlsPanelSpecs() {
@@ -337,16 +364,65 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         )
     }
 
-    private fun initializeActiveTabs(onInitializeFragments: Boolean) {
+    private fun initActiveFragmentsOrTabs(onInitActiveFragments: Boolean) {
         mActiveFragments.iterator().forEach {
-            if (onInitializeFragments) initializeActiveFragments(it.toInt()) else if (goPreferences.isTabsEnabled) setupTabLayoutTabs(
-                mActiveFragments.indexOf(it),
-                it.toInt()
-            )
+            if (onInitActiveFragments) initActiveFragments(it.toInt()) else
+                mTabsLayout.getTabAt(mActiveFragments.indexOf(it))?.setIcon(
+                    ThemeHelper.getTabIcon(
+                        it.toInt()
+                    )
+                )
         }
     }
 
-    private fun initializeMediaButtons() {
+    private fun initActiveFragments(index: Int) {
+        when (index) {
+            0 -> mArtistsFragment = ArtistsFragment.newInstance()
+            1 -> mAllMusicFragment = AllMusicFragment.newInstance()
+            2 -> mFoldersFragment = FoldersFragment.newInstance()
+            else -> mSettingsFragment = SettingsFragment.newInstance()
+        }
+    }
+
+    private fun handleOnNavigationItemSelected(itemId: Int): Fragment {
+        return when (itemId) {
+            0 -> getFragmentForIndex(mActiveFragments[0].toInt())
+            1 -> getFragmentForIndex(mActiveFragments[1].toInt())
+            2 -> getFragmentForIndex(mActiveFragments[2].toInt())
+            else -> getFragmentForIndex(mActiveFragments[3].toInt())
+        }
+    }
+
+    private fun getFragmentForIndex(index: Int): Fragment {
+        return when (index) {
+            0 -> mArtistsFragment
+            1 -> mAllMusicFragment
+            2 -> mFoldersFragment
+            else -> mSettingsFragment
+        }
+    }
+
+    private fun openDetailsFragment(
+        selectedArtistOrFolder: String,
+        isFolder: Boolean
+    ) {
+
+        mDetailsFragment =
+            DetailsFragment.newInstance(
+                selectedArtistOrFolder,
+                isFolder,
+                MusicUtils.getPlayingAlbumPosition(selectedArtistOrFolder, mMediaPlayerHolder)
+            )
+        supportFragmentManager.beginTransaction()
+            .addToBackStack(null)
+            .add(
+                R.id.container,
+                mDetailsFragment, DetailsFragment.TAG_ARTIST_FOLDER
+            )
+            .commit()
+    }
+
+    private fun initMediaButtons() {
 
         mPlayPauseButton.setOnClickListener { resumeOrPause() }
 
@@ -372,61 +448,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             if (checkIsPlayer(true)) openPlayingArtistAlbum(it)
             return@setOnLongClickListener true
         }
-    }
-
-    private fun handleOnNavigationItemSelected(itemId: Int): Fragment {
-        return when (itemId) {
-            0 -> getFragmentForIndex(mActiveFragments[0].toInt())
-            1 -> getFragmentForIndex(mActiveFragments[1].toInt())
-            2 -> getFragmentForIndex(mActiveFragments[2].toInt())
-            else -> getFragmentForIndex(mActiveFragments[3].toInt())
-        }
-    }
-
-    private fun getFragmentForIndex(index: Int): Fragment {
-        return when (index) {
-            0 -> mArtistsFragment
-            1 -> mAllMusicFragment
-            2 -> mFoldersFragment
-            else -> mSettingsFragment
-        }
-    }
-
-    private fun setupTabLayoutTabs(tabIndex: Int, iconIndex: Int) {
-        mTabsLayout.apply {
-            getTabAt(tabIndex)?.setIcon(ThemeHelper.getTabIcon(iconIndex))
-            if (tabIndex != 0) getTabAt(tabIndex)?.icon?.setTint(mResolvedAlphaAccentColor)
-            else getTabAt(tabIndex)?.icon?.setTint(mResolvedAccentColor)
-        }
-    }
-
-    private fun initializeActiveFragments(index: Int) {
-        when (index) {
-            0 -> mArtistsFragment = ArtistsFragment.newInstance()
-            1 -> mAllMusicFragment = AllMusicFragment.newInstance()
-            2 -> mFoldersFragment = FoldersFragment.newInstance()
-            else -> mSettingsFragment = SettingsFragment.newInstance()
-        }
-    }
-
-    private fun openDetailsFragment(
-        selectedArtistOrFolder: String,
-        isFolder: Boolean
-    ) {
-
-        mDetailsFragment =
-            DetailsFragment.newInstance(
-                selectedArtistOrFolder,
-                isFolder,
-                MusicUtils.getPlayingAlbumPosition(selectedArtistOrFolder, mMediaPlayerHolder)
-            )
-        supportFragmentManager.beginTransaction()
-            .addToBackStack(null)
-            .add(
-                R.id.container,
-                mDetailsFragment, DetailsFragment.TAG_ARTIST_FOLDER
-            )
-            .commit()
     }
 
     /**
