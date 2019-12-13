@@ -264,7 +264,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mQueueButton = queue_button
 
         mResolvedAccentColor = ThemeHelper.resolveThemeAccent(this)
-        mResolvedAlphaAccentColor = ThemeHelper.getAlphaAccent(this, 50)
+        mResolvedAlphaAccentColor =
+            ThemeHelper.getAlphaAccent(this, ThemeHelper.getAlphaForAccent())
         mResolvedIconsColor =
             ThemeHelper.resolveColorAttr(this, android.R.attr.textColorPrimary)
         mResolvedDisabledIconsColor =

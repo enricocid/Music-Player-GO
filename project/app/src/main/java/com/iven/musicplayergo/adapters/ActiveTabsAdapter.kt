@@ -67,7 +67,10 @@ class ActiveTabsAdapter(
                         visibility = View.VISIBLE
                         drawable.alpha = 50
                     }
-                    ThemeHelper.updateIconTint(icon, ThemeHelper.getAlphaAccent(context, 50))
+                    ThemeHelper.updateIconTint(
+                        icon,
+                        ThemeHelper.getAlphaAccent(context, ThemeHelper.getAlphaForAccent())
+                    )
                 }
 
                 setOnClickListener {
@@ -100,7 +103,10 @@ class ActiveTabsAdapter(
             }
             else -> {
                 indicator.visibility = View.GONE
-                ThemeHelper.updateIconTint(icon, ThemeHelper.getAlphaAccent(context, 50))
+                ThemeHelper.updateIconTint(
+                    icon,
+                    ThemeHelper.getAlphaAccent(context, ThemeHelper.getAlphaForAccent())
+                )
             }
         }
     }
