@@ -23,6 +23,8 @@ class MusicLibrary {
     //keys: artist || value: songs contained in the folder
     lateinit var allSongsForFolder: Map<String, List<Music>>
 
+    val randomMusic get() = allSongsFiltered.random()
+
     // Extension method to get all music files list from external storage/sd card
     @Suppress("DEPRECATION")
     @SuppressLint("InlinedApi")

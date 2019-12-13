@@ -632,27 +632,32 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mMediaPlayerHolder.apply {
 
                 if (isMediaPlayer) {
+
                     onResumeActivity()
                     updatePlayingInfo(true)
+
                 } else {
-                    if (goPreferences.lastPlayedSong != null) {
-                        val lastPlayedSong = goPreferences.lastPlayedSong
-                        val song = lastPlayedSong?.first!!
 
-                        val songs =
-                            MusicUtils.getAlbumFromList(song.album, mMusic[song.artist]!!)
-                                .first
-                                .music
+                    isSongRestoredFromPrefs = goPreferences.lastPlayedSong != null
 
-                        isSongRestoredFromPrefs = true
-                        isPlay = false
+                    val song =
+                        if (isSongRestoredFromPrefs) goPreferences.lastPlayedSong?.first!! else
+                            musicLibrary.randomMusic
 
-                        startPlayback(song, songs!!)
+                    val songs =
+                        MusicUtils.getAlbumFromList(song.album, mMusic[song.artist]!!)
+                            .first
+                            .music
 
-                        updatePlayingInfo(false)
+                    isPlay = false
 
-                        mSeekProgressBar.progress = lastPlayedSong.second
-                    }
+                    startPlayback(song, songs!!)
+
+                    updatePlayingInfo(false)
+
+                    mSeekProgressBar.progress =
+                        if (isSongRestoredFromPrefs) goPreferences.lastPlayedSong?.second!! else 0
+
                 }
             }
         }
