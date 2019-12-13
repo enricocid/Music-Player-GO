@@ -59,7 +59,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private var mResolvedDisabledIconsColor: Int by Delegates.notNull()
 
     //fragments
-
     private lateinit var mArtistsFragment: ArtistsFragment
     private lateinit var mAllMusicFragment: AllMusicFragment
     private lateinit var mFoldersFragment: FoldersFragment
@@ -319,6 +318,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mViewPager.offscreenPageLimit = mActiveFragments.size - 1
         mViewPager.adapter = pagerAdapter
 
+        if (sRestoreSettingsFragment) mViewPager.currentItem = mViewPager.offscreenPageLimit
+
         if (sTabsEnabled) {
             mTabsLayout.apply {
 
@@ -327,15 +328,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 tabIconTint = ColorStateList.valueOf(mResolvedAlphaAccentColor)
                 initActiveFragmentsOrTabs(false)
 
-                when {
-                    sRestoreSettingsFragment -> {
-                        mViewPager.currentItem =
-                            mActiveFragments.size - 1
-
-                        getTabAt(mViewPager.currentItem)?.icon?.setTint(mResolvedAccentColor)
-                    }
-                    else -> getTabAt(0)?.icon?.setTint(mResolvedAccentColor)
-                }
+                getTabAt(if (sRestoreSettingsFragment) mViewPager.currentItem else 0)?.icon?.setTint(
+                    mResolvedAccentColor
+                )
 
                 addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
