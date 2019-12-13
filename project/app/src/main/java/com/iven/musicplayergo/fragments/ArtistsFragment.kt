@@ -7,7 +7,6 @@ import android.view.*
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,7 +24,6 @@ import com.reddit.indicatorfastscroll.FastScrollerThumbView
 import com.reddit.indicatorfastscroll.FastScrollerView
 import kotlinx.android.synthetic.main.fragment_artists.*
 import kotlinx.android.synthetic.main.search_toolbar.*
-import kotlin.properties.Delegates
 
 
 /**
@@ -52,11 +50,6 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private lateinit var mSortMenuItem: MenuItem
     private var mSorting = ASCENDING_SORTING
-
-    private val sBlackAccentLight = ThemeHelper.isAccentBlack() && ThemeHelper.isThemeLight()
-    private val sBlackAccentDark = ThemeHelper.isAccentBlack() && ThemeHelper.isThemeNight()
-
-    private var mSelectedSortItemColor: Int by Delegates.notNull()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -101,8 +94,6 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
 
         context?.let {
 
-            mSelectedSortItemColor = ThemeHelper.getAccentForBlackAccentLight(sBlackAccentLight, it)
-
             mArtistsRecyclerView.apply {
 
                 // setup{} is an extension method on RecyclerView
@@ -130,7 +121,7 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                 }
             }
 
-            setupIndicatorFastScrollerView(it)
+            setupIndicatorFastScrollerView()
 
             mSearchToolbar.apply {
 
@@ -149,7 +140,7 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                     mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, this)
 
-                    mSortMenuItem.setTitleColor(mSelectedSortItemColor)
+                    mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(it))
 
                     val searchView = findItem(R.id.action_search).actionView as SearchView
 
@@ -190,7 +181,7 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     @SuppressLint("DefaultLocale")
-    private fun setupIndicatorFastScrollerView(context: Context) {
+    private fun setupIndicatorFastScrollerView() {
 
         if (mSorting == DEFAULT_SORTING) mIndicatorFastScrollerView.visibility =
             View.GONE
@@ -215,12 +206,6 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                 )
 
                 mIndicatorFastScrollThumb.setupWithFastScroller(mIndicatorFastScrollerView)
-
-                if (sBlackAccentDark) mIndicatorFastScrollThumb.textColor =
-                    ThemeHelper.resolveColorAttr(context, android.R.attr.textColorPrimary)
-
-                if (sBlackAccentLight) mIndicatorFastScrollerView.textColor =
-                    ContextCompat.getColorStateList(context, R.color.pressed_selector_black)
 
                 mIndicatorFastScrollerView.useDefaultScroller = false
                 mIndicatorFastScrollerView.itemIndicatorSelectedCallbacks += object :
@@ -262,7 +247,7 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                 mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, menu)
 
-                mSortMenuItem.setTitleColor(mSelectedSortItemColor)
+                mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(context))
 
                 goPreferences.artistsSorting = mSorting
             }

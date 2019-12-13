@@ -104,7 +104,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mLoveButtonNP: ImageView
     private lateinit var mVolumeNP: ImageView
 
-    private val sBlackAccentLight = ThemeHelper.isAccentBlack() && ThemeHelper.isThemeLight()
 
     //music player things
 
@@ -563,10 +562,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 ThemeHelper.updateIconTint(
                     mRepeatNP,
-                    if (mMediaPlayerHolder.isRepeat) ThemeHelper.getAccentForBlackAccentLight(
-                        sBlackAccentLight,
-                        this@MainActivity
-                    ) else
+                    if (mMediaPlayerHolder.isRepeat) mResolvedAccentColor
+                    else
                         mResolvedIconsColor
                 )
 
@@ -714,7 +711,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 onPlaybackCompletion -> ThemeHelper.updateIconTint(mRepeatNP, mResolvedIconsColor)
                 mMediaPlayerHolder.isRepeat -> ThemeHelper.updateIconTint(
                     mRepeatNP,
-                    ThemeHelper.getAccentForBlackAccentLight(sBlackAccentLight, this@MainActivity)
+                    mResolvedAccentColor
                 )
                 else -> ThemeHelper.updateIconTint(mRepeatNP, mResolvedIconsColor)
             }

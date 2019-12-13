@@ -52,22 +52,8 @@ object ThemeHelper {
     }
 
     @JvmStatic
-    fun getAccentForBlackAccentLight(isBlackAccentLight: Boolean, context: Context): Int {
-        return if (isBlackAccentLight) getColor(
-            context,
-            R.color.greyPrimaryDark,
-            R.color.deep_purple
-        ) else resolveThemeAccent(context)
-    }
-
-    @JvmStatic
-    fun isThemeNight(): Boolean {
+    private fun isThemeNight(): Boolean {
         return AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
-    }
-
-    @JvmStatic
-    fun isThemeLight(): Boolean {
-        return AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO
     }
 
     @JvmStatic
@@ -120,14 +106,8 @@ object ThemeHelper {
         Pair(R.color.deep_orange, R.style.BaseTheme_DeepOrange),
         Pair(R.color.brown, R.style.BaseTheme_Brown),
         Pair(R.color.grey, R.style.BaseTheme_Grey),
-        Pair(R.color.blue_grey, R.style.BaseTheme_BlueGrey),
-        Pair(android.R.color.black, R.style.BaseTheme_Default)
+        Pair(R.color.blue_grey, R.style.BaseTheme_BlueGrey)
     )
-
-    @JvmStatic
-    fun isAccentBlack(): Boolean {
-        return goPreferences.accent == android.R.color.black
-    }
 
     @JvmStatic
     @SuppressLint("DefaultLocale")

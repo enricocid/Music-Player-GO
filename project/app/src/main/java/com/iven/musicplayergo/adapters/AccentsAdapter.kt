@@ -50,20 +50,11 @@ class AccentsAdapter(private val activity: Activity) :
                     R.color.deep_purple
                 ).apply { ThemeHelper.updateIconTint(findViewById(R.id.circle), this) }
 
-
                 findViewById<ImageView>(R.id.check).apply {
-                    visibility = if (color != mSelectedAccent) {
+                    visibility = if (color != mSelectedAccent)
                         View.GONE
-                    } else {
-                        if (ThemeHelper.isThemeNight() && ThemeHelper.isAccentBlack()) ThemeHelper.updateIconTint(
-                            this,
-                            ThemeHelper.resolveColorAttr(
-                                context,
-                                android.R.attr.textColorSecondary
-                            )
-                        )
+                    else
                         View.VISIBLE
-                    }
                 }
 
                 setOnClickListener {
