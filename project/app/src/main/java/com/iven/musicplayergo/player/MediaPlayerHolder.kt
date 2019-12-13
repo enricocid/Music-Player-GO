@@ -303,15 +303,19 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         } catch (e: IndexOutOfBoundsException) {
             e.printStackTrace()
             return when {
-                isQueue -> when {
-                    isNext -> {
-                        setQueueEnabled(false)
-                        restorePreQueueSongs()
-                        getSkipSong(true)
-                    }
-                    else -> {
-                        isQueueStarted = false
-                        preQueueSong.first
+                isQueue -> {
+
+                    when {
+
+                        isNext -> {
+                            setQueueEnabled(false)
+                            restorePreQueueSongs()
+                            getSkipSong(true)
+                        }
+                        else -> {
+                            isQueueStarted = false
+                            preQueueSong.first
+                        }
                     }
                 }
                 else -> if (currentIndex != 0) mPlayingAlbumSongs[0] else mPlayingAlbumSongs[mPlayingAlbumSongs.size - 1]
@@ -415,10 +419,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             isSongFromLovedSongs = Pair(false, 0)
         }
 
-        if (isQueue) {
-            mediaPlayerInterface.onQueueStartedOrEnded(isQueueStarted)
-            if (!isQueueStarted) isQueueStarted = true
-        }
+        if (isQueue) mediaPlayerInterface.onQueueStartedOrEnded(isQueueStarted)
 
         if (isPlay) {
             setStatus(PLAYING)

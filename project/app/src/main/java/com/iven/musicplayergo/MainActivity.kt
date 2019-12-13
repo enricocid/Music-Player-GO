@@ -685,10 +685,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         if (restore) {
 
-            if (mMediaPlayerHolder.currentSong.second) mMediaPlayerInterface.onQueueStartedOrEnded(
-                true
-            )
-            else if (mMediaPlayerHolder.queueSongs.isNotEmpty()) mMediaPlayerInterface.onQueueEnabled()
+            if (mMediaPlayerHolder.queueSongs.isNotEmpty() && !mMediaPlayerHolder.isQueueStarted)
+                mMediaPlayerInterface.onQueueEnabled() else
+                mMediaPlayerInterface.onQueueStartedOrEnded(mMediaPlayerHolder.isQueueStarted)
 
             updatePlayingStatus(false)
 
