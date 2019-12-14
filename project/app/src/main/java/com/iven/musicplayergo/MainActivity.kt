@@ -639,10 +639,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 } else {
 
-                    isSongRestoredFromPrefs = goPreferences.lastPlayedSong != null
+                    isSongRestoredFromPrefs = goPreferences.latestPlayedSong != null
 
                     val song =
-                        if (isSongRestoredFromPrefs) goPreferences.lastPlayedSong?.first!! else
+                        if (isSongRestoredFromPrefs) goPreferences.latestPlayedSong?.first!! else
                             musicLibrary.randomMusic
 
                     val songs =
@@ -657,7 +657,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     updatePlayingInfo(false)
 
                     mSeekProgressBar.progress =
-                        if (isSongRestoredFromPrefs) goPreferences.lastPlayedSong?.second!! else 0
+                        if (isSongRestoredFromPrefs) goPreferences.latestPlayedSong?.second!! else 0
 
                 }
             }

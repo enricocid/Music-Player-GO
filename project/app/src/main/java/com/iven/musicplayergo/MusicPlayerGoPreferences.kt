@@ -13,8 +13,8 @@ const val DESCENDING_SORTING = 2
 
 class MusicPlayerGoPreferences(context: Context) {
 
-    private val prefsLastVolume = context.getString(R.string.last_volume_pref)
-    private val prefsLastPlayedSong = context.getString(R.string.last_played_song_pref)
+    private val prefsLatestVolume = context.getString(R.string.latest_volume_pref)
+    private val prefsLatestPlayedSong = context.getString(R.string.latest_played_song_pref)
     private val prefsLovedSongs = context.getString(R.string.loved_songs_pref)
 
     private val prefsTheme = context.getString(R.string.theme_pref)
@@ -40,16 +40,16 @@ class MusicPlayerGoPreferences(context: Context) {
     private val typeMusic = object : TypeToken<Pair<Music, Int>>() {}.type
     private val typeLovedSong = object : TypeToken<MutableList<Pair<Music, Int>>>() {}.type
 
-    var lastVolume: Int
-        get() = mPrefs.getInt(prefsLastVolume, 100)
-        set(value) = mPrefs.edit().putInt(prefsLastVolume, value).apply()
+    var latestVolume: Int
+        get() = mPrefs.getInt(prefsLatestVolume, 100)
+        set(value) = mPrefs.edit().putInt(prefsLatestVolume, value).apply()
 
-    var lastPlayedSong: Pair<Music, Int>?
+    var latestPlayedSong: Pair<Music, Int>?
         get() = getObject(
-            prefsLastPlayedSong,
+            prefsLatestPlayedSong,
             typeMusic
         )
-        set(value) = putObject(prefsLastPlayedSong, value)
+        set(value) = putObject(prefsLatestPlayedSong, value)
 
     var lovedSongs: MutableList<Pair<Music, Int>>?
         get() = getObject(
