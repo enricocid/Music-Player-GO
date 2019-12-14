@@ -34,7 +34,7 @@ import kotlin.properties.Delegates
  * create an instance of this fragment.
  */
 
-private const val REVEAL_DURATION: Long = 1000
+private const val REVEAL_DURATION: Long = 500
 
 class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
