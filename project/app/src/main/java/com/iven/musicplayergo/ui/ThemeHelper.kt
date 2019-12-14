@@ -220,4 +220,14 @@ object ThemeHelper {
             else -> Html.fromHtml(res)
         }
     }
+
+    @JvmStatic
+    fun getPreciseVolumeIcon(volume: Int): Int {
+        return when (volume) {
+            in 1..33 -> R.drawable.ic_volume_mute
+            in 34..67 -> R.drawable.ic_volume_down
+            in 68..100 -> R.drawable.ic_volume_up
+            else -> R.drawable.ic_volume_off
+        }
+    }
 }

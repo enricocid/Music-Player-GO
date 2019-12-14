@@ -495,13 +495,21 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         var isUserSeeking = false
 
-        mVolumeSeekBarNP.progress = mMediaPlayerHolder.currentVolumeInPercent
+        mMediaPlayerHolder.currentVolumeInPercent.apply {
+            mVolumeNP.setImageResource(ThemeHelper.getPreciseVolumeIcon(this))
+            mVolumeSeekBarNP.progress = this
+        }
+
         mVolumeSeekBarNP.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
 
-            override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, b: Boolean) {
                 if (isUserSeeking) {
-                    mMediaPlayerHolder.setPreciseVolume(i)
+
+                    mMediaPlayerHolder.setPreciseVolume(progress)
+
+                    mVolumeNP.setImageResource(ThemeHelper.getPreciseVolumeIcon(progress))
+
                     ThemeHelper.updateIconTint(
                         mVolumeNP,
                         mResolvedAccentColor
