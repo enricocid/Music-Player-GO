@@ -61,6 +61,7 @@
     <string name="category_appearance">Appearance</string>
     <string name="category_general">General</string>
 
+    <string name="last_volume_pref" translatable="false">last_volume_pref</string>
     <string name="last_played_song_pref" translatable="false">last_played_song_pref</string>
     <string name="loved_songs_pref" translatable="false">loved_songs_pref</string>
 

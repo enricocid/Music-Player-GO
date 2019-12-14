@@ -29,6 +29,8 @@ class PlayerService : Service() {
             if (mediaPlayerHolder.isCurrentSong) goPreferences.lastPlayedSong =
                 Pair(mediaPlayerHolder.currentSong.first, mediaPlayerHolder.playerPosition)
 
+            goPreferences.lastVolume = mediaPlayerHolder.currentVolumeInPercent
+
             mediaPlayerHolder.release()
         }
     }

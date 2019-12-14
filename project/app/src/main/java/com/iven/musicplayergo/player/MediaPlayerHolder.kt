@@ -96,7 +96,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     lateinit var currentSong: Pair<Music, Boolean>
     private lateinit var mPlayingAlbumSongs: List<Music>
 
-    var currentVolumeInPercent = 100
+    var currentVolumeInPercent = goPreferences.lastVolume
     val playerPosition get() = if (!isMediaPlayer) goPreferences.lastPlayedSong?.second!! else mediaPlayer.currentPosition
 
     //media player state/booleans
@@ -398,6 +398,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             tryToGetAudioFocus()
             registerMediaButtonsReceiver()
 
+            setPreciseVolume(currentVolumeInPercent)
+
             mediaPlayer.setDataSource(song.path)
             mediaPlayer.prepare()
 
@@ -517,7 +519,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
-    /* Sets the volume of the media player (scale is 1-100) */
+    /* Sets the volume of the media player */
     fun setPreciseVolume(percent: Int) {
 
         currentVolumeInPercent = percent
