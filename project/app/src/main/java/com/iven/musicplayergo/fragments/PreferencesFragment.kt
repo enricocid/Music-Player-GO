@@ -22,9 +22,8 @@ import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.ui.Utils
 import kotlin.properties.Delegates
 
-
 class PreferencesFragment : PreferenceFragmentCompat(),
-    SharedPreferences.OnSharedPreferenceChangeListener {
+    SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener {
 
     private lateinit var mAccentsDialog: MaterialDialog
     private lateinit var mMultiListDialog: MaterialDialog
@@ -75,39 +74,40 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         setPreferencesFromResource(R.xml.preferences, rootKey)
 
         activity?.let { fragmentActivity ->
-            val openGitPreference = findPreference<Preference>(getString(R.string.open_git_pref))
 
-            openGitPreference?.setOnPreferenceClickListener {
-                Utils.openCustomTab(fragmentActivity, getString(R.string.app_git))
-                return@setOnPreferenceClickListener true
+            findPreference<Preference>(getString(R.string.open_git_pref))?.onPreferenceClickListener =
+                this
+
+            findPreference<Preference>(getString(R.string.supported_formats_pref))?.onPreferenceClickListener =
+                this
+
+            findPreference<Preference>(getString(R.string.accent_pref))?.apply {
+                summary =
+                    ThemeHelper.getAccentName(goPreferences.accent, fragmentActivity)
+                onPreferenceClickListener = this@PreferencesFragment
             }
 
-            val supportedMediaPreference =
-                findPreference<Preference>(getString(R.string.supported_formats_pref))
-
-            supportedMediaPreference?.setOnPreferenceClickListener {
-                mSupportedFormatsDialog = Utils.showSupportedFormatsDialog(fragmentActivity)
-                return@setOnPreferenceClickListener true
-            }
-
-            val accentPreference = findPreference<Preference>(getString(R.string.accent_pref))
-            accentPreference?.summary =
-                ThemeHelper.getAccentName(goPreferences.accent, fragmentActivity)
-
-            accentPreference?.setOnPreferenceClickListener {
-                showAccentDialog(fragmentActivity)
-                return@setOnPreferenceClickListener true
-            }
-
-            val activeFragmentsPreference =
-                findPreference<Preference>(getString(R.string.active_fragments_pref))
-
-            activeFragmentsPreference?.summary = goPreferences.activeFragments?.size.toString()
-            activeFragmentsPreference?.setOnPreferenceClickListener {
-                showActiveFragmentsDialog(fragmentActivity)
-                return@setOnPreferenceClickListener true
+            findPreference<Preference>(getString(R.string.active_fragments_pref))?.apply {
+                summary = goPreferences.activeFragments?.size.toString()
+                onPreferenceClickListener = this@PreferencesFragment
             }
         }
+    }
+
+    override fun onPreferenceClick(preference: Preference?): Boolean {
+        activity?.let {
+            when (preference?.key) {
+                getString(R.string.open_git_pref) -> Utils.openCustomTab(
+                    it,
+                    getString(R.string.app_git)
+                )
+                getString(R.string.supported_formats_pref) -> mSupportedFormatsDialog =
+                    Utils.showSupportedFormatsDialog(it)
+                getString(R.string.accent_pref) -> showAccentDialog(it)
+                getString(R.string.active_fragments_pref) -> showActiveFragmentsDialog(it)
+            }
+        }
+        return false
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
