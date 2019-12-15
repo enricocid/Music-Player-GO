@@ -63,7 +63,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mAllMusicFragment: AllMusicFragment
     private lateinit var mFoldersFragment: FoldersFragment
     private lateinit var mSettingsFragment: SettingsFragment
+
     private lateinit var mDetailsFragment: DetailsFragment
+    private val sDetailsFragmentExpanded get() = ::mDetailsFragment.isInitialized && mDetailsFragment.isAdded
 
     private lateinit var mActiveFragments: MutableList<String>
 
@@ -164,10 +166,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onBackPressed() {
-        if (::mDetailsFragment.isInitialized && mDetailsFragment.isAdded) {
-            mDetailsFragment.onHandleBackPressed().doOnEnd {
-                super.onBackPressed()
-            }
+        if (sDetailsFragmentExpanded) {
+            closeDetailsFragment(null)
         } else {
             if (mViewPager.currentItem != 0) mViewPager.currentItem = 0 else
                 if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) Utils.stopPlaybackDialog(
@@ -336,7 +336,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
                     override fun onTabSelected(tab: TabLayout.Tab) {
-                        tab.icon?.setTint(mResolvedAccentColor)
+                        if (sDetailsFragmentExpanded) closeDetailsFragment(tab) else
+                            tab.icon?.setTint(mResolvedAccentColor)
                     }
 
                     override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -417,6 +418,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mDetailsFragment, DetailsFragment.TAG_ARTIST_FOLDER
             )
             .commit()
+    }
+
+    private fun closeDetailsFragment(tab: TabLayout.Tab?) {
+        mDetailsFragment.onHandleBackPressed().doOnEnd {
+            tab?.let {
+                it.icon?.setTint(mResolvedAccentColor)
+            }
+            super.onBackPressed()
+        }
     }
 
     private fun initMediaButtons() {
@@ -754,7 +764,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
             val selectedSong = mMediaPlayerHolder.currentSong.first
             val selectedArtistOrFolder = selectedSong.artist!!
-            if (::mDetailsFragment.isInitialized && mDetailsFragment.isAdded)
+            if (sDetailsFragmentExpanded)
                 mDetailsFragment.updateView(
                     selectedArtistOrFolder,
                     MusicUtils.getPlayingAlbumPosition(selectedArtistOrFolder, mMediaPlayerHolder)
