@@ -5,6 +5,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
@@ -139,8 +140,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                 title = mSelectedArtistOrFolder
 
-                if (sFolder) elevation =
-                    resources.getDimensionPixelSize(R.dimen.search_bar_elevation).toFloat()
+                setupToolbarSpecs(sFolder)
 
                 setNavigationOnClickListener {
                     activity?.onBackPressed()
@@ -276,6 +276,17 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     }
 
+    private fun setupToolbarSpecs(isFolder: Boolean) {
+        mDetailsToolbar.apply {
+            elevation = if (isFolder)
+                resources.getDimensionPixelSize(R.dimen.search_bar_elevation).toFloat() else 0F
+
+            val params = layoutParams as LinearLayout.LayoutParams
+            params.bottomMargin = if (isFolder)
+                0 else resources.getDimensionPixelSize(R.dimen.player_controls_padding_normal)
+        }
+    }
+
     private fun setupAlbumsContainer(onUpdateView: Boolean) {
 
         selected_album_container.setOnClickListener {
@@ -371,6 +382,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 mSelectedAlbumYearDuration.visibility = View.VISIBLE
                 mSelectedAlbumsDataSource = dataSourceOf(mSelectedArtistAlbums)
 
+                setupToolbarSpecs(sFolder)
                 setupMenu(true)
                 setupAlbumsContainer(true)
 
