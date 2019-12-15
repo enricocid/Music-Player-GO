@@ -21,10 +21,15 @@ class MusicViewModel : ViewModel(), CoroutineScope {
     }
 
     fun loadMusic(context: Context): MutableLiveData<Boolean> {
-        launch(Dispatchers.Main) {
-            withContext(Dispatchers.Main) {
-                musicLibrary.loadMusic(context)
-                hasLoaded.value = true
+        launch {
+            try {
+                withContext(Dispatchers.Main) {
+                    musicLibrary.build(context)
+                    hasLoaded.value = true
+                }
+            } catch (e: Exception) {
+                hasLoaded.value = false
+                e.printStackTrace()
             }
         }
         return hasLoaded

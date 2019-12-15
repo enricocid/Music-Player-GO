@@ -148,7 +148,7 @@ object MusicUtils {
     fun getMusicCursor(contentResolver: ContentResolver): Cursor? {
         return contentResolver.query(
             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-            COLUMNS, null, null, getSongLoaderSortOrder()
+            COLUMNS, AudioColumns.IS_MUSIC + "=1", null, getSongLoaderSortOrder()
         )
     }
 

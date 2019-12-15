@@ -28,61 +28,83 @@ class MusicLibrary {
     // Extension method to get all music files list from external storage/sd card
     @Suppress("DEPRECATION")
     @SuppressLint("InlinedApi")
-    fun loadMusic(context: Context) {
+    fun build(context: Context) {
 
-        return try {
+        val musicCursor = MusicUtils.getMusicCursor(context.contentResolver)
+
+        try {
             // Query the storage for music files
+            // If query result is not empty
 
-            MusicUtils.getMusicCursor(context.contentResolver)?.apply {
-                // If query result is not empty
-                if (moveToFirst()) {
+            musicCursor?.let {
+                if (musicCursor.moveToFirst()) {
+
+                    val artist = musicCursor.getColumnIndex(MediaStore.Audio.AudioColumns.ARTIST)
+                    val year = musicCursor.getColumnIndex(MediaStore.Audio.AudioColumns.YEAR)
+                    val track = musicCursor.getColumnIndex(MediaStore.Audio.AudioColumns.TRACK)
+                    val title = musicCursor.getColumnIndex(MediaStore.Audio.AudioColumns.TITLE)
+                    val duration =
+                        musicCursor.getColumnIndex(MediaStore.Audio.AudioColumns.DURATION)
+                    val album = musicCursor.getColumnIndex(MediaStore.Audio.AudioColumns.ALBUM)
+                    val path = musicCursor.getColumnIndex(MediaStore.Audio.AudioColumns.DATA)
+                    val albumId = musicCursor.getColumnIndex(MediaStore.Audio.AudioColumns.ALBUM_ID)
 
                     // Now loop through the music files
                     do {
+                        val audioArtist = musicCursor.getString(artist)
+                        val audioYear = musicCursor.getInt(year)
+                        val audioTrack = musicCursor.getInt(track)
+                        val audioTitle = musicCursor.getString(title)
+                        val audioDuration = musicCursor.getLong(duration)
+                        val audioAlbum = musicCursor.getString(album)
+                        val audioPath = musicCursor.getString(path)
+                        val audioAlbumId = musicCursor.getString(albumId)
+
                         // Add the current music to the list
                         allSongsUnfiltered.add(
                             Music(
-                                getString(getColumnIndex(MediaStore.Audio.AudioColumns.ARTIST)),
-                                getInt(getColumnIndex(MediaStore.Audio.AudioColumns.YEAR)),
-                                getInt(getColumnIndex(MediaStore.Audio.AudioColumns.TRACK)),
-                                getString(getColumnIndex(MediaStore.Audio.AudioColumns.TITLE)),
-                                getLong(getColumnIndex(MediaStore.Audio.AudioColumns.DURATION)),
-                                getString(getColumnIndex(MediaStore.Audio.AudioColumns.ALBUM)),
-                                getString(getColumnIndex(MediaStore.Audio.AudioColumns.DATA)),
-                                getString(getColumnIndex(MediaStore.Audio.AudioColumns.ALBUM_ID))
+                                audioArtist,
+                                audioYear,
+                                audioTrack,
+                                audioTitle,
+                                audioDuration,
+                                audioAlbum,
+                                audioPath,
+                                audioAlbumId
                             )
                         )
 
-                    } while (moveToNext())
-                    close()
+                    } while (musicCursor.moveToNext())
                 }
-            }
 
+                // Removing duplicates by comparing everything except path which is different
+                // if the same song is hold in different paths
+                allSongsFiltered =
+                    allSongsUnfiltered.distinctBy { it.artist to it.year to it.track to it.title to it.duration to it.album to it.albumId }
+                        .toMutableList()
 
-            // Removing duplicates by comparing everything except path which is different
-            // if the same song is hold in different paths
-            allSongsFiltered =
-                allSongsUnfiltered.distinctBy { it.artist to it.year to it.track to it.title to it.duration to it.album to it.albumId }
-                    .toMutableList()
+                allSongsForArtist = allSongsFiltered.groupBy { it.artist }
 
-            allSongsForArtist = allSongsFiltered.groupBy { it.artist }
+                allSongsForArtist.keys.iterator().forEach {
 
-            allSongsForArtist.keys.iterator().forEach {
+                    allAlbumsForArtist[it!!] = MusicUtils.buildSortedArtistAlbums(
+                        context.resources,
+                        allSongsForArtist.getValue(it)
+                    )
+                }
 
-                allAlbumsForArtist[it!!] = MusicUtils.buildSortedArtistAlbums(
-                    context.resources,
-                    allSongsForArtist.getValue(it)
-                )
-            }
-
-            allSongsForFolder = allSongsFiltered.groupBy {
-                val file = File(it.path!!).parentFile
-                file!!.name
+                allSongsForFolder = allSongsFiltered.groupBy {
+                    val file = File(it.path!!).parentFile
+                    file!!.name
+                }
             }
 
         } catch (e: Exception) {
             Utils.makeToast(context, context.getString(R.string.error_unknown))
             e.printStackTrace()
+
+        } finally {
+            musicCursor?.close()
         }
     }
 }
