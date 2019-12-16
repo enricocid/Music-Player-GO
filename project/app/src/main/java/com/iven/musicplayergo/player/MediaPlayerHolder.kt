@@ -390,13 +390,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                             .build()
                     )
                 }
+
+                mMusicNotificationManager = playerService.musicNotificationManager
+                tryToGetAudioFocus()
+                registerMediaButtonsReceiver()
+
+                setPreciseVolume(currentVolumeInPercent)
             }
-
-            mMusicNotificationManager = playerService.musicNotificationManager
-            tryToGetAudioFocus()
-            registerMediaButtonsReceiver()
-
-            setPreciseVolume(currentVolumeInPercent)
 
             mediaPlayer.setDataSource(song.path)
             mediaPlayer.prepare()
