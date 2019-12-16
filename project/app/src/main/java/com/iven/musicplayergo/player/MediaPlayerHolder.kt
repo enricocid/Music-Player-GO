@@ -102,6 +102,11 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     //media player state/booleans
     val isPlaying get() = isMediaPlayer && mediaPlayer.isPlaying
     val isMediaPlayer get() = ::mediaPlayer.isInitialized
+
+    private var sNotificationForeground = false
+    private var sCreateNotificationOnResume = false
+    private var sUpdateNotification = false
+
     val isCurrentSong get() = ::currentSong.isInitialized
     var isRepeat = false
 
@@ -124,10 +129,19 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private lateinit var mMusicNotificationManager: MusicNotificationManager
 
     private fun startForeground() {
-        playerService.startForeground(
-            NOTIFICATION_ID,
-            mMusicNotificationManager.createNotification()
-        )
+        if (!sNotificationForeground || sCreateNotificationOnResume) {
+            sNotificationForeground = true
+            if (sCreateNotificationOnResume) sCreateNotificationOnResume = false
+            playerService.startForeground(
+                NOTIFICATION_ID,
+                mMusicNotificationManager.createNotification()
+            )
+        } else {
+            if (sUpdateNotification) {
+                sUpdateNotification = false
+                updateNotification()
+            }
+        }
     }
 
     fun updateNotification() {
@@ -256,6 +270,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (!isPlaying) {
             if (isMediaPlayer) mediaPlayer.start()
             setStatus(if (isSongRestoredFromPrefs) PLAYING else RESUMED)
+
+            if (!sNotificationForeground) sCreateNotificationOnResume = true
 
             startForeground()
 
@@ -422,6 +438,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (isQueue) mediaPlayerInterface.onQueueStartedOrEnded(isQueueStarted)
 
         if (isPlay) {
+            sUpdateNotification = true
             setStatus(PLAYING)
             mediaPlayer.start()
             startForeground()
