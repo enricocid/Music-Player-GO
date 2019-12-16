@@ -196,7 +196,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun onResumeActivity() {
-        startUpdatingCallbackWithPosition()
+        if (mExecutor == null) startUpdatingCallbackWithPosition()
     }
 
     fun onPauseActivity() {
@@ -328,10 +328,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
      */
     private fun startUpdatingCallbackWithPosition() {
 
-        if (mExecutor == null) mExecutor = Executors.newSingleThreadScheduledExecutor()
         if (mSeekBarPositionUpdateTask == null) mSeekBarPositionUpdateTask =
-            Runnable { this.updateProgressCallbackTask() }
+            Runnable { updateProgressCallbackTask() }
 
+        mExecutor = Executors.newSingleThreadScheduledExecutor()
         mExecutor?.scheduleAtFixedRate(
             mSeekBarPositionUpdateTask!!,
             0,
@@ -342,11 +342,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     // Reports media playback position to mPlaybackProgressCallback.
     private fun stopUpdatingCallbackWithPosition() {
-        if (mExecutor != null) {
-            mExecutor!!.shutdownNow()
-            mExecutor = null
-            mSeekBarPositionUpdateTask = null
-        }
+        mExecutor?.shutdownNow()
+        mExecutor = null
+        mSeekBarPositionUpdateTask = null
     }
 
     private fun updateProgressCallbackTask() {
@@ -409,7 +407,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     override fun onPrepared(mediaPlayer: MediaPlayer) {
-        startUpdatingCallbackWithPosition()
+        if (mExecutor == null) startUpdatingCallbackWithPosition()
 
         if (isRepeat) isRepeat = false
 
