@@ -45,8 +45,6 @@ dependencies {
 
     api 'com.google.android.material:material:1.0.0'
 
-    implementation 'androidx.annotation:annotation:1.1.0'
-
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation 'androidx.media:media:1.1.0'
@@ -54,8 +52,6 @@ dependencies {
 
     implementation 'androidx.browser:browser:1.0.0'
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
     implementation 'com.google.code.gson:gson:2.8.5'
 
     implementation 'com.reddit:indicator-fast-scroll:1.2.1'

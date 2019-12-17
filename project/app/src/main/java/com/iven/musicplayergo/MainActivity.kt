@@ -108,11 +108,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     //music player things
 
-    //view model
-    private val mViewModel: MusicViewModel by lazy {
-        ViewModelProviders.of(this).get(MusicViewModel::class.java)
-    }
-
     private lateinit var mAllDeviceSongs: MutableList<Music>
 
     //booleans
@@ -282,7 +277,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun loadMusicAndFinishSetupUI() {
 
-        mViewModel.loadMusic(this).observe(this, Observer { hasLoaded ->
+        val viewModel = ViewModelProviders.of(this).get(MusicViewModel::class.java)
+
+        viewModel.loadMusic(this).observe(this, Observer { hasLoaded ->
 
             //setup all the views if there's something
             if (hasLoaded && musicLibrary.allAlbumsForArtist.isNotEmpty()) {

@@ -28,8 +28,9 @@ class MusicLibrary {
     // Extension method to get all music files list from external storage/sd card
     @Suppress("DEPRECATION")
     @SuppressLint("InlinedApi")
-    fun build(context: Context) {
+    fun build(context: Context): Boolean {
 
+        var hasLoaded = false
         val musicCursor = MusicUtils.getMusicCursor(context.contentResolver)
 
         try {
@@ -97,6 +98,7 @@ class MusicLibrary {
                     val file = File(it.path!!).parentFile
                     file!!.name
                 }
+                hasLoaded = true
             }
 
         } catch (e: Exception) {
@@ -106,5 +108,6 @@ class MusicLibrary {
         } finally {
             musicCursor?.close()
         }
+        return hasLoaded
     }
 }
