@@ -101,11 +101,12 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
     private fun notificationAction(action: String): NotificationCompat.Action {
 
-        var icon: Int =
+        var icon =
             if (playerService.mediaPlayerHolder.state != PAUSED) R.drawable.ic_pause else R.drawable.ic_play
 
         when (action) {
-            REPEAT_ACTION -> icon = R.drawable.ic_repeat_one
+            REPEAT_ACTION -> icon =
+                if (playerService.mediaPlayerHolder.isRepeat) R.drawable.ic_repeat_one else R.drawable.ic_repeat_one_notif_disabled
             PREV_ACTION -> icon = R.drawable.ic_skip_previous
             NEXT_ACTION -> icon = R.drawable.ic_skip_next
             CLOSE_ACTION -> icon = R.drawable.ic_round_close

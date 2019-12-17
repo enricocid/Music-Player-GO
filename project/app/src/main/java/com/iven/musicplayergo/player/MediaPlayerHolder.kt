@@ -199,7 +199,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         mediaPlayerInterface.onPlaybackCompleted()
 
         when {
-            isRepeat -> if (isMediaPlayer) resetSong()
+            isRepeat -> if (isMediaPlayer) repeatSong()
             isQueue -> manageQueue(true)
             else -> skip(true)
         }
@@ -283,8 +283,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         updateNotification()
     }
 
-    private fun resetSong() {
+    private fun repeatSong() {
         isRepeat = false
+        updateNotification()
         mediaPlayer.seekTo(0)
         mediaPlayer.start()
         setStatus(PLAYING)
@@ -368,7 +369,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun instantReset() {
         if (isMediaPlayer) {
-            if (mediaPlayer.currentPosition < 5000) skip(false) else resetSong()
+            if (mediaPlayer.currentPosition < 5000) skip(false) else repeatSong()
         }
     }
 
@@ -462,8 +463,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (isPlaying) pauseMediaPlayer() else resumeMediaPlayer()
     }
 
-    fun reset() {
+    fun repeat() {
         isRepeat = !isRepeat
+        updateNotification()
         Utils.makeToast(
             playerService,
             playerService.getString(if (isRepeat) R.string.repeat_enabled else R.string.repeat_disabled)
@@ -564,7 +566,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     PLAY_PAUSE_ACTION -> resumeOrPause()
                     NEXT_ACTION -> skip(true)
                     REPEAT_ACTION -> {
-                        reset()
+                        repeat()
                         mediaPlayerInterface.onUpdateRepeatStatus()
                     }
                     CLOSE_ACTION -> if (playerService.isRunning && isMediaPlayer) stopPlaybackService(
@@ -612,7 +614,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     KeyEvent.KEYCODE_MEDIA_PREVIOUS -> skip(false)
                     KeyEvent.KEYCODE_MEDIA_NEXT -> skip(true)
                     KeyEvent.KEYCODE_MEDIA_STOP -> stopPlaybackService(true)
-                    KeyEvent.KEYCODE_MEDIA_REWIND -> resetSong()
+                    KeyEvent.KEYCODE_MEDIA_REWIND -> repeatSong()
                     KeyEvent.KEYCODE_MEDIA_PAUSE -> pauseMediaPlayer()
                     KeyEvent.KEYCODE_MEDIA_PLAY -> resumeMediaPlayer()
                 }

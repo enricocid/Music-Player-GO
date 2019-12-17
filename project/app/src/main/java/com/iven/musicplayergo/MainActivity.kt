@@ -822,7 +822,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun setRepeat() {
         if (checkIsPlayer(true)) {
-            mMediaPlayerHolder.reset()
+            mMediaPlayerHolder.repeat()
             updateRepeatStatus(false)
         }
     }
