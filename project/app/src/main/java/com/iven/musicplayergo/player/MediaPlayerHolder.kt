@@ -105,7 +105,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private var sNotificationForeground = false
     private var sCreateNotificationOnResume = false
-    private var sUpdateNotification = false
 
     val isCurrentSong get() = ::currentSong.isInitialized
     var isRepeat = false
@@ -137,10 +136,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 mMusicNotificationManager.createNotification()
             )
         } else {
-            if (sUpdateNotification) {
-                sUpdateNotification = false
-                updateNotification()
-            }
+            updateNotification()
         }
     }
 
@@ -438,7 +434,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (isQueue) mediaPlayerInterface.onQueueStartedOrEnded(isQueueStarted)
 
         if (isPlay) {
-            sUpdateNotification = true
             setStatus(PLAYING)
             mediaPlayer.start()
             startForeground()
