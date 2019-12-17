@@ -82,9 +82,9 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 mSelectedAlbumPosition = it
             }
 
-            mSelectedArtistAlbums = musicLibrary.allAlbumsForArtist[mSelectedArtistOrFolder]!!
+            mSelectedArtistAlbums = musicLibrary.allAlbumsByArtist[mSelectedArtistOrFolder]!!
             mSongsForArtistOrFolder =
-                musicLibrary.allSongsForArtist.getValue(mSelectedArtistOrFolder)
+                musicLibrary.allSongsByArtist.getValue(mSelectedArtistOrFolder)
 
             mSelectedAlbum =
                 if (mSelectedAlbumPosition != -1) {
@@ -95,7 +95,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 }
         } else {
             mSongsForArtistOrFolder =
-                musicLibrary.allSongsForFolder.getValue(mSelectedArtistOrFolder)
+                musicLibrary.allSongsByFolder.getValue(mSelectedArtistOrFolder)
         }
 
         // This makes sure that the container activity has implemented
@@ -160,7 +160,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 mSelectedAlbumYearDuration.visibility = View.GONE
 
                 mSongsForArtistOrFolder =
-                    musicLibrary.allSongsForFolder.getValue(mSelectedArtistOrFolder)
+                    musicLibrary.allSongsByFolder.getValue(mSelectedArtistOrFolder)
 
                 mDetailsToolbar.subtitle = getString(
                     R.string.folder_info,
@@ -366,7 +366,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
             mSelectedArtistOrFolder = selectedArtist
             mSelectedArtistAlbums =
-                musicLibrary.allAlbumsForArtist.getValue(mSelectedArtistOrFolder)
+                musicLibrary.allAlbumsByArtist.getValue(mSelectedArtistOrFolder)
 
             //restore album position
             if (playedAlbumPosition != -1) {
@@ -407,7 +407,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             )
 
             mSongsForArtistOrFolder =
-                musicLibrary.allSongsForArtist.getValue(mSelectedArtistOrFolder)
+                musicLibrary.allSongsByArtist.getValue(mSelectedArtistOrFolder)
 
             mSongsDataSource.set(mSelectedAlbum.music!!)
         }

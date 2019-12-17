@@ -33,10 +33,7 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.google.android.material.tabs.TabLayout
 import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.fragments.*
-import com.iven.musicplayergo.music.Album
-import com.iven.musicplayergo.music.Music
-import com.iven.musicplayergo.music.MusicUtils
-import com.iven.musicplayergo.music.MusicViewModel
+import com.iven.musicplayergo.music.*
 import com.iven.musicplayergo.player.*
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -145,7 +142,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder
             mMediaPlayerHolder.mediaPlayerInterface = mMediaPlayerInterface
 
-            loadMusicAndFinishSetupUI()
+            loadLibraryAndFinishSetup()
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
@@ -158,6 +155,23 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mBindingIntent = Intent(this, PlayerService::class.java).also {
             bindService(it, connection, Context.BIND_AUTO_CREATE)
         }
+    }
+
+    private fun loadAllDeviceMusic() {
+
+        val viewModel = ViewModelProviders.of(this).get(MusicViewModel::class.java)
+
+        viewModel.loadAllDeviceMusic(this).observe(this, Observer { allSongsUnfiltered ->
+            if (allSongsUnfiltered.isNotEmpty()) {
+                mAllDeviceSongs = allSongsUnfiltered
+            } else {
+                Utils.makeToast(
+                    this@MainActivity,
+                    getString(R.string.error_no_music)
+                )
+                finish()
+            }
+        })
     }
 
     override fun onBackPressed() {
@@ -205,9 +219,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED) Utils.showPermissionRationale(
-            this
-        ) else doBindService()
+        if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+            Utils.showPermissionRationale(
+                this
+            )
+        } else {
+            loadAllDeviceMusic()
+            doBindService()
+        }
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -239,7 +258,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 false
             )
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else doBindService()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkPermission()
+        } else {
+            loadAllDeviceMusic()
+            doBindService()
+        }
     }
 
     private fun getViewsAndResources() {
@@ -275,35 +299,28 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    private fun loadMusicAndFinishSetupUI() {
+    private fun loadLibraryAndFinishSetup() {
 
-        val viewModel = ViewModelProviders.of(this).get(MusicViewModel::class.java)
+        val libraryViewModel = ViewModelProviders.of(this).get(LibraryViewModel::class.java)
 
-        viewModel.loadMusic(this).observe(this, Observer { hasLoaded ->
+        libraryViewModel.buildLibrary(this, mAllDeviceSongs)
+            .observe(this, Observer { allAlbumByArtist ->
 
-            //setup all the views if there's something
-            if (hasLoaded && musicLibrary.allAlbumsForArtist.isNotEmpty()) {
-
-                mAllDeviceSongs = musicLibrary.allSongsUnfiltered
-                mMusic = musicLibrary.allAlbumsForArtist
+                mMusic = allAlbumByArtist
 
                 initViewPager()
 
-                //let's get intent from external app and open the song,
-                //else restore the player (normal usage)
-                if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null)
-                    handleIntent(intent)
-                else
-                    restorePlayerStatus()
+                handleRestoring()
+            })
+    }
 
-            } else {
-                Utils.makeToast(
-                    this@MainActivity,
-                    getString(R.string.error_no_music)
-                )
-                finish()
-            }
-        })
+    private fun handleRestoring() {
+        //let's get intent from external app and open the song,
+        //else restore the player (normal usage)
+        if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null)
+            handleIntent(intent)
+        else
+            restorePlayerStatus()
     }
 
     private fun initViewPager() {
@@ -873,7 +890,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     @TargetApi(23)
     private fun checkPermission() {
-        if (Utils.hasToShowPermissionRationale(this)) Utils.showPermissionRationale(this) else doBindService()
+        if (Utils.hasToShowPermissionRationale(this)) {
+            Utils.showPermissionRationale(this)
+        } else {
+            loadAllDeviceMusic()
+            doBindService()
+        }
     }
 
     //method to handle intent to play audio file from external app

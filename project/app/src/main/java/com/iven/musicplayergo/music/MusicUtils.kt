@@ -29,7 +29,7 @@ object MusicUtils {
     fun getPlayingAlbumPosition(selectedArtist: String, mediaPlayerHolder: MediaPlayerHolder): Int {
         return try {
             val currentSong = mediaPlayerHolder.currentSong.first
-            val albumsForArtist = musicLibrary.allAlbumsForArtist.getValue(selectedArtist)
+            val albumsForArtist = musicLibrary.allAlbumsByArtist.getValue(selectedArtist)
             val album = getAlbumFromList(currentSong.album, albumsForArtist)
             album.second
         } catch (e: Exception) {

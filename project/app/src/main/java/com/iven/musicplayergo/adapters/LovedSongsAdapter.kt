@@ -80,7 +80,7 @@ class LovedSongsAdapter(
                         song,
                         MusicUtils.getAlbumFromList(
                             song.album,
-                            musicLibrary.allAlbumsForArtist[song.artist]!!
+                            musicLibrary.allAlbumsByArtist[song.artist]!!
                         )
                             .first
                             .music!!

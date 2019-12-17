@@ -78,8 +78,8 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
     private fun getSortedFolders(): MutableList<String> {
         return Utils.getSortedList(
             mSorting,
-            musicLibrary.allSongsForFolder.keys.toMutableList(),
-            musicLibrary.allSongsForFolder.keys.toMutableList()
+            musicLibrary.allSongsByFolder.keys.toMutableList(),
+            musicLibrary.allSongsByFolder.keys.toMutableList()
         )
     }
 
@@ -175,7 +175,7 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
     //getting parent path of the first song
     private fun getParentFolder(item: String): String {
         val songRootPath =
-            musicLibrary.allSongsForFolder.getValue(item)[0].path
+            musicLibrary.allSongsByFolder.getValue(item)[0].path
         return File(songRootPath!!).parentFile?.parent.toString()
     }
 

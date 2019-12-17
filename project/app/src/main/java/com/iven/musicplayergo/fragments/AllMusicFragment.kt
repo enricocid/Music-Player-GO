@@ -87,7 +87,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                                 item,
                                 MusicUtils.getAlbumFromList(
                                     item.album,
-                                    musicLibrary.allAlbumsForArtist.getValue(item.artist!!)
+                                    musicLibrary.allAlbumsByArtist.getValue(item.artist!!)
                                 )
                                     .first.music!!.toList()
                             )
