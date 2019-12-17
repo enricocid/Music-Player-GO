@@ -104,7 +104,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     val isMediaPlayer get() = ::mediaPlayer.isInitialized
 
     private var sNotificationForeground = false
-    private var sCreateNotificationOnResume = false
 
     val isCurrentSong get() = ::currentSong.isInitialized
     var isRepeat = false
@@ -128,13 +127,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private lateinit var mMusicNotificationManager: MusicNotificationManager
 
     private fun startForeground() {
-        if (!sNotificationForeground || sCreateNotificationOnResume) {
-            sNotificationForeground = true
-            if (sCreateNotificationOnResume) sCreateNotificationOnResume = false
+        if (!sNotificationForeground) {
             playerService.startForeground(
                 NOTIFICATION_ID,
                 mMusicNotificationManager.createNotification()
             )
+            sNotificationForeground = true
         } else {
             updateNotification()
         }
@@ -265,13 +263,17 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private fun resumeMediaPlayer() {
         if (!isPlaying) {
             if (isMediaPlayer) mediaPlayer.start()
-            setStatus(if (isSongRestoredFromPrefs) PLAYING else RESUMED)
+            val status = if (isSongRestoredFromPrefs) {
+                isSongRestoredFromPrefs = false
+                PLAYING
+            } else {
+                RESUMED
+            }
 
-            if (!sNotificationForeground) sCreateNotificationOnResume = true
+            setStatus(status)
 
             startForeground()
 
-            isSongRestoredFromPrefs = false
             if (!isPlay) isPlay = true
         }
     }
@@ -280,6 +282,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         setStatus(PAUSED)
         mediaPlayer.pause()
         playerService.stopForeground(false)
+        sNotificationForeground = false
         updateNotification()
     }
 
