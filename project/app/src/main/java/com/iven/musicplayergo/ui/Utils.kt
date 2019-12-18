@@ -444,27 +444,4 @@ object Utils {
             e.printStackTrace()
         }
     }
-
-    @JvmStatic
-    fun showSupportedFormatsDialog(
-        context: Context
-    ): MaterialDialog {
-
-        return MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
-            title(R.string.supported_formats_title)
-            message(R.string.supportedFormats) {
-                html { openCustomTab(context, it) }
-                lineSpacing(1.4f)
-            }
-
-            cornerRadius(res = R.dimen.md_corner_radius)
-
-            icon(res = R.drawable.ic_music_note)
-
-            if (goPreferences.isEdgeToEdge && window != null) ThemeHelper.handleEdgeToEdge(
-                window,
-                view
-            )
-        }
-    }
 }

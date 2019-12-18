@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder
             mMediaPlayerHolder.mediaPlayerInterface = mMediaPlayerInterface
 
-            loadLibraryAndFinishSetup()
+            buildLibraryAndFinishSetup()
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
@@ -155,23 +155,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mBindingIntent = Intent(this, PlayerService::class.java).also {
             bindService(it, connection, Context.BIND_AUTO_CREATE)
         }
-    }
-
-    private fun loadAllDeviceMusic() {
-
-        val viewModel = ViewModelProviders.of(this).get(MusicViewModel::class.java)
-
-        viewModel.loadAllDeviceMusic(this).observe(this, Observer { allSongsUnfiltered ->
-            if (allSongsUnfiltered.isNotEmpty()) {
-                mAllDeviceSongs = allSongsUnfiltered
-            } else {
-                Utils.makeToast(
-                    this@MainActivity,
-                    getString(R.string.error_no_music)
-                )
-                finish()
-            }
-        })
     }
 
     override fun onBackPressed() {
@@ -224,8 +207,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 this
             )
         } else {
-            loadAllDeviceMusic()
-            doBindService()
+            getAllDeviceSongsAndBind()
         }
     }
 
@@ -258,12 +240,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 false
             )
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkPermission()
-        } else {
-            loadAllDeviceMusic()
-            doBindService()
-        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else getAllDeviceSongsAndBind()
     }
 
     private fun getViewsAndResources() {
@@ -299,7 +276,39 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    private fun loadLibraryAndFinishSetup() {
+    private fun getAllDeviceSongsAndBind() {
+
+        if (!goPreferences.allDeviceSongs.isNullOrEmpty()) {
+
+            mAllDeviceSongs = goPreferences.allDeviceSongs!!
+
+            doBindService()
+
+        } else {
+
+            val viewModel = ViewModelProviders.of(this).get(MusicViewModel::class.java)
+            viewModel.loadAllDeviceMusic(this).observe(this, Observer { allSongsUnfiltered ->
+
+                if (allSongsUnfiltered.isNotEmpty()) {
+
+                    goPreferences.allDeviceSongs = allSongsUnfiltered
+
+                    mAllDeviceSongs = allSongsUnfiltered
+
+                    doBindService()
+
+                } else {
+                    Utils.makeToast(
+                        this@MainActivity,
+                        getString(R.string.error_no_music)
+                    )
+                    finish()
+                }
+            })
+        }
+    }
+
+    private fun buildLibraryAndFinishSetup() {
 
         val libraryViewModel = ViewModelProviders.of(this).get(LibraryViewModel::class.java)
 
@@ -890,12 +899,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     @TargetApi(23)
     private fun checkPermission() {
-        if (Utils.hasToShowPermissionRationale(this)) {
-            Utils.showPermissionRationale(this)
-        } else {
-            loadAllDeviceMusic()
-            doBindService()
-        }
+        if (Utils.hasToShowPermissionRationale(this)) Utils.showPermissionRationale(this) else getAllDeviceSongsAndBind()
     }
 
     //method to handle intent to play audio file from external app

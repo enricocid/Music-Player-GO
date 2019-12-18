@@ -10,13 +10,16 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.AccentsAdapter
 import com.iven.musicplayergo.adapters.ActiveTabsAdapter
 import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.ui.Utils
@@ -91,19 +94,30 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 summary = goPreferences.activeFragments?.size.toString()
                 onPreferenceClickListener = this@PreferencesFragment
             }
+
+            findPreference<Preference>(getString(R.string.reset_library_pref))?.apply {
+                summary =
+                    getString(R.string.reset_library_summary, musicLibrary.allSongsFiltered.size)
+                setOnPreferenceClickListener {
+                    showRebuildLibraryDialog(fragmentActivity)
+                    return@setOnPreferenceClickListener false
+                }
+            }
         }
     }
 
     override fun onPreferenceClick(preference: Preference?): Boolean {
+
+
         activity?.let {
             when (preference?.key) {
+
                 getString(R.string.open_git_pref) -> Utils.openCustomTab(
-                    it,
+                    activity!!,
                     getString(R.string.app_git)
                 )
-                getString(R.string.supported_formats_pref) -> mSupportedFormatsDialog =
-                    Utils.showSupportedFormatsDialog(it)
-                getString(R.string.accent_pref) -> showAccentDialog(it)
+                getString(R.string.supported_formats_pref) -> showSupportedFormatsDialog(it)
+                getString(R.string.accent_pref) -> showAccentsDialog(it)
                 getString(R.string.active_fragments_pref) -> showActiveFragmentsDialog(it)
             }
         }
@@ -128,7 +142,52 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         }
     }
 
-    private fun showAccentDialog(activity: Activity) {
+    private fun showRebuildLibraryDialog(
+        activity: Activity
+    ): MaterialDialog {
+
+        return MaterialDialog(activity).show {
+
+            cornerRadius(res = R.dimen.md_corner_radius)
+
+            title(res = R.string.reset_library_title)
+            icon(res = R.drawable.ic_library_music)
+
+            message(
+                text = context.getString(R.string.reset_library_message)
+            )
+            positiveButton {
+                goPreferences.allDeviceSongs = null
+                ThemeHelper.applyNewThemeSmoothly(activity)
+            }
+            negativeButton {}
+        }
+    }
+
+    private fun showSupportedFormatsDialog(
+        context: Context
+    ) {
+
+        mSupportedFormatsDialog =
+            MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
+                title(R.string.supported_formats_title)
+                message(R.string.supportedFormats) {
+                    html { Utils.openCustomTab(context, it) }
+                    lineSpacing(1.4f)
+                }
+
+                cornerRadius(res = R.dimen.md_corner_radius)
+
+                icon(res = R.drawable.ic_music_note)
+
+                if (goPreferences.isEdgeToEdge && window != null) ThemeHelper.handleEdgeToEdge(
+                    window,
+                    view
+                )
+            }
+    }
+
+    private fun showAccentsDialog(activity: Activity) {
 
         mAccentsDialog = MaterialDialog(activity).show {
 
