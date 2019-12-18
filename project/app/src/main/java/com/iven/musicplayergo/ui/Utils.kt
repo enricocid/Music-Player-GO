@@ -198,7 +198,7 @@ object Utils {
 
             cornerRadius(res = R.dimen.md_corner_radius)
 
-            title(res = R.string.app_name)
+            title(res = R.string.queue)
             icon(res = R.drawable.ic_delete_forever)
 
             message(
@@ -234,7 +234,7 @@ object Utils {
 
             cornerRadius(res = R.dimen.md_corner_radius)
 
-            title(res = R.string.app_name)
+            title(res = R.string.queue)
             icon(res = R.drawable.ic_delete_forever)
 
             message(text = context.getString(R.string.queue_songs_clear))
@@ -320,7 +320,7 @@ object Utils {
 
             cornerRadius(res = R.dimen.md_corner_radius)
 
-            title(res = R.string.app_name)
+            title(res = R.string.loved_songs)
             icon(res = R.drawable.ic_delete_forever)
 
             message(
@@ -334,6 +334,29 @@ object Utils {
                 lovedSongs?.remove(item)
                 goPreferences.lovedSongs = lovedSongs
                 lovedSongsAdapter.swapSongs(lovedSongs!!)
+            }
+            negativeButton {}
+        }
+    }
+
+    @JvmStatic
+    fun showClearLovedSongDialog(
+        context: Context,
+        uiControlInterface: UIControlInterface
+    ) {
+
+        MaterialDialog(context).show {
+
+            cornerRadius(res = R.dimen.md_corner_radius)
+
+            title(res = R.string.loved_songs)
+            icon(res = R.drawable.ic_delete_forever)
+
+            message(
+                text = context.getString(R.string.loved_songs_clear)
+            )
+            positiveButton {
+                uiControlInterface.onLovedSongsUpdate(true)
             }
             negativeButton {}
         }
@@ -368,29 +391,6 @@ object Utils {
             inflate(R.menu.menu_do_something)
             gravity = Gravity.END
             show()
-        }
-    }
-
-    @JvmStatic
-    fun showClearLovedSongDialog(
-        context: Context,
-        uiControlInterface: UIControlInterface
-    ) {
-
-        MaterialDialog(context).show {
-
-            cornerRadius(res = R.dimen.md_corner_radius)
-
-            title(res = R.string.app_name)
-            icon(res = R.drawable.ic_delete_forever)
-
-            message(
-                text = context.getString(R.string.loved_songs_clear)
-            )
-            positiveButton {
-                uiControlInterface.onLovedSongsUpdate(true)
-            }
-            negativeButton {}
         }
     }
 
