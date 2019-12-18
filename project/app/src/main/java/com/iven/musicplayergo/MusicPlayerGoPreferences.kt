@@ -70,7 +70,7 @@ class MusicPlayerGoPreferences(context: Context) {
         set(value) = mPrefs.edit().putInt(prefsAccent, value).apply()
 
     var isEdgeToEdge
-        get() = mPrefs.getBoolean(prefsEdgeToEdge, false)
+        get() = mPrefs.getBoolean(prefsEdgeToEdge, true)
         set(value) = mPrefs.edit().putBoolean(prefsEdgeToEdge, value).apply()
 
     var isTabsEnabled

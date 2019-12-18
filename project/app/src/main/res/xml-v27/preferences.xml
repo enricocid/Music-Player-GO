@@ -50,7 +50,7 @@
 
         <SwitchPreference
             android:summaryOff="@string/edge_pref_summary_off"
-            app:defaultValue="false"
+            app:defaultValue="true"
             app:dialogTitle="@string/edge_pref_title"
             app:key="@string/edge_pref"
             app:summaryOn="@string/edge_pref_summary_on"
