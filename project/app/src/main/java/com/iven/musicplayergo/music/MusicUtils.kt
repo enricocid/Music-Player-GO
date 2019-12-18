@@ -140,15 +140,10 @@ object MusicUtils {
     )
 
     @JvmStatic
-    private fun getSortOrder(): String {
-        return MediaStore.Audio.Artists.DEFAULT_SORT_ORDER + ", " + MediaStore.Audio.Albums.DEFAULT_SORT_ORDER + ", " + MediaStore.Audio.Media.DEFAULT_SORT_ORDER
-    }
-
-    @JvmStatic
     fun getMusicCursor(contentResolver: ContentResolver): Cursor? {
         return contentResolver.query(
             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-            COLUMNS, AudioColumns.IS_MUSIC + "=1", null, getSortOrder()
+            COLUMNS, AudioColumns.IS_MUSIC + "=1", null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER
         )
     }
 
