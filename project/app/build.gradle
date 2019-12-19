@@ -10,7 +10,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 131
-        versionName "3.6.9.2"
+        versionName "3.9.6.2"
     }
 
     //retrieve version number
@@ -52,7 +52,7 @@ dependencies {
     implementation 'androidx.media:media:1.1.0'
     implementation 'androidx.preference:preference-ktx:1.1.0'
 
-    implementation 'androidx.browser:browser:1.0.0'
+    implementation 'androidx.browser:browser:1.2.0'
 
     implementation 'com.google.code.gson:gson:2.8.5'
 
