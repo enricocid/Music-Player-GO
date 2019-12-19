@@ -30,7 +30,7 @@ class ActiveTabsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckableItemsHolder {
         return CheckableItemsHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.checkable_tab_item,
+                R.layout.active_tab_item,
                 parent,
                 false
             )

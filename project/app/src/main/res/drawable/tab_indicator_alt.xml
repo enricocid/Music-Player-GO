@@ -2,8 +2,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:gravity="center"
-        android:left="16dp"
-        android:right="16dp">
+        android:left="4dp"
+        android:right="4dp">
         <shape android:shape="rectangle">
             <solid android:color="?attr/colorPrimary" />
             <corners

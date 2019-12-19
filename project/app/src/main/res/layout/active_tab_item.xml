@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:src="@drawable/tab_indicator"
+        android:src="@drawable/tab_indicator_alt"
         android:tint="?attr/colorPrimary"
         tools:ignore="ContentDescription" />
 </FrameLayout>
