@@ -127,10 +127,4 @@
     <string name="headset_pref_title">Headset plug</string>
     <string name="headset_pref_summary_on">Disable headset plug management</string>
     <string name="headset_pref_summary_off">Enable headset plug management</string>
-
-    <string name="music_library_pref" translatable="false">music_library_pref</string>
-    <string name="reset_library_pref" translatable="false">reset_library_pref</string>
-    <string name="reset_library_title">Music library</string>
-    <string name="reset_library_summary">Found songs: %1d</string>
-    <string name="reset_library_message">Songs library will be reset and app restarted. Continue?</string>
 </resources>

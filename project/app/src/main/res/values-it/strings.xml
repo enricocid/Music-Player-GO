@@ -93,8 +93,4 @@
     <string name="headset_pref_title">Inserimento cuffie</string>
     <string name="headset_pref_summary_on">Disabilita gestione inserimento cuffie</string>
     <string name="headset_pref_summary_off">Abilita gestione inserimento cuffie</string>
-
-    <string name="reset_library_title">Libreria musicale</string>
-    <string name="reset_library_summary">Canzoni trovate: %1d</string>
-    <string name="reset_library_message">La libreria delle canzoni sarà resettata e l\'app riavviata. Continuare?</string>
 </resources>

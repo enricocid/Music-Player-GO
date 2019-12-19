@@ -19,7 +19,6 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.AccentsAdapter
 import com.iven.musicplayergo.adapters.ActiveTabsAdapter
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.ui.Utils
@@ -94,15 +93,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 summary = goPreferences.activeFragments?.size.toString()
                 onPreferenceClickListener = this@PreferencesFragment
             }
-
-            findPreference<Preference>(getString(R.string.reset_library_pref))?.apply {
-                summary =
-                    getString(R.string.reset_library_summary, musicLibrary.allSongsFiltered.size)
-                setOnPreferenceClickListener {
-                    showRebuildLibraryDialog(fragmentActivity)
-                    return@setOnPreferenceClickListener false
-                }
-            }
         }
     }
 
@@ -139,28 +129,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 )
                 getString(R.string.accent_pref) -> mUIControlInterface.onAccentUpdated()
             }
-        }
-    }
-
-    private fun showRebuildLibraryDialog(
-        activity: Activity
-    ): MaterialDialog {
-
-        return MaterialDialog(activity).show {
-
-            cornerRadius(res = R.dimen.md_corner_radius)
-
-            title(res = R.string.reset_library_title)
-            icon(res = R.drawable.ic_library_music)
-
-            message(
-                text = context.getString(R.string.reset_library_message)
-            )
-            positiveButton {
-                goPreferences.allDeviceSongs = null
-                ThemeHelper.applyNewThemeSmoothly(activity)
-            }
-            negativeButton {}
         }
     }
 

@@ -28,10 +28,6 @@
         app:key="@string/supported_formats_pref"
         app:title="@string/supported_formats_title" />
 
-    <Preference
-        app:key="@string/reset_library_pref"
-        app:title="@string/reset_library_title" />
-
     <PreferenceCategory app:title="@string/category_appearance">
 
         <ListPreference
