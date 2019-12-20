@@ -73,6 +73,8 @@
     <string name="supported_formats_title">Supported media formats</string>
     <string name="supported_formats_summary">Open this page if You are experiencing any issue related to supported media formats :P</string>
 
+    <string name="songs_lib_pref" translatable="false">songs_lib_pref</string>
+
     <string name="supportedFormats"><![CDATA[
     Music Player GO implements native <a href="https://developer.android.com/guide/topics/media/mediaplayer">MediaPlayer API</a>,
     that supports the following <a href="https://developer.android.com/guide/topics/media/media-formats">media formats</a>.<br/><br/>

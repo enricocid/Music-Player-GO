@@ -34,9 +34,12 @@ class MusicPlayerGoPreferences(context: Context) {
     private val prefsFocus = context.getString(R.string.focus_pref)
     private val prefsHeadsetPlug = context.getString(R.string.headset_pref)
 
+    private val prefsSongsLibrary = context.getString(R.string.songs_lib_pref)
+
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
     private val mGson = GsonBuilder().create()
 
+    private val typeSongsLibrary = object : TypeToken<MutableList<Music>>() {}.type
     private val typeLastPlayedSong = object : TypeToken<Pair<Music, Int>>() {}.type
     private val typeLovedSong = object : TypeToken<MutableList<Pair<Music, Int>>>() {}.type
 
@@ -50,6 +53,13 @@ class MusicPlayerGoPreferences(context: Context) {
             typeLastPlayedSong
         )
         set(value) = putObject(prefsLatestPlayedSong, value)
+
+    var emergencySongsLib: MutableList<Music>?
+        get() = getObject(
+            prefsSongsLibrary,
+            typeSongsLibrary
+        )
+        set(value) = putObject(prefsSongsLibrary, value)
 
     var lovedSongs: MutableList<Pair<Music, Int>>?
         get() = getObject(

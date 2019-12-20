@@ -104,7 +104,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
 
     //music player things
-
     private lateinit var mAllDeviceSongs: MutableList<Music>
 
     //booleans
@@ -281,15 +280,23 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             if (allSongsUnfiltered.isNotEmpty()) {
 
                 mAllDeviceSongs = allSongsUnfiltered
+                goPreferences.emergencySongsLib = allSongsUnfiltered
 
                 buildLibraryAndFinishSetup()
 
             } else {
+
                 Utils.makeToast(
                     this@MainActivity,
                     getString(R.string.error_no_music)
                 )
-                finish()
+
+                if (!goPreferences.emergencySongsLib.isNullOrEmpty()) {
+                    mAllDeviceSongs = goPreferences.emergencySongsLib!!
+                    buildLibraryAndFinishSetup()
+                } else {
+                    finishAndRemoveTask()
+                }
             }
         })
     }
@@ -304,7 +311,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mMusic = allAlbumByArtist
 
                 initViewPager()
-
                 doBindService()
             })
     }
