@@ -141,7 +141,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder
             mMediaPlayerHolder.mediaPlayerInterface = mMediaPlayerInterface
 
-            handleRestoring()
+            getAllDeviceSongs()
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
@@ -204,7 +204,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED)
             Utils.showPermissionRationale(
                 this
-            ) else getAllDeviceSongs()
+            ) else doBindService()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -236,7 +236,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 false
             )
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else getAllDeviceSongs()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else doBindService()
     }
 
     private fun getViewsAndResources() {
@@ -311,7 +311,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mMusic = allAlbumByArtist
 
                 initViewPager()
-                doBindService()
+
+                handleRestoring()
             })
     }
 
@@ -891,7 +892,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     @TargetApi(23)
     private fun checkPermission() {
-        if (Utils.hasToShowPermissionRationale(this)) Utils.showPermissionRationale(this) else getAllDeviceSongs()
+        if (Utils.hasToShowPermissionRationale(this)) Utils.showPermissionRationale(this) else doBindService()
     }
 
     //method to handle intent to play audio file from external app
