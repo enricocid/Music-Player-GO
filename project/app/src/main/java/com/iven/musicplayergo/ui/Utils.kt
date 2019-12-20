@@ -65,7 +65,8 @@ object Utils {
                 negativeButton {
                     makeToast(
                         this@apply,
-                        getString(R.string.perm_rationale)
+                        getString(R.string.perm_rationale),
+                        Toast.LENGTH_LONG
                     )
                     dismiss()
                     finishAndRemoveTask()
@@ -75,8 +76,8 @@ object Utils {
     }
 
     @JvmStatic
-    fun makeToast(context: Context, message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG)
+    fun makeToast(context: Context, message: String, lenght: Int) {
+        Toast.makeText(context, message, lenght)
             .show()
     }
 
@@ -273,7 +274,8 @@ object Utils {
                     R.string.loved_song_added,
                     song.title!!,
                     MusicUtils.formatSongDuration(currentPosition.toLong(), false)
-                )
+                ),
+                Toast.LENGTH_SHORT
             )
             goPreferences.lovedSongs = lovedSongs
         }
@@ -440,7 +442,7 @@ object Utils {
                 build().launchUrl(context, Uri.parse(link))
             }
         } catch (e: Exception) {
-            makeToast(context, context.getString(R.string.no_browser))
+            makeToast(context, context.getString(R.string.no_browser), Toast.LENGTH_LONG)
             e.printStackTrace()
         }
     }

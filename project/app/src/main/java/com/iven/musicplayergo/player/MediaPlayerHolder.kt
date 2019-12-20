@@ -16,6 +16,7 @@ import android.os.Handler
 import android.os.Parcelable
 import android.os.PowerManager
 import android.view.KeyEvent
+import android.widget.Toast
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
@@ -313,7 +314,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     private fun getSkipSong(isNext: Boolean): Music {
+
         val currentIndex = mPlayingAlbumSongs.indexOf(currentSong.first)
+
         try {
             return mPlayingAlbumSongs[if (isNext) currentIndex + 1 else currentIndex - 1]
         } catch (e: IndexOutOfBoundsException) {
@@ -322,7 +325,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 isQueue -> {
 
                     when {
-
                         isNext -> {
                             setQueueEnabled(false)
                             restorePreQueueSongs()
@@ -471,7 +473,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         updateNotification()
         Utils.makeToast(
             playerService,
-            playerService.getString(if (isRepeat) R.string.repeat_enabled else R.string.repeat_disabled)
+            playerService.getString(if (isRepeat) R.string.repeat_enabled else R.string.repeat_disabled),
+            Toast.LENGTH_SHORT
         )
     }
 

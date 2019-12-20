@@ -3,6 +3,7 @@ package com.iven.musicplayergo.music
 import android.annotation.SuppressLint
 import android.content.Context
 import android.provider.MediaStore
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.iven.musicplayergo.R
@@ -96,7 +97,11 @@ class MusicViewModel : ViewModel(), CoroutineScope {
                     }
                 }
             } catch (e: Exception) {
-                Utils.makeToast(context, context.getString(R.string.error_unknown))
+                Utils.makeToast(
+                    context,
+                    context.getString(R.string.error_unknown),
+                    Toast.LENGTH_LONG
+                )
                 e.printStackTrace()
             }
         }

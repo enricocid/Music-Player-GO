@@ -11,10 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.view.View
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.SeekBar
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
@@ -286,15 +283,23 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
             } else {
 
-                Utils.makeToast(
-                    this@MainActivity,
-                    getString(R.string.error_no_music)
-                )
-
                 if (!goPreferences.emergencySongsLib.isNullOrEmpty()) {
+
+                    Utils.makeToast(
+                        this@MainActivity,
+                        getString(R.string.error_unknown),
+                        Toast.LENGTH_LONG
+                    )
                     mAllDeviceSongs = goPreferences.emergencySongsLib!!
                     buildLibraryAndFinishSetup()
+
                 } else {
+
+                    Utils.makeToast(
+                        this@MainActivity,
+                        getString(R.string.error_no_music),
+                        Toast.LENGTH_LONG
+                    )
                     finishAndRemoveTask()
                 }
             }
@@ -860,7 +865,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     getString(
                         R.string.queue_song_add,
                         song.title
-                    )
+                    ),
+                    Toast.LENGTH_SHORT
                 )
             }
         }
@@ -877,7 +883,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mQueueDialog = Utils.showQueueSongsDialog(this, mMediaPlayerHolder)
         else
             Utils.makeToast(
-                this, getString(R.string.error_no_queue)
+                this, getString(R.string.error_no_queue),
+                Toast.LENGTH_SHORT
             )
     }
 
@@ -886,7 +893,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             Utils.showLovedSongsDialog(this, this, mMediaPlayerHolder)
         else
             Utils.makeToast(
-                this, getString(R.string.error_no_loved_songs)
+                this, getString(R.string.error_no_loved_songs),
+                Toast.LENGTH_SHORT
             )
     }
 
@@ -925,7 +933,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 } else {
                     Utils.makeToast(
                         this@MainActivity,
-                        getString(R.string.error_unknown_unsupported)
+                        getString(R.string.error_unknown_unsupported),
+                        Toast.LENGTH_LONG
                     )
                     finishAndRemoveTask()
                 }
@@ -933,7 +942,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         } catch (e: Exception) {
             Utils.makeToast(
                 this@MainActivity,
-                getString(R.string.error_unknown_unsupported)
+                getString(R.string.error_unknown_unsupported),
+                Toast.LENGTH_LONG
             )
             finishAndRemoveTask()
         }

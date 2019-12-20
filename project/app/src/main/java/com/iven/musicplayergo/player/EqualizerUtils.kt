@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.media.audiofx.AudioEffect
+import android.widget.Toast
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.ui.Utils
 
@@ -59,11 +60,12 @@ object EqualizerUtils {
             } else
             Utils.makeToast(
                 activity,
-                activity.getString(R.string.no_eq)
+                activity.getString(R.string.no_eq),
+                Toast.LENGTH_SHORT
             )
     }
 
     fun notifyNoSessionId(context: Context) {
-        Utils.makeToast(context, context.getString(R.string.bad_id))
+        Utils.makeToast(context, context.getString(R.string.bad_id), Toast.LENGTH_LONG)
     }
 }

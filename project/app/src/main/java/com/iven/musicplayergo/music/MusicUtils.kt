@@ -10,6 +10,7 @@ import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
+import android.widget.Toast
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.player.MediaPlayerHolder
@@ -237,7 +238,11 @@ object MusicUtils {
 
 
         } catch (e: Exception) {
-            Utils.makeToast(context, context.getString(R.string.error_unknown_unsupported))
+            Utils.makeToast(
+                context,
+                context.getString(R.string.error_unknown_unsupported),
+                Toast.LENGTH_LONG
+            )
             e.printStackTrace()
         }
         return returnedString

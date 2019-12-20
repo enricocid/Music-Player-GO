@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
@@ -85,7 +86,8 @@ class ActiveTabsAdapter(
                     if (mActiveItems?.size!! < 2) {
                         Utils.makeToast(
                             context,
-                            context.getString(R.string.active_fragments_pref_warning)
+                            context.getString(R.string.active_fragments_pref_warning),
+                            Toast.LENGTH_SHORT
                         )
                         mActiveItems.add(adapterPosition.toString())
                         manageIndicatorsStatus(true, icon, indicator)
