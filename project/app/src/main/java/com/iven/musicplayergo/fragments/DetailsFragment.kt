@@ -55,6 +55,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var mAlbumsRecyclerView: RecyclerView
     private lateinit var mAlbumsRecyclerViewLayoutManager: LinearLayoutManager
     private lateinit var mSongsRecyclerView: RecyclerView
+    private lateinit var mSongsRecyclerViewLayoutManager: LinearLayoutManager
 
     private lateinit var mSelectedArtistAlbums: List<Album>
     private lateinit var mSongsForArtistOrFolder: List<Music>
@@ -64,6 +65,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private lateinit var mUIControlInterface: UIControlInterface
     private lateinit var mSelectedAlbum: Album
+    private var mPlayingSong: String? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -74,6 +76,10 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
         arguments?.getBoolean(TAG_IS_FOLDER)?.let {
             sFolder = it
+        }
+
+        arguments?.getString(TAG_PLAYING_SONG)?.let {
+            mPlayingSong = it
         }
 
         if (!sFolder) {
@@ -186,20 +192,52 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 setup {
                     // item is a `val` in `this` here
                     withDataSource(mSongsDataSource)
+
+                    mSongsRecyclerViewLayoutManager = LinearLayoutManager(
+                        it,
+                        LinearLayoutManager.VERTICAL,
+                        false
+                    )
+
+                    withLayoutManager(mSongsRecyclerViewLayoutManager)
+
                     withItem<Music, GenericViewHolder>(R.layout.song_item) {
                         onBind(::GenericViewHolder) { _, item ->
                             // GenericViewHolder is `this` here
-                            title.text = ThemeHelper.buildSpanned(
-                                getString(
-                                    R.string.track_song,
-                                    MusicUtils.formatSongTrack(item.track),
-                                    item.title
+                            title.apply {
+                                text = ThemeHelper.buildSpanned(
+                                    getString(
+                                        R.string.track_song,
+                                        MusicUtils.formatSongTrack(item.track),
+                                        item.title
+                                    )
                                 )
-                            )
+
+                                setTextColor(
+                                    if (mPlayingSong != item.title) ThemeHelper.resolveColorAttr(
+                                        it,
+                                        android.R.attr.textColorPrimary
+                                    ) else ThemeHelper.resolveThemeAccent(it)
+                                )
+                            }
+
                             subtitle.text = MusicUtils.formatSongDuration(item.duration, false)
                         }
 
                         onClick {
+
+                            if (mPlayingSong != item.title) {
+                                mSongsRecyclerView.adapter?.apply {
+                                    val source =
+                                        if (sFolder) mSongsForArtistOrFolder else mSelectedAlbum.music!!
+                                    notifyItemChanged(source.indexOfFirst {
+                                        mPlayingSong == it.title
+                                    })
+                                    mPlayingSong = item.title
+                                    notifyItemChanged(source.indexOf(item))
+                                }
+                            }
+
                             val selectedPlaylist =
 
                                 if (sFolder) mSongsForArtistOrFolder
@@ -211,7 +249,8 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                             mUIControlInterface.onSongSelected(
                                 item,
-                                selectedPlaylist
+                                selectedPlaylist,
+                                false
                             )
                         }
 
@@ -227,6 +266,13 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 }
 
                 addItemDecoration(ThemeHelper.getRecyclerViewDivider(it))
+
+                if (mPlayingSong != null) {
+                    val index = mSongsForArtistOrFolder.indexOfFirst {
+                        it.title == mPlayingSong
+                    }
+                    mSongsRecyclerViewLayoutManager.scrollToPositionWithOffset(index, 0)
+                }
             }
 
             view.afterMeasured {
@@ -479,6 +525,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         const val TAG_ARTIST_FOLDER = "SELECTED_ARTIST_FOLDER"
         const val TAG_IS_FOLDER = "IS_FOLDER"
         const val TAG_SELECTED_ALBUM_POSITION = "SELECTED_ALBUM_POSITION"
+        const val TAG_PLAYING_SONG = "PLAYING_SONG"
 
         /**
          * Use this factory method to create a new instance of
@@ -490,13 +537,15 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         fun newInstance(
             selectedArtistOrFolder: String,
             sFolder: Boolean,
-            playedAlbumPosition: Int
+            playedAlbumPosition: Int,
+            playingSong: String?
         ) =
             DetailsFragment().apply {
                 arguments = Bundle().apply {
                     putString(TAG_ARTIST_FOLDER, selectedArtistOrFolder)
                     putBoolean(TAG_IS_FOLDER, sFolder)
                     putInt(TAG_SELECTED_ALBUM_POSITION, playedAlbumPosition)
+                    putString(TAG_PLAYING_SONG, playingSong)
                 }
             }
     }

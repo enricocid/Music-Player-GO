@@ -315,9 +315,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 mMusic = allAlbumByArtist
 
-                initViewPager()
-
                 handleRestoring()
+
+                initViewPager()
             })
     }
 
@@ -396,9 +396,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun initActiveFragments(index: Int) {
         when (index) {
-            0 -> mArtistsFragment = ArtistsFragment.newInstance()
-            1 -> mAllMusicFragment = AllMusicFragment.newInstance()
-            2 -> mFoldersFragment = FoldersFragment.newInstance()
+            0 -> mArtistsFragment =
+                ArtistsFragment.newInstance(mMediaPlayerHolder.currentSong.first.artist)
+            1 -> mAllMusicFragment =
+                AllMusicFragment.newInstance(mMediaPlayerHolder.currentSong.first.title)
+            2 -> mFoldersFragment =
+                FoldersFragment.newInstance(MusicUtils.getFolderName(mMediaPlayerHolder.currentSong.first.path))
             else -> mSettingsFragment = SettingsFragment.newInstance()
         }
     }
@@ -430,7 +433,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             DetailsFragment.newInstance(
                 selectedArtistOrFolder,
                 isFolder,
-                MusicUtils.getPlayingAlbumPosition(selectedArtistOrFolder, mMediaPlayerHolder)
+                MusicUtils.getPlayingAlbumPosition(selectedArtistOrFolder, mMediaPlayerHolder),
+                mMediaPlayerHolder.currentSong.first.title
             )
         supportFragmentManager.beginTransaction()
             .addToBackStack(null)
@@ -681,7 +685,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     isSongRestoredFromPrefs = goPreferences.latestPlayedSong != null
 
                     val song =
-                        if (isSongRestoredFromPrefs) goPreferences.latestPlayedSong?.first!! else
+                        if (isSongRestoredFromPrefs) goPreferences.latestPlayedSong?.first!!
+                        else
                             musicLibrary.randomMusic
 
                     val songs =
@@ -822,11 +827,21 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    override fun onSongSelected(song: Music, songs: List<Music>) {
+    override fun onSongSelected(song: Music, songs: List<Music>, isUserClicking: Boolean) {
         mMediaPlayerHolder.apply {
             isSongRestoredFromPrefs = false
             if (!isPlay) isPlay = true
             if (isQueue) setQueueEnabled(false)
+            if (::mArtistsFragment.isInitialized && mArtistsFragment.isAdded) mArtistsFragment.swapPlayingArtist(
+                song.artist!!
+            )
+            if (::mFoldersFragment.isInitialized && mFoldersFragment.isAdded) mFoldersFragment.swapPlayingFolder(
+                MusicUtils.getFolderName(song.path)
+            )
+            if (::mAllMusicFragment.isInitialized && mAllMusicFragment.isAdded) mAllMusicFragment.swapPlayingSong(
+                song.title!!,
+                isUserClicking
+            )
             startPlayback(song, songs)
         }
     }
@@ -875,7 +890,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     override fun onShuffleSongs(songs: MutableList<Music>) {
         songs.shuffle()
         val song = songs[0]
-        onSongSelected(song, songs)
+        onSongSelected(song, songs, false)
     }
 
     fun openQueueDialog(view: View) {
@@ -928,7 +943,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         MusicUtils.getAlbumFromList(song.album, mMusic[song.artist]!!).first
                             .music
 
-                    onSongSelected(song, albumSongs!!)
+                    onSongSelected(song, albumSongs!!, false)
 
                 } else {
                     Utils.makeToast(

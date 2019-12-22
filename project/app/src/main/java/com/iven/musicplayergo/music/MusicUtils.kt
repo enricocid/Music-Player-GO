@@ -15,6 +15,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.Utils
+import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -146,6 +147,12 @@ object MusicUtils {
             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
             COLUMNS, AudioColumns.IS_MUSIC + "=1", null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER
         )
+    }
+
+    @JvmStatic
+    fun getFolderName(path: String?): String {
+        val file = File(path!!).parentFile
+        return file!!.name
     }
 
     /**

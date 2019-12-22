@@ -2,7 +2,6 @@ package com.iven.musicplayergo.music
 
 import android.annotation.SuppressLint
 import android.content.Context
-import java.io.File
 
 
 class MusicLibrary {
@@ -46,8 +45,7 @@ class MusicLibrary {
         }
 
         allSongsByFolder = allSongsFiltered.groupBy {
-            val file = File(it.path!!).parentFile
-            file!!.name
+            MusicUtils.getFolderName(it.path)
         }
 
         return allAlbumsByArtist
