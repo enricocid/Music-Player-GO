@@ -174,7 +174,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                 val newSelectedPosition = mAllMusic.indexOfFirst {
                     it.title == playingSong
                 }
-                mSongsRecyclerViewLayoutManager.scrollToPositionWithOffset(newSelectedPosition, 0)
+                if (!isUserClicking) mSongsRecyclerViewLayoutManager.scrollToPositionWithOffset(newSelectedPosition, 0)
                 notifyItemChanged(newSelectedPosition)
             }
             mPlayingSong = playingSong
