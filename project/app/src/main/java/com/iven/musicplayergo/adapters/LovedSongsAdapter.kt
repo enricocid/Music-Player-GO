@@ -83,8 +83,7 @@ class LovedSongsAdapter(
                             musicLibrary.allAlbumsByArtist[song.artist]!!
                         )
                             .first
-                            .music!!,
-                        false
+                            .music!!
                     )
                 }
                 setOnLongClickListener {

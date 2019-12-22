@@ -65,7 +65,6 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private lateinit var mUIControlInterface: UIControlInterface
     private lateinit var mSelectedAlbum: Album
-    private var mPlayingSong: String? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -76,10 +75,6 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
         arguments?.getBoolean(TAG_IS_FOLDER)?.let {
             sFolder = it
-        }
-
-        arguments?.getString(TAG_PLAYING_SONG)?.let {
-            mPlayingSong = it
         }
 
         if (!sFolder) {
@@ -204,42 +199,19 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     withItem<Music, GenericViewHolder>(R.layout.song_item) {
                         onBind(::GenericViewHolder) { _, item ->
                             // GenericViewHolder is `this` here
-                            title.apply {
-                                text = ThemeHelper.buildSpanned(
-                                    getString(
-                                        R.string.track_song,
-                                        MusicUtils.formatSongTrack(item.track),
-                                        item.title
-                                    )
+                            title.text = ThemeHelper.buildSpanned(
+                                getString(
+                                    R.string.track_song,
+                                    MusicUtils.formatSongTrack(item.track),
+                                    item.title
                                 )
-
-                                setTextColor(
-                                    if (mPlayingSong != item.title) ThemeHelper.resolveColorAttr(
-                                        it,
-                                        android.R.attr.textColorPrimary
-                                    ) else ThemeHelper.resolveThemeAccent(it)
-                                )
-                            }
-
+                            )
                             subtitle.text = MusicUtils.formatSongDuration(item.duration, false)
                         }
 
                         onClick {
 
-                            if (mPlayingSong != item.title) {
-                                mSongsRecyclerView.adapter?.apply {
-                                    val source =
-                                        if (sFolder) mSongsForArtistOrFolder else mSelectedAlbum.music!!
-                                    notifyItemChanged(source.indexOfFirst {
-                                        mPlayingSong == it.title
-                                    })
-                                    mPlayingSong = item.title
-                                    notifyItemChanged(source.indexOf(item))
-                                }
-                            }
-
                             val selectedPlaylist =
-
                                 if (sFolder) mSongsForArtistOrFolder
                                 else
                                     MusicUtils.getAlbumFromList(
@@ -249,8 +221,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                             mUIControlInterface.onSongSelected(
                                 item,
-                                selectedPlaylist,
-                                false
+                                selectedPlaylist
                             )
                         }
 
@@ -266,13 +237,6 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 }
 
                 addItemDecoration(ThemeHelper.getRecyclerViewDivider(it))
-
-                if (mPlayingSong != null) {
-                    val index = mSongsForArtistOrFolder.indexOfFirst {
-                        it.title == mPlayingSong
-                    }
-                    mSongsRecyclerViewLayoutManager.scrollToPositionWithOffset(index, 0)
-                }
             }
 
             view.afterMeasured {
@@ -368,6 +332,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 withLayoutManager(mAlbumsRecyclerViewLayoutManager)
 
                 withItem<Album, AlbumsViewHolder>(R.layout.album_item) {
+
                     onBind(::AlbumsViewHolder) { _, item ->
                         // AlbumsViewHolder is `this` here
                         itemView.background.alpha = 20
@@ -525,7 +490,6 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         const val TAG_ARTIST_FOLDER = "SELECTED_ARTIST_FOLDER"
         const val TAG_IS_FOLDER = "IS_FOLDER"
         const val TAG_SELECTED_ALBUM_POSITION = "SELECTED_ALBUM_POSITION"
-        const val TAG_PLAYING_SONG = "PLAYING_SONG"
 
         /**
          * Use this factory method to create a new instance of
@@ -537,15 +501,13 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         fun newInstance(
             selectedArtistOrFolder: String,
             sFolder: Boolean,
-            playedAlbumPosition: Int,
-            playingSong: String?
+            playedAlbumPosition: Int
         ) =
             DetailsFragment().apply {
                 arguments = Bundle().apply {
                     putString(TAG_ARTIST_FOLDER, selectedArtistOrFolder)
                     putBoolean(TAG_IS_FOLDER, sFolder)
                     putInt(TAG_SELECTED_ALBUM_POSITION, playedAlbumPosition)
-                    putString(TAG_PLAYING_SONG, playingSong)
                 }
             }
     }

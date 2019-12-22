@@ -96,7 +96,6 @@ class QueueAdapter(
                                 currentSong = Pair(song, true)
                         }
                         initMediaPlayer(song)
-
                     }
                 }
 
@@ -109,7 +108,6 @@ class QueueAdapter(
                             this@QueueAdapter,
                             mediaPlayerHolder
                         )
-
                     return@setOnLongClickListener true
                 }
             }

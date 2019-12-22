@@ -24,7 +24,6 @@ import com.reddit.indicatorfastscroll.FastScrollerThumbView
 import com.reddit.indicatorfastscroll.FastScrollerView
 import kotlinx.android.synthetic.main.fragment_artists.*
 import kotlinx.android.synthetic.main.search_toolbar.*
-import kotlin.properties.Delegates
 
 
 /**
@@ -36,7 +35,6 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     //views
     private lateinit var mArtistsRecyclerView: RecyclerView
-    private lateinit var mArtistsRecyclerViewLayoutManager: LinearLayoutManager
 
     private lateinit var mSearchToolbar: Toolbar
 
@@ -53,15 +51,8 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var mSortMenuItem: MenuItem
     private var mSorting = ASCENDING_SORTING
 
-    private var mPlayingArtist: String by Delegates.notNull()
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
-        arguments?.getString(TAG_PLAYING_ARTIST)?.let {
-            mPlayingArtist = it
-        }
-
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
@@ -110,27 +101,11 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                     // item is a `val` in `this` here
                     withDataSource(mDataSource)
 
-                    mArtistsRecyclerViewLayoutManager = LinearLayoutManager(
-                        it,
-                        LinearLayoutManager.VERTICAL,
-                        false
-                    )
-
-                    withLayoutManager(mArtistsRecyclerViewLayoutManager)
-
                     withItem<String, GenericViewHolder>(R.layout.generic_item) {
 
                         onBind(::GenericViewHolder) { _, item ->
                             // GenericViewHolder is `this` here
-                            title.apply {
-                                text = item
-                                setTextColor(
-                                    if (mPlayingArtist != item) ThemeHelper.resolveColorAttr(
-                                        it,
-                                        android.R.attr.textColorPrimary
-                                    ) else ThemeHelper.resolveThemeAccent(it)
-                                )
-                            }
+                            title.text = item
                             subtitle.text = getArtistSubtitle(item)
                         }
 
@@ -142,12 +117,6 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                     addItemDecoration(
                         ThemeHelper.getRecyclerViewDivider(it)
-                    )
-
-                    mArtistsRecyclerViewLayoutManager.scrollToPositionWithOffset(
-                        mArtists.indexOf(
-                            mPlayingArtist
-                        ), 0
                     )
                 }
             }
@@ -191,18 +160,6 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                     setMenuOnItemClickListener(it, this)
                 }
             }
-        }
-    }
-
-    fun swapPlayingArtist(playingArtist: String) {
-        if (playingArtist != mPlayingArtist) {
-            mArtistsRecyclerView.adapter?.apply {
-                notifyItemChanged(mArtists.indexOf(mPlayingArtist))
-                val newSelectedPosition = mArtists.indexOf(playingArtist)
-                mArtistsRecyclerViewLayoutManager.scrollToPositionWithOffset(newSelectedPosition, 0)
-                notifyItemChanged(newSelectedPosition)
-            }
-            mPlayingArtist = playingArtist
         }
     }
 
@@ -320,9 +277,6 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     companion object {
-
-        const val TAG_PLAYING_ARTIST = "PLAYING_ARTIST"
-
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
@@ -330,10 +284,6 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
          * @return A new instance of fragment MusicFragment.
          */
         @JvmStatic
-        fun newInstance(playingArtist: String?) = ArtistsFragment().apply {
-            arguments = Bundle().apply {
-                putString(TAG_PLAYING_ARTIST, playingArtist)
-            }
-        }
+        fun newInstance() = ArtistsFragment()
     }
 }

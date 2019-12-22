@@ -28,7 +28,6 @@ import com.reddit.indicatorfastscroll.FastScrollerView
 import kotlinx.android.synthetic.main.fragment_folders.*
 import kotlinx.android.synthetic.main.search_toolbar.*
 import java.io.File
-import kotlin.properties.Delegates
 
 
 /**
@@ -40,7 +39,6 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
 
     //views
     private lateinit var mFoldersRecyclerView: RecyclerView
-    private lateinit var mFoldersRecyclerViewLayoutManager: LinearLayoutManager
 
     private lateinit var mSearchToolbar: Toolbar
 
@@ -57,15 +55,8 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var mSortMenuItem: MenuItem
     private var mSorting = DEFAULT_SORTING
 
-    private var mPlayingFolder: String by Delegates.notNull()
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
-        arguments?.getString(TAG_PLAYING_FOLDER)?.let {
-            mPlayingFolder = it
-        }
-
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
@@ -113,29 +104,12 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
 
                     withDataSource(mDataSource)
 
-                    mFoldersRecyclerViewLayoutManager = LinearLayoutManager(
-                        it,
-                        LinearLayoutManager.VERTICAL,
-                        false
-                    )
-
-                    withLayoutManager(mFoldersRecyclerViewLayoutManager)
-
                     withItem<String, GenericViewHolder>(R.layout.folder_item) {
                         onBind(::GenericViewHolder) { _, item ->
                             // GenericViewHolder is `this` here
-                            title.apply {
-                                text = item
-                                setTextColor(
-                                    if (mPlayingFolder != item) ThemeHelper.resolveColorAttr(
-                                        it,
-                                        android.R.attr.textColorPrimary
-                                    ) else ThemeHelper.resolveThemeAccent(it)
-                                )
-                            }
+                            title.text = item
                             subtitle.text = getParentFolder(item)
                         }
-
                         onClick {
                             // item is a `val` in `this` here
                             if (::mUIControlInterface.isInitialized)
@@ -143,12 +117,6 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
                         }
                     }
                     addItemDecoration(ThemeHelper.getRecyclerViewDivider(it))
-
-                    mFoldersRecyclerViewLayoutManager.scrollToPositionWithOffset(
-                        mFolders.indexOf(
-                            mPlayingFolder
-                        ), 0
-                    )
                 }
             }
 
@@ -186,22 +154,9 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
                             menu.setGroupVisible(R.id.sorting, !hasFocus)
                         }
                     }
-
                     setMenuOnItemClickListener(it, this)
                 }
             }
-        }
-    }
-
-    fun swapPlayingFolder(playingFolder: String) {
-        if (playingFolder != mPlayingFolder) {
-            mFoldersRecyclerView.adapter?.apply {
-                notifyItemChanged(mFolders.indexOf(mPlayingFolder))
-                val newSelectedPosition = mFolders.indexOf(playingFolder)
-                mFoldersRecyclerViewLayoutManager.scrollToPositionWithOffset(newSelectedPosition, 0)
-                notifyItemChanged(newSelectedPosition)
-            }
-            mPlayingFolder = playingFolder
         }
     }
 
@@ -318,8 +273,6 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     companion object {
-
-        const val TAG_PLAYING_FOLDER = "PLAYING_FOLDER"
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
@@ -327,10 +280,6 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
          * @return A new instance of fragment NowPlaying.
          */
         @JvmStatic
-        fun newInstance(playingFolder: String?) = FoldersFragment().apply {
-            arguments = Bundle().apply {
-                putString(TAG_PLAYING_FOLDER, playingFolder)
-            }
-        }
+        fun newInstance() = FoldersFragment()
     }
 }

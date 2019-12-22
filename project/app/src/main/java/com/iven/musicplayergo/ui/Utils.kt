@@ -173,11 +173,13 @@ object Utils {
             customListAdapter(
                 QueueAdapter(context, this, mediaPlayerHolder)
             )
+
             getRecyclerView().addItemDecoration(
                 ThemeHelper.getRecyclerViewDivider(
                     context
                 )
             )
+
             if (goPreferences.isEdgeToEdge && window != null) ThemeHelper.handleEdgeToEdge(
                 window,
                 view
