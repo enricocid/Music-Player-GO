@@ -152,7 +152,7 @@ object MusicUtils {
     @JvmStatic
     fun getFolderName(path: String?): String {
         val file = File(path!!).parentFile
-        return file!!.name
+        return file?.name!!
     }
 
     /**
