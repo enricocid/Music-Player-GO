@@ -98,6 +98,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mVolumeSeekBarNP: SeekBar
     private lateinit var mLoveButtonNP: ImageView
     private lateinit var mVolumeNP: ImageView
+    private lateinit var mRatesTextNP: TextView
 
 
     //music player things
@@ -576,28 +577,30 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 customView(R.layout.now_playing)
 
-                mSongTextNP = getCustomView().findViewById(R.id.np_song)
+                val customView = getCustomView()
+
+                mSongTextNP = customView.findViewById(R.id.np_song)
                 mSongTextNP.isSelected = true
-                mArtistAlbumTextNP = getCustomView().findViewById(R.id.np_artist_album)
+                mArtistAlbumTextNP = customView.findViewById(R.id.np_artist_album)
                 mArtistAlbumTextNP.isSelected = true
-                mFixedMusicBar = getCustomView().findViewById(R.id.np_fixed_music_bar)
+                mFixedMusicBar = customView.findViewById(R.id.np_fixed_music_bar)
                 mFixedMusicBar.setBackgroundBarPrimeColor(
                     mResolvedAlphaAccentColor
                 )
 
-                mSongSeekTextNP = getCustomView().findViewById(R.id.np_seek)
-                mSongDurationTextNP = getCustomView().findViewById(R.id.np_duration)
+                mSongSeekTextNP = customView.findViewById(R.id.np_seek)
+                mSongDurationTextNP = customView.findViewById(R.id.np_duration)
 
-                mSkipPrevButtonNP = getCustomView().findViewById(R.id.np_skip_prev)
+                mSkipPrevButtonNP = customView.findViewById(R.id.np_skip_prev)
                 mSkipPrevButtonNP.setOnClickListener { skip(false) }
 
-                mPlayPauseButtonNP = getCustomView().findViewById(R.id.np_play)
+                mPlayPauseButtonNP = customView.findViewById(R.id.np_play)
                 mPlayPauseButtonNP.setOnClickListener { resumeOrPause() }
 
-                mSkipNextButtonNP = getCustomView().findViewById(R.id.np_skip_next)
+                mSkipNextButtonNP = customView.findViewById(R.id.np_skip_next)
                 mSkipNextButtonNP.setOnClickListener { skip(true) }
 
-                mRepeatNP = getCustomView().findViewById(R.id.np_repeat)
+                mRepeatNP = customView.findViewById(R.id.np_repeat)
 
                 ThemeHelper.updateIconTint(
                     mRepeatNP,
@@ -608,7 +611,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 mRepeatNP.setOnClickListener { setRepeat() }
 
-                mLoveButtonNP = getCustomView().findViewById(R.id.np_love)
+                mLoveButtonNP = customView.findViewById(R.id.np_love)
                 mLoveButtonNP.setOnClickListener {
                     Utils.addToLovedSongs(
                         this@MainActivity,
@@ -618,12 +621,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     onLovedSongsUpdate(false)
                 }
 
-                mVolumeSeekBarNP = getCustomView().findViewById(R.id.np_volume_seek)
-                mVolumeNP = getCustomView().findViewById(R.id.np_volume)
+                mVolumeSeekBarNP = customView.findViewById(R.id.np_volume_seek)
+                mVolumeNP = customView.findViewById(R.id.np_volume)
 
                 setupPreciseVolumeHandler()
                 setFixedMusicBarProgressListener()
 
+                mRatesTextNP = customView.findViewById(R.id.np_rates)
                 updateNowPlayingInfo()
 
                 onDismiss {
@@ -781,6 +785,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mSongDurationTextNP.text = MusicUtils.formatSongDuration(selectedSongDuration, false)
 
         mFixedMusicBar.loadFrom(selectedSong.path, selectedSong.duration.toInt())
+
+        MusicUtils.getBitrate(selectedSong.path!!)?.let {
+            mRatesTextNP.text = getString(R.string.rates, it.first, it.second)
+        }
 
         updatePlayingStatus(true)
     }

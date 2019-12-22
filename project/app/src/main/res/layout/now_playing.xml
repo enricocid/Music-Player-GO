@@ -88,4 +88,12 @@
 
     <include layout="@layout/now_playing_extended_controls" />
 
+    <TextView
+        android:id="@+id/np_rates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        android:textAlignment="center"
+        android:textAppearance="@android:style/TextAppearance.Material.Caption"
+        android:textColor="?attr/colorPrimary" />
 </LinearLayout>

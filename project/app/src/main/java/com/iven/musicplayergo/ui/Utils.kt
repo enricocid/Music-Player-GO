@@ -76,8 +76,8 @@ object Utils {
     }
 
     @JvmStatic
-    fun makeToast(context: Context, message: String, length: Int) {
-        Toast.makeText(context, message, length)
+    fun makeToast(context: Context, message: String, lenght: Int) {
+        Toast.makeText(context, message, lenght)
             .show()
     }
 

@@ -6,6 +6,7 @@
     <string name="underscore_delimiter" translatable="false">&#95;</string>
     <string name="app_git" translatable="false">https://github.com/enricocid/Music-Player-GO</string>
     <string name="song_title_notification" translatable="false">&lt;b>%1s&lt;/b>&lt;br/></string>
+    <string name="rates" translatable="false">%1d&#160;kHz,&#160;%2d&#160;kbps</string>
 
     <!-- Main - Artists -->
     <string name="artists">Artists</string>

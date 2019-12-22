@@ -5,6 +5,8 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.res.Resources
 import android.database.Cursor
+import android.media.MediaExtractor
+import android.media.MediaFormat
 import android.net.Uri
 import android.os.Environment
 import android.provider.DocumentsContract
@@ -147,6 +149,23 @@ object MusicUtils {
             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
             COLUMNS, AudioColumns.IS_MUSIC + "=1", null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER
         )
+    }
+
+    @JvmStatic
+    fun getBitrate(path: String): Pair<Int, Int>? {
+        val mediaExtractor = MediaExtractor()
+        return try {
+            mediaExtractor.setDataSource(path)
+            val mediaFormat = mediaExtractor.getTrackFormat(0)
+
+            val sampleRate = mediaFormat.getInteger(MediaFormat.KEY_SAMPLE_RATE)
+            //get bitrate in bps, divide by 1000 to get Kbps
+            val bitrate = mediaFormat.getInteger(MediaFormat.KEY_BIT_RATE) / 1000
+            Pair(sampleRate, bitrate)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
     }
 
     @JvmStatic
