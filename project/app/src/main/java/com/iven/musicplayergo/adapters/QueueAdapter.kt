@@ -85,16 +85,19 @@ class QueueAdapter(
                 setOnClickListener {
 
                     mediaPlayerHolder.apply {
-                        when {
-                            isSongRestoredFromPrefs -> isPlay = true
-                            else -> if (!mediaPlayerHolder.isQueueStarted)
-                                mediaPlayerHolder.setCurrentSong(
-                                    song,
-                                    queueSongs,
-                                    true
-                                ) else
-                                currentSong = Pair(song, true)
+
+                        if (isSongRestoredFromPrefs) isPlay = true
+
+                        if (!isQueueStarted) {
+                            isQueueStarted = true
+                            mediaPlayerHolder.mediaPlayerInterface.onQueueStartedOrEnded(true)
                         }
+
+                        mediaPlayerHolder.setCurrentSong(
+                            song,
+                            queueSongs,
+                            true
+                        )
                         initMediaPlayer(song)
                     }
                 }
