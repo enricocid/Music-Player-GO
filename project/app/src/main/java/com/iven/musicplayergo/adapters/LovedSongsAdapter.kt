@@ -11,7 +11,6 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
-import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -27,7 +26,7 @@ class LovedSongsAdapter(
 
     private var mLovedSongs = goPreferences.lovedSongs?.toMutableList()
 
-    fun swapSongs(lovedSongs: MutableList<Pair<Music, Int>>) {
+    fun swapSongs(lovedSongs: MutableList<Pair<Music?, Int>>?) {
         mLovedSongs = lovedSongs
         notifyDataSetChanged()
         uiControlInterface.onLovedSongsUpdate(false)
@@ -49,25 +48,25 @@ class LovedSongsAdapter(
     }
 
     override fun onBindViewHolder(holder: LoveHolder, position: Int) {
-        holder.bindItems(mLovedSongs?.get(holder.adapterPosition)!!)
+        holder.bindItems(mLovedSongs?.get(holder.adapterPosition))
     }
 
     inner class LoveHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindItems(lovedSong: Pair<Music, Int>) {
+        fun bindItems(lovedSong: Pair<Music?, Int>?) {
 
             val title = itemView.findViewById<TextView>(R.id.title)
             val duration = itemView.findViewById<TextView>(R.id.duration)
             val subtitle = itemView.findViewById<TextView>(R.id.subtitle)
 
-            val song = lovedSong.first
+            val song = lovedSong?.first
 
-            title.text = song.title
+            title.text = song?.title
             duration.text = ThemeHelper.buildSpanned(
                 context.getString(
                     R.string.loved_song_subtitle,
-                    MusicUtils.formatSongDuration(lovedSong.second.toLong(), false),
-                    MusicUtils.formatSongDuration(song.duration, false)
+                    MusicUtils.formatSongDuration(lovedSong?.second?.toLong()!!, false),
+                    MusicUtils.formatSongDuration(song?.duration!!, false)
                 )
             )
             subtitle.text =
@@ -78,12 +77,10 @@ class LovedSongsAdapter(
                     mediaPlayerHolder.isSongFromLovedSongs = Pair(true, lovedSong.second)
                     uiControlInterface.onSongSelected(
                         song,
-                        MusicUtils.getAlbumFromList(
-                            song.album,
-                            musicLibrary.allAlbumsByArtist[song.artist]!!
+                        MusicUtils.getAlbumSongs(
+                            song.artist,
+                            song.album
                         )
-                            .first
-                            .music!!
                     )
                 }
                 setOnLongClickListener {

@@ -84,14 +84,14 @@ object Utils {
     @JvmStatic
     fun processQueryForStringsLists(
         query: String?,
-        list: List<String>
+        list: List<String>?
     ): List<String>? {
         // in real app you'd have it instantiated just once
         val filteredStrings = mutableListOf<String>()
 
         return try {
             // case insensitive search
-            list.iterator().forEach {
+            list?.iterator()?.forEach {
                 if (it.toLowerCase().contains(query?.toLowerCase()!!)) {
                     filteredStrings.add(it)
                 }
@@ -104,13 +104,13 @@ object Utils {
     }
 
     @JvmStatic
-    fun processQueryForMusic(query: String?, musicList: List<Music>): List<Any>? {
+    fun processQueryForMusic(query: String?, musicList: List<Music>?): List<Music>? {
         // in real app you'd have it instantiated just once
-        val filteredSongs = mutableListOf<Any>()
+        val filteredSongs = mutableListOf<Music>()
 
         return try {
             // case insensitive search
-            musicList.iterator().forEach {
+            musicList?.iterator()?.forEach {
                 if (it.title?.toLowerCase()!!.contains(query?.toLowerCase()!!)) {
                     filteredSongs.add(it)
                 }
@@ -125,19 +125,23 @@ object Utils {
     @JvmStatic
     fun getSortedList(
         id: Int,
-        list: MutableList<String>,
-        defaultList: MutableList<String>
-    ): MutableList<String> {
-        return when (id) {
+        list: MutableList<String>?,
+        defaultList: MutableList<String>?
+    ): MutableList<String>? {
 
+        return when (id) {
             ASCENDING_SORTING -> {
-                Collections.sort(list, String.CASE_INSENSITIVE_ORDER)
+                list?.apply {
+                    Collections.sort(this, String.CASE_INSENSITIVE_ORDER)
+                }
                 list
             }
 
             DESCENDING_SORTING -> {
-                Collections.sort(list, String.CASE_INSENSITIVE_ORDER)
-                list.asReversed()
+                list?.apply {
+                    Collections.sort(this, String.CASE_INSENSITIVE_ORDER)
+                }
+                list?.asReversed()
             }
             else -> defaultList
         }
@@ -260,7 +264,7 @@ object Utils {
     }
 
     @JvmStatic
-    fun addToLovedSongs(context: Context, song: Music, currentPosition: Int) {
+    fun addToLovedSongs(context: Context, song: Music?, currentPosition: Int) {
         val lovedSongs =
             if (goPreferences.lovedSongs != null) goPreferences.lovedSongs else mutableListOf()
         if (!lovedSongs?.contains(Pair(song, currentPosition))!!) {
@@ -274,7 +278,7 @@ object Utils {
                 context,
                 context.getString(
                     R.string.loved_song_added,
-                    song.title!!,
+                    song?.title,
                     MusicUtils.formatSongDuration(currentPosition.toLong(), false)
                 ),
                 Toast.LENGTH_SHORT
@@ -314,7 +318,7 @@ object Utils {
     @JvmStatic
     fun showDeleteLovedSongDialog(
         context: Context,
-        item: Pair<Music, Int>,
+        item: Pair<Music?, Int>?,
         lovedSongsAdapter: LovedSongsAdapter
     ) {
 
@@ -330,14 +334,14 @@ object Utils {
             message(
                 text = context.getString(
                     R.string.loved_song_remove,
-                    item.first.title,
-                    MusicUtils.formatSongDuration(item.second.toLong(), false)
+                    item?.first?.title,
+                    MusicUtils.formatSongDuration(item?.second?.toLong()!!, false)
                 )
             )
             positiveButton {
                 lovedSongs?.remove(item)
                 goPreferences.lovedSongs = lovedSongs
-                lovedSongsAdapter.swapSongs(lovedSongs!!)
+                lovedSongsAdapter.swapSongs(lovedSongs)
             }
             negativeButton {}
         }

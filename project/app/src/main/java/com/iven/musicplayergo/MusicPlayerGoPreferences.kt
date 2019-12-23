@@ -40,14 +40,14 @@ class MusicPlayerGoPreferences(context: Context) {
     private val mGson = GsonBuilder().create()
 
     private val typeSongsLibrary = object : TypeToken<MutableList<Music>>() {}.type
-    private val typeLastPlayedSong = object : TypeToken<Pair<Music, Int>>() {}.type
-    private val typeLovedSong = object : TypeToken<MutableList<Pair<Music, Int>>>() {}.type
+    private val typeLastPlayedSong = object : TypeToken<Pair<Music?, Int>>() {}.type
+    private val typeLovedSong = object : TypeToken<MutableList<Pair<Music?, Int>>>() {}.type
 
     var latestVolume: Int
         get() = mPrefs.getInt(prefsLatestVolume, 100)
         set(value) = mPrefs.edit().putInt(prefsLatestVolume, value).apply()
 
-    var latestPlayedSong: Pair<Music, Int>?
+    var latestPlayedSong: Pair<Music?, Int>?
         get() = getObject(
             prefsLatestPlayedSong,
             typeLastPlayedSong
@@ -61,7 +61,7 @@ class MusicPlayerGoPreferences(context: Context) {
         )
         set(value) = putObject(prefsSongsLibrary, value)
 
-    var lovedSongs: MutableList<Pair<Music, Int>>?
+    var lovedSongs: MutableList<Pair<Music?, Int>>?
         get() = getObject(
             prefsLovedSongs,
             typeLovedSong

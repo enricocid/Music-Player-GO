@@ -30,11 +30,10 @@ object MusicUtils {
     //so when played artist is selected the album position will be returned
     //if selected artist differs from played artist -1 will be returned
     @JvmStatic
-    fun getPlayingAlbumPosition(selectedArtist: String, mediaPlayerHolder: MediaPlayerHolder): Int {
+    fun getPlayingAlbumPosition(mediaPlayerHolder: MediaPlayerHolder): Int {
         return try {
             val currentSong = mediaPlayerHolder.currentSong.first
-            val albumsForArtist = musicLibrary.allAlbumsByArtist.getValue(selectedArtist)
-            val album = getAlbumFromList(currentSong.album, albumsForArtist)
+            val album = getAlbumFromList(currentSong?.artist, currentSong?.album)
             album.second
         } catch (e: Exception) {
             e.printStackTrace()
@@ -44,22 +43,28 @@ object MusicUtils {
 
     @JvmStatic
     //returns a pair of album and its position given a list of albums
-    fun getAlbumFromList(album: String?, albums: List<Album>): Pair<Album, Int> {
+    fun getAlbumFromList(artist: String?, album: String?): Pair<Album, Int> {
+        val albums = musicLibrary.allAlbumsByArtist[artist]
         return try {
-            val position = albums.indexOfFirst { it.title == album }
+            val position = albums?.indexOfFirst { it.title == album }!!
             Pair(albums[position], position)
         } catch (e: Exception) {
             e.printStackTrace()
-            Pair(albums[0], 0)
+            Pair(albums?.get(0)!!, 0)
         }
+    }
+
+    @JvmStatic
+    fun getAlbumSongs(artist: String?, album: String?): List<Music>? {
+        return getAlbumFromList(artist, album).first.music
     }
 
     @JvmStatic
     fun getSongForIntent(
         path: String?,
-        allDeviceSongs: List<Music>
+        allDeviceSongs: List<Music>?
     ): Music? {
-        return allDeviceSongs.firstOrNull { s -> s.path == path }
+        return allDeviceSongs?.firstOrNull { s -> s.path == path }
     }
 
     @JvmStatic
@@ -102,10 +107,10 @@ object MusicUtils {
     }
 
     @JvmStatic
-    fun formatSongDuration(duration: Long, isAlbum: Boolean): String {
+    fun formatSongDuration(duration: Long?, isAlbum: Boolean): String {
         val defaultFormat = if (isAlbum) "%02dm:%02ds" else "%02d:%02d"
 
-        val hours = TimeUnit.MILLISECONDS.toHours(duration)
+        val hours = TimeUnit.MILLISECONDS.toHours(duration!!)
         val minutes = TimeUnit.MILLISECONDS.toMinutes(duration)
         val seconds = TimeUnit.MILLISECONDS.toSeconds(duration)
 
@@ -152,10 +157,10 @@ object MusicUtils {
     }
 
     @JvmStatic
-    fun getBitrate(path: String): Pair<Int, Int>? {
+    fun getBitrate(path: String?): Pair<Int, Int>? {
         val mediaExtractor = MediaExtractor()
         return try {
-            mediaExtractor.setDataSource(path)
+            mediaExtractor.setDataSource(path!!)
             val mediaFormat = mediaExtractor.getTrackFormat(0)
 
             val sampleRate = mediaFormat.getInteger(MediaFormat.KEY_SAMPLE_RATE)
@@ -185,7 +190,7 @@ object MusicUtils {
      * https://gist.github.com/tatocaster/32aad15f6e0c50311626
      */
     @JvmStatic
-    fun getRealPathFromURI(context: Context, uri: Uri): String? {
+    fun getRealPathFromURI(context: Context, uri: Uri?): String? {
         // DocumentProvider
         if (DocumentsContract.isDocumentUri(context, uri)) {
 
@@ -215,13 +220,13 @@ object MusicUtils {
                 return getDataColumn(context, contentUri, selection, selectionArgs)
             }// MediaProvider
             // DownloadsProvider
-        } else if ("content".equals(uri.scheme!!, ignoreCase = true)) {
+        } else if ("content".equals(uri?.scheme, ignoreCase = true)) {
 
             // Return the remote address
             return getDataColumn(context, uri, null, null)
 
-        } else if ("file".equals(uri.scheme!!, ignoreCase = true)) {
-            return uri.path
+        } else if ("file".equals(uri?.scheme, ignoreCase = true)) {
+            return uri?.path
         }
         return null
     }
@@ -279,8 +284,8 @@ object MusicUtils {
      * @return Whether the Uri authority is ExternalStorageProvider.
      */
     @JvmStatic
-    private fun isExternalStorageDocument(uri: Uri): Boolean {
-        return "com.android.externalstorage.documents" == uri.authority
+    private fun isExternalStorageDocument(uri: Uri?): Boolean {
+        return "com.android.externalstorage.documents" == uri?.authority
     }
 
     /**
@@ -288,7 +293,7 @@ object MusicUtils {
      * @return Whether the Uri authority is MediaProvider.
      */
     @JvmStatic
-    private fun isMediaDocument(uri: Uri): Boolean {
-        return "com.android.providers.media.documents" == uri.authority
+    private fun isMediaDocument(uri: Uri?): Boolean {
+        return "com.android.providers.media.documents" == uri?.authority
     }
 }

@@ -10,7 +10,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.recyclical.datasource.DataSource
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
@@ -46,9 +45,9 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var mIndicatorFastScrollerView: FastScrollerView
     private lateinit var mIndicatorFastScrollThumb: FastScrollerThumbView
 
-    private lateinit var mFolders: MutableList<String>
+    private var mFolders: MutableList<String>? = null
 
-    private lateinit var mDataSource: DataSource<Any>
+    private val mDataSource = dataSourceOf()
 
     private lateinit var mUIControlInterface: UIControlInterface
 
@@ -74,11 +73,11 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
         return inflater.inflate(R.layout.fragment_folders, container, false)
     }
 
-    private fun getSortedFolders(): MutableList<String> {
+    private fun getSortedFolders(): MutableList<String>? {
         return Utils.getSortedList(
             mSorting,
-            musicLibrary.allSongsByFolder.keys.toMutableList(),
-            musicLibrary.allSongsByFolder.keys.toMutableList()
+            musicLibrary.allSongsByFolder?.keys?.toMutableList(),
+            musicLibrary.allSongsByFolder?.keys?.toMutableList()
         )
     }
 
@@ -93,7 +92,7 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
         mSorting = goPreferences.foldersSorting
 
         mFolders = getSortedFolders()
-        mDataSource = dataSourceOf(mFolders)
+        setFoldersDataSource(mFolders)
 
         context?.let {
 
@@ -160,8 +159,14 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
+    private fun setFoldersDataSource(foldersList: List<String>?) {
+        foldersList?.apply {
+            mDataSource.set(this)
+        }
+    }
+
     override fun onQueryTextChange(newText: String?): Boolean {
-        mDataSource.set(Utils.processQueryForStringsLists(newText, mFolders) ?: mFolders)
+        setFoldersDataSource(Utils.processQueryForStringsLists(newText, mFolders) ?: mFolders)
         return false
     }
 
@@ -172,7 +177,7 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
     //getting parent path of the first song
     private fun getParentFolder(item: String): String {
         val songRootPath =
-            musicLibrary.allSongsByFolder.getValue(item)[0].path
+            musicLibrary.allSongsByFolder?.getValue(item)?.get(0)?.path
         return File(songRootPath!!).parentFile?.parent.toString()
     }
 
@@ -189,14 +194,14 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
                 mIndicatorFastScrollerView.setupWithRecyclerView(
                     mFoldersRecyclerView,
                     { position ->
-                        val item = mFolders[position] // Get your model object
+                        val item = mFolders?.get(position) // Get your model object
                         // or fetch the section at [position] from your database
 
                         FastScrollItemIndicator.Text(
-                            item.substring(
+                            item?.substring(
                                 0,
                                 1
-                            ).toUpperCase() // Grab the first letter and capitalize it
+                            )?.toUpperCase()!! // Grab the first letter and capitalize it
                         ) // Return a text tab_indicator
                     }
                 )
@@ -232,7 +237,7 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
                 mIndicatorFastScrollerView.visibility =
                     if (mSorting != DEFAULT_SORTING) View.VISIBLE else View.GONE
 
-                mDataSource.set(mFolders)
+                mDataSource.set(mFolders!!)
 
                 mSortMenuItem.setTitleColor(
                     ThemeHelper.resolveColorAttr(

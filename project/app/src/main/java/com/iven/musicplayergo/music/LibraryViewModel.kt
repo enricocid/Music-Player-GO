@@ -23,7 +23,7 @@ class LibraryViewModel : ViewModel(), CoroutineScope {
 
     fun buildLibrary(
         context: Context,
-        deviceSongs: MutableList<Music>
+        deviceSongs: MutableList<Music>?
     ): MutableLiveData<HashMap<String, List<Album>>> {
         return go(context, deviceSongs)
     }
@@ -32,7 +32,7 @@ class LibraryViewModel : ViewModel(), CoroutineScope {
     @SuppressLint("InlinedApi")
     fun go(
         context: Context,
-        deviceSongs: MutableList<Music>
+        deviceSongs: MutableList<Music>?
     ): MutableLiveData<HashMap<String, List<Album>>> {
 
         launch {

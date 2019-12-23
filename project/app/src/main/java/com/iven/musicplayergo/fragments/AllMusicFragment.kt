@@ -8,8 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.recyclical.datasource.DataSource
-import com.afollestad.recyclical.datasource.dataSourceOf
+import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.R
@@ -32,8 +31,8 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private lateinit var mSongsRecyclerView: RecyclerView
 
-    private lateinit var mAllMusic: MutableList<Music>
-    private lateinit var mDataSource: DataSource<Any>
+    private var mAllMusic: MutableList<Music>? = null
+    private val mDataSource = emptyDataSource()
 
     private lateinit var mUIControlInterface: UIControlInterface
 
@@ -62,7 +61,8 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
         mSongsRecyclerView = all_music_rv
 
         mAllMusic = musicLibrary.allSongsFiltered
-        mDataSource = dataSourceOf(mAllMusic)
+
+        setMusicDataSource(mAllMusic)
 
         context?.let {
 
@@ -85,11 +85,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                         onClick {
                             mUIControlInterface.onSongSelected(
                                 item,
-                                MusicUtils.getAlbumFromList(
-                                    item.album,
-                                    musicLibrary.allAlbumsByArtist.getValue(item.artist!!)
-                                )
-                                    .first.music!!.toList()
+                                MusicUtils.getAlbumSongs(item.artist, item.album)
                             )
                         }
 
@@ -133,8 +129,14 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
+    private fun setMusicDataSource(musicList: List<Music>?) {
+        musicList?.apply {
+            mDataSource.set(this)
+        }
+    }
+
     override fun onQueryTextChange(newText: String?): Boolean {
-        mDataSource.set(Utils.processQueryForMusic(newText, mAllMusic) ?: mAllMusic)
+        setMusicDataSource(Utils.processQueryForMusic(newText, mAllMusic) ?: mAllMusic)
         return false
     }
 

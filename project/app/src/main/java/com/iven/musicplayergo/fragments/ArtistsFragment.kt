@@ -10,8 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.recyclical.datasource.DataSource
-import com.afollestad.recyclical.datasource.dataSourceOf
+import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.*
@@ -42,9 +41,9 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var mIndicatorFastScrollerView: FastScrollerView
     private lateinit var mIndicatorFastScrollThumb: FastScrollerThumbView
 
-    private lateinit var mArtists: MutableList<String>
+    private var mArtists: MutableList<String>? = null
 
-    private lateinit var mDataSource: DataSource<Any>
+    private val mDataSource = emptyDataSource()
 
     private lateinit var mUIControlInterface: UIControlInterface
 
@@ -70,7 +69,7 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
         return inflater.inflate(R.layout.fragment_artists, container, false)
     }
 
-    private fun getSortedArtists(): MutableList<String> {
+    private fun getSortedArtists(): MutableList<String>? {
         return Utils.getSortedList(
             mSorting,
             musicLibrary.allAlbumsByArtist.keys.toMutableList(),
@@ -89,7 +88,8 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
         mSorting = goPreferences.artistsSorting
 
         mArtists = getSortedArtists()
-        mDataSource = dataSourceOf(mArtists)
+
+        setArtistsDataSource(mArtists)
 
         context?.let {
 
@@ -163,8 +163,14 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
+    private fun setArtistsDataSource(artistsList: List<String>?) {
+        artistsList?.apply {
+            mDataSource.set(this)
+        }
+    }
+
     override fun onQueryTextChange(newText: String?): Boolean {
-        mDataSource.set(Utils.processQueryForStringsLists(newText, mArtists) ?: mArtists)
+        setArtistsDataSource(Utils.processQueryForStringsLists(newText, mArtists) ?: mArtists)
         return false
     }
 
@@ -193,14 +199,14 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                 mIndicatorFastScrollerView.setupWithRecyclerView(
                     mArtistsRecyclerView,
                     { position ->
-                        val item = mArtists[position] // Get your model object
+                        val item = mArtists?.get(position) // Get your model object
                         // or fetch the section at [position] from your database
 
                         FastScrollItemIndicator.Text(
-                            item.substring(
+                            item?.substring(
                                 0,
                                 1
-                            ).toUpperCase() // Grab the first letter and capitalize it
+                            )?.toUpperCase()!! // Grab the first letter and capitalize it
                         ) // Return a text tab_indicator
                     }
                 )
@@ -236,7 +242,7 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                 mIndicatorFastScrollerView.visibility =
                     if (mSorting != DEFAULT_SORTING) View.VISIBLE else View.GONE
 
-                mDataSource.set(mArtists)
+                setArtistsDataSource(mArtists)
 
                 mSortMenuItem.setTitleColor(
                     ThemeHelper.resolveColorAttr(

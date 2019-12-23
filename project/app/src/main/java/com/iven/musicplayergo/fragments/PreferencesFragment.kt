@@ -28,7 +28,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener {
 
     private lateinit var mAccentsDialog: MaterialDialog
-    private lateinit var mMultiListDialog: MaterialDialog
+    private lateinit var mActiveFragmentsDialog: MaterialDialog
     private lateinit var mSupportedFormatsDialog: MaterialDialog
 
     private var mSelectedAccent: Int by Delegates.notNull()
@@ -36,13 +36,15 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     private lateinit var mUIControlInterface: UIControlInterface
 
     override fun setDivider(divider: Drawable?) {
-        val newDivider = ColorDrawable(
-            ThemeHelper.getAlphaAccent(
-                context!!,
-                85
+        context?.apply {
+            val newDivider = ColorDrawable(
+                ThemeHelper.getAlphaAccent(
+                    this,
+                    85
+                )
             )
-        )
-        super.setDivider(newDivider)
+            super.setDivider(newDivider)
+        }
     }
 
     override fun onResume() {
@@ -54,7 +56,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         super.onPause()
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
         if (::mAccentsDialog.isInitialized && mAccentsDialog.isShowing) mAccentsDialog.dismiss()
-        if (::mMultiListDialog.isInitialized && mMultiListDialog.isShowing) mMultiListDialog.dismiss()
+        if (::mActiveFragmentsDialog.isInitialized && mActiveFragmentsDialog.isShowing) mActiveFragmentsDialog.dismiss()
         if (::mSupportedFormatsDialog.isInitialized && mSupportedFormatsDialog.isShowing) mSupportedFormatsDialog.dismiss()
     }
 
@@ -97,7 +99,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     }
 
     override fun onPreferenceClick(preference: Preference?): Boolean {
-
 
         activity?.let {
             when (preference?.key) {
@@ -177,7 +178,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     private fun showActiveFragmentsDialog(activity: Activity) {
 
-        mMultiListDialog = MaterialDialog(activity).show {
+        mActiveFragmentsDialog = MaterialDialog(activity).show {
 
             cornerRadius(res = R.dimen.md_corner_radius)
             title(res = R.string.active_fragments_pref_title)

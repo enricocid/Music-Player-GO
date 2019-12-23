@@ -94,8 +94,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private var mSeekBarPositionUpdateTask: Runnable? = null
 
     //first: current song, second: isFromQueue
-    lateinit var currentSong: Pair<Music, Boolean>
-    private lateinit var mPlayingAlbumSongs: List<Music>
+    lateinit var currentSong: Pair<Music?, Boolean>
+    private var mPlayingAlbumSongs: List<Music>? = null
 
     var currentVolumeInPercent = goPreferences.latestVolume
     val playerPosition get() = if (!isMediaPlayer) goPreferences.latestPlayedSong?.second!! else mediaPlayer.currentPosition
@@ -111,7 +111,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     var isQueue = false
     var isQueueStarted = false
-    private lateinit var preQueueSong: Pair<Music, List<Music>>
+    private lateinit var preQueueSong: Pair<Music?, List<Music>?>
     var queueSongs = mutableListOf<Music>()
 
     var isSongRestoredFromPrefs = false
@@ -187,7 +187,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
-    fun setCurrentSong(song: Music, songs: List<Music>, isFromQueue: Boolean) {
+    fun setCurrentSong(song: Music?, songs: List<Music>?, isFromQueue: Boolean) {
         currentSong = Pair(song, isFromQueue)
         mPlayingAlbumSongs = songs
     }
@@ -313,12 +313,16 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         setCurrentSong(preQueueSong.first, preQueueSong.second, false)
     }
 
-    private fun getSkipSong(isNext: Boolean): Music {
+    private fun getSkipSong(isNext: Boolean): Music? {
 
-        val currentIndex = mPlayingAlbumSongs.indexOf(currentSong.first)
+        val currentIndex = mPlayingAlbumSongs?.indexOf(currentSong.first)
 
         try {
-            return mPlayingAlbumSongs[if (isNext) currentIndex + 1 else currentIndex - 1]
+            return mPlayingAlbumSongs?.get(
+                if (isNext) currentIndex?.plus(1)!! else currentIndex?.minus(
+                    1
+                )!!
+            )
         } catch (e: IndexOutOfBoundsException) {
             e.printStackTrace()
             return when {
@@ -336,7 +340,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                         }
                     }
                 }
-                else -> if (currentIndex != 0) mPlayingAlbumSongs[0] else mPlayingAlbumSongs[mPlayingAlbumSongs.size - 1]
+                else -> if (currentIndex != 0) mPlayingAlbumSongs?.get(0) else mPlayingAlbumSongs?.get(
+                    mPlayingAlbumSongs?.size?.minus(1)!!
+                )
             }
         }
     }
@@ -385,7 +391,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
      * object has to be created. That's why this method is private, and called by load(int) and
      * not the constructor.
      */
-    fun initMediaPlayer(song: Music) {
+    fun initMediaPlayer(song: Music?) {
 
         try {
             if (isMediaPlayer) {
@@ -416,7 +422,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 setPreciseVolume(currentVolumeInPercent)
             }
 
-            mediaPlayer.setDataSource(song.path)
+            mediaPlayer.setDataSource(song?.path)
             mediaPlayer.prepare()
 
         } catch (e: Exception) {
@@ -564,6 +570,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private inner class NotificationReceiver : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
+
             val action = intent.action
 
             if (action != null) {
@@ -606,14 +613,14 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private inner class MediaButtonIntentReceiver : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
-            val intentAction = intent.action
-            if (Intent.ACTION_MEDIA_BUTTON != intentAction) {
+
+            if (Intent.ACTION_MEDIA_BUTTON != intent.action) {
                 return
             }
-            val event: KeyEvent =
-                intent.getParcelableExtra<Parcelable>(Intent.EXTRA_KEY_EVENT) as KeyEvent
-            val action: Int = event.action
-            if (action == KeyEvent.ACTION_DOWN) { // do something
+
+            val event = intent.getParcelableExtra<Parcelable>(Intent.EXTRA_KEY_EVENT) as KeyEvent
+
+            if (event.action == KeyEvent.ACTION_DOWN) { // do something
                 when (event.keyCode) {
                     KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> resumeOrPause()
                     KeyEvent.KEYCODE_MEDIA_CLOSE -> stopPlaybackService(true)

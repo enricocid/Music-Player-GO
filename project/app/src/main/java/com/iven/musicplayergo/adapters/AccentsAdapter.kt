@@ -14,11 +14,7 @@ class AccentsAdapter(private val activity: Activity) :
     RecyclerView.Adapter<AccentsAdapter.AccentsHolder>() {
 
     private val mAccents = ThemeHelper.accents
-    private var mSelectedAccent = R.color.deep_purple
-
-    init {
-        mSelectedAccent = goPreferences.accent
-    }
+    private var mSelectedAccent = goPreferences.accent
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccentsHolder {
         return AccentsHolder(

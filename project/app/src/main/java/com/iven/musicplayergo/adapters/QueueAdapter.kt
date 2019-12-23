@@ -27,7 +27,7 @@ class QueueAdapter(
     private val mDefaultTextColor =
         ThemeHelper.resolveColorAttr(context, android.R.attr.textColorPrimary)
 
-    fun swapSelectedSong(song: Music) {
+    fun swapSelectedSong(song: Music?) {
         notifyItemChanged(mQueueSongs.indexOf(mSelectedSong.first))
         mSelectedSong = Pair(song, true)
         notifyItemChanged(mQueueSongs.indexOf(mSelectedSong.first))

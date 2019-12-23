@@ -73,7 +73,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                         ThemeHelper.buildSpanned(
                             playerService.getString(
                                 R.string.song_title_notification,
-                                song.title
+                                song?.title
                             )
                         )
                     )
@@ -81,8 +81,8 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                         ThemeHelper.buildSpanned(
                             playerService.getString(
                                 R.string.artist_and_album,
-                                song.artist,
-                                song.album
+                                song?.artist,
+                                song?.album
                             )
                         )
                     )

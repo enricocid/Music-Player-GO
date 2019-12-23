@@ -15,7 +15,6 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.ArgbEvaluator
-import com.afollestad.recyclical.datasource.DataSource
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
@@ -27,7 +26,6 @@ import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.ui.*
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlin.math.max
-import kotlin.properties.Delegates
 
 /**
  * A simple [Fragment] subclass.
@@ -49,22 +47,22 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var mSelectedAlbumTitle: TextView
     private lateinit var mSelectedAlbumYearDuration: TextView
 
-    private lateinit var mSelectedAlbumsDataSource: DataSource<Any>
-    private lateinit var mSongsDataSource: DataSource<Any>
+    private val mSelectedAlbumsDataSource = dataSourceOf()
+    private val mSongsDataSource = dataSourceOf()
 
     private lateinit var mAlbumsRecyclerView: RecyclerView
     private lateinit var mAlbumsRecyclerViewLayoutManager: LinearLayoutManager
     private lateinit var mSongsRecyclerView: RecyclerView
     private lateinit var mSongsRecyclerViewLayoutManager: LinearLayoutManager
 
-    private lateinit var mSelectedArtistAlbums: List<Album>
-    private lateinit var mSongsForArtistOrFolder: List<Music>
+    private var mSelectedArtistAlbums: List<Album>? = null
+    private var mSongsForArtistOrFolder: List<Music>? = null
 
-    private var mSelectedArtistOrFolder: String by Delegates.notNull()
+    private var mSelectedArtistOrFolder: String? = null
     private var mSelectedAlbumPosition = -1
 
     private lateinit var mUIControlInterface: UIControlInterface
-    private lateinit var mSelectedAlbum: Album
+    private var mSelectedAlbum: Album? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -85,18 +83,18 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
             mSelectedArtistAlbums = musicLibrary.allAlbumsByArtist[mSelectedArtistOrFolder]!!
             mSongsForArtistOrFolder =
-                musicLibrary.allSongsByArtist.getValue(mSelectedArtistOrFolder)
+                musicLibrary.allSongsByArtist[mSelectedArtistOrFolder]
 
             mSelectedAlbum =
                 if (mSelectedAlbumPosition != -1) {
-                    mSelectedArtistAlbums[mSelectedAlbumPosition]
+                    mSelectedArtistAlbums?.get(mSelectedAlbumPosition)
                 } else {
                     mSelectedAlbumPosition = 0
-                    mSelectedArtistAlbums[0]
+                    mSelectedArtistAlbums?.get(0)
                 }
         } else {
             mSongsForArtistOrFolder =
-                musicLibrary.allSongsByFolder.getValue(mSelectedArtistOrFolder)
+                musicLibrary.allSongsByFolder?.get(mSelectedArtistOrFolder)
         }
 
         // This makes sure that the container activity has implemented
@@ -161,11 +159,11 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 mSelectedAlbumYearDuration.visibility = View.GONE
 
                 mSongsForArtistOrFolder =
-                    musicLibrary.allSongsByFolder.getValue(mSelectedArtistOrFolder)
+                    musicLibrary.allSongsByFolder?.get(mSelectedArtistOrFolder)
 
                 mDetailsToolbar.subtitle = getString(
                     R.string.folder_info,
-                    mSongsForArtistOrFolder.size
+                    mSongsForArtistOrFolder?.size
                 )
 
                 val searchView =
@@ -178,8 +176,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 }
             }
 
-            mSongsDataSource =
-                dataSourceOf(if (sFolder) mSongsForArtistOrFolder else mSelectedAlbum.music!!)
+            setSongsDataSource(if (sFolder) mSongsForArtistOrFolder else mSelectedAlbum?.music)
 
             mSongsRecyclerView.apply {
 
@@ -214,10 +211,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                             val selectedPlaylist =
                                 if (sFolder) mSongsForArtistOrFolder
                                 else
-                                    MusicUtils.getAlbumFromList(
-                                        item.album,
-                                        mSelectedArtistAlbums
-                                    ).first.music!!.toList()
+                                    MusicUtils.getAlbumSongs(item.artist, item.album)
 
                             mUIControlInterface.onSongSelected(
                                 item,
@@ -245,9 +239,22 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
+    private fun setAlbumsDataSource(albumsList: List<Album>?) {
+        albumsList?.apply {
+            mSelectedAlbumsDataSource.set(this)
+        }
+    }
+
+    private fun setSongsDataSource(musicList: List<Music>?) {
+        musicList?.apply {
+            mSongsDataSource.set(this)
+        }
+    }
+
     override fun onQueryTextChange(newText: String?): Boolean {
-        mSongsDataSource.set(
-            Utils.processQueryForMusic(newText, mSongsForArtistOrFolder) ?: mSongsForArtistOrFolder
+        setSongsDataSource(
+            Utils.processQueryForMusic(newText, mSongsForArtistOrFolder)
+                ?: mSongsForArtistOrFolder
         )
         return false
     }
@@ -270,15 +277,15 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             menu.apply {
                 findItem(R.id.action_shuffle_sa).isEnabled = !sFolder
                 if (!sFolder) findItem(R.id.action_shuffle_am).isEnabled =
-                    mSelectedArtistAlbums.size >= 2
+                    mSelectedArtistAlbums?.size!! >= 2
             }
 
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.action_shuffle_am -> mUIControlInterface.onShuffleSongs(
-                        mSongsForArtistOrFolder.toMutableList()
+                        mSongsForArtistOrFolder?.toMutableList()
                     )
-                    R.id.action_shuffle_sa -> mUIControlInterface.onShuffleSongs(mSelectedAlbum.music!!)
+                    R.id.action_shuffle_sa -> mUIControlInterface.onShuffleSongs(mSelectedAlbum?.music)
                 }
                 return@setOnMenuItemClickListener true
             }
@@ -310,12 +317,12 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
         updateSelectedAlbumTitle()
 
-        mSelectedAlbumsDataSource = dataSourceOf(mSelectedArtistAlbums)
+        setAlbumsDataSource(mSelectedArtistAlbums)
 
         mDetailsToolbar.subtitle = getString(
             R.string.artist_info,
-            mSelectedArtistAlbums.size,
-            mSongsForArtistOrFolder.size
+            mSelectedArtistAlbums?.size,
+            mSongsForArtistOrFolder?.size
         )
 
         mAlbumsRecyclerView.apply {
@@ -341,7 +348,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         totalDuration.text =
                             MusicUtils.formatSongDuration(item.totalDuration, true)
                         checkbox.visibility =
-                            if (mSelectedAlbum.title != item.title) View.GONE else View.VISIBLE
+                            if (mSelectedAlbum?.title != item.title) View.GONE else View.VISIBLE
                     }
 
                     onClick { index ->
@@ -371,18 +378,18 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    fun updateView(selectedArtist: String, playedAlbumPosition: Int) {
+    fun updateView(selectedArtist: String?, playedAlbumPosition: Int) {
 
         if (selectedArtist != mSelectedArtistOrFolder) {
 
             mSelectedArtistOrFolder = selectedArtist
             mSelectedArtistAlbums =
-                musicLibrary.allAlbumsByArtist.getValue(mSelectedArtistOrFolder)
+                musicLibrary.allAlbumsByArtist[mSelectedArtistOrFolder]
 
             //restore album position
             if (playedAlbumPosition != -1) {
                 mSelectedAlbumPosition = playedAlbumPosition
-                mSelectedAlbum = mSelectedArtistAlbums[mSelectedAlbumPosition]
+                mSelectedAlbum = mSelectedArtistAlbums?.get(mSelectedAlbumPosition)
             }
 
             if (sFolder) {
@@ -391,7 +398,6 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 mAlbumsRecyclerView.visibility = View.VISIBLE
                 mSelectedAlbumTitle.visibility = View.VISIBLE
                 mSelectedAlbumYearDuration.visibility = View.VISIBLE
-                mSelectedAlbumsDataSource = dataSourceOf(mSelectedArtistAlbums)
 
                 setupToolbarSpecs(sFolder)
                 setupMenu(true)
@@ -403,14 +409,15 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     title = mSelectedArtistOrFolder
                     subtitle = getString(
                         R.string.artist_info,
-                        mSelectedArtistAlbums.size,
-                        mSongsForArtistOrFolder.size
+                        mSelectedArtistAlbums?.size,
+                        mSongsForArtistOrFolder?.size
                     )
                 }
 
-                mSelectedAlbumsDataSource.set(mSelectedArtistAlbums)
                 updateSelectedAlbumTitle()
             }
+
+            setAlbumsDataSource(mSelectedArtistAlbums)
 
             mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
                 mSelectedAlbumPosition,
@@ -420,21 +427,21 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             mSongsForArtistOrFolder =
                 musicLibrary.allSongsByArtist.getValue(mSelectedArtistOrFolder)
 
-            mSongsDataSource.set(mSelectedAlbum.music!!)
+            setSongsDataSource(mSelectedAlbum?.music)
         }
     }
 
     private fun updateSelectedAlbumTitle() {
-        mSelectedAlbumTitle.text = mSelectedAlbum.title
+        mSelectedAlbumTitle.text = mSelectedAlbum?.title
         mSelectedAlbumYearDuration.text = getString(
             R.string.year_and_duration,
-            mSelectedAlbum.year,
-            MusicUtils.formatSongDuration(mSelectedAlbum.totalDuration, true)
+            mSelectedAlbum?.year,
+            MusicUtils.formatSongDuration(mSelectedAlbum?.totalDuration, true)
         )
     }
 
     private fun swapAlbum(songs: MutableList<Music>?) {
-        mSongsDataSource.set(songs!!)
+        setSongsDataSource(songs)
         mSongsRecyclerView.scrollToPosition(0)
     }
 
@@ -499,7 +506,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
          */
         @JvmStatic
         fun newInstance(
-            selectedArtistOrFolder: String,
+            selectedArtistOrFolder: String?,
             sFolder: Boolean,
             playedAlbumPosition: Int
         ) =

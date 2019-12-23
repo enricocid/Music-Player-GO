@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mDetailsFragment: DetailsFragment
     private val sDetailsFragmentExpanded get() = ::mDetailsFragment.isInitialized && mDetailsFragment.isAdded
 
-    private lateinit var mActiveFragments: MutableList<String>
+    private var mActiveFragments: MutableList<String>? = null
 
     private var sRestoreSettingsFragment = false
 
@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
 
     //music player things
-    private lateinit var mAllDeviceSongs: MutableList<Music>
+    private var mAllDeviceSongs: MutableList<Music>? = null
 
     //booleans
     private var sUserIsSeeking = false
@@ -291,7 +291,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         getString(R.string.error_unknown),
                         Toast.LENGTH_LONG
                     )
-                    mAllDeviceSongs = goPreferences.emergencySongsLib!!
+                    mAllDeviceSongs = goPreferences.emergencySongsLib
                     buildLibraryAndFinishSetup()
 
                 } else {
@@ -333,12 +333,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun initViewPager() {
 
-        mActiveFragments = goPreferences.activeFragments?.toMutableList()!!
+        mActiveFragments = goPreferences.activeFragments?.toMutableList()
 
         initActiveFragmentsOrTabs(true)
 
         val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
-        mViewPager.offscreenPageLimit = mActiveFragments.size - 1
+        mViewPager.offscreenPageLimit = mActiveFragments?.size?.minus(1)!!
         mViewPager.adapter = pagerAdapter
 
         if (sRestoreSettingsFragment) mViewPager.currentItem = mViewPager.offscreenPageLimit
@@ -385,9 +385,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun initActiveFragmentsOrTabs(onInitActiveFragments: Boolean) {
-        mActiveFragments.iterator().forEach {
+        mActiveFragments?.iterator()?.forEach {
             if (onInitActiveFragments) initActiveFragments(it.toInt()) else
-                mTabsLayout.getTabAt(mActiveFragments.indexOf(it))?.setIcon(
+                mTabsLayout.getTabAt(mActiveFragments?.indexOf(it)!!)?.setIcon(
                     ThemeHelper.getTabIcon(
                         it.toInt()
                     )
@@ -406,14 +406,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun handleOnNavigationItemSelected(itemId: Int): Fragment {
         return when (itemId) {
-            0 -> getFragmentForIndex(mActiveFragments[0].toInt())
-            1 -> getFragmentForIndex(mActiveFragments[1].toInt())
-            2 -> getFragmentForIndex(mActiveFragments[2].toInt())
-            else -> getFragmentForIndex(mActiveFragments[3].toInt())
+            0 -> getFragmentForIndex(mActiveFragments?.get(0)?.toInt())
+            1 -> getFragmentForIndex(mActiveFragments?.get(1)?.toInt())
+            2 -> getFragmentForIndex(mActiveFragments?.get(2)?.toInt())
+            else -> getFragmentForIndex(mActiveFragments?.get(3)?.toInt())
         }
     }
 
-    private fun getFragmentForIndex(index: Int): Fragment {
+    private fun getFragmentForIndex(index: Int?): Fragment {
         return when (index) {
             0 -> mArtistsFragment
             1 -> mAllMusicFragment
@@ -423,7 +423,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun openDetailsFragment(
-        selectedArtistOrFolder: String,
+        selectedArtistOrFolder: String?,
         isFolder: Boolean
     ) {
 
@@ -431,7 +431,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             DetailsFragment.newInstance(
                 selectedArtistOrFolder,
                 isFolder,
-                MusicUtils.getPlayingAlbumPosition(selectedArtistOrFolder, mMediaPlayerHolder)
+                MusicUtils.getPlayingAlbumPosition(mMediaPlayerHolder)
             )
         supportFragmentManager.beginTransaction()
             .addToBackStack(null)
@@ -685,18 +685,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     isSongRestoredFromPrefs = goPreferences.latestPlayedSong != null
 
                     val song =
-                        if (isSongRestoredFromPrefs) goPreferences.latestPlayedSong?.first!!
+                        if (isSongRestoredFromPrefs) goPreferences.latestPlayedSong?.first
                         else
                             musicLibrary.randomMusic
 
-                    val songs =
-                        MusicUtils.getAlbumFromList(song.album, mMusic[song.artist]!!)
-                            .first
-                            .music
+                    val songs = MusicUtils.getAlbumSongs(song?.artist, song?.album)
 
                     isPlay = false
 
-                    startPlayback(song, songs!!)
+                    startPlayback(song, songs)
 
                     updatePlayingInfo(false)
 
@@ -712,7 +709,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun updatePlayingInfo(restore: Boolean) {
 
         val selectedSong = mMediaPlayerHolder.currentSong.first
-        mSeekProgressBar.max = selectedSong.duration.toInt()
+        mSeekProgressBar.max = selectedSong?.duration!!.toInt()
 
         mPlayingSong.text = selectedSong.title
 
@@ -765,7 +762,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun updateNowPlayingInfo() {
 
         val selectedSong = mMediaPlayerHolder.currentSong.first
-        val selectedSongDuration = selectedSong.duration
+        val selectedSongDuration = selectedSong?.duration!!
 
         mSongTextNP.text = selectedSong.title
 
@@ -782,7 +779,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         mFixedMusicBar.loadFrom(selectedSong.path, selectedSong.duration.toInt())
 
-        MusicUtils.getBitrate(selectedSong.path!!)?.let {
+        MusicUtils.getBitrate(selectedSong.path)?.let {
             mRatesTextNP.text = getString(R.string.rates, it.first, it.second)
         }
 
@@ -793,11 +790,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         if (isMediaPlayerHolder && mMediaPlayerHolder.isCurrentSong) {
 
             val selectedSong = mMediaPlayerHolder.currentSong.first
-            val selectedArtistOrFolder = selectedSong.artist!!
+            val selectedArtistOrFolder = selectedSong?.artist
             if (sDetailsFragmentExpanded)
                 mDetailsFragment.updateView(
                     selectedArtistOrFolder,
-                    MusicUtils.getPlayingAlbumPosition(selectedArtistOrFolder, mMediaPlayerHolder)
+                    MusicUtils.getPlayingAlbumPosition(mMediaPlayerHolder)
                 )
             else
                 openDetailsFragment(selectedArtistOrFolder, isFolder = false)
@@ -823,7 +820,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         )
     }
 
-    private fun startPlayback(song: Music, album: List<Music>) {
+    private fun startPlayback(song: Music?, album: List<Music>?) {
         if (isMediaPlayerHolder && !mPlayerService.isRunning) startService(mBindingIntent)
         mMediaPlayerHolder.apply {
             setCurrentSong(song, album, false)
@@ -831,7 +828,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    override fun onSongSelected(song: Music, songs: List<Music>) {
+    override fun onSongSelected(song: Music?, songs: List<Music>?) {
         mMediaPlayerHolder.apply {
             isSongRestoredFromPrefs = false
             if (!isPlay) isPlay = true
@@ -881,9 +878,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    override fun onShuffleSongs(songs: MutableList<Music>) {
-        songs.shuffle()
-        val song = songs[0]
+    override fun onShuffleSongs(songs: MutableList<Music>?) {
+        songs?.shuffle()
+        val song = songs?.get(0)
         onSongSelected(song, songs)
     }
 
@@ -920,7 +917,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         try {
             if (uri.toString().isNotEmpty()) {
 
-                val path = MusicUtils.getRealPathFromURI(this, uri!!)
+                val path = MusicUtils.getRealPathFromURI(this, uri)
 
                 //if we were able to get the song play it!
                 if (MusicUtils.getSongForIntent(
@@ -930,14 +927,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 ) {
 
                     val song =
-                        MusicUtils.getSongForIntent(path, mAllDeviceSongs)!!
+                        MusicUtils.getSongForIntent(path, mAllDeviceSongs)
 
                     //get album songs and sort them
-                    val albumSongs =
-                        MusicUtils.getAlbumFromList(song.album, mMusic[song.artist]!!).first
-                            .music
+                    val albumSongs = MusicUtils.getAlbumSongs(song?.artist, song?.album)
 
-                    onSongSelected(song, albumSongs!!)
+                    onSongSelected(song, albumSongs)
 
                 } else {
                     Utils.makeToast(
@@ -1024,7 +1019,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
      */
     private inner class ScreenSlidePagerAdapter(fm: FragmentManager) :
         FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        override fun getCount() = mActiveFragments.size
+        override fun getCount() = mActiveFragments?.size!!
 
         override fun getItem(position: Int): Fragment {
             return handleOnNavigationItemSelected(position)
