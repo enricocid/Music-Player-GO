@@ -30,10 +30,13 @@ object MusicUtils {
     //so when played artist is selected the album position will be returned
     //if selected artist differs from played artist -1 will be returned
     @JvmStatic
-    fun getPlayingAlbumPosition(mediaPlayerHolder: MediaPlayerHolder): Int {
+    fun getPlayingAlbumPosition(
+        selectedArtist: String?,
+        mediaPlayerHolder: MediaPlayerHolder
+    ): Int {
         return try {
             val currentSong = mediaPlayerHolder.currentSong.first
-            val album = getAlbumFromList(currentSong?.artist, currentSong?.album)
+            val album = getAlbumFromList(selectedArtist, currentSong?.album)
             album.second
         } catch (e: Exception) {
             e.printStackTrace()

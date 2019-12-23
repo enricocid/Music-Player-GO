@@ -431,7 +431,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             DetailsFragment.newInstance(
                 selectedArtistOrFolder,
                 isFolder,
-                MusicUtils.getPlayingAlbumPosition(mMediaPlayerHolder)
+                MusicUtils.getPlayingAlbumPosition(selectedArtistOrFolder, mMediaPlayerHolder)
             )
         supportFragmentManager.beginTransaction()
             .addToBackStack(null)
@@ -794,7 +794,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             if (sDetailsFragmentExpanded)
                 mDetailsFragment.updateView(
                     selectedArtistOrFolder,
-                    MusicUtils.getPlayingAlbumPosition(mMediaPlayerHolder)
+                    MusicUtils.getPlayingAlbumPosition(selectedArtistOrFolder, mMediaPlayerHolder)
                 )
             else
                 openDetailsFragment(selectedArtistOrFolder, isFolder = false)
