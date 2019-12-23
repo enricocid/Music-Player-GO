@@ -86,7 +86,8 @@ class QueueAdapter(
 
                     mediaPlayerHolder.apply {
 
-                        if (isSongRestoredFromPrefs) isPlay = true
+                        if (isSongRestoredFromPrefs) isSongRestoredFromPrefs = false
+                        if (!isPlay) isPlay = true
 
                         if (!isQueueStarted) {
                             isQueueStarted = true
