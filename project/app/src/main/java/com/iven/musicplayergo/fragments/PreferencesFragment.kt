@@ -10,9 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
 import com.iven.musicplayergo.R
@@ -29,7 +27,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     private lateinit var mAccentsDialog: MaterialDialog
     private lateinit var mActiveFragmentsDialog: MaterialDialog
-    private lateinit var mSupportedFormatsDialog: MaterialDialog
 
     private var mSelectedAccent: Int by Delegates.notNull()
 
@@ -57,7 +54,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
         if (::mAccentsDialog.isInitialized && mAccentsDialog.isShowing) mAccentsDialog.dismiss()
         if (::mActiveFragmentsDialog.isInitialized && mActiveFragmentsDialog.isShowing) mActiveFragmentsDialog.dismiss()
-        if (::mSupportedFormatsDialog.isInitialized && mSupportedFormatsDialog.isShowing) mSupportedFormatsDialog.dismiss()
     }
 
     override fun onAttach(context: Context) {
@@ -82,7 +78,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             findPreference<Preference>(getString(R.string.open_git_pref))?.onPreferenceClickListener =
                 this
 
-            findPreference<Preference>(getString(R.string.supported_formats_pref))?.onPreferenceClickListener =
+            findPreference<Preference>(getString(R.string.faq_pref))?.onPreferenceClickListener =
                 this
 
             findPreference<Preference>(getString(R.string.accent_pref))?.apply {
@@ -104,10 +100,13 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             when (preference?.key) {
 
                 getString(R.string.open_git_pref) -> Utils.openCustomTab(
-                    activity!!,
+                    it,
                     getString(R.string.app_git)
                 )
-                getString(R.string.supported_formats_pref) -> showSupportedFormatsDialog(it)
+                getString(R.string.faq_pref) -> Utils.openCustomTab(
+                    it,
+                    getString(R.string.app_faq)
+                )
                 getString(R.string.accent_pref) -> showAccentsDialog(it)
                 getString(R.string.active_fragments_pref) -> showActiveFragmentsDialog(it)
             }
@@ -131,29 +130,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 getString(R.string.accent_pref) -> mUIControlInterface.onAccentUpdated()
             }
         }
-    }
-
-    private fun showSupportedFormatsDialog(
-        context: Context
-    ) {
-
-        mSupportedFormatsDialog =
-            MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
-                title(R.string.supported_formats_title)
-                message(R.string.supportedFormats) {
-                    html { Utils.openCustomTab(context, it) }
-                    lineSpacing(1.4f)
-                }
-
-                cornerRadius(res = R.dimen.md_corner_radius)
-
-                icon(res = R.drawable.ic_music_note)
-
-                if (goPreferences.isEdgeToEdge && window != null) ThemeHelper.handleEdgeToEdge(
-                    window,
-                    view
-                )
-            }
     }
 
     private fun showAccentsDialog(activity: Activity) {

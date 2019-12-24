@@ -52,19 +52,7 @@
     <string name="open_git_pref_title">Halaman GitHub</string>
     <string name="open_git_pref_summary">Silakan buka halaman proyek untuk informasi lebih lanjut :)</string>
 
-    <string name="supported_formats_title">Format media yang didukung</string>
-    <string name="supported_formats_summary">Buka halaman ini jika anda mengalami masalah terkait dengan format media yang didukung :P</string>
-    <string name="supportedFormats"><![CDATA[
-    Music Player GO mengimplementasikan <a href="https://developer.android.com/guide/topics/media/mediaplayer">API MediaPlayer</a> bawaan android,
-    yang mendukung banyak <a href="https://developer.android.com/guide/topics/media/media-formats">format media</a>.<br/><br/>
-    Instruksi untuk membuat codec tertentu berfungsi dengan baik:<br/>
-    Sebagai contoh, Opus, didukung secara bawaan sejak Android 5.0, tetapi hanya dalam kontainer Matroska (.mkv). Kontainer/tipe berkas Opus tidak bisa dideteksi
-    dan tidak didukung oleh API MediaPlayer. Solusi sederhana untuk mendeteksi dan memutar berkas Opus adalah dengan mengganti
-    ekstensinya (.opus) dengan ekstensi yang didukung (.mkv).<br/>
-    Lihat tabel "Format Kontainer / Tipe Berkas yang Didukung" di halaman pengembang android tentang
-    <a href="https://developer.android.com/guide/topics/media/media-formats">format media yang didukung</a> untuk mengetahui kontainer yang didukung untuk format/codec yang ada.<br/><br/>
-    <i><font color="#F38596">Terima kasih telah menggunakan Music Player GO ♥</font></i>
-  ]]></string>
+    <string name="faq_summary">FAQ dan format media yang didukung :P</string>
 
     <string name="theme_pref_title">Tema</string>
     <string name="theme_pref_light_title">Terang</string>
