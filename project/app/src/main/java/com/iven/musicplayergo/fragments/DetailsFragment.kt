@@ -452,10 +452,8 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                 override fun onStop() {
                     super.onStop()
-                    context?.let {
-                        mAlbumsRecyclerView.findViewHolderForAdapterPosition(position)
-                            ?.itemView?.performClick()
-                    }
+                    mAlbumsRecyclerView.findViewHolderForAdapterPosition(position)
+                        ?.itemView?.performClick()
                 }
             }
             smoothScroller.targetPosition = position
