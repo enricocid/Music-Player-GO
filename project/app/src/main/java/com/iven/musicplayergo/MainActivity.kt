@@ -793,6 +793,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             val selectedArtistOrFolder = selectedSong?.artist
             if (sDetailsFragmentExpanded)
                 mDetailsFragment.updateView(
+                    this,
                     selectedArtistOrFolder,
                     MusicUtils.getPlayingAlbumPosition(selectedArtistOrFolder, mMediaPlayerHolder)
                 )

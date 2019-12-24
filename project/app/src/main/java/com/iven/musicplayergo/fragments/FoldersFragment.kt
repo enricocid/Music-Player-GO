@@ -189,10 +189,10 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
 
         //set indexes if artists rv is scrollable
         mFoldersRecyclerView.afterMeasured {
-            if (mFoldersRecyclerView.computeVerticalScrollRange() > height) {
+            if (computeVerticalScrollRange() > height) {
 
                 mIndicatorFastScrollerView.setupWithRecyclerView(
-                    mFoldersRecyclerView,
+                    this,
                     { position ->
                         val item = mFolders?.get(position) // Get your model object
                         // or fetch the section at [position] from your database
@@ -216,8 +216,7 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
                         indicatorCenterY: Int,
                         itemPosition: Int
                     ) {
-                        val artistsLayoutManager =
-                            mFoldersRecyclerView.layoutManager as LinearLayoutManager
+                        val artistsLayoutManager = layoutManager as LinearLayoutManager
                         artistsLayoutManager.scrollToPositionWithOffset(itemPosition, 0)
                     }
                 }

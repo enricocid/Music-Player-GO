@@ -2,6 +2,7 @@ package com.iven.musicplayergo.fragments
 
 import android.animation.Animator
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.*
@@ -151,7 +152,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
             if (!sFolder) {
 
-                setupAlbumsContainer(false)
+                setupAlbumsContainer(it, false)
 
             } else {
 
@@ -305,7 +306,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private fun setupAlbumsContainer(onUpdateView: Boolean) {
+    private fun setupAlbumsContainer(context: Context, onUpdateView: Boolean) {
 
         selected_album_container.setOnClickListener {
             mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
@@ -379,7 +380,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    fun updateView(selectedArtist: String?, playedAlbumPosition: Int) {
+    fun updateView(context: Context, selectedArtist: String?, playedAlbumPosition: Int) {
 
         fun invalidateDetails() {
 
@@ -402,7 +403,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                 setupToolbarSpecs(sFolder)
                 setupMenu(true)
-                setupAlbumsContainer(true)
+                setupAlbumsContainer(context, true)
 
             } else {
 
@@ -439,26 +440,25 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     //https://stackoverflow.com/a/53986874
+    @SuppressLint("StaticFieldLeak")
     private fun RecyclerView.smoothSnapToPosition(position: Int) {
-        context?.let {
-            val smoothScroller = object : LinearSmoothScroller(context) {
-                override fun getVerticalSnapPreference(): Int {
-                    return SNAP_TO_START
-                }
-
-                override fun getHorizontalSnapPreference(): Int {
-                    return SNAP_TO_START
-                }
-
-                override fun onStop() {
-                    super.onStop()
-                    mAlbumsRecyclerView.findViewHolderForAdapterPosition(position)
-                        ?.itemView?.performClick()
-                }
+        val smoothScroller = object : LinearSmoothScroller(this.context) {
+            override fun getVerticalSnapPreference(): Int {
+                return SNAP_TO_START
             }
-            smoothScroller.targetPosition = position
-            layoutManager?.startSmoothScroll(smoothScroller)
+
+            override fun getHorizontalSnapPreference(): Int {
+                return SNAP_TO_START
+            }
+
+            override fun onStop() {
+                super.onStop()
+                mAlbumsRecyclerView.findViewHolderForAdapterPosition(position)
+                    ?.itemView?.performClick()
+            }
         }
+        smoothScroller.targetPosition = position
+        layoutManager?.startSmoothScroll(smoothScroller)
     }
 
     private fun updateSelectedAlbumTitle() {
