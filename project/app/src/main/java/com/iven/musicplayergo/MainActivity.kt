@@ -367,6 +367,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     }
 
                     override fun onTabReselected(tab: TabLayout.Tab) {
+                        if (sDetailsFragmentExpanded) closeDetailsFragment(null)
                     }
                 })
             }
