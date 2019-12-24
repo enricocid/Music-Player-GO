@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.ArgbEvaluator
 import com.afollestad.recyclical.datasource.dataSourceOf
@@ -380,7 +381,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     fun updateView(selectedArtist: String?, playedAlbumPosition: Int) {
 
-        if (selectedArtist != mSelectedArtistOrFolder) {
+        fun invalidateDetails() {
 
             mSelectedArtistOrFolder = selectedArtist
             mSelectedArtistAlbums =
@@ -428,6 +429,37 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 musicLibrary.allSongsByArtist.getValue(mSelectedArtistOrFolder)
 
             setSongsDataSource(mSelectedAlbum?.music)
+        }
+
+        when {
+            selectedArtist != mSelectedArtistOrFolder -> invalidateDetails()
+            sFolder -> invalidateDetails()
+            else -> mAlbumsRecyclerView.smoothSnapToPosition(playedAlbumPosition)
+        }
+    }
+
+    //https://stackoverflow.com/a/53986874
+    private fun RecyclerView.smoothSnapToPosition(position: Int) {
+        context?.let {
+            val smoothScroller = object : LinearSmoothScroller(context) {
+                override fun getVerticalSnapPreference(): Int {
+                    return SNAP_TO_START
+                }
+
+                override fun getHorizontalSnapPreference(): Int {
+                    return SNAP_TO_START
+                }
+
+                override fun onStop() {
+                    super.onStop()
+                    context?.let {
+                        mAlbumsRecyclerView.findViewHolderForAdapterPosition(position)
+                            ?.itemView?.performClick()
+                    }
+                }
+            }
+            smoothScroller.targetPosition = position
+            layoutManager?.startSmoothScroll(smoothScroller)
         }
     }
 
