@@ -398,10 +398,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun initActiveFragments(index: Int) {
         when (index) {
-            0 -> mArtistsFragment = ArtistsFragment.newInstance()
-            1 -> mAllMusicFragment = AllMusicFragment.newInstance()
-            2 -> mFoldersFragment = FoldersFragment.newInstance()
-            else -> mSettingsFragment = SettingsFragment.newInstance()
+            0 -> if (!::mArtistsFragment.isInitialized) mArtistsFragment =
+                ArtistsFragment.newInstance()
+            1 -> if (!::mAllMusicFragment.isInitialized) mAllMusicFragment =
+                AllMusicFragment.newInstance()
+            2 -> if (!::mFoldersFragment.isInitialized) mFoldersFragment =
+                FoldersFragment.newInstance()
+            else -> if (!::mSettingsFragment.isInitialized) mSettingsFragment =
+                SettingsFragment.newInstance()
         }
     }
 
@@ -727,21 +731,23 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         if (restore) {
 
-            if (mMediaPlayerHolder.queueSongs.isNotEmpty() && !mMediaPlayerHolder.isQueueStarted)
+            if (!mMediaPlayerHolder.queueSongs.isNullOrEmpty() && !mMediaPlayerHolder.isQueueStarted)
                 mMediaPlayerInterface.onQueueEnabled() else
                 mMediaPlayerInterface.onQueueStartedOrEnded(mMediaPlayerHolder.isQueueStarted)
 
             updatePlayingStatus(false)
 
-            //stop foreground if coming from pause state
-            mPlayerService.apply {
-                if (isRestoredFromPause) {
-                    stopForeground(false)
-                    musicNotificationManager.notificationManager.notify(
-                        NOTIFICATION_ID,
-                        mPlayerService.musicNotificationManager.notificationBuilder.build()
-                    )
-                    isRestoredFromPause = false
+            if (::mPlayerService.isInitialized) {
+                //stop foreground if coming from pause state
+                mPlayerService.apply {
+                    if (isRestoredFromPause) {
+                        stopForeground(false)
+                        musicNotificationManager.notificationManager.notify(
+                            NOTIFICATION_ID,
+                            mPlayerService.musicNotificationManager.notificationBuilder.build()
+                        )
+                        isRestoredFromPause = false
+                    }
                 }
             }
         }
@@ -823,15 +829,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun startPlayback(song: Music?, album: List<Music>?) {
-        if (isMediaPlayerHolder && !mPlayerService.isRunning) startService(mBindingIntent)
-        mMediaPlayerHolder.apply {
-            setCurrentSong(song, album, false)
-            initMediaPlayer(song)
+        if (isMediaPlayerHolder) {
+            if (!mPlayerService.isRunning) startService(mBindingIntent)
+            mMediaPlayerHolder.apply {
+                setCurrentSong(song, album, false)
+                initMediaPlayer(song)
+            }
         }
     }
 
     override fun onSongSelected(song: Music?, songs: List<Music>?) {
-        mMediaPlayerHolder.apply {
+        if (isMediaPlayerHolder) mMediaPlayerHolder.apply {
             isSongRestoredFromPrefs = false
             if (!isPlay) isPlay = true
             if (isQueue) setQueueEnabled(false)
