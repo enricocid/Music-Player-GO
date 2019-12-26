@@ -13,6 +13,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
@@ -55,7 +56,6 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var mAlbumsRecyclerView: RecyclerView
     private lateinit var mAlbumsRecyclerViewLayoutManager: LinearLayoutManager
     private lateinit var mSongsRecyclerView: RecyclerView
-    private lateinit var mSongsRecyclerViewLayoutManager: LinearLayoutManager
 
     private var mSelectedArtistAlbums: List<Album>? = null
     private var mSongsForArtistOrFolder: List<Music>? = null
@@ -65,6 +65,8 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private lateinit var mUIControlInterface: UIControlInterface
     private var mSelectedAlbum: Album? = null
+
+    private var sDeviceLand = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -133,6 +135,8 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
         context?.let {
 
+            sDeviceLand = ThemeHelper.isDeviceLand(it.resources)
+
             mDetailsToolbar.apply {
 
                 overflowIcon = AppCompatResources.getDrawable(it, R.drawable.ic_shuffle)
@@ -185,13 +189,10 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     // item is a `val` in `this` here
                     withDataSource(mSongsDataSource)
 
-                    mSongsRecyclerViewLayoutManager = LinearLayoutManager(
-                        it,
-                        LinearLayoutManager.VERTICAL,
-                        false
-                    )
-
-                    withLayoutManager(mSongsRecyclerViewLayoutManager)
+                    if (sDeviceLand)
+                        withLayoutManager(GridLayoutManager(it, 2))
+                    else
+                        addItemDecoration(ThemeHelper.getRecyclerViewDivider(it))
 
                     withItem<Music, GenericViewHolder>(R.layout.song_item) {
                         onBind(::GenericViewHolder) { _, item ->
@@ -229,8 +230,6 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         }
                     }
                 }
-
-                addItemDecoration(ThemeHelper.getRecyclerViewDivider(it))
             }
 
             view.afterMeasured {
@@ -333,7 +332,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                 mAlbumsRecyclerViewLayoutManager = LinearLayoutManager(
                     context,
-                    LinearLayoutManager.HORIZONTAL,
+                    if (sDeviceLand) LinearLayoutManager.VERTICAL else LinearLayoutManager.HORIZONTAL,
                     false
                 )
                 withLayoutManager(mAlbumsRecyclerViewLayoutManager)

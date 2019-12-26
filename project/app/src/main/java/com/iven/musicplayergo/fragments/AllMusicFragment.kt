@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
@@ -70,8 +71,19 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
                 // setup{} is an extension method on RecyclerView
                 setup {
+
                     // item is a `val` in `this` here
                     withDataSource(mDataSource)
+
+                    if (ThemeHelper.isDeviceLand(resources)) withLayoutManager(
+                        GridLayoutManager(
+                            it,
+                            3
+                        )
+                    )
+                    else addItemDecoration(
+                        ThemeHelper.getRecyclerViewDivider(it)
+                    )
 
                     withItem<Music, SongsViewHolder>(R.layout.song_item_alt) {
                         onBind(::SongsViewHolder) { _, item ->
@@ -99,9 +111,6 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                         }
                     }
                 }
-                addItemDecoration(
-                    ThemeHelper.getRecyclerViewDivider(it)
-                )
             }
 
             search_toolbar.apply {

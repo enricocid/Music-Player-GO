@@ -71,6 +71,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mTabsLayout: TabLayout
     private lateinit var mPlayerControlsContainer: View
 
+    private var sDeviceLand = false
+
     //settings/controls panel
     private lateinit var mPlayingArtist: TextView
     private lateinit var mPlayingSong: TextView
@@ -169,7 +171,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putBoolean(RESTORE_SETTINGS_FRAGMENT, true)
+        outState.putBoolean(
+            RESTORE_SETTINGS_FRAGMENT,
+            true
+        )
     }
 
     override fun onDestroy() {
@@ -208,7 +213,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        if (goPreferences.isEdgeToEdge && window != null) ThemeHelper.handleEdgeToEdge(
+        if (goPreferences.isEdgeToEdge && !sDeviceLand && window != null) ThemeHelper.handleEdgeToEdge(
             window,
             mainView
         )
@@ -228,6 +233,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         setupControlsPanelSpecs()
 
         initMediaButtons()
+
+        sDeviceLand = ThemeHelper.isDeviceLand(resources)
 
         sRestoreSettingsFragment =
             savedInstanceState?.getBoolean(RESTORE_SETTINGS_FRAGMENT) ?: intent.getBooleanExtra(
@@ -641,7 +648,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 }
             }
 
-            if (goPreferences.isEdgeToEdge && mNowPlayingDialog.window != null) ThemeHelper.handleEdgeToEdge(
+            if (goPreferences.isEdgeToEdge && !sDeviceLand && mNowPlayingDialog.window != null) ThemeHelper.handleEdgeToEdge(
                 mNowPlayingDialog.window,
                 mNowPlayingDialog.view
             )

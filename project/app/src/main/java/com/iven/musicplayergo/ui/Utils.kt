@@ -17,6 +17,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ActivityCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.recyclerview.widget.GridLayoutManager
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
@@ -178,16 +179,21 @@ object Utils {
                 QueueAdapter(context, this, mediaPlayerHolder)
             )
 
-            getRecyclerView().addItemDecoration(
-                ThemeHelper.getRecyclerViewDivider(
-                    context
-                )
-            )
+            val recyclerView = getRecyclerView()
 
-            if (goPreferences.isEdgeToEdge && window != null) ThemeHelper.handleEdgeToEdge(
-                window,
-                view
-            )
+            if (ThemeHelper.isDeviceLand(context.resources)) {
+                recyclerView.layoutManager = GridLayoutManager(context, 3)
+            } else {
+                recyclerView.addItemDecoration(
+                    ThemeHelper.getRecyclerViewDivider(
+                        context
+                    )
+                )
+                if (goPreferences.isEdgeToEdge && window != null) ThemeHelper.handleEdgeToEdge(
+                    window,
+                    view
+                )
+            }
         }
         return Pair(dialog, dialog.getListAdapter() as QueueAdapter)
     }
@@ -303,15 +309,22 @@ object Utils {
             customListAdapter(
                 LovedSongsAdapter(context, this, uiControlInterface, mediaPlayerHolder)
             )
-            getRecyclerView().addItemDecoration(
-                ThemeHelper.getRecyclerViewDivider(
-                    context
+
+            val recyclerView = getRecyclerView()
+
+            if (ThemeHelper.isDeviceLand(context.resources)) {
+                recyclerView.layoutManager = GridLayoutManager(context, 3)
+            } else {
+                recyclerView.addItemDecoration(
+                    ThemeHelper.getRecyclerViewDivider(
+                        context
+                    )
                 )
-            )
-            if (goPreferences.isEdgeToEdge && window != null) ThemeHelper.handleEdgeToEdge(
-                window,
-                view
-            )
+                if (goPreferences.isEdgeToEdge && window != null) ThemeHelper.handleEdgeToEdge(
+                    window,
+                    view
+                )
+            }
         }
     }
 

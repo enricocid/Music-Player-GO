@@ -8,6 +8,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.emptyDataSource
@@ -101,6 +102,13 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                     // item is a `val` in `this` here
                     withDataSource(mDataSource)
 
+                    if (ThemeHelper.isDeviceLand(resources))
+                        withLayoutManager(GridLayoutManager(it, 3))
+                    else
+                        addItemDecoration(
+                            ThemeHelper.getRecyclerViewDivider(it)
+                        )
+
                     withItem<String, GenericViewHolder>(R.layout.generic_item) {
 
                         onBind(::GenericViewHolder) { _, item ->
@@ -114,10 +122,6 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                                 mUIControlInterface.onArtistOrFolderSelected(item, false)
                         }
                     }
-
-                    addItemDecoration(
-                        ThemeHelper.getRecyclerViewDivider(it)
-                    )
                 }
             }
 

@@ -8,6 +8,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceOf
@@ -96,6 +97,8 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
 
         context?.let {
 
+            val isDeviceLand = ThemeHelper.isDeviceLand(it.resources)
+
             mFoldersRecyclerView.apply {
 
                 // setup{} is an extension method on RecyclerView
@@ -103,7 +106,13 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
 
                     withDataSource(mDataSource)
 
-                    withItem<String, GenericViewHolder>(R.layout.folder_item) {
+                    if (isDeviceLand)
+                        withLayoutManager(GridLayoutManager(it, 3))
+                    else addItemDecoration(
+                        ThemeHelper.getRecyclerViewDivider(it)
+                    )
+
+                    withItem<String, GenericViewHolder>(if (isDeviceLand) R.layout.generic_item else R.layout.folder_item) {
                         onBind(::GenericViewHolder) { _, item ->
                             // GenericViewHolder is `this` here
                             title.text = item
@@ -115,7 +124,6 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
                                 mUIControlInterface.onArtistOrFolderSelected(item, true)
                         }
                     }
-                    addItemDecoration(ThemeHelper.getRecyclerViewDivider(it))
                 }
             }
 
