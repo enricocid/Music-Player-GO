@@ -51,6 +51,8 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var mSortMenuItem: MenuItem
     private var mSorting = ASCENDING_SORTING
 
+    private var sDeviceLand = false
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         // This makes sure that the container activity has implemented
@@ -94,6 +96,8 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
 
         context?.let {
 
+            sDeviceLand = ThemeHelper.isDeviceLand(it.resources)
+
             mArtistsRecyclerView.apply {
 
                 // setup{} is an extension method on RecyclerView
@@ -102,7 +106,7 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                     // item is a `val` in `this` here
                     withDataSource(mDataSource)
 
-                    if (ThemeHelper.isDeviceLand(resources))
+                    if (sDeviceLand)
                         withLayoutManager(GridLayoutManager(it, 3))
                     else
                         addItemDecoration(
@@ -212,6 +216,9 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                                 1
                             )?.toUpperCase()!! // Grab the first letter and capitalize it
                         ) // Return a text tab_indicator
+                    }, showIndicator = { _, indicatorPosition, _ ->
+                        // Hide every other indicator
+                        if (sDeviceLand) indicatorPosition % 2 == 0 else true
                     }
                 )
 
@@ -228,6 +235,11 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                         val artistsLayoutManager = layoutManager as LinearLayoutManager
                         artistsLayoutManager.scrollToPositionWithOffset(itemPosition, 0)
                     }
+                }
+            } else {
+                if (sDeviceLand) {
+                    mIndicatorFastScrollerView.visibility = View.GONE
+                    mIndicatorFastScrollThumb.visibility = View.GONE
                 }
             }
         }

@@ -55,6 +55,8 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var mSortMenuItem: MenuItem
     private var mSorting = DEFAULT_SORTING
 
+    private var sDeviceLand = false
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         // This makes sure that the container activity has implemented
@@ -97,7 +99,7 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
 
         context?.let {
 
-            val isDeviceLand = ThemeHelper.isDeviceLand(it.resources)
+            sDeviceLand = ThemeHelper.isDeviceLand(it.resources)
 
             mFoldersRecyclerView.apply {
 
@@ -106,13 +108,13 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
 
                     withDataSource(mDataSource)
 
-                    if (isDeviceLand)
+                    if (sDeviceLand)
                         withLayoutManager(GridLayoutManager(it, 3))
                     else addItemDecoration(
                         ThemeHelper.getRecyclerViewDivider(it)
                     )
 
-                    withItem<String, GenericViewHolder>(if (isDeviceLand) R.layout.generic_item else R.layout.folder_item) {
+                    withItem<String, GenericViewHolder>(if (sDeviceLand) R.layout.generic_item else R.layout.folder_item) {
                         onBind(::GenericViewHolder) { _, item ->
                             // GenericViewHolder is `this` here
                             title.text = item
@@ -211,6 +213,9 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
                                 1
                             )?.toUpperCase()!! // Grab the first letter and capitalize it
                         ) // Return a text tab_indicator
+                    }, showIndicator = { _, indicatorPosition, _ ->
+                        // Hide every other indicator
+                        if (sDeviceLand) indicatorPosition % 2 == 0 else true
                     }
                 )
 
@@ -227,6 +232,11 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
                         val artistsLayoutManager = layoutManager as LinearLayoutManager
                         artistsLayoutManager.scrollToPositionWithOffset(itemPosition, 0)
                     }
+                }
+            } else {
+                if (sDeviceLand) {
+                    mIndicatorFastScrollerView.visibility = View.GONE
+                    mIndicatorFastScrollThumb.visibility = View.GONE
                 }
             }
         }

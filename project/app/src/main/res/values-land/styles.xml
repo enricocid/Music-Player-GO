@@ -1,0 +1,14 @@
+<resources>
+
+    <style name="FastScrollerColorFull" parent="Widget.IndicatorFastScroll.FastScroller">
+        <item name="android:textColor">@color/pressed_selector</item>
+        <item name="android:textAppearance">@style/FastScrollerTextStyle</item>
+        <item name="android:scaleX">0.90</item>
+        <item name="android:scaleY">0.90</item>
+    </style>
+
+    <style name="ToolbarStyle.Title" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">20sp
+        </item> <!-- Default for portrait is 20sp and for landscape 14sp-->
+    </style>
+</resources>
