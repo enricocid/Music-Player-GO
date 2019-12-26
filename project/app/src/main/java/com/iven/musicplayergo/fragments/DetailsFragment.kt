@@ -116,10 +116,8 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         return inflater.inflate(R.layout.fragment_details, container, false)
     }
 
-    fun onHandleBackPressed(): Animator {
-        context?.let {
-            revealFragment(it, false)
-        }
+    fun onHandleBackPressed(context: Context): Animator {
+        if (!mArtistDetailsAnimator.isRunning) revealFragment(context, false)
         return mArtistDetailsAnimator
     }
 

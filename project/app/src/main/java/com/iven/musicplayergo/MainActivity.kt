@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private lateinit var mDetailsFragment: DetailsFragment
     private val sDetailsFragmentExpanded get() = ::mDetailsFragment.isInitialized && mDetailsFragment.isAdded
+    private var sRevealAnimationRunning = false
 
     private var mActiveFragments: MutableList<String>? = null
 
@@ -448,11 +449,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun closeDetailsFragment(tab: TabLayout.Tab?) {
-        mDetailsFragment.onHandleBackPressed().doOnEnd {
-            tab?.let {
-                it.icon?.setTint(mResolvedAccentColor)
+        if (!sRevealAnimationRunning) {
+            mDetailsFragment.onHandleBackPressed(this).apply {
+                sRevealAnimationRunning = true
+                tab?.icon?.setTint(mResolvedAccentColor)
+                doOnEnd {
+                    super.onBackPressed()
+                    sRevealAnimationRunning = false
+                }
             }
-            super.onBackPressed()
         }
     }
 
