@@ -6,10 +6,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="horizontal"
-    android:paddingStart="16dp"
-    android:paddingTop="16dp"
-    android:paddingEnd="16dp"
-    android:paddingBottom="32dp">
+    android:padding="16dp">
 
     <ImageView
         android:id="@+id/np_love"
