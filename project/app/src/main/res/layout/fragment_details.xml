@@ -30,9 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ripple"
-        android:orientation="vertical"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/selected_album"
@@ -42,6 +40,7 @@
             android:fontFamily="@font/raleway_bold_italic"
             android:marqueeRepeatLimit="marquee_forever"
             android:paddingStart="12dp"
+            android:paddingTop="8dp"
             android:paddingEnd="12dp"
             android:scrollHorizontally="true"
             android:singleLine="true"
@@ -56,6 +55,7 @@
             android:layout_gravity="end"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
+            android:paddingBottom="8dp"
             android:singleLine="true"
             android:textAlignment="textEnd"
             android:textAppearance="@android:style/TextAppearance.Material.Caption"

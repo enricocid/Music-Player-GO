@@ -64,6 +64,7 @@
                 android:layout_gravity="end"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
+                android:layout_marginBottom="4dp"
                 android:singleLine="true"
                 android:textAlignment="textEnd"
                 android:textAppearance="@android:style/TextAppearance.Material.Caption"
