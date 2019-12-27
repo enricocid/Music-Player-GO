@@ -9,4 +9,6 @@
     android:theme="@style/ToolbarStyle"
     app:collapseIcon="@drawable/ic_navigate_before"
     app:navigationIcon="@drawable/ic_round_close"
+    app:subtitleTextAppearance="@style/ToolbarStyle.Subtitle"
+    app:titleTextAppearance="@style/ToolbarStyle.Title"
     app:titleTextColor="?attr/colorPrimary" />

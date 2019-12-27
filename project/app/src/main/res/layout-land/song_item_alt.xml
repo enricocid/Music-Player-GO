@@ -25,7 +25,7 @@
         android:layout_marginTop="4dp"
         android:singleLine="true"
         android:textAppearance="@android:style/TextAppearance.Material.Caption"
-        android:textColor="?android:attr/textColorPrimary" />
+        android:textColor="?android:attr/textColorSecondary" />
 
     <TextView
         android:id="@+id/subtitle"

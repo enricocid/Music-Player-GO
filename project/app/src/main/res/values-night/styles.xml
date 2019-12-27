@@ -4,5 +4,8 @@
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <item name="indicatorFastScrollerStyle">@style/FastScrollerColorFull</item>
         <item name="colorPrimaryDark">?attr/colorPrimary</item>
+        <item name="android:fontFamily">@font/raleway</item>
+        <item name="md_font_title">@font/raleway_black</item>
+        <item name="alertDialogTheme">@style/DialogsStyle</item>
     </style>
 </resources>

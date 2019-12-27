@@ -29,7 +29,9 @@
         app:key="@string/faq_pref"
         app:title="@string/faq_title" />
 
-    <PreferenceCategory app:title="@string/category_appearance">
+    <PreferenceCategory
+        app:layout="@layout/custom_preference_category"
+        app:title="@string/category_appearance">
 
         <ListPreference
             android:defaultValue="@string/theme_pref_light"
@@ -54,7 +56,9 @@
             app:title="@string/edge_pref_title" />
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/category_general">
+    <PreferenceCategory
+        app:layout="@layout/custom_preference_category"
+        app:title="@string/category_general">
 
         <Preference
             app:key="@string/active_fragments_pref"

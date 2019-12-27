@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
+            android:fontFamily="@font/raleway_bold"
             android:marqueeRepeatLimit="marquee_forever"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
