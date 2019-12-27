@@ -39,4 +39,6 @@
     <color name="brownPrimaryDark">#4b2c20</color>
     <color name="greyPrimaryDark">#707070</color>
     <color name="blueGreyPrimaryDark">#34515e</color>
+
+    <color name="ratesColor">#50000000</color>
 </resources>

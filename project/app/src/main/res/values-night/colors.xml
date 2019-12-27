@@ -20,4 +20,6 @@
     <color name="brown">#bcaaa4</color>
     <color name="grey">#eeeeee</color>
     <color name="blue_grey">#b0bec5</color>
+
+    <color name="ratesColor">#50FFFFFF</color>
 </resources>

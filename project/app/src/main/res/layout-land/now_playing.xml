@@ -73,12 +73,27 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.oze.music.musicbar.FixedMusicBar
-                android:id="@+id/np_fixed_music_bar"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:padding="8dp"
-                app:LoadedBarPrimeColor="?attr/colorPrimary" />
+                android:layout_height="wrap_content">
+
+                <com.oze.music.musicbar.FixedMusicBar
+                    android:id="@+id/np_fixed_music_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:padding="8dp"
+                    app:LoadedBarPrimeColor="?attr/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/np_rates"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/raleway_bold_italic"
+                    android:textAlignment="center"
+                    android:textAppearance="@android:style/TextAppearance.Material.Caption"
+                    android:textColor="@color/ratesColor" />
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -113,13 +128,4 @@
         <include layout="@layout/now_playing_extended_controls" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/np_rates"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="16dp"
-        android:textAlignment="center"
-        android:textAppearance="@android:style/TextAppearance.Material.Caption"
-        android:textColor="?attr/colorPrimary" />
 </LinearLayout>
