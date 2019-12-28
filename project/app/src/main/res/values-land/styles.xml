@@ -12,4 +12,9 @@
         </item> <!-- Default for portrait is 20sp and for landscape 14sp-->
         <item name="android:fontFamily">@font/raleway_black</item>
     </style>
+
+    <!-- Indicator thumb text style -->
+    <style name="IndicatorThumbTextAppearance" parent="TextAppearance.AppCompat.Small">
+        <item name="android:fontFamily">@font/raleway_black</item>
+    </style>
 </resources>
