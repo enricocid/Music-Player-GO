@@ -78,12 +78,10 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                         )
                     )
                     setContentText(
-                        ThemeHelper.buildSpanned(
-                            playerService.getString(
-                                R.string.artist_and_album,
-                                song?.artist,
-                                song?.album
-                            )
+                        playerService.getString(
+                            R.string.artist_and_album,
+                            song?.artist,
+                            song?.album
                         )
                     )
                     setContentIntent(contentIntent)
