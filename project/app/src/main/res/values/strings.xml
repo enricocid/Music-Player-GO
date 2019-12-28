@@ -3,7 +3,6 @@
     <string name="app_name" translatable="false">Music Player GO</string>
     <string name="app_git" translatable="false">https://github.com/enricocid/Music-Player-GO</string>
     <string name="app_faq" translatable="false">https://github.com/enricocid/Music-Player-GO/blob/master/Faq.md</string>
-    <string name="hex" translatable="false">&#35;%06X</string>
     <string name="space_delimiter" translatable="false">&#160;</string>
     <string name="underscore_delimiter" translatable="false">&#95;</string>
     <string name="song_title_notification" translatable="false">&lt;b>%1s&lt;/b>&lt;br/></string>
@@ -89,6 +88,7 @@
 
     <string name="accent_pref" translatable="false">accent_pref</string>
     <string name="accent_pref_title">Accent</string>
+    <string name="accent_and_hex" translatable="false">&lt;b>%1s&lt;/b>:&#160;%2s</string>
 
     <string name="edge_pref" translatable="false">edge_pref</string>
     <string name="edge_pref_title" translatable="false">Edge-to-edge</string>

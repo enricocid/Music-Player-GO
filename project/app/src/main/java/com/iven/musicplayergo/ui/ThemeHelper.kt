@@ -122,16 +122,18 @@ object ThemeHelper {
 
     @JvmStatic
     @SuppressLint("DefaultLocale")
-    fun getAccentName(accent: Int, context: Context): String {
-        val hexValue = String.format(
-            context.getString(R.string.hex),
-            0xFFFFFF and accent
-        )
+    fun getAccentName(accent: Int, context: Context): Spanned {
         val accentName = context.resources.getResourceEntryName(accent).replace(
             context.getString(R.string.underscore_delimiter),
             context.getString(R.string.space_delimiter)
         ).capitalize()
-        return context.getString(R.string.year_and_duration, hexValue, accentName)
+        return buildSpanned(
+            context.getString(
+                R.string.accent_and_hex,
+                accentName,
+                context.getString(accent).toUpperCase()
+            )
+        )
     }
 
     //finds theme and its position in accents array and returns a pair(theme, position)
