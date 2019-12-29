@@ -5,6 +5,7 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -29,6 +30,7 @@ import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.ui.*
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlin.math.max
+
 
 /**
  * A simple [Fragment] subclass.
@@ -123,6 +125,19 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         return mArtistDetailsAnimator
     }
 
+    //https://stackoverflow.com/a/38241603
+    private fun getTitleTextView(toolbar: Toolbar): TextView? {
+        return try {
+            val toolbarClass = Toolbar::class.java
+            val titleTextViewField = toolbarClass.getDeclaredField("mTitleTextView")
+            titleTextViewField.isAccessible = true
+            titleTextViewField.get(toolbar) as TextView
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -142,6 +157,14 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 overflowIcon = AppCompatResources.getDrawable(it, R.drawable.ic_shuffle)
 
                 title = mSelectedArtistOrFolder
+
+                //make toolbar's title scrollable
+                getTitleTextView(this)?.let { tV ->
+                    tV.isSelected = true
+                    tV.setHorizontallyScrolling(true)
+                    tV.ellipsize = TextUtils.TruncateAt.MARQUEE
+                    tV.marqueeRepeatLimit = -1
+                }
 
                 setupToolbarSpecs(sFolder)
 
