@@ -15,7 +15,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ActivityCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.GridLayoutManager
 import com.afollestad.materialdialogs.LayoutMode
@@ -448,13 +447,11 @@ object Utils {
             val accent = ThemeHelper.resolveThemeAccent(context)
 
             CustomTabsIntent.Builder().apply {
-                setSecondaryToolbarColor(accent)
                 addDefaultShareMenuItem()
                 setShowTitle(true)
 
                 // https://stackoverflow.com/a/55260049
-                AppCompatResources.getDrawable(context, R.drawable.ic_navigate_before)?.let {
-                    DrawableCompat.setTint(it, accent)
+                AppCompatResources.getDrawable(context, R.drawable.ic_round_close_red)?.let {
                     setCloseButtonIcon(it.toBitmap())
                 }
 
