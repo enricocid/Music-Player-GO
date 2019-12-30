@@ -444,7 +444,6 @@ object Utils {
     ) {
 
         try {
-            val accent = ThemeHelper.resolveThemeAccent(context)
 
             CustomTabsIntent.Builder().apply {
                 addDefaultShareMenuItem()
