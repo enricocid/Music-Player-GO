@@ -1,7 +1,7 @@
 4.0.0:
 - Nuova UI tabbed: artisti, canzoni, cartelle, impostazioni
-- Tema automativo (segue il sistem su Android Q e la batteria
-sui dispositivi più vecchi, come da guidelines)
+- Tema automatico (segue il sistema su Android Q e la batteria
+sulle versioni più vecchie, come da guidelinea)
 - L'ultima canzone riprodotta (e posizione) viene ora ripristinata
 - Dialog Now Playing (clicca sul pannello inferiore):
   - Music bar (spectrum)
