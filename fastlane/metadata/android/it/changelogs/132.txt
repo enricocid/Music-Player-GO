@@ -1,0 +1,17 @@
+4.0.0:
+- Nuova UI tabbed: artisti, canzoni, cartelle, impostazioni
+- Tema automativo (segue il sistem su Android Q e la batteria
+sui dispositivi più vecchi, come da guidelines)
+- L'ultima canzone riprodotta (e posizione) viene ora ripristinata
+- Dialog Now Playing (clicca sul pannello inferiore):
+  - Music bar (spectrum)
+  - Pulsanti media
+  - Pulsante 'aggiungi a preferiti'
+  - Controllo preciso del volume
+- Canzoni preferite
+- Opzioni sorting
+- Nuovo schema accenti
+- Supporto landscape
+- Molte correzioni/migliorie
+
+Per maggiori info/suggerimenti/credits: https://github.com/enricocid/Music-Player-GO

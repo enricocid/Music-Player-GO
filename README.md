@@ -1,20 +1,61 @@
 # <img src ="https://upload.wikimedia.org/wikipedia/commons/b/b5/Kotlin-logo.png" width=24> Music-Player-GO
 
-[FAQ](https://github.com/enricocid/Music-Player-GO/blob/master/FAQ.md) -  [Privacy policy](https://github.com/enricocid/Music-Player-GO/blob/master/Privacy.md) - [CREDITS](https://github.com/enricocid/Music-Player-GO/blob/master/Credits.md) - [Supported formats](https://github.com/enricocid/Music-Player-GO/blob/master/FORMATS.MD)
-
-[![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=21) [![Donate on PayPal](https://img.shields.io/badge/PayPal-Donate%20Now-brightgreen.svg)](https://paypal.me/enricocid)
-
-###### Very slim, nice and **original** music player
-###### Current version: [3.6.9.2](https://github.com/enricocid/Music-Player-GO/releases/tag/v3.6.9.2)
+### Very simple, nice, privacy-friendly and **original** local Android Music Player
 
 
+[![Privacy policy](https://img.shields.io/static/v1?label=Privacy-policy&message=read&color=ef9a9a)](https://github.com/enricocid/Music-Player-GO/blob/master/Privacy.md)
+[![FAQ](https://img.shields.io/static/v1?label=FAQ&message=read&color=ce93d8)](https://github.com/enricocid/Music-Player-GO/blob/master/Faq.md)
+[![3rd party libs](https://img.shields.io/static/v1?label=Libs&message=7&color=9fa8da)](https://github.com/enricocid/Music-Player-GO/blob/master/Libs.md)
+[![Contributors](https://img.shields.io/static/v1?label=Contributors&message=21&color=81d4fa)](https://github.com/enricocid/Music-Player-GO/blob/master/Contributors.md)
+[![Supported formats](https://img.shields.io/static/v1?label=Formats&message=read&color=80cbc4)](https://github.com/enricocid/Music-Player-GO/blob/master/Formats.md)
 
-### Material icon by [Julian Javier Gomez - AxinenDesign](https://github.com/AxinenDesign)
-### Special thanks goes to [Arianna Masciolini](https://github.com/harisont)
+[![API](https://img.shields.io/static/v1?label=API&message=21&color=a5d6a7)](https://developer.android.com/about/versions/android-5.0.html)
 
-# Screenshots
+[![TAG](https://img.shields.io/static/v1?label=Tag&message=v4.0.0&color=ffe082)](https://github.com/enricocid/Music-Player-GO/releases/tag/v4.0.0)
 
-![Screenshots](https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/screenshots_v3-6-5.png) 
+
+<img align="right" src="https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/mpgo-4.gif" height="500px"/>
+
+
+# Features:
+
+- **Tabbed UI**: artists, all songs, folders and settings
+- **Settings**:
+  - **Themes**: light, dark and automatic (following the system settings on Android Q and battery level on pre-Q devices)
+  - 19 awesome **accents**
+  - Edge-to-edge (for >= Oreo 8.1)
+  - Active tabs management
+  - Audio focus and headsets plug management toggles
+
+- **Save/restore last reproduced song/progress**
+
+- Bottom controls panel containing:
+  - Currently reproduced song
+    > Tip: long click on it to quickly jump to the artist's details
+  - Play/pause
+  - **Queue** button
+  - **Loved songs** button
+
+- **Now playing** dialog showing the SeekBar as song's spectrum and the media buttons: equalizer, skip, play/pause, repeat 1x, **add to loved songs**, current volume step fine control
+  > Tip: click on played song to quickly jump to the artist's details
+
+- **Artist's details** showing its albums/songs. Shuffle all its songs or the selected album
+  > Tip: click on album's title to quickly jump back to it
+
+- Simple **queue** management
+  > Tip: to clear queue long click on queue button
+
+- Loved songs: You can now bookmark a song from songs lists and now playing dialog (in this case current position will be saved too!)
+  > Tip: to clear the list long click on loved songs button
+
+- **Landscape** support
+
+- Search
+- **Sort** options (default, ascending, descending)
+- Shuffle options
+- Open audio files from outside the app
+- Pause/resume when the headsets are plugged in/out
+- Simple audio focus management
 
 
 # Download
@@ -24,23 +65,15 @@
 [<img alt="Get it on Github" height="80" src="https://raw.githubusercontent.com/flocke/andOTP/master/assets/badges/get-it-on-github.png">](https://github.com/enricocid/Music-Player-GO/releases)
 
 
-# Features:
+# License
 
-### Unified UI: music controls and settings at hand!
+Copyright (C) 2020 **Enrico D'Ortenzio**
 
-- **Expandable bottom panel**. Special features:
-  - Clicking "played song info" opens the artist details
-  - Long click on skip prev button enables repeat song 1x
-  - Expand the panel to show settings
-- **Settings**:
-  - Dynamic shuffle button plays randomly all songs or artist songs
-  - System equalizer (if present on the device)
-  - Dark and light themes + 16 accents
-  - Enable/disable search bar
-- Precise volume control dialog
-- **Indicator fast scroll** by Reddit
-- **Search bar**
-- Open audio files from outside the app
-- Pause/resume when the headsets are (dis)connected
-- Simple audio focus management
+Licensed under the GNU General Public License, Version 3.0 (the "License");
+You may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
+   http://www.gnu.org/licenses/#GPL
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and limitations under the License.
