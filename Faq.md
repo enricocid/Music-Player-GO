@@ -80,7 +80,7 @@ This feature is not supported on these Android version. It has been added in api
 No, the music library is scanned by the operating system. To exclude folders create a file called ".nomedia".
 
 
-###What about features requests/crash reports?
+### What about features requests/crash reports?
 
 1. Not all requests can be taken into consideration unfortunately. This could happen for a variety of reasons:
 
