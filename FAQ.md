@@ -22,6 +22,12 @@ It could happens on devices with Android versions >= Marshmallow because of the 
 Music Player GO app's info -> Battery -> Battery optimization -> Music Player GO -> Don't optimize
 
 
+### Sometimes music is not fully loaded
+
+This is not Music Player GO fault. Every time the app is restarted MediaStore is queried. After many accesses to MediaStore databases for some reasons (probably security) the query fails. This problem is present also on any app implementing querying music on boot (e.g. Phonograph, Shuttle Music Player).
+Moral: limit the app restarts.
+
+
 ### Can I customize the app's theme to my taste?
 
 1. Yes, you can choose between 3 themes:
@@ -67,12 +73,6 @@ Music is categorized by artists and folders. Artists music is in turn categorize
 ### Where is edge-to-edge option (Lollipop, Marshmallow, Nougat or Android 8.0.0)?
 
 This feature is not supported on these Android version. It has been added in api level 27 (Android 8.1) to avoid issues with navigation bar buttons visibility: [light navigation bar](https://developer.android.com/reference/android/R.attr#windowLightNavigationBar) is in fact available since api level 27.
-
-
-### Sometimes music is not loaded
-
-This is not Music Player GO fault. Every time the app is restarted MediaStore is queried. If many accesses are registered the MediaStore access to the app will be limited, so You have to wait some time to have full access again. This problem is present also on any app implementing querying and not a database on every app's restart (e.g. Phonograph, Shuttle Music Player).
-Moral: limit the app restarts.
 
 
 ### Can I exclude folders from my library?
