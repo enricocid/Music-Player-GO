@@ -11,7 +11,7 @@
 
 [![API](https://img.shields.io/static/v1?label=API&message=21&color=a5d6a7)](https://developer.android.com/about/versions/android-5.0.html)
 
-[![TAG](https://img.shields.io/static/v1?label=Tag&message=v4.0.0&color=ffe082)](https://github.com/enricocid/Music-Player-GO/releases/tag/v4.0.0)
+[![TAG](https://img.shields.io/static/v1?label=Tag&message=v4.0.1&color=ffe082)](https://github.com/enricocid/Music-Player-GO/releases/tag/v4.0.1)
 
 
 <img align="right" src="https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/mpgo-4.gif" height="500px"/>
