@@ -53,10 +53,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private var mResolvedDisabledIconsColor: Int by Delegates.notNull()
 
     //fragments
-    private lateinit var mArtistsFragment: ArtistsFragment
-    private lateinit var mAllMusicFragment: AllMusicFragment
-    private lateinit var mFoldersFragment: FoldersFragment
-    private lateinit var mSettingsFragment: SettingsFragment
+    private var mArtistsFragment: ArtistsFragment? = null
+    private var mAllMusicFragment: AllMusicFragment? = null
+    private var mFoldersFragment: FoldersFragment? = null
+    private var mSettingsFragment: SettingsFragment? = null
 
     private lateinit var mDetailsFragment: DetailsFragment
     private val sDetailsFragmentExpanded get() = ::mDetailsFragment.isInitialized && mDetailsFragment.isAdded
@@ -406,18 +406,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun initActiveFragments(index: Int) {
         when (index) {
-            0 -> if (!::mArtistsFragment.isInitialized) mArtistsFragment =
+            0 -> if (mArtistsFragment == null || !mArtistsFragment?.isAdded!!) mArtistsFragment =
                 ArtistsFragment.newInstance()
-            1 -> if (!::mAllMusicFragment.isInitialized) mAllMusicFragment =
+            1 -> if (mAllMusicFragment == null || !mAllMusicFragment?.isAdded!!) mAllMusicFragment =
                 AllMusicFragment.newInstance()
-            2 -> if (!::mFoldersFragment.isInitialized) mFoldersFragment =
+            2 -> if (mFoldersFragment == null || !mFoldersFragment?.isAdded!!) mFoldersFragment =
                 FoldersFragment.newInstance()
-            else -> if (!::mSettingsFragment.isInitialized) mSettingsFragment =
+            else -> if (mSettingsFragment == null || !mSettingsFragment?.isAdded!!) mSettingsFragment =
                 SettingsFragment.newInstance()
         }
     }
 
-    private fun handleOnNavigationItemSelected(itemId: Int): Fragment {
+    private fun handleOnNavigationItemSelected(itemId: Int): Fragment? {
         return when (itemId) {
             0 -> getFragmentForIndex(mActiveFragments?.get(0)?.toInt())
             1 -> getFragmentForIndex(mActiveFragments?.get(1)?.toInt())
@@ -426,7 +426,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    private fun getFragmentForIndex(index: Int?): Fragment {
+    private fun getFragmentForIndex(index: Int?): Fragment? {
         return when (index) {
             0 -> mArtistsFragment
             1 -> mAllMusicFragment
@@ -1044,7 +1044,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         override fun getCount() = mActiveFragments?.size!!
 
         override fun getItem(position: Int): Fragment {
-            return handleOnNavigationItemSelected(position)
+            return handleOnNavigationItemSelected(position)!!
         }
     }
 }
