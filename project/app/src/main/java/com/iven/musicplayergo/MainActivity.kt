@@ -281,9 +281,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun getAllDeviceSongs() {
 
         val viewModel = ViewModelProviders.of(this).get(MusicViewModel::class.java)
-        viewModel.loadAllDeviceMusic(this).observe(this, Observer { allSongsUnfiltered ->
 
-            if (allSongsUnfiltered.isNotEmpty()) {
+        viewModel.getMutableLiveData(this).observe(this, Observer { allSongsUnfiltered ->
+
+            if (!allSongsUnfiltered.isNullOrEmpty()) {
 
                 mAllDeviceSongs = allSongsUnfiltered
                 goPreferences.emergencySongsLib = allSongsUnfiltered
@@ -291,7 +292,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 buildLibraryAndFinishSetup()
 
             } else {
-
                 if (!goPreferences.emergencySongsLib.isNullOrEmpty()) {
 
                     Utils.makeToast(
@@ -319,7 +319,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         val libraryViewModel = ViewModelProviders.of(this).get(LibraryViewModel::class.java)
 
-        libraryViewModel.buildLibrary(this, mAllDeviceSongs)
+        libraryViewModel.getMutableLiveData(this, mAllDeviceSongs)
             .observe(this, Observer { allAlbumByArtist ->
 
                 mMusic = allAlbumByArtist

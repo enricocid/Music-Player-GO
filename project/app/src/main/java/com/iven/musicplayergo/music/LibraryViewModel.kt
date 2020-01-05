@@ -10,7 +10,9 @@ import kotlin.coroutines.CoroutineContext
 
 class LibraryViewModel : ViewModel(), CoroutineScope {
 
-    private val libraryLiveData: MutableLiveData<HashMap<String, List<Album>>> = MutableLiveData()
+    private val libraryLiveData: MusicLiveData<HashMap<String, List<Album>>> by lazy {
+        MusicLiveData<HashMap<String, List<Album>>>()
+    }
 
     private val buildLibraryJob = Job()
 
@@ -21,16 +23,9 @@ class LibraryViewModel : ViewModel(), CoroutineScope {
         exception.printStackTrace()
     }
 
-    fun buildLibrary(
-        context: Context,
-        deviceSongs: MutableList<Music>?
-    ): MutableLiveData<HashMap<String, List<Album>>> {
-        return go(context, deviceSongs)
-    }
-
     // Extension method to get all music files list from external storage/sd card
     @SuppressLint("InlinedApi")
-    fun go(
+    fun getMutableLiveData(
         context: Context,
         deviceSongs: MutableList<Music>?
     ): MutableLiveData<HashMap<String, List<Album>>> {
@@ -38,7 +33,8 @@ class LibraryViewModel : ViewModel(), CoroutineScope {
         launch {
             try {
                 withContext(Dispatchers.Main) {
-                    libraryLiveData.value = musicLibrary.buildLibrary(context, deviceSongs)
+                    val library = musicLibrary.buildLibrary(context, deviceSongs)
+                    libraryLiveData.postValue(library)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
