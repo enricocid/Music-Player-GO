@@ -11,6 +11,7 @@ android {
         targetSdkVersion 29
         versionCode 133
         versionName "4.0.1"
+        vectorDrawables.useSupportLibrary = true
     }
 
     //retrieve version number

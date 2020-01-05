@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="0dp"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_weight="1"
     android:gravity="center"
     android:orientation="horizontal">
@@ -16,7 +17,7 @@
         android:background="?android:attr/actionBarItemBackground"
         android:onClick="openEqualizer"
         android:padding="8dp"
-        android:src="@drawable/ic_equalizer"
+        app:srcCompat="@drawable/ic_equalizer"
         tools:ignore="ContentDescription" />
 
     <ImageView
@@ -27,7 +28,7 @@
         android:layout_weight="1"
         android:background="?android:attr/actionBarItemBackground"
         android:padding="8dp"
-        android:src="@drawable/ic_skip_previous"
+        app:srcCompat="@drawable/ic_skip_previous"
         android:tint="?android:attr/textColorPrimary"
         tools:ignore="ContentDescription" />
 
@@ -37,7 +38,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="?android:attr/actionBarItemBackground"
-        android:src="@drawable/ic_play"
+        app:srcCompat="@drawable/ic_play"
         tools:ignore="ContentDescription" />
 
     <ImageView
@@ -48,7 +49,7 @@
         android:layout_weight="1"
         android:background="?android:attr/actionBarItemBackground"
         android:padding="8dp"
-        android:src="@drawable/ic_skip_next"
+        app:srcCompat="@drawable/ic_skip_next"
         android:tint="?android:attr/textColorPrimary"
         tools:ignore="ContentDescription" />
 
@@ -60,6 +61,6 @@
         android:layout_weight="1"
         android:background="?android:attr/actionBarItemBackground"
         android:padding="8dp"
-        android:src="@drawable/ic_repeat_one"
+        app:srcCompat="@drawable/ic_repeat_one"
         tools:ignore="ContentDescription" />
 </LinearLayout>

@@ -17,7 +17,7 @@
         android:layout_width="@android:dimen/app_icon_size"
         android:layout_height="@android:dimen/app_icon_size"
         android:layout_gravity="center"
-        android:src="@drawable/ic_check_circle"
+        app:srcCompat="@drawable/ic_check_circle"
         tools:ignore="ContentDescription" />
 
     <LinearLayout
