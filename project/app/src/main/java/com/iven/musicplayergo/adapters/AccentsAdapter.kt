@@ -53,7 +53,7 @@ class AccentsAdapter(private val activity: Activity) :
                     else
                         View.VISIBLE
 
-                circle.setOnClickListener {
+                setOnClickListener {
 
                     if (mAccents[adapterPosition].first != mSelectedAccent) {
 

@@ -3,25 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@android:dimen/app_icon_size"
     android:layout_height="@android:dimen/app_icon_size"
+    android:background="?attr/selectableItemBackground"
     android:padding="6dp">
 
     <ImageButton
         android:id="@+id/circle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_circle"
+        android:background="@android:color/transparent"
+        android:clickable="false"
+        android:focusable="false"
         android:scaleType="fitCenter"
-        android:background="?attr/selectableItemBackground"
+        android:src="@drawable/ic_circle"
         tools:ignore="ContentDescription" />
 
     <ImageButton
         android:id="@+id/check"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:clickable="false"
+        android:focusable="false"
+        android:scaleType="fitCenter"
         android:scaleX="0.50"
         android:scaleY="0.50"
-        android:scaleType="fitCenter"
-        android:background="?attr/selectableItemBackground"
         android:src="@drawable/ic_check"
         tools:ignore="ContentDescription" />
 </FrameLayout>
