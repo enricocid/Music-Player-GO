@@ -30,7 +30,9 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.google.android.material.tabs.TabLayout
 import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.fragments.*
-import com.iven.musicplayergo.music.*
+import com.iven.musicplayergo.music.Music
+import com.iven.musicplayergo.music.MusicUtils
+import com.iven.musicplayergo.music.MusicViewModel
 import com.iven.musicplayergo.player.*
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -109,9 +111,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     //booleans
     private var sUserIsSeeking = false
-
-    //music
-    private lateinit var mMusic: Map<String, List<Album>>
 
     private lateinit var mQueueDialog: Pair<MaterialDialog, QueueAdapter>
 
@@ -281,8 +280,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun getAllDeviceSongs() {
 
         val viewModel = ViewModelProviders.of(this).get(MusicViewModel::class.java)
-
-        viewModel.getMutableLiveData(this).observe(this, Observer { allSongsUnfiltered ->
+        viewModel.musicLiveData.observe(this, Observer { allSongsUnfiltered ->
 
             if (!allSongsUnfiltered.isNullOrEmpty()) {
 
@@ -313,21 +311,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 }
             }
         })
+
+        viewModel.getMusicLiveData()
     }
 
     private fun buildLibraryAndFinishSetup() {
 
-        val libraryViewModel = ViewModelProviders.of(this).get(LibraryViewModel::class.java)
+        handleRestoring()
 
-        libraryViewModel.getMutableLiveData(this, mAllDeviceSongs)
-            .observe(this, Observer { allAlbumByArtist ->
-
-                mMusic = allAlbumByArtist
-
-                handleRestoring()
-
-                initViewPager()
-            })
+        initViewPager()
     }
 
     private fun handleRestoring() {
