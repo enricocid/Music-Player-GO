@@ -4,22 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@android:dimen/app_icon_size"
     android:layout_height="@android:dimen/app_icon_size"
-    android:layout_margin="12dp"
-    android:background="?android:attr/selectableItemBackground">
+    android:layout_margin="12dp">
 
-    <ImageView
+    <ImageButton
         android:id="@+id/tab_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="fitCenter"
         tools:ignore="ContentDescription" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/tab_indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
+        android:scaleType="fitCenter"
         android:src="@drawable/tab_indicator_alt"
+        android:background="@android:color/transparent"
         android:tint="?attr/colorPrimary"
         tools:ignore="ContentDescription" />
 </FrameLayout>
