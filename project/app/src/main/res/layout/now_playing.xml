@@ -16,6 +16,7 @@
         android:orientation="vertical"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
+        android:layout_marginBottom="4dp"
         tools:context=".MainActivity">
 
         <TextView
@@ -57,7 +58,8 @@
             android:id="@+id/np_fixed_music_bar"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:padding="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             app:LoadedBarPrimeColor="?attr/colorPrimary" />
 
         <TextView

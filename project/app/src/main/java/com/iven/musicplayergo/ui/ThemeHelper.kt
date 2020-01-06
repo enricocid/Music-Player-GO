@@ -16,7 +16,7 @@ import android.text.Spanned
 import android.util.TypedValue
 import android.view.View
 import android.view.Window
-import android.widget.ImageView
+import android.widget.ImageButton
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
@@ -159,9 +159,9 @@ object ThemeHelper {
     }
 
     @JvmStatic
-    fun updateIconTint(imageView: ImageView, tint: Int) {
+    fun updateIconTint(imageButton: ImageButton, tint: Int) {
         ImageViewCompat.setImageTintList(
-            imageView, ColorStateList.valueOf(tint)
+            imageButton, ColorStateList.valueOf(tint)
         )
     }
 

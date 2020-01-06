@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -52,7 +53,7 @@ class ActiveTabsAdapter(
 
             itemView.apply {
 
-                val icon = findViewById<ImageView>(R.id.tab_image)
+                val icon = findViewById<ImageButton>(R.id.tab_image)
                 icon.setImageResource(ThemeHelper.getTabIcon(adapterPosition))
                 val indicator = findViewById<ImageView>(R.id.tab_indicator)
 
@@ -97,7 +98,11 @@ class ActiveTabsAdapter(
         }
     }
 
-    private fun manageIndicatorsStatus(condition: Boolean, icon: ImageView, indicator: ImageView) {
+    private fun manageIndicatorsStatus(
+        condition: Boolean,
+        icon: ImageButton,
+        indicator: ImageView
+    ) {
         when {
             condition -> {
                 indicator.visibility = View.VISIBLE

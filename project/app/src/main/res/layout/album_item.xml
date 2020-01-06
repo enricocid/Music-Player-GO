@@ -12,11 +12,12 @@
     app:cardCornerRadius="8dp"
     app:cardElevation="0dp">
 
-    <ImageView
+    <ImageButton
         android:id="@+id/checkbox"
         android:layout_width="@android:dimen/app_icon_size"
         android:layout_height="@android:dimen/app_icon_size"
         android:layout_gravity="center"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_check_circle"
         tools:ignore="ContentDescription" />
 

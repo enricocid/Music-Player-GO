@@ -62,7 +62,7 @@
                 android:textColor="?android:attr/textColorPrimary" />
         </LinearLayout>
 
-        <ImageView
+        <ImageButton
             android:id="@+id/play_pause_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
             android:src="@drawable/ic_play"
             tools:ignore="ContentDescription" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/queue_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
             android:layout_gravity="center"
             android:padding="8dp">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/loved_songs_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

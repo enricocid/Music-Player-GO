@@ -77,10 +77,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mPlayingArtist: TextView
     private lateinit var mPlayingSong: TextView
     private lateinit var mSeekProgressBar: ProgressBar
-    private lateinit var mPlayPauseButton: ImageView
-    private lateinit var mLovedSongsButton: ImageView
+    private lateinit var mPlayPauseButton: ImageButton
+    private lateinit var mLovedSongsButton: ImageButton
     private lateinit var mLoveSongsNumber: TextView
-    private lateinit var mQueueButton: ImageView
+    private lateinit var mQueueButton: ImageButton
 
     private var mControlsPaddingNoTabs: Int by Delegates.notNull()
     private var mControlsPaddingNormal: Int by Delegates.notNull()
@@ -94,13 +94,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mArtistAlbumTextNP: TextView
     private lateinit var mSongSeekTextNP: TextView
     private lateinit var mSongDurationTextNP: TextView
-    private lateinit var mSkipPrevButtonNP: ImageView
-    private lateinit var mPlayPauseButtonNP: ImageView
-    private lateinit var mSkipNextButtonNP: ImageView
-    private lateinit var mRepeatNP: ImageView
+    private lateinit var mSkipPrevButtonNP: ImageButton
+    private lateinit var mPlayPauseButtonNP: ImageButton
+    private lateinit var mSkipNextButtonNP: ImageButton
+    private lateinit var mRepeatNP: ImageButton
     private lateinit var mVolumeSeekBarNP: SeekBar
-    private lateinit var mLoveButtonNP: ImageView
-    private lateinit var mVolumeNP: ImageView
+    private lateinit var mLoveButtonNP: ImageButton
+    private lateinit var mVolumeNP: ImageButton
     private lateinit var mRatesTextNP: TextView
 
 

@@ -11,12 +11,12 @@
     android:paddingStart="16dp"
     android:paddingEnd="16dp">
 
-    <ImageView
+    <ImageButton
         android:id="@+id/np_love"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="4dp"
         android:background="?android:attr/actionBarItemBackground"
         android:src="@drawable/ic_favorite"
         tools:ignore="ContentDescription" />
@@ -31,12 +31,12 @@
         android:focusable="true"
         android:max="100" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/np_volume"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         tools:ignore="ContentDescription" />
 
 </LinearLayout>

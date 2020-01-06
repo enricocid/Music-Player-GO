@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@android:dimen/app_icon_size"
-    android:layout_height="@android:dimen/app_icon_size"
-    android:background="?android:attr/selectableItemBackground"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:padding="6dp">
 
-    <ImageView
+    <ImageButton
         android:id="@+id/circle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="@android:dimen/app_icon_size"
+        android:layout_height="@android:dimen/app_icon_size"
         android:src="@drawable/ic_circle"
+        android:scaleType="fitCenter"
+        android:background="?attr/selectableItemBackground"
         tools:ignore="ContentDescription" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/check"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="@android:dimen/app_icon_size"
+        android:layout_height="@android:dimen/app_icon_size"
         android:scaleX="0.50"
         android:scaleY="0.50"
+        android:scaleType="fitCenter"
+        android:background="?attr/selectableItemBackground"
         android:src="@drawable/ic_check"
         tools:ignore="ContentDescription" />
 </FrameLayout>

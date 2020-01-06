@@ -4,7 +4,7 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
@@ -40,20 +40,20 @@ class AccentsAdapter(private val activity: Activity) :
 
             itemView.apply {
 
+                val circle = findViewById<ImageButton>(R.id.circle)
                 ThemeHelper.getColor(
                     context,
                     color,
                     R.color.deep_purple
-                ).apply { ThemeHelper.updateIconTint(findViewById(R.id.circle), this) }
+                ).apply { ThemeHelper.updateIconTint(circle, this) }
 
-                findViewById<ImageView>(R.id.check).apply {
-                    visibility = if (color != mSelectedAccent)
+                itemView.findViewById<ImageButton>(R.id.check).visibility =
+                    if (color != mSelectedAccent)
                         View.GONE
                     else
                         View.VISIBLE
-                }
 
-                setOnClickListener {
+                circle.setOnClickListener {
 
                     if (mAccents[adapterPosition].first != mSelectedAccent) {
 
