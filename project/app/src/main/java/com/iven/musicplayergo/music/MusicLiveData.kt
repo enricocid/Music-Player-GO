@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 
 class MusicLiveData<T> : MutableLiveData<T>() {
 
-    var isSet = false
     /**
      * re-implemented post method, as the original implementation may swallow date changes
      * by ignored all data before last [postValue] call
@@ -16,10 +15,5 @@ class MusicLiveData<T> : MutableLiveData<T>() {
             setValue(value)
         else
             Handler(Looper.getMainLooper()).post { setValue(value) }
-    }
-
-    override fun setValue(value: T) {
-        isSet = true
-        super.setValue(value)
     }
 }

@@ -30,14 +30,16 @@ class LibraryViewModel : ViewModel(), CoroutineScope {
         deviceSongs: MutableList<Music>?
     ): MutableLiveData<HashMap<String, List<Album>>> {
 
-        launch {
-            try {
-                withContext(Dispatchers.Main) {
-                    val library = musicLibrary.buildLibrary(context, deviceSongs)
-                    libraryLiveData.postValue(library)
+        if (libraryLiveData.value.isNullOrEmpty()) {
+            launch {
+                try {
+                    withContext(Dispatchers.Main) {
+                        val library = musicLibrary.buildLibrary(context, deviceSongs)
+                        libraryLiveData.postValue(library)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
             }
         }
         return libraryLiveData

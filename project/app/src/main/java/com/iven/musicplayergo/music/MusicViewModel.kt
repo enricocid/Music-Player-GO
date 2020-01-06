@@ -3,7 +3,6 @@ package com.iven.musicplayergo.music
 import android.annotation.SuppressLint
 import android.content.Context
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -32,8 +31,7 @@ class MusicViewModel : ViewModel(), CoroutineScope {
     @SuppressLint("InlinedApi")
     fun getMutableLiveData(context: Context): MutableLiveData<MutableList<Music>> {
 
-        Log.d("ISsET", musicLiveData.isSet.toString())
-        if (!musicLiveData.isSet) {
+        if (musicLiveData.value.isNullOrEmpty()) {
             val allSongsUnfiltered = mutableListOf<Music>()
 
             launch {
@@ -93,11 +91,7 @@ class MusicViewModel : ViewModel(), CoroutineScope {
                                 } while (it.moveToNext())
                                 it.close()
                             }
-                            if (it.isClosed) {
-                                musicLiveData.postValue(allSongsUnfiltered)
-                                Log.d("stoqua", musicLiveData.isSet.toString())
-
-                            }
+                            if (it.isClosed) musicLiveData.postValue(allSongsUnfiltered)
                         }
                     }
                 } catch (e: Exception) {
