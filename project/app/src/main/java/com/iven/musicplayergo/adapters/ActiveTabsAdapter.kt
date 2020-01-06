@@ -51,35 +51,37 @@ class ActiveTabsAdapter(
 
         fun bindItems() {
 
-            itemView.apply {
+            val tabImageButton = itemView.findViewById<ImageButton>(R.id.tab_image)
+            val indicator = itemView.findViewById<ImageButton>(R.id.tab_indicator)
 
-                val tabImageButton = findViewById<ImageButton>(R.id.tab_image)
-                tabImageButton.setImageResource(ThemeHelper.getTabIcon(adapterPosition))
-                val indicator = findViewById<ImageView>(R.id.tab_indicator)
+            tabImageButton.apply {
+
+                setImageResource(ThemeHelper.getTabIcon(adapterPosition))
 
                 isEnabled = adapterPosition != mAvailableItems.size - 1
+
                 if (isEnabled) {
                     manageIndicatorsStatus(
                         mActiveItems?.contains(adapterPosition.toString())!!,
-                        tabImageButton,
+                        this,
                         indicator
                     )
                 } else {
                     indicator.apply {
                         visibility = View.VISIBLE
-                        drawable.alpha = 50
+                        alpha = 0.10F
                     }
                     ThemeHelper.updateIconTint(
-                        tabImageButton,
+                        this,
                         ThemeHelper.getAlphaAccent(context, ThemeHelper.getAlphaForAccent())
                     )
                 }
 
-                tabImageButton.setOnClickListener {
+                setOnClickListener {
 
                     manageIndicatorsStatus(
                         indicator.visibility != View.VISIBLE,
-                        tabImageButton,
+                        this,
                         indicator
                     )
 
@@ -95,7 +97,7 @@ class ActiveTabsAdapter(
                             Toast.LENGTH_SHORT
                         )
                         mActiveItems.add(adapterPosition.toString())
-                        manageIndicatorsStatus(true, tabImageButton, indicator)
+                        manageIndicatorsStatus(true, this, indicator)
                     }
                 }
             }
