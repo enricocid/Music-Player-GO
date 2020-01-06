@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@android:dimen/app_icon_size"
     android:layout_height="@android:dimen/app_icon_size"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="12dp"
     android:background="?android:attr/selectableItemBackground">
 
@@ -20,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        app:srcCompat="@drawable/tab_indicator_alt"
+        android:src="@drawable/tab_indicator_alt"
         android:tint="?attr/colorPrimary"
         tools:ignore="ContentDescription" />
 </FrameLayout>

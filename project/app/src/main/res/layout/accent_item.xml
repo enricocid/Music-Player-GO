@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@android:dimen/app_icon_size"
     android:layout_height="@android:dimen/app_icon_size"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?android:attr/selectableItemBackground"
     android:padding="6dp">
 
@@ -11,7 +10,7 @@
         android:id="@+id/circle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srcCompat="@drawable/ic_circle"
+        android:src="@drawable/ic_circle"
         tools:ignore="ContentDescription" />
 
     <ImageView
@@ -20,6 +19,6 @@
         android:layout_height="match_parent"
         android:scaleX="0.50"
         android:scaleY="0.50"
-        app:srcCompat="@drawable/ic_check"
+        android:src="@drawable/ic_check"
         tools:ignore="ContentDescription" />
 </FrameLayout>
