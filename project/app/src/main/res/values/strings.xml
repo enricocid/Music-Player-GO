@@ -74,8 +74,6 @@
     <string name="faq_title" translatable="false">FAQ</string>
     <string name="faq_summary">FAQ and supported media formats :P</string>
 
-    <string name="songs_lib_pref" translatable="false">songs_lib_pref</string>
-
     <string name="theme_pref" translatable="false">theme_pref</string>
     <string name="theme_pref_title">Theme</string>
     <string name="theme_pref_light_title">Light</string>
@@ -100,9 +98,14 @@
     <string name="tabs_pref_summary_on">Disable tabs</string>
     <string name="tabs_pref_summary_off">Show tabs to navigate sections</string>
 
-    <string name="active_fragments_pref" translatable="false">active_fragments_pref</string>
+    <string name="active_fragments_pref" translatable="false">selected_fragments_pref</string>
     <string name="active_fragments_pref_title">Active tabs</string>
     <string name="active_fragments_pref_warning">You just can\'t remove all tabs! :P</string>
+
+    <string name="active_frag_artist" translatable="false">active_frag_artist</string>
+    <string name="active_frag_music" translatable="false">active_frag_music</string>
+    <string name="active_frag_folders" translatable="false">active_frag_folder</string>
+    <string name="active_frag_settings" translatable="false">active_frag_settings</string>
 
     <string name="artists_sorting_pref" translatable="false">artists_sorting_pref</string>
     <string name="folders_sorting_pref" translatable="false">folders_sorting_pref</string>

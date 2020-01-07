@@ -18,8 +18,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
@@ -32,7 +30,6 @@ import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
-import com.iven.musicplayergo.music.MusicViewModel
 import com.iven.musicplayergo.player.*
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -41,12 +38,13 @@ import com.oze.music.musicbar.FixedMusicBar
 import com.oze.music.musicbar.MusicBar
 import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.player_controls_panel.*
+import kotlinx.coroutines.*
 import kotlin.properties.Delegates
 
 const val RESTORE_SETTINGS_FRAGMENT = "restore_settings_fragment_key"
 
 @Suppress("UNUSED_PARAMETER")
-class MainActivity : AppCompatActivity(), UIControlInterface {
+class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by MainScope() {
 
     //colors
     private var mResolvedAccentColor: Int by Delegates.notNull()
@@ -107,6 +105,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
 
     //music player things
+
     private var mAllDeviceSongs: MutableList<Music>? = null
 
     //booleans
@@ -141,7 +140,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder
             mMediaPlayerHolder.mediaPlayerInterface = mMediaPlayerInterface
 
-            getAllDeviceSongs()
+            launch {
+                callLoadAllMusic()
+            }
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
@@ -233,6 +234,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         initMediaButtons()
 
+        mActiveFragments = goPreferences.activeFragments?.toMutableList()
+
         sDeviceLand = ThemeHelper.isDeviceLand(resources)
 
         sRestoreSettingsFragment =
@@ -277,45 +280,40 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    private fun getAllDeviceSongs() {
+    private suspend fun callLoadAllMusic() {
 
-        val viewModel = ViewModelProviders.of(this).get(MusicViewModel::class.java)
-        viewModel.musicLiveData.observe(this, Observer { allSongsUnfiltered ->
+        val result = loadAllMusic()
 
-            if (!allSongsUnfiltered.isNullOrEmpty()) {
+        withContext(Dispatchers.Main) {
+            if (!result.isNullOrEmpty()) {
 
-                mAllDeviceSongs = allSongsUnfiltered
-                goPreferences.emergencySongsLib = allSongsUnfiltered
+                mAllDeviceSongs = result
 
-                buildLibraryAndFinishSetup()
+                finishSetup()
 
             } else {
-                if (!goPreferences.emergencySongsLib.isNullOrEmpty()) {
 
-                    Utils.makeToast(
-                        this@MainActivity,
-                        getString(R.string.error_unknown),
-                        Toast.LENGTH_LONG
-                    )
-                    mAllDeviceSongs = goPreferences.emergencySongsLib
-                    buildLibraryAndFinishSetup()
-
-                } else {
-
-                    Utils.makeToast(
-                        this@MainActivity,
-                        getString(R.string.error_no_music),
-                        Toast.LENGTH_LONG
-                    )
-                    finishAndRemoveTask()
-                }
+                Utils.makeToast(
+                    this@MainActivity,
+                    getString(R.string.error_no_music),
+                    Toast.LENGTH_LONG
+                )
+                finishAndRemoveTask()
             }
-        })
-
-        viewModel.getMusicLiveData()
+        }
     }
 
-    private fun buildLibraryAndFinishSetup() {
+    private suspend fun loadAllMusic(): MutableList<Music>? {
+        return withContext(Dispatchers.Default) {
+
+            val music = musicLibrary.queryForMusic(this@MainActivity)
+            musicLibrary.buildLibrary(this@MainActivity, music)
+
+            return@withContext music
+        }
+    }
+
+    private fun finishSetup() {
 
         handleRestoring()
 
@@ -332,8 +330,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun initViewPager() {
-
-        mActiveFragments = goPreferences.activeFragments?.toMutableList()
 
         initActiveFragmentsOrTabs(true)
 

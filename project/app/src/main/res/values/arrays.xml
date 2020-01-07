@@ -15,10 +15,10 @@
     </string-array>
 
     <string-array name="activeFragmentsListArray">
-        <item>@string/artists</item>
-        <item>@string/songs</item>
-        <item>@string/folders</item>
-        <item>@string/settings</item>
+        <item>@string/active_frag_artist</item>
+        <item>@string/active_frag_music</item>
+        <item>@string/active_frag_folders</item>
+        <item>@string/active_frag_settings</item>
     </string-array>
 
     <string-array name="activeFragmentsEntryArray">
