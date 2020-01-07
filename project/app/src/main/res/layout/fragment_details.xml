@@ -57,7 +57,6 @@
             android:paddingEnd="12dp"
             android:paddingBottom="8dp"
             android:singleLine="true"
-            android:textAlignment="textEnd"
             android:textAppearance="@android:style/TextAppearance.Material.Caption"
             android:textColor="?android:attr/textColorSecondary" />
     </LinearLayout>

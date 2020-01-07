@@ -53,7 +53,7 @@
                 android:paddingEnd="12dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:textAlignment="textEnd"
+                android:textAlignment="center"
                 android:textAppearance="@android:style/TextAppearance.Material.Subhead"
                 android:textColor="?colorPrimary" />
 
@@ -61,12 +61,11 @@
                 android:id="@+id/album_year_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="center"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:layout_marginBottom="4dp"
                 android:singleLine="true"
-                android:textAlignment="textEnd"
                 android:textAppearance="@android:style/TextAppearance.Material.Caption"
                 android:textColor="?android:attr/textColorSecondary" />
 
