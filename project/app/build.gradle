@@ -37,6 +37,7 @@ android {
 
     lintOptions {
         disable 'MissingTranslation'
+        disable 'UnusedAttribute'
     }
 }
 
