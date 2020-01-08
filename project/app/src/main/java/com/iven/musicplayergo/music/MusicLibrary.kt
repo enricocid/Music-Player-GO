@@ -3,9 +3,6 @@ package com.iven.musicplayergo.music
 import android.annotation.SuppressLint
 import android.content.Context
 import android.provider.MediaStore
-import android.widget.Toast
-import com.iven.musicplayergo.R
-import com.iven.musicplayergo.ui.Utils
 
 
 class MusicLibrary {
@@ -35,62 +32,54 @@ class MusicLibrary {
 
             // Query the storage for music files
             // If query result is not empty
-            musicCursor?.use {
-                if (it.moveToFirst()) {
+            musicCursor?.use { cursor ->
 
-                    val artist =
-                        it.getColumnIndex(MediaStore.Audio.AudioColumns.ARTIST)
-                    val year =
-                        it.getColumnIndex(MediaStore.Audio.AudioColumns.YEAR)
-                    val track =
-                        it.getColumnIndex(MediaStore.Audio.AudioColumns.TRACK)
-                    val title =
-                        it.getColumnIndex(MediaStore.Audio.AudioColumns.TITLE)
-                    val duration =
-                        it.getColumnIndex(MediaStore.Audio.AudioColumns.DURATION)
-                    val album =
-                        it.getColumnIndex(MediaStore.Audio.AudioColumns.ALBUM)
-                    val path =
-                        it.getColumnIndex(MediaStore.Audio.AudioColumns.DATA)
-                    val albumId =
-                        it.getColumnIndex(MediaStore.Audio.AudioColumns.ALBUM_ID)
+                val artist =
+                    cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ARTIST)
+                val year =
+                    cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.YEAR)
+                val track =
+                    cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.TRACK)
+                val title =
+                    cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.TITLE)
+                val duration =
+                    cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DURATION)
+                val album =
+                    cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ALBUM)
+                val path =
+                    cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DATA)
+                val albumId =
+                    cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ALBUM_ID)
+
+                while (cursor.moveToNext()) {
 
                     // Now loop through the music files
-                    do {
-                        val audioArtist = it.getString(artist)
-                        val audioYear = it.getInt(year)
-                        val audioTrack = it.getInt(track)
-                        val audioTitle = it.getString(title)
-                        val audioDuration = it.getLong(duration)
-                        val audioAlbum = it.getString(album)
-                        val audioPath = it.getString(path)
-                        val audioAlbumId = it.getString(albumId)
+                    val audioArtist = cursor.getString(artist)
+                    val audioYear = cursor.getInt(year)
+                    val audioTrack = cursor.getInt(track)
+                    val audioTitle = cursor.getString(title)
+                    val audioDuration = cursor.getLong(duration)
+                    val audioAlbum = cursor.getString(album)
+                    val audioPath = cursor.getString(path)
+                    val audioAlbumId = cursor.getString(albumId)
 
-                        // Add the current music to the list
-                        allSongsUnfiltered?.add(
-                            Music(
-                                audioArtist,
-                                audioYear,
-                                audioTrack,
-                                audioTitle,
-                                audioDuration,
-                                audioAlbum,
-                                audioPath,
-                                audioAlbumId
-                            )
+                    // Add the current music to the list
+                    allSongsUnfiltered?.add(
+                        Music(
+                            audioArtist,
+                            audioYear,
+                            audioTrack,
+                            audioTitle,
+                            audioDuration,
+                            audioAlbum,
+                            audioPath,
+                            audioAlbumId
                         )
-
-                    } while (it.moveToNext())
-                    it.close()
+                    )
                 }
             }
         } catch (e: Exception) {
             allSongsUnfiltered = null
-            Utils.makeToast(
-                context,
-                context.getString(R.string.error_unknown),
-                Toast.LENGTH_LONG
-            )
             e.printStackTrace()
         }
         return allSongsUnfiltered

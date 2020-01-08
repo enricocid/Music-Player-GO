@@ -295,7 +295,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
 
                 Utils.makeToast(
                     this@MainActivity,
-                    getString(R.string.error_no_music),
+                    getString(R.string.error_unknown),
                     Toast.LENGTH_LONG
                 )
                 finishAndRemoveTask()
@@ -307,7 +307,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
         return withContext(Dispatchers.Default) {
 
             val music = musicLibrary.queryForMusic(this@MainActivity)
-            musicLibrary.buildLibrary(this@MainActivity, music)
+            if (!music.isNullOrEmpty()) musicLibrary.buildLibrary(this@MainActivity, music)
 
             return@withContext music
         }
