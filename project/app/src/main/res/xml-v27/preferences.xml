@@ -73,6 +73,14 @@
             app:title="@string/tabs_pref_title" />
 
         <SwitchPreference
+            android:summaryOff="@string/precise_volume_pref_summary_off"
+            app:defaultValue="true"
+            app:dialogTitle="@string/precise_volume_pref_title"
+            app:key="@string/precise_volume_pref"
+            app:summaryOn="@string/precise_volume_pref_summary_on"
+            app:title="@string/precise_volume_pref_title" />
+
+        <SwitchPreference
             android:summaryOff="@string/focus_pref_summary_off"
             app:defaultValue="true"
             app:dialogTitle="@string/focus_pref_title"

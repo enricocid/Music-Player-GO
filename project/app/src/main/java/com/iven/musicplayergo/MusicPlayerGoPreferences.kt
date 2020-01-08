@@ -31,6 +31,7 @@ class MusicPlayerGoPreferences(context: Context) {
     private val prefsArtistsSorting = context.getString(R.string.artists_sorting_pref)
     private val prefsFoldersSorting = context.getString(R.string.folders_sorting_pref)
 
+    private val prefsPreciseVolume = context.getString(R.string.precise_volume_pref)
     private val prefsFocus = context.getString(R.string.focus_pref)
     private val prefsHeadsetPlug = context.getString(R.string.headset_pref)
 
@@ -85,6 +86,10 @@ class MusicPlayerGoPreferences(context: Context) {
     var foldersSorting
         get() = mPrefs.getInt(prefsFoldersSorting, DEFAULT_SORTING)
         set(value) = mPrefs.edit().putInt(prefsFoldersSorting, value).apply()
+
+    var isPreciseVolumeEnabled
+        get() = mPrefs.getBoolean(prefsPreciseVolume, true)
+        set(value) = mPrefs.edit().putBoolean(prefsPreciseVolume, value).apply()
 
     var isFocusEnabled
         get() = mPrefs.getBoolean(prefsFocus, true)

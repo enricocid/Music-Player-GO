@@ -625,7 +625,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
                 mVolumeSeekBarNP = customView.findViewById(R.id.np_volume_seek)
                 mVolumeNP = customView.findViewById(R.id.np_volume)
 
-                setupPreciseVolumeHandler()
+                if (goPreferences.isPreciseVolumeEnabled) {
+                    setupPreciseVolumeHandler()
+                } else {
+                    mVolumeSeekBarNP.isEnabled = false
+                    ThemeHelper.updateIconTint(mVolumeNP, mResolvedDisabledIconsColor)
+                }
+
                 setFixedMusicBarProgressListener()
 
                 mRatesTextNP = customView.findViewById(R.id.np_rates)

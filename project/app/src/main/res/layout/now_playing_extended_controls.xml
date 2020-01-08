@@ -36,6 +36,7 @@
         android:layout_gravity="center"
         android:layout_marginStart="16dp"
         android:background="@android:color/transparent"
+        android:src="@drawable/ic_volume_up"
         android:clickable="false"
         android:focusable="false"
         tools:ignore="ContentDescription" />

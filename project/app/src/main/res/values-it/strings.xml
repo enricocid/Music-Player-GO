@@ -73,6 +73,10 @@
     <string name="sorting_pref_ascending">Ascendente</string>
     <string name="sorting_pref_descending">Discendente</string>
 
+    <string name="precise_volume_pref_title">Controllo preciso del volume</string>
+    <string name="precise_volume_pref_summary_on">Disabilita controllo preciso del volume</string>
+    <string name="precise_volume_pref_summary_off">Abilita controllo preciso del volume</string>
+
     <string name="focus_pref_title">Focus audio</string>
     <string name="focus_pref_summary_on">Disabilita gestione focus audio</string>
     <string name="focus_pref_summary_off">Abilita gestione focus audio</string>

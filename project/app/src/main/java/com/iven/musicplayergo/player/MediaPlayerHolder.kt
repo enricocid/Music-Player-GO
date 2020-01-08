@@ -419,7 +419,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 tryToGetAudioFocus()
                 registerMediaButtonsReceiver()
 
-                setPreciseVolume(currentVolumeInPercent)
+                if (goPreferences.isPreciseVolumeEnabled) setPreciseVolume(currentVolumeInPercent)
             }
 
             mediaPlayer.setDataSource(song?.path)
@@ -436,7 +436,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (isRepeat) isRepeat = false
 
         if (isSongRestoredFromPrefs) {
-            setPreciseVolume(currentVolumeInPercent)
+            if (goPreferences.isPreciseVolumeEnabled) setPreciseVolume(currentVolumeInPercent)
             mediaPlayer.seekTo(goPreferences.latestPlayedSong?.second!!)
         } else if (isSongFromLovedSongs.first) {
             mediaPlayer.seekTo(isSongFromLovedSongs.second)
