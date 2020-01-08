@@ -36,7 +36,6 @@
     <string name="no_eq">Geen equalizer aangetroffen!</string>
     <string name="error_unknown">Er is iets misgegaan! :(</string>
     <string name="error_unknown_unsupported">Er is iets misgegaan! :( Het gekozen bestandstype wordt mogelijk niet ondersteund of de map is ontoegankelijk (wat niet de schuld van de app is!)</string>
-    <string name="error_no_music">Geen muziek aangetroffen!</string>
     <string name="on_close_activity">Wil je het afspelen stoppen?</string>
     <string name="repeat_enabled">1x herhalen ingeschakeld!</string>
     <string name="repeat_disabled">1x herhalen uitgeschakeld!</string>

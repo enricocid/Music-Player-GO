@@ -36,7 +36,6 @@
     <string name="no_eq">Nessun equalizzatore trovato!</string>
     <string name="error_unknown">Qualcosa è andato storto! :(</string>
     <string name="error_unknown_unsupported">Qualcosa è andato storto! :( Forse il formato della canzone non è supportato o la cartella non è accessibile(non dipende dall\'app!)</string>
-    <string name="error_no_music">Nessuna canzone trovata</string>
     <string name="on_close_activity">Vuoi interrompere la riproduzione?</string>
     <string name="repeat_enabled">Ripeti 1x attivato!</string>
     <string name="repeat_disabled">Ripeti 1x disattivato!</string>
