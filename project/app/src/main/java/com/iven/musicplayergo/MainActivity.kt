@@ -140,9 +140,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder
             mMediaPlayerHolder.mediaPlayerInterface = mMediaPlayerInterface
 
-            launch {
-                callLoadAllMusic()
-            }
+            handleRestoring()
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
@@ -208,7 +206,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
         if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED)
             Utils.showPermissionRationale(
                 this
-            ) else doBindService()
+            ) else launchMusicLoading()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -244,7 +242,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
                 false
             )
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else doBindService()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else launchMusicLoading()
     }
 
     private fun getViewsAndResources() {
@@ -277,6 +275,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
             mControlsPaddingEnd = getDimensionPixelSize(R.dimen.player_controls_padding_end)
             mControlsPaddingNoTabs =
                 getDimensionPixelSize(R.dimen.player_controls_padding_no_tabs)
+        }
+    }
+
+    private fun launchMusicLoading() {
+        launch {
+            callLoadAllMusic()
         }
     }
 
@@ -315,9 +319,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
 
     private fun finishSetup() {
 
-        handleRestoring()
-
         initViewPager()
+
+        doBindService()
     }
 
     private fun handleRestoring() {
@@ -922,7 +926,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
 
     @TargetApi(23)
     private fun checkPermission() {
-        if (Utils.hasToShowPermissionRationale(this)) Utils.showPermissionRationale(this) else doBindService()
+        if (Utils.hasToShowPermissionRationale(this)) Utils.showPermissionRationale(this) else launchMusicLoading()
     }
 
     //method to handle intent to play audio file from external app
