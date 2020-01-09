@@ -34,34 +34,37 @@ class MusicLibrary {
             // If query result is not empty
             musicCursor?.use { cursor ->
 
-                val artist =
+                val artistIndex =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ARTIST)
-                val year =
+                val yearIndex =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.YEAR)
-                val track =
+                val trackIndex =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.TRACK)
-                val title =
+                val titleIndex =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.TITLE)
-                val duration =
+                val displayNameIndex =
+                    cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DISPLAY_NAME)
+                val durationIndex =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DURATION)
-                val album =
+                val albumIndex =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ALBUM)
-                val path =
+                val pathIndex =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DATA)
-                val albumId =
+                val albumIdIndex =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ALBUM_ID)
 
                 while (cursor.moveToNext()) {
 
                     // Now loop through the music files
-                    val audioArtist = cursor.getString(artist)
-                    val audioYear = cursor.getInt(year)
-                    val audioTrack = cursor.getInt(track)
-                    val audioTitle = cursor.getString(title)
-                    val audioDuration = cursor.getLong(duration)
-                    val audioAlbum = cursor.getString(album)
-                    val audioPath = cursor.getString(path)
-                    val audioAlbumId = cursor.getString(albumId)
+                    val audioArtist = cursor.getString(artistIndex)
+                    val audioYear = cursor.getInt(yearIndex)
+                    val audioTrack = cursor.getInt(trackIndex)
+                    val audioTitle = cursor.getString(titleIndex)
+                    val audioDisplayName = cursor.getString(displayNameIndex)
+                    val audioDuration = cursor.getLong(durationIndex)
+                    val audioAlbum = cursor.getString(albumIndex)
+                    val audioPath = cursor.getString(pathIndex)
+                    val audioAlbumId = cursor.getString(albumIdIndex)
 
                     // Add the current music to the list
                     allSongsUnfiltered?.add(
@@ -70,6 +73,7 @@ class MusicLibrary {
                             audioYear,
                             audioTrack,
                             audioTitle,
+                            audioDisplayName,
                             audioDuration,
                             audioAlbum,
                             audioPath,

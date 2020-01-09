@@ -5,6 +5,7 @@ data class Music(
     val year: Int,
     val track: Int,
     val title: String?,
+    val displayName: String?,
     val duration: Long,
     val album: String?,
     val path: String?,

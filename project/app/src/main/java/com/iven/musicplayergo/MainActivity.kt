@@ -10,6 +10,7 @@ import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
+import android.provider.OpenableColumns
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -700,7 +701,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
                     isSongRestoredFromPrefs = goPreferences.latestPlayedSong != null
 
                     val song =
-                        if (isSongRestoredFromPrefs) goPreferences.latestPlayedSong?.first
+                        if (isSongRestoredFromPrefs) MusicUtils.getSavedSong()
                         else
                             musicLibrary.randomMusic
 
@@ -932,44 +933,28 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
     //method to handle intent to play audio file from external app
     private fun handleIntent(intent: Intent) {
 
-        val uri = intent.data
+        intent.data?.let { returnUri ->
+            contentResolver.query(returnUri, null, null, null, null)
+        }?.use { cursor ->
+            try {
+                val displayNameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                cursor.moveToFirst()
+                val song =
+                    MusicUtils.getSongForIntent(cursor.getString(displayNameIndex), mAllDeviceSongs)
+                //get album songs and sort them
+                val albumSongs = MusicUtils.getAlbumSongs(song?.artist, song?.album)
 
-        try {
-            if (uri.toString().isNotEmpty()) {
+                onSongSelected(song, albumSongs)
 
-                val path = MusicUtils.getRealPathFromURI(this, uri)
-
-                //if we were able to get the song play it!
-                if (MusicUtils.getSongForIntent(
-                        path,
-                        mAllDeviceSongs
-                    ) != null
-                ) {
-
-                    val song =
-                        MusicUtils.getSongForIntent(path, mAllDeviceSongs)
-
-                    //get album songs and sort them
-                    val albumSongs = MusicUtils.getAlbumSongs(song?.artist, song?.album)
-
-                    onSongSelected(song, albumSongs)
-
-                } else {
-                    Utils.makeToast(
-                        this@MainActivity,
-                        getString(R.string.error_unknown_unsupported),
-                        Toast.LENGTH_LONG
-                    )
-                    finishAndRemoveTask()
-                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Utils.makeToast(
+                    this@MainActivity,
+                    getString(R.string.error_unknown_unsupported),
+                    Toast.LENGTH_LONG
+                )
+                finishAndRemoveTask()
             }
-        } catch (e: Exception) {
-            Utils.makeToast(
-                this@MainActivity,
-                getString(R.string.error_unknown_unsupported),
-                Toast.LENGTH_LONG
-            )
-            finishAndRemoveTask()
         }
     }
 
