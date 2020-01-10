@@ -6,6 +6,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -35,6 +36,11 @@ import java.util.*
 
 @SuppressLint("DefaultLocale")
 object Utils {
+
+    @JvmStatic
+    fun isAndroidQ(): Boolean {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+    }
 
     @JvmStatic
     fun hasToShowPermissionRationale(context: Context): Boolean {
@@ -192,7 +198,7 @@ object Utils {
                 )
                 if (goPreferences.isEdgeToEdge) {
                     window?.apply {
-                        ThemeHelper.handleSystemBarsFlags(this, recyclerView, true)
+                        ThemeHelper.handleSystemBarsFlags(decorView, true)
                         edgeToEdge {
                             recyclerView.fit { Edge.Bottom }
                             decorView.fit { Edge.Top }
@@ -328,7 +334,7 @@ object Utils {
                 )
                 if (goPreferences.isEdgeToEdge) {
                     window?.apply {
-                        ThemeHelper.handleSystemBarsFlags(this, recyclerView, true)
+                        ThemeHelper.handleSystemBarsFlags(decorView, true)
                         edgeToEdge {
                             recyclerView.fit { Edge.Bottom }
                             decorView.fit { Edge.Top }

@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
@@ -233,7 +234,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         getViewsAndResources()
 
         if (goPreferences.isEdgeToEdge) {
-            ThemeHelper.handleSystemBarsFlags(window, window.decorView, false)
+            window?.apply {
+                statusBarColor = Color.TRANSPARENT
+                navigationBarColor = Color.TRANSPARENT
+                ThemeHelper.handleSystemBarsFlags(window.decorView, false)
+            }
             edgeToEdge {
                 mainView.fit { Edge.Top + Edge.Bottom }
             }
@@ -678,7 +683,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 if (goPreferences.isEdgeToEdge && !sDeviceLand) {
                     window?.apply {
-                        ThemeHelper.handleSystemBarsFlags(this, customView, true)
+                        ThemeHelper.handleSystemBarsFlags(decorView, true)
                         edgeToEdge {
                             customView.fit { Edge.Bottom }
                             decorView.fit { Edge.Top }
