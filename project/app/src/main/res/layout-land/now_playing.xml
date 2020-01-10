@@ -20,6 +20,7 @@
             android:background="@drawable/ripple"
             android:onClick="openPlayingArtistAlbum"
             android:orientation="vertical"
+            android:layout_marginBottom="8dp"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             tools:context=".MainActivity">

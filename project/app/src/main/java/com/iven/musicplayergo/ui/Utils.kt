@@ -190,7 +190,6 @@ object Utils {
                         context
                     )
                 )
-
                 if (goPreferences.isEdgeToEdge) {
                     window?.apply {
                         ThemeHelper.handleSystemBarsFlags(this, recyclerView, true)
@@ -327,7 +326,6 @@ object Utils {
                         context
                     )
                 )
-
                 if (goPreferences.isEdgeToEdge) {
                     window?.apply {
                         ThemeHelper.handleSystemBarsFlags(this, recyclerView, true)

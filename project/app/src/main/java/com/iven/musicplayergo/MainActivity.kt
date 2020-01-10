@@ -676,7 +676,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     mSeekBarNP.setOnSeekBarChangeListener(null)
                 }
 
-                if (goPreferences.isEdgeToEdge) {
+                if (goPreferences.isEdgeToEdge && !sDeviceLand) {
                     window?.apply {
                         ThemeHelper.handleSystemBarsFlags(this, customView, true)
                         edgeToEdge {
