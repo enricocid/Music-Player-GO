@@ -40,5 +40,5 @@
     <color name="greyPrimaryDark">#707070</color>
     <color name="blueGreyPrimaryDark">#34515e</color>
 
-    <color name="ratesColor">#50000000</color>
+    <color name="ratesColor">#50FFFFFF</color>
 </resources>
