@@ -11,11 +11,11 @@ import android.net.Uri
 import android.os.ParcelFileDescriptor
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
-import androidx.core.os.BuildCompat
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.player.MediaPlayerHolder
+import com.iven.musicplayergo.ui.Utils
 import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -189,7 +189,7 @@ object MusicUtils {
     @JvmStatic
     @Suppress("DEPRECATION")
     fun getPathColumn(): String {
-        return if (BuildCompat.isAtLeastQ()) AudioColumns.RELATIVE_PATH else AudioColumns.DATA
+        return if (Utils.isAndroidQ()) AudioColumns.RELATIVE_PATH else AudioColumns.DATA
     }
 
     @JvmStatic
