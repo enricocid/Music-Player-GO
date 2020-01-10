@@ -63,6 +63,7 @@ object ThemeHelper {
         return AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
     }
 
+    @JvmStatic
     fun getAlphaForAccent(): Int {
         return if (goPreferences.accent != R.color.yellow) 100 else 150
     }

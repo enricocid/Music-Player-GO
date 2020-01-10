@@ -524,7 +524,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     /**
     UI related methods
      */
-    private fun setFixedMusicBarProgressListener() {
+    private fun setSeekBarProgressListener() {
 
         mSeekBarNP.setOnSeekBarChangeListener(
             object : SeekBar.OnSeekBarChangeListener {
@@ -666,7 +666,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     ThemeHelper.updateIconTint(mVolumeNP, mResolvedDisabledIconsColor)
                 }
 
-                setFixedMusicBarProgressListener()
+                setSeekBarProgressListener()
 
                 mRatesTextNP = customView.findViewById(R.id.np_rates)
                 updateNowPlayingInfo()
