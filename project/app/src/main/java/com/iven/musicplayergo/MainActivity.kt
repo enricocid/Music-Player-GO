@@ -35,8 +35,6 @@ import com.iven.musicplayergo.player.*
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.ui.Utils
-import com.oze.music.musicbar.FixedMusicBar
-import com.oze.music.musicbar.MusicBar
 import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.player_controls_panel.*
 import kotlinx.coroutines.*
@@ -95,7 +93,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
 
     //now playing
     private lateinit var mNowPlayingDialog: MaterialDialog
-    private lateinit var mFixedMusicBar: FixedMusicBar
+    private lateinit var mSeekBarNP: SeekBar
     private lateinit var mSongTextNP: TextView
     private lateinit var mArtistAlbumTextNP: TextView
     private lateinit var mSongSeekTextNP: TextView
@@ -537,39 +535,39 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
      */
     private fun setFixedMusicBarProgressListener() {
 
-        mFixedMusicBar.setProgressChangeListener(
-            object : MusicBar.OnMusicBarProgressChangeListener {
+        mSeekBarNP.setOnSeekBarChangeListener(
+            object : SeekBar.OnSeekBarChangeListener {
 
                 val defaultPositionColor = mSongSeekTextNP.currentTextColor
                 var userSelectedPosition = 0
 
                 override fun onProgressChanged(
-                    musicBar: MusicBar,
+                    seekBar: SeekBar?,
                     progress: Int,
                     fromUser: Boolean
                 ) {
                     if (sUserIsSeeking) {
-                        userSelectedPosition = musicBar.position
+                        userSelectedPosition = progress
                         mSongSeekTextNP.setTextColor(
                             mResolvedAccentColor
                         )
                     }
                     mSongSeekTextNP.text =
-                        MusicUtils.formatSongDuration(musicBar.position.toLong(), false)
+                        MusicUtils.formatSongDuration(progress.toLong(), false)
                 }
 
-                override fun onStartTrackingTouch(musicBar: MusicBar?) {
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {
                     sUserIsSeeking = true
                 }
 
-                override fun onStopTrackingTouch(musicBar: MusicBar) {
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {
                     if (sUserIsSeeking) {
                         mSongSeekTextNP.setTextColor(defaultPositionColor)
                     }
                     sUserIsSeeking = false
                     if (mMediaPlayerHolder.state != PLAYING) {
                         mSeekProgressBar.progress = userSelectedPosition
-                        mFixedMusicBar.setProgress(userSelectedPosition)
+                        mSeekBarNP.progress = userSelectedPosition
                     }
                     mMediaPlayerHolder.seekTo(userSelectedPosition)
                 }
@@ -632,10 +630,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
                 mSongTextNP.isSelected = true
                 mArtistAlbumTextNP = customView.findViewById(R.id.np_artist_album)
                 mArtistAlbumTextNP.isSelected = true
-                mFixedMusicBar = customView.findViewById(R.id.np_fixed_music_bar)
-                mFixedMusicBar.setBackgroundBarPrimeColor(
-                    mResolvedAlphaAccentColor
-                )
+                mSeekBarNP = customView.findViewById(R.id.np_seek_bar)
 
                 mSongSeekTextNP = customView.findViewById(R.id.np_seek)
                 mSongDurationTextNP = customView.findViewById(R.id.np_duration)
@@ -686,7 +681,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
                 updateNowPlayingInfo()
 
                 onDismiss {
-                    mFixedMusicBar.removeAllListener()
+                    mSeekBarNP.setOnSeekBarChangeListener(null)
                 }
             }
 
@@ -838,7 +833,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
             MusicUtils.formatSongDuration(mMediaPlayerHolder.playerPosition.toLong(), false)
         mSongDurationTextNP.text = MusicUtils.formatSongDuration(selectedSongDuration, false)
 
-        mFixedMusicBar.loadFrom(selectedSong.path, selectedSong.duration.toInt())
+        mSeekBarNP.max = selectedSong.duration.toInt()
 
         MusicUtils.getBitrate(selectedSong.path)?.let {
             mRatesTextNP.text = getString(R.string.rates, it.first, it.second)
@@ -1022,7 +1017,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
         override fun onPositionChanged(position: Int) {
             if (!sUserIsSeeking) {
                 mSeekProgressBar.progress = position
-                if (isNowPlaying) mFixedMusicBar.setProgress(position)
+                if (isNowPlaying) mSeekBarNP.progress = position
             }
         }
 

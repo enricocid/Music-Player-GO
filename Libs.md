@@ -4,8 +4,6 @@
 
 - [**Indicator Fast Scroll**](https://github.com/reddit/IndicatorFastScroll) library by Reddit
 
-- [**MusicBar**](https://github.com/emadabdalrahman/MusicBar) by [**emad**](https://github.com/emadabdalrahman)
-
 - [**material-dialogs**](https://github.com/afollestad/material-dialogs) by [**Aidan Afollestad**](https://github.com/afollestad)
 
 - [**recyclical**](https://github.com/afollestad/recyclical) by [**Aidan Afollestad**](https://github.com/afollestad)

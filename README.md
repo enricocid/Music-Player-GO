@@ -35,7 +35,7 @@
   - **Queue** button
   - **Loved songs** button
 
-- **Now playing** dialog showing the SeekBar as song's spectrum and the media buttons: equalizer, skip, play/pause, repeat 1x, **add to loved songs**, current volume step fine control
+- **Now playing** dialog showing the classical media controls: seekbar, equalizer, skip, play/pause, repeat 1x, **add to loved songs**, current volume step fine control
   > Tip: click on played song to quickly jump to the artist's details
 
 - **Artist's details** showing its albums/songs. Shuffle all its songs or the selected album
