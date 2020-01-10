@@ -19,6 +19,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
@@ -31,13 +33,13 @@ import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
+import com.iven.musicplayergo.music.MusicViewModel
 import com.iven.musicplayergo.player.*
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.ui.Utils
 import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.player_controls_panel.*
-import kotlinx.coroutines.*
 import kotlin.properties.Delegates
 
 const val RESTORE_SETTINGS_FRAGMENT = "restore_settings_fragment_key"
@@ -48,7 +50,7 @@ private const val FOLDERS_FRAGMENT_ACTIVE = "2"
 private const val SETTINGS_FRAGMENT_ACTIVE = "3"
 
 @Suppress("UNUSED_PARAMETER")
-class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by MainScope() {
+class MainActivity : AppCompatActivity(), UIControlInterface {
 
     //colors
     private var mResolvedAccentColor: Int by Delegates.notNull()
@@ -109,6 +111,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
 
 
     //music player things
+
+    private val mMusicViewModel: MusicViewModel by lazy {
+        ViewModelProviders.of(this).get(MusicViewModel::class.java)
+    }
 
     private var mAllDeviceSongs: MutableList<Music>? = null
 
@@ -283,19 +289,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
     }
 
     private fun launchMusicLoading() {
-        launch {
-            callLoadAllMusic()
-        }
-    }
 
-    private suspend fun callLoadAllMusic() {
-
-        val result = loadAllMusic()
-
-        withContext(Dispatchers.Main) {
+        mMusicViewModel.musicLiveData.observe(this, Observer { result ->
             if (!result.isNullOrEmpty()) {
 
                 mAllDeviceSongs = result
+                musicLibrary.buildLibrary(this, mAllDeviceSongs)
 
                 finishSetup()
 
@@ -308,17 +307,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
                 )
                 finishAndRemoveTask()
             }
-        }
-    }
+        })
 
-    private suspend fun loadAllMusic(): MutableList<Music>? {
-        return withContext(Dispatchers.Default) {
-
-            val music = musicLibrary.queryForMusic(this@MainActivity)
-            if (!music.isNullOrEmpty()) musicLibrary.buildLibrary(this@MainActivity, music)
-
-            return@withContext music
-        }
+        mMusicViewModel.getMusicLiveData(this)
     }
 
     private fun finishSetup() {

@@ -46,9 +46,8 @@ dependencies {
 
     api 'com.google.android.material:material:1.0.0'
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
     implementation 'androidx.core:core-ktx:1.1.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation 'androidx.media:media:1.1.0'
     implementation 'androidx.preference:preference-ktx:1.1.0'
 
@@ -60,5 +59,4 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:3.1.1'
     implementation 'com.afollestad.material-dialogs:bottomsheets:3.1.1'
     implementation 'com.afollestad:recyclical:1.1.1'
-    implementation 'com.oze.music:MusicBar:1.0.5'
 }
