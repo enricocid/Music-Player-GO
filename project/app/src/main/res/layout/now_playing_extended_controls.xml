@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="horizontal"
-    android:padding="16dp"
-    android:layout_marginBottom="16dp">
+    android:padding="16dp">
 
     <ImageButton
         android:id="@+id/np_love"
@@ -36,9 +35,9 @@
         android:layout_gravity="center"
         android:layout_marginStart="16dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_volume_up"
         android:clickable="false"
         android:focusable="false"
+        android:src="@drawable/ic_volume_up"
         tools:ignore="ContentDescription" />
 
 </LinearLayout>

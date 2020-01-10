@@ -29,6 +29,8 @@ import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.player.MediaPlayerHolder
+import de.halfbit.edgetoedge.Edge
+import de.halfbit.edgetoedge.edgeToEdge
 import java.util.*
 
 @SuppressLint("DefaultLocale")
@@ -188,10 +190,16 @@ object Utils {
                         context
                     )
                 )
-                if (goPreferences.isEdgeToEdge && window != null) ThemeHelper.handleEdgeToEdge(
-                    window,
-                    view
-                )
+
+                if (goPreferences.isEdgeToEdge) {
+                    window?.apply {
+                        ThemeHelper.handleSystemBarsFlags(this, recyclerView, true)
+                        edgeToEdge {
+                            recyclerView.fit { Edge.Bottom }
+                            decorView.fit { Edge.Top }
+                        }
+                    }
+                }
             }
         }
         return Pair(dialog, dialog.getListAdapter() as QueueAdapter)
@@ -319,10 +327,16 @@ object Utils {
                         context
                     )
                 )
-                if (goPreferences.isEdgeToEdge && window != null) ThemeHelper.handleEdgeToEdge(
-                    window,
-                    view
-                )
+
+                if (goPreferences.isEdgeToEdge) {
+                    window?.apply {
+                        ThemeHelper.handleSystemBarsFlags(this, recyclerView, true)
+                        edgeToEdge {
+                            recyclerView.fit { Edge.Bottom }
+                            decorView.fit { Edge.Top }
+                        }
+                    }
+                }
             }
         }
     }
@@ -355,6 +369,7 @@ object Utils {
                 goPreferences.lovedSongs = lovedSongs
                 lovedSongsAdapter.swapSongs(lovedSongs)
             }
+
             negativeButton {}
         }
     }

@@ -8,6 +8,8 @@
 
 - [**recyclical**](https://github.com/afollestad/recyclical) by [**Aidan Afollestad**](https://github.com/afollestad)
 
+- [**Edge-to-Edge**](https://github.com/beworker/edge-to-edge) by [**Sergej Shafarenka**](https://github.com/beworker)
+
 - [**Screener - Better screenshots**](https://play.google.com/store/apps/details?id=de.toastcode.screener) app by [**Toastcode**](https://toastco.de/)
 
 - [**Round icons**](https://material.io/tools/icons/?style=round) by Google

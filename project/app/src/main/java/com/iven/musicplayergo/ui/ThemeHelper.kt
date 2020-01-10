@@ -1,6 +1,7 @@
 package com.iven.musicplayergo.ui
 
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -22,6 +23,7 @@ import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.os.BuildCompat
 import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.iven.musicplayergo.MainActivity
@@ -69,32 +71,21 @@ object ThemeHelper {
     }
 
     @JvmStatic
-    fun handleEdgeToEdge(window: Window?, view: View) {
+    @TargetApi(Build.VERSION_CODES.O_MR1)
+    fun handleSystemBarsFlags(window: Window?, view: View, isDialog: Boolean) {
 
         window?.apply {
             statusBarColor = Color.TRANSPARENT
             navigationBarColor = Color.TRANSPARENT
         }
 
-        var flags =
+        val systemBarsFlags =
             View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        val lightSystemBarsFlags =
+            if (isThemeNight()) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
 
-        view.apply {
-            when {
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 -> {
-                    val systemBarsFlag =
-                        if (isThemeNight()) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-                    flags =
-                        flags or systemBarsFlag
-                }
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
-                    flags =
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                }
-            }
-
-            systemUiVisibility = flags
-        }
+        view.systemUiVisibility =
+            if (BuildCompat.isAtLeastQ()) systemBarsFlags else if (!isDialog) lightSystemBarsFlags or systemBarsFlags else lightSystemBarsFlags
     }
 
     //fixed array of pairs (first: accent, second: theme)

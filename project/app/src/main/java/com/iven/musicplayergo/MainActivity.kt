@@ -38,6 +38,8 @@ import com.iven.musicplayergo.player.*
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.ui.Utils
+import de.halfbit.edgetoedge.Edge
+import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.player_controls_panel.*
 import kotlin.properties.Delegates
@@ -219,14 +221,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             ) else launchMusicLoading()
     }
 
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (goPreferences.isEdgeToEdge && !sDeviceLand && window != null) ThemeHelper.handleEdgeToEdge(
-            window,
-            mainView
-        )
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -237,6 +231,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         //init views
         getViewsAndResources()
+
+        if (goPreferences.isEdgeToEdge) {
+            ThemeHelper.handleSystemBarsFlags(window, window.decorView, false)
+            edgeToEdge {
+                mainView.fit { Edge.Top + Edge.Bottom }
+            }
+        }
 
         setupControlsPanelSpecs()
 
@@ -674,12 +675,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 onDismiss {
                     mSeekBarNP.setOnSeekBarChangeListener(null)
                 }
-            }
 
-            if (goPreferences.isEdgeToEdge && !sDeviceLand && mNowPlayingDialog.window != null) ThemeHelper.handleEdgeToEdge(
-                mNowPlayingDialog.window,
-                mNowPlayingDialog.view
-            )
+                if (goPreferences.isEdgeToEdge) {
+                    window?.apply {
+                        ThemeHelper.handleSystemBarsFlags(this, customView, true)
+                        edgeToEdge {
+                            customView.fit { Edge.Bottom }
+                            decorView.fit { Edge.Top }
+                        }
+                    }
+                }
+            }
         }
     }
 

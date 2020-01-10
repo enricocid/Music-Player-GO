@@ -199,7 +199,8 @@ object MusicUtils {
             // Perform operations on "pfd".
             metaDataRetriever.setDataSource(pfd.fileDescriptor)
         }
-        return metaDataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION).toLong()
+        return metaDataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+            .toLong()
     }
 
     @JvmStatic
