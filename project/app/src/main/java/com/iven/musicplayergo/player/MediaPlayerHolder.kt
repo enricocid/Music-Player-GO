@@ -21,6 +21,7 @@ import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.music.Music
+import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.ui.Utils
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -422,7 +423,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 if (goPreferences.isPreciseVolumeEnabled) setPreciseVolume(currentVolumeInPercent)
             }
 
-            mediaPlayer.setDataSource(song?.path)
+            mediaPlayer.setDataSource(playerService, MusicUtils.getContentUri(song?.id!!))
             mediaPlayer.prepare()
 
         } catch (e: Exception) {

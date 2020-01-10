@@ -3,7 +3,7 @@
     <!-- Main - Artists -->
     <string name="artists">Artisti</string>
     <string name="artist_info">%1d&#160;Album,&#160;%2d&#160;Canzoni</string>
-    <string name="folder_info">%2d&#160;Canzoni</string>
+    <string name="folder_info">%1d&#160;Canzoni</string>
 
     <!-- Main - All songs -->
     <string name="songs">Canzoni</string>

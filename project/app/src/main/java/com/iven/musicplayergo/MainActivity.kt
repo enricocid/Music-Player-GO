@@ -727,7 +727,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 } else {
 
-                    isSongRestoredFromPrefs = goPreferences.latestPlayedSong != null
+                    isSongRestoredFromPrefs = MusicUtils.getSavedSong() != null
 
                     val song =
                         if (isSongRestoredFromPrefs) MusicUtils.getSavedSong()
@@ -826,7 +826,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         mSeekBarNP.max = selectedSong.duration.toInt()
 
-        MusicUtils.getBitrate(selectedSong.path)?.let {
+        MusicUtils.getBitrate(MusicUtils.getContentUri(selectedSong.id!!), contentResolver)?.let {
             mRatesTextNP.text = getString(R.string.rates, it.first, it.second)
         }
 

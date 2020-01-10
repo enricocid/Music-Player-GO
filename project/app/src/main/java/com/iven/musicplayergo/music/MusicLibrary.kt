@@ -1,6 +1,5 @@
 package com.iven.musicplayergo.music
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.provider.MediaStore
 
@@ -22,8 +21,6 @@ class MusicLibrary {
 
     val randomMusic get() = allSongsFiltered?.random()
 
-    @Suppress("DEPRECATION")
-    @SuppressLint("InlinedApi")
     fun queryForMusic(context: Context): MutableList<Music>? {
 
         try {
@@ -44,14 +41,14 @@ class MusicLibrary {
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.TITLE)
                 val displayNameIndex =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DISPLAY_NAME)
-                val durationIndex =
-                    cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DURATION)
                 val albumIndex =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ALBUM)
                 val pathIndex =
-                    cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DATA)
+                    cursor.getColumnIndexOrThrow(MusicUtils.getPathColumn())
                 val albumIdIndex =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ALBUM_ID)
+                val idIndex =
+                    cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns._ID)
 
                 while (cursor.moveToNext()) {
 
@@ -61,10 +58,14 @@ class MusicLibrary {
                     val audioTrack = cursor.getInt(trackIndex)
                     val audioTitle = cursor.getString(titleIndex)
                     val audioDisplayName = cursor.getString(displayNameIndex)
-                    val audioDuration = cursor.getLong(durationIndex)
                     val audioAlbum = cursor.getString(albumIndex)
-                    val audioPath = cursor.getString(pathIndex)
+                    val audioRelativePath = cursor.getString(pathIndex)
                     val audioAlbumId = cursor.getString(albumIdIndex)
+                    val audioId = cursor.getLong(idIndex)
+
+                    val contentUri = MusicUtils.getContentUri(audioId)
+
+                    val audioFolderName = MusicUtils.getFolderName(audioRelativePath)
 
                     // Add the current music to the list
                     allSongsUnfiltered?.add(
@@ -74,10 +75,11 @@ class MusicLibrary {
                             audioTrack,
                             audioTitle,
                             audioDisplayName,
-                            audioDuration,
+                            MusicUtils.getAudioDuration(contentUri, context.contentResolver),
                             audioAlbum,
-                            audioPath,
-                            audioAlbumId
+                            audioFolderName,
+                            audioAlbumId,
+                            audioId
                         )
                     )
                 }
@@ -90,8 +92,6 @@ class MusicLibrary {
     }
 
     // Extension method to sort the device music
-    @Suppress("DEPRECATION")
-    @SuppressLint("InlinedApi")
     fun buildLibrary(
         context: Context,
         loadedSongs: MutableList<Music>?
@@ -115,7 +115,7 @@ class MusicLibrary {
         }
 
         allSongsByFolder = allSongsFiltered?.groupBy {
-            MusicUtils.getFolderName(it.path!!)
+            it.relativePath!!
         }
 
         return allAlbumsByArtist

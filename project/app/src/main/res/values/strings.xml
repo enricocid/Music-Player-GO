@@ -11,7 +11,7 @@
     <!-- Main - Artists -->
     <string name="artists">Artists</string>
     <string name="artist_info">%1d&#160;Albums,&#160;%2d&#160;Tracks</string>
-    <string name="folder_info">%2d&#160;Tracks</string>
+    <string name="folder_info">%1d&#160;Tracks</string>
 
     <!-- Main - All songs -->
     <string name="songs">Songs</string>
