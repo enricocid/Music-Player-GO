@@ -1,12 +1,12 @@
 package com.iven.musicplayergo.music
 
+import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.res.Resources
 import android.database.Cursor
 import android.media.MediaExtractor
 import android.media.MediaFormat
-import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import android.provider.MediaStore
@@ -164,16 +164,18 @@ object MusicUtils {
     }
 
     @JvmStatic
+    @SuppressLint("InlinedApi")
     private val COLUMNS = arrayOf(
         AudioColumns.ARTIST, // 0
         AudioColumns.YEAR, // 1
         AudioColumns.TRACK, // 2
         AudioColumns.TITLE, // 3
         AudioColumns.DISPLAY_NAME, // 4,
-        AudioColumns.ALBUM, // 5
-        getPathColumn(), // 6
-        AudioColumns.ALBUM_ID, //7
-        AudioColumns._ID //8
+        AudioColumns.DURATION, //5,
+        AudioColumns.ALBUM, // 6
+        getPathColumn(), // 7
+        AudioColumns.ALBUM_ID, //8
+        AudioColumns._ID //9
     )
 
     @JvmStatic
@@ -188,19 +190,6 @@ object MusicUtils {
     @Suppress("DEPRECATION")
     fun getPathColumn(): String {
         return if (BuildCompat.isAtLeastQ()) AudioColumns.RELATIVE_PATH else AudioColumns.DATA
-    }
-
-    @JvmStatic
-    fun getAudioDuration(contentUri: Uri, contentResolver: ContentResolver): Long {
-
-        val metaDataRetriever = MediaMetadataRetriever()
-
-        getAudioFileDescriptor(contentUri, contentResolver)?.use { pfd ->
-            // Perform operations on "pfd".
-            metaDataRetriever.setDataSource(pfd.fileDescriptor)
-        }
-        return metaDataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
-            .toLong()
     }
 
     @JvmStatic

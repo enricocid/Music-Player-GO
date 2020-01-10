@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.music
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.provider.MediaStore
 
@@ -21,6 +22,7 @@ class MusicLibrary {
 
     val randomMusic get() = allSongsFiltered?.random()
 
+    @SuppressLint("InlinedApi")
     fun queryForMusic(context: Context): MutableList<Music>? {
 
         try {
@@ -41,6 +43,8 @@ class MusicLibrary {
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.TITLE)
                 val displayNameIndex =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DISPLAY_NAME)
+                val durationIndex =
+                    cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DURATION)
                 val albumIndex =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ALBUM)
                 val pathIndex =
@@ -58,12 +62,11 @@ class MusicLibrary {
                     val audioTrack = cursor.getInt(trackIndex)
                     val audioTitle = cursor.getString(titleIndex)
                     val audioDisplayName = cursor.getString(displayNameIndex)
+                    val audioDuration = cursor.getLong(durationIndex)
                     val audioAlbum = cursor.getString(albumIndex)
                     val audioRelativePath = cursor.getString(pathIndex)
                     val audioAlbumId = cursor.getString(albumIdIndex)
                     val audioId = cursor.getLong(idIndex)
-
-                    val contentUri = MusicUtils.getContentUri(audioId)
 
                     val audioFolderName = MusicUtils.getFolderName(audioRelativePath)
 
@@ -75,7 +78,7 @@ class MusicLibrary {
                             audioTrack,
                             audioTitle,
                             audioDisplayName,
-                            MusicUtils.getAudioDuration(contentUri, context.contentResolver),
+                            audioDuration,
                             audioAlbum,
                             audioFolderName,
                             audioAlbumId,
