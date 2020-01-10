@@ -391,18 +391,22 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
     }
 
     private fun initActiveFragmentsOrTabs(onInitActiveFragments: Boolean) {
-        if (mActiveFragments?.contains(ARTISTS_FRAGMENT_ACTIVE)!!) initFragmentOrTab(
-            onInitActiveFragments,
-            ARTISTS_FRAGMENT_ACTIVE
-        )
-        if (mActiveFragments?.contains(MUSIC_FRAGMENT_ACTIVE)!!) initFragmentOrTab(
-            onInitActiveFragments,
-            MUSIC_FRAGMENT_ACTIVE
-        )
-        if (mActiveFragments?.contains(FOLDERS_FRAGMENT_ACTIVE)!!) initFragmentOrTab(
-            onInitActiveFragments,
-            FOLDERS_FRAGMENT_ACTIVE
-        )
+
+        mActiveFragments?.apply {
+            if (contains(ARTISTS_FRAGMENT_ACTIVE)) initFragmentOrTab(
+                onInitActiveFragments,
+                ARTISTS_FRAGMENT_ACTIVE
+            )
+            if (contains(MUSIC_FRAGMENT_ACTIVE)) initFragmentOrTab(
+                onInitActiveFragments,
+                MUSIC_FRAGMENT_ACTIVE
+            )
+            if (contains(FOLDERS_FRAGMENT_ACTIVE)) initFragmentOrTab(
+                onInitActiveFragments,
+                FOLDERS_FRAGMENT_ACTIVE
+            )
+        }
+
         initFragmentOrTab(onInitActiveFragments, SETTINGS_FRAGMENT_ACTIVE)
     }
 
