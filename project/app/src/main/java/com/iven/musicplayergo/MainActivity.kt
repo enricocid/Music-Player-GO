@@ -44,6 +44,11 @@ import kotlin.properties.Delegates
 
 const val RESTORE_SETTINGS_FRAGMENT = "restore_settings_fragment_key"
 
+private const val ARTISTS_FRAGMENT_ACTIVE = "0"
+private const val MUSIC_FRAGMENT_ACTIVE = "1"
+private const val FOLDERS_FRAGMENT_ACTIVE = "2"
+private const val SETTINGS_FRAGMENT_ACTIVE = "3"
+
 @Suppress("UNUSED_PARAMETER")
 class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by MainScope() {
 
@@ -376,7 +381,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
     }
 
     private fun setupControlsPanelSpecs() {
-
         if (!sTabsEnabled) mTabsLayout.visibility = View.GONE
         mPlayerControlsContainer.setPadding(
             mControlsPaddingNoTabs,
@@ -387,27 +391,62 @@ class MainActivity : AppCompatActivity(), UIControlInterface, CoroutineScope by 
     }
 
     private fun initActiveFragmentsOrTabs(onInitActiveFragments: Boolean) {
-        mActiveFragments?.iterator()?.forEach {
-            if (onInitActiveFragments) initActiveFragments(it.toInt()) else
-                mTabsLayout.getTabAt(mActiveFragments?.indexOf(it)!!)?.setIcon(
-                    ThemeHelper.getTabIcon(
-                        it.toInt()
-                    )
-                )
+        if (mActiveFragments?.contains(ARTISTS_FRAGMENT_ACTIVE)!!) initFragmentOrTab(
+            onInitActiveFragments,
+            ARTISTS_FRAGMENT_ACTIVE
+        )
+        if (mActiveFragments?.contains(MUSIC_FRAGMENT_ACTIVE)!!) initFragmentOrTab(
+            onInitActiveFragments,
+            MUSIC_FRAGMENT_ACTIVE
+        )
+        if (mActiveFragments?.contains(FOLDERS_FRAGMENT_ACTIVE)!!) initFragmentOrTab(
+            onInitActiveFragments,
+            FOLDERS_FRAGMENT_ACTIVE
+        )
+        initFragmentOrTab(onInitActiveFragments, SETTINGS_FRAGMENT_ACTIVE)
+    }
+
+    private fun initFragmentOrTab(onInitFragment: Boolean, index: String) {
+        when (index) {
+            ARTISTS_FRAGMENT_ACTIVE -> {
+                if (onInitFragment)
+                    mArtistsFragment =
+                        ArtistsFragment.newInstance()
+                else
+                    initTab(ARTISTS_FRAGMENT_ACTIVE)
+            }
+            MUSIC_FRAGMENT_ACTIVE -> {
+                if (onInitFragment)
+                    mAllMusicFragment =
+                        AllMusicFragment.newInstance()
+                else
+                    initTab(MUSIC_FRAGMENT_ACTIVE)
+            }
+
+            FOLDERS_FRAGMENT_ACTIVE -> {
+                if (onInitFragment)
+                    mFoldersFragment =
+                        FoldersFragment.newInstance()
+                else
+                    initTab(FOLDERS_FRAGMENT_ACTIVE)
+
+            }
+            else -> {
+                if (onInitFragment)
+                    mSettingsFragment =
+                        SettingsFragment.newInstance()
+                else
+                    initTab(SETTINGS_FRAGMENT_ACTIVE)
+            }
         }
     }
 
-    private fun initActiveFragments(index: Int) {
-        when (index) {
-            0 -> if (mArtistsFragment == null || !mArtistsFragment?.isAdded!!) mArtistsFragment =
-                ArtistsFragment.newInstance()
-            1 -> if (mAllMusicFragment == null || !mAllMusicFragment?.isAdded!!) mAllMusicFragment =
-                AllMusicFragment.newInstance()
-            2 -> if (mFoldersFragment == null || !mFoldersFragment?.isAdded!!) mFoldersFragment =
-                FoldersFragment.newInstance()
-            else -> if (mSettingsFragment == null || !mSettingsFragment?.isAdded!!) mSettingsFragment =
-                SettingsFragment.newInstance()
-        }
+    private fun initTab(index: String) {
+        mTabsLayout.getTabAt(mActiveFragments?.indexOf(index)!!)?.setIcon(
+            ThemeHelper.getTabIcon(
+                index.toInt()
+            )
+        )
     }
 
     private fun handleOnNavigationItemSelected(itemId: Int): Fragment? {
