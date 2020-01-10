@@ -1,22 +1,24 @@
 package com.iven.musicplayergo.music
 
+import android.app.Application
 import android.content.Context
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.iven.musicplayergo.musicLibrary
 
-class MusicViewModel : ViewModel() {
+class MusicViewModel(application: Application) : AndroidViewModel(application) {
 
     val musicLiveData: MutableLiveData<MutableList<Music>> = MutableLiveData()
 
-    private fun loadAllDeviceMusic(context: Context) {
-        val music = musicLibrary.queryForMusic(context)
+    private fun loadAllDeviceMusic() {
+        val music = musicLibrary.queryForMusic(getApplication())
         musicLiveData.value = music
     }
 
-    fun getMusicLiveData(context: Context): LiveData<MutableList<Music>> {
-        loadAllDeviceMusic(context)
+    fun getMusicLiveData(): LiveData<MutableList<Music>> {
+        loadAllDeviceMusic()
         return musicLiveData
     }
 }

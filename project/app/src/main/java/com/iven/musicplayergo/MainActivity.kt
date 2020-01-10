@@ -315,7 +315,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             }
         })
 
-        mMusicViewModel.getMusicLiveData(this)
+        mMusicViewModel.getMusicLiveData()
     }
 
     private fun finishSetup() {
