@@ -59,22 +59,23 @@
             android:layout_height="wrap_content"
             android:clickable="false"
             android:focusable="false"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
             android:progressDrawable="@drawable/seekbar_np_track"
             android:splitTrack="false"
-            android:thumbOffset="0dp"
-            android:thumbTint="@android:color/transparent" />
+            android:thumb="@drawable/seekbar_np_thumb"
+            android:thumbOffset="0dp" />
 
         <TextView
             android:id="@+id/np_rates"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:alpha="0.5"
             android:fontFamily="@font/raleway_bold_italic"
             android:textAlignment="center"
             android:textAppearance="@android:style/TextAppearance.Material.Caption"
-            android:textColor="@color/ratesColor" />
+            android:textColor="?android:attr/textColorPrimary" />
     </FrameLayout>
 
     <LinearLayout
