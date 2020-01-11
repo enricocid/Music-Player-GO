@@ -43,6 +43,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <Preference
+            app:enableCopying="true"
             app:icon="@drawable/ic_circle"
             app:key="@string/accent_pref"
             app:title="@string/accent_pref_title" />
