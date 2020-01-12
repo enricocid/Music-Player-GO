@@ -55,6 +55,4 @@
     <string name="tabs_pref_summary_on">Отключить вкладки</string>
     <string name="tabs_pref_summary_off">Показать вкладки для переключения сессий</string>
     <string name="sorting_pref_default">По умолчанию</string>
-    <string name="sorting_pref_ascending">По возрастанию</string>
-    <string name="sorting_pref_descending">По убыванию</string>
 </resources>
