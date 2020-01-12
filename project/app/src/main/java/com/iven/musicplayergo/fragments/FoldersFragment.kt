@@ -27,7 +27,6 @@ import com.reddit.indicatorfastscroll.FastScrollerThumbView
 import com.reddit.indicatorfastscroll.FastScrollerView
 import kotlinx.android.synthetic.main.fragment_folders.*
 import kotlinx.android.synthetic.main.search_toolbar.*
-import java.io.File
 
 
 /**
@@ -118,7 +117,10 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
                         onBind(::GenericViewHolder) { _, item ->
                             // GenericViewHolder is `this` here
                             title.text = item
-                            subtitle.text = getParentFolder(item)
+                            subtitle.text = getString(
+                                R.string.folder_info,
+                                musicLibrary.allSongsByFolder?.getValue(item)?.size
+                            )
                         }
                         onClick {
                             // item is a `val` in `this` here
@@ -182,13 +184,6 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         return false
-    }
-
-    //getting parent path of the first song
-    private fun getParentFolder(item: String): String {
-        val songRootPath =
-            musicLibrary.allSongsByFolder?.getValue(item)?.get(0)?.path
-        return File(songRootPath!!).parentFile?.parent.toString()
     }
 
     @SuppressLint("DefaultLocale")

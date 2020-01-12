@@ -43,6 +43,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <Preference
+            app:enableCopying="true"
             app:icon="@drawable/ic_circle"
             app:key="@string/accent_pref"
             app:title="@string/accent_pref_title" />
@@ -56,7 +57,7 @@
             app:key="@string/active_fragments_pref"
             app:title="@string/active_fragments_pref_title" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:summaryOff="@string/tabs_pref_summary_off"
             app:defaultValue="true"
             app:dialogTitle="@string/tabs_pref_title"
@@ -64,7 +65,7 @@
             app:summaryOn="@string/tabs_pref_summary_on"
             app:title="@string/tabs_pref_title" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:summaryOff="@string/precise_volume_pref_summary_off"
             app:defaultValue="true"
             app:dialogTitle="@string/precise_volume_pref_title"
@@ -72,7 +73,7 @@
             app:summaryOn="@string/precise_volume_pref_summary_on"
             app:title="@string/precise_volume_pref_title" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:summaryOff="@string/focus_pref_summary_off"
             app:defaultValue="true"
             app:dialogTitle="@string/focus_pref_title"
@@ -80,7 +81,7 @@
             app:summaryOn="@string/focus_pref_summary_on"
             app:title="@string/focus_pref_title" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:summaryOff="@string/headset_pref_summary_off"
             app:defaultValue="true"
             app:dialogTitle="@string/headset_pref_title"

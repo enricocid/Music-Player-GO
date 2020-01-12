@@ -3,7 +3,7 @@
     <!-- Main - Artists -->
     <string name="artists">Artisti</string>
     <string name="artist_info">%1d&#160;Album,&#160;%2d&#160;Canzoni</string>
-    <string name="folder_info">%2d&#160;Canzoni</string>
+    <string name="folder_info">%1d&#160;Canzoni</string>
 
     <!-- Main - All songs -->
     <string name="songs">Canzoni</string>
@@ -69,8 +69,6 @@
     <string name="active_fragments_pref_warning">Non puoi rimuovere tutte le tabs! :P</string>
 
     <string name="sorting_pref_default">Predefinito</string>
-    <string name="sorting_pref_ascending">Ascendente</string>
-    <string name="sorting_pref_descending">Discendente</string>
 
     <string name="precise_volume_pref_title">Controllo preciso del volume</string>
     <string name="precise_volume_pref_summary_on">Disabilita controllo preciso del volume</string>

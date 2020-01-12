@@ -2,23 +2,43 @@ package com.iven.musicplayergo.music
 
 import android.annotation.SuppressLint
 import android.content.ContentResolver
+import android.content.ContentUris
 import android.content.res.Resources
 import android.database.Cursor
 import android.media.MediaExtractor
 import android.media.MediaFormat
+import android.net.Uri
+import android.os.ParcelFileDescriptor
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.player.MediaPlayerHolder
+import com.iven.musicplayergo.ui.Utils
 import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-@Suppress("DEPRECATION")
 object MusicUtils {
+
+    @JvmStatic
+    fun getContentUri(audioId: Long): Uri {
+        return ContentUris.withAppendedId(
+            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+            audioId
+        )
+    }
+
+    @JvmStatic
+    private fun getAudioFileDescriptor(
+        contentUri: Uri,
+        contentResolver: ContentResolver
+    ): ParcelFileDescriptor? {
+        val readOnlyMode = "r"
+        return contentResolver.openFileDescriptor(contentUri, readOnlyMode)
+    }
 
     @JvmStatic
     fun getSavedSong(): Music? {
@@ -151,10 +171,11 @@ object MusicUtils {
         AudioColumns.TRACK, // 2
         AudioColumns.TITLE, // 3
         AudioColumns.DISPLAY_NAME, // 4,
-        AudioColumns.DURATION, // 5
+        AudioColumns.DURATION, //5,
         AudioColumns.ALBUM, // 6
-        AudioColumns.DATA, // 7
-        AudioColumns.ALBUM_ID //8
+        getPathColumn(), // 7
+        AudioColumns.ALBUM_ID, //8
+        AudioColumns._ID //9
     )
 
     @JvmStatic
@@ -166,10 +187,20 @@ object MusicUtils {
     }
 
     @JvmStatic
-    fun getBitrate(path: String?): Pair<Int, Int>? {
+    @Suppress("DEPRECATION")
+    fun getPathColumn(): String {
+        return if (Utils.isAndroidQ()) AudioColumns.BUCKET_DISPLAY_NAME else AudioColumns.DATA
+    }
+
+    @JvmStatic
+    fun getBitrate(contentUri: Uri, contentResolver: ContentResolver): Pair<Int, Int>? {
         val mediaExtractor = MediaExtractor()
         return try {
-            mediaExtractor.setDataSource(path!!)
+
+            getAudioFileDescriptor(contentUri, contentResolver)?.use { pfd ->
+                mediaExtractor.setDataSource(pfd.fileDescriptor)
+            }
+
             val mediaFormat = mediaExtractor.getTrackFormat(0)
 
             val sampleRate = mediaFormat.getInteger(MediaFormat.KEY_SAMPLE_RATE)
@@ -183,8 +214,7 @@ object MusicUtils {
     }
 
     @JvmStatic
-    fun getFolderName(path: String?): String {
-        val file = File(path!!).parentFile
-        return file?.name!!
+    fun getFolderName(path: String?): String? {
+        return File(path!!).parentFile?.name
     }
 }

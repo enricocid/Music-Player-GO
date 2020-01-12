@@ -6,29 +6,11 @@
         <shape
             android:shape="rectangle"
             android:tint="?attr/colorPrimary">
-            <corners android:radius="8dp" />
             <size android:height="@android:dimen/app_icon_size" />
-            <solid android:color="?attr/colorControlNormal" />
+            <gradient
+                android:angle="0"
+                android:endColor="@color/seekbarBgColorLight"
+                android:startColor="@color/seekbarBgColorDark" />
         </shape>
-    </item>
-    <item
-        android:id="@android:id/progress"
-        android:gravity="center_vertical">
-        <scale android:scaleWidth="100%">
-            <selector>
-                <item
-                    android:drawable="@android:color/transparent"
-                    android:state_enabled="false" />
-                <item>
-                    <shape
-                        android:shape="rectangle"
-                        android:tint="?attr/colorPrimary">
-                        <corners android:radius="8dp" />
-                        <size android:height="@android:dimen/app_icon_size" />
-                        <solid android:color="?attr/colorPrimary" />
-                    </shape>
-                </item>
-            </selector>
-        </scale>
     </item>
 </layer-list>

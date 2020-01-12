@@ -1,13 +1,13 @@
 package com.iven.musicplayergo.ui
 
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.content.res.Resources
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Handler
@@ -15,7 +15,6 @@ import android.text.Html
 import android.text.Spanned
 import android.util.TypedValue
 import android.view.View
-import android.view.Window
 import android.widget.ImageButton
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
@@ -63,37 +62,16 @@ object ThemeHelper {
         return AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
     }
 
+    @JvmStatic
     fun getAlphaForAccent(): Int {
         return if (goPreferences.accent != R.color.yellow) 100 else 150
     }
 
     @JvmStatic
-    fun handleEdgeToEdge(window: Window?, view: View) {
-
-        window?.apply {
-            statusBarColor = Color.TRANSPARENT
-            navigationBarColor = Color.TRANSPARENT
-        }
-
-        var flags =
-            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-
-        view.apply {
-            when {
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 -> {
-                    val systemBarsFlag =
-                        if (isThemeNight()) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-                    flags =
-                        flags or systemBarsFlag
-                }
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
-                    flags =
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                }
-            }
-
-            systemUiVisibility = flags
-        }
+    @TargetApi(Build.VERSION_CODES.O_MR1)
+    fun handleLightSystemBars(view: View) {
+        view.systemUiVisibility =
+            if (isThemeNight()) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
     }
 
     //fixed array of pairs (first: accent, second: theme)

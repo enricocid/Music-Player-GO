@@ -11,7 +11,7 @@
     <!-- Main - Artists -->
     <string name="artists">Artists</string>
     <string name="artist_info">%1d&#160;Albums,&#160;%2d&#160;Tracks</string>
-    <string name="folder_info">%2d&#160;Tracks</string>
+    <string name="folder_info">%1d&#160;Tracks</string>
 
     <!-- Main - All songs -->
     <string name="songs">Songs</string>
@@ -62,8 +62,8 @@
     <string name="category_general">General</string>
 
     <string name="latest_volume_pref" translatable="false">latest_volume_pref</string>
-    <string name="latest_played_song_pref" translatable="false">latest_played_song_pref</string>
-    <string name="loved_songs_pref" translatable="false">loved_songs_pref</string>
+    <string name="latest_played_song_pref" translatable="false">latest_reproduced_song_pref</string>
+    <string name="loved_songs_pref" translatable="false">preferred_songs_pref</string>
 
     <string name="open_git_pref" translatable="false">open_git_pref</string>
     <string name="open_git_pref_title">GitHub page</string>
@@ -109,8 +109,8 @@
     <string name="artists_sorting_pref" translatable="false">artists_sorting_pref</string>
     <string name="folders_sorting_pref" translatable="false">folders_sorting_pref</string>
     <string name="sorting_pref_default">Default</string>
-    <string name="sorting_pref_ascending">Ascending</string>
-    <string name="sorting_pref_descending">Descending</string>
+    <string name="sorting_pref_ascending" translatable="false">A-Z</string>
+    <string name="sorting_pref_descending" translatable="false">Z-A</string>
 
     <string name="precise_volume_pref" translatable="false">precise_volume_pref</string>
     <string name="precise_volume_pref_title">Precise volume control</string>

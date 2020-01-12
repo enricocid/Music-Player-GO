@@ -6,6 +6,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -29,10 +30,29 @@ import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.player.MediaPlayerHolder
+import de.halfbit.edgetoedge.Edge
+import de.halfbit.edgetoedge.edgeToEdge
 import java.util.*
 
 @SuppressLint("DefaultLocale")
 object Utils {
+
+    @JvmStatic
+    fun isAndroidQ(): Boolean {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+    }
+
+    @JvmStatic
+    fun notifyLoadingError(activity: Activity) {
+        activity.apply {
+            makeToast(
+                activity,
+                activity.getString(R.string.error_unknown),
+                Toast.LENGTH_LONG
+            )
+            finishAndRemoveTask()
+        }
+    }
 
     @JvmStatic
     fun hasToShowPermissionRationale(context: Context): Boolean {
@@ -188,10 +208,15 @@ object Utils {
                         context
                     )
                 )
-                if (goPreferences.isEdgeToEdge && window != null) ThemeHelper.handleEdgeToEdge(
-                    window,
-                    view
-                )
+                if (goPreferences.isEdgeToEdge) {
+                    window?.apply {
+                        ThemeHelper.handleLightSystemBars(decorView)
+                        edgeToEdge {
+                            recyclerView.fit { Edge.Bottom }
+                            decorView.fit { Edge.Top }
+                        }
+                    }
+                }
             }
         }
         return Pair(dialog, dialog.getListAdapter() as QueueAdapter)
@@ -319,10 +344,15 @@ object Utils {
                         context
                     )
                 )
-                if (goPreferences.isEdgeToEdge && window != null) ThemeHelper.handleEdgeToEdge(
-                    window,
-                    view
-                )
+                if (goPreferences.isEdgeToEdge) {
+                    window?.apply {
+                        ThemeHelper.handleLightSystemBars(decorView)
+                        edgeToEdge {
+                            recyclerView.fit { Edge.Bottom }
+                            decorView.fit { Edge.Top }
+                        }
+                    }
+                }
             }
         }
     }
@@ -355,6 +385,7 @@ object Utils {
                 goPreferences.lovedSongs = lovedSongs
                 lovedSongsAdapter.swapSongs(lovedSongs)
             }
+
             negativeButton {}
         }
     }

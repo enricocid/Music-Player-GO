@@ -33,11 +33,11 @@
         android:id="@+id/np_play"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:background="?android:attr/actionBarItemBackground"
         android:padding="20dp"
         android:scaleType="fitCenter"
-        android:adjustViewBounds="true"
-        android:layout_weight="1"
-        android:background="?android:attr/actionBarItemBackground"
         android:src="@drawable/ic_play"
         tools:ignore="ContentDescription" />
 

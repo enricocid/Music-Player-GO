@@ -11,16 +11,17 @@ import android.media.AudioAttributes
 import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.media.session.PlaybackState
 import android.os.Build
 import android.os.Handler
-import android.os.Parcelable
 import android.os.PowerManager
-import android.view.KeyEvent
+import android.support.v4.media.session.PlaybackStateCompat
 import android.widget.Toast
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.music.Music
+import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.ui.Utils
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -48,14 +49,24 @@ private const val HEADSET_DISCONNECTED = 0
 private const val HEADSET_CONNECTED = 1
 
 // Player playing statuses
-const val PLAYING = 0
-const val PAUSED = 1
-const val RESUMED = 2
+const val PLAYING = PlaybackState.STATE_PLAYING
+const val PAUSED = PlaybackState.STATE_PAUSED
+const val RESUMED = PlaybackState.STATE_NONE
 
 @Suppress("DEPRECATION")
 class MediaPlayerHolder(private val playerService: PlayerService) :
     MediaPlayer.OnCompletionListener,
     MediaPlayer.OnPreparedListener {
+
+    private val stateBuilder =
+        PlaybackStateCompat.Builder().setActions(
+            PlaybackStateCompat.ACTION_PLAY
+                    or PlaybackStateCompat.ACTION_STOP
+                    or PlaybackStateCompat.ACTION_PAUSE
+                    or PlaybackStateCompat.ACTION_PLAY_PAUSE
+                    or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
+                    or PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS
+        )
 
     lateinit var mediaPlayerInterface: MediaPlayerInterface
 
@@ -120,9 +131,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     var state = PAUSED
     var isPlay = false
 
-    //receivers
-    private lateinit var mMediaButtonsReceiver: MediaButtonIntentReceiver
-
     //notifications
     private lateinit var mNotificationActionsReceiver: NotificationReceiver
     private lateinit var mMusicNotificationManager: MusicNotificationManager
@@ -165,25 +173,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             playerService.unregisterReceiver(mNotificationActionsReceiver)
         } catch (e: IllegalArgumentException) {
             e.printStackTrace()
-        }
-    }
-
-    //https://stackoverflow.com/a/44709784
-    private fun registerMediaButtonsReceiver() {
-        mMediaButtonsReceiver = MediaButtonIntentReceiver()
-        val mediaFilter = IntentFilter(Intent.ACTION_MEDIA_BUTTON).apply {
-            priority = 10000
-        }
-        playerService.registerReceiver(mMediaButtonsReceiver, mediaFilter)
-    }
-
-    private fun unregisterMediaButtonsReceiver() {
-        if (::mMediaButtonsReceiver.isInitialized) {
-            try {
-                playerService.unregisterReceiver(mMediaButtonsReceiver)
-            } catch (e: IllegalArgumentException) {
-                e.printStackTrace()
-            }
         }
     }
 
@@ -258,10 +247,17 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private fun setStatus(status: Int) {
         state = status
+        playerService.getMediaSession().setPlaybackState(
+            stateBuilder.setState(
+                state,
+                PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
+                1F
+            ).build()
+        )
         mediaPlayerInterface.onStateChanged()
     }
 
-    private fun resumeMediaPlayer() {
+    fun resumeMediaPlayer() {
         if (!isPlaying) {
             if (isMediaPlayer) mediaPlayer.start()
             val status = if (isSongRestoredFromPrefs) {
@@ -279,7 +275,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
-    private fun pauseMediaPlayer() {
+    fun pauseMediaPlayer() {
         setStatus(PAUSED)
         mediaPlayer.pause()
         playerService.stopForeground(false)
@@ -287,7 +283,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         updateNotification()
     }
 
-    private fun repeatSong() {
+    fun repeatSong() {
         isRepeat = false
         updateNotification()
         mediaPlayer.seekTo(0)
@@ -417,12 +413,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
                 mMusicNotificationManager = playerService.musicNotificationManager
                 tryToGetAudioFocus()
-                registerMediaButtonsReceiver()
+                // registerMediaButtonsReceiver()
 
                 if (goPreferences.isPreciseVolumeEnabled) setPreciseVolume(currentVolumeInPercent)
             }
 
-            mediaPlayer.setDataSource(song?.path)
+            mediaPlayer.setDataSource(playerService, MusicUtils.getContentUri(song?.id!!))
             mediaPlayer.prepare()
 
         } catch (e: Exception) {
@@ -465,7 +461,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             mediaPlayer.release()
             giveUpAudioFocus()
             stopUpdatingCallbackWithPosition()
-            unregisterMediaButtonsReceiver()
         }
         unregisterActionsReceiver()
     }
@@ -604,32 +599,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                         }
                     }
                     AudioManager.ACTION_AUDIO_BECOMING_NOISY -> if (isPlaying && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
-                }
-            }
-            if (isOrderedBroadcast) abortBroadcast()
-        }
-    }
-
-    private inner class MediaButtonIntentReceiver : BroadcastReceiver() {
-
-        override fun onReceive(context: Context, intent: Intent) {
-
-            if (Intent.ACTION_MEDIA_BUTTON != intent.action) {
-                return
-            }
-
-            val event = intent.getParcelableExtra<Parcelable>(Intent.EXTRA_KEY_EVENT) as KeyEvent
-
-            if (event.action == KeyEvent.ACTION_DOWN) { // do something
-                when (event.keyCode) {
-                    KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> resumeOrPause()
-                    KeyEvent.KEYCODE_MEDIA_CLOSE -> stopPlaybackService(true)
-                    KeyEvent.KEYCODE_MEDIA_PREVIOUS -> skip(false)
-                    KeyEvent.KEYCODE_MEDIA_NEXT -> skip(true)
-                    KeyEvent.KEYCODE_MEDIA_STOP -> stopPlaybackService(true)
-                    KeyEvent.KEYCODE_MEDIA_REWIND -> repeatSong()
-                    KeyEvent.KEYCODE_MEDIA_PAUSE -> pauseMediaPlayer()
-                    KeyEvent.KEYCODE_MEDIA_PLAY -> resumeMediaPlayer()
                 }
             }
             if (isOrderedBroadcast) abortBroadcast()

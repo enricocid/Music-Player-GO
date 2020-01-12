@@ -3,7 +3,7 @@
     <!-- Main - Artists -->
     <string name="artists">Artiesten</string>
     <string name="artist_info">%1d&#160;Albums,&#160;%2d&#160;Nummers</string>
-    <string name="folder_info">%2d&#160;Nummers</string>
+    <string name="folder_info">%1d&#160;Nummers</string>
 
     <!-- Main - All songs -->
     <string name="songs">Nummers</string>
@@ -69,8 +69,6 @@
     <string name="active_fragments_pref_warning">Je kunt niet álle tabbladen verwijderen! :P</string>
 
     <string name="sorting_pref_default">Standaard</string>
-    <string name="sorting_pref_ascending">Oplopend</string>
-    <string name="sorting_pref_descending">Aflopend</string>
 
     <string name="focus_pref_title">Audiofocus</string>
     <string name="focus_pref_summary_on">Audiofocusbeheer uitschakelen</string>
