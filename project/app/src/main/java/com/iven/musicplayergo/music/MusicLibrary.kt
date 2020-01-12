@@ -8,7 +8,7 @@ import com.iven.musicplayergo.ui.Utils
 
 class MusicLibrary {
 
-    var allSongsUnfiltered: MutableList<Music>? = mutableListOf()
+    private var allSongsUnfiltered: MutableList<Music>? = mutableListOf()
 
     var allSongsFiltered: MutableList<Music>? = null
 
