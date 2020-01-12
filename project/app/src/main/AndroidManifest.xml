@@ -44,9 +44,7 @@
 
         </activity>
 
-        <service android:name=".player.PlayerService">
-
-        </service>
+        <service android:name=".player.PlayerService" />
 
         <receiver android:name="androidx.media.session.MediaButtonReceiver" >
             <intent-filter>
