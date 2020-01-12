@@ -71,8 +71,6 @@
     <string name="active_fragments_pref_warning">Anda tidak bisa membuang semua tab! :P</string>
 
     <string name="sorting_pref_default">Default</string>
-    <string name="sorting_pref_ascending">Naik</string>
-    <string name="sorting_pref_descending">Turun</string>
 
     <string name="focus_pref_title">Fokus audio</string>
     <string name="focus_pref_summary_on">Menonaktifkan manajemen fokus audio</string>

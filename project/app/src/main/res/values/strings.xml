@@ -109,8 +109,8 @@
     <string name="artists_sorting_pref" translatable="false">artists_sorting_pref</string>
     <string name="folders_sorting_pref" translatable="false">folders_sorting_pref</string>
     <string name="sorting_pref_default">Default</string>
-    <string name="sorting_pref_ascending">Ascending</string>
-    <string name="sorting_pref_descending">Descending</string>
+    <string name="sorting_pref_ascending" translatable="false">A-Z</string>
+    <string name="sorting_pref_descending" translatable="false">Z-A</string>
 
     <string name="precise_volume_pref" translatable="false">precise_volume_pref</string>
     <string name="precise_volume_pref_title">Precise volume control</string>
