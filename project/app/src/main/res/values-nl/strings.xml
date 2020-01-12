@@ -7,8 +7,8 @@
 
     <!-- Main - All songs -->
     <string name="songs">Nummers</string>
-    <string name="shuffle_am">Alle nummers willkeurig afspelen</string>
-    <string name="shuffle_sa">Geselecteerd album willkeurig afspelen</string>
+    <string name="shuffle_am">Alle nummers willekeurig afspelen</string>
+    <string name="shuffle_sa">Geselecteerd album willekeurig afspelen</string>
 
     <!-- Main - Folders -->
     <string name="folders">Mappen</string>
@@ -24,7 +24,7 @@
     <!-- Loved songs -->
     <string name="loved_songs">Favorieten</string>
     <string name="loved_song_added">%1s (%2s) is toegevoegd aan je favorieten</string>
-    <string name="loved_song_remove">%1s (%2s) worhdt verwijderd uit je favorieten. Wil je doorgaan?</string>
+    <string name="loved_song_remove">%1s (%2s) wordt verwijderd uit je favorieten. Wil je doorgaan?</string>
     <string name="loved_songs_clear">Je favorieten worden gewist. Wil je doorgaan?</string>
     <string name="loved_song_add">Toevoegen aan favorieten</string>
     <string name="error_no_loved_songs">Je hebt nog geen favorieten!</string>
@@ -59,7 +59,7 @@
     <string name="accent_pref_title">Accent</string>
 
     <string name="edge_pref_summary_on">Beeldvullende modus uitschakelen</string>
-    <string name="edge_pref_summary_off">Beeldvullende modus uitschakelen</string>
+    <string name="edge_pref_summary_off">Beeldvullende modus inschakelen</string>
 
     <string name="tabs_pref_title">Tabbladen</string>
     <string name="tabs_pref_summary_on">Tabbladen uitschakelen</string>
@@ -71,6 +71,10 @@
     <string name="sorting_pref_default">Standaard</string>
     <string name="sorting_pref_ascending">Oplopend</string>
     <string name="sorting_pref_descending">Aflopend</string>
+ 
+    <string name="precise_volume_pref_title">Nauwkeurige volumebediening</string>
+    <string name="precise_volume_pref_summary_on">Nauwkeurige volumebediening uitschakelen</string>
+    <string name="precise_volume_pref_summary_off">Nauwkeurige volumebediening inschakelen</string>
 
     <string name="focus_pref_title">Audiofocus</string>
     <string name="focus_pref_summary_on">Audiofocusbeheer uitschakelen</string>
