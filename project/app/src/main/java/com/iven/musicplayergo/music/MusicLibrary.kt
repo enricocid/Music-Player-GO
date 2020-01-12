@@ -3,6 +3,7 @@ package com.iven.musicplayergo.music
 import android.annotation.SuppressLint
 import android.content.Context
 import android.provider.MediaStore
+import com.iven.musicplayergo.ui.Utils
 
 
 class MusicLibrary {
@@ -47,7 +48,7 @@ class MusicLibrary {
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DURATION)
                 val albumIndex =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ALBUM)
-                val pathIndex =
+                val relativePathIndex =
                     cursor.getColumnIndexOrThrow(MusicUtils.getPathColumn())
                 val albumIdIndex =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ALBUM_ID)
@@ -64,11 +65,14 @@ class MusicLibrary {
                     val audioDisplayName = cursor.getString(displayNameIndex)
                     val audioDuration = cursor.getLong(durationIndex)
                     val audioAlbum = cursor.getString(albumIndex)
-                    val audioRelativePath = cursor.getString(pathIndex)
+                    val audioRelativePath = cursor.getString(relativePathIndex)
                     val audioAlbumId = cursor.getString(albumIdIndex)
                     val audioId = cursor.getLong(idIndex)
 
-                    val audioFolderName = MusicUtils.getFolderName(audioRelativePath)
+                    val audioFolderName =
+                        if (Utils.isAndroidQ()) audioRelativePath else MusicUtils.getFolderName(
+                            audioRelativePath
+                        )
 
                     // Add the current music to the list
                     allSongsUnfiltered?.add(
