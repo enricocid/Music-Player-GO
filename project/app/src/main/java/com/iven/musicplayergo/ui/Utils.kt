@@ -198,7 +198,7 @@ object Utils {
                 )
                 if (goPreferences.isEdgeToEdge) {
                     window?.apply {
-                        if (!isAndroidQ()) ThemeHelper.handleLightSystemBars(decorView)
+                        ThemeHelper.handleLightSystemBars(decorView)
                         edgeToEdge {
                             recyclerView.fit { Edge.Bottom }
                             decorView.fit { Edge.Top }
@@ -334,7 +334,7 @@ object Utils {
                 )
                 if (goPreferences.isEdgeToEdge) {
                     window?.apply {
-                        if (!isAndroidQ()) ThemeHelper.handleLightSystemBars(decorView)
+                        ThemeHelper.handleLightSystemBars(decorView)
                         edgeToEdge {
                             recyclerView.fit { Edge.Bottom }
                             decorView.fit { Edge.Top }

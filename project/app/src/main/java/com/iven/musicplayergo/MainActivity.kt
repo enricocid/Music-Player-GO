@@ -235,9 +235,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         if (goPreferences.isEdgeToEdge) {
             window?.apply {
-                statusBarColor = Color.TRANSPARENT
-                navigationBarColor = Color.TRANSPARENT
-                if (!Utils.isAndroidQ()) ThemeHelper.handleLightSystemBars(decorView)
+                if (!Utils.isAndroidQ()) {
+                    statusBarColor = Color.TRANSPARENT
+                    navigationBarColor = Color.TRANSPARENT
+                }
+                ThemeHelper.handleLightSystemBars(decorView)
             }
             edgeToEdge {
                 mainView.fit { Edge.Top + Edge.Bottom }
@@ -683,7 +685,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 if (goPreferences.isEdgeToEdge && !sDeviceLand) {
                     window?.apply {
-                        if (!Utils.isAndroidQ()) ThemeHelper.handleLightSystemBars(decorView)
+                        ThemeHelper.handleLightSystemBars(decorView)
                         edgeToEdge {
                             customView.fit { Edge.Bottom }
                             decorView.fit { Edge.Top }
