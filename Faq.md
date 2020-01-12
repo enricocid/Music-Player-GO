@@ -15,6 +15,11 @@ It is a lightweight, original, privacy-friendly and **ads-free** music player th
 Music Player GO can be downloaded [here](https://play.google.com/store/apps/details?id=com.iven.musicplayergo) on the Google Play Store and [here](https://f-droid.org/repository/browse/?fdid=com.iven.musicplayergo) on F-Droid. 
 
 
+### How to contribute to translations?
+
+Please have a look [here](https://github.com/enricocid/Music-Player-GO/issues/114) :)
+
+
 ### Sometimes app crashes when opened from background
 
 It could happens on devices with Android versions >= Marshmallow because of the doze mode. Developers are not allowed to setup apps to ignore battery's system optimizations. All You can do is to disable it by yourself:
