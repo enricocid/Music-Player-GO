@@ -12,27 +12,27 @@
     <!-- Queue -->
     <string name="queue">File d'attente</string>
     <string name="queue_add">Ajouter à la file d'attente</string>
-    <string name="queue_song_add">%1s ajouté à la file d'attente !</string>
-    <string name="queue_song_remove">%1s va être retiré de la file d'attente. Continuer ?</string>
-    <string name="queue_songs_clear">La file d'attente va être effacée. Continuer ?</string>
-    <string name="error_no_queue">Aucun titre dans la file d'attente !</string>
+    <string name="queue_song_add">%1s ajouté à la file d'attente&#160;!</string>
+    <string name="queue_song_remove">%1s va être retiré de la file d'attente. Continuer&#160;?</string>
+    <string name="queue_songs_clear">La file d'attente va être effacée. Continuer&#160;?</string>
+    <string name="error_no_queue">Aucun titre dans la file d'attente&#160;!</string>
     <!-- Loved songs -->
     <string name="loved_songs">Titres favoris</string>
     <string name="loved_song_added">%1s (%2s) ajouté aux titres favoris</string>
-    <string name="loved_song_remove">%1s (%2s) va être retiré des titres favoris. Continuer ?</string>
-    <string name="loved_songs_clear">La liste des titres favoris va être effacée. Continuer ?</string>
+    <string name="loved_song_remove">%1s (%2s) va être retiré des titres favoris. Continuer&#160;?</string>
+    <string name="loved_songs_clear">La liste des titres favoris va être effacée. Continuer&#160;?</string>
     <string name="loved_song_add">Ajouter aux titres favoris</string>
-    <string name="error_no_loved_songs">Aucun titre favoris !</string>
+    <string name="error_no_loved_songs">Aucun titre favoris&#160;!</string>
     <!-- Messages -->
     <string name="perm_rationale">Pour vous permettre de lire la musique sur votre appareil, Music Player GO a besoin d\'accèder à vos fichiers</string>
-    <string name="no_browser">Aucun navigateur n\'a été trouvé !</string>
-    <string name="bad_id">Lancez d'abord la lecture d\'un titre !</string>
-    <string name="no_eq">Aucun égaliseur n\'a été trouvé !</string>
-    <string name="error_unknown">Une erreur s\'est produite ! :(</string>
-    <string name="error_unknown_unsupported">Une erreur s\'est produite ! :( Peut-être que le format sélectionné n\'est pas supporté, ou que le dossier n\'est pas accessible (Ce n\'est pas de la faute de l\'application !).</string>
-    <string name="on_close_activity">Voulez-vous arrêter la lecture ?</string>
-    <string name="repeat_enabled">Répétition x1 activée !</string>
-    <string name="repeat_disabled">Répétition x1 désactivée !</string>
+    <string name="no_browser">Aucun navigateur n\'a été trouvé&#160;!</string>
+    <string name="bad_id">Lancez d'abord la lecture d\'un titre&#160;!</string>
+    <string name="no_eq">Aucun égaliseur n\'a été trouvé&#160;!</string>
+    <string name="error_unknown">Une erreur s\'est produite&#160;! :(</string>
+    <string name="error_unknown_unsupported">Une erreur s\'est produite&#160;! :( Peut-être que le format sélectionné n\'est pas supporté, ou que le dossier n\'est pas accessible (Ce n\'est pas de la faute de l\'application&#160;!).</string>
+    <string name="on_close_activity">Voulez-vous arrêter la lecture&#160;?</string>
+    <string name="repeat_enabled">Répétition x1 activée&#160;!</string>
+    <string name="repeat_disabled">Répétition x1 désactivée&#160;!</string>
     <!-- Settings -->
     <!-- Preferences -->
     <string name="settings">Paramètres</string>
@@ -52,7 +52,7 @@
     <string name="tabs_pref_summary_on">Désactiver les onglets</string>
     <string name="tabs_pref_summary_off">Activer les onglets</string>
     <string name="active_fragments_pref_title">Onglets actifs</string>
-    <string name="active_fragments_pref_warning">Vous ne pouvez pas retirer tous les onglets ! :P</string>
+    <string name="active_fragments_pref_warning">Vous ne pouvez pas retirer tous les onglets&#160;! :P</string>
     <string name="sorting_pref_default">Par défaut</string>
     <string name="sorting_pref_ascending">A-Z</string>
     <string name="sorting_pref_descending">Z-A</string>
