@@ -32,6 +32,7 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.google.android.material.tabs.TabLayout
 import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.fragments.*
+import com.iven.musicplayergo.music.LibraryViewModel
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.music.MusicViewModel
@@ -117,6 +118,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private val mMusicViewModel: MusicViewModel by lazy {
         ViewModelProviders.of(this).get(MusicViewModel::class.java)
+    }
+
+    private val mLibraryViewModel: LibraryViewModel by lazy {
+        ViewModelProviders.of(this).get(LibraryViewModel::class.java)
     }
 
     private var mAllDeviceSongs: MutableList<Music>? = null
@@ -302,22 +307,22 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             if (!result.isNullOrEmpty()) {
 
                 mAllDeviceSongs = result
-                musicLibrary.buildLibrary(this, mAllDeviceSongs)
 
-                finishSetup()
+                loadMusicLibraryAndFinishSetup()
 
             } else {
-
-                Utils.makeToast(
-                    this@MainActivity,
-                    getString(R.string.error_unknown),
-                    Toast.LENGTH_LONG
-                )
-                finishAndRemoveTask()
+                Utils.notifyLoadingError(this)
             }
         })
 
-        mMusicViewModel.getMusicLiveData()
+        mMusicViewModel.loadMusic()
+    }
+
+    private fun loadMusicLibraryAndFinishSetup() {
+        mLibraryViewModel.buildLibraryLiveData.observe(this, Observer { hasLoaded ->
+            if (hasLoaded) finishSetup() else Utils.notifyLoadingError(this)
+        })
+        mLibraryViewModel.buildMusicLibrary()
     }
 
     private fun finishSetup() {

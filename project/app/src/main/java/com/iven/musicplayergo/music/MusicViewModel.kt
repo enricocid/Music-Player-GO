@@ -10,13 +10,14 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
 
     val musicLiveData: MutableLiveData<MutableList<Music>> = MutableLiveData()
 
-    private fun loadAllDeviceMusic() {
+    private fun performLoadMusic() {
         val music = musicLibrary.queryForMusic(getApplication())
+        musicLibrary.buildLibrary(getApplication(), music)
         musicLiveData.value = music
     }
 
-    fun getMusicLiveData(): LiveData<MutableList<Music>> {
-        loadAllDeviceMusic()
+    fun loadMusic(): LiveData<MutableList<Music>> {
+        performLoadMusic()
         return musicLiveData
     }
 }

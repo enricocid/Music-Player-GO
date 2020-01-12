@@ -43,6 +43,18 @@ object Utils {
     }
 
     @JvmStatic
+    fun notifyLoadingError(activity: Activity) {
+        activity.apply {
+            makeToast(
+                activity,
+                activity.getString(R.string.error_unknown),
+                Toast.LENGTH_LONG
+            )
+            finishAndRemoveTask()
+        }
+    }
+
+    @JvmStatic
     fun hasToShowPermissionRationale(context: Context): Boolean {
         return ActivityCompat.checkSelfPermission(
             context,
