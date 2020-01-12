@@ -54,8 +54,6 @@
     <string name="active_fragments_pref_title">Onglets actifs</string>
     <string name="active_fragments_pref_warning">Vous ne pouvez pas retirer tous les onglets! :P</string>
     <string name="sorting_pref_default">Par défaut</string>
-    <string name="sorting_pref_ascending">A-Z</string>
-    <string name="sorting_pref_descending">Z-A</string>
     <string name="precise_volume_pref_title">Contrôle précis du volume</string>
     <string name="precise_volume_pref_summary_on">Activer le contrôle précis du volume</string>
     <string name="precise_volume_pref_summary_off">Désactiver le contrôle précis du volume</string>

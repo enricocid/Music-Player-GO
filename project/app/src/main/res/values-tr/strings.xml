@@ -60,8 +60,6 @@
     <string name="active_fragments_pref_title">Aktif sekmeler</string>
     <string name="active_fragments_pref_warning">Bütün sekmeleri kaldıramazsınız! : P</string>
     <string name="sorting_pref_default">Varsayılan</string>
-    <string name="sorting_pref_ascending">Artan</string>
-    <string name="sorting_pref_descending">Azalan</string>
     <string name="precise_volume_pref_title">Hassas ses kontrolü</string>
     <string name="precise_volume_pref_summary_on">Hassas ses kontrolünü devre dışı bırak</string>
     <string name="precise_volume_pref_summary_off">Hassas ses kontrolünü aktif et</string>
