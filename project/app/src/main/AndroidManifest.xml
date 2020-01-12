@@ -41,8 +41,18 @@
                 <data android:scheme="file"/>
                 <data android:mimeType="audio/*"/>
             </intent-filter>
+
         </activity>
-        <service android:name=".player.PlayerService"/>
+
+        <service android:name=".player.PlayerService">
+
+        </service>
+
+        <receiver android:name="androidx.media.session.MediaButtonReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
