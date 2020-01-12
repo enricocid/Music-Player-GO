@@ -46,8 +46,8 @@
     <string name="theme_pref_dark_title">Sombre</string>
     <string name="theme_pref_auto_title">Automatique</string>
     <string name="accent_pref_title">Couleur d\'accentuation</string>
-    <string name="edge_pref_summary_on">Disable edge-to-edge</string>
-    <string name="edge_pref_summary_off">Enable edge-to-edge</string>
+    <string name="edge_pref_summary_on">Désactiver edge-to-edge</string>
+    <string name="edge_pref_summary_off">Activer edge-to-edge</string>
     <string name="tabs_pref_title">Onglets</string>
     <string name="tabs_pref_summary_on">Désactiver les onglets</string>
     <string name="tabs_pref_summary_off">Activer les onglets</string>
