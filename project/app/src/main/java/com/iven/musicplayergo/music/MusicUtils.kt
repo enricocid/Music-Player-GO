@@ -189,7 +189,7 @@ object MusicUtils {
     @JvmStatic
     @Suppress("DEPRECATION")
     fun getPathColumn(): String {
-        return if (Utils.isAndroidQ()) AudioColumns.RELATIVE_PATH else AudioColumns.DATA
+        return if (Utils.isAndroidQ()) AudioColumns.BUCKET_DISPLAY_NAME else AudioColumns.DATA
     }
 
     @JvmStatic
