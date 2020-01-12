@@ -6,7 +6,11 @@
         <item name="android:fontFamily">@font/raleway</item>
         <item name="md_font_title">@font/raleway_black</item>
         <item name="alertDialogTheme">@style/DialogsStyle</item>
-        <item name="preferenceTheme">@style/DialogsStyle</item>
+        <item name="preferenceTheme">@style/PrefTheme</item>
+    </style>
+
+    <style name="PrefTheme" parent="PreferenceThemeOverlay">
+        <item name="android:scrollbars">none</item>
     </style>
 
     <style name="DialogsStyle" parent="Theme.AppCompat.DayNight.Dialog">
