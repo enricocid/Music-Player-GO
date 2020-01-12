@@ -69,15 +69,9 @@ object ThemeHelper {
 
     @JvmStatic
     @TargetApi(Build.VERSION_CODES.O_MR1)
-    fun handleSystemBarsFlags(view: View, isDialog: Boolean) {
-
-        val systemBarsFlags =
-            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        val lightSystemBarsFlags =
-            if (isThemeNight()) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-
+    fun handleLightSystemBars(view: View) {
         view.systemUiVisibility =
-            if (Utils.isAndroidQ()) systemBarsFlags else if (!isDialog) lightSystemBarsFlags or systemBarsFlags else lightSystemBarsFlags
+            if (isThemeNight()) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
     }
 
     //fixed array of pairs (first: accent, second: theme)

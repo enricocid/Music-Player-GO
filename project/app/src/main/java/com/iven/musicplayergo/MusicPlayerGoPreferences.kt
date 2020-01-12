@@ -1,6 +1,7 @@
 package com.iven.musicplayergo
 
 import android.content.Context
+import android.os.Build
 import androidx.preference.PreferenceManager
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -68,7 +69,10 @@ class MusicPlayerGoPreferences(context: Context) {
         set(value) = mPrefs.edit().putInt(prefsAccent, value).apply()
 
     var isEdgeToEdge
-        get() = mPrefs.getBoolean(prefsEdgeToEdge, true)
+        get() = mPrefs.getBoolean(
+            prefsEdgeToEdge,
+            true
+        ) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1
         set(value) = mPrefs.edit().putBoolean(prefsEdgeToEdge, value).apply()
 
     var isTabsEnabled
