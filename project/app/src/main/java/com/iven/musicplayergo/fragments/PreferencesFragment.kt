@@ -137,7 +137,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         mAccentsDialog = MaterialDialog(activity).show {
 
             cornerRadius(res = R.dimen.md_corner_radius)
-            title(res = R.string.accent_pref_title)
+            title(R.string.accent_pref_title)
 
             customListAdapter(
                 AccentsAdapter(
@@ -157,7 +157,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         mActiveFragmentsDialog = MaterialDialog(activity).show {
 
             cornerRadius(res = R.dimen.md_corner_radius)
-            title(res = R.string.active_fragments_pref_title)
+            title(R.string.active_fragments_pref_title)
 
             val activeTabsAdapter = ActiveTabsAdapter(activity)
 
@@ -166,11 +166,11 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             getRecyclerView().layoutManager =
                 LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
-            positiveButton {
+            positiveButton(R.string.yes) {
                 goPreferences.activeFragments = activeTabsAdapter.getUpdatedItems()
                 ThemeHelper.applyNewThemeSmoothly(activity)
             }
-            negativeButton {}
+            negativeButton(R.string.no)
         }
     }
 

@@ -1,4 +1,8 @@
 <resources>
+
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+
     <!-- Main - Artists -->
     <string name="artists">Artistas</string>
     <string name="artist_info">%1d&#160;Álbumes,&#160;%2d&#160;Canciones</string>

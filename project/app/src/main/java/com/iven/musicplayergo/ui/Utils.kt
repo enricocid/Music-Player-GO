@@ -71,18 +71,18 @@ object Utils {
                 cancelOnTouchOutside(false)
                 cornerRadius(res = R.dimen.md_corner_radius)
 
-                title(res = R.string.app_name)
-                icon(res = R.drawable.ic_folder)
+                title(R.string.app_name)
+                icon(R.drawable.ic_folder)
 
                 message(R.string.perm_rationale)
-                positiveButton {
+                positiveButton(R.string.yes) {
                     ActivityCompat.requestPermissions(
                         this@apply,
                         arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                         2588
                     )
                 }
-                negativeButton {
+                negativeButton(R.string.no) {
                     makeToast(
                         this@apply,
                         getString(R.string.perm_rationale),
@@ -186,7 +186,7 @@ object Utils {
 
             cornerRadius(res = R.dimen.md_corner_radius)
 
-            title(res = R.string.queue)
+            title(R.string.queue)
 
             AppCompatResources.getDrawable(context, R.drawable.ic_queue_music)?.apply {
                 mutate()
@@ -235,8 +235,8 @@ object Utils {
 
             cornerRadius(res = R.dimen.md_corner_radius)
 
-            title(res = R.string.queue)
-            icon(res = R.drawable.ic_delete_forever)
+            title(R.string.queue)
+            icon(R.drawable.ic_delete_forever)
 
             message(
                 text = context.getString(
@@ -244,7 +244,7 @@ object Utils {
                     song.first.title
                 )
             )
-            positiveButton {
+            positiveButton(R.string.yes) {
 
                 mediaPlayerHolder.apply {
                     queueSongs.removeAt(song.second)
@@ -257,7 +257,7 @@ object Utils {
                     }
                 }
             }
-            negativeButton {}
+            negativeButton(R.string.no)
         }
     }
 
@@ -271,12 +271,12 @@ object Utils {
 
             cornerRadius(res = R.dimen.md_corner_radius)
 
-            title(res = R.string.queue)
-            icon(res = R.drawable.ic_delete_forever)
+            title(R.string.queue)
+            icon(R.drawable.ic_delete_forever)
 
-            message(text = context.getString(R.string.queue_songs_clear))
+            message(R.string.queue_songs_clear)
 
-            positiveButton {
+            positiveButton(R.string.yes) {
 
                 mediaPlayerHolder.apply {
                     if (isQueueStarted && isPlaying) {
@@ -289,7 +289,7 @@ object Utils {
                     setQueueEnabled(false)
                 }
             }
-            negativeButton {}
+            negativeButton(R.string.no)
         }
     }
 
@@ -327,8 +327,8 @@ object Utils {
         MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
             cornerRadius(res = R.dimen.md_corner_radius)
-            title(res = R.string.loved_songs)
-            icon(res = R.drawable.ic_favorite)
+            title(R.string.loved_songs)
+            icon(R.drawable.ic_favorite)
 
             customListAdapter(
                 LovedSongsAdapter(context, this, uiControlInterface, mediaPlayerHolder)
@@ -370,8 +370,8 @@ object Utils {
 
             cornerRadius(res = R.dimen.md_corner_radius)
 
-            title(res = R.string.loved_songs)
-            icon(res = R.drawable.ic_delete_forever)
+            title(R.string.loved_songs)
+            icon(R.drawable.ic_delete_forever)
 
             message(
                 text = context.getString(
@@ -380,13 +380,13 @@ object Utils {
                     MusicUtils.formatSongDuration(item?.second?.toLong()!!, false)
                 )
             )
-            positiveButton {
+            positiveButton(R.string.yes) {
                 lovedSongs?.remove(item)
                 goPreferences.lovedSongs = lovedSongs
                 lovedSongsAdapter.swapSongs(lovedSongs)
             }
 
-            negativeButton {}
+            negativeButton(R.string.no)
         }
     }
 
@@ -400,16 +400,14 @@ object Utils {
 
             cornerRadius(res = R.dimen.md_corner_radius)
 
-            title(res = R.string.loved_songs)
-            icon(res = R.drawable.ic_delete_forever)
+            title(R.string.loved_songs)
+            icon(R.drawable.ic_delete_forever)
 
-            message(
-                text = context.getString(R.string.loved_songs_clear)
-            )
-            positiveButton {
+            message(R.string.loved_songs_clear)
+            positiveButton(R.string.yes) {
                 uiControlInterface.onLovedSongsUpdate(true)
             }
-            negativeButton {}
+            negativeButton(R.string.no)
         }
     }
 
@@ -455,14 +453,14 @@ object Utils {
 
             cornerRadius(res = R.dimen.md_corner_radius)
 
-            title(res = R.string.app_name)
-            icon(res = R.drawable.ic_stop)
+            title(R.string.app_name)
+            icon(R.drawable.ic_stop)
 
-            message(text = context.getString(R.string.on_close_activity))
-            positiveButton {
+            message(R.string.on_close_activity)
+            positiveButton(R.string.yes) {
                 mediaPlayerHolder.stopPlaybackService(true)
             }
-            negativeButton(text = context.getString(android.R.string.no)) {
+            negativeButton(R.string.no) {
                 mediaPlayerHolder.stopPlaybackService(false)
             }
         }

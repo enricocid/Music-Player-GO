@@ -1,5 +1,8 @@
 <resources>
 
+    <string name="yes">Evet</string>
+    <string name="no">Hayır</string>
+
     <!-- Main - Artists -->
     <string name="artists">Sanatçılar</string>
     <string name="artist_info">%1d&#160;Albüm,&#160;%2d&#160;Şarkı</string>

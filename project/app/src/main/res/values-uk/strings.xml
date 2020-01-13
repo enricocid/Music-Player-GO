@@ -4,4 +4,6 @@
     <string name="no_browser">Браузер не знайдено!</string>
     <string name="perm_rationale">Для відтворення музики потрібен доступ Music Player-GO до Ваших файлів</string>
     <string name="artist_info">%1d&#160;Aльбомів,&#160;%2d&#160;Пісень</string>
+    <string name="yes">так</string>
+    <string name="no">ні</string>
 </resources>

@@ -1,5 +1,8 @@
 <resources>
 
+    <string name="yes">Iya</string>
+    <string name="no">Tidak</string>
+
     <!-- Main - Artists -->
     <string name="artists">Artis</string>
     <string name="artist_info">%1d&#160;Album,&#160;%2d&#160;Lagu</string>

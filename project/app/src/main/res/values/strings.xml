@@ -7,6 +7,8 @@
     <string name="underscore_delimiter" translatable="false">&#95;</string>
     <string name="song_title_notification" translatable="false">&lt;b>%1s&lt;/b></string>
     <string name="rates" translatable="false">%1d&#160;kHz,&#160;%2d&#160;kbps</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <!-- Main - Artists -->
     <string name="artists">Artists</string>
