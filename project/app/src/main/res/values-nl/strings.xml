@@ -69,8 +69,6 @@
     <string name="active_fragments_pref_warning">Je kunt niet álle tabbladen verwijderen! :P</string>
 
     <string name="sorting_pref_default">Standaard</string>
-    <string name="sorting_pref_ascending">Oplopend</string>
-    <string name="sorting_pref_descending">Aflopend</string>
  
     <string name="precise_volume_pref_title">Nauwkeurige volumebediening</string>
     <string name="precise_volume_pref_summary_on">Nauwkeurige volumebediening uitschakelen</string>

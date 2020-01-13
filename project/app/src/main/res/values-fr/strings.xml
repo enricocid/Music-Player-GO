@@ -1,7 +1,66 @@
 <resources>
-    <string name="no_eq">Aucun égaliseur sur l\'appareil!</string>
-    <string name="bad_id">Démarrer une piste musicale d\'abord!</string>
-    <string name="no_browser">No navigateur trouvé!</string>
+    <!-- Main - Artists -->
+    <string name="artists">Artistes</string>
+    <string name="artist_info">%1d&#160;Albums,&#160;%2d&#160;Titres</string>
+    <string name="folder_info">%1d&#160;Titres</string>
+    <!-- Main - All songs -->
+    <string name="songs">Titres</string>
+    <string name="shuffle_am">Lecture aléatoire de tous les titres</string>
+    <string name="shuffle_sa">Lecture aléatoire de l\'album</string>
+    <!-- Main - Folders -->
+    <string name="folders">Dossiers</string>
+    <!-- Queue -->
+    <string name="queue">File d\'attente</string>
+    <string name="queue_add">Ajouter à la file d\'attente</string>
+    <string name="queue_song_add">%1s ajouté à la file d\'attente!</string>
+    <string name="queue_song_remove">%1s va être retiré de la file d\'attente. Continuer?</string>
+    <string name="queue_songs_clear">La file d\'attente va être effacée. Continuer?</string>
+    <string name="error_no_queue">Aucun titre dans la file d\'attente!</string>
+    <!-- Loved songs -->
+    <string name="loved_songs">Titres favoris</string>
+    <string name="loved_song_added">%1s (%2s) ajouté aux titres favoris</string>
+    <string name="loved_song_remove">%1s (%2s) va être retiré des titres favoris. Continuer?</string>
+    <string name="loved_songs_clear">La liste des titres favoris va être effacée. Continuer?</string>
+    <string name="loved_song_add">Ajouter aux titres favoris</string>
+    <string name="error_no_loved_songs">Aucun titre favoris!</string>
+    <!-- Messages -->
     <string name="perm_rationale">Pour vous permettre de lire la musique sur votre appareil, Music Player GO a besoin d\'accèder à vos fichiers</string>
-    <string name="artist_info">%1d&#160;Albums,&#160;%2d&#160;Pistes</string>
+    <string name="no_browser">Aucun navigateur n\'a été trouvé!</string>
+    <string name="bad_id">Lancez d\'abord la lecture d\'un titre!</string>
+    <string name="no_eq">Aucun égaliseur n\'a été trouvé!</string>
+    <string name="error_unknown">Une erreur s\'est produite! :(</string>
+    <string name="error_unknown_unsupported">Une erreur s\'est produite! :( Peut-être que le format sélectionné n\'est pas supporté, ou que le dossier n\'est pas accessible (Ce n\'est pas de la faute de l\'application&#160;!).</string>
+    <string name="on_close_activity">Voulez-vous arrêter la lecture?</string>
+    <string name="repeat_enabled">Répétition x1 activée!</string>
+    <string name="repeat_disabled">Répétition x1 désactivée!</string>
+    <!-- Settings -->
+    <!-- Preferences -->
+    <string name="settings">Paramètres</string>
+    <string name="category_appearance">Apparence</string>
+    <string name="category_general">Général</string>
+    <string name="open_git_pref_title">Page GitHub</string>
+    <string name="open_git_pref_summary">Ouvre la page du projet pour plus d\'informations :)</string>
+    <string name="faq_summary">FAQ et formats supportés :P</string>
+    <string name="theme_pref_title">Thème</string>
+    <string name="theme_pref_light_title">Clair</string>
+    <string name="theme_pref_dark_title">Sombre</string>
+    <string name="theme_pref_auto_title">Automatique</string>
+    <string name="accent_pref_title">Couleur d\'accentuation</string>
+    <string name="edge_pref_summary_on">Désactiver edge-to-edge</string>
+    <string name="edge_pref_summary_off">Activer edge-to-edge</string>
+    <string name="tabs_pref_title">Onglets</string>
+    <string name="tabs_pref_summary_on">Désactiver les onglets</string>
+    <string name="tabs_pref_summary_off">Activer les onglets</string>
+    <string name="active_fragments_pref_title">Onglets actifs</string>
+    <string name="active_fragments_pref_warning">Vous ne pouvez pas retirer tous les onglets! :P</string>
+    <string name="sorting_pref_default">Par défaut</string>
+    <string name="precise_volume_pref_title">Contrôle précis du volume</string>
+    <string name="precise_volume_pref_summary_on">Activer le contrôle précis du volume</string>
+    <string name="precise_volume_pref_summary_off">Désactiver le contrôle précis du volume</string>
+    <string name="focus_pref_title">Concentration audio</string>
+    <string name="focus_pref_summary_on">Désactiver la gestion de la concentration du volume</string>
+    <string name="focus_pref_summary_off">Activer la gestion de la concentration du volume</string>
+    <string name="headset_pref_title">Branchement du casque</string>
+    <string name="headset_pref_summary_on">Désactiver la gestion du branchement du casque</string>
+    <string name="headset_pref_summary_off">Activer la gestion du branchement du casque</string>
 </resources>

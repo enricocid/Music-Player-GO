@@ -1,7 +1,85 @@
 <resources>
-    <string name="no_eq">No se encontró un ecualizador!</string>
-    <string name="bad_id">¡Primero reproduce una canción!</string>
-    <string name="no_browser">No se encontró un navegador!</string>
-    <string name="perm_rationale">Para reproducir la música en tu teléfono, Music Player Go necesita acceso a tus archivos</string>
+    <!-- Main - Artists -->
+    <string name="artists">Artistas</string>
     <string name="artist_info">%1d&#160;Álbumes,&#160;%2d&#160;Canciones</string>
+    <string name="folder_info">%1d&#160;Canciones</string>
+
+    <!-- Main - All songs -->
+    <string name="songs">Canciones</string>
+    <string name="shuffle_am">Cambiar orden de las canciones</string>
+    <string name="shuffle_sa">Cambiar orden del álbum seleccionado</string>
+
+    <!-- Main - Folders -->
+    <string name="folders">Directorios</string>
+
+    <!-- Queue -->
+    <string name="queue">Cola</string>
+    <string name="queue_add">Agregar a la cola de reproducción</string>
+    <string name="queue_song_add">%1s agregada a la cola de reproducción!</string>
+    <string name="queue_song_remove">%1s se removerá de la cola de reproducción. ¿Continuar?</string>
+    <string name="queue_songs_clear">Se limpiará la cola de reproducción. ¿Continuar?</string>
+    <string name="error_no_queue">¡No canciones en la cola de reproducción!</string>
+
+    <!-- Loved songs -->
+    <string name="loved_songs">Canciones favoritas</string>
+    <string name="loved_song_added">%1s (%2s) agredada a canciones favoritas</string>
+    <string name="loved_song_remove">%1s (%2s) será removida de las canciones favoritas. ¿Continuar?</string>
+    <string name="loved_songs_clear">Se limpiará la lista de canciones favoritas. ¿Continuar?</string>
+    <string name="loved_song_add">Agregar a canciones favoritas</string>
+    <string name="error_no_loved_songs">!No canciones favoritas!</string>
+
+    <!-- Details -->
+
+    <!-- Messages -->
+    <string name="perm_rationale">Music Player GO necesita acceso a tus archivos para reproducir la música</string>
+    <string name="no_browser">¡No se encontró un navegador!</string>
+    <string name="bad_id">!Reproduce una canción primero!</string>
+    <string name="no_eq">¡No se encontró un ecualizador!</string>
+    <string name="error_unknown">¡Algo malo sucedió! :(</string>
+    <string name="error_unknown_unsupported">¡Algo malo sucedió! :( Probablemente el formato elegido no es soportado o el directorio es inaccesible (de lo cual la applicación no es culpable)</string>
+    <string name="on_close_activity">¿Deseas detener la reproducción?</string>
+    <string name="repeat_enabled">¡Repetición 1x activada!</string>
+    <string name="repeat_disabled">¡Repetición 1x desactivada!</string>
+
+    <!-- Settings -->
+    <!-- Preferences -->
+    <string name="settings">Preferencias</string>
+    <string name="category_appearance">Apariencia</string>
+    <string name="category_general">General</string>
+
+    <string name="open_git_pref_title">Página de GitHub</string>
+    <string name="open_git_pref_summary">Visita la página del proyecto para más información</string>
+
+    <string name="faq_summary">Preguntas frecuentes y los formatos de medio soportados :P</string>
+
+    <string name="theme_pref_title">Tema</string>
+    <string name="theme_pref_light_title">Claro</string>
+    <string name="theme_pref_dark_title">Oscuro</string>
+    <string name="theme_pref_auto_title">Automático</string>
+
+    <string name="accent_pref_title">Acento</string>
+
+    <string name="edge_pref_summary_on">Activar edge-to-edge</string>
+    <string name="edge_pref_summary_off">Desactivar edge-to-edge</string>
+
+    <string name="tabs_pref_title">Petañas</string>
+    <string name="tabs_pref_summary_on">Desactivar las petañas</string>
+    <string name="tabs_pref_summary_off">Mostrar las petañas para navegar las secciones</string>
+
+    <string name="active_fragments_pref_title">Activar las petañas</string>
+    <string name="active_fragments_pref_warning">¡No puedes remover todas las petañas! :P</string>
+
+    <string name="sorting_pref_default">Predeterminado</string>
+
+    <string name="precise_volume_pref_title">Control preciso del volumen</string>
+    <string name="precise_volume_pref_summary_on">Desactivar control preciso del volumen</string>
+    <string name="precise_volume_pref_summary_off">Activar control preciso del volumen</string>
+
+    <string name="focus_pref_title">Enfoque del audio focus</string>
+    <string name="focus_pref_summary_on">Desactivar manejo del enfoque del audio</string>
+    <string name="focus_pref_summary_off">Activar manejo del enfoque del audio</string>
+
+    <string name="headset_pref_title">Conexión de auriculares</string>
+    <string name="headset_pref_summary_on">Desactivar manejo de conexión de auriculares</string>
+    <string name="headset_pref_summary_off">Activar manejo de conexión de auriculares</string>
 </resources>

@@ -12,7 +12,6 @@ import android.os.ParcelFileDescriptor
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.Utils
@@ -38,16 +37,6 @@ object MusicUtils {
     ): ParcelFileDescriptor? {
         val readOnlyMode = "r"
         return contentResolver.openFileDescriptor(contentUri, readOnlyMode)
-    }
-
-    @JvmStatic
-    fun getSavedSong(): Music? {
-        return try {
-            goPreferences.latestPlayedSong?.first
-        } catch (e: Exception) {
-            e.printStackTrace()
-            musicLibrary.randomMusic
-        }
     }
 
     //returns the position in list of the current played album

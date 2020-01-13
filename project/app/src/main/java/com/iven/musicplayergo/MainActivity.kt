@@ -731,12 +731,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 } else {
 
-                    isSongRestoredFromPrefs = MusicUtils.getSavedSong() != null
+                    isSongRestoredFromPrefs = goPreferences.latestPlayedSong != null
 
                     val song =
-                        if (isSongRestoredFromPrefs) MusicUtils.getSavedSong()
-                        else
-                            musicLibrary.randomMusic
+                        if (isSongRestoredFromPrefs) goPreferences.latestPlayedSong?.first else musicLibrary.randomMusic
 
                     val songs = MusicUtils.getAlbumSongs(song?.artist, song?.album)
 
