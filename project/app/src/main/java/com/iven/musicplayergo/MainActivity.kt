@@ -1,6 +1,5 @@
 package com.iven.musicplayergo
 
-import android.annotation.TargetApi
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -8,7 +7,6 @@ import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
@@ -45,6 +43,7 @@ import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.player_controls_panel.*
 import kotlin.properties.Delegates
 
+const val PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 2588
 const val RESTORE_SETTINGS_FRAGMENT = "restore_settings_fragment_key"
 
 private const val ARTISTS_FRAGMENT_ACTIVE = "0"
@@ -212,14 +211,23 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     //manage request permission result, continue loading ui if permissions was granted
     override fun onRequestPermissionsResult(
         requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        permissions: Array<String>, grantResults: IntArray
     ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED)
-            Utils.showPermissionRationale(
-                this
-            ) else launchMusicLoading()
+        when (requestCode) {
+            PERMISSION_REQUEST_READ_EXTERNAL_STORAGE -> {
+                // If request is cancelled, the result arrays are empty.
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    // permission was granted, yay! Do the
+                    // music-related task you need to do.
+                    launchMusicLoading()
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Utils.dismissOnPermissionDenied(this)
+                }
+                return
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -260,7 +268,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 false
             )
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) checkPermission() else launchMusicLoading()
+        if (Utils.hasToAskForReadStoragePermission(this)) Utils.manageAskForReadStoragePermission(
+            this
+        ) else launchMusicLoading()
     }
 
     private fun getViewsAndResources() {
@@ -954,11 +964,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 this, getString(R.string.error_no_loved_songs),
                 Toast.LENGTH_SHORT
             )
-    }
-
-    @TargetApi(23)
-    private fun checkPermission() {
-        if (Utils.hasToShowPermissionRationale(this)) Utils.showPermissionRationale(this) else launchMusicLoading()
     }
 
     //method to handle intent to play audio file from external app

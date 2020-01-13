@@ -16,6 +16,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.GridLayoutManager
 import com.afollestad.materialdialogs.LayoutMode
@@ -55,18 +56,23 @@ object Utils {
     }
 
     @JvmStatic
-    fun hasToShowPermissionRationale(context: Context): Boolean {
-        return ActivityCompat.checkSelfPermission(
-            context,
+    fun hasToAskForReadStoragePermission(activity: Activity): Boolean {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(
+            activity,
             Manifest.permission.READ_EXTERNAL_STORAGE
         ) != PackageManager.PERMISSION_GRANTED
     }
 
     @JvmStatic
-    fun showPermissionRationale(activity: Activity) {
+    fun manageAskForReadStoragePermission(activity: Activity) {
 
-        activity.apply {
-            MaterialDialog(this).show {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                activity,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        ) {
+
+            MaterialDialog(activity).show {
 
                 cancelOnTouchOutside(false)
                 cornerRadius(res = R.dimen.md_corner_radius)
@@ -76,22 +82,34 @@ object Utils {
 
                 message(R.string.perm_rationale)
                 positiveButton(R.string.yes) {
-                    ActivityCompat.requestPermissions(
-                        this@apply,
-                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                        2588
-                    )
+                    askForReadStoragePermission(activity)
                 }
                 negativeButton(R.string.no) {
-                    makeToast(
-                        this@apply,
-                        getString(R.string.perm_rationale),
-                        Toast.LENGTH_LONG
-                    )
-                    dismiss()
-                    finishAndRemoveTask()
+                    dismissOnPermissionDenied(activity)
                 }
             }
+        } else {
+            askForReadStoragePermission(activity)
+        }
+    }
+
+    private fun askForReadStoragePermission(activity: Activity) {
+        ActivityCompat.requestPermissions(
+            activity,
+            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+            PERMISSION_REQUEST_READ_EXTERNAL_STORAGE
+        )
+    }
+
+    @JvmStatic
+    fun dismissOnPermissionDenied(activity: Activity) {
+        activity.apply {
+            makeToast(
+                this,
+                getString(R.string.perm_rationale),
+                Toast.LENGTH_LONG
+            )
+            finishAndRemoveTask()
         }
     }
 
