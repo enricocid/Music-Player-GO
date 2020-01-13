@@ -58,7 +58,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     MediaPlayer.OnCompletionListener,
     MediaPlayer.OnPreparedListener {
 
-    private val stateBuilder =
+    private val mStateBuilder =
         PlaybackStateCompat.Builder().setActions(
             PlaybackStateCompat.ACTION_PLAY
                     or PlaybackStateCompat.ACTION_STOP
@@ -248,7 +248,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private fun setStatus(status: Int) {
         state = status
         playerService.getMediaSession().setPlaybackState(
-            stateBuilder.setState(
+            mStateBuilder.setState(
                 state,
                 PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
                 1F
@@ -412,8 +412,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 }
 
                 mMusicNotificationManager = playerService.musicNotificationManager
+
                 tryToGetAudioFocus()
-                // registerMediaButtonsReceiver()
 
                 if (goPreferences.isPreciseVolumeEnabled) setPreciseVolume(currentVolumeInPercent)
             }
