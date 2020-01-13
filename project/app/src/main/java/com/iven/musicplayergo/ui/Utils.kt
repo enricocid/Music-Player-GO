@@ -2,6 +2,7 @@ package com.iven.musicplayergo.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
@@ -93,6 +94,7 @@ object Utils {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
     private fun askForReadStoragePermission(activity: Activity) {
         ActivityCompat.requestPermissions(
             activity,
@@ -114,7 +116,7 @@ object Utils {
     }
 
     @JvmStatic
-    fun makeToast(context: Context, message: String, length: Int) {
+    fun makeToast(context: Context, message: CharSequence, length: Int) {
         Toast.makeText(context, message, length)
             .show()
     }
