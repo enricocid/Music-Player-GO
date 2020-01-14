@@ -18,8 +18,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.loader.app.LoaderManager
+import androidx.loader.content.Loader
 import androidx.viewpager.widget.ViewPager
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
@@ -31,8 +31,8 @@ import com.google.android.material.tabs.TabLayout
 import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.music.Music
+import com.iven.musicplayergo.music.MusicLoader
 import com.iven.musicplayergo.music.MusicUtils
-import com.iven.musicplayergo.music.MusicViewModel
 import com.iven.musicplayergo.player.*
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -43,11 +43,13 @@ import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.player_controls_panel.*
 import kotlin.properties.Delegates
 
+private const val MUSIC_LOADER_ID = 25
 const val PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 2588
 const val RESTORE_SETTINGS_FRAGMENT = "restore_settings_fragment_key"
 
 @Suppress("UNUSED_PARAMETER")
-class MainActivity : AppCompatActivity(), UIControlInterface {
+class MainActivity : AppCompatActivity(), UIControlInterface,
+    LoaderManager.LoaderCallbacks<Boolean> {
 
     //colors
     private var mResolvedAccentColor: Int by Delegates.notNull()
@@ -70,6 +72,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private var sRestoreSettingsFragment = false
 
     //views
+    private lateinit var mLoadingProgress: ProgressBar
     private lateinit var mViewPager: ViewPager
     private lateinit var mTabsLayout: TabLayout
     private lateinit var mPlayerControlsContainer: View
@@ -108,6 +111,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
 
     //music player things
+    private var mMusicLoader: Loader<Boolean>? = null
 
     //booleans
     private var sUserIsSeeking = false
@@ -141,7 +145,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder
             mMediaPlayerHolder.mediaPlayerInterface = mMediaPlayerInterface
 
-            handleRestoring()
+            launchMusicLoading()
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
@@ -150,6 +154,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun doBindService() {
+
+        if (mLoadingProgress.visibility != View.VISIBLE) mLoadingProgress.visibility = View.VISIBLE
+
         // Bind to LocalService
         mBindingIntent = Intent(this, PlayerService::class.java).also {
             bindService(it, connection, Context.BIND_AUTO_CREATE)
@@ -208,7 +215,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED))
                 // permission was granted, yay! Do the
                 // music-related task you need to do.
-                    launchMusicLoading()
+                    doBindService()
                 else
                 // permission denied, boo! Disable the
                 // functionality that depends on this permission.
@@ -257,11 +264,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         if (Utils.hasToAskForReadStoragePermission(this)) Utils.manageAskForReadStoragePermission(
             this
-        ) else launchMusicLoading()
+        ) else doBindService()
     }
 
     private fun getViewsAndResources() {
 
+        mLoadingProgress = loading_progress_bar
         mViewPager = pager
         mTabsLayout = tab_layout
         mPlayerControlsContainer = playing_songs_container
@@ -293,19 +301,32 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    private fun launchMusicLoading() {
+    override fun onLoaderReset(loader: Loader<Boolean>) {
+    }
 
-        val model = ViewModelProviders.of(this)[MusicViewModel::class.java]
-        model.getMusic().observe(this, Observer { hasLoaded ->
-            if (hasLoaded) finishSetup() else Utils.notifyLoadingError(this)
-        })
+    override fun onCreateLoader(id: Int, args: Bundle?): Loader<Boolean> {
+        return MusicLoader(this)
+    }
+
+    override fun onLoadFinished(loader: Loader<Boolean>, hasLoaded: Boolean) {
+        if (hasLoaded) finishSetup() else Utils.notifyLoadingError(this)
+    }
+
+    private fun launchMusicLoading() {
+        if (mMusicLoader == null) LoaderManager.getInstance(this).initLoader(
+            MUSIC_LOADER_ID,
+            null,
+            this
+        )
     }
 
     private fun finishSetup() {
 
+        if (mLoadingProgress.visibility != View.GONE) mLoadingProgress.visibility = View.GONE
+
         initViewPager()
 
-        doBindService()
+        handleRestoring()
     }
 
     private fun handleRestoring() {

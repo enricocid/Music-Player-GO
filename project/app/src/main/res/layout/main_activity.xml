@@ -10,17 +10,33 @@
     tools:context=".MainActivity">
 
     <FrameLayout
-        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <ProgressBar
+            android:id="@+id/loading_progress_bar"
+            android:layout_width="@android:dimen/app_icon_size"
+            android:layout_height="@android:dimen/app_icon_size"
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:indeterminate="false"
+            android:indeterminateTint="?attr/colorPrimary"
+            android:visibility="gone" />
 
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </FrameLayout>
     </FrameLayout>
+
 
     <!-- CONTROLS PANEL -->
     <include layout="@layout/player_controls_panel" />
