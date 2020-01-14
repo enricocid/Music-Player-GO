@@ -61,7 +61,7 @@ object MusicUtils {
     @JvmStatic
     //returns a pair of album and its position given a list of albums
     fun getAlbumFromList(artist: String?, album: String?): Pair<Album, Int> {
-        val albums = musicLibrary.allAlbumsByArtist[artist]
+        val albums = musicLibrary.allAlbumsByArtist?.get(artist)
         return try {
             val position = albums?.indexOfFirst { it.title == album }!!
             Pair(albums[position], position)
@@ -91,34 +91,38 @@ object MusicUtils {
     @JvmStatic
     fun buildSortedArtistAlbums(
         resources: Resources,
-        artistSongs: List<Music>
+        artistSongs: List<Music>?
     ): List<Album> {
 
         val sortedAlbums = mutableListOf<Album>()
 
-        try {
+        artistSongs?.let {
 
-            val groupedSongs = artistSongs.groupBy { song -> song.album }
+            try {
 
-            groupedSongs.keys.iterator().forEach {
+                val groupedSongs = it.groupBy { song -> song.album }
 
-                val albumSongs = groupedSongs.getValue(it).toMutableList()
-                albumSongs.sortBy { song -> song.track }
+                groupedSongs.keys.iterator().forEach { album ->
 
-                sortedAlbums.add(
-                    Album(
-                        it,
-                        getYearForAlbum(resources, albumSongs[0].year),
-                        albumSongs,
-                        albumSongs.map { song -> song.duration }.sum()
+                    val albumSongs = groupedSongs.getValue(album).toMutableList()
+                    albumSongs.sortBy { song -> song.track }
+
+                    sortedAlbums.add(
+                        Album(
+                            album,
+                            getYearForAlbum(resources, albumSongs[0].year),
+                            albumSongs,
+                            albumSongs.map { song -> song.duration }.sum()
+                        )
                     )
-                )
-            }
+                }
 
-        } catch (e: Exception) {
-            e.printStackTrace()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            sortedAlbums.sortBy { album -> album.year }
         }
-        sortedAlbums.sortBy { it.year }
+
         return sortedAlbums
     }
 

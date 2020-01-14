@@ -75,8 +75,8 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
     private fun getSortedArtists(): MutableList<String>? {
         return Utils.getSortedList(
             mSorting,
-            musicLibrary.allAlbumsByArtist.keys.toMutableList(),
-            musicLibrary.allAlbumsByArtist.keys.toMutableList()
+            musicLibrary.allAlbumsByArtist?.keys?.toMutableList(),
+            musicLibrary.allAlbumsByArtist?.keys?.toMutableList()
         )
     }
 
@@ -189,8 +189,8 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
     private fun getArtistSubtitle(item: String): String {
         return getString(
             R.string.artist_info,
-            musicLibrary.allAlbumsByArtist.getValue(item).size,
-            musicLibrary.allSongsByArtist.getValue(item).size
+            musicLibrary.allAlbumsByArtist?.getValue(item)?.size,
+            musicLibrary.allSongsByArtist?.getValue(item)?.size
         )
     }
 

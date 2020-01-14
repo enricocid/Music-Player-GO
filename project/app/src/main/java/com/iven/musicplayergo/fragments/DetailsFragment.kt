@@ -87,9 +87,13 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 mSelectedAlbumPosition = it
             }
 
-            mSelectedArtistAlbums = musicLibrary.allAlbumsByArtist[mSelectedArtistOrFolder]!!
-            mSongsForArtistOrFolder =
-                musicLibrary.allSongsByArtist[mSelectedArtistOrFolder]
+            musicLibrary.allAlbumsByArtist?.get(mSelectedArtistOrFolder)?.let {
+                mSelectedArtistAlbums = it
+            }
+
+            musicLibrary.allSongsByArtist?.get(mSelectedArtistOrFolder)?.let {
+                mSongsForArtistOrFolder = it
+            }
 
             mSelectedAlbum =
                 if (mSelectedAlbumPosition != -1) {
@@ -406,7 +410,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
             mSelectedArtistOrFolder = selectedArtist
             mSelectedArtistAlbums =
-                musicLibrary.allAlbumsByArtist[mSelectedArtistOrFolder]
+                musicLibrary.allAlbumsByArtist?.get(mSelectedArtistOrFolder)
 
             //restore album position
             if (playedAlbumPosition != -1) {
@@ -447,7 +451,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             )
 
             mSongsForArtistOrFolder =
-                musicLibrary.allSongsByArtist.getValue(mSelectedArtistOrFolder)
+                musicLibrary.allSongsByArtist?.getValue(mSelectedArtistOrFolder)
 
             setSongsDataSource(mSelectedAlbum?.music)
         }

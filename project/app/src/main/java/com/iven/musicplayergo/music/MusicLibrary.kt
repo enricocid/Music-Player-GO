@@ -13,10 +13,10 @@ class MusicLibrary {
     var allSongsFiltered: MutableList<Music>? = null
 
     //keys: artist || value: its songs
-    lateinit var allSongsByArtist: Map<String?, List<Music>>
+    var allSongsByArtist: Map<String?, List<Music>>? = null
 
     //keys: artist || value: albums
-    val allAlbumsByArtist = hashMapOf<String, List<Album>>()
+    val allAlbumsByArtist: MutableMap<String, List<Album>>? = mutableMapOf()
 
     //keys: artist || value: songs contained in the folder
     var allSongsByFolder: Map<String, List<Music>>? = null
@@ -98,14 +98,19 @@ class MusicLibrary {
                 allSongsUnfiltered.distinctBy { it.artist to it.year to it.track to it.title to it.duration to it.album to it.albumId }
                     .toMutableList()
 
-            allSongsByArtist = allSongsFiltered?.groupBy { it.artist }!!
+            allSongsByArtist = allSongsFiltered?.groupBy { it.artist }
 
-            allSongsByArtist.keys.iterator().forEach {
-
-                allAlbumsByArtist[it!!] = MusicUtils.buildSortedArtistAlbums(
-                    context.resources,
-                    allSongsByArtist.getValue(it)
-                )
+            allSongsByArtist?.keys?.iterator()?.forEach {
+                it?.let { artist ->
+                    allAlbumsByArtist.apply {
+                        this?.set(
+                            artist, MusicUtils.buildSortedArtistAlbums(
+                                context.resources,
+                                allSongsByArtist?.getValue(artist)
+                            )
+                        )
+                    }
+                }
             }
 
             allSongsByFolder = allSongsFiltered?.groupBy {
