@@ -78,10 +78,9 @@ object MusicUtils {
 
     @JvmStatic
     fun getSongForIntent(
-        displayName: String?,
-        allDeviceSongs: List<Music>?
+        displayName: String?
     ): Music? {
-        return allDeviceSongs?.firstOrNull { s -> s.displayName == displayName }
+        return musicLibrary.allSongsUnfiltered.firstOrNull { s -> s.displayName == displayName }
     }
 
     @JvmStatic

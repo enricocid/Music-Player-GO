@@ -8,7 +8,7 @@ import com.iven.musicplayergo.ui.Utils
 
 class MusicLibrary {
 
-    private var allSongsUnfiltered: MutableList<Music>? = mutableListOf()
+    var allSongsUnfiltered: MutableList<Music> = mutableListOf()
 
     var allSongsFiltered: MutableList<Music>? = null
 
@@ -24,9 +24,9 @@ class MusicLibrary {
     val randomMusic get() = allSongsFiltered?.random()
 
     @SuppressLint("InlinedApi")
-    fun queryForMusic(context: Context): MutableList<Music>? {
+    fun queryForMusic(context: Context): Boolean {
 
-        try {
+        return try {
 
             val musicCursor = MusicUtils.getMusicCursor(context.contentResolver)
 
@@ -75,7 +75,7 @@ class MusicLibrary {
                         )
 
                     // Add the current music to the list
-                    allSongsUnfiltered?.add(
+                    allSongsUnfiltered.add(
                         Music(
                             audioArtist,
                             audioYear,
@@ -91,40 +91,30 @@ class MusicLibrary {
                     )
                 }
             }
+
+            // Removing duplicates by comparing everything except path which is different
+            // if the same song is hold in different paths
+            allSongsFiltered =
+                allSongsUnfiltered.distinctBy { it.artist to it.year to it.track to it.title to it.duration to it.album to it.albumId }
+                    .toMutableList()
+
+            allSongsByArtist = allSongsFiltered?.groupBy { it.artist }!!
+
+            allSongsByArtist.keys.iterator().forEach {
+
+                allAlbumsByArtist[it!!] = MusicUtils.buildSortedArtistAlbums(
+                    context.resources,
+                    allSongsByArtist.getValue(it)
+                )
+            }
+
+            allSongsByFolder = allSongsFiltered?.groupBy {
+                it.relativePath!!
+            }
+            true
         } catch (e: Exception) {
-            allSongsUnfiltered = null
             e.printStackTrace()
+            false
         }
-        return allSongsUnfiltered
-    }
-
-    // Extension method to sort the device music
-    fun buildLibrary(
-        context: Context,
-        loadedSongs: MutableList<Music>?
-    ): HashMap<String, List<Album>> {
-
-
-        // Removing duplicates by comparing everything except path which is different
-        // if the same song is hold in different paths
-        allSongsFiltered =
-            loadedSongs?.distinctBy { it.artist to it.year to it.track to it.title to it.duration to it.album to it.albumId }
-                ?.toMutableList()
-
-        allSongsByArtist = allSongsFiltered?.groupBy { it.artist }!!
-
-        allSongsByArtist.keys.iterator().forEach {
-
-            allAlbumsByArtist[it!!] = MusicUtils.buildSortedArtistAlbums(
-                context.resources,
-                allSongsByArtist.getValue(it)
-            )
-        }
-
-        allSongsByFolder = allSongsFiltered?.groupBy {
-            it.relativePath!!
-        }
-
-        return allAlbumsByArtist
     }
 }

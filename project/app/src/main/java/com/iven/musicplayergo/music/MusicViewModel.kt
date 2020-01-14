@@ -8,16 +8,18 @@ import com.iven.musicplayergo.musicLibrary
 
 class MusicViewModel(application: Application) : AndroidViewModel(application) {
 
-    val musicLiveData: MutableLiveData<MutableList<Music>> = MutableLiveData()
-
-    private fun performLoadMusic() {
-        val music = musicLibrary.queryForMusic(getApplication())
-        musicLibrary.buildLibrary(getApplication(), music)
-        musicLiveData.value = music
+    private val musicLiveData: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>().also {
+            performLoadMusic()
+            it.value = true
+        }
     }
 
-    fun loadMusic(): LiveData<MutableList<Music>> {
-        performLoadMusic()
+    private fun performLoadMusic() {
+        musicLibrary.queryForMusic(getApplication())
+    }
+
+    fun getMusic(): LiveData<Boolean> {
         return musicLiveData
     }
 }

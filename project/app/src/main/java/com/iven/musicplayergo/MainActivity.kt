@@ -114,12 +114,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     //music player things
 
-    private val mMusicViewModel: MusicViewModel by lazy {
-        ViewModelProviders.of(this).get(MusicViewModel::class.java)
-    }
-
-    private var mAllDeviceSongs: MutableList<Music>? = null
-
     //booleans
     private var sUserIsSeeking = false
 
@@ -216,16 +210,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         when (requestCode) {
             PERMISSION_REQUEST_READ_EXTERNAL_STORAGE -> {
                 // If request is cancelled, the result arrays are empty.
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    // permission was granted, yay! Do the
-                    // music-related task you need to do.
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED))
+                // permission was granted, yay! Do the
+                // music-related task you need to do.
                     launchMusicLoading()
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                else
+                // permission denied, boo! Disable the
+                // functionality that depends on this permission.
                     Utils.dismissOnPermissionDenied(this)
-                }
-                return
             }
         }
     }
@@ -308,17 +300,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun launchMusicLoading() {
 
-        mMusicViewModel.musicLiveData.observe(this, Observer { result ->
-            if (!result.isNullOrEmpty()) {
-                mAllDeviceSongs = result
-                musicLibrary.buildLibrary(this, mAllDeviceSongs)
-                finishSetup()
-            } else {
-                Utils.notifyLoadingError(this)
-            }
+        val model = ViewModelProviders.of(this)[MusicViewModel::class.java]
+        model.getMusic().observe(this, Observer { hasLoaded ->
+            if (hasLoaded) finishSetup() else Utils.notifyLoadingError(this)
         })
-
-        mMusicViewModel.loadMusic()
     }
 
     private fun finishSetup() {
@@ -976,7 +961,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 val displayNameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
                 cursor.moveToFirst()
                 val song =
-                    MusicUtils.getSongForIntent(cursor.getString(displayNameIndex), mAllDeviceSongs)
+                    MusicUtils.getSongForIntent(cursor.getString(displayNameIndex))
                 //get album songs and sort them
                 val albumSongs = MusicUtils.getAlbumSongs(song?.artist, song?.album)
 
