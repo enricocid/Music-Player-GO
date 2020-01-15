@@ -166,8 +166,7 @@ object MusicUtils {
         AudioColumns.DURATION, //5,
         AudioColumns.ALBUM, // 6
         getPathColumn(), // 7
-        AudioColumns.ALBUM_ID, //8
-        AudioColumns._ID //9
+        AudioColumns._ID //8
     )
 
     @JvmStatic

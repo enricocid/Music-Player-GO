@@ -51,8 +51,6 @@ class MusicLibrary {
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ALBUM)
                 val relativePathIndex =
                     cursor.getColumnIndexOrThrow(MusicUtils.getPathColumn())
-                val albumIdIndex =
-                    cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ALBUM_ID)
                 val idIndex =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns._ID)
 
@@ -67,7 +65,6 @@ class MusicLibrary {
                     val audioDuration = cursor.getLong(durationIndex)
                     val audioAlbum = cursor.getString(albumIndex)
                     val audioRelativePath = cursor.getString(relativePathIndex)
-                    val audioAlbumId = cursor.getString(albumIdIndex)
                     val audioId = cursor.getLong(idIndex)
 
                     val audioFolderName =
@@ -93,7 +90,6 @@ class MusicLibrary {
                             audioDuration,
                             audioAlbum,
                             audioFolderName,
-                            audioAlbumId,
                             audioId
                         )
                     )
@@ -103,7 +99,7 @@ class MusicLibrary {
             // Removing duplicates by comparing everything except path which is different
             // if the same song is hold in different paths
             allSongsFiltered =
-                allSongsUnfiltered.distinctBy { it.artist to it.year to it.track to it.title to it.duration to it.album to it.albumId }
+                allSongsUnfiltered.distinctBy { it.artist to it.year to it.track to it.title to it.duration to it.album }
                     .toMutableList()
 
             allSongsByArtist = allSongsFiltered?.groupBy { it.artist }
