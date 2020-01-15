@@ -21,7 +21,7 @@ Many thanks to all contributors (listed in no particular order :)
 
 - [**Jnss98b**](https://github.com/Jnss98b) for helping me to implement [edge-to-edge](https://github.com/enricocid/Music-Player-GO/issues/86)
 
-- [**Pirhszm Yfiz**](https://github.com/pirhszm) for reporting me this [**issue**](https://github.com/enricocid/Music-Player-GO/issues/110#issuecomment-573424280)
+- [**Pirhszm Yfiz**](https://github.com/pirhszm) for reporting me this [issue](https://github.com/enricocid/Music-Player-GO/issues/110#issuecomment-573424280)
 
 - [**IzzySoft**](https://github.com/IzzySoft) and [**Poussinou**](https://github.com/Poussinou) for setting up the **F-Droid** repository
 
@@ -42,7 +42,7 @@ Many thanks to all contributors (listed in no particular order :)
 
 - [**keddad**](https://github.com/keddad) for **Russian** translations
 
-- [**Nathan Bonnemains**](https://github.com/NathanBnm) for **French** translations
+- [**Nathan Bonnemains**](https://github.com/NathanBnm) and [**KowalskiOmniROM**](https://devhub.io/developer/KowalskiOmniROM) for **French** translations
 
 - [**Adem Furkan ÖZCAN**](https://github.com/Adem68) for **Turkish** translations
 
@@ -55,7 +55,5 @@ Many thanks to all contributors (listed in no particular order :)
 - [**Luis F. Uceta**](https://github.com/uzluisf) for **Spanish** translations
 
 - [**Stanislav**](https://github.com/STWheel) for **Ukrainian** and **Russian** translations and other strings/ui refinements
-
-- [**KowalskiOmniROM**](https://github.com/KowalskiOmniROM) for **French** translations
 
 - [**Somesh Kumar**](https://github.com/TheSomeshKumar) for **Hindi** translations
