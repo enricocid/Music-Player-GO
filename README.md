@@ -6,14 +6,14 @@
 [![Privacy policy](https://img.shields.io/static/v1?label=Privacy-policy&message=read&color=ef9a9a)](https://github.com/enricocid/Music-Player-GO/blob/master/Privacy.md)
 [![FAQ](https://img.shields.io/static/v1?label=FAQ&message=read&color=ce93d8)](https://github.com/enricocid/Music-Player-GO/blob/master/Faq.md)
 [![3rd party libs and tools](https://img.shields.io/static/v1?label=Libs/tools&message=9&color=9fa8da)](https://github.com/enricocid/Music-Player-GO/blob/master/Libs.md)
-[![Contributors](https://img.shields.io/static/v1?label=Contributors&message=21&color=81d4fa)](https://github.com/enricocid/Music-Player-GO/blob/master/Contributors.md)
+[![Contributors](https://img.shields.io/static/v1?label=Contributors&message=27&color=81d4fa)](https://github.com/enricocid/Music-Player-GO/blob/master/Contributors.md)
 [![Supported formats](https://img.shields.io/static/v1?label=Formats&message=read&color=80cbc4)](https://github.com/enricocid/Music-Player-GO/blob/master/FORMATS.MD)
 
 [![API](https://img.shields.io/static/v1?label=API&message=21&color=a5d6a7)](https://developer.android.com/about/versions/android-5.0.html)
-[![TAG](https://img.shields.io/static/v1?label=Tag&message=v4.0.1&color=ffe082)](https://github.com/enricocid/Music-Player-GO/releases/tag/v4.0.1)
+[![TAG](https://img.shields.io/static/v1?label=Tag&message=v4.1.0&color=ffe082)](https://github.com/enricocid/Music-Player-GO/releases/tag/v4.1.0)
 
 
-<img align="right" src="https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/mpgo-4.gif" height="500px"/>
+<img align="right" src="https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/mpgo-4-1-0.gif" height="500px"/>
 
 
 # Features:
@@ -22,8 +22,10 @@
 - **Settings**:
   - **Themes**: light, dark and automatic (following the system settings on Android Q and battery level on pre-Q devices)
   - 19 awesome **accents**
-  - Edge-to-edge (for >= Oreo 8.1)
+    > Tip: long click on the preference for copying
+  - Edge-to-edge (starting from Oreo 8.1)
   - Active tabs management
+  - Precise volume control toggle
   - Audio focus and headsets plug management toggles
 
 - **Save/restore last reproduced song/progress**
@@ -35,7 +37,7 @@
   - **Queue** button
   - **Loved songs** button
 
-- **Now playing** dialog showing the classical media controls: seekbar, equalizer, skip, play/pause, repeat 1x, **add to loved songs**, current volume step fine control
+- **Now playing** dialog showing the classical media controls: seek bar, equalizer, skip, play/pause, repeat 1x, **add to loved songs**, current volume step fine control
   > Tip: click on played song to quickly jump to the artist's details
 
 - **Artist's details** showing its albums/songs. Shuffle all its songs or the selected album
@@ -62,6 +64,11 @@
 [<img alt="Get it on Google Play" height="80" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png">](https://play.google.com/store/apps/details?id=com.iven.musicplayergo)
 [<img alt="Get it on F-Droid" height="80" src="https://gitlab.com/fdroid/artwork/raw/master/badge/get-it-on.png">](https://f-droid.org/repository/browse/?fdid=com.iven.musicplayergo)
 [<img alt="Get it on Github" height="80" src="https://raw.githubusercontent.com/flocke/andOTP/master/assets/badges/get-it-on-github.png">](https://github.com/enricocid/Music-Player-GO/releases)
+
+
+# Want to contribute to translations?
+
+Please have a look [here](https://github.com/enricocid/Music-Player-GO/issues/114) :)
 
 
 # License

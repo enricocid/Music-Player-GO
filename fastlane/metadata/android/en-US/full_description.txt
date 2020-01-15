@@ -1,0 +1,46 @@
+# Features:
+
+- Tabbed UI: artists, all songs, folders and settings
+- Settings:
+  - Themes: light, dark and automatic (following the system settings on Android Q and battery level on pre-Q devices)
+  - 19 awesome accents
+    > Tip: long click on the preference for copying
+  - Edge-to-edge (for >= Oreo 8.1)
+  - Active tabs management
+  - Precise volume control toggle
+  - Audio focus and headsets plug management toggles
+
+- Save/restore last reproduced song/progress
+
+- Bottom controls panel containing:
+  - Currently reproduced song
+    > Tip: long click on it to quickly jump to the artist's details
+  - Play/pause
+  - Queue button
+  - Loved songs button
+
+- Now playing dialog showing the classical media controls: seek bar, equalizer, skip, play/pause, repeat 1x, add to loved songs, current volume step fine control
+  > Tip: click on played song to quickly jump to the artist's details
+
+- Artist's details showing its albums/songs. Shuffle all its songs or the selected album
+  > Tip: click on album's title to quickly jump back to it
+
+- Simple queue management
+  > Tip: to clear queue long click on queue button
+
+- Loved songs: You can now bookmark a song from songs lists and now playing dialog (in this case current position will be saved too!)
+  > Tip: to clear the list long click on loved songs button
+
+- Landscape support
+
+- Search
+- Sort options (default, ascending, descending)
+- Shuffle options
+- Open audio files from outside the app
+- Pause/resume when the headsets are plugged in/out
+- Simple audio focus management
+
+
+# Want to contribute to translations?
+
+Please have a look here: https://github.com/enricocid/Music-Player-GO/issues/114 :)

@@ -1,0 +1,12 @@
+- Corretta schermata bianca su certi dispositivi
+- Corretto problema cursore lampeggiante di alcuni titoli
+- Rimossa waveform MusicBar (per ora) per problemi di compatibilità
+- Migliorato edge-to-edge
+- Aggiunto supporto ai controlli delle cuffie
+- Migliorato il caricamento delle canzoni (aggiunta anche una progress bar) 
+- Da ora puoi copiare l'accento dai settings (click lungo)
+- Migliorie codice
+- Aggiunte traduzioni Francese
+- Aggiornate le traduzioni
+
+Grazie a chi mi ha aiutato a migliorare MPGO :)

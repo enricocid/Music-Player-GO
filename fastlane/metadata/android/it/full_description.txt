@@ -1,0 +1,45 @@
+# Caratteristiche:
+
+- Tabbed UI: artisti, tutte le canzoni, cartelle ed impostazioni
+- Impostazioni:
+- Temi: chiaro, scuro ed automatico (segue le impostazioni di sistema in Android Q ed il livello di batteria sui telefono pre-Q)
+  - 19 meravigliosi accenti
+    > Consiglio: clicca a lungo sull'opzione per copiarlo
+  - Edge-to-edge (per >= Oreo 8.1)
+  - Gestione tabs attive
+  - Opzione controllo preciso del volume
+  - Gestione del focus audio e dell'inserimento delle cuffie
+
+- Salvataggio/ripristino dell'ultima canzone riprodotta
+
+- Pannello di controllo inferiore contenente:
+  - Canzoni riprodotta
+    > Consiglio: clicca a lungo su di essa per saltare velocemente alla pagina dell'artista
+  - Play/pausa
+  - Pulsante coda
+  - Pulsante preferiti
+
+- Dialog now playing che mostra i classici controlli multimediali: barra di scorrimento, equalizzatore, skip, play/pausa, ripeti 1x, aggiungi a canzoni preferite, controllo fine dello step di volume corrente
+  > Consiglio: clicca su di essa per saltare velocemente alla pagina dell'artista
+
+- Pagina artista che mostra i suoi album/canzoni. Mescola tutte le sue canzoni o l'album selezionato
+  > Consiglio: clicca il titolo dell'album per tornare velocemente alla sua posizione nella lista
+
+- Semplice gestione della coda
+  > Consiglio: per cancellare la coda clicca a lungo sul pulsante della coda
+
+- Canzoni preferite: puoi salvare una canzone dalle liste di canzoni o dal dialog now playing (in questo caso sarà salvata anche la posizione corrente!)
+  > Consiglio: per cancellare la lista clicca a lungo sul pulsante dei preferiti
+
+- Supporto landscape
+
+- Ricerca
+- Opzioni sorting (default, ascendente, discendente)
+- Opzioni per il mescolamento (shuffle)
+- Possibilità di aprire file audio dall'esterno dell'app
+- Pausa/riprendi quando le cuffie sono (s)connesse
+- Semplice gestione del focus audio
+
+# Vuoi contribuire alle traduzioni?
+
+Dai una occhiata qui: https://github.com/enricocid/Music-Player-GO/issues/114 :)

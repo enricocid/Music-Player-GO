@@ -9,8 +9,8 @@ android {
         applicationId "com.iven.musicplayergo"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 133
-        versionName "4.0.1"
+        versionCode 134
+        versionName "4.1.0"
     }
 
     //retrieve version number
@@ -41,17 +41,15 @@ android {
 }
 
 dependencies {
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     api 'com.google.android.material:material:1.0.0'
 
     implementation 'androidx.core:core-ktx:1.1.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation 'androidx.media:media:1.1.0'
     implementation 'androidx.preference:preference-ktx:1.1.0'
-
     implementation 'androidx.browser:browser:1.2.0'
-
     implementation 'com.google.code.gson:gson:2.8.5'
 
     implementation 'com.reddit:indicator-fast-scroll:1.2.1'

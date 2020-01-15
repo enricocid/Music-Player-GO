@@ -20,19 +20,6 @@ Music Player GO can be downloaded [here](https://play.google.com/store/apps/deta
 Please have a look [here](https://github.com/enricocid/Music-Player-GO/issues/114) :)
 
 
-### Sometimes app crashes when opened from background
-
-It could happens on devices with Android versions >= Marshmallow because of the doze mode. Developers are not allowed to setup apps to ignore battery's system optimizations. All You can do is to disable it by yourself:
-
-Music Player GO app's info -> Battery -> Battery optimization -> Music Player GO -> Don't optimize
-
-
-### Sometimes music is not fully loaded
-
-This is not Music Player GO fault. Every time the app is restarted MediaStore is queried. After many accesses to MediaStore databases for some reasons (probably security) the query fails. This problem is present also on any app implementing querying music on boot (e.g. Phonograph, Shuttle Music Player).
-Moral: limit the app restarts.
-
-
 ### Can I customize the app's theme to my taste?
 
 1. Yes, you can choose between 3 themes:
