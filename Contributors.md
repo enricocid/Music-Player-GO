@@ -13,6 +13,12 @@ Many thanks to all contributors (listed in no particular order :)
 
 ### General credits:
 
+- **Luigi Sforza**, [**Friso Smith**](https://github.com/fwSmit), [**GuinnessX**](https://github.com/GuinnessX) for having reported a critical [issue](https://github.com/enricocid/Music-Player-GO/issues/105) and for debugging
+
+- [**bullhead**](https://github.com/bullheadandplato) for dialogs titles blinking cursor [fixes](https://github.com/enricocid/Music-Player-GO/pull/121)
+
+- [**seventhsonmizo**](https://github.com/seventhsonmizo) for Android Q [issue](https://github.com/enricocid/Music-Player-GO/issues/110) report and debugging
+
 - [**Jnss98b**](https://github.com/Jnss98b) for helping me to implement [edge-to-edge](https://github.com/enricocid/Music-Player-GO/issues/86)
 
 - [**Robin H.**](https://github.com/r2binx) for the Android 10's playback issues [**fix**](https://github.com/enricocid/Music-Player-GO/commit/237281e601d5d120ed250bb1a10c94e554165b48)
@@ -33,6 +39,10 @@ Many thanks to all contributors (listed in no particular order :)
 
 
 ### Big thanks to translators:
+
+- [**keddad**](https://github.com/keddad) for **Russian** translations
+
+- [**Nathan Bonnemains**](https://github.com/NathanBnm) for **French** translations
 
 - [**Adem Furkan ÖZCAN**](https://github.com/Adem68) for **Turkish** translations
 
