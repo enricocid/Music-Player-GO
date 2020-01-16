@@ -327,16 +327,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
 
         initViewPager()
 
-        handleRestoring()
-    }
-
-    private fun handleRestoring() {
-        //let's get intent from external app and open the song,
-        //else restore the player (normal usage)
-        if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null)
-            handleIntent(intent)
-        else
-            restorePlayerStatus()
+        mViewPager.afterMeasured {
+            //handle restoring: handle external app intent or restore playback
+            if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null)
+                handleIntent(intent)
+            else
+                restorePlayerStatus()
+        }
     }
 
     private fun initViewPager() {

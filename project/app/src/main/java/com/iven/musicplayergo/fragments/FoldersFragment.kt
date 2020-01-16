@@ -14,10 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
-import com.iven.musicplayergo.DEFAULT_SORTING
-import com.iven.musicplayergo.R
-import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.musicLibrary
+import com.iven.musicplayergo.*
 import com.iven.musicplayergo.ui.GenericViewHolder
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -267,26 +264,6 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
 
             return@setOnMenuItemClickListener true
         }
-    }
-
-    private fun MenuItem.setTitleColor(color: Int) {
-        val hexColor = Integer.toHexString(color).substring(2)
-        val html = "<font color='#$hexColor'>$title</font>"
-        this.title = ThemeHelper.buildSpanned(html)
-    }
-
-    //viewTreeObserver extension to measure layout params
-    //https://antonioleiva.com/kotlin-ongloballayoutlistener/
-    private inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
-        viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                if (measuredWidth > 0 && measuredHeight > 0) {
-                    viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    f()
-                }
-            }
-        })
     }
 
     companion object {

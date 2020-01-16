@@ -6,7 +6,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewAnimationUtils
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
@@ -23,6 +26,7 @@ import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.afterMeasured
 import com.iven.musicplayergo.music.Album
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
@@ -571,19 +575,5 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     putInt(TAG_SELECTED_ALBUM_POSITION, playedAlbumPosition)
                 }
             }
-    }
-
-    //viewTreeObserver extension to measure layout params
-    //https://antonioleiva.com/kotlin-ongloballayoutlistener/
-    private inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
-        viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                if (measuredWidth > 0 && measuredHeight > 0) {
-                    viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    f()
-                }
-            }
-        })
     }
 }

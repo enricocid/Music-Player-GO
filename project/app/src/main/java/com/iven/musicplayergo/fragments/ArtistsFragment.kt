@@ -277,26 +277,6 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private fun MenuItem.setTitleColor(color: Int) {
-        val hexColor = Integer.toHexString(color).substring(2)
-        val html = "<font color='#$hexColor'>$title</font>"
-        this.title = ThemeHelper.buildSpanned(html)
-    }
-
-    //viewTreeObserver extension to measure layout params
-    //https://antonioleiva.com/kotlin-ongloballayoutlistener/
-    private inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
-        viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                if (measuredWidth > 0 && measuredHeight > 0) {
-                    viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    f()
-                }
-            }
-        })
-    }
-
     companion object {
         /**
          * Use this factory method to create a new instance of
