@@ -25,6 +25,7 @@ import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.callbacks.onDismiss
+import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.google.android.material.tabs.TabLayout
@@ -639,6 +640,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
 
                 mRatesTextNP = customView.findViewById(R.id.np_rates)
                 updateNowPlayingInfo()
+
+                onShow {
+                    mSeekBarNP.progress = mSeekProgressBar.progress
+                }
 
                 onDismiss {
                     mSeekBarNP.setOnSeekBarChangeListener(null)
