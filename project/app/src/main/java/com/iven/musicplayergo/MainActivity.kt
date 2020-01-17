@@ -491,9 +491,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
         }
     }
 
-    /**
-    UI related methods
-     */
     private fun setSeekBarProgressListener() {
 
         mSeekBarNP.setOnSeekBarChangeListener(
@@ -828,9 +825,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
         }
     }
 
-    /**
-    Music player/playback related methods
-     */
     override fun onCloseActivity() {
         if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) Utils.stopPlaybackDialog(
             this,
@@ -959,9 +953,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
         }
     }
 
-    /**
-     * Interface to let MediaPlayerHolder update the UI media player controls.
-     */
+    //interface to let MediaPlayerHolder update the UI media player controls.
     private val mMediaPlayerInterface = object : MediaPlayerInterface {
 
         override fun onPlaybackCompleted() {
@@ -1019,10 +1011,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
         }
     }
 
-    /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
-     * sequence.
-     */
+    //view pager's adapter
     private inner class ScreenSlidePagerAdapter(fm: FragmentManager) :
         FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         override fun getCount() = mActiveFragments?.size!!
