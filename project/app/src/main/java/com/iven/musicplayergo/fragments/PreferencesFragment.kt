@@ -33,14 +33,15 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     private lateinit var mUIControlInterface: UIControlInterface
 
     override fun setDivider(divider: Drawable?) {
-        context?.apply {
-            val newDivider = ColorDrawable(
-                ThemeHelper.getAlphaAccent(
-                    this,
-                    85
+        context?.let {
+            super.setDivider(
+                ColorDrawable(
+                    ThemeHelper.getAlphaAccent(
+                        it,
+                        85
+                    )
                 )
             )
-            super.setDivider(newDivider)
         }
     }
 

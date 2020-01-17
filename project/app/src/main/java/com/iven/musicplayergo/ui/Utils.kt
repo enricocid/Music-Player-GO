@@ -165,8 +165,7 @@ object Utils {
     @JvmStatic
     fun getSortedList(
         id: Int,
-        list: MutableList<String>?,
-        defaultList: MutableList<String>?
+        list: MutableList<String>?
     ): MutableList<String>? {
 
         return when (id) {
@@ -183,7 +182,7 @@ object Utils {
                 }
                 list?.asReversed()
             }
-            else -> defaultList
+            else -> list
         }
     }
 

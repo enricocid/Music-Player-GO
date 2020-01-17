@@ -47,7 +47,7 @@ class AccentsAdapter(private val activity: Activity) :
                     R.color.deep_purple
                 ).apply { ThemeHelper.updateIconTint(circle, this) }
 
-                itemView.findViewById<ImageButton>(R.id.check).visibility =
+                findViewById<ImageButton>(R.id.check).visibility =
                     if (color != mSelectedAccent)
                         View.GONE
                     else

@@ -75,7 +75,6 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
     private fun getSortedArtists(): MutableList<String>? {
         return Utils.getSortedList(
             mSorting,
-            musicLibrary.allAlbumsByArtist?.keys?.toMutableList(),
             musicLibrary.allAlbumsByArtist?.keys?.toMutableList()
         )
     }
@@ -146,9 +145,9 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                 menu.apply {
 
-                    mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, this)
-
-                    mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(it))
+                    mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, this).apply {
+                        setTitleColor(ThemeHelper.resolveThemeAccent(it))
+                    }
 
                     val searchView = findItem(R.id.action_search).actionView as SearchView
 
@@ -266,9 +265,9 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                     )
                 )
 
-                mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, menu)
-
-                mSortMenuItem.setTitleColor(ThemeHelper.resolveThemeAccent(context))
+                mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, menu).apply {
+                    setTitleColor(ThemeHelper.resolveThemeAccent(context))
+                }
 
                 goPreferences.artistsSorting = mSorting
             }
