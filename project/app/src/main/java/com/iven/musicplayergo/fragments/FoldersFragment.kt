@@ -75,7 +75,8 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
     private fun getSortedFolders(): MutableList<String>? {
         return Utils.getSortedList(
             mSorting,
-            musicLibrary.allSongsByFolder?.keys?.toMutableList())
+            musicLibrary.allSongsByFolder?.keys?.toMutableList()
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
