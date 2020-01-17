@@ -23,5 +23,5 @@ inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
 fun MenuItem.setTitleColor(color: Int) {
     val hexColor = Integer.toHexString(color).substring(2)
     val html = "<font color='#$hexColor'>$title</font>"
-    this.title = ThemeHelper.buildSpanned(html)
+    title = ThemeHelper.buildSpanned(html)
 }
