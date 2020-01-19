@@ -171,9 +171,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     }
 
     companion object {
-
-        internal const val TAG = "PreferencesFragmentTag"
-
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.

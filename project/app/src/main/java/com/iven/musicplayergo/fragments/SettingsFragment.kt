@@ -52,7 +52,7 @@ class SettingsFragment : Fragment() {
             childFragmentManager.beginTransaction()
                 .replace(
                     R.id.fragment_layout,
-                    PreferencesFragment.newInstance(), PreferencesFragment.TAG
+                    PreferencesFragment.newInstance()
                 )
                 .commit()
         }
