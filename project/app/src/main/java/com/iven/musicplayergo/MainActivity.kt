@@ -672,7 +672,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
                 this
             )
         ) else if (mMediaPlayerHolder.isPlaying) mMediaPlayerHolder.updateNotification()
-
     }
 
     private fun updatePlayingStatus(isNowPlaying: Boolean) {
