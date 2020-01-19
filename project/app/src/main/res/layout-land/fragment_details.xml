@@ -35,39 +35,48 @@
 
         <!-- SELECTED ALBUM -->
         <LinearLayout
-            android:id="@+id/selected_album_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/ripple"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/selected_album"
+            <LinearLayout
+                android:id="@+id/selected_album_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="marquee"
-                android:fontFamily="@font/raleway_bold_italic"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:scrollHorizontally="true"
-                android:singleLine="true"
-                android:textAlignment="center"
-                android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-                android:textColor="?colorPrimary" />
+                android:background="@drawable/ripple"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/album_year_duration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="4dp"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:singleLine="true"
-                android:textAppearance="@android:style/TextAppearance.Material.Caption"
-                android:textColor="?android:attr/textColorSecondary" />
+                <TextView
+                    android:id="@+id/selected_album"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/raleway_bold_italic"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:paddingStart="12dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="12dp"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+                    android:textColor="?colorPrimary" />
+
+                <TextView
+                    android:id="@+id/album_year_duration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="4dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="4dp"
+                    android:singleLine="true"
+                    android:textAppearance="@android:style/TextAppearance.Material.Caption"
+                    android:textColor="?android:attr/textColorSecondary" />
+
+            </LinearLayout>
 
             <!-- DISC SONGS -->
             <androidx.recyclerview.widget.RecyclerView
