@@ -8,9 +8,11 @@ import android.os.Parcelable
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.view.KeyEvent
+import android.widget.Toast
 import androidx.media.MediaBrowserServiceCompat
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.ui.Utils
 
 
 class PlayerService : MediaBrowserServiceCompat() {
@@ -113,33 +115,41 @@ class PlayerService : MediaBrowserServiceCompat() {
 
         var isSuccess = false
 
-        intent?.let {
-            val event = intent.getParcelableExtra<Parcelable>(Intent.EXTRA_KEY_EVENT) as KeyEvent
-            if (event.action == KeyEvent.ACTION_DOWN) { // do something
-                when (event.keyCode) {
-                    KeyEvent.KEYCODE_MEDIA_PAUSE, KeyEvent.KEYCODE_MEDIA_PLAY, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, KeyEvent.KEYCODE_HEADSETHOOK -> {
-                        mediaPlayerHolder.resumeOrPause()
-                        isSuccess = true
-                    }
-                    KeyEvent.KEYCODE_MEDIA_CLOSE, KeyEvent.KEYCODE_MEDIA_STOP -> {
-                        mediaPlayerHolder.stopPlaybackService(true)
-                        isSuccess = true
-                    }
-                    KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {
-                        mediaPlayerHolder.skip(false)
-                        isSuccess = true
-                    }
-                    KeyEvent.KEYCODE_MEDIA_NEXT -> {
-                        mediaPlayerHolder.skip(true)
-                        isSuccess = true
-                    }
-                    KeyEvent.KEYCODE_MEDIA_REWIND -> {
-                        mediaPlayerHolder.repeatSong()
-                        isSuccess = true
+        try {
+            intent?.let {
+                val event =
+                    intent.getParcelableExtra<Parcelable>(Intent.EXTRA_KEY_EVENT) as KeyEvent
+                if (event.action == KeyEvent.ACTION_DOWN) { // do something
+                    when (event.keyCode) {
+                        KeyEvent.KEYCODE_MEDIA_PAUSE, KeyEvent.KEYCODE_MEDIA_PLAY, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, KeyEvent.KEYCODE_HEADSETHOOK -> {
+                            mediaPlayerHolder.resumeOrPause()
+                            isSuccess = true
+                        }
+                        KeyEvent.KEYCODE_MEDIA_CLOSE, KeyEvent.KEYCODE_MEDIA_STOP -> {
+                            mediaPlayerHolder.stopPlaybackService(true)
+                            isSuccess = true
+                        }
+                        KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {
+                            mediaPlayerHolder.skip(false)
+                            isSuccess = true
+                        }
+                        KeyEvent.KEYCODE_MEDIA_NEXT -> {
+                            mediaPlayerHolder.skip(true)
+                            isSuccess = true
+                        }
+                        KeyEvent.KEYCODE_MEDIA_REWIND -> {
+                            mediaPlayerHolder.repeatSong()
+                            isSuccess = true
+                        }
                     }
                 }
             }
+        } catch (e: Exception) {
+            isSuccess = false
+            Utils.makeToast(this, getString(R.string.error_media_buttons), Toast.LENGTH_LONG)
+            e.printStackTrace()
         }
+
         return isSuccess
     }
 }
