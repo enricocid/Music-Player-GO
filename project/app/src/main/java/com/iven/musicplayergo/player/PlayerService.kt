@@ -71,8 +71,13 @@ class PlayerService : MediaBrowserServiceCompat() {
 
             goPreferences.latestVolume = mediaPlayerHolder.currentVolumeInPercent
 
-            mMediaSessionCompat.release()
             mediaPlayerHolder.release()
+        }
+
+        if (::mMediaSessionCompat.isInitialized && mMediaSessionCompat.isActive) {
+            mMediaSessionCompat.isActive = false
+            mMediaSessionCompat.setCallback(null)
+            mMediaSessionCompat.release()
         }
     }
 
