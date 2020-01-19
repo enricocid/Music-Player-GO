@@ -13,6 +13,7 @@ import android.provider.OpenableColumns
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -70,6 +71,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
 
     private var mActiveFragments: MutableList<String>? = null
 
+    private var sThemeChanged = false
     private var sRestoreSettingsFragment = false
 
     //views
@@ -177,11 +179,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putBoolean(
-            RESTORE_SETTINGS_FRAGMENT,
-            true
-        )
+        if (sThemeChanged) {
+            super.onSaveInstanceState(outState)
+            outState.putBoolean(
+                RESTORE_SETTINGS_FRAGMENT,
+                true
+            )
+        } else {
+            if (isNowPlaying) super.onBackPressed()
+        }
     }
 
     override fun onDestroy() {
@@ -659,8 +665,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
         }
     }
 
-    override fun onAccentUpdated() {
-        if (mMediaPlayerHolder.isPlaying) mMediaPlayerHolder.updateNotification()
+    override fun onThemeChanged(isAccent: Boolean) {
+        sThemeChanged = !isAccent
+        if (sThemeChanged) AppCompatDelegate.setDefaultNightMode(
+            ThemeHelper.getDefaultNightMode(
+                this
+            )
+        ) else if (mMediaPlayerHolder.isPlaying) mMediaPlayerHolder.updateNotification()
+
     }
 
     private fun updatePlayingStatus(isNowPlaying: Boolean) {
