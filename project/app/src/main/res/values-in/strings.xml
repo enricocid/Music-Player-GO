@@ -41,6 +41,7 @@
     <string name="no_eq">Equalizer tidak ditemukan!</string>
     <string name="error_unknown">Telah terjadi kesalahan! :(</string>
     <string name="error_unknown_unsupported">Telah terjadi kesalahan! :( Mungkin format yang dipilih tidak didukung atau folder tidak bisa diakses (bukan kesalahan aplikasi!)</string>
+    <string name="error_media_buttons">Telah terjadi kesalahan! :( Silakan mulai ulang pemutaran dari aplikasi</string>
     <string name="on_close_activity">Apakah anda ingin berhenti memutar musik?</string>
     <string name="repeat_enabled">1x pengulangan diaktifkan!</string>
     <string name="repeat_disabled">1x pengulangan dinonaktifkan!</string>
