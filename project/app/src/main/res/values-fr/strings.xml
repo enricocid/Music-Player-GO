@@ -34,7 +34,7 @@
     <string name="no_eq">Aucun égaliseur n\'a été trouvé !</string>
     <string name="error_unknown">Une erreur s\'est produite ! :(</string>
     <string name="error_unknown_unsupported">Une erreur s\'est produite ! :( Peut-être que le format sélectionné n\'est pas supporté, ou que le dossier n\'est pas accessible (Ce n\'est pas de la faute de l\'application !).</string>
-    <string name="error_media_buttons">Une erreur s\'est produite! :( Veuillez relancer la lecture depuis l'application</string>
+    <string name="error_media_buttons">Une erreur s\'est produite! :( Veuillez relancer la lecture depuis l\'application</string>
     <string name="on_close_activity">Voulez-vous arrêter la lecture ?</string>
     <string name="repeat_enabled">Répétition x1 activée !</string>
     <string name="repeat_disabled">Répétition x1 désactivée !</string>
