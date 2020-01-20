@@ -1,0 +1,5 @@
+- Il tema dark è più scuro
+- Landscape: corretti 3 bug
+- Corretto crash che avveniva quando nessuna canzone è presente sul dispositivo
+- Migliorato il dialog degli accenti
+- Il dialog dei temi ha ora gli angoli arrotondati
