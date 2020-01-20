@@ -9,6 +9,8 @@ import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.RippleDrawable
 import android.os.Build
 import android.os.Handler
 import android.text.Html
@@ -216,5 +218,12 @@ object ThemeHelper {
             in 68..100 -> R.drawable.ic_volume_up
             else -> R.drawable.ic_volume_off
         }
+    }
+
+    @JvmStatic
+    fun createColouredRipple(context: Context, rippleColor: Int): Drawable? {
+        val ripple = ContextCompat.getDrawable(context, R.drawable.ripple_oval) as RippleDrawable
+        ripple.setColor(ColorStateList.valueOf(rippleColor))
+        return ripple
     }
 }
