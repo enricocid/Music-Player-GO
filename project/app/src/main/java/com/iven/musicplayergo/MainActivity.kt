@@ -317,7 +317,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
 
     override fun onLoadFinished(loader: Loader<Boolean>, hasLoaded: Boolean) {
         LoaderManager.getInstance(this).destroyLoader(MUSIC_LOADER_ID)
-        if (hasLoaded) finishSetup() else Utils.notifyLoadingError(this)
+        if (hasLoaded && !musicLibrary.allSongsFiltered.isNullOrEmpty()) finishSetup() else Utils.notifyLoadingError(
+            this
+        )
     }
 
     private fun launchMusicLoading() {
