@@ -5,8 +5,10 @@
         <item name="indicatorFastScrollerStyle">@style/FastScrollerColorFull</item>
         <item name="android:fontFamily">@font/raleway</item>
         <item name="md_font_title">@font/raleway_black</item>
+        <item name="md_background_color">@color/windowBackground</item>
         <item name="alertDialogTheme">@style/DialogsStyle</item>
         <item name="preferenceTheme">@style/PrefTheme</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
     </style>
 
     <style name="PrefTheme" parent="PreferenceThemeOverlay">
@@ -14,6 +16,7 @@
     </style>
 
     <style name="DialogsStyle" parent="Theme.AppCompat.DayNight.Dialog">
+        <item name="android:background">@color/windowBackground</item>
         <item name="android:windowTitleStyle">@style/DialogsStyle.Title</item>
         <item name="colorAccent">?attr/colorControlNormal</item>
     </style>

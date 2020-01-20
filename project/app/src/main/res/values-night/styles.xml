@@ -6,7 +6,9 @@
         <item name="colorPrimaryDark">?attr/colorPrimary</item>
         <item name="android:fontFamily">@font/raleway</item>
         <item name="md_font_title">@font/raleway_black</item>
+        <item name="md_background_color">@color/windowBackground</item>
         <item name="alertDialogTheme">@style/DialogsStyle</item>
         <item name="preferenceTheme">@style/PrefTheme</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
     </style>
 </resources>

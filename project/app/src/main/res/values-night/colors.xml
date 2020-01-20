@@ -21,6 +21,8 @@
     <color name="grey">#eeeeee</color>
     <color name="blue_grey">#b0bec5</color>
 
-    <color name="seekbarBgColorDark">#10000000</color>
-    <color name="seekbarBgColorLight">#20000000</color>
+    <color name="seekBarBgColorDark">#10000000</color>
+    <color name="seekBarBgColorLight">#20000000</color>
+
+    <color name="windowBackground">#151515</color>
 </resources>

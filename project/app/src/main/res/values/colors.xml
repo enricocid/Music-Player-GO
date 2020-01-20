@@ -40,6 +40,8 @@
     <color name="greyPrimaryDark">#707070</color>
     <color name="blueGreyPrimaryDark">#34515e</color>
 
-    <color name="seekbarBgColorDark">#10ffffff</color>
-    <color name="seekbarBgColorLight">#20ffffff</color>
+    <color name="seekBarBgColorDark">#10ffffff</color>
+    <color name="seekBarBgColorLight">#20ffffff</color>
+
+    <color name="windowBackground">#fafafa</color>
 </resources>

@@ -9,8 +9,8 @@
             <size android:height="@android:dimen/app_icon_size" />
             <gradient
                 android:angle="0"
-                android:endColor="@color/seekbarBgColorLight"
-                android:startColor="@color/seekbarBgColorDark" />
+                android:endColor="@color/seekBarBgColorLight"
+                android:startColor="@color/seekBarBgColorDark" />
         </shape>
     </item>
 </layer-list>
