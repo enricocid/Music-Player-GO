@@ -25,4 +25,5 @@
     <color name="seekBarBgColorLight">#20000000</color>
 
     <color name="windowBackground">#151515</color>
+    <color name="dialogsBackground">#212121</color>
 </resources>

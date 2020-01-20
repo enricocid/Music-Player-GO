@@ -44,4 +44,5 @@
     <color name="seekBarBgColorLight">#20ffffff</color>
 
     <color name="windowBackground">#fafafa</color>
+    <color name="dialogsBackground">@color/windowBackground</color>
 </resources>
