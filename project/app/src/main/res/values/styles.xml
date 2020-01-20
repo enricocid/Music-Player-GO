@@ -16,6 +16,7 @@
     </style>
 
     <style name="DialogsStyle" parent="Theme.AppCompat.DayNight.Dialog">
+        <item name="dialogCornerRadius">@dimen/md_corner_radius</item>
         <item name="android:background">@color/windowBackground</item>
         <item name="android:windowTitleStyle">@style/DialogsStyle.Title</item>
         <item name="colorAccent">?attr/colorControlNormal</item>
