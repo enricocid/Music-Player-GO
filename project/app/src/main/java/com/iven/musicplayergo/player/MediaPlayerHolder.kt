@@ -448,6 +448,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (isPlay) {
             mediaPlayer.start()
             startForeground()
+            state = PLAYING
             updatePlaybackStatus()
         }
     }

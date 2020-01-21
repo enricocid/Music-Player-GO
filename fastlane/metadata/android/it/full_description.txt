@@ -34,6 +34,7 @@
 - Supporto landscape
 
 - Ricerca
+- Supporto SeekBar notifica (a partire da Android Q)
 - Opzioni sorting (default, ascendente, discendente)
 - Opzioni per il mescolamento (shuffle)
 - Possibilità di aprire file audio dall'esterno dell'app
