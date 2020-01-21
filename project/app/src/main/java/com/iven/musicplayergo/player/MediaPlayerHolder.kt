@@ -59,13 +59,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     MediaPlayer.OnPreparedListener {
 
     private val mStateBuilder =
-        Builder().setActions(
-            ACTION_STOP
-                    or ACTION_PLAY_PAUSE
-                    or ACTION_SKIP_TO_NEXT
-                    or ACTION_SKIP_TO_PREVIOUS
-                    or ACTION_SEEK_TO
-        )
+        Builder().apply {
+            if (Utils.isAndroidQ()) setActions(ACTION_SEEK_TO)
+        }
 
     lateinit var mediaPlayerInterface: MediaPlayerInterface
 
