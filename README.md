@@ -10,7 +10,7 @@
 [![Supported formats](https://img.shields.io/static/v1?label=Formats&message=read&color=80cbc4)](https://github.com/enricocid/Music-Player-GO/blob/master/FORMATS.MD)
 
 [![API](https://img.shields.io/static/v1?label=API&message=21&color=a5d6a7)](https://developer.android.com/about/versions/android-5.0.html)
-[![TAG](https://img.shields.io/static/v1?label=Tag&message=v4.1.3&color=ffe082)](https://github.com/enricocid/Music-Player-GO/releases/tag/v4.1.3)
+[![TAG](https://img.shields.io/static/v1?label=Tag&message=v4.1.4&color=ffe082)](https://github.com/enricocid/Music-Player-GO/releases/tag/v4.1.4)
 
 
 <img align="right" src="https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/mpgo-4-1-3.gif" height="500px"/>
@@ -52,6 +52,7 @@
 - **Landscape** support
 
 - Search
+- Notification's SeekBar support (starting from Android Q)
 - **Sort** options (default, ascending, descending)
 - Shuffle options
 - Open audio files from outside the app

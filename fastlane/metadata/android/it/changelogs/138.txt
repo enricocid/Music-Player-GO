@@ -1,0 +1,2 @@
+- Android 10: aggiunto supporto SeekBar notifica
+- Semplificato servizio musica
