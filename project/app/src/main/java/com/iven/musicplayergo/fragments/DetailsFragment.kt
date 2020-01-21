@@ -565,13 +565,13 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         @JvmStatic
         fun newInstance(
             selectedArtistOrFolder: String?,
-            sFolder: Boolean,
+            isFolder: Boolean,
             playedAlbumPosition: Int
         ) =
             DetailsFragment().apply {
                 arguments = Bundle().apply {
                     putString(TAG_ARTIST_FOLDER, selectedArtistOrFolder)
-                    putBoolean(TAG_IS_FOLDER, sFolder)
+                    putBoolean(TAG_IS_FOLDER, isFolder)
                     putInt(TAG_SELECTED_ALBUM_POSITION, playedAlbumPosition)
                 }
             }
