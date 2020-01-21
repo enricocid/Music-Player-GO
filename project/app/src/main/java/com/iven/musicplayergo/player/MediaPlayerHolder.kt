@@ -11,11 +11,11 @@ import android.media.AudioAttributes
 import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.MediaPlayer
-import android.media.session.PlaybackState
 import android.os.Build
 import android.os.Handler
 import android.os.PowerManager
-import android.support.v4.media.session.PlaybackStateCompat
+import android.support.v4.media.MediaMetadataCompat
+import android.support.v4.media.session.PlaybackStateCompat.*
 import android.widget.Toast
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
@@ -49,9 +49,9 @@ private const val HEADSET_DISCONNECTED = 0
 private const val HEADSET_CONNECTED = 1
 
 // Player playing statuses
-const val PLAYING = PlaybackState.STATE_PLAYING
-const val PAUSED = PlaybackState.STATE_PAUSED
-const val RESUMED = PlaybackState.STATE_NONE
+const val PLAYING = STATE_PLAYING
+const val PAUSED = STATE_PAUSED
+const val RESUMED = STATE_NONE
 
 @Suppress("DEPRECATION")
 class MediaPlayerHolder(private val playerService: PlayerService) :
@@ -59,13 +59,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     MediaPlayer.OnPreparedListener {
 
     private val mStateBuilder =
-        PlaybackStateCompat.Builder().setActions(
-            PlaybackStateCompat.ACTION_PLAY
-                    or PlaybackStateCompat.ACTION_STOP
-                    or PlaybackStateCompat.ACTION_PAUSE
-                    or PlaybackStateCompat.ACTION_PLAY_PAUSE
-                    or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
-                    or PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS
+        Builder().setActions(
+            ACTION_STOP
+                    or ACTION_PLAY_PAUSE
+                    or ACTION_SKIP_TO_NEXT
+                    or ACTION_SKIP_TO_PREVIOUS
+                    or ACTION_SEEK_TO
         )
 
     lateinit var mediaPlayerInterface: MediaPlayerInterface
@@ -181,6 +180,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         mPlayingAlbumSongs = songs
     }
 
+    private fun updateMediaSessionMetaData() {
+        val mediaMediaPlayerCompat = MediaMetadataCompat.Builder().apply {
+            putLong(MediaMetadataCompat.METADATA_KEY_DURATION, currentSong.first?.duration!!)
+        }
+        playerService.getMediaSession().setMetadata(mediaMediaPlayerCompat.build())
+    }
+
     override fun onCompletion(mediaPlayer: MediaPlayer) {
 
         mediaPlayerInterface.onStateChanged()
@@ -245,29 +251,29 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
-    private fun setStatus(status: Int) {
-        state = status
+    private fun updatePlaybackStatus() {
         playerService.getMediaSession().setPlaybackState(
             mStateBuilder.setState(
-                state,
-                PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
+                if (state == RESUMED) PLAYING else state,
+                if (Utils.isAndroidQ()) mediaPlayer.currentPosition.toLong() else PLAYBACK_POSITION_UNKNOWN,
                 1F
             ).build()
         )
+        updateNotification()
         mediaPlayerInterface.onStateChanged()
     }
 
     fun resumeMediaPlayer() {
         if (!isPlaying) {
             if (isMediaPlayer) mediaPlayer.start()
-            val status = if (isSongRestoredFromPrefs) {
+            state = if (isSongRestoredFromPrefs) {
                 isSongRestoredFromPrefs = false
                 PLAYING
             } else {
                 RESUMED
             }
 
-            setStatus(status)
+            updatePlaybackStatus()
 
             startForeground()
 
@@ -276,19 +282,19 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun pauseMediaPlayer() {
-        setStatus(PAUSED)
         mediaPlayer.pause()
         playerService.stopForeground(false)
         sNotificationForeground = false
-        updateNotification()
+        state = PAUSED
+        updatePlaybackStatus()
     }
 
     fun repeatSong() {
         isRepeat = false
-        updateNotification()
         mediaPlayer.seekTo(0)
         mediaPlayer.start()
-        setStatus(PLAYING)
+        state = PLAYING
+        updatePlaybackStatus()
     }
 
     private fun manageQueue(isNext: Boolean) {
@@ -441,10 +447,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         if (isQueue) mediaPlayerInterface.onQueueStartedOrEnded(isQueueStarted)
 
+        if (Utils.isAndroidQ()) updateMediaSessionMetaData()
+
         if (isPlay) {
-            setStatus(PLAYING)
             mediaPlayer.start()
             startForeground()
+            updatePlaybackStatus()
         }
     }
 
@@ -471,7 +479,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun repeat() {
         isRepeat = !isRepeat
-        updateNotification()
+        updatePlaybackStatus()
         Utils.makeToast(
             playerService,
             playerService.getString(if (isRepeat) R.string.repeat_enabled else R.string.repeat_disabled),
@@ -508,7 +516,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun seekTo(position: Int) {
-        if (isMediaPlayer) mediaPlayer.seekTo(position)
+        if (isMediaPlayer) {
+            mediaPlayer.seekTo(position)
+            updatePlaybackStatus()
+        }
     }
 
     /**

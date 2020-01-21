@@ -166,6 +166,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 goPreferences.activeFragments = activeTabsAdapter.getUpdatedItems()
                 ThemeHelper.applyNewThemeSmoothly(activity)
             }
+
             negativeButton(R.string.no)
         }
     }

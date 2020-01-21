@@ -1,21 +1,19 @@
 package com.iven.musicplayergo.player
 
+import android.app.Service
 import android.content.Intent
 import android.os.Binder
-import android.os.Bundle
 import android.os.IBinder
 import android.os.Parcelable
-import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.view.KeyEvent
 import android.widget.Toast
-import androidx.media.MediaBrowserServiceCompat
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.ui.Utils
 
 
-class PlayerService : MediaBrowserServiceCompat() {
+class PlayerService : Service() {
 
     // Binder given to clients
     private val binder = LocalBinder()
@@ -30,22 +28,12 @@ class PlayerService : MediaBrowserServiceCompat() {
 
     private lateinit var mMediaSessionCompat: MediaSessionCompat
 
-    override fun onLoadChildren(
-        parentId: String,
-        result: Result<MutableList<MediaBrowserCompat.MediaItem>>
-    ) {
-        result.sendResult(null)
-    }
-
-    override fun onGetRoot(
-        clientPackageName: String,
-        clientUid: Int,
-        rootHints: Bundle?
-    ): BrowserRoot? {
-        return BrowserRoot(getString(R.string.app_name), null)
-    }
-
     private val mMediaSessionCallback = object : MediaSessionCompat.Callback() {
+
+        override fun onSeekTo(pos: Long) {
+            super.onSeekTo(pos)
+            mediaPlayerHolder.seekTo(pos.toInt())
+        }
 
         override fun onMediaButtonEvent(mediaButtonEvent: Intent?): Boolean {
             return handleMediaIntent(mediaButtonEvent)

@@ -13,6 +13,7 @@ import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.ui.ThemeHelper
+import com.iven.musicplayergo.ui.Utils
 
 // Notification params
 private const val CHANNEL_ID = "CHANNEL_ID_GO"
@@ -62,6 +63,8 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             )
 
             val style = MediaStyle().setShowActionsInCompactView(1, 2, 3)
+
+            if (Utils.isAndroidQ()) style.setMediaSession(playerService.getMediaSession().sessionToken)
 
             notificationBuilder.let {
                 it.apply {
