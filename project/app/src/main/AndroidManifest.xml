@@ -26,21 +26,12 @@
                 <action android:name="android.intent.action.MUSIC_PLAYER"/>
             </intent-filter>
 
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data android:scheme="content"/>
                 <data android:mimeType="audio/*"/>
             </intent-filter>
-
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:scheme="file"/>
-                <data android:mimeType="audio/*"/>
-            </intent-filter>
-
         </activity>
 
         <service android:name=".player.PlayerService" />
