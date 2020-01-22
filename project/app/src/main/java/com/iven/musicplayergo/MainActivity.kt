@@ -186,7 +186,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
                 true
             )
         } else {
-            if (isNowPlaying) super.onBackPressed()
+            if (sDetailsFragmentExpanded) super.onBackPressed()
         }
     }
 
