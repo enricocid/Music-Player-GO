@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
     private lateinit var mTabsLayout: TabLayout
     private lateinit var mPlayerControlsContainer: View
 
-    private var sDeviceLand = false
+    private var sLandscape = false
 
     //settings/controls panel
     private lateinit var mPlayingArtist: TextView
@@ -261,7 +261,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
 
         mActiveFragments = goPreferences.activeFragments?.toMutableList()
 
-        sDeviceLand = ThemeHelper.isDeviceLand(resources)
+        sLandscape = ThemeHelper.isDeviceLand(resources)
 
         sRestoreSettingsFragment =
             savedInstanceState?.getBoolean(RESTORE_SETTINGS_FRAGMENT) ?: intent.getBooleanExtra(
@@ -654,7 +654,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
                     mSeekBarNP.setOnSeekBarChangeListener(null)
                 }
 
-                if (goPreferences.isEdgeToEdge && !sDeviceLand) {
+                if (goPreferences.isEdgeToEdge && !sLandscape) {
                     window?.apply {
                         ThemeHelper.handleLightSystemBars(decorView)
                         edgeToEdge {

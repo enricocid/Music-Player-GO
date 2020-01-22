@@ -72,7 +72,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var mUIControlInterface: UIControlInterface
     private var mSelectedAlbum: Album? = null
 
-    private var sDeviceLand = false
+    private var sLandscape = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -158,7 +158,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
         context?.let {
 
-            sDeviceLand = ThemeHelper.isDeviceLand(it.resources)
+            sLandscape = ThemeHelper.isDeviceLand(it.resources)
 
             mDetailsToolbar.apply {
 
@@ -220,7 +220,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     // item is a `val` in `this` here
                     withDataSource(mSongsDataSource)
 
-                    if (sDeviceLand)
+                    if (sLandscape)
                         withLayoutManager(GridLayoutManager(it, 2))
                     else
                         addItemDecoration(ThemeHelper.getRecyclerViewDivider(it))
@@ -363,7 +363,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                 mAlbumsRecyclerViewLayoutManager = LinearLayoutManager(
                     context,
-                    if (sDeviceLand) LinearLayoutManager.VERTICAL else LinearLayoutManager.HORIZONTAL,
+                    if (sLandscape) LinearLayoutManager.VERTICAL else LinearLayoutManager.HORIZONTAL,
                     false
                 )
                 withLayoutManager(mAlbumsRecyclerViewLayoutManager)

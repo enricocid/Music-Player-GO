@@ -51,7 +51,8 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var mSortMenuItem: MenuItem
     private var mSorting = DEFAULT_SORTING
 
-    private var sDeviceLand = false
+    private var sIsFastScroller = false
+    private var sLandscape = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -94,7 +95,7 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
 
         context?.let {
 
-            sDeviceLand = ThemeHelper.isDeviceLand(it.resources)
+            sLandscape = ThemeHelper.isDeviceLand(it.resources)
 
             mFoldersRecyclerView.apply {
 
@@ -103,13 +104,13 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
 
                     withDataSource(mDataSource)
 
-                    if (sDeviceLand)
+                    if (sLandscape)
                         withLayoutManager(GridLayoutManager(it, 3))
                     else addItemDecoration(
                         ThemeHelper.getRecyclerViewDivider(it)
                     )
 
-                    withItem<String, GenericViewHolder>(if (sDeviceLand) R.layout.generic_item else R.layout.folder_item) {
+                    withItem<String, GenericViewHolder>(if (sLandscape) R.layout.generic_item else R.layout.folder_item) {
                         onBind(::GenericViewHolder) { _, item ->
                             // GenericViewHolder is `this` here
                             title.text = item
@@ -191,7 +192,10 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
 
         //set indexes if artists rv is scrollable
         mFoldersRecyclerView.afterMeasured {
-            if (computeVerticalScrollRange() > height) {
+
+            sIsFastScroller = computeVerticalScrollRange() > height
+
+            if (sIsFastScroller) {
 
                 mIndicatorFastScrollerView.setupWithRecyclerView(
                     this,
@@ -207,7 +211,7 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
                         ) // Return a text tab_indicator
                     }, showIndicator = { _, indicatorPosition, _ ->
                         // Hide every other indicator
-                        if (sDeviceLand) indicatorPosition % 2 == 0 else true
+                        if (sLandscape) indicatorPosition % 2 == 0 else true
                     }
                 )
 
@@ -225,13 +229,22 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
                         artistsLayoutManager.scrollToPositionWithOffset(itemPosition, 0)
                     }
                 }
+
+                if (sLandscape) setupFoldersRecyclerViewPadding(true)
+
             } else {
-                if (sDeviceLand) {
+                if (sLandscape) {
                     mIndicatorFastScrollerView.visibility = View.GONE
                     mIndicatorFastScrollThumb.visibility = View.GONE
                 }
             }
         }
+    }
+
+    private fun setupFoldersRecyclerViewPadding(isIndicatorFastScrollerViewVisible: Boolean) {
+        if (isIndicatorFastScrollerViewVisible) mIndicatorFastScrollerView.afterMeasured {
+            mFoldersRecyclerView.setPadding(0, 0, width, 0)
+        } else mFoldersRecyclerView.setPadding(0, 0, 0, 0)
     }
 
     private fun setMenuOnItemClickListener(context: Context, menu: Menu) {
@@ -243,8 +256,15 @@ class FoldersFragment : Fragment(), SearchView.OnQueryTextListener {
 
                 mFolders = getSortedFolders()
 
+                val isIndicatorFastScrollerViewVisible =
+                    mSorting != DEFAULT_SORTING && sIsFastScroller
+
                 mIndicatorFastScrollerView.visibility =
-                    if (mSorting != DEFAULT_SORTING) View.VISIBLE else View.GONE
+                    if (isIndicatorFastScrollerViewVisible) View.VISIBLE else View.GONE
+
+                if (sLandscape) setupFoldersRecyclerViewPadding(
+                    isIndicatorFastScrollerViewVisible
+                )
 
                 mDataSource.set(mFolders!!)
 

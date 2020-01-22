@@ -51,7 +51,8 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var mSortMenuItem: MenuItem
     private var mSorting = ASCENDING_SORTING
 
-    private var sDeviceLand = false
+    private var sIsFastScroller = false
+    private var sLandscape = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -95,7 +96,7 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
 
         context?.let {
 
-            sDeviceLand = ThemeHelper.isDeviceLand(it.resources)
+            sLandscape = ThemeHelper.isDeviceLand(it.resources)
 
             mArtistsRecyclerView.apply {
 
@@ -105,7 +106,7 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                     // item is a `val` in `this` here
                     withDataSource(mDataSource)
 
-                    if (sDeviceLand)
+                    if (sLandscape)
                         withLayoutManager(GridLayoutManager(it, 3))
                     else
                         addItemDecoration(
@@ -201,7 +202,10 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
 
         //set indexes if artists rv is scrollable
         mArtistsRecyclerView.afterMeasured {
-            if (computeVerticalScrollRange() > height) {
+
+            sIsFastScroller = computeVerticalScrollRange() > height
+
+            if (sIsFastScroller) {
 
                 mIndicatorFastScrollerView.setupWithRecyclerView(
                     this,
@@ -217,7 +221,7 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                         ) // Return a text tab_indicator
                     }, showIndicator = { _, indicatorPosition, _ ->
                         // Hide every other indicator
-                        if (sDeviceLand) indicatorPosition % 2 == 0 else true
+                        if (sLandscape) indicatorPosition % 2 == 0 else true
                     }
                 )
 
@@ -235,13 +239,22 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                         artistsLayoutManager.scrollToPositionWithOffset(itemPosition, 0)
                     }
                 }
+
+                if (sLandscape) setupArtistsRecyclerViewPadding(true)
+
             } else {
-                if (sDeviceLand) {
+                if (sLandscape) {
                     mIndicatorFastScrollerView.visibility = View.GONE
                     mIndicatorFastScrollThumb.visibility = View.GONE
                 }
             }
         }
+    }
+
+    private fun setupArtistsRecyclerViewPadding(isFastScrollerViewVisible: Boolean) {
+        if (isFastScrollerViewVisible) mIndicatorFastScrollerView.afterMeasured {
+            mArtistsRecyclerView.setPadding(0, 0, width, 0)
+        } else mArtistsRecyclerView.setPadding(0, 0, 0, 0)
     }
 
     private fun setMenuOnItemClickListener(context: Context, menu: Menu) {
@@ -253,8 +266,15 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                 mArtists = getSortedArtists()
 
+                val isIndicatorFastScrollerViewVisible =
+                    mSorting != DEFAULT_SORTING && sIsFastScroller
+
                 mIndicatorFastScrollerView.visibility =
-                    if (mSorting != DEFAULT_SORTING) View.VISIBLE else View.GONE
+                    if (isIndicatorFastScrollerViewVisible) View.VISIBLE else View.GONE
+
+                if (sLandscape) setupArtistsRecyclerViewPadding(
+                    isIndicatorFastScrollerViewVisible
+                )
 
                 setArtistsDataSource(mArtists)
 
