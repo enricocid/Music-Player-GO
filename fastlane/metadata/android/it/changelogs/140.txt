@@ -1,0 +1,3 @@
+- Landscape: corretto problemi di sovrapposizione tra gli indicatori e la lista degli artisti/cartelle
+- Landscape: corretto un crash quando sono aperti dei dialog (ad es. now playing)
+- Aggiornate traduzioni Spagnolo
