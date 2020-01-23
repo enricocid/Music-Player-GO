@@ -1,0 +1,5 @@
+- Corretto un crash all'avvio
+- Corretto un leak del servizio musicale alla rotazione del telefono
+- Ottimizzazione codice (rimosse 299 linee di codice!)
+- Dialogo permesso: i pulsanti "Si" e "No" sono rimpiazzati da "Ok" ed "Annulla"
+- Aggiornate le traduzioni Turco & Hindi
