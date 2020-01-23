@@ -1,12 +1,89 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="no_eq">कोई इक्वलैज़र नहीं मिला!</string>
-    <string name="artist_info">%1d&#160;एलबम,&#160;%2d&#160;गीत</string>
-    <string name="bad_id">पहले एक गाना बजाये!</string>
-    <string name="no_browser">कोई ब्राउज़र नहीं मिला!</string>
-    <string name="perm_rationale">Music Player GO को संगीत बजाने के लिये फ़ाइलों को एक्सेस करने की अनुमति चाहिये!</string>
 
     <string name="yes">हाँ</string>
     <string name="no">नहीं</string>
+   
+    <!-- Main - Artists -->
+    <string name="artists">कलाकार</string>
+    <string name="artist_info">%1d&#160;एल्बम,&#160;%2d&#160;गीत</string>
+    <string name="folder_info">%1d&#160;गीत</string>
 
+    <!-- Main - All songs -->
+    <string name="songs">गीत</string>
+    <string name="shuffle_am">सभी गीत शफल करे</string>
+    <string name="shuffle_sa">शफ़ल चयनित एल्बम</string>
+   
+    <!-- Main - Folders -->
+    <string name="folders">फ़ोल्डर</string>
+
+    <!-- Queue -->
+    <string name="queue">पंक्ति</string>
+    <string name="queue_add">क़तार में जोड़ें</string>
+    <string name="queue_song_add">%1s कतार में जोड़ा गया!</string>
+    <string name="queue_song_remove">%1s कतार से हटा दिया जाएगा। जारी रखें?</string>
+    <string name="queue_songs_clear">कतार साफ हो जाएगी। जारी रखें?</string>
+    <string name="error_no_queue">कोई गीत पंक्तिबद्ध नहीं!</string>
+
+    <!-- Loved songs -->
+    <string name="loved_songs">प्रिय गीत</string>
+    <string name="loved_song_added">%1s (%2s) प्रिय गीत में जोड़ा गया</string>
+    <string name="loved_song_remove">%1s (%2s) प्रिय गीतों से हटा दिया जाएगा। जारी रखें?</string>
+    <string name="loved_songs_clear">प्रिय गीत साफ हो जाएंगे। जारी रखें?</string>
+    <string name="loved_song_add">प्रिय भरे गीतों में जोड़ें</string>
+    <string name="error_no_loved_songs">कोई प्रिय गीत नहीं मिला!</string>
+
+  
+    <!-- Messages -->
+    <string name="perm_rationale">Music Player GO को म्यूजिक चलाने के लिए आपकी फाइलों तक पहुंच की जरूरत होती है!</string>
+    <string name="no_browser">कोई ब्राउज़र नहीं मिला!</string>
+    <string name="bad_id">पहले एक गाना चलाएं!</string>
+    <string name="no_eq">कोई ईक्वलाइज़र नहीं मिला !</string>
+    <string name="error_unknown">कुछ गलत हो गया! :(</string>
+    <string name="error_unknown_unsupported">कुछ गलत हो गया! :( संभवतः चयनित प्रारूप समर्थित नहीं है या फ़ोल्डर सुलभ नहीं है (ऐप का दोष नहीं है!)</string>
+    <string name="error_media_buttons">कुछ गलत हो गया! :( कृपया एप्लिकेशन से प्लेबैक पुनः आरंभ करें</string>
+    <string name="on_close_activity">क्या आप प्लेबैक को रोकना चाहते हैं?</string>
+    <string name="repeat_enabled">दोहराना 1x सक्षम!</string>
+    <string name="repeat_disabled">दोहराना 1x अक्षम!</string>
+
+    <!-- Settings -->
+    <!-- Preferences -->
+    <string name="settings">सेटिंग्स</string>
+    <string name="category_appearance">दिखावट</string>
+    <string name="category_general">सामान्य</string>
+
+    <string name="open_git_pref_title">GitHub पेज</string>
+    <string name="open_git_pref_summary">अधिक जानकारी के लिए प्रोजेक्ट का पेज खोलें :)</string>
+
+    <string name="faq_summary">पूछे जाने वाले प्रश्न और समर्थित मीडिया प्रारूप :P</string>
+
+    <string name="theme_pref_title">थीम</string>
+    <string name="theme_pref_light_title">सफ़ेद</string>
+    <string name="theme_pref_dark_title">गहरा</string>
+    <string name="theme_pref_auto_title">स्वचालित</string>
+
+    <string name="accent_pref_title">एक्सेंट</string>
+
+    <string name="edge_pref_summary_on">किनारे-किनारे अक्षम करें</string>
+    <string name="edge_pref_summary_off">किनारे-किनारे सक्षम करें</string>
+
+    <string name="tabs_pref_title">टैब्स</string>
+    <string name="tabs_pref_summary_on">टैब अक्षम करें</string>
+    <string name="tabs_pref_summary_off">अनुभागों को नेविगेट करने के लिए टैब दिखाएं</string>
+
+    <string name="active_fragments_pref_title">सक्रिय टैब</string>
+    <string name="active_fragments_pref_warning">आप सभी टैब नहीं निकाल सकते हैं! :P</string>
+
+    <string name="sorting_pref_default">डिफ़ॉल्ट</string>
+
+    <string name="precise_volume_pref_title">सटीक वॉल्यूम नियंत्रण</string>
+    <string name="precise_volume_pref_summary_on">सटीक वॉल्यूम नियंत्रण अक्षम करें</string>
+    <string name="precise_volume_pref_summary_off">सटीक वॉल्यूम नियंत्रण सक्षम करें</string>
+
+    <string name="focus_pref_title">ऑडियो फोकस</string>
+    <string name="focus_pref_summary_on">ऑडियो फ़ोकस मैनेजरों को अक्षम करें</string>
+    <string name="focus_pref_summary_off">ऑडियो फ़ोकस प्रबंधन सक्षम करें</string>
+
+    <string name="headset_pref_title">हेडसेट प्लग</string>
+    <string name="headset_pref_summary_on">हेडसेट प्लग प्रबंधन अक्षम करें</string>
+    <string name="headset_pref_summary_off">हेडसेट प्लग प्रबंधन सक्षम करें</string>
 </resources>
