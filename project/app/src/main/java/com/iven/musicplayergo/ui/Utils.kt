@@ -82,10 +82,10 @@ object Utils {
                 icon(R.drawable.ic_folder)
 
                 message(R.string.perm_rationale)
-                positiveButton(R.string.yes) {
+                positiveButton(android.R.string.ok) {
                     askForReadStoragePermission(activity)
                 }
-                negativeButton(R.string.no) {
+                negativeButton {
                     dismissOnPermissionDenied(activity)
                 }
             }
