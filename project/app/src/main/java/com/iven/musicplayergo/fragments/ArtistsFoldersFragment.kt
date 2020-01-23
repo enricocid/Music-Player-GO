@@ -22,19 +22,21 @@ import com.iven.musicplayergo.ui.Utils
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerThumbView
 import com.reddit.indicatorfastscroll.FastScrollerView
-import kotlinx.android.synthetic.main.fragment_artists.*
+import kotlinx.android.synthetic.main.fragment_artist_folder.*
 import kotlinx.android.synthetic.main.search_toolbar.*
 
 
 /**
  * A simple [Fragment] subclass.
- * Use the [ArtistsFragment.newInstance] factory method to
+ * Use the [ArtistsFoldersFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
+class ArtistsFoldersFragment : Fragment(), SearchView.OnQueryTextListener {
+
+    private var sIsFoldersFragment = false
 
     //views
-    private lateinit var mArtistsRecyclerView: RecyclerView
+    private lateinit var mArtistsFoldersRecyclerView: RecyclerView
 
     private lateinit var mSearchToolbar: Toolbar
 
@@ -42,7 +44,7 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var mIndicatorFastScrollerView: FastScrollerView
     private lateinit var mIndicatorFastScrollThumb: FastScrollerThumbView
 
-    private var mArtists: MutableList<String>? = null
+    private var mList: MutableList<String>? = null
 
     private val mDataSource = emptyDataSource()
 
@@ -56,6 +58,11 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
+        arguments?.getString(TAG_SELECTED_FRAGMENT)?.let {
+            sIsFoldersFragment = it != TAG_ARTISTS
+        }
+
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
@@ -70,13 +77,15 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_artists, container, false)
+        return inflater.inflate(R.layout.fragment_artist_folder, container, false)
     }
 
-    private fun getSortedArtists(): MutableList<String>? {
+    private fun getSortedList(): MutableList<String>? {
+        val selectedList =
+            if (sIsFoldersFragment) musicLibrary.allSongsByFolder?.keys else musicLibrary.allAlbumsByArtist?.keys
         return Utils.getSortedList(
             mSorting,
-            musicLibrary.allAlbumsByArtist?.keys?.toMutableList()
+            selectedList?.toMutableList()
         )
     }
 
@@ -84,21 +93,21 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
         super.onViewCreated(view, savedInstanceState)
 
         mSearchToolbar = search_toolbar
-        mArtistsRecyclerView = artists_rv
+        mArtistsFoldersRecyclerView = artists_folders_rv
         mIndicatorFastScrollerView = fastscroller
         mIndicatorFastScrollThumb = fastscroller_thumb
 
-        mSorting = goPreferences.artistsSorting
+        mSorting =
+            if (sIsFoldersFragment) goPreferences.foldersSorting else goPreferences.artistsSorting
 
-        mArtists = getSortedArtists()
-
-        setArtistsDataSource(mArtists)
+        mList = getSortedList()
+        setListDataSource(mList)
 
         context?.let {
 
             sLandscape = ThemeHelper.isDeviceLand(it.resources)
 
-            mArtistsRecyclerView.apply {
+            mArtistsFoldersRecyclerView.apply {
 
                 // setup{} is an extension method on RecyclerView
                 setup {
@@ -113,17 +122,23 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                             ThemeHelper.getRecyclerViewDivider(it)
                         )
 
-                    withItem<String, GenericViewHolder>(R.layout.generic_item) {
+                    withItem<String, GenericViewHolder>(if (sIsFoldersFragment) getFolderItem() else R.layout.generic_item) {
 
                         onBind(::GenericViewHolder) { _, item ->
                             // GenericViewHolder is `this` here
                             title.text = item
-                            subtitle.text = getArtistSubtitle(item)
+                            subtitle.text = if (sIsFoldersFragment) getString(
+                                R.string.folder_info,
+                                musicLibrary.allSongsByFolder?.getValue(item)?.size
+                            ) else getArtistSubtitle(item)
                         }
 
                         onClick {
                             if (::mUIControlInterface.isInitialized)
-                                mUIControlInterface.onArtistOrFolderSelected(item, false)
+                                mUIControlInterface.onArtistOrFolderSelected(
+                                    item,
+                                    sIsFoldersFragment
+                                )
                         }
                     }
                 }
@@ -138,7 +153,7 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                 overflowIcon =
                     AppCompatResources.getDrawable(it, R.drawable.ic_sort)
 
-                title = getString(R.string.artists)
+                title = getString(if (sIsFoldersFragment) R.string.folders else R.string.artists)
 
                 setNavigationOnClickListener {
                     mUIControlInterface.onCloseActivity()
@@ -153,7 +168,7 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                     val searchView = findItem(R.id.action_search).actionView as SearchView
 
                     searchView.apply {
-                        setOnQueryTextListener(this@ArtistsFragment)
+                        setOnQueryTextListener(this@ArtistsFoldersFragment)
                         setOnQueryTextFocusChangeListener { _, hasFocus ->
                             if (mSorting != DEFAULT_SORTING) {
                                 val fastScrollerVisibility =
@@ -171,14 +186,18 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private fun setArtistsDataSource(artistsList: List<String>?) {
-        artistsList?.apply {
+    private fun getFolderItem(): Int {
+        return if (sLandscape) R.layout.generic_item else R.layout.folder_item
+    }
+
+    private fun setListDataSource(selectedList: List<String>?) {
+        selectedList?.apply {
             mDataSource.set(this)
         }
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        setArtistsDataSource(Utils.processQueryForStringsLists(newText, mArtists) ?: mArtists)
+        setListDataSource(Utils.processQueryForStringsLists(newText, mList) ?: mList)
         return false
     }
 
@@ -201,7 +220,7 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
             View.GONE
 
         //set indexes if artists rv is scrollable
-        mArtistsRecyclerView.afterMeasured {
+        mArtistsFoldersRecyclerView.afterMeasured {
 
             sIsFastScroller = computeVerticalScrollRange() > height
 
@@ -210,7 +229,7 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                 mIndicatorFastScrollerView.setupWithRecyclerView(
                     this,
                     { position ->
-                        val item = mArtists?.get(position) // Get your model object
+                        val item = mList?.get(position) // Get your model object
                         // or fetch the section at [position] from your database
 
                         FastScrollItemIndicator.Text(
@@ -253,8 +272,8 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private fun setupArtistsRecyclerViewPadding(isFastScrollerViewVisible: Boolean) {
         if (isFastScrollerViewVisible) mIndicatorFastScrollerView.afterMeasured {
-            mArtistsRecyclerView.setPadding(0, 0, width, 0)
-        } else mArtistsRecyclerView.setPadding(0, 0, 0, 0)
+            mArtistsFoldersRecyclerView.setPadding(0, 0, width, 0)
+        } else mArtistsFoldersRecyclerView.setPadding(0, 0, 0, 0)
     }
 
     private fun setMenuOnItemClickListener(context: Context, menu: Menu) {
@@ -264,7 +283,7 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                 mSorting = it.order
 
-                mArtists = getSortedArtists()
+                mList = getSortedList()
 
                 val isIndicatorFastScrollerViewVisible =
                     mSorting != DEFAULT_SORTING && sIsFastScroller
@@ -276,7 +295,7 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
                     isIndicatorFastScrollerViewVisible
                 )
 
-                setArtistsDataSource(mArtists)
+                setListDataSource(mList)
 
                 mSortMenuItem.setTitleColor(
                     ThemeHelper.resolveColorAttr(
@@ -297,6 +316,11 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     companion object {
+
+        private const val TAG_SELECTED_FRAGMENT = "SELECTED_FRAGMENT"
+
+        internal const val TAG_ARTISTS = "ArtistsFragmentTag"
+        internal const val TAG_FOLDERS = "FoldersFragmentTag"
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
@@ -304,6 +328,10 @@ class ArtistsFragment : Fragment(), SearchView.OnQueryTextListener {
          * @return A new instance of fragment MusicFragment.
          */
         @JvmStatic
-        fun newInstance() = ArtistsFragment()
+        fun newInstance(tag: String) = ArtistsFoldersFragment().apply {
+            arguments = Bundle().apply {
+                putString(TAG_SELECTED_FRAGMENT, tag)
+            }
+        }
     }
 }

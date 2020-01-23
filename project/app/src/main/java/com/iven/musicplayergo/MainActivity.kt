@@ -31,7 +31,12 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.google.android.material.tabs.TabLayout
 import com.iven.musicplayergo.adapters.QueueAdapter
-import com.iven.musicplayergo.fragments.*
+import com.iven.musicplayergo.fragments.AllMusicFragment
+import com.iven.musicplayergo.fragments.ArtistsFoldersFragment
+import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_ARTISTS
+import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_FOLDERS
+import com.iven.musicplayergo.fragments.DetailsFragment
+import com.iven.musicplayergo.fragments.SettingsFragment
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicLoader
 import com.iven.musicplayergo.music.MusicUtils
@@ -60,9 +65,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
     private var mResolvedDisabledIconsColor: Int by Delegates.notNull()
 
     //fragments
-    private var mArtistsFragment: ArtistsFragment? = null
+    private var mArtistsFragment: ArtistsFoldersFragment? = null
     private var mAllMusicFragment: AllMusicFragment? = null
-    private var mFoldersFragment: FoldersFragment? = null
+    private var mFoldersFragment: ArtistsFoldersFragment? = null
     private var mSettingsFragment: SettingsFragment? = null
 
     private lateinit var mDetailsFragment: DetailsFragment
@@ -410,11 +415,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
     private fun initActiveFragments(index: Int) {
         when (index) {
             0 -> if (mArtistsFragment == null || !mArtistsFragment?.isAdded!!) mArtistsFragment =
-                ArtistsFragment.newInstance()
+                ArtistsFoldersFragment.newInstance(TAG_ARTISTS)
             1 -> if (mAllMusicFragment == null || !mAllMusicFragment?.isAdded!!) mAllMusicFragment =
                 AllMusicFragment.newInstance()
             2 -> if (mFoldersFragment == null || !mFoldersFragment?.isAdded!!) mFoldersFragment =
-                FoldersFragment.newInstance()
+                ArtistsFoldersFragment.newInstance(TAG_FOLDERS)
             else -> if (mSettingsFragment == null || !mSettingsFragment?.isAdded!!) mSettingsFragment =
                 SettingsFragment.newInstance()
         }
@@ -453,7 +458,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
             .addToBackStack(null)
             .add(
                 R.id.container,
-                mDetailsFragment, DetailsFragment.TAG_ARTIST_FOLDER
+                mDetailsFragment
             )
             .commit()
     }

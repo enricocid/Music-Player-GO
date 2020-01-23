@@ -552,9 +552,9 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     companion object {
 
-        const val TAG_ARTIST_FOLDER = "SELECTED_ARTIST_FOLDER"
-        const val TAG_IS_FOLDER = "IS_FOLDER"
-        const val TAG_SELECTED_ALBUM_POSITION = "SELECTED_ALBUM_POSITION"
+        private const val TAG_ARTIST_FOLDER = "SELECTED_ARTIST_FOLDER"
+        internal const val TAG_IS_FOLDER = "IS_FOLDER"
+        internal const val TAG_SELECTED_ALBUM_POSITION = "SELECTED_ALBUM_POSITION"
 
         /**
          * Use this factory method to create a new instance of
