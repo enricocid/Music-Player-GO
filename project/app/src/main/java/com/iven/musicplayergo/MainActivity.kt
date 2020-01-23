@@ -341,13 +341,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
 
         initViewPager()
 
-        mViewPager.afterMeasured {
-            //handle restoring: handle external app intent or restore playback
-            if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null)
-                handleIntent(intent)
-            else
-                restorePlayerStatus()
-        }
+        //handle restoring: handle external app intent or restore playback
+        if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null)
+            handleIntent(intent)
+        else
+            restorePlayerStatus()
     }
 
     private fun initViewPager() {
