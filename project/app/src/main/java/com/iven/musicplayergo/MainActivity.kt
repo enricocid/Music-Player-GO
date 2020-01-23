@@ -190,8 +190,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
                 RESTORE_SETTINGS_FRAGMENT,
                 true
             )
-        } else {
-            if (sDetailsFragmentExpanded) super.onBackPressed()
         }
     }
 
