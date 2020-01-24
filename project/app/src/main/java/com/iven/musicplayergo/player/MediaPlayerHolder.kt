@@ -53,7 +53,6 @@ const val PLAYING = STATE_PLAYING
 const val PAUSED = STATE_PAUSED
 const val RESUMED = STATE_NONE
 
-@Suppress("DEPRECATION")
 class MediaPlayerHolder(private val playerService: PlayerService) :
     MediaPlayer.OnCompletionListener,
     MediaPlayer.OnPreparedListener {
@@ -210,6 +209,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
+    @Suppress("DEPRECATION")
     private fun getAudioFocusResult(): Int {
 
         return when {
@@ -234,6 +234,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
+    @Suppress("DEPRECATION")
     private fun giveUpAudioFocus() {
 
         when {
