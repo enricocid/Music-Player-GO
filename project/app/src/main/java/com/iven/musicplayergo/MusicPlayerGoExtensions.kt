@@ -4,6 +4,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewTreeObserver
 import com.iven.musicplayergo.ui.ThemeHelper
+import kotlin.random.Random
 
 //viewTreeObserver extension to measure layout params
 //https://antonioleiva.com/kotlin-ongloballayoutlistener/
@@ -25,3 +26,5 @@ fun MenuItem.setTitleColor(color: Int) {
     val html = "<font color='#$hexColor'>$title</font>"
     title = ThemeHelper.buildSpanned(html)
 }
+
+fun IntRange.random() = Random.nextInt(start, endInclusive + 1)

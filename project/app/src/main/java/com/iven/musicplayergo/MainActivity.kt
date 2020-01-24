@@ -923,8 +923,9 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     }
 
     override fun onShuffleSongs(songs: MutableList<Music>?) {
-        songs?.shuffle()
-        val song = songs?.get(0)
+        val randomNumber = (0 until songs?.size!!).random()
+        songs.shuffle()
+        val song = songs[randomNumber]
         onSongSelected(song, songs)
     }
 
