@@ -6,10 +6,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
@@ -44,7 +42,7 @@ import kotlin.math.max
 
 private const val REVEAL_DURATION: Long = 500
 
-class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
+class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryTextListener {
 
     private var sFolder = false
 
@@ -120,14 +118,6 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_details, container, false)
-    }
-
     fun onHandleBackPressed(context: Context): Animator {
         if (!mArtistDetailsAnimator.isRunning) revealFragment(context, false)
         return mArtistDetailsAnimator
@@ -156,13 +146,13 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         mSelectedAlbumYearDuration = album_year_duration
         mSongsRecyclerView = songs_rv
 
-        context?.let {
+        context?.let { cxt ->
 
-            sLandscape = ThemeHelper.isDeviceLand(it.resources)
+            sLandscape = ThemeHelper.isDeviceLand(cxt.resources)
 
             mDetailsToolbar.apply {
 
-                overflowIcon = AppCompatResources.getDrawable(it, R.drawable.ic_shuffle)
+                overflowIcon = AppCompatResources.getDrawable(cxt, R.drawable.ic_shuffle)
 
                 title = mSelectedArtistOrFolder
 
@@ -185,7 +175,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
             if (!sFolder) {
 
-                setupAlbumsContainer(it, false)
+                setupAlbumsContainer(cxt, false)
 
             } else {
 
@@ -221,9 +211,9 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     withDataSource(mSongsDataSource)
 
                     if (sLandscape)
-                        withLayoutManager(GridLayoutManager(it, 2))
+                        withLayoutManager(GridLayoutManager(cxt, 2))
                     else
-                        addItemDecoration(ThemeHelper.getRecyclerViewDivider(it))
+                        addItemDecoration(ThemeHelper.getRecyclerViewDivider(cxt))
 
                     withItem<Music, GenericViewHolder>(R.layout.song_item) {
                         onBind(::GenericViewHolder) { _, item ->
@@ -253,7 +243,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                         onLongClick { index ->
                             Utils.showAddToLovedQueueSongsPopup(
-                                it,
+                                cxt,
                                 findViewHolderForAdapterPosition(index)?.itemView!!,
                                 item,
                                 mUIControlInterface
@@ -264,7 +254,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             }
 
             view.afterMeasured {
-                revealFragment(it, true)
+                revealFragment(cxt, true)
             }
         }
     }

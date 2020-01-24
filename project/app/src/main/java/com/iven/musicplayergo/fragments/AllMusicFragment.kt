@@ -2,9 +2,7 @@ package com.iven.musicplayergo.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -28,7 +26,7 @@ import kotlinx.android.synthetic.main.search_toolbar.*
  * Use the [AllMusicFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
+class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQueryTextListener {
 
     private lateinit var mSongsRecyclerView: RecyclerView
 
@@ -48,14 +46,6 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_all_music, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -65,7 +55,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
         setMusicDataSource(mAllMusic)
 
-        context?.let {
+        context?.let { cxt ->
 
             mSongsRecyclerView.apply {
 
@@ -77,12 +67,12 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
                     if (ThemeHelper.isDeviceLand(resources)) withLayoutManager(
                         GridLayoutManager(
-                            it,
+                            cxt,
                             3
                         )
                     )
                     else addItemDecoration(
-                        ThemeHelper.getRecyclerViewDivider(it)
+                        ThemeHelper.getRecyclerViewDivider(cxt)
                     )
 
                     withItem<Music, SongsViewHolder>(R.layout.song_item_alt) {
@@ -103,7 +93,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
                         onLongClick { index ->
                             Utils.showAddToLovedQueueSongsPopup(
-                                it,
+                                cxt,
                                 findViewHolderForAdapterPosition(index)?.itemView!!,
                                 item,
                                 mUIControlInterface

@@ -3,7 +3,9 @@ package com.iven.musicplayergo.fragments
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -31,7 +33,8 @@ import kotlinx.android.synthetic.main.search_toolbar.*
  * Use the [ArtistsFoldersFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ArtistsFoldersFragment : Fragment(), SearchView.OnQueryTextListener {
+class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
+    SearchView.OnQueryTextListener {
 
     private var sIsFoldersFragment = false
 
@@ -72,14 +75,6 @@ class ArtistsFoldersFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_artist_folder, container, false)
-    }
-
     private fun getSortedList(): MutableList<String>? {
         val selectedList =
             if (sIsFoldersFragment) musicLibrary.allSongsByFolder?.keys else musicLibrary.allAlbumsByArtist?.keys
@@ -103,9 +98,9 @@ class ArtistsFoldersFragment : Fragment(), SearchView.OnQueryTextListener {
         mList = getSortedList()
         setListDataSource(mList)
 
-        context?.let {
+        context?.let { cxt ->
 
-            sLandscape = ThemeHelper.isDeviceLand(it.resources)
+            sLandscape = ThemeHelper.isDeviceLand(cxt.resources)
 
             mArtistsFoldersRecyclerView.apply {
 
@@ -116,10 +111,10 @@ class ArtistsFoldersFragment : Fragment(), SearchView.OnQueryTextListener {
                     withDataSource(mDataSource)
 
                     if (sLandscape)
-                        withLayoutManager(GridLayoutManager(it, 3))
+                        withLayoutManager(GridLayoutManager(cxt, 3))
                     else
                         addItemDecoration(
-                            ThemeHelper.getRecyclerViewDivider(it)
+                            ThemeHelper.getRecyclerViewDivider(cxt)
                         )
 
                     withItem<String, GenericViewHolder>(if (sIsFoldersFragment) getFolderItem() else R.layout.generic_item) {
@@ -151,7 +146,7 @@ class ArtistsFoldersFragment : Fragment(), SearchView.OnQueryTextListener {
                 inflateMenu(R.menu.menu_search)
 
                 overflowIcon =
-                    AppCompatResources.getDrawable(it, R.drawable.ic_sort)
+                    AppCompatResources.getDrawable(cxt, R.drawable.ic_sort)
 
                 title = getString(if (sIsFoldersFragment) R.string.folders else R.string.artists)
 
@@ -162,7 +157,7 @@ class ArtistsFoldersFragment : Fragment(), SearchView.OnQueryTextListener {
                 menu.apply {
 
                     mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, this).apply {
-                        setTitleColor(ThemeHelper.resolveThemeAccent(it))
+                        setTitleColor(ThemeHelper.resolveThemeAccent(cxt))
                     }
 
                     val searchView = findItem(R.id.action_search).actionView as SearchView
@@ -180,7 +175,7 @@ class ArtistsFoldersFragment : Fragment(), SearchView.OnQueryTextListener {
                         }
                     }
 
-                    setMenuOnItemClickListener(it, this)
+                    setMenuOnItemClickListener(cxt, this)
                 }
             }
         }

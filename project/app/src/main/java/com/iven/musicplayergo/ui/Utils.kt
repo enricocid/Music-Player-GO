@@ -131,9 +131,9 @@ object Utils {
 
         return try {
             // case insensitive search
-            list?.iterator()?.forEach {
-                if (it.toLowerCase().contains(query?.toLowerCase()!!)) {
-                    filteredStrings.add(it)
+            list?.iterator()?.forEach { filteredString ->
+                if (filteredString.toLowerCase().contains(query?.toLowerCase()!!)) {
+                    filteredStrings.add(filteredString)
                 }
             }
             return filteredStrings
@@ -150,9 +150,9 @@ object Utils {
 
         return try {
             // case insensitive search
-            musicList?.iterator()?.forEach {
-                if (it.title?.toLowerCase()!!.contains(query?.toLowerCase()!!)) {
-                    filteredSongs.add(it)
+            musicList?.iterator()?.forEach { filteredSong ->
+                if (filteredSong.title?.toLowerCase()!!.contains(query?.toLowerCase()!!)) {
+                    filteredSongs.add(filteredSong)
                 }
             }
             return filteredSongs

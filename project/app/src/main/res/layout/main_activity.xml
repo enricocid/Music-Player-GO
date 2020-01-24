@@ -37,7 +37,6 @@
         </FrameLayout>
     </FrameLayout>
 
-
     <!-- CONTROLS PANEL -->
     <include layout="@layout/player_controls_panel" />
 </LinearLayout>

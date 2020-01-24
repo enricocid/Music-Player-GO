@@ -10,7 +10,9 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
+import android.util.AttributeSet
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -55,7 +57,7 @@ const val PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 2588
 const val RESTORE_SETTINGS_FRAGMENT = "restore_settings_fragment_key"
 
 @Suppress("UNUSED_PARAMETER")
-class MainActivity : AppCompatActivity(), UIControlInterface,
+class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterface,
     LoaderManager.LoaderCallbacks<Boolean> {
 
     //colors
@@ -234,13 +236,19 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun onCreateView(
+        parent: View?,
+        name: String,
+        context: Context,
+        attrs: AttributeSet
+    ): View? {
         //set ui theme
         setTheme(ThemeHelper.getAccentedTheme().first)
+        return super.onCreateView(parent, name, context, attrs)
+    }
 
-        setContentView(R.layout.main_activity)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         //init views
         getViewsAndResources()
@@ -354,17 +362,16 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
         mViewPager.offscreenPageLimit = mActiveFragments?.size?.minus(1)!!
         mViewPager.adapter = pagerAdapter
 
-        if (sRestoreSettingsFragment) mViewPager.currentItem = mViewPager.offscreenPageLimit
-
         if (sTabsEnabled) {
             mTabsLayout.apply {
 
+                tabIconTint = ColorStateList.valueOf(mResolvedAlphaAccentColor)
+
                 setupWithViewPager(mViewPager)
 
-                tabIconTint = ColorStateList.valueOf(mResolvedAlphaAccentColor)
                 initActiveFragmentsOrTabs(false)
 
-                getTabAt(if (sRestoreSettingsFragment) mViewPager.currentItem else 0)?.icon?.setTint(
+                if (!sRestoreSettingsFragment) getTabAt(0)?.icon?.setTint(
                     mResolvedAccentColor
                 )
 
@@ -385,6 +392,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
                 })
             }
         }
+
+        if (sRestoreSettingsFragment) mViewPager.currentItem =
+            mViewPager.offscreenPageLimit
     }
 
     private fun setupControlsPanelSpecs() {
@@ -399,7 +409,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
 
     private fun initActiveFragmentsOrTabs(onInitActiveFragments: Boolean) {
         mActiveFragments?.iterator()?.forEach {
-            if (onInitActiveFragments) initActiveFragments(it.toInt()) else
+            if (onInitActiveFragments) initFragmentAtIndex(it.toInt()) else
                 mTabsLayout.getTabAt(mActiveFragments?.indexOf(it)!!)?.setIcon(
                     ThemeHelper.getTabIcon(
                         it.toInt()
@@ -408,15 +418,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
         }
     }
 
-    private fun initActiveFragments(index: Int) {
+    private fun initFragmentAtIndex(index: Int) {
         when (index) {
-            0 -> if (mArtistsFragment == null || !mArtistsFragment?.isAdded!!) mArtistsFragment =
+            0 -> if (mArtistsFragment == null) mArtistsFragment =
                 ArtistsFoldersFragment.newInstance(TAG_ARTISTS)
-            1 -> if (mAllMusicFragment == null || !mAllMusicFragment?.isAdded!!) mAllMusicFragment =
-                AllMusicFragment.newInstance()
-            2 -> if (mFoldersFragment == null || !mFoldersFragment?.isAdded!!) mFoldersFragment =
+            1 -> if (mAllMusicFragment == null) mAllMusicFragment = AllMusicFragment.newInstance()
+            2 -> if (mFoldersFragment == null) mFoldersFragment =
                 ArtistsFoldersFragment.newInstance(TAG_FOLDERS)
-            else -> if (mSettingsFragment == null || !mSettingsFragment?.isAdded!!) mSettingsFragment =
+            else -> if (mSettingsFragment == null) mSettingsFragment =
                 SettingsFragment.newInstance()
         }
     }
@@ -494,8 +503,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
 
         onLovedSongsUpdate(false)
 
-        mPlayerControlsContainer.setOnLongClickListener {
-            if (checkIsPlayer(true)) openPlayingArtistAlbum(it)
+        mPlayerControlsContainer.setOnLongClickListener { playerControlsContainer ->
+            if (checkIsPlayer(true)) openPlayingArtistAlbum(playerControlsContainer)
             return@setOnLongClickListener true
         }
     }
@@ -1028,10 +1037,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface,
     //view pager's adapter
     private inner class ScreenSlidePagerAdapter(fm: FragmentManager) :
         FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+        override fun instantiateItem(container: ViewGroup, position: Int): Any {
+            initFragmentAtIndex(mActiveFragments?.get(position)?.toInt()!!)
+            return super.instantiateItem(container, position)
+        }
+
         override fun getCount() = mActiveFragments?.size!!
 
-        override fun getItem(position: Int): Fragment {
-            return handleOnNavigationItemSelected(position)!!
-        }
+        override fun getItem(position: Int) = handleOnNavigationItemSelected(position)!!
     }
 }

@@ -96,19 +96,19 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     override fun onPreferenceClick(preference: Preference?): Boolean {
 
-        activity?.let {
+        activity?.let { context ->
             when (preference?.key) {
 
                 getString(R.string.open_git_pref) -> Utils.openCustomTab(
-                    it,
+                    context,
                     getString(R.string.app_git)
                 )
                 getString(R.string.faq_pref) -> Utils.openCustomTab(
-                    it,
+                    context,
                     getString(R.string.app_faq)
                 )
-                getString(R.string.accent_pref) -> showAccentsDialog(it)
-                getString(R.string.active_fragments_pref) -> showActiveFragmentsDialog(it)
+                getString(R.string.accent_pref) -> showAccentsDialog(context)
+                getString(R.string.active_fragments_pref) -> showActiveFragmentsDialog(context)
             }
         }
         return false
