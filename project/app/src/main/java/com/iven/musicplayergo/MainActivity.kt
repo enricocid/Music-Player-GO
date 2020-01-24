@@ -12,7 +12,6 @@ import android.os.IBinder
 import android.provider.OpenableColumns
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -1038,11 +1037,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     //view pager's adapter
     private inner class ScreenSlidePagerAdapter(fm: FragmentManager) :
         FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-
-        override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            initFragmentAtIndex(mActiveFragments?.get(position)?.toInt()!!)
-            return super.instantiateItem(container, position)
-        }
 
         override fun getCount() = mActiveFragments?.size!!
 

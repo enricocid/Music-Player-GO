@@ -25,6 +25,5 @@ class MusicPlayerGoApp : Application() {
         prefs = MusicPlayerGoPreferences(applicationContext)
         musicLibrary = MusicLibrary()
         AppCompatDelegate.setDefaultNightMode(ThemeHelper.getDefaultNightMode(applicationContext))
-        setTheme(ThemeHelper.getAccentedTheme().first)
     }
 }
