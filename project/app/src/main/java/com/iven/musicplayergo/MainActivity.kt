@@ -395,7 +395,9 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                     }
                 })
 
-                if (!sRestoreSettingsFragment) getTabAt(0)?.icon?.setTint(mResolvedAccentColor)
+                getTabAt(if (sRestoreSettingsFragment) mViewPager2.offscreenPageLimit else 0)?.icon?.setTint(
+                    mResolvedAccentColor
+                )
             }
         }
 
