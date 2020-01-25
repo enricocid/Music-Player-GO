@@ -18,11 +18,11 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentActivity
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
@@ -31,6 +31,7 @@ import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_ARTISTS
@@ -79,7 +80,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
     //views
     private lateinit var mLoadingProgress: ProgressBar
-    private lateinit var mViewPager: ViewPager
+    private lateinit var mViewPager2: ViewPager2
     private lateinit var mTabsLayout: TabLayout
     private lateinit var mPlayingSongsContainer: View
 
@@ -172,7 +173,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         if (sDetailsFragmentExpanded) {
             closeDetailsFragment(null)
         } else {
-            if (mViewPager.currentItem != 0) mViewPager.currentItem = 0 else
+            if (mViewPager2.currentItem != 0) mViewPager2.currentItem = 0 else
                 if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) Utils.stopPlaybackDialog(
                     this,
                     mMediaPlayerHolder
@@ -287,7 +288,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     private fun getViewsAndResources() {
 
         mLoadingProgress = loading_progress_bar
-        mViewPager = pager
+        mViewPager2 = view_pager2
         mTabsLayout = tab_layout
         mPlayingSongsContainer = playing_songs_container
 
@@ -362,24 +363,21 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
     private fun initViewPager() {
 
-        initActiveFragmentsOrTabs(true)
-
-        val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
-        mViewPager.offscreenPageLimit = mActiveFragments?.size?.minus(1)!!
-        mViewPager.adapter = pagerAdapter
+        val pagerAdapter = ScreenSlidePagerAdapter(this)
+        mViewPager2.offscreenPageLimit = mActiveFragments?.size?.minus(1)!!
+        mViewPager2.adapter = pagerAdapter
 
         if (sTabsEnabled) {
             mTabsLayout.apply {
 
                 tabIconTint = ColorStateList.valueOf(mResolvedAlphaAccentColor)
 
-                setupWithViewPager(mViewPager)
-
-                initActiveFragmentsOrTabs(false)
-
-                if (!sRestoreSettingsFragment) getTabAt(0)?.icon?.setTint(
-                    mResolvedAccentColor
-                ) else getTabAt(mViewPager.offscreenPageLimit)?.icon?.setTint(mResolvedAccentColor)
+                TabLayoutMediator(this, mViewPager2) { tab, position ->
+                    mActiveFragments?.get(position)?.toInt()?.let { currentFragmentIndex ->
+                        tab.setIcon(ThemeHelper.getTabIcon(currentFragmentIndex))
+                        initFragmentAtIndex(currentFragmentIndex)
+                    }
+                }.attach()
 
                 addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
@@ -396,11 +394,13 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                         if (sDetailsFragmentExpanded) closeDetailsFragment(null)
                     }
                 })
+
+                if (!sRestoreSettingsFragment) getTabAt(0)?.icon?.setTint(mResolvedAccentColor)
             }
         }
 
-        if (sRestoreSettingsFragment) mViewPager.currentItem =
-            mViewPager.offscreenPageLimit
+        if (sRestoreSettingsFragment) mViewPager2.currentItem =
+            mViewPager2.offscreenPageLimit
     }
 
     private fun setupControlsPanelSpecs() {
@@ -411,17 +411,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             mControlsPaddingEnd,
             if (sTabsEnabled) mControlsPaddingNormal else mControlsPaddingNoTabs
         )
-    }
-
-    private fun initActiveFragmentsOrTabs(onInitActiveFragments: Boolean) {
-        mActiveFragments?.iterator()?.forEach {
-            if (onInitActiveFragments) initFragmentAtIndex(it.toInt()) else
-                mTabsLayout.getTabAt(mActiveFragments?.indexOf(it)!!)?.setIcon(
-                    ThemeHelper.getTabIcon(
-                        it.toInt()
-                    )
-                )
-        }
     }
 
     private fun initFragmentAtIndex(index: Int) {
@@ -1037,12 +1026,11 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         }
     }
 
-    //view pager's adapter
-    private inner class ScreenSlidePagerAdapter(fm: FragmentManager) :
-        FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+    // ViewPager2 adapter class
+    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+        override fun getItemCount(): Int = mActiveFragments?.size!!
 
-        override fun getCount() = mActiveFragments?.size!!
-
-        override fun getItem(position: Int) = handleOnNavigationItemSelected(position)!!
+        override fun createFragment(position: Int): Fragment =
+            handleOnNavigationItemSelected(position)!!
     }
 }
