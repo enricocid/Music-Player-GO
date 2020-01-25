@@ -52,7 +52,7 @@
     <string name="no_browser">No browser found!</string>
     <string name="bad_id">Play a song first!</string>
     <string name="no_eq">No equalizer found!</string>
-    <string name="error_unknown">Something went wrong! :(</string>
+    <string name="error_no_music">No music found :(</string>
     <string name="error_unknown_unsupported">Something went wrong! :( Probably the chosen format is not supported or folder is not accessible (not an app\'s fault!)</string>
     <string name="error_media_buttons">Something went wrong! :( Please restart playback from the app</string>
     <string name="on_close_activity">Do You want to stop playback?</string>

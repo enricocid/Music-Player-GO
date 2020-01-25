@@ -47,9 +47,10 @@ class AccentsAdapter(private val activity: Activity) :
                     R.color.deep_purple
                 ).apply {
                     ThemeHelper.updateIconTint(circle, this)
-                    ThemeHelper.createColouredRipple(activity, this)?.apply {
-                        itemView.background = this
-                    }
+                    ThemeHelper.createColouredRipple(activity, this, R.drawable.ripple_oval)
+                        ?.apply {
+                            itemView.background = this
+                        }
                 }
 
                 findViewById<ImageButton>(R.id.check).visibility =

@@ -37,7 +37,6 @@
     <string name="no_browser">Tarayıcı uygulaması bulunamadı!</string>
     <string name="bad_id">Oynatmak için şarkı seçin!</string>
     <string name="no_eq">Ekolayzer bulunamadı!</string>
-    <string name="error_unknown">Bir şeyler yanlış gitti! :(</string>
     <string name="error_unknown_unsupported">Bir şeyler yanlış gitti! :( Muhtemelen seçilen biçim desteklenmiyor veya klasöre erişilemiyor (uygulamanın hatası değil!)</string>
     <string name="error_media_buttons">Bir şeyler yanlış gitti! :( Lütfen uygulamadan oynatmayı yeniden başlatın</string>
     <string name="on_close_activity">Oynatmayı durdurmak ister misin?</string>

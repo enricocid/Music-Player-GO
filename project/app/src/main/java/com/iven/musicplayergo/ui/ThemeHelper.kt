@@ -221,8 +221,8 @@ object ThemeHelper {
     }
 
     @JvmStatic
-    fun createColouredRipple(context: Context, rippleColor: Int): Drawable? {
-        val ripple = ContextCompat.getDrawable(context, R.drawable.ripple_oval) as RippleDrawable
+    fun createColouredRipple(context: Context, rippleColor: Int, rippleId: Int): Drawable? {
+        val ripple = ContextCompat.getDrawable(context, rippleId) as RippleDrawable
         ripple.setColor(ColorStateList.valueOf(rippleColor))
         return ripple
     }

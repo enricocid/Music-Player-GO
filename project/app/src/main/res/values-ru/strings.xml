@@ -15,7 +15,6 @@
     <string name="edge_pref_summary_on">Отключить полное заполнение экрана</string>
     <string name="error_no_queue">В очереди нет треков!</string>
     <string name="error_no_loved_songs">В избранном нет треков!</string>
-    <string name="error_unknown">Что-то пошло не так! :(</string>
     <string name="error_unknown_unsupported">Что-то пошло не так! :( Возможно, формат не поддерживается или папка недоступна (не вина приложения!)</string>
     <string name="faq_summary">FAQ и поддерживаемые форматы :D</string>
     <string name="focus_pref_summary_off">Включить управление фокусировкой аудио</string>

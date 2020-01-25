@@ -10,4 +10,5 @@ interface UIControlInterface {
     fun onLovedSongsUpdate(clear: Boolean)
     fun onCloseActivity()
     fun onAddToQueue(song: Music)
+    fun onDenyPermission()
 }

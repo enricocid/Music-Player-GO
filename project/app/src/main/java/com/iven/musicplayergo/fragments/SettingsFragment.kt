@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.addFragment
 import com.iven.musicplayergo.ui.UIControlInterface
 import kotlinx.android.synthetic.main.search_toolbar.*
 
@@ -38,13 +39,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                     mUIControlInterface.onCloseActivity()
                 }
             }
-
             childFragmentManager.beginTransaction()
-                .replace(
-                    R.id.fragment_layout,
-                    PreferencesFragment.newInstance()
-                )
-                .commit()
+                .addFragment(false, R.id.fragment_layout, PreferencesFragment.newInstance())
         }
     }
 
@@ -53,7 +49,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @return A new instance of fragment PreferencesFragment.
+         * @return A new instance of fragment SettingsFragment.
          */
         @JvmStatic
         fun newInstance() = SettingsFragment()

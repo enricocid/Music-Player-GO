@@ -32,12 +32,9 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.google.android.material.tabs.TabLayout
 import com.iven.musicplayergo.adapters.QueueAdapter
-import com.iven.musicplayergo.fragments.AllMusicFragment
-import com.iven.musicplayergo.fragments.ArtistsFoldersFragment
+import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_ARTISTS
 import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_FOLDERS
-import com.iven.musicplayergo.fragments.DetailsFragment
-import com.iven.musicplayergo.fragments.SettingsFragment
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicLoader
 import com.iven.musicplayergo.music.MusicUtils
@@ -84,7 +81,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     private lateinit var mLoadingProgress: ProgressBar
     private lateinit var mViewPager: ViewPager
     private lateinit var mTabsLayout: TabLayout
-    private lateinit var mPlayerControlsContainer: View
+    private lateinit var mPlayingSongsContainer: View
 
     private var sLandscape = false
 
@@ -117,7 +114,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     private lateinit var mLoveButtonNP: ImageButton
     private lateinit var mVolumeNP: ImageButton
     private lateinit var mRatesTextNP: TextView
-
 
     //music player things
     private var mMusicLoader: Loader<Boolean>? = null
@@ -230,9 +226,13 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                 else
                 // permission denied, boo! Disable the
                 // functionality that depends on this permission.
-                    Utils.dismissOnPermissionDenied(this)
+                    notifyError(ErrorFragment.TAG_NO_PERMISSION)
             }
         }
+    }
+
+    override fun onDenyPermission() {
+        notifyError(ErrorFragment.TAG_NO_PERMISSION)
     }
 
     override fun onCreateView(
@@ -280,7 +280,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             )
 
         if (Utils.hasToAskForReadStoragePermission(this)) Utils.manageAskForReadStoragePermission(
-            this
+            activity = this, uiControlInterface = this
         ) else doBindService()
     }
 
@@ -289,7 +289,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         mLoadingProgress = loading_progress_bar
         mViewPager = pager
         mTabsLayout = tab_layout
-        mPlayerControlsContainer = playing_songs_container
+        mPlayingSongsContainer = playing_songs_container
 
         //controls panel
         mPlayingSong = playing_song
@@ -318,6 +318,12 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         }
     }
 
+    private fun notifyError(errorType: String) {
+        player_controls_container.visibility = View.GONE
+        supportFragmentManager.beginTransaction()
+            .addFragment(false, R.id.container, ErrorFragment.newInstance(errorType))
+    }
+
     override fun onLoaderReset(loader: Loader<Boolean>) {
     }
 
@@ -326,9 +332,12 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     }
 
     override fun onLoadFinished(loader: Loader<Boolean>, hasLoaded: Boolean) {
+
         LoaderManager.getInstance(this).destroyLoader(MUSIC_LOADER_ID)
-        if (hasLoaded && !musicLibrary.allSongsFiltered.isNullOrEmpty()) finishSetup() else Utils.notifyLoadingError(
-            this
+        if (mLoadingProgress.visibility != View.GONE) mLoadingProgress.visibility = View.GONE
+
+        if (hasLoaded && !musicLibrary.allSongsFiltered.isNullOrEmpty()) finishSetup() else notifyError(
+            ErrorFragment.TAG_NO_MUSIC
         )
     }
 
@@ -341,8 +350,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     }
 
     private fun finishSetup() {
-
-        if (mLoadingProgress.visibility != View.GONE) mLoadingProgress.visibility = View.GONE
 
         initViewPager()
 
@@ -398,7 +405,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
     private fun setupControlsPanelSpecs() {
         if (!sTabsEnabled) mTabsLayout.visibility = View.GONE
-        mPlayerControlsContainer.setPadding(
+        mPlayingSongsContainer.setPadding(
             mControlsPaddingNoTabs,
             if (sTabsEnabled) mControlsPaddingNormal else mControlsPaddingNoTabs,
             mControlsPaddingEnd,
@@ -458,18 +465,14 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                 isFolder,
                 MusicUtils.getPlayingAlbumPosition(selectedArtistOrFolder, mMediaPlayerHolder)
             )
+
         supportFragmentManager.beginTransaction()
-            .addToBackStack(null)
-            .add(
-                R.id.container,
-                mDetailsFragment
-            )
-            .commit()
+            .addFragment(true, R.id.container, mDetailsFragment)
     }
 
     private fun closeDetailsFragment(tab: TabLayout.Tab?) {
         if (!sRevealAnimationRunning) {
-            mDetailsFragment.onHandleBackPressed(this).apply {
+            mDetailsFragment.onHandleBackPressed().apply {
                 sRevealAnimationRunning = true
                 tab?.icon?.setTint(mResolvedAccentColor)
                 doOnEnd {
@@ -502,7 +505,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
         onLovedSongsUpdate(false)
 
-        mPlayerControlsContainer.setOnLongClickListener { playerControlsContainer ->
+        mPlayingSongsContainer.setOnLongClickListener { playerControlsContainer ->
             if (checkIsPlayer(true)) openPlayingArtistAlbum(playerControlsContainer)
             return@setOnLongClickListener true
         }

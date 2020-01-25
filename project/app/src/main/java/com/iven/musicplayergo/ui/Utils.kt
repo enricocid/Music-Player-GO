@@ -45,18 +45,6 @@ object Utils {
     }
 
     @JvmStatic
-    fun notifyLoadingError(activity: Activity) {
-        activity.apply {
-            makeToast(
-                activity,
-                activity.getString(R.string.error_unknown),
-                Toast.LENGTH_LONG
-            )
-            finishAndRemoveTask()
-        }
-    }
-
-    @JvmStatic
     fun hasToAskForReadStoragePermission(activity: Activity): Boolean {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(
             activity,
@@ -65,7 +53,10 @@ object Utils {
     }
 
     @JvmStatic
-    fun manageAskForReadStoragePermission(activity: Activity) {
+    fun manageAskForReadStoragePermission(
+        activity: Activity,
+        uiControlInterface: UIControlInterface
+    ) {
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(
                 activity,
@@ -86,7 +77,7 @@ object Utils {
                     askForReadStoragePermission(activity)
                 }
                 negativeButton {
-                    dismissOnPermissionDenied(activity)
+                    uiControlInterface.onDenyPermission()
                 }
             }
         } else {
@@ -101,18 +92,6 @@ object Utils {
             arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
             PERMISSION_REQUEST_READ_EXTERNAL_STORAGE
         )
-    }
-
-    @JvmStatic
-    fun dismissOnPermissionDenied(activity: Activity) {
-        activity.apply {
-            makeToast(
-                this,
-                getString(R.string.perm_rationale),
-                Toast.LENGTH_LONG
-            )
-            finishAndRemoveTask()
-        }
     }
 
     @JvmStatic

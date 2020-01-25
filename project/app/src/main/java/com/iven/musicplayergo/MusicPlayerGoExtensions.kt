@@ -1,9 +1,19 @@
 package com.iven.musicplayergo
 
+import android.animation.Animator
+import android.animation.ValueAnimator
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewAnimationUtils
 import android.view.ViewTreeObserver
+import androidx.core.animation.doOnEnd
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import androidx.vectordrawable.graphics.drawable.ArgbEvaluator
 import com.iven.musicplayergo.ui.ThemeHelper
+import kotlin.math.max
 import kotlin.random.Random
 
 //viewTreeObserver extension to measure layout params
@@ -28,3 +38,69 @@ fun MenuItem.setTitleColor(color: Int) {
 }
 
 fun IntRange.random() = Random.nextInt(start, endInclusive + 1)
+
+fun FragmentTransaction.addFragment(isAdd: Boolean, container: Int, fragment: Fragment) {
+    when {
+        isAdd -> {
+            addToBackStack(null)
+            add(
+                container,
+                fragment
+            )
+        }
+        else -> replace(
+            container,
+            fragment
+        )
+    }
+    commit()
+}
+
+fun View.createCircularReveal(isCentered: Boolean, show: Boolean): Animator {
+
+    val revealDuration: Long = if (isCentered) 1500 else 500
+    val radius = max(width, height).toFloat()
+
+    val startRadius = if (show) 0f else radius
+    val finalRadius = if (show) radius else 0f
+
+    val cx = if (isCentered) width / 2 else 0
+    val cy = if (isCentered) height / 2 else 0
+    val animator =
+        ViewAnimationUtils.createCircularReveal(
+            this,
+            cx,
+            cy,
+            startRadius,
+            finalRadius
+        ).apply {
+            interpolator = FastOutSlowInInterpolator()
+            duration = revealDuration
+            start()
+        }
+
+    val accent = if (isCentered) ContextCompat.getColor(
+        context,
+        R.color.red
+    ) else ThemeHelper.resolveThemeAccent(context)
+    val backgroundColor =
+        ThemeHelper.resolveColorAttr(context, android.R.attr.windowBackground)
+    val startColor = if (show) accent else backgroundColor
+    val endColor = if (show) backgroundColor else accent
+
+    ValueAnimator().apply {
+        setIntValues(startColor, endColor)
+        setEvaluator(ArgbEvaluator())
+        addUpdateListener { valueAnimator -> setBackgroundColor((valueAnimator.animatedValue as Int)) }
+        duration = revealDuration
+        if (isCentered) doOnEnd {
+            background = ThemeHelper.createColouredRipple(
+                context,
+                ContextCompat.getColor(context, R.color.red),
+                R.drawable.ripple
+            )
+        }
+        start()
+    }
+    return animator
+}

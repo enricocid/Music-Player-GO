@@ -148,7 +148,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @return A new instance of fragment MusicFragment.
+         * @return A new instance of fragment AllMusicFragment.
          */
         @JvmStatic
         fun newInstance() = AllMusicFragment()

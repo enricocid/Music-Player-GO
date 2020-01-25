@@ -1,37 +1,33 @@
 package com.iven.musicplayergo.fragments
 
 import android.animation.Animator
-import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import android.view.ViewAnimationUtils
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
-import androidx.vectordrawable.graphics.drawable.ArgbEvaluator
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.afterMeasured
+import com.iven.musicplayergo.createCircularReveal
 import com.iven.musicplayergo.music.Album
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.ui.*
 import kotlinx.android.synthetic.main.fragment_details.*
-import kotlin.math.max
 
 
 /**
@@ -39,8 +35,6 @@ import kotlin.math.max
  * Use the [DetailsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-
-private const val REVEAL_DURATION: Long = 500
 
 class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryTextListener {
 
@@ -118,8 +112,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
     }
 
-    fun onHandleBackPressed(context: Context): Animator {
-        if (!mArtistDetailsAnimator.isRunning) revealFragment(context, false)
+    fun onHandleBackPressed(): Animator {
+        if (!mArtistDetailsAnimator.isRunning) mArtistDetailsAnimator =
+            mArtistDetailsView.createCircularReveal(isCentered = false, show = false)
         return mArtistDetailsAnimator
     }
 
@@ -254,7 +249,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             }
 
             view.afterMeasured {
-                revealFragment(cxt, true)
+                mArtistDetailsAnimator =
+                    mArtistDetailsView.createCircularReveal(isCentered = false, show = true)
             }
         }
     }
@@ -493,64 +489,17 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         mSongsRecyclerView.scrollToPosition(0)
     }
 
-    private fun revealFragment(context: Context, show: Boolean) {
-
-        val radius = max(mArtistDetailsView.width, mArtistDetailsView.height).toFloat()
-
-        val startRadius = if (show) 0f else radius
-        val finalRadius = if (show) radius else 0f
-
-        mArtistDetailsAnimator =
-            ViewAnimationUtils.createCircularReveal(
-                mArtistDetailsView,
-                0,
-                0,
-                startRadius,
-                finalRadius
-            ).apply {
-                interpolator = FastOutSlowInInterpolator()
-                duration = REVEAL_DURATION
-                start()
-            }
-
-        val accent = ThemeHelper.resolveThemeAccent(context)
-        val backgroundColor =
-            ThemeHelper.resolveColorAttr(context, android.R.attr.windowBackground)
-        val startColor = if (show) accent else backgroundColor
-        val endColor = if (show) backgroundColor else accent
-
-        startColorAnimation(
-            mArtistDetailsView,
-            startColor,
-            endColor
-        )
-    }
-
-    private fun startColorAnimation(
-        view: View,
-        startColor: Int,
-        endColor: Int
-    ) {
-        ValueAnimator().apply {
-            setIntValues(startColor, endColor)
-            setEvaluator(ArgbEvaluator())
-            addUpdateListener { valueAnimator -> view.setBackgroundColor((valueAnimator.animatedValue as Int)) }
-            duration = REVEAL_DURATION
-            start()
-        }
-    }
-
     companion object {
 
         private const val TAG_ARTIST_FOLDER = "SELECTED_ARTIST_FOLDER"
-        internal const val TAG_IS_FOLDER = "IS_FOLDER"
-        internal const val TAG_SELECTED_ALBUM_POSITION = "SELECTED_ALBUM_POSITION"
+        private const val TAG_IS_FOLDER = "IS_FOLDER"
+        private const val TAG_SELECTED_ALBUM_POSITION = "SELECTED_ALBUM_POSITION"
 
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @return A new instance of fragment MusicFragment.
+         * @return A new instance of fragment DetailsFragment.
          */
         @JvmStatic
         fun newInstance(
