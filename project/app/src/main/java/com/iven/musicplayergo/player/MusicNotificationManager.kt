@@ -49,7 +49,8 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
     fun createNotification(): Notification {
 
-        playerService.mediaPlayerHolder.currentSong.first.let { song ->
+        val mediaPlayerHolder = playerService.mediaPlayerHolder
+        mediaPlayerHolder.currentSong.first.let { song ->
             notificationBuilder = NotificationCompat.Builder(playerService, CHANNEL_ID)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) createNotificationChannel()
@@ -70,7 +71,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                 it.apply {
                     setShowWhen(false)
                     setStyle(style)
-                    setSmallIcon(R.drawable.ic_music_note)
+                    setSmallIcon(if (mediaPlayerHolder.isPlayingFromFolder) R.drawable.ic_library_music else R.drawable.ic_music_note)
                     color = ThemeHelper.resolveThemeAccent(playerService)
                     setContentTitle(
                         ThemeHelper.buildSpanned(

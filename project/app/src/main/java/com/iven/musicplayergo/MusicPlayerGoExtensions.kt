@@ -11,6 +11,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.ArgbEvaluator
 import com.iven.musicplayergo.ui.ThemeHelper
 import kotlin.math.max
@@ -103,4 +105,24 @@ fun View.createCircularReveal(isCentered: Boolean, show: Boolean): Animator {
         start()
     }
     return animator
+}
+
+fun RecyclerView.smoothSnapToPosition(position: Int) {
+    val smoothScroller = object : LinearSmoothScroller(this.context) {
+        override fun getVerticalSnapPreference(): Int {
+            return SNAP_TO_START
+        }
+
+        override fun getHorizontalSnapPreference(): Int {
+            return SNAP_TO_START
+        }
+
+        override fun onStop() {
+            super.onStop()
+            findViewHolderForAdapterPosition(position)
+                ?.itemView?.performClick()
+        }
+    }
+    smoothScroller.targetPosition = position
+    layoutManager?.startSmoothScroll(smoothScroller)
 }

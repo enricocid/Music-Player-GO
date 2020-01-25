@@ -1,7 +1,6 @@
 package com.iven.musicplayergo.fragments
 
 import android.animation.Animator
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
@@ -14,18 +13,14 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
-import com.iven.musicplayergo.R
-import com.iven.musicplayergo.afterMeasured
-import com.iven.musicplayergo.createCircularReveal
+import com.iven.musicplayergo.*
 import com.iven.musicplayergo.music.Album
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
-import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.ui.*
 import kotlinx.android.synthetic.main.fragment_details.*
 
@@ -165,12 +160,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     activity?.onBackPressed()
                 }
 
-                setupMenu(false)
+                setupMenu()
             }
 
             if (!sFolder) {
 
-                setupAlbumsContainer(cxt, false)
+                setupAlbumsContainer(cxt)
 
             } else {
 
@@ -232,7 +227,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                             mUIControlInterface.onSongSelected(
                                 item,
-                                selectedPlaylist
+                                selectedPlaylist,
+                                sFolder
                             )
                         }
 
@@ -279,14 +275,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         return false
     }
 
-    private fun setupMenu(onUpdateView: Boolean) {
+    private fun setupMenu() {
 
         mDetailsToolbar.apply {
 
-            if (onUpdateView) mDetailsToolbar.menu.clear()
-
             val menuToInflate =
-                if (sFolder && !onUpdateView) R.menu.menu_folder_details else R.menu.menu_artist_details
+                if (sFolder) R.menu.menu_folder_details else R.menu.menu_artist_details
 
             inflateMenu(menuToInflate)
 
@@ -299,14 +293,17 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.action_shuffle_am -> mUIControlInterface.onShuffleSongs(
-                        mSongsForArtistOrFolder?.toMutableList()
+                        mSongsForArtistOrFolder?.toMutableList(),
+                        sFolder
                     )
-                    R.id.action_shuffle_sa -> mUIControlInterface.onShuffleSongs(mSelectedAlbum?.music)
+                    R.id.action_shuffle_sa -> mUIControlInterface.onShuffleSongs(
+                        mSelectedAlbum?.music,
+                        sFolder
+                    )
                 }
                 return@setOnMenuItemClickListener true
             }
         }
-
     }
 
     private fun setupToolbarSpecs(isFolder: Boolean) {
@@ -320,7 +317,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
     }
 
-    private fun setupAlbumsContainer(context: Context, onUpdateView: Boolean) {
+    private fun setupAlbumsContainer(context: Context) {
 
         selected_album_container.setOnClickListener {
             mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
@@ -387,92 +384,19 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     }
                 }
             }
-            if (mSelectedAlbumPosition != -1 or 0 && !onUpdateView) mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
+            if (mSelectedAlbumPosition != -1 || mSelectedAlbumPosition != 0) mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
                 mSelectedAlbumPosition,
                 0
             )
         }
     }
 
-    fun updateView(context: Context, selectedArtist: String?, playedAlbumPosition: Int) {
-
-        fun invalidateDetails() {
-
-            mSelectedArtistOrFolder = selectedArtist
-            mSelectedArtistAlbums =
-                musicLibrary.allAlbumsByArtist?.get(mSelectedArtistOrFolder)
-
-            //restore album position
-            if (playedAlbumPosition != -1) {
-                mSelectedAlbumPosition = playedAlbumPosition
-                mSelectedAlbum = mSelectedArtistAlbums?.get(mSelectedAlbumPosition)
-            }
-
-            if (sFolder) {
-                sFolder = false
-                mDetailsToolbar.title = mSelectedArtistOrFolder
-                mAlbumsRecyclerView.visibility = View.VISIBLE
-                mSelectedAlbumTitle.visibility = View.VISIBLE
-                mSelectedAlbumYearDuration.visibility = View.VISIBLE
-
-                setupToolbarSpecs(sFolder)
-                setupMenu(true)
-                setupAlbumsContainer(context, true)
-
-            } else {
-
-                mDetailsToolbar.apply {
-                    title = mSelectedArtistOrFolder
-                    subtitle = getString(
-                        R.string.artist_info,
-                        mSelectedArtistAlbums?.size,
-                        mSongsForArtistOrFolder?.size
-                    )
-                }
-
-                updateSelectedAlbumTitle()
-            }
-
-            setAlbumsDataSource(mSelectedArtistAlbums)
-
-            mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
-                mSelectedAlbumPosition,
-                0
-            )
-
-            mSongsForArtistOrFolder =
-                musicLibrary.allSongsByArtist?.getValue(mSelectedArtistOrFolder)
-
-            setSongsDataSource(mSelectedAlbum?.music)
-        }
-
-        when {
-            selectedArtist != mSelectedArtistOrFolder -> invalidateDetails()
-            sFolder -> invalidateDetails()
-            else -> mAlbumsRecyclerView.smoothSnapToPosition(playedAlbumPosition)
-        }
+    fun hasToUpdate(selectedArtistOrFolder: String?): Boolean {
+        return selectedArtistOrFolder != mSelectedArtistOrFolder
     }
 
-    //https://stackoverflow.com/a/53986874
-    @SuppressLint("StaticFieldLeak")
-    private fun RecyclerView.smoothSnapToPosition(position: Int) {
-        val smoothScroller = object : LinearSmoothScroller(this.context) {
-            override fun getVerticalSnapPreference(): Int {
-                return SNAP_TO_START
-            }
-
-            override fun getHorizontalSnapPreference(): Int {
-                return SNAP_TO_START
-            }
-
-            override fun onStop() {
-                super.onStop()
-                mAlbumsRecyclerView.findViewHolderForAdapterPosition(position)
-                    ?.itemView?.performClick()
-            }
-        }
-        smoothScroller.targetPosition = position
-        layoutManager?.startSmoothScroll(smoothScroller)
+    fun tryToSnapToAlbumPosition(snapPosition: Int) {
+        if (!sFolder && snapPosition != -1) mAlbumsRecyclerView.smoothSnapToPosition(snapPosition)
     }
 
     private fun updateSelectedAlbumTitle() {

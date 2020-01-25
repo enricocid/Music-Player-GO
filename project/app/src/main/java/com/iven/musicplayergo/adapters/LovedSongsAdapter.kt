@@ -80,7 +80,8 @@ class LovedSongsAdapter(
                         MusicUtils.getAlbumSongs(
                             song.artist,
                             song.album
-                        )
+                        ),
+                        false
                     )
                 }
                 setOnLongClickListener {

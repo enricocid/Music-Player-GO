@@ -97,7 +97,8 @@ class QueueAdapter(
                         mediaPlayerHolder.setCurrentSong(
                             song,
                             queueSongs,
-                            true
+                            isFromQueue = true,
+                            isFolderAlbum = false
                         )
                         initMediaPlayer(song)
                     }

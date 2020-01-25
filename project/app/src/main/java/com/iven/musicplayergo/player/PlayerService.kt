@@ -56,8 +56,10 @@ class PlayerService : Service() {
 
         if (::mediaPlayerHolder.isInitialized) {
             //saves last played song and its position
-            if (mediaPlayerHolder.isCurrentSong) goPreferences.latestPlayedSong =
-                Pair(mediaPlayerHolder.currentSong.first, mediaPlayerHolder.playerPosition)
+            if (mediaPlayerHolder.isCurrentSong) mediaPlayerHolder.apply {
+                goPreferences.latestPlayedSong =
+                    Triple(currentSong.first, playerPosition, isPlayingFromFolder)
+            }
 
             goPreferences.latestVolume = mediaPlayerHolder.currentVolumeInPercent
 

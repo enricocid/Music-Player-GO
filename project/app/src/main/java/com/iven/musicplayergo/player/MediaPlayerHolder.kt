@@ -100,6 +100,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     //first: current song, second: isFromQueue
     lateinit var currentSong: Pair<Music?, Boolean>
+    var isPlayingFromFolder = false
+    private var isPlayingFromFolderPreQueue = false
     private var mPlayingAlbumSongs: List<Music>? = null
 
     var currentVolumeInPercent = goPreferences.latestVolume
@@ -170,7 +172,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
-    fun setCurrentSong(song: Music?, songs: List<Music>?, isFromQueue: Boolean) {
+    fun setCurrentSong(
+        song: Music?,
+        songs: List<Music>?,
+        isFromQueue: Boolean,
+        isFolderAlbum: Boolean
+    ) {
+        isPlayingFromFolder = isFolderAlbum
         currentSong = Pair(song, isFromQueue)
         mPlayingAlbumSongs = songs
     }
@@ -301,7 +309,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         when {
             isQueueStarted -> currentSong = Pair(getSkipSong(isNext), true)
             else -> {
-                setCurrentSong(queueSongs[0], queueSongs, true)
+                setCurrentSong(queueSongs[0], queueSongs, isFromQueue = true, isFolderAlbum = false)
                 isQueueStarted = true
             }
         }
@@ -309,7 +317,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun restorePreQueueSongs() {
-        setCurrentSong(preQueueSong.first, preQueueSong.second, false)
+        setCurrentSong(preQueueSong.first, preQueueSong.second, false, isPlayingFromFolderPreQueue)
     }
 
     private fun getSkipSong(isNext: Boolean): Music? {
@@ -492,6 +500,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         when {
             isQueue -> {
                 preQueueSong = Pair(currentSong.first, mPlayingAlbumSongs)
+                isPlayingFromFolderPreQueue = isPlayingFromFolder
                 isQueue = true
                 mediaPlayerInterface.onQueueEnabled()
             }

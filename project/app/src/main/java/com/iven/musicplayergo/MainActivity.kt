@@ -465,8 +465,9 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                 sRevealAnimationRunning = true
                 tab?.icon?.setTint(mResolvedAccentColor)
                 doOnEnd {
-                    super.onBackPressed()
-                    sRevealAnimationRunning = false
+                    synchronized(super.onBackPressed()) {
+                        sRevealAnimationRunning = false
+                    }
                 }
             }
         }
@@ -705,9 +706,9 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
     private fun restorePlayerStatus() {
         if (isMediaPlayerHolder) {
+
             //if we are playing and the activity was restarted
             //update the controls panel
-
             mMediaPlayerHolder.apply {
 
                 if (isMediaPlayer) {
@@ -726,7 +727,11 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
                     isPlay = false
 
-                    startPlayback(song, songs)
+                    startPlayback(
+                        song,
+                        songs,
+                        isSongRestoredFromPrefs && goPreferences.latestPlayedSong?.third!!
+                    )
 
                     updatePlayingInfo(false)
 
@@ -824,16 +829,29 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     fun openPlayingArtistAlbum(view: View) {
         if (isMediaPlayerHolder && mMediaPlayerHolder.isCurrentSong) {
 
+            val isPlayingFromFolder = mMediaPlayerHolder.isPlayingFromFolder
             val selectedSong = mMediaPlayerHolder.currentSong.first
-            val selectedArtistOrFolder = selectedSong?.artist
-            if (sDetailsFragmentExpanded)
-                mDetailsFragment.updateView(
-                    this,
-                    selectedArtistOrFolder,
-                    MusicUtils.getPlayingAlbumPosition(selectedArtistOrFolder, mMediaPlayerHolder)
-                )
-            else
-                openDetailsFragment(selectedArtistOrFolder, isFolder = false)
+            val selectedArtistOrFolder =
+                if (isPlayingFromFolder) selectedSong?.relativePath else selectedSong?.artist
+            if (sDetailsFragmentExpanded) {
+                if (mDetailsFragment.hasToUpdate(selectedArtistOrFolder)) {
+                    synchronized(super.onBackPressed()) {
+                        openDetailsFragment(
+                            selectedArtistOrFolder,
+                            mMediaPlayerHolder.isPlayingFromFolder
+                        )
+                    }
+                } else {
+                    mDetailsFragment.tryToSnapToAlbumPosition(
+                        MusicUtils.getPlayingAlbumPosition(
+                            selectedArtistOrFolder,
+                            mMediaPlayerHolder
+                        )
+                    )
+                }
+            } else {
+                openDetailsFragment(selectedArtistOrFolder, mMediaPlayerHolder.isPlayingFromFolder)
+            }
 
             if (isNowPlaying) mNowPlayingDialog.dismiss()
         }
@@ -853,22 +871,22 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         )
     }
 
-    private fun startPlayback(song: Music?, album: List<Music>?) {
+    private fun startPlayback(song: Music?, album: List<Music>?, isFolderAlbum: Boolean) {
         if (isMediaPlayerHolder) {
             if (!mPlayerService.isRunning) startService(mBindingIntent)
             mMediaPlayerHolder.apply {
-                setCurrentSong(song, album, false)
+                setCurrentSong(song, album, isFromQueue = false, isFolderAlbum = isFolderAlbum)
                 initMediaPlayer(song)
             }
         }
     }
 
-    override fun onSongSelected(song: Music?, songs: List<Music>?) {
+    override fun onSongSelected(song: Music?, songs: List<Music>?, isFolderAlbum: Boolean) {
         if (isMediaPlayerHolder) mMediaPlayerHolder.apply {
             isSongRestoredFromPrefs = false
             if (!isPlay) isPlay = true
             if (isQueue) setQueueEnabled(false)
-            startPlayback(song, songs)
+            startPlayback(song, songs, isFolderAlbum)
         }
     }
 
@@ -913,11 +931,11 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         }
     }
 
-    override fun onShuffleSongs(songs: MutableList<Music>?) {
+    override fun onShuffleSongs(songs: MutableList<Music>?, isFolderAlbum: Boolean) {
         val randomNumber = (0 until songs?.size!!).random()
         songs.shuffle()
         val song = songs[randomNumber]
-        onSongSelected(song, songs)
+        onSongSelected(song, songs, isFolderAlbum)
     }
 
     fun openQueueDialog(view: View) {
@@ -954,7 +972,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                 //get album songs and sort them
                 val albumSongs = MusicUtils.getAlbumSongs(song?.artist, song?.album)
 
-                onSongSelected(song, albumSongs)
+                onSongSelected(song, albumSongs, false)
 
             } catch (e: Exception) {
                 e.printStackTrace()

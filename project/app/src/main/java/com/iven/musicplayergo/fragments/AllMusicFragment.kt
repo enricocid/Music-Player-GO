@@ -87,7 +87,8 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                         onClick {
                             mUIControlInterface.onSongSelected(
                                 item,
-                                MusicUtils.getAlbumSongs(item.artist, item.album)
+                                MusicUtils.getAlbumSongs(item.artist, item.album),
+                                false
                             )
                         }
 
@@ -113,7 +114,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
                 menu.apply {
                     findItem(R.id.action_shuffle_am).setOnMenuItemClickListener {
-                        mUIControlInterface.onShuffleSongs(mAllMusic)
+                        mUIControlInterface.onShuffleSongs(mAllMusic, false)
                         return@setOnMenuItemClickListener true
                     }
                     val searchView = findItem(R.id.action_search).actionView as SearchView
