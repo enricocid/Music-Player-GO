@@ -39,6 +39,7 @@
     <string name="no_browser">¡No se encontró un navegador!</string>
     <string name="bad_id">!Reproduce una canción primero!</string>
     <string name="no_eq">¡No se encontró un ecualizador!</string>
+    <string name="error_no_music">No se encontró música :(</string>
     <string name="error_unknown_unsupported">¡Algo malo sucedió! :( Probablemente el formato elegido no es soportado o el directorio es inaccesible (de lo cual la applicación no es culpable)</string>
     <string name="error_media_buttons">¡Algo malo sucedió! :( Por favor reinicia la reproducción desde la aplicación</string>
     <string name="on_close_activity">¿Deseas detener la reproducción?</string>
