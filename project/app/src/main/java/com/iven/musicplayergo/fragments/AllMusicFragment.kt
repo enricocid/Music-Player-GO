@@ -140,9 +140,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
         return false
     }
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        return false
-    }
+    override fun onQueryTextSubmit(query: String?) = false
 
     companion object {
         /**

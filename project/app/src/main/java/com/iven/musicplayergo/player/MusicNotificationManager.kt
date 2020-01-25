@@ -102,7 +102,6 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     }
 
     private fun notificationAction(action: String): NotificationCompat.Action {
-
         var icon =
             if (playerService.mediaPlayerHolder.state != PAUSED) R.drawable.ic_pause else R.drawable.ic_play
 

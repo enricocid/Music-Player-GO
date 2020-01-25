@@ -39,9 +39,7 @@ class ActiveTabsAdapter(
         )
     }
 
-    override fun getItemCount(): Int {
-        return mAvailableItems.size
-    }
+    override fun getItemCount() = mAvailableItems.size
 
     override fun onBindViewHolder(holder: CheckableItemsHolder, position: Int) {
         holder.bindItems()

@@ -40,17 +40,14 @@ import java.util.*
 object Utils {
 
     @JvmStatic
-    fun isAndroidQ(): Boolean {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
-    }
+    fun isAndroidQ() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
 
     @JvmStatic
-    fun hasToAskForReadStoragePermission(activity: Activity): Boolean {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(
+    fun hasToAskForReadStoragePermission(activity: Activity) =
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(
             activity,
             Manifest.permission.READ_EXTERNAL_STORAGE
         ) != PackageManager.PERMISSION_GRANTED
-    }
 
     @JvmStatic
     fun manageAskForReadStoragePermission(
@@ -145,33 +142,28 @@ object Utils {
     fun getSortedList(
         id: Int,
         list: MutableList<String>?
-    ): MutableList<String>? {
-
-        return when (id) {
-            ASCENDING_SORTING -> {
-                list?.apply {
-                    Collections.sort(this, String.CASE_INSENSITIVE_ORDER)
-                }
-                list
+    ) = when (id) {
+        ASCENDING_SORTING -> {
+            list?.apply {
+                Collections.sort(this, String.CASE_INSENSITIVE_ORDER)
             }
-
-            DESCENDING_SORTING -> {
-                list?.apply {
-                    Collections.sort(this, String.CASE_INSENSITIVE_ORDER)
-                }
-                list?.asReversed()
-            }
-            else -> list
+            list
         }
+
+        DESCENDING_SORTING -> {
+            list?.apply {
+                Collections.sort(this, String.CASE_INSENSITIVE_ORDER)
+            }
+            list?.asReversed()
+        }
+        else -> list
     }
 
     @JvmStatic
-    fun getSelectedSortingMenuItem(sorting: Int, menu: Menu): MenuItem {
-        return when (sorting) {
-            DEFAULT_SORTING -> menu.findItem(R.id.default_sorting)
-            ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
-            else -> menu.findItem(R.id.descending_sorting)
-        }
+    fun getSelectedSorting(sorting: Int, menu: Menu): MenuItem = when (sorting) {
+        DEFAULT_SORTING -> menu.findItem(R.id.default_sorting)
+        ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
+        else -> menu.findItem(R.id.descending_sorting)
     }
 
     @JvmStatic

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.res.Resources
-import android.database.Cursor
 import android.media.MediaExtractor
 import android.media.MediaFormat
 import android.net.Uri
@@ -47,15 +46,13 @@ object MusicUtils {
     fun getPlayingAlbumPosition(
         selectedArtist: String?,
         mediaPlayerHolder: MediaPlayerHolder
-    ): Int {
-        return try {
-            val currentSong = mediaPlayerHolder.currentSong.first
-            val album = getAlbumFromList(selectedArtist, currentSong?.album)
-            album.second
-        } catch (e: Exception) {
-            e.printStackTrace()
-            -1
-        }
+    ) = try {
+        val currentSong = mediaPlayerHolder.currentSong.first
+        val album = getAlbumFromList(selectedArtist, currentSong?.album)
+        album.second
+    } catch (e: Exception) {
+        e.printStackTrace()
+        -1
     }
 
     @JvmStatic
@@ -72,21 +69,16 @@ object MusicUtils {
     }
 
     @JvmStatic
-    fun getAlbumSongs(artist: String?, album: String?): List<Music>? {
-        return getAlbumFromList(artist, album).first.music
-    }
+    fun getAlbumSongs(artist: String?, album: String?) = getAlbumFromList(artist, album).first.music
 
     @JvmStatic
     fun getSongForIntent(
         displayName: String?
-    ): Music? {
-        return musicLibrary.allSongsUnfiltered.firstOrNull { s -> s.displayName == displayName }
-    }
+    ): Music? = musicLibrary.allSongsUnfiltered.firstOrNull { s -> s.displayName == displayName }
 
     @JvmStatic
-    fun getYearForAlbum(resources: Resources, year: Int): String {
-        return if (year != 0) year.toString() else resources.getString(R.string.unknown_year)
-    }
+    fun getYearForAlbum(resources: Resources, year: Int) =
+        if (year != 0) year.toString() else resources.getString(R.string.unknown_year)
 
     @JvmStatic
     fun buildSortedArtistAlbums(
@@ -170,18 +162,15 @@ object MusicUtils {
     )
 
     @JvmStatic
-    fun getMusicCursor(contentResolver: ContentResolver): Cursor? {
-        return contentResolver.query(
-            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-            COLUMNS, AudioColumns.IS_MUSIC + "=1", null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER
-        )
-    }
+    fun getMusicCursor(contentResolver: ContentResolver) = contentResolver.query(
+        MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+        COLUMNS, AudioColumns.IS_MUSIC + "=1", null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER
+    )
 
     @JvmStatic
     @Suppress("DEPRECATION")
-    fun getPathColumn(): String {
-        return if (Utils.isAndroidQ()) AudioColumns.BUCKET_DISPLAY_NAME else AudioColumns.DATA
-    }
+    fun getPathColumn() =
+        if (Utils.isAndroidQ()) AudioColumns.BUCKET_DISPLAY_NAME else AudioColumns.DATA
 
     @JvmStatic
     fun getBitrate(contentUri: Uri, contentResolver: ContentResolver): Pair<Int, Int>? {
@@ -205,7 +194,5 @@ object MusicUtils {
     }
 
     @JvmStatic
-    fun getFolderName(path: String?): String? {
-        return File(path!!).parentFile?.name
-    }
+    fun getFolderName(path: String?) = File(path!!).parentFile?.name
 }

@@ -26,9 +26,7 @@ class AccentsAdapter(private val activity: Activity) :
         )
     }
 
-    override fun getItemCount(): Int {
-        return mAccents.size
-    }
+    override fun getItemCount() = mAccents.size
 
     override fun onBindViewHolder(holder: AccentsHolder, position: Int) {
         holder.bindItems(mAccents[holder.adapterPosition].first)

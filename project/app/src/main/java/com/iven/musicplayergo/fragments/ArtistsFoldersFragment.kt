@@ -62,8 +62,8 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        arguments?.getString(TAG_SELECTED_FRAGMENT)?.let {
-            sIsFoldersFragment = it != TAG_ARTISTS
+        arguments?.getString(TAG_SELECTED_FRAGMENT)?.let { isFoldersFragment ->
+            sIsFoldersFragment = isFoldersFragment != TAG_ARTISTS
         }
 
         // This makes sure that the container activity has implemented
@@ -156,7 +156,7 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
 
                 menu.apply {
 
-                    mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, this).apply {
+                    mSortMenuItem = Utils.getSelectedSorting(mSorting, this).apply {
                         setTitleColor(ThemeHelper.resolveThemeAccent(cxt))
                     }
 
@@ -181,9 +181,7 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
         }
     }
 
-    private fun getFolderItem(): Int {
-        return if (sLandscape) R.layout.generic_item else R.layout.folder_item
-    }
+    private fun getFolderItem() = if (sLandscape) R.layout.generic_item else R.layout.folder_item
 
     private fun setListDataSource(selectedList: List<String>?) {
         selectedList?.apply {
@@ -196,17 +194,13 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
         return false
     }
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        return false
-    }
+    override fun onQueryTextSubmit(query: String?) = false
 
-    private fun getArtistSubtitle(item: String): String {
-        return getString(
-            R.string.artist_info,
-            musicLibrary.allAlbumsByArtist?.getValue(item)?.size,
-            musicLibrary.allSongsByArtist?.getValue(item)?.size
-        )
-    }
+    private fun getArtistSubtitle(item: String) = getString(
+        R.string.artist_info,
+        musicLibrary.allAlbumsByArtist?.getValue(item)?.size,
+        musicLibrary.allSongsByArtist?.getValue(item)?.size
+    )
 
     @SuppressLint("DefaultLocale")
     private fun setupIndicatorFastScrollerView() {
@@ -299,7 +293,7 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
                     )
                 )
 
-                mSortMenuItem = Utils.getSelectedSortingMenuItem(mSorting, menu).apply {
+                mSortMenuItem = Utils.getSelectedSorting(mSorting, menu).apply {
                     setTitleColor(ThemeHelper.resolveThemeAccent(context))
                 }
 

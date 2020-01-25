@@ -64,35 +64,37 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        arguments?.getString(TAG_ARTIST_FOLDER)?.let {
-            mSelectedArtistOrFolder = it
+        arguments?.getString(TAG_ARTIST_FOLDER)?.let { selectedArtistOrFolder ->
+            mSelectedArtistOrFolder = selectedArtistOrFolder
         }
 
-        arguments?.getBoolean(TAG_IS_FOLDER)?.let {
-            sFolder = it
+        arguments?.getBoolean(TAG_IS_FOLDER)?.let { isFolder ->
+            sFolder = isFolder
         }
 
         if (!sFolder) {
 
-            arguments?.getInt(TAG_SELECTED_ALBUM_POSITION)?.let {
-                mSelectedAlbumPosition = it
+            arguments?.getInt(TAG_SELECTED_ALBUM_POSITION)?.let { selectedAlbumPosition ->
+                mSelectedAlbumPosition = selectedAlbumPosition
             }
 
-            musicLibrary.allAlbumsByArtist?.get(mSelectedArtistOrFolder)?.let {
-                mSelectedArtistAlbums = it
+            musicLibrary.allAlbumsByArtist?.get(mSelectedArtistOrFolder)
+                ?.let { selectedArtistAlbums ->
+                    mSelectedArtistAlbums = selectedArtistAlbums
+                }
+
+            musicLibrary.allSongsByArtist?.get(mSelectedArtistOrFolder)?.let { selectedSongs ->
+                mSongsForArtistOrFolder = selectedSongs
             }
 
-            musicLibrary.allSongsByArtist?.get(mSelectedArtistOrFolder)?.let {
-                mSongsForArtistOrFolder = it
-            }
-
-            mSelectedAlbum =
-                if (mSelectedAlbumPosition != -1) {
-                    mSelectedArtistAlbums?.get(mSelectedAlbumPosition)
-                } else {
+            mSelectedAlbum = when {
+                mSelectedAlbumPosition != -1 -> mSelectedArtistAlbums?.get(mSelectedAlbumPosition)
+                else -> {
                     mSelectedAlbumPosition = 0
                     mSelectedArtistAlbums?.get(0)
                 }
+            }
+
         } else {
             mSongsForArtistOrFolder =
                 musicLibrary.allSongsByFolder?.get(mSelectedArtistOrFolder)
@@ -114,16 +116,14 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     }
 
     //https://stackoverflow.com/a/38241603
-    private fun getTitleTextView(toolbar: Toolbar): TextView? {
-        return try {
-            val toolbarClass = Toolbar::class.java
-            val titleTextViewField = toolbarClass.getDeclaredField("mTitleTextView")
-            titleTextViewField.isAccessible = true
-            titleTextViewField.get(toolbar) as TextView
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
+    private fun getTitleTextView(toolbar: Toolbar) = try {
+        val toolbarClass = Toolbar::class.java
+        val titleTextViewField = toolbarClass.getDeclaredField("mTitleTextView")
+        titleTextViewField.isAccessible = true
+        titleTextViewField.get(toolbar) as TextView
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -271,9 +271,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         return false
     }
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        return false
-    }
+    override fun onQueryTextSubmit(query: String?) = false
 
     private fun setupMenu() {
 
@@ -391,9 +389,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
     }
 
-    fun hasToUpdate(selectedArtistOrFolder: String?): Boolean {
-        return selectedArtistOrFolder != mSelectedArtistOrFolder
-    }
+    fun hasToUpdate(selectedArtistOrFolder: String?) =
+        selectedArtistOrFolder != mSelectedArtistOrFolder
 
     fun tryToSnapToAlbumPosition(snapPosition: Int) {
         if (!sFolder && snapPosition != -1) mAlbumsRecyclerView.smoothSnapToPosition(snapPosition)

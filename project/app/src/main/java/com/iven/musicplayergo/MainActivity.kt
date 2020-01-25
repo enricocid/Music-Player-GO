@@ -134,13 +134,11 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     private var sBound = false
     private lateinit var mBindingIntent: Intent
 
-    private fun checkIsPlayer(showError: Boolean): Boolean {
-        return mMediaPlayerHolder.apply {
-            if (!isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs && showError) EqualizerUtils.notifyNoSessionId(
-                this@MainActivity
-            )
-        }.isMediaPlayer
-    }
+    private fun checkIsPlayer(showError: Boolean) = mMediaPlayerHolder.apply {
+        if (!isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs && showError) EqualizerUtils.notifyNoSessionId(
+            this@MainActivity
+        )
+    }.isMediaPlayer
 
     //Defines callbacks for service binding, passed to bindService()
     private val connection = object : ServiceConnection {
@@ -328,9 +326,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     override fun onLoaderReset(loader: Loader<Boolean>) {
     }
 
-    override fun onCreateLoader(id: Int, args: Bundle?): Loader<Boolean> {
-        return MusicLoader(this)
-    }
+    override fun onCreateLoader(id: Int, args: Bundle?) = MusicLoader(this)
 
     override fun onLoadFinished(loader: Loader<Boolean>, hasLoaded: Boolean) {
 
@@ -427,22 +423,18 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         }
     }
 
-    private fun handleOnNavigationItemSelected(itemId: Int): Fragment? {
-        return when (itemId) {
-            0 -> getFragmentForIndex(mActiveFragments?.get(0)?.toInt())
-            1 -> getFragmentForIndex(mActiveFragments?.get(1)?.toInt())
-            2 -> getFragmentForIndex(mActiveFragments?.get(2)?.toInt())
-            else -> getFragmentForIndex(mActiveFragments?.get(3)?.toInt())
-        }
+    private fun handleOnNavigationItemSelected(itemId: Int) = when (itemId) {
+        0 -> getFragmentForIndex(mActiveFragments?.get(0)?.toInt())
+        1 -> getFragmentForIndex(mActiveFragments?.get(1)?.toInt())
+        2 -> getFragmentForIndex(mActiveFragments?.get(2)?.toInt())
+        else -> getFragmentForIndex(mActiveFragments?.get(3)?.toInt())
     }
 
-    private fun getFragmentForIndex(index: Int?): Fragment? {
-        return when (index) {
-            0 -> mArtistsFragment
-            1 -> mAllMusicFragment
-            2 -> mFoldersFragment
-            else -> mSettingsFragment
-        }
+    private fun getFragmentForIndex(index: Int?) = when (index) {
+        0 -> mArtistsFragment
+        1 -> mAllMusicFragment
+        2 -> mFoldersFragment
+        else -> mSettingsFragment
     }
 
     private fun openDetailsFragment(

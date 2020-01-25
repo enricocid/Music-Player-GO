@@ -46,28 +46,22 @@ object ThemeHelper {
     }
 
     @JvmStatic
-    fun getDefaultNightMode(context: Context): Int {
-        return when (goPreferences.theme) {
-            context.getString(R.string.theme_pref_light) -> AppCompatDelegate.MODE_NIGHT_NO
-            context.getString(R.string.theme_pref_dark) -> AppCompatDelegate.MODE_NIGHT_YES
-            else -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM else AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
-        }
+    fun getDefaultNightMode(context: Context) = when (goPreferences.theme) {
+        context.getString(R.string.theme_pref_light) -> AppCompatDelegate.MODE_NIGHT_NO
+        context.getString(R.string.theme_pref_dark) -> AppCompatDelegate.MODE_NIGHT_YES
+        else -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM else AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
     }
 
     @JvmStatic
-    fun isDeviceLand(resources: Resources): Boolean {
-        return resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-    }
+    fun isDeviceLand(resources: Resources) =
+        resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
     @JvmStatic
-    private fun isThemeNight(): Boolean {
-        return AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
-    }
+    private fun isThemeNight() =
+        AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
 
     @JvmStatic
-    fun getAlphaForAccent(): Int {
-        return if (goPreferences.accent != R.color.yellow) 100 else 150
-    }
+    fun getAlphaForAccent() = if (goPreferences.accent != R.color.yellow) 100 else 150
 
     @JvmStatic
     @TargetApi(Build.VERSION_CODES.O_MR1)
@@ -118,24 +112,20 @@ object ThemeHelper {
 
     //finds theme and its position in accents array and returns a pair(theme, position)
     @JvmStatic
-    fun getAccentedTheme(): Pair<Int, Int> {
-        return try {
-            val pair = accents.find { pair -> pair.first == goPreferences.accent }
-            val theme = pair!!.second
-            val position = accents.indexOf(pair)
-            Pair(theme, position)
-        } catch (e: Exception) {
-            Pair(R.style.BaseTheme_DeepPurple, 3)
-        }
+    fun getAccentedTheme() = try {
+        val pair = accents.find { pair -> pair.first == goPreferences.accent }
+        val theme = pair!!.second
+        val position = accents.indexOf(pair)
+        Pair(theme, position)
+    } catch (e: Exception) {
+        Pair(R.style.BaseTheme_DeepPurple, 3)
     }
 
     @JvmStatic
-    fun getColor(context: Context, color: Int, emergencyColor: Int): Int {
-        return try {
-            ContextCompat.getColor(context, color)
-        } catch (e: Exception) {
-            ContextCompat.getColor(context, emergencyColor)
-        }
+    fun getColor(context: Context, color: Int, emergencyColor: Int) = try {
+        ContextCompat.getColor(context, color)
+    } catch (e: Exception) {
+        ContextCompat.getColor(context, emergencyColor)
     }
 
     @JvmStatic
@@ -147,9 +137,8 @@ object ThemeHelper {
 
     @ColorInt
     @JvmStatic
-    fun resolveThemeAccent(context: Context): Int {
-        return getColor(context, goPreferences.accent, R.color.deep_purple)
-    }
+    fun resolveThemeAccent(context: Context) =
+        getColor(context, goPreferences.accent, R.color.deep_purple)
 
     @ColorInt
     @JvmStatic
@@ -162,62 +151,52 @@ object ThemeHelper {
     }
 
     @JvmStatic
-    private fun resolveThemeAttr(context: Context, @AttrRes attrRes: Int): TypedValue {
-        return TypedValue().apply { context.theme.resolveAttribute(attrRes, this, true) }
-    }
+    private fun resolveThemeAttr(context: Context, @AttrRes attrRes: Int) =
+        TypedValue().apply { context.theme.resolveAttribute(attrRes, this, true) }
 
     @JvmStatic
-    fun getRecyclerViewDivider(context: Context): DividerItemDecoration {
-        return DividerItemDecoration(
-            context,
-            DividerItemDecoration.VERTICAL
-        ).apply {
-            setDrawable(
-                ColorDrawable(
-                    getAlphaAccent(
-                        context,
-                        if (isThemeNight()) 45 else 85
-                    )
+    fun getRecyclerViewDivider(context: Context) = DividerItemDecoration(
+        context,
+        DividerItemDecoration.VERTICAL
+    ).apply {
+        setDrawable(
+            ColorDrawable(
+                getAlphaAccent(
+                    context,
+                    if (isThemeNight()) 45 else 85
                 )
             )
-        }
+        )
     }
 
     @JvmStatic
-    fun getAlphaAccent(context: Context, alpha: Int): Int {
-        return ColorUtils.setAlphaComponent(resolveThemeAccent(context), alpha)
-    }
+    fun getAlphaAccent(context: Context, alpha: Int) =
+        ColorUtils.setAlphaComponent(resolveThemeAccent(context), alpha)
 
     @JvmStatic
-    fun getTabIcon(iconIndex: Int): Int {
-        return when (iconIndex) {
-            0 -> R.drawable.ic_person
-            1 -> R.drawable.ic_music_note
-            2 -> R.drawable.ic_folder
-            else -> R.drawable.ic_more_horiz
-        }
+    fun getTabIcon(iconIndex: Int) = when (iconIndex) {
+        0 -> R.drawable.ic_person
+        1 -> R.drawable.ic_music_note
+        2 -> R.drawable.ic_folder
+        else -> R.drawable.ic_more_horiz
     }
 
     @JvmStatic
     @Suppress("DEPRECATION")
-    fun buildSpanned(res: String): Spanned {
-        return when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> Html.fromHtml(
-                res,
-                Html.FROM_HTML_MODE_LEGACY
-            )
-            else -> Html.fromHtml(res)
-        }
+    fun buildSpanned(res: String): Spanned = when {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> Html.fromHtml(
+            res,
+            Html.FROM_HTML_MODE_LEGACY
+        )
+        else -> Html.fromHtml(res)
     }
 
     @JvmStatic
-    fun getPreciseVolumeIcon(volume: Int): Int {
-        return when (volume) {
-            in 1..33 -> R.drawable.ic_volume_mute
-            in 34..67 -> R.drawable.ic_volume_down
-            in 68..100 -> R.drawable.ic_volume_up
-            else -> R.drawable.ic_volume_off
-        }
+    fun getPreciseVolumeIcon(volume: Int) = when (volume) {
+        in 1..33 -> R.drawable.ic_volume_mute
+        in 34..67 -> R.drawable.ic_volume_down
+        in 68..100 -> R.drawable.ic_volume_up
+        else -> R.drawable.ic_volume_off
     }
 
     @JvmStatic

@@ -48,9 +48,7 @@ class QueueAdapter(
         )
     }
 
-    override fun getItemCount(): Int {
-        return mQueueSongs.size
-    }
+    override fun getItemCount() = mQueueSongs.size
 
     override fun onBindViewHolder(holder: QueueHolder, position: Int) {
         holder.bindItems(mQueueSongs[holder.adapterPosition])

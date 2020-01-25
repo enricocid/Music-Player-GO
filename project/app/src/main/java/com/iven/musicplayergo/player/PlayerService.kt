@@ -35,9 +35,8 @@ class PlayerService : Service() {
             mediaPlayerHolder.seekTo(pos.toInt())
         }
 
-        override fun onMediaButtonEvent(mediaButtonEvent: Intent?): Boolean {
-            return handleMediaIntent(mediaButtonEvent)
-        }
+        override fun onMediaButtonEvent(mediaButtonEvent: Intent?) =
+            handleMediaIntent(mediaButtonEvent)
     }
 
     private fun configureMediaSession() {

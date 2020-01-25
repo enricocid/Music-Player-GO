@@ -57,12 +57,11 @@ object EqualizerUtils {
                         notFound.printStackTrace()
                     }
                 }
-            } else
-            Utils.makeToast(
-                activity,
-                activity.getString(R.string.no_eq),
-                Toast.LENGTH_SHORT
-            )
+            } else Utils.makeToast(
+            activity,
+            activity.getString(R.string.no_eq),
+            Toast.LENGTH_SHORT
+        )
     }
 
     fun notifyNoSessionId(context: Context) {
