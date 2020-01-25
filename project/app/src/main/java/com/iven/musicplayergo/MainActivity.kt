@@ -379,7 +379,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
                 if (!sRestoreSettingsFragment) getTabAt(0)?.icon?.setTint(
                     mResolvedAccentColor
-                )
+                ) else getTabAt(mViewPager.offscreenPageLimit)?.icon?.setTint(mResolvedAccentColor)
 
                 addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
