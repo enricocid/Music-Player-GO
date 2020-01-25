@@ -34,11 +34,11 @@ object ThemeHelper {
 
     //update theme
     @JvmStatic
-    fun applyNewThemeSmoothly(activity: Activity) {
+    fun applyNewThemeSmoothly(activity: Activity, restoreSettingsFragment: Boolean) {
         //smoothly set app theme
         Handler().postDelayed({
             Intent(activity, MainActivity::class.java).apply {
-                putExtra(RESTORE_SETTINGS_FRAGMENT, true)
+                putExtra(RESTORE_SETTINGS_FRAGMENT, restoreSettingsFragment)
                 activity.finish()
                 activity.startActivity(this)
             }

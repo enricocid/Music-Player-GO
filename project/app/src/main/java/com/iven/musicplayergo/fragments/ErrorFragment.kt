@@ -53,7 +53,7 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
         error_icon.setImageResource(mErrorIcon)
         view.setOnClickListener {
             if (sNoMusic) mUIControlInterface.onCloseActivity() else activity?.let { fa ->
-                ThemeHelper.applyNewThemeSmoothly(fa)
+                ThemeHelper.applyNewThemeSmoothly(fa, false)
             }
         }
 

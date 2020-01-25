@@ -67,7 +67,8 @@ class AccentsAdapter(private val activity: Activity) :
                         goPreferences.accent = mSelectedAccent
 
                         ThemeHelper.applyNewThemeSmoothly(
-                            activity
+                            activity,
+                            true
                         )
                     }
                 }
