@@ -57,3 +57,5 @@ Many thanks to all contributors (listed in no particular order :)
 - [**Stanislav**](https://github.com/STWheel) for **Ukrainian** and **Russian** translations and other strings/ui refinements
 
 - [**Somesh Kumar**](https://github.com/TheSomeshKumar) for **Hindi** translations
+
+- [**Glaucio Santos**](https://github.com/7glaucio) for **Brazilian Portuguese** translations
