@@ -4,11 +4,11 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
@@ -30,8 +30,7 @@ const val CLOSE_ACTION = "CLOSE_GO"
 class MusicNotificationManager(private val playerService: PlayerService) {
 
     //notification manager/builder
-    val notificationManager =
-        playerService.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    val notificationManager = NotificationManagerCompat.from(playerService)
     lateinit var notificationBuilder: NotificationCompat.Builder
 
     private fun playerAction(action: String): PendingIntent {
