@@ -865,22 +865,22 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         )
     }
 
-    private fun startPlayback(song: Music?, album: List<Music>?, isFolderAlbum: Boolean) {
+    private fun startPlayback(song: Music?, album: List<Music>?, isFromFolder: Boolean) {
         if (isMediaPlayerHolder) {
             if (!mPlayerService.isRunning) startService(mBindingIntent)
             mMediaPlayerHolder.apply {
-                setCurrentSong(song, album, isFromQueue = false, isFolderAlbum = isFolderAlbum)
+                setCurrentSong(song, album, isFromQueue = false, isFolderAlbum = isFromFolder)
                 initMediaPlayer(song)
             }
         }
     }
 
-    override fun onSongSelected(song: Music?, songs: List<Music>?, isFolderAlbum: Boolean) {
+    override fun onSongSelected(song: Music?, songs: List<Music>?, isFromFolder: Boolean) {
         if (isMediaPlayerHolder) mMediaPlayerHolder.apply {
             isSongRestoredFromPrefs = false
             if (!isPlay) isPlay = true
             if (isQueue) setQueueEnabled(false)
-            startPlayback(song, songs, isFolderAlbum)
+            startPlayback(song, songs, isFromFolder)
         }
     }
 
@@ -925,11 +925,11 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         }
     }
 
-    override fun onShuffleSongs(songs: MutableList<Music>?, isFolderAlbum: Boolean) {
+    override fun onShuffleSongs(songs: MutableList<Music>?, isFromFolder: Boolean) {
         val randomNumber = (0 until songs?.size!!).random()
         songs.shuffle()
         val song = songs[randomNumber]
-        onSongSelected(song, songs, isFolderAlbum)
+        onSongSelected(song, songs, isFromFolder)
     }
 
     fun openQueueDialog(view: View) {
