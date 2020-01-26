@@ -1,5 +1,6 @@
 <resources>
 
+    <!-- Dialogs -->
     <string name="yes">Sí</string>
     <string name="no">No</string>
 
@@ -32,9 +33,7 @@
     <string name="loved_song_add">Agregar a canciones favoritas</string>
     <string name="error_no_loved_songs">!No canciones favoritas!</string>
 
-    <!-- Details -->
-
-    <!-- Messages -->
+   <!-- Messages -->
     <string name="perm_rationale">Music Player GO necesita acceso a tus archivos para reproducir la música</string>
     <string name="no_browser">¡No se encontró un navegador!</string>
     <string name="bad_id">!Reproduce una canción primero!</string>
@@ -46,44 +45,32 @@
     <string name="repeat_enabled">¡Repetición 1x activada!</string>
     <string name="repeat_disabled">¡Repetición 1x desactivada!</string>
 
-    <!-- Settings -->
     <!-- Preferences -->
     <string name="settings">Preferencias</string>
     <string name="category_appearance">Apariencia</string>
     <string name="category_general">General</string>
-
     <string name="open_git_pref_title">Página de GitHub</string>
     <string name="open_git_pref_summary">Visita la página del proyecto para más información</string>
-
     <string name="faq_summary">Preguntas frecuentes y los formatos de medio soportados :P</string>
-
     <string name="theme_pref_title">Tema</string>
     <string name="theme_pref_light_title">Claro</string>
     <string name="theme_pref_dark_title">Oscuro</string>
     <string name="theme_pref_auto_title">Automático</string>
-
     <string name="accent_pref_title">Acento</string>
-
     <string name="edge_pref_summary_on">Activar edge-to-edge</string>
     <string name="edge_pref_summary_off">Desactivar edge-to-edge</string>
-
     <string name="tabs_pref_title">Petañas</string>
     <string name="tabs_pref_summary_on">Desactivar las petañas</string>
     <string name="tabs_pref_summary_off">Mostrar las petañas para navegar las secciones</string>
-
     <string name="active_fragments_pref_title">Activar las petañas</string>
     <string name="active_fragments_pref_warning">¡No puedes remover todas las petañas! :P</string>
-
     <string name="sorting_pref_default">Predeterminado</string>
-
     <string name="precise_volume_pref_title">Control preciso del volumen</string>
     <string name="precise_volume_pref_summary_on">Desactivar control preciso del volumen</string>
     <string name="precise_volume_pref_summary_off">Activar control preciso del volumen</string>
-
     <string name="focus_pref_title">Enfoque del audio focus</string>
     <string name="focus_pref_summary_on">Desactivar manejo del enfoque del audio</string>
     <string name="focus_pref_summary_off">Activar manejo del enfoque del audio</string>
-
     <string name="headset_pref_title">Conexión de auriculares</string>
     <string name="headset_pref_summary_on">Desactivar manejo de conexión de auriculares</string>
     <string name="headset_pref_summary_off">Activar manejo de conexión de auriculares</string>

@@ -1,5 +1,6 @@
 <resources>
 
+    <!-- Dialogs -->
     <string name="yes">Sim</string>
     <string name="no">Não</string>
 
@@ -44,45 +45,32 @@
     <string name="repeat_enabled">Repetir 1x ativado!</string>
     <string name="repeat_disabled">Repetir 1x desativado!</string>
 
-    <!-- Settings -->
     <!-- Preferences -->
     <string name="settings">Configurações</string>
     <string name="category_appearance">Aparência</string>
     <string name="category_general">Geral</string>
-
     <string name="open_git_pref_title">Página no GitHub</string>
     <string name="open_git_pref_summary">Abra a página do projeto para mais informações :)</string>
-
     <string name="faq_summary">Dúvidas frequentes e formatos de mídia suportados :P</string>
-
     <string name="theme_pref_title">Tema</string>
     <string name="theme_pref_light_title">Claro</string>
     <string name="theme_pref_dark_title">Escuro</string>
     <string name="theme_pref_auto_title">Automático</string>
-
     <string name="accent_pref_title">Cor de Destaque</string>
-
     <string name="edge_pref_summary_on">Desativar edge-to-edge</string>
     <string name="edge_pref_summary_off">Ativar edge-to-edge</string>
-
     <string name="tabs_pref_title">Abas</string>
     <string name="tabs_pref_summary_on">Desativar abas</string>
     <string name="tabs_pref_summary_off">Mostrar abas para navegação</string>
-
-    <string name="active_fragments_pref">selected_fragments_pref</string>
     <string name="active_fragments_pref_title">Abas ativas</string>
     <string name="active_fragments_pref_warning">Você não pode simplesmente remover todas as abas! :P</string>
-
     <string name="sorting_pref_default">Pré-Definido</string>
-
     <string name="precise_volume_pref_title">Controle preciso do volume</string>
     <string name="precise_volume_pref_summary_on">Desativar controle preciso do volume</string>
     <string name="precise_volume_pref_summary_off">Ativar controle preciso do volume</string>
-
     <string name="focus_pref_title">Foco do Áudio</string>
     <string name="focus_pref_summary_on">Desativar gerenciamento de foco do áudio</string>
     <string name="focus_pref_summary_off">Ativar gerenciamento de foco do áudio</string>
-
     <string name="headset_pref_title">Entrada do Fone de Ouvido</string>
     <string name="headset_pref_summary_on">Desativar gerenciamento da Entrada do Fone de Ouvido</string>
     <string name="headset_pref_summary_off">Ativar gerenciamento da Entrada do Fone de Ouvido</string>
