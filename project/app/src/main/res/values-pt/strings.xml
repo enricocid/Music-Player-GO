@@ -1,15 +1,7 @@
 <resources>
 
-    <string name="app_name">Music Player GO</string>
-    <string name="app_git">https://github.com/enricocid/Music-Player-GO</string>
-    <string name="app_faq">https://github.com/enricocid/Music-Player-GO/blob/master/Faq.md</string>
-    <string name="space_delimiter">&#160;</string>
-    <string name="underscore_delimiter">&#95;</string>
-    <string name="song_title_notification">&lt;b>%1s&lt;/b></string>
-    <string name="rates">%1d&#160;kHz,&#160;%2d&#160;kbps</string>
     <string name="yes">Sim</string>
     <string name="no">Não</string>
-    <string name="slash">/</string>
 
     <!-- Main - Artists -->
     <string name="artists">Artistas</string>
@@ -18,11 +10,8 @@
 
     <!-- Main - All songs -->
     <string name="songs">Músicas</string>
-    <string name="artist_and_album">%1s&#160;/&#160;%2s</string>
     <string name="shuffle_am">Reproduzir todas as músicas aleatoriamente</string>
     <string name="shuffle_sa">Reproduzir aleatoriamente o álbum selecionado</string>
-    <string name="track_song">&lt;b>%1d&lt;/b>&#160;-&#160;%2s</string>
-    <string name="year_and_duration">%1s&#160;-&#160;%2s</string>
 
     <!-- Main - Folders -->
     <string name="folders">Pastas</string>
@@ -37,15 +26,11 @@
 
     <!-- Loved songs -->
     <string name="loved_songs">Músicas favoritas</string>
-    <string name="loved_song_subtitle">&lt;b>%1s&lt;/b>&#160;-&#160;%2s</string>
     <string name="loved_song_added">%1s (%2s) adicionada às músicas favoritas</string>
     <string name="loved_song_remove">%1s (%2s) será apagada das músicas favoritas. Continuar?</string>
     <string name="loved_songs_clear">Todas as suas músicas favoritas serão apagadas. Continuar?</string>
     <string name="loved_song_add">Adicionar às músicas favoritas</string>
     <string name="error_no_loved_songs">Nenhuma música favorita encontrada!</string>
-
-    <!-- Details -->
-    <string name="unknown_year">N&#x2F;A</string>
 
     <!-- Messages -->
     <string name="perm_rationale">Music Player GO precisa acessar seus arquivos para reproduzir música!</string>
@@ -65,38 +50,21 @@
     <string name="category_appearance">Aparência</string>
     <string name="category_general">Geral</string>
 
-    <string name="latest_volume_pref">latest_volume_pref</string>
-    <string name="latest_played_song_pref">latest_played_song_pref</string>
-    <string name="loved_songs_pref">preferred_songs_pref</string>
-
-    <string name="open_git_pref">open_git_pref</string>
     <string name="open_git_pref_title">Página no GitHub</string>
     <string name="open_git_pref_summary">Abra a página do projeto para mais informações :)</string>
 
-    <string name="faq_pref">faq_pref</string>
-    <string name="faq_title">FAQ</string>
     <string name="faq_summary">Dúvidas frequentes e formatos de mídia suportados :P</string>
 
-    <string name="theme_pref">theme_pref</string>
     <string name="theme_pref_title">Tema</string>
     <string name="theme_pref_light_title">Claro</string>
     <string name="theme_pref_dark_title">Escuro</string>
     <string name="theme_pref_auto_title">Automático</string>
 
-    <string name="theme_pref_light">theme_pref_light</string>
-    <string name="theme_pref_dark">theme_pref_dark</string>
-    <string name="theme_pref_auto">theme_pref_auto</string>
-
-    <string name="accent_pref">accent_pref</string>
     <string name="accent_pref_title">Cor de Destaque</string>
-    <string name="accent_and_hex">&lt;b>%1s&lt;/b>:&#160;%2s</string>
 
-    <string name="edge_pref">edge_pref</string>
-    <string name="edge_pref_title">Edge-to-edge</string>
     <string name="edge_pref_summary_on">Desativar edge-to-edge</string>
     <string name="edge_pref_summary_off">Ativar edge-to-edge</string>
 
-    <string name="tabs_pref">tabs_pref</string>
     <string name="tabs_pref_title">Abas</string>
     <string name="tabs_pref_summary_on">Desativar abas</string>
     <string name="tabs_pref_summary_off">Mostrar abas para navegação</string>
@@ -105,28 +73,16 @@
     <string name="active_fragments_pref_title">Abas ativas</string>
     <string name="active_fragments_pref_warning">Você não pode simplesmente remover todas as abas! :P</string>
 
-    <string name="active_frag_artist">active_frag_artist</string>
-    <string name="active_frag_music">active_frag_music</string>
-    <string name="active_frag_folders">active_frag_folder</string>
-    <string name="active_frag_settings">active_frag_settings</string>
-
-    <string name="artists_sorting_pref">artists_sorting_pref</string>
-    <string name="folders_sorting_pref">folders_sorting_pref</string>
     <string name="sorting_pref_default">Pré-Definido</string>
-    <string name="sorting_pref_ascending">A-Z</string>
-    <string name="sorting_pref_descending">Z-A</string>
 
-    <string name="precise_volume_pref">precise_volume_pref</string>
     <string name="precise_volume_pref_title">Controle preciso do volume</string>
     <string name="precise_volume_pref_summary_on">Desativar controle preciso do volume</string>
     <string name="precise_volume_pref_summary_off">Ativar controle preciso do volume</string>
 
-    <string name="focus_pref">focus_pref</string>
     <string name="focus_pref_title">Foco do Áudio</string>
     <string name="focus_pref_summary_on">Desativar gerenciamento de foco do áudio</string>
     <string name="focus_pref_summary_off">Ativar gerenciamento de foco do áudio</string>
 
-    <string name="headset_pref">headsets_pref</string>
     <string name="headset_pref_title">Entrada do Fone de Ouvido</string>
     <string name="headset_pref_summary_on">Desativar gerenciamento da Entrada do Fone de Ouvido</string>
     <string name="headset_pref_summary_off">Ativar gerenciamento da Entrada do Fone de Ouvido</string>
