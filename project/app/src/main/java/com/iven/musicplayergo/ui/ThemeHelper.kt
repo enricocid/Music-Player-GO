@@ -137,8 +137,16 @@ object ThemeHelper {
 
     @ColorInt
     @JvmStatic
-    fun resolveThemeAccent(context: Context) =
-        getColor(context, goPreferences.accent, R.color.deep_purple)
+    fun resolveThemeAccent(context: Context): Int {
+        var accent = goPreferences.accent
+
+        //fallback to default color when the pref is f@#$ed (when resources change)
+        if (!accents.map { accentId -> accentId.first }.contains(accent)) {
+            accent = R.color.deep_purple
+            goPreferences.accent = accent
+        }
+        return getColor(context, accent, R.color.deep_purple)
+    }
 
     @ColorInt
     @JvmStatic
