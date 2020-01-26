@@ -34,6 +34,11 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
             if (sNoMusic) {
                 mErrorIcon = R.drawable.ic_music_off
                 mErrorString = R.string.error_no_music
+            } else {
+                if (errorType == TAG_NO_MUSIC_INTENT) {
+                    mErrorIcon = R.drawable.ic_sentiment_very_dissatisfied
+                    mErrorString = R.string.error_unknown_unsupported
+                }
             }
         }
 
@@ -72,6 +77,7 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
 
         internal const val TAG_NO_PERMISSION = "NO_PERMISSION"
         internal const val TAG_NO_MUSIC = "NO_MUSIC"
+        internal const val TAG_NO_MUSIC_INTENT = "NO_MUSIC_INTENT"
 
         /**
          * Use this factory method to create a new instance of

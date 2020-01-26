@@ -36,6 +36,7 @@ import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_ARTISTS
 import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_FOLDERS
+import com.iven.musicplayergo.fragments.ErrorFragment.Companion.TAG_NO_MUSIC_INTENT
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicLoader
 import com.iven.musicplayergo.music.MusicUtils
@@ -968,12 +969,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
             } catch (e: Exception) {
                 e.printStackTrace()
-                Utils.makeToast(
-                    this@MainActivity,
-                    getString(R.string.error_unknown_unsupported),
-                    Toast.LENGTH_LONG
-                )
-                finishAndRemoveTask()
+                notifyError(TAG_NO_MUSIC_INTENT)
             }
         }
     }
