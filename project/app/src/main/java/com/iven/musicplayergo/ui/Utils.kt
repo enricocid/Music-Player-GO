@@ -64,7 +64,6 @@ object Utils {
             MaterialDialog(activity).show {
 
                 cancelOnTouchOutside(false)
-                cornerRadius(res = R.dimen.md_corner_radius)
 
                 title(R.string.app_name)
                 icon(R.drawable.ic_folder)
@@ -174,8 +173,6 @@ object Utils {
 
         val dialog = MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
-            cornerRadius(res = R.dimen.md_corner_radius)
-
             title(R.string.queue)
 
             AppCompatResources.getDrawable(context, R.drawable.ic_queue_music)?.apply {
@@ -223,8 +220,6 @@ object Utils {
 
         MaterialDialog(context).show {
 
-            cornerRadius(res = R.dimen.md_corner_radius)
-
             title(R.string.queue)
             icon(R.drawable.ic_delete_forever)
 
@@ -258,8 +253,6 @@ object Utils {
     ) {
 
         MaterialDialog(context).show {
-
-            cornerRadius(res = R.dimen.md_corner_radius)
 
             title(R.string.queue)
             icon(R.drawable.ic_delete_forever)
@@ -316,7 +309,6 @@ object Utils {
 
         MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
-            cornerRadius(res = R.dimen.md_corner_radius)
             title(R.string.loved_songs)
             icon(R.drawable.ic_favorite)
 
@@ -358,8 +350,6 @@ object Utils {
 
         MaterialDialog(context).show {
 
-            cornerRadius(res = R.dimen.md_corner_radius)
-
             title(R.string.loved_songs)
             icon(R.drawable.ic_delete_forever)
 
@@ -387,8 +377,6 @@ object Utils {
     ) {
 
         MaterialDialog(context).show {
-
-            cornerRadius(res = R.dimen.md_corner_radius)
 
             title(R.string.loved_songs)
             icon(R.drawable.ic_delete_forever)
@@ -440,8 +428,6 @@ object Utils {
     ) {
 
         MaterialDialog(context).show {
-
-            cornerRadius(res = R.dimen.md_corner_radius)
 
             title(R.string.app_name)
             icon(R.drawable.ic_stop)

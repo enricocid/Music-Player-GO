@@ -582,8 +582,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
             mNowPlayingDialog = MaterialDialog(this, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
-                cornerRadius(res = R.dimen.md_corner_radius)
-
                 customView(R.layout.now_playing)
 
                 val customView = getCustomView()

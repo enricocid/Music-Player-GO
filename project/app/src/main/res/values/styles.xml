@@ -6,6 +6,7 @@
         <item name="android:fontFamily">@font/raleway</item>
         <item name="md_font_title">@font/raleway_black</item>
         <item name="md_background_color">@color/dialogsBackground</item>
+        <item name="md_corner_radius">@dimen/md_corner_radius</item>
         <item name="alertDialogTheme">@style/DialogsStyle</item>
         <item name="preferenceTheme">@style/PrefTheme</item>
         <item name="android:windowBackground">@color/windowBackground</item>

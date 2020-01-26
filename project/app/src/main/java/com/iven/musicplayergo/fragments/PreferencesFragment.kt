@@ -133,7 +133,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
         mAccentsDialog = MaterialDialog(activity).show {
 
-            cornerRadius(res = R.dimen.md_corner_radius)
             title(R.string.accent_pref_title)
 
             customListAdapter(
@@ -153,7 +152,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
         mActiveFragmentsDialog = MaterialDialog(activity).show {
 
-            cornerRadius(res = R.dimen.md_corner_radius)
             title(R.string.active_fragments_pref_title)
 
             val activeTabsAdapter = ActiveTabsAdapter(activity)
