@@ -40,8 +40,10 @@ class PlayerService : Service() {
     }
 
     private fun configureMediaSession() {
-        mMediaSessionCompat = MediaSessionCompat(this, packageName)
-        mMediaSessionCompat.setCallback(mMediaSessionCallback)
+        mMediaSessionCompat = MediaSessionCompat(this, packageName).apply {
+            isActive = true
+            setCallback(mMediaSessionCallback)
+        }
     }
 
     fun getMediaSession(): MediaSessionCompat {
