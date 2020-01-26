@@ -108,6 +108,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
                 inflateMenu(R.menu.menu_all_music)
                 title = getString(R.string.songs)
+                subtitle = getString(R.string.folder_info, mAllMusic?.size)
                 setNavigationOnClickListener {
                     mUIControlInterface.onCloseActivity()
                 }
