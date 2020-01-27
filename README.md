@@ -10,10 +10,10 @@
 [![Supported formats](https://img.shields.io/static/v1?label=Formats&message=read&color=80cbc4)](https://github.com/enricocid/Music-Player-GO/blob/master/FORMATS.MD)
 
 [![API](https://img.shields.io/static/v1?label=API&message=21&color=a5d6a7)](https://developer.android.com/about/versions/android-5.0.html)
-[![TAG](https://img.shields.io/static/v1?label=Tag&message=v4.1.8&color=ffe082)](https://github.com/enricocid/Music-Player-GO/releases/tag/v4.1.8)
+[![TAG](https://img.shields.io/static/v1?label=Tag&message=v4.1.9&color=ffe082)](https://github.com/enricocid/Music-Player-GO/releases/tag/v4.1.9)
 
 
-<img align="right" src="https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/mpgo-4-1-8.gif" height="500px"/>
+<img align="right" src="https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/mpgo-4-1-9.gif" height="500px"/>
 
 
 # Features:
