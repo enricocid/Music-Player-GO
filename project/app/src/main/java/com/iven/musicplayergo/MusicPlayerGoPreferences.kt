@@ -23,8 +23,6 @@ class MusicPlayerGoPreferences(context: Context) {
     private val prefsAccent = context.getString(R.string.accent_pref)
     private val prefsEdgeToEdge = context.getString(R.string.edge_pref)
 
-    private val prefsTabs = context.getString(R.string.tabs_pref)
-
     private val prefsActiveFragments = context.getString(R.string.active_fragments_pref)
     private val prefsActiveFragmentsDefault =
         context.resources.getStringArray(R.array.activeFragmentsEntryArray).toMutableSet()
@@ -77,10 +75,6 @@ class MusicPlayerGoPreferences(context: Context) {
             true
         ) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1
         set(value) = mPrefs.edit().putBoolean(prefsEdgeToEdge, value).apply()
-
-    var isTabsEnabled
-        get() = mPrefs.getBoolean(prefsTabs, true)
-        set(value) = mPrefs.edit().putBoolean(prefsTabs, value).apply()
 
     var activeFragments: Set<String>?
         get() = mPrefs.getStringSet(prefsActiveFragments, prefsActiveFragmentsDefault)

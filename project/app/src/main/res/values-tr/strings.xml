@@ -58,9 +58,6 @@
     <string name="accent_pref_title">Ana Renk</string>
     <string name="edge_pref_summary_on">Edge-to-edge\’i devre dışı bırak</string>
     <string name="edge_pref_summary_off">Edge-to-edge\’i aktif et</string>
-    <string name="tabs_pref_title">Sekmeler</string>
-    <string name="tabs_pref_summary_on">Sekmeleri devre dışı bırak</string>
-    <string name="tabs_pref_summary_off">Bölümlerde gezinmek için sekmeleri göster</string>
     <string name="active_fragments_pref_title">Aktif sekmeler</string>
     <string name="active_fragments_pref_warning">Bütün sekmeleri kaldıramazsınız! : P</string>
     <string name="sorting_pref_default">Varsayılan</string>

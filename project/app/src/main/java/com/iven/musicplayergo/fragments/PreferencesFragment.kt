@@ -120,7 +120,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             when (key) {
                 getString(R.string.theme_pref) -> mUIControlInterface.onThemeChanged(false)
-                getString(R.string.tabs_pref), getString(R.string.edge_pref) -> ThemeHelper.applyNewThemeSmoothly(
+                getString(R.string.edge_pref) -> ThemeHelper.applyNewThemeSmoothly(
                     it,
                     true
                 )

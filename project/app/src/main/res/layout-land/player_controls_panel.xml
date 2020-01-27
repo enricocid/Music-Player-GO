@@ -44,7 +44,11 @@
                 android:layout_weight="1"
                 android:background="@drawable/ripple_alt"
                 android:onClick="openNowPlaying"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingStart="@dimen/player_controls_padding_start"
+                android:paddingTop="@dimen/player_controls_padding_normal"
+                android:paddingEnd="@dimen/player_controls_padding_end"
+                android:paddingBottom="@dimen/player_controls_padding_normal">
 
                 <TextView
                     android:id="@+id/playing_song"

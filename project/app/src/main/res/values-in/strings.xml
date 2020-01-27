@@ -67,10 +67,6 @@
     <string name="edge_pref_summary_on">Edge-to-edge diaktifkan</string>
     <string name="edge_pref_summary_off">Edge-to-edge dinonaktifkan</string>
 
-    <string name="tabs_pref_title">Tab</string>
-    <string name="tabs_pref_summary_on">Tab navigasi diaktifkan</string>
-    <string name="tabs_pref_summary_off">Tab navigasi dinonaktifkan</string>
-
     <string name="active_fragments_pref_title">Tab aktif</string>
     <string name="active_fragments_pref_warning">Anda tidak bisa membuang semua tab! :P</string>
 

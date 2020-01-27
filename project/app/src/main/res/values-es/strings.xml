@@ -59,9 +59,6 @@
     <string name="accent_pref_title">Acento</string>
     <string name="edge_pref_summary_on">Activar edge-to-edge</string>
     <string name="edge_pref_summary_off">Desactivar edge-to-edge</string>
-    <string name="tabs_pref_title">Petañas</string>
-    <string name="tabs_pref_summary_on">Desactivar las petañas</string>
-    <string name="tabs_pref_summary_off">Mostrar las petañas para navegar las secciones</string>
     <string name="active_fragments_pref_title">Activar las petañas</string>
     <string name="active_fragments_pref_warning">¡No puedes remover todas las petañas! :P</string>
     <string name="sorting_pref_default">Predeterminado</string>

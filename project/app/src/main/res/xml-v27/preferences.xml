@@ -65,13 +65,6 @@
             app:title="@string/active_fragments_pref_title" />
 
         <SwitchPreferenceCompat
-            android:summaryOff="@string/tabs_pref_summary_off"
-            app:defaultValue="true"
-            app:key="@string/tabs_pref"
-            app:summaryOn="@string/tabs_pref_summary_on"
-            app:title="@string/tabs_pref_title" />
-
-        <SwitchPreferenceCompat
             android:summaryOff="@string/precise_volume_pref_summary_off"
             app:defaultValue="true"
             app:key="@string/precise_volume_pref"

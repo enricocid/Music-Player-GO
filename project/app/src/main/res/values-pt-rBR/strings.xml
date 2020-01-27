@@ -59,9 +59,6 @@
     <string name="accent_pref_title">Cor de Destaque</string>
     <string name="edge_pref_summary_on">Desativar edge-to-edge</string>
     <string name="edge_pref_summary_off">Ativar edge-to-edge</string>
-    <string name="tabs_pref_title">Abas</string>
-    <string name="tabs_pref_summary_on">Desativar abas</string>
-    <string name="tabs_pref_summary_off">Mostrar abas para navegação</string>
     <string name="active_fragments_pref_title">Abas ativas</string>
     <string name="active_fragments_pref_warning">Você não pode simplesmente remover todas as abas! :P</string>
     <string name="sorting_pref_default">Pré-Definido</string>

@@ -65,10 +65,6 @@
     <string name="edge_pref_summary_on">किनारे-किनारे अक्षम करें</string>
     <string name="edge_pref_summary_off">किनारे-किनारे सक्षम करें</string>
 
-    <string name="tabs_pref_title">टैब्स</string>
-    <string name="tabs_pref_summary_on">टैब अक्षम करें</string>
-    <string name="tabs_pref_summary_off">अनुभागों को नेविगेट करने के लिए टैब दिखाएं</string>
-
     <string name="active_fragments_pref_title">सक्रिय टैब</string>
     <string name="active_fragments_pref_warning">आप सभी टैब नहीं निकाल सकते हैं! :P</string>
 

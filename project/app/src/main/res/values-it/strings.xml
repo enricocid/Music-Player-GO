@@ -65,10 +65,6 @@
     <string name="edge_pref_summary_on">Disabilita edge-to-edge</string>
     <string name="edge_pref_summary_off">Abilita edge-to-edge</string>
 
-    <string name="tabs_pref_title">Tabs</string>
-    <string name="tabs_pref_summary_on">Disabilita tabs</string>
-    <string name="tabs_pref_summary_off">Mostra tabs per navigare le sezioni</string>
-
     <string name="active_fragments_pref_title">Tab attive</string>
     <string name="active_fragments_pref_warning">Non puoi rimuovere tutte le tabs! :P</string>
 

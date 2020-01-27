@@ -65,10 +65,6 @@
     <string name="edge_pref_summary_on">Beeldvullende modus uitschakelen</string>
     <string name="edge_pref_summary_off">Beeldvullende modus inschakelen</string>
 
-    <string name="tabs_pref_title">Tabbladen</string>
-    <string name="tabs_pref_summary_on">Tabbladen uitschakelen</string>
-    <string name="tabs_pref_summary_off">Tabbladen gebruiken om door secties te navigeren</string>
-
     <string name="active_fragments_pref_title">Actieve tabbladen</string>
     <string name="active_fragments_pref_warning">Je kunt niet álle tabbladen verwijderen! :P</string>
 

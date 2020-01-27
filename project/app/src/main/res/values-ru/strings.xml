@@ -52,8 +52,5 @@
     <string name="theme_pref_light_title">Светлая</string>
     <string name="theme_pref_dark_title">Темная</string>
     <string name="theme_pref_auto_title">Автоматически</string>
-    <string name="tabs_pref_title">Вкладки</string>
-    <string name="tabs_pref_summary_on">Отключить вкладки</string>
-    <string name="tabs_pref_summary_off">Показать вкладки для переключения сессий</string>
     <string name="sorting_pref_default">По умолчанию</string>
 </resources>

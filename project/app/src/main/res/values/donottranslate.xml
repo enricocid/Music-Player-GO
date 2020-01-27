@@ -27,7 +27,6 @@
     <string name="accent_and_hex">&lt;b>%1s&lt;/b>:&#160;%2s</string>
     <string name="edge_pref">edge_pref</string>
     <string name="edge_pref_title">Edge-to-edge</string>
-    <string name="tabs_pref">tabs_pref</string>
     <string name="active_fragments_pref">selected_fragments_pref</string>
     <string name="active_frag_artist">active_frag_artist</string>
     <string name="active_frag_music">active_frag_music</string>

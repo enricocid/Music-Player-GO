@@ -83,7 +83,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     private lateinit var mLoadingProgress: ProgressBar
     private lateinit var mViewPager2: ViewPager2
     private lateinit var mTabsLayout: TabLayout
-    private lateinit var mPlayingSongsContainer: View
 
     private var sLandscape = false
 
@@ -95,11 +94,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     private lateinit var mLovedSongsButton: ImageButton
     private lateinit var mLoveSongsNumber: TextView
     private lateinit var mQueueButton: ImageButton
-
-    private var mControlsPaddingNoTabs: Int by Delegates.notNull()
-    private var mControlsPaddingNormal: Int by Delegates.notNull()
-    private var mControlsPaddingEnd: Int by Delegates.notNull()
-    private val sTabsEnabled = goPreferences.isTabsEnabled
 
     //now playing
     private lateinit var mNowPlayingDialog: MaterialDialog
@@ -265,8 +259,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             }
         }
 
-        setupControlsPanelSpecs()
-
         initMediaButtons()
 
         mActiveFragments = goPreferences.activeFragments?.toMutableList()
@@ -289,7 +281,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         mLoadingProgress = loading_progress_bar
         mViewPager2 = view_pager2
         mTabsLayout = tab_layout
-        mPlayingSongsContainer = playing_songs_container
 
         //controls panel
         mPlayingSong = playing_song
@@ -308,14 +299,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             ThemeHelper.resolveColorAttr(this, android.R.attr.textColorPrimary)
         mResolvedDisabledIconsColor =
             ThemeHelper.resolveColorAttr(this, android.R.attr.colorButtonNormal)
-
-        resources.apply {
-            mControlsPaddingNormal =
-                getDimensionPixelSize(R.dimen.player_controls_padding_normal)
-            mControlsPaddingEnd = getDimensionPixelSize(R.dimen.player_controls_padding_end)
-            mControlsPaddingNoTabs =
-                getDimensionPixelSize(R.dimen.player_controls_padding_no_tabs)
-        }
     }
 
     private fun notifyError(errorType: String) {
@@ -364,52 +347,40 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         mViewPager2.offscreenPageLimit = mActiveFragments?.size?.minus(1)!!
         mViewPager2.adapter = pagerAdapter
 
-        if (sTabsEnabled) {
-            mTabsLayout.apply {
+        mTabsLayout.apply {
 
-                tabIconTint = ColorStateList.valueOf(mResolvedAlphaAccentColor)
+            tabIconTint = ColorStateList.valueOf(mResolvedAlphaAccentColor)
 
-                TabLayoutMediator(this, mViewPager2) { tab, position ->
-                    mActiveFragments?.get(position)?.toInt()?.let { currentFragmentIndex ->
-                        tab.setIcon(ThemeHelper.getTabIcon(currentFragmentIndex))
-                        initFragmentAtIndex(currentFragmentIndex)
-                    }
-                }.attach()
+            TabLayoutMediator(this, mViewPager2) { tab, position ->
+                mActiveFragments?.get(position)?.toInt()?.let { currentFragmentIndex ->
+                    tab.setIcon(ThemeHelper.getTabIcon(currentFragmentIndex))
+                    initFragmentAtIndex(currentFragmentIndex)
+                }
+            }.attach()
 
-                addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
-                    override fun onTabSelected(tab: TabLayout.Tab) {
-                        if (sDetailsFragmentExpanded) closeDetailsFragment(tab) else
-                            tab.icon?.setTint(mResolvedAccentColor)
-                    }
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    if (sDetailsFragmentExpanded) closeDetailsFragment(tab) else
+                        tab.icon?.setTint(mResolvedAccentColor)
+                }
 
-                    override fun onTabUnselected(tab: TabLayout.Tab) {
-                        tab.icon?.setTint(mResolvedAlphaAccentColor)
-                    }
+                override fun onTabUnselected(tab: TabLayout.Tab) {
+                    tab.icon?.setTint(mResolvedAlphaAccentColor)
+                }
 
-                    override fun onTabReselected(tab: TabLayout.Tab) {
-                        if (sDetailsFragmentExpanded) closeDetailsFragment(null)
-                    }
-                })
+                override fun onTabReselected(tab: TabLayout.Tab) {
+                    if (sDetailsFragmentExpanded) closeDetailsFragment(null)
+                }
+            })
 
-                getTabAt(if (sRestoreSettingsFragment) mViewPager2.offscreenPageLimit else 0)?.icon?.setTint(
-                    mResolvedAccentColor
-                )
-            }
+            getTabAt(if (sRestoreSettingsFragment) mViewPager2.offscreenPageLimit else 0)?.icon?.setTint(
+                mResolvedAccentColor
+            )
         }
 
         if (sRestoreSettingsFragment) mViewPager2.currentItem =
             mViewPager2.offscreenPageLimit
-    }
-
-    private fun setupControlsPanelSpecs() {
-        if (!sTabsEnabled) mTabsLayout.visibility = View.GONE
-        mPlayingSongsContainer.setPadding(
-            mControlsPaddingNoTabs,
-            if (sTabsEnabled) mControlsPaddingNormal else mControlsPaddingNoTabs,
-            mControlsPaddingEnd,
-            if (sTabsEnabled) mControlsPaddingNormal else mControlsPaddingNoTabs
-        )
     }
 
     private fun initFragmentAtIndex(index: Int) {
@@ -490,7 +461,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
         onLovedSongsUpdate(false)
 
-        mPlayingSongsContainer.setOnLongClickListener { playerControlsContainer ->
+        playing_songs_container.setOnLongClickListener { playerControlsContainer ->
             if (checkIsPlayer(true)) openPlayingArtistAlbum(playerControlsContainer)
             return@setOnLongClickListener true
         }
