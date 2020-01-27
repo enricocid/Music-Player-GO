@@ -6,10 +6,7 @@
     android:layout_gravity="center_vertical"
     android:background="@drawable/ripple"
     android:orientation="vertical"
-    android:paddingStart="16dp"
-    android:paddingTop="16dp"
-    android:paddingEnd="32dp"
-    android:paddingBottom="16dp">
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/title"

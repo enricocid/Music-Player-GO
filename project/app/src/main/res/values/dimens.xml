@@ -7,4 +7,5 @@
     <dimen name="player_controls_padding_normal">4dp</dimen>
     <dimen name="player_controls_padding_no_tabs">8dp</dimen>
     <dimen name="player_controls_padding_end">2dp</dimen>
+    <dimen name="fast_scroller_view_dim">32dp</dimen>
 </resources>

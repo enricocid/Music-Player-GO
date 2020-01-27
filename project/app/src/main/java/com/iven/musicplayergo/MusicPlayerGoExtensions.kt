@@ -126,3 +126,7 @@ fun RecyclerView.smoothSnapToPosition(position: Int) {
     smoothScroller.targetPosition = position
     layoutManager?.startSmoothScroll(smoothScroller)
 }
+
+fun View.handleViewVisibility(isVisible: Boolean) {
+    visibility = if (isVisible) View.VISIBLE else View.GONE
+}

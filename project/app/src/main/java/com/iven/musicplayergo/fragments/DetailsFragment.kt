@@ -358,8 +358,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         year.text = item.year
                         totalDuration.text =
                             MusicUtils.formatSongDuration(item.totalDuration, true)
-                        checkbox.visibility =
-                            if (mSelectedAlbum?.title != item.title) View.GONE else View.VISIBLE
+                        checkbox.handleViewVisibility(mSelectedAlbum?.title == item.title)
                     }
 
                     onClick { index ->
