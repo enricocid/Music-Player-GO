@@ -2,6 +2,8 @@
 
 Many thanks to all contributors (listed in no particular order :)
 
+If You think You should be listed don't hesitate to notify me! :)
+
 ### Special thanks goes to:
 
 - [**Julian Javier Gomez - Axinen Design**](https://github.com/AxinenDesign) for the wonderful **material design icon**
@@ -25,8 +27,6 @@ Many thanks to all contributors (listed in no particular order :)
 
 - [**IzzySoft**](https://github.com/IzzySoft) and [**Poussinou**](https://github.com/Poussinou) for setting up the **F-Droid** repository
 
-- [**Somesh Kumar**](https://github.com/TheSomeshKumar) for Hindi translations
-
 - [**TacoTheDank**](https://github.com/TacoTheDank) for upgrades to gradle and java 1.8
 
 - [**Dankan1890**](https://github.com/dankan1890) for some fixes to bluetooth devices
@@ -37,6 +37,9 @@ Many thanks to all contributors (listed in no particular order :)
 
 - [**andOTP**](https://github.com/andOTP) for "Get it on GitHub" download badge
 
+- [**abirke**](https://github.com/abirke) for having reported media buttons [issues](https://github.com/enricocid/Music-Player-GO/issues/137)
+
+- [**Kieran BW**](https://github.com/FredHappyface) for having raised [this](https://github.com/enricocid/Music-Player-GO/issues/131) question
 
 ### Big thanks to translators:
 

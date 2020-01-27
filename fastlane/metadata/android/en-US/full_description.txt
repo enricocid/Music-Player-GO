@@ -14,16 +14,16 @@
 
 - Bottom controls panel containing:
   - Currently reproduced song
-    > Tip: long click on it to quickly jump to the artist's details
+    > Tip: Tip: long click on it to quickly jump to the song's album/folder
   - Play/pause
   - Queue button
   - Loved songs button
 
 - Now playing dialog showing the classical media controls: seek bar, equalizer, skip, play/pause, repeat 1x, add to loved songs, current volume step fine control
-  > Tip: click on played song to quickly jump to the artist's details
+  > Tip: click on played song to quickly jump to song's album/folder
 
 - Artist's details showing its albums/songs. Shuffle all its songs or the selected album
-  > Tip: click on album's title to quickly jump back to it
+  > Tip: click on the album's title to quickly jump to the song's album
 
 - Simple queue management
   > Tip: to clear queue long click on queue button

@@ -1,0 +1,8 @@
+- Quick jump: ora supporta le cartelle
+- Corretta e migliorata la gestione della sovrapposizione tra le liste e l'indicatore per lo scrolling
+- Errori: invece di chiudere l'app viene mostrato un errore
+- Migliorato shuffling
+- Pulsanti cuffie: correzioni (grazie abirke)
+- Ottimizzazioni codice e altre correzioni
+- Aggiunto supporto a Portoghese-regione:Brasile (grazie Glaucio Santos)
+- Aggiornate le traduzioni (grazie a tutti)
