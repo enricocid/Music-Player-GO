@@ -1,74 +1,74 @@
 <resources>
 
     <!-- Dialogs -->
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
+    <string name="yes">Igen</string>
+    <string name="no">Nem</string>
 
     <!-- Main - Artists -->
-    <string name="artists">Artists</string>
-    <string name="artist_info">%1d&#160;Albums,&#160;%2d&#160;Songs</string>
-    <string name="folder_info">%1d&#160;Songs</string>
+    <string name="artists">Művészek</string>
+    <string name="artist_info">%1d&#160;Albumok,&#160;%2d&#160;Dalok</string>
+    <string name="folder_info">%1d&#160;Dalok</string>
 
     <!-- Main - All songs -->
-    <string name="songs">Songs</string>
-    <string name="shuffle_am">Shuffle all songs</string>
-    <string name="shuffle_sa">Shuffle selected album</string>
+    <string name="songs">Dalok</string>
+    <string name="shuffle_am">Összes dal keverése</string>
+    <string name="shuffle_sa">Kiválasztott albumok keverése</string>
 
     <!-- Main - Folders -->
-    <string name="folders">Folders</string>
+    <string name="folders">Mappa</string>
 
     <!-- Queue -->
-    <string name="queue">Queue</string>
-    <string name="queue_add">Add to queue</string>
-    <string name="queue_song_add">%1s added to queue!</string>
-    <string name="queue_song_remove">%1s will be deleted from queue. Continue?</string>
-    <string name="queue_songs_clear">Queue will be cleared. Continue?</string>
-    <string name="error_no_queue">No songs queued!</string>
+    <string name="queue">Lejátszási lista</string>
+    <string name="queue_add">Lejátszási listához adás</string>
+    <string name="queue_song_add">%1s hozzáadva a lejátszási listához!</string>
+    <string name="queue_song_remove">%1s ki lesz törölve a lejátszási listából. Folytatod?</string>
+    <string name="queue_songs_clear">A lejátszási lista törlődni fog. Folytatod?</string>
+    <string name="error_no_queue">Üres lejátszási lista!</string>
 
     <!-- Loved songs -->
-    <string name="loved_songs">Loved songs</string>
-    <string name="loved_song_added">%1s (%2s) added to loved songs</string>
-    <string name="loved_song_remove">%1s (%2s) will be deleted from loved songs. Continue?</string>
-    <string name="loved_songs_clear">Loved songs will be cleared. Continue?</string>
-    <string name="loved_song_add">Add to loved songs</string>
-    <string name="error_no_loved_songs">No loved songs found!</string>
+    <string name="loved_songs">Kedvencek</string>
+    <string name="loved_song_added">%1s (%2s) hozzáadva a kedvencekhez!</string>
+    <string name="loved_song_remove">%1s (%2s) ki lest törölve a kedvencekből. Folytatod?</string>
+    <string name="loved_songs_clear">Kedvencek törlődni fognak. Folytatod?</string>
+    <string name="loved_song_add">Hozzáadva a kedvencekhez!</string>
+    <string name="error_no_loved_songs">Nincsenek kedvencek!</string>
 
     <!-- Messages -->
-    <string name="perm_rationale">Music Player GO needs access to your files to play music!</string>
-    <string name="no_browser">No browser found!</string>
-    <string name="bad_id">Play a song first!</string>
-    <string name="no_eq">No equalizer found!</string>
-    <string name="error_no_music">No music found :(</string>
-    <string name="error_unknown_unsupported">Something went wrong! :( Probably the chosen format is not supported or folder is not accessible (not an app\'s fault!)</string>
-    <string name="error_media_buttons">Something went wrong! :( Please restart playback from the app</string>
-    <string name="on_close_activity">Do You want to stop playback?</string>
-    <string name="repeat_enabled">Repeat 1x enabled!</string>
-    <string name="repeat_disabled">Repeat 1x disabled!</string>
+    <string name="perm_rationale">Music Player GO hozzáférést igényel a fáljaidhoz hogy zenét tudjon játszani!</string>
+    <string name="no_browser">Böngésző nem található!</string>
+    <string name="bad_id">Először játsz egy dalt!</string>
+    <string name="no_eq">Hangszínszabályzó nem található!</string>
+    <string name="error_no_music">Zene nem található! :(</string>
+    <string name="error_unknown_unsupported">Valami elromlott! :( A kiválasztott formátum nem támogatott vagy a mappa nem elérhető. (nem egy alapértelmezett!)</string>
+    <string name="error_media_buttons">Valami elromlott! :( Kérlek indításad újra a visszajátszást</string>
+    <string name="on_close_activity">Meg szeretnéd állítani a visszajátszást?</string>
+    <string name="repeat_enabled">Ismétlés 1x aktiválva!</string>
+    <string name="repeat_disabled">Ismétlés 1x deaktiválva!</string>
 
     <!-- Preferences -->
-    <string name="settings">Settings</string>
-    <string name="category_appearance">Appearance</string>
-    <string name="category_general">General</string>
-    <string name="open_git_pref_title">GitHub page</string>
-    <string name="open_git_pref_summary">Open the project\'s page for more info :)</string>
-    <string name="faq_summary">FAQ and supported media formats :P</string>
-    <string name="theme_pref_title">Theme</string>
-    <string name="theme_pref_light_title">Light</string>
-    <string name="theme_pref_dark_title">Dark</string>
-    <string name="theme_pref_auto_title">Automatic</string>
-    <string name="accent_pref_title">Accent</string>
-    <string name="edge_pref_summary_on">Disable edge-to-edge</string>
-    <string name="edge_pref_summary_off">Enable edge-to-edge</string>
-    <string name="active_fragments_pref_title">Active tabs</string>
-    <string name="active_fragments_pref_warning">You just can\'t remove all tabs! :P</string>
-    <string name="sorting_pref_default">Default</string>
-    <string name="precise_volume_pref_title">Precise volume control</string>
-    <string name="precise_volume_pref_summary_on">Disable precise volume control</string>
-    <string name="precise_volume_pref_summary_off">Enable precise volume control</string>
-    <string name="focus_pref_title">Audio focus</string>
-    <string name="focus_pref_summary_on">Disable audio focus management</string>
-    <string name="focus_pref_summary_off">Enable audio focus management</string>
-    <string name="headset_pref_title">Headset plug</string>
-    <string name="headset_pref_summary_on">Disable headset plug management</string>
-    <string name="headset_pref_summary_off">Enable headset plug management</string>
+    <string name="settings">Beállítások</string>
+    <string name="category_appearance">Megjelenés</string>
+    <string name="category_general">Általános</string>
+    <string name="open_git_pref_title">GitHub oldal</string>
+    <string name="open_git_pref_summary">Nyisd meg a Projektek oldalt több információért :)</string>
+    <string name="faq_summary">FAQ és támogatott média formátumok :P</string>
+    <string name="theme_pref_title">Színséma</string>
+    <string name="theme_pref_light_title">Világos</string>
+    <string name="theme_pref_dark_title">Sötét</string>
+    <string name="theme_pref_auto_title">Autómatikus</string>
+    <string name="accent_pref_title">Hangsúly</string>
+    <string name="edge_pref_summary_on">Edge-to-edge tiltás</string>
+    <string name="edge_pref_summary_off">Edge-to-edge engedélyezés</string>
+    <string name="active_fragments_pref_title">Aktív oldalak</string>
+    <string name="active_fragments_pref_warning">Nem tudos eltávolítani az összes oldalt! :P</string>
+    <string name="sorting_pref_default">Alapértelmezett</string>
+    <string name="precise_volume_pref_title">Pontos hangerő-szabályozás</string>
+    <string name="precise_volume_pref_summary_on">Pontos hangerő-szabályozás tiltás</string>
+    <string name="precise_volume_pref_summary_off">Pontos hangerő-szabályozás engedélyezés</string>
+    <string name="focus_pref_title">Audió fókusz</string>
+    <string name="focus_pref_summary_on">Audió fókusz menedzsment tiltás</string>
+    <string name="focus_pref_summary_off">Audió fókusz menedzsment engedélyezés</string>
+    <string name="headset_pref_title">Fülhallgató csatlakozó</string>
+    <string name="headset_pref_summary_on">Fülhallgató csatlakozó menedzsment tiltás</string>
+    <string name="headset_pref_summary_off">Fülhallgató csatlakozó menedzsment engedélyezés</string>
 </resources>
