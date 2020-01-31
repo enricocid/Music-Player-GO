@@ -62,3 +62,5 @@ If You think You should be listed don't hesitate to notify me! :)
 - [**Somesh Kumar**](https://github.com/TheSomeshKumar) for **Hindi** translations
 
 - [**Glaucio Santos**](https://github.com/7glaucio) for **Brazilian Portuguese** translations
+
+- [**INeido**](https://github.com/Ineido) for **Hungarian** translations
