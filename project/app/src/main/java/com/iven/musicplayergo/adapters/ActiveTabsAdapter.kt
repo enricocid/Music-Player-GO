@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.toColouredToast
 import com.iven.musicplayergo.ui.ThemeHelper
-import com.iven.musicplayergo.ui.Utils
 
 class ActiveTabsAdapter(
     private val context: Context
@@ -89,11 +88,8 @@ class ActiveTabsAdapter(
                         adapterPosition.toString()
                     )
                     if (mActiveItems?.size!! < 2) {
-                        Utils.makeToast(
-                            context,
-                            context.getString(R.string.active_fragments_pref_warning),
-                            Toast.LENGTH_SHORT
-                        )
+                        context.getString(R.string.active_fragments_pref_warning)
+                            .toColouredToast(context)
                         mActiveItems.add(adapterPosition.toString())
                         manageIndicatorsStatus(true, tabImageButton, indicator)
                     }

@@ -12,7 +12,6 @@ import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
 import androidx.browser.customtabs.CustomTabsIntent
@@ -88,12 +87,6 @@ object Utils {
             arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
             PERMISSION_REQUEST_READ_EXTERNAL_STORAGE
         )
-    }
-
-    @JvmStatic
-    fun makeToast(context: Context, message: CharSequence, length: Int) {
-        Toast.makeText(context, message, length)
-            .show()
     }
 
     @JvmStatic
@@ -287,15 +280,11 @@ object Utils {
                     currentPosition
                 )
             )
-            makeToast(
-                context,
-                context.getString(
-                    R.string.loved_song_added,
-                    song?.title,
-                    MusicUtils.formatSongDuration(currentPosition.toLong(), false)
-                ),
-                Toast.LENGTH_SHORT
-            )
+            context.getString(
+                R.string.loved_song_added,
+                song?.title,
+                MusicUtils.formatSongDuration(currentPosition.toLong(), false)
+            ).toColouredToast(context)
             goPreferences.lovedSongs = lovedSongs
         }
     }
@@ -462,7 +451,7 @@ object Utils {
                 build().launchUrl(context, Uri.parse(link))
             }
         } catch (e: Exception) {
-            makeToast(context, context.getString(R.string.no_browser), Toast.LENGTH_LONG)
+            context.getString(R.string.no_browser).toColouredToast(context)
             e.printStackTrace()
         }
     }

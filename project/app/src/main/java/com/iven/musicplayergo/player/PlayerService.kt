@@ -7,10 +7,9 @@ import android.os.IBinder
 import android.os.Parcelable
 import android.support.v4.media.session.MediaSessionCompat
 import android.view.KeyEvent
-import android.widget.Toast
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.ui.Utils
+import com.iven.musicplayergo.toColouredToast
 
 
 class PlayerService : Service() {
@@ -137,7 +136,7 @@ class PlayerService : Service() {
             }
         } catch (e: Exception) {
             isSuccess = false
-            Utils.makeToast(this, getString(R.string.error_media_buttons), Toast.LENGTH_LONG)
+            getString(R.string.error_media_buttons).toColouredToast(this)
             e.printStackTrace()
         }
 

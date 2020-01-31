@@ -16,12 +16,12 @@ import android.os.Handler
 import android.os.PowerManager
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat.*
-import android.widget.Toast
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
+import com.iven.musicplayergo.toColouredToast
 import com.iven.musicplayergo.ui.Utils
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -486,11 +486,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun repeat() {
         isRepeat = !isRepeat
         updatePlaybackStatus()
-        Utils.makeToast(
-            playerService,
-            playerService.getString(if (isRepeat) R.string.repeat_enabled else R.string.repeat_disabled),
-            Toast.LENGTH_SHORT
-        )
+        playerService.getString(if (isRepeat) R.string.repeat_enabled else R.string.repeat_disabled)
+            .toColouredToast(playerService)
     }
 
     fun setQueueEnabled(enabled: Boolean) {

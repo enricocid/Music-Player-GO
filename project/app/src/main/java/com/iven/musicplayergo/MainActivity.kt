@@ -12,7 +12,10 @@ import android.os.IBinder
 import android.provider.OpenableColumns
 import android.util.AttributeSet
 import android.view.View
-import android.widget.*
+import android.widget.ImageButton
+import android.widget.ProgressBar
+import android.widget.SeekBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
@@ -130,7 +133,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     private lateinit var mBindingIntent: Intent
 
     private fun checkIsPlayer(showError: Boolean) = mMediaPlayerHolder.apply {
-        if (!isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs && showError) EqualizerUtils.notifyNoSessionId(
+        if (!isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs && showError) getString(R.string.bad_id).toColouredToast(
             this@MainActivity
         )
     }.isMediaPlayer
@@ -883,14 +886,10 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             mMediaPlayerHolder.apply {
                 if (queueSongs.isEmpty()) setQueueEnabled(true)
                 queueSongs.add(song)
-                Utils.makeToast(
-                    this@MainActivity,
-                    getString(
-                        R.string.queue_song_add,
-                        song.title
-                    ),
-                    Toast.LENGTH_SHORT
-                )
+                getString(
+                    R.string.queue_song_add,
+                    song.title
+                ).toColouredToast(this@MainActivity)
             }
         }
     }
@@ -906,20 +905,14 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         if (checkIsPlayer(false) && mMediaPlayerHolder.queueSongs.isNotEmpty())
             mQueueDialog = Utils.showQueueSongsDialog(this, mMediaPlayerHolder)
         else
-            Utils.makeToast(
-                this, getString(R.string.error_no_queue),
-                Toast.LENGTH_SHORT
-            )
+            getString(R.string.error_no_queue).toColouredToast(this)
     }
 
     fun openLovedSongsDialog(view: View) {
         if (!goPreferences.lovedSongs.isNullOrEmpty())
             Utils.showLovedSongsDialog(this, this, mMediaPlayerHolder)
         else
-            Utils.makeToast(
-                this, getString(R.string.error_no_loved_songs),
-                Toast.LENGTH_SHORT
-            )
+            getString(R.string.error_no_loved_songs).toColouredToast(this)
     }
 
     //method to handle intent to play audio file from external app
