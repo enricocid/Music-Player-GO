@@ -7,14 +7,14 @@
         <item name="android:scaleY">0.90</item>
     </style>
 
-    <style name="ToolbarStyle.Title" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">20sp
-        </item> <!-- Default for portrait is 20sp and for landscape 14sp-->
+    <!-- Indicator thumb text style -->
+    <style name="IndicatorThumbTextAppearance" parent="TextAppearance.AppCompat.Small">
         <item name="android:fontFamily">@font/raleway_black</item>
     </style>
 
-    <!-- Indicator thumb text style -->
-    <style name="IndicatorThumbTextAppearance" parent="TextAppearance.AppCompat.Small">
+    <style name="ToolbarStyle.Title" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">20sp
+        </item> <!-- Default for portrait is 20sp and for landscape 14sp-->
         <item name="android:fontFamily">@font/raleway_black</item>
     </style>
 </resources>

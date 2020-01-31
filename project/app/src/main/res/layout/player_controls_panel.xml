@@ -6,6 +6,7 @@
     android:id="@+id/player_controls_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?android:attr/windowBackground"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -122,6 +123,7 @@
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="32dp"
+        android:background="?android:attr/windowBackground"
         app:tabGravity="fill"
         app:tabIndicator="@drawable/tab_indicator"
         app:tabMode="fixed"
