@@ -3,12 +3,10 @@ package com.iven.musicplayergo
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.content.Context
-import android.content.res.ColorStateList
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewTreeObserver
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
@@ -18,7 +16,6 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.ArgbEvaluator
-import com.google.android.material.card.MaterialCardView
 import com.iven.musicplayergo.ui.ThemeHelper
 import kotlin.math.max
 import kotlin.random.Random
@@ -136,19 +133,8 @@ fun View.handleViewVisibility(isVisible: Boolean) {
     visibility = if (isVisible) View.VISIBLE else View.GONE
 }
 
-fun String.toColouredToast(
+fun String.toToast(
     context: Context
 ) {
-    Toast.makeText(context, this, Toast.LENGTH_LONG).apply {
-
-        val toastView = View.inflate(context, R.layout.custom_toast, null) as MaterialCardView
-
-        toastView.apply {
-            setCardBackgroundColor(ColorStateList.valueOf(ThemeHelper.resolveThemeAccent(context)))
-            findViewById<TextView>(R.id.toast_text).text = this@toColouredToast
-        }
-
-        view = toastView
-
-    }.show()
+    Toast.makeText(context, this, Toast.LENGTH_LONG).show()
 }

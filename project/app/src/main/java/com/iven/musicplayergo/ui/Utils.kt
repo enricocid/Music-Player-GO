@@ -284,7 +284,7 @@ object Utils {
                 R.string.loved_song_added,
                 song?.title,
                 MusicUtils.formatSongDuration(currentPosition.toLong(), false)
-            ).toColouredToast(context)
+            ).toToast(context)
             goPreferences.lovedSongs = lovedSongs
         }
     }
@@ -451,7 +451,7 @@ object Utils {
                 build().launchUrl(context, Uri.parse(link))
             }
         } catch (e: Exception) {
-            context.getString(R.string.no_browser).toColouredToast(context)
+            context.getString(R.string.no_browser).toToast(context)
             e.printStackTrace()
         }
     }

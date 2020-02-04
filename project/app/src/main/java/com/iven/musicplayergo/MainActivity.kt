@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     private lateinit var mBindingIntent: Intent
 
     private fun checkIsPlayer(showError: Boolean) = mMediaPlayerHolder.apply {
-        if (!isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs && showError) getString(R.string.bad_id).toColouredToast(
+        if (!isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs && showError) getString(R.string.bad_id).toToast(
             this@MainActivity
         )
     }.isMediaPlayer
@@ -889,7 +889,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                 getString(
                     R.string.queue_song_add,
                     song.title
-                ).toColouredToast(this@MainActivity)
+                ).toToast(this@MainActivity)
             }
         }
     }
@@ -905,14 +905,14 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         if (checkIsPlayer(false) && mMediaPlayerHolder.queueSongs.isNotEmpty())
             mQueueDialog = Utils.showQueueSongsDialog(this, mMediaPlayerHolder)
         else
-            getString(R.string.error_no_queue).toColouredToast(this)
+            getString(R.string.error_no_queue).toToast(this)
     }
 
     fun openLovedSongsDialog(view: View) {
         if (!goPreferences.lovedSongs.isNullOrEmpty())
             Utils.showLovedSongsDialog(this, this, mMediaPlayerHolder)
         else
-            getString(R.string.error_no_loved_songs).toColouredToast(this)
+            getString(R.string.error_no_loved_songs).toToast(this)
     }
 
     //method to handle intent to play audio file from external app

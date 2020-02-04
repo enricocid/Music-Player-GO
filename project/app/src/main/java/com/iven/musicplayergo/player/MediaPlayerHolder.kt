@@ -21,7 +21,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
-import com.iven.musicplayergo.toColouredToast
+import com.iven.musicplayergo.toToast
 import com.iven.musicplayergo.ui.Utils
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -487,7 +487,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         isRepeat = !isRepeat
         updatePlaybackStatus()
         playerService.getString(if (isRepeat) R.string.repeat_enabled else R.string.repeat_disabled)
-            .toColouredToast(playerService)
+            .toToast(playerService)
     }
 
     fun setQueueEnabled(enabled: Boolean) {

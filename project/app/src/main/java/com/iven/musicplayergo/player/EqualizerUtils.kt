@@ -7,7 +7,7 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.media.audiofx.AudioEffect
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.toColouredToast
+import com.iven.musicplayergo.toToast
 
 object EqualizerUtils {
 
@@ -38,7 +38,7 @@ object EqualizerUtils {
     internal fun openEqualizer(activity: Activity, mediaPlayer: MediaPlayer) {
         if (hasEqualizer(activity))
             when (mediaPlayer.audioSessionId) {
-                AudioEffect.ERROR_BAD_VALUE -> activity.getString(R.string.bad_id).toColouredToast(
+                AudioEffect.ERROR_BAD_VALUE -> activity.getString(R.string.bad_id).toToast(
                     activity
                 )
                 else -> {
@@ -58,6 +58,6 @@ object EqualizerUtils {
                         notFound.printStackTrace()
                     }
                 }
-            } else activity.getString(R.string.no_eq).toColouredToast(activity)
+            } else activity.getString(R.string.no_eq).toToast(activity)
     }
 }

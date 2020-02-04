@@ -9,7 +9,7 @@ import android.support.v4.media.session.MediaSessionCompat
 import android.view.KeyEvent
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.toColouredToast
+import com.iven.musicplayergo.toToast
 
 
 class PlayerService : Service() {
@@ -136,7 +136,7 @@ class PlayerService : Service() {
             }
         } catch (e: Exception) {
             isSuccess = false
-            getString(R.string.error_media_buttons).toColouredToast(this)
+            getString(R.string.error_media_buttons).toToast(this)
             e.printStackTrace()
         }
 
