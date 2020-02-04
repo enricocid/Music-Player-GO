@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,7 +16,7 @@
         android:background="?android:attr/actionBarItemBackground"
         android:onClick="openEqualizer"
         android:padding="8dp"
-        android:src="@drawable/ic_equalizer"
+        app:srcCompat="@drawable/ic_equalizer"
         tools:ignore="ContentDescription" />
 
     <ImageButton
@@ -26,7 +27,7 @@
         android:layout_weight="1"
         android:background="?android:attr/actionBarItemBackground"
         android:padding="8dp"
-        android:src="@drawable/ic_skip_previous"
+        app:srcCompat="@drawable/ic_skip_previous"
         tools:ignore="ContentDescription" />
 
     <ImageButton
@@ -38,7 +39,7 @@
         android:background="?android:attr/actionBarItemBackground"
         android:padding="20dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_play"
+        app:srcCompat="@drawable/ic_play"
         tools:ignore="ContentDescription" />
 
     <ImageButton
@@ -49,7 +50,7 @@
         android:layout_weight="1"
         android:background="?android:attr/actionBarItemBackground"
         android:padding="8dp"
-        android:src="@drawable/ic_skip_next"
+        app:srcCompat="@drawable/ic_skip_next"
         tools:ignore="ContentDescription" />
 
     <ImageButton
@@ -60,6 +61,6 @@
         android:layout_weight="1"
         android:background="?android:attr/actionBarItemBackground"
         android:padding="8dp"
-        android:src="@drawable/ic_repeat_one"
+        app:srcCompat="@drawable/ic_repeat_one"
         tools:ignore="ContentDescription" />
 </LinearLayout>

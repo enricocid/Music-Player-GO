@@ -21,6 +21,7 @@ import android.widget.ImageButton
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.widget.ImageViewCompat
@@ -209,8 +210,9 @@ object ThemeHelper {
 
     @JvmStatic
     fun createColouredRipple(context: Context, rippleColor: Int, rippleId: Int): Drawable? {
-        val ripple = ContextCompat.getDrawable(context, rippleId) as RippleDrawable
-        ripple.setColor(ColorStateList.valueOf(rippleColor))
-        return ripple
+        val ripple = AppCompatResources.getDrawable(context, rippleId) as RippleDrawable
+        return ripple.apply {
+            setColor(ColorStateList.valueOf(rippleColor))
+        }
     }
 }

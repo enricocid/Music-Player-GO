@@ -30,8 +30,8 @@
             android:id="@+id/error_icon"
             android:layout_width="@android:dimen/notification_large_icon_height"
             android:layout_height="@android:dimen/notification_large_icon_height"
-            android:src="@drawable/ic_round_close_red"
             android:tint="@color/red"
+            app:srcCompat="@drawable/ic_round_close_red"
             tools:ignore="ContentDescription" />
 
         <TextView

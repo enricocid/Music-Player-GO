@@ -75,7 +75,7 @@
             android:layout_gravity="center"
             android:background="?android:attr/actionBarItemBackground"
             android:padding="8dp"
-            android:src="@drawable/ic_play"
+            app:srcCompat="@drawable/ic_play"
             tools:ignore="ContentDescription" />
 
         <ImageButton
@@ -86,7 +86,7 @@
             android:background="?android:attr/actionBarItemBackground"
             android:onClick="openQueueDialog"
             android:padding="8dp"
-            android:src="@drawable/ic_queue_music"
+            app:srcCompat="@drawable/ic_queue_music"
             tools:ignore="ContentDescription" />
 
         <FrameLayout
@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:background="?android:attr/actionBarItemBackground"
                 android:onClick="openLovedSongsDialog"
-                android:src="@drawable/ic_favorite"
+                app:srcCompat="@drawable/ic_favorite"
                 tools:ignore="ContentDescription" />
 
             <TextView

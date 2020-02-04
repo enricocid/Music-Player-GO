@@ -35,6 +35,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    defaultConfig {
+        vectorDrawables.useSupportLibrary = true
+    }
+
     // For Kotlin projects
     kotlinOptions {
         jvmTarget = "1.8"

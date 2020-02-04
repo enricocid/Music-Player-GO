@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@android:dimen/app_icon_size"
     android:layout_height="@android:dimen/app_icon_size"
@@ -27,8 +28,8 @@
         android:clickable="false"
         android:focusable="false"
         android:scaleType="fitCenter"
-        android:src="@drawable/tab_indicator_alt"
         android:tint="?attr/colorPrimary"
+        app:srcCompat="@drawable/tab_indicator_alt"
         tools:ignore="ContentDescription" />
 </FrameLayout>
 
