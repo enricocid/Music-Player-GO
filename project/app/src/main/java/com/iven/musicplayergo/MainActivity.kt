@@ -40,8 +40,8 @@ import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_ARTISTS
 import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_FOLDERS
 import com.iven.musicplayergo.fragments.ErrorFragment.Companion.TAG_NO_MUSIC_INTENT
+import com.iven.musicplayergo.loader.MusicLoader
 import com.iven.musicplayergo.music.Music
-import com.iven.musicplayergo.music.MusicLoader
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.player.*
 import com.iven.musicplayergo.ui.ThemeHelper
@@ -115,7 +115,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     private lateinit var mRatesTextNP: TextView
 
     //music player things
-    private var mMusicLoader: Loader<Boolean>? = null
 
     //booleans
     private var sUserIsSeeking = false
@@ -147,7 +146,11 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder
             mMediaPlayerHolder.mediaPlayerInterface = mMediaPlayerInterface
 
-            launchMusicLoading()
+            LoaderManager.getInstance(this@MainActivity).initLoader(
+                MUSIC_LOADER_ID,
+                null,
+                this@MainActivity
+            )
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
@@ -313,7 +316,8 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     override fun onLoaderReset(loader: Loader<Boolean>) {
     }
 
-    override fun onCreateLoader(id: Int, args: Bundle?) = MusicLoader(this)
+    override fun onCreateLoader(id: Int, args: Bundle?) =
+        MusicLoader(this)
 
     override fun onLoadFinished(loader: Loader<Boolean>, hasLoaded: Boolean) {
 
@@ -322,14 +326,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
         if (hasLoaded && !musicLibrary.allSongsFiltered.isNullOrEmpty()) finishSetup() else notifyError(
             ErrorFragment.TAG_NO_MUSIC
-        )
-    }
-
-    private fun launchMusicLoading() {
-        if (mMusicLoader == null) LoaderManager.getInstance(this).initLoader(
-            MUSIC_LOADER_ID,
-            null,
-            this
         )
     }
 
