@@ -505,7 +505,10 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                         mSeekProgressBar.progress = userSelectedPosition
                         mSeekBarNP.progress = userSelectedPosition
                     }
-                    mMediaPlayerHolder.seekTo(userSelectedPosition)
+                    mMediaPlayerHolder.seekTo(
+                        userSelectedPosition,
+                        mMediaPlayerHolder.state == PLAYING
+                    )
                 }
             })
     }

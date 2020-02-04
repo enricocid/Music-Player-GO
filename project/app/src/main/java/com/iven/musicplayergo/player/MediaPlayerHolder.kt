@@ -519,10 +519,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
-    fun seekTo(position: Int) {
+    fun seekTo(position: Int, updatePlaybackStatus: Boolean) {
         if (isMediaPlayer) {
             mediaPlayer.seekTo(position)
-            updatePlaybackStatus()
+            if (updatePlaybackStatus) updatePlaybackStatus()
         }
     }
 

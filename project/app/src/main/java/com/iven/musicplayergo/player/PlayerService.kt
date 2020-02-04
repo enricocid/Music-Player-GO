@@ -31,7 +31,7 @@ class PlayerService : Service() {
 
         override fun onSeekTo(pos: Long) {
             super.onSeekTo(pos)
-            mediaPlayerHolder.seekTo(pos.toInt())
+            mediaPlayerHolder.seekTo(pos.toInt(), true)
         }
 
         override fun onMediaButtonEvent(mediaButtonEvent: Intent?) =

@@ -10,14 +10,11 @@ import android.net.Uri
 import android.os.ParcelFileDescriptor
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
-import com.iven.musicplayergo.R
 import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.toFormattedYear
 import com.iven.musicplayergo.ui.Utils
 import java.io.File
-import java.util.*
-import java.util.concurrent.TimeUnit
 
 
 object MusicUtils {
