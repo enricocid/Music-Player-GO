@@ -12,6 +12,7 @@ import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.music.Music
 import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.player.MediaPlayerHolder
+import com.iven.musicplayergo.toFormattedDuration
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.ui.Utils
@@ -65,21 +66,21 @@ class LovedSongsAdapter(
             duration.text = ThemeHelper.buildSpanned(
                 context.getString(
                     R.string.loved_song_subtitle,
-                    MusicUtils.formatSongDuration(lovedSong?.second?.toLong()!!, false),
-                    MusicUtils.formatSongDuration(song?.duration!!, false)
+                    lovedSong?.second?.toLong()?.toFormattedDuration(false),
+                    song?.duration?.toFormattedDuration(false)
                 )
             )
             subtitle.text =
-                context.getString(R.string.artist_and_album, song.artist, song.album)
+                context.getString(R.string.artist_and_album, song?.artist, song?.album)
 
             itemView.apply {
                 setOnClickListener {
-                    mediaPlayerHolder.isSongFromLovedSongs = Pair(true, lovedSong.second)
+                    mediaPlayerHolder.isSongFromLovedSongs = Pair(true, lovedSong?.second!!)
                     uiControlInterface.onSongSelected(
                         song,
                         MusicUtils.getAlbumSongs(
-                            song.artist,
-                            song.album
+                            song?.artist,
+                            song?.album
                         ),
                         false
                     )

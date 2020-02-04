@@ -211,11 +211,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             title.text = ThemeHelper.buildSpanned(
                                 getString(
                                     R.string.track_song,
-                                    MusicUtils.formatSongTrack(item.track),
+                                    item.track.toFormattedTrack(),
                                     item.title
                                 )
                             )
-                            subtitle.text = MusicUtils.formatSongDuration(item.duration, false)
+                            subtitle.text = item.duration.toFormattedDuration(false)
                         }
 
                         onClick {
@@ -356,8 +356,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         itemView.background.alpha = 20
                         album.text = item.title
                         year.text = item.year
-                        totalDuration.text =
-                            MusicUtils.formatSongDuration(item.totalDuration, true)
+                        totalDuration.text = item.totalDuration.toFormattedDuration(true)
                         checkbox.handleViewVisibility(mSelectedAlbum?.title == item.title)
                     }
 
@@ -400,7 +399,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         mSelectedAlbumYearDuration.text = getString(
             R.string.year_and_duration,
             mSelectedAlbum?.year,
-            MusicUtils.formatSongDuration(mSelectedAlbum?.totalDuration, true)
+            mSelectedAlbum?.totalDuration?.toFormattedDuration(true)
         )
     }
 

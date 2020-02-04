@@ -489,8 +489,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                             mResolvedAccentColor
                         )
                     }
-                    mSongSeekTextNP.text =
-                        MusicUtils.formatSongDuration(progress.toLong(), false)
+                    mSongSeekTextNP.text = progress.toLong().toFormattedDuration(false)
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -780,9 +779,8 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                 selectedSong.album
             )
 
-        mSongSeekTextNP.text =
-            MusicUtils.formatSongDuration(mMediaPlayerHolder.playerPosition.toLong(), false)
-        mSongDurationTextNP.text = MusicUtils.formatSongDuration(selectedSongDuration, false)
+        mSongSeekTextNP.text = mMediaPlayerHolder.playerPosition.toLong().toFormattedDuration(false)
+        mSongDurationTextNP.text = selectedSongDuration.toFormattedDuration(false)
 
         mSeekBarNP.max = selectedSong.duration.toInt()
 

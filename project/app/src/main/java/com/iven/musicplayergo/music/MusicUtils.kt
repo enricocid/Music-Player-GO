@@ -13,6 +13,7 @@ import android.provider.MediaStore.Audio.AudioColumns
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.player.MediaPlayerHolder
+import com.iven.musicplayergo.toFormattedYear
 import com.iven.musicplayergo.ui.Utils
 import java.io.File
 import java.util.*
@@ -77,10 +78,6 @@ object MusicUtils {
     ): Music? = musicLibrary.allSongsUnfiltered.firstOrNull { s -> s.displayName == displayName }
 
     @JvmStatic
-    fun getYearForAlbum(resources: Resources, year: Int) =
-        if (year != 0) year.toString() else resources.getString(R.string.unknown_year)
-
-    @JvmStatic
     fun buildSortedArtistAlbums(
         resources: Resources,
         artistSongs: List<Music>?
@@ -102,7 +99,7 @@ object MusicUtils {
                     sortedAlbums.add(
                         Album(
                             album,
-                            getYearForAlbum(resources, albumSongs[0].year),
+                            albumSongs[0].year.toFormattedYear(resources),
                             albumSongs,
                             albumSongs.map { song -> song.duration }.sum()
                         )
@@ -116,35 +113,6 @@ object MusicUtils {
         }
 
         return sortedAlbums
-    }
-
-    @JvmStatic
-    fun formatSongDuration(duration: Long?, isAlbum: Boolean): String {
-        val defaultFormat = if (isAlbum) "%02dm:%02ds" else "%02d:%02d"
-
-        val hours = TimeUnit.MILLISECONDS.toHours(duration!!)
-        val minutes = TimeUnit.MILLISECONDS.toMinutes(duration)
-        val seconds = TimeUnit.MILLISECONDS.toSeconds(duration)
-
-        return if (minutes < 60) String.format(
-            Locale.getDefault(), defaultFormat,
-            minutes,
-            seconds - TimeUnit.MINUTES.toSeconds(minutes)
-        ) else
-        //https://stackoverflow.com/a/9027379
-            String.format(
-                "%02dh:%02dm",
-                hours,
-                minutes - TimeUnit.HOURS.toMinutes(hours), // The change is in this line
-                seconds - TimeUnit.MINUTES.toSeconds(minutes)
-            )
-    }
-
-    @JvmStatic
-    fun formatSongTrack(trackNumber: Int): Int {
-        var formatted = trackNumber
-        if (trackNumber >= 1000) formatted = trackNumber % 1000
-        return formatted
     }
 
     @JvmStatic

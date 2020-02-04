@@ -29,7 +29,6 @@ import com.iven.musicplayergo.*
 import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.music.Music
-import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
@@ -283,7 +282,7 @@ object Utils {
             context.getString(
                 R.string.loved_song_added,
                 song?.title,
-                MusicUtils.formatSongDuration(currentPosition.toLong(), false)
+                currentPosition.toLong().toFormattedDuration(false)
             ).toToast(context)
             goPreferences.lovedSongs = lovedSongs
         }
@@ -346,7 +345,7 @@ object Utils {
                 text = context.getString(
                     R.string.loved_song_remove,
                     item?.first?.title,
-                    MusicUtils.formatSongDuration(item?.second?.toLong()!!, false)
+                    item?.second?.toLong()?.toFormattedDuration(false)
                 )
             )
             positiveButton(R.string.yes) {

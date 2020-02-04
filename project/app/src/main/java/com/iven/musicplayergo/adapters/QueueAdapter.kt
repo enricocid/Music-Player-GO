@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.music.Music
-import com.iven.musicplayergo.music.MusicUtils
 import com.iven.musicplayergo.player.MediaPlayerHolder
+import com.iven.musicplayergo.toFormattedDuration
 import com.iven.musicplayergo.ui.ThemeHelper
 import com.iven.musicplayergo.ui.Utils
 
@@ -76,7 +76,7 @@ class QueueAdapter(
                     }
                 }
 
-                duration.text = MusicUtils.formatSongDuration(song.duration, false)
+                duration.text = song.duration.toFormattedDuration(false)
                 subtitle.text =
                     context.getString(R.string.artist_and_album, song.artist, song.album)
 
