@@ -17,7 +17,6 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.GridLayoutManager
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
@@ -437,16 +436,9 @@ object Utils {
     ) {
 
         try {
-
             CustomTabsIntent.Builder().apply {
                 addDefaultShareMenuItem()
                 setShowTitle(true)
-
-                // https://stackoverflow.com/a/55260049
-                AppCompatResources.getDrawable(context, R.drawable.ic_round_close_red)?.let {
-                    setCloseButtonIcon(it.toBitmap())
-                }
-
                 build().launchUrl(context, Uri.parse(link))
             }
         } catch (e: Exception) {
