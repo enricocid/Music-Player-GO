@@ -2,7 +2,6 @@ package com.iven.musicplayergo.fragments
 
 import android.animation.Animator
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
-import com.google.android.material.card.MaterialCardView
 import com.iven.musicplayergo.*
 import com.iven.musicplayergo.music.Album
 import com.iven.musicplayergo.music.Music
@@ -360,11 +358,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         year.text = item.year
                         totalDuration.text =
                             MusicUtils.formatSongDuration(item.totalDuration, true)
-                        (itemView as MaterialCardView).strokeColor =
-                            if (mSelectedAlbum?.title == item.title) ThemeHelper.getAlphaAccent(
-                                context,
-                                50
-                            ) else Color.TRANSPARENT
                         checkbox.handleViewVisibility(mSelectedAlbum?.title == item.title)
                     }
 
