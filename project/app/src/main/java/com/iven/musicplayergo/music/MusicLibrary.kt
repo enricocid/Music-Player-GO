@@ -5,6 +5,7 @@ import android.content.Context
 import android.provider.MediaStore
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.ui.Utils
+import java.io.File
 
 
 class MusicLibrary {
@@ -71,9 +72,8 @@ class MusicLibrary {
                         if (Utils.isAndroidQ()) {
                             audioRelativePath ?: context.getString(R.string.slash)
                         } else {
-                            val returnedPath = MusicUtils.getFolderName(
-                                audioRelativePath
-                            ) ?: context.getString(R.string.slash)
+                            val returnedPath = File(audioRelativePath).parentFile?.name
+                                ?: context.getString(R.string.slash)
                             if (returnedPath != "0") returnedPath else context.getString(
                                 R.string.slash
                             )

@@ -14,7 +14,6 @@ import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.toFormattedYear
 import com.iven.musicplayergo.ui.Utils
-import java.io.File
 
 
 object MusicUtils {
@@ -157,7 +156,4 @@ object MusicUtils {
             null
         }
     }
-
-    @JvmStatic
-    fun getFolderName(path: String?) = File(path!!).parentFile?.name
 }
