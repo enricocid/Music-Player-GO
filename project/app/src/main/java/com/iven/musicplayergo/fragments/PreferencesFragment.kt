@@ -35,6 +35,8 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     private lateinit var mUIControlInterface: UIControlInterface
 
+    private var mThemePreference: Preference? = null
+
     override fun setDivider(divider: Drawable?) {
         context?.let {
             super.setDivider(
@@ -90,7 +92,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 onPreferenceClickListener = this@PreferencesFragment
             }
 
-            findPreference<Preference>(getString(R.string.theme_pref))?.apply {
+            mThemePreference = findPreference<Preference>(getString(R.string.theme_pref))?.apply {
                 icon = AppCompatResources.getDrawable(fa, ThemeHelper.resolveThemeIcon(fa))
             }
 
@@ -139,12 +141,16 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
 
-        activity?.let {
+        activity?.let { ac ->
 
             when (key) {
-                getString(R.string.theme_pref) -> mUIControlInterface.onThemeChanged(false)
+                getString(R.string.theme_pref) -> {
+                    mThemePreference?.icon =
+                        AppCompatResources.getDrawable(ac, ThemeHelper.resolveThemeIcon(ac))
+                    mUIControlInterface.onThemeChanged(false)
+                }
                 getString(R.string.edge_pref) -> ThemeHelper.applyNewThemeSmoothly(
-                    it,
+                    ac,
                     true
                 )
                 getString(R.string.accent_pref) -> mUIControlInterface.onThemeChanged(true)
