@@ -30,6 +30,7 @@ import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.RESTORE_SETTINGS_FRAGMENT
 import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.player.MediaPlayerHolder
 
 object ThemeHelper {
 
@@ -230,5 +231,12 @@ object ThemeHelper {
         return ripple.apply {
             setColor(ColorStateList.valueOf(rippleColor))
         }
+    }
+
+    @JvmStatic
+    fun getRepeatIcon(mediaPlayerHolder: MediaPlayerHolder) = when {
+        mediaPlayerHolder.isRepeat1X -> R.drawable.ic_repeat_one
+        mediaPlayerHolder.isLoop -> R.drawable.ic_repeat
+        else -> R.drawable.ic_repeat_one_notif_disabled
     }
 }

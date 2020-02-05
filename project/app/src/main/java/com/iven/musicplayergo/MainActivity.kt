@@ -589,9 +589,11 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
                 mRepeatNP = customView.findViewById(R.id.np_repeat)
 
+                mRepeatNP.setImageResource(ThemeHelper.getRepeatIcon(mMediaPlayerHolder))
+
                 ThemeHelper.updateIconTint(
                     mRepeatNP,
-                    if (mMediaPlayerHolder.isRepeat) mResolvedAccentColor
+                    if (mMediaPlayerHolder.isRepeat1X || mMediaPlayerHolder.isLoop) mResolvedAccentColor
                     else
                         mResolvedIconsColor
                 )
@@ -763,12 +765,15 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
     private fun updateRepeatStatus(onPlaybackCompletion: Boolean) {
         if (isNowPlaying) {
+            mRepeatNP.setImageResource(ThemeHelper.getRepeatIcon(mMediaPlayerHolder))
             when {
                 onPlaybackCompletion -> ThemeHelper.updateIconTint(mRepeatNP, mResolvedIconsColor)
-                mMediaPlayerHolder.isRepeat -> ThemeHelper.updateIconTint(
-                    mRepeatNP,
-                    mResolvedAccentColor
-                )
+                mMediaPlayerHolder.isRepeat1X || mMediaPlayerHolder.isLoop -> {
+                    ThemeHelper.updateIconTint(
+                        mRepeatNP,
+                        mResolvedAccentColor
+                    )
+                }
                 else -> ThemeHelper.updateIconTint(mRepeatNP, mResolvedIconsColor)
             }
         }

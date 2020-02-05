@@ -43,7 +43,8 @@
     <string name="error_media_buttons">Valami elromlott! :( Kérlek indításad újra a visszajátszást</string>
     <string name="on_close_activity">Meg szeretnéd állítani a visszajátszást?</string>
     <string name="repeat_enabled">Ismétlés 1x aktiválva!</string>
-    <string name="repeat_disabled">Ismétlés 1x deaktiválva!</string>
+    <string name="repeat_loop_enabled">Ismétlés &#8734; aktiválva !</string>
+    <string name="repeat_disabled">Ismétlés &#8734; deaktiválva !</string>
 
     <!-- Preferences -->
     <string name="settings">Beállítások</string>

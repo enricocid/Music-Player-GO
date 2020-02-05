@@ -114,7 +114,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private var sNotificationForeground = false
 
     val isCurrentSong get() = ::currentSong.isInitialized
-    var isRepeat = false
+    var isRepeat1X = false
+    var isLoop = false
 
     var isQueue = false
     var isQueueStarted = false
@@ -196,7 +197,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         mediaPlayerInterface.onPlaybackCompleted()
 
         when {
-            isRepeat -> if (isMediaPlayer) repeatSong()
+            isRepeat1X or isLoop -> if (isMediaPlayer) repeatSong()
             isQueue -> manageQueue(true)
             else -> skip(true)
         }
@@ -295,7 +296,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun repeatSong() {
-        isRepeat = false
+        isRepeat1X = false
         mediaPlayer.seekTo(0)
         mediaPlayer.start()
         state = PLAYING
@@ -440,7 +441,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     override fun onPrepared(mediaPlayer: MediaPlayer) {
         if (mExecutor == null) startUpdatingCallbackWithPosition()
 
-        if (isRepeat) isRepeat = false
+        if (isRepeat1X) isRepeat1X = false
 
         if (isSongRestoredFromPrefs) {
             if (goPreferences.isPreciseVolumeEnabled) setPreciseVolume(currentVolumeInPercent)
@@ -483,11 +484,28 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (isPlaying) pauseMediaPlayer() else resumeMediaPlayer()
     }
 
-    fun repeat() {
-        isRepeat = !isRepeat
-        updatePlaybackStatus()
-        playerService.getString(if (isRepeat) R.string.repeat_enabled else R.string.repeat_disabled)
+    private fun getRepeatMode() {
+        var toastMessage = R.string.repeat_enabled
+        when {
+            isRepeat1X -> {
+                isRepeat1X = false
+                isLoop = true
+                toastMessage = R.string.repeat_loop_enabled
+            }
+            isLoop -> {
+                isLoop = false
+                toastMessage = R.string.repeat_disabled
+            }
+            else -> isRepeat1X = true
+        }
+        playerService.getString(toastMessage)
             .toToast(playerService)
+    }
+
+
+    fun repeat() {
+        getRepeatMode()
+        updatePlaybackStatus()
     }
 
     fun setQueueEnabled(enabled: Boolean) {

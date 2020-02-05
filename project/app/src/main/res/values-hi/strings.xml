@@ -42,7 +42,8 @@
     <string name="error_media_buttons">कुछ गलत हो गया! :( कृपया एप्लिकेशन से प्लेबैक पुनः आरंभ करें</string>
     <string name="on_close_activity">क्या आप प्लेबैक को रोकना चाहते हैं?</string>
     <string name="repeat_enabled">दोहराना 1x सक्षम!</string>
-    <string name="repeat_disabled">दोहराना 1x अक्षम!</string>
+    <string name="repeat_loop_enabled">दोहराना &#8734; सक्षम !</string>
+    <string name="repeat_disabled">दोहराना &#8734; अक्षम !</string>
 
     <!-- Settings -->
     <!-- Preferences -->

@@ -43,7 +43,8 @@
     <string name="error_media_buttons">¡Algo malo sucedió! :( Por favor reinicia la reproducción desde la aplicación</string>
     <string name="on_close_activity">¿Deseas detener la reproducción?</string>
     <string name="repeat_enabled">¡Repetición 1x activada!</string>
-    <string name="repeat_disabled">¡Repetición 1x desactivada!</string>
+    <string name="repeat_loop_enabled">¡Repetición &#8734; activada!</string>
+    <string name="repeat_disabled">¡Repetición &#8734; desactivada!</string>
 
     <!-- Preferences -->
     <string name="settings">Preferencias</string>

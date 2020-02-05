@@ -43,7 +43,8 @@
     <string name="error_media_buttons">Something went wrong! :( Please restart playback from the app</string>
     <string name="on_close_activity">Do You want to stop playback?</string>
     <string name="repeat_enabled">Repeat 1x enabled!</string>
-    <string name="repeat_disabled">Repeat 1x disabled!</string>
+    <string name="repeat_loop_enabled">Repeat &#8734; enabled!</string>
+    <string name="repeat_disabled">Repeat &#8734; disabled!</string>
 
     <!-- Preferences -->
     <string name="settings">Settings</string>

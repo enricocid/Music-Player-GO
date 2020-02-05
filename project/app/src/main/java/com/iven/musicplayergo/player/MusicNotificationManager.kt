@@ -105,8 +105,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             if (playerService.mediaPlayerHolder.state != PAUSED) R.drawable.ic_pause else R.drawable.ic_play
 
         when (action) {
-            REPEAT_ACTION -> icon =
-                if (playerService.mediaPlayerHolder.isRepeat) R.drawable.ic_repeat_one else R.drawable.ic_repeat_one_notif_disabled
+            REPEAT_ACTION -> icon = ThemeHelper.getRepeatIcon(playerService.mediaPlayerHolder)
             PREV_ACTION -> icon = R.drawable.ic_skip_previous
             NEXT_ACTION -> icon = R.drawable.ic_skip_next
             CLOSE_ACTION -> icon = R.drawable.ic_round_close

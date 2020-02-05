@@ -43,7 +43,8 @@
     <string name="error_media_buttons">Algo deu errado! :( Por favor reinicie a reprodução do aplicativo</string>
     <string name="on_close_activity">Deseja interromper a reprodução?</string>
     <string name="repeat_enabled">Repetir 1x ativado!</string>
-    <string name="repeat_disabled">Repetir 1x desativado!</string>
+    <string name="repeat_loop_enabled">Repetir &#8734; ativado!</string>
+    <string name="repeat_disabled">Repetir &#8734; desativado!</string>
 
     <!-- Preferences -->
     <string name="settings">Configurações</string>

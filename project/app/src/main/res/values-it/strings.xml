@@ -42,7 +42,8 @@
     <string name="error_media_buttons">Qualcosa è andato storto! :( Per favore riavvia la riproduzione dall\'app</string>
     <string name="on_close_activity">Vuoi interrompere la riproduzione?</string>
     <string name="repeat_enabled">Ripeti 1x attivato!</string>
-    <string name="repeat_disabled">Ripeti 1x disattivato!</string>
+    <string name="repeat_loop_enabled">Ripeti &#8734; attivato!</string>
+    <string name="repeat_disabled">Ripeti &#8734; disattivato!</string>
 
     <!-- Settings -->
     <!-- Preferences -->

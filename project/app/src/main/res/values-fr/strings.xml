@@ -37,7 +37,9 @@
     <string name="error_media_buttons">Une erreur s\'est produite! :( Veuillez relancer la lecture depuis l\'application</string>
     <string name="on_close_activity">Voulez-vous arrêter la lecture ?</string>
     <string name="repeat_enabled">Répétition x1 activée !</string>
-    <string name="repeat_disabled">Répétition x1 désactivée !</string>
+    <string name="repeat_loop_enabled">Répétition &#8734; activée !</string>
+    <string name="repeat_disabled">Répétition &#8734; désactivée !</string>
+
     <!-- Settings -->
     <!-- Preferences -->
     <string name="settings">Paramètres</string>
