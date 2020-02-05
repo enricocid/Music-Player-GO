@@ -18,7 +18,7 @@
 
     <style name="BaseTheme.DeepPurple" parent="BaseTheme">
         <item name="colorPrimary">@color/deep_purple</item>
-        <item name="colorSecondary">@color/deep_orange</item>
+        <item name="colorSecondary">@color/deep_purple</item>
     </style>
 
     <style name="BaseTheme.Indigo" parent="BaseTheme">
