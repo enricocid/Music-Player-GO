@@ -9,9 +9,4 @@
         android:id="@+id/queue_add"
         android:title="@string/queue_add"
         app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/filter_add"
-        android:title="@string/filter_popup_title"
-        app:showAsAction="ifRoom" />
 </menu>

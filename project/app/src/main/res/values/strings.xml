@@ -74,4 +74,7 @@
     <string name="headset_pref_title">Headset plug</string>
     <string name="headset_pref_summary_on">Disable headset plug management</string>
     <string name="headset_pref_summary_off">Enable headset plug management</string>
+    <string name="filter_pref_title">Filters</string>
+    <string name="filter_popup_title">Hide</string>
+    <string name="error_no_filter">No filters found!</string>
 </resources>

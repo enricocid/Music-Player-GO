@@ -82,5 +82,9 @@
             app:key="@string/headset_pref"
             app:summaryOn="@string/headset_pref_summary_on"
             app:title="@string/headset_pref_title" />
+
+        <Preference
+            app:key="@string/filter_pref"
+            app:title="@string/filter_pref_title" />
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>

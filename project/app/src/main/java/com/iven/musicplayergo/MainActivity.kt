@@ -892,15 +892,19 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         if (checkIsPlayer(true)) mMediaPlayerHolder.openEqualizer(this)
     }
 
-    override fun onAddToQueue(song: Music) {
+    override fun onAddToQueue(song: Music?) {
         if (checkIsPlayer(true)) {
             mMediaPlayerHolder.apply {
                 if (queueSongs.isEmpty()) setQueueEnabled(true)
-                queueSongs.add(song)
-                getString(
-                    R.string.queue_song_add,
-                    song.title
-                ).toToast(this@MainActivity)
+                song?.let { songToQueue ->
+                    queueSongs.add(songToQueue)
+                    getString(
+                        R.string.queue_song_add,
+                        songToQueue.title
+                    ).toToast(
+                        this@MainActivity
+                    )
+                }
             }
         }
     }
@@ -910,6 +914,14 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         songs.shuffle()
         val song = songs[randomNumber]
         onSongSelected(song, songs, isFromFolder)
+    }
+
+    override fun onAddToFilter(stringToFilter: String?) {
+        stringToFilter?.let { string ->
+            mArtistsFragment?.onListFiltered(string)
+            mFoldersFragment?.onListFiltered(string)
+            Utils.addToHiddenItems(string)
+        }
     }
 
     fun openQueueDialog(view: View) {

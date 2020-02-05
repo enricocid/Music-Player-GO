@@ -377,35 +377,46 @@ object Utils {
     }
 
     @JvmStatic
-    fun showAddToLovedQueueSongsPopup(
+    fun showDoSomethingPopup(
         context: Context,
-        itemView: View,
-        song: Music,
+        itemView: View?,
+        song: Music?,
+        stringToFilter: String?,
         uiControlInterface: UIControlInterface
     ) {
-        PopupMenu(context, itemView).apply {
-            setOnMenuItemClickListener {
+        itemView?.let {
+            PopupMenu(context, itemView).apply {
+                setOnMenuItemClickListener {
 
-                when (it.itemId) {
-                    R.id.loved_songs_add -> {
-                        addToLovedSongs(
-                            context,
-                            song,
-                            0
-                        )
-                        uiControlInterface.onLovedSongsUpdate(false)
+                    when (it.itemId) {
+                        R.id.loved_songs_add -> {
+                            addToLovedSongs(
+                                context,
+                                song,
+                                0
+                            )
+                            uiControlInterface.onLovedSongsUpdate(false)
+                        }
+                        R.id.queue_add -> uiControlInterface.onAddToQueue(song)
+                        R.id.filter_add -> uiControlInterface.onAddToFilter(stringToFilter)
                     }
-                    R.id.queue_add -> {
-                        uiControlInterface.onAddToQueue(song)
-                    }
+
+                    return@setOnMenuItemClickListener true
                 }
-
-                return@setOnMenuItemClickListener true
+                val menu =
+                    if (stringToFilter != null) R.menu.menu_do_something else R.menu.menu_love_queue
+                inflate(menu)
+                gravity = Gravity.END
+                show()
             }
-            inflate(R.menu.menu_do_something)
-            gravity = Gravity.END
-            show()
         }
+    }
+
+    @JvmStatic
+    fun addToHiddenItems(item: String) {
+        val hiddenArtistsFolders = goPreferences.filters?.toMutableList()
+        hiddenArtistsFolders?.add(item)
+        goPreferences.filters = hiddenArtistsFolders?.toSet()
     }
 
     @JvmStatic

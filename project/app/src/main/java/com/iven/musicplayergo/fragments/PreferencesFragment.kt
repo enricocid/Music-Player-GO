@@ -15,8 +15,10 @@ import com.afollestad.materialdialogs.list.getRecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.AccentsAdapter
 import com.iven.musicplayergo.adapters.ActiveTabsAdapter
+import com.iven.musicplayergo.adapters.FiltersAdapter
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.musicLibrary
+import com.iven.musicplayergo.toToast
 import com.iven.musicplayergo.utils.ThemeHelper
 import com.iven.musicplayergo.utils.UIControlInterface
 import com.iven.musicplayergo.utils.Utils
@@ -93,6 +95,10 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 onPreferenceClickListener = this@PreferencesFragment
             }
 
+            findPreference<Preference>(getString(R.string.filter_pref))?.apply {
+                onPreferenceClickListener = this@PreferencesFragment
+            }
+
             findPreference<Preference>(getString(R.string.active_fragments_pref))?.apply {
                 summary = goPreferences.activeFragments?.size.toString()
                 onPreferenceClickListener = this@PreferencesFragment
@@ -115,6 +121,11 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 )
                 getString(R.string.reset_pref_lib) -> showReloadDatabaseDialog(ac)
                 getString(R.string.accent_pref) -> showAccentsDialog(ac)
+                getString(R.string.filter_pref) -> {
+                    if (!goPreferences.filters.isNullOrEmpty()) showFiltersDialog(ac) else getString(
+                        R.string.error_no_filter
+                    ).toToast(ac)
+                }
                 getString(R.string.active_fragments_pref) -> showActiveFragmentsDialog(ac)
             }
         }
@@ -186,6 +197,25 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             positiveButton(R.string.yes) {
                 goPreferences.activeFragments = activeTabsAdapter.getUpdatedItems()
                 ThemeHelper.applyNewThemeSmoothly(activity, true)
+            }
+
+            negativeButton(R.string.no)
+        }
+    }
+
+    private fun showFiltersDialog(activity: Activity) {
+
+        MaterialDialog(activity).show {
+
+            title(R.string.filter_pref_title)
+
+            val filtersAdapter = FiltersAdapter()
+
+            customListAdapter(filtersAdapter)
+
+            positiveButton(R.string.yes) {
+                goPreferences.filters = filtersAdapter.getUpdatedItems()
+                ThemeHelper.applyNewThemeSmoothly(activity, false)
             }
 
             negativeButton(R.string.no)

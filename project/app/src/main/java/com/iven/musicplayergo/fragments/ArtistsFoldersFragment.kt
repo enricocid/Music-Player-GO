@@ -96,7 +96,8 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
         mSorting =
             if (sIsFoldersFragment) goPreferences.foldersSorting else goPreferences.artistsSorting
 
-        mList = getSortedList()
+        mList = getSortedList()?.filter { !goPreferences.filters?.contains(it)!! }?.toMutableList()
+
         setListDataSource(mList)
 
         context?.let { cxt ->
@@ -134,6 +135,17 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
                                 mUIControlInterface.onArtistOrFolderSelected(
                                     item,
                                     sIsFoldersFragment
+                                )
+                        }
+
+                        onLongClick { index ->
+                            if (::mUIControlInterface.isInitialized)
+                                Utils.showDoSomethingPopup(
+                                    context,
+                                    findViewHolderForAdapterPosition(index)?.itemView,
+                                    null,
+                                    item,
+                                    mUIControlInterface
                                 )
                         }
                     }
@@ -184,6 +196,13 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
     private fun setListDataSource(selectedList: List<String>?) {
         selectedList?.apply {
             mDataSource.set(this)
+        }
+    }
+
+    fun onListFiltered(stringToFilter: String?) {
+        stringToFilter?.let { string ->
+            mList?.remove(string)
+            setListDataSource(mList)
         }
     }
 

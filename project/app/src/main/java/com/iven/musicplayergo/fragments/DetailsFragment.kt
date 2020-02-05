@@ -232,10 +232,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         }
 
                         onLongClick { index ->
-                            Utils.showAddToLovedQueueSongsPopup(
+                            Utils.showDoSomethingPopup(
                                 cxt,
-                                findViewHolderForAdapterPosition(index)?.itemView!!,
+                                findViewHolderForAdapterPosition(index)?.itemView,
                                 item,
+                                null,
                                 mUIControlInterface
                             )
                         }

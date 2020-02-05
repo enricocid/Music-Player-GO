@@ -90,10 +90,11 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                         }
 
                         onLongClick { index ->
-                            Utils.showAddToLovedQueueSongsPopup(
+                            Utils.showDoSomethingPopup(
                                 cxt,
-                                findViewHolderForAdapterPosition(index)?.itemView!!,
+                                findViewHolderForAdapterPosition(index)?.itemView,
                                 item,
+                                null,
                                 mUIControlInterface
                             )
                         }

@@ -36,6 +36,8 @@ class MusicPlayerGoPreferences(context: Context) {
     private val prefsFocus = context.getString(R.string.focus_pref)
     private val prefsHeadsetPlug = context.getString(R.string.headset_pref)
 
+    private val prefsFilter = context.getString(R.string.filter_pref)
+
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
     private val mGson = GsonBuilder().create()
 
@@ -89,6 +91,10 @@ class MusicPlayerGoPreferences(context: Context) {
     var artistsSorting
         get() = mPrefs.getInt(prefsArtistsSorting, ASCENDING_SORTING)
         set(value) = mPrefs.edit().putInt(prefsArtistsSorting, value).apply()
+
+    var filters: Set<String>?
+        get() = mPrefs.getStringSet(prefsFilter, setOf())
+        set(value) = mPrefs.edit().putStringSet(prefsFilter, value).apply()
 
     var foldersSorting
         get() = mPrefs.getInt(prefsFoldersSorting, DEFAULT_SORTING)
