@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.ui
+package com.iven.musicplayergo.utils
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi

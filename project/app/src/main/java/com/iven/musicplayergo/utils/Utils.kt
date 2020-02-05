@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.ui
+package com.iven.musicplayergo.utils
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -27,7 +27,7 @@ import com.afollestad.materialdialogs.list.getRecyclerView
 import com.iven.musicplayergo.*
 import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.adapters.QueueAdapter
-import com.iven.musicplayergo.music.Music
+import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
@@ -421,10 +421,10 @@ object Utils {
 
             message(R.string.on_close_activity)
             positiveButton(R.string.yes) {
-                mediaPlayerHolder.stopPlaybackService(true)
+                mediaPlayerHolder.stopPlaybackService(true, isFromReloadDB = false)
             }
             negativeButton(R.string.no) {
-                mediaPlayerHolder.stopPlaybackService(false)
+                mediaPlayerHolder.stopPlaybackService(false, isFromReloadDB = false)
             }
         }
     }

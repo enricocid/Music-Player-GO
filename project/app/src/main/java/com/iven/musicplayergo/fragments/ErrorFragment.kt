@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.afterMeasured
 import com.iven.musicplayergo.createCircularReveal
-import com.iven.musicplayergo.ui.ThemeHelper
-import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.utils.ThemeHelper
+import com.iven.musicplayergo.utils.UIControlInterface
 import kotlinx.android.synthetic.main.fragment_error.*
 
 /**

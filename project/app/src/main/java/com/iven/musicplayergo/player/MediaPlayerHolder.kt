@@ -19,10 +19,10 @@ import android.support.v4.media.session.PlaybackStateCompat.*
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.music.Music
-import com.iven.musicplayergo.music.MusicUtils
+import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.toToast
-import com.iven.musicplayergo.ui.Utils
+import com.iven.musicplayergo.utils.MusicUtils
+import com.iven.musicplayergo.utils.Utils
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -569,12 +569,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
-    fun stopPlaybackService(stopPlayback: Boolean) {
+    fun stopPlaybackService(stopPlayback: Boolean, isFromReloadDB: Boolean) {
         if (playerService.isRunning && isMediaPlayer && stopPlayback) {
+            playerService.isFromReloadDB = isFromReloadDB
             playerService.stopForeground(true)
             playerService.stopSelf()
         }
-        mediaPlayerInterface.onClose()
+        if (!isFromReloadDB) mediaPlayerInterface.onClose()
     }
 
     private inner class NotificationReceiver : BroadcastReceiver() {
@@ -593,7 +594,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                         mediaPlayerInterface.onUpdateRepeatStatus()
                     }
                     CLOSE_ACTION -> if (playerService.isRunning && isMediaPlayer) stopPlaybackService(
-                        true
+                        stopPlayback = true, isFromReloadDB = false
                     )
 
                     BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (::currentSong.isInitialized && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()

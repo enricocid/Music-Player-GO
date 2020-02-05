@@ -16,9 +16,10 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.AccentsAdapter
 import com.iven.musicplayergo.adapters.ActiveTabsAdapter
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.ui.ThemeHelper
-import com.iven.musicplayergo.ui.UIControlInterface
-import com.iven.musicplayergo.ui.Utils
+import com.iven.musicplayergo.musicLibrary
+import com.iven.musicplayergo.utils.ThemeHelper
+import com.iven.musicplayergo.utils.UIControlInterface
+import com.iven.musicplayergo.utils.Utils
 import kotlin.properties.Delegates
 
 class PreferencesFragment : PreferenceFragmentCompat(),
@@ -81,6 +82,11 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             findPreference<Preference>(getString(R.string.faq_pref))?.onPreferenceClickListener =
                 this
 
+            findPreference<Preference>(getString(R.string.reset_pref_lib))?.apply {
+                summary = getString(R.string.reset_pref_summary, musicLibrary.allSongs?.size)
+                onPreferenceClickListener = this@PreferencesFragment
+            }
+
             findPreference<Preference>(getString(R.string.accent_pref))?.apply {
                 summary =
                     ThemeHelper.getAccentName(goPreferences.accent, fragmentActivity)
@@ -96,19 +102,20 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     override fun onPreferenceClick(preference: Preference?): Boolean {
 
-        activity?.let { context ->
+        activity?.let { ac ->
             when (preference?.key) {
 
                 getString(R.string.open_git_pref) -> Utils.openCustomTab(
-                    context,
+                    ac,
                     getString(R.string.app_git)
                 )
                 getString(R.string.faq_pref) -> Utils.openCustomTab(
-                    context,
+                    ac,
                     getString(R.string.app_faq)
                 )
-                getString(R.string.accent_pref) -> showAccentsDialog(context)
-                getString(R.string.active_fragments_pref) -> showActiveFragmentsDialog(context)
+                getString(R.string.reset_pref_lib) -> showReloadDatabaseDialog(ac)
+                getString(R.string.accent_pref) -> showAccentsDialog(ac)
+                getString(R.string.active_fragments_pref) -> showActiveFragmentsDialog(ac)
             }
         }
         return false
@@ -126,6 +133,21 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 )
                 getString(R.string.accent_pref) -> mUIControlInterface.onThemeChanged(true)
             }
+        }
+    }
+
+    private fun showReloadDatabaseDialog(activity: Activity) {
+        MaterialDialog(activity).show {
+            title(R.string.app_name)
+            message(R.string.reset_pref_message)
+            positiveButton(R.string.yes) {
+                goPreferences.apply {
+                    reloadDB = true
+                    latestPlayedSong = null
+                }
+                mUIControlInterface.onStopPlaybackFromReloadDB()
+            }
+            negativeButton(R.string.no)
         }
     }
 

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.toToast
-import com.iven.musicplayergo.ui.ThemeHelper
+import com.iven.musicplayergo.utils.ThemeHelper
 
 class ActiveTabsAdapter(
     private val context: Context

@@ -11,14 +11,10 @@ import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.music.Music
-import com.iven.musicplayergo.music.MusicUtils
+import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.toFormattedDuration
-import com.iven.musicplayergo.ui.SongsViewHolder
-import com.iven.musicplayergo.ui.ThemeHelper
-import com.iven.musicplayergo.ui.UIControlInterface
-import com.iven.musicplayergo.ui.Utils
+import com.iven.musicplayergo.utils.*
 import kotlinx.android.synthetic.main.fragment_all_music.*
 import kotlinx.android.synthetic.main.search_toolbar.*
 
@@ -52,7 +48,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
         mSongsRecyclerView = all_music_rv
 
-        mAllMusic = musicLibrary.allSongsFiltered
+        mAllMusic = musicLibrary.allSongs
 
         setMusicDataSource(mAllMusic)
 

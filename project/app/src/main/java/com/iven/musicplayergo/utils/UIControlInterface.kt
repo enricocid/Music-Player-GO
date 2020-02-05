@@ -1,6 +1,6 @@
-package com.iven.musicplayergo.ui
+package com.iven.musicplayergo.utils
 
-import com.iven.musicplayergo.music.Music
+import com.iven.musicplayergo.models.Music
 
 interface UIControlInterface {
     fun onThemeChanged(isAccent: Boolean)
@@ -11,4 +11,5 @@ interface UIControlInterface {
     fun onCloseActivity()
     fun onAddToQueue(song: Music)
     fun onDenyPermission()
+    fun onStopPlaybackFromReloadDB()
 }

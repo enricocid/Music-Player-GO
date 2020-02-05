@@ -6,7 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.addFragment
-import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.utils.UIControlInterface
 import kotlinx.android.synthetic.main.search_toolbar.*
 
 /**

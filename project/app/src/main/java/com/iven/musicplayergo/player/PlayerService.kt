@@ -24,6 +24,7 @@ class PlayerService : Service() {
     lateinit var mediaPlayerHolder: MediaPlayerHolder
     lateinit var musicNotificationManager: MusicNotificationManager
     var isRestoredFromPause = false
+    var isFromReloadDB = false
 
     private lateinit var mMediaSessionCompat: MediaSessionCompat
 
@@ -56,7 +57,7 @@ class PlayerService : Service() {
 
         if (::mediaPlayerHolder.isInitialized) {
             //saves last played song and its position
-            if (mediaPlayerHolder.isCurrentSong) mediaPlayerHolder.apply {
+            if (mediaPlayerHolder.isCurrentSong && !isFromReloadDB) mediaPlayerHolder.apply {
                 goPreferences.latestPlayedSong =
                     Triple(currentSong.first, playerPosition, isPlayingFromFolder)
             }
@@ -116,7 +117,10 @@ class PlayerService : Service() {
                             isSuccess = true
                         }
                         KeyEvent.KEYCODE_MEDIA_CLOSE, KeyEvent.KEYCODE_MEDIA_STOP -> {
-                            mediaPlayerHolder.stopPlaybackService(true)
+                            mediaPlayerHolder.stopPlaybackService(
+                                stopPlayback = true,
+                                isFromReloadDB = false
+                            )
                             isSuccess = true
                         }
                         KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {

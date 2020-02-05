@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.music
+package com.iven.musicplayergo.utils
 
 import android.annotation.SuppressLint
 import android.content.ContentResolver
@@ -10,10 +10,11 @@ import android.net.Uri
 import android.os.ParcelFileDescriptor
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
+import com.iven.musicplayergo.models.Album
+import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.toFormattedYear
-import com.iven.musicplayergo.ui.Utils
 
 
 object MusicUtils {
@@ -45,7 +46,10 @@ object MusicUtils {
         mediaPlayerHolder: MediaPlayerHolder
     ) = try {
         val currentSong = mediaPlayerHolder.currentSong.first
-        val album = getAlbumFromList(selectedArtist, currentSong?.album)
+        val album = getAlbumFromList(
+            selectedArtist,
+            currentSong?.album
+        )
         album.second
     } catch (e: Exception) {
         e.printStackTrace()
@@ -66,12 +70,15 @@ object MusicUtils {
     }
 
     @JvmStatic
-    fun getAlbumSongs(artist: String?, album: String?) = getAlbumFromList(artist, album).first.music
+    fun getAlbumSongs(artist: String?, album: String?) = getAlbumFromList(
+        artist,
+        album
+    ).first.music
 
     @JvmStatic
     fun getSongForIntent(
         displayName: String?
-    ): Music? = musicLibrary.allSongsUnfiltered.firstOrNull { s -> s.displayName == displayName }
+    ): Music? = musicLibrary.allSongs?.firstOrNull { s -> s.displayName == displayName }
 
     @JvmStatic
     fun buildSortedArtistAlbums(
@@ -141,7 +148,10 @@ object MusicUtils {
         val mediaExtractor = MediaExtractor()
         return try {
 
-            getAudioFileDescriptor(contentUri, contentResolver)?.use { pfd ->
+            getAudioFileDescriptor(
+                contentUri,
+                contentResolver
+            )?.use { pfd ->
                 mediaExtractor.setDataSource(pfd.fileDescriptor)
             }
 

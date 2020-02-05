@@ -12,8 +12,8 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.ui.ThemeHelper
-import com.iven.musicplayergo.ui.Utils
+import com.iven.musicplayergo.utils.ThemeHelper
+import com.iven.musicplayergo.utils.Utils
 
 // Notification params
 private const val CHANNEL_ID = "CHANNEL_ID_GO"

@@ -18,10 +18,9 @@ import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.*
-import com.iven.musicplayergo.music.Album
-import com.iven.musicplayergo.music.Music
-import com.iven.musicplayergo.music.MusicUtils
-import com.iven.musicplayergo.ui.*
+import com.iven.musicplayergo.models.Album
+import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.utils.*
 import kotlinx.android.synthetic.main.fragment_details.*
 
 

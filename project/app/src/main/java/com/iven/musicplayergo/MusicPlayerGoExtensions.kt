@@ -17,7 +17,7 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.ArgbEvaluator
-import com.iven.musicplayergo.ui.ThemeHelper
+import com.iven.musicplayergo.utils.ThemeHelper
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.max

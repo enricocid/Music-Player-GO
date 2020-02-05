@@ -17,10 +17,10 @@ import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.*
-import com.iven.musicplayergo.ui.GenericViewHolder
-import com.iven.musicplayergo.ui.ThemeHelper
-import com.iven.musicplayergo.ui.UIControlInterface
-import com.iven.musicplayergo.ui.Utils
+import com.iven.musicplayergo.utils.GenericViewHolder
+import com.iven.musicplayergo.utils.ThemeHelper
+import com.iven.musicplayergo.utils.UIControlInterface
+import com.iven.musicplayergo.utils.Utils
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerThumbView
 import com.reddit.indicatorfastscroll.FastScrollerView

@@ -29,6 +29,11 @@
         app:key="@string/faq_pref"
         app:title="@string/faq_title" />
 
+    <Preference
+        android:summary="@string/reset_pref_title"
+        app:key="@string/reset_pref_lib"
+        app:title="@string/reset_pref_title" />
+
     <PreferenceCategory
         app:layout="@layout/custom_preference_category"
         app:title="@string/category_appearance">

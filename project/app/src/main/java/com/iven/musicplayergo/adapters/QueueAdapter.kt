@@ -8,11 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.music.Music
+import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.toFormattedDuration
-import com.iven.musicplayergo.ui.ThemeHelper
-import com.iven.musicplayergo.ui.Utils
+import com.iven.musicplayergo.utils.ThemeHelper
+import com.iven.musicplayergo.utils.Utils
 
 class QueueAdapter(
     context: Context,

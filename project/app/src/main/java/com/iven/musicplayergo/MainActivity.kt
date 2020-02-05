@@ -40,26 +40,26 @@ import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_ARTISTS
 import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_FOLDERS
 import com.iven.musicplayergo.fragments.ErrorFragment.Companion.TAG_NO_MUSIC_INTENT
-import com.iven.musicplayergo.loader.MusicLoader
-import com.iven.musicplayergo.music.Music
-import com.iven.musicplayergo.music.MusicUtils
+import com.iven.musicplayergo.loader.DatabaseLoader
+import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.*
-import com.iven.musicplayergo.ui.ThemeHelper
-import com.iven.musicplayergo.ui.UIControlInterface
-import com.iven.musicplayergo.ui.Utils
+import com.iven.musicplayergo.utils.MusicUtils
+import com.iven.musicplayergo.utils.ThemeHelper
+import com.iven.musicplayergo.utils.UIControlInterface
+import com.iven.musicplayergo.utils.Utils
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.player_controls_panel.*
 import kotlin.properties.Delegates
 
-private const val MUSIC_LOADER_ID = 25
+private const val DATABASE_LOADER_ID = 25
 const val PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 2588
 const val RESTORE_SETTINGS_FRAGMENT = "restore_settings_fragment_key"
 
 @Suppress("UNUSED_PARAMETER")
 class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterface,
-    LoaderManager.LoaderCallbacks<Boolean> {
+    LoaderManager.LoaderCallbacks<Any?> {
 
     //colors
     private var mResolvedAccentColor: Int by Delegates.notNull()
@@ -146,11 +146,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder
             mMediaPlayerHolder.mediaPlayerInterface = mMediaPlayerInterface
 
-            LoaderManager.getInstance(this@MainActivity).initLoader(
-                MUSIC_LOADER_ID,
-                null,
-                this@MainActivity
-            )
+            launchBuildMusicDB()
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
@@ -313,19 +309,30 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             .addFragment(false, R.id.container, ErrorFragment.newInstance(errorType))
     }
 
-    override fun onLoaderReset(loader: Loader<Boolean>) {
-    }
+    override fun onLoaderReset(loader: Loader<Any?>) {}
 
     override fun onCreateLoader(id: Int, args: Bundle?) =
-        MusicLoader(this)
+        DatabaseLoader(this)
 
-    override fun onLoadFinished(loader: Loader<Boolean>, hasLoaded: Boolean) {
+    override fun onLoadFinished(loader: Loader<Any?>, data: Any?) {
 
-        LoaderManager.getInstance(this).destroyLoader(MUSIC_LOADER_ID)
-        if (mLoadingProgress.visibility != View.GONE) mLoadingProgress.visibility = View.GONE
+        LoaderManager.getInstance(this).destroyLoader(DATABASE_LOADER_ID)
 
-        if (hasLoaded && !musicLibrary.allSongsFiltered.isNullOrEmpty()) finishSetup() else notifyError(
+        loading_progress_bar.apply {
+            if (visibility != View.GONE) visibility = View.GONE
+        }
+
+        if (data != null && !musicLibrary.allSongs.isNullOrEmpty()) finishSetup()
+        else notifyError(
             ErrorFragment.TAG_NO_MUSIC
+        )
+    }
+
+    private fun launchBuildMusicDB() {
+        LoaderManager.getInstance(this).initLoader(
+            DATABASE_LOADER_ID,
+            null,
+            this
         )
     }
 
@@ -819,6 +826,13 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
             if (isNowPlaying) mNowPlayingDialog.dismiss()
         }
+    }
+
+    override fun onStopPlaybackFromReloadDB() {
+        if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) mMediaPlayerHolder.stopPlaybackService(
+            stopPlayback = true, isFromReloadDB = true
+        )
+        recreate()
     }
 
     override fun onCloseActivity() {

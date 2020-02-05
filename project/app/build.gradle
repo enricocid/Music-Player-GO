@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -11,6 +12,11 @@ android {
         targetSdkVersion 29
         versionCode 143
         versionName "4.1.9"
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas".toString())
+            }
+        }
     }
 
     //retrieve version number
@@ -50,28 +56,25 @@ android {
 }
 
 dependencies {
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-
-    //using because of tabs layout
     implementation 'com.google.android.material:material:1.1.0'
-
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'androidx.activity:activity-ktx:1.1.0'
     implementation 'androidx.fragment:fragment-ktx:1.2.0'
     implementation 'androidx.loader:loader:1.1.0'
     implementation 'androidx.annotation:annotation:1.1.0'
-
+    implementation 'androidx.room:room-runtime:2.2.3'
+    kapt 'android.arch.persistence.room:compiler:2.2.3'
+    implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.media:media:1.1.0'
     implementation 'androidx.preference:preference-ktx:1.1.0'
     implementation 'androidx.browser:browser:1.2.0'
-
-    implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.reddit:indicator-fast-scroll:1.2.1'
     implementation 'com.afollestad.material-dialogs:core:3.1.1'
     implementation 'com.afollestad.material-dialogs:bottomsheets:3.1.1'
+    implementation 'com.afollestad.material-dialogs:input:3.1.1'
     implementation 'com.afollestad:recyclical:1.1.1'
     implementation 'de.halfbit:edge-to-edge:0.8'
 }
