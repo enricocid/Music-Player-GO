@@ -81,25 +81,25 @@ object ThemeHelper {
     //fixed array of pairs (first: accent, second: theme)
     @JvmStatic
     val accents = arrayOf(
-        Pair(R.color.red, R.style.BaseTheme_Red),
-        Pair(R.color.pink, R.style.BaseTheme_Pink),
-        Pair(R.color.purple, R.style.BaseTheme_Purple),
-        Pair(R.color.deep_purple, R.style.BaseTheme_DeepPurple),
-        Pair(R.color.indigo, R.style.BaseTheme_Indigo),
-        Pair(R.color.blue, R.style.BaseTheme_Blue),
-        Pair(R.color.light_blue, R.style.BaseTheme_LightBlue),
-        Pair(R.color.cyan, R.style.BaseTheme_Cyan),
-        Pair(R.color.teal, R.style.BaseTheme_Teal),
-        Pair(R.color.green, R.style.BaseTheme_Green),
-        Pair(R.color.light_green, R.style.BaseTheme_LightGreen),
-        Pair(R.color.lime, R.style.BaseTheme_Lime),
-        Pair(R.color.yellow, R.style.BaseTheme_Yellow),
-        Pair(R.color.amber, R.style.BaseTheme_Amber),
-        Pair(R.color.orange, R.style.BaseTheme_Orange),
-        Pair(R.color.deep_orange, R.style.BaseTheme_DeepOrange),
-        Pair(R.color.brown, R.style.BaseTheme_Brown),
-        Pair(R.color.grey, R.style.BaseTheme_Grey),
-        Pair(R.color.blue_grey, R.style.BaseTheme_BlueGrey)
+        Triple(R.color.red, R.style.BaseTheme_Red, R.color.redPrimaryDark),
+        Triple(R.color.pink, R.style.BaseTheme_Pink, R.color.pinkPrimaryDark),
+        Triple(R.color.purple, R.style.BaseTheme_Purple, R.color.purplePrimaryDark),
+        Triple(R.color.deep_purple, R.style.BaseTheme_DeepPurple, R.color.deepPurplePrimaryDark),
+        Triple(R.color.indigo, R.style.BaseTheme_Indigo, R.color.indigoPrimaryDark),
+        Triple(R.color.blue, R.style.BaseTheme_Blue, R.color.bluePrimaryDark),
+        Triple(R.color.light_blue, R.style.BaseTheme_LightBlue, R.color.lightBluePrimaryDark),
+        Triple(R.color.cyan, R.style.BaseTheme_Cyan, R.color.cyanPrimaryDark),
+        Triple(R.color.teal, R.style.BaseTheme_Teal, R.color.tealPrimaryDark),
+        Triple(R.color.green, R.style.BaseTheme_Green, R.color.greenPrimaryDark),
+        Triple(R.color.light_green, R.style.BaseTheme_LightGreen, R.color.lightGreenPrimaryDark),
+        Triple(R.color.lime, R.style.BaseTheme_Lime, R.color.limePrimaryDark),
+        Triple(R.color.yellow, R.style.BaseTheme_Yellow, R.color.yellowPrimaryDark),
+        Triple(R.color.amber, R.style.BaseTheme_Amber, R.color.amberPrimaryDark),
+        Triple(R.color.orange, R.style.BaseTheme_Orange, R.color.orangePrimaryDark),
+        Triple(R.color.deep_orange, R.style.BaseTheme_DeepOrange, R.color.deepOrangePrimaryDark),
+        Triple(R.color.brown, R.style.BaseTheme_Brown, R.color.brownPrimaryDark),
+        Triple(R.color.grey, R.style.BaseTheme_Grey, R.color.greyPrimaryDark),
+        Triple(R.color.blue_grey, R.style.BaseTheme_BlueGrey, R.color.blueGreyPrimaryDark)
     )
 
     @JvmStatic
@@ -121,12 +121,21 @@ object ThemeHelper {
     //finds theme and its position in accents array and returns a pair(theme, position)
     @JvmStatic
     fun getAccentedTheme() = try {
-        val pair = accents.find { pair -> pair.first == goPreferences.accent }
-        val theme = pair!!.second
-        val position = accents.indexOf(pair)
+        val triple = accents.find { pair -> pair.first == goPreferences.accent }
+        val theme = triple!!.second
+        val position = accents.indexOf(triple)
         Pair(theme, position)
     } catch (e: Exception) {
         Pair(R.style.BaseTheme_DeepPurple, 3)
+    }
+
+    //finds theme and its position in accents array and returns a pair(theme, position)
+    @JvmStatic
+    fun resolvePrimaryDarkColor() = try {
+        val triple = accents.find { pair -> pair.first == goPreferences.accent }
+        triple!!.third
+    } catch (e: Exception) {
+        R.color.deepPurplePrimaryDark
     }
 
     @JvmStatic

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="red">#f44336</color>
     <color name="pink">#e91e63</color>
     <color name="purple">#9c27b0</color>
@@ -45,4 +46,5 @@
 
     <color name="windowBackground">#fafafa</color>
     <color name="dialogsBackground">@color/windowBackground</color>
+    <color name="themeDialogPrimaryColor">#212121</color>
 </resources>

@@ -21,9 +21,30 @@
     <color name="grey">#eeeeee</color>
     <color name="blue_grey">#b0bec5</color>
 
+    <color name="redPrimaryDark">@color/red</color>
+    <color name="pinkPrimaryDark">@color/pink</color>
+    <color name="purplePrimaryDark">@color/purple</color>
+    <color name="deepPurplePrimaryDark">@color/deep_purple</color>
+    <color name="indigoPrimaryDark">@color/indigo</color>
+    <color name="bluePrimaryDark">@color/blue</color>
+    <color name="lightBluePrimaryDark">@color/light_blue</color>
+    <color name="cyanPrimaryDark">@color/cyan</color>
+    <color name="tealPrimaryDark">@color/teal</color>
+    <color name="greenPrimaryDark">@color/green</color>
+    <color name="lightGreenPrimaryDark">@color/light_green</color>
+    <color name="limePrimaryDark">@color/lime</color>
+    <color name="yellowPrimaryDark">@color/yellow</color>
+    <color name="amberPrimaryDark">@color/amber</color>
+    <color name="orangePrimaryDark">@color/orange</color>
+    <color name="deepOrangePrimaryDark">@color/deep_orange</color>
+    <color name="brownPrimaryDark">@color/brown</color>
+    <color name="greyPrimaryDark">@color/grey</color>
+    <color name="blueGreyPrimaryDark">@color/blue_grey</color>
+
     <color name="seekBarBgColorDark">#10000000</color>
     <color name="seekBarBgColorLight">#20000000</color>
 
     <color name="windowBackground">#151515</color>
     <color name="dialogsBackground">#212121</color>
+    <color name="themeDialogPrimaryColor">#fafafa</color>
 </resources>

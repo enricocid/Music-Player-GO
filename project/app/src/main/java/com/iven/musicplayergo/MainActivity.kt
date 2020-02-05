@@ -259,6 +259,9 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             edgeToEdge {
                 mainView.fit { Edge.Top + Edge.Bottom }
             }
+        } else {
+            window.statusBarColor =
+                ContextCompat.getColor(this, ThemeHelper.resolvePrimaryDarkColor())
         }
 
         initMediaButtons()

@@ -8,7 +8,7 @@
     </style>
 
     <!-- Indicator thumb text style -->
-    <style name="IndicatorThumbTextAppearance" parent="TextAppearance.AppCompat.Small">
+    <style name="IndicatorThumbTextAppearance" parent="@android:style/TextAppearance.Material.Small">
         <item name="android:fontFamily">@font/raleway_black</item>
     </style>
 

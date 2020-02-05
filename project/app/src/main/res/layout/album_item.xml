@@ -68,7 +68,7 @@
                 android:singleLine="true"
                 android:textAlignment="textEnd"
                 android:textAppearance="@android:style/TextAppearance.Material.Caption"
-                android:textColor="?attr/colorAccent" />
+                android:textColor="?attr/colorPrimary" />
 
         </LinearLayout>
     </LinearLayout>
