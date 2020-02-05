@@ -513,7 +513,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                     }
                     mMediaPlayerHolder.seekTo(
                         userSelectedPosition,
-                        mMediaPlayerHolder.state == PLAYING
+                        mMediaPlayerHolder.isPlaying
                     )
                 }
             })
@@ -768,7 +768,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             mRepeatNP.setImageResource(ThemeHelper.getRepeatIcon(mMediaPlayerHolder))
             when {
                 onPlaybackCompletion -> ThemeHelper.updateIconTint(mRepeatNP, mResolvedIconsColor)
-                mMediaPlayerHolder.isRepeat1X || mMediaPlayerHolder.isLoop -> {
+                mMediaPlayerHolder.isRepeat1X or mMediaPlayerHolder.isLoop -> {
                     ThemeHelper.updateIconTint(
                         mRepeatNP,
                         mResolvedAccentColor
@@ -891,7 +891,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
     private fun setRepeat() {
         if (checkIsPlayer(true)) {
-            mMediaPlayerHolder.repeat()
+            mMediaPlayerHolder.repeat(mMediaPlayerHolder.isPlaying)
             updateRepeatStatus(false)
         }
     }

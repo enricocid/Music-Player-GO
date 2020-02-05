@@ -503,9 +503,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
 
-    fun repeat() {
+    fun repeat(updatePlaybackStatus: Boolean) {
         getRepeatMode()
-        updatePlaybackStatus()
+        if (updatePlaybackStatus) updatePlaybackStatus()
     }
 
     fun setQueueEnabled(enabled: Boolean) {
@@ -608,7 +608,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     PLAY_PAUSE_ACTION -> resumeOrPause()
                     NEXT_ACTION -> skip(true)
                     REPEAT_ACTION -> {
-                        repeat()
+                        repeat(true)
                         mediaPlayerInterface.onUpdateRepeatStatus()
                     }
                     CLOSE_ACTION -> if (playerService.isRunning && isMediaPlayer) stopPlaybackService(
