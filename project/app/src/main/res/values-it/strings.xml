@@ -47,7 +47,6 @@
     <!-- Settings -->
     <!-- Preferences -->
     <string name="settings">Opzioni</string>
-    <string name="category_appearance">Aspetto</string>
     <string name="category_general">Generali</string>
 
     <string name="open_git_pref_title">Pagina GitHub</string>

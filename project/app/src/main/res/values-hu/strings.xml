@@ -47,7 +47,6 @@
 
     <!-- Preferences -->
     <string name="settings">Beállítások</string>
-    <string name="category_appearance">Megjelenés</string>
     <string name="category_general">Általános</string>
     <string name="open_git_pref_title">GitHub oldal</string>
     <string name="open_git_pref_summary">Nyisd meg a Projektek oldalt több információért :)</string>

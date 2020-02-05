@@ -47,7 +47,6 @@
     <!-- Settings -->
     <!-- Preferences -->
     <string name="settings">सेटिंग्स</string>
-    <string name="category_appearance">दिखावट</string>
     <string name="category_general">सामान्य</string>
 
     <string name="open_git_pref_title">GitHub पेज</string>

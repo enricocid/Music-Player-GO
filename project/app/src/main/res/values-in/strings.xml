@@ -49,7 +49,6 @@
     <!-- Settings -->
     <!-- Preferences -->
     <string name="settings">Pengaturan</string>
-    <string name="category_appearance">Tampilan</string>
     <string name="category_general">Umum</string>
 
     <string name="open_git_pref_title">Halaman GitHub</string>

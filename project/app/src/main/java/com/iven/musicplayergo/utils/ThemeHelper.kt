@@ -54,6 +54,13 @@ object ThemeHelper {
     }
 
     @JvmStatic
+    fun resolveThemeIcon(context: Context) = when (goPreferences.theme) {
+        context.getString(R.string.theme_pref_light) -> R.drawable.ic_day
+        context.getString(R.string.theme_pref_auto) -> R.drawable.ic_auto
+        else -> R.drawable.ic_night
+    }
+
+    @JvmStatic
     fun isDeviceLand(resources: Resources) =
         resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 

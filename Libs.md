@@ -14,6 +14,8 @@
 
 - [**Round icons**](https://material.io/tools/icons/?style=round) by Google
 
+- [**Database icon**](https://materialdesignicons.com/icon/database) by Cody [XT3000](https://twitter.com/XT3000)
+
 - [**Badges**](https://shields.io/) by Shields.io
 
 - [**gifmaker.me**](https://gifmaker.me/)

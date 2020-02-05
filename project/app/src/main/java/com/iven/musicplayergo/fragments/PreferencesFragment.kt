@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -76,7 +77,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
 
-        activity?.let { fragmentActivity ->
+        activity?.let { fa ->
 
             findPreference<Preference>(getString(R.string.open_git_pref))?.onPreferenceClickListener =
                 this
@@ -89,9 +90,13 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 onPreferenceClickListener = this@PreferencesFragment
             }
 
+            findPreference<Preference>(getString(R.string.theme_pref))?.apply {
+                icon = AppCompatResources.getDrawable(fa, ThemeHelper.resolveThemeIcon(fa))
+            }
+
             findPreference<Preference>(getString(R.string.accent_pref))?.apply {
                 summary =
-                    ThemeHelper.getAccentName(goPreferences.accent, fragmentActivity)
+                    ThemeHelper.getAccentName(goPreferences.accent, fa)
                 onPreferenceClickListener = this@PreferencesFragment
             }
 

@@ -46,7 +46,6 @@
 
     <!-- Preferences -->
     <string name="settings">Ayarlar</string>
-    <string name="category_appearance">Görünüm</string>
     <string name="category_general">Genel</string>
     <string name="open_git_pref_title">GitHub Sayfası</string>
     <string name="open_git_pref_summary">Daha fazla bilgi için projenin sayfasını açın :)</string>

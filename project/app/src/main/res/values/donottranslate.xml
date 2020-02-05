@@ -21,6 +21,7 @@
     <string name="faq_title">FAQ</string>
     <string name="reset_pref_lib">reset_pref_lib</string>
     <string name="reset_pref_db_reload">reset_pref_db_reload</string>
+    <string name="category_ui">UI</string>
     <string name="theme_pref">theme_pref</string>
     <string name="theme_pref_light">theme_pref_light</string>
     <string name="theme_pref_dark">theme_pref_dark</string>

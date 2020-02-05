@@ -31,12 +31,13 @@
 
     <Preference
         android:summary="@string/reset_pref_title"
+        app:icon="@drawable/ic_database"
         app:key="@string/reset_pref_lib"
         app:title="@string/reset_pref_title" />
 
     <PreferenceCategory
         app:layout="@layout/custom_preference_category"
-        app:title="@string/category_appearance">
+        app:title="@string/category_ui">
 
         <ListPreference
             android:defaultValue="@string/theme_pref_light"
@@ -52,15 +53,15 @@
             app:icon="@drawable/ic_circle"
             app:key="@string/accent_pref"
             app:title="@string/accent_pref_title" />
+
+        <Preference
+            app:key="@string/active_fragments_pref"
+            app:title="@string/active_fragments_pref_title" />
     </PreferenceCategory>
 
     <PreferenceCategory
         app:layout="@layout/custom_preference_category"
         app:title="@string/category_general">
-
-        <Preference
-            app:key="@string/active_fragments_pref"
-            app:title="@string/active_fragments_pref_title" />
 
         <SwitchPreferenceCompat
             android:summaryOff="@string/precise_volume_pref_summary_off"

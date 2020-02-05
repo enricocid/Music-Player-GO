@@ -47,7 +47,6 @@
     <!-- Settings -->
     <!-- Preferences -->
     <string name="settings">Instellingen</string>
-    <string name="category_appearance">Uiterlijk</string>
     <string name="category_general">Algemeen</string>
 
     <string name="open_git_pref_title">GitHub-pagina</string>
