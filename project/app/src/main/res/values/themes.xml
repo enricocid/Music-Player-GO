@@ -99,5 +99,6 @@
     <style name="BaseTheme.Default" parent="BaseTheme">
         <item name="colorPrimary">@android:color/background_dark</item>
         <item name="colorSecondary">@android:color/background_dark</item>
+        <item name="android:statusBarColor">@android:color/background_dark</item>
     </style>
 </resources>
