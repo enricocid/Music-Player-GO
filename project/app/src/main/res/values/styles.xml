@@ -11,6 +11,7 @@
         <item name="popupMenuStyle">@style/PopupMenu</item>
         <item name="alertDialogTheme">@style/DialogsStyle</item>
         <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="android:navigationBarColor">@color/navBarColor</item>
     </style>
 
     <style name="PrefTheme" parent="PreferenceThemeOverlay">

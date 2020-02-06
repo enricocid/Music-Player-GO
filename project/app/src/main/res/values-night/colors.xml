@@ -47,4 +47,5 @@
     <color name="windowBackground">#151515</color>
     <color name="dialogsBackground">#212121</color>
     <color name="themeDialogPrimaryColor">#fafafa</color>
+    <color name="navBarColor">@android:color/background_dark</color>
 </resources>
