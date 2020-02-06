@@ -798,7 +798,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
         mSeekBarNP.max = selectedSong.duration.toInt()
 
-        MusicUtils.getBitrate(MusicUtils.getContentUri(selectedSong.id!!), contentResolver)?.let {
+        MusicUtils.getBitrate(MusicUtils.getContentUri(selectedSong.id), contentResolver)?.let {
             mRatesTextNP.text = getString(R.string.rates, it.first, it.second)
         }
 

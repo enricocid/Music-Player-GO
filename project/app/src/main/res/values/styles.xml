@@ -22,8 +22,8 @@
         <item name="colorBackgroundFloating">@color/dialogsBackground</item>
         <item name="android:windowTitleStyle">@style/DialogsStyle.Title</item>
         <item name="dialogCornerRadius">@dimen/md_corner_radius</item>
-        <item name="colorPrimary">@color/themeDialogPrimaryColor</item>
-        <item name="colorSecondary">@color/themeDialogPrimaryColor</item>
+        <item name="colorPrimary">@color/widgetsColor</item>
+        <item name="colorSecondary">@color/widgetsColor</item>
     </style>
 
     <style name="DialogsStyle.Title" parent="@android:style/TextAppearance.Material.Title">
