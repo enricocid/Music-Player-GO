@@ -2,11 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/loved_songs_add"
-        android:title="@string/loved_song_add"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/queue_add"
-        android:title="@string/queue_add"
+        android:id="@+id/filter_add"
+        android:title="@string/filter_popup_title"
         app:showAsAction="ifRoom" />
 </menu>

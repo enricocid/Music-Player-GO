@@ -404,7 +404,7 @@ object Utils {
                     return@setOnMenuItemClickListener true
                 }
                 val menu =
-                    if (stringToFilter != null) R.menu.menu_do_something else R.menu.menu_love_queue
+                    if (stringToFilter != null) R.menu.menu_filter else R.menu.menu_do_something
                 inflate(menu)
                 gravity = Gravity.END
                 show()
