@@ -7,7 +7,6 @@ import android.content.res.Resources
 import android.media.MediaExtractor
 import android.media.MediaFormat
 import android.net.Uri
-import android.os.ParcelFileDescriptor
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
 import com.iven.musicplayergo.models.Album
@@ -20,8 +19,8 @@ import com.iven.musicplayergo.toFormattedYear
 object MusicUtils {
 
     @JvmStatic
-    fun getContentUri(audioId: Long): Uri {
-        return ContentUris.withAppendedId(
+    fun getContentUri(audioId: Long?) = audioId?.let {
+        ContentUris.withAppendedId(
             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
             audioId
         )
@@ -31,10 +30,7 @@ object MusicUtils {
     private fun getAudioFileDescriptor(
         contentUri: Uri,
         contentResolver: ContentResolver
-    ): ParcelFileDescriptor? {
-        val readOnlyMode = "r"
-        return contentResolver.openFileDescriptor(contentUri, readOnlyMode)
-    }
+    ) = contentResolver.openFileDescriptor(contentUri, "r")
 
     //returns the position in list of the current played album
     //pass selected artist from artists adapter and not from current song
@@ -144,15 +140,17 @@ object MusicUtils {
         if (Utils.isAndroidQ()) AudioColumns.BUCKET_DISPLAY_NAME else AudioColumns.DATA
 
     @JvmStatic
-    fun getBitrate(contentUri: Uri, contentResolver: ContentResolver): Pair<Int, Int>? {
+    fun getBitrate(contentUri: Uri?, contentResolver: ContentResolver): Pair<Int, Int>? {
         val mediaExtractor = MediaExtractor()
         return try {
 
-            getAudioFileDescriptor(
-                contentUri,
-                contentResolver
-            )?.use { pfd ->
-                mediaExtractor.setDataSource(pfd.fileDescriptor)
+            contentUri?.let { uri ->
+                getAudioFileDescriptor(
+                    uri,
+                    contentResolver
+                )?.use { pfd ->
+                    mediaExtractor.setDataSource(pfd.fileDescriptor)
+                }
             }
 
             val mediaFormat = mediaExtractor.getTrackFormat(0)

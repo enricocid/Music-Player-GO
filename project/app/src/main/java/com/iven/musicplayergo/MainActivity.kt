@@ -837,8 +837,9 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     }
 
     override fun onStopPlaybackFromReloadDB() {
-        if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) mMediaPlayerHolder.stopPlaybackService(
-            stopPlayback = true, isFromReloadDB = true
+        if (::mPlayerService.isInitialized) mPlayerService.isReloadDB = true
+        if (isMediaPlayerHolder) mMediaPlayerHolder.stopPlaybackService(
+            stopPlayback = true
         )
         recreate()
     }

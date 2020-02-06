@@ -432,10 +432,10 @@ object Utils {
 
             message(R.string.on_close_activity)
             positiveButton(R.string.yes) {
-                mediaPlayerHolder.stopPlaybackService(true, isFromReloadDB = false)
+                mediaPlayerHolder.stopPlaybackService(true)
             }
             negativeButton(R.string.no) {
-                mediaPlayerHolder.stopPlaybackService(false, isFromReloadDB = false)
+                mediaPlayerHolder.stopPlaybackService(false)
             }
         }
     }

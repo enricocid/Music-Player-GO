@@ -57,7 +57,7 @@
 
     <string name="reset_pref_title">Libreria musicale</string>
     <string name="reset_pref_summary">Canzoni trovate: %1d</string>
-    <string name="reset_pref_message">La libreria musicale sarà ricaricata e l\'app riavviata. Continuare?</string>
+    <string name="reset_pref_message">La libreria musicale, incluse le canzoni preferite, sarà ricaricata. Continuare?</string>
 
     <string name="theme_pref_title">Tema</string>
     <string name="theme_pref_light_title">Chiaro</string>

@@ -429,8 +429,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
                 if (goPreferences.isPreciseVolumeEnabled) setPreciseVolume(currentVolumeInPercent)
             }
-
-            mediaPlayer.setDataSource(playerService, MusicUtils.getContentUri(song?.id!!))
+            MusicUtils.getContentUri(song?.id)?.let { contentUri ->
+                mediaPlayer.setDataSource(playerService, contentUri)
+            }
             mediaPlayer.prepare()
 
         } catch (e: Exception) {
@@ -587,13 +588,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
-    fun stopPlaybackService(stopPlayback: Boolean, isFromReloadDB: Boolean) {
+    fun stopPlaybackService(stopPlayback: Boolean) {
         if (playerService.isRunning && isMediaPlayer && stopPlayback) {
-            playerService.isFromReloadDB = isFromReloadDB
             playerService.stopForeground(true)
             playerService.stopSelf()
         }
-        if (!isFromReloadDB) mediaPlayerInterface.onClose()
+        if (!playerService.isReloadDB) mediaPlayerInterface.onClose()
     }
 
     private inner class NotificationReceiver : BroadcastReceiver() {
@@ -612,7 +612,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                         mediaPlayerInterface.onUpdateRepeatStatus()
                     }
                     CLOSE_ACTION -> if (playerService.isRunning && isMediaPlayer) stopPlaybackService(
-                        stopPlayback = true, isFromReloadDB = false
+                        stopPlayback = true
                     )
 
                     BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (::currentSong.isInitialized && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()

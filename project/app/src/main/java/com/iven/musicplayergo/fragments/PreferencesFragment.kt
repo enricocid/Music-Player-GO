@@ -166,6 +166,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 goPreferences.apply {
                     reloadDB = true
                     latestPlayedSong = null
+                    lovedSongs = null
                 }
                 mUIControlInterface.onStopPlaybackFromReloadDB()
             }
