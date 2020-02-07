@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.afterMeasured
 import com.iven.musicplayergo.createCircularReveal
-import com.iven.musicplayergo.utils.ThemeHelper
 import com.iven.musicplayergo.utils.UIControlInterface
 import kotlinx.android.synthetic.main.fragment_error.*
 
@@ -57,9 +56,7 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
         error_message.text = getString(mErrorString)
         error_icon.setImageResource(mErrorIcon)
         view.setOnClickListener {
-            if (sNoMusic) mUIControlInterface.onCloseActivity() else activity?.let { fa ->
-                ThemeHelper.applyNewThemeSmoothly(fa, false)
-            }
+            if (sNoMusic) mUIControlInterface.onCloseActivity() else activity?.recreate()
         }
 
         error_toolbar.setNavigationOnClickListener {

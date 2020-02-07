@@ -2,9 +2,7 @@ package com.iven.musicplayergo.utils
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -12,7 +10,6 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.RippleDrawable
 import android.os.Build
-import android.os.Handler
 import android.text.Html
 import android.text.Spanned
 import android.util.TypedValue
@@ -26,26 +23,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.RESTORE_SETTINGS_FRAGMENT
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.player.MediaPlayerHolder
 
 object ThemeHelper {
-
-    //update theme
-    @JvmStatic
-    fun applyNewThemeSmoothly(activity: Activity, restoreSettingsFragment: Boolean) {
-        //smoothly set app theme
-        Handler().postDelayed({
-            Intent(activity, MainActivity::class.java).apply {
-                putExtra(RESTORE_SETTINGS_FRAGMENT, restoreSettingsFragment)
-                activity.finish()
-                activity.startActivity(this)
-            }
-        }, 250)
-    }
 
     @JvmStatic
     fun getDefaultNightMode(context: Context) = when (goPreferences.theme) {

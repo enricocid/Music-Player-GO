@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
     private var mActiveFragments: MutableList<String>? = null
 
-    private var sThemeChanged = false
+    private var sAppearanceChanged = false
     private var sRestoreSettingsFragment = false
 
     //views
@@ -177,7 +177,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        if (sThemeChanged) {
+        if (sAppearanceChanged) {
             super.onSaveInstanceState(outState)
             outState.putBoolean(
                 RESTORE_SETTINGS_FRAGMENT,
@@ -646,13 +646,20 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         }
     }
 
-    override fun onThemeChanged(isAccent: Boolean) {
-        sThemeChanged = !isAccent
-        if (sThemeChanged) AppCompatDelegate.setDefaultNightMode(
+
+    override fun onThemeChanged() {
+        sAppearanceChanged = true
+        AppCompatDelegate.setDefaultNightMode(
             ThemeHelper.getDefaultNightMode(
                 this
             )
-        ) else if (mMediaPlayerHolder.isPlaying) mMediaPlayerHolder.updateNotification()
+        )
+    }
+
+    override fun onAppearanceChanged(isAccentChanged: Boolean) {
+        sAppearanceChanged = true
+        if (isAccentChanged && mMediaPlayerHolder.isPlaying) mMediaPlayerHolder.updateNotification()
+        recreate()
     }
 
     private fun updatePlayingStatus(isNowPlaying: Boolean) {

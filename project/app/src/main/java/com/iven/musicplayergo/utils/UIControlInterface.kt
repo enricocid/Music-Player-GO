@@ -3,7 +3,8 @@ package com.iven.musicplayergo.utils
 import com.iven.musicplayergo.models.Music
 
 interface UIControlInterface {
-    fun onThemeChanged(isAccent: Boolean)
+    fun onAppearanceChanged(isAccentChanged: Boolean)
+    fun onThemeChanged()
     fun onArtistOrFolderSelected(artistOrFolder: String, isFolder: Boolean)
     fun onSongSelected(song: Music?, songs: List<Music>?, isFromFolder: Boolean)
     fun onShuffleSongs(songs: MutableList<Music>?, isFromFolder: Boolean)

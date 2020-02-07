@@ -30,6 +30,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     private lateinit var mAccentsDialog: MaterialDialog
     private lateinit var mActiveFragmentsDialog: MaterialDialog
+    private lateinit var mFiltersDialog: MaterialDialog
 
     private var mSelectedAccent: Int by Delegates.notNull()
 
@@ -60,6 +61,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
         if (::mAccentsDialog.isInitialized && mAccentsDialog.isShowing) mAccentsDialog.dismiss()
         if (::mActiveFragmentsDialog.isInitialized && mActiveFragmentsDialog.isShowing) mActiveFragmentsDialog.dismiss()
+        if (::mFiltersDialog.isInitialized && mFiltersDialog.isShowing) mFiltersDialog.dismiss()
     }
 
     override fun onAttach(context: Context) {
@@ -147,13 +149,13 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 getString(R.string.theme_pref) -> {
                     mThemePreference?.icon =
                         AppCompatResources.getDrawable(ac, ThemeHelper.resolveThemeIcon(ac))
-                    mUIControlInterface.onThemeChanged(false)
+                    mUIControlInterface.onThemeChanged()
                 }
-                getString(R.string.edge_pref) -> ThemeHelper.applyNewThemeSmoothly(
-                    ac,
-                    true
-                )
-                getString(R.string.accent_pref) -> mUIControlInterface.onThemeChanged(true)
+                getString(R.string.edge_pref) -> mUIControlInterface.onAppearanceChanged(false)
+                getString(R.string.accent_pref) -> {
+                    mAccentsDialog.dismiss()
+                    mUIControlInterface.onAppearanceChanged(true)
+                }
             }
         }
     }
@@ -206,12 +208,12 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             getRecyclerView().layoutManager =
                 LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
-            positiveButton(R.string.yes) {
+            positiveButton(android.R.string.ok) {
                 goPreferences.activeFragments = activeTabsAdapter.getUpdatedItems()
-                ThemeHelper.applyNewThemeSmoothly(activity, true)
+                mUIControlInterface.onAppearanceChanged(false)
             }
 
-            negativeButton(R.string.no)
+            negativeButton(android.R.string.cancel)
         }
     }
 
@@ -225,12 +227,12 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             customListAdapter(filtersAdapter)
 
-            positiveButton(R.string.yes) {
+            positiveButton(android.R.string.ok) {
                 goPreferences.filters = filtersAdapter.getUpdatedItems()
-                ThemeHelper.applyNewThemeSmoothly(activity, false)
+                activity.recreate()
             }
 
-            negativeButton(R.string.no)
+            negativeButton(android.R.string.cancel)
         }
     }
 
