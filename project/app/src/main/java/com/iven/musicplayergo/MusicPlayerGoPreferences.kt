@@ -80,7 +80,7 @@ class MusicPlayerGoPreferences(context: Context) {
     var isEdgeToEdge
         get() = mPrefs.getBoolean(
             prefsEdgeToEdge,
-            true
+            false
         ) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1
         set(value) = mPrefs.edit().putBoolean(prefsEdgeToEdge, value).apply()
 
