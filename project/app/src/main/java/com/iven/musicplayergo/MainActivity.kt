@@ -655,20 +655,31 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         }
     }
 
-    override fun onThemeChanged() {
-        sAppearanceChanged = true
-        AppCompatDelegate.setDefaultNightMode(
-            ThemeHelper.getDefaultNightMode(
-                this
-            )
-        )
+    private fun saveSongToPref() {
+        if (::mMediaPlayerHolder.isInitialized && !mMediaPlayerHolder.isPlaying) mMediaPlayerHolder.apply {
+            goPreferences.latestPlayedSong =
+                Triple(currentSong.first, playerPosition, isPlayingFromFolder)
+        }
     }
 
-    override fun onAppearanceChanged(isAccentChanged: Boolean) {
+    override fun onThemeChanged() {
+        sAppearanceChanged = true
+        synchronized(saveSongToPref()) {
+            AppCompatDelegate.setDefaultNightMode(
+                ThemeHelper.getDefaultNightMode(
+                    this
+                )
+            )
+        }
+    }
+
+    override fun onAppearanceChanged(isAccentChanged: Boolean, restoreSettings: Boolean) {
         if (isAccentChanged && mMediaPlayerHolder.isPlaying) {
             mMediaPlayerHolder.updateNotification()
         }
-        ThemeHelper.applyChangesSmoothly(this, true)
+        synchronized(saveSongToPref()) {
+            ThemeHelper.applyChangesSmoothly(this, restoreSettings)
+        }
     }
 
     private fun updatePlayingStatus(isNowPlaying: Boolean) {
@@ -703,7 +714,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             //update the controls panel
             mMediaPlayerHolder.apply {
 
-                if (isMediaPlayer) {
+                if (isMediaPlayer && mMediaPlayerHolder.isPlaying) {
 
                     onResumeActivity()
                     updatePlayingInfo(true)

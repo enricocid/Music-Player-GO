@@ -150,10 +150,16 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                         AppCompatResources.getDrawable(ac, ThemeHelper.resolveThemeIcon(ac))
                     mUIControlInterface.onThemeChanged()
                 }
-                getString(R.string.edge_pref) -> mUIControlInterface.onAppearanceChanged(false)
+                getString(R.string.edge_pref) -> mUIControlInterface.onAppearanceChanged(
+                    isAccentChanged = false,
+                    restoreSettings = true
+                )
                 getString(R.string.accent_pref) -> {
                     mAccentsDialog.dismiss()
-                    mUIControlInterface.onAppearanceChanged(true)
+                    mUIControlInterface.onAppearanceChanged(
+                        isAccentChanged = true,
+                        restoreSettings = true
+                    )
                 }
             }
         }
@@ -209,7 +215,10 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             positiveButton(android.R.string.ok) {
                 goPreferences.activeFragments = activeTabsAdapter.getUpdatedItems()
-                mUIControlInterface.onAppearanceChanged(false)
+                mUIControlInterface.onAppearanceChanged(
+                    isAccentChanged = false,
+                    restoreSettings = true
+                )
             }
 
             negativeButton(android.R.string.cancel)
@@ -228,7 +237,10 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             positiveButton(android.R.string.ok) {
                 goPreferences.filters = filtersAdapter.getUpdatedItems()
-                activity.recreate()
+                mUIControlInterface.onAppearanceChanged(
+                    isAccentChanged = false,
+                    restoreSettings = false
+                )
             }
 
             negativeButton(android.R.string.cancel)

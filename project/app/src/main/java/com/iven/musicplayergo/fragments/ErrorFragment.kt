@@ -56,7 +56,10 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
         error_message.text = getString(mErrorString)
         error_icon.setImageResource(mErrorIcon)
         view.setOnClickListener {
-            if (sNoMusic) mUIControlInterface.onCloseActivity() else activity?.recreate()
+            if (sNoMusic) mUIControlInterface.onCloseActivity() else mUIControlInterface.onAppearanceChanged(
+                isAccentChanged = false,
+                restoreSettings = false
+            )
         }
 
         error_toolbar.setNavigationOnClickListener {
