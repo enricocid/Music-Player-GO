@@ -10,6 +10,7 @@
     android:baselineAligned="false"
     android:elevation="4dp"
     android:orientation="horizontal"
+    android:alpha="0"
     tools:context=".MainActivity">
 
     <com.google.android.material.tabs.TabLayout

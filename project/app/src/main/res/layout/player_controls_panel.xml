@@ -8,6 +8,7 @@
     android:layout_height="wrap_content"
     android:background="?android:attr/windowBackground"
     android:orientation="vertical"
+    android:alpha="0"
     tools:context=".MainActivity">
 
     <ProgressBar

@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     private var sLandscape = false
 
     //settings/controls panel
+    private lateinit var mPlayerControlsView: View
     private lateinit var mPlayingArtist: TextView
     private lateinit var mPlayingSong: TextView
     private lateinit var mSeekProgressBar: ProgressBar
@@ -288,6 +289,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         mTabsLayout = tab_layout
 
         //controls panel
+        mPlayerControlsView = player_controls_container
         mPlayingSong = playing_song
         mPlayingArtist = playing_artist
         mSeekProgressBar = song_progress
@@ -307,7 +309,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     }
 
     private fun notifyError(errorType: String) {
-        player_controls_container.visibility = View.GONE
+        mPlayerControlsView.visibility = View.GONE
         supportFragmentManager.beginTransaction()
             .addFragment(false, R.id.container, ErrorFragment.newInstance(errorType))
     }
@@ -722,6 +724,10 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                     mSeekProgressBar.progress =
                         if (isSongRestoredFromPrefs) goPreferences.latestPlayedSong?.second!! else 0
 
+                    mPlayerControlsView.animate().apply {
+                        duration = 500
+                        alpha(1.0F)
+                    }
                 }
             }
         }
