@@ -144,7 +144,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
 
         activity?.let { ac ->
-
             when (key) {
                 getString(R.string.theme_pref) -> {
                     mThemePreference?.icon =

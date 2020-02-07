@@ -346,10 +346,17 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         initViewPager()
 
         //handle restoring: handle external app intent or restore playback
-        if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null)
+        if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null) {
             handleIntent(intent)
-        else
-            restorePlayerStatus()
+
+        } else {
+            synchronized(restorePlayerStatus()) {
+                mPlayerControlsView.animate().apply {
+                    duration = 500
+                    alpha(1.0F)
+                }
+            }
+        }
     }
 
     private fun initViewPager() {
@@ -648,7 +655,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         }
     }
 
-
     override fun onThemeChanged() {
         sAppearanceChanged = true
         AppCompatDelegate.setDefaultNightMode(
@@ -659,9 +665,10 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     }
 
     override fun onAppearanceChanged(isAccentChanged: Boolean) {
-        sAppearanceChanged = true
-        if (isAccentChanged && mMediaPlayerHolder.isPlaying) mMediaPlayerHolder.updateNotification()
-        recreate()
+        if (isAccentChanged && mMediaPlayerHolder.isPlaying) {
+            mMediaPlayerHolder.updateNotification()
+        }
+        ThemeHelper.applyChangesSmoothly(this, true)
     }
 
     private fun updatePlayingStatus(isNowPlaying: Boolean) {
@@ -692,7 +699,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
     private fun restorePlayerStatus() {
         if (isMediaPlayerHolder) {
-
             //if we are playing and the activity was restarted
             //update the controls panel
             mMediaPlayerHolder.apply {
@@ -723,11 +729,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
                     mSeekProgressBar.progress =
                         if (isSongRestoredFromPrefs) goPreferences.latestPlayedSong?.second!! else 0
-
-                    mPlayerControlsView.animate().apply {
-                        duration = 500
-                        alpha(1.0F)
-                    }
                 }
             }
         }
