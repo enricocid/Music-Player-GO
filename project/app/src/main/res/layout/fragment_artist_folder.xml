@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- ARTISTS LIST -->
+        <!-- ARTISTS/FOLDERS LIST -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/artists_folders_rv"
             android:layout_width="match_parent"
