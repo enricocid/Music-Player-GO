@@ -47,6 +47,7 @@
     <string name="open_git_pref_title">Page GitHub</string>
     <string name="open_git_pref_summary">Ouvre la page du projet pour plus d\'informations :)</string>
     <string name="faq_summary">FAQ et formats supportés :P</string>
+    <string name="reset_pref_title">Titres trouvés : %1d</string>
     <string name="theme_pref_title">Thème</string>
     <string name="theme_pref_light_title">Clair</string>
     <string name="theme_pref_dark_title">Sombre</string>
@@ -66,4 +67,7 @@
     <string name="headset_pref_title">Branchement du casque</string>
     <string name="headset_pref_summary_on">Désactiver la gestion du branchement du casque</string>
     <string name="headset_pref_summary_off">Activer la gestion du branchement du casque</string>
+    <string name="filter_pref_title">Filtres</string>
+    <string name="filter_popup_title">Masquer</string>
+    <string name="error_no_filter">Aucun filtre trouvé !</string>
 </resources>
