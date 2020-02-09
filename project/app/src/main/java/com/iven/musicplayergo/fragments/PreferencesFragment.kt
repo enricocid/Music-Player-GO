@@ -89,8 +89,8 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             findPreference<Preference>(getString(R.string.faq_pref))?.onPreferenceClickListener =
                 this
 
-            findPreference<Preference>(getString(R.string.reset_pref_lib))?.apply {
-                summary = getString(R.string.reset_pref_summary, musicLibrary.allSongs?.size)
+            findPreference<Preference>(getString(R.string.found_songs_pref))?.apply {
+                title = getString(R.string.reset_pref_title, musicLibrary.allSongsFiltered?.size)
                 onPreferenceClickListener = this@PreferencesFragment
             }
 
@@ -128,7 +128,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                     ac,
                     getString(R.string.app_faq)
                 )
-                getString(R.string.reset_pref_lib) -> showReloadDatabaseDialog(ac)
                 getString(R.string.accent_pref) -> showAccentsDialog(ac)
                 getString(R.string.filter_pref) -> {
                     if (!goPreferences.filters.isNullOrEmpty()) showFiltersDialog(ac) else getString(
@@ -162,22 +161,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                     )
                 }
             }
-        }
-    }
-
-    private fun showReloadDatabaseDialog(activity: Activity) {
-        MaterialDialog(activity).show {
-            title(R.string.app_name)
-            message(R.string.reset_pref_message)
-            positiveButton(R.string.yes) {
-                goPreferences.apply {
-                    reloadDB = true
-                    latestPlayedSong = null
-                    lovedSongs = null
-                }
-                mUIControlInterface.onStopPlaybackFromReloadDB()
-            }
-            negativeButton(R.string.no)
         }
     }
 

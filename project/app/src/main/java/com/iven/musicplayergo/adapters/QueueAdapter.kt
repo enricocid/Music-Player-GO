@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.musicloadutils.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.toFormattedDuration
 import com.iven.musicplayergo.utils.ThemeHelper

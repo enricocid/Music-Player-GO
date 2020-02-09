@@ -2,7 +2,7 @@
 
     <string name="yes">हाँ</string>
     <string name="no">नहीं</string>
-   
+
     <!-- Main - Artists -->
     <string name="artists">कलाकार</string>
     <string name="artist_info">%1d&#160;एल्बम,&#160;%2d&#160;गीत</string>
@@ -12,7 +12,7 @@
     <string name="songs">गीत</string>
     <string name="shuffle_am">सभी गीत शफल करे</string>
     <string name="shuffle_sa">शफ़ल चयनित एल्बम</string>
-   
+
     <!-- Main - Folders -->
     <string name="folders">फ़ोल्डर</string>
 
@@ -32,7 +32,7 @@
     <string name="loved_song_add">प्रिय भरे गीतों में जोड़ें</string>
     <string name="error_no_loved_songs">कोई प्रिय गीत नहीं मिला!</string>
 
-  
+
     <!-- Messages -->
     <string name="perm_rationale">Music Player GO को म्यूजिक चलाने के लिए आपकी फाइलों तक पहुंच की जरूरत होती है!</string>
     <string name="no_browser">कोई ब्राउज़र नहीं मिला!</string>

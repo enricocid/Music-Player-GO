@@ -52,9 +52,7 @@
     <string name="open_git_pref_title">GitHub page</string>
     <string name="open_git_pref_summary">Open the project\'s page for more info :)</string>
     <string name="faq_summary">FAQ and supported media formats :P</string>
-    <string name="reset_pref_title">Music library</string>
-    <string name="reset_pref_summary">Found songs: %1d</string>
-    <string name="reset_pref_message">Songs library will be reset and loved songs cleared. Continue?</string>
+    <string name="reset_pref_title">Found songs: %1d</string>
     <string name="theme_pref_title">Theme</string>
     <string name="theme_pref_light_title">Light</string>
     <string name="theme_pref_dark_title">Dark</string>

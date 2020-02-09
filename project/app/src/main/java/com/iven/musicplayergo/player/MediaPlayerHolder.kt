@@ -19,7 +19,7 @@ import android.support.v4.media.session.PlaybackStateCompat.*
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.musicloadutils.Music
 import com.iven.musicplayergo.toToast
 import com.iven.musicplayergo.utils.MusicUtils
 import com.iven.musicplayergo.utils.Utils

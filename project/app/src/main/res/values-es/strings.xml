@@ -33,7 +33,7 @@
     <string name="loved_song_add">Agregar a canciones favoritas</string>
     <string name="error_no_loved_songs">!No canciones favoritas!</string>
 
-   <!-- Messages -->
+    <!-- Messages -->
     <string name="perm_rationale">Music Player GO necesita acceso a tus archivos para reproducir la música</string>
     <string name="no_browser">¡No se encontró un navegador!</string>
     <string name="bad_id">!Reproduce una canción primero!</string>

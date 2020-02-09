@@ -40,8 +40,8 @@ import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_ARTISTS
 import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_FOLDERS
 import com.iven.musicplayergo.fragments.ErrorFragment.Companion.TAG_NO_MUSIC_INTENT
-import com.iven.musicplayergo.loader.DatabaseLoader
-import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.musicloadutils.Music
+import com.iven.musicplayergo.musicloadutils.MusicLoader
 import com.iven.musicplayergo.player.*
 import com.iven.musicplayergo.utils.MusicUtils
 import com.iven.musicplayergo.utils.ThemeHelper
@@ -53,7 +53,7 @@ import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.player_controls_panel.*
 import kotlin.properties.Delegates
 
-private const val DATABASE_LOADER_ID = 25
+private const val MUSIC_LOADER_ID = 25
 const val PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 2588
 const val RESTORE_SETTINGS_FRAGMENT = "restore_settings_fragment_key"
 
@@ -147,7 +147,11 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder
             mMediaPlayerHolder.mediaPlayerInterface = mMediaPlayerInterface
 
-            launchBuildMusicDB()
+            LoaderManager.getInstance(this@MainActivity).initLoader(
+                MUSIC_LOADER_ID,
+                null,
+                this@MainActivity
+            )
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
@@ -317,27 +321,19 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     override fun onLoaderReset(loader: Loader<Any?>) {}
 
     override fun onCreateLoader(id: Int, args: Bundle?) =
-        DatabaseLoader(this)
+        MusicLoader(this)
 
     override fun onLoadFinished(loader: Loader<Any?>, data: Any?) {
 
-        LoaderManager.getInstance(this).destroyLoader(DATABASE_LOADER_ID)
+        LoaderManager.getInstance(this).destroyLoader(MUSIC_LOADER_ID)
 
         loading_progress_bar.apply {
             if (visibility != View.GONE) visibility = View.GONE
         }
 
-        if (data != null && !musicLibrary.allSongs.isNullOrEmpty()) finishSetup()
+        if (data != null && !musicLibrary.allSongsFiltered.isNullOrEmpty()) finishSetup()
         else notifyError(
             ErrorFragment.TAG_NO_MUSIC
-        )
-    }
-
-    private fun launchBuildMusicDB() {
-        LoaderManager.getInstance(this).initLoader(
-            DATABASE_LOADER_ID,
-            null,
-            this
         )
     }
 

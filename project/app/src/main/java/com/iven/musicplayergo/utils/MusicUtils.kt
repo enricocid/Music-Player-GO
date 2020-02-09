@@ -9,9 +9,9 @@ import android.media.MediaFormat
 import android.net.Uri
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
-import com.iven.musicplayergo.models.Album
-import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.musicLibrary
+import com.iven.musicplayergo.musicloadutils.Album
+import com.iven.musicplayergo.musicloadutils.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.toFormattedYear
 
@@ -74,7 +74,7 @@ object MusicUtils {
     @JvmStatic
     fun getSongForIntent(
         displayName: String?
-    ): Music? = musicLibrary.allSongs?.firstOrNull { s -> s.displayName == displayName }
+    ): Music? = musicLibrary.allSongsUnfiltered.firstOrNull { s -> s.displayName == displayName }
 
     @JvmStatic
     fun buildSortedArtistAlbums(

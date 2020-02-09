@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.loader
+package com.iven.musicplayergo.musicloadutils
 
 import android.content.Context
 import androidx.loader.content.AsyncTaskLoader

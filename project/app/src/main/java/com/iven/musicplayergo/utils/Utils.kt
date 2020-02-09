@@ -27,7 +27,7 @@ import com.afollestad.materialdialogs.list.getRecyclerView
 import com.iven.musicplayergo.*
 import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.adapters.QueueAdapter
-import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.musicloadutils.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge

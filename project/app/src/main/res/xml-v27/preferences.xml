@@ -30,10 +30,9 @@
         app:title="@string/faq_title" />
 
     <Preference
-        android:summary="@string/reset_pref_title"
         app:icon="@drawable/ic_database"
-        app:key="@string/reset_pref_lib"
-        app:title="@string/reset_pref_title" />
+        app:key="@string/found_songs_pref"
+        android:enabled="false" />
 
     <PreferenceCategory
         app:layout="@layout/custom_preference_category"

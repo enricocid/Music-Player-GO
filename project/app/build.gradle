@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -12,13 +11,6 @@ android {
         targetSdkVersion 29
         versionCode 143
         versionName "4.1.9"
-        kapt {
-            arguments {
-                arg("room.schemaLocation", "$projectDir/schemas".toString())
-                arg("room.incremental", "true")
-                arg("room.expandProjection", "true")
-            }
-        }
     }
 
     //retrieve version number
@@ -65,8 +57,6 @@ dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.2.1'
     implementation 'androidx.loader:loader:1.1.0'
     implementation 'androidx.annotation:annotation:1.1.0'
-    implementation 'androidx.room:room-runtime:2.2.3'
-    kapt 'android.arch.persistence.room:compiler:2.2.3'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
