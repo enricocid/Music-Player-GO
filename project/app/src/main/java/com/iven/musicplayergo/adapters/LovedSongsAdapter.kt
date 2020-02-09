@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.musicloadutils.Music
+import com.iven.musicplayergo.musicloadutils.SavedMusic
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.toFormattedDuration
 import com.iven.musicplayergo.utils.MusicUtils
@@ -27,7 +27,7 @@ class LovedSongsAdapter(
 
     private var mLovedSongs = goPreferences.lovedSongs?.toMutableList()
 
-    fun swapSongs(lovedSongs: MutableList<Pair<Music?, Int>>?) {
+    fun swapSongs(lovedSongs: MutableList<SavedMusic>?) {
         mLovedSongs = lovedSongs
         notifyDataSetChanged()
         uiControlInterface.onLovedSongsUpdate(false)
@@ -54,36 +54,36 @@ class LovedSongsAdapter(
 
     inner class LoveHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindItems(lovedSong: Pair<Music?, Int>?) {
+        fun bindItems(lovedSong: SavedMusic?) {
 
             val title = itemView.findViewById<TextView>(R.id.title)
             val duration = itemView.findViewById<TextView>(R.id.duration)
             val subtitle = itemView.findViewById<TextView>(R.id.subtitle)
 
-            val song = lovedSong?.first
-
-            title.text = song?.title
+            title.text = lovedSong?.title
             duration.text = ThemeHelper.buildSpanned(
                 context.getString(
                     R.string.loved_song_subtitle,
-                    lovedSong?.second?.toLong()?.toFormattedDuration(false),
-                    song?.duration?.toFormattedDuration(false)
+                    lovedSong?.startFrom?.toLong()?.toFormattedDuration(false),
+                    lovedSong?.duration?.toFormattedDuration(false)
                 )
             )
             subtitle.text =
-                context.getString(R.string.artist_and_album, song?.artist, song?.album)
+                context.getString(R.string.artist_and_album, lovedSong?.artist, lovedSong?.album)
 
             itemView.apply {
                 setOnClickListener {
-                    mediaPlayerHolder.isSongFromLovedSongs = Pair(true, lovedSong?.second!!)
-                    uiControlInterface.onSongSelected(
-                        song,
-                        MusicUtils.getAlbumSongs(
-                            song?.artist,
-                            song?.album
-                        ),
-                        false
-                    )
+                    mediaPlayerHolder.isSongFromLovedSongs = Pair(true, lovedSong?.startFrom!!)
+                    MusicUtils.getSongForRestore(lovedSong)?.let { songToPlay ->
+                        uiControlInterface.onSongSelected(
+                            songToPlay,
+                            MusicUtils.getAlbumSongs(
+                                songToPlay.artist,
+                                songToPlay.album
+                            ),
+                            lovedSong.isFromFolder
+                        )
+                    }
                 }
                 setOnLongClickListener {
                     Utils.showDeleteLovedSongDialog(context, lovedSong, this@LovedSongsAdapter)

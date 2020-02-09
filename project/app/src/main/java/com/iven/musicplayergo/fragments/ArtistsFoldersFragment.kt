@@ -140,10 +140,9 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
 
                         onLongClick { index ->
                             if (::mUIControlInterface.isInitialized)
-                                Utils.showDoSomethingPopup(
+                                Utils.showHidePopup(
                                     context,
                                     findViewHolderForAdapterPosition(index)?.itemView,
-                                    null,
                                     item,
                                     mUIControlInterface
                                 )

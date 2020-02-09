@@ -9,11 +9,14 @@ import android.media.MediaFormat
 import android.net.Uri
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
+import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.musicloadutils.Album
 import com.iven.musicplayergo.musicloadutils.Music
+import com.iven.musicplayergo.musicloadutils.SavedMusic
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.toFormattedYear
+import com.iven.musicplayergo.toSavedMusic
 
 
 object MusicUtils {
@@ -74,7 +77,22 @@ object MusicUtils {
     @JvmStatic
     fun getSongForIntent(
         displayName: String?
-    ): Music? = musicLibrary.allSongsUnfiltered.firstOrNull { s -> s.displayName == displayName }
+    ) = musicLibrary.allSongsUnfiltered.firstOrNull { s -> s.displayName == displayName }
+
+    @JvmStatic
+    fun getSongForRestore(savedMusic: SavedMusic?) =
+        musicLibrary.allSongsUnfiltered.firstOrNull { s ->
+            s.artist == savedMusic?.artist && s.title == savedMusic?.title && s.displayName == savedMusic?.displayName
+                    && s.year == savedMusic?.year && s.duration == savedMusic.duration && s.album == savedMusic.album
+        }
+
+    @JvmStatic
+    fun saveLatestSong(latestSong: Music?, playerPosition: Int, isPlayingFromFolder: Boolean) {
+        latestSong?.let { musicToSave ->
+            goPreferences.latestPlayedSong =
+                musicToSave.toSavedMusic(playerPosition, isPlayingFromFolder)
+        }
+    }
 
     @JvmStatic
     fun buildSortedArtistAlbums(

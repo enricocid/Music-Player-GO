@@ -17,6 +17,8 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.ArgbEvaluator
+import com.iven.musicplayergo.musicloadutils.Music
+import com.iven.musicplayergo.musicloadutils.SavedMusic
 import com.iven.musicplayergo.utils.ThemeHelper
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -177,3 +179,14 @@ fun Int.toFormattedTrack() = try {
 
 fun Int.toFormattedYear(resources: Resources) =
     if (this != 0) toString() else resources.getString(R.string.unknown_year)
+
+fun Music.toSavedMusic(playerPosition: Int, isPlayingFromFolder: Boolean) = SavedMusic(
+    artist,
+    title,
+    displayName,
+    year,
+    playerPosition,
+    duration,
+    album,
+    isPlayingFromFolder
+)

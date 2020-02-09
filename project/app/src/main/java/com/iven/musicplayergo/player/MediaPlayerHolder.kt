@@ -105,7 +105,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private var mPlayingAlbumSongs: List<Music>? = null
 
     var currentVolumeInPercent = goPreferences.latestVolume
-    val playerPosition get() = if (!isMediaPlayer) goPreferences.latestPlayedSong?.second!! else mediaPlayer.currentPosition
+    val playerPosition get() = if (!isMediaPlayer) goPreferences.latestPlayedSong?.startFrom!! else mediaPlayer.currentPosition
 
     //media player state/booleans
     val isPlaying get() = isMediaPlayer && mediaPlayer.isPlaying
@@ -446,7 +446,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         if (isSongRestoredFromPrefs) {
             if (goPreferences.isPreciseVolumeEnabled) setPreciseVolume(currentVolumeInPercent)
-            mediaPlayer.seekTo(goPreferences.latestPlayedSong?.second!!)
+            mediaPlayer.seekTo(goPreferences.latestPlayedSong?.startFrom!!)
         } else if (isSongFromLovedSongs.first) {
             mediaPlayer.seekTo(isSongFromLovedSongs.second)
             isSongFromLovedSongs = Pair(false, 0)

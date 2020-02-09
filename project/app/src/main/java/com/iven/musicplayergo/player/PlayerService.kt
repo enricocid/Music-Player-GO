@@ -9,6 +9,7 @@ import android.support.v4.media.session.MediaSessionCompat
 import android.view.KeyEvent
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.toSavedMusic
 import com.iven.musicplayergo.toToast
 
 
@@ -58,8 +59,10 @@ class PlayerService : Service() {
         if (::mediaPlayerHolder.isInitialized) {
             //saves last played song and its position
             if (mediaPlayerHolder.isCurrentSong && !isReloadDB) mediaPlayerHolder.apply {
-                goPreferences.latestPlayedSong =
-                    Triple(currentSong.first, playerPosition, isPlayingFromFolder)
+                currentSong.first?.let { musicToSave ->
+                    goPreferences.latestPlayedSong =
+                        musicToSave.toSavedMusic(playerPosition, isPlayingFromFolder)
+                }
             }
 
             goPreferences.latestVolume = mediaPlayerHolder.currentVolumeInPercent

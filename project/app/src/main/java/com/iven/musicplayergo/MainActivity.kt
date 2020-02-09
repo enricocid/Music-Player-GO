@@ -609,8 +609,10 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                 mLoveButtonNP.setOnClickListener {
                     Utils.addToLovedSongs(
                         this@MainActivity,
-                        mMediaPlayerHolder.currentSong.first,
-                        mMediaPlayerHolder.playerPosition
+                        mMediaPlayerHolder.currentSong.first?.toSavedMusic(
+                            mMediaPlayerHolder.playerPosition,
+                            mMediaPlayerHolder.isPlayingFromFolder
+                        )
                     )
                     onLovedSongsUpdate(false)
                 }
@@ -653,8 +655,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
     private fun saveSongToPref() {
         if (::mMediaPlayerHolder.isInitialized && !mMediaPlayerHolder.isPlaying) mMediaPlayerHolder.apply {
-            goPreferences.latestPlayedSong =
-                Triple(currentSong.first, playerPosition, isPlayingFromFolder)
+            MusicUtils.saveLatestSong(currentSong.first, playerPosition, isPlayingFromFolder)
         }
     }
 
@@ -720,7 +721,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                     isSongRestoredFromPrefs = goPreferences.latestPlayedSong != null
 
                     val song =
-                        if (isSongRestoredFromPrefs) goPreferences.latestPlayedSong?.first else musicLibrary.randomMusic
+                        if (isSongRestoredFromPrefs) MusicUtils.getSongForRestore(goPreferences.latestPlayedSong) else musicLibrary.randomMusic
 
                     val songs = MusicUtils.getAlbumSongs(song?.artist, song?.album)
 
@@ -729,13 +730,13 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                     startPlayback(
                         song,
                         songs,
-                        isSongRestoredFromPrefs && goPreferences.latestPlayedSong?.third!!
+                        isSongRestoredFromPrefs && goPreferences.latestPlayedSong?.isFromFolder!!
                     )
 
                     updatePlayingInfo(false)
 
                     mSeekProgressBar.progress =
-                        if (isSongRestoredFromPrefs) goPreferences.latestPlayedSong?.second!! else 0
+                        if (isSongRestoredFromPrefs) goPreferences.latestPlayedSong?.startFrom!! else 0
                 }
             }
         }

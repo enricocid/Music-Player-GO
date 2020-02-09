@@ -94,7 +94,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                                 cxt,
                                 findViewHolderForAdapterPosition(index)?.itemView,
                                 item,
-                                null,
+                                false,
                                 mUIControlInterface
                             )
                         }

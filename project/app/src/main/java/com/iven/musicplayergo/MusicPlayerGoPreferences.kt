@@ -5,7 +5,7 @@ import android.os.Build
 import androidx.preference.PreferenceManager
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import com.iven.musicplayergo.musicloadutils.Music
+import com.iven.musicplayergo.musicloadutils.SavedMusic
 import java.lang.reflect.Type
 
 const val DEFAULT_SORTING = 0
@@ -40,23 +40,23 @@ class MusicPlayerGoPreferences(context: Context) {
     private val mGson = GsonBuilder().create()
 
     //first: the song (Music object), second: position, third: isPlayingFromFolder
-    private val typeLastPlayedSong = object : TypeToken<Triple<Music?, Int, Boolean>>() {}.type
+    private val typeLastPlayedSong = object : TypeToken<SavedMusic>() {}.type
 
     //first: the song (Music object), second: position
-    private val typeLovedSong = object : TypeToken<MutableList<Pair<Music?, Int>>>() {}.type
+    private val typeLovedSong = object : TypeToken<MutableList<SavedMusic>>() {}.type
 
     var latestVolume: Int
         get() = mPrefs.getInt(prefsLatestVolume, 100)
         set(value) = mPrefs.edit().putInt(prefsLatestVolume, value).apply()
 
-    var latestPlayedSong: Triple<Music?, Int, Boolean>?
+    var latestPlayedSong: SavedMusic?
         get() = getObject(
             prefsLatestPlayedSong,
             typeLastPlayedSong
         )
         set(value) = putObject(prefsLatestPlayedSong, value)
 
-    var lovedSongs: MutableList<Pair<Music?, Int>>?
+    var lovedSongs: MutableList<SavedMusic>?
         get() = getObject(
             prefsLovedSongs,
             typeLovedSong

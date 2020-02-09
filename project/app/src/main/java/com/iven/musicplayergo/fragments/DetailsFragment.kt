@@ -236,7 +236,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                                 cxt,
                                 findViewHolderForAdapterPosition(index)?.itemView,
                                 item,
-                                null,
+                                sFolder,
                                 mUIControlInterface
                             )
                         }

@@ -28,6 +28,7 @@ import com.iven.musicplayergo.*
 import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.musicloadutils.Music
+import com.iven.musicplayergo.musicloadutils.SavedMusic
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
@@ -268,23 +269,24 @@ object Utils {
     }
 
     @JvmStatic
-    fun addToLovedSongs(context: Context, song: Music?, currentPosition: Int) {
+    fun addToLovedSongs(context: Context, songToSave: SavedMusic?) {
         val lovedSongs =
             if (goPreferences.lovedSongs != null) goPreferences.lovedSongs else mutableListOf()
-        if (!lovedSongs?.contains(Pair(song, currentPosition))!!) {
-            lovedSongs.add(
-                Pair(
-                    song,
-                    currentPosition
+
+        songToSave?.let { song ->
+            if (!lovedSongs?.contains(song)!!) {
+                lovedSongs.add(
+                    song
                 )
-            )
-            context.getString(
-                R.string.loved_song_added,
-                song?.title,
-                currentPosition.toLong().toFormattedDuration(false)
-            ).toToast(context)
-            goPreferences.lovedSongs = lovedSongs
+                context.getString(
+                    R.string.loved_song_added,
+                    song.title,
+                    song.startFrom.toLong().toFormattedDuration(false)
+                ).toToast(context)
+                goPreferences.lovedSongs = lovedSongs
+            }
         }
+
     }
 
     @JvmStatic
@@ -329,7 +331,7 @@ object Utils {
     @JvmStatic
     fun showDeleteLovedSongDialog(
         context: Context,
-        item: Pair<Music?, Int>?,
+        songToDelete: SavedMusic?,
         lovedSongsAdapter: LovedSongsAdapter
     ) {
 
@@ -343,12 +345,12 @@ object Utils {
             message(
                 text = context.getString(
                     R.string.loved_song_remove,
-                    item?.first?.title,
-                    item?.second?.toLong()?.toFormattedDuration(false)
+                    songToDelete?.title,
+                    songToDelete?.startFrom?.toLong()?.toFormattedDuration(false)
                 )
             )
             positiveButton(R.string.yes) {
-                lovedSongs?.remove(item)
+                lovedSongs?.remove(songToDelete)
                 goPreferences.lovedSongs = lovedSongs
                 lovedSongsAdapter.swapSongs(lovedSongs)
             }
@@ -377,11 +379,31 @@ object Utils {
     }
 
     @JvmStatic
+    fun showHidePopup(
+        context: Context,
+        itemView: View?,
+        stringToFilter: String?,
+        uiControlInterface: UIControlInterface
+    ) {
+        itemView?.let { view ->
+            PopupMenu(context, view).apply {
+                setOnMenuItemClickListener {
+                    uiControlInterface.onAddToFilter(stringToFilter)
+                    return@setOnMenuItemClickListener true
+                }
+                inflate(R.menu.menu_filter)
+                gravity = Gravity.END
+                show()
+            }
+        }
+    }
+
+    @JvmStatic
     fun showDoSomethingPopup(
         context: Context,
         itemView: View?,
         song: Music?,
-        stringToFilter: String?,
+        isFolder: Boolean,
         uiControlInterface: UIControlInterface
     ) {
         itemView?.let {
@@ -392,20 +414,16 @@ object Utils {
                         R.id.loved_songs_add -> {
                             addToLovedSongs(
                                 context,
-                                song,
-                                0
+                                song?.toSavedMusic(0, isFolder)
                             )
                             uiControlInterface.onLovedSongsUpdate(false)
                         }
                         R.id.queue_add -> uiControlInterface.onAddToQueue(song)
-                        R.id.filter_add -> uiControlInterface.onAddToFilter(stringToFilter)
                     }
 
                     return@setOnMenuItemClickListener true
                 }
-                val menu =
-                    if (stringToFilter != null) R.menu.menu_filter else R.menu.menu_do_something
-                inflate(menu)
+                inflate(R.menu.menu_do_something)
                 gravity = Gravity.END
                 show()
             }
