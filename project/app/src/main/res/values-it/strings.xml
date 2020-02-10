@@ -1,38 +1,25 @@
 <resources>
-
     <string name="yes">Si</string>
     <string name="no">No</string>
-
-    <!-- Main - Artists -->
     <string name="artists">Artisti</string>
     <string name="artist_info">%1d&#160;Album,&#160;%2d&#160;Canzoni</string>
     <string name="folder_info">%1d&#160;Canzoni</string>
-
-    <!-- Main - All songs -->
     <string name="songs">Canzoni</string>
     <string name="shuffle_am">Mescola tutte le canzoni</string>
     <string name="shuffle_sa">Mescola l\'abum selezionato</string>
-
-    <!-- Main - Folders -->
     <string name="folders">Cartelle</string>
-
-    <!-- Queue -->
     <string name="queue">Coda</string>
     <string name="queue_add">Aggiungi alla coda</string>
     <string name="queue_song_add">%1s aggiunta alla coda!</string>
     <string name="queue_song_remove">%1s sarà rimossa dalla coda. Continuare?</string>
     <string name="queue_songs_clear">La coda verrà cancellata. Continuare?</string>
     <string name="error_no_queue">Nessuna canzone in coda!</string>
-
-    <!-- Loved songs -->
     <string name="loved_songs">Canzoni preferite</string>
     <string name="loved_song_added">%1s (%2s) aggiunta alle canzoni preferite</string>
     <string name="loved_song_remove">%1s (%2s) sarà rimossa dalle canzoni preferite. Continuare?</string>
     <string name="loved_song_add">Aggiungi a canzoni preferite</string>
     <string name="loved_songs_clear">Le canzoni preferite saranno cancellate. Continuare?</string>
     <string name="error_no_loved_songs">Nessuna canzone preferita trovata!</string>
-
-    <!-- Messages -->
     <string name="perm_rationale">Music Player GO deve poter accedere ai tuoi file per eseguire la musica!</string>
     <string name="error_no_browser">Nessun browser trovato!</string>
     <string name="error_bad_id">Magari esegui una canzone!</string>
@@ -44,46 +31,31 @@
     <string name="repeat_enabled">Ripeti 1x attivato!</string>
     <string name="repeat_loop_enabled">Ripeti &#8734; attivato!</string>
     <string name="repeat_disabled">Ripeti &#8734; disattivato!</string>
-
-    <!-- Settings -->
-    <!-- Preferences -->
     <string name="settings">Opzioni</string>
     <string name="category_general">Generali</string>
-
     <string name="open_git_pref_title">Pagina GitHub</string>
     <string name="open_git_pref_summary">Apri la pagina del progetto per maggiori info :)</string>
-
     <string name="faq_summary">FAQ e formati media supportati :P</string>
-
     <string name="found_songs_pref_title">Canzoni trovate: %1d</string>
-
     <string name="theme_pref_title">Tema</string>
     <string name="theme_pref_light_title">Chiaro</string>
     <string name="theme_pref_dark_title">Scuro</string>
     <string name="theme_pref_auto_title">Automatico</string>
-
     <string name="accent_pref_title">Accento</string>
-
     <string name="edge_pref_summary_on">Disabilita edge-to-edge</string>
     <string name="edge_pref_summary_off">Abilita edge-to-edge</string>
-
     <string name="active_fragments_pref_title">Tab attive</string>
     <string name="active_fragments_pref_warning">Non puoi rimuovere tutte le tabs! :P</string>
-
     <string name="sorting_pref_default">Predefinito</string>
-
     <string name="precise_volume_pref_title">Controllo preciso del volume</string>
     <string name="precise_volume_pref_summary_on">Disabilita controllo preciso del volume</string>
     <string name="precise_volume_pref_summary_off">Abilita controllo preciso del volume</string>
-
     <string name="focus_pref_title">Focus audio</string>
     <string name="focus_pref_summary_on">Disabilita gestione focus audio</string>
     <string name="focus_pref_summary_off">Abilita gestione focus audio</string>
-
     <string name="headset_pref_title">Inserimento cuffie</string>
     <string name="headset_pref_summary_on">Disabilita gestione inserimento cuffie</string>
     <string name="headset_pref_summary_off">Abilita gestione inserimento cuffie</string>
-
     <string name="filter_pref_title">Filtri</string>
     <string name="filter_popup_title">Nascondi</string>
     <string name="error_no_filter">Nessun filtro trovato!</string>

@@ -1,39 +1,25 @@
 <resources>
-
-    <!-- Dialogs -->
     <string name="yes">Sim</string>
     <string name="no">Não</string>
-
-    <!-- Main - Artists -->
     <string name="artists">Artistas</string>
     <string name="artist_info">%1d&#160;Álbums,&#160;%2d&#160;Faixas</string>
     <string name="folder_info">%1d&#160;Faixas</string>
-
-    <!-- Main - All songs -->
     <string name="songs">Músicas</string>
     <string name="shuffle_am">Reproduzir todas as músicas aleatoriamente</string>
     <string name="shuffle_sa">Reproduzir aleatoriamente o álbum selecionado</string>
-
-    <!-- Main - Folders -->
     <string name="folders">Pastas</string>
-
-    <!-- Queue -->
     <string name="queue">Fila</string>
     <string name="queue_add">Adicionar na fila</string>
     <string name="queue_song_add">%1s adicionada na fila!</string>
     <string name="queue_song_remove">%1s será apagada da fila. Continuar?</string>
     <string name="queue_songs_clear">A fila será limpa. Continuar?</string>
     <string name="error_no_queue">Nenhuma música na fila!</string>
-
-    <!-- Loved songs -->
     <string name="loved_songs">Músicas favoritas</string>
     <string name="loved_song_added">%1s (%2s) adicionada às músicas favoritas</string>
     <string name="loved_song_remove">%1s (%2s) será apagada das músicas favoritas. Continuar?</string>
     <string name="loved_songs_clear">Todas as suas músicas favoritas serão apagadas. Continuar?</string>
     <string name="loved_song_add">Adicionar às músicas favoritas</string>
     <string name="error_no_loved_songs">Nenhuma música favorita encontrada!</string>
-
-    <!-- Messages -->
     <string name="perm_rationale">Music Player GO precisa acessar seus arquivos para reproduzir música!</string>
     <string name="error_no_browser">Nenhum navegador encontrado!</string>
     <string name="error_bad_id">Toque uma música primeiro!</string>
@@ -45,8 +31,6 @@
     <string name="repeat_enabled">Repetir 1x ativado!</string>
     <string name="repeat_loop_enabled">Repetir &#8734; ativado!</string>
     <string name="repeat_disabled">Repetir &#8734; desativado!</string>
-
-    <!-- Preferences -->
     <string name="settings">Configurações</string>
     <string name="category_general">Geral</string>
     <string name="open_git_pref_title">Página no GitHub</string>

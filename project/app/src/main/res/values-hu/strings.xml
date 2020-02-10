@@ -1,39 +1,25 @@
 <resources>
-
-    <!-- Dialogs -->
     <string name="yes">Igen</string>
     <string name="no">Nem</string>
-
-    <!-- Main - Artists -->
     <string name="artists">Művészek</string>
     <string name="artist_info">%1d&#160;Albumok,&#160;%2d&#160;Dalok</string>
     <string name="folder_info">%1d&#160;Dalok</string>
-
-    <!-- Main - All songs -->
     <string name="songs">Dalok</string>
     <string name="shuffle_am">Összes dal keverése</string>
     <string name="shuffle_sa">Kiválasztott albumok keverése</string>
-
-    <!-- Main - Folders -->
     <string name="folders">Mappa</string>
-
-    <!-- Queue -->
     <string name="queue">Lejátszási lista</string>
     <string name="queue_add">Lejátszási listához adás</string>
     <string name="queue_song_add">%1s hozzáadva a lejátszási listához!</string>
     <string name="queue_song_remove">%1s ki lesz törölve a lejátszási listából. Folytatod?</string>
     <string name="queue_songs_clear">A lejátszási lista törlődni fog. Folytatod?</string>
     <string name="error_no_queue">Üres lejátszási lista!</string>
-
-    <!-- Loved songs -->
     <string name="loved_songs">Kedvencek</string>
     <string name="loved_song_added">%1s (%2s) hozzáadva a kedvencekhez!</string>
     <string name="loved_song_remove">%1s (%2s) ki lest törölve a kedvencekből. Folytatod?</string>
     <string name="loved_songs_clear">Kedvencek törlődni fognak. Folytatod?</string>
     <string name="loved_song_add">Hozzáadva a kedvencekhez!</string>
     <string name="error_no_loved_songs">Nincsenek kedvencek!</string>
-
-    <!-- Messages -->
     <string name="perm_rationale">Music Player GO hozzáférést igényel a fáljaidhoz hogy zenét tudjon játszani!</string>
     <string name="error_no_browser">Böngésző nem található!</string>
     <string name="error_bad_id">Először játsz egy dalt!</string>
@@ -45,8 +31,6 @@
     <string name="repeat_enabled">Ismétlés 1x aktiválva!</string>
     <string name="repeat_loop_enabled">Ismétlés &#8734; aktiválva !</string>
     <string name="repeat_disabled">Ismétlés &#8734; deaktiválva !</string>
-
-    <!-- Preferences -->
     <string name="settings">Beállítások</string>
     <string name="category_general">Általános</string>
     <string name="open_git_pref_title">GitHub oldal</string>

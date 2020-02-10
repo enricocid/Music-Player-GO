@@ -1,38 +1,25 @@
 <resources>
-
     <string name="yes">Evet</string>
     <string name="no">Hayır</string>
-
-    <!-- Main - Artists -->
     <string name="artists">Sanatçılar</string>
     <string name="artist_info">%1d&#160;Albüm,&#160;%2d&#160;Şarkı</string>
     <string name="folder_info">%1d&#160;Şarkı</string>
-
-    <!-- Main - All songs -->
     <string name="songs">Şarkılar</string>
     <string name="shuffle_am">Tüm şarkıları karışık çal</string>
     <string name="shuffle_sa">Seçilen albümü karışık çal</string>
-
-    <!-- Main - Folders -->
     <string name="folders">Klasörler</string>
-
-    <!-- Queue -->
     <string name="queue">Kuyruk</string>
     <string name="queue_add">Kuyruğa ekle</string>
     <string name="queue_song_add">%1s kuyruğa eklendi!</string>
     <string name="queue_song_remove">%1s kuyruktan silinecek. Devam et?</string>
     <string name="queue_songs_clear">Kuyruk temizlenecek. Devam et?</string>
     <string name="error_no_queue">Kuyrukta şarkı bulunamadı!</string>
-
-    <!-- Loved songs -->
     <string name="loved_songs">Favori şarkılar</string>
     <string name="loved_song_added">%1s (%2s) favori şarkılara eklendi</string>
     <string name="loved_song_remove">%1s (%2s) favori şarkılardan silinecek. Devam et?</string>
     <string name="loved_songs_clear">Favori şarkılar temizlenecek. Devam et?</string>
     <string name="loved_song_add">Favori şarkılara eklendi</string>
     <string name="error_no_loved_songs">Favori şarkı bulunamadı!</string>
-
-    <!-- Messages -->
     <string name="perm_rationale">Music Player GO\'nun müziklerinizi oynatması için dosyalarınıza erişmesi gerekiyor!</string>
     <string name="error_no_browser">Tarayıcı uygulaması bulunamadı!</string>
     <string name="error_bad_id">Oynatmak için şarkı seçin!</string>
@@ -43,8 +30,6 @@
     <string name="on_close_activity">Oynatmayı durdurmak ister misin?</string>
     <string name="repeat_enabled">Tekrar etme aktif</string>
     <string name="repeat_disabled">Tekrar etme devre dışı!</string>
-
-    <!-- Preferences -->
     <string name="settings">Ayarlar</string>
     <string name="category_general">Genel</string>
     <string name="open_git_pref_title">GitHub Sayfası</string>

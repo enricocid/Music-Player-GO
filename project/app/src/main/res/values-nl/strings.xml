@@ -1,38 +1,25 @@
 <resources>
-
     <string name="yes">Ja</string>
     <string name="no">Nee</string>
-
-    <!-- Main - Artists -->
     <string name="artists">Artiesten</string>
     <string name="artist_info">%1d&#160;Albums,&#160;%2d&#160;Nummers</string>
     <string name="folder_info">%1d&#160;Nummers</string>
-
-    <!-- Main - All songs -->
     <string name="songs">Nummers</string>
     <string name="shuffle_am">Alle nummers willekeurig afspelen</string>
     <string name="shuffle_sa">Geselecteerd album willekeurig afspelen</string>
-
-    <!-- Main - Folders -->
     <string name="folders">Mappen</string>
-
-    <!-- Queue -->
     <string name="queue">Wachtrij</string>
     <string name="queue_add">Toevoegen aan wachtrij</string>
     <string name="queue_song_add">%1s is toegevoegd aan de wachtrij!</string>
     <string name="queue_song_remove">%1s wordt verwijderd uit de wachtrij. Wil je doorgaan?</string>
     <string name="queue_songs_clear">De wachtrij wordt leeggemaakt. Wil je doorgaan?</string>
     <string name="error_no_queue">Er staan geen nummers in de wachtrij.</string>
-
-    <!-- Loved songs -->
     <string name="loved_songs">Favorieten</string>
     <string name="loved_song_added">%1s (%2s) is toegevoegd aan je favorieten</string>
     <string name="loved_song_remove">%1s (%2s) wordt verwijderd uit je favorieten. Wil je doorgaan?</string>
     <string name="loved_songs_clear">Je favorieten worden gewist. Wil je doorgaan?</string>
     <string name="loved_song_add">Toevoegen aan favorieten</string>
     <string name="error_no_loved_songs">Je hebt nog geen favorieten!</string>
-
-    <!-- Messages -->
     <string name="perm_rationale">Music Player GO heeft toegang nodig tot je bestanden om muziek af te spelen!</string>
     <string name="error_no_browser">Geen browser aangetroffen!</string>
     <string name="error_bad_id">Start eerst een nummer!</string>
@@ -44,46 +31,32 @@
     <string name="repeat_enabled">1x herhalen ingeschakeld!</string>
     <string name="repeat_loop_enabled">&#8734; herhalen ingeschakeld!</string>
     <string name="repeat_disabled">&#8734; herhalen uitgeschakeld!</string>
-
-    <!-- Settings -->
-    <!-- Preferences -->
     <string name="settings">Instellingen</string>
     <string name="category_general">Algemeen</string>
-
     <string name="open_git_pref_title">GitHub-pagina</string>
     <string name="open_git_pref_summary">Bekijk de projectpagina voor meer informatie :)</string>
-
     <string name="faq_summary">FAQ en ondersteunde mediaformaten :P</string>
     <string name="found_songs_pref_title">Aangetroffen nummers: %1d</string>
-
     <string name="theme_pref_title">Thema</string>
     <string name="theme_pref_light_title">Licht</string>
     <string name="theme_pref_dark_title">Donker</string>
     <string name="theme_pref_auto_title">Automatisch</string>
-
     <string name="accent_pref_title">Accent</string>
-
     <string name="edge_pref_summary_on">Beeldvullende modus uitschakelen</string>
     <string name="edge_pref_summary_off">Beeldvullende modus inschakelen</string>
-
     <string name="active_fragments_pref_title">Actieve tabbladen</string>
     <string name="active_fragments_pref_warning">Je kunt niet álle tabbladen verwijderen! :P</string>
-
     <string name="sorting_pref_default">Standaard</string>
-
     <string name="precise_volume_pref_title">Nauwkeurige volumebediening</string>
     <string name="precise_volume_pref_summary_on">Nauwkeurige volumebediening uitschakelen</string>
     <string name="precise_volume_pref_summary_off">Nauwkeurige volumebediening inschakelen</string>
-
     <string name="focus_pref_title">Audiofocus</string>
     <string name="focus_pref_summary_on">Audiofocusbeheer uitschakelen</string>
     <string name="focus_pref_summary_off">Audiofocusbeheer inschakelen</string>
-
     <string name="headset_pref_title">Headset-pluggen</string>
     <string name="headset_pref_summary_on">Headset-plugbeheer uitschakelen</string>
     <string name="headset_pref_summary_off">Headset-plugbeheer inschakelen</string>
     <string name="filter_pref_title">Filters</string>
     <string name="filter_popup_title">Verbergen</string>
     <string name="error_no_filter">Geen filters!</string>
-
 </resources>

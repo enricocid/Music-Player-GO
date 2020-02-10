@@ -1,33 +1,25 @@
 <resources>
-
     <string name="yes">Oui</string>
     <string name="no">Non</string>
-
-    <!-- Main - Artists -->
     <string name="artists">Artistes</string>
     <string name="artist_info">%1d&#160;Albums,&#160;%2d&#160;Titres</string>
     <string name="folder_info">%1d&#160;Titres</string>
-    <!-- Main - All songs -->
     <string name="songs">Titres</string>
     <string name="shuffle_am">Lecture aléatoire de tous les titres</string>
     <string name="shuffle_sa">Lecture aléatoire de l\'album</string>
-    <!-- Main - Folders -->
     <string name="folders">Dossiers</string>
-    <!-- Queue -->
     <string name="queue">File d\'attente</string>
     <string name="queue_add">Ajouter à la file d\'attente</string>
     <string name="queue_song_add">%1s ajouté à la file d\'attente !</string>
     <string name="queue_song_remove">%1s va être retiré de la file d\'attente. Continuer?</string>
     <string name="queue_songs_clear">La file d\'attente va être effacée. Continuer ?</string>
     <string name="error_no_queue">Aucun titre dans la file d\'attente !</string>
-    <!-- Loved songs -->
     <string name="loved_songs">Titres favoris</string>
     <string name="loved_song_added">%1s (%2s) ajouté aux titres favoris</string>
     <string name="loved_song_remove">%1s (%2s) va être retiré des titres favoris. Continuer ?</string>
     <string name="loved_songs_clear">La liste des titres favoris va être effacée. Continuer ?</string>
     <string name="loved_song_add">Ajouter aux titres favoris</string>
     <string name="error_no_loved_songs">Aucun titre favoris !</string>
-    <!-- Messages -->
     <string name="perm_rationale">Pour vous permettre de lire la musique sur votre appareil, Music Player GO a besoin d\'accéder à vos fichiers</string>
     <string name="error_no_browser">Aucun navigateur n\'a été trouvé !</string>
     <string name="error_bad_id">Lancez d\'abord la lecture d\'un titre !</string>
@@ -39,9 +31,6 @@
     <string name="repeat_enabled">Répétition x1 activée !</string>
     <string name="repeat_loop_enabled">Répétition &#8734; activée !</string>
     <string name="repeat_disabled">Répétition &#8734; désactivée !</string>
-
-    <!-- Settings -->
-    <!-- Preferences -->
     <string name="settings">Paramètres</string>
     <string name="category_general">Général</string>
     <string name="open_git_pref_title">Page GitHub</string>

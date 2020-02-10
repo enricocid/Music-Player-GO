@@ -1,39 +1,25 @@
 <resources>
-
-    <!-- Dialogs -->
     <string name="yes">Sí</string>
     <string name="no">No</string>
-
-    <!-- Main - Artists -->
     <string name="artists">Artistas</string>
     <string name="artist_info">%1d&#160;Álbumes,&#160;%2d&#160;Canciones</string>
     <string name="folder_info">%1d&#160;Canciones</string>
-
-    <!-- Main - All songs -->
     <string name="songs">Canciones</string>
     <string name="shuffle_am">Cambiar orden de las canciones</string>
     <string name="shuffle_sa">Cambiar orden del álbum seleccionado</string>
-
-    <!-- Main - Folders -->
     <string name="folders">Directorios</string>
-
-    <!-- Queue -->
     <string name="queue">Cola</string>
     <string name="queue_add">Agregar a la cola de reproducción</string>
     <string name="queue_song_add">%1s agregada a la cola de reproducción!</string>
     <string name="queue_song_remove">%1s se removerá de la cola de reproducción. ¿Continuar?</string>
     <string name="queue_songs_clear">Se limpiará la cola de reproducción. ¿Continuar?</string>
     <string name="error_no_queue">¡No canciones en la cola de reproducción!</string>
-
-    <!-- Loved songs -->
     <string name="loved_songs">Canciones favoritas</string>
     <string name="loved_song_added">%1s (%2s) agredada a canciones favoritas</string>
     <string name="loved_song_remove">%1s (%2s) será removida de las canciones favoritas. ¿Continuar?</string>
     <string name="loved_songs_clear">Se limpiará la lista de canciones favoritas. ¿Continuar?</string>
     <string name="loved_song_add">Agregar a canciones favoritas</string>
     <string name="error_no_loved_songs">!No canciones favoritas!</string>
-
-    <!-- Messages -->
     <string name="perm_rationale">Music Player GO necesita acceso a tus archivos para reproducir la música</string>
     <string name="error_no_browser">¡No se encontró un navegador!</string>
     <string name="error_bad_id">!Reproduce una canción primero!</string>
@@ -45,8 +31,6 @@
     <string name="repeat_enabled">¡Repetición 1x activada!</string>
     <string name="repeat_loop_enabled">¡Repetición &#8734; activada!</string>
     <string name="repeat_disabled">¡Repetición &#8734; desactivada!</string>
-
-    <!-- Preferences -->
     <string name="settings">Preferencias</string>
     <string name="category_general">General</string>
     <string name="open_git_pref_title">Página de GitHub</string>
