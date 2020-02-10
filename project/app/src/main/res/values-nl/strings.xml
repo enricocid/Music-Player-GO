@@ -54,6 +54,7 @@
     <string name="open_git_pref_summary">Bekijk de projectpagina voor meer informatie :)</string>
 
     <string name="faq_summary">FAQ en ondersteunde mediaformaten :P</string>
+    <string name="found_songs_pref_title">Aangetroffen nummers: %1d</string>
 
     <string name="theme_pref_title">Thema</string>
     <string name="theme_pref_light_title">Licht</string>
@@ -81,5 +82,8 @@
     <string name="headset_pref_title">Headset-pluggen</string>
     <string name="headset_pref_summary_on">Headset-plugbeheer uitschakelen</string>
     <string name="headset_pref_summary_off">Headset-plugbeheer inschakelen</string>
+    <string name="filter_pref_title">Filters</string>
+    <string name="filter_popup_title">Verbergen</string>
+    <string name="error_no_filter">Geen filters!</string>
 
 </resources>
