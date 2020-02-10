@@ -1,45 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Music Player GO</string>
+
+    <!-- External links -->
     <string name="app_git">https://github.com/enricocid/Music-Player-GO</string>
     <string name="app_faq">https://github.com/enricocid/Music-Player-GO/blob/master/Faq.md</string>
-    <string name="space_delimiter">&#160;</string>
-    <string name="underscore_delimiter">&#95;</string>
-    <string name="song_title_notification">&lt;b>%1s&lt;/b></string>
+
+    <!-- Formatted strings used in RVs items and other TextViews -->
     <string name="rates">%1d&#160;kHz,&#160;%2d&#160;kbps</string>
-    <string name="slash">/</string>
     <string name="artist_and_album">%1s&#160;/&#160;%2s</string>
     <string name="track_song">&lt;b>%1d&lt;/b>&#160;-&#160;%2s</string>
     <string name="year_and_duration">%1s&#160;-&#160;%2s</string>
     <string name="loved_song_subtitle">&lt;b>%1s&lt;/b>&#160;-&#160;%2s</string>
+
+    <!-- Formatting symbols -->
+    <string name="space_delimiter">&#160;</string>
+    <string name="underscore_delimiter">&#95;</string>
+    <string name="slash">/</string>
     <string name="unknown_year">N&#x2F;A</string>
-    <string name="latest_volume_pref">latest_volume_pref</string>
-    <string name="latest_played_song_pref">latest_song_pref</string>
-    <string name="loved_songs_pref">saved_songs_pref</string>
+
+    <!-- Sorting menu -->
+    <string name="sorting_pref_ascending">A-Z</string>
+    <string name="sorting_pref_descending">Z-A</string>
+
+    <!-- Notifications -->
+    <string name="song_title_notification">&lt;b>%1s&lt;/b></string>
+
+    <!-- Other preferences titles/subtitles -->
+    <string name="faq_title">FAQ</string>
+    <string name="category_ui">UI</string>
+    <string name="accent_and_hex">&lt;b>%1s&lt;/b>:&#160;%2s</string>
+    <string name="edge_pref_title">Edge-to-edge</string>
+
+    <!-- Preferences keys used in settings-->
     <string name="open_git_pref">open_git_pref</string>
     <string name="faq_pref">faq_pref</string>
-    <string name="faq_title">FAQ</string>
     <string name="found_songs_pref">found_songs_pref</string>
-    <string name="category_ui">UI</string>
     <string name="theme_pref">theme_pref</string>
     <string name="theme_pref_light">theme_pref_light</string>
     <string name="theme_pref_dark">theme_pref_dark</string>
     <string name="theme_pref_auto">theme_pref_auto</string>
     <string name="accent_pref">accent_pref</string>
-    <string name="accent_and_hex">&lt;b>%1s&lt;/b>:&#160;%2s</string>
     <string name="edge_pref">edge_pref</string>
-    <string name="edge_pref_title">Edge-to-edge</string>
     <string name="active_fragments_pref">selected_fragments_pref</string>
     <string name="active_frag_artist">active_frag_artist</string>
     <string name="active_frag_music">active_frag_music</string>
     <string name="active_frag_folders">active_frag_folder</string>
     <string name="active_frag_settings">active_frag_settings</string>
-    <string name="artists_sorting_pref">artists_sorting_pref</string>
-    <string name="folders_sorting_pref">folders_sorting_pref</string>
-    <string name="sorting_pref_ascending">A-Z</string>
-    <string name="sorting_pref_descending">Z-A</string>
     <string name="precise_volume_pref">precise_volume_pref</string>
     <string name="focus_pref">focus_pref</string>
     <string name="headset_pref">headsets_pref</string>
     <string name="filter_pref">filter_pref</string>
+
+    <!-- Other preferences keys -->
+    <string name="artists_sorting_pref">artists_sorting_pref</string>
+    <string name="folders_sorting_pref">folders_sorting_pref</string>
+    <string name="latest_played_song_pref">latest_song_pref</string>
+    <string name="loved_songs_pref">saved_songs_pref</string>
+    <string name="latest_volume_pref">latest_volume_pref</string>
 </resources>
