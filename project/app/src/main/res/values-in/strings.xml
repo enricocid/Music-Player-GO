@@ -35,9 +35,9 @@
 
     <!-- Messages -->
     <string name="perm_rationale">Music Player GO membutuhkan akses ke berkas musik untuk dapat memutar musik!</string>
-    <string name="no_browser">Peramban tidak ditemukan!</string>
-    <string name="bad_id">Putar lagu terlebih dahulu!</string>
-    <string name="no_eq">Equalizer tidak ditemukan!</string>
+    <string name="error_no_browser">Peramban tidak ditemukan!</string>
+    <string name="error_bad_id">Putar lagu terlebih dahulu!</string>
+    <string name="error_no_eq">Equalizer tidak ditemukan!</string>
     <string name="error_no_music">Musik tidak ditemukan :(</string>
     <string name="error_unknown_unsupported">Telah terjadi kesalahan! :( Mungkin format tidak didukung atau folder tidak bisa diakses (bukan kesalahan aplikasi!)</string>
     <string name="error_media_buttons">Telah terjadi kesalahan! :( Silakan mulai ulang pemutaran dari aplikasi</string>

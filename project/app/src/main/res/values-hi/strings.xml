@@ -35,9 +35,9 @@
 
     <!-- Messages -->
     <string name="perm_rationale">Music Player GO को म्यूजिक चलाने के लिए आपकी फाइलों तक पहुंच की जरूरत होती है!</string>
-    <string name="no_browser">कोई ब्राउज़र नहीं मिला!</string>
-    <string name="bad_id">पहले एक गाना चलाएं!</string>
-    <string name="no_eq">कोई ईक्वलाइज़र नहीं मिला !</string>
+    <string name="error_no_browser">कोई ब्राउज़र नहीं मिला!</string>
+    <string name="error_bad_id">पहले एक गाना चलाएं!</string>
+    <string name="error_no_eq">कोई ईक्वलाइज़र नहीं मिला !</string>
     <string name="error_unknown_unsupported">कुछ गलत हो गया! :( संभवतः चयनित प्रारूप समर्थित नहीं है या फ़ोल्डर सुलभ नहीं है (ऐप का दोष नहीं है!)</string>
     <string name="error_media_buttons">कुछ गलत हो गया! :( कृपया एप्लिकेशन से प्लेबैक पुनः आरंभ करें</string>
     <string name="on_close_activity">क्या आप प्लेबैक को रोकना चाहते हैं?</string>

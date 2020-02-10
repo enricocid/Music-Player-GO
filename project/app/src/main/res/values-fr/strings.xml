@@ -29,9 +29,9 @@
     <string name="error_no_loved_songs">Aucun titre favoris !</string>
     <!-- Messages -->
     <string name="perm_rationale">Pour vous permettre de lire la musique sur votre appareil, Music Player GO a besoin d\'accéder à vos fichiers</string>
-    <string name="no_browser">Aucun navigateur n\'a été trouvé !</string>
-    <string name="bad_id">Lancez d\'abord la lecture d\'un titre !</string>
-    <string name="no_eq">Aucun égaliseur n\'a été trouvé !</string>
+    <string name="error_no_browser">Aucun navigateur n\'a été trouvé !</string>
+    <string name="error_bad_id">Lancez d\'abord la lecture d\'un titre !</string>
+    <string name="error_no_eq">Aucun égaliseur n\'a été trouvé !</string>
     <string name="error_no_music">Pas de musique trouvée :(</string>
     <string name="error_unknown_unsupported">Une erreur s\'est produite ! :( Peut-être que le format sélectionné n\'est pas supporté, ou que le dossier n\'est pas accessible (Ce n\'est pas de la faute de l\'application !).</string>
     <string name="error_media_buttons">Une erreur s\'est produite! :( Veuillez relancer la lecture depuis l\'application</string>

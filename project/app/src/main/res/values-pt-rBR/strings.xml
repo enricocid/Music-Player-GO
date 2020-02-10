@@ -35,9 +35,9 @@
 
     <!-- Messages -->
     <string name="perm_rationale">Music Player GO precisa acessar seus arquivos para reproduzir música!</string>
-    <string name="no_browser">Nenhum navegador encontrado!</string>
-    <string name="bad_id">Toque uma música primeiro!</string>
-    <string name="no_eq">Nenhum equalizador encontrado!</string>
+    <string name="error_no_browser">Nenhum navegador encontrado!</string>
+    <string name="error_bad_id">Toque uma música primeiro!</string>
+    <string name="error_no_eq">Nenhum equalizador encontrado!</string>
     <string name="error_no_music">Nenhuma música encontrada :(</string>
     <string name="error_unknown_unsupported">Algo deu errado! :( Provavelmente o formato escolhido não é suportado, ou a pasta não está acessível (não é culpa do aplicativo!).</string>
     <string name="error_media_buttons">Algo deu errado! :( Por favor reinicie a reprodução do aplicativo</string>
