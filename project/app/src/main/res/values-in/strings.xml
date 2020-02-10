@@ -52,7 +52,7 @@
     <string name="open_git_pref_title">Laman GitHub</string>
     <string name="open_git_pref_summary">Buka halaman proyek untuk informasi lebih lanjut :)</string>
     <string name="faq_summary">PYSD dan format media yang didukung :P</string>
-    <string name="reset_pref_title">Jumlah lagu: %1d</string>
+    <string name="found_songs_pref_title">Jumlah lagu: %1d</string>
     <string name="theme_pref_title">Tema</string>
     <string name="theme_pref_light_title">Terang</string>
     <string name="theme_pref_dark_title">Gelap</string>

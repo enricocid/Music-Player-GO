@@ -55,7 +55,7 @@
 
     <string name="faq_summary">FAQ e formati media supportati :P</string>
 
-    <string name="reset_pref_title">Canzoni trovate: %1d</string>
+    <string name="found_songs_pref_title">Canzoni trovate: %1d</string>
 
     <string name="theme_pref_title">Tema</string>
     <string name="theme_pref_light_title">Chiaro</string>

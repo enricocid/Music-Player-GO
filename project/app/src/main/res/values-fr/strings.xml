@@ -47,7 +47,7 @@
     <string name="open_git_pref_title">Page GitHub</string>
     <string name="open_git_pref_summary">Ouvre la page du projet pour plus d\'informations :)</string>
     <string name="faq_summary">FAQ et formats supportés :P</string>
-    <string name="reset_pref_title">Titres trouvés : %1d</string>
+    <string name="found_songs_pref_title">Titres trouvés : %1d</string>
     <string name="theme_pref_title">Thème</string>
     <string name="theme_pref_light_title">Clair</string>
     <string name="theme_pref_dark_title">Sombre</string>
