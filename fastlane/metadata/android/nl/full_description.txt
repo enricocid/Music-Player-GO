@@ -1,0 +1,47 @@
+# Bevat:
+
+- Tabbladen: artiesten, alle nummers, mappen en instellingen
+- Instellingen:
+  - licht, donker en automatisch thema (op basis van de systeeminstellingen (Android 10) of de batterijbesparing (Android 9 en lager))
+  - 19 mooie themakleuren
+    > Tip: houd de optie ingedrukt om deze te kopiëren
+  - Een naadloos ontwerp (Android 8.1 en hoger)
+  - Beheer van actieve tabbladen
+  - Precieze volumeregeling
+  - Opties voor audiofocus en headset-plugbeheer
+
+- Een optie om het laatst afgespeelde nummer op te slaan of te hervatten
+
+- Een paneel aan de onderkant met daarop:
+  - het nummer dat momenteel wordt afgespeeld
+    > Tip: houd lang ingedrukt om naar het album/de map van het nummer te gaan
+  - een afspeel- en pauzeerknop
+  - een wachtrijknop
+  - een favorietenknop
+
+- Een afspeelpaneel met daarop de traditionele regelingen en knoppen: spoelbalk, equalizer, overslaan, afspelen/pauzeren, 1x herhalen, toevoegen aan favorieten, precieze volumeregeling
+  > Tip: druk op het huidige nummer om naar het album/de map ervan te gaan
+
+- Artiestinformatie met een lijst van alle albums/nummers. Speel albums of nummers willekeurig af.
+  > Tip: druk op de albumnaam om naar het album van het nummer te gaan
+
+- Eenvoudige wachtrijen
+  > Tip: houd de wachtrijknop lang ingedrukt om de wachtrij te legen
+
+- Favoriete nummers: voeg een nummer toe aan je favorieten middels de lijst of het afspeelpaneel (de huidige positie wordt eveneens opgeslagen!)
+  > Tip: houd de favorietenknop lang ingedrukt om de lijst op te schonen
+
+- Ondersteuning voor horizontale modus
+
+- Een zoekfunctie
+- Een spoelfunctie op de getoonde melding (Android 10 en hoger)
+- Sorteeropties (standaard, oplopend, aflopend)
+- Opties voor willekeurig afspelen
+- De mogelijkheid om audiobestanden te openen middels een andere app
+- De optie om te pauzeren/af te spelen als een headset wordt aan- of afgekoppeld
+- Eenvoudig audiofocusbeheer
+
+
+# Wil je helpen om de app te vertalen?
+
+Kijk dan hier: https://github.com/enricocid/Music-Player-GO/issues/114 :)

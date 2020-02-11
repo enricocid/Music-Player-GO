@@ -1,0 +1,13 @@
+- Fix blank screen on certain devices
+- Fix dialogs titles blinking cursor issue
+- Remove waveform MusicBar (for now) for compatibility issues
+- Improve edge-to-edge
+- Respond to headsets controls
+- Improve music loading mechanism
+- Show a loading progress bar while fetching music 
+- Enable accent preference copying (long click)
+- Code improvements/fixes
+- Add French and Russian translations
+- Translations update
+
+Many thanks to anyone who helped me improving MPGO :)
