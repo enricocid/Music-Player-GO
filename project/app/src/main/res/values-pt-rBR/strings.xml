@@ -55,4 +55,7 @@
     <string name="headset_pref_title">Entrada do Fone de Ouvido</string>
     <string name="headset_pref_summary_on">Desativar gerenciamento da Entrada do Fone de Ouvido</string>
     <string name="headset_pref_summary_off">Ativar gerenciamento da Entrada do Fone de Ouvido</string>
+    <string name="filter_pref_title">Filtros</string>
+    <string name="filter_popup_title">Ocultar</string>
+    <string name="error_no_filter">Nenhum filtro encontrado!</string>
 </resources>
