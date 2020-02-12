@@ -16,7 +16,6 @@ import android.os.Handler
 import android.os.PowerManager
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat.*
-import android.util.Log
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
@@ -542,7 +541,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun seekTo(position: Int, updatePlaybackStatus: Boolean, restoreProgressCallBack: Boolean) {
         if (isMediaPlayer) {
             mediaPlayer.seekTo(position)
-            Log.d("cazzo", "dio1")
             if (restoreProgressCallBack) startUpdatingCallbackWithPosition()
             if (updatePlaybackStatus) updatePlaybackStatus(!restoreProgressCallBack)
         }
