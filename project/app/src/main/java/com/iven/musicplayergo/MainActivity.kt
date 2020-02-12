@@ -117,9 +117,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
     //music player things
 
-    //booleans
-    private var sUserIsSeeking = false
-
     private lateinit var mQueueDialog: Pair<MaterialDialog, QueueAdapter>
 
     //the player
@@ -203,13 +200,13 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     //restore recycler views state
     override fun onResume() {
         super.onResume()
-        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) mMediaPlayerHolder.onResumeActivity()
+        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) mMediaPlayerHolder.onRestartSeekBarCallback()
     }
 
     //save recycler views state
     override fun onPause() {
         super.onPause()
-        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) mMediaPlayerHolder.onPauseActivity()
+        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) mMediaPlayerHolder.onPauseSeekBarCallback()
     }
 
     //manage request permission result, continue loading ui if permissions was granted
@@ -488,13 +485,14 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
                 val defaultPositionColor = mSongSeekTextNP.currentTextColor
                 var userSelectedPosition = 0
+                var isUserSeeking = false
 
                 override fun onProgressChanged(
                     seekBar: SeekBar?,
                     progress: Int,
                     fromUser: Boolean
                 ) {
-                    if (sUserIsSeeking) {
+                    if (isUserSeeking) {
                         userSelectedPosition = progress
                         mSongSeekTextNP.setTextColor(
                             mResolvedAccentColor
@@ -504,29 +502,29 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                    sUserIsSeeking = true
+                    isUserSeeking = true
                 }
 
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                    if (sUserIsSeeking) {
+                    if (isUserSeeking) {
                         mSongSeekTextNP.setTextColor(defaultPositionColor)
+                        mMediaPlayerHolder.onPauseSeekBarCallback()
+                        isUserSeeking = false
                     }
-                    sUserIsSeeking = false
                     if (mMediaPlayerHolder.state != PLAYING) {
                         mSeekProgressBar.progress = userSelectedPosition
                         mSeekBarNP.progress = userSelectedPosition
                     }
                     mMediaPlayerHolder.seekTo(
                         userSelectedPosition,
-                        mMediaPlayerHolder.isPlaying
+                        updatePlaybackStatus = mMediaPlayerHolder.isPlaying,
+                        restoreProgressCallBack = !isUserSeeking
                     )
                 }
             })
     }
 
     private fun setupPreciseVolumeHandler() {
-
-        var isUserSeeking = false
 
         mMediaPlayerHolder.currentVolumeInPercent.apply {
             mVolumeNP.setImageResource(ThemeHelper.getPreciseVolumeIcon(this))
@@ -535,6 +533,8 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
         mVolumeSeekBarNP.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
+
+            var isUserSeeking = false
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, b: Boolean) {
                 if (isUserSeeking) {
@@ -713,7 +713,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
                 if (isMediaPlayer && mMediaPlayerHolder.isPlaying) {
 
-                    onResumeActivity()
+                    onRestartSeekBarCallback()
                     updatePlayingInfo(true)
 
                 } else {
@@ -1009,10 +1009,8 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         }
 
         override fun onPositionChanged(position: Int) {
-            if (!sUserIsSeeking) {
-                mSeekProgressBar.progress = position
-                if (isNowPlaying) mSeekBarNP.progress = position
-            }
+            mSeekProgressBar.progress = position
+            if (isNowPlaying) mSeekBarNP.progress = position
         }
 
         override fun onStateChanged() {

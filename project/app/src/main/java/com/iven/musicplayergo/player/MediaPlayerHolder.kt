@@ -16,6 +16,7 @@ import android.os.Handler
 import android.os.PowerManager
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat.*
+import android.util.Log
 import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
@@ -203,11 +204,11 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
-    fun onResumeActivity() {
+    fun onRestartSeekBarCallback() {
         if (mExecutor == null) startUpdatingCallbackWithPosition()
     }
 
-    fun onPauseActivity() {
+    fun onPauseSeekBarCallback() {
         stopUpdatingCallbackWithPosition()
     }
 
@@ -257,7 +258,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
-    private fun updatePlaybackStatus() {
+    private fun updatePlaybackStatus(updateUI: Boolean) {
         playerService.getMediaSession().setPlaybackState(
             mStateBuilder.setState(
                 if (state == RESUMED) PLAYING else state,
@@ -266,7 +267,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             ).build()
         )
         updateNotification()
-        mediaPlayerInterface.onStateChanged()
+        if (updateUI) mediaPlayerInterface.onStateChanged()
     }
 
     fun resumeMediaPlayer() {
@@ -279,7 +280,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 RESUMED
             }
 
-            updatePlaybackStatus()
+            updatePlaybackStatus(true)
 
             startForeground()
 
@@ -292,7 +293,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         playerService.stopForeground(false)
         sNotificationForeground = false
         state = PAUSED
-        updatePlaybackStatus()
+        updatePlaybackStatus(true)
     }
 
     fun repeatSong() {
@@ -300,7 +301,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         mediaPlayer.seekTo(0)
         mediaPlayer.start()
         state = PLAYING
-        updatePlaybackStatus()
+        updatePlaybackStatus(true)
     }
 
     private fun manageQueue(isNext: Boolean) {
@@ -460,7 +461,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             mediaPlayer.start()
             startForeground()
             state = PLAYING
-            updatePlaybackStatus()
+            updatePlaybackStatus(true)
         }
     }
 
@@ -506,7 +507,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun repeat(updatePlaybackStatus: Boolean) {
         getRepeatMode()
-        if (updatePlaybackStatus) updatePlaybackStatus()
+        if (updatePlaybackStatus) updatePlaybackStatus(true)
     }
 
     fun setQueueEnabled(enabled: Boolean) {
@@ -538,10 +539,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
-    fun seekTo(position: Int, updatePlaybackStatus: Boolean) {
+    fun seekTo(position: Int, updatePlaybackStatus: Boolean, restoreProgressCallBack: Boolean) {
         if (isMediaPlayer) {
             mediaPlayer.seekTo(position)
-            if (updatePlaybackStatus) updatePlaybackStatus()
+            Log.d("cazzo", "dio1")
+            if (restoreProgressCallBack) startUpdatingCallbackWithPosition()
+            if (updatePlaybackStatus) updatePlaybackStatus(!restoreProgressCallBack)
         }
     }
 
