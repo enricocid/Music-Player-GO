@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     private lateinit var mBindingIntent: Intent
 
     private fun checkIsPlayer(showError: Boolean) = mMediaPlayerHolder.apply {
-        if (!isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs && showError) getString(R.string.bad_id).toToast(
+        if (!isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs && showError) getString(R.string.error_bad_id).toToast(
             this@MainActivity
         )
     }.isMediaPlayer

@@ -38,7 +38,7 @@ object EqualizerUtils {
     internal fun openEqualizer(activity: Activity, mediaPlayer: MediaPlayer) {
         if (hasEqualizer(activity))
             when (mediaPlayer.audioSessionId) {
-                AudioEffect.ERROR_BAD_VALUE -> activity.getString(R.string.bad_id).toToast(
+                AudioEffect.ERROR_BAD_VALUE -> activity.getString(R.string.error_bad_id).toToast(
                     activity
                 )
                 else -> {
@@ -58,6 +58,6 @@ object EqualizerUtils {
                         notFound.printStackTrace()
                     }
                 }
-            } else activity.getString(R.string.no_eq).toToast(activity)
+            } else activity.getString(R.string.error_no_eq).toToast(activity)
     }
 }
