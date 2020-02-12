@@ -19,6 +19,7 @@
     <string name="loved_song_remove">%1s (%2s) será removida de las canciones favoritas. ¿Continuar?</string>
     <string name="loved_songs_clear">Se limpiará la lista de canciones favoritas. ¿Continuar?</string>
     <string name="loved_song_add">Agregar a canciones favoritas</string>
+    <string name="filter_popup_title">Ocultar</string>
     <string name="error_no_loved_songs">!No canciones favoritas!</string>
     <string name="perm_rationale">Music Player GO necesita acceso a tus archivos para reproducir la música</string>
     <string name="error_no_browser">¡No se encontró un navegador!</string>
@@ -36,6 +37,7 @@
     <string name="open_git_pref_title">Página de GitHub</string>
     <string name="open_git_pref_summary">Visita la página del proyecto para más información</string>
     <string name="faq_summary">Preguntas frecuentes y los formatos de medio soportados :P</string>
+    <string name="found_songs_pref_title">Canciones encontradas: %1d</string>
     <string name="theme_pref_title">Tema</string>
     <string name="theme_pref_light_title">Claro</string>
     <string name="theme_pref_dark_title">Oscuro</string>
@@ -55,4 +57,6 @@
     <string name="headset_pref_title">Conexión de auriculares</string>
     <string name="headset_pref_summary_on">Desactivar manejo de conexión de auriculares</string>
     <string name="headset_pref_summary_off">Activar manejo de conexión de auriculares</string>
+    <string name="filter_pref_title">Filtros</string>
+    <string name="error_no_filter">¡No filtros encontrados!</string>
 </resources>
