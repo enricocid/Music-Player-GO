@@ -33,7 +33,7 @@ class PlayerService : Service() {
 
         override fun onSeekTo(pos: Long) {
             super.onSeekTo(pos)
-            mediaPlayerHolder.seekTo(pos.toInt(), true)
+            mediaPlayerHolder.seekTo(pos.toInt(), updatePlaybackStatus = true, restoreProgressCallBack = false)
         }
 
         override fun onMediaButtonEvent(mediaButtonEvent: Intent?) =
