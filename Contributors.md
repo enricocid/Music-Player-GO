@@ -17,6 +17,8 @@ If You think You should be listed don't hesitate to notify me! :)
 
 - **Luigi Sforza**, [**Friso Smith**](https://github.com/fwSmit), [**GuinnessX**](https://github.com/GuinnessX) for having reported a critical [issue](https://github.com/enricocid/Music-Player-GO/issues/105) and for debugging
 
+- [**Johnett Mathew**](https://github.com/Johnett) for these [fixes](https://github.com/enricocid/Music-Player-GO/pull/149)
+
 - [**bullhead**](https://github.com/bullheadandplato) for dialogs titles blinking cursor [fixes](https://github.com/enricocid/Music-Player-GO/pull/121)
 
 - [**seventhsonmizo**](https://github.com/seventhsonmizo) for Android Q [issue](https://github.com/enricocid/Music-Player-GO/issues/110) report and debugging
