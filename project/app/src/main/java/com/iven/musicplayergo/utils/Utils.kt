@@ -471,7 +471,7 @@ object Utils {
                 build().launchUrl(context, Uri.parse(link))
             }
         } catch (e: Exception) {
-            context.getString(R.string.no_browser).toToast(context)
+            context.getString(R.string.error_no_browser).toToast(context)
             e.printStackTrace()
         }
     }
