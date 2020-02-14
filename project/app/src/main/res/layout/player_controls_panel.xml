@@ -8,6 +8,7 @@
     android:layout_height="wrap_content"
     android:alpha="0"
     android:background="?android:attr/windowBackground"
+    android:elevation="@dimen/search_bar_elevation"
     android:orientation="vertical"
     tools:context=".MainActivity">
 

@@ -9,7 +9,7 @@
     android:alpha="0"
     android:background="?android:attr/windowBackground"
     android:baselineAligned="false"
-    android:elevation="4dp"
+    android:elevation="@dimen/search_bar_elevation"
     android:orientation="horizontal"
     tools:context=".MainActivity">
 
