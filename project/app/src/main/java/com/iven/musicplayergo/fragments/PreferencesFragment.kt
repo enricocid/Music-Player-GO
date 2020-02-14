@@ -90,7 +90,8 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 this
 
             findPreference<Preference>(getString(R.string.found_songs_pref))?.apply {
-                title = getString(R.string.found_songs_pref_title, musicLibrary.allSongsFiltered?.size)
+                title =
+                    getString(R.string.found_songs_pref_title, musicLibrary.allSongsFiltered?.size)
                 onPreferenceClickListener = this@PreferencesFragment
             }
 

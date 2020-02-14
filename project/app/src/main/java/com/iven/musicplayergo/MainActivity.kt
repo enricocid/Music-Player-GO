@@ -304,7 +304,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         mResolvedAlphaAccentColor =
             ThemeHelper.getAlphaAccent(this, ThemeHelper.getAlphaForAccent())
         mResolvedIconsColor =
-            ThemeHelper.resolveColorAttr(this, android.R.attr.textColorPrimary)
+            ContextCompat.getColor(this, R.color.widgetsColor)
         mResolvedDisabledIconsColor =
             ThemeHelper.resolveColorAttr(this, android.R.attr.colorButtonNormal)
     }

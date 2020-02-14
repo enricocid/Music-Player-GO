@@ -5,11 +5,13 @@ import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,6 +43,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private lateinit var mSelectedAlbumTitle: TextView
     private lateinit var mSelectedAlbumYearDuration: TextView
+    private lateinit var mSortSongsButton: ImageButton
 
     private val mSelectedAlbumsDataSource = dataSourceOf()
     private val mSongsDataSource = dataSourceOf()
@@ -59,6 +62,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private var mSelectedAlbum: Album? = null
 
     private var sLandscape = false
+
+    private var mSongsSorting = TRACK_SORTING
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -82,9 +87,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     mSelectedArtistAlbums = selectedArtistAlbums
                 }
 
-            musicLibrary.allSongsByArtist?.get(mSelectedArtistOrFolder)?.let { selectedSongs ->
-                mSongsForArtistOrFolder = selectedSongs
-            }
+            mSongsForArtistOrFolder = musicLibrary.allSongsByArtist?.get(mSelectedArtistOrFolder)
 
             mSelectedAlbum = when {
                 mSelectedAlbumPosition != -1 -> mSelectedArtistAlbums?.get(mSelectedAlbumPosition)
@@ -133,6 +136,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         mAlbumsRecyclerView = albums_rv
         mSelectedAlbumTitle = selected_album
         mSelectedAlbumYearDuration = album_year_duration
+        mSortSongsButton = sort_button
         mSongsRecyclerView = songs_rv
 
         context?.let { cxt ->
@@ -141,7 +145,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
             mDetailsToolbar.apply {
 
-                overflowIcon = AppCompatResources.getDrawable(cxt, R.drawable.ic_shuffle)
+                overflowIcon = AppCompatResources.getDrawable(
+                    cxt,
+                    if (sFolder) R.drawable.ic_more_vert else R.drawable.ic_shuffle
+                )
 
                 title = mSelectedArtistOrFolder
 
@@ -153,13 +160,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     tV.marqueeRepeatLimit = -1
                 }
 
-                setupToolbarSpecs(sFolder)
+                setupToolbarSpecs()
 
                 setNavigationOnClickListener {
                     activity?.onBackPressed()
                 }
 
-                setupMenu()
+                setupMenu(cxt)
             }
 
             if (!sFolder) {
@@ -169,8 +176,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             } else {
 
                 mAlbumsRecyclerView.visibility = View.GONE
-                mSelectedAlbumTitle.visibility = View.GONE
-                mSelectedAlbumYearDuration.visibility = View.GONE
+                selected_album_container.visibility = View.GONE
 
                 mSongsForArtistOrFolder =
                     musicLibrary.allSongsByFolder?.get(mSelectedArtistOrFolder)
@@ -185,12 +191,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 searchView.apply {
                     setOnQueryTextListener(this@DetailsFragment)
                     setOnQueryTextFocusChangeListener { _, hasFocus ->
-                        mDetailsToolbar.menu.setGroupVisible(R.id.shuffle_options_folder, !hasFocus)
+                        mDetailsToolbar.menu.setGroupVisible(R.id.more_options_folder, !hasFocus)
                     }
                 }
             }
 
-            setSongsDataSource(if (sFolder) mSongsForArtistOrFolder else mSelectedAlbum?.music)
+            setSongsDataSource(cxt, if (sFolder) mSongsForArtistOrFolder else mSelectedAlbum?.music)
 
             mSongsRecyclerView.apply {
 
@@ -244,6 +250,22 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 }
             }
 
+            if (!sFolder) {
+                mSortSongsButton.apply {
+                    setOnClickListener {
+                        mSongsSorting = Utils.getSongsSorting(mSongsSorting)
+                        setImageResource(ThemeHelper.resolveSortAlbumSongsIcon(mSongsSorting))
+                        setSongsDataSource(
+                            cxt,
+                            Utils.getSortedMusicList(
+                                mSongsSorting,
+                                mSelectedAlbum?.music
+                            )
+                        )
+                    }
+                }
+            }
+
             view.afterMeasured {
                 mArtistDetailsAnimator =
                     mArtistDetailsView.createCircularReveal(isCentered = false, show = true)
@@ -257,23 +279,36 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
     }
 
-    private fun setSongsDataSource(musicList: List<Music>?) {
+    private fun setSongsDataSource(context: Context, musicList: List<Music>?) {
+        if (!sFolder) mSortSongsButton.apply {
+            isEnabled = mSelectedAlbum?.music?.size!! >= 2
+            ThemeHelper.updateIconTint(
+                this,
+                if (isEnabled) ContextCompat.getColor(
+                    context,
+                    R.color.widgetsColor
+                ) else ThemeHelper.resolveColorAttr(context, android.R.attr.colorButtonNormal)
+            )
+        }
         musicList?.apply {
             mSongsDataSource.set(this)
         }
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        setSongsDataSource(
-            Utils.processQueryForMusic(newText, mSongsForArtistOrFolder)
-                ?: mSongsForArtistOrFolder
-        )
+        context?.let { cxt ->
+            setSongsDataSource(
+                cxt,
+                Utils.processQueryForMusic(newText, mSongsForArtistOrFolder)
+                    ?: mSongsForArtistOrFolder
+            )
+        }
         return false
     }
 
     override fun onQueryTextSubmit(query: String?) = false
 
-    private fun setupMenu() {
+    private fun setupMenu(context: Context) {
 
         mDetailsToolbar.apply {
 
@@ -286,6 +321,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 findItem(R.id.action_shuffle_sa).isEnabled = !sFolder
                 if (!sFolder) findItem(R.id.action_shuffle_am).isEnabled =
                     mSelectedArtistAlbums?.size!! >= 2
+
+                if (sFolder) findItem(R.id.sorting).isEnabled = mSongsForArtistOrFolder?.size!! >= 2
             }
 
             setOnMenuItemClickListener {
@@ -298,19 +335,33 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         mSelectedAlbum?.music,
                         sFolder
                     )
+                    R.id.default_sorting -> applySortingToMusic(context, DEFAULT_SORTING)
+                    R.id.descending_sorting -> applySortingToMusic(context, DESCENDING_SORTING)
+                    R.id.ascending_sorting -> applySortingToMusic(context, ASCENDING_SORTING)
+                    R.id.track_sorting -> applySortingToMusic(context, TRACK_SORTING)
+                    R.id.track_sorting_inv -> applySortingToMusic(context, TRACK_SORTING_INVERTED)
                 }
                 return@setOnMenuItemClickListener true
             }
         }
     }
 
-    private fun setupToolbarSpecs(isFolder: Boolean) {
+    private fun applySortingToMusic(context: Context, order: Int) {
+        val selectedList = musicLibrary.allSongsByFolder?.get(mSelectedArtistOrFolder)
+        mSongsForArtistOrFolder = Utils.getSortedMusicList(
+            order,
+            selectedList?.toMutableList()
+        )
+        setSongsDataSource(context, mSongsForArtistOrFolder)
+    }
+
+    private fun setupToolbarSpecs() {
         mDetailsToolbar.apply {
-            elevation = if (isFolder)
+            elevation = if (sFolder)
                 resources.getDimensionPixelSize(R.dimen.search_bar_elevation).toFloat() else 0F
 
             val params = layoutParams as LinearLayout.LayoutParams
-            params.bottomMargin = if (isFolder)
+            params.bottomMargin = if (sFolder)
                 0 else resources.getDimensionPixelSize(R.dimen.player_controls_padding_normal)
         }
     }
@@ -396,15 +447,17 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private fun updateSelectedAlbumTitle() {
         mSelectedAlbumTitle.text = mSelectedAlbum?.title
-        mSelectedAlbumYearDuration.text = getString(
+        album_year_duration.text = getString(
             R.string.year_and_duration,
-            mSelectedAlbum?.year,
-            mSelectedAlbum?.totalDuration?.toFormattedDuration(true)
+            mSelectedAlbum?.totalDuration?.toFormattedDuration(true),
+            mSelectedAlbum?.year
         )
     }
 
     private fun swapAlbum(songs: MutableList<Music>?) {
-        setSongsDataSource(songs)
+        context?.let { cxt ->
+            setSongsDataSource(cxt, songs)
+        }
         mSongsRecyclerView.scrollToPosition(0)
     }
 

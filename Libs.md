@@ -16,6 +16,14 @@
 
 - [**Database icon**](https://materialdesignicons.com/icon/database) by Cody [XT3000](https://twitter.com/XT3000)
 
+- [**sort-alphabetical-descending-variant icon**](https://materialdesignicons.com/icon/sort-alphabetical-descending-variant) by Austin Andrews [templatarian](https://twitter.com/templarian)
+
+- [**sort-alphabetical-ascending-variant icon**](https://materialdesignicons.com/icon/sort-alphabetical-ascending-variant) by Austin Andrews [templatarian](https://twitter.com/templarian)
+
+- [**sort-numeric-ascending-variant icon**](https://materialdesignicons.com/icon/sort-numeric-ascending-variant) by Michael Irigoyen [mririgo](https://twitter.com/mririgo)
+
+- [**sort-numeric-descending-variant icon**](https://materialdesignicons.com/icon/sort-numeric-descending-variant) by Michael Irigoyen [mririgo](https://twitter.com/mririgo)
+
 - [**Badges**](https://shields.io/) by Shields.io
 
 - [**gifmaker.me**](https://gifmaker.me/)

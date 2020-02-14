@@ -26,10 +26,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.iven.musicplayergo.MainActivity
-import com.iven.musicplayergo.R
-import com.iven.musicplayergo.RESTORE_SETTINGS_FRAGMENT
-import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.*
 import com.iven.musicplayergo.player.MediaPlayerHolder
 
 
@@ -60,6 +57,14 @@ object ThemeHelper {
         context.getString(R.string.theme_pref_light) -> R.drawable.ic_day
         context.getString(R.string.theme_pref_auto) -> R.drawable.ic_auto
         else -> R.drawable.ic_night
+    }
+
+    @JvmStatic
+    fun resolveSortAlbumSongsIcon(sort: Int) = when (sort) {
+        ASCENDING_SORTING -> R.drawable.ic_sort_alphabetical_descending
+        DESCENDING_SORTING -> R.drawable.ic_sort_alphabetical_ascending
+        TRACK_SORTING -> R.drawable.ic_sort_numeric_descending
+        else -> R.drawable.ic_sort_numeric_ascending
     }
 
     @JvmStatic

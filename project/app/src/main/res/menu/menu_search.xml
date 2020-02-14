@@ -20,13 +20,13 @@
             app:showAsAction="never" />
 
         <item
-            android:id="@+id/ascending_sorting"
+            android:id="@+id/descending_sorting"
             android:orderInCategory="1"
             android:title="@string/sorting_pref_ascending"
             app:showAsAction="never" />
 
         <item
-            android:id="@+id/descending_sorting"
+            android:id="@+id/ascending_sorting"
             android:orderInCategory="2"
             android:title="@string/sorting_pref_descending"
             app:showAsAction="never" />

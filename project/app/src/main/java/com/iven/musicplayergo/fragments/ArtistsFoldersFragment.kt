@@ -305,7 +305,8 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
                     setTitleColor(ThemeHelper.resolveThemeAccent(context))
                 }
 
-               if (sIsFoldersFragment)  goPreferences.foldersSorting = mSorting else goPreferences.artistsSorting = mSorting
+                if (sIsFoldersFragment) goPreferences.foldersSorting =
+                    mSorting else goPreferences.artistsSorting = mSorting
             }
 
             return@setOnMenuItemClickListener true

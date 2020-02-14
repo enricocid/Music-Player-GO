@@ -11,7 +11,7 @@
         app:showAsAction="collapseActionView|always"
         tools:ignore="AlwaysShowAction" />
 
-    <group android:id="@+id/shuffle_options_folder">
+    <group android:id="@+id/more_options_folder">
 
         <!-- am = all artist music, sa = selected album -->
         <item
@@ -25,5 +25,43 @@
             android:orderInCategory="1"
             android:title="@string/shuffle_sa"
             app:showAsAction="never" />
+
+        <item
+            android:id="@+id/sorting"
+            android:orderInCategory="2"
+            android:title="@string/sorting_pref">
+
+            <menu>
+                <item
+                    android:id="@+id/default_sorting"
+                    android:orderInCategory="0"
+                    android:title="@string/sorting_pref_default"
+                    app:showAsAction="never" />
+
+                <item
+                    android:id="@+id/descending_sorting"
+                    android:orderInCategory="1"
+                    android:title="@string/sorting_pref_ascending"
+                    app:showAsAction="never" />
+
+                <item
+                    android:id="@+id/ascending_sorting"
+                    android:orderInCategory="2"
+                    android:title="@string/sorting_pref_descending"
+                    app:showAsAction="never" />
+
+                <item
+                    android:id="@+id/track_sorting"
+                    android:orderInCategory="3"
+                    android:title="@string/sorting_pref_track"
+                    app:showAsAction="never" />
+
+                <item
+                    android:id="@+id/track_sorting_inv"
+                    android:orderInCategory="4"
+                    android:title="@string/sorting_pref_track_inv"
+                    app:showAsAction="never" />
+            </menu>
+        </item>
     </group>
 </menu>

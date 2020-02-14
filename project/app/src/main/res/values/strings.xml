@@ -18,7 +18,10 @@
     <string name="folder_info">%1d&#160;Songs</string>
 
     <!-- Popup/Menu titles -->
+    <string name="sorting_pref">Sorting</string>
     <string name="sorting_pref_default">Default</string>
+    <string name="sorting_pref_track">By track no. &#8595;</string>
+    <string name="sorting_pref_track_inv">By track no. &#8593;</string>
     <string name="shuffle_am">Shuffle all songs</string>
     <string name="shuffle_sa">Shuffle selected album</string>
     <string name="queue_add">Add to queue</string>

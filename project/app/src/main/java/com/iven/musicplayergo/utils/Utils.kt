@@ -134,14 +134,14 @@ object Utils {
         id: Int,
         list: MutableList<String>?
     ) = when (id) {
-        ASCENDING_SORTING -> {
+        DESCENDING_SORTING -> {
             list?.apply {
                 Collections.sort(this, String.CASE_INSENSITIVE_ORDER)
             }
             list
         }
 
-        DESCENDING_SORTING -> {
+        ASCENDING_SORTING -> {
             list?.apply {
                 Collections.sort(this, String.CASE_INSENSITIVE_ORDER)
             }
@@ -155,6 +155,42 @@ object Utils {
         DEFAULT_SORTING -> menu.findItem(R.id.default_sorting)
         ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
         else -> menu.findItem(R.id.descending_sorting)
+    }
+
+    @JvmStatic
+    fun getSortedMusicList(
+        id: Int,
+        list: MutableList<Music>?
+    ) = when (id) {
+
+        DESCENDING_SORTING -> {
+            list?.sortBy { it.title }
+            list
+        }
+
+        ASCENDING_SORTING -> {
+            list?.sortBy { it.title }
+            list?.asReversed()
+        }
+
+        TRACK_SORTING -> {
+            list?.sortBy { it.track }
+            list
+        }
+
+        TRACK_SORTING_INVERTED -> {
+            list?.sortBy { it.track }
+            list?.asReversed()
+        }
+        else -> list
+    }
+
+    @JvmStatic
+    fun getSongsSorting(currentSorting: Int) = when (currentSorting) {
+        TRACK_SORTING -> TRACK_SORTING_INVERTED
+        TRACK_SORTING_INVERTED -> ASCENDING_SORTING
+        ASCENDING_SORTING -> DESCENDING_SORTING
+        else -> TRACK_SORTING
     }
 
     @JvmStatic
