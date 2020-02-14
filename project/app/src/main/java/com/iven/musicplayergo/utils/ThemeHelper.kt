@@ -210,7 +210,7 @@ object ThemeHelper {
         0 -> R.drawable.ic_person
         1 -> R.drawable.ic_music_note
         2 -> R.drawable.ic_folder
-        else -> R.drawable.ic_more_horiz
+        else -> R.drawable.ic_settings
     }
 
     @JvmStatic
