@@ -280,15 +280,19 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     }
 
     private fun setSongsDataSource(context: Context, musicList: List<Music>?) {
-        if (!sFolder) mSortSongsButton.apply {
-            isEnabled = mSelectedAlbum?.music?.size!! >= 2
-            ThemeHelper.updateIconTint(
-                this,
-                if (isEnabled) ContextCompat.getColor(
-                    context,
-                    R.color.widgetsColor
-                ) else ThemeHelper.resolveColorAttr(context, android.R.attr.colorButtonNormal)
-            )
+        if (!sFolder) {
+            mSortSongsButton.apply {
+                isEnabled = mSelectedAlbum?.music?.size!! >= 2
+                ThemeHelper.updateIconTint(
+                    this,
+                    if (isEnabled) ContextCompat.getColor(
+                        context,
+                        R.color.widgetsColor
+                    ) else ThemeHelper.resolveColorAttr(context, android.R.attr.colorButtonNormal)
+                )
+            }
+            mDetailsToolbar.menu.findItem(R.id.action_shuffle_sa).isEnabled =
+                mSelectedAlbum?.music?.size!! >= 2
         }
         musicList?.apply {
             mSongsDataSource.set(this)
@@ -318,10 +322,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             inflateMenu(menuToInflate)
 
             menu.apply {
+                findItem(R.id.action_shuffle_am).isEnabled = if (sFolder) mSongsForArtistOrFolder?.size!! >= 2 else !sFolder && mSelectedArtistAlbums?.size!! >= 2
                 findItem(R.id.action_shuffle_sa).isEnabled = !sFolder
-                if (!sFolder) findItem(R.id.action_shuffle_am).isEnabled =
-                    mSelectedArtistAlbums?.size!! >= 2
-
                 if (sFolder) findItem(R.id.sorting).isEnabled = mSongsForArtistOrFolder?.size!! >= 2
             }
 
