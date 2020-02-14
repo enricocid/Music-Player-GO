@@ -38,7 +38,7 @@
             android:id="@+id/error_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/raleway_bold_italic"
+            android:fontFamily="@font/raleway_bold"
             android:gravity="center"
             android:textAppearance="@android:style/TextAppearance.Material.Subhead"
             android:textColor="?android:attr/textColorPrimary" />

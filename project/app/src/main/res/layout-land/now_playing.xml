@@ -95,7 +95,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:alpha="0.5"
-                    android:fontFamily="@font/raleway_bold_italic"
                     android:text="@string/unknown_year"
                     android:textAlignment="center"
                     android:textAppearance="@android:style/TextAppearance.Material.Caption"
