@@ -2,7 +2,7 @@
 <resources>
     <dimen name="album_height">96dp</dimen>
     <dimen name="album_width">128dp</dimen>
-    <dimen name="md_corner_radius">8dp</dimen>
+    <dimen name="md_corner_radius">16dp</dimen>
     <dimen name="search_bar_elevation">1dp</dimen>
     <dimen name="player_controls_padding_normal">4dp</dimen>
     <dimen name="player_controls_padding_start">8dp</dimen>

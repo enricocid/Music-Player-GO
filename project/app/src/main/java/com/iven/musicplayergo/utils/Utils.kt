@@ -12,7 +12,6 @@ import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ActivityCompat
@@ -64,7 +63,6 @@ object Utils {
                 cancelOnTouchOutside(false)
 
                 title(R.string.app_name)
-                icon(R.drawable.ic_folder)
 
                 message(R.string.perm_rationale)
                 positiveButton(android.R.string.ok) {
@@ -203,12 +201,6 @@ object Utils {
 
             title(R.string.queue)
 
-            AppCompatResources.getDrawable(context, R.drawable.ic_queue_music)?.apply {
-                mutate()
-                setTint(ThemeHelper.resolveColorAttr(context, android.R.attr.textColorPrimary))
-                icon(drawable = this)
-            }
-
             customListAdapter(
                 QueueAdapter(context, this, mediaPlayerHolder)
             )
@@ -249,7 +241,6 @@ object Utils {
         MaterialDialog(context).show {
 
             title(R.string.queue)
-            icon(R.drawable.ic_delete_forever)
 
             message(
                 text = context.getString(
@@ -283,7 +274,6 @@ object Utils {
         MaterialDialog(context).show {
 
             title(R.string.queue)
-            icon(R.drawable.ic_delete_forever)
 
             message(R.string.queue_songs_clear)
 
@@ -335,7 +325,6 @@ object Utils {
         MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
             title(R.string.loved_songs)
-            icon(R.drawable.ic_favorite)
 
             customListAdapter(
                 LovedSongsAdapter(context, this, uiControlInterface, mediaPlayerHolder)
@@ -376,7 +365,6 @@ object Utils {
         MaterialDialog(context).show {
 
             title(R.string.loved_songs)
-            icon(R.drawable.ic_delete_forever)
 
             message(
                 text = context.getString(
@@ -404,7 +392,6 @@ object Utils {
         MaterialDialog(context).show {
 
             title(R.string.loved_songs)
-            icon(R.drawable.ic_delete_forever)
 
             message(R.string.loved_songs_clear)
             positiveButton(R.string.yes) {
@@ -482,7 +469,6 @@ object Utils {
         MaterialDialog(context).show {
 
             title(R.string.app_name)
-            icon(R.drawable.ic_stop)
 
             message(R.string.on_close_activity)
             positiveButton(R.string.yes) {
