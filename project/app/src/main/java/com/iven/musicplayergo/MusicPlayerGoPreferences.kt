@@ -86,7 +86,7 @@ class MusicPlayerGoPreferences(context: Context) {
         set(value) = mPrefs.edit().putStringSet(prefsActiveFragments, value).apply()
 
     var artistsSorting
-        get() = mPrefs.getInt(prefsArtistsSorting, ASCENDING_SORTING)
+        get() = mPrefs.getInt(prefsArtistsSorting, DESCENDING_SORTING)
         set(value) = mPrefs.edit().putInt(prefsArtistsSorting, value).apply()
 
     var filters: Set<String>?

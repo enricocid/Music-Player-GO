@@ -54,7 +54,7 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
     private lateinit var mUIControlInterface: UIControlInterface
 
     private lateinit var mSortMenuItem: MenuItem
-    private var mSorting = ASCENDING_SORTING
+    private var mSorting = DESCENDING_SORTING
 
     private var sIsFastScroller = false
     private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != DEFAULT_SORTING
