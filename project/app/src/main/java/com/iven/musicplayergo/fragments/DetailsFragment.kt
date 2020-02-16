@@ -457,6 +457,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     }
 
     private fun swapAlbum(songs: MutableList<Music>?) {
+        mSongsSorting = TRACK_SORTING
+        mSortSongsButton.setImageResource(ThemeHelper.resolveSortAlbumSongsIcon(mSongsSorting))
         context?.let { cxt ->
             setSongsDataSource(cxt, songs)
         }
