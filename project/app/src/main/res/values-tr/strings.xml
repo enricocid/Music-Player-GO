@@ -28,8 +28,6 @@
     <string name="error_unknown_unsupported">Bir şeyler yanlış gitti! :( Muhtemelen seçilen biçim desteklenmiyor veya klasöre erişilemiyor (uygulamanın hatası değil!)</string>
     <string name="error_media_buttons">Bir şeyler yanlış gitti! :( Lütfen uygulamadan oynatmayı yeniden başlatın</string>
     <string name="on_close_activity">Oynatmayı durdurmak ister misin?</string>
-    <string name="repeat_enabled">Tekrar etme aktif</string>
-    <string name="repeat_disabled">Tekrar etme devre dışı!</string>
     <string name="settings">Ayarlar</string>
     <string name="category_general">Genel</string>
     <string name="open_git_pref_title">GitHub Sayfası</string>
