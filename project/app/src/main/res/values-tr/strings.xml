@@ -35,6 +35,7 @@
     <string name="open_git_pref_title">GitHub Sayfası</string>
     <string name="open_git_pref_summary">Daha fazla bilgi için projenin sayfasını açın :)</string>
     <string name="faq_summary">SSS ve desteklenen medya formatları :P</string>
+    <string name="found_songs_pref_title">Bulunan şarkılar: %1d</string>
     <string name="theme_pref_title">Tema</string>
     <string name="theme_pref_light_title">Açık</string>
     <string name="theme_pref_dark_title">Koyu</string>
@@ -54,4 +55,10 @@
     <string name="headset_pref_title">Kulaklık girişi</string>
     <string name="headset_pref_summary_on">Kulaklık girişi yönetimini devre dışı bırak</string>
     <string name="headset_pref_summary_off">Kulaklık girişi yönetimini aktif et</string>
+    <string name="filter_pref_title">Filtreler</string>
+    <string name="filter_popup_title">Gizle</string>
+    <string name="error_no_filter">Filtre bulunamadı!</string>
+    <string name="repeat_loop_enabled">&#8734; tekrar açık!</string>
+    <string name="repeat_enabled">1x tekrar açık!</string>
+    <string name="repeat_disabled">&#8734; tekrar kapalı!</string>
 </resources>
