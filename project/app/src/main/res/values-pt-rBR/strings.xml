@@ -59,4 +59,8 @@
     <string name="filter_popup_title">Ocultar</string>
     <string name="error_no_filter">Nenhum filtro encontrado!</string>
     <string name="found_songs_pref_title">Músicas encontradas: %1d</string>
+    <string name="sorting_pref">Classificar</string>
+    <string name="sorting_pref_track">Pelo número da faixa &#8595;</string>
+    <string name="sorting_pref_track_inv">Pelo número da faixa &#8593;</string>
+
 </resources>
