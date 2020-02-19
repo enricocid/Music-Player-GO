@@ -5,6 +5,9 @@
     <string name="artist_info">%1d&#160;Albums,&#160;%2d&#160;Nummers</string>
     <string name="folder_info">%1d&#160;Nummers</string>
     <string name="songs">Nummers</string>
+    <string name="sorting_pref">Sorteren</string>
+    <string name="sorting_pref_track">Op liednummer &#8595;</string>
+    <string name="sorting_pref_track_inv">Op liednummer &#8593;</string>
     <string name="shuffle_am">Alle nummers willekeurig afspelen</string>
     <string name="shuffle_sa">Geselecteerd album willekeurig afspelen</string>
     <string name="folders">Mappen</string>
