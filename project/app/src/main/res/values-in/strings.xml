@@ -1,5 +1,4 @@
 <resources>
-
     <string name="yes">Iya</string>
     <string name="no">Tidak</string>
     <string name="artists">Artis</string>
@@ -47,7 +46,10 @@
     <string name="edge_pref_summary_off">Edge-to-edge dinonaktifkan</string>
     <string name="active_fragments_pref_title">Tab aktif</string>
     <string name="active_fragments_pref_warning">Anda tidak bisa membuang semua tab! :P</string>
+    <string name="sorting_pref">Urutan</string>
     <string name="sorting_pref_default">Bawaan</string>
+    <string name="sorting_pref_track">No. Trek &#8595;</string>
+    <string name="sorting_pref_track_inv">No. Trek &#8593;</string>
     <string name="precise_volume_pref_title">Kontrol presisi volume</string>
     <string name="precise_volume_pref_summary_on">Pengontrol presisi volume diaktifkan</string>
     <string name="precise_volume_pref_summary_off">Pengontrol presisi volume dinonaktifkan</string>
