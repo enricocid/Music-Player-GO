@@ -8,14 +8,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.musicloadutils.SavedMusic
+import com.iven.musicplayergo.helpers.DialogHelpers
+import com.iven.musicplayergo.helpers.MusicOrgHelper
+import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.models.SavedMusic
 import com.iven.musicplayergo.player.MediaPlayerHolder
-import com.iven.musicplayergo.toFormattedDuration
-import com.iven.musicplayergo.utils.MusicUtils
-import com.iven.musicplayergo.utils.ThemeHelper
-import com.iven.musicplayergo.utils.UIControlInterface
-import com.iven.musicplayergo.utils.Utils
+import com.iven.musicplayergo.ui.UIControlInterface
 
 class LovedSongsAdapter(
     private val context: Context,
@@ -74,10 +74,10 @@ class LovedSongsAdapter(
             itemView.apply {
                 setOnClickListener {
                     mediaPlayerHolder.isSongFromLovedSongs = Pair(true, lovedSong?.startFrom!!)
-                    MusicUtils.getSongForRestore(lovedSong)?.let { songToPlay ->
+                    MusicOrgHelper.getSongForRestore(lovedSong)?.let { songToPlay ->
                         uiControlInterface.onSongSelected(
                             songToPlay,
-                            MusicUtils.getAlbumSongs(
+                            MusicOrgHelper.getAlbumSongs(
                                 songToPlay.artist,
                                 songToPlay.album
                             ),
@@ -86,7 +86,11 @@ class LovedSongsAdapter(
                     }
                 }
                 setOnLongClickListener {
-                    Utils.showDeleteLovedSongDialog(context, lovedSong, this@LovedSongsAdapter)
+                    DialogHelpers.showDeleteLovedSongDialog(
+                        context,
+                        lovedSong,
+                        this@LovedSongsAdapter
+                    )
                     return@setOnLongClickListener true
                 }
             }

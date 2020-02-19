@@ -11,10 +11,15 @@ import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.extensions.toFormattedDuration
+import com.iven.musicplayergo.helpers.DialogHelpers
+import com.iven.musicplayergo.helpers.ListsHelper
+import com.iven.musicplayergo.helpers.MusicOrgHelper
+import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.musicLibrary
-import com.iven.musicplayergo.musicloadutils.Music
-import com.iven.musicplayergo.toFormattedDuration
-import com.iven.musicplayergo.utils.*
+import com.iven.musicplayergo.ui.SongsViewHolder
+import com.iven.musicplayergo.ui.UIControlInterface
 import kotlinx.android.synthetic.main.fragment_all_music.*
 import kotlinx.android.synthetic.main.search_toolbar.*
 
@@ -84,13 +89,13 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                         onClick {
                             mUIControlInterface.onSongSelected(
                                 item,
-                                MusicUtils.getAlbumSongs(item.artist, item.album),
+                                MusicOrgHelper.getAlbumSongs(item.artist, item.album),
                                 false
                             )
                         }
 
                         onLongClick { index ->
-                            Utils.showDoSomethingPopup(
+                            DialogHelpers.showDoSomethingPopup(
                                 cxt,
                                 findViewHolderForAdapterPosition(index)?.itemView,
                                 item,
@@ -135,7 +140,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        setMusicDataSource(Utils.processQueryForMusic(newText, mAllMusic) ?: mAllMusic)
+        setMusicDataSource(ListsHelper.processQueryForMusic(newText, mAllMusic) ?: mAllMusic)
         return false
     }
 

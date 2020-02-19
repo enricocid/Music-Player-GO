@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.musicloadutils
+package com.iven.musicplayergo.models
 
 data class SavedMusic(
     val artist: String?,

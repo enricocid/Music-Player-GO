@@ -8,7 +8,7 @@ import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.utils.ThemeHelper
+import com.iven.musicplayergo.helpers.ThemeHelper
 
 class AccentsAdapter(private val activity: Activity) :
     RecyclerView.Adapter<AccentsAdapter.AccentsHolder>() {

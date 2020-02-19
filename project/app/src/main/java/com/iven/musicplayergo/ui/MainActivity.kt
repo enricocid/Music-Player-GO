@@ -1,4 +1,4 @@
-package com.iven.musicplayergo
+package com.iven.musicplayergo.ui
 
 import android.content.ComponentName
 import android.content.Context
@@ -35,18 +35,19 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.QueueAdapter
+import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_ARTISTS
 import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_FOLDERS
 import com.iven.musicplayergo.fragments.ErrorFragment.Companion.TAG_NO_MUSIC_INTENT
-import com.iven.musicplayergo.musicloadutils.Music
-import com.iven.musicplayergo.musicloadutils.MusicLoader
+import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.helpers.*
+import com.iven.musicplayergo.loader.MusicLoader
+import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.player.*
-import com.iven.musicplayergo.utils.MusicUtils
-import com.iven.musicplayergo.utils.ThemeHelper
-import com.iven.musicplayergo.utils.UIControlInterface
-import com.iven.musicplayergo.utils.Utils
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.main_activity.*
@@ -130,7 +131,9 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     private lateinit var mBindingIntent: Intent
 
     private fun checkIsPlayer(showError: Boolean) = mMediaPlayerHolder.apply {
-        if (!isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs && showError) getString(R.string.error_bad_id).toToast(
+        if (!isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs && showError) getString(
+            R.string.error_bad_id
+        ).toToast(
             this@MainActivity
         )
     }.isMediaPlayer
@@ -171,7 +174,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             closeDetailsFragment(null)
         } else {
             if (mViewPager2.currentItem != 0) mViewPager2.currentItem = 0 else
-                if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) Utils.stopPlaybackDialog(
+                if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) DialogHelpers.stopPlaybackDialog(
                     this,
                     mMediaPlayerHolder
                 ) else super.onBackPressed()
@@ -252,7 +255,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
         if (goPreferences.isEdgeToEdge) {
             window?.apply {
-                if (!Utils.isAndroidQ()) {
+                if (!VersioningHelper.isQ()) {
                     statusBarColor = Color.TRANSPARENT
                     navigationBarColor = Color.TRANSPARENT
                 }
@@ -278,7 +281,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                 false
             )
 
-        if (Utils.hasToAskForReadStoragePermission(this)) Utils.manageAskForReadStoragePermission(
+        if (PermissionsHelper.hasToAskForReadStoragePermission(this)) PermissionsHelper.manageAskForReadStoragePermission(
             activity = this, uiControlInterface = this
         ) else doBindService()
     }
@@ -304,7 +307,10 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         mResolvedAlphaAccentColor =
             ThemeHelper.getAlphaAccent(this, ThemeHelper.getAlphaForAccent())
         mResolvedIconsColor =
-            ContextCompat.getColor(this, R.color.widgetsColor)
+            ContextCompat.getColor(
+                this,
+                R.color.widgetsColor
+            )
         mResolvedDisabledIconsColor =
             ThemeHelper.resolveColorAttr(this, android.R.attr.colorButtonNormal)
     }
@@ -312,7 +318,10 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     private fun notifyError(errorType: String) {
         mPlayerControlsView.visibility = View.GONE
         supportFragmentManager.beginTransaction()
-            .addFragment(false, R.id.container, ErrorFragment.newInstance(errorType))
+            .addFragment(
+                false,
+                R.id.container, ErrorFragment.newInstance(errorType)
+            )
     }
 
     override fun onLoaderReset(loader: Loader<Any?>) {}
@@ -328,7 +337,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             if (visibility != View.GONE) visibility = View.GONE
         }
 
-        if (data != null && !musicLibrary.allSongsFiltered.isNullOrEmpty()) finishSetup()
+        if (data != null) finishSetup()
         else notifyError(
             ErrorFragment.TAG_NO_MUSIC
         )
@@ -429,11 +438,14 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             DetailsFragment.newInstance(
                 selectedArtistOrFolder,
                 isFolder,
-                MusicUtils.getPlayingAlbumPosition(selectedArtistOrFolder, mMediaPlayerHolder)
+                MusicOrgHelper.getPlayingAlbumPosition(selectedArtistOrFolder, mMediaPlayerHolder)
             )
 
         supportFragmentManager.beginTransaction()
-            .addFragment(true, R.id.container, mDetailsFragment)
+            .addFragment(
+                true,
+                R.id.container, mDetailsFragment
+            )
     }
 
     private fun closeDetailsFragment(tab: TabLayout.Tab?) {
@@ -455,7 +467,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         mPlayPauseButton.setOnClickListener { resumeOrPause() }
 
         mQueueButton.setOnLongClickListener {
-            if (checkIsPlayer(true) && mMediaPlayerHolder.isQueue) Utils.showClearQueueDialog(
+            if (checkIsPlayer(true) && mMediaPlayerHolder.isQueue) DialogHelpers.showClearQueueDialog(
                 this,
                 mMediaPlayerHolder
             )
@@ -463,7 +475,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         }
 
         mLovedSongsButton.setOnLongClickListener {
-            if (!goPreferences.lovedSongs.isNullOrEmpty()) Utils.showClearLovedSongDialog(
+            if (!goPreferences.lovedSongs.isNullOrEmpty()) DialogHelpers.showClearLovedSongDialog(
                 this,
                 this
             )
@@ -607,12 +619,11 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
                 mLoveButtonNP = customView.findViewById(R.id.np_love)
                 mLoveButtonNP.setOnClickListener {
-                    Utils.addToLovedSongs(
+                    ListsHelper.addToLovedSongs(
                         this@MainActivity,
-                        mMediaPlayerHolder.currentSong.first?.toSavedMusic(
-                            mMediaPlayerHolder.playerPosition,
-                            mMediaPlayerHolder.isPlayingFromFolder
-                        )
+                        mMediaPlayerHolder.currentSong.first,
+                        mMediaPlayerHolder.playerPosition,
+                        mMediaPlayerHolder.isPlayingFromFolder
                     )
                     onLovedSongsUpdate(false)
                 }
@@ -655,7 +666,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
     private fun saveSongToPref() {
         if (::mMediaPlayerHolder.isInitialized && !mMediaPlayerHolder.isPlaying) mMediaPlayerHolder.apply {
-            MusicUtils.saveLatestSong(currentSong.first, playerPosition, isPlayingFromFolder)
+            MusicOrgHelper.saveLatestSong(currentSong.first, playerPosition, isPlayingFromFolder)
         }
     }
 
@@ -721,9 +732,9 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                     isSongRestoredFromPrefs = goPreferences.latestPlayedSong != null
 
                     val song =
-                        if (isSongRestoredFromPrefs) MusicUtils.getSongForRestore(goPreferences.latestPlayedSong) else musicLibrary.randomMusic
+                        if (isSongRestoredFromPrefs) MusicOrgHelper.getSongForRestore(goPreferences.latestPlayedSong) else musicLibrary.randomMusic
 
-                    val songs = MusicUtils.getAlbumSongs(song?.artist, song?.album)
+                    val songs = MusicOrgHelper.getAlbumSongs(song?.artist, song?.album)
 
                     isPlay = false
 
@@ -820,8 +831,8 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
         mSeekBarNP.max = selectedSong.duration.toInt()
 
-        MusicUtils.getBitrate(MusicUtils.getContentUri(selectedSong.id), contentResolver)?.let {
-            mRatesTextNP.text = getString(R.string.rates, it.first, it.second)
+        selectedSong.id?.toContentUri()?.toBitrate(this)?.let { bitrateInfo ->
+            mRatesTextNP.text = getString(R.string.rates, bitrateInfo.first, bitrateInfo.second)
         }
 
         updatePlayingStatus(true)
@@ -844,7 +855,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                     }
                 } else {
                     mDetailsFragment.tryToSnapToAlbumPosition(
-                        MusicUtils.getPlayingAlbumPosition(
+                        MusicOrgHelper.getPlayingAlbumPosition(
                             selectedArtistOrFolder,
                             mMediaPlayerHolder
                         )
@@ -859,7 +870,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     }
 
     override fun onCloseActivity() {
-        if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) Utils.stopPlaybackDialog(
+        if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) DialogHelpers.stopPlaybackDialog(
             this,
             mMediaPlayerHolder
         ) else super.onBackPressed()
@@ -937,7 +948,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     }
 
     override fun onShuffleSongs(songs: MutableList<Music>?, isFromFolder: Boolean) {
-        val randomNumber = (0 until songs?.size!!).random()
+        val randomNumber = (0 until songs?.size!!).getRandom()
         songs.shuffle()
         val song = songs[randomNumber]
         onSongSelected(song, songs, isFromFolder)
@@ -947,20 +958,20 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         stringToFilter?.let { string ->
             mArtistsFragment?.onListFiltered(string)
             mFoldersFragment?.onListFiltered(string)
-            Utils.addToHiddenItems(string)
+            ListsHelper.addToHiddenItems(string)
         }
     }
 
     fun openQueueDialog(view: View) {
         if (checkIsPlayer(false) && mMediaPlayerHolder.queueSongs.isNotEmpty())
-            mQueueDialog = Utils.showQueueSongsDialog(this, mMediaPlayerHolder)
+            mQueueDialog = DialogHelpers.showQueueSongsDialog(this, mMediaPlayerHolder)
         else
             getString(R.string.error_no_queue).toToast(this)
     }
 
     fun openLovedSongsDialog(view: View) {
         if (!goPreferences.lovedSongs.isNullOrEmpty())
-            Utils.showLovedSongsDialog(this, this, mMediaPlayerHolder)
+            DialogHelpers.showLovedSongsDialog(this, this, mMediaPlayerHolder)
         else
             getString(R.string.error_no_loved_songs).toToast(this)
     }
@@ -974,10 +985,9 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             try {
                 val displayNameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
                 cursor.moveToFirst()
-                val song =
-                    MusicUtils.getSongForIntent(cursor.getString(displayNameIndex))
+                val song = cursor.getString(displayNameIndex)?.getSongForIntent()
                 //get album songs and sort them
-                val albumSongs = MusicUtils.getAlbumSongs(song?.artist, song?.album)
+                val albumSongs = MusicOrgHelper.getAlbumSongs(song?.artist, song?.album)
 
                 onSongSelected(song, albumSongs, false)
 

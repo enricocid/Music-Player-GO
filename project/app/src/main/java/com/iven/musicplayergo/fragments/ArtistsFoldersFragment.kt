@@ -17,10 +17,14 @@ import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.*
-import com.iven.musicplayergo.utils.GenericViewHolder
-import com.iven.musicplayergo.utils.ThemeHelper
-import com.iven.musicplayergo.utils.UIControlInterface
-import com.iven.musicplayergo.utils.Utils
+import com.iven.musicplayergo.extensions.afterMeasured
+import com.iven.musicplayergo.extensions.handleViewVisibility
+import com.iven.musicplayergo.extensions.setTitleColor
+import com.iven.musicplayergo.helpers.DialogHelpers
+import com.iven.musicplayergo.helpers.ListsHelper
+import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.ui.GenericViewHolder
+import com.iven.musicplayergo.ui.UIControlInterface
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerThumbView
 import com.reddit.indicatorfastscroll.FastScrollerView
@@ -79,7 +83,7 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
     private fun getSortedList(): MutableList<String>? {
         val selectedList =
             if (sIsFoldersFragment) musicLibrary.allSongsByFolder?.keys else musicLibrary.allAlbumsByArtist?.keys
-        return Utils.getSortedList(
+        return ListsHelper.getSortedList(
             mSorting,
             selectedList?.toMutableList()
         )
@@ -140,7 +144,7 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
 
                         onLongClick { index ->
                             if (::mUIControlInterface.isInitialized)
-                                Utils.showHidePopup(
+                                DialogHelpers.showHidePopup(
                                     context,
                                     findViewHolderForAdapterPosition(index)?.itemView,
                                     item,
@@ -168,7 +172,7 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
 
                 menu.apply {
 
-                    mSortMenuItem = Utils.getSelectedSorting(mSorting, this).apply {
+                    mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, this).apply {
                         setTitleColor(ThemeHelper.resolveThemeAccent(cxt))
                     }
 
@@ -206,7 +210,7 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        setListDataSource(Utils.processQueryForStringsLists(newText, mList) ?: mList)
+        setListDataSource(ListsHelper.processQueryForStringsLists(newText, mList) ?: mList)
         return false
     }
 
@@ -301,7 +305,7 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
                     )
                 )
 
-                mSortMenuItem = Utils.getSelectedSorting(mSorting, menu).apply {
+                mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, menu).apply {
                     setTitleColor(ThemeHelper.resolveThemeAccent(context))
                 }
 

@@ -5,8 +5,10 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,12 +19,11 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.AccentsAdapter
 import com.iven.musicplayergo.adapters.ActiveTabsAdapter
 import com.iven.musicplayergo.adapters.FiltersAdapter
+import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.musicLibrary
-import com.iven.musicplayergo.toToast
-import com.iven.musicplayergo.utils.ThemeHelper
-import com.iven.musicplayergo.utils.UIControlInterface
-import com.iven.musicplayergo.utils.Utils
+import com.iven.musicplayergo.ui.UIControlInterface
 import kotlin.properties.Delegates
 
 class PreferencesFragment : PreferenceFragmentCompat(),
@@ -121,11 +122,11 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         activity?.let { ac ->
             when (preference?.key) {
 
-                getString(R.string.open_git_pref) -> Utils.openCustomTab(
+                getString(R.string.open_git_pref) -> openCustomTab(
                     ac,
                     getString(R.string.app_git)
                 )
-                getString(R.string.faq_pref) -> Utils.openCustomTab(
+                getString(R.string.faq_pref) -> openCustomTab(
                     ac,
                     getString(R.string.app_faq)
                 )
@@ -163,6 +164,23 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 }
                 getString(R.string.focus_pref) -> mUIControlInterface.onHandleFocusPref()
             }
+        }
+    }
+
+    private fun openCustomTab(
+        context: Context,
+        link: String
+    ) {
+
+        try {
+            CustomTabsIntent.Builder().apply {
+                addDefaultShareMenuItem()
+                setShowTitle(true)
+                build().launchUrl(context, Uri.parse(link))
+            }
+        } catch (e: Exception) {
+            context.getString(R.string.error_no_browser).toToast(context)
+            e.printStackTrace()
         }
     }
 

@@ -5,15 +5,14 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
-import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.media.app.NotificationCompat.MediaStyle
-import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.utils.ThemeHelper
-import com.iven.musicplayergo.utils.Utils
+import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.helpers.VersioningHelper
+import com.iven.musicplayergo.ui.MainActivity
 
 // Notification params
 private const val CHANNEL_ID = "CHANNEL_ID_GO"
@@ -52,7 +51,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         mediaPlayerHolder.currentSong.first.let { song ->
             notificationBuilder = NotificationCompat.Builder(playerService, CHANNEL_ID)
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) createNotificationChannel()
+            if (VersioningHelper.isOreo()) createNotificationChannel()
 
             val openPlayerIntent = Intent(playerService, MainActivity::class.java)
             openPlayerIntent.flags =
@@ -64,7 +63,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
             val style = MediaStyle().setShowActionsInCompactView(1, 2, 3)
 
-            if (Utils.isAndroidQ()) style.setMediaSession(playerService.getMediaSession().sessionToken)
+            if (VersioningHelper.isQ()) style.setMediaSession(playerService.getMediaSession().sessionToken)
 
             notificationBuilder.let {
                 it.apply {

@@ -10,7 +10,7 @@
     android:background="?android:attr/windowBackground"
     android:elevation="@dimen/search_bar_elevation"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <ProgressBar
         android:id="@+id/song_progress"

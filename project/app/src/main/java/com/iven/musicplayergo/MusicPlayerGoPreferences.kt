@@ -1,11 +1,11 @@
 package com.iven.musicplayergo
 
 import android.content.Context
-import android.os.Build
 import androidx.preference.PreferenceManager
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import com.iven.musicplayergo.musicloadutils.SavedMusic
+import com.iven.musicplayergo.helpers.VersioningHelper
+import com.iven.musicplayergo.models.SavedMusic
 import java.lang.reflect.Type
 
 const val DEFAULT_SORTING = 0
@@ -78,7 +78,7 @@ class MusicPlayerGoPreferences(context: Context) {
         get() = mPrefs.getBoolean(
             prefsEdgeToEdge,
             false
-        ) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1
+        ) && VersioningHelper.isOreoMR1()
         set(value) = mPrefs.edit().putBoolean(prefsEdgeToEdge, value).apply()
 
     var activeFragments: Set<String>?

@@ -1,6 +1,6 @@
-package com.iven.musicplayergo.utils
+package com.iven.musicplayergo.ui
 
-import com.iven.musicplayergo.musicloadutils.Music
+import com.iven.musicplayergo.models.Music
 
 interface UIControlInterface {
     fun onAppearanceChanged(isAccentChanged: Boolean, restoreSettings: Boolean)

@@ -8,9 +8,9 @@ import android.os.Parcelable
 import android.support.v4.media.session.MediaSessionCompat
 import android.view.KeyEvent
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.extensions.toSavedMusic
+import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.toSavedMusic
-import com.iven.musicplayergo.toToast
 
 
 class PlayerService : Service() {

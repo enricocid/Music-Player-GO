@@ -7,10 +7,10 @@ import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.afterMeasured
-import com.iven.musicplayergo.createCircularReveal
+import com.iven.musicplayergo.extensions.afterMeasured
+import com.iven.musicplayergo.extensions.createCircularReveal
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.utils.UIControlInterface
+import com.iven.musicplayergo.ui.UIControlInterface
 import kotlinx.android.synthetic.main.fragment_error.*
 
 /**

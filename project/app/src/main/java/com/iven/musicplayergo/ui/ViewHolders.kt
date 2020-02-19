@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.utils
+package com.iven.musicplayergo.ui
 
 import android.view.View
 import android.widget.ImageButton

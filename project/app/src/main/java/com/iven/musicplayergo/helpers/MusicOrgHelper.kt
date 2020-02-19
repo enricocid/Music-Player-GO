@@ -1,39 +1,21 @@
-package com.iven.musicplayergo.utils
+package com.iven.musicplayergo.helpers
 
 import android.annotation.SuppressLint
 import android.content.ContentResolver
-import android.content.ContentUris
 import android.content.res.Resources
-import android.media.MediaExtractor
-import android.media.MediaFormat
-import android.net.Uri
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
+import com.iven.musicplayergo.extensions.toFormattedYear
+import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.models.Album
+import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.models.SavedMusic
 import com.iven.musicplayergo.musicLibrary
-import com.iven.musicplayergo.musicloadutils.Album
-import com.iven.musicplayergo.musicloadutils.Music
-import com.iven.musicplayergo.musicloadutils.SavedMusic
 import com.iven.musicplayergo.player.MediaPlayerHolder
-import com.iven.musicplayergo.toFormattedYear
-import com.iven.musicplayergo.toSavedMusic
 
 
-object MusicUtils {
-
-    @JvmStatic
-    fun getContentUri(audioId: Long?) = audioId?.let {
-        ContentUris.withAppendedId(
-            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-            audioId
-        )
-    }
-
-    @JvmStatic
-    private fun getAudioFileDescriptor(
-        contentUri: Uri,
-        contentResolver: ContentResolver
-    ) = contentResolver.openFileDescriptor(contentUri, "r")
+object MusicOrgHelper {
 
     //returns the position in list of the current played album
     //pass selected artist from artists adapter and not from current song
@@ -73,11 +55,6 @@ object MusicUtils {
         artist,
         album
     ).first.music
-
-    @JvmStatic
-    fun getSongForIntent(
-        displayName: String?
-    ) = musicLibrary.allSongsUnfiltered.firstOrNull { s -> s.displayName == displayName }
 
     @JvmStatic
     fun getSongForRestore(savedMusic: SavedMusic?) =
@@ -134,52 +111,23 @@ object MusicUtils {
 
     @JvmStatic
     @SuppressLint("InlinedApi")
-    private val COLUMNS = arrayOf(
-        AudioColumns.ARTIST, // 0
-        AudioColumns.YEAR, // 1
-        AudioColumns.TRACK, // 2
-        AudioColumns.TITLE, // 3
-        AudioColumns.DISPLAY_NAME, // 4,
-        AudioColumns.DURATION, //5,
-        AudioColumns.ALBUM, // 6
-        getPathColumn(), // 7
-        AudioColumns._ID //8
-    )
-
-    @JvmStatic
     fun getMusicCursor(contentResolver: ContentResolver) = contentResolver.query(
         MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-        COLUMNS, AudioColumns.IS_MUSIC + "=1", null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER
+        arrayOf(
+            AudioColumns.ARTIST, // 0
+            AudioColumns.YEAR, // 1
+            AudioColumns.TRACK, // 2
+            AudioColumns.TITLE, // 3
+            AudioColumns.DISPLAY_NAME, // 4,
+            AudioColumns.DURATION, //5,
+            AudioColumns.ALBUM, // 6
+            getPathColumn(), // 7
+            AudioColumns._ID //8
+        ), AudioColumns.IS_MUSIC + "=1", null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER
     )
 
     @JvmStatic
     @Suppress("DEPRECATION")
     fun getPathColumn() =
-        if (Utils.isAndroidQ()) AudioColumns.BUCKET_DISPLAY_NAME else AudioColumns.DATA
-
-    @JvmStatic
-    fun getBitrate(contentUri: Uri?, contentResolver: ContentResolver): Pair<Int, Int>? {
-        val mediaExtractor = MediaExtractor()
-        return try {
-
-            contentUri?.let { uri ->
-                getAudioFileDescriptor(
-                    uri,
-                    contentResolver
-                )?.use { pfd ->
-                    mediaExtractor.setDataSource(pfd.fileDescriptor)
-                }
-            }
-
-            val mediaFormat = mediaExtractor.getTrackFormat(0)
-
-            val sampleRate = mediaFormat.getInteger(MediaFormat.KEY_SAMPLE_RATE)
-            //get bitrate in bps, divide by 1000 to get Kbps
-            val bitrate = mediaFormat.getInteger(MediaFormat.KEY_BIT_RATE) / 1000
-            Pair(sampleRate, bitrate)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
+        if (VersioningHelper.isQ()) AudioColumns.BUCKET_DISPLAY_NAME else AudioColumns.DATA
 }

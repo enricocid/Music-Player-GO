@@ -1,11 +1,13 @@
-package com.iven.musicplayergo.musicloadutils
+package com.iven.musicplayergo.loader
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.provider.MediaStore
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.utils.MusicUtils
-import com.iven.musicplayergo.utils.Utils
+import com.iven.musicplayergo.helpers.MusicOrgHelper
+import com.iven.musicplayergo.helpers.VersioningHelper
+import com.iven.musicplayergo.models.Album
+import com.iven.musicplayergo.models.Music
 import java.io.File
 
 class MusicLibrary {
@@ -28,7 +30,7 @@ class MusicLibrary {
     @SuppressLint("InlinedApi")
     fun queryForMusic(context: Context) = try {
 
-        val musicCursor = MusicUtils.getMusicCursor(context.contentResolver)
+        val musicCursor = MusicOrgHelper.getMusicCursor(context.contentResolver)
 
         // Query the storage for music files
         // If query result is not empty
@@ -49,7 +51,7 @@ class MusicLibrary {
             val albumIndex =
                 cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ALBUM)
             val relativePathIndex =
-                cursor.getColumnIndexOrThrow(MusicUtils.getPathColumn())
+                cursor.getColumnIndexOrThrow(MusicOrgHelper.getPathColumn())
             val idIndex =
                 cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns._ID)
 
@@ -67,7 +69,7 @@ class MusicLibrary {
                 val audioId = cursor.getLong(idIndex)
 
                 val audioFolderName =
-                    if (Utils.isAndroidQ()) {
+                    if (VersioningHelper.isQ()) {
                         audioRelativePath ?: context.getString(R.string.slash)
                     } else {
                         val returnedPath = File(audioRelativePath).parentFile?.name
@@ -106,7 +108,7 @@ class MusicLibrary {
             it?.let { artist ->
                 allAlbumsByArtist.apply {
                     this?.set(
-                        artist, MusicUtils.buildSortedArtistAlbums(
+                        artist, MusicOrgHelper.buildSortedArtistAlbums(
                             context.resources,
                             allSongsByArtist?.getValue(artist)
                         )

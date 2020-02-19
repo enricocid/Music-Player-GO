@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.musicloadutils
+package com.iven.musicplayergo.loader
 
 import android.content.Context
 import com.iven.musicplayergo.musicLibrary

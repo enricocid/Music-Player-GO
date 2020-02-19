@@ -1,21 +1,9 @@
-package com.iven.musicplayergo.utils
+package com.iven.musicplayergo.helpers
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.annotation.TargetApi
-import android.app.Activity
 import android.content.Context
-import android.content.pm.PackageManager
-import android.net.Uri
-import android.os.Build
 import android.view.Gravity
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
-import androidx.browser.customtabs.CustomTabsIntent
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
@@ -23,173 +11,19 @@ import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
-import com.iven.musicplayergo.*
+import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.adapters.QueueAdapter
-import com.iven.musicplayergo.musicloadutils.Music
-import com.iven.musicplayergo.musicloadutils.SavedMusic
+import com.iven.musicplayergo.extensions.toFormattedDuration
+import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.models.SavedMusic
 import com.iven.musicplayergo.player.MediaPlayerHolder
+import com.iven.musicplayergo.ui.UIControlInterface
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
-import java.util.*
 
-@SuppressLint("DefaultLocale")
-object Utils {
-
-    @JvmStatic
-    fun isAndroidQ() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
-
-    @JvmStatic
-    fun hasToAskForReadStoragePermission(activity: Activity) =
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(
-            activity,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        ) != PackageManager.PERMISSION_GRANTED
-
-    @JvmStatic
-    fun manageAskForReadStoragePermission(
-        activity: Activity,
-        uiControlInterface: UIControlInterface
-    ) {
-
-        if (ActivityCompat.shouldShowRequestPermissionRationale(
-                activity,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        ) {
-
-            MaterialDialog(activity).show {
-
-                cancelOnTouchOutside(false)
-
-                title(R.string.app_name)
-
-                message(R.string.perm_rationale)
-                positiveButton(android.R.string.ok) {
-                    askForReadStoragePermission(activity)
-                }
-                negativeButton {
-                    uiControlInterface.onDenyPermission()
-                }
-            }
-        } else {
-            askForReadStoragePermission(activity)
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    private fun askForReadStoragePermission(activity: Activity) {
-        ActivityCompat.requestPermissions(
-            activity,
-            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-            PERMISSION_REQUEST_READ_EXTERNAL_STORAGE
-        )
-    }
-
-    @JvmStatic
-    fun processQueryForStringsLists(
-        query: String?,
-        list: List<String>?
-    ): List<String>? {
-        // in real app you'd have it instantiated just once
-        val filteredStrings = mutableListOf<String>()
-
-        return try {
-            // case insensitive search
-            list?.iterator()?.forEach { filteredString ->
-                if (filteredString.toLowerCase().contains(query?.toLowerCase()!!)) {
-                    filteredStrings.add(filteredString)
-                }
-            }
-            return filteredStrings
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
-
-    @JvmStatic
-    fun processQueryForMusic(query: String?, musicList: List<Music>?): List<Music>? {
-        // in real app you'd have it instantiated just once
-        val filteredSongs = mutableListOf<Music>()
-
-        return try {
-            // case insensitive search
-            musicList?.iterator()?.forEach { filteredSong ->
-                if (filteredSong.title?.toLowerCase()!!.contains(query?.toLowerCase()!!)) {
-                    filteredSongs.add(filteredSong)
-                }
-            }
-            return filteredSongs
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
-
-    @JvmStatic
-    fun getSortedList(
-        id: Int,
-        list: MutableList<String>?
-    ) = when (id) {
-        DESCENDING_SORTING -> {
-            list?.apply {
-                Collections.sort(this, String.CASE_INSENSITIVE_ORDER)
-            }
-            list
-        }
-
-        ASCENDING_SORTING -> {
-            list?.apply {
-                Collections.sort(this, String.CASE_INSENSITIVE_ORDER)
-            }
-            list?.asReversed()
-        }
-        else -> list
-    }
-
-    @JvmStatic
-    fun getSelectedSorting(sorting: Int, menu: Menu): MenuItem = when (sorting) {
-        DEFAULT_SORTING -> menu.findItem(R.id.default_sorting)
-        ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
-        else -> menu.findItem(R.id.descending_sorting)
-    }
-
-    @JvmStatic
-    fun getSortedMusicList(
-        id: Int,
-        list: MutableList<Music>?
-    ) = when (id) {
-
-        DESCENDING_SORTING -> {
-            list?.sortBy { it.title }
-            list
-        }
-
-        ASCENDING_SORTING -> {
-            list?.sortBy { it.title }
-            list?.asReversed()
-        }
-
-        TRACK_SORTING -> {
-            list?.sortBy { it.track }
-            list
-        }
-
-        TRACK_SORTING_INVERTED -> {
-            list?.sortBy { it.track }
-            list?.asReversed()
-        }
-        else -> list
-    }
-
-    @JvmStatic
-    fun getSongsSorting(currentSorting: Int) = when (currentSorting) {
-        TRACK_SORTING -> TRACK_SORTING_INVERTED
-        TRACK_SORTING_INVERTED -> ASCENDING_SORTING
-        ASCENDING_SORTING -> DESCENDING_SORTING
-        else -> TRACK_SORTING
-    }
+object DialogHelpers {
 
     @JvmStatic
     fun showQueueSongsDialog(
@@ -292,27 +126,6 @@ object Utils {
             }
             negativeButton(R.string.no)
         }
-    }
-
-    @JvmStatic
-    fun addToLovedSongs(context: Context, songToSave: SavedMusic?) {
-        val lovedSongs =
-            if (goPreferences.lovedSongs != null) goPreferences.lovedSongs else mutableListOf()
-
-        songToSave?.let { song ->
-            if (!lovedSongs?.contains(song)!!) {
-                lovedSongs.add(
-                    song
-                )
-                context.getString(
-                    R.string.loved_song_added,
-                    song.title,
-                    song.startFrom.toLong().toFormattedDuration(false)
-                ).toToast(context)
-                goPreferences.lovedSongs = lovedSongs
-            }
-        }
-
     }
 
     @JvmStatic
@@ -435,9 +248,11 @@ object Utils {
 
                     when (it.itemId) {
                         R.id.loved_songs_add -> {
-                            addToLovedSongs(
+                            ListsHelper.addToLovedSongs(
                                 context,
-                                song?.toSavedMusic(0, isFolder)
+                                song,
+                                0,
+                                isFolder
                             )
                             uiControlInterface.onLovedSongsUpdate(false)
                         }
@@ -451,13 +266,6 @@ object Utils {
                 show()
             }
         }
-    }
-
-    @JvmStatic
-    fun addToHiddenItems(item: String) {
-        val hiddenArtistsFolders = goPreferences.filters?.toMutableList()
-        hiddenArtistsFolders?.add(item)
-        goPreferences.filters = hiddenArtistsFolders?.toSet()
     }
 
     @JvmStatic
@@ -477,24 +285,6 @@ object Utils {
             negativeButton(R.string.no) {
                 mediaPlayerHolder.stopPlaybackService(false)
             }
-        }
-    }
-
-    @JvmStatic
-    fun openCustomTab(
-        context: Context,
-        link: String
-    ) {
-
-        try {
-            CustomTabsIntent.Builder().apply {
-                addDefaultShareMenuItem()
-                setShowTitle(true)
-                build().launchUrl(context, Uri.parse(link))
-            }
-        } catch (e: Exception) {
-            context.getString(R.string.error_no_browser).toToast(context)
-            e.printStackTrace()
         }
     }
 }

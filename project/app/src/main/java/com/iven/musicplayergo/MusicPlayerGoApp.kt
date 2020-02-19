@@ -2,8 +2,8 @@ package com.iven.musicplayergo
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import com.iven.musicplayergo.musicloadutils.MusicLibrary
-import com.iven.musicplayergo.utils.ThemeHelper
+import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.loader.MusicLibrary
 
 val goPreferences: MusicPlayerGoPreferences by lazy {
     MusicPlayerGoApp.prefs

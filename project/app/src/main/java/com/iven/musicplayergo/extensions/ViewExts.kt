@@ -1,9 +1,8 @@
-package com.iven.musicplayergo
+package com.iven.musicplayergo.extensions
 
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.content.Context
-import android.content.res.Resources
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewAnimationUtils
@@ -17,13 +16,9 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.ArgbEvaluator
-import com.iven.musicplayergo.musicloadutils.Music
-import com.iven.musicplayergo.musicloadutils.SavedMusic
-import com.iven.musicplayergo.utils.ThemeHelper
-import java.util.*
-import java.util.concurrent.TimeUnit
+import com.iven.musicplayergo.R
+import com.iven.musicplayergo.helpers.ThemeHelper
 import kotlin.math.max
-import kotlin.random.Random
 
 //viewTreeObserver extension to measure layout params
 //https://antonioleiva.com/kotlin-ongloballayoutlistener/
@@ -45,8 +40,6 @@ fun MenuItem.setTitleColor(color: Int) {
     val html = "<font color='#$hexColor'>$title</font>"
     title = ThemeHelper.buildSpanned(html)
 }
-
-fun IntRange.random() = Random.nextInt(start, endInclusive + 1)
 
 fun FragmentTransaction.addFragment(isAdd: Boolean, container: Int, fragment: Fragment) {
     when {
@@ -93,7 +86,10 @@ fun View.createCircularReveal(isCentered: Boolean, show: Boolean): Animator {
         R.color.red
     ) else ThemeHelper.resolveThemeAccent(context)
     val backgroundColor =
-        ThemeHelper.resolveColorAttr(context, android.R.attr.windowBackground)
+        ThemeHelper.resolveColorAttr(
+            context,
+            android.R.attr.windowBackground
+        )
     val startColor = if (show) accent else backgroundColor
     val endColor = if (show) backgroundColor else accent
 
@@ -103,11 +99,15 @@ fun View.createCircularReveal(isCentered: Boolean, show: Boolean): Animator {
         addUpdateListener { valueAnimator -> setBackgroundColor((valueAnimator.animatedValue as Int)) }
         duration = revealDuration
         if (isCentered) doOnEnd {
-            background = ThemeHelper.createColouredRipple(
-                context,
-                ContextCompat.getColor(context, R.color.red),
-                R.drawable.ripple
-            )
+            background =
+                ThemeHelper.createColouredRipple(
+                    context,
+                    ContextCompat.getColor(
+                        context,
+                        R.color.red
+                    ),
+                    R.drawable.ripple
+                )
         }
         start()
     }
@@ -143,50 +143,3 @@ fun String.toToast(
 ) {
     Toast.makeText(context, this, Toast.LENGTH_LONG).show()
 }
-
-fun Long.toFormattedDuration(isAlbum: Boolean) = try {
-
-    val defaultFormat = if (isAlbum) "%02dm:%02ds" else "%02d:%02d"
-
-    val hours = TimeUnit.MILLISECONDS.toHours(this)
-    val minutes = TimeUnit.MILLISECONDS.toMinutes(this)
-    val seconds = TimeUnit.MILLISECONDS.toSeconds(this)
-
-    if (minutes < 60) String.format(
-        Locale.getDefault(), defaultFormat,
-        minutes,
-        seconds - TimeUnit.MINUTES.toSeconds(minutes)
-    ) else
-    //https://stackoverflow.com/a/9027379
-        String.format(
-            "%02dh:%02dm",
-            hours,
-            minutes - TimeUnit.HOURS.toMinutes(hours), // The change is in this line
-            seconds - TimeUnit.MINUTES.toSeconds(minutes)
-        )
-
-} catch (e: Exception) {
-    e.printStackTrace()
-    ""
-}
-
-fun Int.toFormattedTrack() = try {
-    if (this >= 1000) this % 1000 else this
-} catch (e: Exception) {
-    e.printStackTrace()
-    0
-}
-
-fun Int.toFormattedYear(resources: Resources) =
-    if (this != 0) toString() else resources.getString(R.string.unknown_year)
-
-fun Music.toSavedMusic(playerPosition: Int, isPlayingFromFolder: Boolean) = SavedMusic(
-    artist,
-    title,
-    displayName,
-    year,
-    playerPosition,
-    duration,
-    album,
-    isPlayingFromFolder
-)

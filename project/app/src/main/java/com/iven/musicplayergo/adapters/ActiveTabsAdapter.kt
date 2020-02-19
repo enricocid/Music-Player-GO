@@ -8,9 +8,9 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.toToast
-import com.iven.musicplayergo.utils.ThemeHelper
+import com.iven.musicplayergo.helpers.ThemeHelper
 
 class ActiveTabsAdapter(
     private val context: Context

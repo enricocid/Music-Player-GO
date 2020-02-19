@@ -20,9 +20,16 @@ import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.*
-import com.iven.musicplayergo.musicloadutils.Album
-import com.iven.musicplayergo.musicloadutils.Music
-import com.iven.musicplayergo.utils.*
+import com.iven.musicplayergo.extensions.*
+import com.iven.musicplayergo.helpers.DialogHelpers
+import com.iven.musicplayergo.helpers.ListsHelper
+import com.iven.musicplayergo.helpers.MusicOrgHelper
+import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.models.Album
+import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.ui.AlbumsViewHolder
+import com.iven.musicplayergo.ui.GenericViewHolder
+import com.iven.musicplayergo.ui.UIControlInterface
 import kotlinx.android.synthetic.main.fragment_details.*
 
 
@@ -228,7 +235,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             val selectedPlaylist =
                                 if (sFolder) mSongsForArtistOrFolder
                                 else
-                                    MusicUtils.getAlbumSongs(item.artist, item.album)
+                                    MusicOrgHelper.getAlbumSongs(item.artist, item.album)
 
                             mUIControlInterface.onSongSelected(
                                 item,
@@ -238,7 +245,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         }
 
                         onLongClick { index ->
-                            Utils.showDoSomethingPopup(
+                            DialogHelpers.showDoSomethingPopup(
                                 cxt,
                                 findViewHolderForAdapterPosition(index)?.itemView,
                                 item,
@@ -253,11 +260,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             if (!sFolder) {
                 mSortSongsButton.apply {
                     setOnClickListener {
-                        mSongsSorting = Utils.getSongsSorting(mSongsSorting)
+                        mSongsSorting = ListsHelper.getSongsSorting(mSongsSorting)
                         setImageResource(ThemeHelper.resolveSortAlbumSongsIcon(mSongsSorting))
                         setSongsDataSource(
                             cxt,
-                            Utils.getSortedMusicList(
+                            ListsHelper.getSortedMusicList(
                                 mSongsSorting,
                                 mSelectedAlbum?.music
                             )
@@ -303,7 +310,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         context?.let { cxt ->
             setSongsDataSource(
                 cxt,
-                Utils.processQueryForMusic(newText, mSongsForArtistOrFolder)
+                ListsHelper.processQueryForMusic(newText, mSongsForArtistOrFolder)
                     ?: mSongsForArtistOrFolder
             )
         }
@@ -322,7 +329,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             inflateMenu(menuToInflate)
 
             menu.apply {
-                findItem(R.id.action_shuffle_am).isEnabled = if (sFolder) mSongsForArtistOrFolder?.size!! >= 2 else !sFolder && mSelectedArtistAlbums?.size!! >= 2
+                findItem(R.id.action_shuffle_am).isEnabled =
+                    if (sFolder) mSongsForArtistOrFolder?.size!! >= 2 else !sFolder && mSelectedArtistAlbums?.size!! >= 2
                 findItem(R.id.action_shuffle_sa).isEnabled = !sFolder
                 if (sFolder) findItem(R.id.sorting).isEnabled = mSongsForArtistOrFolder?.size!! >= 2
             }
@@ -350,7 +358,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private fun applySortingToMusic(context: Context, order: Int) {
         val selectedList = musicLibrary.allSongsByFolder?.get(mSelectedArtistOrFolder)
-        mSongsForArtistOrFolder = Utils.getSortedMusicList(
+        mSongsForArtistOrFolder = ListsHelper.getSortedMusicList(
             order,
             selectedList?.toMutableList()
         )

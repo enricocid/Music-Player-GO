@@ -23,7 +23,7 @@
             android:orientation="vertical"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            tools:context=".MainActivity">
+            tools:context=".ui.MainActivity">
 
             <TextView
                 android:id="@+id/np_song"

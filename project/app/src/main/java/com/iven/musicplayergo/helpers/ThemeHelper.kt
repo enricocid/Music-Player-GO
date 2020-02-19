@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.utils
+package com.iven.musicplayergo.helpers
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
@@ -28,6 +28,8 @@ import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.iven.musicplayergo.*
 import com.iven.musicplayergo.player.MediaPlayerHolder
+import com.iven.musicplayergo.ui.MainActivity
+import com.iven.musicplayergo.ui.RESTORE_SETTINGS_FRAGMENT
 
 
 object ThemeHelper {
@@ -49,7 +51,7 @@ object ThemeHelper {
     fun getDefaultNightMode(context: Context) = when (goPreferences.theme) {
         context.getString(R.string.theme_pref_light) -> AppCompatDelegate.MODE_NIGHT_NO
         context.getString(R.string.theme_pref_dark) -> AppCompatDelegate.MODE_NIGHT_YES
-        else -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM else AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+        else -> if (VersioningHelper.isQ()) AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM else AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
     }
 
     @JvmStatic
@@ -169,13 +171,21 @@ object ThemeHelper {
             accent = R.color.deep_purple
             goPreferences.accent = accent
         }
-        return getColor(context, accent, R.color.deep_purple)
+        return getColor(
+            context,
+            accent,
+            R.color.deep_purple
+        )
     }
 
     @ColorInt
     @JvmStatic
     fun resolveColorAttr(context: Context, @AttrRes colorAttr: Int): Int {
-        val resolvedAttr: TypedValue = resolveThemeAttr(context, colorAttr)
+        val resolvedAttr: TypedValue =
+            resolveThemeAttr(
+                context,
+                colorAttr
+            )
         // resourceId is used if it's a ColorStateList, and data if it's a color reference or a hex color
         val colorRes =
             if (resolvedAttr.resourceId != 0) resolvedAttr.resourceId else resolvedAttr.data
@@ -203,7 +213,11 @@ object ThemeHelper {
 
     @JvmStatic
     fun getAlphaAccent(context: Context, alpha: Int) =
-        ColorUtils.setAlphaComponent(resolveThemeAccent(context), alpha)
+        ColorUtils.setAlphaComponent(
+            resolveThemeAccent(
+                context
+            ), alpha
+        )
 
     @JvmStatic
     fun getTabIcon(iconIndex: Int) = when (iconIndex) {
@@ -216,7 +230,7 @@ object ThemeHelper {
     @JvmStatic
     @Suppress("DEPRECATION")
     fun buildSpanned(res: String): Spanned = when {
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> Html.fromHtml(
+        VersioningHelper.isNougat() -> Html.fromHtml(
             res,
             Html.FROM_HTML_MODE_LEGACY
         )

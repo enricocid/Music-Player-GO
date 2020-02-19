@@ -11,7 +11,7 @@
     android:baselineAligned="false"
     android:elevation="@dimen/search_bar_elevation"
     android:orientation="horizontal"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:orientation="vertical"
-        tools:context=".MainActivity">
+        tools:context=".ui.MainActivity">
 
         <LinearLayout
             android:layout_width="match_parent"

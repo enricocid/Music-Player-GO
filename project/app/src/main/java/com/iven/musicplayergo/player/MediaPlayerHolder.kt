@@ -11,18 +11,17 @@ import android.media.AudioAttributes
 import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.MediaPlayer
-import android.os.Build
 import android.os.Handler
 import android.os.PowerManager
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat.*
-import com.iven.musicplayergo.MainActivity
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.extensions.toContentUri
+import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.musicloadutils.Music
-import com.iven.musicplayergo.toToast
-import com.iven.musicplayergo.utils.MusicUtils
-import com.iven.musicplayergo.utils.Utils
+import com.iven.musicplayergo.helpers.VersioningHelper
+import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.ui.MainActivity
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -59,7 +58,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private val mStateBuilder =
         Builder().apply {
-            if (Utils.isAndroidQ()) setActions(ACTION_SEEK_TO)
+            if (VersioningHelper.isQ()) setActions(ACTION_SEEK_TO)
         }
 
     lateinit var mediaPlayerInterface: MediaPlayerInterface
@@ -222,7 +221,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private fun getAudioFocusResult(): Int {
 
         return when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
+            VersioningHelper.isOreoMR1() -> {
                 mAudioFocusRequestOreo =
                     AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN).run {
                         setAudioAttributes(AudioAttributes.Builder().run {
@@ -246,7 +245,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     @Suppress("DEPRECATION")
     fun giveUpAudioFocus() {
         when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> mAudioManager.abandonAudioFocusRequest(
+            VersioningHelper.isOreo() -> mAudioManager.abandonAudioFocusRequest(
                 mAudioFocusRequestOreo
             )
             else -> {
@@ -260,7 +259,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         playerService.getMediaSession().setPlaybackState(
             mStateBuilder.setState(
                 if (state == RESUMED) PLAYING else state,
-                if (Utils.isAndroidQ()) mediaPlayer.currentPosition.toLong() else PLAYBACK_POSITION_UNKNOWN,
+                if (VersioningHelper.isQ()) mediaPlayer.currentPosition.toLong() else PLAYBACK_POSITION_UNKNOWN,
                 1F
             ).build()
         )
@@ -428,9 +427,11 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
                 if (goPreferences.isPreciseVolumeEnabled) setPreciseVolume(currentVolumeInPercent)
             }
-            MusicUtils.getContentUri(song?.id)?.let { contentUri ->
-                mediaPlayer.setDataSource(playerService, contentUri)
+
+            song?.id?.toContentUri()?.let { uri ->
+                mediaPlayer.setDataSource(playerService, uri)
             }
+
             mediaPlayer.prepare()
 
         } catch (e: Exception) {
@@ -453,7 +454,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         if (isQueue) mediaPlayerInterface.onQueueStartedOrEnded(isQueueStarted)
 
-        if (Utils.isAndroidQ()) updateMediaSessionMetaData()
+        if (VersioningHelper.isQ()) updateMediaSessionMetaData()
 
         if (isPlay) {
             mediaPlayer.start()

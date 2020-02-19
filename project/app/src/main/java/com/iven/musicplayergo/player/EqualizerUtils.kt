@@ -7,7 +7,7 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.media.audiofx.AudioEffect
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.toToast
+import com.iven.musicplayergo.extensions.toToast
 
 object EqualizerUtils {
 
