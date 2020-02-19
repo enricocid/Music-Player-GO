@@ -90,7 +90,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
             }
             // Update the player state based on the change
-            if (isMediaPlayer && goPreferences.isFocusEnabled) configurePlayerState()
+            if (isMediaPlayer) configurePlayerState()
         }
 
     //media player
@@ -211,7 +211,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         stopUpdatingCallbackWithPosition()
     }
 
-    private fun tryToGetAudioFocus() {
+    fun tryToGetAudioFocus() {
         mCurrentAudioFocusState = when (getAudioFocusResult()) {
             AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> AUDIO_FOCUSED
             else -> AUDIO_NO_FOCUS_NO_DUCK
@@ -244,7 +244,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     @Suppress("DEPRECATION")
-    private fun giveUpAudioFocus() {
+    fun giveUpAudioFocus() {
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> mAudioManager.abandonAudioFocusRequest(
                 mAudioFocusRequestOreo
@@ -424,7 +424,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
                 mMusicNotificationManager = playerService.musicNotificationManager
 
-                tryToGetAudioFocus()
+                if (goPreferences.isFocusEnabled) tryToGetAudioFocus()
 
                 if (goPreferences.isPreciseVolumeEnabled) setPreciseVolume(currentVolumeInPercent)
             }
@@ -474,7 +474,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 mediaPlayer.audioSessionId
             )
             mediaPlayer.release()
-            giveUpAudioFocus()
+            if (goPreferences.isFocusEnabled) giveUpAudioFocus()
             stopUpdatingCallbackWithPosition()
         }
         unregisterActionsReceiver()

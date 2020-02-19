@@ -161,6 +161,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                         restoreSettings = true
                     )
                 }
+                getString(R.string.focus_pref) -> mUIControlInterface.onHandleFocusPref()
             }
         }
     }

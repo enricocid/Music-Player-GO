@@ -865,6 +865,10 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         ) else super.onBackPressed()
     }
 
+    override fun onHandleFocusPref() {
+        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) if (goPreferences.isFocusEnabled) mMediaPlayerHolder.tryToGetAudioFocus() else mMediaPlayerHolder.giveUpAudioFocus()
+    }
+
     override fun onArtistOrFolderSelected(artistOrFolder: String, isFolder: Boolean) {
         openDetailsFragment(
             artistOrFolder,
