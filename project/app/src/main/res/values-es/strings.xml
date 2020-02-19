@@ -32,6 +32,9 @@
     <string name="repeat_enabled">¡Repetición 1x activada!</string>
     <string name="repeat_loop_enabled">¡Repetición &#8734; activada!</string>
     <string name="repeat_disabled">¡Repetición &#8734; desactivada!</string>
+    <string name="sorting_pref">Ordenamiento</string>
+    <string name="sorting_pref_track">Por nro. de récord &#8595;</string>
+    <string name="sorting_pref_track_inv">Por nro. de récord &#8593;</string>
     <string name="settings">Preferencias</string>
     <string name="category_general">General</string>
     <string name="open_git_pref_title">Página de GitHub</string>
