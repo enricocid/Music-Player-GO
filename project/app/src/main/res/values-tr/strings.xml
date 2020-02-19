@@ -59,4 +59,7 @@
     <string name="repeat_loop_enabled">&#8734; tekrar açık!</string>
     <string name="repeat_enabled">1x tekrar açık!</string>
     <string name="repeat_disabled">&#8734; tekrar kapalı!</string>
+    <string name="sorting_pref">Sıralama</string>
+    <string name="sorting_pref_track">Şarkı numarasına göre &#8595;</string>
+    <string name="sorting_pref_track_inv">Şarkı numarasına göre &#8593;</string>
 </resources>
