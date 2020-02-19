@@ -858,14 +858,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         }
     }
 
-    override fun onStopPlaybackFromReloadDB() {
-        if (::mPlayerService.isInitialized) mPlayerService.isReloadDB = true
-        if (isMediaPlayerHolder) mMediaPlayerHolder.stopPlaybackService(
-            stopPlayback = true
-        )
-        recreate()
-    }
-
     override fun onCloseActivity() {
         if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) Utils.stopPlaybackDialog(
             this,

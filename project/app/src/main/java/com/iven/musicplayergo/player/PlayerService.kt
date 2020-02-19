@@ -25,7 +25,6 @@ class PlayerService : Service() {
     lateinit var mediaPlayerHolder: MediaPlayerHolder
     lateinit var musicNotificationManager: MusicNotificationManager
     var isRestoredFromPause = false
-    var isReloadDB = false
 
     private lateinit var mMediaSessionCompat: MediaSessionCompat
 
@@ -33,7 +32,11 @@ class PlayerService : Service() {
 
         override fun onSeekTo(pos: Long) {
             super.onSeekTo(pos)
-            mediaPlayerHolder.seekTo(pos.toInt(), updatePlaybackStatus = true, restoreProgressCallBack = false)
+            mediaPlayerHolder.seekTo(
+                pos.toInt(),
+                updatePlaybackStatus = true,
+                restoreProgressCallBack = false
+            )
         }
 
         override fun onMediaButtonEvent(mediaButtonEvent: Intent?) =
@@ -58,7 +61,7 @@ class PlayerService : Service() {
 
         if (::mediaPlayerHolder.isInitialized) {
             //saves last played song and its position
-            if (mediaPlayerHolder.isCurrentSong && !isReloadDB) mediaPlayerHolder.apply {
+            if (mediaPlayerHolder.isCurrentSong) mediaPlayerHolder.apply {
                 currentSong.first?.let { musicToSave ->
                     goPreferences.latestPlayedSong =
                         musicToSave.toSavedMusic(playerPosition, isPlayingFromFolder)

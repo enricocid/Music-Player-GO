@@ -13,5 +13,4 @@ interface UIControlInterface {
     fun onAddToQueue(song: Music?)
     fun onAddToFilter(stringToFilter: String?)
     fun onDenyPermission()
-    fun onStopPlaybackFromReloadDB()
 }

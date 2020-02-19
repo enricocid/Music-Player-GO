@@ -245,7 +245,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     @Suppress("DEPRECATION")
     private fun giveUpAudioFocus() {
-
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> mAudioManager.abandonAudioFocusRequest(
                 mAudioFocusRequestOreo
@@ -594,7 +593,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             playerService.stopForeground(true)
             playerService.stopSelf()
         }
-        if (!playerService.isReloadDB) mediaPlayerInterface.onClose()
+        mediaPlayerInterface.onClose()
     }
 
     private inner class NotificationReceiver : BroadcastReceiver() {
