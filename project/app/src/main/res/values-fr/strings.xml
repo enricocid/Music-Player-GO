@@ -48,8 +48,8 @@
     <string name="active_fragments_pref_warning">Vous ne pouvez pas retirer tous les onglets ! :P</string>
     <string name="sorting_pref">Tri</string>
     <string name="sorting_pref_default">Par défaut</string>
-    <string name="sorting_pref_track">Par titre n° &#8595;</string>
-    <string name="sorting_pref_track_inv">Par titre n° &#8593;</string>
+    <string name="sorting_pref_track">Par n° de titre &#8595;</string>
+    <string name="sorting_pref_track_inv">Par n° de titre &#8593;</string>
     <string name="precise_volume_pref_title">Contrôle précis du volume</string>
     <string name="precise_volume_pref_summary_on">Activer le contrôle précis du volume</string>
     <string name="precise_volume_pref_summary_off">Désactiver le contrôle précis du volume</string>
