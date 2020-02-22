@@ -10,7 +10,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.helpers.DialogHelpers
+import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.MusicOrgHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.SavedMusic
@@ -86,7 +86,7 @@ class LovedSongsAdapter(
                     }
                 }
                 setOnLongClickListener {
-                    DialogHelpers.showDeleteLovedSongDialog(
+                    DialogHelper.showDeleteLovedSongDialog(
                         context,
                         lovedSong,
                         this@LovedSongsAdapter

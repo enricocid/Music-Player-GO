@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toFormattedDuration
-import com.iven.musicplayergo.helpers.DialogHelpers
+import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
@@ -104,7 +104,7 @@ class QueueAdapter(
 
                 setOnLongClickListener {
                     if (title.currentTextColor != ThemeHelper.resolveThemeAccent(context))
-                        DialogHelpers.showDeleteQueueSongDialog(
+                        DialogHelper.showDeleteQueueSongDialog(
                             context,
                             Pair(song, adapterPosition),
                             queueSongsDialog,

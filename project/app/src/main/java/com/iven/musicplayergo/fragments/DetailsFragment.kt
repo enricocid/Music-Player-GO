@@ -21,7 +21,7 @@ import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.*
 import com.iven.musicplayergo.extensions.*
-import com.iven.musicplayergo.helpers.DialogHelpers
+import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.MusicOrgHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
@@ -245,7 +245,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         }
 
                         onLongClick { index ->
-                            DialogHelpers.showDoSomethingPopup(
+                            DialogHelper.showDoSomethingPopup(
                                 cxt,
                                 findViewHolderForAdapterPosition(index)?.itemView,
                                 item,

@@ -20,7 +20,7 @@ import com.iven.musicplayergo.*
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.extensions.setTitleColor
-import com.iven.musicplayergo.helpers.DialogHelpers
+import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.ui.GenericViewHolder
@@ -144,7 +144,7 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
 
                         onLongClick { index ->
                             if (::mUIControlInterface.isInitialized)
-                                DialogHelpers.showHidePopup(
+                                DialogHelper.showHidePopup(
                                     context,
                                     findViewHolderForAdapterPosition(index)?.itemView,
                                     item,

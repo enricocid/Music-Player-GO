@@ -23,7 +23,7 @@ import com.iven.musicplayergo.ui.UIControlInterface
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 
-object DialogHelpers {
+object DialogHelper {
 
     @JvmStatic
     fun showQueueSongsDialog(

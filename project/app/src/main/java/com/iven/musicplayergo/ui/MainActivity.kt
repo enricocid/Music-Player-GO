@@ -174,7 +174,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             closeDetailsFragment(null)
         } else {
             if (mViewPager2.currentItem != 0) mViewPager2.currentItem = 0 else
-                if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) DialogHelpers.stopPlaybackDialog(
+                if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) DialogHelper.stopPlaybackDialog(
                     this,
                     mMediaPlayerHolder
                 ) else super.onBackPressed()
@@ -467,7 +467,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         mPlayPauseButton.setOnClickListener { resumeOrPause() }
 
         mQueueButton.setOnLongClickListener {
-            if (checkIsPlayer(true) && mMediaPlayerHolder.isQueue) DialogHelpers.showClearQueueDialog(
+            if (checkIsPlayer(true) && mMediaPlayerHolder.isQueue) DialogHelper.showClearQueueDialog(
                 this,
                 mMediaPlayerHolder
             )
@@ -475,7 +475,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         }
 
         mLovedSongsButton.setOnLongClickListener {
-            if (!goPreferences.lovedSongs.isNullOrEmpty()) DialogHelpers.showClearLovedSongDialog(
+            if (!goPreferences.lovedSongs.isNullOrEmpty()) DialogHelper.showClearLovedSongDialog(
                 this,
                 this
             )
@@ -870,7 +870,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     }
 
     override fun onCloseActivity() {
-        if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) DialogHelpers.stopPlaybackDialog(
+        if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) DialogHelper.stopPlaybackDialog(
             this,
             mMediaPlayerHolder
         ) else super.onBackPressed()
@@ -964,14 +964,14 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
     fun openQueueDialog(view: View) {
         if (checkIsPlayer(false) && mMediaPlayerHolder.queueSongs.isNotEmpty())
-            mQueueDialog = DialogHelpers.showQueueSongsDialog(this, mMediaPlayerHolder)
+            mQueueDialog = DialogHelper.showQueueSongsDialog(this, mMediaPlayerHolder)
         else
             getString(R.string.error_no_queue).toToast(this)
     }
 
     fun openLovedSongsDialog(view: View) {
         if (!goPreferences.lovedSongs.isNullOrEmpty())
-            DialogHelpers.showLovedSongsDialog(this, this, mMediaPlayerHolder)
+            DialogHelper.showLovedSongsDialog(this, this, mMediaPlayerHolder)
         else
             getString(R.string.error_no_loved_songs).toToast(this)
     }
