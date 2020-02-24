@@ -11,7 +11,7 @@ import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedMusic
-import com.iven.musicplayergo.musicLibrary
+
 import com.iven.musicplayergo.player.MediaPlayerHolder
 
 
@@ -24,12 +24,14 @@ object MusicOrgHelper {
     @JvmStatic
     fun getPlayingAlbumPosition(
         selectedArtist: String?,
+        deviceAlbumsByArtist: MutableMap<String, List<Album>>?,
         mediaPlayerHolder: MediaPlayerHolder
     ) = try {
         val currentSong = mediaPlayerHolder.currentSong.first
         val album = getAlbumFromList(
             selectedArtist,
-            currentSong?.album
+            currentSong?.album,
+            deviceAlbumsByArtist
         )
         album.second
     } catch (e: Exception) {
@@ -39,8 +41,12 @@ object MusicOrgHelper {
 
     @JvmStatic
     //returns a pair of album and its position given a list of albums
-    fun getAlbumFromList(artist: String?, album: String?): Pair<Album, Int> {
-        val albums = musicLibrary.allAlbumsByArtist?.get(artist)
+    fun getAlbumFromList(
+        artist: String?,
+        album: String?,
+        deviceAlbumsByArtist: MutableMap<String, List<Album>>?
+    ): Pair<Album, Int> {
+        val albums = deviceAlbumsByArtist?.get(artist)
         return try {
             val position = albums?.indexOfFirst { it.title == album }!!
             Pair(albums[position], position)
@@ -51,14 +57,19 @@ object MusicOrgHelper {
     }
 
     @JvmStatic
-    fun getAlbumSongs(artist: String?, album: String?) = getAlbumFromList(
+    fun getAlbumSongs(
+        artist: String?,
+        album: String?,
+        deviceAlbumsByArtist: MutableMap<String, List<Album>>?
+    ) = getAlbumFromList(
         artist,
-        album
+        album,
+        deviceAlbumsByArtist
     ).first.music
 
     @JvmStatic
-    fun getSongForRestore(savedMusic: SavedMusic?) =
-        musicLibrary.allSongsUnfiltered.firstOrNull { s ->
+    fun getSongForRestore(savedMusic: SavedMusic?, deviceSongs: MutableList<Music>) =
+        deviceSongs.firstOrNull { s ->
             s.artist == savedMusic?.artist && s.title == savedMusic?.title && s.displayName == savedMusic?.displayName
                     && s.year == savedMusic?.year && s.duration == savedMusic.duration && s.album == savedMusic.album
         }

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
+import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.AccentsAdapter
 import com.iven.musicplayergo.adapters.ActiveTabsAdapter
@@ -22,7 +23,6 @@ import com.iven.musicplayergo.adapters.FiltersAdapter
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
-import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.ui.UIControlInterface
 import kotlin.properties.Delegates
 
@@ -91,8 +91,9 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 this
 
             findPreference<Preference>(getString(R.string.found_songs_pref))?.apply {
+                val musicRepository = MusicRepository.getInstance()
                 title =
-                    getString(R.string.found_songs_pref_title, musicLibrary.allSongsFiltered?.size)
+                    getString(R.string.found_songs_pref_title, musicRepository.musicDatabaseSize)
                 onPreferenceClickListener = this@PreferencesFragment
             }
 

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
+import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.helpers.DialogHelper
@@ -17,7 +18,7 @@ import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.MusicOrgHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.Music
-import com.iven.musicplayergo.musicLibrary
+
 import com.iven.musicplayergo.ui.SongsViewHolder
 import com.iven.musicplayergo.ui.UIControlInterface
 import kotlinx.android.synthetic.main.fragment_all_music.*
@@ -53,11 +54,14 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
         mSongsRecyclerView = all_music_rv
 
-        mAllMusic = musicLibrary.allSongsFiltered
 
-        setMusicDataSource(mAllMusic)
 
         context?.let { cxt ->
+
+            val musicRepository = MusicRepository.getInstance()
+            mAllMusic = musicRepository.deviceMusicFiltered
+
+            setMusicDataSource(mAllMusic)
 
             mSongsRecyclerView.apply {
 
@@ -89,7 +93,11 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                         onClick {
                             mUIControlInterface.onSongSelected(
                                 item,
-                                MusicOrgHelper.getAlbumSongs(item.artist, item.album),
+                                MusicOrgHelper.getAlbumSongs(
+                                    item.artist,
+                                    item.album,
+                                    musicRepository.deviceAlbumsByArtist
+                                ),
                                 false
                             )
                         }

@@ -40,6 +40,8 @@ import kotlinx.android.synthetic.main.search_toolbar.*
 class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
     SearchView.OnQueryTextListener {
 
+    private lateinit var mMusicRepository: MusicRepository
+
     private var sIsFoldersFragment = false
 
     //views
@@ -82,7 +84,7 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
 
     private fun getSortedList(): MutableList<String>? {
         val selectedList =
-            if (sIsFoldersFragment) musicLibrary.allSongsByFolder?.keys else musicLibrary.allAlbumsByArtist?.keys
+            if (sIsFoldersFragment) mMusicRepository.deviceMusicByFolder?.keys else mMusicRepository.deviceAlbumsByArtist?.keys
         return ListsHelper.getSortedList(
             mSorting,
             selectedList?.toMutableList()
@@ -100,11 +102,13 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
         mSorting =
             if (sIsFoldersFragment) goPreferences.foldersSorting else goPreferences.artistsSorting
 
-        mList = getSortedList()?.filter { !goPreferences.filters?.contains(it)!! }?.toMutableList()
-
-        setListDataSource(mList)
-
         context?.let { cxt ->
+
+            mMusicRepository = MusicRepository.getInstance()
+
+            mList =
+                getSortedList()?.filter { !goPreferences.filters?.contains(it)!! }?.toMutableList()
+            setListDataSource(mList)
 
             sLandscape = ThemeHelper.isDeviceLand(cxt.resources)
 
@@ -130,7 +134,7 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
                             title.text = item
                             subtitle.text = if (sIsFoldersFragment) getString(
                                 R.string.folder_info,
-                                musicLibrary.allSongsByFolder?.getValue(item)?.size
+                                mMusicRepository.deviceMusicByFolder?.getValue(item)?.size
                             ) else getArtistSubtitle(item)
                         }
 
@@ -218,8 +222,8 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
 
     private fun getArtistSubtitle(item: String) = getString(
         R.string.artist_info,
-        musicLibrary.allAlbumsByArtist?.getValue(item)?.size,
-        musicLibrary.allSongsByArtist?.getValue(item)?.size
+        mMusicRepository.deviceAlbumsByArtist?.getValue(item)?.size,
+        mMusicRepository.deviceSongsByArtist?.getValue(item)?.size
     )
 
     @SuppressLint("DefaultLocale")

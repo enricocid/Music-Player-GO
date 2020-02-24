@@ -41,6 +41,8 @@ import kotlinx.android.synthetic.main.fragment_details.*
 
 class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryTextListener {
 
+    private lateinit var mMusicRepository: MusicRepository
+
     private var sFolder = false
 
     private lateinit var mArtistDetailsView: View
@@ -83,30 +85,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             sFolder = isFolder
         }
 
-        if (!sFolder) {
-
-            arguments?.getInt(TAG_SELECTED_ALBUM_POSITION)?.let { selectedAlbumPosition ->
-                mSelectedAlbumPosition = selectedAlbumPosition
-            }
-
-            musicLibrary.allAlbumsByArtist?.get(mSelectedArtistOrFolder)
-                ?.let { selectedArtistAlbums ->
-                    mSelectedArtistAlbums = selectedArtistAlbums
-                }
-
-            mSongsForArtistOrFolder = musicLibrary.allSongsByArtist?.get(mSelectedArtistOrFolder)
-
-            mSelectedAlbum = when {
-                mSelectedAlbumPosition != -1 -> mSelectedArtistAlbums?.get(mSelectedAlbumPosition)
-                else -> {
-                    mSelectedAlbumPosition = 0
-                    mSelectedArtistAlbums?.get(0)
-                }
-            }
-
-        } else {
-            mSongsForArtistOrFolder =
-                musicLibrary.allSongsByFolder?.get(mSelectedArtistOrFolder)
+        if (!sFolder) arguments?.getInt(TAG_SELECTED_ALBUM_POSITION)?.let { selectedAlbumPosition ->
+            mSelectedAlbumPosition = selectedAlbumPosition
         }
 
         // This makes sure that the container activity has implemented
@@ -148,6 +128,33 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
         context?.let { cxt ->
 
+            mMusicRepository = MusicRepository.getInstance()
+
+            if (!sFolder) {
+
+                mMusicRepository.deviceAlbumsByArtist?.get(mSelectedArtistOrFolder)
+                    ?.let { selectedArtistAlbums ->
+                        mSelectedArtistAlbums = selectedArtistAlbums
+                    }
+
+                mSongsForArtistOrFolder =
+                    mMusicRepository.deviceSongsByArtist?.get(mSelectedArtistOrFolder)
+
+                mSelectedAlbum = when {
+                    mSelectedAlbumPosition != -1 -> mSelectedArtistAlbums?.get(
+                        mSelectedAlbumPosition
+                    )
+                    else -> {
+                        mSelectedAlbumPosition = 0
+                        mSelectedArtistAlbums?.get(0)
+                    }
+                }
+
+            } else {
+                mSongsForArtistOrFolder =
+                    mMusicRepository.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
+            }
+
             sLandscape = ThemeHelper.isDeviceLand(cxt.resources)
 
             mDetailsToolbar.apply {
@@ -186,7 +193,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 selected_album_container.visibility = View.GONE
 
                 mSongsForArtistOrFolder =
-                    musicLibrary.allSongsByFolder?.get(mSelectedArtistOrFolder)
+                    mMusicRepository.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
 
                 mDetailsToolbar.subtitle = getString(
                     R.string.folder_info,
@@ -235,7 +242,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             val selectedPlaylist =
                                 if (sFolder) mSongsForArtistOrFolder
                                 else
-                                    MusicOrgHelper.getAlbumSongs(item.artist, item.album)
+                                    MusicOrgHelper.getAlbumSongs(
+                                        item.artist,
+                                        item.album,
+                                        mMusicRepository.deviceAlbumsByArtist
+                                    )
 
                             mUIControlInterface.onSongSelected(
                                 item,
@@ -357,7 +368,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     }
 
     private fun applySortingToMusic(context: Context, order: Int) {
-        val selectedList = musicLibrary.allSongsByFolder?.get(mSelectedArtistOrFolder)
+        val selectedList = mMusicRepository.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
         mSongsForArtistOrFolder = ListsHelper.getSortedMusicList(
             order,
             selectedList?.toMutableList()

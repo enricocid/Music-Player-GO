@@ -16,14 +16,14 @@ import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.loader.app.LoaderManager
-import androidx.loader.content.Loader
+import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.LayoutMode
@@ -35,18 +35,19 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.iven.musicplayergo.MusicRepository
+import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_ARTISTS
 import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_FOLDERS
+import com.iven.musicplayergo.fragments.ErrorFragment.Companion.TAG_NO_MUSIC
 import com.iven.musicplayergo.fragments.ErrorFragment.Companion.TAG_NO_MUSIC_INTENT
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.*
-import com.iven.musicplayergo.loader.MusicLoader
 import com.iven.musicplayergo.models.Music
-import com.iven.musicplayergo.musicLibrary
 import com.iven.musicplayergo.player.*
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
@@ -54,13 +55,14 @@ import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.player_controls_panel.*
 import kotlin.properties.Delegates
 
-private const val MUSIC_LOADER_ID = 25
 const val PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 2588
 const val RESTORE_SETTINGS_FRAGMENT = "restore_settings_fragment_key"
 
 @Suppress("UNUSED_PARAMETER")
-class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterface,
-    LoaderManager.LoaderCallbacks<Any?> {
+class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterface {
+
+    private val mMusicViewModel: MusicViewModel by viewModels()
+    private lateinit var mMusicRepository: MusicRepository
 
     //colors
     private var mResolvedAccentColor: Int by Delegates.notNull()
@@ -147,11 +149,11 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder
             mMediaPlayerHolder.mediaPlayerInterface = mMediaPlayerInterface
 
-            LoaderManager.getInstance(this@MainActivity).initLoader(
-                MUSIC_LOADER_ID,
-                null,
-                this@MainActivity
-            )
+            mMusicRepository = MusicRepository.getInstance()
+            mMusicViewModel.getDeviceMusic()
+            mMusicViewModel.deviceMusic.observe(this@MainActivity, Observer { returnedMusic ->
+                finishSetup(returnedMusic)
+            })
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
@@ -324,40 +326,31 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             )
     }
 
-    override fun onLoaderReset(loader: Loader<Any?>) {}
+    private fun finishSetup(music: MutableList<Music>?) {
 
-    override fun onCreateLoader(id: Int, args: Bundle?) =
-        MusicLoader(this)
+        if (!music.isNullOrEmpty()) {
 
-    override fun onLoadFinished(loader: Loader<Any?>, data: Any?) {
+            if (mLoadingProgress.visibility != View.GONE) mLoadingProgress.visibility = View.GONE
 
-        LoaderManager.getInstance(this).destroyLoader(MUSIC_LOADER_ID)
+            initViewPager()
 
-        loading_progress_bar.apply {
-            if (visibility != View.GONE) visibility = View.GONE
-        }
+            //handle restoring: handle external app intent or restore playback
+            if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null) {
+                handleIntent(intent)
 
-        if (data != null) finishSetup()
-        else notifyError(
-            ErrorFragment.TAG_NO_MUSIC
-        )
-    }
+            } else {
 
-    private fun finishSetup() {
-
-        initViewPager()
-
-        //handle restoring: handle external app intent or restore playback
-        if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null) {
-            handleIntent(intent)
-
-        } else {
-            synchronized(restorePlayerStatus()) {
-                mPlayerControlsView.animate().apply {
-                    duration = 500
-                    alpha(1.0F)
+                synchronized(restorePlayerStatus()) {
+                    mPlayerControlsView.animate().apply {
+                        duration = 500
+                        alpha(1.0F)
+                    }
                 }
             }
+        } else {
+            notifyError(
+                TAG_NO_MUSIC
+            )
         }
     }
 
@@ -438,7 +431,11 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             DetailsFragment.newInstance(
                 selectedArtistOrFolder,
                 isFolder,
-                MusicOrgHelper.getPlayingAlbumPosition(selectedArtistOrFolder, mMediaPlayerHolder)
+                MusicOrgHelper.getPlayingAlbumPosition(
+                    selectedArtistOrFolder,
+                    mMusicRepository.deviceAlbumsByArtist,
+                    mMediaPlayerHolder
+                )
             )
 
         supportFragmentManager.beginTransaction()
@@ -732,9 +729,16 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                     isSongRestoredFromPrefs = goPreferences.latestPlayedSong != null
 
                     val song =
-                        if (isSongRestoredFromPrefs) MusicOrgHelper.getSongForRestore(goPreferences.latestPlayedSong) else musicLibrary.randomMusic
+                        if (isSongRestoredFromPrefs) MusicOrgHelper.getSongForRestore(
+                            goPreferences.latestPlayedSong,
+                            mMusicRepository.deviceMusicList
+                        ) else mMusicRepository.randomMusic
 
-                    val songs = MusicOrgHelper.getAlbumSongs(song?.artist, song?.album)
+                    val songs = MusicOrgHelper.getAlbumSongs(
+                        song?.artist,
+                        song?.album,
+                        mMusicRepository.deviceAlbumsByArtist
+                    )
 
                     isPlay = false
 
@@ -857,6 +861,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                     mDetailsFragment.tryToSnapToAlbumPosition(
                         MusicOrgHelper.getPlayingAlbumPosition(
                             selectedArtistOrFolder,
+                            mMusicRepository.deviceAlbumsByArtist,
                             mMediaPlayerHolder
                         )
                     )
@@ -971,7 +976,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
     fun openLovedSongsDialog(view: View) {
         if (!goPreferences.lovedSongs.isNullOrEmpty())
-            DialogHelper.showLovedSongsDialog(this, this, mMediaPlayerHolder)
+            DialogHelper.showLovedSongsDialog(this, this, mMediaPlayerHolder, mMusicRepository)
         else
             getString(R.string.error_no_loved_songs).toToast(this)
     }
@@ -985,9 +990,13 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             try {
                 val displayNameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
                 cursor.moveToFirst()
-                val song = cursor.getString(displayNameIndex)?.getSongForIntent()
+                val song = mMusicRepository.getSongFromIntent(cursor.getString(displayNameIndex))
                 //get album songs and sort them
-                val albumSongs = MusicOrgHelper.getAlbumSongs(song?.artist, song?.album)
+                val albumSongs = MusicOrgHelper.getAlbumSongs(
+                    song?.artist,
+                    song?.album,
+                    mMusicRepository.deviceAlbumsByArtist
+                )
 
                 onSongSelected(song, albumSongs, false)
 

@@ -11,6 +11,7 @@ import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
+import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.adapters.QueueAdapter
@@ -132,7 +133,8 @@ object DialogHelper {
     fun showLovedSongsDialog(
         context: Context,
         uiControlInterface: UIControlInterface,
-        mediaPlayerHolder: MediaPlayerHolder
+        mediaPlayerHolder: MediaPlayerHolder,
+        musicRepository: MusicRepository
     ) {
 
         MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
@@ -140,7 +142,13 @@ object DialogHelper {
             title(R.string.loved_songs)
 
             customListAdapter(
-                LovedSongsAdapter(context, this, uiControlInterface, mediaPlayerHolder)
+                LovedSongsAdapter(
+                    context,
+                    this,
+                    uiControlInterface,
+                    mediaPlayerHolder,
+                    musicRepository
+                )
             )
 
             val recyclerView = getRecyclerView()
