@@ -432,7 +432,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 mediaPlayer.setDataSource(playerService, uri)
             }
 
-            mediaPlayer.prepare()
+            mediaPlayer.prepareAsync()
 
         } catch (e: Exception) {
             e.printStackTrace()
