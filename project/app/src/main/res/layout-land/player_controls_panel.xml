@@ -62,7 +62,7 @@
                     android:singleLine="true"
                     android:text="@string/app_name"
                     android:textAlignment="textStart"
-                    android:textAppearance="@android:style/TextAppearance.Material.Small"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     android:textColor="?android:attr/textColorPrimary"
                     android:textStyle="bold" />
 
@@ -75,7 +75,7 @@
                     android:singleLine="true"
                     android:text="@string/versionName"
                     android:textAlignment="textStart"
-                    android:textAppearance="@android:style/TextAppearance.Material.Caption"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
                     android:textColor="?android:attr/textColorPrimary" />
             </LinearLayout>
 
@@ -123,9 +123,8 @@
                     android:gravity="center"
                     android:scaleX="0.50"
                     android:scaleY="0.50"
-                    android:textAppearance="@android:style/TextAppearance.Material.Caption"
-                    android:textColor="?android:attr/textColorPrimaryInverse"
-                    android:textStyle="bold" />
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    android:textColor="?android:attr/textColorPrimaryInverse" />
 
             </FrameLayout>
         </LinearLayout>

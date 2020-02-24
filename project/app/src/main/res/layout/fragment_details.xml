@@ -52,7 +52,7 @@
                 android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:textAlignment="textEnd"
-                android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:textColor="?colorPrimary" />
 
             <TextView
@@ -64,7 +64,7 @@
                 android:paddingEnd="12dp"
                 android:paddingBottom="8dp"
                 android:singleLine="true"
-                android:textAppearance="@android:style/TextAppearance.Material.Caption"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                 android:textColor="?android:attr/textColorSecondary" />
         </LinearLayout>
 

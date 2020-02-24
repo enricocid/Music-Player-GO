@@ -40,7 +40,7 @@
             android:padding="2dp"
             android:textAlignment="center"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="14sp" />
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                 android:layout_weight="1"
                 android:singleLine="true"
                 android:textAlignment="textStart"
-                android:textAppearance="@android:style/TextAppearance.Material.Caption"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
                 android:textColor="?android:attr/textColorSecondary" />
 
             <TextView
@@ -67,7 +67,7 @@
                 android:layout_weight="1"
                 android:singleLine="true"
                 android:textAlignment="textEnd"
-                android:textAppearance="@android:style/TextAppearance.Material.Caption"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
                 android:textColor="?attr/colorPrimary" />
 
         </LinearLayout>

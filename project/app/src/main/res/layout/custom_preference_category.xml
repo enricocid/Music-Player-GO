@@ -8,5 +8,5 @@
     android:paddingStart="?attr/listPreferredItemPaddingStart"
     android:paddingTop="16dp"
     android:paddingEnd="?attr/listPreferredItemPaddingEnd"
-    android:textAppearance="@android:style/TextAppearance.Material"
+    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
     android:textColor="?attr/colorPrimary" />

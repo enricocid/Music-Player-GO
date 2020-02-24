@@ -15,7 +15,7 @@
         android:ellipsize="marquee"
         android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true"
-        android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         android:textColor="?android:attr/textColorPrimary" />
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:singleLine="true"
-        android:textAppearance="@android:style/TextAppearance.Material.Caption"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
         android:textColor="?android:attr/textColorSecondary" />
 
     <TextView
@@ -33,6 +33,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:singleLine="true"
-        android:textAppearance="@android:style/TextAppearance.Material.Caption"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
         android:textColor="?android:attr/textColorSecondary" />
 </LinearLayout>
