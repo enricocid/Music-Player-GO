@@ -150,10 +150,10 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             mMediaPlayerHolder.mediaPlayerInterface = mMediaPlayerInterface
 
             mMusicRepository = MusicRepository.getInstance()
-            mMusicViewModel.getDeviceMusic()
             mMusicViewModel.deviceMusic.observe(this@MainActivity, Observer { returnedMusic ->
                 finishSetup(returnedMusic)
             })
+            mMusicViewModel.getDeviceMusic()
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
