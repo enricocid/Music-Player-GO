@@ -13,7 +13,7 @@ import kotlin.coroutines.CoroutineContext
 class MusicViewModel(application: Application) : AndroidViewModel(application), CoroutineScope {
 
     override val coroutineContext: CoroutineContext
-        get() = Dispatchers.IO
+        get() = Dispatchers.Main
 
     val deviceMusic = MutableLiveData<MutableList<Music>?>()
 
@@ -24,7 +24,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application), 
         launch {
             val music =
                 musicRepository.getDeviceMusic(getApplication()) // get music from MediaStore on IO thread
-            withContext(Dispatchers.Main) {
+            withContext(coroutineContext) {
                 deviceMusic.value = music // post values on Main thread
             }
         }
