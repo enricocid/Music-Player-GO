@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
-import androidx.vectordrawable.graphics.drawable.ArgbEvaluator
+import com.google.android.material.animation.ArgbEvaluatorCompat
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.helpers.ThemeHelper
 import kotlin.math.max
@@ -95,7 +95,7 @@ fun View.createCircularReveal(isCentered: Boolean, show: Boolean): Animator {
 
     ValueAnimator().apply {
         setIntValues(startColor, endColor)
-        setEvaluator(ArgbEvaluator())
+        setEvaluator(ArgbEvaluatorCompat())
         addUpdateListener { valueAnimator -> setBackgroundColor((valueAnimator.animatedValue as Int)) }
         duration = revealDuration
         if (isCentered) doOnEnd {
