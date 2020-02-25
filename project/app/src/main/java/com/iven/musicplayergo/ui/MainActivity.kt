@@ -662,8 +662,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mPlayerControlsPanelBinding.lovedSongsButton,
             lovedSongsButtonColor
         )
-        val songsNumber = if (lovedSongs.isNullOrEmpty()) 0 else lovedSongs.size
-        mPlayerControlsPanelBinding.lovedSongsNumber.text = songsNumber.toString()
     }
 
     private fun restorePlayerStatus() {
