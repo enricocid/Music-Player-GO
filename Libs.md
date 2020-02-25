@@ -1,6 +1,6 @@
 # 3rd party awesome libraries, tools and resources used in the app
 
-- [**Raleway**](https://fonts.google.com/specimen/Raleway) font by Google Fonts
+- [**Alegreya**](https://fonts.google.com/specimen/Alegreya) font by Google Fonts
 
 - [**Indicator Fast Scroll**](https://github.com/reddit/IndicatorFastScroll) library by Reddit
 
@@ -12,9 +12,7 @@
 
 - [**Screener - Better screenshots**](https://play.google.com/store/apps/details?id=de.toastcode.screener) app by [**Toastcode**](https://toastco.de/)
 
-- [**Round icons**](https://material.io/tools/icons/?style=round) by Google
-
-- [**Database icon**](https://materialdesignicons.com/icon/database) by Cody [XT3000](https://twitter.com/XT3000)
+- [**Outline icons**](https://material.io/tools/icons/?style=round) by Google
 
 - [**sort-alphabetical-descending-variant icon**](https://materialdesignicons.com/icon/sort-alphabetical-descending-variant) by Austin Andrews [templatarian](https://twitter.com/templarian)
 
