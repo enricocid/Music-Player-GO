@@ -14,7 +14,7 @@
         android:theme="@style/ToolbarStyle"
         app:title="@string/songs"
         app:collapseIcon="@drawable/ic_navigate_before"
-        app:navigationIcon="@drawable/ic_round_close"
+        app:navigationIcon="@drawable/ic_close"
         app:titleTextAppearance="@style/ToolbarStyle.Title"
         app:titleTextColor="?attr/colorPrimary" />
 

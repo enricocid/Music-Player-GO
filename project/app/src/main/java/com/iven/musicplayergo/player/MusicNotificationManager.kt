@@ -107,7 +107,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             REPEAT_ACTION -> icon = ThemeHelper.getRepeatIcon(playerService.mediaPlayerHolder)
             PREV_ACTION -> icon = R.drawable.ic_skip_previous
             NEXT_ACTION -> icon = R.drawable.ic_skip_next
-            CLOSE_ACTION -> icon = R.drawable.ic_round_close
+            CLOSE_ACTION -> icon = R.drawable.ic_close
         }
         return NotificationCompat.Action.Builder(icon, action, playerAction(action)).build()
     }

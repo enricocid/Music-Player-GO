@@ -19,7 +19,7 @@
 
     <Preference
         android:summary="@string/open_git_pref_summary"
-        app:icon="@drawable/ic_github_circle"
+        app:icon="@drawable/ic_code"
         app:key="@string/open_git_pref"
         app:title="@string/open_git_pref_title" />
 
@@ -49,7 +49,7 @@
 
         <Preference
             app:enableCopying="true"
-            app:icon="@drawable/ic_circle"
+            app:icon="@drawable/ic_colorize"
             app:key="@string/accent_pref"
             app:title="@string/accent_pref_title" />
 

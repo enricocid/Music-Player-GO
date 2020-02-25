@@ -70,20 +70,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private var mResolvedDisabledIconsColor: Int by Delegates.notNull()
 
     //fragments
+    private var mActiveFragments: MutableList<String>? = null
     private var mArtistsFragment: ArtistsFoldersFragment? = null
     private var mAllMusicFragment: AllMusicFragment? = null
     private var mFoldersFragment: ArtistsFoldersFragment? = null
     private var mSettingsFragment: SettingsFragment? = null
-
     private lateinit var mDetailsFragment: DetailsFragment
+
+    //booleans
     private val sDetailsFragmentExpanded get() = ::mDetailsFragment.isInitialized && mDetailsFragment.isAdded
     private var sRevealAnimationRunning = false
-
-    private var mActiveFragments: MutableList<String>? = null
-
     private var sAppearanceChanged = false
     private var sRestoreSettingsFragment = false
-
     private var sLandscape = false
 
     //now playing
@@ -93,7 +91,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mNowPlayingExtendedControlsBinding: NowPlayingExtendedControlsBinding
 
     //music player things
-
     private lateinit var mQueueDialog: MaterialDialog
     private lateinit var mQueueAdapter: QueueAdapter
 

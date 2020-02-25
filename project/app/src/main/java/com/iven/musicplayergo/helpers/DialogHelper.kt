@@ -31,32 +31,32 @@ object DialogHelper {
         mediaPlayerHolder: MediaPlayerHolder
     ) = MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
-            title(R.string.queue)
+        title(R.string.queue)
 
-            customListAdapter(
-                QueueAdapter(context, this, mediaPlayerHolder)
-            )
+        customListAdapter(
+            QueueAdapter(context, this, mediaPlayerHolder)
+        )
 
-            val recyclerView = getRecyclerView()
+        val recyclerView = getRecyclerView()
 
-            if (ThemeHelper.isDeviceLand(context.resources)) {
-                recyclerView.layoutManager = GridLayoutManager(context, 3)
-            } else {
-                recyclerView.addItemDecoration(
-                    ThemeHelper.getRecyclerViewDivider(
-                        context
-                    )
+        if (ThemeHelper.isDeviceLand(context.resources)) {
+            recyclerView.layoutManager = GridLayoutManager(context, 3)
+        } else {
+            recyclerView.addItemDecoration(
+                ThemeHelper.getRecyclerViewDivider(
+                    context
                 )
-                if (goPreferences.isEdgeToEdge) {
-                    window?.apply {
-                        ThemeHelper.handleLightSystemBars(decorView)
-                        edgeToEdge {
-                            recyclerView.fit { Edge.Bottom }
-                            decorView.fit { Edge.Top }
-                        }
+            )
+            if (goPreferences.isEdgeToEdge) {
+                window?.apply {
+                    ThemeHelper.handleLightSystemBars(decorView)
+                    edgeToEdge {
+                        recyclerView.fit { Edge.Bottom }
+                        decorView.fit { Edge.Top }
                     }
                 }
             }
+        }
     }
 
     @JvmStatic

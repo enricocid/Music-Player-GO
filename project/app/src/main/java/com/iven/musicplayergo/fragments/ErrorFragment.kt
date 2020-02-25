@@ -40,12 +40,12 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
                 }
                 TAG_NO_MUSIC_INTENT -> {
                     sNoMusic = false
-                    mErrorIcon = R.drawable.ic_sentiment_very_dissatisfied
+                    mErrorIcon = R.drawable.ic_mood_bad
                     mErrorString = R.string.error_unknown_unsupported
                 }
                 TAG_SD_NOT_READY -> {
                     sNoMusic = true
-                    mErrorIcon = R.drawable.ic_sentiment_very_dissatisfied
+                    mErrorIcon = R.drawable.ic_mood_bad
                     mErrorString = R.string.error_not_ready
                 }
             }
