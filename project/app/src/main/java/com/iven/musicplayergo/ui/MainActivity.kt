@@ -45,6 +45,7 @@ import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_ART
 import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_FOLDERS
 import com.iven.musicplayergo.fragments.ErrorFragment.Companion.TAG_NO_MUSIC
 import com.iven.musicplayergo.fragments.ErrorFragment.Companion.TAG_NO_MUSIC_INTENT
+import com.iven.musicplayergo.fragments.ErrorFragment.Companion.TAG_SD_NOT_READY
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.*
 import com.iven.musicplayergo.models.Music
@@ -740,18 +741,22 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                         mMusicRepository.deviceAlbumsByArtist
                     )
 
-                    isPlay = false
+                    if (!songs.isNullOrEmpty()) {
+                        isPlay = false
 
-                    startPlayback(
-                        song,
-                        songs,
-                        isSongRestoredFromPrefs && goPreferences.latestPlayedSong?.isFromFolder!!
-                    )
+                        startPlayback(
+                            song,
+                            songs,
+                            isSongRestoredFromPrefs && goPreferences.latestPlayedSong?.isFromFolder!!
+                        )
 
-                    updatePlayingInfo(false)
+                        updatePlayingInfo(false)
 
-                    mSeekProgressBar.progress =
-                        if (isSongRestoredFromPrefs) goPreferences.latestPlayedSong?.startFrom!! else 0
+                        mSeekProgressBar.progress =
+                            if (isSongRestoredFromPrefs) goPreferences.latestPlayedSong?.startFrom!! else 0
+                    } else {
+                        notifyError(TAG_SD_NOT_READY)
+                    }
                 }
             }
         }

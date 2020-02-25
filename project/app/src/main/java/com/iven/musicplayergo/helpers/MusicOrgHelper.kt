@@ -40,6 +40,22 @@ object MusicOrgHelper {
     }
 
     @JvmStatic
+    fun getAlbumSongs(
+        artist: String?,
+        album: String?,
+        deviceAlbumsByArtist: MutableMap<String, List<Album>>?
+    ) = try {
+        getAlbumFromList(
+            artist,
+            album,
+            deviceAlbumsByArtist
+        ).first.music
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
+
+    @JvmStatic
     //returns a pair of album and its position given a list of albums
     fun getAlbumFromList(
         artist: String?,
@@ -55,17 +71,6 @@ object MusicOrgHelper {
             Pair(albums?.get(0)!!, 0)
         }
     }
-
-    @JvmStatic
-    fun getAlbumSongs(
-        artist: String?,
-        album: String?,
-        deviceAlbumsByArtist: MutableMap<String, List<Album>>?
-    ) = getAlbumFromList(
-        artist,
-        album,
-        deviceAlbumsByArtist
-    ).first.music
 
     @JvmStatic
     fun getSongForRestore(savedMusic: SavedMusic?, deviceSongs: MutableList<Music>) =
