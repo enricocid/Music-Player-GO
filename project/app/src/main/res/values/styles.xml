@@ -3,8 +3,8 @@
     <style name="BaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <item name="indicatorFastScrollerStyle">@style/FastScrollerColorFull</item>
-        <item name="android:fontFamily">@font/raleway</item>
-        <item name="md_font_title">@font/raleway_bold</item>
+        <item name="android:fontFamily">@font/alegreya_sans</item>
+        <item name="md_font_title">@font/alegreya_sans_sc_black</item>
         <item name="md_background_color">@color/dialogsBackground</item>
         <item name="md_corner_radius">@dimen/md_corner_radius</item>
         <item name="preferenceTheme">@style/PrefTheme</item>
@@ -27,7 +27,7 @@
     </style>
 
     <style name="DialogsStyle.Title" parent="@android:style/TextAppearance.Material.Title">
-        <item name="android:fontFamily">@font/raleway_bold</item>
+        <item name="android:fontFamily">@font/alegreya_sans_sc_black</item>
     </style>
 
     <!-- Indicator text style -->
@@ -37,12 +37,12 @@
     </style>
 
     <style name="FastScrollerTextStyle" parent="@android:style/TextAppearance.Material.Caption">
-        <item name="android:fontFamily">@font/raleway_bold</item>
+        <item name="android:fontFamily">@font/alegreya_sans_sc_black</item>
     </style>
 
     <!-- Indicator thumb text style -->
     <style name="IndicatorThumbTextAppearance" parent="@android:style/TextAppearance.Material.Medium">
-        <item name="android:fontFamily">@font/raleway_bold</item>
+        <item name="android:fontFamily">@font/alegreya_sans_sc_black</item>
     </style>
 
     <!-- This will set the fade in animation on all the activities by default -->
@@ -63,7 +63,7 @@
     </style>
 
     <style name="ToolbarStyle.Title" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:fontFamily">@font/raleway_bold</item>
+        <item name="android:fontFamily">@font/alegreya_sans_sc_black</item>
     </style>
 
     <style name="ToolbarStyle.Subtitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle" />
