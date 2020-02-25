@@ -7,7 +7,6 @@
     <string name="queue_songs_clear">Queue will be cleared. Continue?</string>
     <string name="loved_songs_clear">Loved songs will be cleared. Continue?</string>
     <string name="loved_song_remove">%1s (%2s) will be deleted from loved songs. Continue?</string>
-    <string name="retry">Retry</string>
 
     <!-- Main - Fragments titles -->
     <string name="artists">Artists</string>
