@@ -25,7 +25,7 @@
     <string name="error_bad_id">Magari esegui una canzone!</string>
     <string name="error_no_eq">Nessun equalizzatore trovato!</string>
     <string name="error_no_music">Nessuna canzone trovata :(</string>
-    <string name="error_not_ready">Qualcosa è andato storto nel caricamento della libreria musicale! :( Ciò è probabilmmente dovuto alla scheda sd che qualche volta viene smontata forzando il MediaStore Android a ricostruire i suoi records nel database. Soluzione: riprova più tardi :)</string>
+    <string name="error_not_ready">Qualcosa è andato storto nel caricamento della libreria musicale! :( Ciò è probabilmente dovuto alla scheda sd che qualche volta viene smontata forzando il MediaStore Android a ricostruire i suoi records nel database. Soluzione: riprova più tardi :)</string>
     <string name="error_unknown_unsupported">Qualcosa è andato storto! :( Forse il formato della canzone non è supportato o la cartella non è accessibile(non dipende dall\'app!)</string>
     <string name="error_media_buttons">Qualcosa è andato storto! :( Per favore riavvia la riproduzione dall\'app</string>
     <string name="on_close_activity">Vuoi interrompere la riproduzione?</string>
