@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
-                android:fontFamily="@font/alegreya_sans_sc_black"
+                android:fontFamily="@font/source_sans_pro_black"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:paddingStart="12dp"
                 android:paddingTop="8dp"

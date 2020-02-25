@@ -1,6 +1,6 @@
 # 3rd party awesome libraries, tools and resources used in the app
 
-- [**Alegreya**](https://fonts.google.com/specimen/Alegreya) font by Google Fonts
+- [**Source sans pro**](https://fonts.google.com/specimen/Source+Sans+Pro) font by Google Fonts
 
 - [**Indicator Fast Scroll**](https://github.com/reddit/IndicatorFastScroll) library by Reddit
 
