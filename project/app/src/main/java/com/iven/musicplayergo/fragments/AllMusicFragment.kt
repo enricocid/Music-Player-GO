@@ -6,23 +6,20 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.databinding.FragmentAllMusicBinding
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.MusicOrgHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.Music
-
 import com.iven.musicplayergo.ui.SongsViewHolder
 import com.iven.musicplayergo.ui.UIControlInterface
-import kotlinx.android.synthetic.main.fragment_all_music.*
-import kotlinx.android.synthetic.main.search_toolbar.*
 
 /**
  * A simple [Fragment] subclass.
@@ -31,7 +28,7 @@ import kotlinx.android.synthetic.main.search_toolbar.*
  */
 class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQueryTextListener {
 
-    private lateinit var mSongsRecyclerView: RecyclerView
+    private lateinit var mAllMusicFragmentBinding: FragmentAllMusicBinding
 
     private var mAllMusic: MutableList<Music>? = null
     private val mDataSource = emptyDataSource()
@@ -52,9 +49,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mSongsRecyclerView = all_music_rv
-
-
+        mAllMusicFragmentBinding = FragmentAllMusicBinding.bind(view)
 
         context?.let { cxt ->
 
@@ -63,7 +58,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
             setMusicDataSource(mAllMusic)
 
-            mSongsRecyclerView.apply {
+            mAllMusicFragmentBinding.allMusicRv.apply {
 
                 // setup{} is an extension method on RecyclerView
                 setup {
@@ -115,10 +110,9 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 }
             }
 
-            search_toolbar.apply {
+            mAllMusicFragmentBinding.searchToolbar.apply {
 
                 inflateMenu(R.menu.menu_all_music)
-                title = getString(R.string.songs)
 
                 setNavigationOnClickListener {
                     mUIControlInterface.onCloseActivity()

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/player_controls_container"
+    tools:showIn="@layout/main_activity">
+
+<LinearLayout
+    android:id="@+id/player_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:alpha="0"
@@ -130,3 +132,4 @@
         app:tabMode="fixed"
         app:tabRippleColor="?attr/colorPrimary" />
 </LinearLayout>
+</merge>

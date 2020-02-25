@@ -9,7 +9,6 @@ import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.list.customListAdapter
-import com.afollestad.materialdialogs.list.getListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
 import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
@@ -30,9 +29,7 @@ object DialogHelper {
     fun showQueueSongsDialog(
         context: Context,
         mediaPlayerHolder: MediaPlayerHolder
-    ): Pair<MaterialDialog, QueueAdapter> {
-
-        val dialog = MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
+    ) = MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
             title(R.string.queue)
 
@@ -60,8 +57,6 @@ object DialogHelper {
                     }
                 }
             }
-        }
-        return Pair(dialog, dialog.getListAdapter() as QueueAdapter)
     }
 
     @JvmStatic

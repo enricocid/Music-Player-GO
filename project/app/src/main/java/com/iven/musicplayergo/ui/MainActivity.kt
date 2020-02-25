@@ -10,12 +10,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
-import android.util.AttributeSet
 import android.view.View
-import android.widget.ImageButton
-import android.widget.ProgressBar
 import android.widget.SeekBar
-import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -25,7 +21,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
@@ -33,12 +28,14 @@ import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
+import com.afollestad.materialdialogs.list.getListAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.QueueAdapter
+import com.iven.musicplayergo.databinding.*
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_ARTISTS
@@ -52,15 +49,16 @@ import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.*
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
-import kotlinx.android.synthetic.main.main_activity.*
-import kotlinx.android.synthetic.main.player_controls_panel.*
 import kotlin.properties.Delegates
 
 const val PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 2588
 const val RESTORE_SETTINGS_FRAGMENT = "restore_settings_fragment_key"
 
 @Suppress("UNUSED_PARAMETER")
-class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterface {
+class MainActivity : AppCompatActivity(), UIControlInterface {
+
+    private lateinit var mMainActivityBinding: MainActivityBinding
+    private lateinit var mPlayerControlsPanelBinding: PlayerControlsPanelBinding
 
     private val mMusicViewModel: MusicViewModel by viewModels()
     private lateinit var mMusicRepository: MusicRepository
@@ -86,42 +84,18 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     private var sAppearanceChanged = false
     private var sRestoreSettingsFragment = false
 
-    //views
-    private lateinit var mLoadingProgress: ProgressBar
-    private lateinit var mViewPager2: ViewPager2
-    private lateinit var mTabsLayout: TabLayout
-
     private var sLandscape = false
-
-    //settings/controls panel
-    private lateinit var mPlayerControlsView: View
-    private lateinit var mPlayingArtist: TextView
-    private lateinit var mPlayingSong: TextView
-    private lateinit var mSeekProgressBar: ProgressBar
-    private lateinit var mPlayPauseButton: ImageButton
-    private lateinit var mLovedSongsButton: ImageButton
-    private lateinit var mLoveSongsNumber: TextView
-    private lateinit var mQueueButton: ImageButton
 
     //now playing
     private lateinit var mNowPlayingDialog: MaterialDialog
-    private lateinit var mSeekBarNP: SeekBar
-    private lateinit var mSongTextNP: TextView
-    private lateinit var mArtistAlbumTextNP: TextView
-    private lateinit var mSongSeekTextNP: TextView
-    private lateinit var mSongDurationTextNP: TextView
-    private lateinit var mSkipPrevButtonNP: ImageButton
-    private lateinit var mPlayPauseButtonNP: ImageButton
-    private lateinit var mSkipNextButtonNP: ImageButton
-    private lateinit var mRepeatNP: ImageButton
-    private lateinit var mVolumeSeekBarNP: SeekBar
-    private lateinit var mLoveButtonNP: ImageButton
-    private lateinit var mVolumeNP: ImageButton
-    private lateinit var mRatesTextNP: TextView
+    private lateinit var mNowPlayingBinding: NowPlayingBinding
+    private lateinit var mNowPlayingControlsBinding: NowPlayingControlsBinding
+    private lateinit var mNowPlayingExtendedControlsBinding: NowPlayingExtendedControlsBinding
 
     //music player things
 
-    private lateinit var mQueueDialog: Pair<MaterialDialog, QueueAdapter>
+    private lateinit var mQueueDialog: MaterialDialog
+    private lateinit var mQueueAdapter: QueueAdapter
 
     //the player
     private lateinit var mMediaPlayerHolder: MediaPlayerHolder
@@ -163,8 +137,8 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     }
 
     private fun doBindService() {
-
-        if (mLoadingProgress.visibility != View.VISIBLE) mLoadingProgress.visibility = View.VISIBLE
+        if (mMainActivityBinding.loadingProgressBar.visibility != View.VISIBLE) mMainActivityBinding.loadingProgressBar.visibility =
+            View.VISIBLE
 
         // Bind to LocalService
         mBindingIntent = Intent(this, PlayerService::class.java).also {
@@ -176,7 +150,8 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         if (sDetailsFragmentExpanded) {
             closeDetailsFragment(null)
         } else {
-            if (mViewPager2.currentItem != 0) mViewPager2.currentItem = 0 else
+            if (mMainActivityBinding.viewPager2.currentItem != 0) mMainActivityBinding.viewPager2.currentItem =
+                0 else
                 if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) DialogHelper.stopPlaybackDialog(
                     this,
                     mMediaPlayerHolder
@@ -239,22 +214,29 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         notifyError(ErrorFragment.TAG_NO_PERMISSION)
     }
 
-    override fun onCreateView(
-        parent: View?,
-        name: String,
-        context: Context,
-        attrs: AttributeSet
-    ): View? {
-        //set ui theme
-        setTheme(ThemeHelper.getAccentedTheme().first)
-        return super.onCreateView(parent, name, context, attrs)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(ThemeHelper.getAccentedTheme().first)
 
-        //init views
-        getViewsAndResources()
+        mMainActivityBinding = MainActivityBinding.inflate(layoutInflater)
+        mPlayerControlsPanelBinding = PlayerControlsPanelBinding.bind(mMainActivityBinding.root)
+        mNowPlayingBinding = NowPlayingBinding.inflate(layoutInflater)
+        mNowPlayingControlsBinding = NowPlayingControlsBinding.bind(mNowPlayingBinding.root)
+        mNowPlayingExtendedControlsBinding =
+            NowPlayingExtendedControlsBinding.bind(mNowPlayingBinding.root)
+        setContentView(mMainActivityBinding.root)
+
+        //init colors
+        mResolvedAccentColor = ThemeHelper.resolveThemeAccent(this)
+        mResolvedAlphaAccentColor =
+            ThemeHelper.getAlphaAccent(this, ThemeHelper.getAlphaForAccent())
+        mResolvedIconsColor =
+            ContextCompat.getColor(
+                this,
+                R.color.widgetsColor
+            )
+        mResolvedDisabledIconsColor =
+            ThemeHelper.resolveColorAttr(this, android.R.attr.colorButtonNormal)
 
         if (goPreferences.isEdgeToEdge) {
             window?.apply {
@@ -265,7 +247,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                 ThemeHelper.handleLightSystemBars(decorView)
             }
             edgeToEdge {
-                mainView.fit { Edge.Top + Edge.Bottom }
+                mMainActivityBinding.mainView.fit { Edge.Top + Edge.Bottom }
             }
         } else {
             window.statusBarColor =
@@ -289,37 +271,8 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         ) else doBindService()
     }
 
-    private fun getViewsAndResources() {
-
-        mLoadingProgress = loading_progress_bar
-        mViewPager2 = view_pager2
-        mTabsLayout = tab_layout
-
-        //controls panel
-        mPlayerControlsView = player_controls_container
-        mPlayingSong = playing_song
-        mPlayingArtist = playing_artist
-        mSeekProgressBar = song_progress
-        mPlayPauseButton = play_pause_button
-
-        mLovedSongsButton = loved_songs_button
-        mLoveSongsNumber = loved_songs_number
-        mQueueButton = queue_button
-
-        mResolvedAccentColor = ThemeHelper.resolveThemeAccent(this)
-        mResolvedAlphaAccentColor =
-            ThemeHelper.getAlphaAccent(this, ThemeHelper.getAlphaForAccent())
-        mResolvedIconsColor =
-            ContextCompat.getColor(
-                this,
-                R.color.widgetsColor
-            )
-        mResolvedDisabledIconsColor =
-            ThemeHelper.resolveColorAttr(this, android.R.attr.colorButtonNormal)
-    }
-
     private fun notifyError(errorType: String) {
-        mPlayerControlsView.visibility = View.GONE
+        mPlayerControlsPanelBinding.playerView.visibility = View.GONE
         supportFragmentManager.beginTransaction()
             .addFragment(
                 false,
@@ -331,18 +284,17 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
         if (!music.isNullOrEmpty()) {
 
-            if (mLoadingProgress.visibility != View.GONE) mLoadingProgress.visibility = View.GONE
+            if (mMainActivityBinding.loadingProgressBar.visibility != View.GONE) mMainActivityBinding.loadingProgressBar.visibility =
+                View.GONE
 
             initViewPager()
 
             //handle restoring: handle external app intent or restore playback
             if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null) {
                 handleIntent(intent)
-
             } else {
-
                 synchronized(restorePlayerStatus()) {
-                    mPlayerControlsView.animate().apply {
+                    mPlayerControlsPanelBinding.playerView.animate().apply {
                         duration = 500
                         alpha(1.0F)
                     }
@@ -358,14 +310,14 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     private fun initViewPager() {
 
         val pagerAdapter = ScreenSlidePagerAdapter(this)
-        mViewPager2.offscreenPageLimit = mActiveFragments?.size?.minus(1)!!
-        mViewPager2.adapter = pagerAdapter
+        mMainActivityBinding.viewPager2.offscreenPageLimit = mActiveFragments?.size?.minus(1)!!
+        mMainActivityBinding.viewPager2.adapter = pagerAdapter
 
-        mTabsLayout.apply {
+        mPlayerControlsPanelBinding.tabLayout.apply {
 
             tabIconTint = ColorStateList.valueOf(mResolvedAlphaAccentColor)
 
-            TabLayoutMediator(this, mViewPager2) { tab, position ->
+            TabLayoutMediator(this, mMainActivityBinding.viewPager2) { tab, position ->
                 mActiveFragments?.get(position)?.toInt()?.let { currentFragmentIndex ->
                     tab.setIcon(ThemeHelper.getTabIcon(currentFragmentIndex))
                     initFragmentAtIndex(currentFragmentIndex)
@@ -388,13 +340,13 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                 }
             })
 
-            getTabAt(if (sRestoreSettingsFragment) mViewPager2.offscreenPageLimit else 0)?.icon?.setTint(
+            getTabAt(if (sRestoreSettingsFragment) mMainActivityBinding.viewPager2.offscreenPageLimit else 0)?.icon?.setTint(
                 mResolvedAccentColor
             )
         }
 
-        if (sRestoreSettingsFragment) mViewPager2.currentItem =
-            mViewPager2.offscreenPageLimit
+        if (sRestoreSettingsFragment) mMainActivityBinding.viewPager2.currentItem =
+            mMainActivityBinding.viewPager2.offscreenPageLimit
     }
 
     private fun initFragmentAtIndex(index: Int) {
@@ -462,9 +414,9 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
     private fun initMediaButtons() {
 
-        mPlayPauseButton.setOnClickListener { resumeOrPause() }
+        mPlayerControlsPanelBinding.playPauseButton.setOnClickListener { resumeOrPause() }
 
-        mQueueButton.setOnLongClickListener {
+        mPlayerControlsPanelBinding.queueButton.setOnLongClickListener {
             if (checkIsPlayer(true) && mMediaPlayerHolder.isQueue) DialogHelper.showClearQueueDialog(
                 this,
                 mMediaPlayerHolder
@@ -472,7 +424,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             return@setOnLongClickListener true
         }
 
-        mLovedSongsButton.setOnLongClickListener {
+        mPlayerControlsPanelBinding.lovedSongsButton.setOnLongClickListener {
             if (!goPreferences.lovedSongs.isNullOrEmpty()) DialogHelper.showClearLovedSongDialog(
                 this,
                 this
@@ -482,7 +434,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
         onLovedSongsUpdate(false)
 
-        playing_songs_container.setOnLongClickListener { playerControlsContainer ->
+        mPlayerControlsPanelBinding.playingSongsContainer.setOnLongClickListener { playerControlsContainer ->
             if (checkIsPlayer(true)) openPlayingArtistAlbum(playerControlsContainer)
             return@setOnLongClickListener true
         }
@@ -490,10 +442,10 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
     private fun setSeekBarProgressListener() {
 
-        mSeekBarNP.setOnSeekBarChangeListener(
+        mNowPlayingBinding.npSeekBar.setOnSeekBarChangeListener(
             object : SeekBar.OnSeekBarChangeListener {
 
-                val defaultPositionColor = mSongSeekTextNP.currentTextColor
+                val defaultPositionColor = mNowPlayingBinding.npSeek.currentTextColor
                 var userSelectedPosition = 0
                 var isUserSeeking = false
 
@@ -504,11 +456,11 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                 ) {
                     if (isUserSeeking) {
                         userSelectedPosition = progress
-                        mSongSeekTextNP.setTextColor(
+                        mNowPlayingBinding.npSeek.setTextColor(
                             mResolvedAccentColor
                         )
                     }
-                    mSongSeekTextNP.text = progress.toLong().toFormattedDuration(false)
+                    mNowPlayingBinding.npSeek.text = progress.toLong().toFormattedDuration(false)
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -517,13 +469,13 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
                     if (isUserSeeking) {
-                        mSongSeekTextNP.setTextColor(defaultPositionColor)
+                        mNowPlayingBinding.npSeek.setTextColor(defaultPositionColor)
                         mMediaPlayerHolder.onPauseSeekBarCallback()
                         isUserSeeking = false
                     }
                     if (mMediaPlayerHolder.state != PLAYING) {
-                        mSeekProgressBar.progress = userSelectedPosition
-                        mSeekBarNP.progress = userSelectedPosition
+                        mPlayerControlsPanelBinding.songProgress.progress = userSelectedPosition
+                        mNowPlayingBinding.npSeekBar.progress = userSelectedPosition
                     }
                     mMediaPlayerHolder.seekTo(
                         userSelectedPosition,
@@ -537,11 +489,15 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     private fun setupPreciseVolumeHandler() {
 
         mMediaPlayerHolder.currentVolumeInPercent.apply {
-            mVolumeNP.setImageResource(ThemeHelper.getPreciseVolumeIcon(this))
-            mVolumeSeekBarNP.progress = this
+            mNowPlayingExtendedControlsBinding.npVolume.setImageResource(
+                ThemeHelper.getPreciseVolumeIcon(
+                    this
+                )
+            )
+            mNowPlayingBinding.npSeekBar.progress = this
         }
 
-        mVolumeSeekBarNP.setOnSeekBarChangeListener(object :
+        mNowPlayingExtendedControlsBinding.npVolumeSeek.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
 
             var isUserSeeking = false
@@ -551,10 +507,14 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
                     mMediaPlayerHolder.setPreciseVolume(progress)
 
-                    mVolumeNP.setImageResource(ThemeHelper.getPreciseVolumeIcon(progress))
+                    mNowPlayingExtendedControlsBinding.npVolume.setImageResource(
+                        ThemeHelper.getPreciseVolumeIcon(
+                            progress
+                        )
+                    )
 
                     ThemeHelper.updateIconTint(
-                        mVolumeNP,
+                        mNowPlayingExtendedControlsBinding.npVolume,
                         mResolvedAccentColor
                     )
                 }
@@ -567,7 +527,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 isUserSeeking = false
                 ThemeHelper.updateIconTint(
-                    mVolumeNP,
+                    mNowPlayingExtendedControlsBinding.npVolume,
                     mResolvedIconsColor
                 )
             }
@@ -580,43 +540,34 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
             mNowPlayingDialog = MaterialDialog(this, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
-                customView(R.layout.now_playing)
+                customView(null, mNowPlayingBinding.root)
+                // customView(R.layout.now_playing)
 
-                val customView = getCustomView()
+                mNowPlayingBinding.npSong.isSelected = true
+                mNowPlayingBinding.npArtistAlbum.isSelected = true
 
-                mSongTextNP = customView.findViewById(R.id.np_song)
-                mSongTextNP.isSelected = true
-                mArtistAlbumTextNP = customView.findViewById(R.id.np_artist_album)
-                mArtistAlbumTextNP.isSelected = true
-                mSeekBarNP = customView.findViewById(R.id.np_seek_bar)
+                mNowPlayingControlsBinding.npSkipPrev.setOnClickListener { skip(false) }
 
-                mSongSeekTextNP = customView.findViewById(R.id.np_seek)
-                mSongDurationTextNP = customView.findViewById(R.id.np_duration)
+                mNowPlayingControlsBinding.npPlay.setOnClickListener { resumeOrPause() }
 
-                mSkipPrevButtonNP = customView.findViewById(R.id.np_skip_prev)
-                mSkipPrevButtonNP.setOnClickListener { skip(false) }
+                mNowPlayingControlsBinding.npSkipNext.setOnClickListener { skip(true) }
 
-                mPlayPauseButtonNP = customView.findViewById(R.id.np_play)
-                mPlayPauseButtonNP.setOnClickListener { resumeOrPause() }
-
-                mSkipNextButtonNP = customView.findViewById(R.id.np_skip_next)
-                mSkipNextButtonNP.setOnClickListener { skip(true) }
-
-                mRepeatNP = customView.findViewById(R.id.np_repeat)
-
-                mRepeatNP.setImageResource(ThemeHelper.getRepeatIcon(mMediaPlayerHolder))
+                mNowPlayingControlsBinding.npRepeat.setImageResource(
+                    ThemeHelper.getRepeatIcon(
+                        mMediaPlayerHolder
+                    )
+                )
 
                 ThemeHelper.updateIconTint(
-                    mRepeatNP,
+                    mNowPlayingControlsBinding.npRepeat,
                     if (mMediaPlayerHolder.isRepeat1X || mMediaPlayerHolder.isLoop) mResolvedAccentColor
                     else
                         mResolvedIconsColor
                 )
 
-                mRepeatNP.setOnClickListener { setRepeat() }
+                mNowPlayingControlsBinding.npRepeat.setOnClickListener { setRepeat() }
 
-                mLoveButtonNP = customView.findViewById(R.id.np_love)
-                mLoveButtonNP.setOnClickListener {
+                mNowPlayingExtendedControlsBinding.npLove.setOnClickListener {
                     ListsHelper.addToLovedSongs(
                         this@MainActivity,
                         mMediaPlayerHolder.currentSong.first,
@@ -626,34 +577,34 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
                     onLovedSongsUpdate(false)
                 }
 
-                mVolumeSeekBarNP = customView.findViewById(R.id.np_volume_seek)
-                mVolumeNP = customView.findViewById(R.id.np_volume)
-
                 if (goPreferences.isPreciseVolumeEnabled) {
                     setupPreciseVolumeHandler()
                 } else {
-                    mVolumeSeekBarNP.isEnabled = false
-                    ThemeHelper.updateIconTint(mVolumeNP, mResolvedDisabledIconsColor)
+                    mNowPlayingExtendedControlsBinding.npVolumeSeek.isEnabled = false
+                    ThemeHelper.updateIconTint(
+                        mNowPlayingExtendedControlsBinding.npVolume,
+                        mResolvedDisabledIconsColor
+                    )
                 }
 
                 setSeekBarProgressListener()
 
-                mRatesTextNP = customView.findViewById(R.id.np_rates)
                 updateNowPlayingInfo()
 
                 onShow {
-                    mSeekBarNP.progress = mSeekProgressBar.progress
+                    mNowPlayingExtendedControlsBinding.npVolumeSeek.progress =
+                        mPlayerControlsPanelBinding.songProgress.progress
                 }
 
                 onDismiss {
-                    mSeekBarNP.setOnSeekBarChangeListener(null)
+                    mNowPlayingBinding.npSeekBar.setOnSeekBarChangeListener(null)
                 }
 
                 if (goPreferences.isEdgeToEdge && !sLandscape) {
                     window?.apply {
                         ThemeHelper.handleLightSystemBars(decorView)
                         edgeToEdge {
-                            customView.fit { Edge.Bottom }
+                            getCustomView().fit { Edge.Bottom }
                             decorView.fit { Edge.Top }
                         }
                     }
@@ -692,9 +643,10 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         val isPlaying = mMediaPlayerHolder.state != PAUSED
         val drawable =
             if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play
-        if (isNowPlaying) mPlayPauseButtonNP.setImageResource(drawable) else mPlayPauseButton.setImageResource(
-            drawable
-        )
+        if (isNowPlaying) mNowPlayingControlsBinding.npPlay.setImageResource(drawable) else
+            mPlayerControlsPanelBinding.playPauseButton.setImageResource(
+                drawable
+            )
     }
 
     override fun onLovedSongsUpdate(clear: Boolean) {
@@ -709,9 +661,12 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         val lovedSongsButtonColor = if (lovedSongs.isNullOrEmpty())
             mResolvedDisabledIconsColor else
             ContextCompat.getColor(this, R.color.red)
-        ThemeHelper.updateIconTint(mLovedSongsButton, lovedSongsButtonColor)
+        ThemeHelper.updateIconTint(
+            mPlayerControlsPanelBinding.lovedSongsButton,
+            lovedSongsButtonColor
+        )
         val songsNumber = if (lovedSongs.isNullOrEmpty()) 0 else lovedSongs.size
-        mLoveSongsNumber.text = songsNumber.toString()
+        mPlayerControlsPanelBinding.lovedSongsNumber.text = songsNumber.toString()
     }
 
     private fun restorePlayerStatus() {
@@ -752,7 +707,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
                         updatePlayingInfo(false)
 
-                        mSeekProgressBar.progress =
+                        mPlayerControlsPanelBinding.songProgress.progress =
                             if (isSongRestoredFromPrefs) goPreferences.latestPlayedSong?.startFrom!! else 0
                     } else {
                         notifyError(TAG_SD_NOT_READY)
@@ -766,11 +721,11 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     private fun updatePlayingInfo(restore: Boolean) {
 
         val selectedSong = mMediaPlayerHolder.currentSong.first
-        mSeekProgressBar.max = selectedSong?.duration!!.toInt()
+        mPlayerControlsPanelBinding.songProgress.max = selectedSong?.duration!!.toInt()
 
-        mPlayingSong.text = selectedSong.title
+        mPlayerControlsPanelBinding.playingSong.text = selectedSong.title
 
-        mPlayingArtist.text =
+        mPlayerControlsPanelBinding.playingArtist.text =
             getString(
                 R.string.artist_and_album,
                 selectedSong.artist,
@@ -807,16 +762,26 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
     private fun updateRepeatStatus(onPlaybackCompletion: Boolean) {
         if (isNowPlaying) {
-            mRepeatNP.setImageResource(ThemeHelper.getRepeatIcon(mMediaPlayerHolder))
+            mNowPlayingControlsBinding.npRepeat.setImageResource(
+                ThemeHelper.getRepeatIcon(
+                    mMediaPlayerHolder
+                )
+            )
             when {
-                onPlaybackCompletion -> ThemeHelper.updateIconTint(mRepeatNP, mResolvedIconsColor)
+                onPlaybackCompletion -> ThemeHelper.updateIconTint(
+                    mNowPlayingControlsBinding.npRepeat,
+                    mResolvedIconsColor
+                )
                 mMediaPlayerHolder.isRepeat1X or mMediaPlayerHolder.isLoop -> {
                     ThemeHelper.updateIconTint(
-                        mRepeatNP,
+                        mNowPlayingControlsBinding.npRepeat,
                         mResolvedAccentColor
                     )
                 }
-                else -> ThemeHelper.updateIconTint(mRepeatNP, mResolvedIconsColor)
+                else -> ThemeHelper.updateIconTint(
+                    mNowPlayingControlsBinding.npRepeat,
+                    mResolvedIconsColor
+                )
             }
         }
     }
@@ -826,22 +791,24 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         val selectedSong = mMediaPlayerHolder.currentSong.first
         val selectedSongDuration = selectedSong?.duration!!
 
-        mSongTextNP.text = selectedSong.title
+        mNowPlayingBinding.npSong.text = selectedSong.title
 
-        mArtistAlbumTextNP.text =
+        mNowPlayingBinding.npArtistAlbum.text =
             getString(
                 R.string.artist_and_album,
                 selectedSong.artist,
                 selectedSong.album
             )
 
-        mSongSeekTextNP.text = mMediaPlayerHolder.playerPosition.toLong().toFormattedDuration(false)
-        mSongDurationTextNP.text = selectedSongDuration.toFormattedDuration(false)
+        mNowPlayingBinding.npSeek.text =
+            mMediaPlayerHolder.playerPosition.toLong().toFormattedDuration(false)
+        mNowPlayingBinding.npDuration.text = selectedSongDuration.toFormattedDuration(false)
 
-        mSeekBarNP.max = selectedSong.duration.toInt()
+        mNowPlayingBinding.npSeekBar.max = selectedSong.duration.toInt()
 
         selectedSong.id?.toContentUri()?.toBitrate(this)?.let { bitrateInfo ->
-            mRatesTextNP.text = getString(R.string.rates, bitrateInfo.first, bitrateInfo.second)
+            mNowPlayingBinding.npRates.text =
+                getString(R.string.rates, bitrateInfo.first, bitrateInfo.second)
         }
 
         updatePlayingStatus(true)
@@ -973,10 +940,12 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
     }
 
     fun openQueueDialog(view: View) {
-        if (checkIsPlayer(false) && mMediaPlayerHolder.queueSongs.isNotEmpty())
+        if (checkIsPlayer(false) && mMediaPlayerHolder.queueSongs.isNotEmpty()) {
             mQueueDialog = DialogHelper.showQueueSongsDialog(this, mMediaPlayerHolder)
-        else
+            mQueueAdapter = mQueueDialog.getListAdapter() as QueueAdapter
+        } else {
             getString(R.string.error_no_queue).toToast(this)
+        }
     }
 
     fun openLovedSongsDialog(view: View) {
@@ -1029,8 +998,8 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
         }
 
         override fun onPositionChanged(position: Int) {
-            mSeekProgressBar.progress = position
-            if (isNowPlaying) mSeekBarNP.progress = position
+            mPlayerControlsPanelBinding.songProgress.progress = position
+            if (isNowPlaying) mNowPlayingBinding.npSeekBar.progress = position
         }
 
         override fun onStateChanged() {
@@ -1038,8 +1007,8 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
             updatePlayingStatus(isNowPlaying)
             if (mMediaPlayerHolder.state != RESUMED && mMediaPlayerHolder.state != PAUSED) {
                 updatePlayingInfo(false)
-                if (::mQueueDialog.isInitialized && mQueueDialog.first.isShowing && mMediaPlayerHolder.isQueue)
-                    mQueueDialog.second.swapSelectedSong(
+                if (::mQueueDialog.isInitialized && mQueueDialog.isShowing && mMediaPlayerHolder.isQueue)
+                    mQueueAdapter.swapSelectedSong(
                         mMediaPlayerHolder.currentSong.first
                     )
             }
@@ -1047,18 +1016,18 @@ class MainActivity : AppCompatActivity(R.layout.main_activity), UIControlInterfa
 
         override fun onQueueEnabled() {
             ThemeHelper.updateIconTint(
-                mQueueButton,
+                mPlayerControlsPanelBinding.queueButton,
                 mResolvedIconsColor
             )
         }
 
         override fun onQueueCleared() {
-            if (::mQueueDialog.isInitialized && mQueueDialog.first.isShowing) mQueueDialog.first.dismiss()
+            if (::mQueueDialog.isInitialized && mQueueDialog.isShowing) mQueueDialog.dismiss()
         }
 
         override fun onQueueStartedOrEnded(started: Boolean) {
             ThemeHelper.updateIconTint(
-                mQueueButton,
+                mPlayerControlsPanelBinding.queueButton,
                 when {
                     started -> mResolvedAccentColor
                     mMediaPlayerHolder.isQueue -> mResolvedIconsColor

@@ -8,15 +8,14 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.*
+import com.iven.musicplayergo.databinding.FragmentArtistFolderBinding
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.extensions.setTitleColor
@@ -26,11 +25,7 @@ import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.ui.GenericViewHolder
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
-import com.reddit.indicatorfastscroll.FastScrollerThumbView
 import com.reddit.indicatorfastscroll.FastScrollerView
-import kotlinx.android.synthetic.main.fragment_artist_folder.*
-import kotlinx.android.synthetic.main.search_toolbar.*
-
 
 /**
  * A simple [Fragment] subclass.
@@ -40,18 +35,10 @@ import kotlinx.android.synthetic.main.search_toolbar.*
 class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
     SearchView.OnQueryTextListener {
 
+    private lateinit var mArtistFolderFragmentBinding: FragmentArtistFolderBinding
     private lateinit var mMusicRepository: MusicRepository
 
     private var sIsFoldersFragment = false
-
-    //views
-    private lateinit var mArtistsFoldersRecyclerView: RecyclerView
-
-    private lateinit var mSearchToolbar: Toolbar
-
-    //tab_indicator fast scroller by reddit
-    private lateinit var mIndicatorFastScrollerView: FastScrollerView
-    private lateinit var mIndicatorFastScrollThumb: FastScrollerThumbView
 
     private var mList: MutableList<String>? = null
 
@@ -94,10 +81,7 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mSearchToolbar = search_toolbar
-        mArtistsFoldersRecyclerView = artists_folders_rv
-        mIndicatorFastScrollerView = fastscroller
-        mIndicatorFastScrollThumb = fastscroller_thumb
+        mArtistFolderFragmentBinding = FragmentArtistFolderBinding.bind(view)
 
         mSorting =
             if (sIsFoldersFragment) goPreferences.foldersSorting else goPreferences.artistsSorting
@@ -112,7 +96,7 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
 
             sLandscape = ThemeHelper.isDeviceLand(cxt.resources)
 
-            mArtistsFoldersRecyclerView.apply {
+            mArtistFolderFragmentBinding.artistsFoldersRv.apply {
 
                 // setup{} is an extension method on RecyclerView
                 setup {
@@ -161,7 +145,7 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
 
             setupIndicatorFastScrollerView()
 
-            mSearchToolbar.apply {
+            mArtistFolderFragmentBinding.searchToolbar.apply {
 
                 inflateMenu(R.menu.menu_search)
 
@@ -186,8 +170,10 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
                         setOnQueryTextListener(this@ArtistsFoldersFragment)
                         setOnQueryTextFocusChangeListener { _, hasFocus ->
                             if (sIsFastScrollerVisible) {
-                                mIndicatorFastScrollerView.handleViewVisibility(!hasFocus)
-                                mIndicatorFastScrollThumb.handleViewVisibility(!hasFocus)
+                                mArtistFolderFragmentBinding.fastscroller.handleViewVisibility(!hasFocus)
+                                mArtistFolderFragmentBinding.fastscrollerThumb.handleViewVisibility(
+                                    !hasFocus
+                                )
                                 setupArtistsRecyclerViewPadding(hasFocus)
                             }
                             menu.setGroupVisible(R.id.sorting, !hasFocus)
@@ -230,13 +216,13 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
     private fun setupIndicatorFastScrollerView() {
 
         //set indexes if artists rv is scrollable
-        mArtistsFoldersRecyclerView.afterMeasured {
+        mArtistFolderFragmentBinding.artistsFoldersRv.afterMeasured {
 
             sIsFastScroller = computeVerticalScrollRange() > height
 
             if (sIsFastScroller) {
 
-                mIndicatorFastScrollerView.setupWithRecyclerView(
+                mArtistFolderFragmentBinding.fastscroller.setupWithRecyclerView(
                     this,
                     { position ->
                         val item = mList?.get(position) // Get your model object
@@ -254,10 +240,12 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
                     }
                 )
 
-                mIndicatorFastScrollThumb.setupWithFastScroller(mIndicatorFastScrollerView)
+                mArtistFolderFragmentBinding.fastscrollerThumb.setupWithFastScroller(
+                    mArtistFolderFragmentBinding.fastscroller
+                )
 
-                mIndicatorFastScrollerView.useDefaultScroller = false
-                mIndicatorFastScrollerView.itemIndicatorSelectedCallbacks += object :
+                mArtistFolderFragmentBinding.fastscroller.useDefaultScroller = false
+                mArtistFolderFragmentBinding.fastscroller.itemIndicatorSelectedCallbacks += object :
                     FastScrollerView.ItemIndicatorSelectedCallback {
                     override fun onItemIndicatorSelected(
                         indicator: FastScrollItemIndicator,
@@ -279,16 +267,16 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
     private fun setupArtistsRecyclerViewPadding(forceNoPadding: Boolean) {
         val rvPaddingEnd =
             if (sIsFastScrollerVisible && !forceNoPadding) resources.getDimensionPixelSize(R.dimen.fast_scroller_view_dim) else 0
-        mArtistsFoldersRecyclerView.setPadding(0, 0, rvPaddingEnd, 0)
+        mArtistFolderFragmentBinding.artistsFoldersRv.setPadding(0, 0, rvPaddingEnd, 0)
     }
 
     private fun handleIndicatorFastScrollerViewVisibility() {
-        mIndicatorFastScrollerView.handleViewVisibility(sIsFastScrollerVisible)
-        mIndicatorFastScrollThumb.handleViewVisibility(sIsFastScrollerVisible)
+        mArtistFolderFragmentBinding.fastscroller.handleViewVisibility(sIsFastScrollerVisible)
+        mArtistFolderFragmentBinding.fastscrollerThumb.handleViewVisibility(sIsFastScrollerVisible)
     }
 
     private fun setMenuOnItemClickListener(context: Context, menu: Menu) {
-        mSearchToolbar.setOnMenuItemClickListener {
+        mArtistFolderFragmentBinding.searchToolbar.setOnMenuItemClickListener {
 
             if (it.itemId != R.id.action_search) {
 

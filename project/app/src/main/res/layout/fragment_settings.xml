@@ -2,9 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <include layout="@layout/search_toolbar" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/search_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?android:attr/windowBackground"
+        android:elevation="@dimen/search_bar_elevation"
+        android:theme="@style/ToolbarStyle"
+        app:title="@string/songs"
+        app:navigationIcon="@drawable/ic_round_close"
+        app:titleTextAppearance="@style/ToolbarStyle.Title"
+        app:titleTextColor="?attr/colorPrimary" />
 
     <FrameLayout
         android:id="@+id/fragment_layout"

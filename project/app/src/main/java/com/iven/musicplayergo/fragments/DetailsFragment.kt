@@ -5,7 +5,6 @@ import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
@@ -15,11 +14,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.*
+import com.iven.musicplayergo.databinding.FragmentDetailsBinding
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
@@ -41,25 +40,16 @@ import kotlinx.android.synthetic.main.fragment_details.*
 
 class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryTextListener {
 
+    private lateinit var mDetailsFragmentBinding: FragmentDetailsBinding
     private lateinit var mMusicRepository: MusicRepository
 
-    private var sFolder = false
-
-    private lateinit var mArtistDetailsView: View
     private lateinit var mArtistDetailsAnimator: Animator
-
-    private lateinit var mDetailsToolbar: Toolbar
-
-    private lateinit var mSelectedAlbumTitle: TextView
-    private lateinit var mSelectedAlbumYearDuration: TextView
-    private lateinit var mSortSongsButton: ImageButton
+    private lateinit var mAlbumsRecyclerViewLayoutManager: LinearLayoutManager
 
     private val mSelectedAlbumsDataSource = dataSourceOf()
     private val mSongsDataSource = dataSourceOf()
 
-    private lateinit var mAlbumsRecyclerView: RecyclerView
-    private lateinit var mAlbumsRecyclerViewLayoutManager: LinearLayoutManager
-    private lateinit var mSongsRecyclerView: RecyclerView
+    private var sFolder = false
 
     private var mSelectedArtistAlbums: List<Album>? = null
     private var mSongsForArtistOrFolder: List<Music>? = null
@@ -100,7 +90,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     fun onHandleBackPressed(): Animator {
         if (!mArtistDetailsAnimator.isRunning) mArtistDetailsAnimator =
-            mArtistDetailsView.createCircularReveal(isCentered = false, show = false)
+            mDetailsFragmentBinding.root.createCircularReveal(isCentered = false, show = false)
         return mArtistDetailsAnimator
     }
 
@@ -118,13 +108,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mArtistDetailsView = view
-        mDetailsToolbar = details_toolbar
-        mAlbumsRecyclerView = albums_rv
-        mSelectedAlbumTitle = selected_album
-        mSelectedAlbumYearDuration = album_year_duration
-        mSortSongsButton = sort_button
-        mSongsRecyclerView = songs_rv
+        mDetailsFragmentBinding = FragmentDetailsBinding.bind(view)
 
         context?.let { cxt ->
 
@@ -157,7 +141,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
             sLandscape = ThemeHelper.isDeviceLand(cxt.resources)
 
-            mDetailsToolbar.apply {
+            mDetailsFragmentBinding.detailsToolbar.apply {
 
                 overflowIcon = AppCompatResources.getDrawable(
                     cxt,
@@ -189,30 +173,33 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
             } else {
 
-                mAlbumsRecyclerView.visibility = View.GONE
+                mDetailsFragmentBinding.albumsRv.visibility = View.GONE
                 selected_album_container.visibility = View.GONE
 
                 mSongsForArtistOrFolder =
                     mMusicRepository.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
 
-                mDetailsToolbar.subtitle = getString(
+                mDetailsFragmentBinding.detailsToolbar.subtitle = getString(
                     R.string.folder_info,
                     mSongsForArtistOrFolder?.size
                 )
 
                 val searchView =
-                    mDetailsToolbar.menu.findItem(R.id.action_search).actionView as SearchView
+                    mDetailsFragmentBinding.detailsToolbar.menu.findItem(R.id.action_search).actionView as SearchView
                 searchView.apply {
                     setOnQueryTextListener(this@DetailsFragment)
                     setOnQueryTextFocusChangeListener { _, hasFocus ->
-                        mDetailsToolbar.menu.setGroupVisible(R.id.more_options_folder, !hasFocus)
+                        mDetailsFragmentBinding.detailsToolbar.menu.setGroupVisible(
+                            R.id.more_options_folder,
+                            !hasFocus
+                        )
                     }
                 }
             }
 
             setSongsDataSource(cxt, if (sFolder) mSongsForArtistOrFolder else mSelectedAlbum?.music)
 
-            mSongsRecyclerView.apply {
+            mDetailsFragmentBinding.songsRv.apply {
 
                 // setup{} is an extension method on RecyclerView
                 setup {
@@ -269,7 +256,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             }
 
             if (!sFolder) {
-                mSortSongsButton.apply {
+                mDetailsFragmentBinding.sortButton.apply {
                     setOnClickListener {
                         mSongsSorting = ListsHelper.getSongsSorting(mSongsSorting)
                         setImageResource(ThemeHelper.resolveSortAlbumSongsIcon(mSongsSorting))
@@ -286,7 +273,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
             view.afterMeasured {
                 mArtistDetailsAnimator =
-                    mArtistDetailsView.createCircularReveal(isCentered = false, show = true)
+                    mDetailsFragmentBinding.root.createCircularReveal(
+                        isCentered = false,
+                        show = true
+                    )
             }
         }
     }
@@ -299,7 +289,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private fun setSongsDataSource(context: Context, musicList: List<Music>?) {
         if (!sFolder) {
-            mSortSongsButton.apply {
+            mDetailsFragmentBinding.sortButton.apply {
                 isEnabled = mSelectedAlbum?.music?.size!! >= 2
                 ThemeHelper.updateIconTint(
                     this,
@@ -309,7 +299,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     ) else ThemeHelper.resolveColorAttr(context, android.R.attr.colorButtonNormal)
                 )
             }
-            mDetailsToolbar.menu.findItem(R.id.action_shuffle_sa).isEnabled =
+            mDetailsFragmentBinding.detailsToolbar.menu.findItem(R.id.action_shuffle_sa).isEnabled =
                 mSelectedAlbum?.music?.size!! >= 2
         }
         musicList?.apply {
@@ -332,7 +322,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private fun setupMenu(context: Context) {
 
-        mDetailsToolbar.apply {
+        mDetailsFragmentBinding.detailsToolbar.apply {
 
             val menuToInflate =
                 if (sFolder) R.menu.menu_folder_details else R.menu.menu_artist_details
@@ -377,7 +367,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     }
 
     private fun setupToolbarSpecs() {
-        mDetailsToolbar.apply {
+        mDetailsFragmentBinding.detailsToolbar.apply {
             elevation = if (sFolder)
                 resources.getDimensionPixelSize(R.dimen.search_bar_elevation).toFloat() else 0F
 
@@ -396,19 +386,19 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             )
         }
 
-        mSelectedAlbumTitle.isSelected = true
+        mDetailsFragmentBinding.selectedAlbum.isSelected = true
 
         updateSelectedAlbumTitle()
 
         setAlbumsDataSource(mSelectedArtistAlbums)
 
-        mDetailsToolbar.subtitle = getString(
+        mDetailsFragmentBinding.detailsToolbar.subtitle = getString(
             R.string.artist_info,
             mSelectedArtistAlbums?.size,
             mSongsForArtistOrFolder?.size
         )
 
-        mAlbumsRecyclerView.apply {
+        mDetailsFragmentBinding.albumsRv.apply {
 
             setup {
 
@@ -436,7 +426,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                         if (index != mSelectedAlbumPosition) {
 
-                            mAlbumsRecyclerView.adapter?.apply {
+                            mDetailsFragmentBinding.albumsRv.adapter?.apply {
                                 notifyItemChanged(
                                     mSelectedAlbumPosition
                                 )
@@ -463,11 +453,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         selectedArtistOrFolder != mSelectedArtistOrFolder
 
     fun tryToSnapToAlbumPosition(snapPosition: Int) {
-        if (!sFolder && snapPosition != -1) mAlbumsRecyclerView.smoothSnapToPosition(snapPosition)
+        if (!sFolder && snapPosition != -1) mDetailsFragmentBinding.albumsRv.smoothSnapToPosition(
+            snapPosition
+        )
     }
 
     private fun updateSelectedAlbumTitle() {
-        mSelectedAlbumTitle.text = mSelectedAlbum?.title
+        mDetailsFragmentBinding.selectedAlbum.text = mSelectedAlbum?.title
         album_year_duration.text = getString(
             R.string.year_and_duration,
             mSelectedAlbum?.totalDuration?.toFormattedDuration(true),
@@ -477,11 +469,15 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private fun swapAlbum(songs: MutableList<Music>?) {
         mSongsSorting = TRACK_SORTING
-        mSortSongsButton.setImageResource(ThemeHelper.resolveSortAlbumSongsIcon(mSongsSorting))
+        mDetailsFragmentBinding.sortButton.setImageResource(
+            ThemeHelper.resolveSortAlbumSongsIcon(
+                mSongsSorting
+            )
+        )
         context?.let { cxt ->
             setSongsDataSource(cxt, songs)
         }
-        mSongsRecyclerView.scrollToPosition(0)
+        mDetailsFragmentBinding.songsRv.scrollToPosition(0)
     }
 
     companion object {

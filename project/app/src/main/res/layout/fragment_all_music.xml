@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/search_toolbar" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/search_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?android:attr/windowBackground"
+        android:elevation="@dimen/search_bar_elevation"
+        android:theme="@style/ToolbarStyle"
+        app:title="@string/songs"
+        app:collapseIcon="@drawable/ic_navigate_before"
+        app:navigationIcon="@drawable/ic_round_close"
+        app:titleTextAppearance="@style/ToolbarStyle.Title"
+        app:titleTextColor="?attr/colorPrimary" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/all_music_rv"

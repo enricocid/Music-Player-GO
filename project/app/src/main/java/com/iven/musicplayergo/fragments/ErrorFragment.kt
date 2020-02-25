@@ -7,11 +7,11 @@ import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.databinding.FragmentErrorBinding
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.createCircularReveal
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.ui.UIControlInterface
-import kotlinx.android.synthetic.main.fragment_error.*
 
 /**
  * A simple [Fragment] subclass.
@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_error.*
  */
 class ErrorFragment : Fragment(R.layout.fragment_error) {
 
+    private lateinit var mErrorFragmentBinding: FragmentErrorBinding
     private lateinit var mUIControlInterface: UIControlInterface
 
     private var sNoMusic = false
@@ -62,20 +63,20 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        error_message.text = getString(mErrorString)
-        error_icon.setImageResource(mErrorIcon)
-        view.setOnClickListener {
+        mErrorFragmentBinding.errorMessage.text = getString(mErrorString)
+        mErrorFragmentBinding.errorIcon.setImageResource(mErrorIcon)
+        mErrorFragmentBinding.root.setOnClickListener {
             if (sNoMusic) mUIControlInterface.onCloseActivity() else mUIControlInterface.onAppearanceChanged(
                 isAccentChanged = false,
                 restoreSettings = false
             )
         }
 
-        error_toolbar.setNavigationOnClickListener {
+        mErrorFragmentBinding.errorToolbar.setNavigationOnClickListener {
             mUIControlInterface.onCloseActivity()
         }
 
-        view.afterMeasured {
+        mErrorFragmentBinding.root.afterMeasured {
             createCircularReveal(isCentered = true, show = true).doOnEnd {
                 if (!goPreferences.isEdgeToEdge) activity?.let { fa ->
                     fa.window.apply {

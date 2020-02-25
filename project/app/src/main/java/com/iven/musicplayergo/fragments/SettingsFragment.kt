@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.databinding.FragmentSettingsBinding
 import com.iven.musicplayergo.extensions.addFragment
 import com.iven.musicplayergo.ui.UIControlInterface
-import kotlinx.android.synthetic.main.search_toolbar.*
 
 /**
  * A simple [Fragment] subclass.
@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.search_toolbar.*
  */
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
+    private lateinit var mSettingsFragmentBinding: FragmentSettingsBinding
     private lateinit var mUIControlInterface: UIControlInterface
 
     override fun onAttach(context: Context) {
@@ -32,9 +33,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mSettingsFragmentBinding = FragmentSettingsBinding.bind(view)
+
         activity?.let {
-            search_toolbar.apply {
-                title = getString(R.string.settings)
+            mSettingsFragmentBinding.searchToolbar.apply {
                 setNavigationOnClickListener {
                     mUIControlInterface.onCloseActivity()
                 }
