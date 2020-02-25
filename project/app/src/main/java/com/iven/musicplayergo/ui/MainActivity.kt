@@ -175,7 +175,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    //restore recycler views state
     override fun onResume() {
         super.onResume()
         if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) mMediaPlayerHolder.onRestartSeekBarCallback()
