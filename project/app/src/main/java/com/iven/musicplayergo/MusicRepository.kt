@@ -54,7 +54,6 @@ class MusicRepository : CoroutineScope {
                 )
 
             // Query the storage for music files
-            // If query result is not empty
             musicCursor?.use { cursor ->
 
                 val idIndex =
@@ -100,7 +99,7 @@ class MusicRepository : CoroutineScope {
                             )
                         }
 
-                    // Add the current music to the database
+                    // Add the current music to the list
                     deviceMusicList.add(
                         Music(
                             audioArtist,
@@ -116,6 +115,7 @@ class MusicRepository : CoroutineScope {
                     )
                 }
             }
+
             deviceMusicList
 
         } catch (e: Exception) {
@@ -148,6 +148,7 @@ class MusicRepository : CoroutineScope {
             deviceMusicByFolder = dsf.groupBy { it.relativePath!! }
         }
 
+        // group artists songs by albums
         deviceSongsByArtist?.keys?.iterator()?.forEach { artist ->
             artist?.let { artistKey ->
                 deviceAlbumsByArtist?.set(
@@ -158,7 +159,6 @@ class MusicRepository : CoroutineScope {
                 )
             }
         }
-
     }
 
     companion object {

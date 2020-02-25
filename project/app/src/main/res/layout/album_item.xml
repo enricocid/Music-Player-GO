@@ -10,7 +10,8 @@
     android:paddingBottom="12dp"
     app:cardBackgroundColor="?attr/colorPrimary"
     app:cardCornerRadius="8dp"
-    app:cardElevation="0dp">
+    app:cardElevation="0dp"
+    tools:viewBindingIgnore="true">
 
     <ImageButton
         android:id="@+id/checkbox"

@@ -6,7 +6,8 @@
     android:layout_width="@android:dimen/app_icon_size"
     android:layout_height="@android:dimen/app_icon_size"
     android:layout_margin="12dp"
-    android:background="?attr/selectableItemBackgroundBorderless">
+    android:background="?attr/selectableItemBackgroundBorderless"
+    tools:viewBindingIgnore="true">
 
     <ImageButton
         android:id="@+id/tab_image"
