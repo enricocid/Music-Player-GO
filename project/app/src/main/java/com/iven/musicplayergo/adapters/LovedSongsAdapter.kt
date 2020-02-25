@@ -39,7 +39,7 @@ class LovedSongsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LoveHolder {
         return LoveHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.song_item_alt,
+                R.layout.music_item,
                 parent,
                 false
             )

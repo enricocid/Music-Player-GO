@@ -224,7 +224,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     else
                         addItemDecoration(ThemeHelper.getRecyclerViewDivider(cxt))
 
-                    withItem<Music, GenericViewHolder>(R.layout.song_item) {
+                    withItem<Music, GenericViewHolder>(R.layout.generic_item) {
                         onBind(::GenericViewHolder) { _, item ->
                             // GenericViewHolder is `this` here
                             title.text = ThemeHelper.buildSpanned(

@@ -81,7 +81,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                         ThemeHelper.getRecyclerViewDivider(cxt)
                     )
 
-                    withItem<Music, SongsViewHolder>(R.layout.song_item_alt) {
+                    withItem<Music, SongsViewHolder>(R.layout.music_item) {
                         onBind(::SongsViewHolder) { _, item ->
                             // GenericViewHolder is `this` here
                             title.text = item.title

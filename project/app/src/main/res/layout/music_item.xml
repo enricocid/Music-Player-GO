@@ -6,24 +6,32 @@
     android:layout_gravity="center_vertical"
     android:background="@drawable/ripple"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+        android:textColor="?android:attr/textColorTertiary" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
         android:ellipsize="marquee"
         android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:textAppearance="?android:attr/textAppearanceListItem"
         android:textColor="?android:attr/textColorPrimary" />
 
     <TextView
         android:id="@+id/subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+        android:textAppearance="?android:attr/textAppearanceListItemSecondary"
         android:textColor="?android:attr/textColorSecondary" />
 </LinearLayout>
