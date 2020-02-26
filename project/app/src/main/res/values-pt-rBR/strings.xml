@@ -63,6 +63,4 @@
     <string name="sorting_pref_track">Pelo número da faixa &#8595;</string>
     <string name="sorting_pref_track_inv">Pelo número da faixa &#8593;</string>
     <string name="error_not_ready">Ocorreu algum problema ao carregar sua biblioteca de músicas! :( Isso acontece provavelmente devido ao cartão de memória, que quando sai do lugar força o Android a carregar novamente os registros de dados. Tente novamente daqui a pouco :)</string>
-
-
 </resources>
