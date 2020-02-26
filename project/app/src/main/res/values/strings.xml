@@ -86,7 +86,7 @@
 
     <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">Active tabs</string>
-    <string name="active_fragments_pref_warning">You just can\'t remove all tabs! :P</string>
+    <string name="active_fragments_pref_warning">You just can\'t remove all the tabs! :P</string>
 
     <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">Precise volume control</string>
