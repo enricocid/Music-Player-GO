@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mDetailsFragment: DetailsFragment
 
     //booleans
-    private val sDetailsFragmentExpanded get() = ::mDetailsFragment.isInitialized && mDetailsFragment.isAdded
+    private val sDetailsFragmentExpanded get() = supportFragmentManager.isDetailsFragment(false)
     private var sRevealAnimationRunning = false
     private var sAppearanceChanged = false
     private var sRestoreSettingsFragment = false
@@ -395,7 +395,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 tab?.icon?.setTint(mResolvedAccentColor)
                 doOnEnd {
                     sRevealAnimationRunning = false
-                    supportFragmentManager.removeDetailsFragment()
+                    supportFragmentManager.isDetailsFragment(true)
                 }
             }
         }
@@ -813,7 +813,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 if (isPlayingFromFolder) selectedSong?.relativePath else selectedSong?.artist
             if (sDetailsFragmentExpanded) {
                 if (mDetailsFragment.hasToUpdate(selectedArtistOrFolder)) {
-                    synchronized(supportFragmentManager.removeDetailsFragment()) {
+                    synchronized(
+                        supportFragmentManager.isDetailsFragment(true)
+                    ) {
                         openDetailsFragment(
                             selectedArtistOrFolder,
                             mMediaPlayerHolder.isPlayingFromFolder

@@ -41,8 +41,12 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                     mUIControlInterface.onCloseActivity()
                 }
             }
-            childFragmentManager.beginTransaction()
-                .addFragment(false, R.id.fragment_layout, PreferencesFragment.newInstance())
+            childFragmentManager.addFragment(
+                false,
+                R.id.fragment_layout,
+                PreferencesFragment.newInstance(),
+                null
+            )
         }
     }
 

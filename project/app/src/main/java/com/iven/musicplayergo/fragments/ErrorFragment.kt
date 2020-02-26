@@ -78,7 +78,7 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
         }
 
         mErrorFragmentBinding.root.afterMeasured {
-            createCircularReveal(isCentered = true, show = true).doOnEnd {
+            createCircularReveal(isErrorFragment = true, show = true).doOnEnd {
                 if (!goPreferences.isEdgeToEdge) activity?.let { fa ->
                     fa.window.apply {
                         val red = ContextCompat.getColor(fa, R.color.red)

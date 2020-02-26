@@ -90,7 +90,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     fun onHandleBackPressed(): Animator {
         if (!mArtistDetailsAnimator.isRunning) mArtistDetailsAnimator =
-            mDetailsFragmentBinding.root.createCircularReveal(isCentered = false, show = false)
+            mDetailsFragmentBinding.root.createCircularReveal(isErrorFragment = false, show = false)
         return mArtistDetailsAnimator
     }
 
@@ -274,7 +274,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             view.afterMeasured {
                 mArtistDetailsAnimator =
                     mDetailsFragmentBinding.root.createCircularReveal(
-                        isCentered = false,
+                        isErrorFragment = false,
                         show = true
                     )
             }
