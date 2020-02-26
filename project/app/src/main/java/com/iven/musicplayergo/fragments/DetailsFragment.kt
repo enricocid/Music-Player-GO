@@ -482,6 +482,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     companion object {
 
+        internal const val DETAILS_FRAGMENT_TAG = "DETAILS_FRAGMENT"
         private const val TAG_ARTIST_FOLDER = "SELECTED_ARTIST_FOLDER"
         private const val TAG_IS_FOLDER = "IS_FOLDER"
         private const val TAG_SELECTED_ALBUM_POSITION = "SELECTED_ALBUM_POSITION"

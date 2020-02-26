@@ -11,12 +11,13 @@ import android.widget.Toast
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.FragmentManager
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.animation.ArgbEvaluatorCompat
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.fragments.DetailsFragment.Companion.DETAILS_FRAGMENT_TAG
 import com.iven.musicplayergo.helpers.ThemeHelper
 import kotlin.math.max
 
@@ -41,33 +42,45 @@ fun MenuItem.setTitleColor(color: Int) {
     title = ThemeHelper.buildSpanned(html)
 }
 
-fun FragmentTransaction.addFragment(isAdd: Boolean, container: Int, fragment: Fragment) {
+fun FragmentManager.addFragment(isAdd: Boolean, container: Int, fragment: Fragment, tag: String?) {
+    val ft = beginTransaction()
     when {
         isAdd -> {
-            addToBackStack(null)
-            add(
+            ft.addToBackStack(null)
+            ft.add(
+                container,
+                fragment,
+                tag
+            )
+        }
+        else -> {
+            ft.replace(
                 container,
                 fragment
             )
         }
-        else -> replace(
-            container,
-            fragment
-        )
     }
-    commit()
+    ft.commit()
 }
 
-fun View.createCircularReveal(isCentered: Boolean, show: Boolean): Animator {
+fun FragmentManager.removeDetailsFragment() {
+    val ft = beginTransaction()
+    findFragmentByTag(DETAILS_FRAGMENT_TAG)?.let { detailsFragment ->
+        ft.remove(detailsFragment)
+    }
+    ft.commit()
+}
 
-    val revealDuration: Long = if (isCentered) 1500 else 500
+fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator {
+
+    val revealDuration: Long = if (isErrorFragment) 1500 else 500
     val radius = max(width, height).toFloat()
 
     val startRadius = if (show) 0f else radius
     val finalRadius = if (show) radius else 0f
 
-    val cx = if (isCentered) width / 2 else 0
-    val cy = if (isCentered) height / 2 else 0
+    val cx = if (isErrorFragment) width / 2 else 0
+    val cy = if (isErrorFragment) height / 2 else 0
     val animator =
         ViewAnimationUtils.createCircularReveal(
             this,
@@ -78,38 +91,42 @@ fun View.createCircularReveal(isCentered: Boolean, show: Boolean): Animator {
         ).apply {
             interpolator = FastOutSlowInInterpolator()
             duration = revealDuration
+            doOnEnd {
+                if (!show) visibility = View.GONE
+            }
             start()
         }
 
-    val accent = if (isCentered) ContextCompat.getColor(
-        context,
-        R.color.red
-    ) else ThemeHelper.resolveThemeAccent(context)
-    val backgroundColor =
-        ThemeHelper.resolveColorAttr(
+    if (show) {
+
+        val startColor = if (isErrorFragment) ContextCompat.getColor(
+            context,
+            R.color.red
+        ) else ThemeHelper.resolveThemeAccent(context)
+
+        val endColor = ThemeHelper.resolveColorAttr(
             context,
             android.R.attr.windowBackground
         )
-    val startColor = if (show) accent else backgroundColor
-    val endColor = if (show) backgroundColor else accent
 
-    ValueAnimator().apply {
-        setIntValues(startColor, endColor)
-        setEvaluator(ArgbEvaluatorCompat())
-        addUpdateListener { valueAnimator -> setBackgroundColor((valueAnimator.animatedValue as Int)) }
-        duration = revealDuration
-        if (isCentered) doOnEnd {
-            background =
-                ThemeHelper.createColouredRipple(
-                    context,
-                    ContextCompat.getColor(
+        ValueAnimator().apply {
+            setIntValues(startColor, endColor)
+            setEvaluator(ArgbEvaluatorCompat())
+            addUpdateListener { valueAnimator -> setBackgroundColor((valueAnimator.animatedValue as Int)) }
+            duration = revealDuration
+            if (isErrorFragment) doOnEnd {
+                background =
+                    ThemeHelper.createColouredRipple(
                         context,
-                        R.color.red
-                    ),
-                    R.drawable.ripple
-                )
+                        ContextCompat.getColor(
+                            context,
+                            R.color.red
+                        ),
+                        R.drawable.ripple
+                    )
+            }
+            start()
         }
-        start()
     }
     return animator
 }

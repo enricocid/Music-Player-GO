@@ -40,6 +40,7 @@ import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_ARTISTS
 import com.iven.musicplayergo.fragments.ArtistsFoldersFragment.Companion.TAG_FOLDERS
+import com.iven.musicplayergo.fragments.DetailsFragment.Companion.DETAILS_FRAGMENT_TAG
 import com.iven.musicplayergo.fragments.ErrorFragment.Companion.TAG_NO_MUSIC
 import com.iven.musicplayergo.fragments.ErrorFragment.Companion.TAG_NO_MUSIC_INTENT
 import com.iven.musicplayergo.fragments.ErrorFragment.Companion.TAG_SD_NOT_READY
@@ -266,11 +267,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun notifyError(errorType: String) {
         mPlayerControlsPanelBinding.playerView.visibility = View.GONE
-        supportFragmentManager.beginTransaction()
-            .addFragment(
-                false,
-                R.id.container, ErrorFragment.newInstance(errorType)
-            )
+        supportFragmentManager.addFragment(
+            false, R.id.container, ErrorFragment.newInstance(errorType), null
+        )
     }
 
     private fun finishSetup(music: MutableList<Music>?) {
@@ -384,11 +383,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 )
             )
 
-        supportFragmentManager.beginTransaction()
-            .addFragment(
-                true,
-                R.id.container, mDetailsFragment
-            )
+        supportFragmentManager.addFragment(
+            true, R.id.container, mDetailsFragment, DETAILS_FRAGMENT_TAG
+        )
     }
 
     private fun closeDetailsFragment(tab: TabLayout.Tab?) {
@@ -397,9 +394,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 sRevealAnimationRunning = true
                 tab?.icon?.setTint(mResolvedAccentColor)
                 doOnEnd {
-                    synchronized(super.onBackPressed()) {
-                        sRevealAnimationRunning = false
-                    }
+                    sRevealAnimationRunning = false
+                    supportFragmentManager.removeDetailsFragment()
                 }
             }
         }
@@ -817,7 +813,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 if (isPlayingFromFolder) selectedSong?.relativePath else selectedSong?.artist
             if (sDetailsFragmentExpanded) {
                 if (mDetailsFragment.hasToUpdate(selectedArtistOrFolder)) {
-                    synchronized(super.onBackPressed()) {
+                    synchronized(supportFragmentManager.removeDetailsFragment()) {
                         openDetailsFragment(
                             selectedArtistOrFolder,
                             mMediaPlayerHolder.isPlayingFromFolder
@@ -844,7 +840,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) DialogHelper.stopPlaybackDialog(
             this,
             mMediaPlayerHolder
-        ) else super.onBackPressed()
+        ) else onBackPressed()
     }
 
     override fun onHandleFocusPref() {
