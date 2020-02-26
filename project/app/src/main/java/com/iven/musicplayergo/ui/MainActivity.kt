@@ -216,10 +216,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         mMainActivityBinding = MainActivityBinding.inflate(layoutInflater)
         mPlayerControlsPanelBinding = PlayerControlsPanelBinding.bind(mMainActivityBinding.root)
-        mNowPlayingBinding = NowPlayingBinding.inflate(layoutInflater)
-        mNowPlayingControlsBinding = NowPlayingControlsBinding.bind(mNowPlayingBinding.root)
-        mNowPlayingExtendedControlsBinding =
-            NowPlayingExtendedControlsBinding.bind(mNowPlayingBinding.root)
+
         setContentView(mMainActivityBinding.root)
 
         //init colors
@@ -243,7 +240,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 ThemeHelper.handleLightSystemBars(decorView)
             }
             edgeToEdge {
-                mMainActivityBinding.mainView.fit { Edge.Top + Edge.Bottom }
+                mMainActivityBinding.root.fit { Edge.Top + Edge.Bottom }
             }
         } else {
             window.statusBarColor =
@@ -536,8 +533,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
             mNowPlayingDialog = MaterialDialog(this, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
-                customView(null, mNowPlayingBinding.root)
-                // customView(R.layout.now_playing)
+                customView(R.layout.now_playing)
+
+                mNowPlayingBinding = NowPlayingBinding.bind(getCustomView())
+                mNowPlayingControlsBinding = NowPlayingControlsBinding.bind(mNowPlayingBinding.root)
+                mNowPlayingExtendedControlsBinding =
+                    NowPlayingExtendedControlsBinding.bind(mNowPlayingBinding.root)
 
                 mNowPlayingBinding.npSong.isSelected = true
                 mNowPlayingBinding.npArtistAlbum.isSelected = true
@@ -600,8 +601,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     window?.apply {
                         ThemeHelper.handleLightSystemBars(decorView)
                         edgeToEdge {
-                            getCustomView().fit { Edge.Bottom }
-                            decorView.fit { Edge.Top }
+                            mNowPlayingBinding.root.fit { Edge.Bottom }
                         }
                     }
                 }
