@@ -32,7 +32,6 @@
             android:layout_width="@android:dimen/notification_large_icon_height"
             android:layout_height="@android:dimen/notification_large_icon_height"
             android:tint="@color/red"
-            app:srcCompat="@drawable/ic_search_cancel"
             tools:ignore="ContentDescription" />
 
         <TextView
