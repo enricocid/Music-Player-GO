@@ -94,7 +94,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 val musicRepository = MusicRepository.getInstance()
                 title =
                     getString(R.string.found_songs_pref_title, musicRepository.musicDatabaseSize)
-                onPreferenceClickListener = this@PreferencesFragment
             }
 
             mThemePreference = findPreference<Preference>(getString(R.string.theme_pref))?.apply {
