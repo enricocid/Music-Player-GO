@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/search_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/windowBackground"
         android:elevation="@dimen/search_bar_elevation"
         android:theme="@style/ToolbarStyle"
-        app:title="@string/settings"
-        app:subtitle="@string/versionName"
         app:navigationIcon="@drawable/ic_close"
+        app:subtitle="@string/versionName"
         app:subtitleTextAppearance="@style/ToolbarStyle.Subtitle"
+        app:title="@string/settings"
         app:titleTextAppearance="@style/ToolbarStyle.Title"
         app:titleTextColor="?attr/colorPrimary" />
 

@@ -12,7 +12,7 @@
         android:id="@+id/details_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/windowBackground"
         android:theme="@style/ToolbarStyle"
         app:collapseIcon="@drawable/ic_navigate_before"
         app:navigationIcon="@drawable/ic_navigate_before"

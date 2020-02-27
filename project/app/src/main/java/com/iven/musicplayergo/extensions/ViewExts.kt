@@ -94,36 +94,30 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
             start()
         }
 
-    if (show) {
+    val windowBackground = ContextCompat.getColor(context, R.color.windowBackground)
+    val red = ContextCompat.getColor(context, R.color.red)
+    val accent = if (!show) windowBackground else ThemeHelper.resolveThemeAccent(context)
 
-        val startColor = if (isErrorFragment) ContextCompat.getColor(
-            context,
-            R.color.red
-        ) else ThemeHelper.resolveThemeAccent(context)
+    val startColor = if (isErrorFragment) red else accent
+    val endColor = if (show) windowBackground else red
 
-        val endColor = ThemeHelper.resolveColorAttr(
-            context,
-            android.R.attr.windowBackground
-        )
-
-        ValueAnimator().apply {
-            setIntValues(startColor, endColor)
-            setEvaluator(ArgbEvaluatorCompat())
-            addUpdateListener { valueAnimator -> setBackgroundColor((valueAnimator.animatedValue as Int)) }
-            duration = revealDuration
-            if (isErrorFragment) doOnEnd {
-                background =
-                    ThemeHelper.createColouredRipple(
+    ValueAnimator().apply {
+        setIntValues(startColor, endColor)
+        setEvaluator(ArgbEvaluatorCompat())
+        addUpdateListener { valueAnimator -> setBackgroundColor((valueAnimator.animatedValue as Int)) }
+        duration = revealDuration
+        if (isErrorFragment) doOnEnd {
+            background =
+                ThemeHelper.createColouredRipple(
+                    context,
+                    ContextCompat.getColor(
                         context,
-                        ContextCompat.getColor(
-                            context,
-                            R.color.red
-                        ),
-                        R.drawable.ripple
-                    )
-            }
-            start()
+                        R.color.red
+                    ),
+                    R.drawable.ripple
+                )
         }
+        start()
     }
     return animator
 }

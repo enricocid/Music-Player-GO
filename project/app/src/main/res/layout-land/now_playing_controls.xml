@@ -3,65 +3,66 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="@layout/now_playing">
-<LinearLayout
-    android:layout_width="0dp"
-    android:layout_height="match_parent"
-    android:layout_marginBottom="8dp"
-    android:layout_weight="1"
-    android:gravity="center"
-    android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/np_eq"
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
         android:layout_weight="1"
-        android:background="?android:attr/actionBarItemBackground"
-        android:onClick="openEqualizer"
-        app:srcCompat="@drawable/ic_equalizer"
-        tools:ignore="ContentDescription" />
+        android:gravity="center"
+        android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/np_skip_prev"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:background="?android:attr/actionBarItemBackground"
-        app:srcCompat="@drawable/ic_skip_previous"
-        tools:ignore="ContentDescription" />
+        <ImageButton
+            android:id="@+id/np_eq"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="?android:attr/actionBarItemBackground"
+            android:onClick="openEqualizer"
+            app:srcCompat="@drawable/ic_equalizer"
+            tools:ignore="ContentDescription" />
 
-    <ImageButton
-        android:id="@+id/np_play"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:adjustViewBounds="true"
-        android:background="?android:attr/actionBarItemBackground"
-        android:padding="16dp"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/ic_play"
-        tools:ignore="ContentDescription" />
+        <ImageButton
+            android:id="@+id/np_skip_prev"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="?android:attr/actionBarItemBackground"
+            app:srcCompat="@drawable/ic_skip_previous"
+            tools:ignore="ContentDescription" />
 
-    <ImageButton
-        android:id="@+id/np_skip_next"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:background="?android:attr/actionBarItemBackground"
-        app:srcCompat="@drawable/ic_skip_next"
-        tools:ignore="ContentDescription" />
+        <ImageButton
+            android:id="@+id/np_play"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="?android:attr/actionBarItemBackground"
+            android:padding="16dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_play"
+            tools:ignore="ContentDescription" />
 
-    <ImageButton
-        android:id="@+id/np_repeat"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:background="?android:attr/actionBarItemBackground"
-        app:srcCompat="@drawable/ic_repeat_one"
-        tools:ignore="ContentDescription" />
-</LinearLayout>
+        <ImageButton
+            android:id="@+id/np_skip_next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="?android:attr/actionBarItemBackground"
+            app:srcCompat="@drawable/ic_skip_next"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
+            android:id="@+id/np_repeat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="?android:attr/actionBarItemBackground"
+            app:srcCompat="@drawable/ic_repeat_one"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
 </merge>

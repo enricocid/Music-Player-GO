@@ -3,44 +3,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="@layout/now_playing">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="horizontal"
-    android:padding="16dp">
 
-    <ImageButton
-        android:id="@+id/np_love"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginEnd="16dp"
-        android:background="?android:attr/actionBarItemBackground"
-        app:srcCompat="@drawable/ic_favorite"
-        tools:ignore="ContentDescription" />
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="16dp">
 
-    <!-- VOLUME SEEKBAR -->
-    <SeekBar
-        android:id="@+id/np_volume_seek"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:clickable="true"
-        android:focusable="true"
-        android:max="100" />
+        <ImageButton
+            android:id="@+id/np_love"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="16dp"
+            android:background="?android:attr/actionBarItemBackground"
+            app:srcCompat="@drawable/ic_favorite"
+            tools:ignore="ContentDescription" />
 
-    <ImageButton
-        android:id="@+id/np_volume"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="16dp"
-        android:background="@android:color/transparent"
-        android:clickable="false"
-        android:focusable="false"
-        app:srcCompat="@drawable/ic_volume_up"
-        tools:ignore="ContentDescription" />
+        <!-- VOLUME SEEKBAR -->
+        <SeekBar
+            android:id="@+id/np_volume_seek"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:max="100" />
 
-</LinearLayout>
+        <ImageButton
+            android:id="@+id/np_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:background="@android:color/transparent"
+            android:clickable="false"
+            android:focusable="false"
+            app:srcCompat="@drawable/ic_volume_up"
+            tools:ignore="ContentDescription" />
+
+    </LinearLayout>
 </merge>

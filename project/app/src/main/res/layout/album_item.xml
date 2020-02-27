@@ -40,8 +40,8 @@
             android:maxLines="4"
             android:padding="2dp"
             android:textAlignment="center"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textColor="?android:attr/textColorPrimary" />
 
         <LinearLayout
             android:layout_width="match_parent"
