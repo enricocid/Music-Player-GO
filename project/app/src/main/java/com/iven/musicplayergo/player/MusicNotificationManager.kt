@@ -10,6 +10,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.extensions.toSpanned
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.ui.MainActivity
@@ -72,12 +73,10 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                     setSmallIcon(if (mediaPlayerHolder.isPlayingFromFolder) R.drawable.ic_library_music else R.drawable.ic_music_note)
                     color = ThemeHelper.resolveThemeAccent(playerService)
                     setContentTitle(
-                        ThemeHelper.buildSpanned(
-                            playerService.getString(
-                                R.string.song_title_notification,
-                                song?.title
-                            )
-                        )
+                        playerService.getString(
+                            R.string.song_title_notification,
+                            song?.title
+                        ).toSpanned()
                     )
                     setContentText(
                         playerService.getString(

@@ -13,7 +13,6 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.RippleDrawable
 import android.os.Build
 import android.os.Handler
-import android.text.Html
 import android.text.Spanned
 import android.util.TypedValue
 import android.view.View
@@ -27,6 +26,7 @@ import androidx.core.graphics.ColorUtils
 import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.iven.musicplayergo.*
+import com.iven.musicplayergo.extensions.toSpanned
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.MainActivity
 import com.iven.musicplayergo.ui.RESTORE_SETTINGS_FRAGMENT
@@ -118,13 +118,11 @@ object ThemeHelper {
             context.getString(R.string.underscore_delimiter),
             context.getString(R.string.space_delimiter)
         ).capitalize()
-        return buildSpanned(
-            context.getString(
-                R.string.accent_and_hex,
-                accentName,
-                context.getString(accent).toUpperCase()
-            )
-        )
+        return context.getString(
+            R.string.accent_and_hex,
+            accentName,
+            context.getString(accent).toUpperCase()
+        ).toSpanned()
     }
 
     //finds theme and its position in accents array and returns a pair(theme, position)
@@ -225,16 +223,6 @@ object ThemeHelper {
         1 -> R.drawable.ic_music_note
         2 -> R.drawable.ic_folder
         else -> R.drawable.ic_settings
-    }
-
-    @JvmStatic
-    @Suppress("DEPRECATION")
-    fun buildSpanned(res: String): Spanned = when {
-        VersioningHelper.isNougat() -> Html.fromHtml(
-            res,
-            Html.FROM_HTML_MODE_LEGACY
-        )
-        else -> Html.fromHtml(res)
     }
 
     @JvmStatic

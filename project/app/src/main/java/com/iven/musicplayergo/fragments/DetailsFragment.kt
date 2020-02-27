@@ -214,13 +214,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     withItem<Music, GenericViewHolder>(R.layout.generic_item) {
                         onBind(::GenericViewHolder) { _, item ->
                             // GenericViewHolder is `this` here
-                            title.text = ThemeHelper.buildSpanned(
-                                getString(
-                                    R.string.track_song,
-                                    item.track.toFormattedTrack(),
-                                    item.title
-                                )
-                            )
+                            title.text = getString(
+                                R.string.track_song,
+                                item.track.toFormattedTrack(),
+                                item.title
+                            ).toSpanned()
                             subtitle.text = item.duration.toFormattedDuration(false)
                         }
 

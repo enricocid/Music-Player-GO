@@ -10,10 +10,10 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toFormattedDuration
+import com.iven.musicplayergo.extensions.toSpanned
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.MusicOrgHelper
-import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.SavedMusic
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -63,13 +63,11 @@ class LovedSongsAdapter(
             val subtitle = itemView.findViewById<TextView>(R.id.subtitle)
 
             title.text = lovedSong?.title
-            duration.text = ThemeHelper.buildSpanned(
-                context.getString(
-                    R.string.loved_song_subtitle,
-                    lovedSong?.startFrom?.toLong()?.toFormattedDuration(false),
-                    lovedSong?.duration?.toFormattedDuration(false)
-                )
-            )
+            duration.text = context.getString(
+                R.string.loved_song_subtitle,
+                lovedSong?.startFrom?.toLong()?.toFormattedDuration(false),
+                lovedSong?.duration?.toFormattedDuration(false)
+            ).toSpanned()
             subtitle.text =
                 context.getString(R.string.artist_and_album, lovedSong?.artist, lovedSong?.album)
 

@@ -3,7 +3,9 @@ package com.iven.musicplayergo.extensions
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.content.Context
+import android.text.Html
 import android.text.SpannableString
+import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.view.MenuItem
 import android.view.View
@@ -21,6 +23,7 @@ import com.google.android.material.animation.ArgbEvaluatorCompat
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.fragments.DetailsFragment.Companion.DETAILS_FRAGMENT_TAG
 import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.helpers.VersioningHelper
 import kotlin.math.max
 
 //viewTreeObserver extension to measure layout params
@@ -36,6 +39,13 @@ inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
         }
     })
 }
+
+@Suppress("DEPRECATION")
+fun String.toSpanned(): Spanned = if (VersioningHelper.isNougat()) Html.fromHtml(
+    this,
+    Html.FROM_HTML_MODE_LEGACY
+)
+else Html.fromHtml(this)
 
 //extension to set menu items text color
 fun MenuItem.setTitleColor(color: Int) {
