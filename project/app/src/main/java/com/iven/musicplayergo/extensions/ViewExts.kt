@@ -3,6 +3,8 @@ package com.iven.musicplayergo.extensions
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.content.Context
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewAnimationUtils
@@ -37,9 +39,10 @@ inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
 
 //extension to set menu items text color
 fun MenuItem.setTitleColor(color: Int) {
-    val hexColor = Integer.toHexString(color).substring(2)
-    val html = "<font color='#$hexColor'>$title</font>"
-    title = ThemeHelper.buildSpanned(html)
+    SpannableString(title).apply {
+        setSpan(ForegroundColorSpan(color), 0, length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+        title = this
+    }
 }
 
 fun FragmentManager.addFragment(fragment: Fragment, tag: String?) {
