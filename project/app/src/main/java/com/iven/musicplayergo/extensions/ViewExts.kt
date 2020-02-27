@@ -42,25 +42,16 @@ fun MenuItem.setTitleColor(color: Int) {
     title = ThemeHelper.buildSpanned(html)
 }
 
-fun FragmentManager.addFragment(isAdd: Boolean, container: Int, fragment: Fragment, tag: String?) {
-    val ft = beginTransaction()
-    when {
-        isAdd -> {
-            ft.addToBackStack(null)
-            ft.add(
-                container,
-                fragment,
-                tag
-            )
-        }
-        else -> {
-            ft.replace(
-                container,
-                fragment
-            )
-        }
+fun FragmentManager.addFragment(fragment: Fragment, tag: String?) {
+    beginTransaction().apply {
+        addToBackStack(null)
+        add(
+            R.id.container,
+            fragment,
+            tag
+        )
+        commit()
     }
-    ft.commit()
 }
 
 fun FragmentManager.isDetailsFragment(remove: Boolean): Boolean {

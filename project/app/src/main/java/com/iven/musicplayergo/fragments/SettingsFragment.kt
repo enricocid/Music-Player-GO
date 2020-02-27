@@ -6,7 +6,6 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentSettingsBinding
-import com.iven.musicplayergo.extensions.addFragment
 import com.iven.musicplayergo.ui.UIControlInterface
 
 /**
@@ -41,12 +40,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                     mUIControlInterface.onCloseActivity()
                 }
             }
-            childFragmentManager.addFragment(
-                false,
-                R.id.fragment_layout,
-                PreferencesFragment.newInstance(),
-                null
-            )
+            childFragmentManager.beginTransaction().apply {
+                replace(R.id.fragment_layout, PreferencesFragment.newInstance())
+                commit()
+            }
         }
     }
 

@@ -267,9 +267,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun notifyError(errorType: String) {
         mPlayerControlsPanelBinding.playerView.visibility = View.GONE
-        supportFragmentManager.addFragment(
-            false, R.id.container, ErrorFragment.newInstance(errorType), null
-        )
+        mMainActivityBinding.apply {
+            loadingProgressBar.visibility = View.GONE
+            viewPager2.visibility = View.GONE
+        }
+        supportFragmentManager.addFragment(ErrorFragment.newInstance(errorType), null)
     }
 
     private fun finishSetup(music: MutableList<Music>?) {
@@ -382,10 +384,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     mMediaPlayerHolder
                 )
             )
-
-        supportFragmentManager.addFragment(
-            true, R.id.container, mDetailsFragment, DETAILS_FRAGMENT_TAG
-        )
+        supportFragmentManager.addFragment(mDetailsFragment, DETAILS_FRAGMENT_TAG)
     }
 
     private fun closeDetailsFragment(tab: TabLayout.Tab?) {
