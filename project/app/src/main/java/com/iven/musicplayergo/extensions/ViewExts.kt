@@ -67,18 +67,9 @@ fun FragmentManager.addFragment(fragment: Fragment, tag: String?) {
     }
 }
 
-fun FragmentManager.isDetailsFragment(remove: Boolean): Boolean {
+fun FragmentManager.isDetailsFragment(): Boolean {
     val df = findFragmentByTag(DETAILS_FRAGMENT_TAG)
-    val isDetailsFragment = df != null && df.isVisible && df.isAdded
-    if (remove && isDetailsFragment) df?.remove(this)
-    return isDetailsFragment
-}
-
-private fun Fragment.remove(fragmentManager: FragmentManager) {
-    fragmentManager.beginTransaction().apply {
-        remove(this@remove)
-        commit()
-    }
+    return df != null && df.isVisible && df.isAdded
 }
 
 fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator {

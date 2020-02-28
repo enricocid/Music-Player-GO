@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mDetailsFragment: DetailsFragment
 
     //booleans
-    private val sDetailsFragmentExpanded get() = supportFragmentManager.isDetailsFragment(false)
+    private val sDetailsFragmentExpanded get() = supportFragmentManager.isDetailsFragment()
     private var sRevealAnimationRunning = false
     private var sAppearanceChanged = false
     private var sRestoreSettingsFragment = false
@@ -334,7 +334,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 }
             })
 
-            getTabAt(if (sRestoreSettingsFragment) mMainActivityBinding.viewPager2.offscreenPageLimit else 0)?.icon?.setTint(
+            getTabAt(if (sRestoreSettingsFragment) mMainActivityBinding.viewPager2.offscreenPageLimit else 0).icon.setTint(
                 mResolvedAccentColor
             )
         }
@@ -393,8 +393,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 sRevealAnimationRunning = true
                 tab?.icon?.setTint(mResolvedAccentColor)
                 doOnEnd {
-                    sRevealAnimationRunning = false
-                    supportFragmentManager.isDetailsFragment(true)
+                    synchronized(super.onBackPressed()) {
+                        sRevealAnimationRunning = false
+                    }
                 }
             }
         }
@@ -812,9 +813,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 if (isPlayingFromFolder) selectedSong?.relativePath else selectedSong?.artist
             if (sDetailsFragmentExpanded) {
                 if (mDetailsFragment.hasToUpdate(selectedArtistOrFolder)) {
-                    synchronized(
-                        supportFragmentManager.isDetailsFragment(true)
-                    ) {
+                    synchronized(super.onBackPressed()) {
                         openDetailsFragment(
                             selectedArtistOrFolder,
                             mMediaPlayerHolder.isPlayingFromFolder
