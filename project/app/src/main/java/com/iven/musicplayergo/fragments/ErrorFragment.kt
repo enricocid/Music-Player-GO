@@ -23,7 +23,6 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
     private lateinit var mErrorFragmentBinding: FragmentErrorBinding
     private lateinit var mUIControlInterface: UIControlInterface
 
-    private var sNoMusic = false
     private var mErrorString = R.string.perm_rationale
     private var mErrorIcon = R.drawable.ic_folder
 
@@ -34,17 +33,14 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
 
             when (errorType) {
                 TAG_NO_MUSIC -> {
-                    sNoMusic = true
                     mErrorIcon = R.drawable.ic_music_off
                     mErrorString = R.string.error_no_music
                 }
                 TAG_NO_MUSIC_INTENT -> {
-                    sNoMusic = false
                     mErrorIcon = R.drawable.ic_mood_bad
                     mErrorString = R.string.error_unknown_unsupported
                 }
                 TAG_SD_NOT_READY -> {
-                    sNoMusic = true
                     mErrorIcon = R.drawable.ic_mood_bad
                     mErrorString = R.string.error_not_ready
                 }
@@ -66,12 +62,7 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
         mErrorFragmentBinding = FragmentErrorBinding.bind(view)
         mErrorFragmentBinding.errorMessage.text = getString(mErrorString)
         mErrorFragmentBinding.errorIcon.setImageResource(mErrorIcon)
-        mErrorFragmentBinding.root.setOnClickListener {
-            if (sNoMusic) mUIControlInterface.onCloseActivity() else mUIControlInterface.onAppearanceChanged(
-                isAccentChanged = false,
-                restoreSettings = false
-            )
-        }
+        mErrorFragmentBinding.root.setOnClickListener { activity?.finishAndRemoveTask() }
 
         mErrorFragmentBinding.errorToolbar.setNavigationOnClickListener {
             mUIControlInterface.onCloseActivity()

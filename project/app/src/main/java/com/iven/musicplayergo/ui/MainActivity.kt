@@ -839,7 +839,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) DialogHelper.stopPlaybackDialog(
             this,
             mMediaPlayerHolder
-        ) else onBackPressed()
+        ) else finishAndRemoveTask()
     }
 
     override fun onHandleFocusPref() {
