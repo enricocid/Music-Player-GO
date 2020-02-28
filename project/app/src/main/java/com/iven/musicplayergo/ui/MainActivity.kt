@@ -485,7 +485,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     this
                 )
             )
-            mNowPlayingBinding.npSeekBar.progress = this
+            mNowPlayingExtendedControlsBinding.npVolumeSeek.progress = this
         }
 
         mNowPlayingExtendedControlsBinding.npVolumeSeek.setOnSeekBarChangeListener(object :
@@ -587,7 +587,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 updateNowPlayingInfo()
 
                 onShow {
-                    mNowPlayingExtendedControlsBinding.npVolumeSeek.progress =
+                    mNowPlayingBinding.npSeekBar.progress =
                         mPlayerControlsPanelBinding.songProgress.progress
                 }
 
