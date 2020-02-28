@@ -334,13 +334,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 }
             })
 
-            getTabAt(if (sRestoreSettingsFragment) mMainActivityBinding.viewPager2.offscreenPageLimit else 0).icon.setTint(
+            getTabAt(if (sRestoreSettingsFragment) mMainActivityBinding.viewPager2.offscreenPageLimit else 0)?.icon?.setTint(
                 mResolvedAccentColor
             )
         }
 
-        if (sRestoreSettingsFragment) mMainActivityBinding.viewPager2.currentItem =
-            mMainActivityBinding.viewPager2.offscreenPageLimit
+        if (sRestoreSettingsFragment) mMainActivityBinding.viewPager2.setCurrentItem(
+            mMainActivityBinding.viewPager2.offscreenPageLimit,
+            false
+        )
     }
 
     private fun initFragmentAtIndex(index: Int) {
@@ -623,12 +625,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onAppearanceChanged(isAccentChanged: Boolean, restoreSettings: Boolean) {
-        if (isAccentChanged && mMediaPlayerHolder.isPlaying) {
-            mMediaPlayerHolder.updateNotification()
-        }
-        synchronized(saveSongToPref()) {
-            ThemeHelper.applyChangesSmoothly(this, restoreSettings)
-        }
+        sAppearanceChanged = true
+        if (isAccentChanged && mMediaPlayerHolder.isPlaying) mMediaPlayerHolder.updateNotification()
+        synchronized(saveSongToPref()) { recreate() }
     }
 
     private fun updatePlayingStatus(isNowPlaying: Boolean) {

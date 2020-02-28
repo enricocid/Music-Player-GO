@@ -121,7 +121,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
         activity?.let { ac ->
             when (preference?.key) {
-
                 getString(R.string.open_git_pref) -> openCustomTab(
                     ac,
                     getString(R.string.app_git)
@@ -240,10 +239,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             positiveButton(android.R.string.ok) {
                 goPreferences.filters = filtersAdapter.getUpdatedItems()
-                mUIControlInterface.onAppearanceChanged(
-                    isAccentChanged = false,
-                    restoreSettings = false
-                )
+                activity.recreate()
             }
 
             negativeButton(android.R.string.cancel)
