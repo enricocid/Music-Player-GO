@@ -42,11 +42,11 @@ class MusicPlayerGoPreferences(context: Context) {
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
     private val mGson = GsonBuilder().create()
 
-    //first: the song (Music object), second: position, third: isPlayingFromFolder
+    // last played song is a SavedMusic
     private val typeLastPlayedSong = object : TypeToken<SavedMusic>() {}.type
 
-    //first: the song (Music object), second: position
-    private val typeLovedSong = object : TypeToken<MutableList<SavedMusic>>() {}.type
+    //loved songs is a list of SavedMusic
+    private val typeLovedSongs = object : TypeToken<MutableList<SavedMusic>>() {}.type
 
     var latestVolume: Int
         get() = mPrefs.getInt(prefsLatestVolume, 100)
@@ -62,7 +62,7 @@ class MusicPlayerGoPreferences(context: Context) {
     var lovedSongs: MutableList<SavedMusic>?
         get() = getObject(
             prefsLovedSongs,
-            typeLovedSong
+            typeLovedSongs
         )
         set(value) = putObject(prefsLovedSongs, value)
 
