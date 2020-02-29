@@ -9,6 +9,7 @@
   - Active tabs management
   - Precise volume control toggle
   - Audio focus and headsets plug management toggles
+  - Filters management
 
 - Save/restore last reproduced song/progress
 
@@ -19,7 +20,7 @@
   - Queue button
   - Loved songs button
 
-- Now playing dialog showing the classical media controls: seek bar, equalizer, skip, play/pause, repeat 1x, add to loved songs, current volume step fine control
+- Now playing dialog showing the classical media controls: seek bar, equalizer, skip, play/pause, repeat (1x, loop), add to loved songs, current volume step fine control
   > Tip: click on played song to quickly jump to song's album/folder
 
 - Artist's details showing its albums/songs. Shuffle all its songs or the selected album
@@ -33,9 +34,10 @@
 
 - Landscape support
 
+- Ability to hide artists/folders
 - Search
 - Notification's SeekBar support (starting from Android Q)
-- Sort options (default, ascending, descending)
+- Sort options
 - Shuffle options
 - Open audio files from outside the app
 - Pause/resume when the headsets are plugged in/out

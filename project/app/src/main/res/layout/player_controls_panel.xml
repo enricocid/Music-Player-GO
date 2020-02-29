@@ -97,6 +97,7 @@
                 android:id="@+id/loved_songs_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:background="?android:attr/actionBarItemBackground"
                 android:onClick="openLovedSongsDialog"
                 android:padding="8dp"

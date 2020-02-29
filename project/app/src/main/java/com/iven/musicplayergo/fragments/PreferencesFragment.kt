@@ -24,7 +24,6 @@ import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
-import kotlin.properties.Delegates
 
 class PreferencesFragment : PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener {
@@ -32,8 +31,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     private lateinit var mAccentsDialog: MaterialDialog
     private lateinit var mActiveFragmentsDialog: MaterialDialog
     private lateinit var mFiltersDialog: MaterialDialog
-
-    private var mSelectedAccent: Int by Delegates.notNull()
 
     private lateinit var mUIControlInterface: UIControlInterface
 
@@ -67,8 +64,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
-        mSelectedAccent = goPreferences.accent
 
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception

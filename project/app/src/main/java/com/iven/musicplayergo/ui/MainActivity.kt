@@ -50,7 +50,7 @@ import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.*
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
-import kotlin.properties.Delegates
+
 
 const val PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 2588
 const val RESTORE_SETTINGS_FRAGMENT = "restore_settings_fragment_key"
@@ -65,10 +65,22 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mMusicRepository: MusicRepository
 
     //colors
-    private var mResolvedAccentColor: Int by Delegates.notNull()
-    private var mResolvedAlphaAccentColor: Int by Delegates.notNull()
-    private var mResolvedIconsColor: Int by Delegates.notNull()
-    private var mResolvedDisabledIconsColor: Int by Delegates.notNull()
+    private val mResolvedAccentColor get() = ThemeHelper.resolveThemeAccent(this)
+    private val mResolvedAlphaAccentColor
+        get() = ThemeHelper.getAlphaAccent(
+            this,
+            ThemeHelper.getAlphaForAccent()
+        )
+    private val mResolvedIconsColor
+        get() = ContextCompat.getColor(
+            this,
+            R.color.widgetsColor
+        )
+    private val mResolvedDisabledIconsColor
+        get() = ThemeHelper.resolveColorAttr(
+            this,
+            android.R.attr.colorButtonNormal
+        )
 
     //fragments
     private var mActiveFragments: MutableList<String>? = null
@@ -83,7 +95,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private var sRevealAnimationRunning = false
     private var sAppearanceChanged = false
     private var sRestoreSettingsFragment = false
-    private var sLandscape = false
+    private val sLandscape get() = ThemeHelper.isDeviceLand(resources)
 
     //now playing
     private lateinit var mNowPlayingDialog: MaterialDialog
@@ -220,18 +232,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         setContentView(mMainActivityBinding.root)
 
-        //init colors
-        mResolvedAccentColor = ThemeHelper.resolveThemeAccent(this)
-        mResolvedAlphaAccentColor =
-            ThemeHelper.getAlphaAccent(this, ThemeHelper.getAlphaForAccent())
-        mResolvedIconsColor =
-            ContextCompat.getColor(
-                this,
-                R.color.widgetsColor
-            )
-        mResolvedDisabledIconsColor =
-            ThemeHelper.resolveColorAttr(this, android.R.attr.colorButtonNormal)
-
         if (goPreferences.isEdgeToEdge) {
             window?.apply {
                 if (!VersioningHelper.isQ()) {
@@ -251,8 +251,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         initMediaButtons()
 
         mActiveFragments = goPreferences.activeFragments?.toMutableList()
-
-        sLandscape = ThemeHelper.isDeviceLand(resources)
 
         sRestoreSettingsFragment =
             savedInstanceState?.getBoolean(RESTORE_SETTINGS_FRAGMENT) ?: intent.getBooleanExtra(

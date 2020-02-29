@@ -10,10 +10,10 @@
 [![Supported formats](https://img.shields.io/static/v1?label=Formats&message=read&color=80cbc4)](https://github.com/enricocid/Music-Player-GO/blob/master/FORMATS.MD)
 
 [![API](https://img.shields.io/static/v1?label=API&message=21&color=a5d6a7)](https://developer.android.com/about/versions/android-5.0.html)
-[![TAG](https://img.shields.io/static/v1?label=Tag&message=v4.1.9&color=ffe082)](https://github.com/enricocid/Music-Player-GO/releases/tag/v4.1.9)
+[![TAG](https://img.shields.io/static/v1?label=Tag&message=v4.2.0&color=ffe082)](https://github.com/enricocid/Music-Player-GO/releases/tag/v4.2.0)
 
 
-<img align="right" src="https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/mpgo-4-1-9.gif" height="500px"/>
+<img align="right" src="https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/mpgo-4-2-0.gif" height="500px"/>
 
 
 # Features:
@@ -27,6 +27,7 @@
   - Active tabs management
   - Precise volume control toggle
   - Audio focus and headsets plug management toggles
+  - Filters management
 
 - **Save/restore last reproduced song/progress**
 
@@ -37,7 +38,7 @@
   - **Queue** button
   - **Loved songs** button
 
-- **Now playing** dialog showing the classical media controls: seek bar, equalizer, skip, play/pause, repeat 1x, **add to loved songs**, current volume step fine control
+- **Now playing** dialog showing the classical media controls: seek bar, equalizer, skip, play/pause, repeat (1x, loop), **add to loved songs**, current volume step fine control
   > Tip: click on played song to quickly jump to song's album/folder
 
 - **Artist's details** showing its albums/songs. Shuffle all its songs or the selected album
@@ -51,9 +52,10 @@
 
 - **Landscape** support
 
+- Ability to hide artists/folders
 - Search
 - Notification's SeekBar support (starting from Android Q)
-- **Sort** options (default, ascending, descending)
+- **Sort** options
 - Shuffle options
 - Open audio files from outside the app
 - Pause/resume when the headsets are plugged in/out

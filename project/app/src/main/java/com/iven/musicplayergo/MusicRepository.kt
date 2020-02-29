@@ -168,9 +168,7 @@ class MusicRepository : CoroutineScope {
 
         fun getInstance(): MusicRepository {
             val tempInstance = INSTANCE
-            if (tempInstance != null) {
-                return tempInstance
-            }
+            if (tempInstance != null) return tempInstance
             synchronized(this) {
                 val instance = MusicRepository()
                 INSTANCE = instance

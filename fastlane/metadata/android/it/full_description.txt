@@ -9,6 +9,7 @@
   - Gestione tabs attive
   - Opzione controllo preciso del volume
   - Gestione del focus audio e dell'inserimento delle cuffie
+  - Gestione filtri
 
 - Salvataggio/ripristino dell'ultima canzone riprodotta
 
@@ -19,7 +20,7 @@
   - Pulsante coda
   - Pulsante preferiti
 
-- Dialog now playing che mostra i classici controlli multimediali: barra di scorrimento, equalizzatore, skip, play/pausa, ripeti 1x, aggiungi a canzoni preferite, controllo fine dello step di volume corrente
+- Dialog now playing che mostra i classici controlli multimediali: barra di scorrimento, equalizzatore, skip, play/pausa, ripeti (1x, loop), aggiungi a canzoni preferite, controllo fine dello step di volume corrente
   > Consiglio: clicca sulla canzone riprodotta per saltare velocemente alla all'album/cartella della canzone
 
 - Pagina artista che mostra i suoi album/canzoni. Mescola tutte le sue canzoni o l'album selezionato
@@ -33,9 +34,10 @@
 
 - Supporto landscape
 
+- Possibilità di nascondere artisti e cartelle
 - Ricerca
 - Supporto SeekBar notifica (a partire da Android Q)
-- Opzioni sorting (default, ascendente, discendente)
+- Opzioni sorting
 - Opzioni per il mescolamento (shuffle)
 - Possibilità di aprire file audio dall'esterno dell'app
 - Pausa/riprendi quando le cuffie sono (s)connesse

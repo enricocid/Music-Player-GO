@@ -1,0 +1,13 @@
+- Miglioramenti design, performance UI e qualità del codice
+(per i geeks: coroutines, viewmodel, viewbinding etc)
+- Nuove font/icone: source sans pro/outline
+- Aggiunta possibilità di:
+  - Ordinare le canzoni al volo
+  - Ripetere in loop una canzone
+  - Nascondere artisti/cartelle
+- Corretta opzione gestione focus
+- Corretto ordinamento artisti
+- Rivisto meccanismo salvataggio canzoni preferite
+- Transizione al tema material components
+- Aggiornate le librerie
+- Molti altri bug fixes
