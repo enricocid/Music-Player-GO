@@ -127,6 +127,7 @@ object ThemeHelper {
         R.color.deepPurplePrimaryDark
     }
 
+    @ColorInt
     @JvmStatic
     fun getColor(context: Context, color: Int, emergencyColor: Int) = try {
         color.decodeColor(context)
