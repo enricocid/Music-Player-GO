@@ -8,16 +8,9 @@ import com.iven.musicplayergo.helpers.MusicOrgHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.io.File
-import kotlin.coroutines.CoroutineContext
 
-class MusicRepository : CoroutineScope {
-
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.IO
+class MusicRepository {
 
     var deviceMusicList = mutableListOf<Music>()
 
@@ -123,15 +116,12 @@ class MusicRepository : CoroutineScope {
             null
         }
 
-    suspend fun getDeviceMusic(application: Application) = withContext(coroutineContext) {
-
+    fun getDeviceMusic(application: Application): MutableList<Music> {
         queryForMusic(application)?.let { fm ->
             deviceMusicList = fm
         }
-
         buildLibrary(application.resources)
-
-        deviceMusicList
+        return deviceMusicList
     }
 
     private fun buildLibrary(resources: Resources) {
