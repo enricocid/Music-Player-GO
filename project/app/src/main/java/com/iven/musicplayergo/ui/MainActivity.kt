@@ -233,7 +233,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     statusBarColor = Color.TRANSPARENT
                     navigationBarColor = Color.TRANSPARENT
                 }
-                ThemeHelper.handleLightSystemBars(decorView)
+                ThemeHelper.handleLightSystemBars(resources.configuration, decorView)
             }
             edgeToEdge {
                 mMainActivityBinding.root.fit { Edge.Top + Edge.Bottom }
@@ -589,7 +589,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 if (goPreferences.isEdgeToEdge && !sLandscape) {
                     window?.apply {
-                        ThemeHelper.handleLightSystemBars(decorView)
+                        ThemeHelper.handleLightSystemBars(this@MainActivity.resources.configuration, decorView)
                         edgeToEdge {
                             mNowPlayingBinding.root.fit { Edge.Bottom }
                         }

@@ -56,17 +56,18 @@ object ThemeHelper {
         resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
     @JvmStatic
-    private fun isThemeNight() =
-        AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
+    private fun isThemeNight(configuration: Configuration) =
+        configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 
     @JvmStatic
     fun getAlphaForAccent() = if (goPreferences.accent != R.color.yellow) 100 else 150
 
     @JvmStatic
     @TargetApi(Build.VERSION_CODES.O_MR1)
-    fun handleLightSystemBars(view: View) {
-        view.systemUiVisibility =
-            if (isThemeNight()) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+    fun handleLightSystemBars(configuration: Configuration, decorView: View) {
+        val flags = decorView.systemUiVisibility
+        decorView.systemUiVisibility =
+            if (isThemeNight(configuration)) flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv() and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv() else flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
     }
 
     //fixed array of pairs (first: accent, second: theme)
@@ -186,7 +187,7 @@ object ThemeHelper {
             ColorDrawable(
                 getAlphaAccent(
                     context,
-                    if (isThemeNight()) 45 else 85
+                    if (isThemeNight(context.resources.configuration)) 45 else 85
                 )
             )
         )

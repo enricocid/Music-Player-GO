@@ -23,7 +23,7 @@ If You think You should be listed don't hesitate to notify me! :)
 
 - [**seventhsonmizo**](https://github.com/seventhsonmizo) for Android Q [issue](https://github.com/enricocid/Music-Player-GO/issues/110) report and debugging
 
-- [**Jnss98b**](https://github.com/Jnss98b) for helping me to implement [edge-to-edge](https://github.com/enricocid/Music-Player-GO/issues/86)
+- [**Jnss98b**](https://github.com/Jnss98b) for helping me to implement [edge-to-edge](https://github.com/enricocid/Music-Player-GO/issues/86) and for having reported/debugged this [issue](https://github.com/enricocid/VectorifyDaHome/issues/17)
 
 - [**Pirhszm Yfiz**](https://github.com/pirhszm) for reporting me this [issue](https://github.com/enricocid/Music-Player-GO/issues/110#issuecomment-573424280)
 
