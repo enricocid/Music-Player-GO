@@ -121,7 +121,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:clickable="false"
-                android:indeterminate="false"
                 android:indeterminateTint="?attr/colorPrimary"
                 android:progressBackgroundTint="?attr/colorControlNormal" />
         </LinearLayout>

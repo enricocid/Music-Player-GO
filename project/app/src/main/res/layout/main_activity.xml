@@ -19,7 +19,6 @@
             android:layout_height="@android:dimen/app_icon_size"
             android:layout_gravity="center"
             android:clickable="false"
-            android:indeterminate="false"
             android:indeterminateTint="?attr/colorPrimary"
             android:visibility="gone" />
 
