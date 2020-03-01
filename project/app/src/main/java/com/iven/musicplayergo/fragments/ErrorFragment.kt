@@ -4,12 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.animation.doOnEnd
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentErrorBinding
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.createCircularReveal
+import com.iven.musicplayergo.extensions.decodeColor
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.ui.UIControlInterface
 
@@ -72,7 +72,7 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
             createCircularReveal(isErrorFragment = true, show = true).doOnEnd {
                 if (!goPreferences.isEdgeToEdge) activity?.let { fa ->
                     fa.window.apply {
-                        val red = ContextCompat.getColor(fa, R.color.red)
+                        val red = R.color.red.decodeColor(fa)
                         statusBarColor = red
                         navigationBarColor = red
                     }

@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewTreeObserver
 import android.widget.Toast
+import androidx.annotation.ColorInt
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -39,6 +40,9 @@ inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
         }
     })
 }
+
+@ColorInt
+fun Int.decodeColor(context: Context) = ContextCompat.getColor(context, this)
 
 @Suppress("DEPRECATION")
 fun String.toSpanned(): Spanned = if (VersioningHelper.isNougat()) Html.fromHtml(
@@ -98,8 +102,8 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
             start()
         }
 
-    val windowBackground = ContextCompat.getColor(context, R.color.windowBackground)
-    val red = ContextCompat.getColor(context, R.color.red)
+    val windowBackground = R.color.windowBackground.decodeColor(context)
+    val red = R.color.red.decodeColor(context)
     val accent = if (!show) windowBackground else ThemeHelper.resolveThemeAccent(context)
 
     val startColor = if (isErrorFragment) red else accent
@@ -114,10 +118,7 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
             background =
                 ThemeHelper.createColouredRipple(
                     context,
-                    ContextCompat.getColor(
-                        context,
-                        R.color.red
-                    ),
+                    R.color.red.decodeColor(context),
                     R.drawable.ripple
                 )
         }

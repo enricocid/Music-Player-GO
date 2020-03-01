@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -291,10 +290,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 isEnabled = mSelectedAlbum?.music?.size!! >= 2
                 ThemeHelper.updateIconTint(
                     this,
-                    if (isEnabled) ContextCompat.getColor(
+                    if (isEnabled) R.color.widgetsColor.decodeColor(context) else ThemeHelper.resolveColorAttr(
                         context,
-                        R.color.widgetsColor
-                    ) else ThemeHelper.resolveColorAttr(context, android.R.attr.colorButtonNormal)
+                        android.R.attr.colorButtonNormal
+                    )
                 )
             }
             mDetailsFragmentBinding.detailsToolbar.menu.findItem(R.id.action_shuffle_sa).isEnabled =

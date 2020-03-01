@@ -16,7 +16,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
@@ -71,11 +70,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             this,
             ThemeHelper.getAlphaForAccent()
         )
-    private val mResolvedIconsColor
-        get() = ContextCompat.getColor(
-            this,
-            R.color.widgetsColor
-        )
+    private val mResolvedIconsColor get() = R.color.widgetsColor.decodeColor(this)
     private val mResolvedDisabledIconsColor
         get() = ThemeHelper.resolveColorAttr(
             this,
@@ -244,8 +239,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mMainActivityBinding.root.fit { Edge.Top + Edge.Bottom }
             }
         } else {
-            window.statusBarColor =
-                ContextCompat.getColor(this, ThemeHelper.resolvePrimaryDarkColor())
+            window.statusBarColor = ThemeHelper.resolvePrimaryDarkColor().decodeColor(this)
         }
 
         initMediaButtons()
@@ -648,8 +642,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
 
         val lovedSongsButtonColor = if (lovedSongs.isNullOrEmpty())
-            mResolvedDisabledIconsColor else
-            ContextCompat.getColor(this, R.color.red)
+            mResolvedDisabledIconsColor else R.color.red.decodeColor(this)
         ThemeHelper.updateIconTint(
             mPlayerControlsPanelBinding.lovedSongsButton,
             lovedSongsButtonColor

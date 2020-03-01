@@ -18,11 +18,11 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.iven.musicplayergo.*
+import com.iven.musicplayergo.extensions.decodeColor
 import com.iven.musicplayergo.extensions.toSpanned
 import com.iven.musicplayergo.player.MediaPlayerHolder
 
@@ -129,9 +129,9 @@ object ThemeHelper {
 
     @JvmStatic
     fun getColor(context: Context, color: Int, emergencyColor: Int) = try {
-        ContextCompat.getColor(context, color)
+        color.decodeColor(context)
     } catch (e: Exception) {
-        ContextCompat.getColor(context, emergencyColor)
+        emergencyColor.decodeColor(context)
     }
 
     @JvmStatic
@@ -169,7 +169,7 @@ object ThemeHelper {
         // resourceId is used if it's a ColorStateList, and data if it's a color reference or a hex color
         val colorRes =
             if (resolvedAttr.resourceId != 0) resolvedAttr.resourceId else resolvedAttr.data
-        return ContextCompat.getColor(context, colorRes)
+        return colorRes.decodeColor(context)
     }
 
     @JvmStatic
