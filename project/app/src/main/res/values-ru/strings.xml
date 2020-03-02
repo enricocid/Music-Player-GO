@@ -55,4 +55,12 @@
     <string name="sorting_pref">Сортировка</string>
     <string name="sorting_pref_track">По номеру трека &#8595;</string>
     <string name="sorting_pref_track_inv">По номеру трека &#8593;</string>
+    <string name="found_songs_pref_title">Найдены треки: %1d</string>
+    <string name="filter_pref_title">Фильтры</string>
+    <string name="filter_popup_title">Спрятать</string>
+    <string name="error_no_filter">Фильтры не найдены!</string>
+    <string name="repeat_loop_enabled">Повтор &#8734; включен!</string>
+    <string name="error_no_music">Музыка не найдена :(</string>
+    <string name="error_media_buttons">Что-то пошло не так! :( Пожалуйста перезапустите воспроизведение из приложения</string>
+    <string name="error_not_ready">Случилась ошибка при загрузке музыкальной библиотеки! :( Вероятнее всего это случилось по причине того, что карта памяти временами отключается, заставляя MediaStore андроида пересобирать заново свою базу данных. Решение: попробовать еще раз поздже :)</string>
 </resources>
