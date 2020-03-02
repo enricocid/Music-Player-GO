@@ -52,4 +52,7 @@
     <string name="theme_pref_dark_title">Темная</string>
     <string name="theme_pref_auto_title">Автоматически</string>
     <string name="sorting_pref_default">По умолчанию</string>
+    <string name="sorting_pref">Сортировка</string>
+    <string name="sorting_pref_track">По номеру трека &#8595;</string>
+    <string name="sorting_pref_track_inv">По номеру трека &#8593;</string>
 </resources>
