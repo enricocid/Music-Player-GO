@@ -145,7 +145,10 @@ object ListsHelper {
                 context.getString(
                     R.string.loved_song_added,
                     savedSong.title,
-                    savedSong.startFrom.toLong().toFormattedDuration(false)
+                    savedSong.startFrom.toLong().toFormattedDuration(
+                        isAlbum = false,
+                        isSeekBar = false
+                    )
                 ).toToast(context)
                 goPreferences.lovedSongs = lovedSongs
             }

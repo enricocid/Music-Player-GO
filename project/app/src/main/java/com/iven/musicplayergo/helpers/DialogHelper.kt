@@ -158,7 +158,10 @@ object DialogHelper {
                 )
                 if (goPreferences.isEdgeToEdge) {
                     window?.apply {
-                        ThemeHelper.handleLightSystemBars(context.resources.configuration, decorView)
+                        ThemeHelper.handleLightSystemBars(
+                            context.resources.configuration,
+                            decorView
+                        )
                         edgeToEdge {
                             recyclerView.fit { Edge.Bottom }
                             decorView.fit { Edge.Top }
@@ -186,7 +189,10 @@ object DialogHelper {
                 text = context.getString(
                     R.string.loved_song_remove,
                     songToDelete?.title,
-                    songToDelete?.startFrom?.toLong()?.toFormattedDuration(false)
+                    songToDelete?.startFrom?.toLong()?.toFormattedDuration(
+                        isAlbum = false,
+                        isSeekBar = false
+                    )
                 )
             )
             positiveButton(R.string.yes) {

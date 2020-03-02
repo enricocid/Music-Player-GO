@@ -80,7 +80,10 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                         onBind(::SongsViewHolder) { _, item ->
                             // GenericViewHolder is `this` here
                             title.text = item.title
-                            duration.text = item.duration.toFormattedDuration(false)
+                            duration.text = item.duration.toFormattedDuration(
+                                isAlbum = false,
+                                isSeekBar = false
+                            )
                             subtitle.text =
                                 getString(R.string.artist_and_album, item.artist, item.album)
                         }

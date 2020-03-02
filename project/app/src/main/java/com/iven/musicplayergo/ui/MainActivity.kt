@@ -10,6 +10,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
+import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import androidx.activity.viewModels
@@ -443,7 +444,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                             mResolvedAccentColor
                         )
                     }
-                    mNowPlayingBinding.npSeek.text = progress.toLong().toFormattedDuration(false)
+                    mNowPlayingBinding.npSeek.text =
+                        progress.toLong().toFormattedDuration(isAlbum = false, isSeekBar = true)
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -589,7 +591,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 if (goPreferences.isEdgeToEdge && !sLandscape) {
                     window?.apply {
-                        ThemeHelper.handleLightSystemBars(this@MainActivity.resources.configuration, decorView)
+                        ThemeHelper.handleLightSystemBars(
+                            this@MainActivity.resources.configuration,
+                            decorView
+                        )
                         edgeToEdge {
                             mNowPlayingBinding.root.fit { Edge.Bottom }
                         }
@@ -781,8 +786,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             )
 
         mNowPlayingBinding.npSeek.text =
-            mMediaPlayerHolder.playerPosition.toLong().toFormattedDuration(false)
-        mNowPlayingBinding.npDuration.text = selectedSongDuration.toFormattedDuration(false)
+            mMediaPlayerHolder.playerPosition.toLong().toFormattedDuration(false, isSeekBar = true)
+        mNowPlayingBinding.npDuration.text =
+            selectedSongDuration.toFormattedDuration(false, isSeekBar = true)
 
         mNowPlayingBinding.npSeekBar.max = selectedSong.duration.toInt()
 
@@ -978,6 +984,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
 
         override fun onPositionChanged(position: Int) {
+            Log.d("pos", position.toString())
             mPlayerControlsPanelBinding.songProgress.progress = position
             if (isNowPlaying) mNowPlayingBinding.npSeekBar.progress = position
         }

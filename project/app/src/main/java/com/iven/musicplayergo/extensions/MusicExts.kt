@@ -39,7 +39,7 @@ fun Uri.toBitrate(context: Context): Pair<Int, Int>? {
 
 fun IntRange.getRandom() = Random.nextInt(start, endInclusive + 1)
 
-fun Long.toFormattedDuration(isAlbum: Boolean) = try {
+fun Long.toFormattedDuration(isAlbum: Boolean, isSeekBar: Boolean) = try {
 
     val defaultFormat = if (isAlbum) "%02dm:%02ds" else "%02d:%02d"
 
@@ -53,12 +53,19 @@ fun Long.toFormattedDuration(isAlbum: Boolean) = try {
         seconds - TimeUnit.MINUTES.toSeconds(minutes)
     ) else
     //https://stackoverflow.com/a/9027379
-        String.format(
-            "%02dh:%02dm",
-            hours,
-            minutes - TimeUnit.HOURS.toMinutes(hours), // The change is in this line
-            seconds - TimeUnit.MINUTES.toSeconds(minutes)
-        )
+        when {
+            isSeekBar -> String.format(
+                "%02d:%02d:%02d",
+                hours,
+                minutes - TimeUnit.HOURS.toMinutes(hours),
+                seconds - TimeUnit.MINUTES.toSeconds(minutes)
+            )
+            else -> String.format(
+                "%02dh:%02dm",
+                hours,
+                minutes - TimeUnit.HOURS.toMinutes(hours)
+            )
+        }
 
 } catch (e: Exception) {
     e.printStackTrace()

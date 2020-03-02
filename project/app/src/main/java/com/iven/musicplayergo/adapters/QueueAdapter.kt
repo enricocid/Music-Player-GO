@@ -76,7 +76,8 @@ class QueueAdapter(
                     }
                 }
 
-                duration.text = song.duration.toFormattedDuration(false)
+                duration.text =
+                    song.duration.toFormattedDuration(isAlbum = false, isSeekBar = false)
                 subtitle.text =
                     context.getString(R.string.artist_and_album, song.artist, song.album)
 

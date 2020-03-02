@@ -65,8 +65,11 @@ class LovedSongsAdapter(
             title.text = lovedSong?.title
             duration.text = context.getString(
                 R.string.loved_song_subtitle,
-                lovedSong?.startFrom?.toLong()?.toFormattedDuration(false),
-                lovedSong?.duration?.toFormattedDuration(false)
+                lovedSong?.startFrom?.toLong()?.toFormattedDuration(
+                    isAlbum = false,
+                    isSeekBar = false
+                ),
+                lovedSong?.duration?.toFormattedDuration(isAlbum = false, isSeekBar = false)
             ).toSpanned()
             subtitle.text =
                 context.getString(R.string.artist_and_album, lovedSong?.artist, lovedSong?.album)

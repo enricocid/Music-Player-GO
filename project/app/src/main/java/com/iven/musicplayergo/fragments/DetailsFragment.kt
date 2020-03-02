@@ -218,7 +218,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                                 item.track.toFormattedTrack(),
                                 item.title
                             ).toSpanned()
-                            subtitle.text = item.duration.toFormattedDuration(false)
+                            subtitle.text = item.duration.toFormattedDuration(
+                                isAlbum = false,
+                                isSeekBar = false
+                            )
                         }
 
                         onClick {
@@ -415,7 +418,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         itemView.background.alpha = 20
                         album.text = item.title
                         year.text = item.year
-                        totalDuration.text = item.totalDuration.toFormattedDuration(true)
+                        totalDuration.text = item.totalDuration.toFormattedDuration(
+                            isAlbum = true,
+                            isSeekBar = false
+                        )
                         checkbox.handleViewVisibility(mSelectedAlbum?.title == item.title)
                     }
 
@@ -459,7 +465,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         mDetailsFragmentBinding.selectedAlbum.text = mSelectedAlbum?.title
         album_year_duration.text = getString(
             R.string.year_and_duration,
-            mSelectedAlbum?.totalDuration?.toFormattedDuration(true),
+            mSelectedAlbum?.totalDuration?.toFormattedDuration(isAlbum = true, isSeekBar = false),
             mSelectedAlbum?.year
         )
     }
