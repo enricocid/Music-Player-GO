@@ -58,9 +58,7 @@ class AccentsAdapter(private val activity: Activity) :
                         View.VISIBLE
 
                 setOnClickListener {
-
                     if (mAccents[adapterPosition].first != mSelectedAccent) {
-
                         mSelectedAccent = mAccents[adapterPosition].first
                         goPreferences.accent = mSelectedAccent
                     }

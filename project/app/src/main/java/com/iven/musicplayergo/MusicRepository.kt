@@ -23,7 +23,7 @@ class MusicRepository {
     var deviceSongsByArtist: Map<String?, List<Music>>? = null
 
     //keys: artist || value: albums
-    var deviceAlbumsByArtist: MutableMap<String, List<Album>>? = null
+    var deviceAlbumsByArtist: MutableMap<String, List<Album>>? = mutableMapOf()
 
     //keys: artist || value: songs contained in the folder
     var deviceMusicByFolder: Map<String, List<Music>>? = null
@@ -31,10 +31,6 @@ class MusicRepository {
     val randomMusic get() = deviceMusicList.random()
 
     val musicDatabaseSize get() = deviceMusicFiltered?.size
-
-    init {
-        if (deviceAlbumsByArtist == null) deviceAlbumsByArtist = mutableMapOf()
-    }
 
     @SuppressLint("InlinedApi")
     fun queryForMusic(application: Application) =
@@ -132,7 +128,6 @@ class MusicRepository {
                 .toMutableList()
 
         deviceMusicFiltered?.let { dsf ->
-
             // group music by artist
             deviceSongsByArtist = dsf.groupBy { it.artist }
             deviceMusicByFolder = dsf.groupBy { it.relativePath!! }
