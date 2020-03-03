@@ -17,10 +17,10 @@ import com.iven.musicplayergo.player.MediaPlayerHolder
 
 object MusicOrgHelper {
 
-    //returns the position in list of the current played album
-    //pass selected artist from artists adapter and not from current song
-    //so when played artist is selected the album position will be returned
-    //if selected artist differs from played artist -1 will be returned
+    // Returns the position in list of the current played album
+    // pass selected artist from artists adapter and not from current song
+    // so when played artist is selected the album position will be returned
+    // if selected artist differs from played artist -1 will be returned
     @JvmStatic
     fun getPlayingAlbumPosition(
         selectedArtist: String?,
@@ -56,7 +56,7 @@ object MusicOrgHelper {
     }
 
     @JvmStatic
-    //returns a pair of album and its position given a list of albums
+    // Returns a pair of album and its position given a list of albums
     fun getAlbumFromList(
         artist: String?,
         album: String?,

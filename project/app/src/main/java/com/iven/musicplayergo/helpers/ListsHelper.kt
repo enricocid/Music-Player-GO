@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.Menu
 import android.view.MenuItem
-import com.iven.musicplayergo.*
+import com.iven.musicplayergo.GoConstants
+import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.extensions.toToast
+import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
 import java.util.*
 
@@ -18,11 +20,11 @@ object ListsHelper {
         query: String?,
         list: List<String>?
     ): List<String>? {
-        // in real app you'd have it instantiated just once
+        // In real app you'd have it instantiated just once
         val filteredStrings = mutableListOf<String>()
 
         return try {
-            // case insensitive search
+            // Case insensitive search
             list?.iterator()?.forEach { filteredString ->
                 if (filteredString.toLowerCase().contains(query?.toLowerCase()!!)) {
                     filteredStrings.add(filteredString)
@@ -37,11 +39,11 @@ object ListsHelper {
 
     @JvmStatic
     fun processQueryForMusic(query: String?, musicList: List<Music>?): List<Music>? {
-        // in real app you'd have it instantiated just once
+        // In real app you'd have it instantiated just once
         val filteredSongs = mutableListOf<Music>()
 
         return try {
-            // case insensitive search
+            // Case insensitive search
             musicList?.iterator()?.forEach { filteredSong ->
                 if (filteredSong.title?.toLowerCase()!!.contains(query?.toLowerCase()!!)) {
                     filteredSongs.add(filteredSong)
@@ -59,14 +61,14 @@ object ListsHelper {
         id: Int,
         list: MutableList<String>?
     ) = when (id) {
-        DESCENDING_SORTING -> {
+        GoConstants.DESCENDING_SORTING -> {
             list?.apply {
                 Collections.sort(this, String.CASE_INSENSITIVE_ORDER)
             }
             list
         }
 
-        ASCENDING_SORTING -> {
+        GoConstants.ASCENDING_SORTING -> {
             list?.apply {
                 Collections.sort(this, String.CASE_INSENSITIVE_ORDER)
             }
@@ -77,8 +79,8 @@ object ListsHelper {
 
     @JvmStatic
     fun getSelectedSorting(sorting: Int, menu: Menu): MenuItem = when (sorting) {
-        DEFAULT_SORTING -> menu.findItem(R.id.default_sorting)
-        ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
+        GoConstants.DEFAULT_SORTING -> menu.findItem(R.id.default_sorting)
+        GoConstants.ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
         else -> menu.findItem(R.id.descending_sorting)
     }
 
@@ -88,22 +90,22 @@ object ListsHelper {
         list: MutableList<Music>?
     ) = when (id) {
 
-        DESCENDING_SORTING -> {
+        GoConstants.DESCENDING_SORTING -> {
             list?.sortBy { it.title }
             list
         }
 
-        ASCENDING_SORTING -> {
+        GoConstants.ASCENDING_SORTING -> {
             list?.sortBy { it.title }
             list?.asReversed()
         }
 
-        TRACK_SORTING -> {
+        GoConstants.TRACK_SORTING -> {
             list?.sortBy { it.track }
             list
         }
 
-        TRACK_SORTING_INVERTED -> {
+        GoConstants.TRACK_SORTING_INVERTED -> {
             list?.sortBy { it.track }
             list?.asReversed()
         }
@@ -112,10 +114,10 @@ object ListsHelper {
 
     @JvmStatic
     fun getSongsSorting(currentSorting: Int) = when (currentSorting) {
-        TRACK_SORTING -> TRACK_SORTING_INVERTED
-        TRACK_SORTING_INVERTED -> ASCENDING_SORTING
-        ASCENDING_SORTING -> DESCENDING_SORTING
-        else -> TRACK_SORTING
+        GoConstants.TRACK_SORTING -> GoConstants.TRACK_SORTING_INVERTED
+        GoConstants.TRACK_SORTING_INVERTED -> GoConstants.ASCENDING_SORTING
+        GoConstants.ASCENDING_SORTING -> GoConstants.DESCENDING_SORTING
+        else -> GoConstants.TRACK_SORTING
     }
 
     @JvmStatic

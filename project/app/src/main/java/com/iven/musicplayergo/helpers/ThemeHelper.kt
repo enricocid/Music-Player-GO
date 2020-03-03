@@ -21,9 +21,11 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.ColorUtils
 import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.iven.musicplayergo.*
+import com.iven.musicplayergo.GoConstants
+import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.decodeColor
 import com.iven.musicplayergo.extensions.toSpanned
+import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.player.MediaPlayerHolder
 
 
@@ -45,9 +47,9 @@ object ThemeHelper {
 
     @JvmStatic
     fun resolveSortAlbumSongsIcon(sort: Int) = when (sort) {
-        ASCENDING_SORTING -> R.drawable.ic_sort_alphabetical_descending
-        DESCENDING_SORTING -> R.drawable.ic_sort_alphabetical_ascending
-        TRACK_SORTING -> R.drawable.ic_sort_numeric_descending
+        GoConstants.ASCENDING_SORTING -> R.drawable.ic_sort_alphabetical_descending
+        GoConstants.DESCENDING_SORTING -> R.drawable.ic_sort_alphabetical_ascending
+        GoConstants.TRACK_SORTING -> R.drawable.ic_sort_numeric_descending
         else -> R.drawable.ic_sort_numeric_ascending
     }
 
@@ -70,7 +72,7 @@ object ThemeHelper {
             if (isThemeNight(configuration)) flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv() and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv() else flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
     }
 
-    //fixed array of pairs (first: accent, second: theme)
+    // Fixed array of pairs (first: accent, second: theme, third: color primary dark)
     @JvmStatic
     val accents = arrayOf(
         Triple(R.color.red, R.style.BaseTheme_Red, R.color.redPrimaryDark),
@@ -108,7 +110,7 @@ object ThemeHelper {
         ).toSpanned()
     }
 
-    //finds theme and its position in accents array and returns a pair(theme, position)
+    // Search theme from accents array of triple, returns a Pair(theme, position)
     @JvmStatic
     fun getAccentedTheme() = try {
         val triple = accents.find { pair -> pair.first == goPreferences.accent }
@@ -119,13 +121,13 @@ object ThemeHelper {
         Pair(R.style.BaseTheme_DeepPurple, 3)
     }
 
-    //finds theme and its position in accents array and returns a pair(theme, position)
+    // Finds color primary dark from accents array of triple
     @JvmStatic
-    fun resolvePrimaryDarkColor() = try {
+    fun resolvePrimaryDarkColor(context: Context) = try {
         val triple = accents.find { pair -> pair.first == goPreferences.accent }
-        triple!!.third
+        triple?.third?.decodeColor(context)
     } catch (e: Exception) {
-        R.color.deepPurplePrimaryDark
+        R.color.deepPurplePrimaryDark.decodeColor(context)
     }
 
     @ColorInt
@@ -148,7 +150,7 @@ object ThemeHelper {
     fun resolveThemeAccent(context: Context): Int {
         var accent = goPreferences.accent
 
-        //fallback to default color when the pref is f@#$ed (when resources change)
+        // Fallback to default color when the pref is f@#$ed (when resources change)
         if (!accents.map { accentId -> accentId.first }.contains(accent)) {
             accent = R.color.deep_purple
             goPreferences.accent = accent

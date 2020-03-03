@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.media.app.NotificationCompat.MediaStyle
+import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toSpanned
 import com.iven.musicplayergo.helpers.ThemeHelper
@@ -18,14 +19,6 @@ import com.iven.musicplayergo.ui.MainActivity
 // Notification params
 private const val CHANNEL_ID = "CHANNEL_ID_GO"
 private const val REQUEST_CODE = 100
-const val NOTIFICATION_ID = 101
-
-// Notification actions
-const val PREV_ACTION = "PREV_GO"
-const val PLAY_PAUSE_ACTION = "PLAY_PAUSE_GO"
-const val NEXT_ACTION = "NEXT_GO"
-const val REPEAT_ACTION = "REPEAT_GO"
-const val CLOSE_ACTION = "CLOSE_GO"
 
 class MusicNotificationManager(private val playerService: PlayerService) {
 
@@ -86,11 +79,11 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                         )
                     )
                     setContentIntent(contentIntent)
-                    addAction(notificationAction(REPEAT_ACTION))
-                    addAction(notificationAction(PREV_ACTION))
-                    addAction(notificationAction(PLAY_PAUSE_ACTION))
-                    addAction(notificationAction(NEXT_ACTION))
-                    addAction(notificationAction(CLOSE_ACTION))
+                    addAction(notificationAction(GoConstants.REPEAT_ACTION))
+                    addAction(notificationAction(GoConstants.PREV_ACTION))
+                    addAction(notificationAction(GoConstants.PLAY_PAUSE_ACTION))
+                    addAction(notificationAction(GoConstants.NEXT_ACTION))
+                    addAction(notificationAction(GoConstants.CLOSE_ACTION))
                     setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 }
             }
@@ -100,13 +93,14 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
     private fun notificationAction(action: String): NotificationCompat.Action {
         var icon =
-            if (playerService.mediaPlayerHolder.state != PAUSED) R.drawable.ic_pause else R.drawable.ic_play
+            if (playerService.mediaPlayerHolder.state != GoConstants.PAUSED) R.drawable.ic_pause else R.drawable.ic_play
 
         when (action) {
-            REPEAT_ACTION -> icon = ThemeHelper.getRepeatIcon(playerService.mediaPlayerHolder)
-            PREV_ACTION -> icon = R.drawable.ic_skip_previous
-            NEXT_ACTION -> icon = R.drawable.ic_skip_next
-            CLOSE_ACTION -> icon = R.drawable.ic_close
+            GoConstants.REPEAT_ACTION -> icon =
+                ThemeHelper.getRepeatIcon(playerService.mediaPlayerHolder)
+            GoConstants.PREV_ACTION -> icon = R.drawable.ic_skip_previous
+            GoConstants.NEXT_ACTION -> icon = R.drawable.ic_skip_next
+            GoConstants.CLOSE_ACTION -> icon = R.drawable.ic_close
         }
         return NotificationCompat.Action.Builder(icon, action, playerAction(action)).build()
     }

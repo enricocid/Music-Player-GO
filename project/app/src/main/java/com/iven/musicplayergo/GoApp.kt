@@ -4,19 +4,19 @@ import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import com.iven.musicplayergo.helpers.ThemeHelper
 
-val goPreferences: MusicPlayerGoPreferences by lazy {
-    MusicPlayerGoApp.prefs
+val goPreferences: GoPreferences by lazy {
+    GoApp.prefs
 }
 
-class MusicPlayerGoApp : Application() {
+class GoApp : Application() {
 
     companion object {
-        lateinit var prefs: MusicPlayerGoPreferences
+        lateinit var prefs: GoPreferences
     }
 
     override fun onCreate() {
         super.onCreate()
-        prefs = MusicPlayerGoPreferences(applicationContext)
+        prefs = GoPreferences(applicationContext)
         AppCompatDelegate.setDefaultNightMode(ThemeHelper.getDefaultNightMode(applicationContext))
     }
 }

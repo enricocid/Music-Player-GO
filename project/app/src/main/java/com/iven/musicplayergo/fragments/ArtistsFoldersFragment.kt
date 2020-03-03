@@ -14,11 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
-import com.iven.musicplayergo.*
+import com.iven.musicplayergo.GoConstants
+import com.iven.musicplayergo.MusicRepository
+import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentArtistFolderBinding
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.extensions.setTitleColor
+import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
@@ -47,17 +50,17 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
     private lateinit var mUIControlInterface: UIControlInterface
 
     private lateinit var mSortMenuItem: MenuItem
-    private var mSorting = DESCENDING_SORTING
+    private var mSorting = GoConstants.DESCENDING_SORTING
 
     private var sIsFastScroller = false
-    private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != DEFAULT_SORTING
+    private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != GoConstants.DEFAULT_SORTING
     private var sLandscape = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
         arguments?.getString(TAG_SELECTED_FRAGMENT)?.let { isFoldersFragment ->
-            sIsFoldersFragment = isFoldersFragment != TAG_ARTISTS
+            sIsFoldersFragment = isFoldersFragment != GoConstants.TAG_ARTISTS
         }
 
         // This makes sure that the container activity has implemented
@@ -210,7 +213,7 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
     @SuppressLint("DefaultLocale")
     private fun setupIndicatorFastScrollerView() {
 
-        //set indexes if artists rv is scrollable
+        // Set indexes if artists rv is scrollable
         mArtistFolderFragmentBinding.artistsFoldersRv.afterMeasured {
 
             sIsFastScroller = computeVerticalScrollRange() > height
@@ -308,8 +311,6 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
 
         private const val TAG_SELECTED_FRAGMENT = "SELECTED_FRAGMENT"
 
-        internal const val TAG_ARTISTS = "ArtistsFragmentTag"
-        internal const val TAG_FOLDERS = "FoldersFragmentTag"
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.

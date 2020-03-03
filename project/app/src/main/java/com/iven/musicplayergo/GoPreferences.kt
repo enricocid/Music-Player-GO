@@ -8,14 +8,7 @@ import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.models.SavedMusic
 import java.lang.reflect.Type
 
-const val DEFAULT_SORTING = 0
-const val DESCENDING_SORTING = 1
-const val ASCENDING_SORTING = 2
-const val TRACK_SORTING = 3
-const val TRACK_SORTING_INVERTED = 4
-
-
-class MusicPlayerGoPreferences(context: Context) {
+class GoPreferences(context: Context) {
 
     private val prefsLatestVolume = context.getString(R.string.latest_volume_pref)
     private val prefsLatestPlayedSong = context.getString(R.string.latest_played_song_pref)
@@ -86,7 +79,7 @@ class MusicPlayerGoPreferences(context: Context) {
         set(value) = mPrefs.edit().putStringSet(prefsActiveFragments, value).apply()
 
     var artistsSorting
-        get() = mPrefs.getInt(prefsArtistsSorting, DESCENDING_SORTING)
+        get() = mPrefs.getInt(prefsArtistsSorting, GoConstants.DESCENDING_SORTING)
         set(value) = mPrefs.edit().putInt(prefsArtistsSorting, value).apply()
 
     var filters: Set<String>?
@@ -94,7 +87,7 @@ class MusicPlayerGoPreferences(context: Context) {
         set(value) = mPrefs.edit().putStringSet(prefsFilter, value).apply()
 
     var foldersSorting
-        get() = mPrefs.getInt(prefsFoldersSorting, DEFAULT_SORTING)
+        get() = mPrefs.getInt(prefsFoldersSorting, GoConstants.DEFAULT_SORTING)
         set(value) = mPrefs.edit().putInt(prefsFoldersSorting, value).apply()
 
     var isPreciseVolumeEnabled

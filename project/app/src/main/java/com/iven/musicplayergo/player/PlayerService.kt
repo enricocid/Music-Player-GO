@@ -21,7 +21,7 @@ class PlayerService : Service() {
     // Check if is already running
     var isRunning = false
 
-    //media player
+    // Media player
     lateinit var mediaPlayerHolder: MediaPlayerHolder
     lateinit var musicNotificationManager: MusicNotificationManager
     var isRestoredFromPause = false
@@ -60,7 +60,7 @@ class PlayerService : Service() {
         isRunning = false
 
         if (::mediaPlayerHolder.isInitialized) {
-            //saves last played song and its position
+            // Saves last played song and its position
             if (mediaPlayerHolder.isCurrentSong) mediaPlayerHolder.apply {
                 currentSong.first?.let { musicToSave ->
                     goPreferences.latestPlayedSong =
@@ -116,7 +116,7 @@ class PlayerService : Service() {
             intent?.let {
                 val event =
                     intent.getParcelableExtra<Parcelable>(Intent.EXTRA_KEY_EVENT) as KeyEvent
-                if (event.action == KeyEvent.ACTION_DOWN) { // do something
+                if (event.action == KeyEvent.ACTION_DOWN) {
                     when (event.keyCode) {
                         KeyEvent.KEYCODE_MEDIA_PAUSE, KeyEvent.KEYCODE_MEDIA_PLAY, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, KeyEvent.KEYCODE_HEADSETHOOK -> {
                             mediaPlayerHolder.resumeOrPause()

@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
@@ -105,11 +106,11 @@ class ActiveTabsAdapter(
     ) {
         when {
             condition -> {
-                indicator.visibility = View.VISIBLE
+                indicator.handleViewVisibility(true)
                 ThemeHelper.updateIconTint(icon, ThemeHelper.resolveThemeAccent(context))
             }
             else -> {
-                indicator.visibility = View.GONE
+                indicator.handleViewVisibility(false)
                 ThemeHelper.updateIconTint(
                     icon,
                     ThemeHelper.getAlphaAccent(context, ThemeHelper.getAlphaForAccent())

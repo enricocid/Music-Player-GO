@@ -21,14 +21,14 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.animation.ArgbEvaluatorCompat
+import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.fragments.DetailsFragment.Companion.DETAILS_FRAGMENT_TAG
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
 import kotlin.math.max
 
-//viewTreeObserver extension to measure layout params
-//https://antonioleiva.com/kotlin-ongloballayoutlistener/
+// viewTreeObserver extension to measure layout params
+// https://antonioleiva.com/kotlin-ongloballayoutlistener/
 inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
     viewTreeObserver.addOnGlobalLayoutListener(object :
         ViewTreeObserver.OnGlobalLayoutListener {
@@ -51,7 +51,7 @@ fun String.toSpanned(): Spanned = if (VersioningHelper.isNougat()) Html.fromHtml
 )
 else Html.fromHtml(this)
 
-//extension to set menu items text color
+// Extension to set menu items text color
 fun MenuItem.setTitleColor(color: Int) {
     SpannableString(title).apply {
         setSpan(ForegroundColorSpan(color), 0, length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -72,7 +72,7 @@ fun FragmentManager.addFragment(fragment: Fragment, tag: String?) {
 }
 
 fun FragmentManager.isDetailsFragment(): Boolean {
-    val df = findFragmentByTag(DETAILS_FRAGMENT_TAG)
+    val df = findFragmentByTag(GoConstants.DETAILS_FRAGMENT_TAG)
     return df != null && df.isVisible && df.isAdded
 }
 
@@ -97,7 +97,7 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
             interpolator = FastOutSlowInInterpolator()
             duration = revealDuration
             doOnEnd {
-                if (!show) visibility = View.GONE
+                if (!show) handleViewVisibility(false)
             }
             start()
         }
@@ -147,8 +147,8 @@ fun RecyclerView.smoothSnapToPosition(position: Int) {
     layoutManager?.startSmoothScroll(smoothScroller)
 }
 
-fun View.handleViewVisibility(isVisible: Boolean) {
-    visibility = if (isVisible) View.VISIBLE else View.GONE
+fun View.handleViewVisibility(show: Boolean) {
+    visibility = if (show) View.VISIBLE else View.GONE
 }
 
 fun String.toToast(

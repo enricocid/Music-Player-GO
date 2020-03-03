@@ -1,12 +1,12 @@
 package com.iven.musicplayergo.fragments
 
-import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.preference.Preference
@@ -37,11 +37,11 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     private var mThemePreference: Preference? = null
 
     override fun setDivider(divider: Drawable?) {
-        context?.let {
+        context?.let { cxt ->
             super.setDivider(
                 ColorDrawable(
                     ThemeHelper.getAlphaAccent(
-                        it,
+                        cxt,
                         85
                     )
                 )
@@ -74,141 +74,127 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         }
     }
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.preferences, rootKey)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        activity?.let { fa ->
+        findPreference<Preference>(getString(R.string.open_git_pref))?.onPreferenceClickListener =
+            this
 
-            findPreference<Preference>(getString(R.string.open_git_pref))?.onPreferenceClickListener =
-                this
+        findPreference<Preference>(getString(R.string.faq_pref))?.onPreferenceClickListener =
+            this
 
-            findPreference<Preference>(getString(R.string.faq_pref))?.onPreferenceClickListener =
-                this
+        findPreference<Preference>(getString(R.string.found_songs_pref))?.apply {
+            val musicRepository = MusicRepository.getInstance()
+            title =
+                getString(R.string.found_songs_pref_title, musicRepository.musicDatabaseSize)
+        }
 
-            findPreference<Preference>(getString(R.string.found_songs_pref))?.apply {
-                val musicRepository = MusicRepository.getInstance()
-                title =
-                    getString(R.string.found_songs_pref_title, musicRepository.musicDatabaseSize)
-            }
+        mThemePreference = findPreference<Preference>(getString(R.string.theme_pref))?.apply {
+            icon = AppCompatResources.getDrawable(
+                requireContext(),
+                ThemeHelper.resolveThemeIcon(requireContext())
+            )
+        }
 
-            mThemePreference = findPreference<Preference>(getString(R.string.theme_pref))?.apply {
-                icon = AppCompatResources.getDrawable(fa, ThemeHelper.resolveThemeIcon(fa))
-            }
+        findPreference<Preference>(getString(R.string.accent_pref))?.apply {
+            summary =
+                ThemeHelper.getAccentName(goPreferences.accent, requireContext())
+            onPreferenceClickListener = this@PreferencesFragment
+        }
 
-            findPreference<Preference>(getString(R.string.accent_pref))?.apply {
-                summary =
-                    ThemeHelper.getAccentName(goPreferences.accent, fa)
-                onPreferenceClickListener = this@PreferencesFragment
-            }
+        findPreference<Preference>(getString(R.string.filter_pref))?.apply {
+            onPreferenceClickListener = this@PreferencesFragment
+        }
 
-            findPreference<Preference>(getString(R.string.filter_pref))?.apply {
-                onPreferenceClickListener = this@PreferencesFragment
-            }
-
-            findPreference<Preference>(getString(R.string.active_fragments_pref))?.apply {
-                summary = goPreferences.activeFragments?.size.toString()
-                onPreferenceClickListener = this@PreferencesFragment
-            }
+        findPreference<Preference>(getString(R.string.active_fragments_pref))?.apply {
+            summary = goPreferences.activeFragments?.size.toString()
+            onPreferenceClickListener = this@PreferencesFragment
         }
     }
 
-    override fun onPreferenceClick(preference: Preference?): Boolean {
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        setPreferencesFromResource(R.xml.preferences, rootKey)
+    }
 
-        activity?.let { ac ->
-            when (preference?.key) {
-                getString(R.string.open_git_pref) -> openCustomTab(
-                    ac,
-                    getString(R.string.app_git)
-                )
-                getString(R.string.faq_pref) -> openCustomTab(
-                    ac,
-                    getString(R.string.app_faq)
-                )
-                getString(R.string.accent_pref) -> showAccentsDialog(ac)
-                getString(R.string.filter_pref) -> {
-                    if (!goPreferences.filters.isNullOrEmpty()) showFiltersDialog(ac) else getString(
-                        R.string.error_no_filter
-                    ).toToast(ac)
-                }
-                getString(R.string.active_fragments_pref) -> showActiveFragmentsDialog(ac)
-            }
+    override fun onPreferenceClick(preference: Preference?): Boolean {
+        when (preference?.key) {
+            getString(R.string.open_git_pref) -> openCustomTab(getString(R.string.app_git))
+            getString(R.string.faq_pref) -> openCustomTab(getString(R.string.app_faq))
+            getString(R.string.accent_pref) -> showAccentsDialog()
+            getString(R.string.filter_pref) -> if (!goPreferences.filters.isNullOrEmpty()) showFiltersDialog() else getString(
+                R.string.error_no_filter
+            ).toToast(requireContext())
+            getString(R.string.active_fragments_pref) -> showActiveFragmentsDialog()
         }
         return false
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-
-        activity?.let { ac ->
-            when (key) {
-                getString(R.string.theme_pref) -> {
-                    mThemePreference?.icon =
-                        AppCompatResources.getDrawable(ac, ThemeHelper.resolveThemeIcon(ac))
-                    mUIControlInterface.onThemeChanged()
-                }
-                getString(R.string.edge_pref) -> mUIControlInterface.onAppearanceChanged(
-                    isAccentChanged = false,
+        when (key) {
+            getString(R.string.theme_pref) -> {
+                mThemePreference?.icon =
+                    AppCompatResources.getDrawable(
+                        requireContext(),
+                        ThemeHelper.resolveThemeIcon(requireContext())
+                    )
+                mUIControlInterface.onThemeChanged()
+            }
+            getString(R.string.edge_pref) -> mUIControlInterface.onAppearanceChanged(
+                isAccentChanged = false,
+                restoreSettings = true
+            )
+            getString(R.string.accent_pref) -> {
+                mAccentsDialog.dismiss()
+                mUIControlInterface.onAppearanceChanged(
+                    isAccentChanged = true,
                     restoreSettings = true
                 )
-                getString(R.string.accent_pref) -> {
-                    mAccentsDialog.dismiss()
-                    mUIControlInterface.onAppearanceChanged(
-                        isAccentChanged = true,
-                        restoreSettings = true
-                    )
-                }
-                getString(R.string.focus_pref) -> mUIControlInterface.onHandleFocusPref()
             }
+            getString(R.string.focus_pref) -> mUIControlInterface.onHandleFocusPref()
         }
     }
 
-    private fun openCustomTab(
-        context: Context,
-        link: String
-    ) {
-
+    private fun openCustomTab(link: String) {
         try {
             CustomTabsIntent.Builder().apply {
                 addDefaultShareMenuItem()
                 setShowTitle(true)
-                build().launchUrl(context, Uri.parse(link))
+                build().launchUrl(requireContext(), Uri.parse(link))
             }
         } catch (e: Exception) {
-            context.getString(R.string.error_no_browser).toToast(context)
+            requireContext().getString(R.string.error_no_browser).toToast(requireContext())
             e.printStackTrace()
         }
     }
 
-    private fun showAccentsDialog(activity: Activity) {
+    private fun showAccentsDialog() {
 
-        mAccentsDialog = MaterialDialog(activity).show {
+        mAccentsDialog = MaterialDialog(requireActivity()).show {
 
             title(R.string.accent_pref_title)
 
-            customListAdapter(
-                AccentsAdapter(
-                    activity
-                )
-            )
+            customListAdapter(AccentsAdapter(requireActivity()))
 
             getRecyclerView().apply {
-                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
                 scrollToPosition(ThemeHelper.getAccentedTheme().second)
             }
         }
     }
 
-    private fun showActiveFragmentsDialog(activity: Activity) {
+    private fun showActiveFragmentsDialog() {
 
-        mActiveFragmentsDialog = MaterialDialog(activity).show {
+        mActiveFragmentsDialog = MaterialDialog(requireActivity()).show {
 
             title(R.string.active_fragments_pref_title)
 
-            val activeTabsAdapter = ActiveTabsAdapter(activity)
+            val activeTabsAdapter = ActiveTabsAdapter(requireContext())
 
             customListAdapter(activeTabsAdapter)
 
             getRecyclerView().layoutManager =
-                LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
             positiveButton(android.R.string.ok) {
                 goPreferences.activeFragments = activeTabsAdapter.getUpdatedItems()
@@ -222,9 +208,9 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         }
     }
 
-    private fun showFiltersDialog(activity: Activity) {
+    private fun showFiltersDialog() {
 
-        MaterialDialog(activity).show {
+        MaterialDialog(requireActivity()).show {
 
             title(R.string.filter_pref_title)
 
@@ -234,7 +220,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             positiveButton(android.R.string.ok) {
                 goPreferences.filters = filtersAdapter.getUpdatedItems()
-                activity.recreate()
+                requireActivity().recreate()
             }
 
             negativeButton(android.R.string.cancel)

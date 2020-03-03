@@ -28,7 +28,7 @@ fun Uri.toBitrate(context: Context): Pair<Int, Int>? {
         val mediaFormat = mediaExtractor.getTrackFormat(0)
 
         val sampleRate = mediaFormat.getInteger(MediaFormat.KEY_SAMPLE_RATE)
-        //get bitrate in bps, divide by 1000 to get Kbps
+        // Get bitrate in bps, divide by 1000 to get Kbps
         val bitrate = mediaFormat.getInteger(MediaFormat.KEY_BIT_RATE) / 1000
         Pair(sampleRate, bitrate)
     } catch (e: Exception) {
@@ -52,7 +52,7 @@ fun Long.toFormattedDuration(isAlbum: Boolean, isSeekBar: Boolean) = try {
         minutes,
         seconds - TimeUnit.MINUTES.toSeconds(minutes)
     ) else
-    //https://stackoverflow.com/a/9027379
+    // https://stackoverflow.com/a/9027379
         when {
             isSeekBar -> String.format(
                 "%02d:%02d:%02d",

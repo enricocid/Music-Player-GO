@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.animation.doOnEnd
 import androidx.fragment.app.Fragment
+import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentErrorBinding
 import com.iven.musicplayergo.extensions.afterMeasured
@@ -32,15 +33,15 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
         arguments?.getString(TAG_ERROR)?.let { errorType ->
 
             when (errorType) {
-                TAG_NO_MUSIC -> {
+                GoConstants.TAG_NO_MUSIC -> {
                     mErrorIcon = R.drawable.ic_music_off
                     mErrorString = R.string.error_no_music
                 }
-                TAG_NO_MUSIC_INTENT -> {
+                GoConstants.TAG_NO_MUSIC_INTENT -> {
                     mErrorIcon = R.drawable.ic_mood_bad
                     mErrorString = R.string.error_unknown_unsupported
                 }
-                TAG_SD_NOT_READY -> {
+                GoConstants.TAG_SD_NOT_READY -> {
                     mErrorIcon = R.drawable.ic_mood_bad
                     mErrorString = R.string.error_not_ready
                 }
@@ -62,7 +63,7 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
         mErrorFragmentBinding = FragmentErrorBinding.bind(view)
         mErrorFragmentBinding.errorMessage.text = getString(mErrorString)
         mErrorFragmentBinding.errorIcon.setImageResource(mErrorIcon)
-        mErrorFragmentBinding.root.setOnClickListener { activity?.finishAndRemoveTask() }
+        mErrorFragmentBinding.root.setOnClickListener { requireActivity().finishAndRemoveTask() }
 
         mErrorFragmentBinding.errorToolbar.setNavigationOnClickListener {
             mUIControlInterface.onCloseActivity()
@@ -83,11 +84,6 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
     companion object {
 
         private const val TAG_ERROR = "WE_HAVE_A_PROBLEM_HOUSTON"
-
-        internal const val TAG_NO_PERMISSION = "NO_PERMISSION"
-        internal const val TAG_NO_MUSIC = "NO_MUSIC"
-        internal const val TAG_NO_MUSIC_INTENT = "NO_MUSIC_INTENT"
-        internal const val TAG_SD_NOT_READY = "SD_NOT_READY"
 
         /**
          * Use this factory method to create a new instance of

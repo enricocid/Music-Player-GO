@@ -8,8 +8,8 @@ import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.afollestad.materialdialogs.MaterialDialog
+import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.ui.PERMISSION_REQUEST_READ_EXTERNAL_STORAGE
 import com.iven.musicplayergo.ui.UIControlInterface
 
 object PermissionsHelper {
@@ -61,7 +61,7 @@ object PermissionsHelper {
         ActivityCompat.requestPermissions(
             activity,
             arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-            PERMISSION_REQUEST_READ_EXTERNAL_STORAGE
+            GoConstants.PERMISSION_REQUEST_READ_EXTERNAL_STORAGE
         )
     }
 }

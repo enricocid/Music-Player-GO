@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 
@@ -51,11 +52,7 @@ class AccentsAdapter(private val activity: Activity) :
                         }
                 }
 
-                findViewById<ImageButton>(R.id.check).visibility =
-                    if (color != mSelectedAccent)
-                        View.GONE
-                    else
-                        View.VISIBLE
+                findViewById<ImageButton>(R.id.check).handleViewVisibility(color == mSelectedAccent)
 
                 setOnClickListener {
                     if (mAccents[adapterPosition].first != mSelectedAccent) {
