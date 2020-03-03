@@ -1,0 +1,5 @@
+- Corretti controlli player non visibili quando si riproduce una canzone da app esterne
+- Corretto un problema riguardante il tema automatico e le barre di sistema light
+- Migliorato il testo della barra di avanzamento per le canzoni che durano più di 60 minuti
+- Aggiornate traduzioni Russo
+- Miglioramenti al codice

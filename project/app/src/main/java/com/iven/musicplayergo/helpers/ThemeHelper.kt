@@ -122,6 +122,7 @@ object ThemeHelper {
     }
 
     // Finds color primary dark from accents array of triple
+    @ColorInt
     @JvmStatic
     fun resolvePrimaryDarkColor(context: Context) = try {
         val triple = accents.find { pair -> pair.first == goPreferences.accent }
