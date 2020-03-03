@@ -45,7 +45,7 @@ If You think You should be listed don't hesitate to notify me! :)
 
 ### Big thanks to translators:
 
-- [**keddad**](https://github.com/keddad) for **Russian** translations
+- [**keddad**](https://github.com/keddad) and [**yafna](https://github.com/yafna) for **Russian** translations
 
 - [**Nathan Bonnemains**](https://github.com/NathanBnm) and [**KowalskiOmniROM**](https://devhub.io/developer/KowalskiOmniROM) for **French** translations
 
