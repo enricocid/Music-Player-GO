@@ -34,16 +34,13 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
         mSettingsFragmentBinding = FragmentSettingsBinding.bind(view)
 
-        activity?.let {
-            mSettingsFragmentBinding.searchToolbar.apply {
-                setNavigationOnClickListener {
-                    mUIControlInterface.onCloseActivity()
-                }
-            }
-            childFragmentManager.beginTransaction().apply {
-                replace(R.id.fragment_layout, PreferencesFragment.newInstance())
-                commit()
-            }
+        mSettingsFragmentBinding.searchToolbar.setNavigationOnClickListener {
+            mUIControlInterface.onCloseActivity()
+        }
+
+        childFragmentManager.beginTransaction().apply {
+            replace(R.id.fragment_layout, PreferencesFragment.newInstance())
+            commit()
         }
     }
 

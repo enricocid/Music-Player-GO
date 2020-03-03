@@ -86,110 +86,105 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
         mSorting =
             if (sIsFoldersFragment) goPreferences.foldersSorting else goPreferences.artistsSorting
 
-        context?.let { cxt ->
+        mMusicRepository = MusicRepository.getInstance()
 
-            mMusicRepository = MusicRepository.getInstance()
+        mList =
+            getSortedList()?.filter { !goPreferences.filters?.contains(it)!! }?.toMutableList()
+        setListDataSource(mList)
 
-            mList =
-                getSortedList()?.filter { !goPreferences.filters?.contains(it)!! }?.toMutableList()
-            setListDataSource(mList)
+        sLandscape = ThemeHelper.isDeviceLand(requireContext().resources)
 
-            sLandscape = ThemeHelper.isDeviceLand(cxt.resources)
+        mArtistFolderFragmentBinding.artistsFoldersRv.apply {
 
-            mArtistFolderFragmentBinding.artistsFoldersRv.apply {
+            // setup{} is an extension method on RecyclerView
+            setup {
 
-                // setup{} is an extension method on RecyclerView
-                setup {
+                // item is a `val` in `this` here
+                withDataSource(mDataSource)
 
-                    // item is a `val` in `this` here
-                    withDataSource(mDataSource)
+                if (sLandscape)
+                    withLayoutManager(GridLayoutManager(requireContext(), 3))
+                else
+                    addItemDecoration(
+                        ThemeHelper.getRecyclerViewDivider(requireContext())
+                    )
 
-                    if (sLandscape)
-                        withLayoutManager(GridLayoutManager(cxt, 3))
-                    else
-                        addItemDecoration(
-                            ThemeHelper.getRecyclerViewDivider(cxt)
-                        )
+                withItem<String, GenericViewHolder>(R.layout.generic_item) {
 
-                    withItem<String, GenericViewHolder>(R.layout.generic_item) {
+                    onBind(::GenericViewHolder) { _, item ->
+                        // GenericViewHolder is `this` here
+                        title.text = item
+                        subtitle.text = if (sIsFoldersFragment) getString(
+                            R.string.folder_info,
+                            mMusicRepository.deviceMusicByFolder?.getValue(item)?.size
+                        ) else getArtistSubtitle(item)
+                    }
 
-                        onBind(::GenericViewHolder) { _, item ->
-                            // GenericViewHolder is `this` here
-                            title.text = item
-                            subtitle.text = if (sIsFoldersFragment) getString(
-                                R.string.folder_info,
-                                mMusicRepository.deviceMusicByFolder?.getValue(item)?.size
-                            ) else getArtistSubtitle(item)
-                        }
+                    onClick {
+                        if (::mUIControlInterface.isInitialized)
+                            mUIControlInterface.onArtistOrFolderSelected(
+                                item,
+                                sIsFoldersFragment
+                            )
+                    }
 
-                        onClick {
-                            if (::mUIControlInterface.isInitialized)
-                                mUIControlInterface.onArtistOrFolderSelected(
-                                    item,
-                                    sIsFoldersFragment
-                                )
-                        }
-
-                        onLongClick { index ->
-                            if (::mUIControlInterface.isInitialized)
-                                DialogHelper.showHidePopup(
-                                    context,
-                                    findViewHolderForAdapterPosition(index)?.itemView,
-                                    item,
-                                    mUIControlInterface
-                                )
-                        }
+                    onLongClick { index ->
+                        if (::mUIControlInterface.isInitialized)
+                            DialogHelper.showHidePopup(
+                                context,
+                                findViewHolderForAdapterPosition(index)?.itemView,
+                                item,
+                                mUIControlInterface
+                            )
                     }
                 }
             }
+        }
 
-            setupIndicatorFastScrollerView()
+        setupIndicatorFastScrollerView()
 
-            mArtistFolderFragmentBinding.searchToolbar.apply {
+        mArtistFolderFragmentBinding.searchToolbar.apply {
 
-                inflateMenu(R.menu.menu_search)
+            inflateMenu(R.menu.menu_search)
 
-                overflowIcon =
-                    AppCompatResources.getDrawable(cxt, R.drawable.ic_sort)
+            overflowIcon =
+                AppCompatResources.getDrawable(requireContext(), R.drawable.ic_sort)
 
-                title = getString(if (sIsFoldersFragment) R.string.folders else R.string.artists)
+            title = getString(if (sIsFoldersFragment) R.string.folders else R.string.artists)
 
-                setNavigationOnClickListener {
-                    mUIControlInterface.onCloseActivity()
+            setNavigationOnClickListener {
+                mUIControlInterface.onCloseActivity()
+            }
+
+            menu.apply {
+
+                mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, this).apply {
+                    setTitleColor(ThemeHelper.resolveThemeAccent(requireContext()))
                 }
 
-                menu.apply {
+                val searchView = findItem(R.id.action_search).actionView as SearchView
 
-                    mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, this).apply {
-                        setTitleColor(ThemeHelper.resolveThemeAccent(cxt))
-                    }
-
-                    val searchView = findItem(R.id.action_search).actionView as SearchView
-
-                    searchView.apply {
-                        setOnQueryTextListener(this@ArtistsFoldersFragment)
-                        setOnQueryTextFocusChangeListener { _, hasFocus ->
-                            if (sIsFastScrollerVisible) {
-                                mArtistFolderFragmentBinding.fastscroller.handleViewVisibility(!hasFocus)
-                                mArtistFolderFragmentBinding.fastscrollerThumb.handleViewVisibility(
-                                    !hasFocus
-                                )
-                                setupArtistsRecyclerViewPadding(hasFocus)
-                            }
-                            menu.setGroupVisible(R.id.sorting, !hasFocus)
+                searchView.apply {
+                    setOnQueryTextListener(this@ArtistsFoldersFragment)
+                    setOnQueryTextFocusChangeListener { _, hasFocus ->
+                        if (sIsFastScrollerVisible) {
+                            mArtistFolderFragmentBinding.fastscroller.handleViewVisibility(!hasFocus)
+                            mArtistFolderFragmentBinding.fastscrollerThumb.handleViewVisibility(
+                                !hasFocus
+                            )
+                            setupArtistsRecyclerViewPadding(hasFocus)
                         }
+                        menu.setGroupVisible(R.id.sorting, !hasFocus)
                     }
-
-                    setMenuOnItemClickListener(cxt, this)
                 }
+
+                setMenuOnItemClickListener(requireContext(), this)
             }
         }
     }
 
     private fun setListDataSource(selectedList: List<String>?) {
-        selectedList?.apply {
-            mDataSource.set(this)
-        }
+        if (!selectedList.isNullOrEmpty()) mDataSource.set(selectedList)
     }
 
     fun onListFiltered(stringToFilter: String?) {

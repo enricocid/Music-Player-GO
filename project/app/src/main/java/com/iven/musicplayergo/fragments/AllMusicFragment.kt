@@ -51,87 +51,84 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
         mAllMusicFragmentBinding = FragmentAllMusicBinding.bind(view)
 
-        context?.let { cxt ->
+        val musicRepository = MusicRepository.getInstance()
+        mAllMusic = musicRepository.deviceMusicFiltered
 
-            val musicRepository = MusicRepository.getInstance()
-            mAllMusic = musicRepository.deviceMusicFiltered
+        setMusicDataSource(mAllMusic)
 
-            setMusicDataSource(mAllMusic)
+        mAllMusicFragmentBinding.allMusicRv.apply {
 
-            mAllMusicFragmentBinding.allMusicRv.apply {
+            // setup{} is an extension method on RecyclerView
+            setup {
 
-                // setup{} is an extension method on RecyclerView
-                setup {
+                // item is a `val` in `this` here
+                withDataSource(mDataSource)
 
-                    // item is a `val` in `this` here
-                    withDataSource(mDataSource)
+                if (ThemeHelper.isDeviceLand(resources)) withLayoutManager(
+                    GridLayoutManager(
+                        requireContext(),
+                        3
+                    )
+                )
+                else addItemDecoration(
+                    ThemeHelper.getRecyclerViewDivider(requireContext())
+                )
 
-                    if (ThemeHelper.isDeviceLand(resources)) withLayoutManager(
-                        GridLayoutManager(
-                            cxt,
-                            3
+                withItem<Music, SongsViewHolder>(R.layout.music_item) {
+                    onBind(::SongsViewHolder) { _, item ->
+                        // GenericViewHolder is `this` here
+                        title.text = item.title
+                        duration.text = item.duration.toFormattedDuration(
+                            isAlbum = false,
+                            isSeekBar = false
                         )
-                    )
-                    else addItemDecoration(
-                        ThemeHelper.getRecyclerViewDivider(cxt)
-                    )
+                        subtitle.text =
+                            getString(R.string.artist_and_album, item.artist, item.album)
+                    }
 
-                    withItem<Music, SongsViewHolder>(R.layout.music_item) {
-                        onBind(::SongsViewHolder) { _, item ->
-                            // GenericViewHolder is `this` here
-                            title.text = item.title
-                            duration.text = item.duration.toFormattedDuration(
-                                isAlbum = false,
-                                isSeekBar = false
-                            )
-                            subtitle.text =
-                                getString(R.string.artist_and_album, item.artist, item.album)
-                        }
+                    onClick {
+                        mUIControlInterface.onSongSelected(
+                            item,
+                            MusicOrgHelper.getAlbumSongs(
+                                item.artist,
+                                item.album,
+                                musicRepository.deviceAlbumsByArtist
+                            ),
+                            false
+                        )
+                    }
 
-                        onClick {
-                            mUIControlInterface.onSongSelected(
-                                item,
-                                MusicOrgHelper.getAlbumSongs(
-                                    item.artist,
-                                    item.album,
-                                    musicRepository.deviceAlbumsByArtist
-                                ),
-                                false
-                            )
-                        }
-
-                        onLongClick { index ->
-                            DialogHelper.showDoSomethingPopup(
-                                cxt,
-                                findViewHolderForAdapterPosition(index)?.itemView,
-                                item,
-                                false,
-                                mUIControlInterface
-                            )
-                        }
+                    onLongClick { index ->
+                        DialogHelper.showDoSomethingPopup(
+                            requireContext(),
+                            findViewHolderForAdapterPosition(index)?.itemView,
+                            item,
+                            false,
+                            mUIControlInterface
+                        )
                     }
                 }
             }
+        }
 
-            mAllMusicFragmentBinding.searchToolbar.apply {
+        mAllMusicFragmentBinding.searchToolbar.apply {
 
-                inflateMenu(R.menu.menu_all_music)
+            inflateMenu(R.menu.menu_all_music)
 
-                setNavigationOnClickListener {
-                    mUIControlInterface.onCloseActivity()
+            setNavigationOnClickListener {
+                mUIControlInterface.onCloseActivity()
+            }
+
+            menu.apply {
+                findItem(R.id.action_shuffle_am).setOnMenuItemClickListener {
+                    mUIControlInterface.onShuffleSongs(mAllMusic, false)
+                    return@setOnMenuItemClickListener true
                 }
-
-                menu.apply {
-                    findItem(R.id.action_shuffle_am).setOnMenuItemClickListener {
-                        mUIControlInterface.onShuffleSongs(mAllMusic, false)
-                        return@setOnMenuItemClickListener true
-                    }
-                    val searchView = findItem(R.id.action_search).actionView as SearchView
-                    searchView.apply {
-                        setOnQueryTextListener(this@AllMusicFragment)
-                        setOnQueryTextFocusChangeListener { _, hasFocus ->
-                            menu.findItem(R.id.action_shuffle_am).isVisible = !hasFocus
-                        }
+                val searchView = findItem(R.id.action_search).actionView as SearchView
+                searchView.apply {
+                    setOnQueryTextListener(this@AllMusicFragment)
+                    setOnQueryTextFocusChangeListener { _, hasFocus ->
+                        menu.findItem(R.id.action_shuffle_am).isVisible = !hasFocus
                     }
                 }
             }
