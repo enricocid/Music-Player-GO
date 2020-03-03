@@ -263,20 +263,23 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
             initViewPager()
 
-            // Handle restoring: handle intent data, if any, or restore playback
-            if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null) handleIntent(
-                intent
-            )
-            else
-                synchronized(restorePlayerStatus()) {
-                    mPlayerControlsPanelBinding.playerView.animate().apply {
-                        duration = 500
-                        alpha(1.0F)
-                    }
+            synchronized(handleRestore()) {
+                mPlayerControlsPanelBinding.playerView.animate().apply {
+                    duration = 500
+                    alpha(1.0F)
                 }
+            }
+
         } else {
             notifyError(GoConstants.TAG_NO_MUSIC)
         }
+    }
+
+    // Handle restoring: handle intent data, if any, or restore playback
+    private fun handleRestore() {
+        if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null) handleIntent(
+            intent
+        ) else restorePlayerStatus()
     }
 
     private fun initViewPager() {
