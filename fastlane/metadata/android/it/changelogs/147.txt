@@ -1,0 +1,3 @@
+- [Oreo+] corretto crash audio focus. Grazie a Stephan Maier per aver riportato il problema
+- Altri piccoli miglioramenti del media player holder
+- Aggiornati build tools/kotlin plugin

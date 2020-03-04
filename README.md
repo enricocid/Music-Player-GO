@@ -6,11 +6,11 @@
 [![Privacy policy](https://img.shields.io/static/v1?label=Privacy-policy&message=read&color=ef9a9a)](https://github.com/enricocid/Music-Player-GO/blob/master/Privacy.md)
 [![FAQ](https://img.shields.io/static/v1?label=FAQ&message=read&color=ce93d8)](https://github.com/enricocid/Music-Player-GO/blob/master/Faq.md)
 [![3rd party libs and tools](https://img.shields.io/static/v1?label=Libs/tools&message=13&color=9fa8da)](https://github.com/enricocid/Music-Player-GO/blob/master/Libs.md)
-[![Contributors](https://img.shields.io/static/v1?label=Contributors&message=33&color=81d4fa)](https://github.com/enricocid/Music-Player-GO/blob/master/Contributors.md)
+[![Contributors](https://img.shields.io/static/v1?label=Contributors&message=34&color=81d4fa)](https://github.com/enricocid/Music-Player-GO/blob/master/Contributors.md)
 [![Supported formats](https://img.shields.io/static/v1?label=Formats&message=read&color=80cbc4)](https://github.com/enricocid/Music-Player-GO/blob/master/FORMATS.MD)
 
 [![API](https://img.shields.io/static/v1?label=API&message=21&color=a5d6a7)](https://developer.android.com/about/versions/android-5.0.html)
-[![TAG](https://img.shields.io/static/v1?label=Tag&message=v4.2.2&color=ffe082)](https://github.com/enricocid/Music-Player-GO/releases/tag/v4.2.2)
+[![TAG](https://img.shields.io/static/v1?label=Tag&message=v4.2.3&color=ffe082)](https://github.com/enricocid/Music-Player-GO/releases/tag/v4.2.3)
 
 
 <img align="right" src="https://raw.githubusercontent.com/enricocid/Music-Player-GO/master/mpgo-4-2-0.gif" height="500px"/>

@@ -1,0 +1,3 @@
+- [Oreo and above] fix audio focus request crash. Thanks Stephan Maier for reporting the issue.
+- Other minor media player holder improvements
+- Upgrade build tools/kotlin plugin

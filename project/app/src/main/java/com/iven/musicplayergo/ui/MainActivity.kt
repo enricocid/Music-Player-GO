@@ -10,7 +10,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
-import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import androidx.activity.viewModels
@@ -670,6 +669,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     )
 
                     if (!songs.isNullOrEmpty()) {
+
                         isPlay = false
 
                         startPlayback(
@@ -864,9 +864,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun skip(isNext: Boolean) {
         if (checkIsPlayer(true)) {
             if (!mMediaPlayerHolder.isPlay) mMediaPlayerHolder.isPlay = true
+            if (isNext) mMediaPlayerHolder.skip(true) else mMediaPlayerHolder.instantReset()
             if (mMediaPlayerHolder.isSongRestoredFromPrefs) mMediaPlayerHolder.isSongRestoredFromPrefs =
                 false
-            if (isNext) mMediaPlayerHolder.skip(true) else mMediaPlayerHolder.instantReset()
         }
     }
 
@@ -972,7 +972,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
 
         override fun onPositionChanged(position: Int) {
-            Log.d("pos", position.toString())
             mPlayerControlsPanelBinding.songProgress.progress = position
             if (isNowPlaying) mNowPlayingBinding.npSeekBar.progress = position
         }
