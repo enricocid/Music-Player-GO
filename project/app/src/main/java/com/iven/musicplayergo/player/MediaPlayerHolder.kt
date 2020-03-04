@@ -35,12 +35,16 @@ import kotlin.math.ln
 // The volume we set the media player to when we lose audio focus, but are
 // allowed to reduce the volume instead of stopping playback.
 private const val VOLUME_DUCK = 0.2f
+
 // The volume we set the media player when we have audio focus.
 private const val VOLUME_NORMAL = 1.0f
+
 // We don't have audio focus, and can't duck (play at a low volume)
 private const val AUDIO_NO_FOCUS_NO_DUCK = 0
+
 // We don't have focus, but can duck (play at a low volume)
 private const val AUDIO_NO_FOCUS_CAN_DUCK = 1
+
 // We have full audio focus
 private const val AUDIO_FOCUSED = 2
 
@@ -215,34 +219,31 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     @Suppress("DEPRECATION")
-    private fun getAudioFocusResult(): Int {
-
-        return when {
-            VersioningHelper.isOreoMR1() -> {
-                mAudioFocusRequestOreo =
-                    AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN).run {
-                        setAudioAttributes(AudioAttributes.Builder().run {
-                            setUsage(AudioAttributes.USAGE_MEDIA)
-                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                                .build()
-                        })
-                        setOnAudioFocusChangeListener(mOnAudioFocusChangeListener, mHandler)
-                        build()
-                    }
-                mAudioManager.requestAudioFocus(mAudioFocusRequestOreo)
-            }
-            else -> mAudioManager.requestAudioFocus(
-                mOnAudioFocusChangeListener,
-                AudioManager.STREAM_MUSIC,
-                AudioManager.AUDIOFOCUS_GAIN
-            )
+    private fun getAudioFocusResult() = when {
+        VersioningHelper.isOreoMR1() -> {
+            mAudioFocusRequestOreo =
+                AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN).run {
+                    setAudioAttributes(AudioAttributes.Builder().run {
+                        setUsage(AudioAttributes.USAGE_MEDIA)
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .build()
+                    })
+                    setOnAudioFocusChangeListener(mOnAudioFocusChangeListener, mHandler)
+                    build()
+                }
+            mAudioManager.requestAudioFocus(mAudioFocusRequestOreo)
         }
+        else -> mAudioManager.requestAudioFocus(
+            mOnAudioFocusChangeListener,
+            AudioManager.STREAM_MUSIC,
+            AudioManager.AUDIOFOCUS_GAIN
+        )
     }
 
     @Suppress("DEPRECATION")
     fun giveUpAudioFocus() {
         when {
-            VersioningHelper.isOreo() -> mAudioManager.abandonAudioFocusRequest(
+            VersioningHelper.isOreo() -> if (::mAudioFocusRequestOreo.isInitialized) mAudioManager.abandonAudioFocusRequest(
                 mAudioFocusRequestOreo
             )
             else -> {
