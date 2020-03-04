@@ -293,10 +293,11 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun repeatSong() {
         isRepeat1X = false
+        mediaPlayer.setOnSeekCompleteListener { mp ->
+            mp.setOnSeekCompleteListener(null)
+            play()
+        }
         mediaPlayer.seekTo(0)
-        mediaPlayer.start()
-        state = GoConstants.PLAYING
-        updatePlaybackStatus(true)
     }
 
     private fun manageQueue(isNext: Boolean) {
@@ -383,9 +384,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun instantReset() {
-        if (isMediaPlayer) {
-            if (mediaPlayer.currentPosition < 5000) skip(false) else repeatSong()
-        }
+        if (isMediaPlayer && !isSongRestoredFromPrefs) when {
+            mediaPlayer.currentPosition < 5000 -> skip(false)
+            else -> repeatSong()
+        } else skip(false)
     }
 
     /**
@@ -422,7 +424,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 mMusicNotificationManager = playerService.musicNotificationManager
 
                 if (goPreferences.isFocusEnabled) tryToGetAudioFocus()
-
                 if (goPreferences.isPreciseVolumeEnabled) setPreciseVolume(currentVolumeInPercent)
             }
 
@@ -438,7 +439,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     override fun onPrepared(mediaPlayer: MediaPlayer) {
-        if (mExecutor == null) startUpdatingCallbackWithPosition()
 
         if (isRepeat1X) isRepeat1X = false
 
@@ -454,12 +454,16 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         if (VersioningHelper.isQ()) updateMediaSessionMetaData()
 
-        if (isPlay) {
-            mediaPlayer.start()
-            startForeground()
-            state = GoConstants.PLAYING
-            updatePlaybackStatus(true)
-        }
+        if (mExecutor == null) startUpdatingCallbackWithPosition()
+
+        if (isPlay) play()
+    }
+
+    private fun play() {
+        mediaPlayer.start()
+        startForeground()
+        state = GoConstants.PLAYING
+        updatePlaybackStatus(true)
     }
 
     fun openEqualizer(activity: Activity) {
@@ -538,9 +542,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun seekTo(position: Int, updatePlaybackStatus: Boolean, restoreProgressCallBack: Boolean) {
         if (isMediaPlayer) {
+            mediaPlayer.setOnSeekCompleteListener { mp ->
+                mp.setOnSeekCompleteListener(null)
+                if (restoreProgressCallBack) startUpdatingCallbackWithPosition()
+                if (updatePlaybackStatus) updatePlaybackStatus(!restoreProgressCallBack)
+            }
             mediaPlayer.seekTo(position)
-            if (restoreProgressCallBack) startUpdatingCallbackWithPosition()
-            if (updatePlaybackStatus) updatePlaybackStatus(!restoreProgressCallBack)
         }
     }
 
