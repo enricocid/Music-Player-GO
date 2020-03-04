@@ -43,11 +43,11 @@ If You think You should be listed don't hesitate to notify me! :)
 
 - [**Kieran BW**](https://github.com/FredHappyface) for having raised [this](https://github.com/enricocid/Music-Player-GO/issues/131) question
 
-- [**Stephan Maier**] for having reported this [issue](https://github.com/enricocid/Music-Player-GO/commit/06b0375eda3f7c214881af205e64dffbca29dfe7) via F-Droid
+- **Stephan Maier** for having reported this [issue](https://github.com/enricocid/Music-Player-GO/commit/06b0375eda3f7c214881af205e64dffbca29dfe7) via F-Droid
 
 ### Big thanks to translators:
 
-- [**keddad**](https://github.com/keddad) and [**yafna](https://github.com/yafna) for **Russian** translations
+- [**keddad**](https://github.com/keddad) and [**yafna**](https://github.com/yafna) for **Russian** translations
 
 - [**Nathan Bonnemains**](https://github.com/NathanBnm) and [**KowalskiOmniROM**](https://devhub.io/developer/KowalskiOmniROM) for **French** translations
 
