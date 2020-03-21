@@ -662,8 +662,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         ) else mMusicRepository.randomMusic
 
                     val songs = MusicOrgHelper.getAlbumSongs(
-                        song?.artist,
-                        song?.album,
+                        song.artist,
+                        song.album,
                         mMusicRepository.deviceAlbumsByArtist
                     )
 

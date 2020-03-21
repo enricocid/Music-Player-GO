@@ -274,7 +274,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 GoConstants.RESUMED
             }
 
-            updatePlaybackStatus(updateUI = true)
+            updatePlaybackStatus(true)
 
             startForeground()
 
@@ -287,7 +287,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         playerService.stopForeground(false)
         sNotificationForeground = false
         state = GoConstants.PAUSED
-        updatePlaybackStatus(updateUI = true)
+        updatePlaybackStatus(true)
         mMusicNotificationManager.apply {
             updatePlayPauseAction()
             updateNotification()
@@ -465,7 +465,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private fun play() {
         mediaPlayer.start()
         state = GoConstants.PLAYING
-        updatePlaybackStatus(updateUI = true)
+        updatePlaybackStatus(true)
         startForeground()
     }
 
@@ -511,7 +511,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun repeat(updatePlaybackStatus: Boolean) {
         getRepeatMode()
-        if (updatePlaybackStatus) updatePlaybackStatus(updateUI = true)
+        if (updatePlaybackStatus) updatePlaybackStatus(true)
         mMusicNotificationManager.apply {
             updateRepeatIcon()
             updateNotification()
@@ -552,7 +552,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             mediaPlayer.setOnSeekCompleteListener { mp ->
                 mp.setOnSeekCompleteListener(null)
                 if (restoreProgressCallBack) startUpdatingCallbackWithPosition()
-                if (updatePlaybackStatus) updatePlaybackStatus(updateUI = !restoreProgressCallBack)
+                if (updatePlaybackStatus) updatePlaybackStatus(!restoreProgressCallBack)
             }
             mediaPlayer.seekTo(position)
         }
