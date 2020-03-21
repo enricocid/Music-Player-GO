@@ -77,7 +77,7 @@ object MusicOrgHelper {
         deviceSongs.firstOrNull { s ->
             s.artist == savedMusic?.artist && s.title == savedMusic?.title && s.displayName == savedMusic?.displayName
                     && s.year == savedMusic?.year && s.duration == savedMusic.duration && s.album == savedMusic.album
-        }
+        } ?: deviceSongs.random()
 
     @JvmStatic
     fun saveLatestSong(latestSong: Music?, playerPosition: Int, isPlayingFromFolder: Boolean) {
