@@ -355,18 +355,19 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         selectedArtistOrFolder: String?,
         isFolder: Boolean
     ) {
-
-        mDetailsFragment =
-            DetailsFragment.newInstance(
-                selectedArtistOrFolder,
-                isFolder,
-                MusicOrgHelper.getPlayingAlbumPosition(
+        if (!sDetailsFragmentExpanded) {
+            mDetailsFragment =
+                DetailsFragment.newInstance(
                     selectedArtistOrFolder,
-                    mMusicRepository.deviceAlbumsByArtist,
-                    mMediaPlayerHolder
+                    isFolder,
+                    MusicOrgHelper.getPlayingAlbumPosition(
+                        selectedArtistOrFolder,
+                        mMusicRepository.deviceAlbumsByArtist,
+                        mMediaPlayerHolder
+                    )
                 )
-            )
-        supportFragmentManager.addFragment(mDetailsFragment, GoConstants.DETAILS_FRAGMENT_TAG)
+            supportFragmentManager.addFragment(mDetailsFragment, GoConstants.DETAILS_FRAGMENT_TAG)
+        }
     }
 
     private fun closeDetailsFragment(tab: TabLayout.Tab?) {

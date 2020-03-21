@@ -78,12 +78,12 @@ class LovedSongsAdapter(
                 setOnClickListener {
                     mediaPlayerHolder.isSongFromLovedSongs = Pair(true, lovedSong?.startFrom!!)
                     MusicOrgHelper.getSongForRestore(lovedSong, musicRepository.deviceMusicList)
-                        ?.let { songToPlay ->
+                        .apply {
                             uiControlInterface.onSongSelected(
-                                songToPlay,
+                                this,
                                 MusicOrgHelper.getAlbumSongs(
-                                    songToPlay.artist,
-                                    songToPlay.album,
+                                    artist,
+                                    album,
                                     musicRepository.deviceAlbumsByArtist
                                 ),
                                 lovedSong.isFromFolder
