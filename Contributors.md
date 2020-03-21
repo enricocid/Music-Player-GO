@@ -63,7 +63,7 @@ If You think You should be listed don't hesitate to notify me! :)
 
 - [**Stanislav**](https://github.com/STWheel) for **Ukrainian** and **Russian** translations and other strings/ui refinements
 
-- [**Somesh Kumar**](https://github.com/TheSomeshKumar) for **Hindi** translations
+- [**Somesh Kumar**](https://github.com/TheSomeshKumar) and [**Pirhszm Yfiz](https://github.com/pirhszm) for **Hindi** translations
 
 - [**Glaucio Santos**](https://github.com/7glaucio) for **Brazilian Portuguese** translations
 
