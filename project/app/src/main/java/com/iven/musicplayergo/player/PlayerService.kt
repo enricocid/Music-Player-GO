@@ -31,7 +31,6 @@ class PlayerService : Service() {
     private val mMediaSessionCallback = object : MediaSessionCompat.Callback() {
 
         override fun onSeekTo(pos: Long) {
-            super.onSeekTo(pos)
             mediaPlayerHolder.seekTo(
                 pos.toInt(),
                 updatePlaybackStatus = true,

@@ -610,7 +610,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onAppearanceChanged(isAccentChanged: Boolean, restoreSettings: Boolean) {
         sAppearanceChanged = true
-        if (isAccentChanged && mMediaPlayerHolder.isPlaying) mMediaPlayerHolder.updateNotification()
         synchronized(saveSongToPref()) { recreate() }
     }
 
@@ -722,10 +721,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mPlayerService.apply {
                     if (isRestoredFromPause) {
                         stopForeground(false)
-                        musicNotificationManager.notificationManager.notify(
-                            GoConstants.NOTIFICATION_ID,
-                            mPlayerService.musicNotificationManager.notificationBuilder.build()
-                        )
+                        musicNotificationManager.updateNotification()
                         isRestoredFromPause = false
                     }
                 }

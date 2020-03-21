@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.player
 
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -23,8 +24,12 @@ private const val REQUEST_CODE = 100
 class MusicNotificationManager(private val playerService: PlayerService) {
 
     //notification manager/builder
-    val notificationManager = NotificationManagerCompat.from(playerService)
-    lateinit var notificationBuilder: NotificationCompat.Builder
+    private val mNotificationManager = NotificationManagerCompat.from(playerService)
+    private lateinit var mNotificationBuilder: NotificationCompat.Builder
+
+    private val mNotificationActions
+        @SuppressLint("RestrictedApi")
+        get() = mNotificationBuilder.mActions
 
     private fun playerAction(action: String): PendingIntent {
 
@@ -41,60 +46,75 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
     fun createNotification(): Notification {
 
-        val mediaPlayerHolder = playerService.mediaPlayerHolder
-        mediaPlayerHolder.currentSong.first.let { song ->
-            notificationBuilder = NotificationCompat.Builder(playerService, CHANNEL_ID)
+        mNotificationBuilder = NotificationCompat.Builder(playerService, CHANNEL_ID)
 
-            if (VersioningHelper.isOreo()) createNotificationChannel()
+        if (VersioningHelper.isOreo()) createNotificationChannel()
 
-            val openPlayerIntent = Intent(playerService, MainActivity::class.java)
-            openPlayerIntent.flags =
-                Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            val contentIntent = PendingIntent.getActivity(
-                playerService, REQUEST_CODE,
-                openPlayerIntent, 0
+        val openPlayerIntent = Intent(playerService, MainActivity::class.java)
+        openPlayerIntent.flags =
+            Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        val contentIntent = PendingIntent.getActivity(
+            playerService, REQUEST_CODE,
+            openPlayerIntent, 0
+        )
+
+        val style = MediaStyle().setShowActionsInCompactView(1, 2, 3)
+
+        if (VersioningHelper.isQ()) style.setMediaSession(playerService.getMediaSession().sessionToken)
+
+        mNotificationBuilder
+            .setShowWhen(false)
+            .setStyle(style)
+            .setContentIntent(contentIntent)
+            .addAction(notificationAction(GoConstants.REPEAT_ACTION))
+            .addAction(notificationAction(GoConstants.PREV_ACTION))
+            .addAction(notificationAction(GoConstants.PLAY_PAUSE_ACTION))
+            .addAction(notificationAction(GoConstants.NEXT_ACTION))
+            .addAction(notificationAction(GoConstants.CLOSE_ACTION))
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+        updateNotificationText()
+        return mNotificationBuilder.build()
+    }
+
+    fun updateNotification() {
+        mNotificationManager
+            .notify(
+                GoConstants.NOTIFICATION_ID,
+                mNotificationBuilder.build()
             )
+    }
 
-            val style = MediaStyle().setShowActionsInCompactView(1, 2, 3)
-
-            if (VersioningHelper.isQ()) style.setMediaSession(playerService.getMediaSession().sessionToken)
-
-            notificationBuilder.let {
-                it.apply {
-                    setShowWhen(false)
-                    setStyle(style)
-                    setSmallIcon(if (mediaPlayerHolder.isPlayingFromFolder) R.drawable.ic_library_music else R.drawable.ic_music_note)
-                    color = ThemeHelper.resolveThemeAccent(playerService)
-                    setContentTitle(
-                        playerService.getString(
-                            R.string.song_title_notification,
-                            song?.title
-                        ).toSpanned()
+    fun updateNotificationText() {
+        val mediaPlayerHolder = playerService.mediaPlayerHolder
+        mediaPlayerHolder.currentSong.first?.let { song ->
+            mNotificationBuilder.setContentText(
+                    playerService.getString(
+                        R.string.artist_and_album,
+                        song.artist,
+                        song.album
                     )
-                    setContentText(
-                        playerService.getString(
-                            R.string.artist_and_album,
-                            song?.artist,
-                            song?.album
-                        )
-                    )
-                    setContentIntent(contentIntent)
-                    addAction(notificationAction(GoConstants.REPEAT_ACTION))
-                    addAction(notificationAction(GoConstants.PREV_ACTION))
-                    addAction(notificationAction(GoConstants.PLAY_PAUSE_ACTION))
-                    addAction(notificationAction(GoConstants.NEXT_ACTION))
-                    addAction(notificationAction(GoConstants.CLOSE_ACTION))
-                    setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                }
-            }
+                )
+                .setContentTitle(
+                    playerService.getString(
+                        R.string.song_title_notification,
+                        song.title
+                    ).toSpanned()
+                )
+                .setSmallIcon(if (mediaPlayerHolder.isPlayingFromFolder) R.drawable.ic_library_music else R.drawable.ic_music_note)
         }
-        return notificationBuilder.build()
+    }
+
+    fun updatePlayPauseAction() {
+        mNotificationActions[2] = notificationAction(GoConstants.PLAY_PAUSE_ACTION)
+    }
+
+    fun updateRepeatIcon() {
+        mNotificationActions[0] = notificationAction(GoConstants.REPEAT_ACTION)
     }
 
     private fun notificationAction(action: String): NotificationCompat.Action {
         var icon =
             if (playerService.mediaPlayerHolder.state != GoConstants.PAUSED) R.drawable.ic_pause else R.drawable.ic_play
-
         when (action) {
             GoConstants.REPEAT_ACTION -> icon =
                 ThemeHelper.getRepeatIcon(playerService.mediaPlayerHolder)
@@ -107,7 +127,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
     @RequiresApi(26)
     private fun createNotificationChannel() {
-        if (notificationManager.getNotificationChannel(CHANNEL_ID) == null) {
+        if (mNotificationManager.getNotificationChannel(CHANNEL_ID) == null) {
             NotificationChannel(
                 CHANNEL_ID,
                 playerService.getString(R.string.app_name),
@@ -117,7 +137,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                 enableLights(false)
                 enableVibration(false)
                 setShowBadge(false)
-                notificationManager.createNotificationChannel(this)
+                mNotificationManager.createNotificationChannel(this)
             }
         }
     }

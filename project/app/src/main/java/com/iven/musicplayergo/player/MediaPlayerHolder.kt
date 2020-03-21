@@ -140,13 +140,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             )
             sNotificationForeground = true
         } else {
-            updateNotification()
+            mMusicNotificationManager.apply {
+                updateNotificationText()
+                updatePlayPauseAction()
+                updateRepeatIcon()
+                updateNotification()
+            }
         }
-    }
-
-    fun updateNotification() {
-        mMusicNotificationManager.notificationManager
-            .notify(GoConstants.NOTIFICATION_ID, mMusicNotificationManager.createNotification())
     }
 
     fun registerActionsReceiver() {
@@ -261,7 +261,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 1F
             ).build()
         )
-        updateNotification()
         if (updateUI) mediaPlayerInterface.onStateChanged()
     }
 
@@ -275,7 +274,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 GoConstants.RESUMED
             }
 
-            updatePlaybackStatus(true)
+            updatePlaybackStatus(updateUI = true)
 
             startForeground()
 
@@ -288,7 +287,11 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         playerService.stopForeground(false)
         sNotificationForeground = false
         state = GoConstants.PAUSED
-        updatePlaybackStatus(true)
+        updatePlaybackStatus(updateUI = true)
+        mMusicNotificationManager.apply {
+            updatePlayPauseAction()
+            updateNotification()
+        }
     }
 
     fun repeatSong() {
@@ -461,9 +464,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private fun play() {
         mediaPlayer.start()
-        startForeground()
         state = GoConstants.PLAYING
-        updatePlaybackStatus(true)
+        updatePlaybackStatus(updateUI = true)
+        startForeground()
     }
 
     fun openEqualizer(activity: Activity) {
@@ -508,7 +511,11 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun repeat(updatePlaybackStatus: Boolean) {
         getRepeatMode()
-        if (updatePlaybackStatus) updatePlaybackStatus(true)
+        if (updatePlaybackStatus) updatePlaybackStatus(updateUI = true)
+        mMusicNotificationManager.apply {
+            updateRepeatIcon()
+            updateNotification()
+        }
     }
 
     fun setQueueEnabled(enabled: Boolean) {
@@ -545,7 +552,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             mediaPlayer.setOnSeekCompleteListener { mp ->
                 mp.setOnSeekCompleteListener(null)
                 if (restoreProgressCallBack) startUpdatingCallbackWithPosition()
-                if (updatePlaybackStatus) updatePlaybackStatus(!restoreProgressCallBack)
+                if (updatePlaybackStatus) updatePlaybackStatus(updateUI = !restoreProgressCallBack)
             }
             mediaPlayer.seekTo(position)
         }
