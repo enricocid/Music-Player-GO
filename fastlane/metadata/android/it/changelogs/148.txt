@@ -1,0 +1,5 @@
+- Migliorata la gestione della notifica
+- Semplificazione notifica
+- Altri miglioramenti del codice
+- Aggiornamenti dipendenze app
+- Aggiornamenti Hindi (grazie mille Pirhszm Yfiz)
