@@ -1,0 +1,3 @@
+- Corretto un crash
+- Aggiornato Indonesiano (grazie zmni)
+- Aggiunte le traduzioni Indonesiano e Olandese della pagine del PlayStore. Grazie a zmni ed Heimen Stoffels
