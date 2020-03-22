@@ -1,0 +1,3 @@
+- Perbaikan masalah
+- Memperbarui terjemahan Bahasa Indonesia (terima kasih zmni)
+- Menambahkan terjemahan Bahasa Indonesia dan Belanda untuk deskripsi PlayStore. Terima kasih zmni dan Heimen Stoffels
