@@ -27,10 +27,10 @@
   > Tip: klik pada judul album untuk fokus ke lagu album tersebut
 
 - Manajemen antrean
-  > Tip: untuk mengosongkannya tekan lama pada tombol antrean
+  > Tip: untuk mengosongkan daftar, tekan lama pada tombol antrean
 
 - Lagu favorit: Anda bisa menambahkan markah dari daftar lagu dan dialog sekarang diputar (posisi pemutaran juga akan disimpan!)
-  > Tip: to clear the list long click on loved songs button
+  > Tip: untuk mengosongkan daftar, tekan lama pada tombol favorit
 
 - Dukungan mode lanskap
 
