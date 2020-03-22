@@ -1,0 +1,5 @@
+- Notification management improvements
+- Notification simplification
+- Other minor code improvements
+- App dependencies upgrade
+- Updated Hindi translations (thanks so much Pirhszm Yfiz)
