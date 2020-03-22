@@ -1,0 +1,5 @@
+- Make dark theme deeper
+- Landscape: 3 bug fixes
+- Fix crash when music library is empty
+- Accents dialog improvements
+- Add rounded corners to themes dialog
