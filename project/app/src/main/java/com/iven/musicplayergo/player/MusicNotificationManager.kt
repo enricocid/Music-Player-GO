@@ -109,7 +109,11 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     }
 
     fun updateRepeatIcon() {
-        mNotificationActions[0] = notificationAction(GoConstants.REPEAT_ACTION)
+        if (::mNotificationBuilder.isInitialized) {
+            mNotificationActions[0] =
+                notificationAction(GoConstants.REPEAT_ACTION)
+            updateNotification()
+        }
     }
 
     private fun notificationAction(action: String): NotificationCompat.Action {

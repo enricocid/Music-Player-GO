@@ -512,10 +512,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun repeat(updatePlaybackStatus: Boolean) {
         getRepeatMode()
         if (updatePlaybackStatus) updatePlaybackStatus(true)
-        mMusicNotificationManager.apply {
-            updateRepeatIcon()
-            updateNotification()
-        }
+        mMusicNotificationManager.updateRepeatIcon()
     }
 
     fun setQueueEnabled(enabled: Boolean) {
