@@ -3,7 +3,7 @@
     <!-- Dialogs / Buttons -->
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="on_close_activity">Do You want to stop playback?</string>
+    <string name="on_close_activity">Do you want to stop playback?</string>
     <string name="queue_songs_clear">Queue will be cleared. Continue?</string>
     <string name="loved_songs_clear">Loved songs will be cleared. Continue?</string>
     <string name="loved_song_remove">%1s (%2s) will be deleted from loved songs. Continue?</string>
@@ -40,9 +40,9 @@
     <!-- Messages - Errors -->
     <string name="error_no_loved_songs">No loved songs found!</string>
     <string name="error_no_music">No music found :(</string>
-    <string name="error_not_ready">There was an issue while loading the music library! :( This is probably due to the sd card that sometimes gets unmounted forcing the Android\'s MediaStore to rebuild its database records. Solution: try again later :)</string>
-    <string name="error_unknown_unsupported">Something went wrong! :( Probably the chosen format is not supported or folder is not accessible (not an app\'s fault!)</string>
-    <string name="error_media_buttons">Something went wrong! :( Please restart playback from the app</string>
+    <string name="error_not_ready">There was an issue while loading the music library! :( This could be due to the SD card getting unmounted, forcing the Android\'s MediaStore to rebuild its database records. Solution: try again later.</string>
+    <string name="error_unknown_unsupported">Something went wrong! :( Perhaps the chosen format is not supported, or the folder is not accessible (not an app\'s fault!).</string>
+    <string name="error_media_buttons">Something went wrong! :( Please restart playback from the app.</string>
     <string name="error_no_browser">No browser found!</string>
     <string name="error_bad_id">Play a song first!</string>
     <string name="error_no_eq">No equalizer found!</string>
@@ -86,7 +86,7 @@
 
     <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">Active tabs</string>
-    <string name="active_fragments_pref_warning">You just can\'t remove all the tabs! :P</string>
+    <string name="active_fragments_pref_warning">You can\'t just remove all the tabs! :P</string>
 
     <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">Precise volume control</string>

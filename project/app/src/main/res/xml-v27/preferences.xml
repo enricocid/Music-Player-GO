@@ -30,9 +30,9 @@
         app:title="@string/faq_title" />
 
     <Preference
+        android:enabled="false"
         app:icon="@drawable/ic_database"
-        app:key="@string/found_songs_pref"
-        android:enabled="false" />
+        app:key="@string/found_songs_pref" />
 
     <PreferenceCategory
         app:layout="@layout/custom_preference_category"

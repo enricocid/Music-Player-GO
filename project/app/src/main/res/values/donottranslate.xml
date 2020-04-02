@@ -4,7 +4,7 @@
 
     <!-- External links -->
     <string name="app_git">https://github.com/enricocid/Music-Player-GO</string>
-    <string name="app_faq">https://github.com/enricocid/Music-Player-GO/blob/master/Faq.md</string>
+    <string name="app_faq">https://github.com/enricocid/Music-Player-GO/blob/master/FAQ.md</string>
 
     <!-- Formatted strings used in RVs items and other TextViews -->
     <string name="rates">%1d&#160;kHz,&#160;%2d&#160;kbps</string>
