@@ -1,6 +1,8 @@
-# 3rd party awesome libraries, tools and resources used in the app
+# Resources used in this project. Thank you!
 
-- [**Source sans pro**](https://fonts.google.com/specimen/Source+Sans+Pro) font by Google Fonts
+### 3rd party libraries used in the app
+
+- [**Gson**](https://github.com/google/gson) by Google
 
 - [**Indicator Fast Scroll**](https://github.com/reddit/IndicatorFastScroll) library by Reddit
 
@@ -9,6 +11,10 @@
 - [**recyclical**](https://github.com/afollestad/recyclical) by [**Aidan Afollestad**](https://github.com/afollestad)
 
 - [**Edge-to-Edge**](https://github.com/beworker/edge-to-edge) by [**Sergej Shafarenka**](https://github.com/beworker)
+
+
+### Repo and project UI, screenshots, etc.
+- [**Source sans pro**](https://fonts.google.com/specimen/Source+Sans+Pro) font by Google Fonts
 
 - [**Screener - Better screenshots**](https://play.google.com/store/apps/details?id=de.toastcode.screener) app by [**Toastcode**](https://toastco.de/)
 
