@@ -1,8 +1,8 @@
 # Credits
 
-Many thanks to all contributors (listed in no particular order :)
+Many thanks to all contributors (listed in no particular order).
 
-If You think You should be listed don't hesitate to notify me! :)
+If you think you should be listed, don't hesitate to notify me! :)
 
 ### Special thanks goes to:
 
@@ -19,13 +19,13 @@ If You think You should be listed don't hesitate to notify me! :)
 
 - [**Johnett Mathew**](https://github.com/Johnett) for these [fixes](https://github.com/enricocid/Music-Player-GO/pull/149)
 
-- [**bullhead**](https://github.com/bullheadandplato) for dialogs titles blinking cursor [fixes](https://github.com/enricocid/Music-Player-GO/pull/121)
+- [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes](https://github.com/enricocid/Music-Player-GO/pull/121)
 
 - [**seventhsonmizo**](https://github.com/seventhsonmizo) for Android Q [issue](https://github.com/enricocid/Music-Player-GO/issues/110) report and debugging
 
 - [**Jnss98b**](https://github.com/Jnss98b) for helping me to implement [edge-to-edge](https://github.com/enricocid/Music-Player-GO/issues/86) and for having reported/debugged this [issue](https://github.com/enricocid/VectorifyDaHome/issues/17)
 
-- [**Pirhszm Yfiz**](https://github.com/pirhszm) for reporting me this [issue](https://github.com/enricocid/Music-Player-GO/issues/110#issuecomment-573424280)
+- [**Pirhszm Yfiz**](https://github.com/pirhszm) for reporting this [issue](https://github.com/enricocid/Music-Player-GO/issues/110#issuecomment-573424280)
 
 - [**IzzySoft**](https://github.com/IzzySoft) and [**Poussinou**](https://github.com/Poussinou) for setting up the **F-Droid** repository
 
@@ -33,13 +33,13 @@ If You think You should be listed don't hesitate to notify me! :)
 
 - [**Dankan1890**](https://github.com/dankan1890) for some fixes to bluetooth devices
 
-- [**Harry**](https://github.com/HarryHeights) for privacy policy
+- [**Harry**](https://github.com/HarryHeights) for the privacy policy
 
-- [**olayhemy**](https://github.com/olayhemy) for FAQ
+- [**olayhemy**](https://github.com/olayhemy) for the FAQ
 
-- [**andOTP**](https://github.com/andOTP) for "Get it on GitHub" download badge
+- [**andOTP**](https://github.com/andOTP) for the "Get it on GitHub" download badge
 
-- [**abirke**](https://github.com/abirke) for having reported media buttons [issues](https://github.com/enricocid/Music-Player-GO/issues/137)
+- [**abirke**](https://github.com/abirke) for having reported media button [issues](https://github.com/enricocid/Music-Player-GO/issues/137)
 
 - [**Kieran BW**](https://github.com/FredHappyface) for having raised [this](https://github.com/enricocid/Music-Player-GO/issues/131) question
 
@@ -61,7 +61,7 @@ If You think You should be listed don't hesitate to notify me! :)
 
 - [**Luis F. Uceta**](https://github.com/uzluisf) for **Spanish** translations
 
-- [**Stanislav**](https://github.com/STWheel) for **Ukrainian** and **Russian** translations and other strings/ui refinements
+- [**Stanislav**](https://github.com/STWheel) for **Ukrainian** and **Russian** translations and other string/UI refinements
 
 - [**Somesh Kumar**](https://github.com/TheSomeshKumar) and [**Pirhszm Yfiz**](https://github.com/pirhszm) for **Hindi** translations
 

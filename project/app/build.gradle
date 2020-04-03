@@ -11,6 +11,8 @@ android {
         targetSdkVersion 29
         versionCode 149
         versionName "4.2.5"
+
+        vectorDrawables.useSupportLibrary = true
     }
 
     //retrieve version number
@@ -39,10 +41,6 @@ android {
         enabled = true
     }
 
-    defaultConfig {
-        vectorDrawables.useSupportLibrary = true
-    }
-
     // For Kotlin projects
     kotlinOptions {
         jvmTarget = "1.8"
@@ -51,26 +49,48 @@ android {
     lintOptions {
         disable 'MissingTranslation'
     }
+
+    packagingOptions {
+        exclude 'META-INF/*'
+    }
 }
 
 dependencies {
+// Kotlin
+    //https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'com.google.android.material:material:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0'
-    implementation 'androidx.activity:activity-ktx:1.1.0'
-    implementation 'androidx.fragment:fragment-ktx:1.2.3'
+    //https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2'
+
+// Support
+    //https://developer.android.com/jetpack/androidx/versions
+    implementation 'androidx.activity:activity-ktx:1.1.0'
     implementation 'androidx.annotation:annotation:1.1.0'
-    implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'androidx.viewpager2:viewpager2:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.browser:browser:1.2.0'
+    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation 'androidx.fragment:fragment-ktx:1.2.4'
     implementation 'androidx.media:media:1.1.0'
     implementation 'androidx.preference:preference-ktx:1.1.0'
-    implementation 'androidx.browser:browser:1.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    //https://github.com/material-components/material-components-android/releases
+    implementation 'com.google.android.material:material:1.1.0'
+
+// Third-party
+    //https://github.com/google/gson/blob/master/CHANGELOG.md
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    //https://github.com/reddit/IndicatorFastScroll/releases
     implementation 'com.reddit:indicator-fast-scroll:1.2.1'
+
+    //https://github.com/afollestad/material-dialogs/releases
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
     implementation 'com.afollestad.material-dialogs:bottomsheets:3.3.0'
+
+    //https://github.com/afollestad/recyclical/releases
     implementation 'com.afollestad:recyclical:1.1.1'
+
+    //https://github.com/beworker/edge-to-edge/blob/master/CHANGELOG.md
     implementation 'de.halfbit:edge-to-edge:0.8'
 }
