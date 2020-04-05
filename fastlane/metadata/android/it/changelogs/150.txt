@@ -1,0 +1,6 @@
+- Gestione tab attive: corretto ordine sbagliato (grazie Martin Teboul per aver riportato)
+- Corretto crash ErrorFragment
+- Migliorie progetto (grazie TacoTheDank)
+- Corretto e migliorato traduzioni Inglese (grazie TacoTheDank)
+- Aggiunte traduzioni Polacco (grazie SpacingBat3)
+- Aggiornate traduzioni Turco (grazie Adem Furkan ÖZCAN)
