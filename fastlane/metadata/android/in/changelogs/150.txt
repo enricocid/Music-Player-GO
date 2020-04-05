@@ -1,0 +1,7 @@
+- Manajemen tab aktif: memperbaiki urutan tab (terima kasih Martin Teboul atas laporannya)
+- Memperbaiki crash ErrorFragment
+- Memperbaiki pengelola notifikasi
+- Penyempurnaan proyek (terima kasih TacoTheDank)
+- Perbaikan dan penyempurnaan terjemahan bahasa Inggris (terima kasih TacoTheDank)
+- Menambahkan terjemahan bahasa Polandia (terima kasih SpacingBat3)
+- Memperbarui terjemahan bahasa Turki (terima kasih Adem Furkan ÖZCAN)
