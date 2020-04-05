@@ -24,6 +24,7 @@ object GoConstants {
     const val TAG_ARTISTS = "ARTISTS_FRAGMENT"
     const val TAG_FOLDERS = "FOLDERS_FRAGMENT"
     const val DETAILS_FRAGMENT_TAG = "DETAILS_FRAGMENT"
+    const val ERROR_FRAGMENT_TAG = "ERROR_FRAGMENT"
 
     // Player playing statuses
     const val PLAYING = PlaybackStateCompat.STATE_PLAYING

@@ -63,7 +63,7 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
         mErrorFragmentBinding = FragmentErrorBinding.bind(view)
         mErrorFragmentBinding.errorMessage.text = getString(mErrorString)
         mErrorFragmentBinding.errorIcon.setImageResource(mErrorIcon)
-        mErrorFragmentBinding.root.setOnClickListener { requireActivity().finishAndRemoveTask() }
+        mErrorFragmentBinding.root.setOnClickListener { mUIControlInterface.onCloseActivity() }
 
         mErrorFragmentBinding.errorToolbar.setNavigationOnClickListener {
             mUIControlInterface.onCloseActivity()

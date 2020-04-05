@@ -78,7 +78,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mDetailsFragment: DetailsFragment
 
     // Booleans
-    private val sDetailsFragmentExpanded get() = supportFragmentManager.isDetailsFragment()
+    private val sDetailsFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.DETAILS_FRAGMENT_TAG)
+    private val sErrorFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.ERROR_FRAGMENT_TAG)
     private var sRevealAnimationRunning = false
     private var sAppearanceChanged = false
     private var sRestoreSettingsFragment = false
@@ -141,15 +142,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onBackPressed() {
-        if (sDetailsFragmentExpanded) {
-            closeDetailsFragment(null)
-        } else {
-            if (mMainActivityBinding.viewPager2.currentItem != 0) mMainActivityBinding.viewPager2.currentItem =
+        when {
+            sDetailsFragmentExpanded -> closeDetailsFragment(null)
+            sErrorFragmentExpanded -> finishAndRemoveTask()
+            else -> if (mMainActivityBinding.viewPager2.currentItem != 0) mMainActivityBinding.viewPager2.currentItem =
                 0 else
                 if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) DialogHelper.stopPlaybackDialog(
                     this,
                     mMediaPlayerHolder
-                ) else super.onBackPressed()
+                ) else onCloseActivity()
         }
     }
 
@@ -249,7 +250,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mPlayerControlsPanelBinding.playerView.handleViewVisibility(false)
         mMainActivityBinding.loadingProgressBar.handleViewVisibility(false)
         mMainActivityBinding.viewPager2.handleViewVisibility(false)
-        supportFragmentManager.addFragment(ErrorFragment.newInstance(errorType), null)
+        supportFragmentManager.addFragment(
+            ErrorFragment.newInstance(errorType),
+            GoConstants.ERROR_FRAGMENT_TAG
+        )
     }
 
     private fun finishSetup(music: MutableList<Music>?) {

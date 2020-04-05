@@ -21,7 +21,6 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.animation.ArgbEvaluatorCompat
-import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
@@ -71,8 +70,8 @@ fun FragmentManager.addFragment(fragment: Fragment, tag: String?) {
     }
 }
 
-fun FragmentManager.isDetailsFragment(): Boolean {
-    val df = findFragmentByTag(GoConstants.DETAILS_FRAGMENT_TAG)
+fun FragmentManager.isFragment(fragmentTag: String): Boolean {
+    val df = findFragmentByTag(fragmentTag)
     return df != null && df.isVisible && df.isAdded
 }
 
