@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         )
 
     // Fragments
-    private var mActiveFragments: MutableList<String>? = null
+    private val mActiveFragments: List<Int> = goPreferences.activeFragments.toList()
     private var mArtistsFragment: ArtistsFoldersFragment? = null
     private var mAllMusicFragment: AllMusicFragment? = null
     private var mFoldersFragment: ArtistsFoldersFragment? = null
@@ -233,8 +233,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         initMediaButtons()
 
-        mActiveFragments = goPreferences.activeFragments?.toMutableList()
-
         sRestoreSettingsFragment =
             savedInstanceState?.getBoolean(GoConstants.RESTORE_SETTINGS_FRAGMENT)
                 ?: intent.getBooleanExtra(
@@ -268,7 +266,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     alpha(1.0F)
                 }
             }
-
         } else {
             notifyError(GoConstants.TAG_NO_MUSIC)
         }
@@ -284,7 +281,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun initViewPager() {
 
         val pagerAdapter = ScreenSlidePagerAdapter(this)
-        mMainActivityBinding.viewPager2.offscreenPageLimit = mActiveFragments?.size?.minus(1)!!
+        mMainActivityBinding.viewPager2.offscreenPageLimit = mActiveFragments.size.minus(1)
         mMainActivityBinding.viewPager2.adapter = pagerAdapter
 
         mPlayerControlsPanelBinding.tabLayout.apply {
@@ -292,10 +289,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             tabIconTint = ColorStateList.valueOf(mResolvedAlphaAccentColor)
 
             TabLayoutMediator(this, mMainActivityBinding.viewPager2) { tab, position ->
-                mActiveFragments?.get(position)?.toInt()?.let { currentFragmentIndex ->
-                    tab.setIcon(ThemeHelper.getTabIcon(currentFragmentIndex))
-                    initFragmentAtIndex(currentFragmentIndex)
-                }
+                val fragmentIndex = mActiveFragments[position]
+                tab.setIcon(ThemeHelper.getTabIcon(fragmentIndex))
+                initFragmentAtPosition(fragmentIndex)
             }.attach()
 
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -325,8 +321,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         )
     }
 
-    private fun initFragmentAtIndex(index: Int) {
-        when (index) {
+    private fun initFragmentAtPosition(fragmentIndex: Int) {
+        when (fragmentIndex) {
             0 -> if (mArtistsFragment == null) mArtistsFragment =
                 ArtistsFoldersFragment.newInstance(GoConstants.TAG_ARTISTS)
             1 -> if (mAllMusicFragment == null) mAllMusicFragment = AllMusicFragment.newInstance()
@@ -337,14 +333,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    private fun handleOnNavigationItemSelected(itemId: Int) = when (itemId) {
-        0 -> getFragmentForIndex(mActiveFragments?.get(0)?.toInt())
-        1 -> getFragmentForIndex(mActiveFragments?.get(1)?.toInt())
-        2 -> getFragmentForIndex(mActiveFragments?.get(2)?.toInt())
-        else -> getFragmentForIndex(mActiveFragments?.get(3)?.toInt())
-    }
-
-    private fun getFragmentForIndex(index: Int?) = when (index) {
+    private fun getFragmentForIndex(index: Int) = when (index) {
         0 -> mArtistsFragment
         1 -> mAllMusicFragment
         2 -> mFoldersFragment
@@ -1010,9 +999,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     // ViewPager2 adapter class
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-        override fun getItemCount(): Int = mActiveFragments?.size!!
+        override fun getItemCount(): Int = mActiveFragments.size
 
         override fun createFragment(position: Int): Fragment =
-            handleOnNavigationItemSelected(position)!!
+            getFragmentForIndex(position)!!
     }
 }

@@ -20,8 +20,7 @@ class GoPreferences(context: Context) {
     private val prefsEdgeToEdge = context.getString(R.string.edge_pref)
 
     private val prefsActiveFragments = context.getString(R.string.active_fragments_pref)
-    private val prefsActiveFragmentsDefault =
-        context.resources.getStringArray(R.array.activeFragmentsEntryArray).toMutableSet()
+    val prefsActiveFragmentsDefault = setOf(0, 1, 2, 3)
 
     private val prefsArtistsSorting = context.getString(R.string.artists_sorting_pref)
     private val prefsFoldersSorting = context.getString(R.string.folders_sorting_pref)
@@ -34,6 +33,9 @@ class GoPreferences(context: Context) {
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
     private val mGson = GsonBuilder().create()
+
+    // active fragments type
+    private val typeActiveFragments = object : TypeToken<Set<Int>>() {}.type
 
     // last played song is a SavedMusic
     private val typeLastPlayedSong = object : TypeToken<SavedMusic>() {}.type
@@ -74,9 +76,9 @@ class GoPreferences(context: Context) {
         ) && VersioningHelper.isOreoMR1()
         set(value) = mPrefs.edit().putBoolean(prefsEdgeToEdge, value).apply()
 
-    var activeFragments: Set<String>?
-        get() = mPrefs.getStringSet(prefsActiveFragments, prefsActiveFragmentsDefault)
-        set(value) = mPrefs.edit().putStringSet(prefsActiveFragments, value).apply()
+    var activeFragments: Set<Int>
+        get() = getObject(prefsActiveFragments, typeActiveFragments) ?: prefsActiveFragmentsDefault
+        set(value) = putObject(prefsActiveFragments, value)
 
     var artistsSorting
         get() = mPrefs.getInt(prefsArtistsSorting, GoConstants.DESCENDING_SORTING)

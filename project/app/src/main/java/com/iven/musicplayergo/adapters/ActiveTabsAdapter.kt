@@ -18,15 +18,13 @@ class ActiveTabsAdapter(
 ) :
     RecyclerView.Adapter<ActiveTabsAdapter.CheckableItemsHolder>() {
 
-    private val mItemsToRemove = mutableListOf<String>()
+    private val mAvailableItems = goPreferences.prefsActiveFragmentsDefault
+    private val mActiveItems = goPreferences.activeFragments.toMutableList()
 
-    private val mAvailableItems =
-        context.resources.getStringArray(R.array.activeFragmentsListArray).toMutableList()
-    private val mActiveItems = goPreferences.activeFragments?.toMutableList()
-
-    fun getUpdatedItems(): Set<String>? {
-        mActiveItems?.removeAll(mItemsToRemove.toSet())
-        return mActiveItems?.toSet()
+    fun getUpdatedItems(): Set<Int> {
+        // make sure to respect tabs order
+        mActiveItems.sortBy { it }
+        return mActiveItems.toSet()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckableItemsHolder {
@@ -60,7 +58,7 @@ class ActiveTabsAdapter(
 
                 if (isEnabled) {
                     manageIndicatorsStatus(
-                        mActiveItems?.contains(adapterPosition.toString())!!,
+                        mActiveItems.contains(adapterPosition),
                         tabImageButton,
                         indicator
                     )
@@ -83,15 +81,13 @@ class ActiveTabsAdapter(
                         indicator
                     )
 
-                    if (indicator.visibility != View.VISIBLE) mActiveItems?.remove(
-                        adapterPosition.toString()
-                    ) else mActiveItems?.add(
-                        adapterPosition.toString()
-                    )
-                    if (mActiveItems?.size!! < 2) {
+                    if (indicator.visibility != View.VISIBLE) mActiveItems.remove(
+                        adapterPosition
+                    ) else mActiveItems.add(adapterPosition)
+                    if (mActiveItems.size < 2) {
                         context.getString(R.string.active_fragments_pref_warning)
                             .toToast(context)
-                        mActiveItems.add(adapterPosition.toString())
+                        mActiveItems.add(adapterPosition)
                         manageIndicatorsStatus(true, tabImageButton, indicator)
                     }
                 }

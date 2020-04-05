@@ -13,18 +13,4 @@
         <item>@string/theme_pref_dark</item>
         <item>@string/theme_pref_auto</item>
     </string-array>
-
-    <string-array name="activeFragmentsListArray">
-        <item>@string/active_frag_artist</item>
-        <item>@string/active_frag_music</item>
-        <item>@string/active_frag_folders</item>
-        <item>@string/active_frag_settings</item>
-    </string-array>
-
-    <string-array name="activeFragmentsEntryArray">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
 </resources>

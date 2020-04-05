@@ -107,7 +107,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         }
 
         findPreference<Preference>(getString(R.string.active_fragments_pref))?.apply {
-            summary = goPreferences.activeFragments?.size.toString()
+            summary = goPreferences.activeFragments.size.toString()
             onPreferenceClickListener = this@PreferencesFragment
         }
     }
