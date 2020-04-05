@@ -337,6 +337,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
+    private fun handleOnNavigationItemSelected(itemId: Int) = when (itemId) {
+        0 -> getFragmentForIndex(mActiveFragments[0])
+        1 -> getFragmentForIndex(mActiveFragments[1])
+        2 -> getFragmentForIndex(mActiveFragments[2])
+        else -> getFragmentForIndex(mActiveFragments[3])
+    }
+
     private fun getFragmentForIndex(index: Int) = when (index) {
         0 -> mArtistsFragment
         1 -> mAllMusicFragment
@@ -1006,6 +1013,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         override fun getItemCount(): Int = mActiveFragments.size
 
         override fun createFragment(position: Int): Fragment =
-            getFragmentForIndex(position)!!
+            handleOnNavigationItemSelected(position)!!
     }
 }
