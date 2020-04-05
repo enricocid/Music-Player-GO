@@ -1,5 +1,6 @@
 - Active tabs management: fix incorrect tabs order (thanks Martin Teboul for reporting)
 - Fix ErrorFragment crash
+- Fix notification manager
 - Project improvements (thanks TacoTheDank)
 - Fix and improve English translations (thanks TacoTheDank)
 - Add Polish translations (thanks SpacingBat3)

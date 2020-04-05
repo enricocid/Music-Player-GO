@@ -1,5 +1,6 @@
 - Gestione tab attive: corretto ordine sbagliato (grazie Martin Teboul per aver riportato)
 - Corretto crash ErrorFragment
+- Corretto notification manager
 - Migliorie progetto (grazie TacoTheDank)
 - Corretto e migliorato traduzioni Inglese (grazie TacoTheDank)
 - Aggiunte traduzioni Polacco (grazie SpacingBat3)
