@@ -88,12 +88,12 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         val mediaPlayerHolder = playerService.mediaPlayerHolder
         mediaPlayerHolder.currentSong.first?.let { song ->
             mNotificationBuilder.setContentText(
-                    playerService.getString(
-                        R.string.artist_and_album,
-                        song.artist,
-                        song.album
-                    )
+                playerService.getString(
+                    R.string.artist_and_album,
+                    song.artist,
+                    song.album
                 )
+            )
                 .setContentTitle(
                     playerService.getString(
                         R.string.song_title_notification,
@@ -105,7 +105,8 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     }
 
     fun updatePlayPauseAction() {
-        mNotificationActions[2] = notificationAction(GoConstants.PLAY_PAUSE_ACTION)
+        if (::mNotificationBuilder.isInitialized) mNotificationActions[2] =
+            notificationAction(GoConstants.PLAY_PAUSE_ACTION)
     }
 
     fun updateRepeatIcon() {
