@@ -29,7 +29,7 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**IzzySoft**](https://github.com/IzzySoft) and [**Poussinou**](https://github.com/Poussinou) for setting up the **F-Droid** repository
 
-- [**TacoTheDank**](https://github.com/TacoTheDank) for upgrades to gradle and java 1.8
+- [**TacoTheDank**](https://github.com/TacoTheDank) for upgrades to gradle, java 1.8 and translations
 
 - [**Dankan1890**](https://github.com/dankan1890) for some fixes to bluetooth devices
 
@@ -38,6 +38,8 @@ If you think you should be listed, don't hesitate to notify me! :)
 - [**olayhemy**](https://github.com/olayhemy) for the FAQ
 
 - [**andOTP**](https://github.com/andOTP) for the "Get it on GitHub" download badge
+
+- **Martin Teboul** for having reported tabs [issue](https://github.com/enricocid/Music-Player-GO/issues/178) and for testing
 
 - [**abirke**](https://github.com/abirke) for having reported media button [issues](https://github.com/enricocid/Music-Player-GO/issues/137)
 
@@ -56,6 +58,8 @@ If you think you should be listed, don't hesitate to notify me! :)
 - [**Heimen Stoffels**](https://github.com/Vistaus) for **Dutch** translations
 
 - [**zmni**](https://github.com/zmni) for **Indonesian** translations
+
+- [**SpacingBat3**](https://github.com/SpacingBat3) for **Polish** translations
 
 - [**Malte Kiefer**](https://github.com/beli3ver) for **German** translations
 
