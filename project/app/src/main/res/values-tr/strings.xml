@@ -62,5 +62,5 @@
     <string name="sorting_pref">Sıralama</string>
     <string name="sorting_pref_track">Şarkı numarasına göre &#8595;</string>
     <string name="sorting_pref_track_inv">Şarkı numarasına göre &#8593;</string>
-    <string name="error_not_ready">Müzik listesi yüklenirken bir hata oluştu! :( Muhtemelen Android'in MediaStore veritabanı kayıtlarını yeniden oluşturmasını zorlayan sd karttan kaynaklanıyor. Çözüm: daha sonra tekrar dene :)</string>
+    <string name="error_not_ready">Müzik listesi yüklenirken bir hata oluştu! :( Muhtemelen Android\'in MediaStore veritabanı kayıtlarını yeniden oluşturmasını zorlayan sd karttan kaynaklanıyor. Çözüm: daha sonra tekrar dene :)</string>
 </resources>
