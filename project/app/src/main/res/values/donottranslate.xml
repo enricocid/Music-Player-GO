@@ -43,10 +43,6 @@
     <string name="accent_pref">accent_pref</string>
     <string name="edge_pref">edge_pref</string>
     <string name="active_fragments_pref">enabled_fragments_pref</string>
-    <string name="active_frag_artist">active_frag_artist</string>
-    <string name="active_frag_music">active_frag_music</string>
-    <string name="active_frag_folders">active_frag_folder</string>
-    <string name="active_frag_settings">active_frag_settings</string>
     <string name="precise_volume_pref">precise_volume_pref</string>
     <string name="focus_pref">focus_pref</string>
     <string name="headset_pref">headsets_pref</string>
