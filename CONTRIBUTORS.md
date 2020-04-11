@@ -72,3 +72,5 @@ If you think you should be listed, don't hesitate to notify me! :)
 - [**Glaucio Santos**](https://github.com/7glaucio) for **Brazilian Portuguese** translations
 
 - [**INeido**](https://github.com/Ineido) for **Hungarian** translations
+
+- [**Xose M**](https://github.com/xmgz) for **Galego (Galician)** translations
