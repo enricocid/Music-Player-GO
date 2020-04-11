@@ -14,6 +14,8 @@
 
 
 ### Repo and project UI, screenshots, etc.
+- [GIF optimization script](https://github.com/mathieu-aubin/tempgif) by [**Mathieu Aubin**](https://github.com/mathieu-aubin)
+
 - [**Source sans pro**](https://fonts.google.com/specimen/Source+Sans+Pro) font by Google Fonts
 
 - [**Screener - Better screenshots**](https://play.google.com/store/apps/details?id=de.toastcode.screener) app by [**Toastcode**](https://toastco.de/)
