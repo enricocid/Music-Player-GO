@@ -50,6 +50,15 @@ Yes, Music Player GO uses the built-in system (default) equalizer (if it exists)
 The equalizer can be found in the "now playing" dialog.
 
 
+### What is audio focus?
+
+Audio focus is an Android feature to moderate media app's playback and
+avoid multiple media app play at the same time.
+Every media app should request and receive the audio focus. This option is enabled by default in MPGO:
+1. It pauses if another app requests audio focus
+2. It lowers its volume when a new message is received.
+
+
 ### Does Music Player GO play music tracks from online sources?
 
 No, Music Player GO doesn't play music tracks from any online source.
