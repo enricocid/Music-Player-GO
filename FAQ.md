@@ -52,11 +52,10 @@ The equalizer can be found in the "now playing" dialog.
 
 ### What is audio focus?
 
-Audio focus is an Android feature to moderate media app's playback and
-avoid multiple media app play at the same time.
-Every media app should request and receive the audio focus. This option is enabled by default in MPGO:
-1. It pauses if another app requests audio focus
-2. It lowers its volume when a new message is received.
+Audio focus is an Android feature to moderate media app's playback and prevent multiple media app to play at the same time.
+Every media app should request and receive the audio focus. This option is enabled by default so that MPGO can:
+1. **pauses** if another app requests audio focus.
+2. **lowers** its volume when a new message is received.
 
 
 ### Does Music Player GO play music tracks from online sources?
