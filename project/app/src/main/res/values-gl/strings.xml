@@ -94,9 +94,9 @@
     <string name="precise_volume_pref_summary_off">Activar control preciso do volume</string>
 
     <!-- Preferences - Focus -->
-    <string name="focus_pref_title">Foco no audio</string>
-    <string name="focus_pref_summary_on">Desactivar foco no audio</string>
-    <string name="focus_pref_summary_off">Activar foco no audio</string>
+    <string name="focus_pref_title">Foco do Audio</string>
+    <string name="focus_pref_summary_on">Desactivar xestión do foco sobre o audio</string>
+    <string name="focus_pref_summary_off">Activar xestión do foco sobre o audio</string>
 
     <!-- Preferences - Headsets -->
     <string name="headset_pref_title">Conexión de auriculares</string>
