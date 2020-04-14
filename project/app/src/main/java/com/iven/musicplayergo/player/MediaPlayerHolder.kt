@@ -186,7 +186,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private fun updateMediaSessionMetaData() {
         val mediaMediaPlayerCompat = MediaMetadataCompat.Builder().apply {
-            putLong(MediaMetadataCompat.METADATA_KEY_DURATION, currentSong.first?.duration!!)
+            if (VersioningHelper.isQ()) putLong(MediaMetadataCompat.METADATA_KEY_DURATION, currentSong.first?.duration!!)
+            putString(MediaMetadataCompat.METADATA_KEY_ARTIST, currentSong.first?.artist)
+            putString(MediaMetadataCompat.METADATA_KEY_TITLE, currentSong.first?.title)
+            putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, currentSong.first?.album)
         }
         playerService.getMediaSession().setMetadata(mediaMediaPlayerCompat.build())
     }
@@ -455,7 +458,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         if (isQueue) mediaPlayerInterface.onQueueStartedOrEnded(isQueueStarted)
 
-        if (VersioningHelper.isQ()) updateMediaSessionMetaData()
+        updateMediaSessionMetaData()
 
         if (mExecutor == null) startUpdatingCallbackWithPosition()
 
