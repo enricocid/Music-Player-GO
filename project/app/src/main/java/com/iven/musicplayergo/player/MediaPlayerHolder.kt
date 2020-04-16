@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Context.AUDIO_SERVICE
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.BitmapFactory
 import android.media.AudioAttributes
 import android.media.AudioFocusRequest
 import android.media.AudioManager
@@ -186,7 +187,18 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private fun updateMediaSessionMetaData() {
         val mediaMediaPlayerCompat = MediaMetadataCompat.Builder().apply {
-            putLong(MediaMetadataCompat.METADATA_KEY_DURATION, currentSong.first?.duration!!)
+            if (VersioningHelper.isQ()) putLong(MediaMetadataCompat.METADATA_KEY_DURATION, currentSong.first?.duration!!)
+            putString(MediaMetadataCompat.METADATA_KEY_ARTIST, currentSong.first?.artist)
+            putString(MediaMetadataCompat.METADATA_KEY_AUTHOR, currentSong.first?.artist)
+            putString(MediaMetadataCompat.METADATA_KEY_COMPOSER, currentSong.first?.artist)
+            putString(MediaMetadataCompat.METADATA_KEY_TITLE, currentSong.first?.title)
+            putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, currentSong.first?.title)
+            putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ARTIST, currentSong.first?.album)
+            putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, currentSong.first?.album)
+            putString(MediaMetadataCompat.METADATA_KEY_ALBUM, currentSong.first?.album)
+            BitmapFactory.decodeResource(playerService.resources, R.drawable.ic_music_note)?.let { bmp ->
+                putBitmap(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON, bmp)
+            }
         }
         playerService.getMediaSession().setMetadata(mediaMediaPlayerCompat.build())
     }
@@ -455,7 +467,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         if (isQueue) mediaPlayerInterface.onQueueStartedOrEnded(isQueueStarted)
 
-        if (VersioningHelper.isQ()) updateMediaSessionMetaData()
+        updateMediaSessionMetaData()
 
         if (mExecutor == null) startUpdatingCallbackWithPosition()
 
