@@ -71,7 +71,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.fragment:fragment-ktx:1.2.4'
     implementation 'androidx.media:media:1.1.0'
-    implementation 'androidx.preference:preference-ktx:1.1.0'
+    implementation 'androidx.preference:preference-ktx:1.1.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     //https://github.com/material-components/material-components-android/releases
