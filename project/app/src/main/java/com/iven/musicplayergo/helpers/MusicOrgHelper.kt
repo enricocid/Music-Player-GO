@@ -82,8 +82,9 @@ object MusicOrgHelper {
     @JvmStatic
     fun saveLatestSong(latestSong: Music?, playerPosition: Int, isPlayingFromFolder: Boolean) {
         latestSong?.let { musicToSave ->
-            goPreferences.latestPlayedSong =
-                musicToSave.toSavedMusic(playerPosition, isPlayingFromFolder)
+            val toSave = musicToSave.toSavedMusic(playerPosition, isPlayingFromFolder)
+            if (goPreferences.latestPlayedSong != toSave) goPreferences.latestPlayedSong =
+                toSave
         }
     }
 

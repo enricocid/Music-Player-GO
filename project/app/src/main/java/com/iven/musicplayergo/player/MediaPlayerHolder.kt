@@ -69,6 +69,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private lateinit var mAudioFocusRequestOreo: AudioFocusRequest
     private val mHandler = Handler()
 
+    private val sFocusEnabled get() = goPreferences.isFocusEnabled
+    private val sFocusGranted get() = mCurrentAudioFocusState == AUDIO_FOCUSED
     private var mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
     private var sPlayOnFocusGain = false
 
@@ -187,7 +189,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private fun updateMediaSessionMetaData() {
         val mediaMediaPlayerCompat = MediaMetadataCompat.Builder().apply {
-            if (VersioningHelper.isQ()) putLong(MediaMetadataCompat.METADATA_KEY_DURATION, currentSong.first?.duration!!)
+            if (VersioningHelper.isQ()) putLong(
+                MediaMetadataCompat.METADATA_KEY_DURATION,
+                currentSong.first?.duration!!
+            )
             putString(MediaMetadataCompat.METADATA_KEY_ARTIST, currentSong.first?.artist)
             putString(MediaMetadataCompat.METADATA_KEY_AUTHOR, currentSong.first?.artist)
             putString(MediaMetadataCompat.METADATA_KEY_COMPOSER, currentSong.first?.artist)
@@ -196,9 +201,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ARTIST, currentSong.first?.album)
             putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, currentSong.first?.album)
             putString(MediaMetadataCompat.METADATA_KEY_ALBUM, currentSong.first?.album)
-            BitmapFactory.decodeResource(playerService.resources, R.drawable.ic_music_note)?.let { bmp ->
-                putBitmap(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON, bmp)
-            }
+            BitmapFactory.decodeResource(playerService.resources, R.drawable.ic_music_note)
+                ?.let { bmp ->
+                    putBitmap(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON, bmp)
+                }
         }
         playerService.getMediaSession().setMetadata(mediaMediaPlayerCompat.build())
     }
@@ -240,6 +246,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                             .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                             .build()
                     })
+                    setAcceptsDelayedFocusGain(true)
                     setOnAudioFocusChangeListener(mOnAudioFocusChangeListener, mHandler)
                     build()
                 }
@@ -258,11 +265,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             VersioningHelper.isOreo() -> if (::mAudioFocusRequestOreo.isInitialized) mAudioManager.abandonAudioFocusRequest(
                 mAudioFocusRequestOreo
             )
-            else -> {
-                mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener)
-                mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
-            }
+            else -> mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener)
         }
+        mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
     }
 
     private fun updatePlaybackStatus(updateUI: Boolean) {
@@ -278,7 +283,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun resumeMediaPlayer() {
         if (!isPlaying) {
-            if (isMediaPlayer) mediaPlayer.start()
+            if (isMediaPlayer) {
+                if (sFocusEnabled && !sFocusGranted) tryToGetAudioFocus()
+                mediaPlayer.start()
+            }
             state = if (isSongRestoredFromPrefs) {
                 isSongRestoredFromPrefs = false
                 GoConstants.PLAYING
@@ -304,6 +312,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             updatePlayPauseAction()
             updateNotification()
         }
+        mediaPlayerInterface.onFocusLoss()
     }
 
     fun repeatSong() {
@@ -438,7 +447,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
                 mMusicNotificationManager = playerService.musicNotificationManager
 
-                if (goPreferences.isFocusEnabled) tryToGetAudioFocus()
+                if (sFocusEnabled && !sFocusGranted && isPlay) tryToGetAudioFocus()
                 if (goPreferences.isPreciseVolumeEnabled) setPreciseVolume(currentVolumeInPercent)
             }
 
@@ -492,7 +501,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 mediaPlayer.audioSessionId
             )
             mediaPlayer.release()
-            if (goPreferences.isFocusEnabled) giveUpAudioFocus()
+            if (sFocusEnabled && sFocusGranted) giveUpAudioFocus()
             stopUpdatingCallbackWithPosition()
         }
         unregisterActionsReceiver()

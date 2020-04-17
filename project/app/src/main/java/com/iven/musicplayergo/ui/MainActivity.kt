@@ -181,7 +181,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     // Pause SeekBar callback
     override fun onPause() {
         super.onPause()
-        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) mMediaPlayerHolder.onPauseSeekBarCallback()
+        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) {
+            saveSongToPref()
+            mMediaPlayerHolder.onPauseSeekBarCallback()
+        }
     }
 
     // Manage request permission result
@@ -593,7 +596,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun saveSongToPref() {
-        if (::mMediaPlayerHolder.isInitialized && !mMediaPlayerHolder.isPlaying) mMediaPlayerHolder.apply {
+        if (::mMediaPlayerHolder.isInitialized && !mMediaPlayerHolder.isPlaying || mMediaPlayerHolder.state == GoConstants.PAUSED) mMediaPlayerHolder.apply {
             MusicOrgHelper.saveLatestSong(currentSong.first, playerPosition, isPlayingFromFolder)
         }
     }
@@ -1005,6 +1008,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     else -> mResolvedDisabledIconsColor
                 }
             )
+        }
+
+        override fun onFocusLoss() {
+            saveSongToPref()
         }
     }
 

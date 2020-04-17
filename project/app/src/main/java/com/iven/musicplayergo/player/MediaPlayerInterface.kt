@@ -9,4 +9,5 @@ interface MediaPlayerInterface {
     fun onQueueEnabled()
     fun onQueueCleared()
     fun onQueueStartedOrEnded(started: Boolean)
+    fun onFocusLoss()
 }
