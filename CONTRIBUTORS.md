@@ -23,6 +23,8 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes](https://github.com/enricocid/Music-Player-GO/pull/121)
 
+- [**Drhaal**](https://github.com/Drhaal) for Always On Display (AOD) [fixes](https://github.com/enricocid/Music-Player-GO/pull/186)
+
 - [**seventhsonmizo**](https://github.com/seventhsonmizo) for Android Q [issue](https://github.com/enricocid/Music-Player-GO/issues/110) report and debugging
 
 - [**Jnss98b**](https://github.com/Jnss98b) for helping me to implement [edge-to-edge](https://github.com/enricocid/Music-Player-GO/issues/86) and for having reported/debugged this [issue](https://github.com/enricocid/VectorifyDaHome/issues/17)
@@ -76,3 +78,5 @@ If you think you should be listed, don't hesitate to notify me! :)
 - [**INeido**](https://github.com/Ineido) for **Hungarian** translations
 
 - [**Xose M**](https://github.com/xmgz) for **Galego (Galician)** translations
+
+- [**1t3x**](https://github.com/1t3x) for **Romanian** translations
