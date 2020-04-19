@@ -1,0 +1,6 @@
+- Memperbaiki AOD (Always On Display) tidak menampilkan informasi (terima kasih kepada Drhaal)
+- Penyempurnaan fokus audio
+- Penyempurnaan mekanisme penyimpanan laju lagu yang terakhir diputar
+- Menambahkan terjemahan bahasa Rumania (terima kasih kepada 1t3x)
+- Menambahkan terjemahan bahasa Galego (Galisia) (terima kasih kepada Xose M)
+- Peningkatan pustaka dan dependensi
