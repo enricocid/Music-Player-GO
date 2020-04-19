@@ -1,0 +1,6 @@
+- Corretto AOD (Always On Display)che non mostrava informazioni (grazie a Drhaal)
+- Migliorie al focus audio
+- Migliorie al meccanismo di salvataggio dell'ultima canzone riprodotta
+- Aggiunte traduzioni Rumeno (grazie a 1t3x)
+- Aggiunte traduzioni Galiziano (Galego) (grazie a Xose M)
+- Aggiornate librerie e dipendenze
