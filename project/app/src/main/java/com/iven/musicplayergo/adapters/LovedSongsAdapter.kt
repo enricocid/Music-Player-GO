@@ -86,7 +86,7 @@ class LovedSongsAdapter(
                                     album,
                                     musicRepository.deviceAlbumsByArtist
                                 ),
-                                lovedSong.isFromFolder
+                                lovedSong.launchedBy
                             )
                         }
                 }

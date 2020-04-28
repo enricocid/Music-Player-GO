@@ -5,6 +5,7 @@ import android.content.ContentResolver
 import android.content.res.Resources
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
+import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.toFormattedYear
 import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.goPreferences
@@ -80,9 +81,9 @@ object MusicOrgHelper {
         } ?: deviceSongs.random()
 
     @JvmStatic
-    fun saveLatestSong(latestSong: Music?, playerPosition: Int, isPlayingFromFolder: Boolean) {
+    fun saveLatestSong(latestSong: Music?, playerPosition: Int, launchedBy: LaunchedBy) {
         latestSong?.let { musicToSave ->
-            val toSave = musicToSave.toSavedMusic(playerPosition, isPlayingFromFolder)
+            val toSave = musicToSave.toSavedMusic(playerPosition, launchedBy)
             if (goPreferences.latestPlayedSong != toSave) goPreferences.latestPlayedSong =
                 toSave
         }

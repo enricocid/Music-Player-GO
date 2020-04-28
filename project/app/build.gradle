@@ -93,4 +93,5 @@ dependencies {
 
     //https://github.com/beworker/edge-to-edge/blob/master/CHANGELOG.md
     implementation 'de.halfbit:edge-to-edge:0.8'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 }

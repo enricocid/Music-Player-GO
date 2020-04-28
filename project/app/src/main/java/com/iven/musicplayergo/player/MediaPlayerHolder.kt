@@ -18,6 +18,7 @@ import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat.*
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.toContentUri
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
@@ -103,8 +104,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     // First: current song, second: isFromQueue
     lateinit var currentSong: Pair<Music?, Boolean>
-    var isPlayingFromFolder = false
-    private var isPlayingFromFolderPreQueue = false
+    var isPlayingFromFolder: LaunchedBy = LaunchedBy.ArtistView
+    private var isPlayingFromFolderPreQueue: LaunchedBy = LaunchedBy.ArtistView
     private var mPlayingAlbumSongs: List<Music>? = null
 
     var currentVolumeInPercent = goPreferences.latestVolume
@@ -180,7 +181,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         song: Music?,
         songs: List<Music>?,
         isFromQueue: Boolean,
-        isFolderAlbum: Boolean
+        isFolderAlbum: LaunchedBy
     ) {
         isPlayingFromFolder = isFolderAlbum
         currentSong = Pair(song, isFromQueue)
@@ -193,6 +194,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 MediaMetadataCompat.METADATA_KEY_DURATION,
                 currentSong.first?.duration!!
             )
+
             putString(MediaMetadataCompat.METADATA_KEY_ARTIST, currentSong.first?.artist)
             putString(MediaMetadataCompat.METADATA_KEY_AUTHOR, currentSong.first?.artist)
             putString(MediaMetadataCompat.METADATA_KEY_COMPOSER, currentSong.first?.artist)
@@ -331,7 +333,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         when {
             isQueueStarted -> currentSong = Pair(getSkipSong(isNext), true)
             else -> {
-                setCurrentSong(queueSongs[0], queueSongs, isFromQueue = true, isFolderAlbum = false)
+                setCurrentSong(queueSongs[0], queueSongs, isFromQueue = true, isFolderAlbum = LaunchedBy.ArtistView)
                 isQueueStarted = true
             }
         }

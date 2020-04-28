@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.extensions.toToast
@@ -78,6 +79,25 @@ object ListsHelper {
     }
 
     @JvmStatic
+    fun getSortedListWithNull(
+        id: Int,
+        list: MutableList<String?>?
+    ): MutableList<String>? {
+        val withoutNulls = list?.map {
+            transformNullToEmpty(it)
+        }?.toMutableList()
+
+        return getSortedList(id,withoutNulls)
+    }
+
+    private fun transformNullToEmpty(toTrans: String?): String{
+        if (toTrans == null){
+            return ""
+        }
+        return toTrans
+    }
+
+    @JvmStatic
     fun getSelectedSorting(sorting: Int, menu: Menu): MenuItem = when (sorting) {
         GoConstants.DEFAULT_SORTING -> menu.findItem(R.id.default_sorting)
         GoConstants.ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
@@ -132,12 +152,12 @@ object ListsHelper {
         context: Context,
         song: Music?,
         playerPosition: Int,
-        isPlayingFromFolder: Boolean
+        launchedBy: LaunchedBy
     ) {
         val lovedSongs =
             if (goPreferences.lovedSongs != null) goPreferences.lovedSongs else mutableListOf()
 
-        val songToSave = song?.toSavedMusic(playerPosition, isPlayingFromFolder)
+        val songToSave = song?.toSavedMusic(playerPosition, launchedBy)
 
         songToSave?.let { savedSong ->
             if (!lovedSongs?.contains(savedSong)!!) {

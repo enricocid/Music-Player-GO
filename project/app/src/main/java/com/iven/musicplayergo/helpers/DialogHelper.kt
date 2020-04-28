@@ -14,6 +14,7 @@ import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.adapters.QueueAdapter
+import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
@@ -248,7 +249,7 @@ object DialogHelper {
         context: Context,
         itemView: View?,
         song: Music?,
-        isFolder: Boolean,
+        launchedBy: LaunchedBy,
         uiControlInterface: UIControlInterface
     ) {
         itemView?.let {
@@ -261,7 +262,7 @@ object DialogHelper {
                                 context,
                                 song,
                                 0,
-                                isFolder
+                                launchedBy
                             )
                             uiControlInterface.onLovedSongsUpdate(false)
                         }

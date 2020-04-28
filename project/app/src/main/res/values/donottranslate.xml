@@ -51,6 +51,7 @@
     <!-- Other preferences keys -->
     <string name="artists_sorting_pref">artists_sorting_pref</string>
     <string name="folders_sorting_pref">folders_sorting_pref</string>
+    <string name="albums_sorting_pref">albums_sorting_pref</string>
     <string name="latest_played_song_pref">latest_song_pref</string>
     <string name="loved_songs_pref">saved_songs_pref</string>
     <string name="latest_volume_pref">latest_volume_pref</string>

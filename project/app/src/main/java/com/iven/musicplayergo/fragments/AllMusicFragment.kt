@@ -12,6 +12,7 @@ import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentAllMusicBinding
+import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
@@ -94,7 +95,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                                 item.album,
                                 musicRepository.deviceAlbumsByArtist
                             ),
-                            false
+                            LaunchedBy.ArtistView
                         )
                     }
 
@@ -103,7 +104,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                             requireContext(),
                             findViewHolderForAdapterPosition(index)?.itemView,
                             item,
-                            false,
+                            LaunchedBy.ArtistView,
                             mUIControlInterface
                         )
                     }
@@ -121,7 +122,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
             menu.apply {
                 findItem(R.id.action_shuffle_am).setOnMenuItemClickListener {
-                    mUIControlInterface.onShuffleSongs(mAllMusic, false)
+                    mUIControlInterface.onShuffleSongs(mAllMusic, LaunchedBy.ArtistView)
                     return@setOnMenuItemClickListener true
                 }
                 val searchView = findItem(R.id.action_search).actionView as SearchView

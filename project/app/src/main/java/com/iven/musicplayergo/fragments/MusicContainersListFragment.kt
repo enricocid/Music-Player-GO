@@ -17,7 +17,8 @@ import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.databinding.FragmentArtistFolderBinding
+import com.iven.musicplayergo.databinding.MusicContainerListBinding
+import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.extensions.setTitleColor
@@ -29,19 +30,20 @@ import com.iven.musicplayergo.ui.GenericViewHolder
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerView
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
- * Use the [ArtistsFoldersFragment.newInstance] factory method to
+ * Use the [MusicContainersListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
+class MusicContainersListFragment : Fragment(R.layout.music_container_list),
     SearchView.OnQueryTextListener {
 
-    private lateinit var mArtistFolderFragmentBinding: FragmentArtistFolderBinding
+    private lateinit var mMusicContainerListBinding: MusicContainerListBinding
     private lateinit var mMusicRepository: MusicRepository
 
-    private var sIsFoldersFragment = false
+    private var launchedBy: LaunchedBy = LaunchedBy.ArtistView
 
     private var mList: MutableList<String>? = null
 
@@ -59,8 +61,8 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        arguments?.getString(TAG_SELECTED_FRAGMENT)?.let { isFoldersFragment ->
-            sIsFoldersFragment = isFoldersFragment != GoConstants.TAG_ARTISTS
+        arguments?.getInt(LAUNCHED_BY)?.let {
+            launchedBy = LaunchedBy.values()[it]
         }
 
         // This makes sure that the container activity has implemented
@@ -72,32 +74,22 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
         }
     }
 
-    private fun getSortedList(): MutableList<String>? {
-        val selectedList =
-            if (sIsFoldersFragment) mMusicRepository.deviceMusicByFolder?.keys else mMusicRepository.deviceAlbumsByArtist?.keys
-        return ListsHelper.getSortedList(
-            mSorting,
-            selectedList?.toMutableList()
-        )
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mArtistFolderFragmentBinding = FragmentArtistFolderBinding.bind(view)
+        mMusicContainerListBinding = MusicContainerListBinding.bind(view)
 
-        mSorting =
-            if (sIsFoldersFragment) goPreferences.foldersSorting else goPreferences.artistsSorting
+        mSorting = getSortingMethodFromPrefs()
 
         mMusicRepository = MusicRepository.getInstance()
 
         mList =
-            getSortedList()?.filter { !goPreferences.filters?.contains(it)!! }?.toMutableList()
+            getSortedItemKeys()?.filter { !goPreferences.filters?.contains(it)!! }?.toMutableList()
         setListDataSource(mList)
 
         sLandscape = ThemeHelper.isDeviceLand(requireContext().resources)
 
-        mArtistFolderFragmentBinding.artistsFoldersRv.apply {
+        mMusicContainerListBinding.artistsFoldersRv.apply {
 
             // setup{} is an extension method on RecyclerView
             setup {
@@ -117,17 +109,14 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
                     onBind(::GenericViewHolder) { _, item ->
                         // GenericViewHolder is `this` here
                         title.text = item
-                        subtitle.text = if (sIsFoldersFragment) getString(
-                            R.string.folder_info,
-                            mMusicRepository.deviceMusicByFolder?.getValue(item)?.size
-                        ) else getArtistSubtitle(item)
+                        subtitle.text = getItemsSubtitle(item)
                     }
 
                     onClick {
                         if (::mUIControlInterface.isInitialized)
                             mUIControlInterface.onArtistOrFolderSelected(
                                 item,
-                                sIsFoldersFragment
+                                launchedBy
                             )
                     }
 
@@ -146,14 +135,14 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
 
         setupIndicatorFastScrollerView()
 
-        mArtistFolderFragmentBinding.searchToolbar.apply {
+        mMusicContainerListBinding.searchToolbar.apply {
 
             inflateMenu(R.menu.menu_search)
 
             overflowIcon =
                 AppCompatResources.getDrawable(requireContext(), R.drawable.ic_sort)
 
-            title = getString(if (sIsFoldersFragment) R.string.folders else R.string.artists)
+            title = getFragmentTitle()
 
             setNavigationOnClickListener {
                 mUIControlInterface.onCloseActivity()
@@ -168,11 +157,11 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
                 val searchView = findItem(R.id.action_search).actionView as SearchView
 
                 searchView.apply {
-                    setOnQueryTextListener(this@ArtistsFoldersFragment)
+                    setOnQueryTextListener(this@MusicContainersListFragment)
                     setOnQueryTextFocusChangeListener { _, hasFocus ->
                         if (sIsFastScrollerVisible) {
-                            mArtistFolderFragmentBinding.fastscroller.handleViewVisibility(!hasFocus)
-                            mArtistFolderFragmentBinding.fastscrollerThumb.handleViewVisibility(
+                            mMusicContainerListBinding.fastscroller.handleViewVisibility(!hasFocus)
+                            mMusicContainerListBinding.fastscrollerThumb.handleViewVisibility(
                                 !hasFocus
                             )
                             setupArtistsRecyclerViewPadding(hasFocus)
@@ -184,6 +173,65 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
                 setMenuOnItemClickListener(requireContext(), this)
             }
         }
+    }
+
+    private fun getItemsSubtitle(item: String): String? {
+        return when (launchedBy) {
+            LaunchedBy.ArtistView ->
+                getArtistSubtitle(item)
+            LaunchedBy.FolderView ->
+                getString(
+                    R.string.folder_info,
+                    mMusicRepository.deviceMusicByFolder?.getValue(item)?.size
+                )
+            else ->
+                mMusicRepository.deviceSongsByAlbum?.get(item)?.first()?.artist
+
+        }
+    }
+
+    private fun getSortedItemKeys(): MutableList<String>? {
+        return when (launchedBy) {
+            LaunchedBy.ArtistView ->
+                ListsHelper.getSortedList(
+                    mSorting,
+                    mMusicRepository.deviceAlbumsByArtist?.keys?.toMutableList()
+                )
+            LaunchedBy.FolderView ->
+                ListsHelper.getSortedList(
+                    mSorting,
+                    mMusicRepository.deviceMusicByFolder?.keys?.toMutableList()
+                )
+
+            else ->
+                ListsHelper.getSortedListWithNull(
+                    mSorting,
+                    mMusicRepository.deviceSongsByAlbum?.keys?.toMutableList()
+                )
+        }
+    }
+
+    private fun getSortingMethodFromPrefs(): Int {
+        return when (launchedBy) {
+            LaunchedBy.ArtistView ->
+                goPreferences.artistsSorting
+            LaunchedBy.FolderView ->
+                goPreferences.foldersSorting
+            else ->
+                goPreferences.albumsSorting
+        }
+    }
+
+    private fun getFragmentTitle(): String {
+        val stringId = when (launchedBy) {
+            LaunchedBy.ArtistView ->
+                R.string.artists
+            LaunchedBy.FolderView ->
+                R.string.folders
+            else ->
+                R.string.albums
+        }
+        return getString(stringId)
     }
 
     private fun setListDataSource(selectedList: List<String>?) {
@@ -210,17 +258,16 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
         mMusicRepository.deviceSongsByArtist?.getValue(item)?.size
     )
 
-    @SuppressLint("DefaultLocale")
     private fun setupIndicatorFastScrollerView() {
 
         // Set indexes if artists rv is scrollable
-        mArtistFolderFragmentBinding.artistsFoldersRv.afterMeasured {
+        mMusicContainerListBinding.artistsFoldersRv.afterMeasured {
 
             sIsFastScroller = computeVerticalScrollRange() > height
 
             if (sIsFastScroller) {
 
-                mArtistFolderFragmentBinding.fastscroller.setupWithRecyclerView(
+                mMusicContainerListBinding.fastscroller.setupWithRecyclerView(
                     this,
                     { position ->
                         val item = mList?.get(position) // Get your model object
@@ -230,7 +277,7 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
                             item?.substring(
                                 0,
                                 1
-                            )?.toUpperCase()!! // Grab the first letter and capitalize it
+                            )?.toUpperCase(Locale.ROOT)!! // Grab the first letter and capitalize it
                         ) // Return a text tab_indicator
                     }, showIndicator = { _, indicatorPosition, _ ->
                         // Hide every other indicator
@@ -238,12 +285,12 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
                     }
                 )
 
-                mArtistFolderFragmentBinding.fastscrollerThumb.setupWithFastScroller(
-                    mArtistFolderFragmentBinding.fastscroller
+                mMusicContainerListBinding.fastscrollerThumb.setupWithFastScroller(
+                    mMusicContainerListBinding.fastscroller
                 )
 
-                mArtistFolderFragmentBinding.fastscroller.useDefaultScroller = false
-                mArtistFolderFragmentBinding.fastscroller.itemIndicatorSelectedCallbacks += object :
+                mMusicContainerListBinding.fastscroller.useDefaultScroller = false
+                mMusicContainerListBinding.fastscroller.itemIndicatorSelectedCallbacks += object :
                     FastScrollerView.ItemIndicatorSelectedCallback {
                     override fun onItemIndicatorSelected(
                         indicator: FastScrollItemIndicator,
@@ -265,22 +312,22 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
     private fun setupArtistsRecyclerViewPadding(forceNoPadding: Boolean) {
         val rvPaddingEnd =
             if (sIsFastScrollerVisible && !forceNoPadding) resources.getDimensionPixelSize(R.dimen.fast_scroller_view_dim) else 0
-        mArtistFolderFragmentBinding.artistsFoldersRv.setPadding(0, 0, rvPaddingEnd, 0)
+        mMusicContainerListBinding.artistsFoldersRv.setPadding(0, 0, rvPaddingEnd, 0)
     }
 
     private fun handleIndicatorFastScrollerViewVisibility() {
-        mArtistFolderFragmentBinding.fastscroller.handleViewVisibility(sIsFastScrollerVisible)
-        mArtistFolderFragmentBinding.fastscrollerThumb.handleViewVisibility(sIsFastScrollerVisible)
+        mMusicContainerListBinding.fastscroller.handleViewVisibility(sIsFastScrollerVisible)
+        mMusicContainerListBinding.fastscrollerThumb.handleViewVisibility(sIsFastScrollerVisible)
     }
 
     private fun setMenuOnItemClickListener(context: Context, menu: Menu) {
-        mArtistFolderFragmentBinding.searchToolbar.setOnMenuItemClickListener {
+        mMusicContainerListBinding.searchToolbar.setOnMenuItemClickListener {
 
             if (it.itemId != R.id.action_search) {
 
                 mSorting = it.order
 
-                mList = getSortedList()
+                mList = getSortedItemKeys()
 
                 handleIndicatorFastScrollerViewVisibility()
 
@@ -299,17 +346,27 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
                     setTitleColor(ThemeHelper.resolveThemeAccent(context))
                 }
 
-                if (sIsFoldersFragment) goPreferences.foldersSorting =
-                    mSorting else goPreferences.artistsSorting = mSorting
+                saveSortingMethodToPrefs(mSorting)
             }
 
             return@setOnMenuItemClickListener true
         }
     }
 
+    private fun saveSortingMethodToPrefs(sortingMethod: Int) {
+        when (launchedBy) {
+            LaunchedBy.ArtistView ->
+                goPreferences.artistsSorting = sortingMethod
+            LaunchedBy.FolderView ->
+                goPreferences.foldersSorting = sortingMethod
+            else ->
+                goPreferences.albumsSorting = sortingMethod
+        }
+    }
+
     companion object {
 
-        private const val TAG_SELECTED_FRAGMENT = "SELECTED_FRAGMENT"
+        private const val LAUNCHED_BY = "SELECTED_FRAGMENT"
 
         /**
          * Use this factory method to create a new instance of
@@ -318,9 +375,9 @@ class ArtistsFoldersFragment : Fragment(R.layout.fragment_artist_folder),
          * @return A new instance of fragment ArtistsFoldersFragment.
          */
         @JvmStatic
-        fun newInstance(tag: String) = ArtistsFoldersFragment().apply {
+        fun newInstance(launchedBy: LaunchedBy) = MusicContainersListFragment().apply {
             arguments = Bundle().apply {
-                putString(TAG_SELECTED_FRAGMENT, tag)
+                putInt(LAUNCHED_BY, launchedBy.ordinal)
             }
         }
     }
