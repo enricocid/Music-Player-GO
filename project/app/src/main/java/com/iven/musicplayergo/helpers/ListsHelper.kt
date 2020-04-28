@@ -6,9 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.extensions.toFormattedDuration
-import com.iven.musicplayergo.extensions.toSavedMusic
-import com.iven.musicplayergo.extensions.toToast
+import com.iven.musicplayergo.extensions.toSavedMusicWithoutPosition
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
 import java.util.*
@@ -128,7 +126,7 @@ object ListsHelper {
     }
 
     @JvmStatic
-    fun addToLovedSongs(
+    fun addOrRemoveFromLovedSongs(
         context: Context,
         song: Music?,
         playerPosition: Int,
@@ -137,23 +135,19 @@ object ListsHelper {
         val lovedSongs =
             if (goPreferences.lovedSongs != null) goPreferences.lovedSongs else mutableListOf()
 
-        val songToSave = song?.toSavedMusic(playerPosition, isPlayingFromFolder)
+        val songToSave = song?.toSavedMusicWithoutPosition(isPlayingFromFolder)
 
         songToSave?.let { savedSong ->
-            if (!lovedSongs?.contains(savedSong)!!) {
+            if (lovedSongs?.contains(savedSong)!!) {
+                lovedSongs.remove(
+                    savedSong
+                )
+            }else {
                 lovedSongs.add(
                     savedSong
                 )
-                context.getString(
-                    R.string.loved_song_added,
-                    savedSong.title,
-                    savedSong.startFrom.toLong().toFormattedDuration(
-                        isAlbum = false,
-                        isSeekBar = false
-                    )
-                ).toToast(context)
-                goPreferences.lovedSongs = lovedSongs
             }
+            goPreferences.lovedSongs = lovedSongs
         }
     }
 }

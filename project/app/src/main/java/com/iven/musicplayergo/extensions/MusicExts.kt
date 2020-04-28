@@ -93,3 +93,15 @@ fun Music.toSavedMusic(playerPosition: Int, isPlayingFromFolder: Boolean) =
         album,
         isPlayingFromFolder
     )
+
+fun Music.toSavedMusicWithoutPosition(isPlayingFromFolder: Boolean) =
+    SavedMusic(
+        artist,
+        title,
+        displayName,
+        year,
+        0,
+        duration,
+        album,
+        isPlayingFromFolder
+    )

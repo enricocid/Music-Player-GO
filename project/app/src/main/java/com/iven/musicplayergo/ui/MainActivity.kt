@@ -548,7 +548,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mNowPlayingControlsBinding.npRepeat.setOnClickListener { setRepeat() }
 
                 mNowPlayingExtendedControlsBinding.npLove.setOnClickListener {
-                    ListsHelper.addToLovedSongs(
+                    ListsHelper.addOrRemoveFromLovedSongs(
                         this@MainActivity,
                         mMediaPlayerHolder.currentSong.first,
                         mMediaPlayerHolder.playerPosition,
@@ -591,8 +591,33 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         }
                     }
                 }
+                updateNowPlayingLovedIcon(context)
             }
         }
+    }
+
+    private fun updateNowPlayingLovedIcon(context: Context) {
+        if (this::mMediaPlayerHolder.isInitialized && this::mNowPlayingExtendedControlsBinding.isInitialized) {
+            mMediaPlayerHolder.currentSong.first.let {
+                val isLoved = isInLovedSongs(it!!)
+                val lovedSongsButtonColor = if (isLoved)
+                    R.color.red.decodeColor(context) else mResolvedDisabledIconsColor
+                ThemeHelper.updateIconTint(
+                    mNowPlayingExtendedControlsBinding.npLove,
+                    lovedSongsButtonColor
+                )
+            }
+        }
+    }
+
+    private fun isInLovedSongs(song: Music): Boolean {
+        val lovedSongs = goPreferences.lovedSongs
+        if (lovedSongs != null) {
+            val convertedSong =
+                song.toSavedMusicWithoutPosition(mMediaPlayerHolder.isPlayingFromFolder)
+            return lovedSongs.contains(convertedSong)
+        }
+        return false
     }
 
     private fun saveSongToPref() {
@@ -642,6 +667,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mPlayerControlsPanelBinding.lovedSongsButton,
             lovedSongsButtonColor
         )
+
+        updateNowPlayingLovedIcon(this)
     }
 
     private fun restorePlayerStatus() {
@@ -786,6 +813,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
 
         updatePlayingStatus(true)
+        updateNowPlayingLovedIcon(this)
     }
 
     fun openPlayingArtistAlbum(view: View) {
@@ -868,6 +896,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             if (mMediaPlayerHolder.isSongRestoredFromPrefs) mMediaPlayerHolder.isSongRestoredFromPrefs =
                 false
         }
+        updateNowPlayingLovedIcon(this)
     }
 
     private fun setRepeat() {

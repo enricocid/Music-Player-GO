@@ -63,14 +63,7 @@ class LovedSongsAdapter(
             val subtitle = itemView.findViewById<TextView>(R.id.subtitle)
 
             title.text = lovedSong?.title
-            duration.text = context.getString(
-                R.string.loved_song_subtitle,
-                lovedSong?.startFrom?.toLong()?.toFormattedDuration(
-                    isAlbum = false,
-                    isSeekBar = false
-                ),
-                lovedSong?.duration?.toFormattedDuration(isAlbum = false, isSeekBar = false)
-            ).toSpanned()
+            duration.text = lovedSong?.duration?.toFormattedDuration(isAlbum = false, isSeekBar = false)
             subtitle.text =
                 context.getString(R.string.artist_and_album, lovedSong?.artist, lovedSong?.album)
 

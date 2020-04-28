@@ -257,7 +257,7 @@ object DialogHelper {
 
                     when (it.itemId) {
                         R.id.loved_songs_add -> {
-                            ListsHelper.addToLovedSongs(
+                            ListsHelper.addOrRemoveFromLovedSongs(
                                 context,
                                 song,
                                 0,
