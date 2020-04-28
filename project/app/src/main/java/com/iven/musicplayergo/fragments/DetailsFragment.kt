@@ -374,16 +374,17 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private fun setupAlbumsContainer(context: Context) {
 
-        selected_album_container.setOnClickListener {
+        selected_album_container.setOnLongClickListener {
             mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
                 mSelectedAlbumPosition,
                 0
             )
+            true
         }
 
         mDetailsFragmentBinding.selectedAlbum.isSelected = true
 
-        updateSelectedAlbumTitle()
+        updateSelectedAlbumContainer()
 
         setAlbumsDataSource(mSelectedArtistAlbums)
 
@@ -433,7 +434,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                                 mSelectedAlbum = item
                                 mSelectedAlbumPosition = index
-                                updateSelectedAlbumTitle()
+                                updateSelectedAlbumContainer()
                                 swapAlbum(item.music)
                             }
                         }
@@ -456,6 +457,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         )
     }
 
+    private fun updateSelectedAlbumContainer() {
+        updateSelectedAlbumTitle()
+        updateSelectedAlbumContainerClickListener()
+    }
+
     private fun updateSelectedAlbumTitle() {
         mDetailsFragmentBinding.selectedAlbum.text = mSelectedAlbum?.title
         album_year_duration.text = getString(
@@ -463,6 +469,32 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             mSelectedAlbum?.totalDuration?.toFormattedDuration(isAlbum = true, isSeekBar = false),
             mSelectedAlbum?.year
         )
+    }
+
+    private fun updateSelectedAlbumContainerClickListener() {
+        mDetailsFragmentBinding.selectedAlbumContainer.setOnClickListener {
+            playFirstSongOfAlbum()
+        }
+    }
+
+    private fun playFirstSongOfAlbum() {
+        val firstSongOfSelectedAlbum = mSelectedAlbum?.music?.first()
+        firstSongOfSelectedAlbum?.let {
+            val loadedSong =
+                if (sFolder) mSongsForArtistOrFolder
+                else
+                    MusicOrgHelper.getAlbumSongs(
+                        firstSongOfSelectedAlbum.artist,
+                        firstSongOfSelectedAlbum.album,
+                        mMusicRepository.deviceAlbumsByArtist
+                    )
+
+            mUIControlInterface.onSongSelected(
+                firstSongOfSelectedAlbum,
+                loadedSong,
+                sFolder
+            )
+        }
     }
 
     private fun swapAlbum(songs: MutableList<Music>?) {
