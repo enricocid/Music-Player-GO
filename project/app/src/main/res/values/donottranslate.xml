@@ -42,7 +42,7 @@
     <string name="theme_pref_auto">theme_pref_auto</string>
     <string name="accent_pref">accent_pref</string>
     <string name="edge_pref">edge_pref</string>
-    <string name="active_fragments_pref">enabled_fragments_pref</string>
+    <string name="active_fragments_pref">enabled_fragments_pref_v2</string>
     <string name="precise_volume_pref">precise_volume_pref</string>
     <string name="focus_pref">focus_pref</string>
     <string name="headset_pref">headsets_pref</string>
