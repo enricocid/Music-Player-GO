@@ -14,7 +14,7 @@
     <string name="folders">المجلدات</string>
 
     <!-- Main - Artists/Folder RecyclerViews items  -->
-    <string name="artist_info">%1d&#160;ألبومات,&#160;%2d&#160;الأغاني</string>
+    <string name="artist_info">%1d&#160;ألبومات,I&#160;%2d&#160; الأغاني</string>
     <string name="folder_info">%1d&#160;الأغاني</string>
 
     <!-- Popup/Menu titles -->
@@ -69,7 +69,7 @@
     <string name="faq_summary">الأسئلة الشائعة وتنسيقات الوسائط المدعومة :P</string>
 
     <!-- Preferences - Found songs -->
-    <string name="found_songs_pref_title">الأغاني الموجودة: %1d</string>
+    <string name="found_songs_pref_title">%1d: الأغاني الموجودة</string>
 
     <!-- Preferences - Themes -->
     <string name="theme_pref_title">موضوع</string>
