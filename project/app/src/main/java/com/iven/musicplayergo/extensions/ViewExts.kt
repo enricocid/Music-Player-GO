@@ -150,6 +150,7 @@ fun RecyclerView.smoothSnapToPosition(position: Int) {
 
 //add swipe features to a RecyclerView
 fun RecyclerView.addBidirectionalSwipeHandler(
+    isRightToLeftEnabled: Boolean,
     onSwiped: (
         viewHolder: RecyclerView.ViewHolder,
         direction: Int
@@ -158,9 +159,11 @@ fun RecyclerView.addBidirectionalSwipeHandler(
     val swipeLeftCallback = instantiateSwipeHandler(ItemTouchHelper.RIGHT, onSwiped)
     val swipeLeftHelper = ItemTouchHelper(swipeLeftCallback)
     swipeLeftHelper.attachToRecyclerView(this)
-    val swipeRightCallback = instantiateSwipeHandler(ItemTouchHelper.LEFT, onSwiped)
-    val swipeRightHelper = ItemTouchHelper(swipeRightCallback)
-    swipeRightHelper.attachToRecyclerView(this)
+    if (isRightToLeftEnabled) {
+        val swipeRightCallback = instantiateSwipeHandler(ItemTouchHelper.LEFT, onSwiped)
+        val swipeRightHelper = ItemTouchHelper(swipeRightCallback)
+        swipeRightHelper.attachToRecyclerView(this)
+    }
 }
 
 private fun instantiateSwipeHandler(

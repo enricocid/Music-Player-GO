@@ -60,18 +60,16 @@ object DialogHelper {
             }
         }
 
-        recyclerView.addBidirectionalSwipeHandler { viewHolder: RecyclerView.ViewHolder,
-                                                    _: Int ->
+        recyclerView.addBidirectionalSwipeHandler(true) { viewHolder: RecyclerView.ViewHolder,
+                                                          _: Int ->
             mediaPlayerHolder.apply {
                 queueSongs.removeAt(viewHolder.adapterPosition)
                 queueAdapter.swapQueueSongs(queueSongs)
-
                 if (queueSongs.isEmpty()) {
                     isQueue = false
                     mediaPlayerInterface.onQueueStartedOrEnded(false)
                     queueDialog.dismiss()
                 }
-                queueAdapter.notifyItemRemoved(viewHolder.adapterPosition)
             }
         }
     }
@@ -187,13 +185,11 @@ object DialogHelper {
                 }
             }
 
-            recyclerView.addBidirectionalSwipeHandler { viewHolder: RecyclerView.ViewHolder,
-                                                        _: Int ->
+            recyclerView.addBidirectionalSwipeHandler(true) { viewHolder: RecyclerView.ViewHolder, _: Int ->
                 val lovedSongs = goPreferences.lovedSongs?.toMutableList()
                 lovedSongs?.removeAt(viewHolder.adapterPosition)
                 goPreferences.lovedSongs = lovedSongs
                 lovedSongsAdapter.swapSongs(lovedSongs)
-                lovedSongsAdapter.notifyItemRemoved(viewHolder.adapterPosition)
             }
         }
     }
