@@ -56,11 +56,9 @@ class PlayerService : Service() {
     override fun onDestroy() {
         super.onDestroy()
 
-        isRunning = false
-
-        if (::mediaPlayerHolder.isInitialized) {
+        if (::mediaPlayerHolder.isInitialized && mediaPlayerHolder.isCurrentSong) {
             // Saves last played song and its position
-            if (mediaPlayerHolder.isCurrentSong) mediaPlayerHolder.apply {
+            mediaPlayerHolder.apply {
                 currentSong.first?.let { musicToSave ->
                     goPreferences.latestPlayedSong =
                         musicToSave.toSavedMusic(playerPosition, isPlayingFromFolder)
@@ -69,13 +67,14 @@ class PlayerService : Service() {
 
             goPreferences.latestVolume = mediaPlayerHolder.currentVolumeInPercent
 
-            mediaPlayerHolder.release()
-        }
+            if (::mMediaSessionCompat.isInitialized && mMediaSessionCompat.isActive) {
+                mMediaSessionCompat.isActive = false
+                mMediaSessionCompat.setCallback(null)
+                mMediaSessionCompat.release()
+            }
 
-        if (::mMediaSessionCompat.isInitialized && mMediaSessionCompat.isActive) {
-            mMediaSessionCompat.isActive = false
-            mMediaSessionCompat.setCallback(null)
-            mMediaSessionCompat.release()
+            mediaPlayerHolder.release()
+            isRunning = false
         }
     }
 

@@ -55,6 +55,7 @@ private const val HEADSET_DISCONNECTED = 0
 private const val HEADSET_CONNECTED = 1
 
 class MediaPlayerHolder(private val playerService: PlayerService) :
+    MediaPlayer.OnErrorListener,
     MediaPlayer.OnCompletionListener,
     MediaPlayer.OnPreparedListener {
 
@@ -486,6 +487,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
                     setOnPreparedListener(this@MediaPlayerHolder)
                     setOnCompletionListener(this@MediaPlayerHolder)
+                    setOnErrorListener(this@MediaPlayerHolder)
                     setWakeMode(playerService, PowerManager.PARTIAL_WAKE_LOCK)
                     setAudioAttributes(
                         AudioAttributes.Builder()
@@ -504,12 +506,19 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             song?.id?.toContentUri()?.let { uri ->
                 mediaPlayer.setDataSource(playerService, uri)
             }
-
-            mediaPlayer.prepareAsync()
+            mediaPlayer.prepare()
 
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
+        if (what == MediaPlayer.MEDIA_ERROR_SERVER_DIED) {
+            mediaPlayer.release()
+            initMediaPlayer(currentSong.first)
+        }
+        return false
     }
 
     override fun onPrepared(mediaPlayer: MediaPlayer) {
