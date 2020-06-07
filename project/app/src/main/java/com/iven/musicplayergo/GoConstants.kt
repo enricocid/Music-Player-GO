@@ -21,8 +21,6 @@ object GoConstants {
     const val TAG_SD_NOT_READY = "SD_NOT_READY"
 
     // fragments tags
-    const val TAG_ARTISTS = "ARTISTS_FRAGMENT"
-    const val TAG_FOLDERS = "FOLDERS_FRAGMENT"
     const val DETAILS_FRAGMENT_TAG = "DETAILS_FRAGMENT"
     const val ERROR_FRAGMENT_TAG = "ERROR_FRAGMENT"
 
