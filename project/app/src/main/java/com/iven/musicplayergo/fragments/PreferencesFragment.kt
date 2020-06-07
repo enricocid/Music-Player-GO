@@ -57,9 +57,15 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     override fun onPause() {
         super.onPause()
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
-        if (::mAccentsDialog.isInitialized && mAccentsDialog.isShowing) mAccentsDialog.dismiss()
-        if (::mActiveFragmentsDialog.isInitialized && mActiveFragmentsDialog.isShowing) mActiveFragmentsDialog.dismiss()
-        if (::mFiltersDialog.isInitialized && mFiltersDialog.isShowing) mFiltersDialog.dismiss()
+        if (::mAccentsDialog.isInitialized && mAccentsDialog.isShowing) {
+            mAccentsDialog.dismiss()
+        }
+        if (::mActiveFragmentsDialog.isInitialized && mActiveFragmentsDialog.isShowing) {
+            mActiveFragmentsDialog.dismiss()
+        }
+        if (::mFiltersDialog.isInitialized && mFiltersDialog.isShowing) {
+            mFiltersDialog.dismiss()
+        }
     }
 
     override fun onAttach(context: Context) {
@@ -121,9 +127,13 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             getString(R.string.open_git_pref) -> openCustomTab(getString(R.string.app_git))
             getString(R.string.faq_pref) -> openCustomTab(getString(R.string.app_faq))
             getString(R.string.accent_pref) -> showAccentsDialog()
-            getString(R.string.filter_pref) -> if (!goPreferences.filters.isNullOrEmpty()) showFiltersDialog() else getString(
-                R.string.error_no_filter
-            ).toToast(requireContext())
+            getString(R.string.filter_pref) -> if (!goPreferences.filters.isNullOrEmpty()) {
+                showFiltersDialog()
+            } else {
+                getString(
+                    R.string.error_no_filter
+                ).toToast(requireContext())
+            }
             getString(R.string.active_fragments_pref) -> showActiveFragmentsDialog()
         }
         return false

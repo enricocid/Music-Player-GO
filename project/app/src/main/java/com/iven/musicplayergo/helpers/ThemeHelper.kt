@@ -35,7 +35,11 @@ object ThemeHelper {
     fun getDefaultNightMode(context: Context) = when (goPreferences.theme) {
         context.getString(R.string.theme_pref_light) -> AppCompatDelegate.MODE_NIGHT_NO
         context.getString(R.string.theme_pref_dark) -> AppCompatDelegate.MODE_NIGHT_YES
-        else -> if (VersioningHelper.isQ()) AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM else AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+        else -> if (VersioningHelper.isQ()) {
+            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        } else {
+            AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+        }
     }
 
     @JvmStatic
@@ -62,14 +66,22 @@ object ThemeHelper {
         configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 
     @JvmStatic
-    fun getAlphaForAccent() = if (goPreferences.accent != R.color.yellow) 100 else 150
+    fun getAlphaForAccent() = if (goPreferences.accent != R.color.yellow) {
+        100
+    } else {
+        150
+    }
 
     @JvmStatic
     @TargetApi(Build.VERSION_CODES.O_MR1)
     fun handleLightSystemBars(configuration: Configuration, decorView: View) {
         val flags = decorView.systemUiVisibility
         decorView.systemUiVisibility =
-            if (isThemeNight(configuration)) flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv() and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv() else flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+            if (isThemeNight(configuration)) {
+                flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv() and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
+            } else {
+                flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+            }
     }
 
     // Fixed array of pairs (first: accent, second: theme, third: color primary dark)
@@ -173,7 +185,11 @@ object ThemeHelper {
             )
         // resourceId is used if it's a ColorStateList, and data if it's a color reference or a hex color
         val colorRes =
-            if (resolvedAttr.resourceId != 0) resolvedAttr.resourceId else resolvedAttr.data
+            if (resolvedAttr.resourceId != 0) {
+                resolvedAttr.resourceId
+            } else {
+                resolvedAttr.data
+            }
         return colorRes.decodeColor(context)
     }
 
@@ -190,7 +206,11 @@ object ThemeHelper {
             ColorDrawable(
                 getAlphaAccent(
                     context,
-                    if (isThemeNight(context.resources.configuration)) 45 else 85
+                    if (isThemeNight(context.resources.configuration)) {
+                        45
+                    } else {
+                        85
+                    }
                 )
             )
         )

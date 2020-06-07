@@ -60,7 +60,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private val mStateBuilder =
         Builder().apply {
-            if (VersioningHelper.isQ()) setActions(ACTION_SEEK_TO)
+            if (VersioningHelper.isQ()) {
+                setActions(ACTION_SEEK_TO)
+            }
         }
 
     lateinit var mediaPlayerInterface: MediaPlayerInterface
@@ -71,7 +73,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private val mHandler = Handler()
 
     private val sFocusEnabled get() = goPreferences.isFocusEnabled
-    private val sFocusGranted get() = mCurrentAudioFocusState == AUDIO_FOCUSED
     private var mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
     private var sPlayOnFocusGain = false
 
@@ -94,7 +95,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
             }
             // Update the player state based on the change
-            if (isMediaPlayer) configurePlayerState()
+            if (isMediaPlayer) {
+                configurePlayerState()
+            }
         }
 
     // Media player
@@ -109,7 +112,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private var mPlayingAlbumSongs: List<Music>? = null
 
     var currentVolumeInPercent = goPreferences.latestVolume
-    val playerPosition get() = if (!isMediaPlayer) goPreferences.latestPlayedSong?.startFrom!! else mediaPlayer.currentPosition
+    val playerPosition
+        get() = if (!isMediaPlayer) {
+            goPreferences.latestPlayedSong?.startFrom!!
+        } else {
+            mediaPlayer.currentPosition
+        }
 
     // Media player state/booleans
     val isPlaying get() = isMediaPlayer && mediaPlayer.isPlaying
@@ -190,11 +198,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private fun updateMediaSessionMetaData() {
         val mediaMediaPlayerCompat = MediaMetadataCompat.Builder().apply {
-            if (VersioningHelper.isQ()) putLong(
-                MediaMetadataCompat.METADATA_KEY_DURATION,
-                currentSong.first?.duration!!
-            )
-
+            if (VersioningHelper.isQ()) {
+                putLong(
+                    MediaMetadataCompat.METADATA_KEY_DURATION,
+                    currentSong.first?.duration!!
+                )
+            }
             putString(MediaMetadataCompat.METADATA_KEY_ARTIST, currentSong.first?.artist)
             putString(MediaMetadataCompat.METADATA_KEY_AUTHOR, currentSong.first?.artist)
             putString(MediaMetadataCompat.METADATA_KEY_COMPOSER, currentSong.first?.artist)
@@ -217,14 +226,18 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         mediaPlayerInterface.onPlaybackCompleted()
 
         when {
-            isRepeat1X or isLoop -> if (isMediaPlayer) repeatSong()
+            isRepeat1X or isLoop -> if (isMediaPlayer) {
+                repeatSong()
+            }
             isQueue -> manageQueue(true)
             else -> skip(true)
         }
     }
 
     fun onRestartSeekBarCallback() {
-        if (mExecutor == null) startUpdatingCallbackWithPosition()
+        if (mExecutor == null) {
+            startUpdatingCallbackWithPosition()
+        }
     }
 
     fun onPauseSeekBarCallback() {
@@ -264,9 +277,11 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     @Suppress("DEPRECATION")
     fun giveUpAudioFocus() {
         when {
-            VersioningHelper.isOreo() -> if (::mAudioFocusRequestOreo.isInitialized) mAudioManager.abandonAudioFocusRequest(
-                mAudioFocusRequestOreo
-            )
+            VersioningHelper.isOreo() -> if (::mAudioFocusRequestOreo.isInitialized) {
+                mAudioManager.abandonAudioFocusRequest(
+                    mAudioFocusRequestOreo
+                )
+            }
             else -> mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener)
         }
         mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
@@ -275,18 +290,28 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private fun updatePlaybackStatus(updateUI: Boolean) {
         playerService.getMediaSession().setPlaybackState(
             mStateBuilder.setState(
-                if (state == GoConstants.RESUMED) GoConstants.PLAYING else state,
-                if (VersioningHelper.isQ()) mediaPlayer.currentPosition.toLong() else PLAYBACK_POSITION_UNKNOWN,
+                if (state == GoConstants.RESUMED) {
+                    GoConstants.PLAYING
+                } else state,
+                if (VersioningHelper.isQ()) {
+                    mediaPlayer.currentPosition.toLong()
+                } else {
+                    PLAYBACK_POSITION_UNKNOWN
+                },
                 1F
             ).build()
         )
-        if (updateUI) mediaPlayerInterface.onStateChanged()
+        if (updateUI) {
+            mediaPlayerInterface.onStateChanged()
+        }
     }
 
     fun resumeMediaPlayer() {
         if (!isPlaying) {
             if (isMediaPlayer) {
-                if (sFocusEnabled && !sFocusGranted) tryToGetAudioFocus()
+                if (sFocusEnabled) {
+                    tryToGetAudioFocus()
+                }
                 mediaPlayer.start()
             }
             state = if (isSongRestoredFromPrefs) {
@@ -300,7 +325,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
             startForeground()
 
-            if (!isPlay) isPlay = true
+            if (!isPlay) {
+                isPlay = true
+            }
         }
     }
 
@@ -328,12 +355,19 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private fun manageQueue(isNext: Boolean) {
 
-        if (isSongRestoredFromPrefs) isSongRestoredFromPrefs = false
+        if (isSongRestoredFromPrefs) {
+            isSongRestoredFromPrefs = false
+        }
 
         when {
             isQueueStarted -> currentSong = Pair(getSkipSong(isNext), true)
             else -> {
-                setCurrentSong(queueSongs[0], queueSongs, isFromQueue = true, isFolderAlbum = LaunchedBy.ArtistView)
+                setCurrentSong(
+                    queueSongs[0],
+                    queueSongs,
+                    isFromQueue = true,
+                    isFolderAlbum = LaunchedBy.ArtistView
+                )
                 isQueueStarted = true
             }
         }
@@ -350,9 +384,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         try {
             return mPlayingAlbumSongs?.get(
-                if (isNext) currentIndex?.plus(1)!! else currentIndex?.minus(
-                    1
-                )!!
+                if (isNext) {
+                    currentIndex?.plus(1)!!
+                } else {
+                    currentIndex?.minus(
+                        1
+                    )!!
+                }
             )
         } catch (e: IndexOutOfBoundsException) {
             e.printStackTrace()
@@ -371,9 +409,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                         }
                     }
                 }
-                else -> if (currentIndex != 0) mPlayingAlbumSongs?.get(0) else mPlayingAlbumSongs?.get(
-                    mPlayingAlbumSongs?.size?.minus(1)!!
-                )
+                else -> if (currentIndex != 0) {
+                    mPlayingAlbumSongs?.get(0)
+                } else {
+                    mPlayingAlbumSongs?.get(
+                        mPlayingAlbumSongs?.size?.minus(1)!!
+                    )
+                }
             }
         }
     }
@@ -383,8 +425,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
      */
     private fun startUpdatingCallbackWithPosition() {
 
-        if (mSeekBarPositionUpdateTask == null) mSeekBarPositionUpdateTask =
-            Runnable { updateProgressCallbackTask() }
+        if (mSeekBarPositionUpdateTask == null) {
+            mSeekBarPositionUpdateTask =
+                Runnable { updateProgressCallbackTask() }
+        }
 
         mExecutor = Executors.newSingleThreadScheduledExecutor()
         mExecutor?.scheduleAtFixedRate(
@@ -410,10 +454,14 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun instantReset() {
-        if (isMediaPlayer && !isSongRestoredFromPrefs) when {
-            mediaPlayer.currentPosition < 5000 -> skip(false)
-            else -> repeatSong()
-        } else skip(false)
+        if (isMediaPlayer && !isSongRestoredFromPrefs) {
+            when {
+                mediaPlayer.currentPosition < 5000 -> skip(false)
+                else -> repeatSong()
+            }
+        } else {
+            skip(false)
+        }
     }
 
     /**
@@ -449,7 +497,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
                 mMusicNotificationManager = playerService.musicNotificationManager
 
-                if (sFocusEnabled && !sFocusGranted && isPlay) tryToGetAudioFocus()
+                if (sFocusEnabled && isPlay) tryToGetAudioFocus()
                 if (goPreferences.isPreciseVolumeEnabled) setPreciseVolume(currentVolumeInPercent)
             }
 
@@ -503,7 +551,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 mediaPlayer.audioSessionId
             )
             mediaPlayer.release()
-            if (sFocusEnabled && sFocusGranted) giveUpAudioFocus()
+            if (sFocusEnabled) giveUpAudioFocus()
             stopUpdatingCallbackWithPosition()
         }
         unregisterActionsReceiver()

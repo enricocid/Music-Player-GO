@@ -17,7 +17,7 @@ import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.databinding.MusicContainerListBinding
+import com.iven.musicplayergo.databinding.FragmentMusicContainerListBinding
 import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.handleViewVisibility
@@ -30,17 +30,16 @@ import com.iven.musicplayergo.ui.GenericViewHolder
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerView
-import java.util.*
 
 /**
  * A simple [Fragment] subclass.
  * Use the [MusicContainersListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MusicContainersListFragment : Fragment(R.layout.music_container_list),
+class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_list),
     SearchView.OnQueryTextListener {
 
-    private lateinit var mMusicContainerListBinding: MusicContainerListBinding
+    private lateinit var mMusicContainerListBinding: FragmentMusicContainerListBinding
     private lateinit var mMusicRepository: MusicRepository
 
     private var launchedBy: LaunchedBy = LaunchedBy.ArtistView
@@ -61,7 +60,7 @@ class MusicContainersListFragment : Fragment(R.layout.music_container_list),
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        arguments?.getInt(LAUNCHED_BY)?.let {
+        arguments?.getInt(TAG_LAUNCHED_BY)?.let {
             launchedBy = LaunchedBy.values()[it]
         }
 
@@ -77,7 +76,7 @@ class MusicContainersListFragment : Fragment(R.layout.music_container_list),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mMusicContainerListBinding = MusicContainerListBinding.bind(view)
+        mMusicContainerListBinding = FragmentMusicContainerListBinding.bind(view)
 
         mSorting = getSortingMethodFromPrefs()
 
@@ -258,6 +257,7 @@ class MusicContainersListFragment : Fragment(R.layout.music_container_list),
         mMusicRepository.deviceSongsByArtist?.getValue(item)?.size
     )
 
+    @SuppressLint("DefaultLocale")
     private fun setupIndicatorFastScrollerView() {
 
         // Set indexes if artists rv is scrollable
@@ -277,7 +277,7 @@ class MusicContainersListFragment : Fragment(R.layout.music_container_list),
                             item?.substring(
                                 0,
                                 1
-                            )?.toUpperCase(Locale.ROOT)!! // Grab the first letter and capitalize it
+                            )?.toUpperCase()!! // Grab the first letter and capitalize it
                         ) // Return a text tab_indicator
                     }, showIndicator = { _, indicatorPosition, _ ->
                         // Hide every other indicator
@@ -366,18 +366,18 @@ class MusicContainersListFragment : Fragment(R.layout.music_container_list),
 
     companion object {
 
-        private const val LAUNCHED_BY = "SELECTED_FRAGMENT"
+        private const val TAG_LAUNCHED_BY = "SELECTED_FRAGMENT"
 
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @return A new instance of fragment ArtistsFoldersFragment.
+         * @return A new instance of fragment MusicContainersListFragment.
          */
         @JvmStatic
         fun newInstance(launchedBy: LaunchedBy) = MusicContainersListFragment().apply {
             arguments = Bundle().apply {
-                putInt(LAUNCHED_BY, launchedBy.ordinal)
+                putInt(TAG_LAUNCHED_BY, launchedBy.ordinal)
             }
         }
     }

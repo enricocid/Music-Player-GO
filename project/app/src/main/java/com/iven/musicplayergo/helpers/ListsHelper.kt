@@ -87,11 +87,11 @@ object ListsHelper {
             transformNullToEmpty(it)
         }?.toMutableList()
 
-        return getSortedList(id,withoutNulls)
+        return getSortedList(id, withoutNulls)
     }
 
-    private fun transformNullToEmpty(toTrans: String?): String{
-        if (toTrans == null){
+    private fun transformNullToEmpty(toTrans: String?): String {
+        if (toTrans == null) {
             return ""
         }
         return toTrans

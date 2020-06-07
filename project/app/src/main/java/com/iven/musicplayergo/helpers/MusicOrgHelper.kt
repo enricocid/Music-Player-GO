@@ -84,8 +84,10 @@ object MusicOrgHelper {
     fun saveLatestSong(latestSong: Music?, playerPosition: Int, launchedBy: LaunchedBy) {
         latestSong?.let { musicToSave ->
             val toSave = musicToSave.toSavedMusic(playerPosition, launchedBy)
-            if (goPreferences.latestPlayedSong != toSave) goPreferences.latestPlayedSong =
-                toSave
+            if (goPreferences.latestPlayedSong != toSave) {
+                goPreferences.latestPlayedSong =
+                    toSave
+            }
         }
     }
 
@@ -147,5 +149,9 @@ object MusicOrgHelper {
     @JvmStatic
     @Suppress("DEPRECATION")
     fun getPathColumn() =
-        if (VersioningHelper.isQ()) AudioColumns.BUCKET_DISPLAY_NAME else AudioColumns.DATA
+        if (VersioningHelper.isQ()) {
+            AudioColumns.BUCKET_DISPLAY_NAME
+        } else {
+            AudioColumns.DATA
+        }
 }

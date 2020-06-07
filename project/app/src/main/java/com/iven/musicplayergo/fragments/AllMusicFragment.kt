@@ -65,13 +65,14 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 // item is a `val` in `this` here
                 withDataSource(mDataSource)
 
-                if (ThemeHelper.isDeviceLand(resources)) withLayoutManager(
-                    GridLayoutManager(
-                        requireContext(),
-                        3
+                if (ThemeHelper.isDeviceLand(resources)) {
+                    withLayoutManager(
+                        GridLayoutManager(
+                            requireContext(),
+                            3
+                        )
                     )
-                )
-                else addItemDecoration(
+                } else addItemDecoration(
                     ThemeHelper.getRecyclerViewDivider(requireContext())
                 )
 

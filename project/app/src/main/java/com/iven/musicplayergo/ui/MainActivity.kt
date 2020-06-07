@@ -108,11 +108,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mBindingIntent: Intent
 
     private fun checkIsPlayer(showError: Boolean) = mMediaPlayerHolder.apply {
-        if (!isMediaPlayer && !isSongRestoredFromPrefs && showError) getString(
-            R.string.error_bad_id
-        ).toToast(
-            this@MainActivity
-        )
+        if (!isMediaPlayer && !isSongRestoredFromPrefs && showError) {
+            getString(
+                R.string.error_bad_id
+            ).toToast(
+                this@MainActivity
+            )
+        }
     }.isMediaPlayer
 
     // Defines callbacks for service binding, passed to bindService()
@@ -147,12 +149,19 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         when {
             sDetailsFragmentExpanded -> closeDetailsFragment(null)
             sErrorFragmentExpanded -> finishAndRemoveTask()
-            else -> if (mMainActivityBinding.viewPager2.currentItem != 0) mMainActivityBinding.viewPager2.currentItem =
-                0 else
-                if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) DialogHelper.stopPlaybackDialog(
-                    this,
-                    mMediaPlayerHolder
-                ) else onCloseActivity()
+            else -> if (mMainActivityBinding.viewPager2.currentItem != 0) {
+                mMainActivityBinding.viewPager2.currentItem =
+                    0
+            } else {
+                if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) {
+                    DialogHelper.stopPlaybackDialog(
+                        this,
+                        mMediaPlayerHolder
+                    )
+                } else {
+                    onCloseActivity()
+                }
+            }
         }
     }
 
@@ -168,7 +177,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (sBound) unbindService(connection)
+        if (sBound) {
+            unbindService(connection)
+        }
         if (isMediaPlayerHolder && !mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning) {
             mPlayerService.stopForeground(true)
             stopService(mBindingIntent)
@@ -177,7 +188,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onResume() {
         super.onResume()
-        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) mMediaPlayerHolder.onRestartSeekBarCallback()
+        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) {
+            mMediaPlayerHolder.onRestartSeekBarCallback()
+        }
     }
 
     // Pause SeekBar callback
@@ -197,12 +210,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         when (requestCode) {
             GoConstants.PERMISSION_REQUEST_READ_EXTERNAL_STORAGE -> {
                 // If request is cancelled, the result arrays are empty.
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED))
-                // Permission was granted, yay! Do bind service
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    // Permission was granted, yay! Do bind service
                     doBindService()
-                else
-                // Permission denied, boo! Error!
+                } else {
+                    // Permission denied, boo! Error!
                     notifyError(GoConstants.TAG_NO_PERMISSION)
+                }
             }
         }
     }
@@ -246,9 +260,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     false
                 )
 
-        if (PermissionsHelper.hasToAskForReadStoragePermission(this)) PermissionsHelper.manageAskForReadStoragePermission(
-            activity = this, uiControlInterface = this
-        ) else doBindService()
+        if (PermissionsHelper.hasToAskForReadStoragePermission(this)) {
+            PermissionsHelper.manageAskForReadStoragePermission(
+                activity = this, uiControlInterface = this
+            )
+        } else {
+            doBindService()
+        }
     }
 
     private fun notifyError(errorType: String) {
@@ -282,9 +300,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     // Handle restoring: handle intent data, if any, or restore playback
     private fun handleRestore() {
-        if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null) handleIntent(
-            intent
-        ) else restorePlayerStatus()
+        if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null) {
+            handleIntent(
+                intent
+            )
+        } else {
+            restorePlayerStatus()
+        }
     }
 
     private fun initViewPager() {
@@ -306,8 +328,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
                 override fun onTabSelected(tab: TabLayout.Tab) {
-                    if (sDetailsFragmentExpanded) closeDetailsFragment(tab) else
+                    if (sDetailsFragmentExpanded) {
+                        closeDetailsFragment(tab)
+                    } else {
                         tab.icon?.setTint(mResolvedAccentColor)
+                    }
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -315,33 +340,53 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 }
 
                 override fun onTabReselected(tab: TabLayout.Tab) {
-                    if (sDetailsFragmentExpanded) closeDetailsFragment(null)
+                    if (sDetailsFragmentExpanded) {
+                        closeDetailsFragment(null)
+                    }
                 }
             })
 
-            getTabAt(if (sRestoreSettingsFragment) mMainActivityBinding.viewPager2.offscreenPageLimit else 0)?.icon?.setTint(
+            getTabAt(
+                if (sRestoreSettingsFragment) {
+                    mMainActivityBinding.viewPager2.offscreenPageLimit
+                } else {
+                    0
+                }
+            )?.icon?.setTint(
                 mResolvedAccentColor
             )
         }
 
-        if (sRestoreSettingsFragment) mMainActivityBinding.viewPager2.setCurrentItem(
-            mMainActivityBinding.viewPager2.offscreenPageLimit,
-            false
-        )
+        if (sRestoreSettingsFragment) {
+            mMainActivityBinding.viewPager2.setCurrentItem(
+                mMainActivityBinding.viewPager2.offscreenPageLimit,
+                false
+            )
+        }
     }
 
     private fun initFragmentAtPosition(fragmentIndex: Int) {
         when (fragmentIndex) {
-            0 -> if (mArtistsFragment == null) mArtistsFragment =
-                MusicContainersListFragment.newInstance(LaunchedBy.ArtistView)
-            1 -> if (mAlbumsFragment == null) mAlbumsFragment =
-                MusicContainersListFragment.newInstance(LaunchedBy.AlbumView)
-            2 -> if (mAllMusicFragment == null) mAllMusicFragment =
-                AllMusicFragment.newInstance()
-            3 -> if (mFoldersFragment == null) mFoldersFragment =
-                MusicContainersListFragment.newInstance(LaunchedBy.FolderView)
-            else -> if (mSettingsFragment == null) mSettingsFragment =
-                SettingsFragment.newInstance()
+            0 -> if (mArtistsFragment == null) {
+                mArtistsFragment =
+                    MusicContainersListFragment.newInstance(LaunchedBy.ArtistView)
+            }
+            1 -> if (mAlbumsFragment == null) {
+                mAlbumsFragment =
+                    MusicContainersListFragment.newInstance(LaunchedBy.AlbumView)
+            }
+            2 -> if (mAllMusicFragment == null) {
+                mAllMusicFragment =
+                    AllMusicFragment.newInstance()
+            }
+            3 -> if (mFoldersFragment == null) {
+                mFoldersFragment =
+                    MusicContainersListFragment.newInstance(LaunchedBy.FolderView)
+            }
+            else -> if (mSettingsFragment == null) {
+                mSettingsFragment =
+                    SettingsFragment.newInstance()
+            }
         }
     }
 
@@ -399,10 +444,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mPlayerControlsPanelBinding.playPauseButton.setOnClickListener { resumeOrPause() }
 
         mPlayerControlsPanelBinding.queueButton.setOnLongClickListener {
-            if (checkIsPlayer(true) && mMediaPlayerHolder.isQueue) DialogHelper.showClearQueueDialog(
-                this,
-                mMediaPlayerHolder
-            )
+            if (checkIsPlayer(true) && mMediaPlayerHolder.isQueue) {
+                DialogHelper.showClearQueueDialog(
+                    this,
+                    mMediaPlayerHolder
+                )
+            }
             return@setOnLongClickListener true
         }
 
@@ -417,7 +464,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         onLovedSongsUpdate(false)
 
         mPlayerControlsPanelBinding.playingSongsContainer.setOnLongClickListener { playerControlsContainer ->
-            if (checkIsPlayer(true)) openPlayingArtistAlbum(playerControlsContainer)
+            if (checkIsPlayer(true)) {
+                openPlayingArtistAlbum(playerControlsContainer)
+            }
             return@setOnLongClickListener true
         }
     }
@@ -547,9 +596,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 ThemeHelper.updateIconTint(
                     mNowPlayingControlsBinding.npRepeat,
-                    if (mMediaPlayerHolder.isRepeat1X || mMediaPlayerHolder.isLoop) mResolvedAccentColor
-                    else
+                    if (mMediaPlayerHolder.isRepeat1X || mMediaPlayerHolder.isLoop) {
+                        mResolvedAccentColor
+                    } else {
                         mResolvedIconsColor
+                    }
                 )
 
                 mNowPlayingControlsBinding.npRepeat.setOnClickListener { setRepeat() }
@@ -813,7 +864,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             val isPlayingFromFolder = mMediaPlayerHolder.isPlayingFromFolder
             val selectedSong = mMediaPlayerHolder.currentSong.first
             val selectedArtistOrFolder = getSongSource(selectedSong, isPlayingFromFolder)
-
             if (sDetailsFragmentExpanded) {
                 if (mDetailsFragment.hasToUpdate(selectedArtistOrFolder)) {
                     synchronized(super.onBackPressed()) {

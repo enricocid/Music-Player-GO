@@ -86,9 +86,13 @@ class MusicRepository {
                         } else {
                             val returnedPath = File(audioRelativePath).parentFile?.name
                                 ?: application.getString(R.string.slash)
-                            if (returnedPath != "0") returnedPath else application.getString(
-                                R.string.slash
-                            )
+                            if (returnedPath != "0") {
+                                returnedPath
+                            } else {
+                                application.getString(
+                                    R.string.slash
+                                )
+                            }
                         }
 
                     // Add the current music to the list
@@ -157,7 +161,9 @@ class MusicRepository {
 
         fun getInstance(): MusicRepository {
             val tempInstance = INSTANCE
-            if (tempInstance != null) return tempInstance
+            if (tempInstance != null) {
+                return tempInstance
+            }
             synchronized(this) {
                 val instance = MusicRepository()
                 INSTANCE = instance

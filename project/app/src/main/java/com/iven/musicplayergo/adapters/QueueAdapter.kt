@@ -105,7 +105,7 @@ class QueueAdapter(
                 }
 
                 setOnLongClickListener {
-                    if (title.currentTextColor != ThemeHelper.resolveThemeAccent(context))
+                    if (title.currentTextColor != ThemeHelper.resolveThemeAccent(context)) {
                         DialogHelper.showDeleteQueueSongDialog(
                             context,
                             Pair(song, adapterPosition),
@@ -113,6 +113,7 @@ class QueueAdapter(
                             this@QueueAdapter,
                             mediaPlayerHolder
                         )
+                    }
                     return@setOnLongClickListener true
                 }
             }

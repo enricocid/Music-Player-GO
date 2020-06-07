@@ -33,7 +33,9 @@ class LovedSongsAdapter(
         mLovedSongs = lovedSongs
         notifyDataSetChanged()
         uiControlInterface.onLovedSongsUpdate(false)
-        if (mLovedSongs?.isEmpty()!!) lovedSongsDialog.dismiss()
+        if (mLovedSongs?.isEmpty()!!) {
+            lovedSongsDialog.dismiss()
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LoveHolder {

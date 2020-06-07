@@ -26,7 +26,6 @@ class GoPreferences(context: Context) {
     private val prefsFoldersSorting = context.getString(R.string.folders_sorting_pref)
     private val prefsAlbumsSorting = context.getString(R.string.albums_sorting_pref)
 
-
     private val prefsPreciseVolume = context.getString(R.string.precise_volume_pref)
     private val prefsFocus = context.getString(R.string.focus_pref)
     private val prefsHeadsetPlug = context.getString(R.string.headset_pref)
