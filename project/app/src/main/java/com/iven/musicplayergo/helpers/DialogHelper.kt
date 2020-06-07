@@ -5,6 +5,8 @@ import android.view.Gravity
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
@@ -32,10 +34,10 @@ object DialogHelper {
     ) = MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
         title(R.string.queue)
+        val queueDialog = this
+        val queueAdapter = QueueAdapter(context, this, mediaPlayerHolder)
 
-        customListAdapter(
-            QueueAdapter(context, this, mediaPlayerHolder)
-        )
+        customListAdapter(queueAdapter)
 
         val recyclerView = getRecyclerView()
 
@@ -55,6 +57,22 @@ object DialogHelper {
                         decorView.fit { Edge.Top }
                     }
                 }
+            }
+        }
+
+        addBidirectionalSwipeHandler(recyclerView)
+        { viewHolder: RecyclerView.ViewHolder,
+          _: Int ->
+            mediaPlayerHolder.apply {
+                queueSongs.removeAt(viewHolder.adapterPosition)
+                queueAdapter.swapQueueSongs(queueSongs)
+
+                if (queueSongs.isEmpty()) {
+                    isQueue = false
+                    mediaPlayerInterface.onQueueStartedOrEnded(false)
+                    queueDialog.dismiss()
+                }
+                queueAdapter.notifyItemRemoved(viewHolder.adapterPosition)
             }
         }
     }
@@ -136,14 +154,16 @@ object DialogHelper {
 
             title(R.string.loved_songs)
 
+            val lovedSongsAdapter = LovedSongsAdapter(
+                context,
+                this,
+                uiControlInterface,
+                mediaPlayerHolder,
+                musicRepository
+            )
+
             customListAdapter(
-                LovedSongsAdapter(
-                    context,
-                    this,
-                    uiControlInterface,
-                    mediaPlayerHolder,
-                    musicRepository
-                )
+                lovedSongsAdapter
             )
 
             val recyclerView = getRecyclerView()
@@ -168,6 +188,58 @@ object DialogHelper {
                         }
                     }
                 }
+            }
+
+            addBidirectionalSwipeHandler(recyclerView)
+            { viewHolder: RecyclerView.ViewHolder,
+              _: Int ->
+                val lovedSongs = goPreferences.lovedSongs?.toMutableList()
+                lovedSongs?.removeAt(viewHolder.adapterPosition)
+                goPreferences.lovedSongs = lovedSongs
+                lovedSongsAdapter.swapSongs(lovedSongs)
+                lovedSongsAdapter.notifyItemRemoved(viewHolder.adapterPosition)
+            }
+        }
+    }
+
+    private fun addBidirectionalSwipeHandler(
+        swipeHolder: RecyclerView,
+        onSwiped: (
+            viewHolder: RecyclerView.ViewHolder,
+            direction: Int
+        ) -> Unit
+    ) {
+        val swipeLeftCallback = instantiateSwipeHandler(ItemTouchHelper.RIGHT, onSwiped)
+        val swipeLeftHelper = ItemTouchHelper(swipeLeftCallback)
+        swipeLeftHelper.attachToRecyclerView(swipeHolder)
+        val swipeRightCallback = instantiateSwipeHandler(ItemTouchHelper.LEFT, onSwiped)
+        val swipeRightHelper = ItemTouchHelper(swipeRightCallback)
+        swipeRightHelper.attachToRecyclerView(swipeHolder)
+    }
+
+    private fun instantiateSwipeHandler(
+        direction: Int,
+        onSwiped: (
+            viewHolder: RecyclerView.ViewHolder,
+            direction: Int
+        ) -> Unit
+    ): ItemTouchHelper.SimpleCallback {
+        return object : ItemTouchHelper.SimpleCallback(
+            0,
+            direction
+        ) {
+
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean = false
+
+            override fun onSwiped(
+                viewHolder: RecyclerView.ViewHolder,
+                direction: Int
+            ) {
+                onSwiped(viewHolder, direction)
             }
         }
     }

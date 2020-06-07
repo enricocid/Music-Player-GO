@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.iven.musicplayergo.MusicRepository
@@ -99,6 +100,10 @@ class LovedSongsAdapter(
                     return@setOnLongClickListener true
                 }
             }
+
         }
+
+
     }
 }
+
