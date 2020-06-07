@@ -5,6 +5,7 @@ import android.view.Gravity
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
@@ -15,6 +16,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.enums.LaunchedBy
+import com.iven.musicplayergo.extensions.addBidirectionalSwipeHandler
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
@@ -33,10 +35,10 @@ object DialogHelper {
     ) = MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
         title(R.string.queue)
+        val queueDialog = this
+        val queueAdapter = QueueAdapter(context, this, mediaPlayerHolder)
 
-        customListAdapter(
-            QueueAdapter(context, this, mediaPlayerHolder)
-        )
+        customListAdapter(queueAdapter)
 
         val recyclerView = getRecyclerView()
 
@@ -55,6 +57,19 @@ object DialogHelper {
                         recyclerView.fit { Edge.Bottom }
                         decorView.fit { Edge.Top }
                     }
+                }
+            }
+        }
+
+        recyclerView.addBidirectionalSwipeHandler(true) { viewHolder: RecyclerView.ViewHolder,
+                                                          _: Int ->
+            mediaPlayerHolder.apply {
+                queueSongs.removeAt(viewHolder.adapterPosition)
+                queueAdapter.swapQueueSongs(queueSongs)
+                if (queueSongs.isEmpty()) {
+                    isQueue = false
+                    mediaPlayerInterface.onQueueStartedOrEnded(false)
+                    queueDialog.dismiss()
                 }
             }
         }
@@ -137,15 +152,15 @@ object DialogHelper {
 
             title(R.string.loved_songs)
 
-            customListAdapter(
-                LovedSongsAdapter(
-                    context,
-                    this,
-                    uiControlInterface,
-                    mediaPlayerHolder,
-                    musicRepository
-                )
+            val lovedSongsAdapter = LovedSongsAdapter(
+                context,
+                this,
+                uiControlInterface,
+                mediaPlayerHolder,
+                musicRepository
             )
+
+            customListAdapter(lovedSongsAdapter)
 
             val recyclerView = getRecyclerView()
 
@@ -169,6 +184,13 @@ object DialogHelper {
                         }
                     }
                 }
+            }
+
+            recyclerView.addBidirectionalSwipeHandler(true) { viewHolder: RecyclerView.ViewHolder, _: Int ->
+                val lovedSongs = goPreferences.lovedSongs?.toMutableList()
+                lovedSongs?.removeAt(viewHolder.adapterPosition)
+                goPreferences.lovedSongs = lovedSongs
+                lovedSongsAdapter.swapSongs(lovedSongs)
             }
         }
     }

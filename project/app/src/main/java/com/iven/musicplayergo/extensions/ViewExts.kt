@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.animation.ArgbEvaluatorCompat
@@ -145,6 +146,51 @@ fun RecyclerView.smoothSnapToPosition(position: Int) {
     }
     smoothScroller.targetPosition = position
     layoutManager?.startSmoothScroll(smoothScroller)
+}
+
+//add swipe features to a RecyclerView
+fun RecyclerView.addBidirectionalSwipeHandler(
+    isRightToLeftEnabled: Boolean,
+    onSwiped: (
+        viewHolder: RecyclerView.ViewHolder,
+        direction: Int
+    ) -> Unit
+) {
+    val swipeLeftCallback = instantiateSwipeHandler(ItemTouchHelper.RIGHT, onSwiped)
+    val swipeLeftHelper = ItemTouchHelper(swipeLeftCallback)
+    swipeLeftHelper.attachToRecyclerView(this)
+    if (isRightToLeftEnabled) {
+        val swipeRightCallback = instantiateSwipeHandler(ItemTouchHelper.LEFT, onSwiped)
+        val swipeRightHelper = ItemTouchHelper(swipeRightCallback)
+        swipeRightHelper.attachToRecyclerView(this)
+    }
+}
+
+private fun instantiateSwipeHandler(
+    direction: Int,
+    onSwiped: (
+        viewHolder: RecyclerView.ViewHolder,
+        direction: Int
+    ) -> Unit
+): ItemTouchHelper.SimpleCallback {
+    return object : ItemTouchHelper.SimpleCallback(
+        0,
+        direction
+    ) {
+
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean = false
+
+        override fun onSwiped(
+            viewHolder: RecyclerView.ViewHolder,
+            direction: Int
+        ) {
+            onSwiped(viewHolder, direction)
+        }
+    }
 }
 
 fun View.handleViewVisibility(show: Boolean) {

@@ -51,6 +51,9 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - **Stephan Maier** for having reported this [issue](https://github.com/enricocid/Music-Player-GO/commit/06b0375eda3f7c214881af205e64dffbca29dfe7) via F-Droid
 
+- [**john2020star**](https://github.com/john2020star) for having contributed to fix this[issue](https://github.com/enricocid/Music-Player-GO/issues/196
+
+
 ### Big thanks to translators:
 
 - [**keddad**](https://github.com/keddad) and [**yafna**](https://github.com/yafna) for **Russian** translations

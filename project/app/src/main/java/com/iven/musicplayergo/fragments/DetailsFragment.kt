@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
@@ -279,6 +280,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         )
                     }
                 }
+            }
+
+            addBidirectionalSwipeHandler(false) { viewHolder: RecyclerView.ViewHolder,
+                                                  _: Int ->
+                mUIControlInterface.onAddToQueue(mSongsForArtistOrFolder!![viewHolder.adapterPosition])
+                adapter?.notifyDataSetChanged()
             }
         }
 
