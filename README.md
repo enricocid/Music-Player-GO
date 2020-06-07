@@ -20,7 +20,11 @@
   <h3 align="center">
   <a href="PRIVACY.md">Privacy policy</a> |
   <a href="FAQ.md">FAQ</a> |
-  <a href="https://github.com/enricocid/Music-Player-GO/issues/114">Translate</a>
+  <a href="https://github.com/enricocid/Music-Player-GO/issues/114">Translate</a> |
+  <a href="CONTRIBUTORS.md">Contributors</a> |
+  <a href="FORMATS.md">Formats</a>
+  </h3>
+
   </h3>
 
 # Table of contents
@@ -28,10 +32,8 @@
 - [Description](#description)
 - [Download](#download)
 - [Features](#features)
-- [Supported formats](FORMATS.md)
-- [Contributors](CONTRIBUTORS.md)
 - [License](#license)
-  - [Authors / Copyright](#authors---copyright)
+  - [Authors / Copyright](#authors--copyright)
   - [Third-party component licenses](#third-party-component-licenses)
     - [Libraries](#libraries)
     - [Tools](#tools)
@@ -39,8 +41,7 @@
 
 # Description
 
-This repo contains the source code of the Music Player GO's Android App.
-Music Player GO is a simple yet fully-featured local music player aiming at simplicity and performance.
+This repo contains the source code of the **Music Player GO** Android app: a simple yet fully-featured local music player aiming at simplicity and performance.
 
 # Download
 
@@ -60,16 +61,13 @@ Music Player GO is a simple yet fully-featured local music player aiming at simp
   
 # Features
 
-- Tabs / music organized by artist, albums and folders / Settings
+- Tabs (artists, songs, albums, folders, settings)
 - Full UI theming including day/night theme and edge-to-edge
-- Now playing
-  > tip: quickly jump to song's album/folder by long clicking on currently played song
+- Now playing (quick jump to album/folder by long clicking on the currently played song)
 - Continue playing from where You left
-- Queue, and loved songs
-- Ability to save songs and their position
-- Common music player options: audio focus, precise volume control, headsets plug
-- Landscape support
-- Other features: search, sorting, shuffle, notification's SeekBar (Android 10), open audios from other apps
+- Queued and loved songs
+- audio focus, precise volume and headsets plug control
+- Other features: search, sorting, shuffle, notification's SeekBar (Android 10), open audios from other apps ...
 
 # License
 
