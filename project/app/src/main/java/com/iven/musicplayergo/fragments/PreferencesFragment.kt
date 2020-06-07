@@ -1,12 +1,14 @@
 package com.iven.musicplayergo.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.preference.Preference
@@ -165,15 +167,32 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     }
 
     private fun openCustomTab(link: String) {
-        try {
-            CustomTabsIntent.Builder().apply {
-                addDefaultShareMenuItem()
-                setShowTitle(true)
-                build().launchUrl(requireContext(), Uri.parse(link))
+        val customTabsIntent = CustomTabsIntent.Builder()
+            .addDefaultShareMenuItem()
+            .setShowTitle(true)
+            .build()
+
+        val parsedUri = Uri.parse(link)
+        val manager = requireContext().packageManager
+        val infos = manager.queryIntentActivities(customTabsIntent.intent, 0)
+        if (infos.size > 0) {
+            customTabsIntent.launchUrl(requireContext(), parsedUri)
+        } else {
+
+            //from: https://github.com/immuni-app/immuni-app-android/blob/development/extensions/src/main/java/it/ministerodellasalute/immuni/extensions/utils/ExternalLinksHelper.kt
+            val browserIntent = Intent(Intent.ACTION_VIEW, parsedUri)
+            browserIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+            val fallbackInfos = manager.queryIntentActivities(browserIntent, 0)
+            if (fallbackInfos.size > 0) {
+                requireContext().startActivity(browserIntent)
+            } else {
+                Toast.makeText(
+                    context,
+                    requireContext().getString(R.string.error_no_browser),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        } catch (e: Exception) {
-            requireContext().getString(R.string.error_no_browser).toToast(requireContext())
-            e.printStackTrace()
         }
     }
 
