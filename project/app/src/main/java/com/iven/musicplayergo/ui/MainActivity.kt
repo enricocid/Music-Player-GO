@@ -245,10 +245,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             edgeToEdge {
                 mMainActivityBinding.root.fit { Edge.Top + Edge.Bottom }
             }
-        } else {
-            ThemeHelper.resolvePrimaryDarkColor(this)?.let { color ->
-                window.statusBarColor = color
-            }
         }
 
         initMediaButtons()

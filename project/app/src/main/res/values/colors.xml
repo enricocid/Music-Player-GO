@@ -21,26 +21,6 @@
     <color name="grey">#9e9e9e</color>
     <color name="blue_grey">#607d8b</color>
 
-    <color name="redPrimaryDark">#ba000d</color>
-    <color name="pinkPrimaryDark">#b0003a</color>
-    <color name="purplePrimaryDark">#6a0080</color>
-    <color name="deepPurplePrimaryDark">#320b86</color>
-    <color name="indigoPrimaryDark">#002984</color>
-    <color name="bluePrimaryDark">#0069c0</color>
-    <color name="lightBluePrimaryDark">#007ac1</color>
-    <color name="cyanPrimaryDark">#008ba3</color>
-    <color name="tealPrimaryDark">#00675b</color>
-    <color name="greenPrimaryDark">#087f23</color>
-    <color name="lightGreenPrimaryDark">#5a9216</color>
-    <color name="limePrimaryDark">#99aa00</color>
-    <color name="yellowPrimaryDark">#c8b900</color>
-    <color name="amberPrimaryDark">#c79100</color>
-    <color name="orangePrimaryDark">#c66900</color>
-    <color name="deepOrangePrimaryDark">#c41c00</color>
-    <color name="brownPrimaryDark">#4b2c20</color>
-    <color name="greyPrimaryDark">#707070</color>
-    <color name="blueGreyPrimaryDark">#34515e</color>
-
     <color name="seekBarBgColorDark">#10ffffff</color>
     <color name="seekBarBgColorLight">#20ffffff</color>
 
