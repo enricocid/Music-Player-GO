@@ -12,6 +12,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.toSpanned
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
@@ -100,7 +101,11 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                         song.title
                     ).toSpanned()
                 )
-                .setSmallIcon(if (mediaPlayerHolder.isPlayingFromFolder) R.drawable.ic_library_music else R.drawable.ic_music_note)
+                .setSmallIcon(
+                    if (mediaPlayerHolder.isPlayingFromFolder == LaunchedBy.FolderView)
+                        R.drawable.ic_library_music else
+                        R.drawable.ic_music_note
+                )
         }
     }
 

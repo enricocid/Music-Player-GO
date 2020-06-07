@@ -22,6 +22,9 @@ class MusicRepository {
     //keys: artist || value: its songs
     var deviceSongsByArtist: Map<String?, List<Music>>? = null
 
+    //keys: album || value: its songs
+    var deviceSongsByAlbum: Map<String?, List<Music>>? = null
+
     //keys: artist || value: albums
     var deviceAlbumsByArtist: MutableMap<String, List<Album>>? = mutableMapOf()
 
@@ -130,6 +133,7 @@ class MusicRepository {
         deviceMusicFiltered?.let { dsf ->
             // group music by artist
             deviceSongsByArtist = dsf.groupBy { it.artist }
+            deviceSongsByAlbum = dsf.groupBy { it.album }
             deviceMusicByFolder = dsf.groupBy { it.relativePath!! }
         }
 

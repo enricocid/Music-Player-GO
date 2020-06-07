@@ -12,6 +12,7 @@
     <string name="artists">Artists</string>
     <string name="songs">Songs</string>
     <string name="folders">Folders</string>
+    <string name="albums">Albums</string>
 
     <!-- Main - Artists/Folder RecyclerViews items  -->
     <string name="artist_info">%1d&#160;Albums,&#160;%2d&#160;Songs</string>
@@ -105,4 +106,7 @@
 
     <!-- Preferences - Filters -->
     <string name="filter_pref_title">Filters</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

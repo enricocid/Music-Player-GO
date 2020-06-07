@@ -33,6 +33,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.iven.musicplayergo.*
 import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.databinding.*
+import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.helpers.*
@@ -71,9 +72,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     // Fragments
     private val mActiveFragments: List<Int> = goPreferences.activeFragments.toList()
-    private var mArtistsFragment: ArtistsFoldersFragment? = null
+    private var mArtistsFragment: MusicContainersListFragment? = null
     private var mAllMusicFragment: AllMusicFragment? = null
-    private var mFoldersFragment: ArtistsFoldersFragment? = null
+    private var mFoldersFragment: MusicContainersListFragment? = null
+    private var mAlbumsFragment: MusicContainersListFragment? = null
     private var mSettingsFragment: SettingsFragment? = null
     private lateinit var mDetailsFragment: DetailsFragment
 
@@ -331,10 +333,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun initFragmentAtPosition(fragmentIndex: Int) {
         when (fragmentIndex) {
             0 -> if (mArtistsFragment == null) mArtistsFragment =
-                ArtistsFoldersFragment.newInstance(GoConstants.TAG_ARTISTS)
-            1 -> if (mAllMusicFragment == null) mAllMusicFragment = AllMusicFragment.newInstance()
-            2 -> if (mFoldersFragment == null) mFoldersFragment =
-                ArtistsFoldersFragment.newInstance(GoConstants.TAG_FOLDERS)
+                MusicContainersListFragment.newInstance(LaunchedBy.ArtistView)
+            1 -> if (mAlbumsFragment == null) mAlbumsFragment =
+                MusicContainersListFragment.newInstance(LaunchedBy.AlbumView)
+            2 -> if (mAllMusicFragment == null) mAllMusicFragment =
+                AllMusicFragment.newInstance()
+            3 -> if (mFoldersFragment == null) mFoldersFragment =
+                MusicContainersListFragment.newInstance(LaunchedBy.FolderView)
             else -> if (mSettingsFragment == null) mSettingsFragment =
                 SettingsFragment.newInstance()
         }
@@ -344,25 +349,27 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         0 -> getFragmentForIndex(mActiveFragments[0])
         1 -> getFragmentForIndex(mActiveFragments[1])
         2 -> getFragmentForIndex(mActiveFragments[2])
-        else -> getFragmentForIndex(mActiveFragments[3])
+        3 -> getFragmentForIndex(mActiveFragments[3])
+        else -> getFragmentForIndex(mActiveFragments[4])
     }
 
     private fun getFragmentForIndex(index: Int) = when (index) {
         0 -> mArtistsFragment
-        1 -> mAllMusicFragment
-        2 -> mFoldersFragment
+        1 -> mAlbumsFragment
+        2 -> mAllMusicFragment
+        3 -> mFoldersFragment
         else -> mSettingsFragment
     }
 
     private fun openDetailsFragment(
         selectedArtistOrFolder: String?,
-        isFolder: Boolean
+        launchedBy: LaunchedBy
     ) {
         if (!sDetailsFragmentExpanded) {
             mDetailsFragment =
                 DetailsFragment.newInstance(
                     selectedArtistOrFolder,
-                    isFolder,
+                    launchedBy,
                     MusicOrgHelper.getPlayingAlbumPosition(
                         selectedArtistOrFolder,
                         mMusicRepository.deviceAlbumsByArtist,
@@ -678,7 +685,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         startPlayback(
                             song,
                             songs,
-                            isSongRestoredFromPrefs && goPreferences.latestPlayedSong?.isFromFolder!!
+                            getLatestSongLaunchedBy()
                         )
 
                         updatePlayingInfo(false)
@@ -691,6 +698,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 }
             }
         }
+    }
+
+    private fun getLatestSongLaunchedBy(): LaunchedBy {
+        return goPreferences.latestPlayedSong?.launchedBy ?: LaunchedBy.ArtistView
     }
 
     // method to update info on controls panel
@@ -788,13 +799,21 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         updatePlayingStatus(true)
     }
 
+    private fun getSongSource(selectedSong: Music?, launchedBy: LaunchedBy): String? {
+        return when (launchedBy) {
+            LaunchedBy.FolderView -> selectedSong?.relativePath
+            LaunchedBy.ArtistView -> selectedSong?.artist
+            else -> selectedSong?.album
+        }
+    }
+
     fun openPlayingArtistAlbum(view: View) {
         if (isMediaPlayerHolder && mMediaPlayerHolder.isCurrentSong) {
 
             val isPlayingFromFolder = mMediaPlayerHolder.isPlayingFromFolder
             val selectedSong = mMediaPlayerHolder.currentSong.first
-            val selectedArtistOrFolder =
-                if (isPlayingFromFolder) selectedSong?.relativePath else selectedSong?.artist
+            val selectedArtistOrFolder = getSongSource(selectedSong, isPlayingFromFolder)
+
             if (sDetailsFragmentExpanded) {
                 if (mDetailsFragment.hasToUpdate(selectedArtistOrFolder)) {
                     synchronized(super.onBackPressed()) {
@@ -831,29 +850,29 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) if (goPreferences.isFocusEnabled) mMediaPlayerHolder.tryToGetAudioFocus() else mMediaPlayerHolder.giveUpAudioFocus()
     }
 
-    override fun onArtistOrFolderSelected(artistOrFolder: String, isFolder: Boolean) {
+    override fun onArtistOrFolderSelected(artistOrFolder: String, launchedBy: LaunchedBy) {
         openDetailsFragment(
             artistOrFolder,
-            isFolder
+            launchedBy
         )
     }
 
-    private fun startPlayback(song: Music?, album: List<Music>?, isFromFolder: Boolean) {
+    private fun startPlayback(song: Music?, album: List<Music>?, launchedBy: LaunchedBy) {
         if (isMediaPlayerHolder) {
             if (!mPlayerService.isRunning) startService(mBindingIntent)
             mMediaPlayerHolder.apply {
-                setCurrentSong(song, album, isFromQueue = false, isFolderAlbum = isFromFolder)
+                setCurrentSong(song, album, isFromQueue = false, isFolderAlbum = launchedBy)
                 initMediaPlayer(song)
             }
         }
     }
 
-    override fun onSongSelected(song: Music?, songs: List<Music>?, isFromFolder: Boolean) {
+    override fun onSongSelected(song: Music?, songs: List<Music>?, launchedBy: LaunchedBy) {
         if (isMediaPlayerHolder) mMediaPlayerHolder.apply {
             isSongRestoredFromPrefs = false
             if (!isPlay) isPlay = true
             if (isQueue) setQueueEnabled(false)
-            startPlayback(song, songs, isFromFolder)
+            startPlayback(song, songs, launchedBy)
         }
     }
 
@@ -898,11 +917,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    override fun onShuffleSongs(songs: MutableList<Music>?, isFromFolder: Boolean) {
+    override fun onShuffleSongs(songs: MutableList<Music>?, launchedBy: LaunchedBy) {
         val randomNumber = (0 until songs?.size!!).getRandom()
         songs.shuffle()
         val song = songs[randomNumber]
-        onSongSelected(song, songs, isFromFolder)
+        onSongSelected(song, songs, launchedBy)
     }
 
     override fun onAddToFilter(stringToFilter: String?) {
@@ -946,7 +965,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     mMusicRepository.deviceAlbumsByArtist
                 )
 
-                onSongSelected(song, albumSongs, false)
+                onSongSelected(song, albumSongs, LaunchedBy.ArtistView)
 
             } catch (e: Exception) {
                 e.printStackTrace()

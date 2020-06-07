@@ -207,8 +207,9 @@ object ThemeHelper {
     @JvmStatic
     fun getTabIcon(iconIndex: Int) = when (iconIndex) {
         0 -> R.drawable.ic_artist
-        1 -> R.drawable.ic_music_note
-        2 -> R.drawable.ic_folder
+        1 -> R.drawable.ic_library_music
+        2 -> R.drawable.ic_music_note
+        3 -> R.drawable.ic_folder
         else -> R.drawable.ic_settings
     }
 
