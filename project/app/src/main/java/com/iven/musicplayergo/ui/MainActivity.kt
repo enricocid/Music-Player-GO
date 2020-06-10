@@ -592,7 +592,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 ThemeHelper.updateIconTint(
                     mNowPlayingControlsBinding.npRepeat,
-                    if (mMediaPlayerHolder.isRepeat1X || mMediaPlayerHolder.isLoop) {
+                    if (mMediaPlayerHolder.isRepeat1X || mMediaPlayerHolder.isLooping) {
                         mResolvedAccentColor
                     } else {
                         mResolvedIconsColor
@@ -803,7 +803,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     mNowPlayingControlsBinding.npRepeat,
                     mResolvedIconsColor
                 )
-                mMediaPlayerHolder.isRepeat1X or mMediaPlayerHolder.isLoop -> {
+                mMediaPlayerHolder.isRepeat1X or mMediaPlayerHolder.isLooping -> {
                     ThemeHelper.updateIconTint(
                         mNowPlayingControlsBinding.npRepeat,
                         mResolvedAccentColor
@@ -893,7 +893,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onHandleFocusPref() {
-        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) if (goPreferences.isFocusEnabled) mMediaPlayerHolder.tryToGetAudioFocus() else mMediaPlayerHolder.giveUpAudioFocus()
+        if (isMediaPlayerHolder) {
+            mMediaPlayerHolder.onFocusPrefChanged(goPreferences.isFocusEnabled)
+        }
     }
 
     override fun onArtistOrFolderSelected(artistOrFolder: String, launchedBy: LaunchedBy) {
@@ -1075,7 +1077,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             )
         }
 
-        override fun onFocusLoss() {
+        override fun onSaveSong() {
             saveSongToPref()
         }
     }

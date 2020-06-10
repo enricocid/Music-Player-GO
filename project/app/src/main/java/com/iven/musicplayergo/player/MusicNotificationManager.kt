@@ -32,6 +32,8 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         @SuppressLint("RestrictedApi")
         get() = mNotificationBuilder.mActions
 
+    private var sNotificationForeground = false
+
     private fun playerAction(action: String): PendingIntent {
 
         val pauseIntent = Intent()
@@ -45,7 +47,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         )
     }
 
-    fun createNotification(): Notification {
+    private fun createNotification(): Notification {
 
         mNotificationBuilder = NotificationCompat.Builder(playerService, CHANNEL_ID)
 
@@ -77,6 +79,27 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         return mNotificationBuilder.build()
     }
 
+    fun startNotificationForeground() {
+        if (!sNotificationForeground) {
+            playerService.startForeground(
+                GoConstants.NOTIFICATION_ID,
+                createNotification()
+            )
+            sNotificationForeground = true
+        } else {
+            updateNotificationText()
+            updatePlayPauseAction()
+            updateRepeatIcon()
+            updateNotification()
+        }
+    }
+
+    fun pauseNotificationForeground() {
+        sNotificationForeground = false
+        updatePlayPauseAction()
+        updateNotification()
+    }
+
     fun updateNotification() {
         mNotificationManager
             .notify(
@@ -85,7 +108,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             )
     }
 
-    fun updateNotificationText() {
+    private fun updateNotificationText() {
         val mediaPlayerHolder = playerService.mediaPlayerHolder
         mediaPlayerHolder.currentSong.first?.let { song ->
             mNotificationBuilder.setContentText(
@@ -109,7 +132,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         }
     }
 
-    fun updatePlayPauseAction() {
+    private fun updatePlayPauseAction() {
         if (::mNotificationBuilder.isInitialized) mNotificationActions[2] =
             notificationAction(GoConstants.PLAY_PAUSE_ACTION)
     }

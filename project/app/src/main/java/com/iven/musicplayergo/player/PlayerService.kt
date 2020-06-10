@@ -23,6 +23,7 @@ class PlayerService : Service() {
 
     // Media player
     lateinit var mediaPlayerHolder: MediaPlayerHolder
+    private lateinit var mNotificationActionsReceiver: NotificationReceiver
     lateinit var musicNotificationManager: MusicNotificationManager
     var isRestoredFromPause = false
 
@@ -88,9 +89,11 @@ class PlayerService : Service() {
 
     override fun onBind(intent: Intent): IBinder {
         if (!::mediaPlayerHolder.isInitialized) {
-            mediaPlayerHolder = MediaPlayerHolder(this).apply {
-                registerActionsReceiver()
-            }
+            mediaPlayerHolder = MediaPlayerHolder(this)
+            mNotificationActionsReceiver = NotificationReceiver(this, mediaPlayerHolder)
+            val intentFilter = mNotificationActionsReceiver.createIntentFilter()
+            registerReceiver(mNotificationActionsReceiver, intentFilter)
+
             musicNotificationManager = MusicNotificationManager(this)
         }
         return binder
@@ -104,6 +107,14 @@ class PlayerService : Service() {
     inner class LocalBinder : Binder() {
         // Return this instance of PlayerService so we can call public methods
         fun getService() = this@PlayerService
+    }
+
+    fun unregisterActionsReceiver() {
+        try {
+            unregisterReceiver(mNotificationActionsReceiver)
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        }
     }
 
     private fun handleMediaIntent(intent: Intent?): Boolean {
