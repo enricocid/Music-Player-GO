@@ -242,7 +242,7 @@ object ThemeHelper {
     @JvmStatic
     fun getRepeatIcon(mediaPlayerHolder: MediaPlayerHolder) = when {
         mediaPlayerHolder.isRepeat1X -> R.drawable.ic_repeat_one
-        mediaPlayerHolder.isLoop -> R.drawable.ic_repeat
+        mediaPlayerHolder.isLooping -> R.drawable.ic_repeat
         else -> R.drawable.ic_repeat_one_notif_disabled
     }
 }

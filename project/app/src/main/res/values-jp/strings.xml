@@ -1,0 +1,108 @@
+<resources>
+
+    <!-- Dialogs / Buttons -->
+    <string name="yes">はい</string>
+    <string name="no">番号</string>
+    <string name="on_close_activity">再生を停止しますか？</string>
+    <string name="queue_songs_clear">キューはクリアされます。継続する？</string>
+    <string name="loved_songs_clear">大好きな曲はクリアされます。継続する？</string>
+    <string name="loved_song_remove">%1s (%2s) 大好きな曲から削除されます。継続する？</string>
+
+    <!-- Main - Fragments titles -->
+    <string name="artists">アーティスト</string>
+    <string name="songs">曲</string>
+    <string name="folders">フォルダー</string>
+
+    <!-- Main - Artists/Folder RecyclerViews items  -->
+    <string name="artist_info">%1d&#160;アルバム,&#160;%2d&#160;曲</string>
+    <string name="folder_info">%1d&#160;曲</string>
+
+    <!-- Popup/Menu titles -->
+    <string name="sorting_pref">仕分け</string>
+    <string name="sorting_pref_default">デフォルト</string>
+    <string name="sorting_pref_track">トラック番号で。 &#8595;</string>
+    <string name="sorting_pref_track_inv">トラック番号で。&#8593;</string>
+    <string name="shuffle_am">すべての曲をシャッフルする</string>
+    <string name="shuffle_sa">選択したアルバムをシャッフル</string>
+    <string name="queue_add">キューに追加する</string>
+    <string name="loved_song_add">お気に入りの曲に追加</string>
+    <string name="filter_popup_title">隠す</string>
+
+    <!-- Queue -->
+    <string name="queue">キュー</string>
+    <string name="queue_song_add">%1s キューに追加されました！</string>
+    <string name="queue_song_remove">%1s キューから削除されます。継続する？</string>
+
+    <!-- Loved songs -->
+    <string name="loved_songs">大好きな曲</string>
+    <string name="loved_song_added">%1s (%2s) 愛する曲に追加</string>
+
+    <!-- Messages - Errors -->
+    <string name="error_no_loved_songs">大好きな曲は見つかりませんでした！</string>
+    <string name="error_no_music">音楽が見つかりません :(</string>
+    <string name="error_not_ready">音楽ライブラリの読み込み中に問題が発生しました！ :( これは、SDカードがマウント解除され、Android \のMediaStoreがデータベースレコードを再構築する必要があるためである可能性があります。解決策：後で再試行してください。</string>
+    <string name="error_unknown_unsupported">問題が発生しました！ :( 選択した形式がサポートされていないか、フォルダにアクセスできません（アプリのせいではありません）。</string>
+    <string name="error_media_buttons">問題が発生しました！ :(アプリから再生を再開してください。</string>
+    <string name="error_no_browser">ブラウザが見つかりません！</string>
+    <string name="error_bad_id">最初に曲を再生してください！</string>
+    <string name="error_no_eq">イコライザーが見つかりません！</string>
+    <string name="error_no_filter">フィルターが見つかりません！</string>
+    <string name="error_no_queue">キューに入っている曲はありません！</string>
+
+    <!-- Messages - Permission rationale -->
+    <string name="perm_rationale">音楽プレーヤーGOが音楽を再生するには、ファイルにアクセスする必要があります。</string>
+
+    <!-- Messages - Repeat -->
+    <string name="repeat_enabled">1xを有効にして繰り返します！</string>
+    <string name="repeat_loop_enabled">繰り返す &#8734; 有効!</string>
+    <string name="repeat_disabled">繰り返す &#8734; 無効！</string>
+
+    <!-- Preferences - Categories -->
+    <string name="settings">設定</string>
+    <string name="category_general">一般的な</string>
+
+    <!-- Preferences - Git page -->
+    <string name="open_git_pref_title">GitHubページ</string>
+    <string name="open_git_pref_summary">詳細については、プロジェクトのページを開いてください:)</string>
+
+    <!-- Preferences - FAQ -->
+    <string name="faq_summary">FAQおよびサポートされているメディア形式 :P</string>
+
+    <!-- Preferences - Found songs -->
+    <string name="found_songs_pref_title">見つかった曲: %1d</string>
+
+    <!-- Preferences - Themes -->
+    <string name="theme_pref_title">テーマ</string>
+    <string name="theme_pref_light_title">光</string>
+    <string name="theme_pref_dark_title">闇</string>
+    <string name="theme_pref_auto_title">自動</string>
+
+    <!-- Preferences - Accent -->
+    <string name="accent_pref_title">アクセント</string>
+
+    <!-- Preferences - Edge-to-edge -->
+    <string name="edge_pref_summary_on">エッジツーエッジを無効にする</string>
+    <string name="edge_pref_summary_off">エッジツーエッジを有効にする</string>
+
+    <!-- Preferences - Active tabs -->
+    <string name="active_fragments_pref_title">アクティブなタブ</string>
+    <string name="active_fragments_pref_warning">すべてのタブを削除することはできません！ :P</string>
+
+    <!-- Preferences - Fine volume control -->
+    <string name="precise_volume_pref_title">正確な音量調節</string>
+    <string name="precise_volume_pref_summary_on">正確な音量調節を無効にする</string>
+    <string name="precise_volume_pref_summary_off">正確な音量調節を可能にする</string>
+
+    <!-- Preferences - Focus -->
+    <string name="focus_pref_title">オーディオフォーカス</string>
+    <string name="focus_pref_summary_on">オーディオフォーカス管理を無効にする</string>
+    <string name="focus_pref_summary_off">オーディオフォーカス管理を有効にする</string>
+
+    <!-- Preferences - Headsets -->
+    <string name="headset_pref_title">ヘッドセットプラグ</string>
+    <string name="headset_pref_summary_on">ヘッドセットプラグ管理を無効にする</string>
+    <string name="headset_pref_summary_off">ヘッドセットプラグ管理を有効にする</string>
+
+    <!-- Preferences - Filters -->
+    <string name="filter_pref_title">フィルター</string>
+</resources>

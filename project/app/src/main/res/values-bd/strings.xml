@@ -1,0 +1,108 @@
+<resources>
+
+    <!-- Dialogs / Buttons -->
+    <string name="yes">হ্যাঁ</string>
+    <string name="no">না</string>
+    <string name="on_close_activity">আপনি কি প্লেব্যাক থামাতে চান?</string>
+    <string name="queue_songs_clear">সারি পরিষ্কার করা হবে। চালিয়ে যেতে চান?</string>
+    <string name="loved_songs_clear">পছন্দসই গানগুলি সাফ হয়ে যাবে। চালিয়ে যেতে চান?</string>
+    <string name="loved_song_remove">%1s (%2s) প্রিয় গান থেকে মুছে ফেলা হবে। চালিয়ে যেতে চান?</string>
+
+    <!-- Main - Fragments titles -->
+    <string name="artists">শিল্পী</string>
+    <string name="songs">গান</string>
+    <string name="folders">ফোল্ডার</string>
+
+    <!-- Main - Artists/Folder RecyclerViews items  -->
+    <string name="artist_info">%1d&#160;অ্যালবাম,&#160;%2d&#160;গান</string>
+    <string name="folder_info">%1d&#160;গান</string>
+
+    <!-- Popup/Menu titles -->
+    <string name="sorting_pref">শ্রেণীবিভাজন</string>
+    <string name="sorting_pref_default">ডিফল্ট</string>
+    <string name="sorting_pref_track">ট্র্যাক দ্বারা। &#8595;</string>
+    <string name="sorting_pref_track_inv">ট্র্যাক দ্বারা। &#8593;</string>
+    <string name="shuffle_am">সমস্ত গান পরিবর্তন করুন</string>
+    <string name="shuffle_sa">নির্বাচিত অ্যালবাম পরিবর্তন করুন</string>
+    <string name="queue_add">সারিতে যোগ করুন</string>
+    <string name="loved_song_add">প্রিয় গানগুলিতে যুক্ত করুন</string>
+    <string name="filter_popup_title">লুকান</string>
+
+    <!-- Queue -->
+    <string name="queue">কিউ</string>
+    <string name="queue_song_add">%1s কাতারে যুক্ত!</string>
+    <string name="queue_song_remove">%1s সারি থেকে মুছে ফেলা হবে। চালিয়ে যেতে চান?</string>
+
+    <!-- Loved songs -->
+    <string name="loved_songs">পছন্দ হয়েছে গান</string>
+    <string name="loved_song_added">%1s (%2s) প্রিয় গানগুলিতে যুক্ত হয়েছে</string>
+
+    <!-- Messages - Errors -->
+    <string name="error_no_loved_songs">কোনও প্রিয় গান পাওয়া গেল না!</string>
+    <string name="error_no_music">কোনও সংগীত পাওয়া যায়নি :(</string>
+    <string name="error_not_ready">গানের লাইব্রেরিটি লোড করার সময় একটি সমস্যা হয়েছিল! :( অ্যান্ড্রয়েডের মিডিয়া স্টোরকে তার ডাটাবেস রেকর্ডগুলি পুনর্নির্মাণে বাধ্য করা, এসডি কার্ডটি আনমাউন্ট হওয়ার কারণে হতে পারে SD কার্ড সমাধান: পরে আবার চেষ্টা করুন।</string>
+    <string name="error_unknown_unsupported">কিছু না বরং বাঁকানো! :( পেরহপস টি সাকশন ফর্ম্যাট 2 নোট সমর্থিত, তার টি ফোল্ডারটি দোষী নয় (নোট এন অ্যাপ্লিকেশন এর দোষ!)।</string>
+    <string name="error_media_buttons">কিছু ভুল হয়েছে! :( অ্যাপ্লিকেশন থেকে প্লেব্যাক পুনরায় আরম্ভ করুন।</string>
+    <string name="error_no_browser">কোনও ব্রাউজার পাওয়া যায়নি!</string>
+    <string name="error_bad_id">প্রথমে একটি গান বাজান!</string>
+    <string name="error_no_eq">কোন সমান পাওয়া যায় নি!</string>
+    <string name="error_no_filter">কোন ফিল্টার পাওয়া যায় নি!</string>
+    <string name="error_no_queue">কোনও গানের সারি নেই!</string>
+
+    <!-- Messages - Permission rationale -->
+    <string name="perm_rationale">Music Player GO সঙ্গীত খেলতে আপনার ফাইলগুলিতে অ্যাক্সেস দরকার!</string>
+
+    <!-- Messages - Repeat -->
+    <string name="repeat_enabled">পুনরাবৃত্তি 1x সক্ষম!</string>
+    <string name="repeat_loop_enabled">পুনরাবৃত্তি &#8734; সক্রিয়!</string>
+    <string name="repeat_disabled">পুনরাবৃত্তি &#8734; অক্ষম!</string>
+
+    <!-- Preferences - Categories -->
+    <string name="settings">সেটিংস</string>
+    <string name="category_general">সাধারণ</string>
+
+    <!-- Preferences - Git page -->
+    <string name="open_git_pref_title">GitHub পৃষ্ঠা</string>
+    <string name="open_git_pref_summary">আরও তথ্যের জন্য প্রকল্পের পৃষ্ঠাটি খুলুন :)</string>
+
+    <!-- Preferences - FAQ -->
+    <string name="faq_summary">FAQ এবং সমর্থিত মিডিয়া ফর্ম্যাটগুলি :P</string>
+
+    <!-- Preferences - Found songs -->
+    <string name="found_songs_pref_title">গান পেয়েছি: %1d</string>
+
+    <!-- Preferences - Themes -->
+    <string name="theme_pref_title">বিষয়</string>
+    <string name="theme_pref_light_title">আলো</string>
+    <string name="theme_pref_dark_title">অন্ধকার</string>
+    <string name="theme_pref_auto_title">স্বয়ংক্রিয়</string>
+
+    <!-- Preferences - Accent -->
+    <string name="accent_pref_title">স্বরাঘাত</string>
+
+    <!-- Preferences - Edge-to-edge -->
+    <string name="edge_pref_summary_on">প্রান্ত থেকে প্রান্ত অক্ষম করুন</string>
+    <string name="edge_pref_summary_off">প্রান্ত থেকে প্রান্ত সক্ষম করুন</string>
+
+    <!-- Preferences - Active tabs -->
+    <string name="active_fragments_pref_title">সক্রিয় ট্যাবগুলি</string>
+    <string name="active_fragments_pref_warning">আপনি সব ট্যাব সরাতে পারবেন না! :P</string>
+
+    <!-- Preferences - Fine volume control -->
+    <string name="precise_volume_pref_title">সঠিক ভলিউম নিয়ন্ত্রণ</string>
+    <string name="precise_volume_pref_summary_on">সুনির্দিষ্ট ভলিউম নিয়ন্ত্রণ অক্ষম করুন</string>
+    <string name="precise_volume_pref_summary_off">সুনির্দিষ্ট ভলিউম নিয়ন্ত্রণ সক্ষম করুন</string>
+
+    <!-- Preferences - Focus -->
+    <string name="focus_pref_title">অডিও ফোকাস</string>
+    <string name="focus_pref_summary_on">অডিও ফোকাস পরিচালনা অক্ষম করুন</string>
+    <string name="focus_pref_summary_off">অডিও ফোকাস পরিচালনা সক্ষম করুন</string>
+
+    <!-- Preferences - Headsets -->
+    <string name="headset_pref_title">হেডসেট প্লাগ</string>
+    <string name="headset_pref_summary_on">হেডসেট প্লাগ পরিচালনা অক্ষম করুন</string>
+    <string name="headset_pref_summary_off">হেডসেট প্লাগ পরিচালনা সক্ষম করুন</string>
+
+    <!-- Preferences - Filters -->
+    <string name="filter_pref_title">ফিল্টার</string>
+</resources>
