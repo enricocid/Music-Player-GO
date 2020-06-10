@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
@@ -65,16 +64,9 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 // item is a `val` in `this` here
                 withDataSource(mDataSource)
 
-                if (ThemeHelper.isDeviceLand(resources)) {
-                    withLayoutManager(
-                        GridLayoutManager(
-                            requireContext(),
-                            3
-                        )
-                    )
-                } else addItemDecoration(
+                if (!ThemeHelper.isDeviceLand(resources)) {
                     ThemeHelper.getRecyclerViewDivider(requireContext())
-                )
+                }
 
                 withItem<Music, SongsViewHolder>(R.layout.music_item) {
                     onBind(::SongsViewHolder) { _, item ->

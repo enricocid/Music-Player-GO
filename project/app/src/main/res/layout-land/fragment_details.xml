@@ -102,6 +102,8 @@
                 android:id="@+id/songs_rv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
                 android:overScrollMode="never"
                 android:scrollbars="none" />
         </LinearLayout>

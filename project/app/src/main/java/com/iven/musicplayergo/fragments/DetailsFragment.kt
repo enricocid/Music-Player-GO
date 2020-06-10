@@ -11,7 +11,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceOf
@@ -238,9 +237,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 // item is a `val` in `this` here
                 withDataSource(mSongsDataSource)
 
-                if (sLandscape) {
-                    withLayoutManager(GridLayoutManager(requireContext(), 2))
-                } else {
+                if (!sLandscape) {
                     addItemDecoration(ThemeHelper.getRecyclerViewDivider(requireContext()))
                 }
 

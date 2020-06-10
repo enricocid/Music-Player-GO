@@ -23,6 +23,7 @@
         android:id="@+id/albums_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:overScrollMode="never" />
 
     <!-- SELECTED ALBUM -->

@@ -9,7 +9,6 @@ import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
@@ -96,12 +95,11 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                 // item is a `val` in `this` here
                 withDataSource(mDataSource)
 
-                if (sLandscape)
-                    withLayoutManager(GridLayoutManager(requireContext(), 3))
-                else
+                if (!sLandscape) {
                     addItemDecoration(
                         ThemeHelper.getRecyclerViewDivider(requireContext())
                     )
+                }
 
                 withItem<String, GenericViewHolder>(R.layout.generic_item) {
 
@@ -112,21 +110,23 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                     }
 
                     onClick {
-                        if (::mUIControlInterface.isInitialized)
+                        if (::mUIControlInterface.isInitialized) {
                             mUIControlInterface.onArtistOrFolderSelected(
                                 item,
                                 launchedBy
                             )
+                        }
                     }
 
                     onLongClick { index ->
-                        if (::mUIControlInterface.isInitialized)
+                        if (::mUIControlInterface.isInitialized) {
                             DialogHelper.showHidePopup(
                                 context,
                                 findViewHolderForAdapterPosition(index)?.itemView,
                                 item,
                                 mUIControlInterface
                             )
+                        }
                     }
                 }
             }
