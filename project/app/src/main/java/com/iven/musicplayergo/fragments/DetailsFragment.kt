@@ -263,8 +263,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             } else {
                                 MusicOrgHelper.getAlbumSongs(
                                     item.artist,
-                                    item.album,
-                                    mMusicRepository.deviceAlbumsByArtist
+                                    item.album
                                 )
                             }
 

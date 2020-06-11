@@ -110,8 +110,7 @@ class QueueAdapter(
                             context,
                             Pair(song, adapterPosition),
                             queueSongsDialog,
-                            this@QueueAdapter,
-                            mediaPlayerHolder
+                            this@QueueAdapter
                         )
                     }
                     return@setOnLongClickListener true

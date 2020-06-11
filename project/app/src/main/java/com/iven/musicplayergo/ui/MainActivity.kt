@@ -148,8 +148,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             } else {
                 if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) {
                     DialogHelper.stopPlaybackDialog(
-                        this,
-                        mMediaPlayerHolder
+                        this
                     )
                 } else {
                     onCloseActivity()
@@ -418,9 +417,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     selectedArtistOrFolder,
                     launchedBy,
                     MusicOrgHelper.getPlayingAlbumPosition(
-                        selectedArtistOrFolder,
-                        mMusicRepository.deviceAlbumsByArtist,
-                        mMediaPlayerHolder
+                        selectedArtistOrFolder
                     )
                 )
             supportFragmentManager.addFragment(mDetailsFragment, GoConstants.DETAILS_FRAGMENT_TAG)
@@ -448,8 +445,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mPlayerControlsPanelBinding.queueButton.setOnLongClickListener {
             if (checkIsPlayer(true) && mMediaPlayerHolder.isQueue) {
                 DialogHelper.showClearQueueDialog(
-                    this,
-                    mMediaPlayerHolder
+                    this
                 )
             }
             return@setOnLongClickListener true
@@ -657,7 +653,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun saveSongToPref() {
         if (::mMediaPlayerHolder.isInitialized && !mMediaPlayerHolder.isPlaying || mMediaPlayerHolder.state == GoConstants.PAUSED) mMediaPlayerHolder.apply {
-            MusicOrgHelper.saveLatestSong(currentSong.first, playerPosition, isPlayingFromFolder)
+            MusicOrgHelper.saveLatestSong(currentSong.first, isPlayingFromFolder)
         }
     }
 
@@ -720,15 +716,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     isSongRestoredFromPrefs = goPreferences.latestPlayedSong != null
 
                     val song =
-                        if (isSongRestoredFromPrefs) MusicOrgHelper.getSongForRestore(
-                            goPreferences.latestPlayedSong,
-                            mMusicRepository.deviceMusicList
-                        ) else mMusicRepository.randomMusic
+                        if (isSongRestoredFromPrefs) {
+                            MusicOrgHelper.getSongForRestore(
+                                goPreferences.latestPlayedSong
+                            )
+                        } else {
+                            mMusicRepository.randomMusic
+                        }
 
                     val songs = MusicOrgHelper.getAlbumSongs(
                         song.artist,
-                        song.album,
-                        mMusicRepository.deviceAlbumsByArtist
+                        song.album
                     )
 
                     if (!songs.isNullOrEmpty()) {
@@ -877,9 +875,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 } else {
                     mDetailsFragment.tryToSnapToAlbumPosition(
                         MusicOrgHelper.getPlayingAlbumPosition(
-                            selectedArtistOrFolder,
-                            mMusicRepository.deviceAlbumsByArtist,
-                            mMediaPlayerHolder
+                            selectedArtistOrFolder
                         )
                     )
                 }
@@ -892,10 +888,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onCloseActivity() {
-        if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) DialogHelper.stopPlaybackDialog(
-            this,
-            mMediaPlayerHolder
-        ) else finishAndRemoveTask()
+        if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) {
+            DialogHelper.stopPlaybackDialog(
+                this
+            )
+        } else {
+            finishAndRemoveTask()
+        }
     }
 
     override fun onHandleFocusPref() {
@@ -913,7 +912,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun startPlayback(song: Music?, album: List<Music>?, launchedBy: LaunchedBy) {
         if (isMediaPlayerHolder) {
-            if (!mPlayerService.isRunning) startService(mBindingIntent)
+            if (::mPlayerService.isInitialized && !mPlayerService.isRunning) startService(
+                mBindingIntent
+            )
             mMediaPlayerHolder.apply {
                 setCurrentSong(song, album, isFromQueue = false, isFolderAlbum = launchedBy)
                 initMediaPlayer(song)
@@ -988,7 +989,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     fun openQueueDialog(view: View) {
         if (checkIsPlayer(false) && mMediaPlayerHolder.queueSongs.isNotEmpty()) {
-            mQueueDialog = DialogHelper.showQueueSongsDialog(this, mMediaPlayerHolder)
+            mQueueDialog = DialogHelper.showQueueSongsDialog(this)
             mQueueAdapter = mQueueDialog.getListAdapter() as QueueAdapter
         } else {
             getString(R.string.error_no_queue).toToast(this)
@@ -996,10 +997,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     fun openLovedSongsDialog(view: View) {
-        if (!goPreferences.lovedSongs.isNullOrEmpty())
-            DialogHelper.showLovedSongsDialog(this, this, mMediaPlayerHolder, mMusicRepository)
-        else
+        if (!goPreferences.lovedSongs.isNullOrEmpty()) {
+            DialogHelper.showLovedSongsDialog(this, this)
+        } else {
             getString(R.string.error_no_loved_songs).toToast(this)
+        }
     }
 
     //method to handle intent to play audio file from external app
@@ -1015,8 +1017,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 //get album songs and sort them
                 val albumSongs = MusicOrgHelper.getAlbumSongs(
                     song?.artist,
-                    song?.album,
-                    mMusicRepository.deviceAlbumsByArtist
+                    song?.album
                 )
 
                 onSongSelected(song, albumSongs, LaunchedBy.ArtistView)

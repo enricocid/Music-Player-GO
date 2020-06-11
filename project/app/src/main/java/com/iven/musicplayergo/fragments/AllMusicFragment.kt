@@ -85,8 +85,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                             item,
                             MusicOrgHelper.getAlbumSongs(
                                 item.artist,
-                                item.album,
-                                musicRepository.deviceAlbumsByArtist
+                                item.album
                             ),
                             LaunchedBy.ArtistView
                         )

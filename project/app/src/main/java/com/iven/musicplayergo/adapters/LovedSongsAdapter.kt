@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
-import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.extensions.toSpanned
@@ -21,9 +20,7 @@ import com.iven.musicplayergo.ui.UIControlInterface
 class LovedSongsAdapter(
     private val context: Context,
     private val lovedSongsDialog: MaterialDialog,
-    private val uiControlInterface: UIControlInterface,
-    private val mediaPlayerHolder: MediaPlayerHolder,
-    private val musicRepository: MusicRepository
+    private val uiControlInterface: UIControlInterface
 ) :
     RecyclerView.Adapter<LovedSongsAdapter.LoveHolder>() {
 
@@ -78,15 +75,15 @@ class LovedSongsAdapter(
 
             itemView.apply {
                 setOnClickListener {
-                    mediaPlayerHolder.isSongFromLovedSongs = Pair(true, lovedSong?.startFrom!!)
-                    MusicOrgHelper.getSongForRestore(lovedSong, musicRepository.deviceMusicList)
+                    MediaPlayerHolder.getInstance().isSongFromLovedSongs =
+                        Pair(true, lovedSong?.startFrom!!)
+                    MusicOrgHelper.getSongForRestore(lovedSong)
                         .apply {
                             uiControlInterface.onSongSelected(
                                 this,
                                 MusicOrgHelper.getAlbumSongs(
                                     artist,
-                                    album,
-                                    musicRepository.deviceAlbumsByArtist
+                                    album
                                 ),
                                 lovedSong.launchedBy
                             )

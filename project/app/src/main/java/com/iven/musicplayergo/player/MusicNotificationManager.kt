@@ -109,7 +109,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     }
 
     private fun updateNotificationText() {
-        val mediaPlayerHolder = playerService.mediaPlayerHolder
+        val mediaPlayerHolder = MediaPlayerHolder.getInstance()
         mediaPlayerHolder.currentSong.first?.let { song ->
             mNotificationBuilder.setContentText(
                 playerService.getString(
@@ -146,11 +146,12 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     }
 
     private fun notificationAction(action: String): NotificationCompat.Action {
+        val mediaPlayerHolder = MediaPlayerHolder.getInstance()
         var icon =
-            if (playerService.mediaPlayerHolder.state != GoConstants.PAUSED) R.drawable.ic_pause else R.drawable.ic_play
+            if (mediaPlayerHolder.state != GoConstants.PAUSED) R.drawable.ic_pause else R.drawable.ic_play
         when (action) {
             GoConstants.REPEAT_ACTION -> icon =
-                ThemeHelper.getRepeatIcon(playerService.mediaPlayerHolder)
+                ThemeHelper.getRepeatIcon(mediaPlayerHolder)
             GoConstants.PREV_ACTION -> icon = R.drawable.ic_skip_previous
             GoConstants.NEXT_ACTION -> icon = R.drawable.ic_skip_next
             GoConstants.CLOSE_ACTION -> icon = R.drawable.ic_close

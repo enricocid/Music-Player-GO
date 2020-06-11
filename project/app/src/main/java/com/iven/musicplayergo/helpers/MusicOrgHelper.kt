@@ -5,6 +5,7 @@ import android.content.ContentResolver
 import android.content.res.Resources
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
+import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.toFormattedYear
 import com.iven.musicplayergo.extensions.toSavedMusic
@@ -24,15 +25,13 @@ object MusicOrgHelper {
     // if selected artist differs from played artist -1 will be returned
     @JvmStatic
     fun getPlayingAlbumPosition(
-        selectedArtist: String?,
-        deviceAlbumsByArtist: MutableMap<String, List<Album>>?,
-        mediaPlayerHolder: MediaPlayerHolder
+        selectedArtist: String?
     ) = try {
+        val mediaPlayerHolder = MediaPlayerHolder.getInstance()
         val currentSong = mediaPlayerHolder.currentSong.first
         val album = getAlbumFromList(
             selectedArtist,
-            currentSong?.album,
-            deviceAlbumsByArtist
+            currentSong?.album
         )
         album.second
     } catch (e: Exception) {
@@ -43,13 +42,11 @@ object MusicOrgHelper {
     @JvmStatic
     fun getAlbumSongs(
         artist: String?,
-        album: String?,
-        deviceAlbumsByArtist: MutableMap<String, List<Album>>?
+        album: String?
     ) = try {
         getAlbumFromList(
             artist,
-            album,
-            deviceAlbumsByArtist
+            album
         ).first.music
     } catch (e: Exception) {
         e.printStackTrace()
@@ -60,9 +57,9 @@ object MusicOrgHelper {
     // Returns a pair of album and its position given a list of albums
     fun getAlbumFromList(
         artist: String?,
-        album: String?,
-        deviceAlbumsByArtist: MutableMap<String, List<Album>>?
+        album: String?
     ): Pair<Album, Int> {
+        val deviceAlbumsByArtist = MusicRepository.getInstance().deviceAlbumsByArtist
         val albums = deviceAlbumsByArtist?.get(artist)
         return try {
             val position = albums?.indexOfFirst { it.title == album }!!
@@ -74,14 +71,18 @@ object MusicOrgHelper {
     }
 
     @JvmStatic
-    fun getSongForRestore(savedMusic: SavedMusic?, deviceSongs: MutableList<Music>) =
-        deviceSongs.firstOrNull { s ->
+    fun getSongForRestore(savedMusic: SavedMusic?): Music {
+        val deviceSongs = MusicRepository.getInstance().deviceMusicList
+        return deviceSongs.firstOrNull { s ->
             s.artist == savedMusic?.artist && s.title == savedMusic?.title && s.displayName == savedMusic?.displayName
                     && s.year == savedMusic?.year && s.duration == savedMusic.duration && s.album == savedMusic.album
         } ?: deviceSongs.random()
+    }
+
 
     @JvmStatic
-    fun saveLatestSong(latestSong: Music?, playerPosition: Int, launchedBy: LaunchedBy) {
+    fun saveLatestSong(latestSong: Music?, launchedBy: LaunchedBy) {
+        val playerPosition = MediaPlayerHolder.getInstance().playerPosition
         latestSong?.let { musicToSave ->
             val toSave = musicToSave.toSavedMusic(playerPosition, launchedBy)
             if (goPreferences.latestPlayedSong != toSave) {

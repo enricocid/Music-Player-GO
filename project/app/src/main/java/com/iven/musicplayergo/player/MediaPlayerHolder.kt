@@ -34,7 +34,7 @@ class MediaPlayerHolder :
     MediaPlayer.OnPreparedListener {
 
     // Media player
-    private lateinit var mediaPlayer: MediaPlayer
+    lateinit var mediaPlayer: MediaPlayer
     var state = GoConstants.PAUSED
     val isMediaPlayer get() = ::mediaPlayer.isInitialized
     val isPlaying get() = isMediaPlayer && mediaPlayer.isPlaying
@@ -343,9 +343,7 @@ class MediaPlayerHolder :
                 mediaPlayer = MediaPlayer()
 
                 mAudioFocusHandler = AudioFocusHandler(
-                    mPlayerService.getSystemService(AUDIO_SERVICE) as AudioManager,
-                    this,
-                    mediaPlayer
+                    mPlayerService.getSystemService(AUDIO_SERVICE) as AudioManager
                 )
 
                 mMusicNotificationManager = mPlayerService.musicNotificationManager

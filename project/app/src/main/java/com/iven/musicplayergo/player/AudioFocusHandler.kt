@@ -4,7 +4,6 @@ import android.annotation.TargetApi
 import android.media.AudioAttributes
 import android.media.AudioFocusRequest
 import android.media.AudioManager
-import android.media.MediaPlayer
 import android.os.Handler
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.goPreferences
@@ -25,36 +24,35 @@ private const val AUDIO_FOCUSED = 1
 
 //https://developer.android.com/guide/topics/media-apps/audio-focus
 class AudioFocusHandler(
-    private val audioManager: AudioManager,
-    private val mediaPlayerHolder: MediaPlayerHolder,
-    private val mediaPlayerInstance: MediaPlayer
+    private val audioManager: AudioManager
 ) {
 
     private val sFocusEnabled get() = goPreferences.isFocusEnabled
     private val mHandler = Handler()
     private var mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
     private var sPlayOnFocusGain = false
+    private val mMediaPlayerHolder get() = MediaPlayerHolder.getInstance()
 
     private val mOnAudioFocusChangeListener =
         AudioManager.OnAudioFocusChangeListener { focusChange ->
-            mediaPlayerHolder.apply {
-                if (mediaPlayerHolder.isMediaPlayer && mediaPlayerHolder.isPlay && mediaPlayerHolder.isPlaying) {
+            mMediaPlayerHolder.apply {
+                if (mMediaPlayerHolder.isMediaPlayer && mMediaPlayerHolder.isPlay && mMediaPlayerHolder.isPlaying) {
                     when (focusChange) {
                         AudioManager.AUDIOFOCUS_LOSS ->
                             // Permanent loss of audio focus
                             // Pause playback immediately
-                            mediaPlayerHolder.pauseMediaPlayer()
+                            mMediaPlayerHolder.pauseMediaPlayer()
 
                         AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
                             // Pause playback
-                            mediaPlayerHolder.pauseMediaPlayer()
+                            mMediaPlayerHolder.pauseMediaPlayer()
                             sPlayOnFocusGain =
-                                mediaPlayerHolder.isMediaPlayer && mediaPlayerHolder.state == GoConstants.PLAYING || mediaPlayerHolder.state == GoConstants.RESUMED
+                                mMediaPlayerHolder.isMediaPlayer && mMediaPlayerHolder.state == GoConstants.PLAYING || mMediaPlayerHolder.state == GoConstants.RESUMED
                         }
 
                         AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> {
                             // Lower the volume, keep playing
-                            mediaPlayerInstance.setVolume(
+                            mediaPlayer.setVolume(
                                 VOLUME_DUCK,
                                 VOLUME_DUCK
                             )
@@ -66,9 +64,9 @@ class AudioFocusHandler(
                             // Your app has been granted audio focus again
                             // Raise volume to normal, restart playback if necessary
                             if (sPlayOnFocusGain) {
-                                mediaPlayerHolder.resumeMediaPlayer()
+                                mMediaPlayerHolder.resumeMediaPlayer()
                             } else {
-                                mediaPlayerInstance.setVolume(VOLUME_NORMAL, VOLUME_NORMAL)
+                                mediaPlayer.setVolume(VOLUME_NORMAL, VOLUME_NORMAL)
                             }
                         }
                     }

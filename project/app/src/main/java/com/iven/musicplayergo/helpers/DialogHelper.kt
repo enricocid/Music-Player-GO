@@ -11,7 +11,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
-import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.adapters.QueueAdapter
@@ -30,13 +29,12 @@ object DialogHelper {
 
     @JvmStatic
     fun showQueueSongsDialog(
-        context: Context,
-        mediaPlayerHolder: MediaPlayerHolder
+        context: Context
     ) = MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
         title(R.string.queue)
         val queueDialog = this
-        val queueAdapter = QueueAdapter(context, this, mediaPlayerHolder)
+        val queueAdapter = QueueAdapter(context, this, MediaPlayerHolder.getInstance())
 
         customListAdapter(queueAdapter)
 
@@ -63,7 +61,7 @@ object DialogHelper {
 
         recyclerView.addBidirectionalSwipeHandler(true) { viewHolder: RecyclerView.ViewHolder,
                                                           _: Int ->
-            mediaPlayerHolder.apply {
+            MediaPlayerHolder.getInstance().apply {
                 queueSongs.removeAt(viewHolder.adapterPosition)
                 queueAdapter.swapQueueSongs(queueSongs)
                 if (queueSongs.isEmpty()) {
@@ -80,8 +78,7 @@ object DialogHelper {
         context: Context,
         song: Pair<Music, Int>,
         queueSongsDialog: MaterialDialog,
-        queueAdapter: QueueAdapter,
-        mediaPlayerHolder: MediaPlayerHolder
+        queueAdapter: QueueAdapter
     ) {
 
         MaterialDialog(context).show {
@@ -96,7 +93,7 @@ object DialogHelper {
             )
             positiveButton(R.string.yes) {
 
-                mediaPlayerHolder.apply {
+                MediaPlayerHolder.getInstance().apply {
                     queueSongs.removeAt(song.second)
                     queueAdapter.swapQueueSongs(queueSongs)
 
@@ -113,8 +110,7 @@ object DialogHelper {
 
     @JvmStatic
     fun showClearQueueDialog(
-        context: Context,
-        mediaPlayerHolder: MediaPlayerHolder
+        context: Context
     ) {
 
         MaterialDialog(context).show {
@@ -125,7 +121,7 @@ object DialogHelper {
 
             positiveButton(R.string.yes) {
 
-                mediaPlayerHolder.apply {
+                MediaPlayerHolder.getInstance().apply {
                     if (isQueueStarted && isPlaying) {
 
                         restorePreQueueSongs()
@@ -143,9 +139,7 @@ object DialogHelper {
     @JvmStatic
     fun showLovedSongsDialog(
         context: Context,
-        uiControlInterface: UIControlInterface,
-        mediaPlayerHolder: MediaPlayerHolder,
-        musicRepository: MusicRepository
+        uiControlInterface: UIControlInterface
     ) {
 
         MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
@@ -155,9 +149,7 @@ object DialogHelper {
             val lovedSongsAdapter = LovedSongsAdapter(
                 context,
                 this,
-                uiControlInterface,
-                mediaPlayerHolder,
-                musicRepository
+                uiControlInterface
             )
 
             customListAdapter(lovedSongsAdapter)
@@ -302,10 +294,10 @@ object DialogHelper {
 
     @JvmStatic
     fun stopPlaybackDialog(
-        context: Context,
-        mediaPlayerHolder: MediaPlayerHolder
+        context: Context
     ) {
 
+        val mediaPlayerHolder = MediaPlayerHolder.getInstance()
         MaterialDialog(context).show {
 
             title(R.string.app_name)
