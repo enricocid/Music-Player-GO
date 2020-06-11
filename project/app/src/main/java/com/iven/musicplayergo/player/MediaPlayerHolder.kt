@@ -28,7 +28,7 @@ import kotlin.math.ln
  * Exposes the functionality of the [MediaPlayer]
  */
 
-class MediaPlayerHolder(private val playerService: PlayerService) :
+class MediaPlayerHolder :
     MediaPlayer.OnErrorListener,
     MediaPlayer.OnCompletionListener,
     MediaPlayer.OnPreparedListener {
@@ -99,6 +99,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private lateinit var mMusicNotificationManager: MusicNotificationManager
 
+    private lateinit var mPlayerService: PlayerService
+
+    fun setPlayerService(playerService: PlayerService) {
+        mPlayerService = playerService
+    }
+
     fun setCurrentSong(
         song: Music?,
         songs: List<Music>?,
@@ -126,12 +132,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ARTIST, currentSong.first?.album)
             putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, currentSong.first?.album)
             putString(MediaMetadataCompat.METADATA_KEY_ALBUM, currentSong.first?.album)
-            BitmapFactory.decodeResource(playerService.resources, R.drawable.ic_music_note)
+            BitmapFactory.decodeResource(mPlayerService.resources, R.drawable.ic_music_note)
                 ?.let { bmp ->
                     putBitmap(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON, bmp)
                 }
         }
-        playerService.getMediaSession().setMetadata(mediaMediaPlayerCompat.build())
+        mPlayerService.getMediaSession().setMetadata(mediaMediaPlayerCompat.build())
     }
 
     override fun onCompletion(mediaPlayer: MediaPlayer) {
@@ -159,7 +165,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     private fun updatePlaybackStatus(updateUI: Boolean) {
-        playerService.getMediaSession().setPlaybackState(
+        mPlayerService.getMediaSession().setPlaybackState(
             mStateBuilder?.setState(
                 if (state == GoConstants.RESUMED) {
                     GoConstants.PLAYING
@@ -203,7 +209,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun pauseMediaPlayer() {
         mediaPlayer.pause()
-        playerService.stopForeground(false)
+        mPlayerService.stopForeground(false)
         state = GoConstants.PAUSED
         updatePlaybackStatus(true)
         mMusicNotificationManager.pauseNotificationForeground()
@@ -337,23 +343,23 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 mediaPlayer = MediaPlayer()
 
                 mAudioFocusHandler = AudioFocusHandler(
-                    playerService.getSystemService(AUDIO_SERVICE) as AudioManager,
+                    mPlayerService.getSystemService(AUDIO_SERVICE) as AudioManager,
                     this,
                     mediaPlayer
                 )
 
-                mMusicNotificationManager = playerService.musicNotificationManager
+                mMusicNotificationManager = mPlayerService.musicNotificationManager
 
                 mediaPlayer.run {
                     EqualizerUtils.openAudioEffectSession(
-                        playerService.applicationContext,
+                        mPlayerService.applicationContext,
                         audioSessionId
                     )
 
                     setOnPreparedListener(this@MediaPlayerHolder)
                     setOnCompletionListener(this@MediaPlayerHolder)
                     setOnErrorListener(this@MediaPlayerHolder)
-                    setWakeMode(playerService, PowerManager.PARTIAL_WAKE_LOCK)
+                    setWakeMode(mPlayerService, PowerManager.PARTIAL_WAKE_LOCK)
                     setAudioAttributes(
                         AudioAttributes.Builder()
                             .setUsage(AudioAttributes.USAGE_MEDIA)
@@ -369,7 +375,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 }
             }
 
-            mediaPlayer.setDataSource(playerService, uri)
+            mediaPlayer.setDataSource(mPlayerService, uri)
             mediaPlayer.prepareAsync()
         }
     }
@@ -432,14 +438,14 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun release() {
         if (isMediaPlayer) {
             EqualizerUtils.closeAudioEffectSession(
-                playerService,
+                mPlayerService,
                 mediaPlayer.audioSessionId
             )
             mediaPlayer.release()
             mAudioFocusHandler.giveUpAudioFocus()
             stopUpdatingCallbackWithPosition()
         }
-        playerService.unregisterActionsReceiver()
+        mPlayerService.unregisterActionsReceiver()
     }
 
     fun resumeOrPause() {
@@ -464,8 +470,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             }
             else -> isRepeat1X = true
         }
-        playerService.getString(toastMessage)
-            .toToast(playerService)
+        mPlayerService.getString(toastMessage).toToast(mPlayerService)
     }
 
     fun repeat(updatePlaybackStatus: Boolean) {
@@ -533,9 +538,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun stopPlaybackService(stopPlayback: Boolean) {
-        if (playerService.isRunning && isMediaPlayer && stopPlayback) {
-            playerService.stopForeground(true)
-            playerService.stopSelf()
+        if (mPlayerService.isRunning && isMediaPlayer && stopPlayback) {
+            mPlayerService.stopForeground(true)
+            mPlayerService.stopSelf()
         }
         mediaPlayerInterface.onClose()
     }
@@ -543,6 +548,24 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun onFocusPrefChanged(enabled: Boolean) {
         if (isMediaPlayer) {
             mAudioFocusHandler.handleFocusPrefChange(enabled)
+        }
+    }
+
+    companion object {
+
+        @Volatile
+        private var INSTANCE: MediaPlayerHolder? = null
+
+        fun getInstance(): MediaPlayerHolder {
+            val tempInstance = INSTANCE
+            if (tempInstance != null) {
+                return tempInstance
+            }
+            synchronized(this) {
+                val instance = MediaPlayerHolder()
+                INSTANCE = instance
+                return instance
+            }
         }
     }
 }

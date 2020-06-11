@@ -123,14 +123,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             val binder = service as PlayerService.LocalBinder
             mPlayerService = binder.getService()
             sBound = true
-            mMediaPlayerHolder = mPlayerService.mediaPlayerHolder
-            mMediaPlayerHolder.mediaPlayerInterface = mMediaPlayerInterface
-
-            mMusicRepository = MusicRepository.getInstance()
-            mMusicViewModel.deviceMusic.observe(this@MainActivity, Observer { returnedMusic ->
-                finishSetup(returnedMusic)
-            })
-            mMusicViewModel.getDeviceMusic()
+            mMediaPlayerHolder.setPlayerService(mPlayerService)
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
@@ -212,6 +205,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 // If request is cancelled, the result arrays are empty.
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     // Permission was granted, yay! Do bind service
+                    initializeMediaPlayerInstance()
                     doBindService()
                 } else {
                     // Permission denied, boo! Error!
@@ -261,8 +255,20 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 activity = this, uiControlInterface = this
             )
         } else {
+            initializeMediaPlayerInstance()
             doBindService()
         }
+    }
+
+    private fun initializeMediaPlayerInstance() {
+        mMediaPlayerHolder = MediaPlayerHolder.getInstance()
+        mMediaPlayerHolder.mediaPlayerInterface = mMediaPlayerInterface
+
+        mMusicRepository = MusicRepository.getInstance()
+        mMusicViewModel.deviceMusic.observe(this@MainActivity, Observer { returnedMusic ->
+            finishSetup(returnedMusic)
+        })
+        mMusicViewModel.getDeviceMusic()
     }
 
     private fun notifyError(errorType: String) {
