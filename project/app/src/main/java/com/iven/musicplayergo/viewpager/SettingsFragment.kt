@@ -15,7 +15,6 @@ import com.iven.musicplayergo.interfaces.UIControlInterface
  */
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
-    private lateinit var mSettingsFragmentBinding: FragmentSettingsBinding
     private lateinit var mUIControlInterface: UIControlInterface
 
     override fun onAttach(context: Context) {
@@ -32,9 +31,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mSettingsFragmentBinding = FragmentSettingsBinding.bind(view)
-
-        mSettingsFragmentBinding.searchToolbar.setNavigationOnClickListener {
+        FragmentSettingsBinding.bind(view).searchToolbar.setNavigationOnClickListener {
             mUIControlInterface.onCloseActivity()
         }
 
