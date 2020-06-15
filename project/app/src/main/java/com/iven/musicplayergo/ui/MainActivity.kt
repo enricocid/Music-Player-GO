@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity),
                 if (!VersioningHelper.isQ()) {
                     handleTransparentSystemBars()
                 }
-                ThemeHelper.handleLightSystemBars(resources.configuration, decorView)
+                ThemeHelper.handleLightSystemBars(resources.configuration, decorView, false)
             }
             edgeToEdge {
                 MainActivityBinding.inflate(layoutInflater).root.fit { Edge.Top + Edge.Bottom }

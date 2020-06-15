@@ -1,6 +1,7 @@
 package com.iven.musicplayergo.extensions
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Color
 import android.text.Html
 import android.text.SpannableString
@@ -16,7 +17,18 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
+import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
+
+fun Window.applyEdgeToEdgeBottomSheet(resources: Resources) {
+    val view = findViewById<View>(com.google.android.material.R.id.container)
+    view?.fitsSystemWindows = false
+
+    if (goPreferences.isEdgeToEdge && !ThemeHelper.isDeviceLand(resources)) {
+        ThemeHelper.handleLightSystemBars(resources.configuration, decorView, true)
+    }
+}
 
 fun Window.handleTransparentSystemBars() {
     statusBarColor = Color.TRANSPARENT

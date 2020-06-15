@@ -74,13 +74,17 @@ object ThemeHelper {
 
     @JvmStatic
     @TargetApi(Build.VERSION_CODES.O_MR1)
-    fun handleLightSystemBars(configuration: Configuration, decorView: View) {
+    fun handleLightSystemBars(configuration: Configuration, decorView: View, isBottomSheet: Boolean) {
         val flags = decorView.systemUiVisibility
         decorView.systemUiVisibility =
             if (isThemeNight(configuration)) {
                 flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv() and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
             } else {
-                flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                if (isBottomSheet) {
+                    flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                } else {
+                    flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                }
             }
     }
 

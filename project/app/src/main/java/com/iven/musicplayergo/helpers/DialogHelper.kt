@@ -50,7 +50,7 @@ object DialogHelper {
             )
             if (goPreferences.isEdgeToEdge) {
                 window?.apply {
-                    ThemeHelper.handleLightSystemBars(context.resources.configuration, decorView)
+                    ThemeHelper.handleLightSystemBars(context.resources.configuration, decorView, false)
                     edgeToEdge {
                         recyclerView.fit { Edge.Bottom }
                         decorView.fit { Edge.Top }
@@ -166,7 +166,8 @@ object DialogHelper {
                     window?.apply {
                         ThemeHelper.handleLightSystemBars(
                             context.resources.configuration,
-                            decorView
+                            decorView,
+                            false
                         )
                         edgeToEdge {
                             recyclerView.fit { Edge.Bottom }
