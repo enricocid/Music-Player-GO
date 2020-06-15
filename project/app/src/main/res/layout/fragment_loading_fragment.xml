@@ -4,7 +4,6 @@
     android:layout_height="@android:dimen/app_icon_size"
     android:layout_gravity="center"
     android:clickable="false"
-    android:fitsSystemWindows="true"
     android:indeterminateTint="?attr/colorPrimary"
     android:indeterminateTintMode="src_in"
     xmlns:android="http://schemas.android.com/apk/res/android" />
