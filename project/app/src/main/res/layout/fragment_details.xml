@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -89,4 +90,11 @@
         android:layout_weight="1"
         android:overScrollMode="never"
         android:scrollbars="none" />
+
+    <!-- CONTROLS PANEL -->
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_player"
+        android:name="com.iven.musicplayergo.player.PlayerFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

@@ -91,7 +91,7 @@ class QueueAdapter(
 
                         if (!isQueueStarted) {
                             isQueueStarted = true
-                            mediaPlayerHolder.mediaPlayerInterface.onQueueStartedOrEnded(true)
+                            mediaPlayerHolder.mediaPlayerInterface?.onQueueStartedOrEnded(true)
                         }
 
                         mediaPlayerHolder.setCurrentSong(
@@ -100,7 +100,7 @@ class QueueAdapter(
                             isFromQueue = true,
                             isFolderAlbum = LaunchedBy.ArtistView
                         )
-                        initMediaPlayer(song)
+                        setSongDataSource(song)
                     }
                 }
 

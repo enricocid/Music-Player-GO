@@ -42,11 +42,13 @@ class NotificationReceiver(
                     GoConstants.NEXT_ACTION -> skip(true)
                     GoConstants.REPEAT_ACTION -> {
                         mediaPlayerHolder.repeat(true)
-                        mediaPlayerInterface.onUpdateRepeatStatus()
+                        mediaPlayerInterface?.onUpdateRepeatStatus()
                     }
-                    GoConstants.CLOSE_ACTION -> if (playerService.isRunning && isMediaPlayer) stopPlaybackService(
-                        stopPlayback = true
-                    )
+                    GoConstants.CLOSE_ACTION -> if (playerService.isRunning) {
+                        stopPlaybackService(
+                            stopPlayback = true
+                        )
+                    }
 
                     BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
                     BluetoothDevice.ACTION_ACL_CONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) resumeMediaPlayer()

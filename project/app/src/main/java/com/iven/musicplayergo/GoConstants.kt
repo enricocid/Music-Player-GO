@@ -20,9 +20,11 @@ object GoConstants {
     const val TAG_NO_MUSIC_INTENT = "NO_MUSIC_INTENT"
     const val TAG_SD_NOT_READY = "SD_NOT_READY"
 
-    // fragments tags
-    const val DETAILS_FRAGMENT_TAG = "DETAILS_FRAGMENT"
-    const val ERROR_FRAGMENT_TAG = "ERROR_FRAGMENT"
+    // tags for fragments bundles
+    const val TAG_ARTIST_FOLDER = "SELECTED_ARTIST_FOLDER"
+    const val TAG_IS_FOLDER = "IS_FOLDER"
+    const val TAG_SELECTED_ALBUM_POSITION = "SELECTED_ALBUM_POSITION"
+    const val TAG_ERROR = "WE_HAVE_A_PROBLEM_HOUSTON"
 
     // Player playing statuses
     const val PLAYING = PlaybackStateCompat.STATE_PLAYING

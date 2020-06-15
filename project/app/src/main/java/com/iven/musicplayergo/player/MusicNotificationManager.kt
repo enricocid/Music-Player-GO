@@ -125,9 +125,11 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                     ).toSpanned()
                 )
                 .setSmallIcon(
-                    if (mediaPlayerHolder.isPlayingFromFolder == LaunchedBy.FolderView)
-                        R.drawable.ic_library_music else
+                    if (mediaPlayerHolder.launchedBy == LaunchedBy.FolderView) {
+                        R.drawable.ic_library_music
+                    } else {
                         R.drawable.ic_music_note
+                    }
                 )
         }
     }

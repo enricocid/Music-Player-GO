@@ -36,7 +36,7 @@ class AudioFocusHandler(
     private val mOnAudioFocusChangeListener =
         AudioManager.OnAudioFocusChangeListener { focusChange ->
             mMediaPlayerHolder.apply {
-                if (mMediaPlayerHolder.isMediaPlayer && mMediaPlayerHolder.isPlay && mMediaPlayerHolder.isPlaying) {
+                if (mMediaPlayerHolder.isPlay && mMediaPlayerHolder.isPlaying) {
                     when (focusChange) {
                         AudioManager.AUDIOFOCUS_LOSS ->
                             // Permanent loss of audio focus
@@ -47,7 +47,7 @@ class AudioFocusHandler(
                             // Pause playback
                             mMediaPlayerHolder.pauseMediaPlayer()
                             sPlayOnFocusGain =
-                                mMediaPlayerHolder.isMediaPlayer && mMediaPlayerHolder.state == GoConstants.PLAYING || mMediaPlayerHolder.state == GoConstants.RESUMED
+                                mMediaPlayerHolder.state == GoConstants.PLAYING || mMediaPlayerHolder.state == GoConstants.RESUMED
                         }
 
                         AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> {

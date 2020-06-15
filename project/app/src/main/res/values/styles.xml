@@ -1,6 +1,7 @@
 <resources>
 
     <style name="BaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowDisablePreview">true</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <item name="indicatorFastScrollerStyle">@style/FastScrollerColorFull</item>
         <item name="android:fontFamily">@font/source_sans_pro</item>

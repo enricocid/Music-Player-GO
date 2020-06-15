@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.fragments
+package com.iven.musicplayergo.viewpager
 
 import android.content.Context
 import android.os.Bundle
@@ -6,7 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentSettingsBinding
-import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.interfaces.UIControlInterface
 
 /**
  * A simple [Fragment] subclass.

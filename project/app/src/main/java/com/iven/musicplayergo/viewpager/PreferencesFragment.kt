@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.fragments
+package com.iven.musicplayergo.viewpager
 
 import android.content.Context
 import android.content.Intent
@@ -25,7 +25,8 @@ import com.iven.musicplayergo.adapters.FiltersAdapter
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
-import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.interfaces.UIControlInterface
+import com.iven.musicplayergo.player.MediaPlayerHolder
 
 class PreferencesFragment : PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener {
@@ -162,7 +163,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                     restoreSettings = true
                 )
             }
-            getString(R.string.focus_pref) -> mUIControlInterface.onHandleFocusPref()
+            getString(R.string.focus_pref) -> MediaPlayerHolder.getInstance().mediaPlayerInterface?.onHandleFocusPref()
         }
     }
 

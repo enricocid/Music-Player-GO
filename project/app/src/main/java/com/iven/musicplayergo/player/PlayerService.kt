@@ -23,7 +23,7 @@ class PlayerService : Service() {
     var isRestoredFromPause = false
 
     // Media player
-    private lateinit var mMediaPlayerHolder: MediaPlayerHolder
+    private val mMediaPlayerHolder: MediaPlayerHolder get() = MediaPlayerHolder.getInstance()
     private lateinit var mNotificationActionsReceiver: NotificationReceiver
     lateinit var musicNotificationManager: MusicNotificationManager
 
@@ -57,12 +57,12 @@ class PlayerService : Service() {
     override fun onDestroy() {
         super.onDestroy()
 
-        if (::mMediaPlayerHolder.isInitialized && mMediaPlayerHolder.isCurrentSong) {
+        if (mMediaPlayerHolder.isCurrentSong) {
             // Saves last played song and its position
             mMediaPlayerHolder.apply {
                 currentSong.first?.let { musicToSave ->
                     goPreferences.latestPlayedSong =
-                        musicToSave.toSavedMusic(playerPosition, isPlayingFromFolder)
+                        musicToSave.toSavedMusic(playerPosition, launchedBy)
                 }
             }
 
@@ -88,8 +88,7 @@ class PlayerService : Service() {
     }
 
     override fun onBind(intent: Intent): IBinder {
-        if (!::mMediaPlayerHolder.isInitialized) {
-            mMediaPlayerHolder = MediaPlayerHolder.getInstance()
+        if (!::mNotificationActionsReceiver.isInitialized) {
             mNotificationActionsReceiver = NotificationReceiver(this, mMediaPlayerHolder)
             val intentFilter = mNotificationActionsReceiver.createIntentFilter()
             registerReceiver(mNotificationActionsReceiver, intentFilter)

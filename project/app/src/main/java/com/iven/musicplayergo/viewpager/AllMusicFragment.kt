@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.fragments
+package com.iven.musicplayergo.viewpager
 
 import android.content.Context
 import android.os.Bundle
@@ -17,9 +17,10 @@ import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.MusicOrgHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.interfaces.UIControlInterface
 import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.SongsViewHolder
-import com.iven.musicplayergo.ui.UIControlInterface
 
 /**
  * A simple [Fragment] subclass.
@@ -81,7 +82,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                     }
 
                     onClick {
-                        mUIControlInterface.onSongSelected(
+                        MediaPlayerHolder.getInstance().mediaPlayerInterface?.onSongSelected(
                             item,
                             MusicOrgHelper.getAlbumSongs(
                                 item.artist,
@@ -96,8 +97,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                             requireContext(),
                             findViewHolderForAdapterPosition(index)?.itemView,
                             item,
-                            LaunchedBy.ArtistView,
-                            mUIControlInterface
+                            LaunchedBy.ArtistView
                         )
                     }
                 }
@@ -114,7 +114,10 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
             menu.apply {
                 findItem(R.id.action_shuffle_am).setOnMenuItemClickListener {
-                    mUIControlInterface.onShuffleSongs(mAllMusic, LaunchedBy.ArtistView)
+                    MediaPlayerHolder.getInstance().mediaPlayerInterface?.onShuffleSongs(
+                        mAllMusic,
+                        LaunchedBy.ArtistView
+                    )
                     return@setOnMenuItemClickListener true
                 }
                 val searchView = findItem(R.id.action_search).actionView as SearchView

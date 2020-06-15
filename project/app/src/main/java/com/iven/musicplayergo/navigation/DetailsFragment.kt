@@ -1,6 +1,5 @@
-package com.iven.musicplayergo.fragments
+package com.iven.musicplayergo.navigation
 
-import android.animation.Animator
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
@@ -26,26 +25,23 @@ import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.MusicOrgHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.interfaces.UIControlInterface
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.AlbumsViewHolder
 import com.iven.musicplayergo.ui.GenericViewHolder
-import com.iven.musicplayergo.ui.UIControlInterface
 import kotlinx.android.synthetic.main.fragment_details.*
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-
 class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryTextListener {
+
+    private var mUIControlInterface: UIControlInterface? = null
+    private val mMediaPlayerInterface get() = MediaPlayerHolder.getInstance().mediaPlayerInterface
 
     private lateinit var mDetailsFragmentBinding: FragmentDetailsBinding
     private lateinit var mMusicRepository: MusicRepository
 
-    private lateinit var mArtistDetailsAnimator: Animator
     private lateinit var mAlbumsRecyclerViewLayoutManager: LinearLayoutManager
 
     private val mSelectedAlbumsDataSource = dataSourceOf()
@@ -59,7 +55,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private var mSelectedArtistOrFolder: String? = null
     private var mSelectedAlbumPosition = -1
 
-    private lateinit var mUIControlInterface: UIControlInterface
     private var mSelectedAlbum: Album? = null
 
     private var sLandscape = false
@@ -72,18 +67,19 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        arguments?.getString(TAG_ARTIST_FOLDER)?.let { selectedArtistOrFolder ->
+        arguments?.getString(GoConstants.TAG_ARTIST_FOLDER)?.let { selectedArtistOrFolder ->
             mSelectedArtistOrFolder = selectedArtistOrFolder
         }
 
-        arguments?.getInt(TAG_IS_FOLDER)?.let { launchedBy ->
+        arguments?.getInt(GoConstants.TAG_IS_FOLDER)?.let { launchedBy ->
             this.launchedBy = LaunchedBy.values()[launchedBy]
         }
 
         if (sLaunchedByArtistView) {
-            arguments?.getInt(TAG_SELECTED_ALBUM_POSITION)?.let { selectedAlbumPosition ->
-                mSelectedAlbumPosition = selectedAlbumPosition
-            }
+            arguments?.getInt(GoConstants.TAG_SELECTED_ALBUM_POSITION)
+                ?.let { selectedAlbumPosition ->
+                    mSelectedAlbumPosition = selectedAlbumPosition
+                }
         }
 
         // This makes sure that the container activity has implemented
@@ -95,15 +91,20 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
     }
 
-    fun onHandleBackPressed(): Animator {
-        if (!mArtistDetailsAnimator.isRunning) {
-            mArtistDetailsAnimator =
-                mDetailsFragmentBinding.root.createCircularReveal(
-                    isErrorFragment = false,
-                    show = false
+    fun onSnapToPosition(selectedArtistOrFolder: String?): Boolean {
+        val hasToUpdate =
+            mSelectedArtistOrFolder != null && sLaunchedByArtistView && selectedArtistOrFolder != mSelectedArtistOrFolder
+        if (!hasToUpdate && selectedArtistOrFolder == mSelectedArtistOrFolder) {
+            val snapPosition = MusicOrgHelper.getPlayingAlbumPosition(
+                selectedArtistOrFolder
+            )
+            if (snapPosition != -1) {
+                mDetailsFragmentBinding.albumsRv.smoothSnapToPosition(
+                    snapPosition
                 )
+            }
         }
-        return mArtistDetailsAnimator
+        return hasToUpdate
     }
 
     // https://stackoverflow.com/a/38241603
@@ -137,6 +138,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
         mMusicRepository = MusicRepository.getInstance()
 
+        setupViews()
+    }
+
+    private fun setupViews() {
         if (sLaunchedByArtistView) {
             mMusicRepository.deviceAlbumsByArtist?.get(mSelectedArtistOrFolder)
                 ?.let { selectedArtistAlbums ->
@@ -267,7 +272,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                                 )
                             }
 
-                        mUIControlInterface.onSongSelected(
+                        mMediaPlayerInterface?.onSongSelected(
                             item,
                             selectedPlaylist,
                             launchedBy
@@ -279,8 +284,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             requireContext(),
                             findViewHolderForAdapterPosition(index)?.itemView,
                             item,
-                            launchedBy,
-                            mUIControlInterface
+                            launchedBy
                         )
                     }
                 }
@@ -288,7 +292,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
             addBidirectionalSwipeHandler(false) { viewHolder: RecyclerView.ViewHolder,
                                                   _: Int ->
-                mUIControlInterface.onAddToQueue(mSongsList!![viewHolder.adapterPosition])
+                MediaPlayerHolder.getInstance().mediaPlayerInterface?.onAddToQueue(mSongsList!![viewHolder.adapterPosition])
                 adapter?.notifyDataSetChanged()
             }
         }
@@ -306,14 +310,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     )
                 }
             }
-        }
-
-        view.afterMeasured {
-            mArtistDetailsAnimator =
-                mDetailsFragmentBinding.root.createCircularReveal(
-                    isErrorFragment = false,
-                    show = true
-                )
         }
     }
 
@@ -387,11 +383,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
             setOnMenuItemClickListener {
                 when (it.itemId) {
-                    R.id.action_shuffle_am -> mUIControlInterface.onShuffleSongs(
+                    R.id.action_shuffle_am -> mMediaPlayerInterface?.onShuffleSongs(
                         mSongsList?.toMutableList(),
                         launchedBy
                     )
-                    R.id.action_shuffle_sa -> mUIControlInterface.onShuffleSongs(
+                    R.id.action_shuffle_sa -> mMediaPlayerInterface?.onShuffleSongs(
                         mSelectedAlbum?.music,
                         launchedBy
                     )
@@ -513,17 +509,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
     }
 
-    fun hasToUpdate(selectedArtistOrFolder: String?) =
-        selectedArtistOrFolder != mSelectedArtistOrFolder
-
-    fun tryToSnapToAlbumPosition(snapPosition: Int) {
-        if (sLaunchedByArtistView && snapPosition != -1) {
-            mDetailsFragmentBinding.albumsRv.smoothSnapToPosition(
-                snapPosition
-            )
-        }
-    }
-
     private fun updateSelectedAlbumTitle() {
         mDetailsFragmentBinding.selectedAlbum.text = mSelectedAlbum?.title
         album_year_duration.text = getString(
@@ -542,32 +527,5 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         )
         setSongsDataSource(songs)
         mDetailsFragmentBinding.songsRv.scrollToPosition(0)
-    }
-
-    companion object {
-
-        private const val TAG_ARTIST_FOLDER = "SELECTED_ARTIST_FOLDER"
-        private const val TAG_IS_FOLDER = "IS_FOLDER"
-        private const val TAG_SELECTED_ALBUM_POSITION = "SELECTED_ALBUM_POSITION"
-
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @return A new instance of fragment DetailsFragment.
-         */
-        @JvmStatic
-        fun newInstance(
-            selectedArtistOrFolder: String?,
-            launchedBy: LaunchedBy,
-            playedAlbumPosition: Int
-        ) =
-            DetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(TAG_ARTIST_FOLDER, selectedArtistOrFolder)
-                    putInt(TAG_IS_FOLDER, launchedBy.ordinal)
-                    putInt(TAG_SELECTED_ALBUM_POSITION, playedAlbumPosition)
-                }
-            }
     }
 }

@@ -18,10 +18,10 @@ import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.addBidirectionalSwipeHandler
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.interfaces.UIControlInterface
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedMusic
 import com.iven.musicplayergo.player.MediaPlayerHolder
-import com.iven.musicplayergo.ui.UIControlInterface
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 
@@ -66,7 +66,7 @@ object DialogHelper {
                 queueAdapter.swapQueueSongs(queueSongs)
                 if (queueSongs.isEmpty()) {
                     isQueue = false
-                    mediaPlayerInterface.onQueueStartedOrEnded(false)
+                    mediaPlayerInterface?.onQueueStartedOrEnded(false)
                     queueDialog.dismiss()
                 }
             }
@@ -99,7 +99,7 @@ object DialogHelper {
 
                     if (queueSongs.isEmpty()) {
                         isQueue = false
-                        mediaPlayerInterface.onQueueStartedOrEnded(false)
+                        mediaPlayerInterface?.onQueueStartedOrEnded(false)
                         queueSongsDialog.dismiss()
                     }
                 }
@@ -138,8 +138,7 @@ object DialogHelper {
 
     @JvmStatic
     fun showLovedSongsDialog(
-        context: Context,
-        uiControlInterface: UIControlInterface
+        context: Context
     ) {
 
         MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
@@ -148,8 +147,7 @@ object DialogHelper {
 
             val lovedSongsAdapter = LovedSongsAdapter(
                 context,
-                this,
-                uiControlInterface
+                this
             )
 
             customListAdapter(lovedSongsAdapter)
@@ -222,8 +220,7 @@ object DialogHelper {
 
     @JvmStatic
     fun showClearLovedSongDialog(
-        context: Context,
-        uiControlInterface: UIControlInterface
+        context: Context
     ) {
 
         MaterialDialog(context).show {
@@ -232,7 +229,7 @@ object DialogHelper {
 
             message(R.string.loved_songs_clear)
             positiveButton(R.string.yes) {
-                uiControlInterface.onLovedSongsUpdate(true)
+                MediaPlayerHolder.getInstance().mediaPlayerInterface?.onLovedSongUpdate(true)
             }
             negativeButton(R.string.no)
         }
@@ -243,12 +240,12 @@ object DialogHelper {
         context: Context,
         itemView: View?,
         stringToFilter: String?,
-        uiControlInterface: UIControlInterface
+        uiControlInterface: UIControlInterface?
     ) {
         itemView?.let { view ->
             PopupMenu(context, view).apply {
                 setOnMenuItemClickListener {
-                    uiControlInterface.onAddToFilter(stringToFilter)
+                    uiControlInterface?.onAddToFilter(stringToFilter)
                     return@setOnMenuItemClickListener true
                 }
                 inflate(R.menu.menu_filter)
@@ -263,9 +260,9 @@ object DialogHelper {
         context: Context,
         itemView: View?,
         song: Music?,
-        launchedBy: LaunchedBy,
-        uiControlInterface: UIControlInterface
+        launchedBy: LaunchedBy
     ) {
+        val mediaPlayerInterface = MediaPlayerHolder.getInstance().mediaPlayerInterface
         itemView?.let {
             PopupMenu(context, itemView).apply {
                 setOnMenuItemClickListener {
@@ -278,9 +275,9 @@ object DialogHelper {
                                 0,
                                 launchedBy
                             )
-                            uiControlInterface.onLovedSongsUpdate(false)
+                            mediaPlayerInterface?.onLovedSongUpdate(false)
                         }
-                        R.id.queue_add -> uiControlInterface.onAddToQueue(song)
+                        R.id.queue_add -> mediaPlayerInterface?.onAddToQueue(song)
                     }
 
                     return@setOnMenuItemClickListener true

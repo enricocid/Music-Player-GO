@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.fragments
+package com.iven.musicplayergo.viewpager
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -25,8 +25,8 @@ import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.interfaces.UIControlInterface
 import com.iven.musicplayergo.ui.GenericViewHolder
-import com.iven.musicplayergo.ui.UIControlInterface
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerView
 
