@@ -28,7 +28,6 @@ import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 
 
-@Suppress("UNUSED_PARAMETER")
 class MainActivity : AppCompatActivity(R.layout.main_activity),
     UIControlInterface {
 
