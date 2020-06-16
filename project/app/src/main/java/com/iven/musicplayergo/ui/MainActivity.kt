@@ -7,7 +7,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.navOptions
 import com.iven.musicplayergo.GoConstants
@@ -25,7 +24,6 @@ import com.iven.musicplayergo.interfaces.UIControlInterface
 import com.iven.musicplayergo.navigation.DetailsFragment
 import com.iven.musicplayergo.navigation.MainFragment
 import com.iven.musicplayergo.player.MediaPlayerHolder
-import com.iven.musicplayergo.player.PlayerFragment
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 
@@ -34,8 +32,12 @@ import de.halfbit.edgetoedge.edgeToEdge
 class MainActivity : AppCompatActivity(R.layout.main_activity),
     UIControlInterface {
 
-    private var mMainFragment: MainFragment? = null
-    private var mPlayerFragment: PlayerFragment? = null
+    private val mMainFragment: Pair<Boolean, MainFragment?>
+        get() {
+            val navHostFragment = supportFragmentManager.primaryNavigationFragment
+            val fragment = navHostFragment?.childFragmentManager!!.fragments[0] as? MainFragment
+            return Pair(fragment != null, fragment)
+        }
 
     private val mMediaPlayerHolder get() = MediaPlayerHolder.getInstance()
 
@@ -47,14 +49,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity),
             popExit = android.R.anim.slide_out_right
         }
         launchSingleTop = true
-    }
-
-    override fun onAttachFragment(fragment: Fragment) {
-        super.onAttachFragment(fragment)
-        when (fragment) {
-            is MainFragment -> mMainFragment = fragment
-            is PlayerFragment -> mPlayerFragment = fragment
-        }
     }
 
     override fun onResume() {
@@ -79,10 +73,12 @@ class MainActivity : AppCompatActivity(R.layout.main_activity),
         }
     }
 
+/*
     override fun onDestroy() {
         super.onDestroy()
-        mPlayerFragment?.unbindService()
+        mMediaPlayerHolder.mediaPlayerInterface?.onUnbindService()
     }
+*/
 
     override fun onBackPressed() {
         if (!isDetailsFragment()) {
@@ -126,7 +122,9 @@ class MainActivity : AppCompatActivity(R.layout.main_activity),
     }
 
     override fun onAddToFilter(stringToFilter: String?) {
-        mMainFragment?.updateFilter(stringToFilter)
+        if (mMainFragment.first) {
+            mMainFragment.second?.updateFilter(stringToFilter)
+        }
     }
 
     override fun onError(errorType: String?) {
@@ -165,9 +163,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity),
                 this
             )
         } else {
-            if (!mMediaPlayerHolder.mediaPlayer.isPlaying) {
-                mPlayerFragment?.unbindService()
-            }
             finishAndRemoveTask()
         }
     }

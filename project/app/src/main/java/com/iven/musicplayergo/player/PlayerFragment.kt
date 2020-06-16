@@ -39,6 +39,13 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
     // View binding classes
     private lateinit var mFragmentPlayerBinding: FragmentPlayerBinding
 
+    private val mDetailsFragment: Pair<Boolean, DetailsFragment?>
+        get() {
+            val navHostFragment = requireActivity().supportFragmentManager.primaryNavigationFragment
+            val fragment = navHostFragment?.childFragmentManager!!.fragments[0] as? DetailsFragment
+            return Pair(fragment != null, fragment)
+        }
+
     private val mMusicRepository: MusicRepository get() = MusicRepository.getInstance()
 
     // Colors
@@ -87,7 +94,12 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
         }
     }
 
-    fun unbindService() {
+    override fun onDestroy() {
+        super.onDestroy()
+        unbindService()
+    }
+
+    private fun unbindService() {
         if (sBound) {
             requireContext().unbindService(connection)
         }
@@ -386,24 +398,14 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
             val selectedSong = mMediaPlayerHolder.currentSong.first
             val selectedArtistOrFolder = getSongSource(selectedSong, launchedBy)
 
-            if (getDetailsFragment() == null || getDetailsFragment()?.onSnapToPosition(
+            if (!mDetailsFragment.first || mDetailsFragment.first && mDetailsFragment.second?.onSnapToPosition(
                     selectedArtistOrFolder
                 )!!
             ) {
                 mUIControlInterface?.onArtistOrFolderSelected(selectedArtistOrFolder!!, launchedBy)
-            } else {
-                getDetailsFragment()?.onSnapToPosition(selectedArtistOrFolder)
+            } else if (mDetailsFragment.first) {
+                mDetailsFragment.second?.onSnapToPosition(selectedArtistOrFolder)
             }
-        }
-    }
-
-    private fun getDetailsFragment(): DetailsFragment? {
-        val navHostFragment = requireActivity().supportFragmentManager.primaryNavigationFragment
-        val fragment = navHostFragment?.childFragmentManager!!.fragments[0]
-        return if (fragment is DetailsFragment) {
-            fragment
-        } else {
-            null
         }
     }
 
