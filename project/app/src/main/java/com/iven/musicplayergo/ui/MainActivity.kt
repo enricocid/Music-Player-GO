@@ -50,18 +50,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity),
         launchSingleTop = true
     }
 
-    override fun onResume() {
-        super.onResume()
-        mMediaPlayerHolder.onRestartSeekBarCallback()
-    }
-
-    // Pause SeekBar callback
-    override fun onPause() {
-        super.onPause()
-        mMediaPlayerHolder.mediaPlayerInterface?.onSaveSongToPref()
-        mMediaPlayerHolder.onPauseSeekBarCallback()
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         if (sAppearanceChanged) {
             super.onSaveInstanceState(outState)
@@ -71,13 +59,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity),
             )
         }
     }
-
-/*
-    override fun onDestroy() {
-        super.onDestroy()
-        mMediaPlayerHolder.mediaPlayerInterface?.onUnbindService()
-    }
-*/
 
     override fun onBackPressed() {
         if (!isDetailsFragment()) {

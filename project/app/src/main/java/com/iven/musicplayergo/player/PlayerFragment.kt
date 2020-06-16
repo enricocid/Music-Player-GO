@@ -81,9 +81,12 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
     // Defines callbacks for service binding, passed to bindService()
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(componentName: ComponentName, service: IBinder) {
+
             val binder = service as PlayerService.LocalBinder
             mPlayerService = binder.getService()
+
             sBound = true
+
             mMediaPlayerHolder.setPlayerService(mPlayerService)
 
             handleRestore()
@@ -94,30 +97,39 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        unbindService()
+    // Pause SeekBar callback
+    override fun onPause() {
+        super.onPause()
+        mMediaPlayerHolder.mediaPlayerInterface?.onSaveSongToPref()
+        mMediaPlayerHolder.onPauseSeekBarCallback()
     }
 
-    private fun unbindService() {
+    override fun onDestroy() {
+        super.onDestroy()
+        doUnbindService()
+    }
+
+    private fun doUnbindService() {
         if (sBound) {
             requireContext().unbindService(connection)
-        }
-        if (!mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning) {
-            mPlayerService.stopForeground(true)
-            requireContext().stopService(mBindingIntent)
+            if (!mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning) {
+                mPlayerService.stopForeground(true)
+                requireContext().stopService(mBindingIntent)
+            }
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mFragmentPlayerBinding = FragmentPlayerBinding.bind(view)
+        if (savedInstanceState == null) {
+            mFragmentPlayerBinding = FragmentPlayerBinding.bind(view)
 
-        initMediaButtons()
+            initMediaButtons()
 
-        mMediaPlayerHolder.mediaPlayerInterface = this
-        doBindService()
+            mMediaPlayerHolder.mediaPlayerInterface = this
+            doBindService()
+        }
     }
 
     override fun onSkipNP(isNext: Boolean) {
@@ -289,7 +301,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
         // update the controls panel
         mMediaPlayerHolder.apply {
 
-            if (mMediaPlayerHolder.isPlaying) {
+            if (isPlaying) {
 
                 onRestartSeekBarCallback()
                 updatePlayingInfo(true)
