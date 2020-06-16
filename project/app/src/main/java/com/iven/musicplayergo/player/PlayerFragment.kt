@@ -51,13 +51,17 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
             android.R.attr.colorButtonNormal
         )
 
-    private var mNowPlayingBottomSheet: NowPlayingBottomSheet? = null
-    private var isNowPlaying =
-        mNowPlayingBottomSheet != null && mNowPlayingBottomSheet?.dialog != null && mNowPlayingBottomSheet?.dialog!!.isShowing
-
     // Music player things
     private lateinit var mQueueDialog: MaterialDialog
     private lateinit var mQueueAdapter: QueueAdapter
+
+    //first: is null, second: fragment
+    private val mNowPlayingFragment: Pair<Boolean, NowPlayingBottomSheet?>
+        get() {
+            val nowPlayingBottomSheet =
+                childFragmentManager.findFragmentByTag(NowPlayingBottomSheet.TAG_NOW_PLAYING) as? NowPlayingBottomSheet
+            return Pair(nowPlayingBottomSheet != null, nowPlayingBottomSheet)
+        }
 
     // The player
     private val mMediaPlayerHolder: MediaPlayerHolder get() = MediaPlayerHolder.getInstance()
@@ -121,8 +125,8 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
 
     override fun onSetRepeatNP() {
         mMediaPlayerHolder.repeat(mMediaPlayerHolder.isPlaying)
-        if (isNowPlaying) {
-            mNowPlayingBottomSheet?.updateRepeatStatus(false)
+        if (mNowPlayingFragment.first) {
+            mNowPlayingFragment.second?.updateRepeatStatus(false)
         }
     }
 
@@ -214,8 +218,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
             playingSongsContainer.apply {
                 setOnClickListener {
                     if (mMediaPlayerHolder.isCurrentSong) {
-                        mNowPlayingBottomSheet = NowPlayingBottomSheet.newInstance()
-                        mNowPlayingBottomSheet?.show(
+                        NowPlayingBottomSheet.newInstance().show(
                             childFragmentManager,
                             NowPlayingBottomSheet.TAG_NOW_PLAYING
                         )
@@ -337,8 +340,8 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
                 selectedSong.album
             )
 
-        if (isNowPlaying) {
-            mNowPlayingBottomSheet?.apply {
+        if (mNowPlayingFragment.first) {
+            mNowPlayingFragment.second?.apply {
                 updateRepeatStatus(false)
                 updateNowPlayingInfo()
             }
@@ -416,14 +419,14 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
 
     // interface to let MediaPlayerHolder update the UI media player controls.
     override fun onPlaybackCompleted() {
-        if (isNowPlaying) {
-            mNowPlayingBottomSheet?.updateRepeatStatus(true)
+        if (mNowPlayingFragment.first) {
+            mNowPlayingFragment.second?.updateRepeatStatus(true)
         }
     }
 
     override fun onUpdateRepeatStatus() {
-        if (isNowPlaying) {
-            mNowPlayingBottomSheet?.updateRepeatStatus(false)
+        if (mNowPlayingFragment.first) {
+            mNowPlayingFragment.second?.updateRepeatStatus(false)
         }
     }
 
@@ -434,8 +437,8 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
 
     override fun onPositionChanged(position: Int) {
         mFragmentPlayerBinding.songProgress.progress = position
-        if (isNowPlaying) {
-            mNowPlayingBottomSheet?.updateProgress(position)
+        if (mNowPlayingFragment.first) {
+            mNowPlayingFragment.second?.updateProgress(position)
         }
     }
 
@@ -443,8 +446,8 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
 
         updatePlayingStatus()
 
-        if (isNowPlaying) {
-            mNowPlayingBottomSheet?.updatePlayingStatus()
+        if (mNowPlayingFragment.first) {
+            mNowPlayingFragment.second?.updatePlayingStatus()
         }
         if (mMediaPlayerHolder.state != GoConstants.RESUMED && mMediaPlayerHolder.state != GoConstants.PAUSED) {
             updatePlayingInfo(false)
