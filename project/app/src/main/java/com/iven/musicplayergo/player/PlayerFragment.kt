@@ -4,7 +4,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
@@ -66,13 +65,14 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
     private var mNowPlayingBottomSheet: NowPlayingBottomSheet? = null
 
     // The player
-    private var mMediaPlayer: MediaPlayer? = null
     private val mMediaPlayerHolder: MediaPlayerHolder get() = MediaPlayerHolder.getInstance()
 
     // Our PlayerService shit
     private lateinit var mPlayerService: PlayerService
     private var sBound = false
     private lateinit var mBindingIntent: Intent
+
+    private var sThemeApplied = false
 
     // Defines callbacks for service binding, passed to bindService()
     private val connection = object : ServiceConnection {
@@ -85,6 +85,11 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
 
             mMediaPlayerHolder.setPlayerService(mPlayerService)
 
+            if (::mPlayerService.isInitialized && !mPlayerService.isRunning) {
+                requireContext().startService(
+                    mBindingIntent
+                )
+            }
             handleRestore()
         }
 
@@ -96,7 +101,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
     // Pause SeekBar callback
     override fun onPause() {
         super.onPause()
-        if (mMediaPlayer != null) {
+        if (mMediaPlayerHolder.isCurrentSong) {
             onSaveSongToPref()
         }
     }
@@ -106,12 +111,21 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
         doUnbindService()
     }
 
+    override fun onThemeApplied() {
+        sThemeApplied = true
+    }
+
     private fun doUnbindService() {
         if (sBound) {
             requireContext().unbindService(connection)
-            if (!mMediaPlayer?.isPlaying!! && ::mPlayerService.isInitialized && mPlayerService.isRunning) {
+            if (mMediaPlayerHolder.state == GoConstants.PAUSED && ::mPlayerService.isInitialized && mPlayerService.isRunning) {
                 mPlayerService.stopForeground(true)
-                requireContext().stopService(mBindingIntent)
+                if (!mMediaPlayerHolder.isSongRestoredFromPrefs && !sThemeApplied) {
+                    requireContext().stopService(mBindingIntent)
+                }
+                if (sThemeApplied) {
+                    sThemeApplied = false
+                }
             }
         }
     }
@@ -120,13 +134,6 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
         super.onViewCreated(view, savedInstanceState)
 
         mFragmentPlayerBinding = FragmentPlayerBinding.bind(view)
-
-        if (mMediaPlayerHolder.getMediaPlayerInstance() == null) {
-            mMediaPlayer = MediaPlayer()
-            mMediaPlayerHolder.setMediaPlayer(mMediaPlayer)
-        } else {
-            mMediaPlayer = mMediaPlayerHolder.getMediaPlayerInstance()
-        }
 
         mMediaPlayerHolder.mediaPlayerInterface = this
 
@@ -151,7 +158,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
     }
 
     override fun onSetRepeatNP() {
-        mMediaPlayerHolder.repeat(mMediaPlayer != null && mMediaPlayer?.isPlaying!!)
+        mMediaPlayerHolder.repeat(mMediaPlayerHolder.state == GoConstants.PAUSED)
         if (mNowPlayingBottomSheet != null) {
             mNowPlayingBottomSheet?.updateRepeatStatus(false)
         }
@@ -308,7 +315,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
         // update the controls panel
         mMediaPlayerHolder.apply {
 
-            if (mMediaPlayer?.isPlaying!!) {
+            if (state != GoConstants.PAUSED) {
 
                 startUpdatingCallbackWithPosition()
                 updatePlayingInfo(true)
@@ -453,7 +460,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
 
     override fun onClose() {
         //finish activity if visible
-        requireActivity().finishAndRemoveTask()
+        mUIControlInterface?.onCloseActivity(false)
     }
 
     override fun onPositionChanged(position: Int) {
@@ -544,17 +551,14 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
     }
 
     override fun onSaveSongToPref() {
-        if (!mMediaPlayer?.isPlaying!! || mMediaPlayerHolder.state == GoConstants.PAUSED) mMediaPlayerHolder.apply {
-            MusicOrgHelper.saveLatestSong(currentSong.first, launchedBy)
+        if (mMediaPlayerHolder.state == GoConstants.PAUSED) {
+            mMediaPlayerHolder.apply {
+                MusicOrgHelper.saveLatestSong(currentSong.first, launchedBy)
+            }
         }
     }
 
     override fun onStartPlayback(song: Music?, songs: List<Music>?, launchedBy: LaunchedBy) {
-        if (::mPlayerService.isInitialized && !mPlayerService.isRunning) {
-            requireContext().startService(
-                mBindingIntent
-            )
-        }
         mMediaPlayerHolder.apply {
             setCurrentSong(song, songs, isFromQueue = false, isFolderAlbum = launchedBy)
             setSongDataSource(song)

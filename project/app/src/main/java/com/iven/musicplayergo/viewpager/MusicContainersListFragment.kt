@@ -26,6 +26,7 @@ import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.interfaces.UIControlInterface
+import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.GenericViewHolder
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerView
@@ -144,7 +145,8 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
             title = getFragmentTitle()
 
             setNavigationOnClickListener {
-                mUIControlInterface.onCloseActivity()
+                val mediaPlayerHolder = MediaPlayerHolder.getInstance()
+                mUIControlInterface.onCloseActivity(mediaPlayerHolder.state == GoConstants.PLAYING || mediaPlayerHolder.state == GoConstants.RESUMED)
             }
 
             menu.apply {

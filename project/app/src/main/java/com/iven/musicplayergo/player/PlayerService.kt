@@ -58,7 +58,7 @@ class PlayerService : Service() {
     override fun onDestroy() {
         super.onDestroy()
 
-        if (mMediaPlayerHolder.isCurrentSong && !mMediaPlayerHolder.getMediaPlayerInstance()?.isPlaying!! && mMediaPlayerHolder.state == GoConstants.PAUSED) {
+        if (mMediaPlayerHolder.isCurrentSong && mMediaPlayerHolder.state == GoConstants.PAUSED) {
             // Saves last played song and its position
             mMediaPlayerHolder.apply {
                 currentSong.first?.let { musicToSave ->
@@ -75,8 +75,9 @@ class PlayerService : Service() {
                 mMediaSessionCompat.release()
             }
 
-            mMediaPlayerHolder.release()
             isRunning = false
+
+            mMediaPlayerHolder.release()
         }
     }
 

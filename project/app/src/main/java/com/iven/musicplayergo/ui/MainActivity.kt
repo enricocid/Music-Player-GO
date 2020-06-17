@@ -1,6 +1,7 @@
 package com.iven.musicplayergo.ui
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.View
@@ -26,6 +27,7 @@ import com.iven.musicplayergo.navigation.MainFragment
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
+import kotlin.system.exitProcess
 
 
 class MainActivity : AppCompatActivity(R.layout.main_activity),
@@ -40,6 +42,8 @@ class MainActivity : AppCompatActivity(R.layout.main_activity),
 
     private val mMediaPlayerHolder get() = MediaPlayerHolder.getInstance()
 
+    private var sAppearanceChanged = false
+
     private val mNavOptions = navOptions {
         anim {
             enter = android.R.anim.slide_in_left
@@ -50,19 +54,9 @@ class MainActivity : AppCompatActivity(R.layout.main_activity),
         launchSingleTop = true
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        if (sAppearanceChanged) {
-            super.onSaveInstanceState(outState)
-            outState.putBoolean(
-                GoConstants.RESTORE_SETTINGS_FRAGMENT,
-                true
-            )
-        }
-    }
-
     override fun onBackPressed() {
         if (!isDetailsFragment()) {
-            onCloseActivity()
+            onCloseActivity(mMediaPlayerHolder.state == GoConstants.PLAYING || mMediaPlayerHolder.state == GoConstants.RESUMED)
         } else {
             super.onBackPressed()
         }
@@ -95,7 +89,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MediaPlayerHolder.getInstance()
         if (goPreferences.isEdgeToEdge) {
             setupEdgeToEdgeSystemBars()
         }
@@ -116,7 +109,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity),
 
     override fun onAppearanceChanged(isAccentChanged: Boolean, restoreSettings: Boolean) {
         sAppearanceChanged = true
-        synchronized(mMediaPlayerHolder.mediaPlayerInterface?.onSaveSongToPref()!!) { recreate() }
+        synchronized(mMediaPlayerHolder.mediaPlayerInterface?.onSaveSongToPref()!!) { onRecreate() }
     }
 
     override fun onArtistOrFolderSelected(artistOrFolder: String, launchedBy: LaunchedBy) {
@@ -137,13 +130,13 @@ class MainActivity : AppCompatActivity(R.layout.main_activity),
         )
     }
 
-    override fun onCloseActivity() {
-        if (mMediaPlayerHolder.getMediaPlayerInstance()?.isPlaying!!) {
+    override fun onCloseActivity(showDialog: Boolean) {
+        if (showDialog) {
             DialogHelper.stopPlaybackDialog(
                 this
             )
         } else {
-            finishAndRemoveTask()
+            exitProcess(0)
         }
     }
 
@@ -155,16 +148,34 @@ class MainActivity : AppCompatActivity(R.layout.main_activity),
         }
     }
 
-    private var sAppearanceChanged = false
-
     override fun onThemeChanged() {
         sAppearanceChanged = true
         synchronized(mMediaPlayerHolder.mediaPlayerInterface?.onSaveSongToPref()!!) {
+            mMediaPlayerHolder.mediaPlayerInterface?.onThemeApplied()
             AppCompatDelegate.setDefaultNightMode(
                 ThemeHelper.getDefaultNightMode(
                     this
                 )
             )
+        }
+    }
+
+    override fun onRecreate() {
+
+        synchronized(mMediaPlayerHolder.mediaPlayerInterface?.onSaveSongToPref()!!) {
+
+            val intent = Intent(this, MainActivity::class.java)
+
+            val bundle = bundleOf(Pair(GoConstants.RESTORE_SETTINGS_FRAGMENT, true))
+            intent.putExtras(bundle)
+            intent.addFlags(
+                Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        or Intent.FLAG_ACTIVITY_NEW_TASK
+            )
+            finishAfterTransition()
+            startActivity(intent)
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
         }
     }
 }

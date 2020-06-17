@@ -4,9 +4,11 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentSettingsBinding
 import com.iven.musicplayergo.interfaces.UIControlInterface
+import com.iven.musicplayergo.player.MediaPlayerHolder
 
 /**
  * A simple [Fragment] subclass.
@@ -32,7 +34,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         super.onViewCreated(view, savedInstanceState)
 
         FragmentSettingsBinding.bind(view).searchToolbar.setNavigationOnClickListener {
-            mUIControlInterface.onCloseActivity()
+            val mediaPlayerHolder = MediaPlayerHolder.getInstance()
+            mUIControlInterface.onCloseActivity(mediaPlayerHolder.state == GoConstants.PLAYING || mediaPlayerHolder.state == GoConstants.RESUMED)
         }
 
         childFragmentManager.beginTransaction().apply {

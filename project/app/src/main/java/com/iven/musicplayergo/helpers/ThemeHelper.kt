@@ -74,7 +74,11 @@ object ThemeHelper {
 
     @JvmStatic
     @TargetApi(Build.VERSION_CODES.O_MR1)
-    fun handleLightSystemBars(configuration: Configuration, decorView: View, isBottomSheet: Boolean) {
+    fun handleLightSystemBars(
+        configuration: Configuration,
+        decorView: View,
+        isBottomSheet: Boolean
+    ) {
         val flags = decorView.systemUiVisibility
         decorView.systemUiVisibility =
             if (isThemeNight(configuration)) {

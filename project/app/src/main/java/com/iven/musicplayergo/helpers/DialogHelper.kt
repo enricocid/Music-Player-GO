@@ -11,6 +11,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
+import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.adapters.QueueAdapter
@@ -50,7 +51,11 @@ object DialogHelper {
             )
             if (goPreferences.isEdgeToEdge) {
                 window?.apply {
-                    ThemeHelper.handleLightSystemBars(context.resources.configuration, decorView, false)
+                    ThemeHelper.handleLightSystemBars(
+                        context.resources.configuration,
+                        decorView,
+                        false
+                    )
                     edgeToEdge {
                         recyclerView.fit { Edge.Bottom }
                         decorView.fit { Edge.Top }
@@ -122,7 +127,7 @@ object DialogHelper {
             positiveButton(R.string.yes) {
 
                 MediaPlayerHolder.getInstance().apply {
-                    if (isQueueStarted && getMediaPlayerInstance()?.isPlaying!!) {
+                    if (isQueueStarted && state != GoConstants.PAUSED) {
 
                         restorePreQueueSongs()
                         skip(

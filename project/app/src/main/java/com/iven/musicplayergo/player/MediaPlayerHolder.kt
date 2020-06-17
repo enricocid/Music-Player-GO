@@ -103,13 +103,15 @@ class MediaPlayerHolder :
 
     private var sAppliedAudioAttrs = false
 
-    fun getMediaPlayerInstance(): MediaPlayer? = mMediaPlayer
-
-    fun setMediaPlayer(mediaPlayer: MediaPlayer?) {
-        mMediaPlayer = mediaPlayer
-    }
     fun setPlayerService(playerService: PlayerService) {
         mPlayerService = playerService
+    }
+
+    fun setVolumeDuck(volume: Float) {
+        mMediaPlayer?.setVolume(
+            volume,
+            volume
+        )
     }
 
     fun setCurrentSong(
@@ -205,9 +207,11 @@ class MediaPlayerHolder :
     }
 
     fun pauseMediaPlayer() {
+
+        state = GoConstants.PAUSED
+
         mMediaPlayer?.pause()
         mPlayerService.stopForeground(false)
-        state = GoConstants.PAUSED
         updatePlaybackStatus(true)
         mMusicNotificationManager.pauseNotificationForeground()
     }
@@ -331,19 +335,27 @@ class MediaPlayerHolder :
      */
     fun setSongDataSource(song: Music?) {
 
-        if (!sAppliedAudioAttrs) {
-            sAppliedAudioAttrs = true
-            initMediaPlayerAttrs()
+        synchronized(createMediaPlayer()) {
+            if (!sAppliedAudioAttrs) {
+                sAppliedAudioAttrs = true
+                initMediaPlayerAttrs()
+            }
+
+            mAudioFocusHandler.tryToGetAudioFocus()
+
+            val contentUri = song?.id?.toContentUri()
+            contentUri?.let { uri ->
+                mMediaPlayer?.setDataSource(mPlayerService, uri)
+                mMediaPlayer?.prepareAsync()
+            }
         }
+    }
 
-        mAudioFocusHandler.tryToGetAudioFocus()
-
-        mMediaPlayer?.reset()
-
-        val contentUri = song?.id?.toContentUri()
-        contentUri?.let { uri ->
-            mMediaPlayer?.setDataSource(mPlayerService, uri)
-            mMediaPlayer?.prepareAsync()
+    private fun createMediaPlayer() {
+        if (mMediaPlayer == null) {
+            mMediaPlayer = MediaPlayer()
+        } else {
+            mMediaPlayer?.reset()
         }
     }
 

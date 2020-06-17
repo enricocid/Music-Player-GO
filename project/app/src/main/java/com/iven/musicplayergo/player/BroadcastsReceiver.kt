@@ -67,7 +67,7 @@ class NotificationReceiver(
                             HEADSET_CONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) resumeMediaPlayer()
                         }
                     }
-                    AudioManager.ACTION_AUDIO_BECOMING_NOISY -> if (getMediaPlayerInstance()?.isPlaying!! && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
+                    AudioManager.ACTION_AUDIO_BECOMING_NOISY -> if (state != GoConstants.PAUSED && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
                 }
             }
         }

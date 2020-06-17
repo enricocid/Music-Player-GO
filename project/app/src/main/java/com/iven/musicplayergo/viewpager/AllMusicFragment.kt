@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
+import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentAllMusicBinding
@@ -31,6 +32,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
     private lateinit var mAllMusicFragmentBinding: FragmentAllMusicBinding
 
+    private val mMediaPlayerHolder get() = MediaPlayerHolder.getInstance()
     private var mAllMusic: MutableList<Music>? = null
     private val mDataSource = emptyDataSource()
 
@@ -82,7 +84,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                     }
 
                     onClick {
-                        MediaPlayerHolder.getInstance().mediaPlayerInterface?.onSongSelected(
+                        mMediaPlayerHolder.mediaPlayerInterface?.onSongSelected(
                             item,
                             MusicOrgHelper.getAlbumSongs(
                                 item.artist,
@@ -109,12 +111,12 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
             inflateMenu(R.menu.menu_all_music)
 
             setNavigationOnClickListener {
-                mUIControlInterface.onCloseActivity()
+                mUIControlInterface.onCloseActivity(mMediaPlayerHolder.state == GoConstants.PLAYING || mMediaPlayerHolder.state == GoConstants.RESUMED)
             }
 
             menu.apply {
                 findItem(R.id.action_shuffle_am).setOnMenuItemClickListener {
-                    MediaPlayerHolder.getInstance().mediaPlayerInterface?.onShuffleSongs(
+                    mMediaPlayerHolder.mediaPlayerInterface?.onShuffleSongs(
                         mAllMusic,
                         LaunchedBy.ArtistView
                     )

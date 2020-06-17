@@ -35,7 +35,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     private lateinit var mActiveFragmentsDialog: MaterialDialog
     private lateinit var mFiltersDialog: MaterialDialog
 
-    private lateinit var mUIControlInterface: UIControlInterface
+    private var mUIControlInterface: UIControlInterface? = null
 
     private var mThemePreference: Preference? = null
 
@@ -150,15 +150,15 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                         requireContext(),
                         ThemeHelper.resolveThemeIcon(requireContext())
                     )
-                mUIControlInterface.onThemeChanged()
+                mUIControlInterface?.onThemeChanged()
             }
-            getString(R.string.edge_pref) -> mUIControlInterface.onAppearanceChanged(
+            getString(R.string.edge_pref) -> mUIControlInterface?.onAppearanceChanged(
                 isAccentChanged = false,
                 restoreSettings = true
             )
             getString(R.string.accent_pref) -> {
                 mAccentsDialog.dismiss()
-                mUIControlInterface.onAppearanceChanged(
+                mUIControlInterface?.onAppearanceChanged(
                     isAccentChanged = true,
                     restoreSettings = true
                 )
@@ -228,7 +228,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             positiveButton(android.R.string.ok) {
                 goPreferences.activeFragments = activeTabsAdapter.getUpdatedItems()
-                mUIControlInterface.onAppearanceChanged(
+                mUIControlInterface?.onAppearanceChanged(
                     isAccentChanged = false,
                     restoreSettings = true
                 )
@@ -250,7 +250,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             positiveButton(android.R.string.ok) {
                 goPreferences.filters = filtersAdapter.getUpdatedItems()
-                requireActivity().recreate()
+                mUIControlInterface?.onRecreate()
             }
 
             negativeButton(android.R.string.cancel)

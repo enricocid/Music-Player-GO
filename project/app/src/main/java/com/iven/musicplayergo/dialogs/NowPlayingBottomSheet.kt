@@ -233,7 +233,7 @@ class NowPlayingBottomSheet : BottomSheetDialogFragment() {
                     }
                     mMediaPlayerHolder.seekTo(
                         userSelectedPosition,
-                        updatePlaybackStatus = mMediaPlayerHolder.getMediaPlayerInstance()?.isPlaying!!,
+                        updatePlaybackStatus = mMediaPlayerHolder.state != GoConstants.PAUSED,
                         restoreProgressCallBack = !isUserSeeking
                     )
                 }
