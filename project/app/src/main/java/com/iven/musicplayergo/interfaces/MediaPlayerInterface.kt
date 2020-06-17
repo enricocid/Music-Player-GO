@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.interfaces
 
+import com.iven.musicplayergo.dialogs.NowPlayingBottomSheet
 import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.models.Music
 
@@ -22,4 +23,6 @@ interface MediaPlayerInterface {
     fun onClose()
     fun onSaveSongToPref()
     fun onHandleFocusPref()
+    fun onBottomSheetCreated(nowPlayingBottomSheet: NowPlayingBottomSheet)
+    fun onDismissNP()
 }

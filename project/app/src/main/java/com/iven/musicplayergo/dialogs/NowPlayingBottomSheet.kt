@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.dialogs
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -59,7 +60,13 @@ class NowPlayingBottomSheet : BottomSheetDialogFragment() {
 
         initViews()
 
+        mMediaPlayerHolder.mediaPlayerInterface?.onBottomSheetCreated(this)
         return nowPlayingView
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        mMediaPlayerHolder.mediaPlayerInterface?.onDismissNP()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,7 +80,7 @@ class NowPlayingBottomSheet : BottomSheetDialogFragment() {
 
         ThemeHelper.updateIconTint(
             mNowPlayingControlsBinding.npRepeat,
-            if (mMediaPlayerHolder.isRepeat1X || mMediaPlayerHolder.isLooping) {
+            if (mMediaPlayerHolder.isRepeat1X || mMediaPlayerHolder.isLooping!!) {
                 mResolvedAccentColor
             } else {
                 mResolvedIconsColor
@@ -95,7 +102,7 @@ class NowPlayingBottomSheet : BottomSheetDialogFragment() {
         updateNowPlayingInfo()
 
         mNowPlayingBinding.npSeekBar.progress =
-            mMediaPlayerHolder.playerPosition
+            mMediaPlayerHolder.playerPosition!!
     }
 
     override fun onStart() {
@@ -139,7 +146,7 @@ class NowPlayingBottomSheet : BottomSheetDialogFragment() {
             ListsHelper.addToLovedSongs(
                 requireContext(),
                 mMediaPlayerHolder.currentSong.first,
-                mMediaPlayerHolder.playerPosition,
+                mMediaPlayerHolder.playerPosition!!,
                 mMediaPlayerHolder.launchedBy
             )
             mediaPlayerInterface?.onLovedSongUpdate(false)
@@ -166,7 +173,8 @@ class NowPlayingBottomSheet : BottomSheetDialogFragment() {
             )
 
         mNowPlayingBinding.npSeek.text =
-            mMediaPlayerHolder.playerPosition.toLong().toFormattedDuration(false, isSeekBar = true)
+            mMediaPlayerHolder.playerPosition!!.toLong()
+                .toFormattedDuration(false, isSeekBar = true)
         mNowPlayingBinding.npDuration.text =
             selectedSongDuration.toFormattedDuration(false, isSeekBar = true)
 
@@ -211,7 +219,6 @@ class NowPlayingBottomSheet : BottomSheetDialogFragment() {
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
                     if (isUserSeeking) {
                         mNowPlayingBinding.npSeek.setTextColor(defaultPositionColor)
-                        mMediaPlayerHolder.onPauseSeekBarCallback()
                         isUserSeeking = false
                     }
                     if (mMediaPlayerHolder.state != GoConstants.PLAYING) {
@@ -226,7 +233,7 @@ class NowPlayingBottomSheet : BottomSheetDialogFragment() {
                     }
                     mMediaPlayerHolder.seekTo(
                         userSelectedPosition,
-                        updatePlaybackStatus = mMediaPlayerHolder.isPlaying,
+                        updatePlaybackStatus = mMediaPlayerHolder.getMediaPlayerInstance()?.isPlaying!!,
                         restoreProgressCallBack = !isUserSeeking
                     )
                 }
@@ -244,7 +251,7 @@ class NowPlayingBottomSheet : BottomSheetDialogFragment() {
                 mNowPlayingControlsBinding.npRepeat,
                 mResolvedIconsColor
             )
-            mMediaPlayerHolder.isRepeat1X or mMediaPlayerHolder.isLooping -> {
+            mMediaPlayerHolder.isRepeat1X or mMediaPlayerHolder.isLooping!! -> {
                 ThemeHelper.updateIconTint(
                     mNowPlayingControlsBinding.npRepeat,
                     mResolvedAccentColor

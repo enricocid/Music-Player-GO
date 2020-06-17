@@ -138,7 +138,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity),
     }
 
     override fun onCloseActivity() {
-        if (mMediaPlayerHolder.isPlaying) {
+        if (mMediaPlayerHolder.getMediaPlayerInstance()?.isPlaying!!) {
             DialogHelper.stopPlaybackDialog(
                 this
             )

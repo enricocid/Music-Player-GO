@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
@@ -39,12 +40,11 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
     // View binding classes
     private lateinit var mFragmentPlayerBinding: FragmentPlayerBinding
 
-    private val mDetailsFragment: Pair<Boolean, DetailsFragment?>
-        get() {
-            val navHostFragment = requireActivity().supportFragmentManager.primaryNavigationFragment
-            val fragment = navHostFragment?.childFragmentManager!!.fragments[0] as? DetailsFragment
-            return Pair(fragment != null, fragment)
-        }
+    private fun getDetailsFragment(): Pair<Boolean, DetailsFragment?> {
+        val navHostFragment = requireActivity().supportFragmentManager.primaryNavigationFragment
+        val fragment = navHostFragment?.childFragmentManager!!.fragments[0] as? DetailsFragment
+        return Pair(fragment != null, fragment)
+    }
 
     private val mMusicRepository: MusicRepository get() = MusicRepository.getInstance()
 
@@ -63,14 +63,10 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
     private lateinit var mQueueAdapter: QueueAdapter
 
     //first: is null, second: fragment
-    private val mNowPlayingFragment: Pair<Boolean, NowPlayingBottomSheet?>
-        get() {
-            val nowPlayingBottomSheet =
-                childFragmentManager.findFragmentByTag(NowPlayingBottomSheet.TAG_NOW_PLAYING) as? NowPlayingBottomSheet
-            return Pair(nowPlayingBottomSheet != null, nowPlayingBottomSheet)
-        }
+    private var mNowPlayingBottomSheet: NowPlayingBottomSheet? = null
 
     // The player
+    private var mMediaPlayer: MediaPlayer? = null
     private val mMediaPlayerHolder: MediaPlayerHolder get() = MediaPlayerHolder.getInstance()
 
     // Our PlayerService shit
@@ -100,8 +96,9 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
     // Pause SeekBar callback
     override fun onPause() {
         super.onPause()
-        mMediaPlayerHolder.mediaPlayerInterface?.onSaveSongToPref()
-        mMediaPlayerHolder.onPauseSeekBarCallback()
+        if (mMediaPlayer != null) {
+            onSaveSongToPref()
+        }
     }
 
     override fun onDestroy() {
@@ -112,7 +109,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
     private fun doUnbindService() {
         if (sBound) {
             requireContext().unbindService(connection)
-            if (!mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning) {
+            if (!mMediaPlayer?.isPlaying!! && ::mPlayerService.isInitialized && mPlayerService.isRunning) {
                 mPlayerService.stopForeground(true)
                 requireContext().stopService(mBindingIntent)
             }
@@ -122,14 +119,20 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (savedInstanceState == null) {
-            mFragmentPlayerBinding = FragmentPlayerBinding.bind(view)
+        mFragmentPlayerBinding = FragmentPlayerBinding.bind(view)
 
-            initMediaButtons()
-
-            mMediaPlayerHolder.mediaPlayerInterface = this
-            doBindService()
+        if (mMediaPlayerHolder.getMediaPlayerInstance() == null) {
+            mMediaPlayer = MediaPlayer()
+            mMediaPlayerHolder.setMediaPlayer(mMediaPlayer)
+        } else {
+            mMediaPlayer = mMediaPlayerHolder.getMediaPlayerInstance()
         }
+
+        mMediaPlayerHolder.mediaPlayerInterface = this
+
+        initMediaButtons()
+
+        doBindService()
     }
 
     override fun onSkipNP(isNext: Boolean) {
@@ -148,9 +151,9 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
     }
 
     override fun onSetRepeatNP() {
-        mMediaPlayerHolder.repeat(mMediaPlayerHolder.isPlaying)
-        if (mNowPlayingFragment.first) {
-            mNowPlayingFragment.second?.updateRepeatStatus(false)
+        mMediaPlayerHolder.repeat(mMediaPlayer != null && mMediaPlayer?.isPlaying!!)
+        if (mNowPlayingBottomSheet != null) {
+            mNowPlayingBottomSheet?.updateRepeatStatus(false)
         }
     }
 
@@ -256,6 +259,10 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
         }
     }
 
+    override fun onBottomSheetCreated(nowPlayingBottomSheet: NowPlayingBottomSheet) {
+        mNowPlayingBottomSheet = nowPlayingBottomSheet
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         // This makes sure that the container activity has implemented
@@ -301,9 +308,9 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
         // update the controls panel
         mMediaPlayerHolder.apply {
 
-            if (isPlaying) {
+            if (mMediaPlayer?.isPlaying!!) {
 
-                onRestartSeekBarCallback()
+                startUpdatingCallbackWithPosition()
                 updatePlayingInfo(true)
 
             } else {
@@ -364,8 +371,8 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
                 selectedSong.album
             )
 
-        if (mNowPlayingFragment.first) {
-            mNowPlayingFragment.second?.apply {
+        if (mNowPlayingBottomSheet != null) {
+            mNowPlayingBottomSheet?.apply {
                 updateRepeatStatus(false)
                 updateNowPlayingInfo()
             }
@@ -410,13 +417,13 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
             val selectedSong = mMediaPlayerHolder.currentSong.first
             val selectedArtistOrFolder = getSongSource(selectedSong, launchedBy)
 
-            if (!mDetailsFragment.first || mDetailsFragment.first && mDetailsFragment.second?.onSnapToPosition(
+            if (!getDetailsFragment().first || getDetailsFragment().first && getDetailsFragment().second?.onSnapToPosition(
                     selectedArtistOrFolder
                 )!!
             ) {
                 mUIControlInterface?.onArtistOrFolderSelected(selectedArtistOrFolder!!, launchedBy)
-            } else if (mDetailsFragment.first) {
-                mDetailsFragment.second?.onSnapToPosition(selectedArtistOrFolder)
+            } else if (getDetailsFragment().first) {
+                getDetailsFragment().second?.onSnapToPosition(selectedArtistOrFolder)
             }
         }
     }
@@ -433,14 +440,14 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
 
     // interface to let MediaPlayerHolder update the UI media player controls.
     override fun onPlaybackCompleted() {
-        if (mNowPlayingFragment.first) {
-            mNowPlayingFragment.second?.updateRepeatStatus(true)
+        if (mNowPlayingBottomSheet != null) {
+            mNowPlayingBottomSheet?.updateRepeatStatus(true)
         }
     }
 
     override fun onUpdateRepeatStatus() {
-        if (mNowPlayingFragment.first) {
-            mNowPlayingFragment.second?.updateRepeatStatus(false)
+        if (mNowPlayingBottomSheet != null) {
+            mNowPlayingBottomSheet?.updateRepeatStatus(false)
         }
     }
 
@@ -451,8 +458,8 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
 
     override fun onPositionChanged(position: Int) {
         mFragmentPlayerBinding.songProgress.progress = position
-        if (mNowPlayingFragment.first) {
-            mNowPlayingFragment.second?.updateProgress(position)
+        if (mNowPlayingBottomSheet != null) {
+            mNowPlayingBottomSheet?.updateProgress(position)
         }
     }
 
@@ -460,9 +467,10 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
 
         updatePlayingStatus()
 
-        if (mNowPlayingFragment.first) {
-            mNowPlayingFragment.second?.updatePlayingStatus()
+        if (mNowPlayingBottomSheet != null) {
+            mNowPlayingBottomSheet?.updatePlayingStatus()
         }
+
         if (mMediaPlayerHolder.state != GoConstants.RESUMED && mMediaPlayerHolder.state != GoConstants.PAUSED) {
             updatePlayingInfo(false)
             if (::mQueueDialog.isInitialized && mQueueDialog.isShowing && mMediaPlayerHolder.isQueue)
@@ -511,6 +519,10 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
         }
     }
 
+    override fun onDismissNP() {
+        mNowPlayingBottomSheet = null
+    }
+
     override fun onHandleFocusPref() {
         mMediaPlayerHolder.onFocusPrefChanged(goPreferences.isFocusEnabled)
     }
@@ -532,7 +544,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
     }
 
     override fun onSaveSongToPref() {
-        if (!mMediaPlayerHolder.isPlaying || mMediaPlayerHolder.state == GoConstants.PAUSED) mMediaPlayerHolder.apply {
+        if (!mMediaPlayer?.isPlaying!! || mMediaPlayerHolder.state == GoConstants.PAUSED) mMediaPlayerHolder.apply {
             MusicOrgHelper.saveLatestSong(currentSong.first, launchedBy)
         }
     }

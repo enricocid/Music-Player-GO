@@ -84,7 +84,7 @@ object MusicOrgHelper {
     fun saveLatestSong(latestSong: Music?, launchedBy: LaunchedBy) {
         val playerPosition = MediaPlayerHolder.getInstance().playerPosition
         latestSong?.let { musicToSave ->
-            val toSave = musicToSave.toSavedMusic(playerPosition, launchedBy)
+            val toSave = musicToSave.toSavedMusic(playerPosition!!, launchedBy)
             if (goPreferences.latestPlayedSong != toSave) {
                 goPreferences.latestPlayedSong =
                     toSave

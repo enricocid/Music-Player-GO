@@ -34,12 +34,9 @@ class MediaPlayerHolder :
     MediaPlayer.OnCompletionListener,
     MediaPlayer.OnPreparedListener {
 
-    // Media player
-    var mediaPlayer: MediaPlayer = MediaPlayer()
+    private var mMediaPlayer: MediaPlayer? = null
 
     var state = GoConstants.PAUSED
-
-    val isPlaying get() = mediaPlayer.isPlaying
 
     var isPlay = false
     private val mStateBuilder = if (VersioningHelper.isQ()) {
@@ -78,7 +75,7 @@ class MediaPlayerHolder :
     private var launchedByPreQueue: LaunchedBy = LaunchedBy.ArtistView
     var isSongRestoredFromPrefs = false
     var isSongFromLovedSongs = Pair(false, 0)
-    val isLooping get() = mediaPlayer.isLooping
+    val isLooping get() = mMediaPlayer?.isLooping
     var isRepeat1X = false
     var isQueue = false
     var isQueueStarted = false
@@ -89,7 +86,7 @@ class MediaPlayerHolder :
         get() = if (isSongRestoredFromPrefs) {
             goPreferences.latestPlayedSong?.startFrom!!
         } else {
-            mediaPlayer.currentPosition
+            mMediaPlayer?.currentPosition
         }
 
     // SeekBar
@@ -106,6 +103,11 @@ class MediaPlayerHolder :
 
     private var sAppliedAudioAttrs = false
 
+    fun getMediaPlayerInstance(): MediaPlayer? = mMediaPlayer
+
+    fun setMediaPlayer(mediaPlayer: MediaPlayer?) {
+        mMediaPlayer = mediaPlayer
+    }
     fun setPlayerService(playerService: PlayerService) {
         mPlayerService = playerService
     }
@@ -159,16 +161,6 @@ class MediaPlayerHolder :
         }
     }
 
-    fun onRestartSeekBarCallback() {
-        if (mExecutor == null) {
-            startUpdatingCallbackWithPosition()
-        }
-    }
-
-    fun onPauseSeekBarCallback() {
-        stopUpdatingCallbackWithPosition()
-    }
-
     private fun updatePlaybackStatus(updateUI: Boolean) {
         mPlayerService.getMediaSession().setPlaybackState(
             mStateBuilder?.setState(
@@ -178,7 +170,7 @@ class MediaPlayerHolder :
                     state
                 },
                 if (VersioningHelper.isQ()) {
-                    mediaPlayer.currentPosition.toLong()
+                    mMediaPlayer?.currentPosition?.toLong()!!
                 } else {
                     PLAYBACK_POSITION_UNKNOWN
                 },
@@ -191,9 +183,9 @@ class MediaPlayerHolder :
     }
 
     fun resumeMediaPlayer() {
-        if (!isPlaying) {
+        if (!mMediaPlayer?.isPlaying!!) {
 
-            mediaPlayer.start()
+            mMediaPlayer?.start()
 
             state = if (isSongRestoredFromPrefs) {
                 isSongRestoredFromPrefs = false
@@ -213,7 +205,7 @@ class MediaPlayerHolder :
     }
 
     fun pauseMediaPlayer() {
-        mediaPlayer.pause()
+        mMediaPlayer?.pause()
         mPlayerService.stopForeground(false)
         state = GoConstants.PAUSED
         updatePlaybackStatus(true)
@@ -222,11 +214,11 @@ class MediaPlayerHolder :
 
     fun repeatSong() {
         isRepeat1X = false
-        mediaPlayer.setOnSeekCompleteListener { mp ->
+        mMediaPlayer?.setOnSeekCompleteListener { mp ->
             mp.setOnSeekCompleteListener(null)
             play()
         }
-        mediaPlayer.seekTo(0)
+        mMediaPlayer?.seekTo(0)
     }
 
     private fun manageQueue(isNext: Boolean) {
@@ -285,39 +277,42 @@ class MediaPlayerHolder :
     /**
      * Syncs the mMediaPlayer position with mPlaybackProgressCallback via recurring task.
      */
-    private fun startUpdatingCallbackWithPosition() {
+    fun startUpdatingCallbackWithPosition() {
 
-        if (mSeekBarPositionUpdateTask == null) {
-            mSeekBarPositionUpdateTask =
-                Runnable { updateProgressCallbackTask() }
+        if (mExecutor == null) {
+            if (mSeekBarPositionUpdateTask == null) {
+                mSeekBarPositionUpdateTask =
+                    Runnable { updateProgressCallbackTask() }
+            }
+
+            mExecutor = Executors.newSingleThreadScheduledExecutor()
+            mExecutor?.scheduleAtFixedRate(
+                mSeekBarPositionUpdateTask!!,
+                0,
+                1000,
+                TimeUnit.MILLISECONDS
+            )
         }
-
-        mExecutor = Executors.newSingleThreadScheduledExecutor()
-        mExecutor?.scheduleAtFixedRate(
-            mSeekBarPositionUpdateTask!!,
-            0,
-            1000,
-            TimeUnit.MILLISECONDS
-        )
     }
 
     // Reports media playback position to mPlaybackProgressCallback.
     private fun stopUpdatingCallbackWithPosition() {
-        mExecutor?.shutdownNow()
-        mExecutor = null
-        mSeekBarPositionUpdateTask = null
+        if (mExecutor != null) {
+            mExecutor?.shutdownNow()
+            mExecutor = null
+            mSeekBarPositionUpdateTask = null
+        }
     }
 
     private fun updateProgressCallbackTask() {
-        if (isPlaying) {
-            val currentPosition = mediaPlayer.currentPosition
-            mediaPlayerInterface?.onPositionChanged(currentPosition)
+        if (mMediaPlayer?.isPlaying!!) {
+            mediaPlayerInterface?.onPositionChanged(playerPosition!!)
         }
     }
 
     fun instantReset() {
         if (!isSongRestoredFromPrefs) {
-            if (mediaPlayer.currentPosition < 5000) {
+            if (playerPosition!! < 5000) {
                 skip(false)
             } else {
                 repeatSong()
@@ -343,12 +338,12 @@ class MediaPlayerHolder :
 
         mAudioFocusHandler.tryToGetAudioFocus()
 
-        mediaPlayer.reset()
+        mMediaPlayer?.reset()
 
         val contentUri = song?.id?.toContentUri()
         contentUri?.let { uri ->
-            mediaPlayer.setDataSource(mPlayerService, uri)
-            mediaPlayer.prepareAsync()
+            mMediaPlayer?.setDataSource(mPlayerService, uri)
+            mMediaPlayer?.prepareAsync()
         }
     }
 
@@ -360,7 +355,7 @@ class MediaPlayerHolder :
 
         mMusicNotificationManager = mPlayerService.musicNotificationManager
 
-        mediaPlayer.run {
+        mMediaPlayer?.run {
             EqualizerUtils.openAudioEffectSession(
                 mPlayerService.applicationContext,
                 audioSessionId
@@ -384,7 +379,7 @@ class MediaPlayerHolder :
 
     override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
         if (what == MediaPlayer.MEDIA_ERROR_SERVER_DIED) {
-            mediaPlayer.release()
+            mMediaPlayer?.release()
             val fallbackSong = if (currentSong.first != null) {
                 currentSong.first
             } else {
@@ -417,16 +412,14 @@ class MediaPlayerHolder :
 
         updateMediaSessionMetaData()
 
-        if (mExecutor == null) {
-            startUpdatingCallbackWithPosition()
-        }
+        startUpdatingCallbackWithPosition()
 
         play()
     }
 
     private fun play() {
         if (isPlay) {
-            mediaPlayer.start()
+            mMediaPlayer?.start()
             state = GoConstants.PLAYING
             updatePlaybackStatus(true)
             mMusicNotificationManager.startNotificationForeground()
@@ -434,22 +427,22 @@ class MediaPlayerHolder :
     }
 
     fun openEqualizer(activity: Activity) {
-        EqualizerUtils.openEqualizer(activity, mediaPlayer)
+        EqualizerUtils.openEqualizer(activity, mMediaPlayer!!)
     }
 
     fun release() {
         EqualizerUtils.closeAudioEffectSession(
             mPlayerService,
-            mediaPlayer.audioSessionId
+            mMediaPlayer?.audioSessionId!!
         )
-        mediaPlayer.release()
+        mMediaPlayer?.release()
         mAudioFocusHandler.giveUpAudioFocus()
         stopUpdatingCallbackWithPosition()
         mPlayerService.unregisterActionsReceiver()
     }
 
     fun resumeOrPause() {
-        if (isPlaying) {
+        if (mMediaPlayer?.isPlaying!!) {
             pauseMediaPlayer()
         } else {
             resumeMediaPlayer()
@@ -461,11 +454,11 @@ class MediaPlayerHolder :
         when {
             isRepeat1X -> {
                 isRepeat1X = false
-                mediaPlayer.isLooping = true
+                mMediaPlayer?.isLooping = true
                 toastMessage = R.string.repeat_loop_enabled
             }
-            mediaPlayer.isLooping -> {
-                mediaPlayer.isLooping = false
+            mMediaPlayer?.isLooping!! -> {
+                mMediaPlayer?.isLooping = false
                 toastMessage = R.string.repeat_disabled
             }
             else -> isRepeat1X = true
@@ -511,12 +504,11 @@ class MediaPlayerHolder :
     }
 
     fun seekTo(position: Int, updatePlaybackStatus: Boolean, restoreProgressCallBack: Boolean) {
-        mediaPlayer.setOnSeekCompleteListener { mp ->
+        mMediaPlayer?.setOnSeekCompleteListener { mp ->
             mp.setOnSeekCompleteListener(null)
-            if (restoreProgressCallBack) startUpdatingCallbackWithPosition()
             if (updatePlaybackStatus) updatePlaybackStatus(!restoreProgressCallBack)
         }
-        mediaPlayer.seekTo(position)
+        mMediaPlayer?.seekTo(position)
     }
 
     /* Sets the volume of the media player */
@@ -530,7 +522,7 @@ class MediaPlayerHolder :
         }
 
         val new = volFromPercent(percent)
-        mediaPlayer.setVolume(new, new)
+        mMediaPlayer?.setVolume(new, new)
     }
 
     fun stopPlaybackService(stopPlayback: Boolean) {

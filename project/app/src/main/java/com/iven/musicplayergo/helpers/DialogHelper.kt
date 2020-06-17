@@ -122,7 +122,7 @@ object DialogHelper {
             positiveButton(R.string.yes) {
 
                 MediaPlayerHolder.getInstance().apply {
-                    if (isQueueStarted && isPlaying) {
+                    if (isQueueStarted && getMediaPlayerInstance()?.isPlaying!!) {
 
                         restorePreQueueSongs()
                         skip(
