@@ -72,7 +72,6 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
     private var sBound = false
     private lateinit var mBindingIntent: Intent
 
-    private var sThemeApplied = false
 
     // Defines callbacks for service binding, passed to bindService()
     private val connection = object : ServiceConnection {
@@ -108,25 +107,9 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
 
     override fun onDestroy() {
         super.onDestroy()
-        doUnbindService()
-    }
-
-    override fun onThemeApplied() {
-        sThemeApplied = true
-    }
-
-    private fun doUnbindService() {
+        // unbind service
         if (sBound) {
             requireContext().unbindService(connection)
-            if (mMediaPlayerHolder.state != GoConstants.PLAYING && ::mPlayerService.isInitialized && mPlayerService.isRunning) {
-                mPlayerService.stopForeground(true)
-                if (!sThemeApplied) {
-                    requireContext().stopService(mBindingIntent)
-                }
-                if (sThemeApplied) {
-                    sThemeApplied = false
-                }
-            }
         }
     }
 

@@ -151,7 +151,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity),
     override fun onThemeChanged() {
         sAppearanceChanged = true
         synchronized(mMediaPlayerHolder.mediaPlayerInterface?.onSaveSongToPref()!!) {
-            mMediaPlayerHolder.mediaPlayerInterface?.onThemeApplied()
             AppCompatDelegate.setDefaultNightMode(
                 ThemeHelper.getDefaultNightMode(
                     this

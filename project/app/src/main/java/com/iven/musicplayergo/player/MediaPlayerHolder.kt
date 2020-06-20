@@ -35,6 +35,7 @@ class MediaPlayerHolder :
     MediaPlayer.OnPreparedListener {
 
     private var mMediaPlayer: MediaPlayer? = null
+    val isPlaying get() = mMediaPlayer != null && mMediaPlayer?.isPlaying!!
 
     var state = GoConstants.PAUSED
 

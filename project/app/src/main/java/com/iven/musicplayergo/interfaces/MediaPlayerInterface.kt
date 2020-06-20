@@ -25,5 +25,4 @@ interface MediaPlayerInterface {
     fun onHandleFocusPref()
     fun onBottomSheetCreated(nowPlayingBottomSheet: NowPlayingBottomSheet)
     fun onDismissNP()
-    fun onThemeApplied()
 }

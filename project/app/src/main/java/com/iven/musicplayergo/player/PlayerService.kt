@@ -7,7 +7,6 @@ import android.os.IBinder
 import android.os.Parcelable
 import android.support.v4.media.session.MediaSessionCompat
 import android.view.KeyEvent
-import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.extensions.toToast
@@ -55,10 +54,14 @@ class PlayerService : Service() {
         return mMediaSessionCompat
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        super.onTaskRemoved(rootIntent)
 
-        if (mMediaPlayerHolder.isCurrentSong && mMediaPlayerHolder.state == GoConstants.PAUSED) {
+        if (mMediaPlayerHolder.isCurrentSong && !mMediaPlayerHolder.isPlaying) {
+
+            stopForeground(true)
+            stopSelf()
+
             // Saves last played song and its position
             mMediaPlayerHolder.apply {
                 currentSong.first?.let { musicToSave ->
