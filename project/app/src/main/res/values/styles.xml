@@ -20,18 +20,6 @@
         <item name="android:scrollbars">none</item>
     </style>
 
-    <!-- https://medium.com/halcyon-mobile/implementing-googles-refreshed-modal-bottom-sheet-4e76cb5de65b -->
-    <!-- set the rounded drawable as background to your bottom sheet -->
-    <style name="BaseBottomSheetDialog" parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/BottomSheet</item>
-        <item name="colorAccent">?attr/colorPrimary</item>
-    </style>
-
-    <!-- set the rounded drawable as background to your bottom sheet -->
-    <style name="BottomSheet">
-        <item name="android:background">@drawable/bottom_sheet_bg</item>
-    </style>
-
     <style name="DialogsStyle" parent="Theme.MaterialComponents.DayNight.Dialog">
         <item name="colorBackgroundFloating">@color/dialogsBackground</item>
         <item name="android:windowTitleStyle">@style/DialogsStyle.Title</item>

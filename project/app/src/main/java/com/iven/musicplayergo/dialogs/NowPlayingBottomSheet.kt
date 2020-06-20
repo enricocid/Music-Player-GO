@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.SeekBar
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
@@ -41,11 +41,6 @@ class NowPlayingBottomSheet : BottomSheetDialogFragment() {
 
     private var sUpdatePlayerProgress = false
 
-    override fun getTheme() = R.style.BaseBottomSheetDialog
-
-    override fun onCreateDialog(savedInstanceState: Bundle?) =
-        BottomSheetDialog(requireContext(), theme)
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,6 +55,18 @@ class NowPlayingBottomSheet : BottomSheetDialogFragment() {
 
         initViews()
 
+        val isLandscape = ThemeHelper.isDeviceLand(requireContext().resources)
+
+        mNowPlayingBinding.npPlayingInfo.afterMeasured {
+            val params = layoutParams as LinearLayout.LayoutParams
+            val marginTop = if (goPreferences.isEdgeToEdge || isLandscape) {
+                0
+            } else {
+                resources.getDimensionPixelOffset(R.dimen.md_corner_radius)
+            }
+            params.topMargin = marginTop
+            layoutParams = params
+        }
         mMediaPlayerHolder.mediaPlayerInterface?.onBottomSheetCreated(this)
         return nowPlayingView
     }
@@ -107,7 +114,9 @@ class NowPlayingBottomSheet : BottomSheetDialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        dialog?.window?.applyEdgeToEdgeBottomSheet(resources)
+        if (goPreferences.isEdgeToEdge) {
+            dialog?.window?.applyEdgeToEdgeBottomSheet(resources)
+        }
     }
 
     private fun initViews() {

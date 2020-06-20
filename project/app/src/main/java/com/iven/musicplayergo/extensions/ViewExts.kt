@@ -24,7 +24,6 @@ import com.iven.musicplayergo.helpers.VersioningHelper
 fun Window.applyEdgeToEdgeBottomSheet(resources: Resources) {
     val view = findViewById<View>(com.google.android.material.R.id.container)
     view?.fitsSystemWindows = false
-
     if (goPreferences.isEdgeToEdge && !ThemeHelper.isDeviceLand(resources)) {
         ThemeHelper.handleLightSystemBars(resources.configuration, decorView, true)
     }

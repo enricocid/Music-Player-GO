@@ -118,9 +118,9 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
     private fun doUnbindService() {
         if (sBound) {
             requireContext().unbindService(connection)
-            if (mMediaPlayerHolder.state == GoConstants.PAUSED && ::mPlayerService.isInitialized && mPlayerService.isRunning) {
+            if (mMediaPlayerHolder.state != GoConstants.PLAYING && ::mPlayerService.isInitialized && mPlayerService.isRunning) {
                 mPlayerService.stopForeground(true)
-                if (!mMediaPlayerHolder.isSongRestoredFromPrefs && !sThemeApplied) {
+                if (!sThemeApplied) {
                     requireContext().stopService(mBindingIntent)
                 }
                 if (sThemeApplied) {
