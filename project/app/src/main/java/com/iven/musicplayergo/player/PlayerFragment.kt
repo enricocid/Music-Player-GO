@@ -267,7 +267,11 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
     private fun updatePlayingStatus() {
         val isPlaying = mMediaPlayerHolder.state != GoConstants.PAUSED
         val drawable =
-            if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play
+            if (isPlaying) {
+                R.drawable.ic_pause
+            } else {
+                R.drawable.ic_play
+            }
         mFragmentPlayerBinding.playPauseButton.setImageResource(
             drawable
         )
@@ -334,7 +338,11 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
                     updatePlayingInfo(false)
 
                     mFragmentPlayerBinding.songProgress.progress =
-                        if (isSongRestoredFromPrefs) goPreferences.latestPlayedSong?.startFrom!! else 0
+                        if (isSongRestoredFromPrefs) {
+                            goPreferences.latestPlayedSong?.startFrom!!
+                        } else {
+                            0
+                        }
                 } else {
                     mUIControlInterface?.onError(GoConstants.TAG_SD_NOT_READY)
                 }
@@ -496,7 +504,9 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
 
     override fun onAddToQueue(song: Music?) {
         mMediaPlayerHolder.apply {
-            if (queueSongs.isEmpty()) setQueueEnabled(true)
+            if (queueSongs.isEmpty()) {
+                setQueueEnabled(true)
+            }
             song?.let { songToQueue ->
                 queueSongs.add(songToQueue)
                 getString(
@@ -528,7 +538,9 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
         mMediaPlayerHolder.apply {
             isSongRestoredFromPrefs = false
             if (!isPlay) isPlay = true
-            if (isQueue) setQueueEnabled(false)
+            if (isQueue) {
+                setQueueEnabled(false)
+            }
             onStartPlayback(song, songs, launchedBy)
         }
     }

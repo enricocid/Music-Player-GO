@@ -519,7 +519,9 @@ class MediaPlayerHolder :
     fun seekTo(position: Int, updatePlaybackStatus: Boolean, restoreProgressCallBack: Boolean) {
         mMediaPlayer?.setOnSeekCompleteListener { mp ->
             mp.setOnSeekCompleteListener(null)
-            if (updatePlaybackStatus) updatePlaybackStatus(!restoreProgressCallBack)
+            if (updatePlaybackStatus) {
+                updatePlaybackStatus(!restoreProgressCallBack)
+            }
         }
         mMediaPlayer?.seekTo(position)
     }
@@ -530,7 +532,9 @@ class MediaPlayerHolder :
         currentVolumeInPercent = percent
 
         fun volFromPercent(percent: Int): Float {
-            if (percent == 100) return 1f
+            if (percent == 100) {
+                return 1f
+            }
             return (1 - (ln((101 - percent).toFloat()) / ln(101f)))
         }
 
