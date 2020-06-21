@@ -1,0 +1,51 @@
+# Funkcje:
+
+- UI oparte na zakładkach: artyści, lista utworów, foldery i ustawienia
+- Ustawienia:
+  - Motywy: ciemny, jasny i automatyczny (uwzględniający motyw Androida dla wersji Q lub większej lub )
+  - 19 niezwykłych odcieni dla każdego z motywów
+    > Wskazówka: long click on the preference for copying
+  - Funkcja „Edge-to-edge” (dla Androida >= Oreo 8.1)
+  - Zarządzanie aktywnymi zakładkami
+  - Programowe i precyzyjne sterowanie głośnością
+  - Przełączniki funkcji skupienia dźwięku i zarządzania podłączaniem słuchawek
+  - Zarządzanie filtrami muzycznymi
+
+- Zapis/przywracanie ostatnio odtwarzanego utworu/postępu
+
+- Dolny panel z przyciskami sterującymi zawiera:
+  - Informacje o obecnie odtwarzanym utworze
+    > Wskazówka: Wskazówka: naciśnij na tą część panelu i przytrzymaj, aby przejść do albumu/folderu odtwarzanego utworu
+  - Przycisk odtwarzaj/pauzuj
+  - Przycisk kolejki
+  - Przycisk ulubionych utworów
+
+- Panel obecnie odtwarzanego utworu z klasycznymi przyciskami sterującymi: pasek z pozycją utworu, equalizer, następny utwór, odtwarzanie/pauza, powtórz (1x, w pętli), dodaj do ulubbionych utworów, sterowanie obecnym poziomem głośności odtwarzania
+  > Wskazówka: click on played song to quickly jump to song's album/folder
+
+- Dane o artyście wraz z jego albumami/utworami. Losowe odtwarzanie jego utworów lub albumu.
+- Artist's details showing its albums/songs. Shuffle all its songs or the selected album
+  > Wskazówka: kliknij na tytuł albumu aby szybko przejść do albumu utworu
+
+- Proste zarządzanie kolejką
+  > Wskazówka: aby wyczyścić kolejkę naciśnij i przytrzymaj przycisk kolejki
+
+- Ulubione utwory: Możesz teraz utworzyć zakładkę dla wybranego utworu z listy utworów i dla obecnie odtwarzanego utworu (w drugim przypadku obecna pozycja utworu również zostanie zapisana!) 
+  > Wskazówka: aby wyczysćić tą listę nacijnij i przytrzymaj przycisk ulubionych utworów
+
+- Wsparcie dla poziomego obrotu ekranu
+
+- Możliwość ukrycia artystów/folderów
+- Wyszukiwanie
+- Wspardzie SeekBar dla powiadomień (starting from Android Q)
+- Opcje sortowania
+- Opcje odtwarzania losowego
+- Otwórz pliki audio spoza położenia aplikacji
+- Pauza/wznowienie odtwarzania, gdy słuchawki są podłączane/odłączane
+- Proste zarządzanie funkcją skupienia audio
+
+– Polskie tłumaczenie aplikacji :)
+
+# Chcesz pomóc w tłumaczeniu aplikacji?
+
+Przeczytaj (w języku angielskim): https://github.com/enricocid/Music-Player-GO/issues/114 :)
