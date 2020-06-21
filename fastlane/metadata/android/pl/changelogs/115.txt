@@ -1,0 +1,3 @@
+- Add close button to notification
+- Remove duplicated songs (those saved in multiple copies in different paths)
+- Code cleaning/improvements

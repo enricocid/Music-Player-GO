@@ -1,0 +1,3 @@
+Fixes to media buttons handling.
+
+Thanks to keddad for testing.
