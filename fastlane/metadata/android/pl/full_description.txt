@@ -44,8 +44,6 @@
 - Pauza/wznowienie odtwarzania, gdy słuchawki są podłączane/odłączane
 - Proste zarządzanie funkcją skupienia audio
 
-– Polskie tłumaczenie aplikacji :)
-
 # Chcesz pomóc w tłumaczeniu aplikacji?
 
 Przeczytaj (w języku angielskim): https://github.com/enricocid/Music-Player-GO/issues/114 :)
