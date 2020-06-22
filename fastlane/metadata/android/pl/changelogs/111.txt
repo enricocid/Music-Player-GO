@@ -1,0 +1,6 @@
+- New indicator fast scroll by Reddit
+- Major UI review
+- Apply themes and accents smoothly
+- Use default material theme font
+- Preferences management has changed, so you have to re-apply them
+- Code improvements

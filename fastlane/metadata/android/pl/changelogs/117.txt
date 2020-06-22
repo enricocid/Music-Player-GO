@@ -1,0 +1,3 @@
+- Apply color themes more smoothly
+- Make player controls info auto-scroll when too long
+- Code improvements
