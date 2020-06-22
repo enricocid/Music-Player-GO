@@ -18,6 +18,8 @@ import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.player.MediaPlayerHolder
+import de.halfbit.edgetoedge.Edge
+import de.halfbit.edgetoedge.edgeToEdge
 
 
 class NowPlayingBottomSheet : BottomSheetDialogFragment() {
@@ -39,6 +41,8 @@ class NowPlayingBottomSheet : BottomSheetDialogFragment() {
             android.R.attr.colorButtonNormal
         )
 
+    private val sLandscape get() = ThemeHelper.isDeviceLand(resources)
+
     private var sUpdatePlayerProgress = false
 
     override fun onCreateView(
@@ -55,11 +59,9 @@ class NowPlayingBottomSheet : BottomSheetDialogFragment() {
 
         initViews()
 
-        val isLandscape = ThemeHelper.isDeviceLand(requireContext().resources)
-
         mNowPlayingBinding.npPlayingInfo.afterMeasured {
             val params = layoutParams as LinearLayout.LayoutParams
-            val marginTop = if (goPreferences.isEdgeToEdge || isLandscape) {
+            val marginTop = if (goPreferences.isEdgeToEdge || sLandscape) {
                 0
             } else {
                 resources.getDimensionPixelOffset(R.dimen.md_corner_radius)
@@ -110,12 +112,17 @@ class NowPlayingBottomSheet : BottomSheetDialogFragment() {
 
         mNowPlayingBinding.npSeekBar.progress =
             mMediaPlayerHolder.playerPosition!!
+
+
     }
 
     override fun onStart() {
         super.onStart()
         if (goPreferences.isEdgeToEdge) {
             dialog?.window?.applyEdgeToEdgeBottomSheet(resources)
+            if (sLandscape) {
+                edgeToEdge { dialog?.window?.decorView?.rootView?.fit { Edge.Bottom + Edge.Top + Edge.Right } }
+            }
         }
     }
 

@@ -16,6 +16,8 @@
         android:layout_weight="1" />
 
     <LinearLayout
+        android:background="@color/windowBackground"
+        android:elevation="4dp"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:baselineAligned="false"
@@ -32,12 +34,11 @@
         <!-- TAB LAYOUT -->
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:background="@color/windowBackground"
             app:tabGravity="fill"
-            app:tabIndicator="@drawable/tab_indicator"
+            app:tabIndicator="@drawable/tab_indicator_alt"
             app:tabMode="fixed"
             app:tabRippleColor="?attr/colorPrimary" />
     </LinearLayout>
