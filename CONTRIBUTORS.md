@@ -66,7 +66,7 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**zmni**](https://github.com/zmni) for **Indonesian** translations
 
-- [**SpacingBat3**](https://github.com/SpacingBat3) for **Polish** translations
+- [**SpacingBat3**](https://github.com/SpacingBat3) for the ["[Guide/Announcement] Play Store description and screenshots translation."](https://github.com/enricocid/Music-Player-GO/issues/204) and for **Polish** translations
 
 - [**Malte Kiefer**](https://github.com/beli3ver) for **German** translations
 
