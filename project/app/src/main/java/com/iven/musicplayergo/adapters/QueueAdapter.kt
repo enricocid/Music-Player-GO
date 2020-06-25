@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
@@ -90,28 +91,28 @@ class QueueAdapter(
 
                         if (!isQueueStarted) {
                             isQueueStarted = true
-                            mediaPlayerHolder.mediaPlayerInterface.onQueueStartedOrEnded(true)
+                            mediaPlayerHolder.mediaPlayerInterface?.onQueueStartedOrEnded(true)
                         }
 
                         mediaPlayerHolder.setCurrentSong(
                             song,
                             queueSongs,
                             isFromQueue = true,
-                            isFolderAlbum = false
+                            isFolderAlbum = LaunchedBy.ArtistView
                         )
-                        initMediaPlayer(song)
+                        setSongDataSource(song)
                     }
                 }
 
                 setOnLongClickListener {
-                    if (title.currentTextColor != ThemeHelper.resolveThemeAccent(context))
+                    if (title.currentTextColor != ThemeHelper.resolveThemeAccent(context)) {
                         DialogHelper.showDeleteQueueSongDialog(
                             context,
                             Pair(song, adapterPosition),
                             queueSongsDialog,
-                            this@QueueAdapter,
-                            mediaPlayerHolder
+                            this@QueueAdapter
                         )
+                    }
                     return@setOnLongClickListener true
                 }
             }

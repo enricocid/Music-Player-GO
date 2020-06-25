@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    app:startDestination="@id/loadingFragment">
+    <fragment
+        android:id="@+id/loadingFragment"
+        android:name="com.iven.musicplayergo.navigation.LoadingFragment"
+        android:label="LoadingFragment" />
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.iven.musicplayergo.navigation.MainFragment"
+        android:label="MainFragment" />
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.iven.musicplayergo.navigation.DetailsFragment"
+        android:label="DetailsFragment" >
+        <argument
+            android:name="TAG_ARTIST_FOLDER"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="TAG_IS_FOLDER"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="TAG_SELECTED_ALBUM_POSITION"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/errorFragment"
+        android:name="com.iven.musicplayergo.navigation.ErrorFragment"
+        android:label="ErrorFragment" >
+        <argument
+            android:name="WE_HAVE_A_PROBLEM_HOUSTON"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+</navigation>

@@ -22,6 +22,9 @@ class MusicRepository {
     //keys: artist || value: its songs
     var deviceSongsByArtist: Map<String?, List<Music>>? = null
 
+    //keys: album || value: its songs
+    var deviceSongsByAlbum: Map<String?, List<Music>>? = null
+
     //keys: artist || value: albums
     var deviceAlbumsByArtist: MutableMap<String, List<Album>>? = mutableMapOf()
 
@@ -83,9 +86,13 @@ class MusicRepository {
                         } else {
                             val returnedPath = File(audioRelativePath).parentFile?.name
                                 ?: application.getString(R.string.slash)
-                            if (returnedPath != "0") returnedPath else application.getString(
-                                R.string.slash
-                            )
+                            if (returnedPath != "0") {
+                                returnedPath
+                            } else {
+                                application.getString(
+                                    R.string.slash
+                                )
+                            }
                         }
 
                     // Add the current music to the list
@@ -130,6 +137,7 @@ class MusicRepository {
         deviceMusicFiltered?.let { dsf ->
             // group music by artist
             deviceSongsByArtist = dsf.groupBy { it.artist }
+            deviceSongsByAlbum = dsf.groupBy { it.album }
             deviceMusicByFolder = dsf.groupBy { it.relativePath!! }
         }
 
@@ -153,7 +161,9 @@ class MusicRepository {
 
         fun getInstance(): MusicRepository {
             val tempInstance = INSTANCE
-            if (tempInstance != null) return tempInstance
+            if (tempInstance != null) {
+                return tempInstance
+            }
             synchronized(this) {
                 val instance = MusicRepository()
                 INSTANCE = instance

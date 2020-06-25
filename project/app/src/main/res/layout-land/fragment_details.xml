@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:clickable="true"
     android:focusable="true"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -102,9 +103,18 @@
                 android:id="@+id/songs_rv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
                 android:overScrollMode="never"
                 android:scrollbars="none" />
         </LinearLayout>
 
     </LinearLayout>
+
+    <!-- CONTROLS PANEL -->
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_player"
+        android:name="com.iven.musicplayergo.player.PlayerFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

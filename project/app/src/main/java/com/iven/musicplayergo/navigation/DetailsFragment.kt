@@ -1,6 +1,5 @@
-package com.iven.musicplayergo.fragments
+package com.iven.musicplayergo.navigation
 
-import android.animation.Animator
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
@@ -11,8 +10,8 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
@@ -20,64 +19,67 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentDetailsBinding
+import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.MusicOrgHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.interfaces.UIControlInterface
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.AlbumsViewHolder
 import com.iven.musicplayergo.ui.GenericViewHolder
-import com.iven.musicplayergo.ui.UIControlInterface
 import kotlinx.android.synthetic.main.fragment_details.*
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-
 class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryTextListener {
+
+    private var mUIControlInterface: UIControlInterface? = null
+    private val mMediaPlayerInterface get() = MediaPlayerHolder.getInstance().mediaPlayerInterface
 
     private lateinit var mDetailsFragmentBinding: FragmentDetailsBinding
     private lateinit var mMusicRepository: MusicRepository
 
-    private lateinit var mArtistDetailsAnimator: Animator
     private lateinit var mAlbumsRecyclerViewLayoutManager: LinearLayoutManager
 
     private val mSelectedAlbumsDataSource = dataSourceOf()
     private val mSongsDataSource = dataSourceOf()
 
-    private var sFolder = false
+    private var launchedBy: LaunchedBy = LaunchedBy.ArtistView
 
     private var mSelectedArtistAlbums: List<Album>? = null
-    private var mSongsForArtistOrFolder: List<Music>? = null
+    private var mSongsList: List<Music>? = null
 
     private var mSelectedArtistOrFolder: String? = null
     private var mSelectedAlbumPosition = -1
 
-    private lateinit var mUIControlInterface: UIControlInterface
     private var mSelectedAlbum: Album? = null
 
     private var sLandscape = false
 
     private var mSongsSorting = GoConstants.TRACK_SORTING
 
+    private val sLaunchedByArtistView: Boolean get() = launchedBy == LaunchedBy.ArtistView
+    private val sLaunchedByFolderView: Boolean get() = launchedBy == LaunchedBy.FolderView
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        arguments?.getString(TAG_ARTIST_FOLDER)?.let { selectedArtistOrFolder ->
+        arguments?.getString(GoConstants.TAG_ARTIST_FOLDER)?.let { selectedArtistOrFolder ->
             mSelectedArtistOrFolder = selectedArtistOrFolder
         }
 
-        arguments?.getBoolean(TAG_IS_FOLDER)?.let { isFolder ->
-            sFolder = isFolder
+        arguments?.getInt(GoConstants.TAG_IS_FOLDER)?.let { launchedBy ->
+            this.launchedBy = LaunchedBy.values()[launchedBy]
         }
 
-        if (!sFolder) arguments?.getInt(TAG_SELECTED_ALBUM_POSITION)?.let { selectedAlbumPosition ->
-            mSelectedAlbumPosition = selectedAlbumPosition
+        if (sLaunchedByArtistView) {
+            arguments?.getInt(GoConstants.TAG_SELECTED_ALBUM_POSITION)
+                ?.let { selectedAlbumPosition ->
+                    mSelectedAlbumPosition = selectedAlbumPosition
+                }
         }
 
         // This makes sure that the container activity has implemented
@@ -89,10 +91,20 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
     }
 
-    fun onHandleBackPressed(): Animator {
-        if (!mArtistDetailsAnimator.isRunning) mArtistDetailsAnimator =
-            mDetailsFragmentBinding.root.createCircularReveal(isErrorFragment = false, show = false)
-        return mArtistDetailsAnimator
+    fun onSnapToPosition(selectedArtistOrFolder: String?): Boolean {
+        val hasToUpdate =
+            mSelectedArtistOrFolder != null && sLaunchedByArtistView && selectedArtistOrFolder != mSelectedArtistOrFolder
+        if (!hasToUpdate && selectedArtistOrFolder == mSelectedArtistOrFolder) {
+            val snapPosition = MusicOrgHelper.getPlayingAlbumPosition(
+                selectedArtistOrFolder
+            )
+            if (snapPosition != -1) {
+                mDetailsFragmentBinding.albumsRv.smoothSnapToPosition(
+                    snapPosition
+                )
+            }
+        }
+        return hasToUpdate
     }
 
     // https://stackoverflow.com/a/38241603
@@ -106,6 +118,19 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         null
     }
 
+    private fun getSongSource(): List<Music>? {
+        return when (launchedBy) {
+            LaunchedBy.ArtistView ->
+                mMusicRepository.deviceSongsByArtist?.get(mSelectedArtistOrFolder)
+
+            LaunchedBy.FolderView ->
+                mMusicRepository.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
+
+            LaunchedBy.AlbumView ->
+                mMusicRepository.deviceSongsByAlbum?.get(mSelectedArtistOrFolder)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -113,15 +138,17 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
         mMusicRepository = MusicRepository.getInstance()
 
-        if (!sFolder) {
+        setupViews()
+    }
 
+    private fun setupViews() {
+        if (sLaunchedByArtistView) {
             mMusicRepository.deviceAlbumsByArtist?.get(mSelectedArtistOrFolder)
                 ?.let { selectedArtistAlbums ->
                     mSelectedArtistAlbums = selectedArtistAlbums
                 }
 
-            mSongsForArtistOrFolder =
-                mMusicRepository.deviceSongsByArtist?.get(mSelectedArtistOrFolder)
+            mSongsList = getSongSource()
 
             mSelectedAlbum = when {
                 mSelectedAlbumPosition != -1 -> mSelectedArtistAlbums?.get(
@@ -134,8 +161,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             }
 
         } else {
-            mSongsForArtistOrFolder =
-                mMusicRepository.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
+            mSongsList =
+                getSongSource()
         }
 
         sLandscape = ThemeHelper.isDeviceLand(requireContext().resources)
@@ -144,7 +171,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
             overflowIcon = AppCompatResources.getDrawable(
                 requireContext(),
-                if (sFolder) R.drawable.ic_more_vert else R.drawable.ic_shuffle
+                if (sLaunchedByArtistView) {
+                    R.drawable.ic_shuffle
+                } else {
+                    R.drawable.ic_more_vert
+                }
             )
 
             title = mSelectedArtistOrFolder
@@ -166,7 +197,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             setupMenu()
         }
 
-        if (!sFolder) {
+        if (sLaunchedByArtistView) {
 
             setupAlbumsContainer(requireContext())
 
@@ -175,12 +206,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             mDetailsFragmentBinding.albumsRv.handleViewVisibility(false)
             selected_album_container.handleViewVisibility(false)
 
-            mSongsForArtistOrFolder =
-                mMusicRepository.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
+            mSongsList =
+                getSongSource()
 
             mDetailsFragmentBinding.detailsToolbar.subtitle = getString(
                 R.string.folder_info,
-                mSongsForArtistOrFolder?.size
+                mSongsList?.size
             )
 
             val searchView =
@@ -196,7 +227,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             }
         }
 
-        setSongsDataSource(if (sFolder) mSongsForArtistOrFolder else mSelectedAlbum?.music)
+        setSongsDataSource(
+            if (sLaunchedByArtistView) {
+                mSelectedAlbum?.music
+            } else {
+                mSongsList
+            }
+        )
 
         mDetailsFragmentBinding.songsRv.apply {
 
@@ -205,10 +242,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 // item is a `val` in `this` here
                 withDataSource(mSongsDataSource)
 
-                if (sLandscape)
-                    withLayoutManager(GridLayoutManager(requireContext(), 2))
-                else
+                if (!sLandscape) {
                     addItemDecoration(ThemeHelper.getRecyclerViewDivider(requireContext()))
+                }
 
                 withItem<Music, GenericViewHolder>(R.layout.generic_item) {
                     onBind(::GenericViewHolder) { _, item ->
@@ -227,18 +263,19 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     onClick {
 
                         val selectedPlaylist =
-                            if (sFolder) mSongsForArtistOrFolder
-                            else
+                            if (sLaunchedByFolderView) {
+                                mSongsList
+                            } else {
                                 MusicOrgHelper.getAlbumSongs(
                                     item.artist,
-                                    item.album,
-                                    mMusicRepository.deviceAlbumsByArtist
+                                    item.album
                                 )
+                            }
 
-                        mUIControlInterface.onSongSelected(
+                        mMediaPlayerInterface?.onSongSelected(
                             item,
                             selectedPlaylist,
-                            sFolder
+                            launchedBy
                         )
                     }
 
@@ -247,15 +284,20 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             requireContext(),
                             findViewHolderForAdapterPosition(index)?.itemView,
                             item,
-                            sFolder,
-                            mUIControlInterface
+                            launchedBy
                         )
                     }
                 }
             }
+
+            addBidirectionalSwipeHandler(false) { viewHolder: RecyclerView.ViewHolder,
+                                                  _: Int ->
+                MediaPlayerHolder.getInstance().mediaPlayerInterface?.onAddToQueue(mSongsList!![viewHolder.adapterPosition])
+                adapter?.notifyDataSetChanged()
+            }
         }
 
-        if (!sFolder) {
+        if (sLaunchedByArtistView) {
             mDetailsFragmentBinding.sortButton.apply {
                 setOnClickListener {
                     mSongsSorting = ListsHelper.getSongsSorting(mSongsSorting)
@@ -269,14 +311,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 }
             }
         }
-
-        view.afterMeasured {
-            mArtistDetailsAnimator =
-                mDetailsFragmentBinding.root.createCircularReveal(
-                    isErrorFragment = false,
-                    show = true
-                )
-        }
     }
 
     private fun setAlbumsDataSource(albumsList: List<Album>?) {
@@ -286,15 +320,19 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     }
 
     private fun setSongsDataSource(musicList: List<Music>?) {
-        if (!sFolder) {
+        if (sLaunchedByArtistView) {
             mDetailsFragmentBinding.sortButton.apply {
                 isEnabled = mSelectedAlbum?.music?.size!! >= 2
                 ThemeHelper.updateIconTint(
                     this,
-                    if (isEnabled) R.color.widgetsColor.decodeColor(requireContext()) else ThemeHelper.resolveColorAttr(
-                        requireContext(),
-                        android.R.attr.colorButtonNormal
-                    )
+                    if (isEnabled) {
+                        R.color.widgetsColor.decodeColor(requireContext())
+                    } else {
+                        ThemeHelper.resolveColorAttr(
+                            requireContext(),
+                            android.R.attr.colorButtonNormal
+                        )
+                    }
                 )
             }
             mDetailsFragmentBinding.detailsToolbar.menu.findItem(R.id.action_shuffle_sa).isEnabled =
@@ -307,8 +345,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     override fun onQueryTextChange(newText: String?): Boolean {
         setSongsDataSource(
-            ListsHelper.processQueryForMusic(newText, mSongsForArtistOrFolder)
-                ?: mSongsForArtistOrFolder
+            ListsHelper.processQueryForMusic(newText, mSongsList)
+                ?: mSongsList
         )
         return false
     }
@@ -320,26 +358,38 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         mDetailsFragmentBinding.detailsToolbar.apply {
 
             val menuToInflate =
-                if (sFolder) R.menu.menu_folder_details else R.menu.menu_artist_details
+                if (sLaunchedByArtistView) {
+                    R.menu.menu_artist_details
+                } else {
+                    R.menu.menu_folder_details
+                }
 
             inflateMenu(menuToInflate)
 
             menu.apply {
                 findItem(R.id.action_shuffle_am).isEnabled =
-                    if (sFolder) mSongsForArtistOrFolder?.size!! >= 2 else !sFolder && mSelectedArtistAlbums?.size!! >= 2
-                findItem(R.id.action_shuffle_sa).isEnabled = !sFolder
-                if (sFolder) findItem(R.id.sorting).isEnabled = mSongsForArtistOrFolder?.size!! >= 2
+                    if (sLaunchedByArtistView) {
+                        mSelectedArtistAlbums?.size!! >= 2
+                    } else {
+                        mSongsList?.size!! >= 2
+                    }
+
+                findItem(R.id.action_shuffle_sa).isEnabled = sLaunchedByArtistView
+                if (!sLaunchedByArtistView) {
+                    findItem(R.id.sorting).isEnabled =
+                        mSongsList?.size!! >= 2
+                }
             }
 
             setOnMenuItemClickListener {
                 when (it.itemId) {
-                    R.id.action_shuffle_am -> mUIControlInterface.onShuffleSongs(
-                        mSongsForArtistOrFolder?.toMutableList(),
-                        sFolder
+                    R.id.action_shuffle_am -> mMediaPlayerInterface?.onShuffleSongs(
+                        mSongsList?.toMutableList(),
+                        launchedBy
                     )
-                    R.id.action_shuffle_sa -> mUIControlInterface.onShuffleSongs(
+                    R.id.action_shuffle_sa -> mMediaPlayerInterface?.onShuffleSongs(
                         mSelectedAlbum?.music,
-                        sFolder
+                        launchedBy
                     )
                     R.id.default_sorting -> applySortingToMusic(GoConstants.DEFAULT_SORTING)
                     R.id.descending_sorting -> applySortingToMusic(GoConstants.DESCENDING_SORTING)
@@ -354,21 +404,27 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private fun applySortingToMusic(order: Int) {
         val selectedList = mMusicRepository.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
-        mSongsForArtistOrFolder = ListsHelper.getSortedMusicList(
+        mSongsList = ListsHelper.getSortedMusicList(
             order,
             selectedList?.toMutableList()
         )
-        setSongsDataSource(mSongsForArtistOrFolder)
+        setSongsDataSource(mSongsList)
     }
 
     private fun setupToolbarSpecs() {
         mDetailsFragmentBinding.detailsToolbar.apply {
-            elevation = if (sFolder)
-                resources.getDimensionPixelSize(R.dimen.search_bar_elevation).toFloat() else 0F
+            elevation = if (!sLaunchedByArtistView) {
+                resources.getDimensionPixelSize(R.dimen.search_bar_elevation).toFloat()
+            } else {
+                0F
+            }
 
             val params = layoutParams as LinearLayout.LayoutParams
-            params.bottomMargin = if (sFolder)
-                0 else resources.getDimensionPixelSize(R.dimen.player_controls_padding_normal)
+            params.bottomMargin = if (!sLaunchedByArtistView) {
+                0
+            } else {
+                resources.getDimensionPixelSize(R.dimen.player_controls_padding_normal)
+            }
         }
     }
 
@@ -391,7 +447,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         mDetailsFragmentBinding.detailsToolbar.subtitle = getString(
             R.string.artist_info,
             mSelectedArtistAlbums?.size,
-            mSongsForArtistOrFolder?.size
+            mSongsList?.size
         )
 
         mDetailsFragmentBinding.albumsRv.apply {
@@ -402,7 +458,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                 mAlbumsRecyclerViewLayoutManager = LinearLayoutManager(
                     context,
-                    if (sLandscape) LinearLayoutManager.VERTICAL else LinearLayoutManager.HORIZONTAL,
+                    if (sLandscape) {
+                        LinearLayoutManager.VERTICAL
+                    } else {
+                        LinearLayoutManager.HORIZONTAL
+                    },
                     false
                 )
                 withLayoutManager(mAlbumsRecyclerViewLayoutManager)
@@ -441,20 +501,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     }
                 }
             }
-            if (mSelectedAlbumPosition != -1 || mSelectedAlbumPosition != 0) mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
-                mSelectedAlbumPosition,
-                0
-            )
+            if (mSelectedAlbumPosition != -1 || mSelectedAlbumPosition != 0) {
+                mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
+                    mSelectedAlbumPosition,
+                    0
+                )
+            }
         }
-    }
-
-    fun hasToUpdate(selectedArtistOrFolder: String?) =
-        selectedArtistOrFolder != mSelectedArtistOrFolder
-
-    fun tryToSnapToAlbumPosition(snapPosition: Int) {
-        if (!sFolder && snapPosition != -1) mDetailsFragmentBinding.albumsRv.smoothSnapToPosition(
-            snapPosition
-        )
     }
 
     private fun updateSelectedAlbumContainer() {
@@ -481,18 +534,15 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         val firstSongOfSelectedAlbum = mSelectedAlbum?.music?.first()
         firstSongOfSelectedAlbum?.let {
             val loadedSong =
-                if (sFolder) mSongsForArtistOrFolder
-                else
-                    MusicOrgHelper.getAlbumSongs(
-                        firstSongOfSelectedAlbum.artist,
-                        firstSongOfSelectedAlbum.album,
-                        mMusicRepository.deviceAlbumsByArtist
-                    )
+                MusicOrgHelper.getAlbumSongs(
+                    firstSongOfSelectedAlbum.artist,
+                    firstSongOfSelectedAlbum.album
+                )
 
-            mUIControlInterface.onSongSelected(
+            mMediaPlayerInterface?.onSongSelected(
                 firstSongOfSelectedAlbum,
                 loadedSong,
-                sFolder
+                launchedBy
             )
         }
     }
@@ -506,32 +556,5 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         )
         setSongsDataSource(songs)
         mDetailsFragmentBinding.songsRv.scrollToPosition(0)
-    }
-
-    companion object {
-
-        private const val TAG_ARTIST_FOLDER = "SELECTED_ARTIST_FOLDER"
-        private const val TAG_IS_FOLDER = "IS_FOLDER"
-        private const val TAG_SELECTED_ALBUM_POSITION = "SELECTED_ALBUM_POSITION"
-
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @return A new instance of fragment DetailsFragment.
-         */
-        @JvmStatic
-        fun newInstance(
-            selectedArtistOrFolder: String?,
-            isFolder: Boolean,
-            playedAlbumPosition: Int
-        ) =
-            DetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(TAG_ARTIST_FOLDER, selectedArtistOrFolder)
-                    putBoolean(TAG_IS_FOLDER, isFolder)
-                    putInt(TAG_SELECTED_ALBUM_POSITION, playedAlbumPosition)
-                }
-            }
     }
 }

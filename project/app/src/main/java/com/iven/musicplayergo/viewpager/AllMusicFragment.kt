@@ -1,25 +1,27 @@
-package com.iven.musicplayergo.fragments
+package com.iven.musicplayergo.viewpager
 
 import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
+import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentAllMusicBinding
+import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.MusicOrgHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.interfaces.UIControlInterface
 import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.SongsViewHolder
-import com.iven.musicplayergo.ui.UIControlInterface
 
 /**
  * A simple [Fragment] subclass.
@@ -30,6 +32,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
     private lateinit var mAllMusicFragmentBinding: FragmentAllMusicBinding
 
+    private val mMediaPlayerHolder get() = MediaPlayerHolder.getInstance()
     private var mAllMusic: MutableList<Music>? = null
     private val mDataSource = emptyDataSource()
 
@@ -64,15 +67,9 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 // item is a `val` in `this` here
                 withDataSource(mDataSource)
 
-                if (ThemeHelper.isDeviceLand(resources)) withLayoutManager(
-                    GridLayoutManager(
-                        requireContext(),
-                        3
-                    )
-                )
-                else addItemDecoration(
+                if (!ThemeHelper.isDeviceLand(resources)) {
                     ThemeHelper.getRecyclerViewDivider(requireContext())
-                )
+                }
 
                 withItem<Music, SongsViewHolder>(R.layout.music_item) {
                     onBind(::SongsViewHolder) { _, item ->
@@ -87,14 +84,13 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                     }
 
                     onClick {
-                        mUIControlInterface.onSongSelected(
+                        mMediaPlayerHolder.mediaPlayerInterface?.onSongSelected(
                             item,
                             MusicOrgHelper.getAlbumSongs(
                                 item.artist,
-                                item.album,
-                                musicRepository.deviceAlbumsByArtist
+                                item.album
                             ),
-                            false
+                            LaunchedBy.ArtistView
                         )
                     }
 
@@ -103,8 +99,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                             requireContext(),
                             findViewHolderForAdapterPosition(index)?.itemView,
                             item,
-                            false,
-                            mUIControlInterface
+                            LaunchedBy.ArtistView
                         )
                     }
                 }
@@ -116,12 +111,15 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
             inflateMenu(R.menu.menu_all_music)
 
             setNavigationOnClickListener {
-                mUIControlInterface.onCloseActivity()
+                mUIControlInterface.onCloseActivity(mMediaPlayerHolder.state == GoConstants.PLAYING || mMediaPlayerHolder.state == GoConstants.RESUMED)
             }
 
             menu.apply {
                 findItem(R.id.action_shuffle_am).setOnMenuItemClickListener {
-                    mUIControlInterface.onShuffleSongs(mAllMusic, false)
+                    mMediaPlayerHolder.mediaPlayerInterface?.onShuffleSongs(
+                        mAllMusic,
+                        LaunchedBy.ArtistView
+                    )
                     return@setOnMenuItemClickListener true
                 }
                 val searchView = findItem(R.id.action_search).actionView as SearchView

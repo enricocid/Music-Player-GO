@@ -8,6 +8,7 @@ import android.media.MediaFormat
 import android.net.Uri
 import android.provider.MediaStore
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedMusic
 import java.util.*
@@ -82,7 +83,7 @@ fun Int.toFormattedTrack() = try {
 fun Int.toFormattedYear(resources: Resources) =
     if (this != 0) toString() else resources.getString(R.string.unknown_year)
 
-fun Music.toSavedMusic(playerPosition: Int, isPlayingFromFolder: Boolean) =
+fun Music.toSavedMusic(playerPosition: Int, launchedBy: LaunchedBy) =
     SavedMusic(
         artist,
         title,
@@ -91,5 +92,5 @@ fun Music.toSavedMusic(playerPosition: Int, isPlayingFromFolder: Boolean) =
         playerPosition,
         duration,
         album,
-        isPlayingFromFolder
+        launchedBy
     )

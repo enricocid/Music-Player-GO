@@ -5,21 +5,24 @@ import android.view.Gravity
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
-import com.iven.musicplayergo.MusicRepository
+import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.adapters.QueueAdapter
+import com.iven.musicplayergo.enums.LaunchedBy
+import com.iven.musicplayergo.extensions.addBidirectionalSwipeHandler
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.interfaces.UIControlInterface
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedMusic
 import com.iven.musicplayergo.player.MediaPlayerHolder
-import com.iven.musicplayergo.ui.UIControlInterface
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 
@@ -27,15 +30,14 @@ object DialogHelper {
 
     @JvmStatic
     fun showQueueSongsDialog(
-        context: Context,
-        mediaPlayerHolder: MediaPlayerHolder
+        context: Context
     ) = MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
         title(R.string.queue)
+        val queueDialog = this
+        val queueAdapter = QueueAdapter(context, this, MediaPlayerHolder.getInstance())
 
-        customListAdapter(
-            QueueAdapter(context, this, mediaPlayerHolder)
-        )
+        customListAdapter(queueAdapter)
 
         val recyclerView = getRecyclerView()
 
@@ -49,11 +51,28 @@ object DialogHelper {
             )
             if (goPreferences.isEdgeToEdge) {
                 window?.apply {
-                    ThemeHelper.handleLightSystemBars(context.resources.configuration, decorView)
+                    ThemeHelper.handleLightSystemBars(
+                        context.resources.configuration,
+                        decorView,
+                        false
+                    )
                     edgeToEdge {
                         recyclerView.fit { Edge.Bottom }
                         decorView.fit { Edge.Top }
                     }
+                }
+            }
+        }
+
+        recyclerView.addBidirectionalSwipeHandler(true) { viewHolder: RecyclerView.ViewHolder,
+                                                          _: Int ->
+            MediaPlayerHolder.getInstance().apply {
+                queueSongs.removeAt(viewHolder.adapterPosition)
+                queueAdapter.swapQueueSongs(queueSongs)
+                if (queueSongs.isEmpty()) {
+                    isQueue = false
+                    mediaPlayerInterface?.onQueueStartedOrEnded(false)
+                    queueDialog.dismiss()
                 }
             }
         }
@@ -64,8 +83,7 @@ object DialogHelper {
         context: Context,
         song: Pair<Music, Int>,
         queueSongsDialog: MaterialDialog,
-        queueAdapter: QueueAdapter,
-        mediaPlayerHolder: MediaPlayerHolder
+        queueAdapter: QueueAdapter
     ) {
 
         MaterialDialog(context).show {
@@ -80,13 +98,13 @@ object DialogHelper {
             )
             positiveButton(R.string.yes) {
 
-                mediaPlayerHolder.apply {
+                MediaPlayerHolder.getInstance().apply {
                     queueSongs.removeAt(song.second)
                     queueAdapter.swapQueueSongs(queueSongs)
 
                     if (queueSongs.isEmpty()) {
                         isQueue = false
-                        mediaPlayerInterface.onQueueStartedOrEnded(false)
+                        mediaPlayerInterface?.onQueueStartedOrEnded(false)
                         queueSongsDialog.dismiss()
                     }
                 }
@@ -97,8 +115,7 @@ object DialogHelper {
 
     @JvmStatic
     fun showClearQueueDialog(
-        context: Context,
-        mediaPlayerHolder: MediaPlayerHolder
+        context: Context
     ) {
 
         MaterialDialog(context).show {
@@ -109,8 +126,8 @@ object DialogHelper {
 
             positiveButton(R.string.yes) {
 
-                mediaPlayerHolder.apply {
-                    if (isQueueStarted && isPlaying) {
+                MediaPlayerHolder.getInstance().apply {
+                    if (isQueueStarted && state != GoConstants.PAUSED) {
 
                         restorePreQueueSongs()
                         skip(
@@ -126,25 +143,19 @@ object DialogHelper {
 
     @JvmStatic
     fun showLovedSongsDialog(
-        context: Context,
-        uiControlInterface: UIControlInterface,
-        mediaPlayerHolder: MediaPlayerHolder,
-        musicRepository: MusicRepository
+        context: Context
     ) {
 
         MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
             title(R.string.loved_songs)
 
-            customListAdapter(
-                LovedSongsAdapter(
-                    context,
-                    this,
-                    uiControlInterface,
-                    mediaPlayerHolder,
-                    musicRepository
-                )
+            val lovedSongsAdapter = LovedSongsAdapter(
+                context,
+                this
             )
+
+            customListAdapter(lovedSongsAdapter)
 
             val recyclerView = getRecyclerView()
 
@@ -160,7 +171,8 @@ object DialogHelper {
                     window?.apply {
                         ThemeHelper.handleLightSystemBars(
                             context.resources.configuration,
-                            decorView
+                            decorView,
+                            false
                         )
                         edgeToEdge {
                             recyclerView.fit { Edge.Bottom }
@@ -168,6 +180,13 @@ object DialogHelper {
                         }
                     }
                 }
+            }
+
+            recyclerView.addBidirectionalSwipeHandler(true) { viewHolder: RecyclerView.ViewHolder, _: Int ->
+                val lovedSongs = goPreferences.lovedSongs?.toMutableList()
+                lovedSongs?.removeAt(viewHolder.adapterPosition)
+                goPreferences.lovedSongs = lovedSongs
+                lovedSongsAdapter.swapSongs(lovedSongs)
             }
         }
     }
@@ -207,8 +226,7 @@ object DialogHelper {
 
     @JvmStatic
     fun showClearLovedSongDialog(
-        context: Context,
-        uiControlInterface: UIControlInterface
+        context: Context
     ) {
 
         MaterialDialog(context).show {
@@ -217,7 +235,7 @@ object DialogHelper {
 
             message(R.string.loved_songs_clear)
             positiveButton(R.string.yes) {
-                uiControlInterface.onLovedSongsUpdate(true)
+                MediaPlayerHolder.getInstance().mediaPlayerInterface?.onLovedSongUpdate(true)
             }
             negativeButton(R.string.no)
         }
@@ -228,12 +246,12 @@ object DialogHelper {
         context: Context,
         itemView: View?,
         stringToFilter: String?,
-        uiControlInterface: UIControlInterface
+        uiControlInterface: UIControlInterface?
     ) {
         itemView?.let { view ->
             PopupMenu(context, view).apply {
                 setOnMenuItemClickListener {
-                    uiControlInterface.onAddToFilter(stringToFilter)
+                    uiControlInterface?.onAddToFilter(stringToFilter)
                     return@setOnMenuItemClickListener true
                 }
                 inflate(R.menu.menu_filter)
@@ -248,9 +266,9 @@ object DialogHelper {
         context: Context,
         itemView: View?,
         song: Music?,
-        isFolder: Boolean,
-        uiControlInterface: UIControlInterface
+        launchedBy: LaunchedBy
     ) {
+        val mediaPlayerInterface = MediaPlayerHolder.getInstance().mediaPlayerInterface
         itemView?.let {
             PopupMenu(context, itemView).apply {
                 setOnMenuItemClickListener {
@@ -261,11 +279,11 @@ object DialogHelper {
                                 context,
                                 song,
                                 0,
-                                isFolder
+                                launchedBy
                             )
-                            uiControlInterface.onLovedSongsUpdate(false)
+                            mediaPlayerInterface?.onLovedSongUpdate(false)
                         }
-                        R.id.queue_add -> uiControlInterface.onAddToQueue(song)
+                        R.id.queue_add -> mediaPlayerInterface?.onAddToQueue(song)
                     }
 
                     return@setOnMenuItemClickListener true
@@ -279,10 +297,10 @@ object DialogHelper {
 
     @JvmStatic
     fun stopPlaybackDialog(
-        context: Context,
-        mediaPlayerHolder: MediaPlayerHolder
+        context: Context
     ) {
 
+        val mediaPlayerHolder = MediaPlayerHolder.getInstance()
         MaterialDialog(context).show {
 
             title(R.string.app_name)

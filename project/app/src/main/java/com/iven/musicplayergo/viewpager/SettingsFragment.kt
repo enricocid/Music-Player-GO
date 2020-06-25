@@ -1,12 +1,14 @@
-package com.iven.musicplayergo.fragments
+package com.iven.musicplayergo.viewpager
 
 import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentSettingsBinding
-import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.interfaces.UIControlInterface
+import com.iven.musicplayergo.player.MediaPlayerHolder
 
 /**
  * A simple [Fragment] subclass.
@@ -15,7 +17,6 @@ import com.iven.musicplayergo.ui.UIControlInterface
  */
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
-    private lateinit var mSettingsFragmentBinding: FragmentSettingsBinding
     private lateinit var mUIControlInterface: UIControlInterface
 
     override fun onAttach(context: Context) {
@@ -32,10 +33,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mSettingsFragmentBinding = FragmentSettingsBinding.bind(view)
-
-        mSettingsFragmentBinding.searchToolbar.setNavigationOnClickListener {
-            mUIControlInterface.onCloseActivity()
+        FragmentSettingsBinding.bind(view).searchToolbar.setNavigationOnClickListener {
+            val mediaPlayerHolder = MediaPlayerHolder.getInstance()
+            mUIControlInterface.onCloseActivity(mediaPlayerHolder.state == GoConstants.PLAYING || mediaPlayerHolder.state == GoConstants.RESUMED)
         }
 
         childFragmentManager.beginTransaction().apply {

@@ -23,7 +23,7 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes](https://github.com/enricocid/Music-Player-GO/pull/121)
 
-- [**Drhaal**](https://github.com/Drhaal) for Always On Display (AOD) [fixes](https://github.com/enricocid/Music-Player-GO/pull/186)
+- [**Drhaal**](https://github.com/Drhaal) for Always On Display (AOD) [fixes](https://github.com/enricocid/Music-Player-GO/pull/186) and the following implementations: [190](https://github.com/enricocid/Music-Player-GO/pull/190), [193](https://github.com/enricocid/Music-Player-GO/pull/193) 
 
 - [**seventhsonmizo**](https://github.com/seventhsonmizo) for Android Q [issue](https://github.com/enricocid/Music-Player-GO/issues/110) report and debugging
 
@@ -50,6 +50,9 @@ If you think you should be listed, don't hesitate to notify me! :)
 - [**Kieran BW**](https://github.com/FredHappyface) for having raised [this](https://github.com/enricocid/Music-Player-GO/issues/131) question
 
 - **Stephan Maier** for having reported this [issue](https://github.com/enricocid/Music-Player-GO/commit/06b0375eda3f7c214881af205e64dffbca29dfe7) via F-Droid
+
+- [**john2020star**](https://github.com/john2020star) for having contributed to fix this[issue](https://github.com/enricocid/Music-Player-GO/issues/196)
+
 
 ### Big thanks to translators:
 

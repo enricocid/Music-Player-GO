@@ -35,7 +35,11 @@ object ThemeHelper {
     fun getDefaultNightMode(context: Context) = when (goPreferences.theme) {
         context.getString(R.string.theme_pref_light) -> AppCompatDelegate.MODE_NIGHT_NO
         context.getString(R.string.theme_pref_dark) -> AppCompatDelegate.MODE_NIGHT_YES
-        else -> if (VersioningHelper.isQ()) AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM else AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+        else -> if (VersioningHelper.isQ()) {
+            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        } else {
+            AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+        }
     }
 
     @JvmStatic
@@ -62,38 +66,54 @@ object ThemeHelper {
         configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 
     @JvmStatic
-    fun getAlphaForAccent() = if (goPreferences.accent != R.color.yellow) 100 else 150
+    fun getAlphaForAccent() = if (goPreferences.accent != R.color.yellow) {
+        100
+    } else {
+        150
+    }
 
     @JvmStatic
     @TargetApi(Build.VERSION_CODES.O_MR1)
-    fun handleLightSystemBars(configuration: Configuration, decorView: View) {
+    fun handleLightSystemBars(
+        configuration: Configuration,
+        decorView: View,
+        isBottomSheet: Boolean
+    ) {
         val flags = decorView.systemUiVisibility
         decorView.systemUiVisibility =
-            if (isThemeNight(configuration)) flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv() and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv() else flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+            if (isThemeNight(configuration)) {
+                flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv() and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
+            } else {
+                if (isBottomSheet) {
+                    flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                } else {
+                    flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                }
+            }
     }
 
     // Fixed array of pairs (first: accent, second: theme, third: color primary dark)
     @JvmStatic
     val accents = arrayOf(
-        Triple(R.color.red, R.style.BaseTheme_Red, R.color.redPrimaryDark),
-        Triple(R.color.pink, R.style.BaseTheme_Pink, R.color.pinkPrimaryDark),
-        Triple(R.color.purple, R.style.BaseTheme_Purple, R.color.purplePrimaryDark),
-        Triple(R.color.deep_purple, R.style.BaseTheme_DeepPurple, R.color.deepPurplePrimaryDark),
-        Triple(R.color.indigo, R.style.BaseTheme_Indigo, R.color.indigoPrimaryDark),
-        Triple(R.color.blue, R.style.BaseTheme_Blue, R.color.bluePrimaryDark),
-        Triple(R.color.light_blue, R.style.BaseTheme_LightBlue, R.color.lightBluePrimaryDark),
-        Triple(R.color.cyan, R.style.BaseTheme_Cyan, R.color.cyanPrimaryDark),
-        Triple(R.color.teal, R.style.BaseTheme_Teal, R.color.tealPrimaryDark),
-        Triple(R.color.green, R.style.BaseTheme_Green, R.color.greenPrimaryDark),
-        Triple(R.color.light_green, R.style.BaseTheme_LightGreen, R.color.lightGreenPrimaryDark),
-        Triple(R.color.lime, R.style.BaseTheme_Lime, R.color.limePrimaryDark),
-        Triple(R.color.yellow, R.style.BaseTheme_Yellow, R.color.yellowPrimaryDark),
-        Triple(R.color.amber, R.style.BaseTheme_Amber, R.color.amberPrimaryDark),
-        Triple(R.color.orange, R.style.BaseTheme_Orange, R.color.orangePrimaryDark),
-        Triple(R.color.deep_orange, R.style.BaseTheme_DeepOrange, R.color.deepOrangePrimaryDark),
-        Triple(R.color.brown, R.style.BaseTheme_Brown, R.color.brownPrimaryDark),
-        Triple(R.color.grey, R.style.BaseTheme_Grey, R.color.greyPrimaryDark),
-        Triple(R.color.blue_grey, R.style.BaseTheme_BlueGrey, R.color.blueGreyPrimaryDark)
+        Pair(R.color.red, R.style.BaseTheme_Red),
+        Pair(R.color.pink, R.style.BaseTheme_Pink),
+        Pair(R.color.purple, R.style.BaseTheme_Purple),
+        Pair(R.color.deep_purple, R.style.BaseTheme_DeepPurple),
+        Pair(R.color.indigo, R.style.BaseTheme_Indigo),
+        Pair(R.color.blue, R.style.BaseTheme_Blue),
+        Pair(R.color.light_blue, R.style.BaseTheme_LightBlue),
+        Pair(R.color.cyan, R.style.BaseTheme_Cyan),
+        Pair(R.color.teal, R.style.BaseTheme_Teal),
+        Pair(R.color.green, R.style.BaseTheme_Green),
+        Pair(R.color.light_green, R.style.BaseTheme_LightGreen),
+        Pair(R.color.lime, R.style.BaseTheme_Lime),
+        Pair(R.color.yellow, R.style.BaseTheme_Yellow),
+        Pair(R.color.amber, R.style.BaseTheme_Amber),
+        Pair(R.color.orange, R.style.BaseTheme_Orange),
+        Pair(R.color.deep_orange, R.style.BaseTheme_DeepOrange),
+        Pair(R.color.brown, R.style.BaseTheme_Brown),
+        Pair(R.color.grey, R.style.BaseTheme_Grey),
+        Pair(R.color.blue_grey, R.style.BaseTheme_BlueGrey)
     )
 
     @JvmStatic
@@ -110,25 +130,15 @@ object ThemeHelper {
         ).toSpanned()
     }
 
-    // Search theme from accents array of triple, returns a Pair(theme, position)
+    // Search theme from accents array of Pair, returns a Pair(theme, position)
     @JvmStatic
     fun getAccentedTheme() = try {
-        val triple = accents.find { pair -> pair.first == goPreferences.accent }
-        val theme = triple!!.second
-        val position = accents.indexOf(triple)
+        val pair = accents.find { pair -> pair.first == goPreferences.accent }
+        val theme = pair!!.second
+        val position = accents.indexOf(pair)
         Pair(theme, position)
     } catch (e: Exception) {
         Pair(R.style.BaseTheme_DeepPurple, 3)
-    }
-
-    // Finds color primary dark from accents array of triple
-    @ColorInt
-    @JvmStatic
-    fun resolvePrimaryDarkColor(context: Context) = try {
-        val triple = accents.find { pair -> pair.first == goPreferences.accent }
-        triple?.third?.decodeColor(context)
-    } catch (e: Exception) {
-        R.color.deepPurplePrimaryDark.decodeColor(context)
     }
 
     @ColorInt
@@ -173,7 +183,11 @@ object ThemeHelper {
             )
         // resourceId is used if it's a ColorStateList, and data if it's a color reference or a hex color
         val colorRes =
-            if (resolvedAttr.resourceId != 0) resolvedAttr.resourceId else resolvedAttr.data
+            if (resolvedAttr.resourceId != 0) {
+                resolvedAttr.resourceId
+            } else {
+                resolvedAttr.data
+            }
         return colorRes.decodeColor(context)
     }
 
@@ -190,7 +204,11 @@ object ThemeHelper {
             ColorDrawable(
                 getAlphaAccent(
                     context,
-                    if (isThemeNight(context.resources.configuration)) 45 else 85
+                    if (isThemeNight(context.resources.configuration)) {
+                        45
+                    } else {
+                        85
+                    }
                 )
             )
         )
@@ -207,8 +225,9 @@ object ThemeHelper {
     @JvmStatic
     fun getTabIcon(iconIndex: Int) = when (iconIndex) {
         0 -> R.drawable.ic_artist
-        1 -> R.drawable.ic_music_note
-        2 -> R.drawable.ic_folder
+        1 -> R.drawable.ic_library_music
+        2 -> R.drawable.ic_music_note
+        3 -> R.drawable.ic_folder
         else -> R.drawable.ic_settings
     }
 
@@ -231,7 +250,7 @@ object ThemeHelper {
     @JvmStatic
     fun getRepeatIcon(mediaPlayerHolder: MediaPlayerHolder) = when {
         mediaPlayerHolder.isRepeat1X -> R.drawable.ic_repeat_one
-        mediaPlayerHolder.isLoop -> R.drawable.ic_repeat
+        mediaPlayerHolder.isLooping!! -> R.drawable.ic_repeat
         else -> R.drawable.ic_repeat_one_notif_disabled
     }
 }

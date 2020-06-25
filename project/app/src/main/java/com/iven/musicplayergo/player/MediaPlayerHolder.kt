@@ -1,27 +1,23 @@
 package com.iven.musicplayergo.player
 
 import android.app.Activity
-import android.bluetooth.BluetoothDevice
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Context.AUDIO_SERVICE
-import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.BitmapFactory
 import android.media.AudioAttributes
-import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.MediaPlayer
-import android.os.Handler
 import android.os.PowerManager
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat.*
 import com.iven.musicplayergo.GoConstants
+import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.toContentUri
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.VersioningHelper
+import com.iven.musicplayergo.interfaces.MediaPlayerInterface
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.MainActivity
 import java.util.concurrent.Executors
@@ -33,166 +29,110 @@ import kotlin.math.ln
  * Exposes the functionality of the [MediaPlayer]
  */
 
-// The volume we set the media player to when we lose audio focus, but are
-// allowed to reduce the volume instead of stopping playback.
-private const val VOLUME_DUCK = 0.2f
-
-// The volume we set the media player when we have audio focus.
-private const val VOLUME_NORMAL = 1.0f
-
-// We don't have audio focus, and can't duck (play at a low volume)
-private const val AUDIO_NO_FOCUS_NO_DUCK = 0
-
-// We don't have focus, but can duck (play at a low volume)
-private const val AUDIO_NO_FOCUS_CAN_DUCK = 1
-
-// We have full audio focus
-private const val AUDIO_FOCUSED = 2
-
-// The headset connection states (0,1)
-private const val HEADSET_DISCONNECTED = 0
-private const val HEADSET_CONNECTED = 1
-
-class MediaPlayerHolder(private val playerService: PlayerService) :
+class MediaPlayerHolder :
+    MediaPlayer.OnErrorListener,
     MediaPlayer.OnCompletionListener,
     MediaPlayer.OnPreparedListener {
 
-    private val mStateBuilder =
-        Builder().apply {
-            if (VersioningHelper.isQ()) setActions(ACTION_SEEK_TO)
-        }
+    private var mMediaPlayer: MediaPlayer? = null
 
-    lateinit var mediaPlayerInterface: MediaPlayerInterface
+    var state = GoConstants.PAUSED
 
-    // Audio focus
-    private var mAudioManager = playerService.getSystemService(AUDIO_SERVICE) as AudioManager
-    private lateinit var mAudioFocusRequestOreo: AudioFocusRequest
-    private val mHandler = Handler()
+    var isPlay = false
+    private val mStateBuilder = if (VersioningHelper.isQ()) {
+        Builder().setActions(ACTION_SEEK_TO)
+    } else {
+        null
+    }
 
-    private val sFocusEnabled get() = goPreferences.isFocusEnabled
-    private val sFocusGranted get() = mCurrentAudioFocusState == AUDIO_FOCUSED
-    private var mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
-    private var sPlayOnFocusGain = false
-
-    private val mOnAudioFocusChangeListener =
-        AudioManager.OnAudioFocusChangeListener { focusChange ->
-            when (focusChange) {
-                AudioManager.AUDIOFOCUS_GAIN -> mCurrentAudioFocusState = AUDIO_FOCUSED
-                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK ->
-                    // Audio focus was lost, but it's possible to duck (i.e.: play quietly)
-                    mCurrentAudioFocusState = AUDIO_NO_FOCUS_CAN_DUCK
-                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
-                    // Lost audio focus, but will gain it back (shortly), so note whether
-                    // playback should resume
-                    mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
-                    sPlayOnFocusGain =
-                        isMediaPlayer && state == GoConstants.PLAYING || state == GoConstants.RESUMED
-                }
-                AudioManager.AUDIOFOCUS_LOSS ->
-                    // Lost audio focus, probably "permanently"
-                    mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
-            }
-            // Update the player state based on the change
-            if (isMediaPlayer) configurePlayerState()
-        }
-
-    // Media player
-    private lateinit var mediaPlayer: MediaPlayer
-    private var mExecutor: ScheduledExecutorService? = null
-    private var mSeekBarPositionUpdateTask: Runnable? = null
-
-    // First: current song, second: isFromQueue
-    lateinit var currentSong: Pair<Music?, Boolean>
-    var isPlayingFromFolder = false
-    private var isPlayingFromFolderPreQueue = false
+    // Media player items
+    lateinit var currentSong: Pair<Music?, Boolean> // First: current song, second: isFromQueue
     private var mPlayingAlbumSongs: List<Music>? = null
-
-    var currentVolumeInPercent = goPreferences.latestVolume
-    val playerPosition get() = if (!isMediaPlayer) goPreferences.latestPlayedSong?.startFrom!! else mediaPlayer.currentPosition
-
-    // Media player state/booleans
-    val isPlaying get() = isMediaPlayer && mediaPlayer.isPlaying
-    val isMediaPlayer get() = ::mediaPlayer.isInitialized
-
-    private var sNotificationForeground = false
-
-    val isCurrentSong get() = ::currentSong.isInitialized
-    var isRepeat1X = false
-    var isLoop = false
-
-    var isQueue = false
-    var isQueueStarted = false
+    private val mCurrentAlbumSize get() = mPlayingAlbumSongs?.size!! - 1
+    private val mCurrentSongIndex get() = mPlayingAlbumSongs?.indexOf(currentSong.first)!!
+    private val mNextSongIndex get() = mCurrentSongIndex + 1
+    private val mPrevSongIndex get() = mCurrentSongIndex - 1
+    private val mNextSong: Music?
+        get() = when {
+            mNextSongIndex <= mCurrentAlbumSize -> mPlayingAlbumSongs?.get(mNextSongIndex)
+            isQueue -> stopQueueAndGetSkipSong(true)
+            else -> mPlayingAlbumSongs?.get(0)
+        }
+    private val mPrevSong: Music?
+        get() = when {
+            mPrevSongIndex <= mCurrentAlbumSize && mPrevSongIndex != -1 -> mPlayingAlbumSongs?.get(
+                mPrevSongIndex
+            )
+            isQueue -> stopQueueAndGetSkipSong(false)
+            else -> mPlayingAlbumSongs?.get(mPlayingAlbumSongs?.lastIndex!!)
+        }
     private lateinit var preQueueSong: Pair<Music?, List<Music>?>
     var queueSongs = mutableListOf<Music>()
 
+    // Media player booleans
+    val isCurrentSong get() = ::currentSong.isInitialized
+    var launchedBy: LaunchedBy = LaunchedBy.ArtistView
+    private var launchedByPreQueue: LaunchedBy = LaunchedBy.ArtistView
     var isSongRestoredFromPrefs = false
     var isSongFromLovedSongs = Pair(false, 0)
+    val isLooping get() = mMediaPlayer?.isLooping
+    var isRepeat1X = false
+    var isQueue = false
+    var isQueueStarted = false
 
-    var state = GoConstants.PAUSED
-    var isPlay = false
+    // Media player INTs/lONGs
+    var currentVolumeInPercent = goPreferences.latestVolume
+    val playerPosition
+        get() = if (isSongRestoredFromPrefs) {
+            goPreferences.latestPlayedSong?.startFrom!!
+        } else {
+            mMediaPlayer?.currentPosition
+        }
 
-    // Notifications
-    private lateinit var mNotificationActionsReceiver: NotificationReceiver
+    // SeekBar
+    private var mExecutor: ScheduledExecutorService? = null
+    private var mSeekBarPositionUpdateTask: Runnable? = null
+
+    // Interfaces, classes
+    var mediaPlayerInterface: MediaPlayerInterface? = null
+    private lateinit var mAudioFocusHandler: AudioFocusHandler
+
     private lateinit var mMusicNotificationManager: MusicNotificationManager
 
-    private fun startForeground() {
-        if (!sNotificationForeground) {
-            playerService.startForeground(
-                GoConstants.NOTIFICATION_ID,
-                mMusicNotificationManager.createNotification()
-            )
-            sNotificationForeground = true
-        } else {
-            mMusicNotificationManager.apply {
-                updateNotificationText()
-                updatePlayPauseAction()
-                updateRepeatIcon()
-                updateNotification()
-            }
-        }
+    private lateinit var mPlayerService: PlayerService
+
+    private var sAppliedAudioAttrs = false
+
+    fun setPlayerService(playerService: PlayerService) {
+        mPlayerService = playerService
     }
 
-    fun registerActionsReceiver() {
-        mNotificationActionsReceiver = NotificationReceiver()
-        val intentFilter = IntentFilter().apply {
-            addAction(GoConstants.REPEAT_ACTION)
-            addAction(GoConstants.PREV_ACTION)
-            addAction(GoConstants.PLAY_PAUSE_ACTION)
-            addAction(GoConstants.NEXT_ACTION)
-            addAction(GoConstants.CLOSE_ACTION)
-            addAction(BluetoothDevice.ACTION_ACL_CONNECTED)
-            addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED)
-            addAction(Intent.ACTION_HEADSET_PLUG)
-            addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
-        }
-        playerService.registerReceiver(mNotificationActionsReceiver, intentFilter)
-    }
-
-    private fun unregisterActionsReceiver() {
-        try {
-            playerService.unregisterReceiver(mNotificationActionsReceiver)
-        } catch (e: IllegalArgumentException) {
-            e.printStackTrace()
-        }
+    fun setVolumeDuck(volume: Float) {
+        mMediaPlayer?.setVolume(
+            volume,
+            volume
+        )
     }
 
     fun setCurrentSong(
         song: Music?,
         songs: List<Music>?,
         isFromQueue: Boolean,
-        isFolderAlbum: Boolean
+        isFolderAlbum: LaunchedBy
     ) {
-        isPlayingFromFolder = isFolderAlbum
+        launchedBy = isFolderAlbum
         currentSong = Pair(song, isFromQueue)
         mPlayingAlbumSongs = songs
     }
 
     private fun updateMediaSessionMetaData() {
         val mediaMediaPlayerCompat = MediaMetadataCompat.Builder().apply {
-            if (VersioningHelper.isQ()) putLong(
-                MediaMetadataCompat.METADATA_KEY_DURATION,
-                currentSong.first?.duration!!
-            )
+            if (VersioningHelper.isQ()) {
+                putLong(
+                    MediaMetadataCompat.METADATA_KEY_DURATION,
+                    currentSong.first?.duration!!
+                )
+            }
             putString(MediaMetadataCompat.METADATA_KEY_ARTIST, currentSong.first?.artist)
             putString(MediaMetadataCompat.METADATA_KEY_AUTHOR, currentSong.first?.artist)
             putString(MediaMetadataCompat.METADATA_KEY_COMPOSER, currentSong.first?.artist)
@@ -201,92 +141,54 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ARTIST, currentSong.first?.album)
             putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, currentSong.first?.album)
             putString(MediaMetadataCompat.METADATA_KEY_ALBUM, currentSong.first?.album)
-            BitmapFactory.decodeResource(playerService.resources, R.drawable.ic_music_note)
+            BitmapFactory.decodeResource(mPlayerService.resources, R.drawable.ic_music_note)
                 ?.let { bmp ->
                     putBitmap(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON, bmp)
                 }
         }
-        playerService.getMediaSession().setMetadata(mediaMediaPlayerCompat.build())
+        mPlayerService.getMediaSession().setMetadata(mediaMediaPlayerCompat.build())
     }
 
     override fun onCompletion(mediaPlayer: MediaPlayer) {
 
-        mediaPlayerInterface.onStateChanged()
-        mediaPlayerInterface.onPlaybackCompleted()
+        mediaPlayerInterface?.onStateChanged()
+        mediaPlayerInterface?.onPlaybackCompleted()
 
-        when {
-            isRepeat1X or isLoop -> if (isMediaPlayer) repeatSong()
-            isQueue -> manageQueue(true)
-            else -> skip(true)
+        if (isRepeat1X || mediaPlayer.isLooping) {
+            repeatSong()
+        } else if (isQueue) {
+            manageQueue(true)
+        } else {
+            skip(true)
         }
-    }
-
-    fun onRestartSeekBarCallback() {
-        if (mExecutor == null) startUpdatingCallbackWithPosition()
-    }
-
-    fun onPauseSeekBarCallback() {
-        stopUpdatingCallbackWithPosition()
-    }
-
-    fun tryToGetAudioFocus() {
-        mCurrentAudioFocusState = when (getAudioFocusResult()) {
-            AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> AUDIO_FOCUSED
-            else -> AUDIO_NO_FOCUS_NO_DUCK
-        }
-    }
-
-    @Suppress("DEPRECATION")
-    private fun getAudioFocusResult() = when {
-        VersioningHelper.isOreoMR1() -> {
-            mAudioFocusRequestOreo =
-                AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN).run {
-                    setAudioAttributes(AudioAttributes.Builder().run {
-                        setUsage(AudioAttributes.USAGE_MEDIA)
-                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                            .build()
-                    })
-                    setAcceptsDelayedFocusGain(true)
-                    setOnAudioFocusChangeListener(mOnAudioFocusChangeListener, mHandler)
-                    build()
-                }
-            mAudioManager.requestAudioFocus(mAudioFocusRequestOreo)
-        }
-        else -> mAudioManager.requestAudioFocus(
-            mOnAudioFocusChangeListener,
-            AudioManager.STREAM_MUSIC,
-            AudioManager.AUDIOFOCUS_GAIN
-        )
-    }
-
-    @Suppress("DEPRECATION")
-    fun giveUpAudioFocus() {
-        when {
-            VersioningHelper.isOreo() -> if (::mAudioFocusRequestOreo.isInitialized) mAudioManager.abandonAudioFocusRequest(
-                mAudioFocusRequestOreo
-            )
-            else -> mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener)
-        }
-        mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
     }
 
     private fun updatePlaybackStatus(updateUI: Boolean) {
-        playerService.getMediaSession().setPlaybackState(
-            mStateBuilder.setState(
-                if (state == GoConstants.RESUMED) GoConstants.PLAYING else state,
-                if (VersioningHelper.isQ()) mediaPlayer.currentPosition.toLong() else PLAYBACK_POSITION_UNKNOWN,
+        mPlayerService.getMediaSession().setPlaybackState(
+            mStateBuilder?.setState(
+                if (state == GoConstants.RESUMED) {
+                    GoConstants.PLAYING
+                } else {
+                    state
+                },
+                if (VersioningHelper.isQ()) {
+                    mMediaPlayer?.currentPosition?.toLong()!!
+                } else {
+                    PLAYBACK_POSITION_UNKNOWN
+                },
                 1F
-            ).build()
+            )?.build()
         )
-        if (updateUI) mediaPlayerInterface.onStateChanged()
+        if (updateUI) {
+            mediaPlayerInterface?.onStateChanged()
+        }
     }
 
     fun resumeMediaPlayer() {
-        if (!isPlaying) {
-            if (isMediaPlayer) {
-                if (sFocusEnabled && !sFocusGranted) tryToGetAudioFocus()
-                mediaPlayer.start()
-            }
+        if (!mMediaPlayer?.isPlaying!!) {
+
+            mMediaPlayer?.start()
+
             state = if (isSongRestoredFromPrefs) {
                 isSongRestoredFromPrefs = false
                 GoConstants.PLAYING
@@ -296,122 +198,132 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
             updatePlaybackStatus(true)
 
-            startForeground()
+            mMusicNotificationManager.startNotificationForeground()
 
-            if (!isPlay) isPlay = true
+            if (!isPlay) {
+                isPlay = true
+            }
         }
     }
 
     fun pauseMediaPlayer() {
-        mediaPlayer.pause()
-        playerService.stopForeground(false)
-        sNotificationForeground = false
+
         state = GoConstants.PAUSED
+
+        mMediaPlayer?.pause()
+        mPlayerService.stopForeground(false)
         updatePlaybackStatus(true)
-        mMusicNotificationManager.apply {
-            updatePlayPauseAction()
-            updateNotification()
-        }
-        mediaPlayerInterface.onFocusLoss()
+        mMusicNotificationManager.pauseNotificationForeground()
     }
 
     fun repeatSong() {
         isRepeat1X = false
-        mediaPlayer.setOnSeekCompleteListener { mp ->
+        mMediaPlayer?.setOnSeekCompleteListener { mp ->
             mp.setOnSeekCompleteListener(null)
             play()
         }
-        mediaPlayer.seekTo(0)
+        mMediaPlayer?.seekTo(0)
     }
 
     private fun manageQueue(isNext: Boolean) {
 
-        if (isSongRestoredFromPrefs) isSongRestoredFromPrefs = false
-
-        when {
-            isQueueStarted -> currentSong = Pair(getSkipSong(isNext), true)
-            else -> {
-                setCurrentSong(queueSongs[0], queueSongs, isFromQueue = true, isFolderAlbum = false)
-                isQueueStarted = true
-            }
+        if (isSongRestoredFromPrefs) {
+            isSongRestoredFromPrefs = false
         }
-        initMediaPlayer(currentSong.first)
+
+        if (isQueueStarted) {
+            val nextSong = getSkipSong(isNext)
+            currentSong = Pair(nextSong, true)
+        } else {
+            setCurrentSong(
+                queueSongs[0],
+                queueSongs,
+                isFromQueue = true,
+                isFolderAlbum = LaunchedBy.ArtistView
+            )
+            isQueueStarted = true
+        }
+
+        setSongDataSource(currentSong.first)
     }
 
     fun restorePreQueueSongs() {
-        setCurrentSong(preQueueSong.first, preQueueSong.second, false, isPlayingFromFolderPreQueue)
+        setCurrentSong(preQueueSong.first, preQueueSong.second, false, launchedByPreQueue)
     }
 
     private fun getSkipSong(isNext: Boolean): Music? {
-
-        val currentIndex = mPlayingAlbumSongs?.indexOf(currentSong.first)
-
-        try {
-            return mPlayingAlbumSongs?.get(
-                if (isNext) currentIndex?.plus(1)!! else currentIndex?.minus(
-                    1
-                )!!
-            )
-        } catch (e: IndexOutOfBoundsException) {
-            e.printStackTrace()
-            return when {
-                isQueue -> {
-
-                    when {
-                        isNext -> {
-                            setQueueEnabled(false)
-                            restorePreQueueSongs()
-                            getSkipSong(true)
-                        }
-                        else -> {
-                            isQueueStarted = false
-                            preQueueSong.first
-                        }
-                    }
-                }
-                else -> if (currentIndex != 0) mPlayingAlbumSongs?.get(0) else mPlayingAlbumSongs?.get(
-                    mPlayingAlbumSongs?.size?.minus(1)!!
-                )
+        if (isNext) {
+            if (mNextSong != null) {
+                return mNextSong
+            } else if (isQueue) {
+                return stopQueueAndGetSkipSong(true)
+            }
+        } else {
+            if (mPrevSong != null) {
+                return mPrevSong
+            } else if (isQueue) {
+                return stopQueueAndGetSkipSong(false)
             }
         }
+        return null
     }
+
+    private fun stopQueueAndGetSkipSong(restorePreviousAlbum: Boolean): Music? =
+        if (restorePreviousAlbum) {
+            setQueueEnabled(false)
+            restorePreQueueSongs()
+            getSkipSong(true)
+        } else {
+            isQueueStarted = false
+            preQueueSong.first
+        }
 
     /**
      * Syncs the mMediaPlayer position with mPlaybackProgressCallback via recurring task.
      */
-    private fun startUpdatingCallbackWithPosition() {
+    fun startUpdatingCallbackWithPosition() {
 
-        if (mSeekBarPositionUpdateTask == null) mSeekBarPositionUpdateTask =
-            Runnable { updateProgressCallbackTask() }
+        if (mExecutor == null) {
+            if (mSeekBarPositionUpdateTask == null) {
+                mSeekBarPositionUpdateTask =
+                    Runnable { updateProgressCallbackTask() }
+            }
 
-        mExecutor = Executors.newSingleThreadScheduledExecutor()
-        mExecutor?.scheduleAtFixedRate(
-            mSeekBarPositionUpdateTask!!,
-            0,
-            1000,
-            TimeUnit.MILLISECONDS
-        )
+            mExecutor = Executors.newSingleThreadScheduledExecutor()
+            mExecutor?.scheduleAtFixedRate(
+                mSeekBarPositionUpdateTask!!,
+                0,
+                1000,
+                TimeUnit.MILLISECONDS
+            )
+        }
     }
 
     // Reports media playback position to mPlaybackProgressCallback.
     private fun stopUpdatingCallbackWithPosition() {
-        mExecutor?.shutdownNow()
-        mExecutor = null
-        mSeekBarPositionUpdateTask = null
+        if (mExecutor != null) {
+            mExecutor?.shutdownNow()
+            mExecutor = null
+            mSeekBarPositionUpdateTask = null
+        }
     }
 
     private fun updateProgressCallbackTask() {
-        if (isPlaying) {
-            val currentPosition = mediaPlayer.currentPosition
-            mediaPlayerInterface.onPositionChanged(currentPosition)
+        if (mMediaPlayer?.isPlaying!!) {
+            mediaPlayerInterface?.onPositionChanged(playerPosition!!)
         }
     }
 
     fun instantReset() {
-        if (isMediaPlayer && !isSongRestoredFromPrefs) when {
-            mediaPlayer.currentPosition < 5000 -> skip(false)
-            else -> repeatSong()
-        } else skip(false)
+        if (!isSongRestoredFromPrefs) {
+            if (playerPosition!! < 5000) {
+                skip(false)
+            } else {
+                repeatSong()
+            }
+        } else {
+            skip(false)
+        }
     }
 
     /**
@@ -421,94 +333,132 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
      * object has to be created. That's why this method is private, and called by load(int) and
      * not the constructor.
      */
-    fun initMediaPlayer(song: Music?) {
+    fun setSongDataSource(song: Music?) {
 
-        try {
-            if (isMediaPlayer) {
-                mediaPlayer.reset()
-            } else {
-                mediaPlayer = MediaPlayer().apply {
-
-                    EqualizerUtils.openAudioEffectSession(
-                        playerService.applicationContext,
-                        audioSessionId
-                    )
-
-                    setOnPreparedListener(this@MediaPlayerHolder)
-                    setOnCompletionListener(this@MediaPlayerHolder)
-                    setWakeMode(playerService, PowerManager.PARTIAL_WAKE_LOCK)
-                    setAudioAttributes(
-                        AudioAttributes.Builder()
-                            .setUsage(AudioAttributes.USAGE_MEDIA)
-                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                            .build()
-                    )
-                }
-
-                mMusicNotificationManager = playerService.musicNotificationManager
-
-                if (sFocusEnabled && !sFocusGranted && isPlay) tryToGetAudioFocus()
-                if (goPreferences.isPreciseVolumeEnabled) setPreciseVolume(currentVolumeInPercent)
+        synchronized(createMediaPlayer()) {
+            if (!sAppliedAudioAttrs) {
+                sAppliedAudioAttrs = true
+                initMediaPlayerAttrs()
             }
 
-            song?.id?.toContentUri()?.let { uri ->
-                mediaPlayer.setDataSource(playerService, uri)
+            mAudioFocusHandler.tryToGetAudioFocus()
+
+            val contentUri = song?.id?.toContentUri()
+            contentUri?.let { uri ->
+                mMediaPlayer?.setDataSource(mPlayerService, uri)
+                mMediaPlayer?.prepareAsync()
             }
-
-            mediaPlayer.prepareAsync()
-
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
+    }
+
+    private fun createMediaPlayer() {
+        if (mMediaPlayer == null) {
+            mMediaPlayer = MediaPlayer()
+        } else {
+            mMediaPlayer?.reset()
+        }
+    }
+
+    private fun initMediaPlayerAttrs() {
+
+        mAudioFocusHandler = AudioFocusHandler(
+            mPlayerService.getSystemService(AUDIO_SERVICE) as AudioManager
+        )
+
+        mMusicNotificationManager = mPlayerService.musicNotificationManager
+
+        mMediaPlayer?.run {
+            EqualizerUtils.openAudioEffectSession(
+                mPlayerService.applicationContext,
+                audioSessionId
+            )
+
+            setOnPreparedListener(this@MediaPlayerHolder)
+            setOnCompletionListener(this@MediaPlayerHolder)
+            setOnErrorListener(this@MediaPlayerHolder)
+            setWakeMode(mPlayerService, PowerManager.PARTIAL_WAKE_LOCK)
+            setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build()
+            )
+        }
+        if (goPreferences.isPreciseVolumeEnabled) {
+            setPreciseVolume(currentVolumeInPercent)
+        }
+    }
+
+    override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
+        if (what == MediaPlayer.MEDIA_ERROR_SERVER_DIED) {
+            mMediaPlayer?.release()
+            val fallbackSong = if (currentSong.first != null) {
+                currentSong.first
+            } else {
+                MusicRepository.getInstance().randomMusic
+            }
+            setSongDataSource(fallbackSong)
+        }
+        return false
     }
 
     override fun onPrepared(mediaPlayer: MediaPlayer) {
 
-        if (isRepeat1X) isRepeat1X = false
+        if (isRepeat1X) {
+            isRepeat1X = false
+        }
 
         if (isSongRestoredFromPrefs) {
-            if (goPreferences.isPreciseVolumeEnabled) setPreciseVolume(currentVolumeInPercent)
+            if (goPreferences.isPreciseVolumeEnabled) {
+                setPreciseVolume(currentVolumeInPercent)
+            }
             mediaPlayer.seekTo(goPreferences.latestPlayedSong?.startFrom!!)
         } else if (isSongFromLovedSongs.first) {
             mediaPlayer.seekTo(isSongFromLovedSongs.second)
             isSongFromLovedSongs = Pair(false, 0)
         }
 
-        if (isQueue) mediaPlayerInterface.onQueueStartedOrEnded(isQueueStarted)
+        if (isQueue) {
+            mediaPlayerInterface?.onQueueStartedOrEnded(isQueueStarted)
+        }
 
         updateMediaSessionMetaData()
 
-        if (mExecutor == null) startUpdatingCallbackWithPosition()
+        startUpdatingCallbackWithPosition()
 
-        if (isPlay) play()
+        play()
     }
 
     private fun play() {
-        mediaPlayer.start()
-        state = GoConstants.PLAYING
-        updatePlaybackStatus(true)
-        startForeground()
+        if (isPlay) {
+            mMediaPlayer?.start()
+            state = GoConstants.PLAYING
+            updatePlaybackStatus(true)
+            mMusicNotificationManager.startNotificationForeground()
+        }
     }
 
     fun openEqualizer(activity: Activity) {
-        EqualizerUtils.openEqualizer(activity, mediaPlayer)
+        EqualizerUtils.openEqualizer(activity, mMediaPlayer!!)
     }
 
     fun release() {
-        if (isMediaPlayer) {
-            EqualizerUtils.closeAudioEffectSession(
-                playerService,
-                mediaPlayer.audioSessionId
-            )
-            mediaPlayer.release()
-            if (sFocusEnabled && sFocusGranted) giveUpAudioFocus()
-            stopUpdatingCallbackWithPosition()
-        }
-        unregisterActionsReceiver()
+        EqualizerUtils.closeAudioEffectSession(
+            mPlayerService,
+            mMediaPlayer?.audioSessionId!!
+        )
+        mMediaPlayer?.release()
+        mAudioFocusHandler.giveUpAudioFocus()
+        stopUpdatingCallbackWithPosition()
+        mPlayerService.unregisterActionsReceiver()
     }
 
     fun resumeOrPause() {
-        if (isPlaying) pauseMediaPlayer() else resumeMediaPlayer()
+        if (mMediaPlayer?.isPlaying!!) {
+            pauseMediaPlayer()
+        } else {
+            resumeMediaPlayer()
+        }
     }
 
     private fun getRepeatMode() {
@@ -516,23 +466,23 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         when {
             isRepeat1X -> {
                 isRepeat1X = false
-                isLoop = true
+                mMediaPlayer?.isLooping = true
                 toastMessage = R.string.repeat_loop_enabled
             }
-            isLoop -> {
-                isLoop = false
+            mMediaPlayer?.isLooping!! -> {
+                mMediaPlayer?.isLooping = false
                 toastMessage = R.string.repeat_disabled
             }
             else -> isRepeat1X = true
         }
-        playerService.getString(toastMessage)
-            .toToast(playerService)
+        mPlayerService.getString(toastMessage).toToast(mPlayerService)
     }
-
 
     fun repeat(updatePlaybackStatus: Boolean) {
         getRepeatMode()
-        if (updatePlaybackStatus) updatePlaybackStatus(true)
+        if (updatePlaybackStatus) {
+            updatePlaybackStatus(true)
+        }
         mMusicNotificationManager.updateRepeatIcon()
     }
 
@@ -543,64 +493,34 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         when {
             isQueue -> {
                 preQueueSong = Pair(currentSong.first, mPlayingAlbumSongs)
-                isPlayingFromFolderPreQueue = isPlayingFromFolder
+                launchedByPreQueue = launchedBy
                 isQueue = true
-                mediaPlayerInterface.onQueueEnabled()
+                mediaPlayerInterface?.onQueueEnabled()
             }
             else -> {
                 queueSongs.clear()
-                mediaPlayerInterface.onQueueCleared()
-                mediaPlayerInterface.onQueueStartedOrEnded(false)
+                mediaPlayerInterface?.onQueueCleared()
+                mediaPlayerInterface?.onQueueStartedOrEnded(false)
             }
         }
     }
 
     fun skip(isNext: Boolean) {
-        when {
-            isQueue -> manageQueue(isNext)
-            else -> {
-                currentSong = Pair(getSkipSong(isNext), false)
-                initMediaPlayer(currentSong.first)
-            }
+        if (isQueue) {
+            manageQueue(isNext)
+        } else {
+            val nextSong = getSkipSong(isNext)
+            currentSong = Pair(nextSong, false)
+            setSongDataSource(currentSong.first)
         }
     }
 
     fun seekTo(position: Int, updatePlaybackStatus: Boolean, restoreProgressCallBack: Boolean) {
-        if (isMediaPlayer) {
-            mediaPlayer.setOnSeekCompleteListener { mp ->
-                mp.setOnSeekCompleteListener(null)
-                if (restoreProgressCallBack) startUpdatingCallbackWithPosition()
-                if (updatePlaybackStatus) updatePlaybackStatus(!restoreProgressCallBack)
-            }
-            mediaPlayer.seekTo(position)
+        mMediaPlayer?.setOnSeekCompleteListener { mp ->
+            mp.setOnSeekCompleteListener(null)
+            if (updatePlaybackStatus) updatePlaybackStatus(!restoreProgressCallBack)
         }
-    }
-
-    /**
-     * Reconfigures the player according to audio focus settings and starts/restarts it. This method
-     * starts/restarts the MediaPlayer instance respecting the current audio focus state. So if we
-     * have focus, it will play normally; if we don't have focus, it will either leave the player
-     * paused or set it to a low volume, depending on what is permitted by the current focus
-     * settings.
-     */
-    private fun configurePlayerState() {
-
-        if (isMediaPlayer) {
-            when (mCurrentAudioFocusState) {
-                AUDIO_NO_FOCUS_NO_DUCK -> pauseMediaPlayer()
-                else -> {
-                    when (mCurrentAudioFocusState) {
-                        AUDIO_NO_FOCUS_CAN_DUCK -> mediaPlayer.setVolume(VOLUME_DUCK, VOLUME_DUCK)
-                        else -> mediaPlayer.setVolume(VOLUME_NORMAL, VOLUME_NORMAL)
-                    }
-                    // If we were playing when we lost focus, we need to resume playing.
-                    if (sPlayOnFocusGain) {
-                        resumeMediaPlayer()
-                        sPlayOnFocusGain = false
-                    }
-                }
-            }
-        }
+        mMediaPlayer?.seekTo(position)
     }
 
     /* Sets the volume of the media player */
@@ -608,65 +528,42 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         currentVolumeInPercent = percent
 
-        if (isMediaPlayer) {
-            fun volFromPercent(percent: Int): Float {
-                if (percent == 100) return 1f
-                return (1 - (ln((101 - percent).toFloat()) / ln(101f)))
-            }
-
-            val new = volFromPercent(percent)
-            mediaPlayer.setVolume(new, new)
+        fun volFromPercent(percent: Int): Float {
+            if (percent == 100) return 1f
+            return (1 - (ln((101 - percent).toFloat()) / ln(101f)))
         }
+
+        val new = volFromPercent(percent)
+        mMediaPlayer?.setVolume(new, new)
     }
 
     fun stopPlaybackService(stopPlayback: Boolean) {
-        if (playerService.isRunning && isMediaPlayer && stopPlayback) {
-            playerService.stopForeground(true)
-            playerService.stopSelf()
+        if (mPlayerService.isRunning && stopPlayback) {
+            mPlayerService.stopForeground(true)
+            mPlayerService.stopSelf()
         }
-        mediaPlayerInterface.onClose()
+        mediaPlayerInterface?.onClose()
     }
 
-    private inner class NotificationReceiver : BroadcastReceiver() {
+    fun onFocusPrefChanged(enabled: Boolean) {
+        mAudioFocusHandler.handleFocusPrefChange(enabled)
+    }
 
-        override fun onReceive(context: Context, intent: Intent) {
+    companion object {
 
-            val action = intent.action
+        @Volatile
+        private var INSTANCE: MediaPlayerHolder? = null
 
-            if (action != null) {
-                when (action) {
-                    GoConstants.PREV_ACTION -> instantReset()
-                    GoConstants.PLAY_PAUSE_ACTION -> resumeOrPause()
-                    GoConstants.NEXT_ACTION -> skip(true)
-                    GoConstants.REPEAT_ACTION -> {
-                        repeat(true)
-                        mediaPlayerInterface.onUpdateRepeatStatus()
-                    }
-                    GoConstants.CLOSE_ACTION -> if (playerService.isRunning && isMediaPlayer) stopPlaybackService(
-                        stopPlayback = true
-                    )
-
-                    BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (::currentSong.isInitialized && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
-                    BluetoothDevice.ACTION_ACL_CONNECTED -> if (::currentSong.isInitialized && goPreferences.isHeadsetPlugEnabled) resumeMediaPlayer()
-
-                    AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED ->
-                        when (intent.getIntExtra(AudioManager.EXTRA_SCO_AUDIO_STATE, -1)) {
-                            AudioManager.SCO_AUDIO_STATE_CONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) resumeMediaPlayer()
-                            AudioManager.SCO_AUDIO_STATE_DISCONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
-                        }
-
-                    Intent.ACTION_HEADSET_PLUG -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
-                        when (intent.getIntExtra("state", -1)) {
-                            // 0 means disconnected
-                            HEADSET_DISCONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
-                            // 1 means connected
-                            HEADSET_CONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) resumeMediaPlayer()
-                        }
-                    }
-                    AudioManager.ACTION_AUDIO_BECOMING_NOISY -> if (isPlaying && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
-                }
+        fun getInstance(): MediaPlayerHolder {
+            val tempInstance = INSTANCE
+            if (tempInstance != null) {
+                return tempInstance
             }
-            if (isOrderedBroadcast) abortBroadcast()
+            synchronized(this) {
+                val instance = MediaPlayerHolder()
+                INSTANCE = instance
+                return instance
+            }
         }
     }
 }
