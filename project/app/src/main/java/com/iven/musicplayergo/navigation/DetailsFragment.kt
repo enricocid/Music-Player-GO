@@ -496,6 +496,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                                 updateSelectedAlbumTitle()
                                 swapAlbum(item.music)
                             }
+                        } else {
+                            mMediaPlayerInterface?.onSongSelected(
+                                item.music?.get(0),
+                                item.music,
+                                launchedBy
+                            )
                         }
                     }
                 }
