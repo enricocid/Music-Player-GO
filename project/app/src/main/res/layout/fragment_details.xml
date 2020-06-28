@@ -20,14 +20,21 @@
         app:titleTextColor="?attr/colorPrimary" />
 
     <!-- ALBUMS -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/albums_rv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:overScrollMode="never" />
 
     <!-- SELECTED ALBUM -->
+
+    <!-- DISC SONGS -->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/songs_rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
+
+    <!-- CONTROLS PANEL -->
+
     <LinearLayout
         android:id="@+id/selected_album_container"
         android:layout_width="match_parent"
@@ -82,16 +89,13 @@
             tools:ignore="ContentDescription" />
     </LinearLayout>
 
-    <!-- DISC SONGS -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/songs_rv"
+        android:id="@+id/albums_rv"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:overScrollMode="never"
-        android:scrollbars="none" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-    <!-- CONTROLS PANEL -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_player"
         android:name="com.iven.musicplayergo.player.PlayerFragment"
