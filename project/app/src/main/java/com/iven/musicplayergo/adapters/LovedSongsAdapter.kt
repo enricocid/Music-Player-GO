@@ -1,13 +1,13 @@
 package com.iven.musicplayergo.adapters
 
 import android.content.Context
+import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
-import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.extensions.toSpanned
@@ -16,24 +16,23 @@ import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.MusicOrgHelper
 import com.iven.musicplayergo.models.SavedMusic
 import com.iven.musicplayergo.player.MediaPlayerHolder
-import com.iven.musicplayergo.ui.UIControlInterface
 
 class LovedSongsAdapter(
     private val context: Context,
-    private val lovedSongsDialog: MaterialDialog,
-    private val uiControlInterface: UIControlInterface,
-    private val mediaPlayerHolder: MediaPlayerHolder,
-    private val musicRepository: MusicRepository
+    private val lovedSongsDialog: MaterialDialog
 ) :
     RecyclerView.Adapter<LovedSongsAdapter.LoveHolder>() {
 
     private var mLovedSongs = goPreferences.lovedSongs?.toMutableList()
 
+    private val mMediaPlayerInterface = MediaPlayerHolder.getInstance().mediaPlayerInterface
     fun swapSongs(lovedSongs: MutableList<SavedMusic>?) {
         mLovedSongs = lovedSongs
         notifyDataSetChanged()
-        uiControlInterface.onLovedSongsUpdate(false)
-        if (mLovedSongs?.isEmpty()!!) lovedSongsDialog.dismiss()
+        mMediaPlayerInterface?.onLovedSongUpdate(false)
+        if (mLovedSongs?.isEmpty()!!) {
+            lovedSongsDialog.dismiss()
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LoveHolder {
@@ -54,6 +53,21 @@ class LovedSongsAdapter(
         holder.bindItems(mLovedSongs?.get(holder.adapterPosition))
     }
 
+    private fun computeDurationText(lovedSong: SavedMusic?): Spanned? {
+        if (lovedSong?.startFrom != null && lovedSong.startFrom > 0L) {
+            return context.getString(
+                R.string.loved_song_subtitle,
+                lovedSong.startFrom.toLong().toFormattedDuration(
+                    isAlbum = false,
+                    isSeekBar = false
+                ),
+                lovedSong.duration.toFormattedDuration(isAlbum = false, isSeekBar = false)
+            ).toSpanned()
+        }
+        return lovedSong?.duration?.toFormattedDuration(isAlbum = false, isSeekBar = false)
+            ?.toSpanned()
+    }
+
     inner class LoveHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindItems(lovedSong: SavedMusic?) {
@@ -63,23 +77,25 @@ class LovedSongsAdapter(
             val subtitle = itemView.findViewById<TextView>(R.id.subtitle)
 
             title.text = lovedSong?.title
-            duration.text = lovedSong?.duration?.toFormattedDuration(isAlbum = false, isSeekBar = false)
+            duration.text =
+                computeDurationText(lovedSong)
             subtitle.text =
                 context.getString(R.string.artist_and_album, lovedSong?.artist, lovedSong?.album)
 
             itemView.apply {
                 setOnClickListener {
-                    mediaPlayerHolder.isSongFromLovedSongs = Pair(true, lovedSong?.startFrom!!)
-                    MusicOrgHelper.getSongForRestore(lovedSong, musicRepository.deviceMusicList)
+                    val mediaPlayerHolder = MediaPlayerHolder.getInstance()
+                    mediaPlayerHolder.isSongFromLovedSongs =
+                        Pair(true, lovedSong?.startFrom!!)
+                    MusicOrgHelper.getSongForRestore(lovedSong)
                         .apply {
-                            uiControlInterface.onSongSelected(
+                            mediaPlayerHolder.mediaPlayerInterface?.onSongSelected(
                                 this,
                                 MusicOrgHelper.getAlbumSongs(
                                     artist,
-                                    album,
-                                    musicRepository.deviceAlbumsByArtist
+                                    album
                                 ),
-                                lovedSong.isFromFolder
+                                lovedSong.launchedBy
                             )
                         }
                 }

@@ -38,7 +38,8 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".player.PlayerService" />
+        <service android:name=".player.PlayerService"
+            android:stopWithTask="false"/>
     </application>
 
 </manifest>

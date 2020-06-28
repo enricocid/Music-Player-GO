@@ -23,7 +23,7 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes](https://github.com/enricocid/Music-Player-GO/pull/121)
 
-- [**Drhaal**](https://github.com/Drhaal) for Always On Display (AOD) [fixes](https://github.com/enricocid/Music-Player-GO/pull/186)
+- [**Drhaal**](https://github.com/Drhaal) for Always On Display (AOD) [fixes](https://github.com/enricocid/Music-Player-GO/pull/186) and the following implementations: [190](https://github.com/enricocid/Music-Player-GO/pull/190), [193](https://github.com/enricocid/Music-Player-GO/pull/193) 
 
 - [**seventhsonmizo**](https://github.com/seventhsonmizo) for Android Q [issue](https://github.com/enricocid/Music-Player-GO/issues/110) report and debugging
 
@@ -51,6 +51,9 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - **Stephan Maier** for having reported this [issue](https://github.com/enricocid/Music-Player-GO/commit/06b0375eda3f7c214881af205e64dffbca29dfe7) via F-Droid
 
+- [**john2020star**](https://github.com/john2020star) for having contributed to fix this[issue](https://github.com/enricocid/Music-Player-GO/issues/196)
+
+
 ### Big thanks to translators:
 
 - [**keddad**](https://github.com/keddad) and [**yafna**](https://github.com/yafna) for **Russian** translations
@@ -63,7 +66,7 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**zmni**](https://github.com/zmni) for **Indonesian** translations
 
-- [**SpacingBat3**](https://github.com/SpacingBat3) for **Polish** translations
+- [**SpacingBat3**](https://github.com/SpacingBat3) for the ["[Guide/Announcement] Play Store description and screenshots translation."](https://github.com/enricocid/Music-Player-GO/issues/204) and for **Polish** translations
 
 - [**Malte Kiefer**](https://github.com/beli3ver) for **German** translations
 

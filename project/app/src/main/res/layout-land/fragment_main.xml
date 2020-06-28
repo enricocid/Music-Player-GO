@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".ui.MainActivity">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:background="@color/windowBackground"
+        android:elevation="4dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:baselineAligned="false"
+        android:layout_height="wrap_content">
+
+        <!-- CONTROLS PANEL -->
+        <androidx.fragment.app.FragmentContainerView
+            android:name="com.iven.musicplayergo.player.PlayerFragment"
+            android:id="@+id/fragment_player"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content" />
+
+        <!-- TAB LAYOUT -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/windowBackground"
+            app:tabGravity="fill"
+            app:tabIndicator="@drawable/tab_indicator_alt"
+            app:tabMode="fixed"
+            app:tabRippleColor="?attr/colorPrimary" />
+    </LinearLayout>
+
+</LinearLayout>

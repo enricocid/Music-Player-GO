@@ -13,14 +13,13 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/np_eq"
+            android:id="@+id/np_save_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
-            android:onClick="openEqualizer"
-            app:srcCompat="@drawable/ic_equalizer"
+            app:srcCompat="@drawable/ic_save_time"
             tools:ignore="ContentDescription" />
 
         <ImageButton

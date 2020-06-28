@@ -86,5 +86,9 @@
         <Preference
             app:key="@string/filter_pref"
             app:title="@string/filter_pref_title" />
+
+        <Preference
+            app:key="@string/equalizer_pref"
+            app:title="@string/equalizer_pref_title" />
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>

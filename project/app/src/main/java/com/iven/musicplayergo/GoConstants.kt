@@ -7,6 +7,8 @@ object GoConstants {
     const val PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 2588
     const val RESTORE_SETTINGS_FRAGMENT = "RESTORE_SETTINGS_FRAGMENT"
 
+    const val IS_APPLY_THEME = "IS_APPLY_THEME"
+
     // sorting
     const val DEFAULT_SORTING = 0
     const val DESCENDING_SORTING = 1
@@ -20,11 +22,11 @@ object GoConstants {
     const val TAG_NO_MUSIC_INTENT = "NO_MUSIC_INTENT"
     const val TAG_SD_NOT_READY = "SD_NOT_READY"
 
-    // fragments tags
-    const val TAG_ARTISTS = "ARTISTS_FRAGMENT"
-    const val TAG_FOLDERS = "FOLDERS_FRAGMENT"
-    const val DETAILS_FRAGMENT_TAG = "DETAILS_FRAGMENT"
-    const val ERROR_FRAGMENT_TAG = "ERROR_FRAGMENT"
+    // tags for fragments bundles
+    const val TAG_ARTIST_FOLDER = "SELECTED_ARTIST_FOLDER"
+    const val TAG_IS_FOLDER = "IS_FOLDER"
+    const val TAG_SELECTED_ALBUM_POSITION = "SELECTED_ALBUM_POSITION"
+    const val TAG_ERROR = "WE_HAVE_A_PROBLEM_HOUSTON"
 
     // Player playing statuses
     const val PLAYING = PlaybackStateCompat.STATE_PLAYING

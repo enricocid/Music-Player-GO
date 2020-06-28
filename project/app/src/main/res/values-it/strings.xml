@@ -8,6 +8,7 @@
     <string name="shuffle_am">Mescola tutte le canzoni</string>
     <string name="shuffle_sa">Mescola l\'abum selezionato</string>
     <string name="folders">Cartelle</string>
+    <string name="albums">Albums</string>
     <string name="queue">Coda</string>
     <string name="queue_add">Aggiungi alla coda</string>
     <string name="queue_song_add">%1s aggiunta alla coda!</string>

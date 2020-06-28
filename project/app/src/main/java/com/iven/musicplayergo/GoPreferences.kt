@@ -20,10 +20,11 @@ class GoPreferences(context: Context) {
     private val prefsEdgeToEdge = context.getString(R.string.edge_pref)
 
     private val prefsActiveFragments = context.getString(R.string.active_fragments_pref)
-    val prefsActiveFragmentsDefault = setOf(0, 1, 2, 3)
+    val prefsActiveFragmentsDefault = setOf(0, 1, 2, 3, 4)
 
     private val prefsArtistsSorting = context.getString(R.string.artists_sorting_pref)
     private val prefsFoldersSorting = context.getString(R.string.folders_sorting_pref)
+    private val prefsAlbumsSorting = context.getString(R.string.albums_sorting_pref)
 
     private val prefsPreciseVolume = context.getString(R.string.precise_volume_pref)
     private val prefsFocus = context.getString(R.string.focus_pref)
@@ -91,6 +92,10 @@ class GoPreferences(context: Context) {
     var foldersSorting
         get() = mPrefs.getInt(prefsFoldersSorting, GoConstants.DEFAULT_SORTING)
         set(value) = mPrefs.edit().putInt(prefsFoldersSorting, value).apply()
+
+    var albumsSorting
+        get() = mPrefs.getInt(prefsAlbumsSorting, GoConstants.DEFAULT_SORTING)
+        set(value) = mPrefs.edit().putInt(prefsAlbumsSorting, value).apply()
 
     var isPreciseVolumeEnabled
         get() = mPrefs.getBoolean(prefsPreciseVolume, true)
