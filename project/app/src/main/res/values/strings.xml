@@ -40,6 +40,7 @@
 
     <!-- Player position -->
     <string name="player_position_saved">Player position saved</string>
+    <string name="cannot_save_position">Cannot save position at 0 second</string>
 
     <!-- Messages - Errors -->
     <string name="error_no_loved_songs">No loved songs found!</string>

@@ -18,6 +18,7 @@ import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.interfaces.MediaPlayerInterface
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import de.halfbit.edgetoedge.Edge
@@ -153,14 +154,7 @@ class NowPlayingBottomSheet : BottomSheetDialogFragment() {
         }
 
         mNowPlayingControlsBinding.npSaveTime.setOnClickListener {
-            ListsHelper.addOrRemoveFromLovedSongs(
-                requireContext(),
-                mMediaPlayerHolder.currentSong.first,
-                mMediaPlayerHolder.playerPosition!!,
-                mMediaPlayerHolder.launchedBy
-            )
-            mediaPlayerInterface?.onLovedSongUpdate(false)
-            getString(R.string.player_position_saved).toToast(requireContext())
+            savePlayerPosition(mediaPlayerInterface)
         }
         mNowPlayingControlsBinding.npPlay.setOnClickListener { mMediaPlayerHolder.resumeOrPause() }
 
@@ -181,6 +175,22 @@ class NowPlayingBottomSheet : BottomSheetDialogFragment() {
             updateNowPlayingLovedIcon(requireContext())
         }
 
+
+    }
+
+    private fun savePlayerPosition(mediaPlayerInterface: MediaPlayerInterface?) {
+        if (mMediaPlayerHolder.playerPosition!! > 0) {
+            ListsHelper.addOrRemoveFromLovedSongs(
+                requireContext(),
+                mMediaPlayerHolder.currentSong.first,
+                mMediaPlayerHolder.playerPosition!!,
+                mMediaPlayerHolder.launchedBy
+            )
+            mediaPlayerInterface?.onLovedSongUpdate(false)
+            getString(R.string.player_position_saved).toToast(requireContext())
+        } else {
+            getString(R.string.cannot_save_position).toToast(requireContext())
+        }
 
     }
 
