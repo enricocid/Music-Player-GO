@@ -342,7 +342,9 @@ class MediaPlayerHolder :
                 initMediaPlayerAttrs()
             }
 
-            mAudioFocusHandler.tryToGetAudioFocus()
+            if (goPreferences.isFocusEnabled && isPlay) {
+                mAudioFocusHandler.tryToGetAudioFocus()
+            }
 
             val contentUri = song?.id?.toContentUri()
             contentUri?.let { uri ->
@@ -550,8 +552,12 @@ class MediaPlayerHolder :
         mediaPlayerInterface?.onClose()
     }
 
-    fun onFocusPrefChanged(enabled: Boolean) {
-        mAudioFocusHandler.handleFocusPrefChange(enabled)
+    fun onFocusPrefChanged() {
+        mAudioFocusHandler.handleFocusPrefChange()
+    }
+
+    fun onCoversPrefChanged() {
+        mMusicNotificationManager.onCoverPrefChanged()
     }
 
     companion object {

@@ -93,5 +93,12 @@
         <Preference
             app:key="@string/filter_pref"
             app:title="@string/filter_pref_title" />
+
+        <SwitchPreferenceCompat
+            android:summaryOff="@string/covers_pref_summary_off"
+            app:defaultValue="false"
+            app:key="@string/covers_pref"
+            app:summaryOn="@string/covers_pref_summary_on"
+            app:title="@string/covers_pref_title" />
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>

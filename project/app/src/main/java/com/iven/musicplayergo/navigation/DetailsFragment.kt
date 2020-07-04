@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
@@ -21,6 +22,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentDetailsBinding
 import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.*
+import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.MusicOrgHelper
@@ -63,6 +65,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private val sLaunchedByArtistView: Boolean get() = launchedBy == LaunchedBy.ArtistView
     private val sLaunchedByFolderView: Boolean get() = launchedBy == LaunchedBy.FolderView
+
+    private val mImageLoader get() = ImageLoader(requireContext())
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -470,14 +474,20 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                     onBind(::AlbumsViewHolder) { _, item ->
                         // AlbumsViewHolder is `this` here
-                        itemView.background.alpha = 20
+
+                        if (goPreferences.isCovers) {
+                            imageView.loadCover(mImageLoader, item.music?.get(0))
+                        }
+
                         album.text = item.title
-                        year.text = item.year
-                        totalDuration.text = item.totalDuration.toFormattedDuration(
-                            isAlbum = true,
-                            isSeekBar = false
-                        )
-                        checkbox.handleViewVisibility(mSelectedAlbum?.title == item.title)
+                        val color =
+                            ThemeHelper.resolveColorAttr(context, android.R.attr.textColorPrimary)
+                        val selectedColor = if (mSelectedAlbum?.title == item.title) {
+                            ThemeHelper.resolveThemeAccent(context)
+                        } else {
+                            color
+                        }
+                        album.setTextColor(selectedColor)
                     }
 
                     onClick { index ->

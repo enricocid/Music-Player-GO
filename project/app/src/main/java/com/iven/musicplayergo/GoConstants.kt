@@ -7,8 +7,6 @@ object GoConstants {
     const val PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 2588
     const val RESTORE_SETTINGS_FRAGMENT = "RESTORE_SETTINGS_FRAGMENT"
 
-    const val IS_APPLY_THEME = "IS_APPLY_THEME"
-
     // sorting
     const val DEFAULT_SORTING = 0
     const val DESCENDING_SORTING = 1

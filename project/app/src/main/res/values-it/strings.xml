@@ -64,4 +64,7 @@
     <string name="filter_pref_title">Filtri</string>
     <string name="filter_popup_title">Nascondi</string>
     <string name="error_no_filter">Nessun filtro trovato!</string>
+    <string name="covers_pref_title">Cover albums incorporate</string>
+    <string name="covers_pref_summary_on">Mostra le cover incorporate degli album</string>
+    <string name="covers_pref_summary_off">Non mostrare le cover incorporate degli album</string>
 </resources>

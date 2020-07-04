@@ -74,16 +74,14 @@ class AudioFocusHandler(
         }
 
     fun tryToGetAudioFocus() {
-        if (sFocusEnabled) {
-            mCurrentAudioFocusState = when (res) {
-                AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> AUDIO_FOCUSED
-                else -> AUDIO_NO_FOCUS_NO_DUCK
-            }
+        mCurrentAudioFocusState = when (res) {
+            AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> AUDIO_FOCUSED
+            else -> AUDIO_NO_FOCUS_NO_DUCK
         }
     }
 
-    fun handleFocusPrefChange(enabled: Boolean) {
-        if (enabled) {
+    fun handleFocusPrefChange() {
+        if (goPreferences.isFocusEnabled) {
             tryToGetAudioFocus()
         } else {
             giveUpAudioFocus()

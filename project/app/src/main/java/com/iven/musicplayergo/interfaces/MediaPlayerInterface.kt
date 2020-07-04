@@ -22,7 +22,6 @@ interface MediaPlayerInterface {
     fun onLovedSongUpdate(clear: Boolean)
     fun onClose()
     fun onSaveSongToPref()
-    fun onHandleFocusPref()
     fun onBottomSheetCreated(nowPlayingBottomSheet: NowPlayingBottomSheet)
     fun onDismissNP()
 }

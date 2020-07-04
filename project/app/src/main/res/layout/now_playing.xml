@@ -2,8 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="@android:dimen/thumbnail_width"
+        android:layout_height="@android:dimen/thumbnail_height"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:id="@+id/np_cover_container"
+        app:cardCornerRadius="8dp">
+
+        <ImageView
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/np_cover"
+            android:src="@drawable/default_cover"
+            tools:ignore="ContentDescription"/>
+    </com.google.android.material.card.MaterialCardView>
 
     <LinearLayout
         android:clickable="true"
@@ -14,7 +33,6 @@
         android:background="@drawable/ripple"
         android:id="@+id/np_playing_info"
         android:orientation="vertical"
-        android:paddingTop="8dp"
         android:paddingBottom="8dp">
 
         <TextView
@@ -52,7 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <SeekBar
+       <SeekBar
             android:id="@+id/np_seek_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

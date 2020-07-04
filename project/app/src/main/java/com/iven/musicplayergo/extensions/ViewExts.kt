@@ -11,15 +11,27 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.Window
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
+import coil.request.LoadRequest
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
+import com.iven.musicplayergo.models.Music
+
+fun ImageView.loadCover(imageLoader: ImageLoader, music: Music?) {
+    val request = LoadRequest.Builder(context)
+        .data(music?.getCover(context))
+        .target(this)
+        .build()
+    imageLoader.execute(request)
+}
 
 fun Window.applyEdgeToEdgeBottomSheet(resources: Resources) {
     val view = findViewById<View>(com.google.android.material.R.id.container)

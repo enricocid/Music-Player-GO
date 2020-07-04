@@ -47,6 +47,7 @@
     <string name="focus_pref">focus_pref</string>
     <string name="headset_pref">headsets_pref</string>
     <string name="filter_pref">filter_pref</string>
+    <string name="covers_pref">covers_pref</string>
 
     <!-- Other preferences keys -->
     <string name="artists_sorting_pref">artists_sorting_pref</string>

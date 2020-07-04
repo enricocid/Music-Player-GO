@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.SeekBar
+import coil.ImageLoader
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
@@ -44,6 +45,8 @@ class NowPlayingBottomSheet : BottomSheetDialogFragment() {
     private val sLandscape get() = ThemeHelper.isDeviceLand(resources)
 
     private var sUpdatePlayerProgress = false
+
+    private val mImageLoader get() = ImageLoader(requireContext())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -178,6 +181,12 @@ class NowPlayingBottomSheet : BottomSheetDialogFragment() {
 
         val selectedSong = mMediaPlayerHolder.currentSong.first
         val selectedSongDuration = selectedSong?.duration!!
+
+        if (goPreferences.isCovers) {
+            mNowPlayingBinding.npCover.loadCover(mImageLoader, selectedSong)
+        } else {
+            mNowPlayingBinding.npCoverContainer.handleViewVisibility(false)
+        }
 
         mNowPlayingBinding.npSong.text = selectedSong.title
 

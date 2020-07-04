@@ -32,6 +32,8 @@ class GoPreferences(context: Context) {
 
     private val prefsFilter = context.getString(R.string.filter_pref)
 
+    private val prefsCover = context.getString(R.string.covers_pref)
+
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
     private val mGson = GsonBuilder().create()
 
@@ -88,6 +90,10 @@ class GoPreferences(context: Context) {
     var filters: Set<String>?
         get() = mPrefs.getStringSet(prefsFilter, setOf())
         set(value) = mPrefs.edit().putStringSet(prefsFilter, value).apply()
+
+    var isCovers: Boolean
+        get() = mPrefs.getBoolean(prefsCover, false)
+        set(value) = mPrefs.edit().putBoolean(prefsCover, value).apply()
 
     var foldersSorting
         get() = mPrefs.getInt(prefsFoldersSorting, GoConstants.DEFAULT_SORTING)

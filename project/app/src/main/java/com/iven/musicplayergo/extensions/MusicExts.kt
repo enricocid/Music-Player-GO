@@ -3,8 +3,11 @@ package com.iven.musicplayergo.extensions
 import android.content.ContentUris
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.media.MediaExtractor
 import android.media.MediaFormat
+import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.provider.MediaStore
 import com.iven.musicplayergo.R
@@ -14,6 +17,26 @@ import com.iven.musicplayergo.models.SavedMusic
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
+
+
+fun Music.getCover(context: Context): Bitmap? {
+    val contentUri = id?.toContentUri()
+    val retriever = MediaMetadataRetriever()
+    return try {
+        retriever.setDataSource(context, contentUri)
+
+        val picture = retriever.embeddedPicture
+
+        if (picture != null) {
+            BitmapFactory
+                .decodeByteArray(picture, 0, picture.size)
+        } else {
+            null
+        }
+    } finally {
+        retriever.release()
+    }
+}
 
 fun Long.toContentUri(): Uri = ContentUris.withAppendedId(
     MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
@@ -35,6 +58,8 @@ fun Uri.toBitrate(context: Context): Pair<Int, Int>? {
     } catch (e: Exception) {
         e.printStackTrace()
         null
+    } finally {
+        mediaExtractor.release()
     }
 }
 

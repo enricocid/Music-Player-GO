@@ -6,6 +6,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
+import android.graphics.BitmapFactory
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -13,7 +14,9 @@ import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.enums.LaunchedBy
+import com.iven.musicplayergo.extensions.getCover
 import com.iven.musicplayergo.extensions.toSpanned
+import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.ui.MainActivity
@@ -75,7 +78,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             .addAction(notificationAction(GoConstants.NEXT_ACTION))
             .addAction(notificationAction(GoConstants.CLOSE_ACTION))
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-        updateNotificationText()
+        updateNotificationContent()
         return mNotificationBuilder.build()
     }
 
@@ -87,7 +90,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             )
             sNotificationForeground = true
         } else {
-            updateNotificationText()
+            updateNotificationContent()
             updatePlayPauseAction()
             updateRepeatIcon()
             updateNotification()
@@ -108,9 +111,25 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             )
     }
 
-    private fun updateNotificationText() {
+    fun onCoverPrefChanged() {
+        if (::mNotificationBuilder.isInitialized) {
+            updateNotificationContent()
+            updateNotification()
+        }
+    }
+
+    private fun updateNotificationContent() {
         val mediaPlayerHolder = MediaPlayerHolder.getInstance()
         mediaPlayerHolder.currentSong.first?.let { song ->
+
+            val stockCover =
+                BitmapFactory.decodeResource(playerService.resources, R.drawable.default_cover)
+            val cover = if (goPreferences.isCovers) {
+                song.getCover(playerService)
+            } else {
+                stockCover
+            }
+
             mNotificationBuilder.setContentText(
                 playerService.getString(
                     R.string.artist_and_album,
@@ -124,6 +143,8 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                         song.title
                     ).toSpanned()
                 )
+                .setLargeIcon(cover)
+                .setColorized(true)
                 .setSmallIcon(
                     if (mediaPlayerHolder.launchedBy == LaunchedBy.FolderView) {
                         R.drawable.ic_library_music

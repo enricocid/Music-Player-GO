@@ -106,4 +106,8 @@
 
     <!-- Preferences - Filters -->
     <string name="filter_pref_title">Filters</string>
+
+    <string name="covers_pref_title">Embedded album\'s covers</string>
+    <string name="covers_pref_summary_on">Show embedded album\'s covers</string>
+    <string name="covers_pref_summary_off">Don\'t show embedded album\'s covers</string>
 </resources>

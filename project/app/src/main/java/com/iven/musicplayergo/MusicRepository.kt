@@ -45,7 +45,7 @@ class MusicRepository {
                     application.contentResolver
                 )
 
-            // Query the storage for music files
+            // Query the storage for default_cover files
             musicCursor?.use { cursor ->
 
                 val idIndex =
@@ -69,7 +69,7 @@ class MusicRepository {
 
                 while (cursor.moveToNext()) {
 
-                    // Now loop through the music files
+                    // Now loop through the default_cover files
                     val audioId = cursor.getLong(idIndex)
                     val audioArtist = cursor.getString(artistIndex)
                     val audioYear = cursor.getInt(yearIndex)
@@ -95,7 +95,7 @@ class MusicRepository {
                             }
                         }
 
-                    // Add the current music to the list
+                    // Add the current default_cover to the list
                     deviceMusicList.add(
                         Music(
                             audioArtist,
@@ -135,7 +135,7 @@ class MusicRepository {
                 .toMutableList()
 
         deviceMusicFiltered?.let { dsf ->
-            // group music by artist
+            // group default_cover by artist
             deviceSongsByArtist = dsf.groupBy { it.artist }
             deviceSongsByAlbum = dsf.groupBy { it.album }
             deviceMusicByFolder = dsf.groupBy { it.relativePath!! }

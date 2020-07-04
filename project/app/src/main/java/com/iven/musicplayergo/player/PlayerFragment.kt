@@ -523,10 +523,6 @@ class PlayerFragment : Fragment(R.layout.fragment_player),
         mNowPlayingBottomSheet = null
     }
 
-    override fun onHandleFocusPref() {
-        mMediaPlayerHolder.onFocusPrefChanged(goPreferences.isFocusEnabled)
-    }
-
     override fun onShuffleSongs(songs: MutableList<Music>?, launchedBy: LaunchedBy) {
         val randomNumber = (0 until songs?.size!!).getRandom()
         songs.shuffle()

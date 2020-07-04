@@ -81,7 +81,7 @@ dependencies {
     //https://github.com/material-components/material-components-android/releases
     implementation 'com.google.android.material:material:1.1.0'
 
-// Third-party
+    // Third-party
     //https://github.com/google/gson/blob/master/CHANGELOG.md
     implementation 'com.google.code.gson:gson:2.8.6'
 
@@ -97,4 +97,7 @@ dependencies {
 
     //https://github.com/beworker/edge-to-edge/blob/master/CHANGELOG.md
     implementation 'de.halfbit:edge-to-edge:0.10'
+
+    //https://github.com/coil-kt/coil
+    implementation 'io.coil-kt:coil:0.11.0'
 }

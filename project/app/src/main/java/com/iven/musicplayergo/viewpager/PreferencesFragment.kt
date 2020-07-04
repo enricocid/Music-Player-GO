@@ -163,7 +163,8 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                     restoreSettings = true
                 )
             }
-            getString(R.string.focus_pref) -> MediaPlayerHolder.getInstance().mediaPlayerInterface?.onHandleFocusPref()
+            getString(R.string.focus_pref) -> MediaPlayerHolder.getInstance().onFocusPrefChanged()
+            getString(R.string.covers_pref) -> MediaPlayerHolder.getInstance().onCoversPrefChanged()
         }
     }
 
