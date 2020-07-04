@@ -87,7 +87,7 @@ class PlayerService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         /*This mode makes sense for things that will be explicitly started
         and stopped to run for arbitrary periods of time, such as a service
-        performing background default_cover playback.*/
+        performing background music playback.*/
         isRunning = true
         return START_NOT_STICKY
     }

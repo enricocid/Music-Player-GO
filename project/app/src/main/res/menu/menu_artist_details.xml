@@ -4,7 +4,7 @@
 
     <group>
 
-        <!-- am = all artist default_cover, sa = selected album -->
+        <!-- am = all artist music, sa = selected album -->
         <item
             android:id="@+id/action_shuffle_am"
             android:orderInCategory="0"
