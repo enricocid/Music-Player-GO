@@ -47,6 +47,15 @@
             app:title="@string/theme_pref_title"
             app:useSimpleSummaryProvider="true" />
 
+        <ListPreference
+            android:defaultValue="@integer/sort_default"
+            app:dialogTitle="@string/sort_pref_title"
+            app:entries="@array/albumSorting"
+            app:entryValues="@array/albumSortingEntry"
+            app:key="@string/sort_pref"
+            app:title="@string/sort_pref_title"
+            app:useSimpleSummaryProvider="true" />
+
         <Preference
             app:enableCopying="true"
             app:icon="@drawable/ic_colorize"

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import com.iven.musicplayergo.enums.SortingOptions
 import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.models.SavedMusic
 import java.lang.reflect.Type
@@ -16,6 +17,10 @@ class GoPreferences(context: Context) {
 
     private val prefsTheme = context.getString(R.string.theme_pref)
     private val prefsThemeDefault = context.getString(R.string.theme_pref_light)
+
+    private val prefSongsSorting = context.getString(R.string.sort_pref)
+    private val prefsSongSortingDefault = SortingOptions.ASCENDING_SORTING.ordinal.toString()
+
     private val prefsAccent = context.getString(R.string.accent_pref)
     private val prefsEdgeToEdge = context.getString(R.string.edge_pref)
 
@@ -66,6 +71,17 @@ class GoPreferences(context: Context) {
         get() = mPrefs.getString(prefsTheme, prefsThemeDefault)
         set(value) = mPrefs.edit().putString(prefsTheme, value).apply()
 
+    var songsSorting
+        get() = getSongSorting()
+        set(value) = mPrefs.edit().putString(prefSongsSorting, value.ordinal.toString()).apply()
+
+    private fun getSongSorting(): SortingOptions {
+        mPrefs.getString(prefSongsSorting, prefsSongSortingDefault)?.let {
+            return SortingOptions.values()[Integer.parseInt(it)]
+        }
+        return SortingOptions.ASCENDING_SORTING
+    }
+
     var accent
         get() = mPrefs.getInt(prefsAccent, R.color.deep_purple)
         set(value) = mPrefs.edit().putInt(prefsAccent, value).apply()
@@ -82,7 +98,7 @@ class GoPreferences(context: Context) {
         set(value) = putObject(prefsActiveFragments, value)
 
     var artistsSorting
-        get() = mPrefs.getInt(prefsArtistsSorting, GoConstants.DESCENDING_SORTING)
+        get() = mPrefs.getInt(prefsArtistsSorting, SortingOptions.DESCENDING_SORTING.ordinal)
         set(value) = mPrefs.edit().putInt(prefsArtistsSorting, value).apply()
 
     var filters: Set<String>?
@@ -90,11 +106,11 @@ class GoPreferences(context: Context) {
         set(value) = mPrefs.edit().putStringSet(prefsFilter, value).apply()
 
     var foldersSorting
-        get() = mPrefs.getInt(prefsFoldersSorting, GoConstants.DEFAULT_SORTING)
+        get() = mPrefs.getInt(prefsFoldersSorting, SortingOptions.DEFAULT_SORTING.ordinal)
         set(value) = mPrefs.edit().putInt(prefsFoldersSorting, value).apply()
 
     var albumsSorting
-        get() = mPrefs.getInt(prefsAlbumsSorting, GoConstants.DEFAULT_SORTING)
+        get() = mPrefs.getInt(prefsAlbumsSorting, SortingOptions.DEFAULT_SORTING.ordinal)
         set(value) = mPrefs.edit().putInt(prefsAlbumsSorting, value).apply()
 
     var isPreciseVolumeEnabled

@@ -18,6 +18,7 @@ import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentMusicContainerListBinding
 import com.iven.musicplayergo.enums.LaunchedBy
+import com.iven.musicplayergo.enums.SortingOptions
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.extensions.setTitleColor
@@ -51,10 +52,10 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     private lateinit var mUIControlInterface: UIControlInterface
 
     private lateinit var mSortMenuItem: MenuItem
-    private var mSorting = GoConstants.DESCENDING_SORTING
+    private var mSorting = SortingOptions.DESCENDING_SORTING
 
     private var sIsFastScroller = false
-    private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != GoConstants.DEFAULT_SORTING
+    private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != SortingOptions.DEFAULT_SORTING
     private var sLandscape = false
 
     override fun onAttach(context: Context) {
@@ -78,7 +79,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
         mMusicContainerListBinding = FragmentMusicContainerListBinding.bind(view)
 
-        mSorting = getSortingMethodFromPrefs()
+        mSorting = SortingOptions.values()[getSortingMethodFromPrefs()]
 
         mMusicRepository = MusicRepository.getInstance()
 
@@ -327,7 +328,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
             if (it.itemId != R.id.action_search) {
 
-                mSorting = it.order
+                mSorting = SortingOptions.values().get(it.order)
 
                 mList = getSortedItemKeys()
 
@@ -355,14 +356,14 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
         }
     }
 
-    private fun saveSortingMethodToPrefs(sortingMethod: Int) {
+    private fun saveSortingMethodToPrefs(sortingMethod: SortingOptions) {
         when (launchedBy) {
             LaunchedBy.ArtistView ->
-                goPreferences.artistsSorting = sortingMethod
+                goPreferences.artistsSorting = sortingMethod.ordinal
             LaunchedBy.FolderView ->
-                goPreferences.foldersSorting = sortingMethod
+                goPreferences.foldersSorting = sortingMethod.ordinal
             else ->
-                goPreferences.albumsSorting = sortingMethod
+                goPreferences.albumsSorting = sortingMethod.ordinal
         }
     }
 

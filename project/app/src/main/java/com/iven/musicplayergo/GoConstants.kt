@@ -9,13 +9,6 @@ object GoConstants {
 
     const val IS_APPLY_THEME = "IS_APPLY_THEME"
 
-    // sorting
-    const val DEFAULT_SORTING = 0
-    const val DESCENDING_SORTING = 1
-    const val ASCENDING_SORTING = 2
-    const val TRACK_SORTING = 3
-    const val TRACK_SORTING_INVERTED = 4
-
     // error tags
     const val TAG_NO_PERMISSION = "NO_PERMISSION"
     const val TAG_NO_MUSIC = "NO_MUSIC"

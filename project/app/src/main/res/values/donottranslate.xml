@@ -40,6 +40,14 @@
     <string name="theme_pref_light">theme_pref_light</string>
     <string name="theme_pref_dark">theme_pref_dark</string>
     <string name="theme_pref_auto">theme_pref_auto</string>
+
+    <string name="sort_pref">sort_pref</string>
+    <string name="sort_pref_descending">sort_pref_descending</string>
+    <string name="sort_pref_ascending">sort_pref_ascending</string>
+    <string name="sort_pref_track">sort_pref_track</string>
+    <string name="sort_pref_track_inverted">sort_pref_track_inverted</string>
+
+
     <string name="accent_pref">accent_pref</string>
     <string name="edge_pref">edge_pref</string>
     <string name="active_fragments_pref">visible_fragments_pref</string>
