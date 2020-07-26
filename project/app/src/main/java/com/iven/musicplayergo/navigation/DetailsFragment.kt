@@ -403,11 +403,18 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     }
 
     private fun applySortingToMusic(order: Int) {
-        val selectedList = mMusicRepository.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
-        mSongsList = ListsHelper.getSortedMusicList(
-            order,
-            selectedList?.toMutableList()
-        )
+        mSongsList = if (launchedBy == LaunchedBy.FolderView) {
+            val selectedList = mMusicRepository.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
+            ListsHelper.getSortedMusicList(
+                order,
+                selectedList?.toMutableList()
+            )
+        } else {
+            ListsHelper.getSortedMusicList(
+                order,
+                mSongsList?.toMutableList()
+            )
+        }
         setSongsDataSource(mSongsList)
     }
 
