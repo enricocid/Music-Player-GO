@@ -71,10 +71,10 @@ This repo contains the source code of the **Music Player GO** Android app: a sim
 # Translations
 
 The project is now hosted on [weblate](https://hosted.weblate.org/engage/music-player-go/). If You want to support weblate guys
-please consider doing a [donation](https://weblate.org/it/donate/new/) :)
+please consider a [donation](https://weblate.org/it/donate/new/) :)
 
 <a href="https://hosted.weblate.org/engage/music-player-go/">
-<img src="https://hosted.weblate.org/widgets/music-player-go/-/88x31-white.png" alt="Stato traduzione" />
+<img src="https://hosted.weblate.org/widgets/music-player-go/-/88x31-white.png" />
 </a>
 
 # License
