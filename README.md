@@ -3,7 +3,7 @@
 <p align="center">
 <img height="384" src="mpgo-4-2-4_quality55.webp">
 </p>
-
+  
 <p align="center">
   <!-- Latest Release -->
     <a href="https://github.com/enricocid/Music-Player-GO/releases">
@@ -17,14 +17,18 @@
     </a>
 </p>
 
+<h3 align="center">
+  <a href="https://hosted.weblate.org/engage/music-player-go/">
+<img src="https://hosted.weblate.org/widgets/music-player-go/-/287x66-white.png" />
+</a>
+</h3>
+
   <h3 align="center">
   <a href="PRIVACY.md">Privacy policy</a> |
   <a href="FAQ.md">FAQ</a> |
-  <a href="https://github.com/enricocid/Music-Player-GO/issues/114">Translate</a> |
   <a href="CONTRIBUTORS.md">Contributors</a> |
   <a href="FORMATS.md">Formats</a>
   </h3>
-
   </h3>
 
 # Table of contents
@@ -32,6 +36,7 @@
 - [Description](#description)
 - [Download](#download)
 - [Features](#features)
+- [Translations](#translations)
 - [License](#license)
   - [Authors / Copyright](#authors--copyright)
   - [Third-party component licenses](#third-party-component-licenses)
@@ -62,6 +67,15 @@ This repo contains the source code of the **Music Player GO** Android app: a sim
 - Queued and loved songs
 - Audio focus, precise volume and headsets plug control
 - Other features: search, sorting, shuffle, notification's SeekBar (Android 10), open audios from other apps ...
+
+# Translations
+
+The project is now hosted on [weblate](https://hosted.weblate.org/engage/music-player-go/). If You want to support weblate guys
+please consider doing a [donation](https://weblate.org/it/donate/new/) :)
+
+<a href="https://hosted.weblate.org/engage/music-player-go/">
+<img src="https://hosted.weblate.org/widgets/music-player-go/-/88x31-white.png" alt="Stato traduzione" />
+</a>
 
 # License
 
