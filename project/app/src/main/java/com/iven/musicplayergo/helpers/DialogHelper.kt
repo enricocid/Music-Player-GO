@@ -29,12 +29,13 @@ object DialogHelper {
 
     @JvmStatic
     fun showQueueSongsDialog(
-            context: Context
+            context: Context,
+            mediaPlayerHolder: MediaPlayerHolder
     ) = MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
         title(R.string.queue)
         val queueDialog = this
-        val queueAdapter = QueueAdapter(context, this, MediaPlayerHolder.getInstance())
+        val queueAdapter = QueueAdapter(context, this, mediaPlayerHolder)
 
         customListAdapter(queueAdapter)
 
@@ -61,7 +62,7 @@ object DialogHelper {
 
         recyclerView.addBidirectionalSwipeHandler(true) { viewHolder: RecyclerView.ViewHolder,
                                                           _: Int ->
-            MediaPlayerHolder.getInstance().apply {
+              mediaPlayerHolder.apply {
                 queueSongs.removeAt(viewHolder.adapterPosition)
                 queueAdapter.swapQueueSongs(queueSongs)
                 if (queueSongs.isEmpty()) {
@@ -78,7 +79,8 @@ object DialogHelper {
             context: Context,
             song: Pair<Music, Int>,
             queueSongsDialog: MaterialDialog,
-            queueAdapter: QueueAdapter
+            queueAdapter: QueueAdapter,
+            mediaPlayerHolder: MediaPlayerHolder
     ) {
 
         MaterialDialog(context).show {
@@ -93,7 +95,7 @@ object DialogHelper {
             )
             positiveButton(R.string.yes) {
 
-                MediaPlayerHolder.getInstance().apply {
+                mediaPlayerHolder.apply {
                     queueSongs.removeAt(song.second)
                     queueAdapter.swapQueueSongs(queueSongs)
 
@@ -110,7 +112,8 @@ object DialogHelper {
 
     @JvmStatic
     fun showClearQueueDialog(
-            context: Context
+            context: Context,
+            mediaPlayerHolder: MediaPlayerHolder
     ) {
 
         MaterialDialog(context).show {
@@ -121,7 +124,7 @@ object DialogHelper {
 
             positiveButton(R.string.yes) {
 
-                MediaPlayerHolder.getInstance().apply {
+                mediaPlayerHolder.apply {
                     if (isQueueStarted && isPlaying) {
 
                         restorePreQueueSongs()
@@ -139,7 +142,8 @@ object DialogHelper {
     @JvmStatic
     fun showLovedSongsDialog(
             context: Context,
-            uiControlInterface: UIControlInterface
+            uiControlInterface: UIControlInterface,
+            mediaPlayerHolder: MediaPlayerHolder
     ) {
 
         MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
@@ -149,6 +153,7 @@ object DialogHelper {
             val lovedSongsAdapter = LovedSongsAdapter(
                     context,
                     this,
+                    mediaPlayerHolder,
                     uiControlInterface
             )
 
@@ -294,10 +299,10 @@ object DialogHelper {
 
     @JvmStatic
     fun stopPlaybackDialog(
-            context: Context
+            context: Context,
+            mediaPlayerHolder: MediaPlayerHolder
     ) {
 
-        val mediaPlayerHolder = MediaPlayerHolder.getInstance()
         MaterialDialog(context).show {
 
             title(R.string.app_name)

@@ -25,9 +25,9 @@ object MusicOrgHelper {
     // if selected artist differs from played artist -1 will be returned
     @JvmStatic
     fun getPlayingAlbumPosition(
-            selectedArtist: String?
+            selectedArtist: String?,
+            mediaPlayerHolder: MediaPlayerHolder
     ) = try {
-        val mediaPlayerHolder = MediaPlayerHolder.getInstance()
         val currentSong = mediaPlayerHolder.currentSong.first
         val album = getAlbumFromList(
                 selectedArtist,
@@ -81,8 +81,8 @@ object MusicOrgHelper {
 
 
     @JvmStatic
-    fun saveLatestSong(latestSong: Music?, launchedBy: LaunchedBy) {
-        val playerPosition = MediaPlayerHolder.getInstance().playerPosition
+    fun saveLatestSong(latestSong: Music?, mediaPlayerHolder: MediaPlayerHolder, launchedBy: LaunchedBy) {
+        val playerPosition = mediaPlayerHolder.playerPosition
         latestSong?.let { musicToSave ->
             val toSave = musicToSave.toSavedMusic(playerPosition, launchedBy)
             if (goPreferences.latestPlayedSong != toSave) {

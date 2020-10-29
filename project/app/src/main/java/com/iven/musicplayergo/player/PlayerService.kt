@@ -20,19 +20,18 @@ class PlayerService : Service() {
 
     // Check if is already running
     var isRunning = false
-    var isRestoredFromPause = false
 
     // Media player
-    private lateinit var mMediaPlayerHolder: MediaPlayerHolder
-    private lateinit var mNotificationActionsReceiver: NotificationReceiver
+    lateinit var mediaPlayerHolder: MediaPlayerHolder
     lateinit var musicNotificationManager: MusicNotificationManager
+    var isRestoredFromPause = false
 
     private lateinit var mMediaSessionCompat: MediaSessionCompat
 
     private val mMediaSessionCallback = object : MediaSessionCompat.Callback() {
 
         override fun onSeekTo(pos: Long) {
-            mMediaPlayerHolder.seekTo(
+            mediaPlayerHolder.seekTo(
                     pos.toInt(),
                     updatePlaybackStatus = true,
                     restoreProgressCallBack = false
@@ -57,16 +56,16 @@ class PlayerService : Service() {
     override fun onDestroy() {
         super.onDestroy()
 
-        if (::mMediaPlayerHolder.isInitialized && mMediaPlayerHolder.isCurrentSong) {
+        if (::mediaPlayerHolder.isInitialized && mediaPlayerHolder.isCurrentSong) {
             // Saves last played song and its position
-            mMediaPlayerHolder.apply {
+            mediaPlayerHolder.apply {
                 currentSong.first?.let { musicToSave ->
                     goPreferences.latestPlayedSong =
                             musicToSave.toSavedMusic(playerPosition, isPlayingFromFolder)
                 }
             }
 
-            goPreferences.latestVolume = mMediaPlayerHolder.currentVolumeInPercent
+            goPreferences.latestVolume = mediaPlayerHolder.currentVolumeInPercent
 
             if (::mMediaSessionCompat.isInitialized && mMediaSessionCompat.isActive) {
                 mMediaSessionCompat.isActive = false
@@ -74,7 +73,7 @@ class PlayerService : Service() {
                 mMediaSessionCompat.release()
             }
 
-            mMediaPlayerHolder.release()
+            mediaPlayerHolder.release()
             isRunning = false
         }
     }
@@ -88,12 +87,10 @@ class PlayerService : Service() {
     }
 
     override fun onBind(intent: Intent): IBinder {
-        if (!::mMediaPlayerHolder.isInitialized) {
-            mMediaPlayerHolder = MediaPlayerHolder.getInstance()
-            mNotificationActionsReceiver = NotificationReceiver(this, mMediaPlayerHolder)
-            val intentFilter = mNotificationActionsReceiver.createIntentFilter()
-            registerReceiver(mNotificationActionsReceiver, intentFilter)
-
+        if (!::mediaPlayerHolder.isInitialized) {
+            mediaPlayerHolder = MediaPlayerHolder(this).apply {
+                registerActionsReceiver()
+            }
             musicNotificationManager = MusicNotificationManager(this)
         }
         return binder
@@ -109,14 +106,6 @@ class PlayerService : Service() {
         fun getService() = this@PlayerService
     }
 
-    fun unregisterActionsReceiver() {
-        try {
-            unregisterReceiver(mNotificationActionsReceiver)
-        } catch (e: IllegalArgumentException) {
-            e.printStackTrace()
-        }
-    }
-
     private fun handleMediaIntent(intent: Intent?): Boolean {
 
         var isSuccess = false
@@ -128,23 +117,23 @@ class PlayerService : Service() {
                 if (event.action == KeyEvent.ACTION_DOWN) {
                     when (event.keyCode) {
                         KeyEvent.KEYCODE_MEDIA_PAUSE, KeyEvent.KEYCODE_MEDIA_PLAY, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, KeyEvent.KEYCODE_HEADSETHOOK -> {
-                            mMediaPlayerHolder.resumeOrPause()
+                            mediaPlayerHolder.resumeOrPause()
                             isSuccess = true
                         }
                         KeyEvent.KEYCODE_MEDIA_CLOSE, KeyEvent.KEYCODE_MEDIA_STOP -> {
-                            mMediaPlayerHolder.stopPlaybackService(stopPlayback = true)
+                            mediaPlayerHolder.stopPlaybackService(stopPlayback = true)
                             isSuccess = true
                         }
                         KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {
-                            mMediaPlayerHolder.skip(false)
+                            mediaPlayerHolder.skip(false)
                             isSuccess = true
                         }
                         KeyEvent.KEYCODE_MEDIA_NEXT -> {
-                            mMediaPlayerHolder.skip(true)
+                            mediaPlayerHolder.skip(true)
                             isSuccess = true
                         }
                         KeyEvent.KEYCODE_MEDIA_REWIND -> {
-                            mMediaPlayerHolder.repeatSong()
+                            mediaPlayerHolder.repeatSong()
                             isSuccess = true
                         }
                     }
@@ -155,6 +144,7 @@ class PlayerService : Service() {
             getString(R.string.error_media_buttons).toToast(this)
             e.printStackTrace()
         }
+
         return isSuccess
     }
 }

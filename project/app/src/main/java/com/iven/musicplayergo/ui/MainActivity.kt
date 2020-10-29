@@ -123,7 +123,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             val binder = service as PlayerService.LocalBinder
             mPlayerService = binder.getService()
             sBound = true
-            mMediaPlayerHolder.setPlayerService(mPlayerService)
+            mMediaPlayerHolder = mPlayerService.mediaPlayerHolder
+            mMediaPlayerHolder.mediaPlayerInterface = mMediaPlayerInterface
+
+            mMusicRepository = MusicRepository.getInstance()
+            mMusicViewModel.deviceMusic.observe(this@MainActivity, Observer { returnedMusic ->
+                finishSetup(returnedMusic)
+            })
+            mMusicViewModel.getDeviceMusic()
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
@@ -148,7 +155,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             } else {
                 if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) {
                     DialogHelper.stopPlaybackDialog(
-                            this
+                            this,
+                            mMediaPlayerHolder
                     )
                 } else {
                     onCloseActivity()
@@ -204,7 +212,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 // If request is cancelled, the result arrays are empty.
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     // Permission was granted, yay! Do bind service
-                    initializeMediaPlayerInstance()
                     doBindService()
                 } else {
                     // Permission denied, boo! Error!
@@ -254,20 +261,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     activity = this, uiControlInterface = this
             )
         } else {
-            initializeMediaPlayerInstance()
             doBindService()
         }
-    }
-
-    private fun initializeMediaPlayerInstance() {
-        mMediaPlayerHolder = MediaPlayerHolder.getInstance()
-        mMediaPlayerHolder.mediaPlayerInterface = mMediaPlayerInterface
-
-        mMusicRepository = MusicRepository.getInstance()
-        mMusicViewModel.deviceMusic.observe(this@MainActivity, Observer { returnedMusic ->
-            finishSetup(returnedMusic)
-        })
-        mMusicViewModel.getDeviceMusic()
     }
 
     private fun notifyError(errorType: String) {
@@ -417,7 +412,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                             selectedArtistOrFolder,
                             launchedBy,
                             MusicOrgHelper.getPlayingAlbumPosition(
-                                    selectedArtistOrFolder
+                                    selectedArtistOrFolder,
+                                    mMediaPlayerHolder
                             )
                     )
             supportFragmentManager.addFragment(mDetailsFragment, GoConstants.DETAILS_FRAGMENT_TAG)
@@ -445,7 +441,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mPlayerControlsPanelBinding.queueButton.setOnLongClickListener {
             if (checkIsPlayer(true) && mMediaPlayerHolder.isQueue) {
                 DialogHelper.showClearQueueDialog(
-                        this
+                        this,
+                        mMediaPlayerHolder
                 )
             }
             return@setOnLongClickListener true
@@ -653,7 +650,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun saveSongToPref() {
         if (::mMediaPlayerHolder.isInitialized && !mMediaPlayerHolder.isPlaying || mMediaPlayerHolder.state == GoConstants.PAUSED) mMediaPlayerHolder.apply {
-            MusicOrgHelper.saveLatestSong(currentSong.first, isPlayingFromFolder)
+            MusicOrgHelper.saveLatestSong(currentSong.first, mMediaPlayerHolder, isPlayingFromFolder)
         }
     }
 
@@ -877,7 +874,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 } else {
                     mDetailsFragment.tryToSnapToAlbumPosition(
                             MusicOrgHelper.getPlayingAlbumPosition(
-                                    selectedArtistOrFolder
+                                    selectedArtistOrFolder,
+                                    mMediaPlayerHolder
                             )
                     )
                 }
@@ -892,7 +890,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     override fun onCloseActivity() {
         if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) {
             DialogHelper.stopPlaybackDialog(
-                    this
+                    this,
+                    mMediaPlayerHolder
             )
         } else {
             finishAndRemoveTask()
@@ -901,7 +900,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onHandleFocusPref() {
         if (isMediaPlayerHolder) {
-            mMediaPlayerHolder.onFocusPrefChanged(goPreferences.isFocusEnabled)
+            if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) if (goPreferences.isFocusEnabled) mMediaPlayerHolder.tryToGetAudioFocus() else mMediaPlayerHolder.giveUpAudioFocus()
         }
     }
 
@@ -991,7 +990,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     fun openQueueDialog(view: View) {
         if (checkIsPlayer(false) && mMediaPlayerHolder.queueSongs.isNotEmpty()) {
-            mQueueDialog = DialogHelper.showQueueSongsDialog(this)
+            mQueueDialog = DialogHelper.showQueueSongsDialog(this, mMediaPlayerHolder)
             mQueueAdapter = mQueueDialog.getListAdapter() as QueueAdapter
         } else {
             getString(R.string.error_no_queue).toToast(this)
@@ -1000,7 +999,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     fun openLovedSongsDialog(view: View) {
         if (!goPreferences.lovedSongs.isNullOrEmpty()) {
-            DialogHelper.showLovedSongsDialog(this, this)
+            DialogHelper.showLovedSongsDialog(this, this, mMediaPlayerHolder)
         } else {
             getString(R.string.error_no_loved_songs).toToast(this)
         }
@@ -1084,6 +1083,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         else -> mResolvedDisabledIconsColor
                     }
             )
+        }
+
+        override fun onFocusLoss() {
+            saveSongToPref()
         }
 
         override fun onSaveSong() {

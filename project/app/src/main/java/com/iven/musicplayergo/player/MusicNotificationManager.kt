@@ -32,8 +32,6 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         @SuppressLint("RestrictedApi")
         get() = mNotificationBuilder.mActions
 
-    private var sNotificationForeground = false
-
     private fun playerAction(action: String): PendingIntent {
 
         val pauseIntent = Intent()
@@ -47,7 +45,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         )
     }
 
-    private fun createNotification(): Notification {
+    fun createNotification(): Notification {
 
         mNotificationBuilder = NotificationCompat.Builder(playerService, CHANNEL_ID)
 
@@ -79,27 +77,6 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         return mNotificationBuilder.build()
     }
 
-    fun startNotificationForeground() {
-        if (!sNotificationForeground) {
-            playerService.startForeground(
-                    GoConstants.NOTIFICATION_ID,
-                    createNotification()
-            )
-            sNotificationForeground = true
-        } else {
-            updateNotificationText()
-            updatePlayPauseAction()
-            updateRepeatIcon()
-            updateNotification()
-        }
-    }
-
-    fun pauseNotificationForeground() {
-        sNotificationForeground = false
-        updatePlayPauseAction()
-        updateNotification()
-    }
-
     fun updateNotification() {
         mNotificationManager
                 .notify(
@@ -108,8 +85,8 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                 )
     }
 
-    private fun updateNotificationText() {
-        val mediaPlayerHolder = MediaPlayerHolder.getInstance()
+    fun updateNotificationText() {
+        val mediaPlayerHolder = playerService.mediaPlayerHolder
         mediaPlayerHolder.currentSong.first?.let { song ->
             mNotificationBuilder.setContentText(
                     playerService.getString(
@@ -132,7 +109,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         }
     }
 
-    private fun updatePlayPauseAction() {
+    fun updatePlayPauseAction() {
         if (::mNotificationBuilder.isInitialized) mNotificationActions[2] =
                 notificationAction(GoConstants.PLAY_PAUSE_ACTION)
     }
@@ -146,12 +123,11 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     }
 
     private fun notificationAction(action: String): NotificationCompat.Action {
-        val mediaPlayerHolder = MediaPlayerHolder.getInstance()
         var icon =
-                if (mediaPlayerHolder.state != GoConstants.PAUSED) R.drawable.ic_pause else R.drawable.ic_play
+                if (playerService.mediaPlayerHolder.state != GoConstants.PAUSED) R.drawable.ic_pause else R.drawable.ic_play
         when (action) {
             GoConstants.REPEAT_ACTION -> icon =
-                    ThemeHelper.getRepeatIcon(mediaPlayerHolder)
+                    ThemeHelper.getRepeatIcon(playerService.mediaPlayerHolder)
             GoConstants.PREV_ACTION -> icon = R.drawable.ic_skip_previous
             GoConstants.NEXT_ACTION -> icon = R.drawable.ic_skip_next
             GoConstants.CLOSE_ACTION -> icon = R.drawable.ic_close

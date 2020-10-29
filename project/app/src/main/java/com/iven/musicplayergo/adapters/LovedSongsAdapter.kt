@@ -20,6 +20,7 @@ import com.iven.musicplayergo.ui.UIControlInterface
 class LovedSongsAdapter(
         private val context: Context,
         private val lovedSongsDialog: MaterialDialog,
+        private val mediaPlayerHolder: MediaPlayerHolder,
         private val uiControlInterface: UIControlInterface
 ) :
         RecyclerView.Adapter<LovedSongsAdapter.LoveHolder>() {
@@ -75,7 +76,7 @@ class LovedSongsAdapter(
 
             itemView.apply {
                 setOnClickListener {
-                    MediaPlayerHolder.getInstance().isSongFromLovedSongs =
+                    mediaPlayerHolder.isSongFromLovedSongs =
                             Pair(true, lovedSong?.startFrom!!)
                     MusicOrgHelper.getSongForRestore(lovedSong)
                             .apply {
