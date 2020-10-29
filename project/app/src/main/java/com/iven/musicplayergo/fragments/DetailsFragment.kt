@@ -61,6 +61,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private var mSelectedAlbumPosition = -1
 
     private lateinit var mUIControlInterface: UIControlInterface
+
     private var mSelectedAlbum: Album? = null
 
     private var sLandscape = false
@@ -525,6 +526,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                                 updateSelectedAlbumTitle()
                                 swapAlbum(item.music)
                             }
+                        } else {
+                            mUIControlInterface.onSongSelected(item.music?.get(0),
+                                    item.music,
+                                    launchedBy)
                         }
                     }
                 }
