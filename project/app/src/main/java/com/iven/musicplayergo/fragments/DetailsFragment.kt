@@ -510,7 +510,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                     onBind(::AlbumsViewHolder) { _, item ->
                         // AlbumsViewHolder is `this` here
-                        itemView.background.alpha = 20
+                        itemView.background.alpha = 35
                         album.text = item.title
                         year.text = item.year
                         totalDuration.text = item.totalDuration.toFormattedDuration(
