@@ -28,7 +28,7 @@ import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 
 class PreferencesFragment : PreferenceFragmentCompat(),
-    SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener {
+        SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener {
 
     private lateinit var mAccentsDialog: MaterialDialog
     private lateinit var mActiveFragmentsDialog: MaterialDialog
@@ -41,12 +41,12 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     override fun setDivider(divider: Drawable?) {
         context?.let { cxt ->
             super.setDivider(
-                ColorDrawable(
-                    ThemeHelper.getAlphaAccent(
-                        cxt,
-                        85
+                    ColorDrawable(
+                            ThemeHelper.getAlphaAccent(
+                                    cxt,
+                                    85
+                            )
                     )
-                )
             )
         }
     }
@@ -86,27 +86,27 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         super.onViewCreated(view, savedInstanceState)
 
         findPreference<Preference>(getString(R.string.open_git_pref))?.onPreferenceClickListener =
-            this
+                this
 
         findPreference<Preference>(getString(R.string.faq_pref))?.onPreferenceClickListener =
-            this
+                this
 
         findPreference<Preference>(getString(R.string.found_songs_pref))?.apply {
             val musicRepository = MusicRepository.getInstance()
             title =
-                getString(R.string.found_songs_pref_title, musicRepository.musicDatabaseSize)
+                    getString(R.string.found_songs_pref_title, musicRepository.musicDatabaseSize)
         }
 
         mThemePreference = findPreference<Preference>(getString(R.string.theme_pref))?.apply {
             icon = AppCompatResources.getDrawable(
-                requireContext(),
-                ThemeHelper.resolveThemeIcon(requireContext())
+                    requireContext(),
+                    ThemeHelper.resolveThemeIcon(requireContext())
             )
         }
 
         findPreference<Preference>(getString(R.string.accent_pref))?.apply {
             summary =
-                ThemeHelper.getAccentName(goPreferences.accent, requireContext())
+                    ThemeHelper.getAccentName(goPreferences.accent, requireContext())
             onPreferenceClickListener = this@PreferencesFragment
         }
 
@@ -133,7 +133,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 showFiltersDialog()
             } else {
                 getString(
-                    R.string.error_no_filter
+                        R.string.error_no_filter
                 ).toToast(requireContext())
             }
             getString(R.string.active_fragments_pref) -> showActiveFragmentsDialog()
@@ -145,21 +145,21 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         when (key) {
             getString(R.string.theme_pref) -> {
                 mThemePreference?.icon =
-                    AppCompatResources.getDrawable(
-                        requireContext(),
-                        ThemeHelper.resolveThemeIcon(requireContext())
-                    )
+                        AppCompatResources.getDrawable(
+                                requireContext(),
+                                ThemeHelper.resolveThemeIcon(requireContext())
+                        )
                 mUIControlInterface.onThemeChanged()
             }
             getString(R.string.edge_pref) -> mUIControlInterface.onAppearanceChanged(
-                isAccentChanged = false,
-                restoreSettings = true
+                    isAccentChanged = false,
+                    restoreSettings = true
             )
             getString(R.string.accent_pref) -> {
                 mAccentsDialog.dismiss()
                 mUIControlInterface.onAppearanceChanged(
-                    isAccentChanged = true,
-                    restoreSettings = true
+                        isAccentChanged = true,
+                        restoreSettings = true
                 )
             }
             getString(R.string.focus_pref) -> mUIControlInterface.onHandleFocusPref()
@@ -168,9 +168,9 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     private fun openCustomTab(link: String) {
         val customTabsIntent = CustomTabsIntent.Builder()
-            .addDefaultShareMenuItem()
-            .setShowTitle(true)
-            .build()
+                .addDefaultShareMenuItem()
+                .setShowTitle(true)
+                .build()
 
         val parsedUri = Uri.parse(link)
         val manager = requireContext().packageManager
@@ -188,9 +188,9 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 requireContext().startActivity(browserIntent)
             } else {
                 Toast.makeText(
-                    context,
-                    requireContext().getString(R.string.error_no_browser),
-                    Toast.LENGTH_SHORT
+                        context,
+                        requireContext().getString(R.string.error_no_browser),
+                        Toast.LENGTH_SHORT
                 ).show()
             }
         }
@@ -206,7 +206,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             getRecyclerView().apply {
                 layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
                 scrollToPosition(ThemeHelper.getAccentedTheme().second)
             }
         }
@@ -223,13 +223,13 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             customListAdapter(activeTabsAdapter)
 
             getRecyclerView().layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
             positiveButton(android.R.string.ok) {
                 goPreferences.activeFragments = activeTabsAdapter.getUpdatedItems()
                 mUIControlInterface.onAppearanceChanged(
-                    isAccentChanged = false,
-                    restoreSettings = true
+                        isAccentChanged = false,
+                        restoreSettings = true
                 )
             }
 

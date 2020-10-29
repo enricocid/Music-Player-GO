@@ -73,31 +73,31 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                         // GenericViewHolder is `this` here
                         title.text = item.title
                         duration.text = item.duration.toFormattedDuration(
-                            isAlbum = false,
-                            isSeekBar = false
+                                isAlbum = false,
+                                isSeekBar = false
                         )
                         subtitle.text =
-                            getString(R.string.artist_and_album, item.artist, item.album)
+                                getString(R.string.artist_and_album, item.artist, item.album)
                     }
 
                     onClick {
                         mUIControlInterface.onSongSelected(
-                            item,
-                            MusicOrgHelper.getAlbumSongs(
-                                item.artist,
-                                item.album
-                            ),
-                            LaunchedBy.ArtistView
+                                item,
+                                MusicOrgHelper.getAlbumSongs(
+                                        item.artist,
+                                        item.album
+                                ),
+                                LaunchedBy.ArtistView
                         )
                     }
 
                     onLongClick { index ->
                         DialogHelper.showDoSomethingPopup(
-                            requireContext(),
-                            findViewHolderForAdapterPosition(index)?.itemView,
-                            item,
-                            LaunchedBy.ArtistView,
-                            mUIControlInterface
+                                requireContext(),
+                                findViewHolderForAdapterPosition(index)?.itemView,
+                                item,
+                                LaunchedBy.ArtistView,
+                                mUIControlInterface
                         )
                     }
                 }

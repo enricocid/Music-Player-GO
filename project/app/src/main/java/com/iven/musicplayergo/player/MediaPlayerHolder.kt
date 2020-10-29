@@ -29,9 +29,9 @@ import kotlin.math.ln
  */
 
 class MediaPlayerHolder :
-    MediaPlayer.OnErrorListener,
-    MediaPlayer.OnCompletionListener,
-    MediaPlayer.OnPreparedListener {
+        MediaPlayer.OnErrorListener,
+        MediaPlayer.OnCompletionListener,
+        MediaPlayer.OnPreparedListener {
 
     // Media player
     lateinit var mediaPlayer: MediaPlayer
@@ -61,7 +61,7 @@ class MediaPlayerHolder :
     private val mPrevSong: Music?
         get() = when {
             mPrevSongIndex <= mCurrentAlbumSize && mPrevSongIndex != -1 -> mPlayingAlbumSongs?.get(
-                mPrevSongIndex
+                    mPrevSongIndex
             )
             isQueue -> stopQueueAndGetSkipSong(false)
             else -> mPlayingAlbumSongs?.get(mPlayingAlbumSongs?.lastIndex!!)
@@ -106,10 +106,10 @@ class MediaPlayerHolder :
     }
 
     fun setCurrentSong(
-        song: Music?,
-        songs: List<Music>?,
-        isFromQueue: Boolean,
-        isFolderAlbum: LaunchedBy
+            song: Music?,
+            songs: List<Music>?,
+            isFromQueue: Boolean,
+            isFolderAlbum: LaunchedBy
     ) {
         isPlayingFromFolder = isFolderAlbum
         currentSong = Pair(song, isFromQueue)
@@ -120,8 +120,8 @@ class MediaPlayerHolder :
         val mediaMediaPlayerCompat = MediaMetadataCompat.Builder().apply {
             if (VersioningHelper.isQ()) {
                 putLong(
-                    MediaMetadataCompat.METADATA_KEY_DURATION,
-                    currentSong.first?.duration!!
+                        MediaMetadataCompat.METADATA_KEY_DURATION,
+                        currentSong.first?.duration!!
                 )
             }
             putString(MediaMetadataCompat.METADATA_KEY_ARTIST, currentSong.first?.artist)
@@ -133,9 +133,9 @@ class MediaPlayerHolder :
             putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, currentSong.first?.album)
             putString(MediaMetadataCompat.METADATA_KEY_ALBUM, currentSong.first?.album)
             BitmapFactory.decodeResource(mPlayerService.resources, R.drawable.ic_music_note)
-                ?.let { bmp ->
-                    putBitmap(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON, bmp)
-                }
+                    ?.let { bmp ->
+                        putBitmap(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON, bmp)
+                    }
         }
         mPlayerService.getMediaSession().setMetadata(mediaMediaPlayerCompat.build())
     }
@@ -166,19 +166,19 @@ class MediaPlayerHolder :
 
     private fun updatePlaybackStatus(updateUI: Boolean) {
         mPlayerService.getMediaSession().setPlaybackState(
-            mStateBuilder?.setState(
-                if (state == GoConstants.RESUMED) {
-                    GoConstants.PLAYING
-                } else {
-                    state
-                },
-                if (VersioningHelper.isQ()) {
-                    mediaPlayer.currentPosition.toLong()
-                } else {
-                    PLAYBACK_POSITION_UNKNOWN
-                },
-                1F
-            )?.build()
+                mStateBuilder?.setState(
+                        if (state == GoConstants.RESUMED) {
+                            GoConstants.PLAYING
+                        } else {
+                            state
+                        },
+                        if (VersioningHelper.isQ()) {
+                            mediaPlayer.currentPosition.toLong()
+                        } else {
+                            PLAYBACK_POSITION_UNKNOWN
+                        },
+                        1F
+                )?.build()
         )
         if (updateUI) {
             mediaPlayerInterface.onStateChanged()
@@ -237,10 +237,10 @@ class MediaPlayerHolder :
             currentSong = Pair(nextSong, true)
         } else {
             setCurrentSong(
-                queueSongs[0],
-                queueSongs,
-                isFromQueue = true,
-                isFolderAlbum = LaunchedBy.ArtistView
+                    queueSongs[0],
+                    queueSongs,
+                    isFromQueue = true,
+                    isFolderAlbum = LaunchedBy.ArtistView
             )
             isQueueStarted = true
         }
@@ -270,14 +270,14 @@ class MediaPlayerHolder :
     }
 
     private fun stopQueueAndGetSkipSong(restorePreviousAlbum: Boolean): Music? =
-        if (restorePreviousAlbum) {
-            setQueueEnabled(false)
-            restorePreQueueSongs()
-            getSkipSong(true)
-        } else {
-            isQueueStarted = false
-            preQueueSong.first
-        }
+            if (restorePreviousAlbum) {
+                setQueueEnabled(false)
+                restorePreQueueSongs()
+                getSkipSong(true)
+            } else {
+                isQueueStarted = false
+                preQueueSong.first
+            }
 
     /**
      * Syncs the mMediaPlayer position with mPlaybackProgressCallback via recurring task.
@@ -286,15 +286,15 @@ class MediaPlayerHolder :
 
         if (mSeekBarPositionUpdateTask == null) {
             mSeekBarPositionUpdateTask =
-                Runnable { updateProgressCallbackTask() }
+                    Runnable { updateProgressCallbackTask() }
         }
 
         mExecutor = Executors.newSingleThreadScheduledExecutor()
         mExecutor?.scheduleAtFixedRate(
-            mSeekBarPositionUpdateTask!!,
-            0,
-            1000,
-            TimeUnit.MILLISECONDS
+                mSeekBarPositionUpdateTask!!,
+                0,
+                1000,
+                TimeUnit.MILLISECONDS
         )
     }
 
@@ -343,15 +343,15 @@ class MediaPlayerHolder :
                 mediaPlayer = MediaPlayer()
 
                 mAudioFocusHandler = AudioFocusHandler(
-                    mPlayerService.getSystemService(AUDIO_SERVICE) as AudioManager
+                        mPlayerService.getSystemService(AUDIO_SERVICE) as AudioManager
                 )
 
                 mMusicNotificationManager = mPlayerService.musicNotificationManager
 
                 mediaPlayer.run {
                     EqualizerUtils.openAudioEffectSession(
-                        mPlayerService.applicationContext,
-                        audioSessionId
+                            mPlayerService.applicationContext,
+                            audioSessionId
                     )
 
                     setOnPreparedListener(this@MediaPlayerHolder)
@@ -359,10 +359,10 @@ class MediaPlayerHolder :
                     setOnErrorListener(this@MediaPlayerHolder)
                     setWakeMode(mPlayerService, PowerManager.PARTIAL_WAKE_LOCK)
                     setAudioAttributes(
-                        AudioAttributes.Builder()
-                            .setUsage(AudioAttributes.USAGE_MEDIA)
-                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                            .build()
+                            AudioAttributes.Builder()
+                                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                    .build()
                     )
                 }
 
@@ -436,8 +436,8 @@ class MediaPlayerHolder :
     fun release() {
         if (isMediaPlayer) {
             EqualizerUtils.closeAudioEffectSession(
-                mPlayerService,
-                mediaPlayer.audioSessionId
+                    mPlayerService,
+                    mediaPlayer.audioSessionId
             )
             mediaPlayer.release()
             mAudioFocusHandler.giveUpAudioFocus()

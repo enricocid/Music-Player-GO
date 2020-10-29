@@ -24,7 +24,7 @@ private const val AUDIO_FOCUSED = 1
 
 //https://developer.android.com/guide/topics/media-apps/audio-focus
 class AudioFocusHandler(
-    private val audioManager: AudioManager
+        private val audioManager: AudioManager
 ) {
 
     private val sFocusEnabled get() = goPreferences.isFocusEnabled
@@ -34,46 +34,46 @@ class AudioFocusHandler(
     private val mMediaPlayerHolder get() = MediaPlayerHolder.getInstance()
 
     private val mOnAudioFocusChangeListener =
-        AudioManager.OnAudioFocusChangeListener { focusChange ->
-            mMediaPlayerHolder.apply {
-                if (mMediaPlayerHolder.isMediaPlayer && mMediaPlayerHolder.isPlay && mMediaPlayerHolder.isPlaying) {
-                    when (focusChange) {
-                        AudioManager.AUDIOFOCUS_LOSS ->
-                            // Permanent loss of audio focus
-                            // Pause playback immediately
-                            mMediaPlayerHolder.pauseMediaPlayer()
+            AudioManager.OnAudioFocusChangeListener { focusChange ->
+                mMediaPlayerHolder.apply {
+                    if (mMediaPlayerHolder.isMediaPlayer && mMediaPlayerHolder.isPlay && mMediaPlayerHolder.isPlaying) {
+                        when (focusChange) {
+                            AudioManager.AUDIOFOCUS_LOSS ->
+                                // Permanent loss of audio focus
+                                // Pause playback immediately
+                                mMediaPlayerHolder.pauseMediaPlayer()
 
-                        AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
-                            // Pause playback
-                            mMediaPlayerHolder.pauseMediaPlayer()
-                            sPlayOnFocusGain =
-                                mMediaPlayerHolder.isMediaPlayer && mMediaPlayerHolder.state == GoConstants.PLAYING || mMediaPlayerHolder.state == GoConstants.RESUMED
-                        }
+                            AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
+                                // Pause playback
+                                mMediaPlayerHolder.pauseMediaPlayer()
+                                sPlayOnFocusGain =
+                                        mMediaPlayerHolder.isMediaPlayer && mMediaPlayerHolder.state == GoConstants.PLAYING || mMediaPlayerHolder.state == GoConstants.RESUMED
+                            }
 
-                        AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> {
-                            // Lower the volume, keep playing
-                            mediaPlayer.setVolume(
-                                VOLUME_DUCK,
-                                VOLUME_DUCK
-                            )
-                            sPlayOnFocusGain = false
-                        }
+                            AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> {
+                                // Lower the volume, keep playing
+                                mediaPlayer.setVolume(
+                                        VOLUME_DUCK,
+                                        VOLUME_DUCK
+                                )
+                                sPlayOnFocusGain = false
+                            }
 
 
-                        AudioManager.AUDIOFOCUS_GAIN -> {
-                            // Your app has been granted audio focus again
-                            // Raise volume to normal, restart playback if necessary
-                            if (sPlayOnFocusGain) {
-                                mMediaPlayerHolder.resumeMediaPlayer()
-                            } else {
-                                mediaPlayer.setVolume(VOLUME_NORMAL, VOLUME_NORMAL)
+                            AudioManager.AUDIOFOCUS_GAIN -> {
+                                // Your app has been granted audio focus again
+                                // Raise volume to normal, restart playback if necessary
+                                if (sPlayOnFocusGain) {
+                                    mMediaPlayerHolder.resumeMediaPlayer()
+                                } else {
+                                    mediaPlayer.setVolume(VOLUME_NORMAL, VOLUME_NORMAL)
+                                }
                             }
                         }
                     }
                 }
-            }
 
-        }
+            }
 
     fun tryToGetAudioFocus() {
         if (sFocusEnabled) {
@@ -94,25 +94,25 @@ class AudioFocusHandler(
 
     @TargetApi(26)
     val audioFocusRequest: AudioFocusRequest =
-        AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN).run {
-            setAudioAttributes(AudioAttributes.Builder().run {
-                setUsage(AudioAttributes.USAGE_MEDIA)
-                setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+            AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN).run {
+                setAudioAttributes(AudioAttributes.Builder().run {
+                    setUsage(AudioAttributes.USAGE_MEDIA)
+                    setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    build()
+                })
+                setAcceptsDelayedFocusGain(true)
+                setOnAudioFocusChangeListener(mOnAudioFocusChangeListener, mHandler)
                 build()
-            })
-            setAcceptsDelayedFocusGain(true)
-            setOnAudioFocusChangeListener(mOnAudioFocusChangeListener, mHandler)
-            build()
-        }
+            }
 
     @Suppress("DEPRECATION")
     val res = if (VersioningHelper.isOreoMR1()) {
         audioManager.requestAudioFocus(audioFocusRequest)
     } else {
         audioManager.requestAudioFocus(
-            mOnAudioFocusChangeListener,
-            AudioManager.STREAM_MUSIC,
-            AudioManager.AUDIOFOCUS_GAIN
+                mOnAudioFocusChangeListener,
+                AudioManager.STREAM_MUSIC,
+                AudioManager.AUDIOFOCUS_GAIN
         )
     }
 
@@ -121,7 +121,7 @@ class AudioFocusHandler(
         if (sFocusEnabled) {
             if (VersioningHelper.isOreo()) {
                 audioManager.abandonAudioFocusRequest(
-                    audioFocusRequest
+                        audioFocusRequest
                 )
             } else {
                 audioManager.abandonAudioFocus(mOnAudioFocusChangeListener)

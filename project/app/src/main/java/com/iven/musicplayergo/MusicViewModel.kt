@@ -40,7 +40,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
         uiScope.launch {
             withContext(ioDispatcher) {
                 val music =
-                    musicRepository.getDeviceMusic(getApplication()) // get music from MediaStore on IO thread
+                        musicRepository.getDeviceMusic(getApplication()) // get music from MediaStore on IO thread
                 withContext(uiDispatcher) {
                     deviceMusic.value = music // post values on Main thread
                 }

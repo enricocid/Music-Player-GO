@@ -50,15 +50,15 @@ class GoPreferences(context: Context) {
 
     var latestPlayedSong: SavedMusic?
         get() = getObject(
-            prefsLatestPlayedSong,
-            typeLastPlayedSong
+                prefsLatestPlayedSong,
+                typeLastPlayedSong
         )
         set(value) = putObject(prefsLatestPlayedSong, value)
 
     var lovedSongs: MutableList<SavedMusic>?
         get() = getObject(
-            prefsLovedSongs,
-            typeLovedSongs
+                prefsLovedSongs,
+                typeLovedSongs
         )
         set(value) = putObject(prefsLovedSongs, value)
 
@@ -72,8 +72,8 @@ class GoPreferences(context: Context) {
 
     var isEdgeToEdge
         get() = mPrefs.getBoolean(
-            prefsEdgeToEdge,
-            false
+                prefsEdgeToEdge,
+                false
         ) && VersioningHelper.isOreoMR1()
         set(value) = mPrefs.edit().putBoolean(prefsEdgeToEdge, value).apply()
 

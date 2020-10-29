@@ -14,8 +14,8 @@ private const val HEADSET_DISCONNECTED = 0
 private const val HEADSET_CONNECTED = 1
 
 class NotificationReceiver(
-    private val playerService: PlayerService,
-    private val mediaPlayerHolder: MediaPlayerHolder
+        private val playerService: PlayerService,
+        private val mediaPlayerHolder: MediaPlayerHolder
 ) : BroadcastReceiver() {
 
     fun createIntentFilter(): IntentFilter = IntentFilter().apply {
@@ -45,7 +45,7 @@ class NotificationReceiver(
                         mediaPlayerInterface.onUpdateRepeatStatus()
                     }
                     GoConstants.CLOSE_ACTION -> if (playerService.isRunning && isMediaPlayer) stopPlaybackService(
-                        stopPlayback = true
+                            stopPlayback = true
                     )
 
                     BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()

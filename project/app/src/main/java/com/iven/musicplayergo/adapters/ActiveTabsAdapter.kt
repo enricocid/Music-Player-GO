@@ -14,9 +14,9 @@ import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 
 class ActiveTabsAdapter(
-    private val context: Context
+        private val context: Context
 ) :
-    RecyclerView.Adapter<ActiveTabsAdapter.CheckableItemsHolder>() {
+        RecyclerView.Adapter<ActiveTabsAdapter.CheckableItemsHolder>() {
 
     private val mAvailableItems = goPreferences.prefsActiveFragmentsDefault
     private val mActiveItems = goPreferences.activeFragments.toMutableList()
@@ -29,11 +29,11 @@ class ActiveTabsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckableItemsHolder {
         return CheckableItemsHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.active_tab_item,
-                parent,
-                false
-            )
+                LayoutInflater.from(parent.context).inflate(
+                        R.layout.active_tab_item,
+                        parent,
+                        false
+                )
         )
     }
 
@@ -58,9 +58,9 @@ class ActiveTabsAdapter(
 
                 if (isEnabled) {
                     manageIndicatorsStatus(
-                        mActiveItems.contains(adapterPosition),
-                        tabImageButton,
-                        indicator
+                            mActiveItems.contains(adapterPosition),
+                            tabImageButton,
+                            indicator
                     )
                 } else {
                     indicator.apply {
@@ -68,25 +68,25 @@ class ActiveTabsAdapter(
                         drawable.alpha = ThemeHelper.getAlphaForAccent()
                     }
                     ThemeHelper.updateIconTint(
-                        tabImageButton,
-                        ThemeHelper.getAlphaAccent(context, ThemeHelper.getAlphaForAccent())
+                            tabImageButton,
+                            ThemeHelper.getAlphaAccent(context, ThemeHelper.getAlphaForAccent())
                     )
                 }
 
                 setOnClickListener {
 
                     manageIndicatorsStatus(
-                        indicator.visibility != View.VISIBLE,
-                        tabImageButton,
-                        indicator
+                            indicator.visibility != View.VISIBLE,
+                            tabImageButton,
+                            indicator
                     )
 
                     if (indicator.visibility != View.VISIBLE) mActiveItems.remove(
-                        adapterPosition
+                            adapterPosition
                     ) else mActiveItems.add(adapterPosition)
                     if (mActiveItems.size < 2) {
                         context.getString(R.string.active_fragments_pref_warning)
-                            .toToast(context)
+                                .toToast(context)
                         mActiveItems.add(adapterPosition)
                         manageIndicatorsStatus(true, tabImageButton, indicator)
                     }
@@ -96,9 +96,9 @@ class ActiveTabsAdapter(
     }
 
     private fun manageIndicatorsStatus(
-        condition: Boolean,
-        icon: ImageButton,
-        indicator: ImageView
+            condition: Boolean,
+            icon: ImageButton,
+            indicator: ImageView
     ) {
         when {
             condition -> {
@@ -108,8 +108,8 @@ class ActiveTabsAdapter(
             else -> {
                 indicator.handleViewVisibility(false)
                 ThemeHelper.updateIconTint(
-                    icon,
-                    ThemeHelper.getAlphaAccent(context, ThemeHelper.getAlphaForAccent())
+                        icon,
+                        ThemeHelper.getAlphaAccent(context, ThemeHelper.getAlphaForAccent())
                 )
             }
         }
