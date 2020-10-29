@@ -16,7 +16,8 @@ import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
 import android.support.v4.media.MediaMetadataCompat
-import android.support.v4.media.session.PlaybackStateCompat.*
+import android.support.v4.media.session.PlaybackStateCompat.ACTION_SEEK_TO
+import android.support.v4.media.session.PlaybackStateCompat.Builder
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.enums.LaunchedBy
@@ -62,9 +63,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private val mStateBuilder =
             Builder().apply {
-                if (VersioningHelper.isQ()) {
-                    setActions(ACTION_SEEK_TO)
-                }
+                setActions(ACTION_SEEK_TO)
             }
 
     lateinit var mediaPlayerInterface: MediaPlayerInterface
@@ -219,12 +218,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private fun updateMediaSessionMetaData() {
         val mediaMediaPlayerCompat = MediaMetadataCompat.Builder().apply {
-            if (VersioningHelper.isQ()) {
-                putLong(
-                        MediaMetadataCompat.METADATA_KEY_DURATION,
-                        currentSong.first?.duration!!
-                )
-            }
+            putLong(
+                    MediaMetadataCompat.METADATA_KEY_DURATION,
+                    currentSong.first?.duration!!
+            )
             putString(MediaMetadataCompat.METADATA_KEY_ARTIST, currentSong.first?.artist)
             putString(MediaMetadataCompat.METADATA_KEY_AUTHOR, currentSong.first?.artist)
             putString(MediaMetadataCompat.METADATA_KEY_COMPOSER, currentSong.first?.artist)
@@ -314,11 +311,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                         if (state == GoConstants.RESUMED) {
                             GoConstants.PLAYING
                         } else state,
-                        if (VersioningHelper.isQ()) {
-                            mediaPlayer.currentPosition.toLong()
-                        } else {
-                            PLAYBACK_POSITION_UNKNOWN
-                        },
+                        mediaPlayer.currentPosition.toLong(),
                         1F
                 ).build()
         )

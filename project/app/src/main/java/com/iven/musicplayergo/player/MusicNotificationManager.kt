@@ -61,7 +61,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
         val style = MediaStyle().setShowActionsInCompactView(1, 2, 3)
 
-        if (VersioningHelper.isQ()) style.setMediaSession(playerService.getMediaSession().sessionToken)
+        style.setMediaSession(playerService.getMediaSession().sessionToken)
 
         mNotificationBuilder
                 .setShowWhen(false)
