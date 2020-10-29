@@ -208,11 +208,13 @@ class MediaPlayerHolder :
     }
 
     fun pauseMediaPlayer() {
-        mediaPlayer.pause()
-        mPlayerService.stopForeground(false)
-        state = GoConstants.PAUSED
-        updatePlaybackStatus(true)
-        mMusicNotificationManager.pauseNotificationForeground()
+        if (isMediaPlayer) {
+            mediaPlayer.pause()
+            mPlayerService.stopForeground(false)
+            state = GoConstants.PAUSED
+            updatePlaybackStatus(true)
+            mMusicNotificationManager.pauseNotificationForeground()
+        }
     }
 
     fun repeatSong() {

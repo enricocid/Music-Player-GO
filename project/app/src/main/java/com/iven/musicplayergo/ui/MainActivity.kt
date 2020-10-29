@@ -670,7 +670,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onAppearanceChanged(isAccentChanged: Boolean, restoreSettings: Boolean) {
         sAppearanceChanged = true
-        synchronized(saveSongToPref()) { recreate() }
+        synchronized(saveSongToPref()) {
+            ThemeHelper.applyChanges(this)
+        }
     }
 
     private fun updatePlayingStatus(isNowPlaying: Boolean) {

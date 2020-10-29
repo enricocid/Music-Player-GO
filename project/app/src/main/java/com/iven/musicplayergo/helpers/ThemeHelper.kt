@@ -2,7 +2,9 @@ package com.iven.musicplayergo.helpers
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -21,6 +23,7 @@ import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.ColorUtils
+import androidx.core.os.bundleOf
 import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.iven.musicplayergo.GoConstants
@@ -29,9 +32,28 @@ import com.iven.musicplayergo.extensions.decodeColor
 import com.iven.musicplayergo.extensions.toSpanned
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.player.MediaPlayerHolder
+import com.iven.musicplayergo.ui.MainActivity
 
 
 object ThemeHelper {
+
+    @JvmStatic
+    fun applyChanges(activity: Activity) {
+        val intent = Intent(activity, MainActivity::class.java)
+
+        val bundle = bundleOf(Pair(GoConstants.RESTORE_SETTINGS_FRAGMENT, true))
+        intent.putExtras(bundle)
+        intent.addFlags(
+                Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        or Intent.FLAG_ACTIVITY_NEW_TASK
+        )
+        activity.apply {
+            finishAfterTransition()
+            startActivity(intent)
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+    }
 
     @JvmStatic
     fun getDefaultNightMode(context: Context) = when (goPreferences.theme) {
