@@ -83,3 +83,5 @@ If you think you should be listed, don't hesitate to notify me! :)
 - [**Xose M**](https://github.com/xmgz) for **Galego (Galician)** translations
 
 - [**1t3x**](https://github.com/1t3x) for **Romanian** translations
+
+- [**AimerNeige**](https://github.com/aimerneige) for **Chinese-Shimply & Chinese-Traditional Support** translations

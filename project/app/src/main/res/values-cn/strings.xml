@@ -4,14 +4,15 @@
     <string name="yes">是</string>
     <string name="no">没有</string>
     <string name="on_close_activity">您要停止播放吗？</string>
-    <string name="queue_songs_clear">队列将被清除。继续？</string>
-    <string name="loved_songs_clear">喜爱的歌曲将被清除。继续？</string>
+    <string name="queue_songs_clear">队列将被清除，继续？</string>
+    <string name="loved_songs_clear">喜爱的歌曲将被清除，继续？</string>
     <string name="loved_song_remove">%1s (%2s) 将从喜爱的歌曲中删除。继续？</string>
 
     <!-- Main - Fragments titles -->
-    <string name="artists">艺人</string>
+    <string name="artists">艺术家</string>
     <string name="songs">歌曲</string>
-    <string name="folders">资料夹</string>
+    <string name="albums">专辑</string>
+    <string name="folders">文件夹</string>
 
     <!-- Main - Artists/Folder RecyclerViews items  -->
     <string name="artist_info">%1d&#160;专辑,&#160;%2d&#160;歌曲</string>
@@ -40,7 +41,7 @@
     <!-- Messages - Errors -->
     <string name="error_no_loved_songs">找不到喜欢的歌曲！</string>
     <string name="error_no_music">找不到音乐 :(</string>
-    <string name="error_not_ready">加载音乐库时出现问题！ :( 这可能是由于SD卡已卸下，从而迫使Android的MediaStore重建其数据库记录。解决方案：请稍后再试。</string>
+    <string name="error_not_ready">加载音乐库时出现问题！ :( 这可能是由于SD卡已卸载，从而迫使Android的MediaStore重建其数据库记录。解决方案：请稍后再试。</string>
     <string name="error_unknown_unsupported">出问题了！ :( 可能不支持所选的格式，或者无法访问该文件夹（不是应用程序的错！）。</string>
     <string name="error_media_buttons">出问题了！ :( 请从应用程序重新开始播放。</string>
     <string name="error_no_browser">找不到浏览器！</string>
@@ -53,12 +54,12 @@
     <string name="perm_rationale">音乐播放器GO需要访问您的文件才能播放音乐！</string>
 
     <!-- Messages - Repeat -->
-    <string name="repeat_enabled">重复启用1x！</string>
-    <string name="repeat_loop_enabled">重复 &#8734; 已启用!</string>
-    <string name="repeat_disabled">重复 &#8734; 残障人士!</string>
+    <string name="repeat_enabled">循环一次！</string>
+    <string name="repeat_loop_enabled">无限循环！</string>
+    <string name="repeat_disabled">无限循环已禁用！</string>
 
     <!-- Preferences - Categories -->
-    <string name="settings">设定值</string>
+    <string name="settings">设定</string>
     <string name="category_general">一般</string>
 
     <!-- Preferences - Git page -->
@@ -72,21 +73,21 @@
     <string name="found_songs_pref_title">找到的歌曲: %1d</string>
 
     <!-- Preferences - Themes -->
-    <string name="theme_pref_title">主题</string>
-    <string name="theme_pref_light_title">光</string>
-    <string name="theme_pref_dark_title">暗</string>
+    <string name="theme_pref_title">主题色调</string>
+    <string name="theme_pref_light_title">浅色</string>
+    <string name="theme_pref_dark_title">深色</string>
     <string name="theme_pref_auto_title">自动</string>
 
     <!-- Preferences - Accent -->
-    <string name="accent_pref_title">口音</string>
+    <string name="accent_pref_title">强调色</string>
 
     <!-- Preferences - Edge-to-edge -->
     <string name="edge_pref_summary_on">禁用边缘到边缘</string>
     <string name="edge_pref_summary_off">启用边缘到边缘</string>
 
     <!-- Preferences - Active tabs -->
-    <string name="active_fragments_pref_title">活动标签</string>
-    <string name="active_fragments_pref_warning">您不能只删除所有标签！ :P</string>
+    <string name="active_fragments_pref_title">标签管理</string>
+    <string name="active_fragments_pref_warning">您不能删除所有标签！ :P</string>
 
     <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">精确的音量控制</string>
@@ -104,5 +105,5 @@
     <string name="headset_pref_summary_off">启用耳机插头管理</string>
 
     <!-- Preferences - Filters -->
-    <string name="filter_pref_title">筛选器</string>
+    <string name="filter_pref_title">过滤器</string>
 </resources>
