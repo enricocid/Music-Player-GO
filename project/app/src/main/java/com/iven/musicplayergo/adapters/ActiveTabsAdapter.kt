@@ -18,7 +18,7 @@ class ActiveTabsAdapter(
 ) :
         RecyclerView.Adapter<ActiveTabsAdapter.CheckableItemsHolder>() {
 
-    private val mAvailableItems = goPreferences.prefsActiveFragmentsDefault
+    private val mAvailableItems = goPreferences.prefsActiveFragmentsDef
     private val mActiveItems = goPreferences.activeFragments.toMutableList()
 
     fun getUpdatedItems(): Set<Int> {

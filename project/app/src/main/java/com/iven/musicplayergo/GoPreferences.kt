@@ -4,7 +4,8 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import com.iven.musicplayergo.enums.SortingOptions
+import com.iven.musicplayergo.enums.SongsVisualOpts
+import com.iven.musicplayergo.enums.SortingOpts
 import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.models.SavedMusic
 import java.lang.reflect.Type
@@ -16,19 +17,22 @@ class GoPreferences(context: Context) {
     private val prefsLovedSongs = context.getString(R.string.loved_songs_pref)
 
     private val prefsTheme = context.getString(R.string.theme_pref)
-    private val prefsThemeDefault = context.getString(R.string.theme_pref_light)
+    private val prefsThemeDef = context.getString(R.string.theme_pref_light)
     private val prefsAccent = context.getString(R.string.accent_pref)
     private val prefsEdgeToEdge = context.getString(R.string.edge_pref)
 
-    private val prefSongsSorting = context.getString(R.string.sort_pref)
-    private val prefsSongSortingDefault = SortingOptions.ASCENDING_SORTING.ordinal.toString()
-
     private val prefsActiveFragments = context.getString(R.string.active_fragments_pref)
-    val prefsActiveFragmentsDefault = setOf(0, 1, 2, 3, 4)
+    val prefsActiveFragmentsDef = setOf(0, 1, 2, 3, 4)
 
     private val prefsArtistsSorting = context.getString(R.string.artists_sorting_pref)
     private val prefsFoldersSorting = context.getString(R.string.folders_sorting_pref)
     private val prefsAlbumsSorting = context.getString(R.string.albums_sorting_pref)
+
+    private val prefSongsVisual = context.getString(R.string.song_visual_pref)
+    private val prefsSongVisualDef = SongsVisualOpts.TITLE.ordinal.toString()
+
+    private val prefSongsSorting = context.getString(R.string.sort_pref)
+    private val prefsSongSortingDef = SortingOpts.ASCENDING_SORTING.ordinal.toString()
 
     private val prefsPreciseVolume = context.getString(R.string.precise_volume_pref)
     private val prefsFocus = context.getString(R.string.focus_pref)
@@ -67,7 +71,7 @@ class GoPreferences(context: Context) {
         set(value) = putObject(prefsLovedSongs, value)
 
     var theme
-        get() = mPrefs.getString(prefsTheme, prefsThemeDefault)
+        get() = mPrefs.getString(prefsTheme, prefsThemeDef)
         set(value) = mPrefs.edit().putString(prefsTheme, value).apply()
 
     var accent
@@ -82,30 +86,41 @@ class GoPreferences(context: Context) {
         set(value) = mPrefs.edit().putBoolean(prefsEdgeToEdge, value).apply()
 
     var activeFragments: Set<Int>
-        get() = getObject(prefsActiveFragments, typeActiveFragments) ?: prefsActiveFragmentsDefault
+        get() = getObject(prefsActiveFragments, typeActiveFragments) ?: prefsActiveFragmentsDef
         set(value) = putObject(prefsActiveFragments, value)
 
-    var artistsSorting
-        get() = mPrefs.getInt(prefsArtistsSorting, SortingOptions.DESCENDING_SORTING.ordinal)
-        set(value) = mPrefs.edit().putInt(prefsArtistsSorting, value).apply()
+    var songsVisualization
+        get() = getSongVisualization()
+        set(value) = mPrefs.edit().putString(prefSongsVisual, value.ordinal.toString()).apply()
+
+    private fun getSongVisualization(): SongsVisualOpts {
+        mPrefs.getString(prefSongsVisual, prefsSongVisualDef)?.let {
+            return SongsVisualOpts.values()[Integer.parseInt(it)]
+        }
+        return SongsVisualOpts.FILE_NAME
+    }
 
     var songsSorting
         get() = getSongSorting()
         set(value) = mPrefs.edit().putString(prefSongsSorting, value.ordinal.toString()).apply()
 
-    private fun getSongSorting(): SortingOptions {
-        mPrefs.getString(prefSongsSorting, prefsSongSortingDefault)?.let {
-            return SortingOptions.values()[Integer.parseInt(it)]
+    private fun getSongSorting(): SortingOpts {
+        mPrefs.getString(prefSongsSorting, prefsSongSortingDef)?.let {
+            return SortingOpts.values()[Integer.parseInt(it)]
         }
-        return SortingOptions.ASCENDING_SORTING
+        return SortingOpts.ASCENDING_SORTING
     }
 
+    var artistsSorting
+        get() = mPrefs.getInt(prefsArtistsSorting, SortingOpts.DESCENDING_SORTING.ordinal)
+        set(value) = mPrefs.edit().putInt(prefsArtistsSorting, value).apply()
+
     var foldersSorting
-        get() = mPrefs.getInt(prefsFoldersSorting, SortingOptions.DEFAULT_SORTING.ordinal)
+        get() = mPrefs.getInt(prefsFoldersSorting, SortingOpts.DEFAULT_SORTING.ordinal)
         set(value) = mPrefs.edit().putInt(prefsFoldersSorting, value).apply()
 
     var albumsSorting
-        get() = mPrefs.getInt(prefsAlbumsSorting, SortingOptions.DEFAULT_SORTING.ordinal)
+        get() = mPrefs.getInt(prefsAlbumsSorting, SortingOpts.DEFAULT_SORTING.ordinal)
         set(value) = mPrefs.edit().putInt(prefsAlbumsSorting, value).apply()
 
     var filters: Set<String>?

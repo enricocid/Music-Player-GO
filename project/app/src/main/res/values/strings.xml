@@ -92,6 +92,11 @@
     <string name="sort_pref_track_title">Track</string>
     <string name="sort_pref_track_inverted_title">Inverted track</string>
 
+    <!-- Preferences - Song visualization options (tl = title, fn = full name) -->
+    <string name="song_visual_pref_title">Songs visualization</string>
+    <string name="song_visual_pref_tl_title">Title</string>
+    <string name="song_visual_pref_fn_title">File name</string>
+
     <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">Active tabs</string>
     <string name="active_fragments_pref_warning">You can\'t just remove all the tabs! :P</string>

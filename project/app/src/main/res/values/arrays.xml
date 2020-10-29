@@ -14,19 +14,31 @@
         <item>@string/theme_pref_auto</item>
     </string-array>
 
-    <string-array name="albumSorting">
+    <integer name="song_visualization_default">0</integer>
+
+    <string-array name="songVisualizationArray">
+        <item>@string/song_visual_pref_title</item>
+        <item>@string/song_visual_pref_fn_title</item>
+    </string-array>
+
+    <string-array name="songVisualizationEntryArray">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <integer name="sort_default">2</integer>
+
+    <string-array name="albumSortingArray">
         <item>@string/sort_pref_ascending_title</item>
         <item>@string/sort_pref_descending_title</item>
         <item>@string/sort_pref_track_title</item>
         <item>@string/sort_pref_track_inverted_title</item>
     </string-array>
 
-    <integer name="sort_default">3</integer>
-
-    <string-array name="albumSortingEntry">
+    <string-array name="albumSortingEntryArray">
+        <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
-        <item>4</item>
     </string-array>
 </resources>

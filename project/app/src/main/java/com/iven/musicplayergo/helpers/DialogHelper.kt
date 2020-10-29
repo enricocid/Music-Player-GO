@@ -62,7 +62,7 @@ object DialogHelper {
 
         recyclerView.addBidirectionalSwipeHandler(true) { viewHolder: RecyclerView.ViewHolder,
                                                           _: Int ->
-              mediaPlayerHolder.apply {
+            mediaPlayerHolder.apply {
                 queueSongs.removeAt(viewHolder.adapterPosition)
                 queueAdapter.swapQueueSongs(queueSongs)
                 if (queueSongs.isEmpty()) {

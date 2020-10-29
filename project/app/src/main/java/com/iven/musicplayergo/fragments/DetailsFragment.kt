@@ -20,7 +20,8 @@ import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentDetailsBinding
 import com.iven.musicplayergo.enums.LaunchedBy
-import com.iven.musicplayergo.enums.SortingOptions
+import com.iven.musicplayergo.enums.SongsVisualOpts
+import com.iven.musicplayergo.enums.SortingOpts
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
@@ -70,6 +71,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private val sLaunchedByArtistView: Boolean get() = launchedBy == LaunchedBy.ArtistView
     private val sLaunchedByFolderView: Boolean get() = launchedBy == LaunchedBy.FolderView
+
+    private val sIsFileNameSongs: Boolean get() = goPreferences.songsVisualization == SongsVisualOpts.FILE_NAME
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -251,12 +254,19 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                 withItem<Music, GenericViewHolder>(R.layout.generic_item) {
                     onBind(::GenericViewHolder) { _, item ->
+
+                        val displayedTitle = if (sIsFileNameSongs) {
+                            item.displayName
+                        } else {
+                            getString(
+                                    R.string.track_song,
+                                    item.track.toFormattedTrack(),
+                                    item.title
+                            ).toSpanned()
+                        }
+
                         // GenericViewHolder is `this` here
-                        title.text = getString(
-                                R.string.track_song,
-                                item.track.toFormattedTrack(),
-                                item.title
-                        ).toSpanned()
+                        title.text = displayedTitle
                         subtitle.text = item.duration.toFormattedDuration(
                                 isAlbum = false,
                                 isSeekBar = false
@@ -414,18 +424,18 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             mSelectedAlbum?.music,
                             launchedBy
                     )
-                    R.id.default_sorting -> applySortingToMusic(SortingOptions.DEFAULT_SORTING)
-                    R.id.descending_sorting -> applySortingToMusic(SortingOptions.DESCENDING_SORTING)
-                    R.id.ascending_sorting -> applySortingToMusic(SortingOptions.ASCENDING_SORTING)
-                    R.id.track_sorting -> applySortingToMusic(SortingOptions.TRACK_SORTING)
-                    R.id.track_sorting_inv -> applySortingToMusic(SortingOptions.TRACK_SORTING_INVERTED)
+                    R.id.default_sorting -> applySortingToMusic(SortingOpts.DEFAULT_SORTING)
+                    R.id.descending_sorting -> applySortingToMusic(SortingOpts.DESCENDING_SORTING)
+                    R.id.ascending_sorting -> applySortingToMusic(SortingOpts.ASCENDING_SORTING)
+                    R.id.track_sorting -> applySortingToMusic(SortingOpts.TRACK_SORTING)
+                    R.id.track_sorting_inv -> applySortingToMusic(SortingOpts.TRACK_SORTING_INVERTED)
                 }
                 return@setOnMenuItemClickListener true
             }
         }
     }
 
-    private fun applySortingToMusic(order: SortingOptions) {
+    private fun applySortingToMusic(order: SortingOpts) {
         mSongsList = if (launchedBy == LaunchedBy.FolderView) {
             val selectedList = mMusicRepository.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
             ListsHelper.getSortedMusicList(

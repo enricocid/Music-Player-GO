@@ -17,7 +17,7 @@ import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentMusicContainerListBinding
 import com.iven.musicplayergo.enums.LaunchedBy
-import com.iven.musicplayergo.enums.SortingOptions
+import com.iven.musicplayergo.enums.SortingOpts
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.extensions.setTitleColor
@@ -50,10 +50,10 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     private lateinit var mUIControlInterface: UIControlInterface
 
     private lateinit var mSortMenuItem: MenuItem
-    private var mSorting = SortingOptions.DESCENDING_SORTING
+    private var mSorting = SortingOpts.DESCENDING_SORTING
 
     private var sIsFastScroller = false
-    private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != SortingOptions.DEFAULT_SORTING
+    private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != SortingOpts.DEFAULT_SORTING
     private var sLandscape = false
 
     override fun onAttach(context: Context) {
@@ -77,7 +77,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
         mMusicContainerListBinding = FragmentMusicContainerListBinding.bind(view)
 
-        mSorting = SortingOptions.values()[getSortingMethodFromPrefs()]
+        mSorting = SortingOpts.values()[getSortingMethodFromPrefs()]
 
         mMusicRepository = MusicRepository.getInstance()
 
@@ -325,7 +325,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
             if (it.itemId != R.id.action_search) {
 
-                mSorting = SortingOptions.values().get(it.order)
+                mSorting = SortingOpts.values().get(it.order)
 
                 mList = getSortedItemKeys()
 
@@ -353,7 +353,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
         }
     }
 
-    private fun saveSortingMethodToPrefs(sortingMethod: SortingOptions) {
+    private fun saveSortingMethodToPrefs(sortingMethod: SortingOpts) {
         when (launchedBy) {
             LaunchedBy.ArtistView ->
                 goPreferences.artistsSorting = sortingMethod.ordinal

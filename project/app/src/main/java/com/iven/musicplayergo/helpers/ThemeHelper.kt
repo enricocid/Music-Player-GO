@@ -28,7 +28,7 @@ import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.enums.SortingOptions
+import com.iven.musicplayergo.enums.SortingOpts
 import com.iven.musicplayergo.extensions.decodeColor
 import com.iven.musicplayergo.extensions.toSpanned
 import com.iven.musicplayergo.goPreferences
@@ -74,10 +74,10 @@ object ThemeHelper {
         else -> R.drawable.ic_night
     }
 
-    fun resolveSortAlbumSongsIcon(sort: SortingOptions) = when (sort) {
-        SortingOptions.ASCENDING_SORTING -> R.drawable.ic_sort_alphabetical_descending
-        SortingOptions.DESCENDING_SORTING -> R.drawable.ic_sort_alphabetical_ascending
-        SortingOptions.TRACK_SORTING -> R.drawable.ic_sort_numeric_descending
+    fun resolveSortAlbumSongsIcon(sort: SortingOpts) = when (sort) {
+        SortingOpts.ASCENDING_SORTING -> R.drawable.ic_sort_alphabetical_descending
+        SortingOpts.DESCENDING_SORTING -> R.drawable.ic_sort_alphabetical_ascending
+        SortingOpts.TRACK_SORTING -> R.drawable.ic_sort_numeric_descending
         else -> R.drawable.ic_sort_numeric_ascending
     }
 

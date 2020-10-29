@@ -70,10 +70,19 @@
         app:title="@string/category_general">
 
         <ListPreference
+            android:defaultValue="@integer/song_visualization_default"
+            app:dialogTitle="@string/song_visual_pref_title"
+            app:entries="@array/songVisualizationArray"
+            app:entryValues="@array/songVisualizationEntryArray"
+            app:key="@string/song_visual_pref"
+            app:title="@string/song_visual_pref_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
             android:defaultValue="@integer/sort_default"
             app:dialogTitle="@string/sort_pref_title"
-            app:entries="@array/albumSorting"
-            app:entryValues="@array/albumSortingEntry"
+            app:entries="@array/albumSortingArray"
+            app:entryValues="@array/albumSortingEntryArray"
             app:key="@string/sort_pref"
             app:title="@string/sort_pref_title"
             app:useSimpleSummaryProvider="true" />

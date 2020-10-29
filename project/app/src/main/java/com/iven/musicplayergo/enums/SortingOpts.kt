@@ -1,6 +1,6 @@
 package com.iven.musicplayergo.enums
 
-enum class SortingOptions {
+enum class SortingOpts {
     DEFAULT_SORTING,
     ASCENDING_SORTING,
     DESCENDING_SORTING,
