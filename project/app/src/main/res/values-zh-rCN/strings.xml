@@ -1,8 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- Dialogs / Buttons -->
     <string name="yes">是</string>
-    <string name="no">没有</string>
+    <string name="no">否</string>
     <string name="on_close_activity">您要停止播放吗？</string>
     <string name="queue_songs_clear">队列将被清除，继续？</string>
     <string name="loved_songs_clear">喜爱的歌曲将被清除，继续？</string>
@@ -32,7 +32,7 @@
     <!-- Queue -->
     <string name="queue">队列</string>
     <string name="queue_song_add">%1s 已加入队列！</string>
-    <string name="queue_song_remove">%1s 将从队列中删除。继续？</string>
+    <string name="queue_song_remove">%1s 将从队列中删除，继续？</string>
 
     <!-- Loved songs -->
     <string name="loved_songs">喜爱的歌曲</string>
@@ -59,7 +59,7 @@
     <string name="repeat_disabled">无限循环已禁用！</string>
 
     <!-- Preferences - Categories -->
-    <string name="settings">设定</string>
+    <string name="settings">设置</string>
     <string name="category_general">一般</string>
 
     <!-- Preferences - Git page -->
