@@ -69,6 +69,15 @@
         app:layout="@layout/custom_preference_category"
         app:title="@string/category_general">
 
+        <ListPreference
+            android:defaultValue="@integer/sort_default"
+            app:dialogTitle="@string/sort_pref_title"
+            app:entries="@array/albumSorting"
+            app:entryValues="@array/albumSortingEntry"
+            app:key="@string/sort_pref"
+            app:title="@string/sort_pref_title"
+            app:useSimpleSummaryProvider="true" />
+
         <SwitchPreferenceCompat
             android:summaryOff="@string/precise_volume_pref_summary_off"
             app:defaultValue="true"

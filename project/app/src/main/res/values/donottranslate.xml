@@ -48,10 +48,18 @@
     <string name="headset_pref">headsets_pref</string>
     <string name="filter_pref">filter_pref</string>
 
-    <!-- Other preferences keys -->
+    <!-- Sorting -->
+    <string name="sort_pref">sort_pref</string>
+    <string name="sort_pref_descending">sort_pref_descending</string>
+    <string name="sort_pref_ascending">sort_pref_ascending</string>
+    <string name="sort_pref_track">sort_pref_track</string>
+    <string name="sort_pref_track_inverted">sort_pref_track_inverted</string>
+
     <string name="artists_sorting_pref">artists_sorting_pref</string>
     <string name="albums_sorting_pref">albums_sorting_pref</string>
     <string name="folders_sorting_pref">folders_sorting_pref</string>
+
+    <!-- Other preferences keys -->
     <string name="latest_played_song_pref">restore_song_pref</string>
     <string name="loved_songs_pref">bookmarked_songs_pref</string>
     <string name="latest_volume_pref">latest_volume_pref</string>

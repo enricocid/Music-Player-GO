@@ -16,12 +16,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
-import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentDetailsBinding
 import com.iven.musicplayergo.enums.LaunchedBy
+import com.iven.musicplayergo.enums.SortingOptions
 import com.iven.musicplayergo.extensions.*
+import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.MusicOrgHelper
@@ -64,7 +65,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private var sLandscape = false
 
-    private var mSongsSorting = GoConstants.TRACK_SORTING
+    private var mSongsSorting = goPreferences.songsSorting
 
     private val sLaunchedByArtistView: Boolean get() = launchedBy == LaunchedBy.ArtistView
     private val sLaunchedByFolderView: Boolean get() = launchedBy == LaunchedBy.FolderView
@@ -224,9 +225,15 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
         setSongsDataSource(
                 if (sLaunchedByArtistView) {
-                    mSelectedAlbum?.music
+                    ListsHelper.getSortedMusicList(
+                            mSongsSorting,
+                            mSelectedAlbum?.music
+                    )
                 } else {
-                    mSongsList
+                    ListsHelper.getSortedMusicList(
+                            mSongsSorting,
+                            mSongsList?.toMutableList()
+                    )
                 }
         )
 
@@ -293,6 +300,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             }
         }
 
+        updateSortingButton()
+
         if (sLaunchedByArtistView) {
             mDetailsFragmentBinding.sortButton.apply {
                 setOnClickListener {
@@ -317,6 +326,14 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
     }
 
+    private fun updateSortingButton() {
+        mDetailsFragmentBinding.sortButton.setImageResource(
+                ThemeHelper.resolveSortAlbumSongsIcon(
+                        mSongsSorting
+                )
+        )
+    }
+
     private fun setAlbumsDataSource(albumsList: List<Album>?) {
         albumsList?.apply {
             mSelectedAlbumsDataSource.set(this)
@@ -339,6 +356,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         }
                 )
             }
+            updateSortingButton()
             mDetailsFragmentBinding.detailsToolbar.menu.findItem(R.id.action_shuffle_sa).isEnabled =
                     mSelectedAlbum?.music?.size!! >= 2
         }
@@ -395,23 +413,30 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             mSelectedAlbum?.music,
                             launchedBy
                     )
-                    R.id.default_sorting -> applySortingToMusic(GoConstants.DEFAULT_SORTING)
-                    R.id.descending_sorting -> applySortingToMusic(GoConstants.DESCENDING_SORTING)
-                    R.id.ascending_sorting -> applySortingToMusic(GoConstants.ASCENDING_SORTING)
-                    R.id.track_sorting -> applySortingToMusic(GoConstants.TRACK_SORTING)
-                    R.id.track_sorting_inv -> applySortingToMusic(GoConstants.TRACK_SORTING_INVERTED)
+                    R.id.default_sorting -> applySortingToMusic(SortingOptions.DEFAULT_SORTING)
+                    R.id.descending_sorting -> applySortingToMusic(SortingOptions.DESCENDING_SORTING)
+                    R.id.ascending_sorting -> applySortingToMusic(SortingOptions.ASCENDING_SORTING)
+                    R.id.track_sorting -> applySortingToMusic(SortingOptions.TRACK_SORTING)
+                    R.id.track_sorting_inv -> applySortingToMusic(SortingOptions.TRACK_SORTING_INVERTED)
                 }
                 return@setOnMenuItemClickListener true
             }
         }
     }
 
-    private fun applySortingToMusic(order: Int) {
-        val selectedList = mMusicRepository.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
-        mSongsList = ListsHelper.getSortedMusicList(
-                order,
-                selectedList?.toMutableList()
-        )
+    private fun applySortingToMusic(order: SortingOptions) {
+        mSongsList = if (launchedBy == LaunchedBy.FolderView) {
+            val selectedList = mMusicRepository.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
+            ListsHelper.getSortedMusicList(
+                    order,
+                    selectedList?.toMutableList()
+            )
+        } else {
+            ListsHelper.getSortedMusicList(
+                    order,
+                    mSongsList?.toMutableList()
+            )
+        }
         setSongsDataSource(mSongsList)
     }
 
@@ -534,7 +559,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     }
 
     private fun swapAlbum(songs: MutableList<Music>?) {
-        mSongsSorting = GoConstants.TRACK_SORTING
+        mSongsSorting = goPreferences.songsSorting
         mDetailsFragmentBinding.sortButton.setImageResource(
                 ThemeHelper.resolveSortAlbumSongsIcon(
                         mSongsSorting
