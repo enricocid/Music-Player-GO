@@ -4,7 +4,6 @@ import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.media.AudioManager
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.goPreferences
@@ -17,18 +16,6 @@ class NotificationReceiver(
         private val playerService: PlayerService,
         private val mediaPlayerHolder: MediaPlayerHolder
 ) : BroadcastReceiver() {
-
-    fun createIntentFilter(): IntentFilter = IntentFilter().apply {
-        addAction(GoConstants.REPEAT_ACTION)
-        addAction(GoConstants.PREV_ACTION)
-        addAction(GoConstants.PLAY_PAUSE_ACTION)
-        addAction(GoConstants.NEXT_ACTION)
-        addAction(GoConstants.CLOSE_ACTION)
-        addAction(BluetoothDevice.ACTION_ACL_CONNECTED)
-        addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED)
-        addAction(Intent.ACTION_HEADSET_PLUG)
-        addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
-    }
 
     override fun onReceive(context: Context?, intent: Intent?) {
 

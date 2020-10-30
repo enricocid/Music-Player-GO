@@ -325,7 +325,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
             if (it.itemId != R.id.action_search) {
 
-                mSorting = SortingOpts.values().get(it.order)
+                mSorting = SortingOpts.values()[it.order]
 
                 mList = getSortedItemKeys()
 

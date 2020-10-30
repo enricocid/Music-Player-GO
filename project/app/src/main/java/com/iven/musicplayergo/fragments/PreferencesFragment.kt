@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -166,6 +167,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         }
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
     private fun openCustomTab(link: String) {
         val customTabsIntent = CustomTabsIntent.Builder()
                 .addDefaultShareMenuItem()

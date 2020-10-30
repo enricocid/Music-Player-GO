@@ -6,7 +6,7 @@
     <string name="on_close_activity">کیا آپ پلے بیک کو روکنا چاہتے ہیں؟</string>
     <string name="queue_songs_clear">قطار صاف ہو جائے گی۔ جاری رہے؟</string>
     <string name="loved_songs_clear">پیارے گانے صاف ہوجائیں گے۔ جاری رہے؟</string>
-    <string name="loved_song_remove">٪1s (٪2s) کو پیارے گانوں سے حذف کردیا جائے گا۔ جاری رہے؟</string>
+    <string name="loved_song_remove">%1s (%2s) کو پیارے گانوں سے حذف کردیا جائے گا۔ جاری رہے؟</string>
 
     <!-- Main - Fragments titles -->
     <string name="artists">فنکار</string>
@@ -31,11 +31,11 @@
     <!-- Queue -->
     <string name="queue">قطار</string>
     <string name="queue_song_add">%1s قطار میں کا اضافہ ہوا!</string>
-    <string name="queue_song_remove">٪1s کو قطار سے حذف کردیا جائے گا۔ جاری رہے؟</string>
+    <string name="queue_song_remove">%1s کو قطار سے حذف کردیا جائے گا۔ جاری رہے؟</string>
 
     <!-- Loved songs -->
     <string name="loved_songs">پیارے گانے</string>
-    <string name="loved_song_added">٪1s (٪2s) نے پسندیدہ گانوں میں اضافہ کیا</string>
+    <string name="loved_song_added">%1s (%2s) نے پسندیدہ گانوں میں اضافہ کیا</string>
 
     <!-- Messages - Errors -->
     <string name="error_no_loved_songs">کوئی پیارا گانا نہیں ملا!</string>

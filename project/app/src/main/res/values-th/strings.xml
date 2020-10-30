@@ -30,7 +30,7 @@
 
     <!-- Queue -->
     <string name="queue">คิว</string>
-    <string name="queue_song_add">%1 เพิ่มลงในคิวแล้ว!!</string>
+    <string name="queue_song_add">%1s เพิ่มลงในคิวแล้ว!!</string>
     <string name="queue_song_remove">%1s จะถูกลบออกจากคิว ต่อหรือไม่?</string>
 
     <!-- Loved songs -->

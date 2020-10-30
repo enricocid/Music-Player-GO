@@ -21,7 +21,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
@@ -132,7 +131,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mMediaPlayerHolder.mediaPlayerInterface = mMediaPlayerInterface
 
             mMusicRepository = MusicRepository.getInstance()
-            mMusicViewModel.deviceMusic.observe(this@MainActivity, Observer { returnedMusic ->
+            mMusicViewModel.deviceMusic.observe(this@MainActivity, { returnedMusic ->
                 finishSetup(returnedMusic)
             })
             mMusicViewModel.getDeviceMusic()
