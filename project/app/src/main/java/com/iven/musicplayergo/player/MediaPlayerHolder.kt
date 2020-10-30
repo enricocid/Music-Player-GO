@@ -173,7 +173,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             sNotificationForeground = true
         } else {
             mMusicNotificationManager.apply {
-                updateNotificationText()
+                updateNotificationContent()
                 updatePlayPauseAction()
                 updateRepeatIcon()
                 updateNotification()
@@ -260,6 +260,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun onPauseSeekBarCallback() {
         stopUpdatingCallbackWithPosition()
+    }
+
+    fun onCoversPrefChanged() {
+        mMusicNotificationManager.onCoverPrefChanged()
     }
 
     fun tryToGetAudioFocus() {

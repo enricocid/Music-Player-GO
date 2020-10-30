@@ -105,8 +105,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         }
 
         findPreference<Preference>(getString(R.string.accent_pref))?.apply {
-            summary =
-                    ThemeHelper.getAccentName(goPreferences.accent, requireContext())
+            summary = ThemeHelper.getAccentName(goPreferences.accent, requireContext())
             onPreferenceClickListener = this@PreferencesFragment
         }
 
@@ -163,6 +162,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 )
             }
             getString(R.string.focus_pref) -> mUIControlInterface.onHandleFocusPref()
+            getString(R.string.covers_pref) -> mUIControlInterface.onHandleCoversPref()
         }
     }
 

@@ -24,12 +24,14 @@ class GoPreferences(context: Context) {
     private val prefsActiveFragments = context.getString(R.string.active_fragments_pref)
     val prefsActiveFragmentsDef = setOf(0, 1, 2, 3, 4)
 
-    private val prefsArtistsSorting = context.getString(R.string.artists_sorting_pref)
-    private val prefsFoldersSorting = context.getString(R.string.folders_sorting_pref)
-    private val prefsAlbumsSorting = context.getString(R.string.albums_sorting_pref)
+    private val prefsCover = context.getString(R.string.covers_pref)
 
     private val prefSongsVisual = context.getString(R.string.song_visual_pref)
     private val prefsSongVisualDef = SongsVisualOpts.TITLE.ordinal.toString()
+
+    private val prefsArtistsSorting = context.getString(R.string.artists_sorting_pref)
+    private val prefsFoldersSorting = context.getString(R.string.folders_sorting_pref)
+    private val prefsAlbumsSorting = context.getString(R.string.albums_sorting_pref)
 
     private val prefSongsSorting = context.getString(R.string.sort_pref)
     private val prefsSongSortingDef = SortingOpts.ASCENDING_SORTING.ordinal.toString()
@@ -88,6 +90,10 @@ class GoPreferences(context: Context) {
     var activeFragments: Set<Int>
         get() = getObject(prefsActiveFragments, typeActiveFragments) ?: prefsActiveFragmentsDef
         set(value) = putObject(prefsActiveFragments, value)
+
+    var isCovers: Boolean
+        get() = mPrefs.getBoolean(prefsCover, false)
+        set(value) = mPrefs.edit().putBoolean(prefsCover, value).apply()
 
     var songsVisualization
         get() = getSongVisualization()

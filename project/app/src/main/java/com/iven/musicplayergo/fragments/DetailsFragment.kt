@@ -2,6 +2,9 @@ package com.iven.musicplayergo.fragments
 
 import android.animation.Animator
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -64,6 +67,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private lateinit var mUIControlInterface: UIControlInterface
 
     private var mSelectedAlbum: Album? = null
+    private lateinit var mDefaultCover: Bitmap
 
     private var sLandscape = false
 
@@ -166,6 +170,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
 
         sLandscape = ThemeHelper.isDeviceLand(requireContext().resources)
+
+        if (goPreferences.isCovers) {
+            mDefaultCover = BitmapFactory.decodeResource(resources, R.drawable.default_cover)
+        }
 
         mDetailsFragmentBinding.detailsToolbar.apply {
 
@@ -491,33 +499,36 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
         mDetailsFragmentBinding.albumsRv.apply {
 
+            setHasFixedSize(true)
+            setItemViewCacheSize(25)
+            setRecycledViewPool(RecyclerView.RecycledViewPool())
+
             setup {
 
                 withDataSource(mSelectedAlbumsDataSource)
 
-                mAlbumsRecyclerViewLayoutManager = LinearLayoutManager(
-                        context,
-                        if (sLandscape) {
-                            LinearLayoutManager.VERTICAL
-                        } else {
-                            LinearLayoutManager.HORIZONTAL
-                        },
-                        false
-                )
-                withLayoutManager(mAlbumsRecyclerViewLayoutManager)
+                mAlbumsRecyclerViewLayoutManager = layoutManager as LinearLayoutManager
 
                 withItem<Album, AlbumsViewHolder>(R.layout.album_item) {
 
                     onBind(::AlbumsViewHolder) { _, item ->
                         // AlbumsViewHolder is `this` here
-                        itemView.background.alpha = 35
+
+                        if (goPreferences.isCovers) {
+                            imageView.loadCover(item.music?.get(0), mDefaultCover, false)
+                        }
+
                         album.text = item.title
-                        year.text = item.year
-                        totalDuration.text = item.totalDuration.toFormattedDuration(
-                                isAlbum = true,
-                                isSeekBar = false
-                        )
-                        checkbox.handleViewVisibility(mSelectedAlbum?.title == item.title)
+                        val color =
+                                ThemeHelper.resolveColorAttr(context, android.R.attr.textColorPrimary)
+                        val selectedColor = if (mSelectedAlbum?.title == item.title) {
+                            album.setShadowLayer(0.25F, 0F, 0F, Color.BLACK)
+                            ThemeHelper.resolveThemeAccent(context)
+                        } else {
+                            album.setShadowLayer(0F, 0F, 0F, Color.TRANSPARENT)
+                            color
+                        }
+                        album.setTextColor(selectedColor)
                     }
 
                     onClick { index ->

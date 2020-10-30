@@ -11,9 +11,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:baselineAligned="false"
+        android:layout_marginBottom="16dp"
         android:orientation="horizontal">
 
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="@dimen/cover_dim"
+            android:layout_height="@dimen/cover_dim"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="4dp"
+            android:id="@+id/np_cover"
+            android:src="@drawable/default_cover"
+            tools:ignore="ContentDescription" />
+
         <LinearLayout
+            android:layout_gravity="center"
+            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"

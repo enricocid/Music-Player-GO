@@ -6,12 +6,15 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
 import android.view.View
 import android.widget.SeekBar
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -92,6 +95,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mNowPlayingBinding: NowPlayingBinding
     private lateinit var mNowPlayingControlsBinding: NowPlayingControlsBinding
     private lateinit var mNowPlayingExtendedControlsBinding: NowPlayingExtendedControlsBinding
+
+    private lateinit var mDefaultCover: Bitmap
 
     // Music player things
     private lateinit var mQueueDialog: MaterialDialog
@@ -231,6 +236,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         mMainActivityBinding = MainActivityBinding.inflate(layoutInflater)
         mPlayerControlsPanelBinding = PlayerControlsPanelBinding.bind(mMainActivityBinding.root)
+
+        mDefaultCover = BitmapFactory.decodeResource(resources, R.drawable.default_cover)
 
         setContentView(mMainActivityBinding.root)
 
@@ -513,6 +520,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 })
     }
 
+    private fun setCovers() {
+        if (goPreferences.isCovers) {
+            if (!ThemeHelper.isDeviceLand(resources)) {
+                mNowPlayingBinding.npArtistAlbum.textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
+                mNowPlayingBinding.npSong.textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
+            }
+            mNowPlayingBinding.npCover.loadCover(mMediaPlayerHolder.currentSong.first, mDefaultCover, true)
+        } else {
+            mNowPlayingBinding.npCover.handleViewVisibility(false)
+        }
+    }
+
     private fun setupPreciseVolumeHandler() {
 
         mMediaPlayerHolder.currentVolumeInPercent.apply {
@@ -582,6 +601,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mNowPlayingControlsBinding.npPlay.setOnClickListener { resumeOrPause() }
 
                 mNowPlayingControlsBinding.npSkipNext.setOnClickListener { skip(true) }
+
+                setCovers()
 
                 mNowPlayingControlsBinding.npRepeat.setImageResource(
                         ThemeHelper.getRepeatIcon(
@@ -901,6 +922,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     override fun onHandleFocusPref() {
         if (isMediaPlayerHolder) {
             if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) if (goPreferences.isFocusEnabled) mMediaPlayerHolder.tryToGetAudioFocus() else mMediaPlayerHolder.giveUpAudioFocus()
+        }
+    }
+
+    override fun onHandleCoversPref() {
+        if (isMediaPlayerHolder) {
+            mMediaPlayerHolder.onCoversPrefChanged()
         }
     }
 

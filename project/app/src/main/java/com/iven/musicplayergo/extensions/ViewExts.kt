@@ -3,6 +3,7 @@ package com.iven.musicplayergo.extensions
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.content.Context
+import android.graphics.Bitmap
 import android.text.Html
 import android.text.SpannableString
 import android.text.Spanned
@@ -11,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewTreeObserver
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.core.animation.doOnEnd
@@ -21,10 +23,13 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.google.android.material.animation.ArgbEvaluatorCompat
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
+import com.iven.musicplayergo.models.Music
 import kotlin.math.max
 
 // viewTreeObserver extension to measure layout params
@@ -39,6 +44,16 @@ inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
             }
         }
     })
+}
+
+fun ImageView.loadCover(music: Music?, defaultCover: Bitmap, isCircleCrop: Boolean) {
+    val cover = music?.getCover(context) ?: defaultCover
+    load(cover) {
+        crossfade(true)
+        if (isCircleCrop) {
+            transformations(CircleCropTransformation())
+        }
+    }
 }
 
 @ColorInt

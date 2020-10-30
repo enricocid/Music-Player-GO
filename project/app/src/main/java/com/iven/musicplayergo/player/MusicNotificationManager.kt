@@ -6,6 +6,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
+import android.graphics.BitmapFactory
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -13,7 +14,9 @@ import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.enums.LaunchedBy
+import com.iven.musicplayergo.extensions.getCover
 import com.iven.musicplayergo.extensions.toSpanned
+import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.ui.MainActivity
@@ -59,13 +62,12 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                 openPlayerIntent, 0
         )
 
-        val style = MediaStyle().setShowActionsInCompactView(1, 2, 3)
-
-        style.setMediaSession(playerService.getMediaSession().sessionToken)
-
         mNotificationBuilder
                 .setShowWhen(false)
-                .setStyle(style)
+                .setStyle(MediaStyle()
+                        .setShowActionsInCompactView(1, 2, 3)
+                        .setMediaSession(playerService.getMediaSession().sessionToken)
+                )
                 .setContentIntent(contentIntent)
                 .addAction(notificationAction(GoConstants.REPEAT_ACTION))
                 .addAction(notificationAction(GoConstants.PREV_ACTION))
@@ -73,7 +75,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                 .addAction(notificationAction(GoConstants.NEXT_ACTION))
                 .addAction(notificationAction(GoConstants.CLOSE_ACTION))
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-        updateNotificationText()
+        updateNotificationContent()
         return mNotificationBuilder.build()
     }
 
@@ -85,9 +87,25 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                 )
     }
 
-    fun updateNotificationText() {
+    fun onCoverPrefChanged() {
+        if (::mNotificationBuilder.isInitialized) {
+            updateNotificationContent()
+            updateNotification()
+        }
+    }
+
+    fun updateNotificationContent() {
         val mediaPlayerHolder = playerService.mediaPlayerHolder
         mediaPlayerHolder.currentSong.first?.let { song ->
+
+            val stockCover =
+                    BitmapFactory.decodeResource(playerService.resources, R.drawable.default_cover)
+            val cover = if (goPreferences.isCovers) {
+                song.getCover(playerService)
+            } else {
+                stockCover
+            }
+
             mNotificationBuilder.setContentText(
                     playerService.getString(
                             R.string.artist_and_album,
@@ -101,6 +119,8 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                                     song.title
                             ).toSpanned()
                     )
+                    .setLargeIcon(cover)
+                    .setColorized(true)
                     .setSmallIcon(
                             if (mediaPlayerHolder.isPlayingFromFolder == LaunchedBy.FolderView)
                                 R.drawable.ic_library_music else

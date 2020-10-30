@@ -85,6 +85,11 @@
     <string name="edge_pref_summary_on">Disable edge-to-edge</string>
     <string name="edge_pref_summary_off">Enable edge-to-edge</string>
 
+    <!-- Preferences - covers -->
+    <string name="covers_pref_title">Embedded album\'s covers</string>
+    <string name="covers_pref_summary_on">Show album\'s covers</string>
+    <string name="covers_pref_summary_off">Don\'t show album\'s covers</string>
+
     <!-- Preferences - Default sorting -->
     <string name="sort_pref_title">Songs sorting</string>
     <string name="sort_pref_ascending_title">Ascending</string>

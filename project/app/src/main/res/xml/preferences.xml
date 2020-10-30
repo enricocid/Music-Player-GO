@@ -62,6 +62,13 @@
         app:layout="@layout/custom_preference_category"
         app:title="@string/category_general">
 
+        <SwitchPreferenceCompat
+            android:summaryOff="@string/covers_pref_summary_off"
+            app:defaultValue="false"
+            app:key="@string/covers_pref"
+            app:summaryOn="@string/covers_pref_summary_on"
+            app:title="@string/covers_pref_title" />
+
         <ListPreference
             android:defaultValue="@integer/song_visualization_default"
             app:dialogTitle="@string/song_visual_pref_title"

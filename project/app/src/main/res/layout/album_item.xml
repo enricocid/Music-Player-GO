@@ -7,71 +7,39 @@
     android:layout_marginStart="4dp"
     android:layout_marginEnd="4dp"
     android:layout_marginBottom="8dp"
+    android:paddingTop="6dp"
     android:paddingBottom="12dp"
-    app:cardBackgroundColor="?attr/colorPrimary"
     app:cardCornerRadius="8dp"
-    app:cardElevation="0dp"
+    app:cardElevation="2dp"
     tools:viewBindingIgnore="true">
-
-    <ImageButton
-        android:id="@+id/checkbox"
-        android:layout_width="@android:dimen/app_icon_size"
-        android:layout_height="@android:dimen/app_icon_size"
-        android:layout_gravity="center"
-        android:background="@android:color/transparent"
-        android:clickable="false"
-        android:focusable="false"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/ic_check_circle"
-        tools:ignore="ContentDescription" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/image"
+            android:scaleType="centerCrop"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/default_cover"
+            tools:ignore="ContentDescription" />
+
         <TextView
             android:id="@+id/album"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight=".75"
+            android:layout_gravity="center"
             android:ellipsize="end"
             android:gravity="center"
-            android:maxLines="4"
+            android:maxLines="2"
             android:padding="2dp"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
             android:textColor="?android:attr/textColorPrimary" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingStart="6dp"
-            android:paddingEnd="6dp"
-            android:paddingBottom="2dp">
-
-            <TextView
-                android:id="@+id/total_duration"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:singleLine="true"
-                android:textAlignment="textStart"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                android:textColor="?android:attr/textColorSecondary" />
-
-            <TextView
-                android:id="@+id/year"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:singleLine="true"
-                android:textAlignment="textEnd"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                android:textColor="?attr/colorPrimary" />
-
-        </LinearLayout>
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

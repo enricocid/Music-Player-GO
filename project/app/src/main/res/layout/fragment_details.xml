@@ -18,6 +18,15 @@
         app:titleTextAppearance="@style/ToolbarStyle.Title"
         app:titleTextColor="?attr/colorPrimary" />
 
+    <!-- ALBUMS -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/albums_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        android:overScrollMode="never" />
+
     <!-- SELECTED ALBUM -->
     <LinearLayout
         android:id="@+id/selected_album_container"
@@ -82,11 +91,4 @@
         android:overScrollMode="never"
         android:scrollbars="none" />
 
-    <!-- ALBUMS -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/albums_rv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:overScrollMode="never" />
 </LinearLayout>

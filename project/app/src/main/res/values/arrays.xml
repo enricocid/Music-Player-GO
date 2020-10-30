@@ -17,7 +17,7 @@
     <integer name="song_visualization_default">0</integer>
 
     <string-array name="songVisualizationArray">
-        <item>@string/song_visual_pref_title</item>
+        <item>@string/song_visual_pref_tl_title</item>
         <item>@string/song_visual_pref_fn_title</item>
     </string-array>
 

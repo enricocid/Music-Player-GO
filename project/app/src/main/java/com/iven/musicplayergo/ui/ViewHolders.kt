@@ -1,7 +1,7 @@
 package com.iven.musicplayergo.ui
 
 import android.view.View
-import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import com.afollestad.recyclical.ViewHolder
 import com.iven.musicplayergo.R
@@ -12,10 +12,8 @@ class GenericViewHolder(itemView: View) : ViewHolder(itemView) {
 }
 
 class AlbumsViewHolder(itemView: View) : ViewHolder(itemView) {
+    val imageView: ImageView = itemView.findViewById(R.id.image)
     val album: TextView = itemView.findViewById(R.id.album)
-    val year: TextView = itemView.findViewById(R.id.year)
-    val totalDuration: TextView = itemView.findViewById(R.id.total_duration)
-    val checkbox: ImageButton = itemView.findViewById(R.id.checkbox)
 }
 
 class SongsViewHolder(itemView: View) : ViewHolder(itemView) {
