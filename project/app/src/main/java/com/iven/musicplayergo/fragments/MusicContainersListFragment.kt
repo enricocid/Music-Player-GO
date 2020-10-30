@@ -13,11 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
+import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.MusicRepository
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentMusicContainerListBinding
 import com.iven.musicplayergo.enums.LaunchedBy
-import com.iven.musicplayergo.enums.SortingOpts
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.extensions.setTitleColor
@@ -50,10 +50,10 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     private lateinit var mUIControlInterface: UIControlInterface
 
     private lateinit var mSortMenuItem: MenuItem
-    private var mSorting = SortingOpts.DESCENDING_SORTING
+    private var mSorting = GoConstants.DESCENDING_SORTING
 
     private var sIsFastScroller = false
-    private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != SortingOpts.DEFAULT_SORTING
+    private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != GoConstants.DEFAULT_SORTING
     private var sLandscape = false
 
     override fun onAttach(context: Context) {
@@ -77,7 +77,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
         mMusicContainerListBinding = FragmentMusicContainerListBinding.bind(view)
 
-        mSorting = SortingOpts.values()[getSortingMethodFromPrefs()]
+        mSorting = getSortingMethodFromPrefs()
 
         mMusicRepository = MusicRepository.getInstance()
 
@@ -325,7 +325,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
             if (it.itemId != R.id.action_search) {
 
-                mSorting = SortingOpts.values()[it.order]
+                mSorting = it.order
 
                 mList = getSortedItemKeys()
 
@@ -353,14 +353,14 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
         }
     }
 
-    private fun saveSortingMethodToPrefs(sortingMethod: SortingOpts) {
+    private fun saveSortingMethodToPrefs(sortingMethod: Int) {
         when (launchedBy) {
             LaunchedBy.ArtistView ->
-                goPreferences.artistsSorting = sortingMethod.ordinal
+                goPreferences.artistsSorting = sortingMethod
             LaunchedBy.FolderView ->
-                goPreferences.foldersSorting = sortingMethod.ordinal
+                goPreferences.foldersSorting = sortingMethod
             else ->
-                goPreferences.albumsSorting = sortingMethod.ordinal
+                goPreferences.albumsSorting = sortingMethod
         }
     }
 

@@ -5,7 +5,6 @@ import androidx.preference.PreferenceManager
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.iven.musicplayergo.enums.SongsVisualOpts
-import com.iven.musicplayergo.enums.SortingOpts
 import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.models.SavedMusic
 import java.lang.reflect.Type
@@ -32,9 +31,6 @@ class GoPreferences(context: Context) {
     private val prefsArtistsSorting = context.getString(R.string.artists_sorting_pref)
     private val prefsFoldersSorting = context.getString(R.string.folders_sorting_pref)
     private val prefsAlbumsSorting = context.getString(R.string.albums_sorting_pref)
-
-    private val prefSongsSorting = context.getString(R.string.sort_pref)
-    private val prefsSongSortingDef = SortingOpts.ASCENDING_SORTING.ordinal.toString()
 
     private val prefsPreciseVolume = context.getString(R.string.precise_volume_pref)
     private val prefsFocus = context.getString(R.string.focus_pref)
@@ -106,27 +102,16 @@ class GoPreferences(context: Context) {
         return SongsVisualOpts.FILE_NAME
     }
 
-    var songsSorting
-        get() = getSongSorting()
-        set(value) = mPrefs.edit().putString(prefSongsSorting, value.ordinal.toString()).apply()
-
-    private fun getSongSorting(): SortingOpts {
-        mPrefs.getString(prefSongsSorting, prefsSongSortingDef)?.let {
-            return SortingOpts.values()[Integer.parseInt(it)]
-        }
-        return SortingOpts.ASCENDING_SORTING
-    }
-
     var artistsSorting
-        get() = mPrefs.getInt(prefsArtistsSorting, SortingOpts.DESCENDING_SORTING.ordinal)
+        get() = mPrefs.getInt(prefsArtistsSorting, GoConstants.DESCENDING_SORTING)
         set(value) = mPrefs.edit().putInt(prefsArtistsSorting, value).apply()
 
     var foldersSorting
-        get() = mPrefs.getInt(prefsFoldersSorting, SortingOpts.DEFAULT_SORTING.ordinal)
+        get() = mPrefs.getInt(prefsFoldersSorting, GoConstants.DEFAULT_SORTING)
         set(value) = mPrefs.edit().putInt(prefsFoldersSorting, value).apply()
 
     var albumsSorting
-        get() = mPrefs.getInt(prefsAlbumsSorting, SortingOpts.DEFAULT_SORTING.ordinal)
+        get() = mPrefs.getInt(prefsAlbumsSorting, GoConstants.DEFAULT_SORTING)
         set(value) = mPrefs.edit().putInt(prefsAlbumsSorting, value).apply()
 
     var filters: Set<String>?

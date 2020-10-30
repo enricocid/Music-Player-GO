@@ -7,6 +7,13 @@ object GoConstants {
     const val PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 2588
     const val RESTORE_SETTINGS_FRAGMENT = "RESTORE_SETTINGS_FRAGMENT"
 
+    // sorting
+    const val DEFAULT_SORTING = 0
+    const val DESCENDING_SORTING = 1
+    const val ASCENDING_SORTING = 2
+    const val TRACK_SORTING = 3
+    const val TRACK_SORTING_INVERTED = 4
+
     // error tags
     const val TAG_NO_PERMISSION = "NO_PERMISSION"
     const val TAG_NO_MUSIC = "NO_MUSIC"

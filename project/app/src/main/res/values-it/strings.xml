@@ -46,11 +46,6 @@
     <string name="accent_pref_title">Accento</string>
     <string name="edge_pref_summary_on">Disabilita edge-to-edge</string>
     <string name="edge_pref_summary_off">Abilita edge-to-edge</string>
-    <string name="sort_pref_title">Ordine canzoni</string>
-    <string name="sort_pref_ascending_title">Ascendente</string>
-    <string name="sort_pref_descending_title">Discendente</string>
-    <string name="sort_pref_track_title">Per traccia</string>
-    <string name="sort_pref_track_inverted_title">Per traccia invertito</string>
     <string name="song_visual_pref_title">Visualizzazione canzoni</string>
     <string name="song_visual_pref_tl_title">Titolo</string>
     <string name="song_visual_pref_fn_title">Nome del file</string>

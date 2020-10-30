@@ -4,9 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.Menu
 import android.view.MenuItem
+import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.enums.LaunchedBy
-import com.iven.musicplayergo.enums.SortingOpts
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.extensions.toToast
@@ -59,17 +59,17 @@ object ListsHelper {
 
     @JvmStatic
     fun getSortedList(
-            id: SortingOpts,
+            id: Int,
             list: MutableList<String>?
     ) = when (id) {
-        SortingOpts.DESCENDING_SORTING -> {
+        GoConstants.DESCENDING_SORTING -> {
             list?.apply {
                 Collections.sort(this, String.CASE_INSENSITIVE_ORDER)
             }
             list
         }
 
-        SortingOpts.ASCENDING_SORTING -> {
+        GoConstants.ASCENDING_SORTING -> {
             list?.apply {
                 Collections.sort(this, String.CASE_INSENSITIVE_ORDER)
             }
@@ -80,7 +80,7 @@ object ListsHelper {
 
     @JvmStatic
     fun getSortedListWithNull(
-            id: SortingOpts,
+            id: Int,
             list: MutableList<String?>?
     ): MutableList<String>? {
         val withoutNulls = list?.map {
@@ -97,34 +97,34 @@ object ListsHelper {
         return toTrans
     }
 
-    fun getSelectedSorting(sorting: SortingOpts, menu: Menu): MenuItem = when (sorting) {
-        SortingOpts.DEFAULT_SORTING -> menu.findItem(R.id.default_sorting)
-        SortingOpts.ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
+    fun getSelectedSorting(sorting: Int, menu: Menu): MenuItem = when (sorting) {
+        GoConstants.DEFAULT_SORTING -> menu.findItem(R.id.default_sorting)
+        GoConstants.ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
         else -> menu.findItem(R.id.descending_sorting)
     }
 
     @JvmStatic
     fun getSortedMusicList(
-            id: SortingOpts,
+            id: Int,
             list: MutableList<Music>?
     ) = when (id) {
 
-        SortingOpts.DESCENDING_SORTING -> {
+        GoConstants.DESCENDING_SORTING -> {
             list?.sortBy { it.title }
             list
         }
 
-        SortingOpts.ASCENDING_SORTING -> {
+        GoConstants.ASCENDING_SORTING -> {
             list?.sortBy { it.title }
             list?.asReversed()
         }
 
-        SortingOpts.TRACK_SORTING -> {
+        GoConstants.TRACK_SORTING -> {
             list?.sortBy { it.track }
             list
         }
 
-        SortingOpts.TRACK_SORTING_INVERTED -> {
+        GoConstants.TRACK_SORTING_INVERTED -> {
             list?.sortBy { it.track }
             list?.asReversed()
         }
@@ -132,11 +132,11 @@ object ListsHelper {
     }
 
     @JvmStatic
-    fun getSongsSorting(currentSorting: SortingOpts) = when (currentSorting) {
-        SortingOpts.TRACK_SORTING -> SortingOpts.TRACK_SORTING_INVERTED
-        SortingOpts.TRACK_SORTING_INVERTED -> SortingOpts.ASCENDING_SORTING
-        SortingOpts.ASCENDING_SORTING -> SortingOpts.DESCENDING_SORTING
-        else -> SortingOpts.TRACK_SORTING
+    fun getSongsSorting(currentSorting: Int) = when (currentSorting) {
+        GoConstants.TRACK_SORTING -> GoConstants.TRACK_SORTING_INVERTED
+        GoConstants.TRACK_SORTING_INVERTED -> GoConstants.ASCENDING_SORTING
+        GoConstants.ASCENDING_SORTING -> GoConstants.DESCENDING_SORTING
+        else -> GoConstants.TRACK_SORTING
     }
 
     @JvmStatic

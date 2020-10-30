@@ -50,8 +50,6 @@
     <string name="filter_pref">filter_pref</string>
 
     <!-- Sorting -->
-    <string name="sort_pref">sort_pref</string>
-
     <string name="artists_sorting_pref">artists_sorting_pref</string>
     <string name="albums_sorting_pref">albums_sorting_pref</string>
     <string name="folders_sorting_pref">folders_sorting_pref</string>
