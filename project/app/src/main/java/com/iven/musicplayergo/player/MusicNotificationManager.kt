@@ -101,7 +101,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             val stockCover =
                     BitmapFactory.decodeResource(playerService.resources, R.drawable.default_cover)
             val cover = if (goPreferences.isCovers) {
-                song.getCover(playerService)
+                song.getCover(playerService) ?: stockCover
             } else {
                 stockCover
             }
