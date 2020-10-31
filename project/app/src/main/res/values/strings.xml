@@ -88,7 +88,7 @@
     <!-- Preferences - covers -->
     <string name="covers_pref_title">Embedded album\'s covers</string>
     <string name="covers_pref_summary_on">Show album\'s covers</string>
-    <string name="covers_pref_summary_off">Don\'t show album\'s covers</string>
+    <string name="covers_pref_summary_off">Hide album\'s covers</string>
 
     <!-- Preferences - Song visualization options (tl = title, fn = full name) -->
     <string name="song_visual_pref_title">Songs visualization</string>

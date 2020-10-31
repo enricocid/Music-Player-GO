@@ -46,6 +46,9 @@
     <string name="accent_pref_title">Accento</string>
     <string name="edge_pref_summary_on">Disabilita edge-to-edge</string>
     <string name="edge_pref_summary_off">Abilita edge-to-edge</string>
+    <string name="covers_pref_title">Cover album incorporate</string>
+    <string name="covers_pref_summary_on">Mostra le cover degli album</string>
+    <string name="covers_pref_summary_off">Nascondi le cover degli album</string>
     <string name="song_visual_pref_title">Visualizzazione canzoni</string>
     <string name="song_visual_pref_tl_title">Titolo</string>
     <string name="song_visual_pref_fn_title">Nome del file</string>
