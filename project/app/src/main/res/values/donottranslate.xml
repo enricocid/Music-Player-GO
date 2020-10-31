@@ -53,6 +53,7 @@
     <string name="artists_sorting_pref">artists_sorting_pref</string>
     <string name="albums_sorting_pref">albums_sorting_pref</string>
     <string name="folders_sorting_pref">folders_sorting_pref</string>
+    <string name="all_music_sorting_pref">all_music_sorting_pref</string>
 
     <!-- Other preferences keys -->
     <string name="latest_played_song_pref">restore_song_pref</string>

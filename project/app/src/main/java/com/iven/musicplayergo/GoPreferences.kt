@@ -31,6 +31,7 @@ class GoPreferences(context: Context) {
     private val prefsArtistsSorting = context.getString(R.string.artists_sorting_pref)
     private val prefsFoldersSorting = context.getString(R.string.folders_sorting_pref)
     private val prefsAlbumsSorting = context.getString(R.string.albums_sorting_pref)
+    private val prefsAllMusicSorting = context.getString(R.string.all_music_sorting_pref)
 
     private val prefsPreciseVolume = context.getString(R.string.precise_volume_pref)
     private val prefsFocus = context.getString(R.string.focus_pref)
@@ -113,6 +114,10 @@ class GoPreferences(context: Context) {
     var albumsSorting
         get() = mPrefs.getInt(prefsAlbumsSorting, GoConstants.DEFAULT_SORTING)
         set(value) = mPrefs.edit().putInt(prefsAlbumsSorting, value).apply()
+
+    var allMusicSorting
+        get() = mPrefs.getInt(prefsAllMusicSorting, GoConstants.DEFAULT_SORTING)
+        set(value) = mPrefs.edit().putInt(prefsAllMusicSorting, value).apply()
 
     var filters: Set<String>?
         get() = mPrefs.getStringSet(prefsFilter, setOf())

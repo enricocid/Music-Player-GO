@@ -18,11 +18,33 @@
         app:titleTextAppearance="@style/ToolbarStyle.Title"
         app:titleTextColor="?attr/colorPrimary" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/all_music_rv"
+    <!-- MUSIC LIST -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:overScrollMode="never"
-        android:scrollbars="none" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/all_music_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
+
+        <com.reddit.indicatorfastscroll.FastScrollerView
+            android:id="@+id/fastscroller"
+            android:layout_width="@dimen/fast_scroller_view_dim"
+            android:layout_height="match_parent"
+            android:layout_gravity="end|center"
+            android:background="@color/windowBackground" />
+
+        <com.reddit.indicatorfastscroll.FastScrollerThumbView
+            android:id="@+id/fastscroller_thumb"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/fast_scroller_view_dim"
+            android:textAppearance="@style/IndicatorThumbTextAppearance" />
+    </FrameLayout>
+
 </LinearLayout>

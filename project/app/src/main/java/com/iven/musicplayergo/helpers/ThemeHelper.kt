@@ -28,6 +28,7 @@ import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.enums.SongsVisualOpts
 import com.iven.musicplayergo.extensions.decodeColor
 import com.iven.musicplayergo.extensions.toSpanned
 import com.iven.musicplayergo.goPreferences
@@ -73,11 +74,21 @@ object ThemeHelper {
         else -> R.drawable.ic_night
     }
 
-    fun resolveSortAlbumSongsIcon(sort: Int) = when (sort) {
-        GoConstants.ASCENDING_SORTING -> R.drawable.ic_sort_alphabetical_descending
-        GoConstants.DESCENDING_SORTING -> R.drawable.ic_sort_alphabetical_ascending
-        GoConstants.TRACK_SORTING -> R.drawable.ic_sort_numeric_descending
-        else -> R.drawable.ic_sort_numeric_ascending
+    fun resolveSortAlbumSongsIcon(sort: Int): Int {
+        val isFileNameSongs = goPreferences.songsVisualization == SongsVisualOpts.FILE_NAME
+        return if (isFileNameSongs) {
+            when (sort) {
+                GoConstants.ASCENDING_SORTING -> R.drawable.ic_sort_alphabetical_descending
+                else -> R.drawable.ic_sort_alphabetical_ascending
+            }
+        } else {
+            when (sort) {
+                GoConstants.ASCENDING_SORTING -> R.drawable.ic_sort_alphabetical_descending
+                GoConstants.DESCENDING_SORTING -> R.drawable.ic_sort_alphabetical_ascending
+                GoConstants.TRACK_SORTING -> R.drawable.ic_sort_numeric_descending
+                else -> R.drawable.ic_sort_numeric_ascending
+            }
+        }
     }
 
     @JvmStatic

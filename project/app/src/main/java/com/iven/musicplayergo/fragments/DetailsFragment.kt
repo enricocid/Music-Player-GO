@@ -71,12 +71,16 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private var sLandscape = false
 
-    private var mSongsSorting = GoConstants.TRACK_SORTING
+    private var mSongsSorting = if (sIsFileNameSongs) {
+        GoConstants.ASCENDING_SORTING
+    } else {
+        GoConstants.TRACK_SORTING
+    }
 
-    private val sLaunchedByArtistView: Boolean get() = launchedBy == LaunchedBy.ArtistView
-    private val sLaunchedByFolderView: Boolean get() = launchedBy == LaunchedBy.FolderView
+    private val sLaunchedByArtistView get() = launchedBy == LaunchedBy.ArtistView
+    private val sLaunchedByFolderView get() = launchedBy == LaunchedBy.FolderView
 
-    private val sIsFileNameSongs: Boolean get() = goPreferences.songsVisualization == SongsVisualOpts.FILE_NAME
+    private val sIsFileNameSongs get() = goPreferences.songsVisualization == SongsVisualOpts.FILE_NAME
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -128,8 +132,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private fun getSongSource(): List<Music>? {
         return when (launchedBy) {
-            LaunchedBy.ArtistView ->
+            LaunchedBy.ArtistView -> {
+                mMusicRepository.deviceAlbumsByArtist?.get(mSelectedArtistOrFolder)
+                        ?.let { selectedArtistAlbums ->
+                            mSelectedArtistAlbums = selectedArtistAlbums
+                        }
                 mMusicRepository.deviceSongsByArtist?.get(mSelectedArtistOrFolder)
+            }
 
             LaunchedBy.FolderView ->
                 mMusicRepository.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
@@ -147,6 +156,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         mMusicRepository = MusicRepository.getInstance()
 
         sLandscape = ThemeHelper.isDeviceLand(requireContext().resources)
+
+        mSongsList = getSongSource()
+
+        setupToolbar()
 
         setupViews(view)
     }
@@ -204,13 +217,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
         if (sLaunchedByArtistView) {
 
-            mMusicRepository.deviceAlbumsByArtist?.get(mSelectedArtistOrFolder)
-                    ?.let { selectedArtistAlbums ->
-                        mSelectedArtistAlbums = selectedArtistAlbums
-                    }
-
-            mSongsList = getSongSource()
-
             mSelectedAlbum = when {
                 mSelectedAlbumPosition != -1 -> mSelectedArtistAlbums?.get(
                         mSelectedAlbumPosition
@@ -228,6 +234,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             setupAlbumsContainer(requireContext())
 
             mDetailsFragmentBinding.sortButton.apply {
+                if (sIsFileNameSongs) {
+                    setImageResource(ThemeHelper.resolveSortAlbumSongsIcon(mSongsSorting))
+                }
                 setOnClickListener {
                     mSongsSorting = ListsHelper.getSongsSorting(mSongsSorting)
                     setImageResource(ThemeHelper.resolveSortAlbumSongsIcon(mSongsSorting))
@@ -241,8 +250,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             }
 
         } else {
-            mSongsList =
-                    getSongSource()
 
             mDetailsFragmentBinding.albumsRv.handleViewVisibility(false)
             selected_album_container.handleViewVisibility(false)
@@ -264,8 +271,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 }
             }
         }
-
-        setupToolbar()
 
         setSongsDataSource(
                 if (sLaunchedByArtistView) {
@@ -289,7 +294,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 withItem<Music, GenericViewHolder>(R.layout.generic_item) {
                     onBind(::GenericViewHolder) { _, item ->
 
-                        val displayedTitle = if (sIsFileNameSongs) {
+                        val displayedTitle = if (sIsFileNameSongs || sLaunchedByFolderView) {
                             item.displayName
                         } else {
                             getString(
@@ -436,8 +441,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     R.id.default_sorting -> applySortingToMusic(GoConstants.DEFAULT_SORTING)
                     R.id.descending_sorting -> applySortingToMusic(GoConstants.DESCENDING_SORTING)
                     R.id.ascending_sorting -> applySortingToMusic(GoConstants.ASCENDING_SORTING)
-                    R.id.track_sorting -> applySortingToMusic(GoConstants.TRACK_SORTING)
-                    R.id.track_sorting_inv -> applySortingToMusic(GoConstants.TRACK_SORTING_INVERTED)
                 }
                 return@setOnMenuItemClickListener true
             }

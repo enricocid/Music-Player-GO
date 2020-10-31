@@ -7,6 +7,7 @@ import android.view.MenuItem
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.enums.LaunchedBy
+import com.iven.musicplayergo.enums.SongsVisualOpts
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.extensions.toToast
@@ -16,6 +17,7 @@ import java.util.*
 
 @SuppressLint("DefaultLocale")
 object ListsHelper {
+
     @JvmStatic
     fun processQueryForStringsLists(
             query: String?,
@@ -132,11 +134,21 @@ object ListsHelper {
     }
 
     @JvmStatic
-    fun getSongsSorting(currentSorting: Int) = when (currentSorting) {
-        GoConstants.TRACK_SORTING -> GoConstants.TRACK_SORTING_INVERTED
-        GoConstants.TRACK_SORTING_INVERTED -> GoConstants.ASCENDING_SORTING
-        GoConstants.ASCENDING_SORTING -> GoConstants.DESCENDING_SORTING
-        else -> GoConstants.TRACK_SORTING
+    fun getSongsSorting(currentSorting: Int): Int {
+        val isFileNameSongs = goPreferences.songsVisualization == SongsVisualOpts.FILE_NAME
+        return if (isFileNameSongs) {
+            when (currentSorting) {
+                GoConstants.ASCENDING_SORTING -> GoConstants.DESCENDING_SORTING
+                else -> GoConstants.ASCENDING_SORTING
+            }
+        } else {
+            when (currentSorting) {
+                GoConstants.TRACK_SORTING -> GoConstants.TRACK_SORTING_INVERTED
+                GoConstants.TRACK_SORTING_INVERTED -> GoConstants.ASCENDING_SORTING
+                GoConstants.ASCENDING_SORTING -> GoConstants.DESCENDING_SORTING
+                else -> GoConstants.TRACK_SORTING
+            }
+        }
     }
 
     @JvmStatic
