@@ -50,7 +50,7 @@ fun ImageView.loadCover(music: Music?, defaultCover: Bitmap, isCircleCrop: Boole
     val cover = music?.getCover(context) ?: defaultCover
     load(cover) {
         crossfade(true)
-        if (isCircleCrop) {
+        if (isCircleCrop && cover != defaultCover) {
             transformations(CircleCropTransformation())
         }
     }
