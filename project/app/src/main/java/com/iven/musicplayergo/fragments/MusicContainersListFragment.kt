@@ -279,9 +279,17 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                                             1
                                     )?.toUpperCase()!! // Grab the first letter and capitalize it
                             ) // Return a text tab_indicator
-                        }, showIndicator = { _, indicatorPosition, _ ->
+                        }, showIndicator = { _, indicatorPosition, totalIndicators ->
                     // Hide every other indicator
-                    if (sLandscape) indicatorPosition % 2 == 0 else true
+                    if (sLandscape) {
+                        indicatorPosition % 2 == 0
+                    } else {
+                        if (totalIndicators >= 30) {
+                            indicatorPosition % 2 == 0
+                        } else {
+                            true
+                        }
+                    }
                 }
                 )
 
