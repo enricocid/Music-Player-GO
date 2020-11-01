@@ -7,8 +7,6 @@
     android:layout_marginStart="4dp"
     android:layout_marginEnd="4dp"
     android:layout_marginBottom="8dp"
-    android:paddingTop="6dp"
-    android:paddingBottom="12dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="2dp"
     tools:viewBindingIgnore="true">
@@ -31,12 +29,11 @@
             android:id="@+id/album"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".75"
+            android:layout_weight="0.85"
             android:layout_gravity="center"
             android:ellipsize="end"
             android:gravity="center"
-            android:maxLines="2"
-            android:padding="2dp"
+            android:maxLines="3"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
             android:textColor="?android:attr/textColorPrimary" />
