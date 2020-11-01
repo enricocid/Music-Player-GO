@@ -63,6 +63,10 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
         viewModelJob.cancel()
     }
 
+    fun cancel() {
+        onCleared()
+    }
+
     fun getDeviceMusic() {
         uiScope.launch {
             withContext(ioDispatcher) {

@@ -94,7 +94,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 this
 
         ViewModelProvider(requireActivity()).get(MusicViewModel::class.java).apply {
-            deviceMusic.observe(requireActivity(), { returnedMusic ->
+            deviceMusic.observe(viewLifecycleOwner, { returnedMusic ->
                 if (!returnedMusic.isNullOrEmpty()) {
                     findPreference<Preference>(getString(R.string.found_songs_pref))?.apply {
                         title =
@@ -106,13 +106,13 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
         mThemePreference = findPreference<Preference>(getString(R.string.theme_pref))?.apply {
             icon = AppCompatResources.getDrawable(
-                    requireContext(),
-                    ThemeHelper.resolveThemeIcon(requireContext())
+                    requireActivity(),
+                    ThemeHelper.resolveThemeIcon(requireActivity())
             )
         }
 
         findPreference<Preference>(getString(R.string.accent_pref))?.apply {
-            summary = ThemeHelper.getAccentName(goPreferences.accent, requireContext())
+            summary = ThemeHelper.getAccentName(goPreferences.accent, requireActivity())
             onPreferenceClickListener = this@PreferencesFragment
         }
 
@@ -140,7 +140,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             } else {
                 getString(
                         R.string.error_no_filter
-                ).toToast(requireContext())
+                ).toToast(requireActivity())
             }
             getString(R.string.active_fragments_pref) -> showActiveFragmentsDialog()
         }
@@ -152,8 +152,8 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             getString(R.string.theme_pref) -> {
                 mThemePreference?.icon =
                         AppCompatResources.getDrawable(
-                                requireContext(),
-                                ThemeHelper.resolveThemeIcon(requireContext())
+                                requireActivity(),
+                                ThemeHelper.resolveThemeIcon(requireActivity())
                         )
                 mUIControlInterface.onThemeChanged()
             }
@@ -181,10 +181,10 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 .build()
 
         val parsedUri = Uri.parse(link)
-        val manager = requireContext().packageManager
+        val manager = requireActivity().packageManager
         val infos = manager.queryIntentActivities(customTabsIntent.intent, 0)
         if (infos.size > 0) {
-            customTabsIntent.launchUrl(requireContext(), parsedUri)
+            customTabsIntent.launchUrl(requireActivity(), parsedUri)
         } else {
 
             //from: https://github.com/immuni-app/immuni-app-android/blob/development/extensions/src/main/java/it/ministerodellasalute/immuni/extensions/utils/ExternalLinksHelper.kt
@@ -193,11 +193,11 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             val fallbackInfos = manager.queryIntentActivities(browserIntent, 0)
             if (fallbackInfos.size > 0) {
-                requireContext().startActivity(browserIntent)
+                requireActivity().startActivity(browserIntent)
             } else {
                 Toast.makeText(
                         context,
-                        requireContext().getString(R.string.error_no_browser),
+                        requireActivity().getString(R.string.error_no_browser),
                         Toast.LENGTH_SHORT
                 ).show()
             }
@@ -214,7 +214,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             getRecyclerView().apply {
                 layoutManager =
-                        LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                        LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
                 scrollToPosition(ThemeHelper.getAccentedTheme().second)
             }
         }
@@ -226,12 +226,12 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             title(R.string.active_fragments_pref_title)
 
-            val activeTabsAdapter = ActiveTabsAdapter(requireContext())
+            val activeTabsAdapter = ActiveTabsAdapter(requireActivity())
 
             customListAdapter(activeTabsAdapter)
 
             getRecyclerView().layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                    LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
 
             positiveButton(android.R.string.ok) {
                 goPreferences.activeFragments = activeTabsAdapter.getUpdatedItems()

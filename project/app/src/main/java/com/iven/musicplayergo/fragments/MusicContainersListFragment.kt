@@ -80,11 +80,11 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
         mMusicContainerListBinding = FragmentMusicContainerListBinding.bind(view)
 
-        sLandscape = ThemeHelper.isDeviceLand(requireContext().resources)
+        sLandscape = ThemeHelper.isDeviceLand(resources)
 
         mMusicViewModel = ViewModelProvider(requireActivity()).get(MusicViewModel::class.java)
 
-        mMusicViewModel.deviceMusic.observe(requireActivity(), { returnedMusic ->
+        mMusicViewModel.deviceMusic.observe(viewLifecycleOwner, { returnedMusic ->
             if (!returnedMusic.isNullOrEmpty()) {
                 mSorting = getSortingMethodFromPrefs()
 
@@ -108,7 +108,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
                 if (!sLandscape) {
                     addItemDecoration(
-                            ThemeHelper.getRecyclerViewDivider(requireContext())
+                            ThemeHelper.getRecyclerViewDivider(requireActivity())
                     )
                 }
 
@@ -150,7 +150,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
             inflateMenu(R.menu.menu_search)
 
             overflowIcon =
-                    AppCompatResources.getDrawable(requireContext(), R.drawable.ic_sort)
+                    AppCompatResources.getDrawable(context, R.drawable.ic_sort)
 
             title = getFragmentTitle()
 
@@ -161,7 +161,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
             menu.apply {
 
                 mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, this).apply {
-                    setTitleColor(ThemeHelper.resolveThemeAccent(requireContext()))
+                    setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
                 }
 
                 val searchView = findItem(R.id.action_search).actionView as SearchView
@@ -180,7 +180,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                     }
                 }
 
-                setMenuOnItemClickListener(requireContext(), this)
+                setMenuOnItemClickListener(requireActivity(), this)
             }
         }
     }

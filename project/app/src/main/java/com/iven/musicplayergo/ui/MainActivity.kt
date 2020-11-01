@@ -187,6 +187,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onDestroy() {
         super.onDestroy()
+        mMusicViewModel.cancel()
         if (sBound) {
             unbindService(connection)
         }

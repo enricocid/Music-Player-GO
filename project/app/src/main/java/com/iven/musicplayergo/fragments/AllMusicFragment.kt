@@ -75,11 +75,11 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
         mAllMusicFragmentBinding = FragmentAllMusicBinding.bind(view)
 
-        sLandscape = ThemeHelper.isDeviceLand(requireContext().resources)
+        sLandscape = ThemeHelper.isDeviceLand(resources)
 
         mMusicViewModel = ViewModelProvider(requireActivity()).get(MusicViewModel::class.java)
 
-        mMusicViewModel.deviceMusic.observe(requireActivity(), { returnedMusic ->
+        mMusicViewModel.deviceMusic.observe(viewLifecycleOwner, { returnedMusic ->
             if (!returnedMusic.isNullOrEmpty()) {
                 mAllMusic = ListsHelper.getSortedMusicList(mSorting, mMusicViewModel.deviceMusicFiltered)
 
@@ -101,7 +101,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
                 if (!sLandscape) {
                     addItemDecoration(
-                            ThemeHelper.getRecyclerViewDivider(requireContext())
+                            ThemeHelper.getRecyclerViewDivider(requireActivity())
                     )
                 }
 
@@ -131,7 +131,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
                     onLongClick { index ->
                         DialogHelper.showDoSomethingPopup(
-                                requireContext(),
+                                requireActivity(),
                                 findViewHolderForAdapterPosition(index)?.itemView,
                                 item,
                                 LaunchedBy.ArtistView,
@@ -149,7 +149,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
             inflateMenu(R.menu.menu_all_music)
 
             overflowIcon = AppCompatResources.getDrawable(
-                    requireContext(),
+                    requireActivity(),
                     R.drawable.ic_more_vert
             )
 
@@ -160,7 +160,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
             menu.apply {
 
                 mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, this).apply {
-                    setTitleColor(ThemeHelper.resolveThemeAccent(requireContext()))
+                    setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
                 }
 
                 findItem(R.id.action_shuffle_am).setOnMenuItemClickListener {
@@ -183,7 +183,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                     }
                 }
 
-                setMenuOnItemClickListener(requireContext(), this)
+                setMenuOnItemClickListener(requireActivity(), this)
             }
         }
     }

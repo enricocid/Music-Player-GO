@@ -87,7 +87,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private val sIsFileNameSongs get() = goPreferences.songsVisualization == SongsVisualOpts.FILE_NAME
 
     private val mImageLoader: ImageLoader by lazy {
-        requireContext().getImageLoader()
+        requireActivity().getImageLoader()
     }
 
     private val sLoadCovers = goPreferences.isCovers
@@ -164,11 +164,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
         mDetailsFragmentBinding = FragmentDetailsBinding.bind(view)
 
-        sLandscape = ThemeHelper.isDeviceLand(requireContext().resources)
+        sLandscape = ThemeHelper.isDeviceLand(resources)
 
         mMusicViewModel = ViewModelProvider(requireActivity()).get(MusicViewModel::class.java)
 
-        mMusicViewModel.deviceMusic.observe(requireActivity(), { returnedMusic ->
+        mMusicViewModel.deviceMusic.observe(viewLifecycleOwner, { returnedMusic ->
             if (!returnedMusic.isNullOrEmpty()) {
                 mSongsList = getSongSource()
 
@@ -183,7 +183,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         mDetailsFragmentBinding.detailsToolbar.apply {
 
             overflowIcon = AppCompatResources.getDrawable(
-                    requireContext(),
+                    requireActivity(),
                     if (sLaunchedByArtistView) {
                         R.drawable.ic_shuffle
                     } else {
@@ -246,7 +246,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 mDefaultCover = BitmapFactory.decodeResource(resources, R.drawable.default_cover)
             }
 
-            setupAlbumsContainer(requireContext())
+            setupAlbumsContainer(requireActivity())
 
             mDetailsFragmentBinding.sortButton.apply {
                 if (sIsFileNameSongs) {
@@ -303,7 +303,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 withDataSource(mSongsDataSource)
 
                 if (!sLandscape) {
-                    addItemDecoration(ThemeHelper.getRecyclerViewDivider(requireContext()))
+                    addItemDecoration(ThemeHelper.getRecyclerViewDivider(requireActivity()))
                 }
 
                 withItem<Music, GenericViewHolder>(R.layout.generic_item) {
@@ -349,7 +349,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                     onLongClick { index ->
                         DialogHelper.showDoSomethingPopup(
-                                requireContext(),
+                                requireActivity(),
                                 findViewHolderForAdapterPosition(index)?.itemView,
                                 item,
                                 launchedBy,
@@ -388,10 +388,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 ThemeHelper.updateIconTint(
                         this,
                         if (isEnabled) {
-                            R.color.widgetsColor.decodeColor(requireContext())
+                            R.color.widgetsColor.decodeColor(requireActivity())
                         } else {
                             ThemeHelper.resolveColorAttr(
-                                    requireContext(),
+                                    requireActivity(),
                                     android.R.attr.colorButtonNormal
                             )
                         }

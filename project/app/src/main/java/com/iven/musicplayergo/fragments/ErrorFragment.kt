@@ -73,7 +73,7 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
             createCircularReveal(isErrorFragment = true, show = true).doOnEnd {
                 if (!goPreferences.isEdgeToEdge) {
                     requireActivity().window.apply {
-                        val red = R.color.red.decodeColor(requireContext())
+                        val red = R.color.red.decodeColor(requireActivity())
                         statusBarColor = red
                         navigationBarColor = red
                     }
