@@ -646,6 +646,23 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
+    fun fastSeek(isForward: Boolean) {
+
+        val step = goPreferences.fastSeekingStep * 1000
+
+        if (isMediaPlayer) {
+            mediaPlayer.apply {
+                var newPosition = currentPosition
+                if (isForward) {
+                    newPosition += step
+                } else {
+                    newPosition -= step
+                }
+                seekTo(newPosition, updatePlaybackStatus = true, restoreProgressCallBack = false)
+            }
+        }
+    }
+
     fun seekTo(position: Int, updatePlaybackStatus: Boolean, restoreProgressCallBack: Boolean) {
         if (isMediaPlayer) {
             mediaPlayer.setOnSeekCompleteListener { mp ->

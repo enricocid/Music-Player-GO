@@ -99,6 +99,10 @@
     <string name="active_fragments_pref_title">Active tabs</string>
     <string name="active_fragments_pref_warning">You can\'t just remove all the tabs! :P</string>
 
+    <!-- Preferences - Fast seeking -->
+    <string name="fast_seeking_pref_title">Fast seeking</string>
+    <string name="fast_seeking_pref_summary">Fast forward/rewind step (seconds)</string>
+
     <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">Precise volume control</string>
     <string name="precise_volume_pref_summary_on">Disable precise volume control</string>

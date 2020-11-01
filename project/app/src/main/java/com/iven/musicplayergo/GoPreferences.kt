@@ -33,6 +33,7 @@ class GoPreferences(context: Context) {
     private val prefsAlbumsSorting = context.getString(R.string.albums_sorting_pref)
     private val prefsAllMusicSorting = context.getString(R.string.all_music_sorting_pref)
 
+    private val prefsFineSeek = context.getString(R.string.fast_seeking_pref)
     private val prefsPreciseVolume = context.getString(R.string.precise_volume_pref)
     private val prefsFocus = context.getString(R.string.focus_pref)
     private val prefsHeadsetPlug = context.getString(R.string.headset_pref)
@@ -122,6 +123,10 @@ class GoPreferences(context: Context) {
     var filters: Set<String>?
         get() = mPrefs.getStringSet(prefsFilter, setOf())
         set(value) = mPrefs.edit().putStringSet(prefsFilter, value).apply()
+
+    var fastSeekingStep
+        get() = mPrefs.getInt(prefsFineSeek, 5)
+        set(value) = mPrefs.edit().putInt(prefsFineSeek, value).apply()
 
     var isPreciseVolumeEnabled
         get() = mPrefs.getBoolean(prefsPreciseVolume, true)

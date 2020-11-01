@@ -54,6 +54,8 @@
     <string name="song_visual_pref_fn_title">Nome del file</string>
     <string name="active_fragments_pref_title">Tab attive</string>
     <string name="active_fragments_pref_warning">Non puoi rimuovere tutte le tabs! :P</string>
+    <string name="fast_seeking_pref_title">Avanzamento veloce</string>
+    <string name="fast_seeking_pref_summary">Step di avanzamento veloce in secondi</string>
     <string name="sorting_pref">Ordine</string>
     <string name="sorting_pref_default">Predefinito</string>
     <string name="sorting_pref_track">Per n° traccia &#8595;</string>

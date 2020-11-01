@@ -63,7 +63,8 @@ This repo contains the source code of the **Music Player GO** Android app: a sim
 
 - Tabs (artists, songs, albums, folders, settings)
 - Full UI theming including day/night theme and edge-to-edge
-- Now playing (quick jump to album/folder by long clicking on the currently played song)
+- Now playing (quick jump to album/folder by long tap on the currently played song)
+- Fast seeking (long tap on skip btns)
 - Continue playing from where You left
 - Queued and loved songs
 - Audio focus, precise volume and headsets plug control

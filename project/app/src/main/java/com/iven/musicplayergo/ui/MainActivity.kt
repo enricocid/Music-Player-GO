@@ -603,10 +603,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mNowPlayingBinding.npArtistAlbum.isSelected = true
 
                 mNowPlayingControlsBinding.npSkipPrev.setOnClickListener { skip(false) }
+                mNowPlayingControlsBinding.npSkipPrev.setOnLongClickListener {
+                    fastSeek(false)
+                    return@setOnLongClickListener true
+                }
 
                 mNowPlayingControlsBinding.npPlay.setOnClickListener { resumeOrPause() }
 
                 mNowPlayingControlsBinding.npSkipNext.setOnClickListener { skip(true) }
+                mNowPlayingControlsBinding.npSkipNext.setOnLongClickListener {
+                    fastSeek(true)
+                    return@setOnLongClickListener true
+                }
 
                 setCovers()
 
@@ -1002,6 +1010,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun resumeOrPause() {
         if (checkIsPlayer(true)) {
             mMediaPlayerHolder.resumeOrPause()
+        }
+    }
+
+    private fun fastSeek(isForward: Boolean) {
+        if (checkIsPlayer(true)) {
+            mMediaPlayerHolder.fastSeek(isForward)
         }
     }
 
