@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
@@ -81,6 +82,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private val sLaunchedByFolderView get() = launchedBy == LaunchedBy.FolderView
 
     private val sIsFileNameSongs get() = goPreferences.songsVisualization == SongsVisualOpts.FILE_NAME
+
+    private val mImageLoader: ImageLoader by lazy {
+        requireContext().getImageLoader()
+    }
+
+    private val sLoadCovers = goPreferences.isCovers
+    private var sLoadDelay = true
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -227,7 +235,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 }
             }
 
-            if (goPreferences.isCovers) {
+            if (sLoadCovers) {
                 mDefaultCover = BitmapFactory.decodeResource(resources, R.drawable.default_cover)
             }
 
@@ -504,8 +512,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     onBind(::AlbumsViewHolder) { _, item ->
                         // AlbumsViewHolder is `this` here
 
-                        if (goPreferences.isCovers) {
-                            imageView.loadCover(item.music?.get(0), mDefaultCover, false)
+                        if (sLoadCovers) {
+                            imageView.loadCover(mImageLoader, item.music?.get(0), mDefaultCover, isCircleCrop = false, isLoadDelay = sLoadDelay)
                         }
 
                         album.text = item.title
@@ -526,6 +534,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         if (index != mSelectedAlbumPosition) {
 
                             mDetailsFragmentBinding.albumsRv.adapter?.apply {
+
+                                sLoadDelay = false
+
                                 notifyItemChanged(
                                         mSelectedAlbumPosition
                                 )

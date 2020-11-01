@@ -23,13 +23,16 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
 import coil.load
+import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import com.google.android.material.animation.ArgbEvaluatorCompat
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.models.Music
+import kotlinx.coroutines.*
 import kotlin.math.max
 
 // viewTreeObserver extension to measure layout params
@@ -46,12 +49,44 @@ inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
     })
 }
 
-fun ImageView.loadCover(music: Music?, defaultCover: Bitmap, isCircleCrop: Boolean) {
-    val cover = music?.getCover(context) ?: defaultCover
-    load(cover) {
-        crossfade(true)
-        if (isCircleCrop && cover != defaultCover) {
-            transformations(CircleCropTransformation())
+/**
+ * This is the job for all coroutines started by this ViewModel.
+ * Cancelling this job will cancel all coroutines started by this ViewModel.
+ */
+private val viewModelJob = SupervisorJob()
+
+private val handler = CoroutineExceptionHandler { _, exception ->
+    exception.printStackTrace()
+}
+
+private val ioDispatcher = Dispatchers.IO + viewModelJob + handler
+private val ioScope = CoroutineScope(ioDispatcher)
+
+fun Context.getImageLoader() = ImageLoader.Builder(this)
+        .bitmapPoolingEnabled(false)
+        .crossfade(true)
+        .build()
+
+fun ImageView.loadCover(imageLoader: ImageLoader, music: Music?, defaultCover: Bitmap, isCircleCrop: Boolean, isLoadDelay: Boolean) {
+
+    val request = ImageRequest.Builder(context)
+            .data(music?.getCover(context) ?: defaultCover)
+            .target(
+                    onSuccess = { result ->
+                        // Handle the successful result.
+                        load(result) {
+                            if (isCircleCrop) {
+                                transformations(CircleCropTransformation())
+                            }
+                        }
+                    }
+            )
+            .build()
+
+    ioScope.launch {
+        withContext(ioDispatcher) {
+            delay(if (isLoadDelay) 1000 else 0)
+            imageLoader.execute(request)
         }
     }
 }

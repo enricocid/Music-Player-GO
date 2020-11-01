@@ -22,6 +22,7 @@ import androidx.core.animation.doOnEnd
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import coil.ImageLoader
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
@@ -96,6 +97,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mNowPlayingExtendedControlsBinding: NowPlayingExtendedControlsBinding
 
     private lateinit var mDefaultCover: Bitmap
+
+    private val mImageLoader: ImageLoader by lazy {
+        getImageLoader()
+    }
 
     // Music player things
     private lateinit var mQueueDialog: MaterialDialog
@@ -525,7 +530,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mNowPlayingBinding.npArtistAlbum.textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
                 mNowPlayingBinding.npSong.textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
             }
-            mNowPlayingBinding.npCover.loadCover(mMediaPlayerHolder.currentSong.first, mDefaultCover, true)
+            mNowPlayingBinding.npCover.loadCover(mImageLoader, mMediaPlayerHolder.currentSong.first, mDefaultCover, isCircleCrop = true, isLoadDelay = false)
         } else {
             mNowPlayingBinding.npCover.handleViewVisibility(false)
         }
