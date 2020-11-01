@@ -184,7 +184,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                         mMusicRepository.deviceMusicByFolder?.getValue(item)?.size
                 )
             else ->
-                mMusicRepository.deviceSongsByAlbum?.get(item)?.first()?.artist
+                mMusicRepository.deviceMusicByAlbum?.get(item)?.first()?.artist
 
         }
     }
@@ -205,7 +205,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
             else ->
                 ListsHelper.getSortedListWithNull(
                         mSorting,
-                        mMusicRepository.deviceSongsByAlbum?.keys?.toMutableList()
+                        mMusicRepository.deviceMusicByAlbum?.keys?.toMutableList()
                 )
         }
     }

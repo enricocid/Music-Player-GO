@@ -61,7 +61,7 @@ class PlayerService : Service() {
             mediaPlayerHolder.apply {
                 currentSong.first?.let { musicToSave ->
                     goPreferences.latestPlayedSong =
-                            musicToSave.toSavedMusic(playerPosition, isPlayingFromFolder)
+                            musicToSave.toSavedMusic(playerPosition, launchedBy)
                 }
             }
 

@@ -144,7 +144,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 mMusicRepository.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
 
             LaunchedBy.AlbumView ->
-                mMusicRepository.deviceSongsByAlbum?.get(mSelectedArtistOrFolder)
+                mMusicRepository.deviceMusicByAlbum?.get(mSelectedArtistOrFolder)
         }
     }
 
@@ -404,12 +404,15 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
         mDetailsFragmentBinding.detailsToolbar.apply {
 
-            val menuToInflate =
-                    if (sLaunchedByArtistView) {
-                        R.menu.menu_artist_details
-                    } else {
-                        R.menu.menu_folder_details
-                    }
+            val menuToInflate = when {
+                sLaunchedByArtistView -> R.menu.menu_artist_details
+                sLaunchedByFolderView -> R.menu.menu_folder_details
+                else -> if (!sIsFileNameSongs) {
+                    R.menu.menu_album_details
+                } else {
+                    R.menu.menu_folder_details
+                }
+            }
 
             inflateMenu(menuToInflate)
 
@@ -429,6 +432,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             }
 
             setOnMenuItemClickListener {
+
                 when (it.itemId) {
                     R.id.action_shuffle_am -> mUIControlInterface.onShuffleSongs(
                             mSongsList?.toMutableList(),
@@ -441,6 +445,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     R.id.default_sorting -> applySortingToMusic(GoConstants.DEFAULT_SORTING)
                     R.id.descending_sorting -> applySortingToMusic(GoConstants.DESCENDING_SORTING)
                     R.id.ascending_sorting -> applySortingToMusic(GoConstants.ASCENDING_SORTING)
+                    R.id.track_sorting -> applySortingToMusic(GoConstants.TRACK_SORTING)
+                    R.id.track_sorting_inv -> applySortingToMusic(GoConstants.TRACK_SORTING_INVERTED)
                 }
                 return@setOnMenuItemClickListener true
             }
@@ -448,7 +454,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     }
 
     private fun applySortingToMusic(order: Int) {
-        val selectedList = mMusicRepository.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
+        val selectedList = if (sLaunchedByFolderView) {
+            mMusicRepository.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
+        } else {
+            mMusicRepository.deviceMusicByAlbum?.get(mSelectedArtistOrFolder)
+        }
         mSongsList = ListsHelper.getSortedMusicList(
                 order,
                 selectedList?.toMutableList()

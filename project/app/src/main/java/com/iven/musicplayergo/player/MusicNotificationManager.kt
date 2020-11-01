@@ -121,12 +121,14 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                     )
                     .setLargeIcon(cover)
                     .setColorized(true)
-                    .setSmallIcon(
-                            if (mediaPlayerHolder.isPlayingFromFolder == LaunchedBy.FolderView)
-                                R.drawable.ic_library_music else
-                                R.drawable.ic_music_note
-                    )
+                    .setSmallIcon(getNotificationSmallIcon(mediaPlayerHolder))
         }
+    }
+
+    private fun getNotificationSmallIcon(mediaPlayerHolder: MediaPlayerHolder) = when (mediaPlayerHolder.launchedBy) {
+        LaunchedBy.FolderView -> R.drawable.ic_folder
+        LaunchedBy.AlbumView -> R.drawable.ic_library_music
+        else -> R.drawable.ic_music_note
     }
 
     fun updatePlayPauseAction() {

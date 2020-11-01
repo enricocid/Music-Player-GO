@@ -108,7 +108,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     // First: current song, second: isFromQueue
     lateinit var currentSong: Pair<Music?, Boolean>
-    var isPlayingFromFolder: LaunchedBy = LaunchedBy.ArtistView
+    var launchedBy: LaunchedBy = LaunchedBy.ArtistView
     private var isPlayingFromFolderPreQueue: LaunchedBy = LaunchedBy.ArtistView
     private var mPlayingAlbumSongs: List<Music>? = null
 
@@ -211,7 +211,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             isFromQueue: Boolean,
             isFolderAlbum: LaunchedBy
     ) {
-        isPlayingFromFolder = isFolderAlbum
+        launchedBy = isFolderAlbum
         currentSong = Pair(song, isFromQueue)
         mPlayingAlbumSongs = songs
     }
@@ -604,7 +604,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         when {
             isQueue -> {
                 preQueueSong = Pair(currentSong.first, mPlayingAlbumSongs)
-                isPlayingFromFolderPreQueue = isPlayingFromFolder
+                isPlayingFromFolderPreQueue = launchedBy
                 isQueue = true
                 mediaPlayerInterface.onQueueEnabled()
             }

@@ -625,7 +625,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                             this@MainActivity,
                             mMediaPlayerHolder.currentSong.first,
                             mMediaPlayerHolder.playerPosition,
-                            mMediaPlayerHolder.isPlayingFromFolder
+                            mMediaPlayerHolder.launchedBy
                     )
                     onLovedSongsUpdate(false)
                 }
@@ -670,7 +670,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun saveSongToPref() {
         if (::mMediaPlayerHolder.isInitialized && !mMediaPlayerHolder.isPlaying || mMediaPlayerHolder.state == GoConstants.PAUSED) mMediaPlayerHolder.apply {
-            MusicOrgHelper.saveLatestSong(currentSong.first, mMediaPlayerHolder, isPlayingFromFolder)
+            MusicOrgHelper.saveLatestSong(currentSong.first, mMediaPlayerHolder, launchedBy)
         }
     }
 
@@ -880,7 +880,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     fun openPlayingArtistAlbum(view: View) {
         if (isMediaPlayerHolder && mMediaPlayerHolder.isCurrentSong) {
 
-            val isPlayingFromFolder = mMediaPlayerHolder.isPlayingFromFolder
+            val isPlayingFromFolder = mMediaPlayerHolder.launchedBy
             val selectedSong = mMediaPlayerHolder.currentSong.first
             val selectedArtistOrFolder = getSongSource(selectedSong, isPlayingFromFolder)
             if (sDetailsFragmentExpanded) {
@@ -888,7 +888,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     synchronized(super.onBackPressed()) {
                         openDetailsFragment(
                                 selectedArtistOrFolder,
-                                mMediaPlayerHolder.isPlayingFromFolder
+                                mMediaPlayerHolder.launchedBy
                         )
                     }
                 } else {
@@ -900,7 +900,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     )
                 }
             } else {
-                openDetailsFragment(selectedArtistOrFolder, mMediaPlayerHolder.isPlayingFromFolder)
+                openDetailsFragment(selectedArtistOrFolder, mMediaPlayerHolder.launchedBy)
             }
 
             if (isNowPlaying) mNowPlayingDialog.dismiss()
