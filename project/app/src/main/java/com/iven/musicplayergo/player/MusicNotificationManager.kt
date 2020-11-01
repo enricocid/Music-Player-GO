@@ -52,7 +52,9 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
         mNotificationBuilder = NotificationCompat.Builder(playerService, CHANNEL_ID)
 
-        if (VersioningHelper.isOreo()) createNotificationChannel()
+        if (VersioningHelper.isOreo()) {
+            createNotificationChannel()
+        }
 
         val openPlayerIntent = Intent(playerService, MainActivity::class.java)
         openPlayerIntent.flags =
@@ -132,8 +134,10 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     }
 
     fun updatePlayPauseAction() {
-        if (::mNotificationBuilder.isInitialized) mNotificationActions[2] =
-                notificationAction(GoConstants.PLAY_PAUSE_ACTION)
+        if (::mNotificationBuilder.isInitialized) {
+            mNotificationActions[2] =
+                    notificationAction(GoConstants.PLAY_PAUSE_ACTION)
+        }
     }
 
     fun updateRepeatIcon() {
@@ -146,7 +150,11 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
     private fun notificationAction(action: String): NotificationCompat.Action {
         var icon =
-                if (playerService.mediaPlayerHolder.state != GoConstants.PAUSED) R.drawable.ic_pause else R.drawable.ic_play
+                if (playerService.mediaPlayerHolder.state != GoConstants.PAUSED) {
+                    R.drawable.ic_pause
+                } else {
+                    R.drawable.ic_play
+                }
         when (action) {
             GoConstants.REPEAT_ACTION -> icon =
                     ThemeHelper.getRepeatIcon(playerService.mediaPlayerHolder)

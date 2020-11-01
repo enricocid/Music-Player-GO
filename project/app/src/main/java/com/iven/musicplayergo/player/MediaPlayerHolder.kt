@@ -501,8 +501,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
                 mMusicNotificationManager = playerService.musicNotificationManager
 
-                if (sFocusEnabled && isPlay) tryToGetAudioFocus()
-                if (goPreferences.isPreciseVolumeEnabled) setPreciseVolume(currentVolumeInPercent)
+                if (sFocusEnabled && isPlay) {
+                    tryToGetAudioFocus()
+                }
+                if (goPreferences.isPreciseVolumeEnabled) {
+                    setPreciseVolume(currentVolumeInPercent)
+                }
             }
 
             song?.id?.toContentUri()?.let { uri ->
@@ -525,7 +529,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     override fun onPrepared(mediaPlayer: MediaPlayer) {
 
-        if (isRepeat1X) isRepeat1X = false
+        if (isRepeat1X) {
+            isRepeat1X = false
+        }
 
         if (isSongRestoredFromPrefs) {
             if (goPreferences.isPreciseVolumeEnabled) setPreciseVolume(currentVolumeInPercent)
@@ -535,13 +541,19 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             isSongFromLovedSongs = Pair(false, 0)
         }
 
-        if (isQueue) mediaPlayerInterface.onQueueStartedOrEnded(isQueueStarted)
+        if (isQueue) {
+            mediaPlayerInterface.onQueueStartedOrEnded(isQueueStarted)
+        }
 
         updateMediaSessionMetaData()
 
-        if (mExecutor == null) startUpdatingCallbackWithPosition()
+        if (mExecutor == null) {
+            startUpdatingCallbackWithPosition()
+        }
 
-        if (isPlay) play()
+        if (isPlay) {
+            play()
+        }
     }
 
     private fun play() {
@@ -562,14 +574,20 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     mediaPlayer.audioSessionId
             )
             mediaPlayer.release()
-            if (sFocusEnabled) giveUpAudioFocus()
+            if (sFocusEnabled) {
+                giveUpAudioFocus()
+            }
             stopUpdatingCallbackWithPosition()
         }
         unregisterActionsReceiver()
     }
 
     fun resumeOrPause() {
-        if (isPlaying) pauseMediaPlayer() else resumeMediaPlayer()
+        if (isPlaying) {
+            pauseMediaPlayer()
+        } else {
+            resumeMediaPlayer()
+        }
     }
 
     private fun getRepeatMode() {
@@ -593,7 +611,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun repeat(updatePlaybackStatus: Boolean) {
         getRepeatMode()
-        if (updatePlaybackStatus) updatePlaybackStatus(true)
+        if (updatePlaybackStatus) {
+            updatePlaybackStatus(true)
+        }
         mMusicNotificationManager.updateRepeatIcon()
     }
 
@@ -630,8 +650,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (isMediaPlayer) {
             mediaPlayer.setOnSeekCompleteListener { mp ->
                 mp.setOnSeekCompleteListener(null)
-                if (restoreProgressCallBack) startUpdatingCallbackWithPosition()
-                if (updatePlaybackStatus) updatePlaybackStatus(!restoreProgressCallBack)
+                if (restoreProgressCallBack) {
+                    startUpdatingCallbackWithPosition()
+                }
+                if (updatePlaybackStatus) {
+                    updatePlaybackStatus(!restoreProgressCallBack)
+                }
             }
             mediaPlayer.seekTo(position)
         }
@@ -671,7 +695,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         if (isMediaPlayer) {
             fun volFromPercent(percent: Int): Float {
-                if (percent == 100) return 1f
+                if (percent == 100) {
+                    return 1f
+                }
                 return (1 - (ln((101 - percent).toFloat()) / ln(101f)))
             }
 
@@ -703,28 +729,44 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                         repeat(true)
                         mediaPlayerInterface.onUpdateRepeatStatus()
                     }
-                    GoConstants.CLOSE_ACTION -> if (playerService.isRunning && isMediaPlayer) stopPlaybackService(
-                            stopPlayback = true
-                    )
+                    GoConstants.CLOSE_ACTION -> if (playerService.isRunning && isMediaPlayer) {
+                        stopPlaybackService(
+                                stopPlayback = true
+                        )
+                    }
 
-                    BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (::currentSong.isInitialized && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
-                    BluetoothDevice.ACTION_ACL_CONNECTED -> if (::currentSong.isInitialized && goPreferences.isHeadsetPlugEnabled) resumeMediaPlayer()
+                    BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (::currentSong.isInitialized && goPreferences.isHeadsetPlugEnabled) {
+                        pauseMediaPlayer()
+                    }
+                    BluetoothDevice.ACTION_ACL_CONNECTED -> if (::currentSong.isInitialized && goPreferences.isHeadsetPlugEnabled) {
+                        resumeMediaPlayer()
+                    }
 
                     AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED ->
                         when (intent.getIntExtra(AudioManager.EXTRA_SCO_AUDIO_STATE, -1)) {
-                            AudioManager.SCO_AUDIO_STATE_CONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) resumeMediaPlayer()
-                            AudioManager.SCO_AUDIO_STATE_DISCONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
+                            AudioManager.SCO_AUDIO_STATE_CONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
+                                resumeMediaPlayer()
+                            }
+                            AudioManager.SCO_AUDIO_STATE_DISCONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
+                                pauseMediaPlayer()
+                            }
                         }
 
                     Intent.ACTION_HEADSET_PLUG -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
                         when (intent.getIntExtra("state", -1)) {
                             // 0 means disconnected
-                            HEADSET_DISCONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
+                            HEADSET_DISCONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
+                                pauseMediaPlayer()
+                            }
                             // 1 means connected
-                            HEADSET_CONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) resumeMediaPlayer()
+                            HEADSET_CONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
+                                resumeMediaPlayer()
+                            }
                         }
                     }
-                    AudioManager.ACTION_AUDIO_BECOMING_NOISY -> if (isPlaying && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
+                    AudioManager.ACTION_AUDIO_BECOMING_NOISY -> if (isPlaying && goPreferences.isHeadsetPlugEnabled) {
+                        pauseMediaPlayer()
+                    }
                 }
             }
             if (isOrderedBroadcast) abortBroadcast()

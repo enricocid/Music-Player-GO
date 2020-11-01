@@ -31,28 +31,44 @@ class NotificationReceiver(
                         mediaPlayerHolder.repeat(true)
                         mediaPlayerInterface.onUpdateRepeatStatus()
                     }
-                    GoConstants.CLOSE_ACTION -> if (playerService.isRunning && isMediaPlayer) stopPlaybackService(
-                            stopPlayback = true
-                    )
+                    GoConstants.CLOSE_ACTION -> if (playerService.isRunning && isMediaPlayer) {
+                        stopPlaybackService(
+                                stopPlayback = true
+                        )
+                    }
 
-                    BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
-                    BluetoothDevice.ACTION_ACL_CONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) resumeMediaPlayer()
+                    BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
+                        pauseMediaPlayer()
+                    }
+                    BluetoothDevice.ACTION_ACL_CONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
+                        resumeMediaPlayer()
+                    }
 
                     AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED ->
                         when (intent.getIntExtra(AudioManager.EXTRA_SCO_AUDIO_STATE, -1)) {
-                            AudioManager.SCO_AUDIO_STATE_CONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) resumeMediaPlayer()
-                            AudioManager.SCO_AUDIO_STATE_DISCONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
+                            AudioManager.SCO_AUDIO_STATE_CONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
+                                resumeMediaPlayer()
+                            }
+                            AudioManager.SCO_AUDIO_STATE_DISCONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
+                                pauseMediaPlayer()
+                            }
                         }
 
                     Intent.ACTION_HEADSET_PLUG -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
                         when (intent.getIntExtra("state", -1)) {
                             // 0 means disconnected
-                            HEADSET_DISCONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
+                            HEADSET_DISCONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
+                                pauseMediaPlayer()
+                            }
                             // 1 means connected
-                            HEADSET_CONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) resumeMediaPlayer()
+                            HEADSET_CONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
+                                resumeMediaPlayer()
+                            }
                         }
                     }
-                    AudioManager.ACTION_AUDIO_BECOMING_NOISY -> if (isPlaying && goPreferences.isHeadsetPlugEnabled) pauseMediaPlayer()
+                    AudioManager.ACTION_AUDIO_BECOMING_NOISY -> if (isPlaying && goPreferences.isHeadsetPlugEnabled) {
+                        pauseMediaPlayer()
+                    }
                 }
             }
         }

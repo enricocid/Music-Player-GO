@@ -166,7 +166,11 @@ object ListsHelper {
             launchedBy: LaunchedBy
     ) {
         val lovedSongs =
-                if (goPreferences.lovedSongs != null) goPreferences.lovedSongs else mutableListOf()
+                if (goPreferences.lovedSongs != null) {
+                    goPreferences.lovedSongs
+                } else {
+                    mutableListOf()
+                }
 
         val songToSave = song?.toSavedMusic(playerPosition, launchedBy)
 

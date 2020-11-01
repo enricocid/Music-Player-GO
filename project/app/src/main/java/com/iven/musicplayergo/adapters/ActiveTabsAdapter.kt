@@ -81,9 +81,13 @@ class ActiveTabsAdapter(
                             indicator
                     )
 
-                    if (indicator.visibility != View.VISIBLE) mActiveItems.remove(
-                            adapterPosition
-                    ) else mActiveItems.add(adapterPosition)
+                    if (indicator.visibility != View.VISIBLE) {
+                        mActiveItems.remove(
+                                adapterPosition
+                        )
+                    } else {
+                        mActiveItems.add(adapterPosition)
+                    }
                     if (mActiveItems.size < 2) {
                         context.getString(R.string.active_fragments_pref_warning)
                                 .toToast(context)

@@ -234,7 +234,9 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     }
 
     private fun setListDataSource(selectedList: List<String>?) {
-        if (!selectedList.isNullOrEmpty()) mDataSource.set(selectedList)
+        if (!selectedList.isNullOrEmpty()) {
+            mDataSource.set(selectedList)
+        }
     }
 
     fun onListFiltered(stringToFilter: String?) {
@@ -319,7 +321,11 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
     private fun setupArtistsRecyclerViewPadding(forceNoPadding: Boolean) {
         val rvPaddingEnd =
-                if (sIsFastScrollerVisible && !forceNoPadding) resources.getDimensionPixelSize(R.dimen.fast_scroller_view_dim) else 0
+                if (sIsFastScrollerVisible && !forceNoPadding) {
+                    resources.getDimensionPixelSize(R.dimen.fast_scroller_view_dim)
+                } else {
+                    0
+                }
         mMusicContainerListBinding.artistsFoldersRv.setPadding(0, 0, rvPaddingEnd, 0)
     }
 

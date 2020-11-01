@@ -460,10 +460,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
 
         mPlayerControlsPanelBinding.lovedSongsButton.setOnLongClickListener {
-            if (!goPreferences.lovedSongs.isNullOrEmpty()) DialogHelper.showClearLovedSongDialog(
-                    this,
-                    this
-            )
+            if (!goPreferences.lovedSongs.isNullOrEmpty()) {
+                DialogHelper.showClearLovedSongDialog(
+                        this,
+                        this
+                )
+            }
             return@setOnLongClickListener true
         }
 
@@ -700,11 +702,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun updatePlayingStatus(isNowPlaying: Boolean) {
         val isPlaying = mMediaPlayerHolder.state != GoConstants.PAUSED
         val drawable =
-                if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play
-        if (isNowPlaying) mNowPlayingControlsBinding.npPlay.setImageResource(drawable) else
+                if (isPlaying) {
+                    R.drawable.ic_pause
+                } else {
+                    R.drawable.ic_play
+                }
+        if (isNowPlaying) {
+            mNowPlayingControlsBinding.npPlay.setImageResource(drawable)
+        } else {
             mPlayerControlsPanelBinding.playPauseButton.setImageResource(
                     drawable
             )
+        }
     }
 
     override fun onLovedSongsUpdate(clear: Boolean) {
@@ -716,8 +725,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             goPreferences.lovedSongs = lovedSongs
         }
 
-        val lovedSongsButtonColor = if (lovedSongs.isNullOrEmpty())
-            mResolvedDisabledIconsColor else R.color.red.decodeColor(this)
+        val lovedSongsButtonColor = if (lovedSongs.isNullOrEmpty()) {
+            mResolvedDisabledIconsColor
+        } else {
+            R.color.red.decodeColor(this)
+        }
         ThemeHelper.updateIconTint(
                 mPlayerControlsPanelBinding.lovedSongsButton,
                 lovedSongsButtonColor
@@ -766,7 +778,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         updatePlayingInfo(false)
 
                         mPlayerControlsPanelBinding.songProgress.progress =
-                                if (isSongRestoredFromPrefs) goPreferences.latestPlayedSong?.startFrom!! else 0
+                                if (isSongRestoredFromPrefs) {
+                                    goPreferences.latestPlayedSong?.startFrom!!
+                                } else {
+                                    0
+                                }
                     } else {
                         notifyError(GoConstants.TAG_SD_NOT_READY)
                     }
@@ -796,13 +812,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         updateRepeatStatus(false)
 
-        if (isNowPlaying) updateNowPlayingInfo()
+        if (isNowPlaying) {
+            updateNowPlayingInfo()
+        }
 
         if (restore) {
 
-            if (!mMediaPlayerHolder.queueSongs.isNullOrEmpty() && !mMediaPlayerHolder.isQueueStarted)
-                mMediaPlayerInterface.onQueueEnabled() else
+            if (!mMediaPlayerHolder.queueSongs.isNullOrEmpty() && !mMediaPlayerHolder.isQueueStarted) {
+                mMediaPlayerInterface.onQueueEnabled()
+            } else {
                 mMediaPlayerInterface.onQueueStartedOrEnded(mMediaPlayerHolder.isQueueStarted)
+            }
 
             updatePlayingStatus(false)
 
@@ -908,7 +928,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 openDetailsFragment(selectedArtistOrFolder, mMediaPlayerHolder.launchedBy)
             }
 
-            if (isNowPlaying) mNowPlayingDialog.dismiss()
+            if (isNowPlaying) {
+                mNowPlayingDialog.dismiss()
+            }
         }
     }
 
@@ -925,7 +947,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onHandleFocusPref() {
         if (isMediaPlayerHolder) {
-            if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) if (goPreferences.isFocusEnabled) mMediaPlayerHolder.tryToGetAudioFocus() else mMediaPlayerHolder.giveUpAudioFocus()
+            if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) {
+                if (goPreferences.isFocusEnabled) {
+                    mMediaPlayerHolder.tryToGetAudioFocus()
+                } else {
+                    mMediaPlayerHolder.giveUpAudioFocus()
+                }
+            }
         }
     }
 
@@ -944,9 +972,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun startPlayback(song: Music?, album: List<Music>?, launchedBy: LaunchedBy) {
         if (isMediaPlayerHolder) {
-            if (::mPlayerService.isInitialized && !mPlayerService.isRunning) startService(
-                    mBindingIntent
-            )
+            if (::mPlayerService.isInitialized && !mPlayerService.isRunning) {
+                startService(
+                        mBindingIntent
+                )
+            }
             mMediaPlayerHolder.apply {
                 setCurrentSong(song, album, isFromQueue = false, isFolderAlbum = launchedBy)
                 initMediaPlayer(song)
@@ -955,24 +985,40 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onSongSelected(song: Music?, songs: List<Music>?, launchedBy: LaunchedBy) {
-        if (isMediaPlayerHolder) mMediaPlayerHolder.apply {
-            isSongRestoredFromPrefs = false
-            if (!isPlay) isPlay = true
-            if (isQueue) setQueueEnabled(false)
-            startPlayback(song, songs, launchedBy)
+        if (isMediaPlayerHolder) {
+            mMediaPlayerHolder.apply {
+                isSongRestoredFromPrefs = false
+                if (!isPlay) {
+                    isPlay = true
+                }
+                if (isQueue) {
+                    setQueueEnabled(false)
+                }
+                startPlayback(song, songs, launchedBy)
+            }
         }
     }
 
     private fun resumeOrPause() {
-        if (checkIsPlayer(true)) mMediaPlayerHolder.resumeOrPause()
+        if (checkIsPlayer(true)) {
+            mMediaPlayerHolder.resumeOrPause()
+        }
     }
 
     private fun skip(isNext: Boolean) {
         if (checkIsPlayer(true)) {
-            if (!mMediaPlayerHolder.isPlay) mMediaPlayerHolder.isPlay = true
-            if (isNext) mMediaPlayerHolder.skip(true) else mMediaPlayerHolder.instantReset()
-            if (mMediaPlayerHolder.isSongRestoredFromPrefs) mMediaPlayerHolder.isSongRestoredFromPrefs =
-                    false
+            if (!mMediaPlayerHolder.isPlay) {
+                mMediaPlayerHolder.isPlay = true
+            }
+            if (isNext) {
+                mMediaPlayerHolder.skip(true)
+            } else {
+                mMediaPlayerHolder.instantReset()
+            }
+            if (mMediaPlayerHolder.isSongRestoredFromPrefs) {
+                mMediaPlayerHolder.isSongRestoredFromPrefs =
+                        false
+            }
         }
     }
 
@@ -984,13 +1030,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     fun openEqualizer(view: View) {
-        if (checkIsPlayer(true)) mMediaPlayerHolder.openEqualizer(this)
+        if (checkIsPlayer(true)) {
+            mMediaPlayerHolder.openEqualizer(this)
+        }
     }
 
     override fun onAddToQueue(song: Music?) {
         if (checkIsPlayer(true)) {
             mMediaPlayerHolder.apply {
-                if (queueSongs.isEmpty()) setQueueEnabled(true)
+                if (queueSongs.isEmpty()) {
+                    setQueueEnabled(true)
+                }
                 song?.let { songToQueue ->
                     queueSongs.add(songToQueue)
                     getString(
@@ -1079,7 +1129,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         override fun onPositionChanged(position: Int) {
             mPlayerControlsPanelBinding.songProgress.progress = position
-            if (isNowPlaying) mNowPlayingBinding.npSeekBar.progress = position
+            if (isNowPlaying) {
+                mNowPlayingBinding.npSeekBar.progress = position
+            }
         }
 
         override fun onStateChanged() {
@@ -1087,10 +1139,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             updatePlayingStatus(isNowPlaying)
             if (mMediaPlayerHolder.state != GoConstants.RESUMED && mMediaPlayerHolder.state != GoConstants.PAUSED) {
                 updatePlayingInfo(false)
-                if (::mQueueDialog.isInitialized && mQueueDialog.isShowing && mMediaPlayerHolder.isQueue)
+                if (::mQueueDialog.isInitialized && mQueueDialog.isShowing && mMediaPlayerHolder.isQueue) {
                     mQueueAdapter.swapSelectedSong(
                             mMediaPlayerHolder.currentSong.first
                     )
+                }
             }
         }
 
@@ -1102,7 +1155,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
 
         override fun onQueueCleared() {
-            if (::mQueueDialog.isInitialized && mQueueDialog.isShowing) mQueueDialog.dismiss()
+            if (::mQueueDialog.isInitialized && mQueueDialog.isShowing) {
+                mQueueDialog.dismiss()
+            }
         }
 
         override fun onQueueStartedOrEnded(started: Boolean) {

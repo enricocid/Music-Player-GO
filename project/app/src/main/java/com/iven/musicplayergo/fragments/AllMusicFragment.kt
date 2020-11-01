@@ -246,7 +246,11 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
     private fun setupMusicRecyclerViewPadding(forceNoPadding: Boolean) {
         val rvPaddingEnd =
-                if (sIsFastScrollerVisible && !forceNoPadding) resources.getDimensionPixelSize(R.dimen.fast_scroller_view_dim) else 0
+                if (sIsFastScrollerVisible && !forceNoPadding) {
+                    resources.getDimensionPixelSize(R.dimen.fast_scroller_view_dim)
+                } else {
+                    0
+                }
         mAllMusicFragmentBinding.allMusicRv.setPadding(0, 0, rvPaddingEnd, 0)
     }
 

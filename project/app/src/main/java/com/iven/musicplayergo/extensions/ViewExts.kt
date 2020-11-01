@@ -85,7 +85,11 @@ fun ImageView.loadCover(imageLoader: ImageLoader, music: Music?, defaultCover: B
 
     ioScope.launch {
         withContext(ioDispatcher) {
-            delay(if (isLoadDelay) 1000 else 0)
+            delay(if (isLoadDelay) {
+                1000
+            } else {
+                0
+            })
             imageLoader.execute(request)
         }
     }
@@ -95,11 +99,12 @@ fun ImageView.loadCover(imageLoader: ImageLoader, music: Music?, defaultCover: B
 fun Int.decodeColor(context: Context) = ContextCompat.getColor(context, this)
 
 @Suppress("DEPRECATION")
-fun String.toSpanned(): Spanned = if (VersioningHelper.isNougat()) Html.fromHtml(
-        this,
-        Html.FROM_HTML_MODE_LEGACY
-)
-else Html.fromHtml(this)
+fun String.toSpanned(): Spanned = if (VersioningHelper.isNougat()) {
+    Html.fromHtml(
+            this,
+            Html.FROM_HTML_MODE_LEGACY
+    )
+} else Html.fromHtml(this)
 
 // Extension to set menu items text color
 fun MenuItem.setTitleColor(color: Int) {
@@ -128,14 +133,34 @@ fun FragmentManager.isFragment(fragmentTag: String): Boolean {
 
 fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator {
 
-    val revealDuration: Long = if (isErrorFragment) 1500 else 500
+    val revealDuration: Long = if (isErrorFragment) {
+        1500
+    } else {
+        500
+    }
     val radius = max(width, height).toFloat()
 
-    val startRadius = if (show) 0f else radius
-    val finalRadius = if (show) radius else 0f
+    val startRadius = if (show) {
+        0f
+    } else {
+        radius
+    }
+    val finalRadius = if (show) {
+        radius
+    } else {
+        0f
+    }
 
-    val cx = if (isErrorFragment) width / 2 else 0
-    val cy = if (isErrorFragment) height / 2 else 0
+    val cx = if (isErrorFragment) {
+        width / 2
+    } else {
+        0
+    }
+    val cy = if (isErrorFragment) {
+        height / 2
+    } else {
+        0
+    }
     val animator =
             ViewAnimationUtils.createCircularReveal(
                     this,
@@ -147,30 +172,46 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
                 interpolator = FastOutSlowInInterpolator()
                 duration = revealDuration
                 doOnEnd {
-                    if (!show) handleViewVisibility(false)
+                    if (!show) {
+                        handleViewVisibility(false)
+                    }
                 }
                 start()
             }
 
     val windowBackground = R.color.windowBackground.decodeColor(context)
     val red = R.color.red.decodeColor(context)
-    val accent = if (!show) windowBackground else ThemeHelper.resolveThemeAccent(context)
+    val accent = if (!show) {
+        windowBackground
+    } else {
+        ThemeHelper.resolveThemeAccent(context)
+    }
 
-    val startColor = if (isErrorFragment) red else accent
-    val endColor = if (show) windowBackground else red
+    val startColor = if (isErrorFragment) {
+        red
+    } else {
+        accent
+    }
+    val endColor = if (show) {
+        windowBackground
+    } else {
+        red
+    }
 
     ValueAnimator().apply {
         setIntValues(startColor, endColor)
         setEvaluator(ArgbEvaluatorCompat())
         addUpdateListener { valueAnimator -> setBackgroundColor((valueAnimator.animatedValue as Int)) }
         duration = revealDuration
-        if (isErrorFragment) doOnEnd {
-            background =
-                    ThemeHelper.createColouredRipple(
-                            context,
-                            R.color.red.decodeColor(context),
-                            R.drawable.ripple
-                    )
+        if (isErrorFragment) {
+            doOnEnd {
+                background =
+                        ThemeHelper.createColouredRipple(
+                                context,
+                                R.color.red.decodeColor(context),
+                                R.drawable.ripple
+                        )
+            }
         }
         start()
     }
@@ -244,7 +285,11 @@ private fun instantiateSwipeHandler(
 }
 
 fun View.handleViewVisibility(show: Boolean) {
-    visibility = if (show) View.VISIBLE else View.GONE
+    visibility = if (show) {
+        View.VISIBLE
+    } else {
+        View.GONE
+    }
 }
 
 fun String.toToast(
