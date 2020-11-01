@@ -18,6 +18,7 @@ import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.addBidirectionalSwipeHandler
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedMusic
 import com.iven.musicplayergo.player.MediaPlayerHolder
@@ -143,7 +144,9 @@ object DialogHelper {
     fun showLovedSongsDialog(
             context: Context,
             uiControlInterface: UIControlInterface,
-            mediaPlayerHolder: MediaPlayerHolder
+            mediaPlayerHolder: MediaPlayerHolder,
+            deviceSongs: MutableList<Music>,
+            deviceAlbumsByArtist: MutableMap<String, List<Album>>?
     ) {
 
         MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
@@ -154,7 +157,9 @@ object DialogHelper {
                     context,
                     this,
                     mediaPlayerHolder,
-                    uiControlInterface
+                    uiControlInterface,
+                    deviceSongs,
+                    deviceAlbumsByArtist
             )
 
             customListAdapter(lovedSongsAdapter)

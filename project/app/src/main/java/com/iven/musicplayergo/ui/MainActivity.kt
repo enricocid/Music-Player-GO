@@ -33,12 +33,15 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.list.getListAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.iven.musicplayergo.*
+import com.iven.musicplayergo.GoConstants
+import com.iven.musicplayergo.MusicViewModel
+import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.databinding.*
 import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.fragments.*
+import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.*
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
@@ -57,7 +60,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     // View model
     private val mMusicViewModel: MusicViewModel by viewModels()
-    private lateinit var mMusicRepository: MusicRepository
 
     // Colors
     private val mResolvedAccentColor get() = ThemeHelper.resolveThemeAccent(this)
@@ -135,7 +137,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder
             mMediaPlayerHolder.mediaPlayerInterface = mMediaPlayerInterface
 
-            mMusicRepository = MusicRepository.getInstance()
             mMusicViewModel.deviceMusic.observe(this@MainActivity, { returnedMusic ->
                 finishSetup(returnedMusic)
             })
@@ -424,7 +425,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                             launchedBy,
                             MusicOrgHelper.getPlayingAlbumPosition(
                                     selectedArtistOrFolder,
-                                    mMediaPlayerHolder
+                                    mMediaPlayerHolder,
+                                    mMusicViewModel.deviceAlbumsByArtist
                             )
                     )
             supportFragmentManager.addFragment(mDetailsFragment, GoConstants.DETAILS_FRAGMENT_TAG)
@@ -762,15 +764,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     val song =
                             if (isSongRestoredFromPrefs) {
                                 MusicOrgHelper.getSongForRestore(
-                                        goPreferences.latestPlayedSong
+                                        goPreferences.latestPlayedSong,
+                                        mMusicViewModel.deviceMusicList
                                 )
                             } else {
-                                mMusicRepository.randomMusic
+                                mMusicViewModel.randomMusic
                             }
 
                     val songs = MusicOrgHelper.getAlbumSongs(
                             song.artist,
-                            song.album
+                            song.album,
+                            mMusicViewModel.deviceAlbumsByArtist
                     )
 
                     if (!songs.isNullOrEmpty()) {
@@ -928,7 +932,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     mDetailsFragment.tryToSnapToAlbumPosition(
                             MusicOrgHelper.getPlayingAlbumPosition(
                                     selectedArtistOrFolder,
-                                    mMediaPlayerHolder
+                                    mMediaPlayerHolder,
+                                    mMusicViewModel.deviceAlbumsByArtist
                             )
                     )
                 }
@@ -1094,7 +1099,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     fun openLovedSongsDialog(view: View) {
         if (!goPreferences.lovedSongs.isNullOrEmpty()) {
-            DialogHelper.showLovedSongsDialog(this, this, mMediaPlayerHolder)
+            DialogHelper.showLovedSongsDialog(this, this, mMediaPlayerHolder, mMusicViewModel.deviceMusicList, mMusicViewModel.deviceAlbumsByArtist)
         } else {
             getString(R.string.error_no_loved_songs).toToast(this)
         }
@@ -1109,11 +1114,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             try {
                 val displayNameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
                 cursor.moveToFirst()
-                val song = mMusicRepository.getSongFromIntent(cursor.getString(displayNameIndex))
+                val song = mMusicViewModel.getSongFromIntent(cursor.getString(displayNameIndex))
                 //get album songs and sort them
                 val albumSongs = MusicOrgHelper.getAlbumSongs(
                         song?.artist,
-                        song?.album
+                        song?.album,
+                        mMusicViewModel.deviceAlbumsByArtist
                 )
 
                 onSongSelected(song, albumSongs, LaunchedBy.ArtistView)

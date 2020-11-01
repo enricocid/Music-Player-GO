@@ -9,12 +9,13 @@ import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.GoConstants
-import com.iven.musicplayergo.MusicRepository
+import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentAllMusicBinding
 import com.iven.musicplayergo.enums.LaunchedBy
@@ -42,6 +43,9 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
     private lateinit var mAllMusicFragmentBinding: FragmentAllMusicBinding
 
+    // View model
+    private lateinit var mMusicViewModel: MusicViewModel
+
     private var mAllMusic: MutableList<Music>? = null
     private val mDataSource = emptyDataSource()
 
@@ -66,22 +70,27 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
         }
     }
 
-    private fun getAllMusic() {
-        val musicRepository = MusicRepository.getInstance()
-        mAllMusic = ListsHelper.getSortedMusicList(mSorting, musicRepository.deviceMusicFiltered)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         mAllMusicFragmentBinding = FragmentAllMusicBinding.bind(view)
 
-        getAllMusic()
-
-        setMusicDataSource(mAllMusic)
-
         sLandscape = ThemeHelper.isDeviceLand(requireContext().resources)
 
+        mMusicViewModel = ViewModelProvider(requireActivity()).get(MusicViewModel::class.java)
+
+        mMusicViewModel.deviceMusic.observe(requireActivity(), { returnedMusic ->
+            if (!returnedMusic.isNullOrEmpty()) {
+                mAllMusic = ListsHelper.getSortedMusicList(mSorting, mMusicViewModel.deviceMusicFiltered)
+
+                setMusicDataSource(mAllMusic)
+
+                finishSetup()
+            }
+        })
+    }
+
+    private fun finishSetup() {
         mAllMusicFragmentBinding.allMusicRv.apply {
 
             // setup{} is an extension method on RecyclerView
@@ -113,7 +122,8 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                                 item,
                                 MusicOrgHelper.getAlbumSongs(
                                         item.artist,
-                                        item.album
+                                        item.album,
+                                        mMusicViewModel.deviceAlbumsByArtist
                                 ),
                                 LaunchedBy.ArtistView
                         )
@@ -267,7 +277,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
                 mSorting = it.order
 
-                getAllMusic()
+                mAllMusic = ListsHelper.getSortedMusicList(mSorting, mMusicViewModel.deviceMusicFiltered)
 
                 handleIndicatorFastScrollerViewVisibility()
 

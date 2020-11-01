@@ -12,13 +12,14 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
-import com.iven.musicplayergo.MusicRepository
+import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.AccentsAdapter
 import com.iven.musicplayergo.adapters.ActiveTabsAdapter
@@ -92,10 +93,15 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         findPreference<Preference>(getString(R.string.faq_pref))?.onPreferenceClickListener =
                 this
 
-        findPreference<Preference>(getString(R.string.found_songs_pref))?.apply {
-            val musicRepository = MusicRepository.getInstance()
-            title =
-                    getString(R.string.found_songs_pref_title, musicRepository.musicDatabaseSize)
+        ViewModelProvider(requireActivity()).get(MusicViewModel::class.java).apply {
+            deviceMusic.observe(requireActivity(), { returnedMusic ->
+                if (!returnedMusic.isNullOrEmpty()) {
+                    findPreference<Preference>(getString(R.string.found_songs_pref))?.apply {
+                        title =
+                                getString(R.string.found_songs_pref_title, musicDatabaseSize)
+                    }
+                }
+            })
         }
 
         mThemePreference = findPreference<Preference>(getString(R.string.theme_pref))?.apply {

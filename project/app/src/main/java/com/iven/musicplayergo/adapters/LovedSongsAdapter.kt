@@ -13,6 +13,8 @@ import com.iven.musicplayergo.extensions.toSpanned
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.MusicOrgHelper
+import com.iven.musicplayergo.models.Album
+import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedMusic
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -21,7 +23,9 @@ class LovedSongsAdapter(
         private val context: Context,
         private val lovedSongsDialog: MaterialDialog,
         private val mediaPlayerHolder: MediaPlayerHolder,
-        private val uiControlInterface: UIControlInterface
+        private val uiControlInterface: UIControlInterface,
+        private val deviceSongs: MutableList<Music>,
+        private val deviceAlbumsByArtist: MutableMap<String, List<Album>>?
 ) :
         RecyclerView.Adapter<LovedSongsAdapter.LoveHolder>() {
 
@@ -78,13 +82,14 @@ class LovedSongsAdapter(
                 setOnClickListener {
                     mediaPlayerHolder.isSongFromLovedSongs =
                             Pair(true, lovedSong?.startFrom!!)
-                    MusicOrgHelper.getSongForRestore(lovedSong)
+                    MusicOrgHelper.getSongForRestore(lovedSong, deviceSongs)
                             .apply {
                                 uiControlInterface.onSongSelected(
                                         this,
                                         MusicOrgHelper.getAlbumSongs(
                                                 artist,
-                                                album
+                                                album,
+                                                deviceAlbumsByArtist
                                         ),
                                         lovedSong.launchedBy
                                 )

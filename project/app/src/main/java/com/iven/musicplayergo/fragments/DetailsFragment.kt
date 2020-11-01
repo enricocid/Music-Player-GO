@@ -14,6 +14,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
@@ -21,7 +22,7 @@ import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.GoConstants
-import com.iven.musicplayergo.MusicRepository
+import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentDetailsBinding
 import com.iven.musicplayergo.enums.LaunchedBy
@@ -49,7 +50,9 @@ import kotlinx.android.synthetic.main.fragment_details.*
 class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryTextListener {
 
     private lateinit var mDetailsFragmentBinding: FragmentDetailsBinding
-    private lateinit var mMusicRepository: MusicRepository
+
+    // View model
+    private lateinit var mMusicViewModel: MusicViewModel
 
     private lateinit var mArtistDetailsAnimator: Animator
     private lateinit var mAlbumsRecyclerViewLayoutManager: LinearLayoutManager
@@ -141,18 +144,18 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private fun getSongSource(): List<Music>? {
         return when (launchedBy) {
             LaunchedBy.ArtistView -> {
-                mMusicRepository.deviceAlbumsByArtist?.get(mSelectedArtistOrFolder)
+                mMusicViewModel.deviceAlbumsByArtist?.get(mSelectedArtistOrFolder)
                         ?.let { selectedArtistAlbums ->
                             mSelectedArtistAlbums = selectedArtistAlbums
                         }
-                mMusicRepository.deviceSongsByArtist?.get(mSelectedArtistOrFolder)
+                mMusicViewModel.deviceSongsByArtist?.get(mSelectedArtistOrFolder)
             }
 
             LaunchedBy.FolderView ->
-                mMusicRepository.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
+                mMusicViewModel.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
 
             LaunchedBy.AlbumView ->
-                mMusicRepository.deviceMusicByAlbum?.get(mSelectedArtistOrFolder)
+                mMusicViewModel.deviceMusicByAlbum?.get(mSelectedArtistOrFolder)
         }
     }
 
@@ -161,15 +164,19 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
         mDetailsFragmentBinding = FragmentDetailsBinding.bind(view)
 
-        mMusicRepository = MusicRepository.getInstance()
-
         sLandscape = ThemeHelper.isDeviceLand(requireContext().resources)
 
-        mSongsList = getSongSource()
+        mMusicViewModel = ViewModelProvider(requireActivity()).get(MusicViewModel::class.java)
 
-        setupToolbar()
+        mMusicViewModel.deviceMusic.observe(requireActivity(), { returnedMusic ->
+            if (!returnedMusic.isNullOrEmpty()) {
+                mSongsList = getSongSource()
 
-        setupViews(view)
+                setupToolbar()
+
+                setupViews(view)
+            }
+        })
     }
 
     private fun setupToolbar() {
@@ -328,7 +335,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                                 } else {
                                     MusicOrgHelper.getAlbumSongs(
                                             item.artist,
-                                            item.album
+                                            item.album,
+                                            mMusicViewModel.deviceAlbumsByArtist
                                     )
                                 }
 
@@ -463,9 +471,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private fun applySortingToMusic(order: Int) {
         val selectedList = if (sLaunchedByFolderView) {
-            mMusicRepository.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
+            mMusicViewModel.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
         } else {
-            mMusicRepository.deviceMusicByAlbum?.get(mSelectedArtistOrFolder)
+            mMusicViewModel.deviceMusicByAlbum?.get(mSelectedArtistOrFolder)
         }
         mSongsList = ListsHelper.getSortedMusicList(
                 order,

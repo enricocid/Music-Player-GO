@@ -9,12 +9,13 @@ import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.GoConstants
-import com.iven.musicplayergo.MusicRepository
+import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentMusicContainerListBinding
 import com.iven.musicplayergo.enums.LaunchedBy
@@ -39,7 +40,9 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
         SearchView.OnQueryTextListener {
 
     private lateinit var mMusicContainerListBinding: FragmentMusicContainerListBinding
-    private lateinit var mMusicRepository: MusicRepository
+
+    // View model
+    private lateinit var mMusicViewModel: MusicViewModel
 
     private var launchedBy: LaunchedBy = LaunchedBy.ArtistView
 
@@ -77,16 +80,24 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
         mMusicContainerListBinding = FragmentMusicContainerListBinding.bind(view)
 
-        mSorting = getSortingMethodFromPrefs()
-
-        mMusicRepository = MusicRepository.getInstance()
-
-        mList =
-                getSortedItemKeys()?.filter { !goPreferences.filters?.contains(it)!! }?.toMutableList()
-        setListDataSource(mList)
-
         sLandscape = ThemeHelper.isDeviceLand(requireContext().resources)
 
+        mMusicViewModel = ViewModelProvider(requireActivity()).get(MusicViewModel::class.java)
+
+        mMusicViewModel.deviceMusic.observe(requireActivity(), { returnedMusic ->
+            if (!returnedMusic.isNullOrEmpty()) {
+                mSorting = getSortingMethodFromPrefs()
+
+                mList =
+                        getSortedItemKeys()?.filter { !goPreferences.filters?.contains(it)!! }?.toMutableList()
+                setListDataSource(mList)
+
+                finishSetup()
+            }
+        })
+    }
+
+    private fun finishSetup() {
         mMusicContainerListBinding.artistsFoldersRv.apply {
 
             // setup{} is an extension method on RecyclerView
@@ -181,10 +192,10 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
             LaunchedBy.FolderView ->
                 getString(
                         R.string.folder_info,
-                        mMusicRepository.deviceMusicByFolder?.getValue(item)?.size
+                        mMusicViewModel.deviceMusicByFolder?.getValue(item)?.size
                 )
             else ->
-                mMusicRepository.deviceMusicByAlbum?.get(item)?.first()?.artist
+                mMusicViewModel.deviceMusicByAlbum?.get(item)?.first()?.artist
 
         }
     }
@@ -194,18 +205,18 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
             LaunchedBy.ArtistView ->
                 ListsHelper.getSortedList(
                         mSorting,
-                        mMusicRepository.deviceAlbumsByArtist?.keys?.toMutableList()
+                        mMusicViewModel.deviceAlbumsByArtist?.keys?.toMutableList()
                 )
             LaunchedBy.FolderView ->
                 ListsHelper.getSortedList(
                         mSorting,
-                        mMusicRepository.deviceMusicByFolder?.keys?.toMutableList()
+                        mMusicViewModel.deviceMusicByFolder?.keys?.toMutableList()
                 )
 
             else ->
                 ListsHelper.getSortedListWithNull(
                         mSorting,
-                        mMusicRepository.deviceMusicByAlbum?.keys?.toMutableList()
+                        mMusicViewModel.deviceMusicByAlbum?.keys?.toMutableList()
                 )
         }
     }
@@ -255,8 +266,8 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
     private fun getArtistSubtitle(item: String) = getString(
             R.string.artist_info,
-            mMusicRepository.deviceAlbumsByArtist?.getValue(item)?.size,
-            mMusicRepository.deviceSongsByArtist?.getValue(item)?.size
+            mMusicViewModel.deviceAlbumsByArtist?.getValue(item)?.size,
+            mMusicViewModel.deviceSongsByArtist?.getValue(item)?.size
     )
 
     @SuppressLint("DefaultLocale")
