@@ -98,7 +98,8 @@ please consider a [donation](https://weblate.org/it/donate/new/) :)
 | [material-dialogs](https://github.com/afollestad/material-dialogs)                  | [Aidan Afollestad](https://github.com/afollestad)                       |
 | [recyclical](https://github.com/afollestad/recyclical)                  | [Aidan Afollestad](https://github.com/afollestad)                       |
 | [Edge-to-Edge](https://github.com/beworker/edge-to-edge)                  | [Sergej Shafarenka](https://github.com/beworker)                       |
-
+| [Edge-to-Edge](https://github.com/beworker/edge-to-edge)                  | [Sergej Shafarenka](https://github.com/beworker)                       |
+| [coil](https://github.com/coil-kt/coil)                  | [coil-kt](https://github.com/coil-kt)                       |
 
 ### Tools
 
