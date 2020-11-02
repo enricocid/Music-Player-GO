@@ -30,8 +30,8 @@
             android:id="@+id/albums_rv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:overScrollMode="never"
             android:orientation="vertical"
+            android:overScrollMode="never"
             android:paddingTop="8dp"
             android:paddingBottom="8dp" />
 
@@ -103,10 +103,10 @@
                 android:id="@+id/songs_rv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2"
                 android:overScrollMode="never"
-                android:scrollbars="none" />
+                android:scrollbars="none"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2" />
         </LinearLayout>
 
     </LinearLayout>

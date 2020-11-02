@@ -62,18 +62,22 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private val mMusicViewModel: MusicViewModel by viewModels()
 
     // Colors
-    private val mResolvedAccentColor get() = ThemeHelper.resolveThemeAccent(this)
-    private val mResolvedAlphaAccentColor
-        get() = ThemeHelper.getAlphaAccent(
+    private val mResolvedAccentColor by lazy { ThemeHelper.resolveThemeAccent(this) }
+    private val mResolvedAlphaAccentColor by lazy {
+        ThemeHelper.getAlphaAccent(
                 this,
                 ThemeHelper.getAlphaForAccent()
         )
-    private val mResolvedIconsColor get() = R.color.widgetsColor.decodeColor(this)
+    }
+    private val mResolvedIconsColor by lazy { R.color.widgetsColor.decodeColor(this) }
+
     private val mResolvedDisabledIconsColor
-        get() = ThemeHelper.resolveColorAttr(
-                this,
-                android.R.attr.colorButtonNormal
-        )
+            by lazy {
+                ThemeHelper.resolveColorAttr(
+                        this,
+                        android.R.attr.colorButtonNormal
+                )
+            }
 
     // Fragments
     private val mActiveFragments: List<Int> = goPreferences.activeFragments.toList()
@@ -90,7 +94,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private var sRevealAnimationRunning = false
     private var sAppearanceChanged = false
     private var sRestoreSettingsFragment = false
-    private val sLandscape get() = ThemeHelper.isDeviceLand(resources)
+    private val sLandscape by lazy { ThemeHelper.isDeviceLand(resources) }
 
     // Now playing
     private lateinit var mNowPlayingDialog: MaterialDialog

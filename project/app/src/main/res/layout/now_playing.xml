@@ -14,23 +14,23 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_gravity="center"
+            android:id="@+id/np_cover"
             android:layout_width="@dimen/cover_dim"
             android:layout_height="@dimen/cover_dim"
+            android:layout_gravity="center"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:id="@+id/np_cover"
             android:src="@drawable/default_cover"
             tools:ignore="ContentDescription" />
 
         <LinearLayout
-            android:gravity="center"
-            android:layout_gravity="center"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginBottom="4dp"
+            android:layout_weight="1"
             android:background="@drawable/ripple"
+            android:gravity="center"
             android:onClick="openPlayingArtistAlbum"
             android:orientation="vertical"
             android:paddingTop="16dp"

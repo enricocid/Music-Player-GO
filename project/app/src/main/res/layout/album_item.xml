@@ -17,11 +17,11 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="match_parent"
             android:id="@+id/image"
-            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:scaleType="centerCrop"
             android:src="@drawable/default_cover"
             tools:ignore="ContentDescription" />
 
@@ -29,8 +29,8 @@
             android:id="@+id/album"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.85"
             android:layout_gravity="center"
+            android:layout_weight="0.85"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="3"

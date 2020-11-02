@@ -15,6 +15,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
@@ -28,6 +29,7 @@ import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
+
 
 class PreferencesFragment : PreferenceFragmentCompat(),
         SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener {
@@ -230,8 +232,10 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             customListAdapter(activeTabsAdapter)
 
-            getRecyclerView().layoutManager =
-                    LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+            val layoutManager = GridLayoutManager(context, 2)
+
+            layoutManager.spanSizeLookup = activeTabsAdapter.spanSizeLookup
+            getRecyclerView().layoutManager = layoutManager
 
             positiveButton(android.R.string.ok) {
                 goPreferences.activeFragments = activeTabsAdapter.getUpdatedItems()

@@ -10,28 +10,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:baselineAligned="false"
         android:layout_marginBottom="16dp"
+        android:baselineAligned="false"
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_gravity="center"
+            android:id="@+id/np_cover"
             android:layout_width="@dimen/cover_dim"
             android:layout_height="@dimen/cover_dim"
+            android:layout_gravity="center"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="4dp"
-            android:id="@+id/np_cover"
             android:src="@drawable/default_cover"
             tools:ignore="ContentDescription" />
 
         <LinearLayout
-            android:layout_gravity="center"
-            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginBottom="8dp"
             android:layout_weight="1"
             android:background="@drawable/ripple"
+            android:gravity="center"
             android:onClick="openPlayingArtistAlbum"
             android:orientation="vertical"
             android:paddingTop="8dp"
