@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
@@ -39,7 +40,7 @@ import kotlin.math.max
 // https://antonioleiva.com/kotlin-ongloballayoutlistener/
 inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
     viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
+        ViewTreeObserver.OnGlobalLayoutListener {
         override fun onGlobalLayout() {
             if (measuredWidth > 0 && measuredHeight > 0) {
                 viewTreeObserver.removeOnGlobalLayoutListener(this)
@@ -63,33 +64,41 @@ private val ioDispatcher = Dispatchers.IO + viewModelJob + handler
 private val ioScope = CoroutineScope(ioDispatcher)
 
 fun Context.getImageLoader() = ImageLoader.Builder(this)
-        .bitmapPoolingEnabled(false)
-        .crossfade(true)
-        .build()
+    .bitmapPoolingEnabled(false)
+    .crossfade(true)
+    .build()
 
-fun ImageView.loadCover(imageLoader: ImageLoader, music: Music?, defaultCover: Bitmap, isCircleCrop: Boolean, isLoadDelay: Boolean) {
+fun ImageView.loadCover(
+    imageLoader: ImageLoader,
+    music: Music?,
+    defaultCover: Bitmap,
+    isCircleCrop: Boolean,
+    isLoadDelay: Boolean
+) {
 
     val request = ImageRequest.Builder(context)
-            .data(music?.getCover(context) ?: defaultCover)
-            .target(
-                    onSuccess = { result ->
-                        // Handle the successful result.
-                        load(result) {
-                            if (isCircleCrop) {
-                                transformations(CircleCropTransformation())
-                            }
-                        }
+        .data(music?.getCover(context) ?: defaultCover)
+        .target(
+            onSuccess = { result ->
+                // Handle the successful result.
+                load(result) {
+                    if (isCircleCrop && result.toBitmap() != defaultCover) {
+                        transformations(CircleCropTransformation())
                     }
-            )
-            .build()
+                }
+            }
+        )
+        .build()
 
     ioScope.launch {
         withContext(ioDispatcher) {
-            delay(if (isLoadDelay) {
-                1000
-            } else {
-                0
-            })
+            delay(
+                if (isLoadDelay) {
+                    1000
+                } else {
+                    0
+                }
+            )
             imageLoader.execute(request)
         }
     }
@@ -101,8 +110,8 @@ fun Int.decodeColor(context: Context) = ContextCompat.getColor(context, this)
 @Suppress("DEPRECATION")
 fun String.toSpanned(): Spanned = if (VersioningHelper.isNougat()) {
     Html.fromHtml(
-            this,
-            Html.FROM_HTML_MODE_LEGACY
+        this,
+        Html.FROM_HTML_MODE_LEGACY
     )
 } else Html.fromHtml(this)
 
@@ -118,9 +127,9 @@ fun FragmentManager.addFragment(fragment: Fragment, tag: String?) {
     beginTransaction().apply {
         addToBackStack(null)
         add(
-                R.id.container,
-                fragment,
-                tag
+            R.id.container,
+            fragment,
+            tag
         )
         commit()
     }
@@ -162,22 +171,22 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
         0
     }
     val animator =
-            ViewAnimationUtils.createCircularReveal(
-                    this,
-                    cx,
-                    cy,
-                    startRadius,
-                    finalRadius
-            ).apply {
-                interpolator = FastOutSlowInInterpolator()
-                duration = revealDuration
-                doOnEnd {
-                    if (!show) {
-                        handleViewVisibility(false)
-                    }
+        ViewAnimationUtils.createCircularReveal(
+            this,
+            cx,
+            cy,
+            startRadius,
+            finalRadius
+        ).apply {
+            interpolator = FastOutSlowInInterpolator()
+            duration = revealDuration
+            doOnEnd {
+                if (!show) {
+                    handleViewVisibility(false)
                 }
-                start()
             }
+            start()
+        }
 
     val windowBackground = R.color.windowBackground.decodeColor(context)
     val red = R.color.red.decodeColor(context)
@@ -206,11 +215,11 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
         if (isErrorFragment) {
             doOnEnd {
                 background =
-                        ThemeHelper.createColouredRipple(
-                                context,
-                                R.color.red.decodeColor(context),
-                                R.drawable.ripple
-                        )
+                    ThemeHelper.createColouredRipple(
+                        context,
+                        R.color.red.decodeColor(context),
+                        R.drawable.ripple
+                    )
             }
         }
         start()
@@ -232,7 +241,7 @@ fun RecyclerView.smoothSnapToPosition(position: Int) {
         override fun onStop() {
             super.onStop()
             findViewHolderForAdapterPosition(position)
-                    ?.itemView?.performClick()
+                ?.itemView?.performClick()
         }
     }
     smoothScroller.targetPosition = position
@@ -241,11 +250,11 @@ fun RecyclerView.smoothSnapToPosition(position: Int) {
 
 //add swipe features to a RecyclerView
 fun RecyclerView.addBidirectionalSwipeHandler(
-        isRightToLeftEnabled: Boolean,
-        onSwiped: (
-                viewHolder: RecyclerView.ViewHolder,
-                direction: Int
-        ) -> Unit
+    isRightToLeftEnabled: Boolean,
+    onSwiped: (
+        viewHolder: RecyclerView.ViewHolder,
+        direction: Int
+    ) -> Unit
 ) {
     val swipeLeftCallback = instantiateSwipeHandler(ItemTouchHelper.RIGHT, onSwiped)
     val swipeLeftHelper = ItemTouchHelper(swipeLeftCallback)
@@ -258,26 +267,26 @@ fun RecyclerView.addBidirectionalSwipeHandler(
 }
 
 private fun instantiateSwipeHandler(
-        direction: Int,
-        onSwiped: (
-                viewHolder: RecyclerView.ViewHolder,
-                direction: Int
-        ) -> Unit
+    direction: Int,
+    onSwiped: (
+        viewHolder: RecyclerView.ViewHolder,
+        direction: Int
+    ) -> Unit
 ): ItemTouchHelper.SimpleCallback {
     return object : ItemTouchHelper.SimpleCallback(
-            0,
-            direction
+        0,
+        direction
     ) {
 
         override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
         ): Boolean = false
 
         override fun onSwiped(
-                viewHolder: RecyclerView.ViewHolder,
-                direction: Int
+            viewHolder: RecyclerView.ViewHolder,
+            direction: Int
         ) {
             onSwiped(viewHolder, direction)
         }
@@ -293,7 +302,7 @@ fun View.handleViewVisibility(show: Boolean) {
 }
 
 fun String.toToast(
-        context: Context
+    context: Context
 ) {
     Toast.makeText(context, this, Toast.LENGTH_LONG).show()
 }
