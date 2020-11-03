@@ -30,8 +30,8 @@ object DialogHelper {
 
     @JvmStatic
     fun showQueueSongsDialog(
-            context: Context,
-            mediaPlayerHolder: MediaPlayerHolder
+        context: Context,
+        mediaPlayerHolder: MediaPlayerHolder
     ) = MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
         title(R.string.queue)
@@ -46,9 +46,9 @@ object DialogHelper {
             recyclerView.layoutManager = GridLayoutManager(context, 3)
         } else {
             recyclerView.addItemDecoration(
-                    ThemeHelper.getRecyclerViewDivider(
-                            context
-                    )
+                ThemeHelper.getRecyclerViewDivider(
+                    context
+                )
             )
             if (goPreferences.isEdgeToEdge) {
                 window?.apply {
@@ -77,11 +77,11 @@ object DialogHelper {
 
     @JvmStatic
     fun showDeleteQueueSongDialog(
-            context: Context,
-            song: Pair<Music, Int>,
-            queueSongsDialog: MaterialDialog,
-            queueAdapter: QueueAdapter,
-            mediaPlayerHolder: MediaPlayerHolder
+        context: Context,
+        song: Pair<Music, Int>,
+        queueSongsDialog: MaterialDialog,
+        queueAdapter: QueueAdapter,
+        mediaPlayerHolder: MediaPlayerHolder
     ) {
 
         MaterialDialog(context).show {
@@ -89,10 +89,10 @@ object DialogHelper {
             title(R.string.queue)
 
             message(
-                    text = context.getString(
-                            R.string.queue_song_remove,
-                            song.first.title
-                    )
+                text = context.getString(
+                    R.string.queue_song_remove,
+                    song.first.title
+                )
             )
             positiveButton(R.string.yes) {
 
@@ -113,8 +113,8 @@ object DialogHelper {
 
     @JvmStatic
     fun showClearQueueDialog(
-            context: Context,
-            mediaPlayerHolder: MediaPlayerHolder
+        context: Context,
+        mediaPlayerHolder: MediaPlayerHolder
     ) {
 
         MaterialDialog(context).show {
@@ -130,7 +130,7 @@ object DialogHelper {
 
                         restorePreQueueSongs()
                         skip(
-                                true
+                            true
                         )
                     }
                     setQueueEnabled(false)
@@ -142,11 +142,11 @@ object DialogHelper {
 
     @JvmStatic
     fun showLovedSongsDialog(
-            context: Context,
-            uiControlInterface: UIControlInterface,
-            mediaPlayerHolder: MediaPlayerHolder,
-            deviceSongs: MutableList<Music>,
-            deviceAlbumsByArtist: MutableMap<String, List<Album>>?
+        context: Context,
+        uiControlInterface: UIControlInterface,
+        mediaPlayerHolder: MediaPlayerHolder,
+        deviceSongs: MutableList<Music>,
+        deviceAlbumsByArtist: MutableMap<String, List<Album>>?
     ) {
 
         MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
@@ -154,12 +154,12 @@ object DialogHelper {
             title(R.string.loved_songs)
 
             val lovedSongsAdapter = LovedSongsAdapter(
-                    context,
-                    this,
-                    mediaPlayerHolder,
-                    uiControlInterface,
-                    deviceSongs,
-                    deviceAlbumsByArtist
+                context,
+                this,
+                mediaPlayerHolder,
+                uiControlInterface,
+                deviceSongs,
+                deviceAlbumsByArtist
             )
 
             customListAdapter(lovedSongsAdapter)
@@ -170,15 +170,15 @@ object DialogHelper {
                 recyclerView.layoutManager = GridLayoutManager(context, 3)
             } else {
                 recyclerView.addItemDecoration(
-                        ThemeHelper.getRecyclerViewDivider(
-                                context
-                        )
+                    ThemeHelper.getRecyclerViewDivider(
+                        context
+                    )
                 )
                 if (goPreferences.isEdgeToEdge) {
                     window?.apply {
                         ThemeHelper.handleLightSystemBars(
-                                context.resources.configuration,
-                                this
+                            context.resources.configuration,
+                            this
                         )
                         edgeToEdge {
                             recyclerView.fit { Edge.Bottom }
@@ -199,9 +199,9 @@ object DialogHelper {
 
     @JvmStatic
     fun showDeleteLovedSongDialog(
-            context: Context,
-            songToDelete: SavedMusic?,
-            lovedSongsAdapter: LovedSongsAdapter
+        context: Context,
+        songToDelete: SavedMusic?,
+        lovedSongsAdapter: LovedSongsAdapter
     ) {
 
         val lovedSongs = goPreferences.lovedSongs?.toMutableList()
@@ -211,14 +211,14 @@ object DialogHelper {
             title(R.string.loved_songs)
 
             message(
-                    text = context.getString(
-                            R.string.loved_song_remove,
-                            songToDelete?.title,
-                            songToDelete?.startFrom?.toLong()?.toFormattedDuration(
-                                    isAlbum = false,
-                                    isSeekBar = false
-                            )
+                text = context.getString(
+                    R.string.loved_song_remove,
+                    songToDelete?.title,
+                    songToDelete?.startFrom?.toLong()?.toFormattedDuration(
+                        isAlbum = false,
+                        isSeekBar = false
                     )
+                )
             )
             positiveButton(R.string.yes) {
                 lovedSongs?.remove(songToDelete)
@@ -232,8 +232,8 @@ object DialogHelper {
 
     @JvmStatic
     fun showClearLovedSongDialog(
-            context: Context,
-            uiControlInterface: UIControlInterface
+        context: Context,
+        uiControlInterface: UIControlInterface
     ) {
 
         MaterialDialog(context).show {
@@ -250,10 +250,10 @@ object DialogHelper {
 
     @JvmStatic
     fun showHidePopup(
-            context: Context,
-            itemView: View?,
-            stringToFilter: String?,
-            uiControlInterface: UIControlInterface
+        context: Context,
+        itemView: View?,
+        stringToFilter: String?,
+        uiControlInterface: UIControlInterface
     ) {
         itemView?.let { view ->
             PopupMenu(context, view).apply {
@@ -270,11 +270,11 @@ object DialogHelper {
 
     @JvmStatic
     fun showDoSomethingPopup(
-            context: Context,
-            itemView: View?,
-            song: Music?,
-            launchedBy: LaunchedBy,
-            uiControlInterface: UIControlInterface
+        context: Context,
+        itemView: View?,
+        song: Music?,
+        launchedBy: LaunchedBy,
+        uiControlInterface: UIControlInterface
     ) {
         itemView?.let {
             PopupMenu(context, itemView).apply {
@@ -283,10 +283,10 @@ object DialogHelper {
                     when (it.itemId) {
                         R.id.loved_songs_add -> {
                             ListsHelper.addToLovedSongs(
-                                    context,
-                                    song,
-                                    0,
-                                    launchedBy
+                                context,
+                                song,
+                                0,
+                                launchedBy
                             )
                             uiControlInterface.onLovedSongsUpdate(false)
                         }
@@ -304,8 +304,8 @@ object DialogHelper {
 
     @JvmStatic
     fun stopPlaybackDialog(
-            context: Context,
-            mediaPlayerHolder: MediaPlayerHolder
+        context: Context,
+        mediaPlayerHolder: MediaPlayerHolder
     ) {
 
         MaterialDialog(context).show {

@@ -56,6 +56,9 @@
     <string name="active_fragments_pref_warning">Non puoi rimuovere tutte le tabs! :P</string>
     <string name="fast_seeking_pref_title">Avanzamento veloce</string>
     <string name="fast_seeking_pref_summary">Step di avanzamento veloce in secondi</string>
+    <string name="fast_seeking_actions_pref_title">Azioni notifiche aggiuntive</string>
+    <string name="fast_seeking_actions_pref_summary_off">Preferisci le azioni chiudi/ripeti</string>
+    <string name="fast_seeking_actions_pref_summary_on">Preferisci le azioni di avanzamento veloce</string>
     <string name="sorting_pref">Ordine</string>
     <string name="sorting_pref_default">Predefinito</string>
     <string name="sorting_pref_track">Per n° traccia &#8595;</string>

@@ -986,9 +986,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    override fun onHandleCoversPref() {
+    override fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean) {
         if (isMediaPlayerHolder) {
-            mMediaPlayerHolder.onCoversPrefChanged()
+            mMediaPlayerHolder.onHandleNotificationUpdate(isAdditionalActionsChanged)
         }
     }
 

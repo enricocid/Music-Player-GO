@@ -15,5 +15,5 @@ interface UIControlInterface {
     fun onAddToFilter(stringToFilter: String?)
     fun onDenyPermission()
     fun onHandleFocusPref()
-    fun onHandleCoversPref()
+    fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean)
 }

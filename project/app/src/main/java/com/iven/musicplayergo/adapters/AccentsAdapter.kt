@@ -12,18 +12,18 @@ import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 
 class AccentsAdapter(private val activity: Activity) :
-        RecyclerView.Adapter<AccentsAdapter.AccentsHolder>() {
+    RecyclerView.Adapter<AccentsAdapter.AccentsHolder>() {
 
     private val mAccents = ThemeHelper.accents
     private var mSelectedAccent = goPreferences.accent
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccentsHolder {
         return AccentsHolder(
-                LayoutInflater.from(parent.context).inflate(
-                        R.layout.accent_item,
-                        parent,
-                        false
-                )
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.accent_item,
+                parent,
+                false
+            )
         )
     }
 
@@ -41,15 +41,15 @@ class AccentsAdapter(private val activity: Activity) :
 
                 val circle = findViewById<ImageButton>(R.id.circle)
                 ThemeHelper.getColor(
-                        context,
-                        color,
-                        R.color.deep_purple
+                    context,
+                    color,
+                    R.color.deep_purple
                 ).apply {
                     ThemeHelper.updateIconTint(circle, this)
                     ThemeHelper.createColouredRipple(activity, this, R.drawable.ripple_oval)
-                            ?.apply {
-                                itemView.background = this
-                            }
+                        ?.apply {
+                            itemView.background = this
+                        }
                 }
 
                 findViewById<ImageButton>(R.id.check).handleViewVisibility(color == mSelectedAccent)

@@ -14,9 +14,9 @@ import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 
 class ActiveTabsAdapter(
-        private val context: Context
+    private val context: Context
 ) :
-        RecyclerView.Adapter<ActiveTabsAdapter.CheckableItemsHolder>() {
+    RecyclerView.Adapter<ActiveTabsAdapter.CheckableItemsHolder>() {
 
     private val mAvailableItems = goPreferences.prefsActiveFragmentsDef
     private val mActiveItems = goPreferences.activeFragments.toMutableList()
@@ -25,8 +25,8 @@ class ActiveTabsAdapter(
     private val mResolvedAccentColor by lazy { ThemeHelper.resolveThemeAccent(context) }
     private val mResolvedAlphaAccentColor by lazy {
         ThemeHelper.getAlphaAccent(
-                context,
-                ThemeHelper.getAlphaForAccent()
+            context,
+            ThemeHelper.getAlphaForAccent()
         )
     }
 
@@ -52,11 +52,11 @@ class ActiveTabsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckableItemsHolder {
         return CheckableItemsHolder(
-                LayoutInflater.from(parent.context).inflate(
-                        R.layout.active_tab_item,
-                        parent,
-                        false
-                )
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.active_tab_item,
+                parent,
+                false
+            )
         )
     }
 
@@ -82,9 +82,9 @@ class ActiveTabsAdapter(
 
                 if (isEnabled) {
                     manageIndicatorsStatus(
-                            mActiveItems.contains(adapterPosition),
-                            tabImageButton,
-                            cardView
+                        mActiveItems.contains(adapterPosition),
+                        tabImageButton,
+                        cardView
                     )
                 } else {
                     cardView.apply {
@@ -92,29 +92,29 @@ class ActiveTabsAdapter(
                         cardView.strokeColor = mResolvedAlphaAccentColor
                     }
                     ThemeHelper.updateIconTint(
-                            tabImageButton,
-                            mResolvedAlphaAccentColor
+                        tabImageButton,
+                        mResolvedAlphaAccentColor
                     )
                 }
 
                 setOnClickListener {
 
                     manageIndicatorsStatus(
-                            cardView.strokeWidth != 4,
-                            tabImageButton,
-                            cardView
+                        cardView.strokeWidth != 4,
+                        tabImageButton,
+                        cardView
                     )
 
                     if (cardView.strokeWidth != 4) {
                         mActiveItems.remove(
-                                adapterPosition
+                            adapterPosition
                         )
                     } else {
                         mActiveItems.add(adapterPosition)
                     }
                     if (mActiveItems.size < 2) {
                         context.getString(R.string.active_fragments_pref_warning)
-                                .toToast(context)
+                            .toToast(context)
                         mActiveItems.add(adapterPosition)
                         manageIndicatorsStatus(true, tabImageButton, cardView)
                     }
@@ -124,9 +124,9 @@ class ActiveTabsAdapter(
     }
 
     private fun manageIndicatorsStatus(
-            condition: Boolean,
-            icon: ImageButton,
-            cardView: MaterialCardView
+        condition: Boolean,
+        icon: ImageButton,
+        cardView: MaterialCardView
     ) {
         when {
             condition -> {
@@ -136,8 +136,8 @@ class ActiveTabsAdapter(
             else -> {
                 cardView.strokeWidth = 0
                 ThemeHelper.updateIconTint(
-                        icon,
-                        mResolvedAlphaAccentColor
+                    icon,
+                    mResolvedAlphaAccentColor
                 )
             }
         }

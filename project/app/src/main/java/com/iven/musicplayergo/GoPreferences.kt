@@ -33,7 +33,8 @@ class GoPreferences(context: Context) {
     private val prefsAlbumsSorting = context.getString(R.string.albums_sorting_pref)
     private val prefsAllMusicSorting = context.getString(R.string.all_music_sorting_pref)
 
-    private val prefsFineSeek = context.getString(R.string.fast_seeking_pref)
+    private val prefsFastSeek = context.getString(R.string.fast_seeking_pref)
+    private val prefsFastSeekActions = context.getString(R.string.fast_seeking_actions_pref)
     private val prefsPreciseVolume = context.getString(R.string.precise_volume_pref)
     private val prefsFocus = context.getString(R.string.focus_pref)
     private val prefsHeadsetPlug = context.getString(R.string.headset_pref)
@@ -58,15 +59,15 @@ class GoPreferences(context: Context) {
 
     var latestPlayedSong: SavedMusic?
         get() = getObject(
-                prefsLatestPlayedSong,
-                typeLastPlayedSong
+            prefsLatestPlayedSong,
+            typeLastPlayedSong
         )
         set(value) = putObject(prefsLatestPlayedSong, value)
 
     var lovedSongs: MutableList<SavedMusic>?
         get() = getObject(
-                prefsLovedSongs,
-                typeLovedSongs
+            prefsLovedSongs,
+            typeLovedSongs
         )
         set(value) = putObject(prefsLovedSongs, value)
 
@@ -80,8 +81,8 @@ class GoPreferences(context: Context) {
 
     var isEdgeToEdge
         get() = mPrefs.getBoolean(
-                prefsEdgeToEdge,
-                false
+            prefsEdgeToEdge,
+            false
         ) && VersioningHelper.isOreoMR1()
         set(value) = mPrefs.edit().putBoolean(prefsEdgeToEdge, value).apply()
 
@@ -125,8 +126,12 @@ class GoPreferences(context: Context) {
         set(value) = mPrefs.edit().putStringSet(prefsFilter, value).apply()
 
     var fastSeekingStep
-        get() = mPrefs.getInt(prefsFineSeek, 5)
-        set(value) = mPrefs.edit().putInt(prefsFineSeek, value).apply()
+        get() = mPrefs.getInt(prefsFastSeek, 5)
+        set(value) = mPrefs.edit().putInt(prefsFastSeek, value).apply()
+
+    var isFastSeekingActions: Boolean
+        get() = mPrefs.getBoolean(prefsFastSeekActions, false)
+        set(value) = mPrefs.edit().putBoolean(prefsFastSeekActions, value).apply()
 
     var isPreciseVolumeEnabled
         get() = mPrefs.getBoolean(prefsPreciseVolume, true)

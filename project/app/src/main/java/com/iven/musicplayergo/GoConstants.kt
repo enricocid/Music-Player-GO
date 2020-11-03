@@ -31,9 +31,11 @@ object GoConstants {
 
     // Notification
     const val NOTIFICATION_ID = 101
+    const val FAST_FORWARD_ACTION = "FAST_FORWARD_GO"
     const val PREV_ACTION = "PREV_GO"
     const val PLAY_PAUSE_ACTION = "PLAY_PAUSE_GO"
     const val NEXT_ACTION = "NEXT_GO"
+    const val REWIND_ACTION = "REWIND_GO"
     const val REPEAT_ACTION = "REPEAT_GO"
     const val CLOSE_ACTION = "CLOSE_GO"
 }

@@ -96,6 +96,13 @@
             app:min="5" />
 
         <SwitchPreferenceCompat
+            android:summaryOff="@string/fast_seeking_actions_pref_summary_off"
+            app:defaultValue="false"
+            app:key="@string/fast_seeking_actions_pref"
+            app:summaryOn="@string/fast_seeking_actions_pref_summary_on"
+            app:title="@string/fast_seeking_actions_pref_title" />
+
+        <SwitchPreferenceCompat
             android:summaryOff="@string/precise_volume_pref_summary_off"
             app:defaultValue="true"
             app:key="@string/precise_volume_pref"
