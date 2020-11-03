@@ -213,7 +213,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         super.onPause()
         if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) {
             saveSongToPref()
-            mMediaPlayerHolder.onPauseSeekBarCallback()
+            mMediaPlayerHolder.apply {
+                onPauseSeekBarCallback()
+                if (!isPlaying) {
+                    mMediaPlayerHolder.giveUpAudioFocus()
+                }
+            }
         }
     }
 
