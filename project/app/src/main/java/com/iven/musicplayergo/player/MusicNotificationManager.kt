@@ -105,15 +105,17 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     }
 
     fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean) {
-        if (::mNotificationBuilder.isInitialized && !isAdditionalActionsChanged) {
-            updateNotificationContent()
-            updateNotification()
-        } else {
-            mNotificationActions[0] =
-                notificationAction(getFirstAdditionalAction())
-            mNotificationActions[4] =
-                notificationAction(getSecondAdditionalAction())
-            updateNotification()
+        if (::mNotificationBuilder.isInitialized) {
+            if (!isAdditionalActionsChanged) {
+                updateNotificationContent()
+                updateNotification()
+            } else {
+                mNotificationActions[0] =
+                    notificationAction(getFirstAdditionalAction())
+                mNotificationActions[4] =
+                    notificationAction(getSecondAdditionalAction())
+                updateNotification()
+            }
         }
     }
 
