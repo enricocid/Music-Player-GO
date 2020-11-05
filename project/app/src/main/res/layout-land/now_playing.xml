@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
-                android:fontFamily="@font/source_sans_pro_black"
+                android:textStyle="bold"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"

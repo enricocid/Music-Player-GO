@@ -9,12 +9,12 @@
 
     <!-- Indicator thumb text style -->
     <style name="IndicatorThumbTextAppearance" parent="@android:style/TextAppearance.Material.Small">
-        <item name="android:fontFamily">@font/source_sans_pro_black</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ToolbarStyle.Title" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">20sp
         </item> <!-- Default for portrait is 20sp and for landscape 14sp-->
-        <item name="android:fontFamily">@font/source_sans_pro_black</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>
