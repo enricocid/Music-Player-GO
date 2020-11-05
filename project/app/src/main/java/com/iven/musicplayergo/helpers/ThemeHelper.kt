@@ -45,9 +45,9 @@ object ThemeHelper {
         val bundle = bundleOf(Pair(GoConstants.RESTORE_SETTINGS_FRAGMENT, true))
         intent.putExtras(bundle)
         intent.addFlags(
-            Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    or Intent.FLAG_ACTIVITY_NEW_TASK
+                Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        or Intent.FLAG_ACTIVITY_NEW_TASK
         )
         activity.apply {
             finishAfterTransition()
@@ -93,11 +93,11 @@ object ThemeHelper {
 
     @JvmStatic
     fun isDeviceLand(resources: Resources) =
-        resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+            resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
     @JvmStatic
     private fun isThemeNight(configuration: Configuration) =
-        configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+            configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 
     @JvmStatic
     fun getAlphaForAccent() = if (goPreferences.accent != R.color.yellow) {
@@ -114,7 +114,7 @@ object ThemeHelper {
             val controller = window.insetsController
             if (controller != null) {
                 val appearance =
-                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS or WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                        WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS or WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
                 val mask = if (isThemeNight(configuration)) {
                     0
                 } else {
@@ -126,49 +126,49 @@ object ThemeHelper {
             val decorView = window.decorView
             val flags = decorView.systemUiVisibility
             decorView.systemUiVisibility =
-                if (isThemeNight(configuration)) {
-                    flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv() and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
-                } else {
-                    flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-                }
+                    if (isThemeNight(configuration)) {
+                        flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv() and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
+                    } else {
+                        flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                    }
         }
     }
 
     // Fixed array of pairs (first: accent, second: theme, third: color primary dark)
     @JvmStatic
     val accents = arrayOf(
-        Pair(R.color.red, R.style.BaseTheme_Red),
-        Pair(R.color.pink, R.style.BaseTheme_Pink),
-        Pair(R.color.purple, R.style.BaseTheme_Purple),
-        Pair(R.color.deep_purple, R.style.BaseTheme_DeepPurple),
-        Pair(R.color.indigo, R.style.BaseTheme_Indigo),
-        Pair(R.color.blue, R.style.BaseTheme_Blue),
-        Pair(R.color.light_blue, R.style.BaseTheme_LightBlue),
-        Pair(R.color.cyan, R.style.BaseTheme_Cyan),
-        Pair(R.color.teal, R.style.BaseTheme_Teal),
-        Pair(R.color.green, R.style.BaseTheme_Green),
-        Pair(R.color.light_green, R.style.BaseTheme_LightGreen),
-        Pair(R.color.lime, R.style.BaseTheme_Lime),
-        Pair(R.color.yellow, R.style.BaseTheme_Yellow),
-        Pair(R.color.amber, R.style.BaseTheme_Amber),
-        Pair(R.color.orange, R.style.BaseTheme_Orange),
-        Pair(R.color.deep_orange, R.style.BaseTheme_DeepOrange),
-        Pair(R.color.brown, R.style.BaseTheme_Brown),
-        Pair(R.color.grey, R.style.BaseTheme_Grey),
-        Pair(R.color.blue_grey, R.style.BaseTheme_BlueGrey)
+            Pair(R.color.red, R.style.BaseTheme_Red),
+            Pair(R.color.pink, R.style.BaseTheme_Pink),
+            Pair(R.color.purple, R.style.BaseTheme_Purple),
+            Pair(R.color.deep_purple, R.style.BaseTheme_DeepPurple),
+            Pair(R.color.indigo, R.style.BaseTheme_Indigo),
+            Pair(R.color.blue, R.style.BaseTheme_Blue),
+            Pair(R.color.light_blue, R.style.BaseTheme_LightBlue),
+            Pair(R.color.cyan, R.style.BaseTheme_Cyan),
+            Pair(R.color.teal, R.style.BaseTheme_Teal),
+            Pair(R.color.green, R.style.BaseTheme_Green),
+            Pair(R.color.light_green, R.style.BaseTheme_LightGreen),
+            Pair(R.color.lime, R.style.BaseTheme_Lime),
+            Pair(R.color.yellow, R.style.BaseTheme_Yellow),
+            Pair(R.color.amber, R.style.BaseTheme_Amber),
+            Pair(R.color.orange, R.style.BaseTheme_Orange),
+            Pair(R.color.deep_orange, R.style.BaseTheme_DeepOrange),
+            Pair(R.color.brown, R.style.BaseTheme_Brown),
+            Pair(R.color.grey, R.style.BaseTheme_Grey),
+            Pair(R.color.blue_grey, R.style.BaseTheme_BlueGrey)
     )
 
     @JvmStatic
     @SuppressLint("DefaultLocale")
     fun getAccentName(accent: Int, context: Context): Spanned {
         val accentName = context.resources.getResourceEntryName(accent).replace(
-            context.getString(R.string.underscore_delimiter),
-            context.getString(R.string.space_delimiter)
+                context.getString(R.string.underscore_delimiter),
+                context.getString(R.string.space_delimiter)
         ).capitalize()
         return context.getString(
-            R.string.accent_and_hex,
-            accentName,
-            context.getString(accent).toUpperCase()
+                R.string.accent_and_hex,
+                accentName,
+                context.getString(accent).toUpperCase()
         ).toSpanned()
     }
 
@@ -194,7 +194,7 @@ object ThemeHelper {
     @JvmStatic
     fun updateIconTint(imageButton: ImageButton, tint: Int) {
         ImageViewCompat.setImageTintList(
-            imageButton, ColorStateList.valueOf(tint)
+                imageButton, ColorStateList.valueOf(tint)
         )
     }
 
@@ -209,9 +209,9 @@ object ThemeHelper {
             goPreferences.accent = accent
         }
         return getColor(
-            context,
-            accent,
-            R.color.deep_purple
+                context,
+                accent,
+                R.color.deep_purple
         )
     }
 
@@ -219,50 +219,50 @@ object ThemeHelper {
     @JvmStatic
     fun resolveColorAttr(context: Context, @AttrRes colorAttr: Int): Int {
         val resolvedAttr: TypedValue =
-            resolveThemeAttr(
-                context,
-                colorAttr
-            )
+                resolveThemeAttr(
+                        context,
+                        colorAttr
+                )
         // resourceId is used if it's a ColorStateList, and data if it's a color reference or a hex color
         val colorRes =
-            if (resolvedAttr.resourceId != 0) {
-                resolvedAttr.resourceId
-            } else {
-                resolvedAttr.data
-            }
+                if (resolvedAttr.resourceId != 0) {
+                    resolvedAttr.resourceId
+                } else {
+                    resolvedAttr.data
+                }
         return colorRes.decodeColor(context)
     }
 
     @JvmStatic
     private fun resolveThemeAttr(context: Context, @AttrRes attrRes: Int) =
-        TypedValue().apply { context.theme.resolveAttribute(attrRes, this, true) }
+            TypedValue().apply { context.theme.resolveAttribute(attrRes, this, true) }
 
     @JvmStatic
     fun getRecyclerViewDivider(context: Context) = DividerItemDecoration(
-        context,
-        DividerItemDecoration.VERTICAL
+            context,
+            DividerItemDecoration.VERTICAL
     ).apply {
         setDrawable(
-            ColorDrawable(
-                getAlphaAccent(
-                    context,
-                    if (isThemeNight(context.resources.configuration)) {
-                        45
-                    } else {
-                        85
-                    }
+                ColorDrawable(
+                        getAlphaAccent(
+                                context,
+                                if (isThemeNight(context.resources.configuration)) {
+                                    45
+                                } else {
+                                    85
+                                }
+                        )
                 )
-            )
         )
     }
 
     @JvmStatic
     fun getAlphaAccent(context: Context, alpha: Int) =
-        ColorUtils.setAlphaComponent(
-            resolveThemeAccent(
-                context
-            ), alpha
-        )
+            ColorUtils.setAlphaComponent(
+                    resolveThemeAccent(
+                            context
+                    ), alpha
+            )
 
     @JvmStatic
     fun getTabIcon(iconIndex: Int) = when (iconIndex) {

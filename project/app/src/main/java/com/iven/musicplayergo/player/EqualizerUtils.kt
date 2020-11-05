@@ -14,7 +14,7 @@ object EqualizerUtils {
     private fun hasEqualizer(context: Context): Boolean {
         val pm = context.packageManager
         val ri =
-            pm.resolveActivity(Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL), 0)
+                pm.resolveActivity(Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL), 0)
         return ri != null
     }
 
@@ -39,18 +39,18 @@ object EqualizerUtils {
         if (hasEqualizer(activity)) {
             when (mediaPlayer.audioSessionId) {
                 AudioEffect.ERROR_BAD_VALUE -> activity.getString(R.string.error_bad_id).toToast(
-                    activity
+                        activity
                 )
                 else -> {
                     try {
                         Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL).apply {
                             putExtra(
-                                AudioEffect.EXTRA_AUDIO_SESSION,
-                                mediaPlayer.audioSessionId
+                                    AudioEffect.EXTRA_AUDIO_SESSION,
+                                    mediaPlayer.audioSessionId
                             )
                             putExtra(
-                                AudioEffect.EXTRA_CONTENT_TYPE,
-                                AudioEffect.CONTENT_TYPE_MUSIC
+                                    AudioEffect.EXTRA_CONTENT_TYPE,
+                                    AudioEffect.CONTENT_TYPE_MUSIC
                             )
                             activity.startActivityForResult(this, 0)
                         }

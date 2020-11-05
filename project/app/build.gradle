@@ -75,6 +75,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.palette:palette-ktx:1.0.0'
     //https://github.com/material-components/material-components-android/releases
     implementation 'com.google.android.material:material:1.2.1'
 

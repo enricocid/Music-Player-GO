@@ -20,14 +20,14 @@ import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.UIControlInterface
 
 class LovedSongsAdapter(
-    private val context: Context,
-    private val lovedSongsDialog: MaterialDialog,
-    private val mediaPlayerHolder: MediaPlayerHolder,
-    private val uiControlInterface: UIControlInterface,
-    private val deviceSongs: MutableList<Music>,
-    private val deviceAlbumsByArtist: MutableMap<String, List<Album>>?
+        private val context: Context,
+        private val lovedSongsDialog: MaterialDialog,
+        private val mediaPlayerHolder: MediaPlayerHolder,
+        private val uiControlInterface: UIControlInterface,
+        private val deviceSongs: MutableList<Music>,
+        private val deviceAlbumsByArtist: MutableMap<String, List<Album>>?
 ) :
-    RecyclerView.Adapter<LovedSongsAdapter.LoveHolder>() {
+        RecyclerView.Adapter<LovedSongsAdapter.LoveHolder>() {
 
     private var mLovedSongs = goPreferences.lovedSongs?.toMutableList()
 
@@ -42,11 +42,11 @@ class LovedSongsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LoveHolder {
         return LoveHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.music_item,
-                parent,
-                false
-            )
+                LayoutInflater.from(parent.context).inflate(
+                        R.layout.music_item,
+                        parent,
+                        false
+                )
         )
     }
 
@@ -68,38 +68,38 @@ class LovedSongsAdapter(
 
             title.text = lovedSong?.title
             duration.text = context.getString(
-                R.string.loved_song_subtitle,
-                lovedSong?.startFrom?.toLong()?.toFormattedDuration(
-                    isAlbum = false,
-                    isSeekBar = false
-                ),
-                lovedSong?.duration?.toFormattedDuration(isAlbum = false, isSeekBar = false)
+                    R.string.loved_song_subtitle,
+                    lovedSong?.startFrom?.toLong()?.toFormattedDuration(
+                            isAlbum = false,
+                            isSeekBar = false
+                    ),
+                    lovedSong?.duration?.toFormattedDuration(isAlbum = false, isSeekBar = false)
             ).toSpanned()
             subtitle.text =
-                context.getString(R.string.artist_and_album, lovedSong?.artist, lovedSong?.album)
+                    context.getString(R.string.artist_and_album, lovedSong?.artist, lovedSong?.album)
 
             itemView.apply {
                 setOnClickListener {
                     mediaPlayerHolder.isSongFromLovedSongs =
-                        Pair(true, lovedSong?.startFrom!!)
+                            Pair(true, lovedSong?.startFrom!!)
                     MusicOrgHelper.getSongForRestore(lovedSong, deviceSongs)
-                        .apply {
-                            uiControlInterface.onSongSelected(
-                                this,
-                                MusicOrgHelper.getAlbumSongs(
-                                    artist,
-                                    album,
-                                    deviceAlbumsByArtist
-                                ),
-                                lovedSong.launchedBy
-                            )
-                        }
+                            .apply {
+                                uiControlInterface.onSongSelected(
+                                        this,
+                                        MusicOrgHelper.getAlbumSongs(
+                                                artist,
+                                                album,
+                                                deviceAlbumsByArtist
+                                        ),
+                                        lovedSong.launchedBy
+                                )
+                            }
                 }
                 setOnLongClickListener {
                     DialogHelper.showDeleteLovedSongDialog(
-                        context,
-                        lovedSong,
-                        this@LovedSongsAdapter
+                            context,
+                            lovedSong,
+                            this@LovedSongsAdapter
                     )
                     return@setOnLongClickListener true
                 }

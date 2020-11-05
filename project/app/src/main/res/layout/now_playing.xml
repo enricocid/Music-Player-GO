@@ -20,7 +20,6 @@
             android:layout_gravity="center"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:src="@drawable/default_cover"
             tools:ignore="ContentDescription" />
 
         <LinearLayout

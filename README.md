@@ -125,7 +125,7 @@ please consider a [donation](https://weblate.org/it/donate/new/) :)
 | [sort-alphabetical-ascending-variant icon](https://materialdesignicons.com/icon/sort-alphabetical-ascending-variant) | Michael Irigoyen [mririgo](https://twitter.com/mririgo)                       |
 | [sort-numeric-ascending-variant icon](https://materialdesignicons.com/icon/sort-numeric-ascending-variant) | Michael Irigoyen [mririgo](https://twitter.com/mririgo)                       |
 | [sort-numeric-descending-variant icon](https://materialdesignicons.com/icon/sort-numeric-descending-variant) | Michael Irigoyen [mririgo](https://twitter.com/mririgo) 
-| [compact disc icon](https://www.flaticon.com/free-icon/compact-disc_2983957) | [freepik](https://www.flaticon.com/authors/freepik)                       |
+| [Albums art](https://it.freepik.com/vettori-gratuito/astratto-sfondo-acquerello_1355098.htm) | [freepik](https://www.flaticon.com/authors/freepik)                       |
 | Badges | [shields.io](https://shields.io/) 
 | gifmaker.me | [gifmaker.me](https://gifmaker.me/)
 

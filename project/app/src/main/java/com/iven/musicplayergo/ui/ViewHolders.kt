@@ -14,6 +14,8 @@ class GenericViewHolder(itemView: View) : ViewHolder(itemView) {
 class AlbumsViewHolder(itemView: View) : ViewHolder(itemView) {
     val imageView: ImageView = itemView.findViewById(R.id.image)
     val album: TextView = itemView.findViewById(R.id.album)
+    val year: TextView = itemView.findViewById(R.id.year)
+    val totalDuration: TextView = itemView.findViewById(R.id.total_duration)
 }
 
 class SongsViewHolder(itemView: View) : ViewHolder(itemView) {
