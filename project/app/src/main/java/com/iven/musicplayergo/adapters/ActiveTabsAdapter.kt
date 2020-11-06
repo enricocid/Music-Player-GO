@@ -14,7 +14,7 @@ import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 
 class ActiveTabsAdapter(
-        private val context: Context
+        context: Context
 ) :
         RecyclerView.Adapter<ActiveTabsAdapter.CheckableItemsHolder>() {
 
@@ -22,13 +22,11 @@ class ActiveTabsAdapter(
     private val mActiveItems = goPreferences.activeFragments.toMutableList()
 
     // Colors
-    private val mResolvedAccentColor by lazy { ThemeHelper.resolveThemeAccent(context) }
-    private val mResolvedAlphaAccentColor by lazy {
-        ThemeHelper.getAlphaAccent(
-                context,
-                ThemeHelper.getAlphaForAccent()
-        )
-    }
+    private val mResolvedAccentColor = ThemeHelper.resolveThemeAccent(context)
+    private val mResolvedAlphaAccentColor = ThemeHelper.getAlphaAccent(
+            context,
+            ThemeHelper.getAlphaForAccent()
+    )
 
     //method used to make the last item of the staggered rv full width
     //https://medium.com/android-dev-journal/how-to-make-first-item-of-recyclerview-of-full-width-with-a-gridlayoutmanager-66456a4bfffe
