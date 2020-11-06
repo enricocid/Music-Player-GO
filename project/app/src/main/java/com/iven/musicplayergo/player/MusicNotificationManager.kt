@@ -6,6 +6,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
@@ -36,6 +37,8 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         get() = mNotificationBuilder.mActions
 
     private val sFastSeekingActions get() = goPreferences.isFastSeekingActions
+
+    private var mAlbumArt = BitmapFactory.decodeResource(playerService.resources, R.drawable.album_art)
 
     private fun playerAction(action: String): PendingIntent {
 
@@ -104,6 +107,13 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                 )
     }
 
+    fun onUpdateDefaultAlbumArt(bitmapRes: Bitmap, updateNotification: Boolean) {
+        mAlbumArt = bitmapRes
+        if (updateNotification) {
+            onHandleNotificationUpdate(false)
+        }
+    }
+
     fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean) {
         if (::mNotificationBuilder.isInitialized) {
             if (!isAdditionalActionsChanged) {
@@ -123,12 +133,10 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         val mediaPlayerHolder = playerService.mediaPlayerHolder
         mediaPlayerHolder.currentSong.first?.let { song ->
 
-            val stockCover =
-                    BitmapFactory.decodeResource(playerService.resources, R.drawable.music_album)
             val cover = if (goPreferences.isCovers) {
-                song.getCover(playerService) ?: stockCover
+                song.getCover(playerService) ?: mAlbumArt
             } else {
-                stockCover
+                mAlbumArt
             }
 
             mNotificationBuilder.setContentText(

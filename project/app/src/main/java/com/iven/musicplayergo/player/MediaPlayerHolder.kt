@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Context.AUDIO_SERVICE
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.AudioAttributes
 import android.media.AudioFocusRequest
@@ -162,7 +163,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     // Notifications
     private lateinit var mNotificationActionsReceiver: NotificationReceiver
-    private lateinit var mMusicNotificationManager: MusicNotificationManager
+    private val mMusicNotificationManager: MusicNotificationManager by lazy {
+        playerService.musicNotificationManager
+    }
 
     private fun startForeground() {
         if (!sNotificationForeground) {
@@ -262,6 +265,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun onPauseSeekBarCallback() {
         stopUpdatingCallbackWithPosition()
+    }
+
+    fun onUpdateDefaultAlbumArt(bitmapRes: Bitmap) {
+        mMusicNotificationManager.onUpdateDefaultAlbumArt(bitmapRes, isPlaying)
     }
 
     fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean) {
@@ -500,8 +507,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                                     .build()
                     )
                 }
-
-                mMusicNotificationManager = playerService.musicNotificationManager
 
                 if (sFocusEnabled && isPlay) {
                     tryToGetAudioFocus()

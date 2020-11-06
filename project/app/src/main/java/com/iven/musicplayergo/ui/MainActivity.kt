@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
@@ -102,7 +101,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mNowPlayingControlsBinding: NowPlayingControlsBinding
     private lateinit var mNowPlayingExtendedControlsBinding: NowPlayingExtendedControlsBinding
 
-    private lateinit var mDefaultCover: Bitmap
+    private val mDefaultCover by lazy {
+        BitmapFactory.decodeResource(resources, ThemeHelper.getDefaultCover(resources.configuration))
+    }
 
     private val mImageLoader: ImageLoader by lazy {
         getImageLoader()
@@ -251,8 +252,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         mMainActivityBinding = MainActivityBinding.inflate(layoutInflater)
         mPlayerControlsPanelBinding = PlayerControlsPanelBinding.bind(mMainActivityBinding.root)
-
-        mDefaultCover = BitmapFactory.decodeResource(resources, R.drawable.music_album)
 
         setContentView(mMainActivityBinding.root)
 
@@ -815,6 +814,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         notifyError(GoConstants.TAG_SD_NOT_READY)
                     }
                 }
+                onUpdateDefaultAlbumArt(mDefaultCover)
             }
         }
     }
