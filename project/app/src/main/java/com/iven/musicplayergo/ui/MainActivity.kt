@@ -548,7 +548,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     mImageLoader,
                     mMediaPlayerHolder.currentSong.first,
                     mDefaultCover,
-                    isCircleCrop = false,
+                    isCircleCrop = true,
                     isLoadDelay = false
             )
         } else {
