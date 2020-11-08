@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Music Player GO</string>
+    <string name="category_audio">Audio</string>
 
     <!-- External links -->
     <string name="app_git">https://github.com/enricocid/Music-Player-GO</string>
@@ -18,6 +19,7 @@
     <string name="underscore_delimiter">&#95;</string>
     <string name="slash">/</string>
     <string name="unknown_year">N&#x2F;A</string>
+    <string name="freq_k">%1dk</string>
 
     <!-- Sorting menu -->
     <string name="sorting_pref_ascending">A-Z</string>
@@ -44,6 +46,7 @@
     <string name="edge_pref">edge_pref</string>
     <string name="covers_pref">covers_pref</string>
     <string name="active_fragments_pref">visible_fragments_pref</string>
+    <string name="eq_pref">eq_pref</string>
     <string name="fast_seeking_actions_pref">fast_seeking_actions_pref</string>
     <string name="fast_seeking_pref">fast_seeking_pref</string>
     <string name="precise_volume_pref">precise_volume_pref</string>
@@ -58,6 +61,7 @@
     <string name="all_music_sorting_pref">all_music_sorting_pref</string>
 
     <!-- Other preferences keys -->
+    <string name="saved_eq_settings">saved_eq_settings_pref</string>
     <string name="latest_played_song_pref">restore_song_pref</string>
     <string name="loved_songs_pref">bookmarked_songs_pref</string>
     <string name="latest_volume_pref">latest_volume_pref</string>

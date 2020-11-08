@@ -13,6 +13,10 @@ import android.media.AudioAttributes
 import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.media.audiofx.AudioEffect
+import android.media.audiofx.BassBoost
+import android.media.audiofx.Equalizer
+import android.media.audiofx.Virtualizer
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
@@ -24,9 +28,11 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.toContentUri
 import com.iven.musicplayergo.extensions.toToast
+import com.iven.musicplayergo.fragments.EqFragment
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.models.SavedEqualizerSettings
 import com.iven.musicplayergo.ui.MainActivity
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -68,6 +74,11 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             }
 
     lateinit var mediaPlayerInterface: MediaPlayerInterface
+
+    // Equalizer
+    private lateinit var mEqualizer: Equalizer
+    private lateinit var mBassBoost: BassBoost
+    private lateinit var mVirtualizer: Virtualizer
 
     // Audio focus
     private var mAudioManager = playerService.getSystemService(AUDIO_SERVICE) as AudioManager
@@ -208,6 +219,29 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         } catch (e: IllegalArgumentException) {
             e.printStackTrace()
         }
+    }
+
+    private fun createCustomEqualizer() {
+        if (mediaPlayer.audioSessionId != AudioEffect.ERROR_BAD_VALUE) {
+            mBassBoost = BassBoost(0, mediaPlayer.audioSessionId)
+            mVirtualizer = Virtualizer(0, mediaPlayer.audioSessionId)
+            mEqualizer = Equalizer(0, mediaPlayer.audioSessionId)
+
+            setEqualizerEnabled(true)
+            restoreCustomEqSettings()
+        }
+    }
+
+    fun getEqualizer() = Triple(mEqualizer, mBassBoost, mVirtualizer)
+
+    fun setEqualizerEnabled(isEnabled: Boolean) {
+        mEqualizer.enabled = isEnabled
+        mBassBoost.enabled = isEnabled
+        mVirtualizer.enabled = isEnabled
+    }
+
+    fun onSaveEqualizerSettings(selectedPreset: Int, bassBoost: Short, virtualizer: Short) {
+        goPreferences.savedEqualizerSettings = SavedEqualizerSettings(selectedPreset, mEqualizer.properties.bandLevels.toList(), bassBoost, virtualizer)
     }
 
     fun setCurrentSong(
@@ -541,7 +575,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
 
         if (isSongRestoredFromPrefs) {
-            if (goPreferences.isPreciseVolumeEnabled) setPreciseVolume(currentVolumeInPercent)
+            if (goPreferences.isPreciseVolumeEnabled) {
+                setPreciseVolume(currentVolumeInPercent)
+            }
             mediaPlayer.seekTo(goPreferences.latestPlayedSong?.startFrom!!)
         } else if (isSongFromLovedSongs.first) {
             mediaPlayer.seekTo(isSongFromLovedSongs.second)
@@ -560,6 +596,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         if (isPlay) {
             play()
+        } else {
+            createCustomEqualizer()
         }
     }
 
@@ -570,9 +608,33 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         startForeground()
     }
 
+    private fun restoreCustomEqSettings() {
+        mediaPlayer.apply {
+            mEqualizer.enabled = true
+            mBassBoost.enabled = true
+            mVirtualizer.enabled = true
+            val savedEqualizerSettings = goPreferences.savedEqualizerSettings
+            savedEqualizerSettings?.let { eqSettings ->
+
+                mEqualizer.usePreset(eqSettings.preset.toShort())
+
+                val bandSettings = eqSettings.bandsSettings
+
+                bandSettings?.iterator()?.withIndex()?.forEach {
+                    mEqualizer.setBandLevel(it.index.toShort(), it.value.toInt().toShort())
+                }
+
+                mBassBoost.setStrength(eqSettings.bassBoost)
+                mVirtualizer.setStrength(eqSettings.virtualizer)
+            }
+        }
+    }
+
     fun openEqualizer(activity: Activity) {
         EqualizerUtils.openEqualizer(activity, mediaPlayer)
     }
+
+    fun openEqualizerCustom() = EqFragment.newInstance()
 
     fun release() {
         if (isMediaPlayer) {

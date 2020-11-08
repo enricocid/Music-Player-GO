@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/visualLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/windowBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/eq_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/windowBackground"
+        android:elevation="2dp"
+        android:theme="@style/ToolbarStyle"
+        app:collapseIcon="@drawable/ic_navigate_before"
+        app:navigationIcon="@drawable/ic_navigate_before"
+        app:subtitleTextAppearance="@style/ToolbarStyle.Subtitle"
+        app:title="@string/equalizer"
+        app:titleTextAppearance="@style/ToolbarStyle.Title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/freq0"
+            android:layout_width="@dimen/preset_dim"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:padding="4dp"
+            android:textAlignment="center"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/slider0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="16dp"
+            android:minHeight="0dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/freq1"
+            android:layout_width="@dimen/preset_dim"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:padding="4dp"
+            android:textAlignment="center"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/slider1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="16dp"
+            android:minHeight="0dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/freq2"
+            android:layout_width="@dimen/preset_dim"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:padding="4dp"
+            android:textAlignment="center"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/slider2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="16dp"
+            android:minHeight="0dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/freq3"
+            android:layout_width="@dimen/preset_dim"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:padding="4dp"
+            android:textAlignment="center"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/slider3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="16dp"
+            android:minHeight="0dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/freq4"
+            android:layout_width="@dimen/preset_dim"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:padding="4dp"
+            android:textAlignment="center"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/slider4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="16dp"
+            android:minHeight="0dp" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/presets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/equalizer_bb"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/sliderBass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:valueTo="1000" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/equalizer_v"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/sliderVirt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:valueTo="1000" />
+    </LinearLayout>
+
+
+</LinearLayout>

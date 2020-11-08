@@ -9,6 +9,9 @@
     <string name="shuffle_sa">Mescola l\'abum selezionato</string>
     <string name="folders">Cartelle</string>
     <string name="albums">Albums</string>
+    <string name="equalizer">Equalizzatore</string>
+    <string name="equalizer_bb">Potenziamento bassi</string>
+    <string name="equalizer_v">Audio surround</string>
     <string name="queue">Coda</string>
     <string name="queue_add">Aggiungi alla coda</string>
     <string name="queue_song_add">%1s aggiunta alla coda!</string>
@@ -54,6 +57,8 @@
     <string name="song_visual_pref_fn_title">Nome del file</string>
     <string name="active_fragments_pref_title">Tab attive</string>
     <string name="active_fragments_pref_warning">Non puoi rimuovere tutte le tabs! :P</string>
+    <string name="eq_pref_summary_off">Preferisci equalizzatore di sistema (se disponibile)</string>
+    <string name="eq_pref_summary_on">Preferisci equalizzatore integrato</string>
     <string name="fast_seeking_pref_title">Avanzamento veloce</string>
     <string name="fast_seeking_pref_summary">Step di avanzamento veloce in secondi</string>
     <string name="fast_seeking_actions_pref_title">Azioni notifiche aggiuntive</string>

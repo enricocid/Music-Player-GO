@@ -23,3 +23,7 @@ class SongsViewHolder(itemView: View) : ViewHolder(itemView) {
     val duration: TextView = itemView.findViewById(R.id.duration)
     val subtitle: TextView = itemView.findViewById(R.id.subtitle)
 }
+
+class PresetsViewHolder(itemView: View) : ViewHolder(itemView) {
+    val presetTitle: TextView = itemView.findViewById(R.id.preset)
+}

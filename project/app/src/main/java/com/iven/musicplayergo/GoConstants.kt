@@ -23,6 +23,7 @@ object GoConstants {
     // fragments tags
     const val DETAILS_FRAGMENT_TAG = "DETAILS_FRAGMENT"
     const val ERROR_FRAGMENT_TAG = "ERROR_FRAGMENT"
+    const val EQ_FRAGMENT_TAG = "EQ_FRAGMENT"
 
     // Player playing statuses
     const val PLAYING = PlaybackStateCompat.STATE_PLAYING

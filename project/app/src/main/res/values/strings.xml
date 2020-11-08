@@ -14,6 +14,11 @@
     <string name="songs">Songs</string>
     <string name="folders">Folders</string>
 
+    <!-- Equalizer -->
+    <string name="equalizer">Equalizer</string>
+    <string name="equalizer_bb">Bass boost</string>
+    <string name="equalizer_v">Surround audio</string>
+
     <!-- Main - Artists/Folder RecyclerViews items  -->
     <string name="artist_info">%1d&#160;Albums,&#160;%2d&#160;Songs</string>
     <string name="folder_info">%1d&#160;Songs</string>
@@ -98,6 +103,10 @@
     <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">Active tabs</string>
     <string name="active_fragments_pref_warning">You can\'t just remove all the tabs! :P</string>
+
+    <!-- Preferences - Custom Equalizer -->
+    <string name="eq_pref_summary_off">Prefer system equalizer (if available)</string>
+    <string name="eq_pref_summary_on">Prefer built-in equalizer</string>
 
     <!-- Preferences - Fast seeking -->
     <string name="fast_seeking_pref_title">Fast seeking</string>

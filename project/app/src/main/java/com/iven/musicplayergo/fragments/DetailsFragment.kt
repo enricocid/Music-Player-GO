@@ -78,10 +78,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private var sLandscape = false
 
-    private val mDefaultTextColor by lazy {
-        ThemeHelper.resolveColorAttr(requireActivity(), android.R.attr.textColorPrimary)
-    }
-
     private var mSongsSorting = if (sIsFileNameSongs) {
         GoConstants.ASCENDING_SORTING
     } else {
@@ -546,7 +542,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         val color = if (mSelectedAlbum?.title == item.title) {
                             ThemeHelper.resolveThemeAccent(context)
                         } else {
-                            mDefaultTextColor
+                            ThemeHelper.resolveColorAttr(requireActivity(), android.R.attr.textColorPrimary)
                         }
                         album.setTextColor(color)
                     }
@@ -555,7 +551,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                         if (index != mSelectedAlbumPosition) {
 
-                            mDetailsFragmentBinding.albumsRv.adapter?.apply {
+                            adapter?.apply {
 
                                 sLoadDelay = false
 

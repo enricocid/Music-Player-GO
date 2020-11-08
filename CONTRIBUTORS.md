@@ -12,6 +12,8 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**Steven Schoen**](https://github.com/DSteve595) for the search function [fixes](https://github.com/enricocid/Music-Player-GO/commit/1c27ff3421dbf7820608237dc60a974955efb022) and quick [support](https://github.com/reddit/IndicatorFastScroll/issues/30)
 
+- [**bullhead**](https://github.com/bullheadandplato) for its equalizer implementation: I learned so much about how an equalizer works
+
 - [**Freepik**](https://www.flaticon.com/authors/freepik) for the [album art](https://it.freepik.com/vettori-gratuito/astratto-sfondo-acquerello_1355098.htm) image
 
 - [**Mathieu Aubin**](https://github.com/mathieu-aubin) for the readme's [GIF optimization](https://github.com/mathieu-aubin/tempgif)

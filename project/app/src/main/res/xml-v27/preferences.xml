@@ -67,23 +67,14 @@
 
     <PreferenceCategory
         app:layout="@layout/custom_preference_category"
-        app:title="@string/category_general">
+        app:title="@string/category_audio">
 
         <SwitchPreferenceCompat
-            android:summaryOff="@string/covers_pref_summary_off"
+            android:summaryOff="@string/eq_pref_summary_off"
             app:defaultValue="false"
-            app:key="@string/covers_pref"
-            app:summaryOn="@string/covers_pref_summary_on"
-            app:title="@string/covers_pref_title" />
-
-        <ListPreference
-            android:defaultValue="@integer/song_visualization_default"
-            app:dialogTitle="@string/song_visual_pref_title"
-            app:entries="@array/songVisualizationArray"
-            app:entryValues="@array/songVisualizationEntryArray"
-            app:key="@string/song_visual_pref"
-            app:title="@string/song_visual_pref_title"
-            app:useSimpleSummaryProvider="true" />
+            app:key="@string/eq_pref"
+            app:summaryOn="@string/eq_pref_summary_on"
+            app:title="@string/equalizer" />
 
         <SeekBarPreference
             android:key="@string/fast_seeking_pref"
@@ -122,6 +113,27 @@
             app:key="@string/headset_pref"
             app:summaryOn="@string/headset_pref_summary_on"
             app:title="@string/headset_pref_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:layout="@layout/custom_preference_category"
+        app:title="@string/category_general">
+
+        <SwitchPreferenceCompat
+            android:summaryOff="@string/covers_pref_summary_off"
+            app:defaultValue="false"
+            app:key="@string/covers_pref"
+            app:summaryOn="@string/covers_pref_summary_on"
+            app:title="@string/covers_pref_title" />
+
+        <ListPreference
+            android:defaultValue="@integer/song_visualization_default"
+            app:dialogTitle="@string/song_visual_pref_title"
+            app:entries="@array/songVisualizationArray"
+            app:entryValues="@array/songVisualizationEntryArray"
+            app:key="@string/song_visual_pref"
+            app:title="@string/song_visual_pref_title"
+            app:useSimpleSummaryProvider="true" />
 
         <Preference
             app:key="@string/filter_pref"

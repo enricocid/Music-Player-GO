@@ -11,7 +11,7 @@ import com.iven.musicplayergo.extensions.toToast
 
 object EqualizerUtils {
 
-    private fun hasEqualizer(context: Context): Boolean {
+    fun hasEqualizer(context: Context): Boolean {
         val pm = context.packageManager
         val ri =
                 pm.resolveActivity(Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL), 0)

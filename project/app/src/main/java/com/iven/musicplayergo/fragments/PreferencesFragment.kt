@@ -15,6 +15,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreferenceCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
@@ -28,6 +29,7 @@ import com.iven.musicplayergo.adapters.FiltersAdapter
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.player.EqualizerUtils
 import com.iven.musicplayergo.ui.UIControlInterface
 
 
@@ -125,6 +127,13 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         findPreference<Preference>(getString(R.string.active_fragments_pref))?.apply {
             summary = goPreferences.activeFragments.size.toString()
             onPreferenceClickListener = this@PreferencesFragment
+        }
+
+        findPreference<SwitchPreferenceCompat>(getString(R.string.eq_pref))?.apply {
+            if (!EqualizerUtils.hasEqualizer(requireActivity())) {
+                isEnabled = false
+                isChecked = true
+            }
         }
     }
 

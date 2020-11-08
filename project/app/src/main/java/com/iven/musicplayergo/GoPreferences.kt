@@ -6,11 +6,13 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.iven.musicplayergo.enums.SongsVisualOpts
 import com.iven.musicplayergo.helpers.VersioningHelper
+import com.iven.musicplayergo.models.SavedEqualizerSettings
 import com.iven.musicplayergo.models.SavedMusic
 import java.lang.reflect.Type
 
 class GoPreferences(context: Context) {
 
+    private val prefsSavedEqualizerSettings = context.getString(R.string.saved_eq_settings)
     private val prefsLatestVolume = context.getString(R.string.latest_volume_pref)
     private val prefsLatestPlayedSong = context.getString(R.string.latest_played_song_pref)
     private val prefsLovedSongs = context.getString(R.string.loved_songs_pref)
@@ -22,6 +24,8 @@ class GoPreferences(context: Context) {
 
     private val prefsActiveFragments = context.getString(R.string.active_fragments_pref)
     val prefsActiveFragmentsDef = setOf(0, 1, 2, 3, 4)
+
+    private val prefsEq = context.getString(R.string.eq_pref)
 
     private val prefsCover = context.getString(R.string.covers_pref)
 
@@ -47,6 +51,9 @@ class GoPreferences(context: Context) {
     // active fragments type
     private val typeActiveFragments = object : TypeToken<Set<Int>>() {}.type
 
+    // saved equalizer settings is a SavedEqualizerSettings
+    private val typeSavedEqualizerSettings = object : TypeToken<SavedEqualizerSettings>() {}.type
+
     // last played song is a SavedMusic
     private val typeLastPlayedSong = object : TypeToken<SavedMusic>() {}.type
 
@@ -63,6 +70,13 @@ class GoPreferences(context: Context) {
                 typeLastPlayedSong
         )
         set(value) = putObject(prefsLatestPlayedSong, value)
+
+    var savedEqualizerSettings: SavedEqualizerSettings?
+        get() = getObject(
+                prefsSavedEqualizerSettings,
+                typeSavedEqualizerSettings
+        )
+        set(value) = putObject(prefsSavedEqualizerSettings, value)
 
     var lovedSongs: MutableList<SavedMusic>?
         get() = getObject(
@@ -89,6 +103,13 @@ class GoPreferences(context: Context) {
     var activeFragments: Set<Int>
         get() = getObject(prefsActiveFragments, typeActiveFragments) ?: prefsActiveFragmentsDef
         set(value) = putObject(prefsActiveFragments, value)
+
+    var isBuiltInEq
+        get() = mPrefs.getBoolean(
+                prefsEq,
+                false
+        )
+        set(value) = mPrefs.edit().putBoolean(prefsEq, value).apply()
 
     var isCovers: Boolean
         get() = mPrefs.getBoolean(prefsCover, false)

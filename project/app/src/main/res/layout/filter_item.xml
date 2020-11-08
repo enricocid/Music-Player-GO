@@ -28,5 +28,4 @@
         android:layout_height="wrap_content"
         android:checked="true"
         android:clickable="false" />
-
 </LinearLayout>

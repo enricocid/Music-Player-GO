@@ -1,5 +1,8 @@
 package com.iven.musicplayergo.ui
 
+import android.media.audiofx.BassBoost
+import android.media.audiofx.Equalizer
+import android.media.audiofx.Virtualizer
 import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.models.Music
 
@@ -16,4 +19,7 @@ interface UIControlInterface {
     fun onDenyPermission()
     fun onHandleFocusPref()
     fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean)
+    fun onGetEqualizer() : Triple<Equalizer, BassBoost, Virtualizer>
+    fun onEnableEqualizer(isEnabled: Boolean)
+    fun onSaveEqualizerSettings(selectedPreset: Int, bassBoost: Short, virtualizer: Short)
 }
