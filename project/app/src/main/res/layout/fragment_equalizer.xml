@@ -20,7 +20,8 @@
         app:navigationIcon="@drawable/ic_navigate_before"
         app:subtitleTextAppearance="@style/ToolbarStyle.Subtitle"
         app:title="@string/equalizer"
-        app:titleTextAppearance="@style/ToolbarStyle.Title" />
+        app:titleTextAppearance="@style/ToolbarStyle.Title"
+        app:titleTextColor="?android:attr/textColorPrimary"/>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -109,7 +109,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private val mDefaultCover by lazy {
         BitmapFactory.decodeResource(
                 resources,
-                ThemeHelper.getDefaultCover(resources.configuration)
+                R.drawable.album_art
         )
     }
 

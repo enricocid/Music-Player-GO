@@ -18,7 +18,7 @@
         app:navigationIcon="@drawable/ic_navigate_before"
         app:subtitleTextAppearance="@style/ToolbarStyle.Subtitle"
         app:titleTextAppearance="@style/ToolbarStyle.Title"
-        app:titleTextColor="?attr/colorPrimary" />
+        app:titleTextColor="?android:attr/textColorPrimary" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,10 +31,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:overScrollMode="never"
             android:paddingTop="8dp"
-            android:paddingBottom="8dp" />
+            android:paddingBottom="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <!-- SELECTED ALBUM -->
         <LinearLayout
@@ -61,7 +61,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="marquee"
-                        android:textStyle="bold"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:paddingStart="12dp"
                         android:paddingTop="4dp"
@@ -70,7 +69,8 @@
                         android:singleLine="true"
                         android:textAlignment="center"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                        android:textColor="?colorPrimary" />
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/album_year_duration"

@@ -100,13 +100,6 @@ object ThemeHelper {
             configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 
     @JvmStatic
-    fun getDefaultCover(configuration: Configuration) = if (isThemeNight(configuration)) {
-        R.drawable.album_art_night
-    } else {
-        R.drawable.album_art
-    }
-
-    @JvmStatic
     fun getAlphaForAccent() = if (goPreferences.accent != R.color.yellow) {
         100
     } else {

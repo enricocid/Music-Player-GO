@@ -14,7 +14,8 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**bullhead**](https://github.com/bullheadandplato) for its equalizer implementation: I learned so much about how an equalizer works
 
-- [**Freepik**](https://www.flaticon.com/authors/freepik) for the [album art](https://it.freepik.com/vettori-gratuito/astratto-sfondo-acquerello_1355098.htm) image
+- [**svgrepo.com**](https://www.svgrepo.com/) for the [compact disc](https://www.svgrepo.com/svg/181020/compact-disc-music) icon, opportunely modified (background color).
+This work is licensed under a [Creative Commons Attribution 0](https://creativecommons.org/share-your-work/public-domain/cc0/) International License
 
 - [**Mathieu Aubin**](https://github.com/mathieu-aubin) for the readme's [GIF optimization](https://github.com/mathieu-aubin/tempgif)
 
