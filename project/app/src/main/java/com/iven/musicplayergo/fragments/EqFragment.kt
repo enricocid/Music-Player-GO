@@ -20,7 +20,6 @@ import com.iven.musicplayergo.databinding.FragmentEqualizerBinding
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.createCircularReveal
 import com.iven.musicplayergo.extensions.decodeColor
-import com.iven.musicplayergo.extensions.smoothSnapToPosition
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.ui.PresetsViewHolder
@@ -106,19 +105,19 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
         mEqFragmentBinding.sliderBass.addOnChangeListener { _, value, fromUser ->
             // Responds to when slider's value is changed
             if (fromUser) {
-                mEqualizer.second.setStrength(value.toInt().toShort())
+                mEqualizer?.second?.setStrength(value.toInt().toShort())
             }
         }
 
         mEqFragmentBinding.sliderVirt.addOnChangeListener { _, value, fromUser ->
             // Responds to when slider's value is changed
             if (fromUser) {
-                mEqualizer.third.setStrength(value.toInt().toShort())
+                mEqualizer?.third?.setStrength(value.toInt().toShort())
             }
         }
 
-        val equalizer = mEqualizer.first
-        for (i in 0 until equalizer.numberOfPresets) {
+        val equalizer = mEqualizer?.first
+        for (i in 0 until equalizer?.numberOfPresets!!) {
             mPresetsList.add(equalizer.getPresetName(i.toShort()))
         }
 
@@ -152,7 +151,11 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
         mSliders[4] = mEqFragmentBinding.slider4
         mSlidersLabels[4] = mEqFragmentBinding.freq4
 
-        mEqualizer.first.apply {
+        goPreferences.savedEqualizerSettings?.let { savedEqualizerSettings ->
+            mSelectedPreset = savedEqualizerSettings.preset
+        }
+
+        mEqualizer?.first?.apply {
             val bandLevelRange = bandLevelRange
             val minBandLevel = bandLevelRange[0]
             val maxBandLevel = bandLevelRange[1]
@@ -164,7 +167,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                 slider.value?.addOnChangeListener { selectedSlider, value, fromUser ->
                     if (fromUser) {
                         if (mSliders[slider.index] == selectedSlider) {
-                            mEqualizer.first.setBandLevel(slider.index.toShort(), value.toInt().toShort())
+                            mEqualizer?.first?.setBandLevel(slider.index.toShort(), value.toInt().toShort())
                         }
                     }
                 }
@@ -195,12 +198,12 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                             adapter?.notifyItemChanged(mSelectedPreset)
                             mSelectedPreset = index
                             adapter?.notifyItemChanged(mSelectedPreset)
-                            mEqualizer.first.usePreset(mSelectedPreset.toShort())
+                            mEqualizer?.first?.usePreset(mSelectedPreset.toShort())
                             updateBandLevels(true)
                         }
                     }
                 }
-                smoothSnapToPosition(mSelectedPreset)
+                scrollToPosition(mSelectedPreset)
             }
         }
 
@@ -227,7 +230,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
             inflateMenu(R.menu.menu_eq)
             menu.apply {
                 val equalizerSwitchMaterial = findItem(R.id.equalizerSwitch).actionView as SwitchMaterial
-                equalizerSwitchMaterial.isChecked = mEqualizer.first.enabled
+                equalizerSwitchMaterial.isChecked = mEqualizer?.first?.enabled!!
                 equalizerSwitchMaterial.setOnCheckedChangeListener { _, isChecked ->
                     mUIControlInterface.onEnableEqualizer(isChecked)
                 }
@@ -237,13 +240,13 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
     private fun updateBandLevels(isPresetChanged: Boolean) {
         mSliders.iterator().withIndex().forEach { slider ->
-            slider.value?.value = mEqualizer.first.getBandLevel(slider.index.toShort()).toFloat()
+            slider.value?.value = mEqualizer?.first?.getBandLevel(slider.index.toShort())!!.toFloat()
         }
         if (!isPresetChanged) {
             goPreferences.savedEqualizerSettings?.let { eqSettings ->
                 mEqFragmentBinding.sliderBass.value = eqSettings.bassBoost.toFloat()
             }
-            mEqFragmentBinding.sliderVirt.value = mEqualizer.third.roundedStrength.toFloat()
+            mEqFragmentBinding.sliderVirt.value = mEqualizer?.third?.roundedStrength!!.toFloat()
         }
     }
 

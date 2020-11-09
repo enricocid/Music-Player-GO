@@ -1078,7 +1078,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    override fun onGetEqualizer(): Triple<Equalizer, BassBoost, Virtualizer> = mMediaPlayerHolder.getEqualizer()
+    override fun onGetEqualizer(): Triple<Equalizer, BassBoost, Virtualizer> = if (::mMediaPlayerHolder.is) mMediaPlayerHolder.getEqualizer()
 
     override fun onEnableEqualizer(isEnabled: Boolean) {
         mMediaPlayerHolder.setEqualizerEnabled(isEnabled)
