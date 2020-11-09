@@ -42,7 +42,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
-                android:textStyle="bold"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
@@ -51,7 +50,8 @@
                 android:singleLine="true"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:textColor="?android:attr/textColorPrimary"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/np_artist_album"
@@ -92,11 +92,12 @@
                     android:id="@+id/np_seek_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/seekbar_np_track"
                     android:clickable="true"
                     android:focusable="true"
-                    android:paddingStart="0dp"
-                    android:paddingEnd="0dp"
-                    android:progressDrawable="@drawable/seekbar_np_track"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:progressDrawable="@android:color/transparent"
                     android:splitTrack="false"
                     android:thumb="@drawable/seekbar_np_thumb"
                     android:thumbOffset="0dp" />
