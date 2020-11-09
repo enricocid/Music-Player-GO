@@ -137,9 +137,9 @@ fun FragmentManager.addFragment(fragment: Fragment, tag: String?) {
     }
 }
 
-fun FragmentManager.hideFragment(fragment: Fragment) {
+fun FragmentManager.removeFragment(fragment: Fragment) {
     beginTransaction().apply {
-        hide(fragment)
+        remove(fragment)
         commit()
     }
 }

@@ -458,7 +458,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 sRevealAnimationRunning = true
                 tab?.icon?.setTint(mResolvedAccentColor)
                 doOnEnd {
-                    synchronized(supportFragmentManager.hideFragment(mDetailsFragment)) {
+                    synchronized(closeFragment(mDetailsFragment)) {
                         sRevealAnimationRunning = false
                     }
                 }
@@ -954,7 +954,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             val selectedArtistOrFolder = getSongSource(selectedSong, isPlayingFromFolder)
             if (sDetailsFragmentExpanded) {
                 if (mDetailsFragment.hasToUpdate(selectedArtistOrFolder)) {
-                    synchronized(supportFragmentManager.hideFragment(mDetailsFragment)) {
+                    synchronized(closeFragment(mDetailsFragment)) {
                         openDetailsFragment(
                                 selectedArtistOrFolder,
                                 mMediaPlayerHolder.launchedBy
@@ -1078,10 +1078,16 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    override fun onGetEqualizer(): Triple<Equalizer, BassBoost, Virtualizer> = if (::mMediaPlayerHolder.is) mMediaPlayerHolder.getEqualizer()
+    override fun onGetEqualizer(): Triple<Equalizer, BassBoost, Virtualizer>? = if (::mMediaPlayerHolder.isInitialized) {
+        mMediaPlayerHolder.getEqualizer()
+    } else {
+        null
+    }
 
     override fun onEnableEqualizer(isEnabled: Boolean) {
-        mMediaPlayerHolder.setEqualizerEnabled(isEnabled)
+        if (::mMediaPlayerHolder.isInitialized) {
+            mMediaPlayerHolder.setEqualizerEnabled(isEnabled)
+        }
     }
 
     override fun onSaveEqualizerSettings(selectedPreset: Int, bassBoost: Short, virtualizer: Short) {
@@ -1113,7 +1119,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 sRevealAnimationRunning = true
                 tab?.icon?.setTint(mResolvedAccentColor)
                 doOnEnd {
-                    synchronized(supportFragmentManager.hideFragment(mEqualizerFragment as Fragment)) {
+                    synchronized(closeFragment(mEqualizerFragment)) {
                         sRevealAnimationRunning = false
                     }
                 }
@@ -1176,6 +1182,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             )
         } else {
             getString(R.string.error_no_loved_songs).toToast(this)
+        }
+    }
+
+    private fun closeFragment(fragment: Fragment) {
+        synchronized(super.onBackPressed()) {
+            supportFragmentManager.removeFragment(fragment)
         }
     }
 
