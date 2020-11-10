@@ -76,23 +76,6 @@
             app:summaryOn="@string/eq_pref_summary_on"
             app:title="@string/equalizer" />
 
-        <SeekBarPreference
-            android:key="@string/fast_seeking_pref"
-            android:title="@string/fast_seeking_pref_title"
-            android:summary="@string/fast_seeking_pref_summary"
-            app:seekBarIncrement="5"
-            android:defaultValue="10"
-            app:showSeekBarValue="true"
-            android:max="60"
-            app:min="5" />
-
-        <SwitchPreferenceCompat
-            android:summaryOff="@string/fast_seeking_actions_pref_summary_off"
-            app:defaultValue="false"
-            app:key="@string/fast_seeking_actions_pref"
-            app:summaryOn="@string/fast_seeking_actions_pref_summary_on"
-            app:title="@string/fast_seeking_actions_pref_title" />
-
         <SwitchPreferenceCompat
             android:summaryOff="@string/precise_volume_pref_summary_off"
             app:defaultValue="true"
@@ -125,6 +108,23 @@
             app:key="@string/covers_pref"
             app:summaryOn="@string/covers_pref_summary_on"
             app:title="@string/covers_pref_title" />
+
+        <SeekBarPreference
+            android:key="@string/fast_seeking_pref"
+            android:title="@string/fast_seeking_pref_title"
+            android:summary="@string/fast_seeking_pref_summary"
+            app:seekBarIncrement="5"
+            android:defaultValue="10"
+            app:showSeekBarValue="true"
+            android:max="60"
+            app:min="5" />
+
+        <SwitchPreferenceCompat
+            android:summaryOff="@string/fast_seeking_actions_pref_summary_off"
+            app:defaultValue="false"
+            app:key="@string/fast_seeking_actions_pref"
+            app:summaryOn="@string/fast_seeking_actions_pref_summary_on"
+            app:title="@string/fast_seeking_actions_pref_title" />
 
         <ListPreference
             android:defaultValue="@integer/song_visualization_default"
