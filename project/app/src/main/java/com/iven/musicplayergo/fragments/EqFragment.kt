@@ -42,6 +42,8 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
     private lateinit var mEqAnimator: Animator
 
+    private var sLaunchCircleReveal = true
+
     private val mPresetsList = mutableListOf<String>()
 
     private val mDataSource = emptyDataSource()
@@ -84,6 +86,10 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
         } catch (e: ClassCastException) {
             e.printStackTrace()
         }
+    }
+
+    fun setDisableCircleReveal() {
+        sLaunchCircleReveal = false
     }
 
     fun onHandleBackPressed(): Animator {
@@ -211,12 +217,14 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
         setupToolbar()
 
-        view.afterMeasured {
-            mEqAnimator =
-                    mEqFragmentBinding.root.createCircularReveal(
-                            isErrorFragment = false,
-                            show = true
-                    )
+        if (sLaunchCircleReveal) {
+            view.afterMeasured {
+                mEqAnimator =
+                        mEqFragmentBinding.root.createCircularReveal(
+                                isErrorFragment = false,
+                                show = true
+                        )
+            }
         }
     }
 

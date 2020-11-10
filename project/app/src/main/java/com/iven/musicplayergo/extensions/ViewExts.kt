@@ -125,14 +125,19 @@ fun MenuItem.setTitleColor(color: Int) {
     }
 }
 
-fun FragmentManager.addFragment(fragment: Fragment, tag: String?) {
+fun FragmentManager.addFragment(fragment: Fragment, tag: String?, isReplace: Boolean) {
     beginTransaction().apply {
         addToBackStack(null)
-        add(
-                R.id.container,
-                fragment,
-                tag
-        )
+        if (isReplace) {
+            replace(R.id.container, fragment, tag)
+        } else {
+            add(
+                    R.id.container,
+                    fragment,
+                    tag
+            )
+        }
+
         commit()
     }
 }

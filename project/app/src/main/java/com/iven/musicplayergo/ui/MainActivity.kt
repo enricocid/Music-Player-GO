@@ -96,6 +96,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private val sErrorFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.ERROR_FRAGMENT_TAG)
     private val sEqFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.EQ_FRAGMENT_TAG)
     private var sRevealAnimationRunning = false
+
     private var sAppearanceChanged = false
     private var sRestoreSettingsFragment = false
     private val sLandscape by lazy { ThemeHelper.isDeviceLand(resources) }
@@ -301,7 +302,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mMainActivityBinding.viewPager2.handleViewVisibility(false)
         supportFragmentManager.addFragment(
                 ErrorFragment.newInstance(errorType),
-                GoConstants.ERROR_FRAGMENT_TAG
+                GoConstants.ERROR_FRAGMENT_TAG,
+                false
         )
     }
 
@@ -438,6 +440,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             launchedBy: LaunchedBy
     ) {
         if (!sDetailsFragmentExpanded) {
+            if (sEqFragmentExpanded) {
+                mEqualizerFragment.setDisableCircleReveal()
+            }
             mDetailsFragment =
                     DetailsFragment.newInstance(
                             selectedArtistOrFolder,
@@ -448,7 +453,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                                     mMusicViewModel.deviceAlbumsByArtist
                             )
                     )
-            supportFragmentManager.addFragment(mDetailsFragment, GoConstants.DETAILS_FRAGMENT_TAG)
+            supportFragmentManager.addFragment(mDetailsFragment, GoConstants.DETAILS_FRAGMENT_TAG, sEqFragmentExpanded)
         }
     }
 
@@ -458,7 +463,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 sRevealAnimationRunning = true
                 tab?.icon?.setTint(mResolvedAccentColor)
                 doOnEnd {
-                    synchronized(closeFragment(mDetailsFragment)) {
+                    synchronized(removeFragment(mDetailsFragment)) {
                         sRevealAnimationRunning = false
                     }
                 }
@@ -469,6 +474,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun closeNowPlayingDialog() {
         if (::mNowPlayingDialog.isInitialized && mNowPlayingDialog.isShowing) {
             mNowPlayingDialog.dismiss()
+        }
+    }
+
+    private fun removeFragment(fragment: Fragment) {
+        synchronized(super.onBackPressed()) {
+            supportFragmentManager.removeFragment(fragment)
         }
     }
 
@@ -954,7 +965,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             val selectedArtistOrFolder = getSongSource(selectedSong, isPlayingFromFolder)
             if (sDetailsFragmentExpanded) {
                 if (mDetailsFragment.hasToUpdate(selectedArtistOrFolder)) {
-                    synchronized(closeFragment(mDetailsFragment)) {
+                    synchronized(removeFragment(mDetailsFragment)) {
                         openDetailsFragment(
                                 selectedArtistOrFolder,
                                 mMediaPlayerHolder.launchedBy
@@ -1097,14 +1108,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     fun openEqualizer(view: View) {
         if (checkIsPlayer(true)) {
             if (goPreferences.isBuiltInEq) {
-                mEqualizerFragment = mMediaPlayerHolder.openEqualizerCustom()
-                synchronized(closeNowPlayingDialog()) {
-                    if (sDetailsFragmentExpanded) {
-                        synchronized(closeDetailsFragment(null)) {
-                            supportFragmentManager.addFragment(mEqualizerFragment, GoConstants.EQ_FRAGMENT_TAG)
+                if (!sEqFragmentExpanded) {
+                    mEqualizerFragment = mMediaPlayerHolder.openEqualizerCustom()
+                    synchronized(closeNowPlayingDialog()) {
+                        if (sDetailsFragmentExpanded) {
+                            mDetailsFragment.setDisableCircleReveal()
                         }
-                    } else {
-                        supportFragmentManager.addFragment(mEqualizerFragment, GoConstants.EQ_FRAGMENT_TAG)
+                        supportFragmentManager.addFragment(mEqualizerFragment, GoConstants.EQ_FRAGMENT_TAG, sDetailsFragmentExpanded)
                     }
                 }
             } else {
@@ -1119,7 +1129,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 sRevealAnimationRunning = true
                 tab?.icon?.setTint(mResolvedAccentColor)
                 doOnEnd {
-                    synchronized(closeFragment(mEqualizerFragment)) {
+                    synchronized(removeFragment(mEqualizerFragment)) {
                         sRevealAnimationRunning = false
                     }
                 }
@@ -1182,12 +1192,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             )
         } else {
             getString(R.string.error_no_loved_songs).toToast(this)
-        }
-    }
-
-    private fun closeFragment(fragment: Fragment) {
-        synchronized(super.onBackPressed()) {
-            supportFragmentManager.removeFragment(fragment)
         }
     }
 

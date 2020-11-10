@@ -90,6 +90,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private val sIsFileNameSongs get() = goPreferences.songsVisualization == SongsVisualOpts.FILE_NAME
 
+    private var sLaunchCircleReveal = true
+
     private val mImageLoader: ImageLoader by lazy {
         requireActivity().getImageLoader()
     }
@@ -132,6 +134,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     )
         }
         return mArtistDetailsAnimator
+    }
+
+    fun setDisableCircleReveal() {
+        sLaunchCircleReveal = false
     }
 
     // https://stackoverflow.com/a/38241603
@@ -366,12 +372,14 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             }
         }
 
-        view.afterMeasured {
-            mArtistDetailsAnimator =
-                    mDetailsFragmentBinding.root.createCircularReveal(
-                            isErrorFragment = false,
-                            show = true
-                    )
+        if (sLaunchCircleReveal) {
+            view.afterMeasured {
+                mArtistDetailsAnimator =
+                        mDetailsFragmentBinding.root.createCircularReveal(
+                                isErrorFragment = false,
+                                show = true
+                        )
+            }
         }
     }
 
