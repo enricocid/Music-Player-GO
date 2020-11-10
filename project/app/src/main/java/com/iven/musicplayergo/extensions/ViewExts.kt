@@ -211,7 +211,7 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
     }
 
     val startColor = if (isErrorFragment) {
-        closeColor
+        R.color.red.decodeColor(context)
     } else {
         accent
     }
