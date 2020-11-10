@@ -96,6 +96,16 @@
             app:key="@string/headset_pref"
             app:summaryOn="@string/headset_pref_summary_on"
             app:title="@string/headset_pref_title" />
+
+        <ListPreference
+            android:defaultValue="@integer/on_list_ended_default"
+            app:dialogTitle="@string/on_list_ended_pref_title"
+            app:entries="@array/onListEndedArray"
+            app:entryValues="@array/onListEndedEntryArray"
+            app:key="@string/on_list_ended_pref"
+            app:title="@string/on_list_ended_pref_title"
+            app:useSimpleSummaryProvider="true" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -11,4 +11,5 @@ interface MediaPlayerInterface {
     fun onQueueStartedOrEnded(started: Boolean)
     fun onSaveSong()
     fun onFocusLoss()
+    fun onPlaylistEnded()
 }

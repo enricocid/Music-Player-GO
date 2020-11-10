@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import com.iven.musicplayergo.enums.OnListEndedOpts
 import com.iven.musicplayergo.enums.SongsVisualOpts
 import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.models.SavedEqualizerSettings
@@ -29,7 +30,10 @@ class GoPreferences(context: Context) {
 
     private val prefsCover = context.getString(R.string.covers_pref)
 
-    private val prefSongsVisual = context.getString(R.string.song_visual_pref)
+    private val prefsOnListEnded = context.getString(R.string.on_list_ended_pref)
+    private val prefsOnListEndedDef = OnListEndedOpts.CONTINUE.ordinal.toString()
+
+    private val prefsSongsVisual = context.getString(R.string.song_visual_pref)
     private val prefsSongVisualDef = SongsVisualOpts.TITLE.ordinal.toString()
 
     private val prefsArtistsSorting = context.getString(R.string.artists_sorting_pref)
@@ -111,16 +115,27 @@ class GoPreferences(context: Context) {
         )
         set(value) = mPrefs.edit().putBoolean(prefsEq, value).apply()
 
+    var onListEnded
+        get() = getOnListEndAction()
+        set(value) = mPrefs.edit().putString(prefsOnListEnded, value.ordinal.toString()).apply()
+
+    private fun getOnListEndAction(): OnListEndedOpts {
+        mPrefs.getString(prefsOnListEnded, prefsOnListEndedDef)?.let {
+            return OnListEndedOpts.values()[Integer.parseInt(it)]
+        }
+        return OnListEndedOpts.CONTINUE
+    }
+
     var isCovers: Boolean
         get() = mPrefs.getBoolean(prefsCover, false)
         set(value) = mPrefs.edit().putBoolean(prefsCover, value).apply()
 
     var songsVisualization
         get() = getSongVisualization()
-        set(value) = mPrefs.edit().putString(prefSongsVisual, value.ordinal.toString()).apply()
+        set(value) = mPrefs.edit().putString(prefsSongsVisual, value.ordinal.toString()).apply()
 
     private fun getSongVisualization(): SongsVisualOpts {
-        mPrefs.getString(prefSongsVisual, prefsSongVisualDef)?.let {
+        mPrefs.getString(prefsSongsVisual, prefsSongVisualDef)?.let {
             return SongsVisualOpts.values()[Integer.parseInt(it)]
         }
         return SongsVisualOpts.FILE_NAME

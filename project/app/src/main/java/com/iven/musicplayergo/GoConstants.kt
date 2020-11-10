@@ -31,6 +31,8 @@ object GoConstants {
     const val RESUMED = PlaybackStateCompat.STATE_NONE
 
     // Notification
+    const val NOTIFICATION_CHANNEL_ID = "CHANNEL_ID_GO"
+    const val NOTIFICATION_INTENT_REQUEST_CODE = 100
     const val NOTIFICATION_ID = 101
     const val FAST_FORWARD_ACTION = "FAST_FORWARD_GO"
     const val PREV_ACTION = "PREV_GO"

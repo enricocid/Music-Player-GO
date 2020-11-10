@@ -1024,7 +1024,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         )
     }
 
-    private fun startPlayback(song: Music?, album: List<Music>?, launchedBy: LaunchedBy) {
+    private fun startPlayback(song: Music?, songs: List<Music>?, launchedBy: LaunchedBy) {
         if (isMediaPlayerHolder) {
             if (::mPlayerService.isInitialized && !mPlayerService.isRunning) {
                 startService(
@@ -1032,7 +1032,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 )
             }
             mMediaPlayerHolder.apply {
-                setCurrentSong(song, album, isFromQueue = false, isFolderAlbum = launchedBy)
+                setCurrentSong(song, songs, isFromQueue = false, isFolderAlbum = launchedBy)
                 initMediaPlayer(song)
             }
         }
@@ -1287,6 +1287,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         override fun onSaveSong() {
             saveSongToPref()
+        }
+
+        override fun onPlaylistEnded() {
+            getString(R.string.error_list_ended).toToast(this@MainActivity)
         }
     }
 

@@ -22,10 +22,6 @@ import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.ui.MainActivity
 
-// Notification params
-private const val CHANNEL_ID = "CHANNEL_ID_GO"
-private const val REQUEST_CODE = 100
-
 class MusicNotificationManager(private val playerService: PlayerService) {
 
     //notification manager/builder
@@ -47,7 +43,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
         return PendingIntent.getBroadcast(
                 playerService,
-                REQUEST_CODE,
+                GoConstants.NOTIFICATION_INTENT_REQUEST_CODE,
                 pauseIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
         )
@@ -67,7 +63,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
     fun createNotification(): Notification {
 
-        mNotificationBuilder = NotificationCompat.Builder(playerService, CHANNEL_ID)
+        mNotificationBuilder = NotificationCompat.Builder(playerService, GoConstants.NOTIFICATION_CHANNEL_ID)
 
         if (VersioningHelper.isOreo()) {
             createNotificationChannel()
@@ -77,7 +73,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         openPlayerIntent.flags =
                 Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         val contentIntent = PendingIntent.getActivity(
-                playerService, REQUEST_CODE,
+                playerService, GoConstants.NOTIFICATION_INTENT_REQUEST_CODE,
                 openPlayerIntent, 0
         )
 
@@ -97,6 +93,10 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
         updateNotificationContent()
         return mNotificationBuilder.build()
+    }
+
+    fun cancelNotification() {
+        mNotificationManager.cancel(GoConstants.NOTIFICATION_ID)
     }
 
     fun updateNotification() {
@@ -201,9 +201,9 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
     @RequiresApi(26)
     private fun createNotificationChannel() {
-        if (mNotificationManager.getNotificationChannel(CHANNEL_ID) == null) {
+        if (mNotificationManager.getNotificationChannel(GoConstants.NOTIFICATION_CHANNEL_ID) == null) {
             NotificationChannel(
-                    CHANNEL_ID,
+                    GoConstants.NOTIFICATION_CHANNEL_ID,
                     playerService.getString(R.string.app_name),
                     NotificationManager.IMPORTANCE_LOW
             ).apply {

@@ -26,6 +26,7 @@ import android.support.v4.media.session.PlaybackStateCompat.Builder
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.enums.LaunchedBy
+import com.iven.musicplayergo.enums.OnListEndedOpts
 import com.iven.musicplayergo.extensions.toContentUri
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.fragments.EqFragment
@@ -287,7 +288,20 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 repeatSong()
             }
             isQueue -> manageQueue(true)
-            else -> skip(true)
+            else -> {
+                if (mPlayingAlbumSongs?.indexOf(currentSong.first) == mPlayingAlbumSongs?.size?.minus(1)) {
+                    if (goPreferences.onListEnded == OnListEndedOpts.CONTINUE) {
+                        skip(true)
+                    } else {
+                        synchronized(pauseMediaPlayer()) {
+                            mMusicNotificationManager.cancelNotification()
+                            mediaPlayerInterface.onPlaylistEnded()
+                        }
+                    }
+                } else {
+                    skip(true)
+                }
+            }
         }
     }
 
@@ -677,7 +691,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 .toToast(playerService)
     }
 
-
     fun repeat(updatePlaybackStatus: Boolean) {
         getRepeatMode()
         if (updatePlaybackStatus) {
@@ -857,7 +870,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     }
                 }
             }
-            if (isOrderedBroadcast) abortBroadcast()
+            if (isOrderedBroadcast) {
+                abortBroadcast()
+            }
         }
     }
 }

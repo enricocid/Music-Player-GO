@@ -54,6 +54,7 @@
     <string name="error_no_eq">No equalizer found!</string>
     <string name="error_no_filter">No filters found!</string>
     <string name="error_no_queue">No songs queued!</string>
+    <string name="error_list_ended">Playlist has ended!</string>
 
     <!-- Messages - Permission rationale -->
     <string name="perm_rationale">Music Player GO needs access to your files to play music!</string>
@@ -94,6 +95,11 @@
     <string name="covers_pref_title">Embedded album\'s covers</string>
     <string name="covers_pref_summary_on">Show album\'s covers</string>
     <string name="covers_pref_summary_off">Hide album\'s covers</string>
+
+    <!-- Preferences - covers -->
+    <string name="on_list_ended_pref_title">On playlist ended &#8230;</string>
+    <string name="on_list_ended_pref_stop_title">Stop</string>
+    <string name="on_list_ended_pref_continue_title">Continue</string>
 
     <!-- Preferences - Song visualization options (tl = title, fn = full name) -->
     <string name="song_visual_pref_title">Songs visualization</string>
