@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="album_stroke">1dp</dimen>
+    <dimen name="album_stroke">2dp</dimen>
     <dimen name="preset_dim">56dp</dimen>
     <dimen name="cover_dim">84dp</dimen>
     <dimen name="album_height">148dp</dimen>
