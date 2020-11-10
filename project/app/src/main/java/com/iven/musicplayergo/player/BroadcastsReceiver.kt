@@ -72,6 +72,8 @@ class NotificationReceiver(
                 }
             }
         }
-        if (isOrderedBroadcast) abortBroadcast()
+        if (isOrderedBroadcast) {
+            abortBroadcast()
+        }
     }
 }
