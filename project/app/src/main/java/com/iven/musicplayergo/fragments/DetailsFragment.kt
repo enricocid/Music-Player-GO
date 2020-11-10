@@ -59,7 +59,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private val mSelectedAlbumsDataSource = dataSourceOf()
     private val mSongsDataSource = dataSourceOf()
 
-    private var launchedBy: LaunchedBy = LaunchedBy.ArtistView
+    private var mLaunchedBy: LaunchedBy = LaunchedBy.ArtistView
 
     private var mSelectedArtistAlbums: List<Album>? = null
     private var mSongsList: List<Music>? = null
@@ -85,8 +85,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         GoConstants.TRACK_SORTING
     }
 
-    private val sLaunchedByArtistView get() = launchedBy == LaunchedBy.ArtistView
-    private val sLaunchedByFolderView get() = launchedBy == LaunchedBy.FolderView
+    private val sLaunchedByArtistView get() = mLaunchedBy == LaunchedBy.ArtistView
+    private val sLaunchedByFolderView get() = mLaunchedBy == LaunchedBy.FolderView
 
     private val sIsFileNameSongs get() = goPreferences.songsVisualization == SongsVisualOpts.FILE_NAME
 
@@ -107,7 +107,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
 
         arguments?.getInt(TAG_IS_FOLDER)?.let { launchedBy ->
-            this.launchedBy = LaunchedBy.values()[launchedBy]
+            mLaunchedBy = LaunchedBy.values()[launchedBy]
         }
 
         if (sLaunchedByArtistView) {
@@ -152,7 +152,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     }
 
     private fun getSongSource(): List<Music>? {
-        return when (launchedBy) {
+        return when (mLaunchedBy) {
             LaunchedBy.ArtistView -> {
                 mMusicViewModel.deviceAlbumsByArtist?.get(mSelectedArtistOrFolder)
                         ?.let { selectedArtistAlbums ->
@@ -349,7 +349,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         mUIControlInterface.onSongSelected(
                                 item,
                                 selectedPlaylist,
-                                launchedBy
+                                mLaunchedBy
                         )
                     }
 
@@ -358,7 +358,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                                 requireActivity(),
                                 findViewHolderForAdapterPosition(index)?.itemView,
                                 item,
-                                launchedBy,
+                                mLaunchedBy,
                                 mUIControlInterface
                         )
                     }
@@ -460,11 +460,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 when (it.itemId) {
                     R.id.action_shuffle_am -> mUIControlInterface.onShuffleSongs(
                             mSongsList?.toMutableList(),
-                            launchedBy
+                            mLaunchedBy
                     )
                     R.id.action_shuffle_sa -> mUIControlInterface.onShuffleSongs(
                             mSelectedAlbum?.music,
-                            launchedBy
+                            mLaunchedBy
                     )
                     R.id.default_sorting -> applySortingToMusic(GoConstants.DEFAULT_SORTING)
                     R.id.descending_sorting -> applySortingToMusic(GoConstants.DESCENDING_SORTING)
@@ -578,7 +578,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             mUIControlInterface.onSongSelected(
                                     item.music?.get(0),
                                     item.music,
-                                    launchedBy
+                                    mLaunchedBy
                             )
                         }
                     }
