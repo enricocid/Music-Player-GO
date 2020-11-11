@@ -19,11 +19,12 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentEqualizerBinding
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.createCircularReveal
-import com.iven.musicplayergo.extensions.decodeColor
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.ui.PresetsViewHolder
 import com.iven.musicplayergo.ui.UIControlInterface
+import java.util.*
+import kotlin.concurrent.schedule
 
 
 /**
@@ -62,17 +63,6 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
             strokeColor = ColorStateList.valueOf(ThemeHelper.resolveThemeAccent(requireActivity()))
             strokeWidth = 0.25F
             fillColor = ColorStateList.valueOf(ThemeHelper.resolveColorAttr(requireActivity(), android.R.attr.textColorPrimaryInverse))
-        }
-    }
-
-    private val mPresetsRecyclerViewBackground by lazy {
-        val shapeAppearanceModel = ShapeAppearanceModel()
-                .toBuilder()
-                .build()
-        MaterialShapeDrawable(shapeAppearanceModel).apply {
-            strokeColor = ColorStateList.valueOf(ThemeHelper.resolveThemeAccent(requireActivity()))
-            strokeWidth = 0.5F
-            fillColor = ColorStateList.valueOf(R.color.windowBackground.decodeColor(requireActivity()))
         }
     }
 
@@ -184,9 +174,6 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
             }
 
             mEqFragmentBinding.presets.apply {
-                if (!ThemeHelper.isDeviceLand(resources)) {
-                    background = mPresetsRecyclerViewBackground
-                }
                 setup {
                     withDataSource(mDataSource)
                     withItem<String, PresetsViewHolder>(R.layout.eq_preset_item) {
@@ -240,7 +227,9 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                 val equalizerSwitchMaterial = findItem(R.id.equalizerSwitch).actionView as SwitchMaterial
                 equalizerSwitchMaterial.isChecked = mEqualizer?.first?.enabled!!
                 equalizerSwitchMaterial.setOnCheckedChangeListener { _, isChecked ->
-                    mUIControlInterface.onEnableEqualizer(isChecked)
+                    Timer().schedule(1000) {
+                        mUIControlInterface.onEnableEqualizer(isChecked)
+                    }
                 }
             }
         }

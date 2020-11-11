@@ -7,6 +7,6 @@
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
     android:background="?android:attr/selectableItemBackgroundBorderless"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp"
     tools:viewBindingIgnore="true" />

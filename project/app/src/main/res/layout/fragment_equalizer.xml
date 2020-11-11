@@ -21,7 +21,7 @@
         app:subtitleTextAppearance="@style/ToolbarStyle.Subtitle"
         app:title="@string/equalizer"
         app:titleTextAppearance="@style/ToolbarStyle.Title"
-        app:titleTextColor="?android:attr/textColorPrimary"/>
+        app:titleTextColor="?android:attr/textColorPrimary" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -151,13 +151,25 @@
             android:minHeight="0dp" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:alpha="0.10"
+        android:background="?attr/colorPrimary" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/presets"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:alpha="0.10"
+        android:background="?attr/colorPrimary" />
 
     <LinearLayout
         android:layout_width="match_parent"
