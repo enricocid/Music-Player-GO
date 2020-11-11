@@ -109,7 +109,6 @@ please consider a [donation](https://weblate.org/it/donate/new/) :)
 | Name                                                        | Author                  |
 | ----------------------------------------------------------- | ------------------------- |
 | [GIF optimization script](https://github.com/mathieu-aubin/tempgif)                  | [Mathieu Aubin](https://github.com/mathieu-aubin)                       |
-| [Source sans pro](https://fonts.google.com/specimen/Source+Sans+Pro)                        | Google Fonts                       |
 | [Screener - Better screenshots](https://play.google.com/store/apps/details?id=de.toastcode.screener) | [Toastcode](https://toastco.de/)                       |
 | [Outline icons](https://material.io/tools/icons/?style=round) | Google                       |
 | [sort-alphabetical-descending-variant icon](https://materialdesignicons.com/icon/sort-alphabetical-descending-variant) | Austin Andrews [templatarian](https://twitter.com/templarian)                       |
