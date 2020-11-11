@@ -96,7 +96,7 @@
     <string name="covers_pref_summary_on">Show album\'s covers</string>
     <string name="covers_pref_summary_off">Hide album\'s covers</string>
 
-    <!-- Preferences - covers -->
+    <!-- Preferences - choose what to do when a playlist ends -->
     <string name="on_list_ended_pref_title">When a playlist ends &#8230;</string>
     <string name="on_list_ended_pref_stop_title">Stop</string>
     <string name="on_list_ended_pref_continue_title">Continue</string>
