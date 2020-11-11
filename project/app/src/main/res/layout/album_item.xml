@@ -37,26 +37,25 @@
 
         <TextView
             android:id="@+id/album"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.50"
+            android:ellipsize="marquee"
             android:gravity="center"
-            android:lines="2"
             android:maxLines="2"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
+            android:padding="4dp"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             android:textColor="?android:attr/textColorPrimary" />
 
         <LinearLayout
             android:id="@+id/info_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
             android:orientation="horizontal"
-            android:paddingStart="6dp"
-            android:paddingEnd="6dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
             android:paddingBottom="2dp">
 
             <TextView
