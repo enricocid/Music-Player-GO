@@ -16,7 +16,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
@@ -244,10 +243,8 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             customListAdapter(activeTabsAdapter)
 
-            val layoutManager = GridLayoutManager(context, 2)
-
-            layoutManager.spanSizeLookup = activeTabsAdapter.spanSizeLookup
-            getRecyclerView().layoutManager = layoutManager
+            getRecyclerView().layoutManager =
+                    LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
 
             positiveButton(android.R.string.ok) {
                 goPreferences.activeFragments = activeTabsAdapter.getUpdatedItems()

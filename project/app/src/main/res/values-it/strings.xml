@@ -55,7 +55,7 @@
     <string name="song_visual_pref_title">Visualizzazione canzoni</string>
     <string name="song_visual_pref_tl_title">Titolo</string>
     <string name="song_visual_pref_fn_title">Nome del file</string>
-    <string name="on_list_ended_pref_title">A playlist terminata &#8230;</string>
+    <string name="on_list_ended_pref_title">Quando una playlist termina &#8230;</string>
     <string name="on_list_ended_pref_stop_title">Interrompi</string>
     <string name="on_list_ended_pref_continue_title">Continua</string>
     <string name="error_list_ended">La playlist è terminata!</string>

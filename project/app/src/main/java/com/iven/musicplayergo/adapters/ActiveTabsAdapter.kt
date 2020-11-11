@@ -5,42 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import androidx.recyclerview.widget.GridLayoutManager
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.card.MaterialCardView
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 
 class ActiveTabsAdapter(
-        context: Context
+        private val context: Context
 ) :
         RecyclerView.Adapter<ActiveTabsAdapter.CheckableItemsHolder>() {
 
     private val mAvailableItems = goPreferences.prefsActiveFragmentsDef
     private val mActiveItems = goPreferences.activeFragments.toMutableList()
-
-    // Colors
-    private val mResolvedAccentColor = ThemeHelper.resolveThemeAccent(context)
-    private val mResolvedAlphaAccentColor = ThemeHelper.getAlphaAccent(
-            context,
-            ThemeHelper.getAlphaForAccent()
-    )
-
-    //method used to make the last item of the staggered rv full width
-    //https://medium.com/android-dev-journal/how-to-make-first-item-of-recyclerview-of-full-width-with-a-gridlayoutmanager-66456a4bfffe
-    val spanSizeLookup: GridLayoutManager.SpanSizeLookup by lazy {
-        object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return if (position == mAvailableItems.size - 1) {
-                    2
-                } else {
-                    1
-                }
-            }
-        }
-    }
 
     fun getUpdatedItems(): Set<Int> {
         // make sure to respect tabs order
@@ -71,10 +50,9 @@ class ActiveTabsAdapter(
             itemView.apply {
 
                 val tabImageButton = findViewById<ImageButton>(R.id.tab_image)
+                val indicator = findViewById<ImageButton>(R.id.tab_indicator)
 
                 tabImageButton.setImageResource(ThemeHelper.getTabIcon(adapterPosition))
-
-                val cardView = itemView as MaterialCardView
 
                 isEnabled = adapterPosition != mAvailableItems.size - 1
 
@@ -82,28 +60,28 @@ class ActiveTabsAdapter(
                     manageIndicatorsStatus(
                             mActiveItems.contains(adapterPosition),
                             tabImageButton,
-                            cardView
+                            indicator
                     )
                 } else {
-                    cardView.apply {
-                        cardView.strokeWidth = 4
-                        cardView.strokeColor = mResolvedAlphaAccentColor
+                    indicator.apply {
+                        visibility = View.VISIBLE
+                        drawable.alpha = ThemeHelper.getAlphaForAccent()
                     }
                     ThemeHelper.updateIconTint(
                             tabImageButton,
-                            mResolvedAlphaAccentColor
+                            ThemeHelper.getAlphaAccent(context, ThemeHelper.getAlphaForAccent())
                     )
                 }
 
                 setOnClickListener {
 
                     manageIndicatorsStatus(
-                            cardView.strokeWidth != 4,
+                            indicator.visibility != View.VISIBLE,
                             tabImageButton,
-                            cardView
+                            indicator
                     )
 
-                    if (cardView.strokeWidth != 4) {
+                    if (indicator.visibility != View.VISIBLE) {
                         mActiveItems.remove(
                                 adapterPosition
                         )
@@ -114,7 +92,7 @@ class ActiveTabsAdapter(
                         context.getString(R.string.active_fragments_pref_warning)
                                 .toToast(context)
                         mActiveItems.add(adapterPosition)
-                        manageIndicatorsStatus(true, tabImageButton, cardView)
+                        manageIndicatorsStatus(true, tabImageButton, indicator)
                     }
                 }
             }
@@ -124,18 +102,18 @@ class ActiveTabsAdapter(
     private fun manageIndicatorsStatus(
             condition: Boolean,
             icon: ImageButton,
-            cardView: MaterialCardView
+            indicator: ImageView
     ) {
         when {
             condition -> {
-                cardView.strokeWidth = 4
-                ThemeHelper.updateIconTint(icon, mResolvedAccentColor)
+                indicator.handleViewVisibility(true)
+                ThemeHelper.updateIconTint(icon, ThemeHelper.resolveThemeAccent(context))
             }
             else -> {
-                cardView.strokeWidth = 0
+                indicator.handleViewVisibility(false)
                 ThemeHelper.updateIconTint(
                         icon,
-                        mResolvedAlphaAccentColor
+                        ThemeHelper.getAlphaAccent(context, ThemeHelper.getAlphaForAccent())
                 )
             }
         }
