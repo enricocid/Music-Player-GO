@@ -120,7 +120,7 @@ class GoPreferences(context: Context) {
         set(value) = mPrefs.edit().putBoolean(prefsCover, value).apply()
 
     var songsVisualization
-        get() = mPrefs.getString(prefsSongsVisual, GoConstants.TITLE.toString())
+        get() = mPrefs.getString(prefsSongsVisual, GoConstants.TITLE)
         set(value) = mPrefs.edit().putString(prefsSongsVisual, value.toString()).apply()
 
     var artistsSorting

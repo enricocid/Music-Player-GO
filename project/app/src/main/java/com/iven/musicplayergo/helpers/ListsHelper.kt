@@ -133,7 +133,7 @@ object ListsHelper {
 
     @JvmStatic
     fun getSongsSorting(currentSorting: Int): Int {
-        val isFileNameSongs = goPreferences.songsVisualization == GoConstants.FILE_NAME
+        val isFileNameSongs = goPreferences.songsVisualization != GoConstants.TITLE
         return if (isFileNameSongs) {
             when (currentSorting) {
                 GoConstants.ASCENDING_SORTING -> GoConstants.DESCENDING_SORTING

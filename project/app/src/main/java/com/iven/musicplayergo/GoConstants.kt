@@ -13,12 +13,10 @@ object GoConstants {
     const val FOLDER_VIEW = "2"
 
     // on list ended option
-    const val STOP = "0"
-    const val CONTINUE = "1"
+    const val CONTINUE = "0"
 
     // song visualization options
     const val TITLE = "0"
-    const val FILE_NAME = "1"
 
     // sorting
     const val DEFAULT_SORTING = 0

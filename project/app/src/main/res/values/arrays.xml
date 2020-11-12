@@ -25,8 +25,8 @@
     </string-array>
 
     <string-array name="onListEndedArray">
-        <item>@string/on_list_ended_pref_stop_title</item>
         <item>@string/on_list_ended_pref_continue_title</item>
+        <item>@string/on_list_ended_pref_stop_title</item>
     </string-array>
 
     <string-array name="onListEndedEntryArray">

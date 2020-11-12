@@ -86,7 +86,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private val sLaunchedByArtistView get() = mLaunchedBy == GoConstants.ARTIST_VIEW
     private val sLaunchedByFolderView get() = mLaunchedBy == GoConstants.FOLDER_VIEW
 
-    private val sIsFileNameSongs get() = goPreferences.songsVisualization == GoConstants.FILE_NAME
+    private val sIsFileNameSongs get() = goPreferences.songsVisualization != GoConstants.TITLE
 
     private var sLaunchCircleReveal = true
 

@@ -74,7 +74,7 @@ object ThemeHelper {
     }
 
     fun resolveSortAlbumSongsIcon(sort: Int): Int {
-        val isFileNameSongs = goPreferences.songsVisualization == GoConstants.FILE_NAME
+        val isFileNameSongs = goPreferences.songsVisualization != GoConstants.TITLE
         return if (isFileNameSongs) {
             when (sort) {
                 GoConstants.ASCENDING_SORTING -> R.drawable.ic_sort_alphabetical_descending
