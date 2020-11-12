@@ -96,19 +96,18 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mEqFragmentBinding = FragmentEqualizerBinding.bind(view)
-
-        mEqFragmentBinding.sliderBass.addOnChangeListener { _, value, fromUser ->
-            // Responds to when slider's value is changed
-            if (fromUser) {
-                mEqualizer?.second?.setStrength(value.toInt().toShort())
+        mEqFragmentBinding = FragmentEqualizerBinding.bind(view).apply {
+            sliderBass.addOnChangeListener { _, value, fromUser ->
+                // Responds to when slider's value is changed
+                if (fromUser) {
+                    mEqualizer?.second?.setStrength(value.toInt().toShort())
+                }
             }
-        }
-
-        mEqFragmentBinding.sliderVirt.addOnChangeListener { _, value, fromUser ->
-            // Responds to when slider's value is changed
-            if (fromUser) {
-                mEqualizer?.third?.setStrength(value.toInt().toShort())
+            sliderVirt.addOnChangeListener { _, value, fromUser ->
+                // Responds to when slider's value is changed
+                if (fromUser) {
+                    mEqualizer?.third?.setStrength(value.toInt().toShort())
+                }
             }
         }
 
@@ -136,16 +135,18 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
     private fun finishSetupEqualizer(view: View) {
 
-        mSliders[0] = mEqFragmentBinding.slider0
-        mSlidersLabels[0] = mEqFragmentBinding.freq0
-        mSliders[1] = mEqFragmentBinding.slider1
-        mSlidersLabels[1] = mEqFragmentBinding.freq1
-        mSliders[2] = mEqFragmentBinding.slider2
-        mSlidersLabels[2] = mEqFragmentBinding.freq2
-        mSliders[3] = mEqFragmentBinding.slider3
-        mSlidersLabels[3] = mEqFragmentBinding.freq3
-        mSliders[4] = mEqFragmentBinding.slider4
-        mSlidersLabels[4] = mEqFragmentBinding.freq4
+        mEqFragmentBinding.apply {
+            mSliders[0] = slider0
+            mSlidersLabels[0] = freq0
+            mSliders[1] = slider1
+            mSlidersLabels[1] = freq1
+            mSliders[2] = slider2
+            mSlidersLabels[2] = freq2
+            mSliders[3] = slider3
+            mSlidersLabels[3] = freq3
+            mSliders[4] = slider4
+            mSlidersLabels[4] = freq4
+        }
 
         goPreferences.savedEqualizerSettings?.let { savedEqualizerSettings ->
             mSelectedPreset = savedEqualizerSettings.preset
