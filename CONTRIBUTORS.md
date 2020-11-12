@@ -90,3 +90,5 @@ This work is licensed under a [Creative Commons Attribution 0](https://creativec
 - [**1t3x**](https://github.com/1t3x) for **Romanian** translations
 
 - [**AimerNeige**](https://github.com/aimerneige) for **Chinese-Shimply & Chinese-Traditional Support** translations
+
+- [**Krishan**](https://github.com/k7bura) for **Hindi** translations
