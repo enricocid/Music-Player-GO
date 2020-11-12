@@ -10,8 +10,14 @@
 
     <!-- Main - Fragments titles -->
     <string name="artists">कलाकार</string>
+    <string name="albums">एल्बम</string>
     <string name="songs">गीत</string>
     <string name="folders">फ़ोल्डर</string>
+
+    <!-- Equalizer -->
+    <string name="equalizer">इक्वलाइज़र </string>
+    <string name="equalizer_bb">बॉस बूस्ट </string>
+    <string name="equalizer_v">सराउंड ऑडियो</string>
 
     <!-- Main - Artists/Folder RecyclerViews items  -->
     <string name="artist_info">%1d&#160;एल्बम,&#160;%2d&#160;गीत</string>
@@ -48,6 +54,7 @@
     <string name="error_no_eq">कोई ईक्वलाइज़र नहीं मिला !</string>
     <string name="error_no_filter">कोई फिल्टर नहीं मिला!</string>
     <string name="error_no_queue">कोई गीत पंक्तिबद्ध नहीं!</string>
+    <string name="error_list_ended">प्लेलिस्ट ख़त्म!</string>
 
     <!-- Messages - Permission rationale -->
     <string name="perm_rationale">Music Player GO को संगीत चलाने के लिए आपकी फाइलों तक पहुंच की जरूरत होती है!</string>
@@ -75,7 +82,7 @@
     <string name="theme_pref_title">थीम</string>
     <string name="theme_pref_light_title">सफ़ेद</string>
     <string name="theme_pref_dark_title">गहरा</string>
-    <string name="theme_pref_auto_title">स्वचालित</string>
+    <string name="theme_pref_auto_title">स्वचलित</string>
 
     <!-- Preferences - Accent -->
     <string name="accent_pref_title">एक्सेंट</string>
@@ -84,9 +91,35 @@
     <string name="edge_pref_summary_on">किनारे-किनारे अक्षम करें</string>
     <string name="edge_pref_summary_off">किनारे-किनारे सक्षम करें</string>
 
+    <!-- Preferences - covers -->
+    <string name="covers_pref_title">एल्बम के कवर सन्निहित करें</string>
+    <string name="covers_pref_summary_on">एल्बम के कवर दिखाए</string>
+    <string name="covers_pref_summary_off">एल्बम के कवर हटाए</string>
+
+    <!-- Preferences - choose what to do when a playlist ends -->
+    <string name="on_list_ended_pref_title">जब एक प्लेलिस्ट ख़त्म हो &#8230;</string>
+    <string name="on_list_ended_pref_stop_title">बंद</string>
+    <string name="on_list_ended_pref_continue_title">जारी</string>
+
+    <!-- Preferences - Song visualization options (tl = title, fn = full name) -->
+    <string name="song_visual_pref_title">गीत दृश्यकरण</string>
+    <string name="song_visual_pref_tl_title">शीर्षक</string>
+    <string name="song_visual_pref_fn_title">फ़ाइल नाम</string>
+
     <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">सक्रिय टैब</string>
     <string name="active_fragments_pref_warning">आप सभी टैब नहीं निकाल सकते हैं! :P</string>
+    
+    <!-- Preferences - Custom Equalizer -->
+    <string name="eq_pref_summary_off">सिस्टम इक्वलाइज़र चुने (यदि है)</string>
+    <string name="eq_pref_summary_on">अंतर्निर्मित इक्वलाइज़र चुने</string>
+
+    <!-- Preferences - Fast seeking -->
+    <string name="fast_seeking_pref_title">फ़ास्ट सीकिंग</string>
+    <string name="fast_seeking_pref_summary">फ़ास्ट फॉरवर्ड/रिवाइंड स्टैप (सेकण्ड)</string>
+    <string name="fast_seeking_actions_pref_title">अन्य  नोटिफिकेशन एक्शन</string>
+    <string name="fast_seeking_actions_pref_summary_off">बंद/पुनराव्रत्ति एक्शन चुने</string>
+    <string name="fast_seeking_actions_pref_summary_on">फ़ास्ट सीकिंग एक्शन चुने</string>
 
     <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">सटीक वॉल्यूम नियंत्रण</string>
