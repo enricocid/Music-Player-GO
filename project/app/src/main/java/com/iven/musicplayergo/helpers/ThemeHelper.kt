@@ -28,7 +28,6 @@ import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.enums.SongsVisualOpts
 import com.iven.musicplayergo.extensions.decodeColor
 import com.iven.musicplayergo.extensions.toSpanned
 import com.iven.musicplayergo.goPreferences
@@ -75,7 +74,7 @@ object ThemeHelper {
     }
 
     fun resolveSortAlbumSongsIcon(sort: Int): Int {
-        val isFileNameSongs = goPreferences.songsVisualization == SongsVisualOpts.FILE_NAME
+        val isFileNameSongs = goPreferences.songsVisualization == GoConstants.FILE_NAME
         return if (isFileNameSongs) {
             when (sort) {
                 GoConstants.ASCENDING_SORTING -> R.drawable.ic_sort_alphabetical_descending

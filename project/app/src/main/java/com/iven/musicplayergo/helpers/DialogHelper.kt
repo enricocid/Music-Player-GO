@@ -14,7 +14,6 @@ import com.afollestad.materialdialogs.list.getRecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.adapters.QueueAdapter
-import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.addBidirectionalSwipeHandler
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.goPreferences
@@ -273,7 +272,7 @@ object DialogHelper {
             context: Context,
             itemView: View?,
             song: Music?,
-            launchedBy: LaunchedBy,
+            launchedBy: String,
             uiControlInterface: UIControlInterface
     ) {
         itemView?.let {

@@ -24,8 +24,6 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentDetailsBinding
-import com.iven.musicplayergo.enums.LaunchedBy
-import com.iven.musicplayergo.enums.SongsVisualOpts
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
@@ -59,7 +57,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private val mSelectedAlbumsDataSource = dataSourceOf()
     private val mSongsDataSource = dataSourceOf()
 
-    private var mLaunchedBy: LaunchedBy = LaunchedBy.ArtistView
+    private var mLaunchedBy = GoConstants.ARTIST_VIEW
 
     private var mSelectedArtistAlbums: List<Album>? = null
     private var mSongsList: List<Music>? = null
@@ -85,10 +83,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         GoConstants.TRACK_SORTING
     }
 
-    private val sLaunchedByArtistView get() = mLaunchedBy == LaunchedBy.ArtistView
-    private val sLaunchedByFolderView get() = mLaunchedBy == LaunchedBy.FolderView
+    private val sLaunchedByArtistView get() = mLaunchedBy == GoConstants.ARTIST_VIEW
+    private val sLaunchedByFolderView get() = mLaunchedBy == GoConstants.FOLDER_VIEW
 
-    private val sIsFileNameSongs get() = goPreferences.songsVisualization == SongsVisualOpts.FILE_NAME
+    private val sIsFileNameSongs get() = goPreferences.songsVisualization == GoConstants.FILE_NAME
 
     private var sLaunchCircleReveal = true
 
@@ -106,8 +104,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             mSelectedArtistOrFolder = selectedArtistOrFolder
         }
 
-        arguments?.getInt(TAG_IS_FOLDER)?.let { launchedBy ->
-            mLaunchedBy = LaunchedBy.values()[launchedBy]
+        arguments?.getString(TAG_IS_FOLDER)?.let { launchedBy ->
+            mLaunchedBy = launchedBy
         }
 
         if (sLaunchedByArtistView) {
@@ -153,7 +151,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private fun getSongSource(): List<Music>? {
         return when (mLaunchedBy) {
-            LaunchedBy.ArtistView -> {
+            GoConstants.ARTIST_VIEW -> {
                 mMusicViewModel.deviceAlbumsByArtist?.get(mSelectedArtistOrFolder)
                         ?.let { selectedArtistAlbums ->
                             mSelectedArtistAlbums = selectedArtistAlbums
@@ -161,10 +159,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 mMusicViewModel.deviceSongsByArtist?.get(mSelectedArtistOrFolder)
             }
 
-            LaunchedBy.FolderView ->
+            GoConstants.FOLDER_VIEW ->
                 mMusicViewModel.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
 
-            LaunchedBy.AlbumView ->
+            else ->
                 mMusicViewModel.deviceMusicByAlbum?.get(mSelectedArtistOrFolder)
         }
     }
@@ -639,13 +637,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         @JvmStatic
         fun newInstance(
                 selectedArtistOrFolder: String?,
-                launchedBy: LaunchedBy,
+                launchedBy: String,
                 playedAlbumPosition: Int
         ) =
                 DetailsFragment().apply {
                     arguments = Bundle().apply {
                         putString(TAG_ARTIST_FOLDER, selectedArtistOrFolder)
-                        putInt(TAG_IS_FOLDER, launchedBy.ordinal)
+                        putString(TAG_IS_FOLDER, launchedBy)
                         putInt(TAG_SELECTED_ALBUM_POSITION, playedAlbumPosition)
                     }
                 }

@@ -98,7 +98,7 @@
             app:title="@string/headset_pref_title" />
 
         <ListPreference
-            android:defaultValue="@integer/on_list_ended_default"
+            android:defaultValue="0"
             app:dialogTitle="@string/on_list_ended_pref_title"
             app:entries="@array/onListEndedArray"
             app:entryValues="@array/onListEndedEntryArray"
@@ -120,14 +120,14 @@
             app:title="@string/covers_pref_title" />
 
         <SeekBarPreference
-            android:key="@string/fast_seeking_pref"
-            android:title="@string/fast_seeking_pref_title"
-            android:summary="@string/fast_seeking_pref_summary"
-            app:seekBarIncrement="5"
             android:defaultValue="10"
-            app:showSeekBarValue="true"
+            android:key="@string/fast_seeking_pref"
             android:max="60"
-            app:min="5" />
+            android:summary="@string/fast_seeking_pref_summary"
+            android:title="@string/fast_seeking_pref_title"
+            app:min="5"
+            app:seekBarIncrement="5"
+            app:showSeekBarValue="true" />
 
         <SwitchPreferenceCompat
             android:summaryOff="@string/fast_seeking_actions_pref_summary_off"
@@ -137,7 +137,7 @@
             app:title="@string/fast_seeking_actions_pref_title" />
 
         <ListPreference
-            android:defaultValue="@integer/song_visualization_default"
+            android:defaultValue="0"
             app:dialogTitle="@string/song_visual_pref_title"
             app:entries="@array/songVisualizationArray"
             app:entryValues="@array/songVisualizationEntryArray"

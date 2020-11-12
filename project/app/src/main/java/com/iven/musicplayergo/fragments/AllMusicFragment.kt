@@ -18,7 +18,6 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentAllMusicBinding
-import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.extensions.setTitleColor
@@ -126,7 +125,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                                         item.album,
                                         mMusicViewModel.deviceAlbumsByArtist
                                 ),
-                                LaunchedBy.ArtistView
+                                GoConstants.ARTIST_VIEW
                         )
                     }
 
@@ -135,7 +134,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                                 requireActivity(),
                                 findViewHolderForAdapterPosition(index)?.itemView,
                                 item,
-                                LaunchedBy.ArtistView,
+                                GoConstants.ARTIST_VIEW,
                                 mUIControlInterface
                         )
                     }
@@ -165,7 +164,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 }
 
                 findItem(R.id.action_shuffle_am).setOnMenuItemClickListener {
-                    mUIControlInterface.onShuffleSongs(mAllMusic, LaunchedBy.ArtistView)
+                    mUIControlInterface.onShuffleSongs(mAllMusic, GoConstants.ARTIST_VIEW)
                     return@setOnMenuItemClickListener true
                 }
 

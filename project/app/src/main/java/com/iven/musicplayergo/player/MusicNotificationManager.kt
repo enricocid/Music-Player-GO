@@ -14,7 +14,6 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.getCover
 import com.iven.musicplayergo.extensions.toSpanned
 import com.iven.musicplayergo.goPreferences
@@ -160,8 +159,8 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
     private fun getNotificationSmallIcon(mediaPlayerHolder: MediaPlayerHolder) =
             when (mediaPlayerHolder.launchedBy) {
-                LaunchedBy.FolderView -> R.drawable.ic_folder
-                LaunchedBy.AlbumView -> R.drawable.ic_library_music
+                GoConstants.FOLDER_VIEW -> R.drawable.ic_folder
+                GoConstants.ALBUM_VIEW -> R.drawable.ic_library_music
                 else -> R.drawable.ic_music_note
             }
 

@@ -14,8 +14,6 @@
         <item>@string/theme_pref_auto</item>
     </string-array>
 
-    <integer name="song_visualization_default">0</integer>
-
     <string-array name="songVisualizationArray">
         <item>@string/song_visual_pref_tl_title</item>
         <item>@string/song_visual_pref_fn_title</item>
@@ -25,8 +23,6 @@
         <item>0</item>
         <item>1</item>
     </string-array>
-
-    <integer name="on_list_ended_default">0</integer>
 
     <string-array name="onListEndedArray">
         <item>@string/on_list_ended_pref_stop_title</item>

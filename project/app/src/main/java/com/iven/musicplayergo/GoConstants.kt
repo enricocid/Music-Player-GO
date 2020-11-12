@@ -7,6 +7,19 @@ object GoConstants {
     const val PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 2588
     const val RESTORE_SETTINGS_FRAGMENT = "RESTORE_SETTINGS_FRAGMENT"
 
+    // launched by, used to determine which MusicContainerListFragment is instantiated by the ViewPager
+    const val ARTIST_VIEW = "0"
+    const val ALBUM_VIEW = "1"
+    const val FOLDER_VIEW = "2"
+
+    // on list ended option
+    const val STOP = "0"
+    const val CONTINUE = "1"
+
+    // song visualization options
+    const val TITLE = "0"
+    const val FILE_NAME = "1"
+
     // sorting
     const val DEFAULT_SORTING = 0
     const val DESCENDING_SORTING = 1

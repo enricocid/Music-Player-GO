@@ -25,8 +25,6 @@ import android.support.v4.media.session.PlaybackStateCompat.ACTION_SEEK_TO
 import android.support.v4.media.session.PlaybackStateCompat.Builder
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.enums.LaunchedBy
-import com.iven.musicplayergo.enums.OnListEndedOpts
 import com.iven.musicplayergo.extensions.toContentUri
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.fragments.EqFragment
@@ -121,8 +119,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     // First: current song, second: isFromQueue
     lateinit var currentSong: Pair<Music?, Boolean>
-    var launchedBy: LaunchedBy = LaunchedBy.ArtistView
-    private var isPlayingFromFolderPreQueue: LaunchedBy = LaunchedBy.ArtistView
+    var launchedBy = GoConstants.ARTIST_VIEW
+    private var isPlayingFromFolderPreQueue = GoConstants.ARTIST_VIEW
     private var mPlayingAlbumSongs: List<Music>? = null
 
     var currentVolumeInPercent = goPreferences.latestVolume
@@ -249,7 +247,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             song: Music?,
             songs: List<Music>?,
             isFromQueue: Boolean,
-            isFolderAlbum: LaunchedBy
+            isFolderAlbum: String
     ) {
         launchedBy = isFolderAlbum
         currentSong = Pair(song, isFromQueue)
@@ -290,7 +288,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             isQueue -> manageQueue(true)
             else -> {
                 if (mPlayingAlbumSongs?.indexOf(currentSong.first) == mPlayingAlbumSongs?.size?.minus(1)) {
-                    if (goPreferences.onListEnded == OnListEndedOpts.CONTINUE) {
+                    if (goPreferences.onListEnded == GoConstants.CONTINUE) {
                         skip(true)
                     } else {
                         synchronized(pauseMediaPlayer()) {
@@ -441,7 +439,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                         queueSongs[0],
                         queueSongs,
                         isFromQueue = true,
-                        isFolderAlbum = LaunchedBy.ArtistView
+                        isFolderAlbum = GoConstants.ARTIST_VIEW
                 )
                 isQueueStarted = true
             }

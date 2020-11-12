@@ -18,7 +18,6 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentMusicContainerListBinding
-import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.extensions.setTitleColor
@@ -44,7 +43,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     // View model
     private lateinit var mMusicViewModel: MusicViewModel
 
-    private var launchedBy: LaunchedBy = LaunchedBy.ArtistView
+    private var mLaunchedBy = GoConstants.ARTIST_VIEW
 
     private var mList: MutableList<String>? = null
 
@@ -62,8 +61,8 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        arguments?.getInt(TAG_LAUNCHED_BY)?.let {
-            launchedBy = LaunchedBy.values()[it]
+        arguments?.getString(TAG_LAUNCHED_BY)?.let { launchedBy ->
+            mLaunchedBy = launchedBy
         }
 
         // This makes sure that the container activity has implemented
@@ -125,7 +124,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                         if (::mUIControlInterface.isInitialized) {
                             mUIControlInterface.onArtistOrFolderSelected(
                                     item,
-                                    launchedBy
+                                    mLaunchedBy
                             )
                         }
                     }
@@ -187,10 +186,10 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     }
 
     private fun getItemsSubtitle(item: String): String? {
-        return when (launchedBy) {
-            LaunchedBy.ArtistView ->
+        return when (mLaunchedBy) {
+            GoConstants.ARTIST_VIEW ->
                 getArtistSubtitle(item)
-            LaunchedBy.FolderView ->
+            GoConstants.FOLDER_VIEW ->
                 getString(
                         R.string.folder_info,
                         mMusicViewModel.deviceMusicByFolder?.getValue(item)?.size
@@ -202,13 +201,13 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     }
 
     private fun getSortedItemKeys(): MutableList<String>? {
-        return when (launchedBy) {
-            LaunchedBy.ArtistView ->
+        return when (mLaunchedBy) {
+            GoConstants.ARTIST_VIEW ->
                 ListsHelper.getSortedList(
                         mSorting,
                         mMusicViewModel.deviceAlbumsByArtist?.keys?.toMutableList()
                 )
-            LaunchedBy.FolderView ->
+            GoConstants.FOLDER_VIEW ->
                 ListsHelper.getSortedList(
                         mSorting,
                         mMusicViewModel.deviceMusicByFolder?.keys?.toMutableList()
@@ -223,10 +222,10 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     }
 
     private fun getSortingMethodFromPrefs(): Int {
-        return when (launchedBy) {
-            LaunchedBy.ArtistView ->
+        return when (mLaunchedBy) {
+            GoConstants.ARTIST_VIEW ->
                 goPreferences.artistsSorting
-            LaunchedBy.FolderView ->
+            GoConstants.FOLDER_VIEW ->
                 goPreferences.foldersSorting
             else ->
                 goPreferences.albumsSorting
@@ -234,10 +233,10 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     }
 
     private fun getFragmentTitle(): String {
-        val stringId = when (launchedBy) {
-            LaunchedBy.ArtistView ->
+        val stringId = when (mLaunchedBy) {
+            GoConstants.ARTIST_VIEW ->
                 R.string.artists
-            LaunchedBy.FolderView ->
+            GoConstants.FOLDER_VIEW ->
                 R.string.folders
             else ->
                 R.string.albums
@@ -380,10 +379,10 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     }
 
     private fun saveSortingMethodToPrefs(sortingMethod: Int) {
-        when (launchedBy) {
-            LaunchedBy.ArtistView ->
+        when (mLaunchedBy) {
+            GoConstants.ARTIST_VIEW ->
                 goPreferences.artistsSorting = sortingMethod
-            LaunchedBy.FolderView ->
+            GoConstants.FOLDER_VIEW ->
                 goPreferences.foldersSorting = sortingMethod
             else ->
                 goPreferences.albumsSorting = sortingMethod
@@ -401,9 +400,9 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
          * @return A new instance of fragment MusicContainersListFragment.
          */
         @JvmStatic
-        fun newInstance(launchedBy: LaunchedBy) = MusicContainersListFragment().apply {
+        fun newInstance(launchedBy: String) = MusicContainersListFragment().apply {
             arguments = Bundle().apply {
-                putInt(TAG_LAUNCHED_BY, launchedBy.ordinal)
+                putString(TAG_LAUNCHED_BY, launchedBy)
             }
         }
     }

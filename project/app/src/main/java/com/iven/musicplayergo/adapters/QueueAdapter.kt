@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
+import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
@@ -102,7 +102,7 @@ class QueueAdapter(
                                 song,
                                 queueSongs,
                                 isFromQueue = true,
-                                isFolderAlbum = LaunchedBy.ArtistView
+                                isFolderAlbum = GoConstants.ARTIST_VIEW
                         )
                         initMediaPlayer(song)
                     }

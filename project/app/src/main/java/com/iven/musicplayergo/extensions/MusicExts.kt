@@ -11,7 +11,6 @@ import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.provider.MediaStore
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.enums.LaunchedBy
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedMusic
 import java.util.*
@@ -122,7 +121,7 @@ fun Int.toFormattedYear(resources: Resources) =
             resources.getString(R.string.unknown_year)
         }
 
-fun Music.toSavedMusic(playerPosition: Int, launchedBy: LaunchedBy) =
+fun Music.toSavedMusic(playerPosition: Int, launchedBy: String) =
         SavedMusic(
                 artist,
                 title,

@@ -6,8 +6,6 @@ import android.view.Menu
 import android.view.MenuItem
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.enums.LaunchedBy
-import com.iven.musicplayergo.enums.SongsVisualOpts
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.extensions.toToast
@@ -135,7 +133,7 @@ object ListsHelper {
 
     @JvmStatic
     fun getSongsSorting(currentSorting: Int): Int {
-        val isFileNameSongs = goPreferences.songsVisualization == SongsVisualOpts.FILE_NAME
+        val isFileNameSongs = goPreferences.songsVisualization == GoConstants.FILE_NAME
         return if (isFileNameSongs) {
             when (currentSorting) {
                 GoConstants.ASCENDING_SORTING -> GoConstants.DESCENDING_SORTING
@@ -163,7 +161,7 @@ object ListsHelper {
             context: Context,
             song: Music?,
             playerPosition: Int,
-            launchedBy: LaunchedBy
+            launchedBy: String
     ) {
         val lovedSongs =
                 if (goPreferences.lovedSongs != null) {
