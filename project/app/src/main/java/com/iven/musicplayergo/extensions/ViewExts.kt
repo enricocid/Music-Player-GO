@@ -142,13 +142,6 @@ fun FragmentManager.addFragment(fragment: Fragment, tag: String?, isReplace: Boo
     }
 }
 
-fun FragmentManager.removeFragment(fragment: Fragment) {
-    beginTransaction().apply {
-        remove(fragment)
-        commit()
-    }
-}
-
 fun FragmentManager.isFragment(fragmentTag: String): Boolean {
     val df = findFragmentByTag(fragmentTag)
     return df != null && df.isVisible && df.isAdded

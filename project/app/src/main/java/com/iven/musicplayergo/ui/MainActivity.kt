@@ -463,7 +463,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 sRevealAnimationRunning = true
                 tab?.icon?.setTint(mResolvedAccentColor)
                 doOnEnd {
-                    synchronized(removeFragment(mDetailsFragment)) {
+                    synchronized(super.onBackPressed()) {
                         sRevealAnimationRunning = false
                     }
                 }
@@ -474,12 +474,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun closeNowPlayingDialog() {
         if (::mNowPlayingDialog.isInitialized && mNowPlayingDialog.isShowing) {
             mNowPlayingDialog.dismiss()
-        }
-    }
-
-    private fun removeFragment(fragment: Fragment) {
-        synchronized(super.onBackPressed()) {
-            supportFragmentManager.removeFragment(fragment)
         }
     }
 
@@ -964,7 +958,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             val selectedArtistOrFolder = getSongSource(selectedSong, isPlayingFromFolder)
             if (sDetailsFragmentExpanded) {
                 if (mDetailsFragment.hasToUpdate(selectedArtistOrFolder)) {
-                    synchronized(removeFragment(mDetailsFragment)) {
+                    synchronized(super.onBackPressed()) {
                         openDetailsFragment(
                                 selectedArtistOrFolder,
                                 mMediaPlayerHolder.launchedBy
@@ -1128,7 +1122,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 sRevealAnimationRunning = true
                 tab?.icon?.setTint(mResolvedAccentColor)
                 doOnEnd {
-                    synchronized(removeFragment(mEqualizerFragment)) {
+                    synchronized(super.onBackPressed()) {
                         sRevealAnimationRunning = false
                     }
                 }
