@@ -45,7 +45,6 @@
     <string name="error_media_buttons">Noe gikk galt! :( Vennligst start avspillingen på nytt fra appen.</string>
     <string name="error_no_browser">Ingen nettlesere funnet!</string>
     <string name="error_bad_id">Spill en sang først!</string>
-    <string name="error_no_eq">Fant ingen utligning!</string>
     <string name="error_no_filter">Fant ingen filtre!</string>
     <string name="error_no_queue">Ingen sanger sto i kø!</string>
 

@@ -45,7 +45,6 @@
     <string name="error_media_buttons">Telah terjadi kesalahan! :( Silakan mulai ulang pemutaran dari aplikasi</string>
     <string name="error_no_browser">Peramban tidak ditemukan!</string>
     <string name="error_bad_id">Putar lagu terlebih dahulu!</string>
-    <string name="error_no_eq">Equalizer tidak ditemukan!</string>
     <string name="error_no_filter">Tidak ada filter yang ditemukan!</string>
     <string name="error_no_queue">Tidak ada lagu dalam antrean!</string>
 

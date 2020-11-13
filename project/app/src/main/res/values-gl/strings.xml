@@ -45,7 +45,6 @@
     <string name="error_media_buttons">Algo fallou! :( Por favor reinicia a reprodución desde a app.</string>
     <string name="error_no_browser">Non se atopou navegador!</string>
     <string name="error_bad_id">Reproduce primeiro unha pista!</string>
-    <string name="error_no_eq">Non se atopa o equalizador!</string>
     <string name="error_no_filter">Non se atopan filtros!</string>
     <string name="error_no_queue">Sen pistas na cola!</string>
 

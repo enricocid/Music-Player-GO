@@ -24,8 +24,6 @@ class GoPreferences(context: Context) {
     private val prefsActiveFragments = context.getString(R.string.active_fragments_pref)
     val prefsActiveFragmentsDef = setOf(0, 1, 2, 3, 4)
 
-    private val prefsEq = context.getString(R.string.eq_pref)
-
     private val prefsCover = context.getString(R.string.covers_pref)
 
     private val prefsOnListEnded = context.getString(R.string.on_list_ended_pref)
@@ -103,13 +101,6 @@ class GoPreferences(context: Context) {
     var activeFragments: Set<Int>
         get() = getObject(prefsActiveFragments, typeActiveFragments) ?: prefsActiveFragmentsDef
         set(value) = putObject(prefsActiveFragments, value)
-
-    var isBuiltInEq
-        get() = mPrefs.getBoolean(
-                prefsEq,
-                false
-        )
-        set(value) = mPrefs.edit().putBoolean(prefsEq, value).apply()
 
     var onListEnded
         get() = mPrefs.getString(prefsOnListEnded, GoConstants.CONTINUE)

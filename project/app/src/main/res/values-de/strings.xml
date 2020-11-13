@@ -1,5 +1,4 @@
 <resources>
-    <string name="error_no_eq">Kein Equalizer gefunden!</string>
     <string name="error_bad_id">Spiel zuerst ein Lied!</string>
     <string name="error_no_browser">Kein Browser gefunden!</string>
     <string name="perm_rationale">Damit du Musik auf deinem Handy wiedergeben kannst, benötigt Music Player GO Zugriff auf deine Dateien</string>

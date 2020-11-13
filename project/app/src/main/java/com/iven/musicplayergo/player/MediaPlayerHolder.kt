@@ -225,8 +225,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             mBassBoost = BassBoost(0, mediaPlayer.audioSessionId)
             mVirtualizer = Virtualizer(0, mediaPlayer.audioSessionId)
             mEqualizer = Equalizer(0, mediaPlayer.audioSessionId)
-
-            setEqualizerEnabled(true)
+            setEqualizerEnabled(false)
             restoreCustomEqSettings()
         }
     }
@@ -240,7 +239,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun onSaveEqualizerSettings(selectedPreset: Int, bassBoost: Short, virtualizer: Short) {
-        goPreferences.savedEqualizerSettings = SavedEqualizerSettings(selectedPreset, mEqualizer.properties.bandLevels.toList(), bassBoost, virtualizer)
+        goPreferences.savedEqualizerSettings = SavedEqualizerSettings(mEqualizer.enabled, selectedPreset, mEqualizer.properties.bandLevels.toList(), bassBoost, virtualizer)
     }
 
     fun setCurrentSong(
@@ -537,10 +536,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             } else {
                 mediaPlayer = MediaPlayer().apply {
 
-                    EqualizerUtils.openAudioEffectSession(
-                            playerService.applicationContext,
-                            audioSessionId
-                    )
+                    if (EqualizerUtils.hasEqualizer(playerService.applicationContext)) {
+                        EqualizerUtils.openAudioEffectSession(
+                                playerService.applicationContext,
+                                audioSessionId
+                        )
+                    }
 
                     setOnPreparedListener(this@MediaPlayerHolder)
                     setOnCompletionListener(this@MediaPlayerHolder)
@@ -609,7 +610,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (isPlay) {
             play()
         } else {
-            createCustomEqualizer()
+            if (!EqualizerUtils.hasEqualizer(playerService)) {
+                // set equalizer the first time is instantiated
+                createCustomEqualizer()
+            }
         }
     }
 
@@ -622,11 +626,11 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private fun restoreCustomEqSettings() {
         mediaPlayer.apply {
-            mEqualizer.enabled = true
-            mBassBoost.enabled = true
-            mVirtualizer.enabled = true
             val savedEqualizerSettings = goPreferences.savedEqualizerSettings
+
             savedEqualizerSettings?.let { eqSettings ->
+
+                setEqualizerEnabled(eqSettings.enabled)
 
                 mEqualizer.usePreset(eqSettings.preset.toShort())
 
@@ -654,6 +658,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     playerService,
                     mediaPlayer.audioSessionId
             )
+            releaseCustomEqualizer()
             mediaPlayer.release()
             if (sFocusEnabled) {
                 giveUpAudioFocus()
@@ -661,6 +666,14 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             stopUpdatingCallbackWithPosition()
         }
         unregisterActionsReceiver()
+    }
+
+    private fun releaseCustomEqualizer() {
+        if (::mEqualizer.isInitialized) {
+            mEqualizer.release()
+            mBassBoost.release()
+            mVirtualizer.release()
+        }
     }
 
     fun resumeOrPause() {

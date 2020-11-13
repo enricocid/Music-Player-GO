@@ -51,10 +51,10 @@
     <string name="error_media_buttons">Something went wrong! :( Please restart playback from the app.</string>
     <string name="error_no_browser">No browser found!</string>
     <string name="error_bad_id">Play a song first!</string>
-    <string name="error_no_eq">No equalizer found!</string>
     <string name="error_no_filter">No filters found!</string>
     <string name="error_no_queue">No songs queued!</string>
     <string name="error_list_ended">List has ended!</string>
+    <string name="error_eq">Ooops, an error occurred!</string>
 
     <!-- Messages - Permission rationale -->
     <string name="perm_rationale">Music Player GO needs access to your files to play music!</string>
@@ -110,9 +110,8 @@
     <string name="active_fragments_pref_title">Active tabs</string>
     <string name="active_fragments_pref_warning">You can\'t just remove all the tabs! :P</string>
 
-    <!-- Preferences - Custom Equalizer -->
-    <string name="eq_pref_summary_off">Prefer system equalizer (if available)</string>
-    <string name="eq_pref_summary_on">Prefer built-in equalizer</string>
+    <!-- Preferences - Custom Equalizer note -->
+    <string name="eq_pref_note_summary">Note: system equalizer will be preferred. If You want to enjoy the built-in one please disable the system equalizer (the app) from settings! :)</string>
 
     <!-- Preferences - Fast seeking -->
     <string name="fast_seeking_pref_title">Fast seeking</string>

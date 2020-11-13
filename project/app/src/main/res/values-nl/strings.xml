@@ -26,7 +26,6 @@
     <string name="perm_rationale">Music Player GO heeft toegang nodig tot je bestanden om muziek af te spelen!</string>
     <string name="error_no_browser">Geen browser aangetroffen!</string>
     <string name="error_bad_id">Start eerst een nummer!</string>
-    <string name="error_no_eq">Geen equalizer aangetroffen!</string>
     <string name="error_no_music">Geen muziek aangetroffen :(</string>
     <string name="error_unknown_unsupported">Er is iets misgegaan! :( Het gekozen bestandstype wordt mogelijk niet ondersteund of de map is ontoegankelijk (wat niet de schuld van de app is!)</string>
     <string name="error_media_buttons">Er is iets misgegaan! :( Start de muziek opnieuw in de app</string>

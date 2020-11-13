@@ -1,7 +1,6 @@
 <resources>
     <string name="yes">да</string>
     <string name="no">нет</string>
-    <string name="error_no_eq">Эквалайзер не обнаружен!</string>
     <string name="error_bad_id">Сначала выберите песню!</string>
     <string name="error_no_browser">Браузер не найден!</string>
     <string name="perm_rationale">Для воспроизведения музыки нужен доступ Music Player-GO к Вашим файлам</string>

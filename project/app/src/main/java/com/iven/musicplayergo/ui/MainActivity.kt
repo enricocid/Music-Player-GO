@@ -45,6 +45,7 @@ import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.*
 import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.player.EqualizerUtils
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.player.MediaPlayerInterface
 import com.iven.musicplayergo.player.PlayerService
@@ -1105,7 +1106,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     fun openEqualizer(view: View) {
         if (checkIsPlayer(true)) {
-            if (goPreferences.isBuiltInEq) {
+            if (!EqualizerUtils.hasEqualizer(this)) {
                 if (!sEqFragmentExpanded) {
                     mEqualizerFragment = mMediaPlayerHolder.openEqualizerCustom()
                     synchronized(closeNowPlayingDialog()) {

@@ -19,6 +19,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentEqualizerBinding
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.createCircularReveal
+import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.ui.PresetsViewHolder
@@ -49,7 +50,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
     private val mDataSource = emptyDataSource()
 
-    private var mSelectedPreset = 3
+    private var mSelectedPreset = 0
 
     private val mSliders: Array<Slider?> = arrayOfNulls(5)
     private val mSlidersLabels: Array<TextView?> = arrayOfNulls(5)
@@ -121,11 +122,9 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
         finishSetupEqualizer(view)
     }
 
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-
+    override fun onDetach() {
         synchronized(saveEqSettings()) {
-            super.onHiddenChanged(hidden)
+            super.onDetach()
         }
     }
 
@@ -237,14 +236,19 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
     }
 
     private fun updateBandLevels(isPresetChanged: Boolean) {
-        mSliders.iterator().withIndex().forEach { slider ->
-            slider.value?.value = mEqualizer?.first?.getBandLevel(slider.index.toShort())!!.toFloat()
-        }
-        if (!isPresetChanged) {
-            goPreferences.savedEqualizerSettings?.let { eqSettings ->
-                mEqFragmentBinding.sliderBass.value = eqSettings.bassBoost.toFloat()
+        try {
+            mSliders.iterator().withIndex().forEach { slider ->
+                slider.value?.value = mEqualizer?.first?.getBandLevel(slider.index.toShort())!!.toFloat()
             }
-            mEqFragmentBinding.sliderVirt.value = mEqualizer?.third?.roundedStrength!!.toFloat()
+            if (!isPresetChanged) {
+                goPreferences.savedEqualizerSettings?.let { eqSettings ->
+                    mEqFragmentBinding.sliderBass.value = eqSettings.bassBoost.toFloat()
+                }
+                mEqFragmentBinding.sliderVirt.value = mEqualizer?.third?.roundedStrength!!.toFloat()
+            }
+        } catch (e: UnsupportedOperationException) {
+            e.printStackTrace()
+            getString(R.string.error_eq).toToast(requireActivity())
         }
     }
 

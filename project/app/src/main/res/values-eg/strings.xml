@@ -45,7 +45,6 @@
     <string name="error_media_buttons">هناك خطأ ما! :( يرجى إعادة التشغيل من التطبيق.</string>
     <string name="error_no_browser">لم يتم العثور على متصفح!</string>
     <string name="error_bad_id">قم بتشغيل أغنية أولاً!</string>
-    <string name="error_no_eq">لم يتم العثور على معادل!</string>
     <string name="error_no_filter">لم يتم العثور على فلاتر!</string>
     <string name="error_no_queue">لم يتم وضع أي أغاني في قائمة الانتظار!</string>
 

@@ -45,7 +45,6 @@
     <string name="error_media_buttons">کچھ غلط ہو گیا! :( براہ کرم ایپ سے پلے بیک دوبارہ شروع کریں۔</string>
     <string name="error_no_browser">کوئی براؤزر نہیں ملا!</string>
     <string name="error_bad_id">پہلے گانا چلائیں!</string>
-    <string name="error_no_eq">کوئی برابری نہیں پایا!</string>
     <string name="error_no_filter">کوئی فلٹر نہیں ملا!</string>
     <string name="error_no_queue">کوئی گانوں کی قطار نہیں ہے!</string>
 

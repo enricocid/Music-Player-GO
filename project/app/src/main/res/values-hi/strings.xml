@@ -51,7 +51,6 @@
     <string name="error_media_buttons">कुछ गलत हो गया! :( कृपया एप्लिकेशन से प्लेबैक पुनः आरंभ करें</string>
     <string name="error_no_browser">कोई ब्राउज़र नहीं मिला!</string>
     <string name="error_bad_id">पहले एक गाना चलाएं!</string>
-    <string name="error_no_eq">कोई ईक्वलाइज़र नहीं मिला !</string>
     <string name="error_no_filter">कोई फिल्टर नहीं मिला!</string>
     <string name="error_no_queue">कोई गीत पंक्तिबद्ध नहीं!</string>
     <string name="error_list_ended">प्लेलिस्ट ख़त्म!</string>
@@ -109,10 +108,6 @@
     <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">सक्रिय टैब</string>
     <string name="active_fragments_pref_warning">आप सभी टैब नहीं निकाल सकते हैं! :P</string>
-    
-    <!-- Preferences - Custom Equalizer -->
-    <string name="eq_pref_summary_off">सिस्टम इक्वलाइज़र चुने (यदि है)</string>
-    <string name="eq_pref_summary_on">अंतर्निर्मित इक्वलाइज़र चुने</string>
 
     <!-- Preferences - Fast seeking -->
     <string name="fast_seeking_pref_title">फ़ास्ट सीकिंग</string>
