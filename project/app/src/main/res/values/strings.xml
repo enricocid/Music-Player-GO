@@ -36,8 +36,8 @@
 
     <!-- Queue -->
     <string name="queue">Queue</string>
-    <string name="queue_song_add">%1s added to queue!</string>
-    <string name="queue_song_remove">%1s will be deleted from queue. Continue?</string>
+    <string name="queue_song_add">%1s enqueued!</string>
+    <string name="queue_song_remove">%1s will be removed from the queue. Continue?</string>
 
     <!-- Loved songs -->
     <string name="loved_songs">Loved songs</string>
@@ -46,23 +46,23 @@
     <!-- Messages - Errors -->
     <string name="error_no_loved_songs">No loved songs found!</string>
     <string name="error_no_music">No music found :(</string>
-    <string name="error_not_ready">There was an issue while loading the music library! :( This could be due to the SD card getting unmounted, forcing the Android\'s MediaStore to rebuild its database records. Solution: try again later.</string>
-    <string name="error_unknown_unsupported">Something went wrong! :( Perhaps the chosen format is not supported, or the folder is not accessible (not an app\'s fault!).</string>
+    <string name="error_not_ready">Could not load the music library! :( This could be due to the SD card getting unmounted, forcing the Android\'s MediaStore to rebuild its database records. Try again later.</string>
+    <string name="error_unknown_unsupported">Something went wrong! :( Perhaps the chosen format is not supported, or the folder is not accessible (not the app\'s fault!).</string>
     <string name="error_media_buttons">Something went wrong! :( Please restart playback from the app.</string>
-    <string name="error_no_browser">No browser found!</string>
-    <string name="error_bad_id">Play a song first!</string>
-    <string name="error_no_filter">No filters found!</string>
-    <string name="error_no_queue">No songs queued!</string>
-    <string name="error_list_ended">List has ended!</string>
+    <string name="error_no_browser">No file-browser found.</string>
+    <string name="error_bad_id">Play a song first.</string>
+    <string name="error_no_filter">No filters found.</string>
+    <string name="error_no_queue">No songs in queue.</string>
+    <string name="error_list_ended">List ended.</string>
     <string name="error_eq">Ooops, an error occurred!</string>
 
     <!-- Messages - Permission rationale -->
-    <string name="perm_rationale">Music Player GO needs access to your files to play music!</string>
+    <string name="perm_rationale">Music Player GO needs access to your files to play music.</string>
 
     <!-- Messages - Repeat -->
-    <string name="repeat_enabled">Repeat 1x enabled!</string>
-    <string name="repeat_loop_enabled">Repeat &#8734; enabled!</string>
-    <string name="repeat_disabled">Repeat &#8734; disabled!</string>
+    <string name="repeat_enabled">Single repetition on.</string>
+    <string name="repeat_loop_enabled">Repeat &#8734; on.</string>
+    <string name="repeat_disabled">Repeat &#8734; off.</string>
 
     <!-- Preferences - Categories -->
     <string name="settings">Settings</string>
@@ -70,13 +70,13 @@
 
     <!-- Preferences - Git page -->
     <string name="open_git_pref_title">GitHub page</string>
-    <string name="open_git_pref_summary">Open the project\'s page for more info :)</string>
+    <string name="open_git_pref_summary">Open the project\'s webpage for more info :)</string>
 
     <!-- Preferences - FAQ -->
     <string name="faq_summary">FAQ and supported media formats :P</string>
 
     <!-- Preferences - Found songs -->
-    <string name="found_songs_pref_title">Found songs: %1d</string>
+    <string name="found_songs_pref_title">Songs found: %1d</string>
 
     <!-- Preferences - Themes -->
     <string name="theme_pref_title">Theme</string>
@@ -88,13 +88,13 @@
     <string name="accent_pref_title">Accent</string>
 
     <!-- Preferences - Edge-to-edge -->
-    <string name="edge_pref_summary_on">Disable edge-to-edge</string>
-    <string name="edge_pref_summary_off">Enable edge-to-edge</string>
+    <string name="edge_pref_summary_on">Turn on edge-to-edge</string>
+    <string name="edge_pref_summary_off">Turn off edge-to-edge</string>
 
     <!-- Preferences - covers -->
-    <string name="covers_pref_title">Embedded album\'s covers</string>
-    <string name="covers_pref_summary_on">Show album\'s covers</string>
-    <string name="covers_pref_summary_off">Hide album\'s covers</string>
+    <string name="covers_pref_title">Embedded album covers</string>
+    <string name="covers_pref_summary_on">Show album covers</string>
+    <string name="covers_pref_summary_off">Hide album covers</string>
 
     <!-- Preferences - choose what to do when a playlist ends -->
     <string name="on_list_ended_pref_title">When a list ends &#8230;</string>
@@ -102,16 +102,16 @@
     <string name="on_list_ended_pref_continue_title">Continue</string>
 
     <!-- Preferences - Song visualization options (tl = title, fn = full name) -->
-    <string name="song_visual_pref_title">Songs visualization</string>
+    <string name="song_visual_pref_title">Song visualization</string>
     <string name="song_visual_pref_tl_title">Title</string>
-    <string name="song_visual_pref_fn_title">File name</string>
+    <string name="song_visual_pref_fn_title">Filename</string>
 
     <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">Active tabs</string>
     <string name="active_fragments_pref_warning">You can\'t just remove all the tabs! :P</string>
 
     <!-- Preferences - Custom Equalizer note -->
-    <string name="eq_pref_note_summary">Note: system equalizer will be preferred. If You want to enjoy the built-in one please disable the system equalizer (the app) from settings! :)</string>
+    <string name="eq_pref_note_summary">Note: The system equalizer will be preferred unless you turn off the app \"system equalizer\" from the system settings. :)</string>
 
     <!-- Preferences - Fast seeking -->
     <string name="fast_seeking_pref_title">Fast seeking</string>
@@ -122,18 +122,18 @@
 
     <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">Precise volume control</string>
-    <string name="precise_volume_pref_summary_on">Disable precise volume control</string>
-    <string name="precise_volume_pref_summary_off">Enable precise volume control</string>
+    <string name="precise_volume_pref_summary_on">Turn on precise volume control</string>
+    <string name="precise_volume_pref_summary_off">Turn off precise volume control</string>
 
     <!-- Preferences - Focus -->
     <string name="focus_pref_title">Audio focus</string>
-    <string name="focus_pref_summary_on">Disable audio focus management</string>
-    <string name="focus_pref_summary_off">Enable audio focus management</string>
+    <string name="focus_pref_summary_on">Turn on audio focus management</string>
+    <string name="focus_pref_summary_off">Turn off audio focus management</string>
 
     <!-- Preferences - Headsets -->
     <string name="headset_pref_title">Headset plug</string>
-    <string name="headset_pref_summary_on">Disable headset plug management</string>
-    <string name="headset_pref_summary_off">Enable headset plug management</string>
+    <string name="headset_pref_summary_on">Turn on headset plug management</string>
+    <string name="headset_pref_summary_off">Turn off headset plug management</string>
 
     <!-- Preferences - Filters -->
     <string name="filter_pref_title">Filters</string>
