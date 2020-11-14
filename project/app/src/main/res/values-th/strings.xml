@@ -45,6 +45,7 @@
     <string name="error_media_buttons">บางอย่างผิดพลาด! :( โปรดรีสตาร์ทการเล่นจากแอพ</string>
     <string name="error_no_browser">ไม่พบเบราว์เซอร์!</string>
     <string name="error_bad_id">เล่นเพลงก่อน!</string>
+    <string name="error_no_eq">ไม่พบอีควอไลเซอร์!</string>
     <string name="error_no_filter">ไม่พบตัวกรอง!</string>
     <string name="error_no_queue">ไม่มีคิวเพลง!</string>
 

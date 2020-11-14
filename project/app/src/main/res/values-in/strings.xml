@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- Dialogs / Buttons -->
     <string name="yes">Iya</string>
     <string name="no">Tidak</string>
@@ -7,101 +7,103 @@
     <string name="queue_songs_clear">Antrean akan dikosongkan. Lanjutkan?</string>
     <string name="loved_songs_clear">Favorit akan dikosongkan. Lanjutkan?</string>
     <string name="loved_song_remove">%1s (%2s) akan dihapus dari favorit. Lanjutkan?</string>
-
     <!-- Main - Fragments titles -->
     <string name="artists">Artis</string>
     <string name="songs">Lagu</string>
     <string name="folders">Folder</string>
-
     <!-- Main - Artists/Folder RecyclerViews items  -->
-    <string name="artist_info">%1d&#160;Album,&#160;%2d&#160;Lagu</string>
-    <string name="folder_info">%2d&#160;Lagu</string>
-
+    <string name="artist_info">%1d Album, %2d Lagu</string>
+    <string name="folder_info">%1d Lagu</string>
     <!-- Popup/Menu titles -->
     <string name="sorting_pref">Urutan</string>
     <string name="sorting_pref_default">Bawaan</string>
-    <string name="sorting_pref_track">No. Trek &#8595;</string>
-    <string name="sorting_pref_track_inv">No. Trek &#8593;</string>
+    <string name="sorting_pref_track">No. Trek ↓</string>
+    <string name="sorting_pref_track_inv">No. Trek ↑</string>
     <string name="shuffle_am">Shuffle semua lagu</string>
     <string name="shuffle_sa">Shuffle album yang dipilih</string>
     <string name="queue_add">Tambahkan ke antrean</string>
     <string name="loved_song_add">Tambahkan ke favorit</string>
     <string name="filter_popup_title">Sembunyikan</string>
-
     <!-- Queue -->
     <string name="queue">Antrean</string>
     <string name="queue_song_add">%1s ditambahkan ke antrean!</string>
     <string name="queue_song_remove">%1s akan dihapus dari antrean. Lanjutkan?</string>
-
     <!-- Loved songs -->
     <string name="loved_songs">Favorit</string>
     <string name="loved_song_added">%1s (%2s) ditambahkan ke favorit</string>
-
     <!-- Messages - Errors -->
     <string name="error_no_loved_songs">Tidak ada lagu favorit yang ditemukan!</string>
     <string name="error_no_music">Musik tidak ditemukan :(</string>
-    <string name="error_not_ready">Ada masalah saat memuat pustaka musik! :( Mungkin disebabkan oleh kartu sd yang tidak lagi terpasang dan memaksa MediaStore Android membangun ulang basis datanya. Solusi: silakan coba lagi nanti :)</string>
-    <string name="error_unknown_unsupported">Telah terjadi kesalahan! :( Mungkin format tidak didukung atau folder tidak bisa diakses (bukan kesalahan aplikasi!)</string>
-    <string name="error_media_buttons">Telah terjadi kesalahan! :( Silakan mulai ulang pemutaran dari aplikasi</string>
+    <string name="error_not_ready">Ada masalah saat memuat pustaka musik! :( Mungkin disebabkan oleh kartu sd yang tidak lagi terpasang dan memaksa MediaStore Android membangun ulang basis datanya. Solusi: coba lagi nanti.</string>
+    <string name="error_unknown_unsupported">Telah terjadi kesalahan! :( Mungkin format yang dipilih tidak didukung, atau folder tidak bisa diakses (bukan kesalahan aplikasi!).</string>
+    <string name="error_media_buttons">Telah terjadi kesalahan! :( Silakan mulai ulang pemutaran dari aplikasi.</string>
     <string name="error_no_browser">Peramban tidak ditemukan!</string>
     <string name="error_bad_id">Putar lagu terlebih dahulu!</string>
+    <string name="error_no_eq">Equalizer tidak ditemukan!</string>
     <string name="error_no_filter">Tidak ada filter yang ditemukan!</string>
     <string name="error_no_queue">Tidak ada lagu dalam antrean!</string>
-
     <!-- Messages - Permission rationale -->
     <string name="perm_rationale">Music Player GO membutuhkan akses ke berkas musik untuk dapat memutar musik!</string>
-
     <!-- Messages - Repeat -->
     <string name="repeat_enabled">1x pengulangan diaktifkan!</string>
-    <string name="repeat_loop_enabled">&#8734; pengulangan diaktifkan!</string>
-    <string name="repeat_disabled">&#8734; pengulangan dinonaktifkan!</string>
-
+    <string name="repeat_loop_enabled">∞ pengulangan diaktifkan!</string>
+    <string name="repeat_disabled">∞ pengulangan dinonaktifkan!</string>
     <!-- Preferences - Categories -->
     <string name="settings">Pengaturan</string>
     <string name="category_general">Umum</string>
-
     <!-- Preferences - Git page -->
     <string name="open_git_pref_title">Laman GitHub</string>
     <string name="open_git_pref_summary">Buka halaman proyek untuk informasi lebih lanjut :)</string>
-
     <!-- Preferences - FAQ -->
     <string name="faq_summary">Pertanyaan yang sering diajukan dan format media yang didukung :P</string>
-
     <!-- Preferences - Found songs -->
     <string name="found_songs_pref_title">Jumlah lagu: %1d</string>
-
     <!-- Preferences - Themes -->
     <string name="theme_pref_title">Tema</string>
     <string name="theme_pref_light_title">Terang</string>
     <string name="theme_pref_dark_title">Gelap</string>
     <string name="theme_pref_auto_title">Otomatis</string>
-
     <!-- Preferences - Accent -->
     <string name="accent_pref_title">Aksen</string>
-
     <!-- Preferences - Edge-to-edge -->
     <string name="edge_pref_summary_on">Edge-to-edge diaktifkan</string>
     <string name="edge_pref_summary_off">Edge-to-edge dinonaktifkan</string>
-
     <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">Tab aktif</string>
     <string name="active_fragments_pref_warning">Anda tidak bisa menyembunyikan semua tab! :P</string>
-
     <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">Kontrol presisi volume</string>
     <string name="precise_volume_pref_summary_on">Pengontrol presisi volume diaktifkan</string>
     <string name="precise_volume_pref_summary_off">Pengontrol presisi volume dinonaktifkan</string>
-
     <!-- Preferences - Focus -->
     <string name="focus_pref_title">Fokus audio</string>
     <string name="focus_pref_summary_on">Manajemen fokus audio diaktifkan</string>
     <string name="focus_pref_summary_off">Manajemen fokus audio dinonaktifkan</string>
-
     <!-- Preferences - Headsets -->
     <string name="headset_pref_title">Headset</string>
     <string name="headset_pref_summary_on">Manajemen headset diaktifkan</string>
     <string name="headset_pref_summary_off">Manajemen headset dinonaktifkan</string>
-
     <!-- Preferences - Filters -->
     <string name="filter_pref_title">Filter</string>
+    <string name="albums">Album</string>
+    <string name="fast_seeking_actions_pref_summary_on">Pencarian cepat diaktifkan</string>
+    <string name="fast_seeking_actions_pref_summary_off">Pencarian cepat dinonaktifkan</string>
+    <string name="fast_seeking_actions_pref_title">Tindakan notifikasi tambahan</string>
+    <string name="fast_seeking_pref_summary">Langkah pencarian maju/mundur cepat (detik)</string>
+    <string name="fast_seeking_pref_title">Pencarian cepat</string>
+    <string name="eq_pref_summary_on">Lebih suka equalizer bawaan</string>
+    <string name="eq_pref_summary_off">Lebih suka equalizer sistem (jika tersedia)</string>
+    <string name="song_visual_pref_fn_title">Nama berkas</string>
+    <string name="song_visual_pref_tl_title">Judul</string>
+    <string name="song_visual_pref_title">Visualisasi lagu</string>
+    <string name="equalizer_v">Audio surround</string>
+    <string name="on_list_ended_pref_continue_title">Lanjutkan</string>
+    <string name="on_list_ended_pref_stop_title">Setop</string>
+    <string name="on_list_ended_pref_title">Ketika daftar putar berakhir …</string>
+    <string name="covers_pref_summary_off">Sembunyikan kover album</string>
+    <string name="covers_pref_summary_on">Tampilkan kover album</string>
+    <string name="covers_pref_title">Kover album tersemat</string>
+    <string name="error_list_ended">Daftar putar telah berakhir!</string>
+    <string name="equalizer_bb">Penguat bas</string>
+    <string name="equalizer">Equalizer</string>
 </resources>

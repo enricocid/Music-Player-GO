@@ -45,6 +45,7 @@
     <string name="error_media_buttons">問題が発生しました！ :(アプリから再生を再開してください。</string>
     <string name="error_no_browser">ブラウザが見つかりません！</string>
     <string name="error_bad_id">最初に曲を再生してください！</string>
+    <string name="error_no_eq">イコライザーが見つかりません！</string>
     <string name="error_no_filter">フィルターが見つかりません！</string>
     <string name="error_no_queue">キューに入っている曲はありません！</string>
 

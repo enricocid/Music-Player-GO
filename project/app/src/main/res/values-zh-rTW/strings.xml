@@ -46,6 +46,7 @@
     <string name="error_media_buttons">出問題了！ :( 請從應用程序重新開始播放。</string>
     <string name="error_no_browser">找不到瀏覽器！</string>
     <string name="error_bad_id">首先播放歌曲！</string>
+    <string name="error_no_eq">找不到均衡器！</string>
     <string name="error_no_filter">找不到過濾器！</string>
     <string name="error_no_queue">沒有歌曲排隊！</string>
 

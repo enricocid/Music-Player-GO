@@ -1,42 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- Dialogs / Buttons -->
     <string name="yes">Ja</string>
     <string name="no">Nei</string>
-    <string name="on_close_activity">Vil du stoppe avspillingen?</string>
-    <string name="queue_songs_clear">Køen blir tømt. Fortsette?</string>
-    <string name="loved_songs_clear">Elskede sanger blir slettet. Fortsette?</string>
-    <string name="loved_song_remove">% 1s (% 2s) vil bli slettet fra populære sanger. Fortsette?</string>
-
+    <string name="on_close_activity">Vil du stoppe avspillingen\?</string>
+    <string name="queue_songs_clear">Køen blir tømt. Fortsett\?</string>
+    <string name="loved_songs_clear">Elskede sanger blir slettet. Fortsett\?</string>
+    <string name="loved_song_remove">%1s (% 2s) vil bli slettet fra elskede sanger. Fortsett\?</string>
     <!-- Main - Fragments titles -->
     <string name="artists">Artister</string>
     <string name="songs">sanger</string>
     <string name="folders">mapper</string>
-
     <!-- Main - Artists/Folder RecyclerViews items  -->
-    <string name="artist_info">%1d&#160; album,&#160;%2d&#160;Songs</string>
-    <string name="folder_info">%1d&#160; Sanger</string>
-
+    <string name="artist_info">%1d  album, %2d Songs</string>
+    <string name="folder_info">%1d  Sanger</string>
     <!-- Popup/Menu titles -->
     <string name="sorting_pref">Sortering</string>
     <string name="sorting_pref_default">Misligholde</string>
-    <string name="sorting_pref_track">Ved spor nr. &#8595;</string>
-    <string name="sorting_pref_track_inv">Ved spor nr. &#8595;</string>
+    <string name="sorting_pref_track">Ved spor nr. ↓</string>
+    <string name="sorting_pref_track_inv">Ved spor nr. ↓</string>
     <string name="shuffle_am">Bland alle sangene</string>
     <string name="shuffle_sa">Bland det valgte albumet</string>
     <string name="queue_add">Legg til i kø</string>
     <string name="loved_song_add">Legg til elskede sanger</string>
     <string name="filter_popup_title">Gjemme seg</string>
-
     <!-- Queue -->
     <string name="queue">Kø</string>
     <string name="queue_song_add">%1s lagt til i køen!</string>
-    <string name="queue_song_remove">%1s blir slettet fra køen. Fortsette?</string>
-
+    <string name="queue_song_remove">%1s blir slettet fra køen. Fortsett\?</string>
     <!-- Loved songs -->
     <string name="loved_songs">Elskede sanger</string>
     <string name="loved_song_added">%1s (%2s) lagt til elskede sanger</string>
-
     <!-- Messages - Errors -->
     <string name="error_no_loved_songs">Fant ingen elskede sanger!</string>
     <string name="error_no_music">Ingen musikk funnet :(</string>
@@ -45,63 +39,51 @@
     <string name="error_media_buttons">Noe gikk galt! :( Vennligst start avspillingen på nytt fra appen.</string>
     <string name="error_no_browser">Ingen nettlesere funnet!</string>
     <string name="error_bad_id">Spill en sang først!</string>
+    <string name="error_no_eq">Fant ingen utligning!</string>
     <string name="error_no_filter">Fant ingen filtre!</string>
     <string name="error_no_queue">Ingen sanger sto i kø!</string>
-
     <!-- Messages - Permission rationale -->
     <string name="perm_rationale">Music Player GO trenger tilgang til filene dine for å spille musikk!</string>
-
     <!-- Messages - Repeat -->
     <string name="repeat_enabled">Gjenta 1x aktivert!</string>
-    <string name="repeat_loop_enabled">Gjenta &#8734; aktivert!</string>
-    <string name="repeat_disabled">Gjenta &#8734; deaktivert!</string>
-
+    <string name="repeat_loop_enabled">Gjenta ∞ aktivert!</string>
+    <string name="repeat_disabled">Gjenta ∞ deaktivert!</string>
     <!-- Preferences - Categories -->
     <string name="settings">innstillinger</string>
     <string name="category_general">Generell</string>
-
     <!-- Preferences - Git page -->
     <string name="open_git_pref_title">GitHub-side</string>
     <string name="open_git_pref_summary">Åpne prosjektets side for mer info :)</string>
-
     <!-- Preferences - FAQ -->
     <string name="faq_summary">FAQ og støttede medieformater :P</string>
-
     <!-- Preferences - Found songs -->
     <string name="found_songs_pref_title">Fant sanger: %1d</string>
-
     <!-- Preferences - Themes -->
     <string name="theme_pref_title">Tema</string>
     <string name="theme_pref_light_title">Lys</string>
     <string name="theme_pref_dark_title">Mørk</string>
     <string name="theme_pref_auto_title">Automatisk</string>
-
     <!-- Preferences - Accent -->
     <string name="accent_pref_title">Aksent</string>
-
     <!-- Preferences - Edge-to-edge -->
     <string name="edge_pref_summary_on">Deaktiver kant-til-kant</string>
     <string name="edge_pref_summary_off">Aktiver kant-til-kant</string>
-
     <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">Aktive faner</string>
     <string name="active_fragments_pref_warning">Du kan ikke bare fjerne alle fanene! :P</string>
-
     <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">Presis volumkontroll</string>
     <string name="precise_volume_pref_summary_on">Deaktiver presis volumkontroll</string>
     <string name="precise_volume_pref_summary_off">Aktiver presis volumkontroll</string>
-
     <!-- Preferences - Focus -->
     <string name="focus_pref_title">Lydfokus</string>
     <string name="focus_pref_summary_on">Deaktiver styring av lydfokus</string>
     <string name="focus_pref_summary_off">Aktiver styring av lydfokus</string>
-
     <!-- Preferences - Headsets -->
     <string name="headset_pref_title">Hodetelefonkontakt</string>
     <string name="headset_pref_summary_on">Deaktiver styring av headsetteplugger</string>
     <string name="headset_pref_summary_off">Aktiver styring av headsetplugger</string>
-
     <!-- Preferences - Filters -->
     <string name="filter_pref_title">filtre</string>
+    <string name="albums">Album</string>
 </resources>

@@ -1,10 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="yes">да</string>
     <string name="no">нет</string>
+    <string name="error_no_eq">Эквалайзер не обнаружен!</string>
     <string name="error_bad_id">Сначала выберите песню!</string>
     <string name="error_no_browser">Браузер не найден!</string>
     <string name="perm_rationale">Для воспроизведения музыки нужен доступ Music Player-GO к Вашим файлам</string>
-    <string name="artist_info">%1d&#160;Aльбомов,&#160;%2d&#160;Песен</string>
+    <string name="artist_info">%1d Aльбомов, %2d Песен</string>
     <string name="active_fragments_pref_title">Активные вкладки</string>
     <string name="active_fragments_pref_warning">Вы не можете закрыть все вкладки! :D</string>
     <string name="artists">Исполнители</string>
@@ -52,14 +54,15 @@
     <string name="theme_pref_auto_title">Автоматически</string>
     <string name="sorting_pref_default">По умолчанию</string>
     <string name="sorting_pref">Сортировка</string>
-    <string name="sorting_pref_track">По номеру трека &#8595;</string>
-    <string name="sorting_pref_track_inv">По номеру трека &#8593;</string>
+    <string name="sorting_pref_track">По номеру трека ↓</string>
+    <string name="sorting_pref_track_inv">По номеру трека ↑</string>
     <string name="found_songs_pref_title">Найдены треки: %1d</string>
     <string name="filter_pref_title">Фильтры</string>
     <string name="filter_popup_title">Спрятать</string>
     <string name="error_no_filter">Фильтры не найдены!</string>
-    <string name="repeat_loop_enabled">Повтор &#8734; включен!</string>
+    <string name="repeat_loop_enabled">Повтор ∞ включен!</string>
     <string name="error_no_music">Музыка не найдена :(</string>
     <string name="error_media_buttons">Что-то пошло не так! :( Пожалуйста перезапустите воспроизведение из приложения</string>
     <string name="error_not_ready">Случилась ошибка при загрузке музыкальной библиотеки! :( Вероятнее всего это случилось по причине того, что карта памяти временами отключается, заставляя MediaStore андроида пересобирать заново свою базу данных. Решение: попробовать еще раз поздже :)</string>
+    <string name="albums">Альбомы</string>
 </resources>

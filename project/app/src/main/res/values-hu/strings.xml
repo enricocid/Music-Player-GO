@@ -23,6 +23,7 @@
     <string name="perm_rationale">Music Player GO hozzáférést igényel a fáljaidhoz hogy zenét tudjon játszani!</string>
     <string name="error_no_browser">Böngésző nem található!</string>
     <string name="error_bad_id">Először játsz egy dalt!</string>
+    <string name="error_no_eq">Hangszínszabályzó nem található!</string>
     <string name="error_no_music">Zene nem található! :(</string>
     <string name="error_unknown_unsupported">Valami elromlott! :( A kiválasztott formátum nem támogatott vagy a mappa nem elérhető. (nem egy alapértelmezett!)</string>
     <string name="error_media_buttons">Valami elromlott! :( Kérlek indításad újra a visszajátszást</string>

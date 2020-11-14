@@ -45,6 +45,7 @@
     <string name="error_media_buttons">මොකක්හරි වැරැද්දක් වෙලා! :( කරුණාකර යෙදුමෙන් නැවත ධාවනය නැවත ආරම්භ කරන්න.</string>
     <string name="error_no_browser">බ්රව්සරයක් හමු නොවීය!</string>
     <string name="error_bad_id">මුලින්ම ගීතයක් වාදනය කරන්න!</string>
+    <string name="error_no_eq">සමකරනය හමු නොවීය!</string>
     <string name="error_no_filter">පෙරහන් කිසිවක් හමු නොවීය!</string>
     <string name="error_no_queue">ගීත කිසිවක් පෝලිම් නැත!</string>
 
