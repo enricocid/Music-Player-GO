@@ -24,7 +24,6 @@
     <string name="perm_rationale">Music Player GO necesita acceso a tus archivos para reproducir la música</string>
     <string name="error_no_browser">¡No se encontró un navegador!</string>
     <string name="error_bad_id">!Reproduce una canción primero!</string>
-    <string name="error_no_eq">¡No se encontró un ecualizador!</string>
     <string name="error_no_music">No se encontró música :(</string>
     <string name="error_unknown_unsupported">¡Algo malo sucedió! :( Probablemente el formato elegido no es soportado o el directorio es inaccesible (de lo cual la applicación no es culpable)</string>
     <string name="error_media_buttons">¡Algo malo sucedió! :( Por favor reinicia la reproducción desde la aplicación</string>

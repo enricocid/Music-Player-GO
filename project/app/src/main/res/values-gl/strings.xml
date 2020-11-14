@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <!-- Dialogs / Buttons -->
     <string name="yes">Si</string>
     <string name="no">Non</string>
@@ -7,30 +7,36 @@
     <string name="queue_songs_clear">A cola quedará baleira. Continuar?</string>
     <string name="loved_songs_clear">Quitaraslle a marca a todas as favoritas. Continuar?</string>
     <string name="loved_song_remove">%1s (%2s) serán eliminadas das pistas favoritas. Continuar?</string>
+
     <!-- Main - Fragments titles -->
     <string name="artists">Artistas</string>
     <string name="songs">Pistas</string>
     <string name="folders">Cartafoles</string>
+
     <!-- Main - Artists/Folder RecyclerViews items  -->
-    <string name="artist_info">%1d Álbumes, %2d Pistas</string>
-    <string name="folder_info">%1d Pistas</string>
+    <string name="artist_info">%1d&#160;Álbumes,&#160;%2d&#160;Pistas</string>
+    <string name="folder_info">%1d&#160;Pistas</string>
+
     <!-- Popup/Menu titles -->
     <string name="sorting_pref">Ordenar</string>
     <string name="sorting_pref_default">Por omisión</string>
-    <string name="sorting_pref_track">Por num. ↓ de pista</string>
-    <string name="sorting_pref_track_inv">Por num. ↑ de pista</string>
+    <string name="sorting_pref_track">Por num. &#8595; de pista</string>
+    <string name="sorting_pref_track_inv">Por num. &#8593; de pista</string>
     <string name="shuffle_am">Barallar todas as pistas</string>
     <string name="shuffle_sa">Barallar álbume seleccionado</string>
     <string name="queue_add">Engadir a cola</string>
     <string name="loved_song_add">Engadir a cancións favoritas</string>
     <string name="filter_popup_title">Agochar</string>
+
     <!-- Queue -->
     <string name="queue">Cola</string>
     <string name="queue_song_add">%1s engadida a cola!</string>
     <string name="queue_song_remove">Vas quitar %1s da cola. Continuar?</string>
+
     <!-- Loved songs -->
     <string name="loved_songs">Cancións favoritas</string>
     <string name="loved_song_added">%1s (%2s) engadidas a favoritas</string>
+
     <!-- Messages - Errors -->
     <string name="error_no_loved_songs">Sen cancións favoritas!</string>
     <string name="error_no_music">Non se atopou música :(</string>
@@ -39,71 +45,63 @@
     <string name="error_media_buttons">Algo fallou! :( Por favor reinicia a reprodución desde a app.</string>
     <string name="error_no_browser">Non se atopou navegador!</string>
     <string name="error_bad_id">Reproduce primeiro unha pista!</string>
-    <string name="error_no_eq">Non se atopa o equalizador!</string>
     <string name="error_no_filter">Non se atopan filtros!</string>
     <string name="error_no_queue">Sen pistas na cola!</string>
+
     <!-- Messages - Permission rationale -->
     <string name="perm_rationale">Music Player GO precisa acceder aos ficheiros para poder reproducilos!</string>
+
     <!-- Messages - Repeat -->
     <string name="repeat_enabled">Activouse repetir 1 vez!</string>
-    <string name="repeat_loop_enabled">Repetir ∞ activado!</string>
-    <string name="repeat_disabled">Repetir ∞ desactivado!</string>
+    <string name="repeat_loop_enabled">Repetir &#8734; activado!</string>
+    <string name="repeat_disabled">Repetir &#8734; desactivado!</string>
+
     <!-- Preferences - Categories -->
     <string name="settings">Axustes</string>
     <string name="category_general">Xeral</string>
+
     <!-- Preferences - Git page -->
     <string name="open_git_pref_title">páxina GitHub</string>
     <string name="open_git_pref_summary">Abre a páxina do proxecto para máis info :)</string>
+
     <!-- Preferences - FAQ -->
     <string name="faq_summary">PMF e tipos de ficheiro soportados :P</string>
+
     <!-- Preferences - Found songs -->
     <string name="found_songs_pref_title">Pistas atopadas: %1d</string>
+
     <!-- Preferences - Themes -->
     <string name="theme_pref_title">Decorado</string>
     <string name="theme_pref_light_title">Claro</string>
     <string name="theme_pref_dark_title">Escuro</string>
     <string name="theme_pref_auto_title">Automático</string>
+
     <!-- Preferences - Accent -->
     <string name="accent_pref_title">Cor</string>
+
     <!-- Preferences - Edge-to-edge -->
     <string name="edge_pref_summary_on">Desactivar de bordo-a-bordo</string>
     <string name="edge_pref_summary_off">Activar de bordo-a-bordo</string>
+
     <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">Lapelas activas</string>
     <string name="active_fragments_pref_warning">Non podes eliminar todas as lapelas! :P</string>
+
     <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">Control preciso do volume</string>
     <string name="precise_volume_pref_summary_on">Desactivar control preciso do volume</string>
     <string name="precise_volume_pref_summary_off">Activar control preciso do volume</string>
+
     <!-- Preferences - Focus -->
     <string name="focus_pref_title">Foco do Audio</string>
     <string name="focus_pref_summary_on">Desactivar xestión do foco sobre o audio</string>
     <string name="focus_pref_summary_off">Activar xestión do foco sobre o audio</string>
+
     <!-- Preferences - Headsets -->
     <string name="headset_pref_title">Conexión de auriculares</string>
     <string name="headset_pref_summary_on">Desactivar xestión da conexión de auriculares</string>
     <string name="headset_pref_summary_off">Activar xestión da conexión de auriculares</string>
+
     <!-- Preferences - Filters -->
     <string name="filter_pref_title">Filtros</string>
-    <string name="albums">Álbumes</string>
-    <string name="on_list_ended_pref_title">Ó rematar a lista…</string>
-    <string name="fast_seeking_actions_pref_summary_on">Preferir accións de busca rápida</string>
-    <string name="fast_seeking_actions_pref_summary_off">Preferir accións pechar/repetir</string>
-    <string name="fast_seeking_actions_pref_title">Accións de notificación adicionais</string>
-    <string name="fast_seeking_pref_summary">Avanzar/Retroceder en pasos (segundos)</string>
-    <string name="fast_seeking_pref_title">Busca rápida</string>
-    <string name="eq_pref_summary_on">Preferir ecualizador incluído</string>
-    <string name="eq_pref_summary_off">Preferir ecualizador do sistema (se dispoñible)</string>
-    <string name="song_visual_pref_fn_title">Nome do ficheiro</string>
-    <string name="song_visual_pref_tl_title">Título</string>
-    <string name="song_visual_pref_title">Visualización das cancións</string>
-    <string name="on_list_ended_pref_continue_title">Continuar</string>
-    <string name="on_list_ended_pref_stop_title">Deter</string>
-    <string name="covers_pref_summary_off">Agochar capas dos álbumes</string>
-    <string name="covers_pref_summary_on">Mostrar capas dos álbumes</string>
-    <string name="covers_pref_title">Capa do álbume incrustada</string>
-    <string name="error_list_ended">A lista rematou!</string>
-    <string name="equalizer_v">Audio Surround</string>
-    <string name="equalizer_bb">Potenciar baixos</string>
-    <string name="equalizer">Ecualizador</string>
 </resources>

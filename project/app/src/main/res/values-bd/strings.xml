@@ -45,7 +45,6 @@
     <string name="error_media_buttons">কিছু ভুল হয়েছে! :( অ্যাপ্লিকেশন থেকে প্লেব্যাক পুনরায় আরম্ভ করুন।</string>
     <string name="error_no_browser">কোনও ব্রাউজার পাওয়া যায়নি!</string>
     <string name="error_bad_id">প্রথমে একটি গান বাজান!</string>
-    <string name="error_no_eq">কোন সমান পাওয়া যায় নি!</string>
     <string name="error_no_filter">কোন ফিল্টার পাওয়া যায় নি!</string>
     <string name="error_no_queue">কোনও গানের সারি নেই!</string>
 
