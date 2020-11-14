@@ -306,10 +306,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 // item is a `val` in `this` here
                 withDataSource(mSongsDataSource)
 
-                if (!sLandscape) {
-                    addItemDecoration(ThemeHelper.getRecyclerViewDivider(requireActivity()))
-                }
-
                 withItem<Music, GenericViewHolder>(R.layout.generic_item) {
                     onBind(::GenericViewHolder) { _, item ->
 

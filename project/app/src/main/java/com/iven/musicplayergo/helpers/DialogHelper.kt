@@ -44,11 +44,6 @@ object DialogHelper {
         if (ThemeHelper.isDeviceLand(context.resources)) {
             recyclerView.layoutManager = GridLayoutManager(context, 3)
         } else {
-            recyclerView.addItemDecoration(
-                    ThemeHelper.getRecyclerViewDivider(
-                            context
-                    )
-            )
             if (goPreferences.isEdgeToEdge) {
                 window?.apply {
                     ThemeHelper.handleLightSystemBars(context.resources.configuration, this)
@@ -168,11 +163,6 @@ object DialogHelper {
             if (ThemeHelper.isDeviceLand(context.resources)) {
                 recyclerView.layoutManager = GridLayoutManager(context, 3)
             } else {
-                recyclerView.addItemDecoration(
-                        ThemeHelper.getRecyclerViewDivider(
-                                context
-                        )
-                )
                 if (goPreferences.isEdgeToEdge) {
                     window?.apply {
                         ThemeHelper.handleLightSystemBars(

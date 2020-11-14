@@ -106,12 +106,6 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                 // item is a `val` in `this` here
                 withDataSource(mDataSource)
 
-                if (!sLandscape) {
-                    addItemDecoration(
-                            ThemeHelper.getRecyclerViewDivider(requireActivity())
-                    )
-                }
-
                 withItem<String, GenericViewHolder>(R.layout.generic_item) {
 
                     onBind(::GenericViewHolder) { _, item ->

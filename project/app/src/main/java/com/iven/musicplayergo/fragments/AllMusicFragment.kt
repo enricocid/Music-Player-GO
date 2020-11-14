@@ -99,12 +99,6 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 // item is a `val` in `this` here
                 withDataSource(mDataSource)
 
-                if (!sLandscape) {
-                    addItemDecoration(
-                            ThemeHelper.getRecyclerViewDivider(requireActivity())
-                    )
-                }
-
                 withItem<Music, SongsViewHolder>(R.layout.music_item) {
                     onBind(::SongsViewHolder) { _, item ->
                         // GenericViewHolder is `this` here

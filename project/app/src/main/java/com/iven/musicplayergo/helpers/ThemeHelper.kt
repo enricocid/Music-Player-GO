@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.content.res.Resources
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.RippleDrawable
 import android.os.Build
@@ -25,7 +24,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.ColorUtils
 import androidx.core.os.bundleOf
 import androidx.core.widget.ImageViewCompat
-import androidx.recyclerview.widget.DividerItemDecoration
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.decodeColor
@@ -235,25 +233,6 @@ object ThemeHelper {
     @JvmStatic
     private fun resolveThemeAttr(context: Context, @AttrRes attrRes: Int) =
             TypedValue().apply { context.theme.resolveAttribute(attrRes, this, true) }
-
-    @JvmStatic
-    fun getRecyclerViewDivider(context: Context) = DividerItemDecoration(
-            context,
-            DividerItemDecoration.VERTICAL
-    ).apply {
-        setDrawable(
-                ColorDrawable(
-                        getAlphaAccent(
-                                context,
-                                if (isThemeNight(context.resources.configuration)) {
-                                    45
-                                } else {
-                                    85
-                                }
-                        )
-                )
-        )
-    }
 
     @JvmStatic
     fun getAlphaAccent(context: Context, alpha: Int) =
