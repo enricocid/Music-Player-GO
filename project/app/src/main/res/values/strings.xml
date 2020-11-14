@@ -49,7 +49,7 @@
     <string name="error_not_ready">Could not load the music library! :( This could be due to the SD card getting unmounted, forcing the Android\'s MediaStore to rebuild its database records. Try again later.</string>
     <string name="error_unknown_unsupported">Something went wrong! :( Perhaps the chosen format is not supported, or the folder is not accessible (not the app\'s fault!).</string>
     <string name="error_media_buttons">Something went wrong! :( Please restart playback from the app.</string>
-    <string name="error_no_browser">No file-browser found.</string>
+    <string name="error_no_browser">No web browser found.</string>
     <string name="error_bad_id">Play a song first.</string>
     <string name="error_no_filter">No filters found.</string>
     <string name="error_no_queue">No songs in queue.</string>
@@ -88,8 +88,8 @@
     <string name="accent_pref_title">Accent</string>
 
     <!-- Preferences - Edge-to-edge -->
-    <string name="edge_pref_summary_on">Turn on edge-to-edge</string>
-    <string name="edge_pref_summary_off">Turn off edge-to-edge</string>
+    <string name="edge_pref_summary_on">Turn off edge-to-edge</string>
+    <string name="edge_pref_summary_off">Turn on edge-to-edge</string>
 
     <!-- Preferences - covers -->
     <string name="covers_pref_title">Embedded album covers</string>
@@ -122,18 +122,18 @@
 
     <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">Precise volume control</string>
-    <string name="precise_volume_pref_summary_on">Turn on precise volume control</string>
-    <string name="precise_volume_pref_summary_off">Turn off precise volume control</string>
+    <string name="precise_volume_pref_summary_on">Turn off precise volume control</string>
+    <string name="precise_volume_pref_summary_off">Turn on precise volume control</string>
 
     <!-- Preferences - Focus -->
     <string name="focus_pref_title">Audio focus</string>
-    <string name="focus_pref_summary_on">Turn on audio focus management</string>
-    <string name="focus_pref_summary_off">Turn off audio focus management</string>
+    <string name="focus_pref_summary_on">Turn off audio focus management</string>
+    <string name="focus_pref_summary_off">Turn on audio focus management</string>
 
     <!-- Preferences - Headsets -->
     <string name="headset_pref_title">Headset plug</string>
-    <string name="headset_pref_summary_on">Turn on headset plug management</string>
-    <string name="headset_pref_summary_off">Turn off headset plug management</string>
+    <string name="headset_pref_summary_on">Turn off headset plug management</string>
+    <string name="headset_pref_summary_off">Turn on headset plug management</string>
 
     <!-- Preferences - Filters -->
     <string name="filter_pref_title">Filters</string>
