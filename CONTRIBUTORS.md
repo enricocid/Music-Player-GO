@@ -61,6 +61,9 @@ This work is licensed under a [Creative Commons Attribution 0](https://creativec
 
 ### Big thanks to translators:
 
+- [**Allan Nordhøy**](https://github.com/comradekingu) 
+for [strings improvements](https://github.com/enricocid/Music-Player-GO/pull/227)
+
 - [**keddad**](https://github.com/keddad) and [**yafna**](https://github.com/yafna) for **Russian** translations
 
 - [**Nathan Bonnemains**](https://github.com/NathanBnm) and [**KowalskiOmniROM**](https://devhub.io/developer/KowalskiOmniROM) for **French** translations
