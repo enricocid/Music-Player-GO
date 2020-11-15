@@ -28,6 +28,7 @@ import coil.ImageLoader
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
+import com.afollestad.materialdialogs.bottomsheets.setPeekHeight
 import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.customview.customView
@@ -700,22 +701,27 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 onShow {
                     mNowPlayingBinding.npSeekBar.progress =
                             mPlayerControlsPanelBinding.songProgress.progress
+
+                    if (goPreferences.isEdgeToEdge && !sLandscape) {
+                        window?.apply {
+                            ThemeHelper.handleLightSystemBars(
+                                    this@MainActivity.resources.configuration,
+                                    this
+                            )
+                            edgeToEdge {
+                                mNowPlayingBinding.root.fit { Edge.Bottom }
+                            }
+                        }
+                    }
                 }
 
                 onDismiss {
                     mNowPlayingBinding.npSeekBar.setOnSeekBarChangeListener(null)
                 }
 
-                if (goPreferences.isEdgeToEdge && !sLandscape) {
-                    window?.apply {
-                        ThemeHelper.handleLightSystemBars(
-                                this@MainActivity.resources.configuration,
-                                this
-                        )
-                        edgeToEdge {
-                            mNowPlayingBinding.root.fit { Edge.Bottom }
-                        }
-                    }
+                // to ensure full dialog's height
+                getCustomView().afterMeasured {
+                    mNowPlayingDialog.setPeekHeight(height)
                 }
             }
         }

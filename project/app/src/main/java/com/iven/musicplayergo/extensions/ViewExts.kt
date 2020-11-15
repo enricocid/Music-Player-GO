@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.load
 import coil.request.ImageRequest
-import coil.transform.CircleCropTransformation
+import coil.transform.RoundedCornersTransformation
 import com.google.android.material.animation.ArgbEvaluatorCompat
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.helpers.ThemeHelper
@@ -85,7 +85,7 @@ fun ImageView.loadCover(
                         load(result) {
 
                             if (isCircleCrop) {
-                                transformations(CircleCropTransformation())
+                                transformations(RoundedCornersTransformation(resources.getDimension(R.dimen.md_corner_radius)))
                             }
                         }
                     }
