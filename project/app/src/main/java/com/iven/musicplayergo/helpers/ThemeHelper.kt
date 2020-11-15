@@ -89,11 +89,7 @@ object ThemeHelper {
             configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 
     @JvmStatic
-    fun getAlphaForAccent() = if (goPreferences.accent != R.color.yellow) {
-        100
-    } else {
-        150
-    }
+    fun getAlphaForAccent() = 150
 
     @JvmStatic
     @TargetApi(Build.VERSION_CODES.O_MR1)
