@@ -58,6 +58,8 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
     private lateinit var mUIControlInterface: UIControlInterface
 
+    private val mResolvedAccentColor by lazy { ThemeHelper.resolveThemeAccent(requireActivity()) }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         // This makes sure that the container activity has implemented
@@ -154,7 +156,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
             menu.apply {
 
                 mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, this).apply {
-                    setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
+                    setTitleColor(mResolvedAccentColor)
                 }
 
                 findItem(R.id.action_shuffle_am).setOnMenuItemClickListener {
@@ -288,7 +290,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 )
 
                 mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, menu).apply {
-                    setTitleColor(ThemeHelper.resolveThemeAccent(context))
+                    setTitleColor(mResolvedAccentColor)
                 }
 
                 goPreferences.allMusicSorting = mSorting

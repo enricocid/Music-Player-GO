@@ -58,6 +58,8 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != GoConstants.DEFAULT_SORTING
     private var sLandscape = false
 
+    private val mResolvedAccentColor by lazy { ThemeHelper.resolveThemeAccent(requireActivity()) }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -155,7 +157,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
             menu.apply {
 
                 mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, this).apply {
-                    setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
+                    setTitleColor(mResolvedAccentColor)
                 }
 
                 val searchView = findItem(R.id.action_search).actionView as SearchView
@@ -362,7 +364,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                 )
 
                 mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, menu).apply {
-                    setTitleColor(ThemeHelper.resolveThemeAccent(context))
+                    setTitleColor(mResolvedAccentColor)
                 }
 
                 saveSortingMethodToPrefs(mSorting)
