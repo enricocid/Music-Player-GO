@@ -424,12 +424,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
             val menuToInflate = when {
                 sLaunchedByArtistView -> R.menu.menu_artist_details
-                sLaunchedByFolderView -> R.menu.menu_folder_details
-                else -> if (!sIsFileNameSongs) {
-                    R.menu.menu_album_details
-                } else {
-                    R.menu.menu_folder_details
-                }
+                sLaunchedByFolderView -> R.menu.menu_album_details
+                else -> R.menu.menu_album_details
             }
 
             inflateMenu(menuToInflate)
