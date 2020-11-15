@@ -701,22 +701,22 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 onShow {
                     mNowPlayingBinding.npSeekBar.progress =
                             mPlayerControlsPanelBinding.songProgress.progress
-
-                    if (goPreferences.isEdgeToEdge && !sLandscape) {
-                        window?.apply {
-                            ThemeHelper.handleLightSystemBars(
-                                    this@MainActivity.resources.configuration,
-                                    this
-                            )
-                            edgeToEdge {
-                                mNowPlayingBinding.root.fit { Edge.Bottom }
-                            }
-                        }
-                    }
                 }
 
                 onDismiss {
                     mNowPlayingBinding.npSeekBar.setOnSeekBarChangeListener(null)
+                }
+
+                if (goPreferences.isEdgeToEdge && !sLandscape) {
+                    window?.apply {
+                        ThemeHelper.handleLightSystemBars(
+                                this@MainActivity.resources.configuration,
+                                this
+                        )
+                        edgeToEdge {
+                            mNowPlayingBinding.root.fit { Edge.Bottom }
+                        }
+                    }
                 }
 
                 // to ensure full dialog's height
