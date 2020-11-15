@@ -16,7 +16,7 @@
         app:navigationIcon="@drawable/ic_close"
         app:subtitleTextAppearance="@style/ToolbarStyle.Subtitle"
         app:titleTextAppearance="@style/ToolbarStyle.Title"
-        app:titleTextColor="?attr/colorPrimary" />
+        app:titleTextColor="?android:attr/textColorPrimary" />
 
     <FrameLayout
         android:layout_width="match_parent"

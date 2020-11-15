@@ -17,7 +17,7 @@
         app:subtitleTextAppearance="@style/ToolbarStyle.Subtitle"
         app:title="@string/settings"
         app:titleTextAppearance="@style/ToolbarStyle.Title"
-        app:titleTextColor="?attr/colorPrimary" />
+        app:titleTextColor="?android:attr/textColorPrimary" />
 
     <FrameLayout
         android:id="@+id/fragment_layout"

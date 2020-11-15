@@ -16,7 +16,7 @@
         app:navigationIcon="@drawable/ic_close"
         app:title="@string/songs"
         app:titleTextAppearance="@style/ToolbarStyle.Title"
-        app:titleTextColor="?attr/colorPrimary" />
+        app:titleTextColor="?android:attr/textColorPrimary" />
 
     <!-- MUSIC LIST -->
     <FrameLayout
