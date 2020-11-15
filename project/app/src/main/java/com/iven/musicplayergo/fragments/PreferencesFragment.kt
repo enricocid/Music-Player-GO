@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -15,7 +13,6 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreferenceCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
@@ -28,7 +25,6 @@ import com.iven.musicplayergo.adapters.FiltersAdapter
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
-import com.iven.musicplayergo.player.EqualizerUtils
 import com.iven.musicplayergo.ui.UIControlInterface
 
 
@@ -42,19 +38,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     private lateinit var mUIControlInterface: UIControlInterface
 
     private var mThemePreference: Preference? = null
-
-    override fun setDivider(divider: Drawable?) {
-        context?.let { cxt ->
-            super.setDivider(
-                    ColorDrawable(
-                            ThemeHelper.getAlphaAccent(
-                                    cxt,
-                                    85
-                            )
-                    )
-            )
-        }
-    }
 
     override fun onResume() {
         super.onResume()
@@ -126,13 +109,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         findPreference<Preference>(getString(R.string.active_fragments_pref))?.apply {
             summary = goPreferences.activeFragments.size.toString()
             onPreferenceClickListener = this@PreferencesFragment
-        }
-
-        findPreference<SwitchPreferenceCompat>(getString(R.string.eq_pref))?.apply {
-            if (!EqualizerUtils.hasEqualizer(requireActivity())) {
-                isEnabled = false
-                isChecked = true
-            }
         }
     }
 
