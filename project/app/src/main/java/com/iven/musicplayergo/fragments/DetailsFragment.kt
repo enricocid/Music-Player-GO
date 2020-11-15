@@ -77,16 +77,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private var sLandscape = false
 
-    private var mSongsSorting = if (sIsFileNameSongs) {
-        GoConstants.ASCENDING_SORTING
-    } else {
-        GoConstants.TRACK_SORTING
-    }
+    private var mSongsSorting = GoConstants.TRACK_SORTING
 
     private val sLaunchedByArtistView get() = mLaunchedBy == GoConstants.ARTIST_VIEW
     private val sLaunchedByFolderView get() = mLaunchedBy == GoConstants.FOLDER_VIEW
-
-    private val sIsFileNameSongs get() = goPreferences.songsVisualization != GoConstants.TITLE
 
     private var sLaunchCircleReveal = true
 
@@ -239,7 +233,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private fun setupViews(view: View) {
 
         if (sLaunchedByArtistView) {
-
             mSelectedAlbum = when {
                 mSelectedAlbumPosition != -1 -> mSelectedArtistAlbums?.get(
                         mSelectedAlbumPosition
@@ -253,9 +246,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             setupAlbumsContainer()
 
             mDetailsFragmentBinding.sortButton.apply {
-                if (sIsFileNameSongs) {
-                    setImageResource(ThemeHelper.resolveSortAlbumSongsIcon(mSongsSorting))
-                }
                 setOnClickListener {
                     mSongsSorting = ListsHelper.getSongsSorting(mSongsSorting)
                     setImageResource(ThemeHelper.resolveSortAlbumSongsIcon(mSongsSorting))
@@ -309,7 +299,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 withItem<Music, GenericViewHolder>(R.layout.generic_item) {
                     onBind(::GenericViewHolder) { _, item ->
 
-                        val displayedTitle = if (sIsFileNameSongs || sLaunchedByFolderView) {
+                        val displayedTitle = if (goPreferences.songsVisualization != GoConstants.TITLE) {
                             item.displayName
                         } else {
                             getString(
