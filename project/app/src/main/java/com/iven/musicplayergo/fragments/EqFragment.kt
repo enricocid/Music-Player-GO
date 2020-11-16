@@ -19,6 +19,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentEqualizerBinding
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.createCircularReveal
+import com.iven.musicplayergo.extensions.decodeColor
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
@@ -62,8 +63,8 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                 .build()
         MaterialShapeDrawable(shapeAppearanceModel).apply {
             strokeColor = ColorStateList.valueOf(ThemeHelper.resolveThemeAccent(requireActivity()))
-            strokeWidth = 0.25F
-            fillColor = ColorStateList.valueOf(ThemeHelper.resolveColorAttr(requireActivity(), android.R.attr.textColorPrimaryInverse))
+            strokeWidth = 0.50F
+            fillColor = ColorStateList.valueOf(R.color.windowBackground.decodeColor(requireActivity()))
         }
     }
 
