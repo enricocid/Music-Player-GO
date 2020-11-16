@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -38,6 +39,10 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     private lateinit var mUIControlInterface: UIControlInterface
 
     private var mThemePreference: Preference? = null
+
+    override fun setDivider(divider: Drawable?) {
+        super.setDivider(null)
+    }
 
     override fun onResume() {
         super.onResume()
