@@ -172,9 +172,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onBackPressed() {
         when {
-            sDetailsFragmentExpanded -> closeDetailsFragment(null)
+            sDetailsFragmentExpanded -> closeDetailsFragment()
             sErrorFragmentExpanded -> finishAndRemoveTask()
-            sEqFragmentExpanded -> closeEqualizerFragment(null)
+            sEqFragmentExpanded -> closeEqualizerFragment()
             else -> if (mMainActivityBinding.viewPager2.currentItem != 0) {
                 mMainActivityBinding.viewPager2.currentItem =
                         0
@@ -348,20 +348,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
             tabIconTint = ColorStateList.valueOf(mResolvedAlphaAccentColor)
 
-            TabLayoutMediator(this, mMainActivityBinding.viewPager2) { tab, position ->
-                val fragmentIndex = mActiveFragments[position]
-                tab.setIcon(ThemeHelper.getTabIcon(fragmentIndex))
-                initFragmentAtPosition(fragmentIndex)
-            }.attach()
+            setTabLayoutEnabled(isFirstSetup = true, isTabsEnabled = true)
 
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
                 override fun onTabSelected(tab: TabLayout.Tab) {
-                    when {
-                        sDetailsFragmentExpanded -> closeDetailsFragment(tab)
-                        sEqFragmentExpanded -> closeEqualizerFragment(tab)
-                        else -> tab.icon?.setTint(mResolvedAccentColor)
-                    }
+                    tab.icon?.setTint(mResolvedAccentColor)
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -369,10 +361,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 }
 
                 override fun onTabReselected(tab: TabLayout.Tab) {
-                    when {
-                        sDetailsFragmentExpanded -> closeDetailsFragment(null)
-                        sEqFragmentExpanded -> closeEqualizerFragment(null)
-                    }
                 }
             })
 
@@ -392,6 +380,19 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     mMainActivityBinding.viewPager2.offscreenPageLimit,
                     false
             )
+        }
+    }
+
+    private fun setTabLayoutEnabled(isFirstSetup: Boolean, isTabsEnabled: Boolean) {
+        mPlayerControlsPanelBinding.tabLayout.apply {
+            TabLayoutMediator(this, mMainActivityBinding.viewPager2) { tab, position ->
+                val fragmentIndex = mActiveFragments[position]
+                tab.setIcon(ThemeHelper.getTabIcon(fragmentIndex))
+                tab.view.isEnabled = isTabsEnabled
+                if (isFirstSetup) {
+                    initFragmentAtPosition(fragmentIndex)
+                }
+            }.attach()
         }
     }
 
@@ -454,18 +455,19 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                                     mMusicViewModel.deviceAlbumsByArtist
                             )
                     )
+            setTabLayoutEnabled(isFirstSetup = false, isTabsEnabled = false)
             supportFragmentManager.addFragment(mDetailsFragment, GoConstants.DETAILS_FRAGMENT_TAG, sEqFragmentExpanded)
         }
     }
 
-    private fun closeDetailsFragment(tab: TabLayout.Tab?) {
+    private fun closeDetailsFragment() {
         if (!sRevealAnimationRunning) {
             mDetailsFragment.onHandleBackPressed().apply {
                 sRevealAnimationRunning = true
-                tab?.icon?.setTint(mResolvedAccentColor)
                 doOnEnd {
                     synchronized(super.onBackPressed()) {
                         sRevealAnimationRunning = false
+                        setTabLayoutEnabled(isFirstSetup = false, isTabsEnabled = true)
                     }
                 }
             }
@@ -853,6 +855,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun updatePlayingInfo(restore: Boolean) {
 
         val selectedSong = mMediaPlayerHolder.currentSong.first
+
+        mPlayerControlsPanelBinding.songProgress.progress = 0
         mPlayerControlsPanelBinding.songProgress.max = selectedSong?.duration!!.toInt()
 
         mPlayerControlsPanelBinding.playingSong.text = selectedSong.title
@@ -1088,11 +1092,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    override fun onGetEqualizer(): Triple<Equalizer, BassBoost, Virtualizer>? = if (::mMediaPlayerHolder.isInitialized) {
-        mMediaPlayerHolder.getEqualizer()
-    } else {
-        null
-    }
+    override fun onGetEqualizer(): Triple<Equalizer, BassBoost, Virtualizer> = mMediaPlayerHolder.getEqualizer()
 
     override fun onEnableEqualizer(isEnabled: Boolean) {
         if (::mMediaPlayerHolder.isInitialized) {
@@ -1113,6 +1113,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         if (sDetailsFragmentExpanded) {
                             mDetailsFragment.setDisableCircleReveal()
                         }
+                        setTabLayoutEnabled(isFirstSetup = false, isTabsEnabled = false)
                         supportFragmentManager.addFragment(mEqualizerFragment, GoConstants.EQ_FRAGMENT_TAG, sDetailsFragmentExpanded)
                     }
                 }
@@ -1122,14 +1123,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    private fun closeEqualizerFragment(tab: TabLayout.Tab?) {
+    private fun closeEqualizerFragment() {
         if (!sRevealAnimationRunning) {
             mEqualizerFragment.onHandleBackPressed().apply {
                 sRevealAnimationRunning = true
-                tab?.icon?.setTint(mResolvedAccentColor)
                 doOnEnd {
                     synchronized(super.onBackPressed()) {
                         sRevealAnimationRunning = false
+                        setTabLayoutEnabled(isFirstSetup = false, isTabsEnabled = true)
                     }
                 }
             }
