@@ -3,6 +3,9 @@ package com.iven.musicplayergo.fragments
 import android.animation.Animator
 import android.content.Context
 import android.content.res.ColorStateList
+import android.media.audiofx.BassBoost
+import android.media.audiofx.Equalizer
+import android.media.audiofx.Virtualizer
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -36,9 +39,7 @@ import kotlin.concurrent.schedule
  */
 class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
-    private val mEqualizer by lazy {
-        mUIControlInterface.onGetEqualizer()
-    }
+    private lateinit var mEqualizer: Triple<Equalizer, BassBoost, Virtualizer>
 
     private lateinit var mEqFragmentBinding: FragmentEqualizerBinding
     private lateinit var mUIControlInterface: UIControlInterface
@@ -98,23 +99,27 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (!::mEqualizer.isInitialized) {
+            mEqualizer = mUIControlInterface.onGetEqualizer()
+        }
+
         mEqFragmentBinding = FragmentEqualizerBinding.bind(view).apply {
             sliderBass.addOnChangeListener { _, value, fromUser ->
                 // Responds to when slider's value is changed
                 if (fromUser) {
-                    mEqualizer?.second?.setStrength(value.toInt().toShort())
+                    mEqualizer.second.setStrength(value.toInt().toShort())
                 }
             }
             sliderVirt.addOnChangeListener { _, value, fromUser ->
                 // Responds to when slider's value is changed
                 if (fromUser) {
-                    mEqualizer?.third?.setStrength(value.toInt().toShort())
+                    mEqualizer.third.setStrength(value.toInt().toShort())
                 }
             }
         }
 
-        val equalizer = mEqualizer?.first
-        for (i in 0 until equalizer?.numberOfPresets!!) {
+        val equalizer = mEqualizer.first
+        for (i in 0 until equalizer.numberOfPresets) {
             mPresetsList.add(equalizer.getPresetName(i.toShort()))
         }
 
@@ -152,7 +157,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
             mSelectedPreset = savedEqualizerSettings.preset
         }
 
-        mEqualizer?.first?.apply {
+        mEqualizer.first.apply {
             val bandLevelRange = bandLevelRange
             val minBandLevel = bandLevelRange[0]
             val maxBandLevel = bandLevelRange[1]
@@ -164,7 +169,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                 slider.value?.addOnChangeListener { selectedSlider, value, fromUser ->
                     if (fromUser) {
                         if (mSliders[slider.index] == selectedSlider) {
-                            mEqualizer?.first?.setBandLevel(slider.index.toShort(), value.toInt().toShort())
+                            mEqualizer.first.setBandLevel(slider.index.toShort(), value.toInt().toShort())
                         }
                     }
                 }
@@ -192,7 +197,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                             adapter?.notifyItemChanged(mSelectedPreset)
                             mSelectedPreset = index
                             adapter?.notifyItemChanged(mSelectedPreset)
-                            mEqualizer?.first?.usePreset(mSelectedPreset.toShort())
+                            mEqualizer.first.usePreset(mSelectedPreset.toShort())
                             updateBandLevels(true)
                         }
                     }
@@ -226,7 +231,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
             inflateMenu(R.menu.menu_eq)
             menu.apply {
                 val equalizerSwitchMaterial = findItem(R.id.equalizerSwitch).actionView as SwitchMaterial
-                equalizerSwitchMaterial.isChecked = mEqualizer?.first?.enabled!!
+                equalizerSwitchMaterial.isChecked = mEqualizer.first.enabled
                 equalizerSwitchMaterial.setOnCheckedChangeListener { _, isChecked ->
                     Timer().schedule(1000) {
                         mUIControlInterface.onEnableEqualizer(isChecked)
@@ -239,13 +244,13 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
     private fun updateBandLevels(isPresetChanged: Boolean) {
         try {
             mSliders.iterator().withIndex().forEach { slider ->
-                slider.value?.value = mEqualizer?.first?.getBandLevel(slider.index.toShort())!!.toFloat()
+                slider.value?.value = mEqualizer.first.getBandLevel(slider.index.toShort()).toFloat()
             }
             if (!isPresetChanged) {
                 goPreferences.savedEqualizerSettings?.let { eqSettings ->
                     mEqFragmentBinding.sliderBass.value = eqSettings.bassBoost.toFloat()
                 }
-                mEqFragmentBinding.sliderVirt.value = mEqualizer?.third?.roundedStrength!!.toFloat()
+                mEqFragmentBinding.sliderVirt.value = mEqualizer.third.roundedStrength.toFloat()
             }
         } catch (e: UnsupportedOperationException) {
             e.printStackTrace()

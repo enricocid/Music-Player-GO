@@ -1,10 +1,12 @@
 package com.iven.musicplayergo.player
 
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import android.os.Parcelable
+import android.os.PowerManager
 import android.support.v4.media.session.MediaSessionCompat
 import android.view.KeyEvent
 import com.iven.musicplayergo.R
@@ -13,6 +15,8 @@ import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 
 
+private const val WAKELOCK_MILLI: Long = 25000
+
 class PlayerService : Service() {
 
     // Binder given to clients
@@ -20,6 +24,9 @@ class PlayerService : Service() {
 
     // Check if is already running
     var isRunning = false
+
+    // WakeLock
+    private lateinit var mWakeLock: PowerManager.WakeLock
 
     // Media player
     lateinit var mediaPlayerHolder: MediaPlayerHolder
@@ -74,6 +81,9 @@ class PlayerService : Service() {
             }
 
             mediaPlayerHolder.release()
+            if (::mWakeLock.isInitialized && mWakeLock.isHeld) {
+                mWakeLock.release()
+            }
             isRunning = false
         }
     }
@@ -96,8 +106,19 @@ class PlayerService : Service() {
         return binder
     }
 
+    fun acquireWakeLock() {
+        if (::mWakeLock.isInitialized) {
+            mWakeLock.acquire(WAKELOCK_MILLI)
+        }
+    }
+
     override fun onCreate() {
         super.onCreate()
+        if (!::mWakeLock.isInitialized) {
+            val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+            mWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, javaClass.name)
+            mWakeLock.setReferenceCounted(false)
+        }
         configureMediaSession()
     }
 

@@ -221,7 +221,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     private fun createCustomEqualizer() {
-        if (mediaPlayer.audioSessionId != AudioEffect.ERROR_BAD_VALUE) {
+        if (mediaPlayer.audioSessionId != AudioEffect.ERROR_BAD_VALUE && !::mEqualizer.isInitialized && !::mBassBoost.isInitialized && !::mVirtualizer.isInitialized) {
             mBassBoost = BassBoost(0, mediaPlayer.audioSessionId)
             mVirtualizer = Virtualizer(0, mediaPlayer.audioSessionId)
             mEqualizer = Equalizer(0, mediaPlayer.audioSessionId)
@@ -276,6 +276,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     override fun onCompletion(mediaPlayer: MediaPlayer) {
+
+        playerService.acquireWakeLock()
 
         mediaPlayerInterface.onStateChanged()
         mediaPlayerInterface.onPlaybackCompleted()
@@ -536,12 +538,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             } else {
                 mediaPlayer = MediaPlayer().apply {
 
-                    if (EqualizerUtils.hasEqualizer(playerService.applicationContext)) {
-                        EqualizerUtils.openAudioEffectSession(
-                                playerService.applicationContext,
-                                audioSessionId
-                        )
-                    }
+                    EqualizerUtils.openAudioEffectSession(
+                            playerService.applicationContext,
+                            audioSessionId
+                    )
 
                     setOnPreparedListener(this@MediaPlayerHolder)
                     setOnCompletionListener(this@MediaPlayerHolder)
@@ -609,11 +609,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         if (isPlay) {
             play()
-        } else {
-            if (!EqualizerUtils.hasEqualizer(playerService)) {
-                // set equalizer the first time is instantiated
-                createCustomEqualizer()
-            }
+        }
+        if (mediaPlayer.audioSessionId != AudioEffect.ERROR_BAD_VALUE && !::mEqualizer.isInitialized && !::mBassBoost.isInitialized && !::mVirtualizer.isInitialized) {
+            // instantiate custom equalizer
+            createCustomEqualizer()
         }
     }
 
