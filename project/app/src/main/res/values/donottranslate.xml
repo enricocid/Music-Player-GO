@@ -46,7 +46,6 @@
     <string name="edge_pref">edge_pref</string>
     <string name="covers_pref">covers_pref</string>
     <string name="active_fragments_pref">visible_fragments_pref</string>
-    <string name="eq_pref">eq_pref</string>
     <string name="on_list_ended_pref">on_list_ended_pref</string>
     <string name="fast_seeking_actions_pref">fast_seeking_actions_pref</string>
     <string name="fast_seeking_pref">fast_seeking_pref</string>
