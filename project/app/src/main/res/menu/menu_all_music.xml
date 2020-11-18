@@ -14,8 +14,8 @@
 
         <item
             android:id="@+id/action_shuffle_am"
-            android:orderInCategory="0"
             android:icon="@drawable/ic_shuffle"
+            android:orderInCategory="0"
             android:title="@string/shuffle_am"
             app:showAsAction="never" />
 

@@ -175,7 +175,6 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                         menu.setGroupVisible(R.id.sorting, !hasFocus)
                     }
                 }
-
                 setMenuOnItemClickListener(requireActivity(), this)
             }
         }

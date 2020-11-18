@@ -137,7 +137,6 @@ fun FragmentManager.addFragment(fragment: Fragment, tag: String?, isReplace: Boo
                     tag
             )
         }
-
         commit()
     }
 }
