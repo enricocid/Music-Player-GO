@@ -81,7 +81,7 @@
     <string name="queue_songs_clear">Warteschlange wird geleert. Fortfahren\?</string>
     <string name="on_close_activity">Wollen Sie die Wiedergabe stoppen\?</string>
     <string name="eq_pref_note_summary">Hinweis: Der systemweite Equalizer wird bevorzugt verwendet, es sei denn du deaktivierst die App \"System Equalizer\" in den Systemeinstellungen. :)</string>
-    <string name="on_list_ended_pref_title">Wenn die Liste zuende ist…</string>
+    <string name="on_list_ended_pref_title">Wenn die Liste zu Ende ist…</string>
     <string name="error_eq">Ups, ein Fehler ist aufgetreten!</string>
     <string name="error_list_ended">Liste am Ende.</string>
 </resources>
