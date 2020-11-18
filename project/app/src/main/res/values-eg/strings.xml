@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- Dialogs / Buttons -->
     <string name="yes">نعم</string>
     <string name="no">لا</string>
@@ -7,36 +7,30 @@
     <string name="queue_songs_clear">سيتم مسح قائمة الانتظار. استمر؟</string>
     <string name="loved_songs_clear">سيتم مسح الأغاني المحببة. استمر؟</string>
     <string name="loved_song_remove">%1s (%2s) سيتم حذفها من الأغاني المحبوبة. استمر؟</string>
-
     <!-- Main - Fragments titles -->
     <string name="artists">فنانين</string>
     <string name="songs">الأغاني</string>
     <string name="folders">المجلدات</string>
-
     <!-- Main - Artists/Folder RecyclerViews items  -->
-    <string name="artist_info">%1d&#160;ألبومات,I&#160;%2d&#160; الأغاني</string>
-    <string name="folder_info">%1d&#160;الأغاني</string>
-
+    <string name="artist_info">%1d ألبومات,I %2d  الأغاني</string>
+    <string name="folder_info">%1d الأغاني</string>
     <!-- Popup/Menu titles -->
     <string name="sorting_pref">فرز</string>
     <string name="sorting_pref_default">إفتراضي</string>
-    <string name="sorting_pref_track">بواسطة رقم المسار. &#8595;</string>
-    <string name="sorting_pref_track_inv">بواسطة رقم المسار. &#8593;</string>
+    <string name="sorting_pref_track">بواسطة رقم المسار. ↓</string>
+    <string name="sorting_pref_track_inv">بواسطة رقم المسار. ↑</string>
     <string name="shuffle_am">خلط جميع الأغاني</string>
     <string name="shuffle_sa">تبديل الألبوم المحدد عشوائيًا</string>
     <string name="queue_add">إضافة إلى قائمة الانتظار</string>
     <string name="loved_song_add">أضف إلى الأغاني المحبوبة</string>
     <string name="filter_popup_title">إخفاء</string>
-
     <!-- Queue -->
     <string name="queue">طابور</string>
     <string name="queue_song_add">%1s تمت إضافته إلى قائمة الانتظار!</string>
     <string name="queue_song_remove">%1s سيتم حذفه من قائمة الانتظار. استمر؟</string>
-
     <!-- Loved songs -->
     <string name="loved_songs">الأغاني المحببة</string>
     <string name="loved_song_added">%1s (%2s) يضاف إلى الأغاني المحبوبة</string>
-
     <!-- Messages - Errors -->
     <string name="error_no_loved_songs">لم يتم العثور على أغاني محبوب!</string>
     <string name="error_no_music">لم يتم العثور على موسيقى :(</string>
@@ -47,61 +41,48 @@
     <string name="error_bad_id">قم بتشغيل أغنية أولاً!</string>
     <string name="error_no_filter">لم يتم العثور على فلاتر!</string>
     <string name="error_no_queue">لم يتم وضع أي أغاني في قائمة الانتظار!</string>
-
     <!-- Messages - Permission rationale -->
     <string name="perm_rationale">يحتاج Music Player GO إلى الوصول إلى ملفاتك لتشغيل الموسيقى!</string>
-
     <!-- Messages - Repeat -->
     <string name="repeat_enabled">تمكين تكرار 1x!</string>
-    <string name="repeat_loop_enabled">كرر &#8734; ممكن!</string>
-    <string name="repeat_disabled">كرر &#8734; ممكن!</string>
-
+    <string name="repeat_loop_enabled">كرر ∞ ممكن!</string>
+    <string name="repeat_disabled">كرر ∞ ممكن!</string>
     <!-- Preferences - Categories -->
     <string name="settings">الإعدادات</string>
     <string name="category_general">جنرال لواء</string>
-
     <!-- Preferences - Git page -->
     <string name="open_git_pref_title">الصفحةGitHub</string>
     <string name="open_git_pref_summary">افتح صفحة المشروع لمزيد من المعلومات :)</string>
-
     <!-- Preferences - FAQ -->
     <string name="faq_summary">الأسئلة الشائعة وتنسيقات الوسائط المدعومة :P</string>
-
     <!-- Preferences - Found songs -->
     <string name="found_songs_pref_title">%1d: الأغاني الموجودة</string>
-
     <!-- Preferences - Themes -->
     <string name="theme_pref_title">موضوع</string>
     <string name="theme_pref_light_title">ضوء</string>
     <string name="theme_pref_dark_title">داكن</string>
     <string name="theme_pref_auto_title">تلقائي</string>
-
     <!-- Preferences - Accent -->
     <string name="accent_pref_title">اللهجة</string>
-
     <!-- Preferences - Edge-to-edge -->
     <string name="edge_pref_summary_on">تعطيل الحافة إلى الحافة</string>
     <string name="edge_pref_summary_off">تمكين من الحافة إلى الحافة</string>
-
     <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">علامات التبويب النشطة</string>
     <string name="active_fragments_pref_warning">لا يمكنك فقط إزالة جميع علامات التبويب! :P</string>
-
     <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">تحكم دقيق في مستوى الصوت</string>
     <string name="precise_volume_pref_summary_on">تعطيل التحكم الدقيق في مستوى الصوت</string>
     <string name="precise_volume_pref_summary_off">تمكين التحكم الدقيق في مستوى الصوت</string>
-
     <!-- Preferences - Focus -->
     <string name="focus_pref_title">التركيز الصوتي</string>
     <string name="focus_pref_summary_on">تعطيل إدارة التركيز الصوتي</string>
     <string name="focus_pref_summary_off">تمكين إدارة التركيز الصوتي</string>
-
     <!-- Preferences - Headsets -->
     <string name="headset_pref_title">قابس سماعة الرأس</string>
     <string name="headset_pref_summary_on">إيقاف إدارة قابس سماعة الرأس</string>
     <string name="headset_pref_summary_off">تفعيل إدارة قابس سماعة الرأس</string>
-
     <!-- Preferences - Filters -->
     <string name="filter_pref_title">مرشحات</string>
+    <string name="albums">ألبومات</string>
 </resources>

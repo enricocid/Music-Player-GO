@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="yes">Si</string>
     <string name="no">No</string>
     <string name="artists">Artisti</string>
-    <string name="artist_info">%1d&#160;Album,&#160;%2d&#160;Canzoni</string>
-    <string name="folder_info">%1d&#160;Canzoni</string>
+    <string name="artist_info">%1d Album, %2d Canzoni</string>
+    <string name="folder_info">%1d Canzoni</string>
     <string name="songs">Canzoni</string>
     <string name="shuffle_am">Mescola tutte le canzoni</string>
     <string name="shuffle_sa">Mescola l\'abum selezionato</string>
@@ -17,25 +18,25 @@
     <string name="queue_song_add">%1s aggiunta alla coda!</string>
     <string name="queue_song_remove">%1s sarà rimossa dalla coda. Continuare?</string>
     <string name="queue_songs_clear">La coda verrà cancellata. Continuare?</string>
-    <string name="error_no_queue">Nessuna canzone in coda!</string>
+    <string name="error_no_queue">Nessuna canzone in coda.</string>
     <string name="loved_songs">Canzoni preferite</string>
     <string name="loved_song_added">%1s (%2s) aggiunta alle canzoni preferite</string>
     <string name="loved_song_remove">%1s (%2s) sarà rimossa dalle canzoni preferite. Continuare?</string>
     <string name="loved_song_add">Aggiungi a canzoni preferite</string>
     <string name="loved_songs_clear">Le canzoni preferite saranno cancellate. Continuare?</string>
     <string name="error_no_loved_songs">Nessuna canzone preferita trovata!</string>
-    <string name="perm_rationale">Music Player GO deve poter accedere ai tuoi file per eseguire la musica!</string>
-    <string name="error_no_browser">Nessun browser trovato!</string>
-    <string name="error_bad_id">Magari esegui una canzone!</string>
+    <string name="perm_rationale">Music Player GO deve poter accedere ai tuoi file per eseguire la musica.</string>
+    <string name="error_no_browser">Nessun web browser trovato.</string>
+    <string name="error_bad_id">Magari esegui una canzone.</string>
     <string name="error_no_music">Nessuna canzone trovata :(</string>
-    <string name="error_not_ready">Qualcosa è andato storto nel caricamento della libreria musicale! :( Ciò è probabilmente dovuto alla scheda sd che qualche volta viene smontata forzando il MediaStore Android a ricostruire i suoi records nel database. Soluzione: riprova più tardi :)</string>
-    <string name="error_unknown_unsupported">Qualcosa è andato storto! :( Forse il formato della canzone non è supportato o la cartella non è accessibile(non dipende dall\'app!)</string>
+    <string name="error_not_ready">Non è stato possibile caricare la libreria musicale! :( Ciò è probabilmente dovuto alla scheda SD che qualche volta viene smontata, forzando il MediaStore Android a ricostruire il suo database. Riprova più tardi :)</string>
+    <string name="error_unknown_unsupported">Qualcosa è andato storto! :( Forse il formato della canzone non è supportato o la cartella non è accessibile (non dipende dall\'app!)</string>
     <string name="error_media_buttons">Qualcosa è andato storto! :( Per favore riavvia la riproduzione dall\'app</string>
     <string name="error_eq">Ooops, qualcosa è andato storto!</string>
     <string name="on_close_activity">Vuoi interrompere la riproduzione?</string>
-    <string name="repeat_enabled">Ripeti 1x attivato!</string>
-    <string name="repeat_loop_enabled">Ripeti &#8734; attivato!</string>
-    <string name="repeat_disabled">Ripeti &#8734; disattivato!</string>
+    <string name="repeat_enabled">Ripeti 1x on.</string>
+    <string name="repeat_loop_enabled">Ripeti ∞ on.</string>
+    <string name="repeat_disabled">Ripeti ∞ off.</string>
     <string name="settings">Opzioni</string>
     <string name="category_general">Generali</string>
     <string name="open_git_pref_title">Pagina GitHub</string>
@@ -55,13 +56,13 @@
     <string name="song_visual_pref_title">Visualizzazione canzoni</string>
     <string name="song_visual_pref_tl_title">Titolo</string>
     <string name="song_visual_pref_fn_title">Nome del file</string>
-    <string name="on_list_ended_pref_title">Quando una lista termina &#8230;</string>
+    <string name="on_list_ended_pref_title">Quando una lista termina …</string>
     <string name="on_list_ended_pref_stop_title">Interrompi</string>
     <string name="on_list_ended_pref_continue_title">Continua</string>
-    <string name="error_list_ended">Lista terminata!</string>
+    <string name="error_list_ended">Lista terminata.</string>
     <string name="active_fragments_pref_title">Tab attive</string>
     <string name="active_fragments_pref_warning">Non puoi rimuovere tutte le tabs! :P</string>
-    <string name="eq_pref_note_summary">Nota: verrà preferito l\'equalizzatore di sistema. Se vuoi usare quello integrato disabilita quello di sistema (l\'app) dalle impostazioni! :)</string>
+    <string name="eq_pref_note_summary">Nota: verrà preferito l\'equalizzatore di sistema a meno che tu non lo disabiliti dalle impostazioni di sistema. :)</string>
     <string name="fast_seeking_pref_title">Avanzamento veloce</string>
     <string name="fast_seeking_pref_summary">Step di avanzamento veloce in secondi</string>
     <string name="fast_seeking_actions_pref_title">Azioni notifiche aggiuntive</string>
@@ -69,8 +70,8 @@
     <string name="fast_seeking_actions_pref_summary_on">Preferisci le azioni di avanzamento veloce</string>
     <string name="sorting_pref">Ordine</string>
     <string name="sorting_pref_default">Predefinito</string>
-    <string name="sorting_pref_track">Per n° traccia &#8595;</string>
-    <string name="sorting_pref_track_inv">Per n° traccia &#8593;</string>
+    <string name="sorting_pref_track">Per n° traccia ↓</string>
+    <string name="sorting_pref_track_inv">Per n° traccia ↑</string>
     <string name="precise_volume_pref_title">Controllo preciso del volume</string>
     <string name="precise_volume_pref_summary_on">Disabilita controllo preciso del volume</string>
     <string name="precise_volume_pref_summary_off">Abilita controllo preciso del volume</string>
@@ -82,5 +83,5 @@
     <string name="headset_pref_summary_off">Abilita gestione inserimento cuffie</string>
     <string name="filter_pref_title">Filtri</string>
     <string name="filter_popup_title">Nascondi</string>
-    <string name="error_no_filter">Nessun filtro trovato!</string>
+    <string name="error_no_filter">Nessun filtro trovato.</string>
 </resources>

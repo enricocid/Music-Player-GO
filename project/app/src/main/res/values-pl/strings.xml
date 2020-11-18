@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- Dialogs / Buttons -->
     <string name="yes">Tak</string>
     <string name="no">Nie</string>
@@ -7,36 +7,30 @@
     <string name="queue_songs_clear">Kolejka zostanie wyczyszczona. Kontynuować?</string>
     <string name="loved_songs_clear">Lista polubionych zostanie wyczyszczona. Kontynuować?</string>
     <string name="loved_song_remove">%1s (%2s) zostanie usunięty z listy polubionych. Kontynuować?</string>
-
     <!-- Main - Fragments titles -->
     <string name="artists">Artyści</string>
     <string name="songs">Utwory</string>
     <string name="folders">Foldery</string>
-
     <!-- Main - Artists/Folder RecyclerViews items  -->
-    <string name="artist_info">%1d&#160;Albumy,&#160;%2d&#160;Utwory</string>
-    <string name="folder_info">%1d&#160;Utwory</string>
-
+    <string name="artist_info">%1d Albumy, %2d Utwory</string>
+    <string name="folder_info">%1d Utwory</string>
     <!-- Popup/Menu titles -->
     <string name="sorting_pref">Sortowanie</string>
     <string name="sorting_pref_default">Domyślne</string>
-    <string name="sorting_pref_track">Według nr scieżki &#8595;</string>
-    <string name="sorting_pref_track_inv">Według nr ścieżki &#8593;</string>
+    <string name="sorting_pref_track">Według nr scieżki ↓</string>
+    <string name="sorting_pref_track_inv">Według nr ścieżki ↑</string>
     <string name="shuffle_am">Odtwarzaj losowo</string>
     <string name="shuffle_sa">Odtwarzaj losowo album</string>
     <string name="queue_add">Dodaj do kolejki</string>
     <string name="loved_song_add">Dodaj do listy polubionych</string>
     <string name="filter_popup_title">Ukryj</string>
-
     <!-- Queue -->
     <string name="queue">Kolejka</string>
     <string name="queue_song_add">%1s dodany do kolejki!</string>
     <string name="queue_song_remove">%1s zostanie usunięty z kolejki. Kontynuować?</string>
-
     <!-- Loved songs -->
     <string name="loved_songs">Lista Polubionych</string>
     <string name="loved_song_added">%1s (%2s) dodany do listy polubionych!</string>
-
     <!-- Messages - Errors -->
     <string name="error_no_loved_songs">Nie znaleziono polubionych!</string>
     <string name="error_no_music">Nie znaleziono muzyki :(</string>
@@ -47,61 +41,65 @@
     <string name="error_bad_id">Najpierw coś odtwórz!</string>
     <string name="error_no_filter">Nie znaleziono filtrów!</string>
     <string name="error_no_queue">Brak utworów w kolejce!</string>
-
     <!-- Messages - Permission rationale -->
     <string name="perm_rationale">Music Player GO wymaga dostępu do plików, aby odtwarzać muzykę!</string>
-
     <!-- Messages - Repeat -->
     <string name="repeat_enabled">Powtarzanie 1x włączone!</string>
-    <string name="repeat_loop_enabled">Powtarzanie &#8734; włączone!</string>
-    <string name="repeat_disabled">Powtarzanie &#8734; wyłączone!</string>
-
+    <string name="repeat_loop_enabled">Powtarzanie ∞ włączone!</string>
+    <string name="repeat_disabled">Powtarzanie ∞ wyłączone!</string>
     <!-- Preferences - Categories -->
     <string name="settings">Ustawienia</string>
     <string name="category_general">Główne</string>
-
     <!-- Preferences - Git page -->
     <string name="open_git_pref_title">Strona na GitHub</string>
     <string name="open_git_pref_summary">Odtwórz stronę projektu, aby uzyskać więcej informacji :)</string>
-
     <!-- Preferences - FAQ -->
     <string name="faq_summary">FAQ i wspierane formaty :P</string>
-
     <!-- Preferences - Found songs -->
     <string name="found_songs_pref_title">Znaleziono utwory: %1d</string>
-
     <!-- Preferences - Themes -->
     <string name="theme_pref_title">Motyw</string>
     <string name="theme_pref_light_title">Jasny</string>
     <string name="theme_pref_dark_title">Ciemny</string>
     <string name="theme_pref_auto_title">Automatyczny</string>
-
     <!-- Preferences - Accent -->
     <string name="accent_pref_title">Odcień koloru</string>
-
     <!-- Preferences - Edge-to-edge -->
     <string name="edge_pref_summary_on">Wyłącz edge-to-edge</string>
     <string name="edge_pref_summary_off">Włącz edge-to-edge</string>
-
     <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">Aktywuj zakładki</string>
     <string name="active_fragments_pref_warning">Po prostu nie możesz usunąć wszystkich zakładek! :P</string>
-
     <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">Dokładna kontrola głośności</string>
     <string name="precise_volume_pref_summary_on">Wyłącz kontrolę głośności aplikacji</string>
     <string name="precise_volume_pref_summary_off">Włącz kontrolę głośności aplikacji</string>
-
     <!-- Preferences - Focus -->
     <string name="focus_pref_title">Wyciszanie otoczenia</string>
     <string name="focus_pref_summary_on">Wyłącz opcję wyciszenia</string>
     <string name="focus_pref_summary_off">Wyciszaj inne źródła dźwięku</string>
-
     <!-- Preferences - Headsets -->
     <string name="headset_pref_title">Podłączanie słuchawek</string>
     <string name="headset_pref_summary_on">Wyłącz zarządzanie podłączeniem słuchawek</string>
     <string name="headset_pref_summary_off">Zarządzaj zachowaniem przy podłączeniu słuchawek</string>
-
     <!-- Preferences - Filters -->
     <string name="filter_pref_title">Filtry</string>
+    <string name="fast_seeking_actions_pref_summary_on">Preferuj czynności szybkiego wyszukiwania</string>
+    <string name="fast_seeking_actions_pref_summary_off">Preferuj akcje „zamknij/powtórz”</string>
+    <string name="fast_seeking_actions_pref_title">Dodatkowe czynności powiadomień</string>
+    <string name="fast_seeking_pref_summary">„Kroki” (odstępy w sekundach) przy przewijaniu do przodu / do tyłu</string>
+    <string name="fast_seeking_pref_title">Szybkie wyszukiwanie</string>
+    <string name="song_visual_pref_fn_title">Nazwa pliku</string>
+    <string name="song_visual_pref_tl_title">Tytuł</string>
+    <string name="song_visual_pref_title">Wirtualizacja muzyki</string>
+    <string name="on_list_ended_pref_continue_title">Kontynuuj</string>
+    <string name="on_list_ended_pref_stop_title">Zatrzymaj</string>
+    <string name="covers_pref_summary_off">Ukryj okładki albumu</string>
+    <string name="covers_pref_summary_on">Pokaż okładki albumów</string>
+    <string name="covers_pref_title">Wbudowane okładki albumów</string>
+    <string name="error_list_ended">Koniec listy odtwarzania!</string>
+    <string name="equalizer_v">Dźwięk przestrzenny</string>
+    <string name="equalizer_bb">Wzmocnienie basów</string>
+    <string name="equalizer">Korektor</string>
+    <string name="albums">Albumy</string>
 </resources>
