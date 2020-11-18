@@ -6,18 +6,21 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 ### Special thanks goes to:
 
-- [**Julian Javier Gomez - Axinen Design**](https://github.com/AxinenDesign) for the wonderful **material design icon**
-
 - [**Arianna Masciolini**](https://github.com/harisont) for the original precise volume control implementation
+
+- [**Cyril Mottier**](https://cyrilmottier.com/) for the [adaptive icon template](https://cyrilmottier.com/2017/07/06/adaptive-icon-template/) icon, opportunely modified (background and foreground).
+This work is licensed under a [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) license
 
 - [**Steven Schoen**](https://github.com/DSteve595) for the search function [fixes](https://github.com/enricocid/Music-Player-GO/commit/1c27ff3421dbf7820608237dc60a974955efb022) and quick [support](https://github.com/reddit/IndicatorFastScroll/issues/30)
 
 - [**bullhead**](https://github.com/bullheadandplato) for its equalizer implementation: I learned so much about how an equalizer works
 
 - [**svgrepo.com**](https://www.svgrepo.com/) for the [compact disc](https://www.svgrepo.com/svg/181020/compact-disc-music) icon, opportunely modified (background color).
-This work is licensed under a [Creative Commons Attribution 0](https://creativecommons.org/share-your-work/public-domain/cc0/) International License
+This work is licensed under a [CC 0](https://creativecommons.org/share-your-work/public-domain/cc0/) license
 
 - [**Mathieu Aubin**](https://github.com/mathieu-aubin) for the readme's [GIF optimization](https://github.com/mathieu-aubin/tempgif)
+
+- [**Julian Javier Gomez - Axinen Design**](https://github.com/AxinenDesign) for the old **material design icon**
 
 
 ### General credits:
