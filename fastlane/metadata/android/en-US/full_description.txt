@@ -1,49 +1,23 @@
-# Features:
+# Features
 
-- Tabbed UI: artists, all songs, folders and settings
-- Settings:
-  - Themes: light, dark and automatic (following the system settings on Android Q and battery level on pre-Q devices)
-  - 19 awesome accents
-    > Tip: long click on the preference for copying
-  - Edge-to-edge (for >= Oreo 8.1)
-  - Active tabs management
-  - Precise volume control toggle
-  - Audio focus and headsets plug management toggles
-  - Filters management
+- Minimalistic interface
+- Equalizer
+- Music organized by Artist, Albums, Songs and Folders
+- Personalization: light, dark, automatic themes and accents
+- Now playing
+- Embedded covers support
+- Fast seeking (long click on skip buttons)
+- Simple audio focus, precise volume and headsets management
+- Other features: search, sorting, shuffle, notification's SeekBar, audios opening from other apps ...
+- Modern code base and ... Kotlin!
 
-- Save/restore last reproduced song/progress
 
-- Bottom controls panel containing:
-  - Currently reproduced song
-    > Tip: Tip: long click on it to quickly jump to the song's album/folder
-  - Play/pause
-  - Queue button
-  - Loved songs button
-
-- Now playing dialog showing the classical media controls: seek bar, equalizer, skip, play/pause, repeat (1x, loop), add to loved songs, current volume step fine control
-  > Tip: click on played song to quickly jump to song's album/folder
-
-- Artist's details showing its albums/songs. Shuffle all its songs or the selected album
-  > Tip: click on the album's title to quickly jump to the song's album
-
-- Simple queue management
-  > Tip: to clear queue long click on queue button
-
-- Loved songs: You can now bookmark a song from songs lists and now playing dialog (in this case current position will be saved too!)
-  > Tip: to clear the list long click on loved songs button
-
-- Landscape support
-
-- Ability to hide artists/folders
-- Search
-- Notification's SeekBar support (starting from Android Q)
-- Sort options
-- Shuffle options
-- Open audio files from outside the app
-- Pause/resume when the headsets are plugged in/out
-- Simple audio focus management
+Want something more minimal?
+Check Be Simple Music Player:
+https://github.com/enricocid/Music-Player-GO/tree/Be-Simple
 
 
 # Want to contribute to translations?
 
-Please have a look here: https://github.com/enricocid/Music-Player-GO/issues/114 :)
+Join us at Weblate:
+https://hosted.weblate.org/engage/music-player-go/

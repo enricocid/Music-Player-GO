@@ -8,12 +8,12 @@
   <!-- Latest Release -->
     <a href="https://github.com/enricocid/Music-Player-GO/releases">
       <img alt="GitHub release"
-      src="https://img.shields.io/static/v1?label=Tag&message=v4.2.7&color=2196f3">
+      src="https://img.shields.io/static/v1?label=Tag&message=v4.2.7&color=58F5D1">
     </a>
    <!-- Minimum SDK -->
     <a>
       <img alt="Minimum SDK"
-      src="https://img.shields.io/static/v1?label=API&message=21&color=4caf50">
+      src="https://img.shields.io/static/v1?label=API&message=21&color=32B5ED">
     </a>
 </p>
 
@@ -62,17 +62,20 @@ This repo contains the source code of the **Music Player GO** Android app: a sim
   
 # Features
 
-- Built-in minimal Equalizer
-- Tabs (artists, songs, albums, folders, settings)
-- Full UI theming including day/night theme and edge-to-edge
-- Now playing (quick jump to album/folder by long tap on the currently played song)
+- Minimalistic interface
+- Equalizer
+- Music organized by Artist, Albums, Songs and Folders
+- Personalization: light, dark, automatic themes and accents
+- Now playing
 - Embedded covers support
-- Fast seeking (long tap on skip btns)
-- Continue playing from where You left
-- Queued and loved songs
-- Audio focus, precise volume and headsets plug control
-- Other features: search, sorting, shuffle, notification's SeekBar (Android 10), open audios from other apps ...
+- Fast seeking (long click on skip buttons)
+- Simple audio focus, precise volume and headsets management
+- Other features: search, sorting, shuffle, notification's SeekBar, audios opening from other apps ...
+- Modern code base and ... Kotlin!
 
+Want something more minimal?
+Check [Be Simple Music Player](https://github.com/enricocid/Music-Player-GO/tree/Be-Simple)!
+ 
 
 # Translations
 

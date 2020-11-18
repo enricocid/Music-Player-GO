@@ -1,48 +1,23 @@
-# Caratteristiche:
+# Caratteristiche
 
-- Tabbed UI: artisti, tutte le canzoni, cartelle ed impostazioni
-- Impostazioni:
-- Temi: chiaro, scuro ed automatico (segue le impostazioni di sistema in Android Q ed il livello di batteria sui telefono pre-Q)
-  - 19 meravigliosi accenti
-    > Consiglio: clicca a lungo sull'opzione per copiarlo
-  - Edge-to-edge (per >= Oreo 8.1)
-  - Gestione tabs attive
-  - Opzione controllo preciso del volume
-  - Gestione del focus audio e dell'inserimento delle cuffie
-  - Gestione filtri
+- Interfaccia minimale
+- Equalizzatore
+- Musica organizzata per Artista, Album, Canzoni e Cartelle
+- Personalizzazione: temi chiaro, scuro, automatico e accenti
+- Now playing
+- Supporto per le cover integrate
+- Avanzamento veloce (tap lungo sui pulsanti precedente/prossima canzone)
+- Semplice gestione del focus audio, volume preciso e delle cuffie
+- Altre funzioni: ricerca, ordinamento, shuffle, barra di scorrimento nella notifica, apertura musica da altre app ..
+- Code base moderna e ... Kotlin ... Kotlin!
 
-- Salvataggio/ripristino dell'ultima canzone riprodotta
 
-- Pannello di controllo inferiore contenente:
-  - Canzone riprodotta
-    > Consiglio: clicca a lungo su di essa per saltare velocemente alla all'album/cartella della canzone
-  - Play/pausa
-  - Pulsante coda
-  - Pulsante preferiti
+Vuoi qualcosa di più minimale?
+Di una occhiata a Simple Music Player:
+https://github.com/enricocid/Music-Player-GO/tree/Be-Simple
 
-- Dialog now playing che mostra i classici controlli multimediali: barra di scorrimento, equalizzatore, skip, play/pausa, ripeti (1x, loop), aggiungi a canzoni preferite, controllo fine dello step di volume corrente
-  > Consiglio: clicca sulla canzone riprodotta per saltare velocemente alla all'album/cartella della canzone
-
-- Pagina artista che mostra i suoi album/canzoni. Mescola tutte le sue canzoni o l'album selezionato
-  > Consiglio: clicca il titolo dell'album per saltare velocemente alla all'album della canzone
-
-- Semplice gestione della coda
-  > Consiglio: per cancellare la coda clicca a lungo sul pulsante della coda
-
-- Canzoni preferite: puoi salvare una canzone dalle liste di canzoni o dal dialog now playing (in questo caso sarà salvata anche la posizione corrente!)
-  > Consiglio: per cancellare la lista clicca a lungo sul pulsante dei preferiti
-
-- Supporto landscape
-
-- Possibilità di nascondere artisti e cartelle
-- Ricerca
-- Supporto SeekBar notifica (a partire da Android Q)
-- Opzioni sorting
-- Opzioni per il mescolamento (shuffle)
-- Possibilità di aprire file audio dall'esterno dell'app
-- Pausa/riprendi quando le cuffie sono (s)connesse
-- Semplice gestione del focus audio
 
 # Vuoi contribuire alle traduzioni?
 
-Dai una occhiata qui: https://github.com/enricocid/Music-Player-GO/issues/114 :)
+Unisciti a noi su Weblate:
+https://hosted.weblate.org/engage/music-player-go/

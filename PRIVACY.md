@@ -17,8 +17,10 @@ For utilization of Music-Player-GO, the software is designed to request only the
 
 This permission has to be enabled so the software can read your storage and add music files to the music library.
   
-Another capability of the software is
+Other capabilities of the software are
+
 - Ability to prevent phone from sleeping while in use.
+- Ability to modify audio settings to apply Equalizer settings.
 
 
 The information that may be collected with the enablement of this permission is stored locally on the device, and the developer has no access to that information.
