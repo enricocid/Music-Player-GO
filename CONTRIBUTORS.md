@@ -41,8 +41,6 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 
 - [**Pirhszm Yfiz**](https://github.com/pirhszm) for reporting this [issue](https://github.com/enricocid/Music-Player-GO/issues/110#issuecomment-573424280)
 
-- [**IzzySoft**](https://github.com/IzzySoft) and [**Poussinou**](https://github.com/Poussinou) for setting up the **F-Droid** repository
-
 - [**TacoTheDank**](https://github.com/TacoTheDank) for upgrades to gradle, java 1.8 and translations
 
 - [**Dankan1890**](https://github.com/dankan1890) for some fixes to bluetooth devices
