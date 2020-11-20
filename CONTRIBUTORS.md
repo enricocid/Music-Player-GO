@@ -6,6 +6,8 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 ### Special thanks goes to:
 
+- [**Izzy**](https://github.com/IzzySoft) and [**Poussinou**](https://github.com/Poussinou) for setting up the F-Droid repository
+
 - [**Arianna Masciolini**](https://github.com/harisont) for the original precise volume control implementation
 
 - [**Cyril Mottier**](https://cyrilmottier.com/) for the [adaptive icon template](https://cyrilmottier.com/2017/07/06/adaptive-icon-template/) icon, opportunely modified (background and foreground).
@@ -64,14 +66,14 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 
 ### Big thanks to translators:
 
-- [**Allan Nordh�y**](https://github.com/comradekingu) 
+- [**Allan Nordhøy**](https://github.com/comradekingu) 
 for [strings improvements](https://github.com/enricocid/Music-Player-GO/pull/227)
 
 - [**keddad**](https://github.com/keddad) and [**yafna**](https://github.com/yafna) for **Russian** translations
 
 - [**Nathan Bonnemains**](https://github.com/NathanBnm) and [**KowalskiOmniROM**](https://devhub.io/developer/KowalskiOmniROM) for **French** translations
 
-- [**Adem Furkan ÖZCAN**](https://github.com/Adem68) for **Turkish** translations
+- [**Adem Furkan Ã–ZCAN**](https://github.com/Adem68) for **Turkish** translations
 
 - [**Heimen Stoffels**](https://github.com/Vistaus) for **Dutch** translations
 
