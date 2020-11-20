@@ -1,49 +1,23 @@
-# Fitur:
+# Features
 
-- UI Tab: artis, lagu, folder dan pengaturan
-- Pengaturan:
-  - Tema: terang, gelap dan otomatis (mengikuti pengaturan sistem pada Android Q dan level baterai pada perangkat pra-Q)
-  - 19 aksen warna
-    > Tip: tekan lama pada preferensi untuk menyalin
-  - Edge-to-edge (untuk >= Oreo 8.1)
-  - Manajemen tab
-  - Pengontrol presisi volume
-  - Fokus audio dan manajemen headset
-  - Manajemen filter
-
-- Simpan/pulihkan laju pemutaran lagu
-
-- Panel bawah berisi:
-  - Lagu yang diputar
-    > Tip: tekan lama untuk fokus ke lagu di dalam album/folder
-  - Putar/jeda
-  - Tombol antrean
-  - Tombol favorit
-
-- Dialog sekarang diputar menampilkan kontrol media umum: bilah laju, equalizer, lewati, putar/jeda, ulangi (1x, berulang), tambah ke favorit, kontrol volume
-  > Tip: klik pada lagu yang sedang diputar untuk fokus ke lagu di dalam album/folder
-
-- Detail artis dengan semua album/lagunya. Shuffle semua lagu atau album yang dipilih saja
-  > Tip: klik pada judul album untuk fokus ke lagu album tersebut
-
-- Manajemen antrean
-  > Tip: untuk mengosongkan daftar, tekan lama pada tombol antrean
-
-- Lagu favorit: Anda bisa menambahkan markah dari daftar lagu dan dialog sekarang diputar (posisi pemutaran juga akan disimpan!)
-  > Tip: untuk mengosongkan daftar, tekan lama pada tombol favorit
-
-- Dukungan mode lanskap
-
-- Sembunyikan artis/folder
-- Pencarian
-- Laju pemutaran pada notifikasi (Android Q dan setelahnya)
-- Opsi pengurutan
-- Opsi shuffle
-- Buka berkas audio dari luar aplikasi
-- Jeda/lanjutkan saat headset dicolok/dilepas
-- Manajemen fokus audio
+- Minimalistic interface
+- Equalizer
+- Music organized by Artist, Albums, Songs and Folders
+- Personalization: light, dark, automatic themes and accents
+- Now playing
+- Embedded covers support
+- Fast seeking (long click on skip buttons)
+- Simple audio focus, precise volume and headsets management
+- Other features: search, sorting, shuffle, notification's SeekBar, audios opening from other apps ...
+- Modern code base and ... Kotlin!
 
 
-# Ingin kontribusi penerjemahan?
+Want less?
+Check Be Simple Music Player:
+https://github.com/enricocid/Be-Simple-Music-Player
 
-Silakan kunjungi: https://github.com/enricocid/Music-Player-GO/issues/114 :)
+
+# Want to contribute to translations?
+
+Join us at Weblate:
+https://hosted.weblate.org/engage/music-player-go/

@@ -9,12 +9,12 @@
 - Avanzamento veloce (tap lungo sui pulsanti precedente/prossima canzone)
 - Semplice gestione del focus audio, volume preciso e delle cuffie
 - Altre funzioni: ricerca, ordinamento, shuffle, barra di scorrimento nella notifica, apertura musica da altre app ..
-- Code base moderna e ... Kotlin ... Kotlin!
+- Code base moderna e ... Kotlin!
 
 
-Vuoi qualcosa di più minimale?
+Vuoi di meno?
 Di una occhiata a Simple Music Player:
-https://github.com/enricocid/Music-Player-GO/tree/Be-Simple
+https://github.com/enricocid/Be-Simple-Music-Player
 
 
 # Vuoi contribuire alle traduzioni?

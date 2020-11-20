@@ -17,7 +17,7 @@ Music Player GO can be downloaded [here](https://play.google.com/store/apps/deta
 
 ### How can I contribute to translations?
 
-Please have a look [here](https://github.com/enricocid/Music-Player-GO/issues/114). :)
+Join us on [Weblate](https://hosted.weblate.org/engage/music-player-go/). :)
 
 
 ### Can I customize the app's theme to my taste?
@@ -46,8 +46,18 @@ Instead, desaturated colors can be used as a more legible alternative.
 
 ### Does Music Player GO use an equalizer?
 
-Yes, Music Player GO uses the built-in system (default) equalizer (if it exists) on the device.
+Yes, Music Player GO uses the system (default) equalizer (if it exists) on the device.
 The equalizer can be found in the "now playing" dialog.
+
+
+### Is there a built-in equalizer?
+
+Yes, Music Player GO has a built-in equalizer. It is similar to the stock equalizer and it is intended for devices without system equalizer. If You want to use this one please disable the system equalizer from system settings.
+
+
+### The built-in equalizer is not being enabled
+
+Just toggle the switch button again.
 
 
 ### What is audio focus?
@@ -72,7 +82,7 @@ The internet permission is not required by this app.
 
 ### How does Music Player GO categorized music tracks?
 
-Music is categorized by artists and folders.
+Music is categorized by artists, folders and albums.
 Artists' music are in turn categorized by albums.
 Folders can be considered albums.
 Each album consists of tracks of the same album.

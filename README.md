@@ -1,14 +1,14 @@
 <h1 align="center">Music Player GO</h1>
 
 <p align="center">
-<img height="384" src="mpgo-4-2-4_quality55.webp">
+<img height="500" src="art.gif">
 </p>
 
 <p align="center">
   <!-- Latest Release -->
     <a href="https://github.com/enricocid/Music-Player-GO/releases">
       <img alt="GitHub release"
-      src="https://img.shields.io/static/v1?label=Tag&message=v4.2.7&color=58F5D1">
+      src="https://img.shields.io/static/v1?label=Tag&message=v4.3.0&color=58F5D1">
     </a>
    <!-- Minimum SDK -->
     <a>
@@ -46,9 +46,11 @@
     - [Tools](#tools)
   - [License details](#license-details)
 
+
 # Description
 
 This repo contains the source code of the **Music Player GO** Android app: a simple yet fully-featured local music player aiming at simplicity and performance.
+
 
 # Download
 
@@ -73,8 +75,8 @@ This repo contains the source code of the **Music Player GO** Android app: a sim
 - Other features: search, sorting, shuffle, notification's SeekBar, audios opening from other apps ...
 - Modern code base and ... Kotlin!
 
-Want something more minimal?
-Check [Be Simple Music Player](https://github.com/enricocid/Music-Player-GO/tree/Be-Simple)!
+Want less?
+Check [Be Simple Music Player](https://github.com/enricocid/Be-Simple-Music-Player)!
  
 
 # Translations

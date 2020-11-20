@@ -1,0 +1,11 @@
+- Equalizzatore (per telefoni sprovvisti di uno di sistema)
+- Nuova icona e grafica rivista
+- Support cover integrate
+- Tab albums
+- Avanzamento veloce (tap lungo su pulsanti precedente/prossima canzone)
+- Nuove opzioni
+
+- Migliorata compatibilità con Android 11
+- Swipe per rimuovere le canzoni dalla coda/favoriti o per accodare le canzoni
+- Le tabs non sono più cliccabili se apri i dettagli di un'artista o l'equalizzatore per evitare problemi
+- Molte correzioni e migliorie del codice sorgente
