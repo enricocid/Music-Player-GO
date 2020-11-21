@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.observe
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import coil.ImageLoader
@@ -358,11 +359,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {
-                    if( ::mDetailsFragment.isInitialized && mDetailsFragment.isVisible){
-                       closeDetailsFragment()
-                    }
                     if( ::mEqualizerFragment.isInitialized && mEqualizerFragment.isVisible){
-                        closeEqualizerFragment()
+                        supportFragmentManager.popBackStack()
+                        //Also pop the detailsFragment if it's open
+                        if(supportFragmentManager.backStackEntryCount > 1)
+                        {
+                            supportFragmentManager.popBackStack()
+                        }
+
+                    }
+                    if( ::mDetailsFragment.isInitialized && mDetailsFragment.isVisible){
+                        supportFragmentManager.popBackStack()
                     }
                     tab.icon?.setTint(mResolvedAlphaAccentColor)
                 }
