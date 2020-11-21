@@ -23,8 +23,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.observe
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import coil.ImageLoader
 import com.afollestad.materialdialogs.LayoutMode
@@ -350,7 +348,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
             tabIconTint = ColorStateList.valueOf(mResolvedAlphaAccentColor)
 
-            setTabLayoutEnabled(isFirstSetup = true, isTabsEnabled = true)
+            mPlayerControlsPanelBinding.tabLayout.apply {
+                TabLayoutMediator(this, mMainActivityBinding.viewPager2) { tab, position ->
+                    val fragmentIndex = mActiveFragments[position]
+                    tab.setIcon(ThemeHelper.getTabIcon(fragmentIndex))
+                    initFragmentAtPosition(fragmentIndex)
+                }.attach()
+            }
 
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
@@ -359,18 +363,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {
-                    if( ::mEqualizerFragment.isInitialized && mEqualizerFragment.isVisible){
-                        supportFragmentManager.popBackStack()
-                        //Also pop the detailsFragment if it's open
-                        if(supportFragmentManager.backStackEntryCount > 1)
-                        {
-                            supportFragmentManager.popBackStack()
-                        }
-
-                    }
-                    if( ::mDetailsFragment.isInitialized && mDetailsFragment.isVisible){
-                        supportFragmentManager.popBackStack()
-                    }
+                    supportFragmentManager.goBackFromFragment(sDetailsFragmentExpanded)
+                    supportFragmentManager.goBackFromFragment(sEqFragmentExpanded)
                     tab.icon?.setTint(mResolvedAlphaAccentColor)
                 }
 
@@ -394,19 +388,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     mMainActivityBinding.viewPager2.offscreenPageLimit,
                     false
             )
-        }
-    }
-
-    private fun setTabLayoutEnabled(isFirstSetup: Boolean, isTabsEnabled: Boolean) {
-        mPlayerControlsPanelBinding.tabLayout.apply {
-            TabLayoutMediator(this, mMainActivityBinding.viewPager2) { tab, position ->
-                val fragmentIndex = mActiveFragments[position]
-                tab.setIcon(ThemeHelper.getTabIcon(fragmentIndex))
-                tab.view.isEnabled = isTabsEnabled
-                if (isFirstSetup) {
-                    initFragmentAtPosition(fragmentIndex)
-                }
-            }.attach()
         }
     }
 
@@ -478,7 +459,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mDetailsFragment.onHandleBackPressed().apply {
                 sRevealAnimationRunning = true
                 doOnEnd {
-                    synchronized(super.onBackPressed()) {
+                    synchronized(supportFragmentManager.goBackFromFragment(true)) {
                         sRevealAnimationRunning = false
                     }
                 }
@@ -980,7 +961,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             val selectedArtistOrFolder = getSongSource(selectedSong, isPlayingFromFolder)
             if (sDetailsFragmentExpanded) {
                 if (mDetailsFragment.hasToUpdate(selectedArtistOrFolder)) {
-                    synchronized(super.onBackPressed()) {
+                    synchronized(supportFragmentManager.goBackFromFragment(true)) {
                         openDetailsFragment(
                                 selectedArtistOrFolder,
                                 mMediaPlayerHolder.launchedBy
@@ -1139,7 +1120,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mEqualizerFragment.onHandleBackPressed().apply {
                 sRevealAnimationRunning = true
                 doOnEnd {
-                    synchronized(super.onBackPressed()) {
+                    synchronized(supportFragmentManager.goBackFromFragment(true)) {
                         sRevealAnimationRunning = false
                     }
                 }

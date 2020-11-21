@@ -141,6 +141,12 @@ fun FragmentManager.addFragment(fragment: Fragment, tag: String?, isReplace: Boo
     }
 }
 
+fun FragmentManager.goBackFromFragment(isFragmentExpanded: Boolean) {
+    if (isFragmentExpanded && backStackEntryCount >= 1) {
+        popBackStack()
+    }
+}
+
 fun FragmentManager.isFragment(fragmentTag: String): Boolean {
     val df = findFragmentByTag(fragmentTag)
     return df != null && df.isVisible && df.isAdded
