@@ -93,8 +93,8 @@
 
     <!-- Preferences - covers -->
     <string name="covers_pref_title">Embedded album covers</string>
-    <string name="covers_pref_summary_on">Show album covers</string>
-    <string name="covers_pref_summary_off">Hide album covers</string>
+    <string name="covers_pref_summary_on">Hide album covers</string>
+    <string name="covers_pref_summary_off">Show album covers</string>
 
     <!-- Preferences - choose what to do when a playlist ends -->
     <string name="on_list_ended_pref_title">When a list ends &#8230;</string>
