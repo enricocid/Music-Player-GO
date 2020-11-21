@@ -1,0 +1,3 @@
+- Ora puoi usare le tabs anche quando equalizzatore e dettagli artista sono aperti (grazie Drhaal)
+- Corretto il sommario dell'opzione per gestire le cover (grazie Ricardo)
+- Aggiornate le traduzioni

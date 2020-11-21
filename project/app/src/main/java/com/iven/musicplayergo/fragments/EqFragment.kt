@@ -46,8 +46,6 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
     private lateinit var mEqAnimator: Animator
 
-    private var sLaunchCircleReveal = true
-
     private val mPresetsList = mutableListOf<String>()
 
     private val mDataSource = emptyDataSource()
@@ -59,13 +57,14 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
     private val mRoundedTextBackground by lazy {
         val shapeAppearanceModel = ShapeAppearanceModel()
-                .toBuilder()
-                .setAllCorners(CornerFamily.ROUNDED, resources.getDimension(R.dimen.md_corner_radius))
-                .build()
+            .toBuilder()
+            .setAllCorners(CornerFamily.ROUNDED, resources.getDimension(R.dimen.md_corner_radius))
+            .build()
         MaterialShapeDrawable(shapeAppearanceModel).apply {
             strokeColor = ColorStateList.valueOf(ThemeHelper.resolveThemeAccent(requireActivity()))
             strokeWidth = 0.50F
-            fillColor = ColorStateList.valueOf(R.color.windowBackground.decodeColor(requireActivity()))
+            fillColor =
+                ColorStateList.valueOf(R.color.windowBackground.decodeColor(requireActivity()))
         }
     }
 
@@ -81,17 +80,13 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
         }
     }
 
-    fun setDisableCircleReveal() {
-        sLaunchCircleReveal = false
-    }
-
     fun onHandleBackPressed(): Animator {
         if (!mEqAnimator.isRunning) {
             mEqAnimator =
-                    mEqFragmentBinding.root.createCircularReveal(
-                            isErrorFragment = false,
-                            show = false
-                    )
+                mEqFragmentBinding.root.createCircularReveal(
+                    isErrorFragment = false,
+                    show = false
+                )
         }
         return mEqAnimator
     }
@@ -135,7 +130,11 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
     }
 
     private fun saveEqSettings() {
-        mUIControlInterface.onSaveEqualizerSettings(mSelectedPreset, mEqFragmentBinding.sliderBass.value.toInt().toShort(), mEqFragmentBinding.sliderVirt.value.toInt().toShort())
+        mUIControlInterface.onSaveEqualizerSettings(
+            mSelectedPreset,
+            mEqFragmentBinding.sliderBass.value.toInt().toShort(),
+            mEqFragmentBinding.sliderVirt.value.toInt().toShort()
+        )
     }
 
     private fun finishSetupEqualizer(view: View) {
@@ -169,7 +168,10 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                 slider.value?.addOnChangeListener { selectedSlider, value, fromUser ->
                     if (fromUser) {
                         if (mSliders[slider.index] == selectedSlider) {
-                            mEqualizer.first.setBandLevel(slider.index.toShort(), value.toInt().toShort())
+                            mEqualizer.first.setBandLevel(
+                                slider.index.toShort(),
+                                value.toInt().toShort()
+                            )
                         }
                     }
                 }
@@ -188,7 +190,10 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                             val textColor = if (mSelectedPreset == index) {
                                 ThemeHelper.resolveThemeAccent(context)
                             } else {
-                                ThemeHelper.resolveColorAttr(requireActivity(), android.R.attr.textColorPrimary)
+                                ThemeHelper.resolveColorAttr(
+                                    requireActivity(),
+                                    android.R.attr.textColorPrimary
+                                )
                             }
                             presetTitle.setTextColor(textColor)
                         }
@@ -210,14 +215,12 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
         setupToolbar()
 
-        if (sLaunchCircleReveal) {
-            view.afterMeasured {
-                mEqAnimator =
-                        mEqFragmentBinding.root.createCircularReveal(
-                                isErrorFragment = false,
-                                show = true
-                        )
-            }
+        view.afterMeasured {
+            mEqAnimator =
+                mEqFragmentBinding.root.createCircularReveal(
+                    isErrorFragment = false,
+                    show = true
+                )
         }
     }
 
@@ -230,7 +233,8 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
             inflateMenu(R.menu.menu_eq)
             menu.apply {
-                val equalizerSwitchMaterial = findItem(R.id.equalizerSwitch).actionView as SwitchMaterial
+                val equalizerSwitchMaterial =
+                    findItem(R.id.equalizerSwitch).actionView as SwitchMaterial
                 equalizerSwitchMaterial.isChecked = mEqualizer.first.enabled
                 equalizerSwitchMaterial.setOnCheckedChangeListener { _, isChecked ->
                     Timer().schedule(1000) {
@@ -244,7 +248,8 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
     private fun updateBandLevels(isPresetChanged: Boolean) {
         try {
             mSliders.iterator().withIndex().forEach { slider ->
-                slider.value?.value = mEqualizer.first.getBandLevel(slider.index.toShort()).toFloat()
+                slider.value?.value =
+                    mEqualizer.first.getBandLevel(slider.index.toShort()).toFloat()
             }
             if (!isPresetChanged) {
                 goPreferences.savedEqualizerSettings?.let { eqSettings ->
