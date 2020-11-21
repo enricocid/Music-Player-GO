@@ -23,6 +23,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.observe
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import coil.ImageLoader
 import com.afollestad.materialdialogs.LayoutMode
@@ -357,6 +359,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {
+                    if( ::mEqualizerFragment.isInitialized && mEqualizerFragment.isVisible){
+                        supportFragmentManager.popBackStack()
+                        //Also pop the detailsFragment if it's open
+                        if(supportFragmentManager.backStackEntryCount > 1)
+                        {
+                            supportFragmentManager.popBackStack()
+                        }
+
+                    }
+                    if( ::mDetailsFragment.isInitialized && mDetailsFragment.isVisible){
+                        supportFragmentManager.popBackStack()
+                    }
                     tab.icon?.setTint(mResolvedAlphaAccentColor)
                 }
 
@@ -455,7 +469,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                                     mMusicViewModel.deviceAlbumsByArtist
                             )
                     )
-            setTabLayoutEnabled(isFirstSetup = false, isTabsEnabled = false)
             supportFragmentManager.addFragment(mDetailsFragment, GoConstants.DETAILS_FRAGMENT_TAG, sEqFragmentExpanded)
         }
     }
@@ -467,7 +480,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 doOnEnd {
                     synchronized(super.onBackPressed()) {
                         sRevealAnimationRunning = false
-                        setTabLayoutEnabled(isFirstSetup = false, isTabsEnabled = true)
                     }
                 }
             }
@@ -1113,7 +1125,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         if (sDetailsFragmentExpanded) {
                             mDetailsFragment.setDisableCircleReveal()
                         }
-                        setTabLayoutEnabled(isFirstSetup = false, isTabsEnabled = false)
                         supportFragmentManager.addFragment(mEqualizerFragment, GoConstants.EQ_FRAGMENT_TAG, sDetailsFragmentExpanded)
                     }
                 }
@@ -1130,7 +1141,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 doOnEnd {
                     synchronized(super.onBackPressed()) {
                         sRevealAnimationRunning = false
-                        setTabLayoutEnabled(isFirstSetup = false, isTabsEnabled = true)
                     }
                 }
             }
