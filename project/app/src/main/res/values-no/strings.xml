@@ -89,8 +89,8 @@
     <string name="fast_seeking_actions_pref_summary_off">Foretrekk lukk/gjenta -handlinger</string>
     <string name="fast_seeking_pref_summary">Hurtigspolingshopp fram og tilbake (sekunder)</string>
     <string name="on_list_ended_pref_title">Når en spilleliste slutter…</string>
-    <string name="covers_pref_summary_on">Vis albumsomslag</string>
-    <string name="covers_pref_summary_off">Skjul albumsomslag</string>
+    <string name="covers_pref_summary_on">Skjul albumsomslag</string>
+    <string name="covers_pref_summary_off">Vis albumsomslag</string>
     <string name="covers_pref_title">Innebygde albumsomslag</string>
     <string name="on_list_ended_pref_stop_title">Stopp</string>
     <string name="on_list_ended_pref_continue_title">Fortsett</string>

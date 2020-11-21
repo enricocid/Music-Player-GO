@@ -2,9 +2,9 @@
 <resources>
     <string name="yes">да</string>
     <string name="no">нет</string>
-    <string name="error_bad_id">Сначала выберите песню!</string>
+    <string name="error_bad_id">Сначала выберите песню.</string>
     <string name="error_no_browser">Браузер не найден!</string>
-    <string name="perm_rationale">Для воспроизведения музыки нужен доступ Music Player-GO к Вашим файлам</string>
+    <string name="perm_rationale">Для воспроизведения музыки нужен доступ Music Player-GO к Вашим файлам.</string>
     <string name="artist_info">%1d Aльбомов, %2d Песен</string>
     <string name="active_fragments_pref_title">Активные вкладки</string>
     <string name="active_fragments_pref_warning">Вы не можете закрыть все вкладки! :D</string>
@@ -12,7 +12,7 @@
     <string name="category_general">Общее</string>
     <string name="edge_pref_summary_off">Включить полное заполнение экрана</string>
     <string name="edge_pref_summary_on">Отключить полное заполнение экрана</string>
-    <string name="error_no_queue">В очереди нет треков!</string>
+    <string name="error_no_queue">В очереди нет треков.</string>
     <string name="error_no_loved_songs">В избранном нет треков!</string>
     <string name="error_unknown_unsupported">Что-то пошло не так! :( Возможно, формат не поддерживается или папка недоступна (не вина приложения!)</string>
     <string name="faq_summary">FAQ и поддерживаемые форматы :D</string>
@@ -41,8 +41,8 @@
     <string name="queue_song_add">%1s добавлена в очередь!</string>
     <string name="queue_song_remove">%1s будет удалена из очереди. Продолжить?</string>
     <string name="queue_songs_clear">Очередь будет очищена. Продолжить?</string>
-    <string name="repeat_disabled">Однократное повторение выключено!</string>
-    <string name="repeat_enabled">Однократное повторение включено!</string>
+    <string name="repeat_disabled">Однократное повторение выключено.</string>
+    <string name="repeat_enabled">Однократное повторение включено.</string>
     <string name="settings">Настройки</string>
     <string name="shuffle_am">Перемешать треки</string>
     <string name="shuffle_sa">Перемешать выбранный альбом</string>
@@ -58,8 +58,8 @@
     <string name="found_songs_pref_title">Найдены треки: %1d</string>
     <string name="filter_pref_title">Фильтры</string>
     <string name="filter_popup_title">Спрятать</string>
-    <string name="error_no_filter">Фильтры не найдены!</string>
-    <string name="repeat_loop_enabled">Повтор ∞ включен!</string>
+    <string name="error_no_filter">Фильтры не найдены.</string>
+    <string name="repeat_loop_enabled">Повтор ∞ включен.</string>
     <string name="error_no_music">Музыка не найдена :(</string>
     <string name="error_media_buttons">Что-то пошло не так! :( Пожалуйста перезапустите воспроизведение из приложения</string>
     <string name="error_not_ready">Случилась ошибка при загрузке музыкальной библиотеки! :( Вероятнее всего это случилось по причине того, что карта памяти временами отключается, заставляя MediaStore андроида пересобирать заново свою базу данных. Решение: попробовать еще раз поздже :)</string>
@@ -76,8 +76,8 @@
     <string name="on_list_ended_pref_continue_title">Продолжить</string>
     <string name="on_list_ended_pref_stop_title">Стоп</string>
     <string name="on_list_ended_pref_title">Когда список заканчивается…</string>
-    <string name="covers_pref_summary_off">Скрыть обложки альбомов</string>
-    <string name="covers_pref_summary_on">Показать обложки альбомов</string>
+    <string name="covers_pref_summary_off">Показать обложки альбомов</string>
+    <string name="covers_pref_summary_on">Скрыть обложки альбомов</string>
     <string name="covers_pref_title">Встроенные обложки альбомов</string>
     <string name="error_eq">Упс, произошла ошибка!</string>
     <string name="error_list_ended">Список закончился.</string>

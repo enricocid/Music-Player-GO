@@ -73,8 +73,8 @@
     <string name="song_visual_pref_tl_title">Titre</string>
     <string name="on_list_ended_pref_continue_title">Continuer</string>
     <string name="on_list_ended_pref_stop_title">Arrêter</string>
-    <string name="covers_pref_summary_off">Masquer les pochettes d\\\'album</string>
-    <string name="covers_pref_summary_on">Afficher les pochettes d\\\'album</string>
+    <string name="covers_pref_summary_off">Afficher les pochettes d\\\'album</string>
+    <string name="covers_pref_summary_on">Masquer les pochettes d\\\'album</string>
     <string name="covers_pref_title">Pochettes d\\\'album intégrées</string>
     <string name="error_list_ended">Liste terminée.</string>
     <string name="equalizer_v">Son surround</string>

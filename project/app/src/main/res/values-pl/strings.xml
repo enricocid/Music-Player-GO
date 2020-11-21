@@ -94,8 +94,8 @@
     <string name="song_visual_pref_title">Wirtualizacja muzyki</string>
     <string name="on_list_ended_pref_continue_title">Kontynuuj</string>
     <string name="on_list_ended_pref_stop_title">Zatrzymaj</string>
-    <string name="covers_pref_summary_off">Ukryj okładki albumu</string>
-    <string name="covers_pref_summary_on">Pokaż okładki albumów</string>
+    <string name="covers_pref_summary_off">Pokaż okładki albumu</string>
+    <string name="covers_pref_summary_on">Ukryj okładki albumów</string>
     <string name="covers_pref_title">Wbudowane okładki albumów</string>
     <string name="error_list_ended">Koniec listy odtwarzania!</string>
     <string name="equalizer_v">Dźwięk przestrzenny</string>

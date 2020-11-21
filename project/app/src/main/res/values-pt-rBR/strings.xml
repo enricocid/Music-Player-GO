@@ -81,7 +81,7 @@
     <string name="on_list_ended_pref_continue_title">Continuar</string>
     <string name="on_list_ended_pref_stop_title">Parar</string>
     <string name="on_list_ended_pref_title">Quando uma lista terminar …</string>
-    <string name="covers_pref_summary_off">Ocultar capas de álbuns</string>
-    <string name="covers_pref_summary_on">Mostrar capas de álbuns</string>
+    <string name="covers_pref_summary_off">Mostrar capas de álbuns</string>
+    <string name="covers_pref_summary_on">Ocultar capas de álbuns</string>
     <string name="covers_pref_title">Capas de álbuns integradas</string>
 </resources>

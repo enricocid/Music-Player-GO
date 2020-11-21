@@ -76,8 +76,8 @@
     <string name="song_visual_pref_title">Şarkı görselleştirme</string>
     <string name="on_list_ended_pref_continue_title">Devam et</string>
     <string name="on_list_ended_pref_stop_title">Dur</string>
-    <string name="covers_pref_summary_off">Albüm kapaklarını gizle</string>
-    <string name="covers_pref_summary_on">Albüm kapaklarını göster</string>
+    <string name="covers_pref_summary_off">Albüm kapaklarını göster</string>
+    <string name="covers_pref_summary_on">Albüm kapaklarını gizle</string>
     <string name="covers_pref_title">Gömülü albüm kapakları</string>
     <string name="error_list_ended">Liste sona erdi.</string>
     <string name="equalizer_v">Surround ses</string>

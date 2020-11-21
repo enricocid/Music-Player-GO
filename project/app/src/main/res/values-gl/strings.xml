@@ -95,8 +95,8 @@
     <string name="on_list_ended_pref_continue_title">Continuar</string>
     <string name="on_list_ended_pref_stop_title">Deter</string>
     <string name="on_list_ended_pref_title">Ó rematar a lista…</string>
-    <string name="covers_pref_summary_off">Agochar capas dos álbumes</string>
-    <string name="covers_pref_summary_on">Mostrar capas dos álbumes</string>
+    <string name="covers_pref_summary_off">Mostrar capas dos álbumes</string>
+    <string name="covers_pref_summary_on">Agochar capas dos álbumes</string>
     <string name="covers_pref_title">Capa do álbume incrustadas</string>
     <string name="error_list_ended">A lista rematou.</string>
     <string name="equalizer_v">Audio Surround</string>

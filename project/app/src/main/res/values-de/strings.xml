@@ -28,8 +28,8 @@
     <string name="song_visual_pref_title">Audiovisualisierung</string>
     <string name="on_list_ended_pref_continue_title">Fortfahren</string>
     <string name="on_list_ended_pref_stop_title">Stoppen</string>
-    <string name="covers_pref_summary_off">Albencover ausblenden</string>
-    <string name="covers_pref_summary_on">Albencover anzeigen</string>
+    <string name="covers_pref_summary_off">Albencover anzeigen</string>
+    <string name="covers_pref_summary_on">Albencover ausblenden</string>
     <string name="covers_pref_title">Eingebettete Albencover</string>
     <string name="edge_pref_summary_off">Edge-to-edge aktivieren</string>
     <string name="edge_pref_summary_on">Edge-to-edge deaktivieren</string>
