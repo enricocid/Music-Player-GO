@@ -24,7 +24,6 @@ import androidx.core.animation.doOnEnd
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import coil.ImageLoader
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
@@ -64,24 +63,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     // View model
     private val mMusicViewModel: MusicViewModel by viewModels()
 
-    // Colors
-    private val mResolvedAccentColor by lazy { ThemeHelper.resolveThemeAccent(this) }
-    private val mResolvedAlphaAccentColor by lazy {
-        ThemeHelper.getAlphaAccent(
-            this,
-            ThemeHelper.getAlphaForAccent()
-        )
-    }
-    private val mResolvedIconsColor by lazy { R.color.widgetsColor.decodeColor(this) }
-
-    private val mResolvedDisabledIconsColor
-            by lazy {
-                ThemeHelper.resolveColorAttr(
-                    this,
-                    android.R.attr.colorButtonNormal
-                )
-            }
-
     // Fragments
     private val mActiveFragments: List<Int> = goPreferences.activeFragments.toList()
     private var mArtistsFragment: MusicContainersListFragment? = null
@@ -103,24 +84,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private var sAppearanceChanged = false
     private var sRestoreSettingsFragment = false
-    private val sLandscape by lazy { ThemeHelper.isDeviceLand(resources) }
 
     // Now playing
     private lateinit var mNowPlayingDialog: MaterialDialog
     private lateinit var mNowPlayingBinding: NowPlayingBinding
     private lateinit var mNowPlayingControlsBinding: NowPlayingControlsBinding
     private lateinit var mNowPlayingExtendedControlsBinding: NowPlayingExtendedControlsBinding
-
-    private val mDefaultCover by lazy {
-        BitmapFactory.decodeResource(
-            resources,
-            R.drawable.album_art
-        )
-    }
-
-    private val mImageLoader: ImageLoader by lazy {
-        getImageLoader()
-    }
 
     // Music player things
     private lateinit var mQueueDialog: MaterialDialog
@@ -351,9 +320,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mMainActivityBinding.viewPager2.offscreenPageLimit = mActiveFragments.size.minus(1)
         mMainActivityBinding.viewPager2.adapter = pagerAdapter
 
+        val resolvedAlphaAccentColor = ThemeHelper.getAlphaAccent(
+            this,
+            ThemeHelper.getAlphaForAccent()
+        )
+
         mPlayerControlsPanelBinding.tabLayout.apply {
 
-            tabIconTint = ColorStateList.valueOf(mResolvedAlphaAccentColor)
+            tabIconTint = ColorStateList.valueOf(resolvedAlphaAccentColor)
 
             mPlayerControlsPanelBinding.tabLayout.apply {
                 TabLayoutMediator(this, mMainActivityBinding.viewPager2) { tab, position ->
@@ -365,12 +339,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
-                    tab.icon?.setTint(mResolvedAccentColor)
+                    tab.icon?.setTint(ThemeHelper.resolveThemeAccent(this@MainActivity))
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {
                     closeFragments()
-                    tab.icon?.setTint(mResolvedAlphaAccentColor)
+                    tab.icon?.setTint(resolvedAlphaAccentColor)
                 }
 
                 override fun onTabReselected(tab: TabLayout.Tab) {
@@ -385,7 +359,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     0
                 }
             )?.icon?.setTint(
-                mResolvedAccentColor
+                ThemeHelper.resolveThemeAccent(this@MainActivity)
             )
         }
 
@@ -529,6 +503,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             object : SeekBar.OnSeekBarChangeListener {
 
                 val defaultPositionColor = mNowPlayingBinding.npSeek.currentTextColor
+                val selectedColor = ThemeHelper.resolveThemeAccent(this@MainActivity)
                 var userSelectedPosition = 0
                 var isUserSeeking = false
 
@@ -540,7 +515,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     if (isUserSeeking) {
                         userSelectedPosition = progress
                         mNowPlayingBinding.npSeek.setTextColor(
-                            mResolvedAccentColor
+                            selectedColor
                         )
                     }
                     mNowPlayingBinding.npSeek.text =
@@ -577,9 +552,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mNowPlayingBinding.npSong.textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
             }
             mNowPlayingBinding.npCover.loadCover(
-                mImageLoader,
+                getImageLoader(),
                 mMediaPlayerHolder.currentSong.first,
-                mDefaultCover,
+                BitmapFactory.decodeResource(
+                    resources,
+                    R.drawable.album_art
+                ),
                 isCircleCrop = true,
                 isLoadDelay = false
             )
@@ -599,6 +577,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mNowPlayingExtendedControlsBinding.npVolumeSeek.progress = this
         }
 
+        val resolvedIconsColor = R.color.widgetsColor.decodeColor(this)
+
         mNowPlayingExtendedControlsBinding.npVolumeSeek.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
 
@@ -617,7 +597,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                     ThemeHelper.updateIconTint(
                         mNowPlayingExtendedControlsBinding.npVolume,
-                        mResolvedAccentColor
+                        ThemeHelper.resolveThemeAccent(this@MainActivity)
                     )
                 }
             }
@@ -630,7 +610,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 isUserSeeking = false
                 ThemeHelper.updateIconTint(
                     mNowPlayingExtendedControlsBinding.npVolume,
-                    mResolvedIconsColor
+                    resolvedIconsColor
                 )
             }
         })
@@ -677,9 +657,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 ThemeHelper.updateIconTint(
                     mNowPlayingControlsBinding.npRepeat,
                     if (mMediaPlayerHolder.isRepeat1X || mMediaPlayerHolder.isLooping) {
-                        mResolvedAccentColor
+                        ThemeHelper.resolveThemeAccent(this@MainActivity)
                     } else {
-                        mResolvedIconsColor
+                        R.color.widgetsColor.decodeColor(this@MainActivity)
                     }
                 )
 
@@ -701,7 +681,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     mNowPlayingExtendedControlsBinding.npVolumeSeek.isEnabled = false
                     ThemeHelper.updateIconTint(
                         mNowPlayingExtendedControlsBinding.npVolume,
-                        mResolvedDisabledIconsColor
+                        ThemeHelper.resolveColorAttr(
+                            this@MainActivity,
+                            android.R.attr.colorButtonNormal
+                        )
                     )
                 }
 
@@ -718,7 +701,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     mNowPlayingBinding.npSeekBar.setOnSeekBarChangeListener(null)
                 }
 
-                if (goPreferences.isEdgeToEdge && !sLandscape) {
+                if (goPreferences.isEdgeToEdge && !ThemeHelper.isDeviceLand(resources)) {
                     window?.apply {
                         ThemeHelper.handleLightSystemBars(
                             this@MainActivity.resources.configuration,
@@ -789,7 +772,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
 
         val lovedSongsButtonColor = if (lovedSongs.isNullOrEmpty()) {
-            mResolvedDisabledIconsColor
+            ThemeHelper.resolveColorAttr(
+                this,
+                android.R.attr.colorButtonNormal
+            )
         } else {
             R.color.red.decodeColor(this)
         }
@@ -852,7 +838,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         notifyError(GoConstants.TAG_SD_NOT_READY)
                     }
                 }
-                onUpdateDefaultAlbumArt(mDefaultCover)
+                onUpdateDefaultAlbumArt(
+                    BitmapFactory.decodeResource(
+                        resources,
+                        R.drawable.album_art
+                    )
+                )
             }
         }
     }
@@ -907,6 +898,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun updateRepeatStatus(onPlaybackCompletion: Boolean) {
+        val resolvedIconsColor = R.color.widgetsColor.decodeColor(this@MainActivity)
         if (isNowPlaying) {
             mNowPlayingControlsBinding.npRepeat.setImageResource(
                 ThemeHelper.getRepeatIcon(
@@ -916,17 +908,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             when {
                 onPlaybackCompletion -> ThemeHelper.updateIconTint(
                     mNowPlayingControlsBinding.npRepeat,
-                    mResolvedIconsColor
+                    resolvedIconsColor
                 )
                 mMediaPlayerHolder.isRepeat1X or mMediaPlayerHolder.isLooping -> {
                     ThemeHelper.updateIconTint(
                         mNowPlayingControlsBinding.npRepeat,
-                        mResolvedAccentColor
+                        ThemeHelper.resolveThemeAccent(this)
                     )
                 }
                 else -> ThemeHelper.updateIconTint(
                     mNowPlayingControlsBinding.npRepeat,
-                    mResolvedIconsColor
+                    resolvedIconsColor
                 )
             }
         }
@@ -1273,7 +1265,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         override fun onQueueEnabled() {
             ThemeHelper.updateIconTint(
                 mPlayerControlsPanelBinding.queueButton,
-                mResolvedIconsColor
+                R.color.widgetsColor.decodeColor(this@MainActivity)
             )
         }
 
@@ -1287,9 +1279,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             ThemeHelper.updateIconTint(
                 mPlayerControlsPanelBinding.queueButton,
                 when {
-                    started -> mResolvedAccentColor
-                    mMediaPlayerHolder.isQueue -> mResolvedIconsColor
-                    else -> mResolvedDisabledIconsColor
+                    started -> ThemeHelper.resolveThemeAccent(this@MainActivity)
+                    mMediaPlayerHolder.isQueue -> R.color.widgetsColor.decodeColor(this@MainActivity)
+                    else -> ThemeHelper.resolveColorAttr(
+                        this@MainActivity,
+                        android.R.attr.colorButtonNormal
+                    )
                 }
             )
         }

@@ -55,19 +55,6 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
     private val mSliders: Array<Slider?> = arrayOfNulls(5)
     private val mSlidersLabels: Array<TextView?> = arrayOfNulls(5)
 
-    private val mRoundedTextBackground by lazy {
-        val shapeAppearanceModel = ShapeAppearanceModel()
-            .toBuilder()
-            .setAllCorners(CornerFamily.ROUNDED, resources.getDimension(R.dimen.md_corner_radius))
-            .build()
-        MaterialShapeDrawable(shapeAppearanceModel).apply {
-            strokeColor = ColorStateList.valueOf(ThemeHelper.resolveThemeAccent(requireActivity()))
-            strokeWidth = 0.50F
-            fillColor =
-                ColorStateList.valueOf(R.color.windowBackground.decodeColor(requireActivity()))
-        }
-    }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -156,6 +143,17 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
             mSelectedPreset = savedEqualizerSettings.preset
         }
 
+        val shapeAppearanceModel = ShapeAppearanceModel()
+            .toBuilder()
+            .setAllCorners(CornerFamily.ROUNDED, resources.getDimension(R.dimen.md_corner_radius))
+            .build()
+        val roundedTextBackground = MaterialShapeDrawable(shapeAppearanceModel).apply {
+            strokeColor = ColorStateList.valueOf(ThemeHelper.resolveThemeAccent(requireActivity()))
+            strokeWidth = 0.50F
+            fillColor =
+                ColorStateList.valueOf(R.color.windowBackground.decodeColor(requireActivity()))
+        }
+
         mEqualizer.first.apply {
             val bandLevelRange = bandLevelRange
             val minBandLevel = bandLevelRange[0]
@@ -175,9 +173,10 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                         }
                     }
                 }
+
                 mSlidersLabels[slider.index]?.apply {
                     text = formatMilliHzToK(getCenterFreq(slider.index.toShort()))
-                    background = mRoundedTextBackground
+                    background = roundedTextBackground
                 }
             }
 

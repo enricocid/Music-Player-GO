@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import coil.ImageLoader
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
@@ -68,12 +67,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private lateinit var mUIControlInterface: UIControlInterface
 
     private var mSelectedAlbum: Album? = null
-    private val mDefaultCover by lazy {
-        BitmapFactory.decodeResource(
-            resources,
-            R.drawable.album_art
-        )
-    }
 
     private var sLandscape = false
 
@@ -81,10 +74,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private val sLaunchedByArtistView get() = mLaunchedBy == GoConstants.ARTIST_VIEW
     private val sLaunchedByFolderView get() = mLaunchedBy == GoConstants.FOLDER_VIEW
-
-    private val mImageLoader: ImageLoader by lazy {
-        requireActivity().getImageLoader()
-    }
 
     private val sLoadCovers = goPreferences.isCovers
     private var sLoadDelay = true
@@ -519,9 +508,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                         if (sLoadCovers) {
                             imageView.loadCover(
-                                mImageLoader,
+                                requireActivity().getImageLoader(),
                                 item.music?.get(0),
-                                mDefaultCover,
+                                BitmapFactory.decodeResource(
+                                    resources,
+                                    R.drawable.album_art
+                                ),
                                 isCircleCrop = false,
                                 isLoadDelay = sLoadDelay
                             )

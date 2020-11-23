@@ -36,7 +36,7 @@ import com.reddit.indicatorfastscroll.FastScrollerView
  * create an instance of this fragment.
  */
 class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_list),
-        SearchView.OnQueryTextListener {
+    SearchView.OnQueryTextListener {
 
     private lateinit var mMusicContainerListBinding: FragmentMusicContainerListBinding
 
@@ -57,8 +57,6 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     private var sIsFastScroller = false
     private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != GoConstants.DEFAULT_SORTING
     private var sLandscape = false
-
-    private val mResolvedAccentColor by lazy { ThemeHelper.resolveThemeAccent(requireActivity()) }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -90,8 +88,8 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                 mSorting = getSortingMethodFromPrefs()
 
                 mList =
-                        getSortedItemKeys()?.filter { !goPreferences.filters?.contains(it)!! }
-                                ?.toMutableList()
+                    getSortedItemKeys()?.filter { !goPreferences.filters?.contains(it)!! }
+                        ?.toMutableList()
                 setListDataSource(mList)
 
                 finishSetup()
@@ -119,8 +117,8 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                     onClick {
                         if (::mUIControlInterface.isInitialized) {
                             mUIControlInterface.onArtistOrFolderSelected(
-                                    item,
-                                    mLaunchedBy
+                                item,
+                                mLaunchedBy
                             )
                         }
                     }
@@ -128,10 +126,10 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                     onLongClick { index ->
                         if (::mUIControlInterface.isInitialized) {
                             DialogHelper.showHidePopup(
-                                    context,
-                                    findViewHolderForAdapterPosition(index)?.itemView,
-                                    item,
-                                    mUIControlInterface
+                                context,
+                                findViewHolderForAdapterPosition(index)?.itemView,
+                                item,
+                                mUIControlInterface
                             )
                         }
                     }
@@ -146,7 +144,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
             inflateMenu(R.menu.menu_search)
 
             overflowIcon =
-                    AppCompatResources.getDrawable(context, R.drawable.ic_sort)
+                AppCompatResources.getDrawable(context, R.drawable.ic_sort)
 
             title = getFragmentTitle()
 
@@ -157,7 +155,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
             menu.apply {
 
                 mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, this).apply {
-                    setTitleColor(mResolvedAccentColor)
+                    setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
                 }
 
                 val searchView = findItem(R.id.action_search).actionView as SearchView
@@ -168,7 +166,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                         if (sIsFastScrollerVisible) {
                             mMusicContainerListBinding.fastscroller.handleViewVisibility(!hasFocus)
                             mMusicContainerListBinding.fastscrollerThumb.handleViewVisibility(
-                                    !hasFocus
+                                !hasFocus
                             )
                             setupArtistsRecyclerViewPadding(hasFocus)
                         }
@@ -186,8 +184,8 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                 getArtistSubtitle(item)
             GoConstants.FOLDER_VIEW ->
                 getString(
-                        R.string.folder_info,
-                        mMusicViewModel.deviceMusicByFolder?.getValue(item)?.size
+                    R.string.folder_info,
+                    mMusicViewModel.deviceMusicByFolder?.getValue(item)?.size
                 )
             else ->
                 mMusicViewModel.deviceMusicByAlbum?.get(item)?.first()?.artist
@@ -199,19 +197,19 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
         return when (mLaunchedBy) {
             GoConstants.ARTIST_VIEW ->
                 ListsHelper.getSortedList(
-                        mSorting,
-                        mMusicViewModel.deviceAlbumsByArtist?.keys?.toMutableList()
+                    mSorting,
+                    mMusicViewModel.deviceAlbumsByArtist?.keys?.toMutableList()
                 )
             GoConstants.FOLDER_VIEW ->
                 ListsHelper.getSortedList(
-                        mSorting,
-                        mMusicViewModel.deviceMusicByFolder?.keys?.toMutableList()
+                    mSorting,
+                    mMusicViewModel.deviceMusicByFolder?.keys?.toMutableList()
                 )
 
             else ->
                 ListsHelper.getSortedListWithNull(
-                        mSorting,
-                        mMusicViewModel.deviceMusicByAlbum?.keys?.toMutableList()
+                    mSorting,
+                    mMusicViewModel.deviceMusicByAlbum?.keys?.toMutableList()
                 )
         }
     }
@@ -260,9 +258,9 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     override fun onQueryTextSubmit(query: String?) = false
 
     private fun getArtistSubtitle(item: String) = getString(
-            R.string.artist_info,
-            mMusicViewModel.deviceAlbumsByArtist?.getValue(item)?.size,
-            mMusicViewModel.deviceSongsByArtist?.getValue(item)?.size
+        R.string.artist_info,
+        mMusicViewModel.deviceAlbumsByArtist?.getValue(item)?.size,
+        mMusicViewModel.deviceSongsByArtist?.getValue(item)?.size
     )
 
     @SuppressLint("DefaultLocale")
@@ -276,42 +274,42 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
             if (sIsFastScroller) {
 
                 mMusicContainerListBinding.fastscroller.setupWithRecyclerView(
-                        this,
-                        { position ->
-                            val item = mList?.get(position) // Get your model object
-                            // or fetch the section at [position] from your database
+                    this,
+                    { position ->
+                        val item = mList?.get(position) // Get your model object
+                        // or fetch the section at [position] from your database
 
-                            FastScrollItemIndicator.Text(
-                                    item?.substring(
-                                            0,
-                                            1
-                                    )?.toUpperCase()!! // Grab the first letter and capitalize it
-                            ) // Return a text tab_indicator
-                        }, showIndicator = { _, indicatorPosition, totalIndicators ->
-                    // Hide every other indicator
-                    if (sLandscape) {
-                        indicatorPosition % 2 == 0
-                    } else {
-                        if (totalIndicators >= 30) {
+                        FastScrollItemIndicator.Text(
+                            item?.substring(
+                                0,
+                                1
+                            )?.toUpperCase()!! // Grab the first letter and capitalize it
+                        ) // Return a text tab_indicator
+                    }, showIndicator = { _, indicatorPosition, totalIndicators ->
+                        // Hide every other indicator
+                        if (sLandscape) {
                             indicatorPosition % 2 == 0
                         } else {
-                            true
+                            if (totalIndicators >= 30) {
+                                indicatorPosition % 2 == 0
+                            } else {
+                                true
+                            }
                         }
                     }
-                }
                 )
 
                 mMusicContainerListBinding.fastscrollerThumb.setupWithFastScroller(
-                        mMusicContainerListBinding.fastscroller
+                    mMusicContainerListBinding.fastscroller
                 )
 
                 mMusicContainerListBinding.fastscroller.useDefaultScroller = false
                 mMusicContainerListBinding.fastscroller.itemIndicatorSelectedCallbacks += object :
-                        FastScrollerView.ItemIndicatorSelectedCallback {
+                    FastScrollerView.ItemIndicatorSelectedCallback {
                     override fun onItemIndicatorSelected(
-                            indicator: FastScrollItemIndicator,
-                            indicatorCenterY: Int,
-                            itemPosition: Int
+                        indicator: FastScrollItemIndicator,
+                        indicatorCenterY: Int,
+                        itemPosition: Int
                     ) {
                         val artistsLayoutManager = layoutManager as LinearLayoutManager
                         artistsLayoutManager.scrollToPositionWithOffset(itemPosition, 0)
@@ -327,11 +325,11 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
     private fun setupArtistsRecyclerViewPadding(forceNoPadding: Boolean) {
         val rvPaddingEnd =
-                if (sIsFastScrollerVisible && !forceNoPadding) {
-                    resources.getDimensionPixelSize(R.dimen.fast_scroller_view_dim)
-                } else {
-                    0
-                }
+            if (sIsFastScrollerVisible && !forceNoPadding) {
+                resources.getDimensionPixelSize(R.dimen.fast_scroller_view_dim)
+            } else {
+                0
+            }
         mMusicContainerListBinding.artistsFoldersRv.setPadding(0, 0, rvPaddingEnd, 0)
     }
 
@@ -356,14 +354,14 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                 setListDataSource(mList)
 
                 mSortMenuItem.setTitleColor(
-                        ThemeHelper.resolveColorAttr(
-                                context,
-                                android.R.attr.textColorPrimary
-                        )
+                    ThemeHelper.resolveColorAttr(
+                        context,
+                        android.R.attr.textColorPrimary
+                    )
                 )
 
                 mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, menu).apply {
-                    setTitleColor(mResolvedAccentColor)
+                    setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
                 }
 
                 saveSortingMethodToPrefs(mSorting)
