@@ -1,0 +1,3 @@
+- Corretto crash nel dialog queue
+- Corretti crash dovuti ad un errore nell'inizializzazione di alcune variabili
+- Aggiornate le dipendenze

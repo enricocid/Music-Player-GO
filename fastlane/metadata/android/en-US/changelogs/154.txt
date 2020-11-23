@@ -1,0 +1,3 @@
+- Fix crash in queue dialog
+- Fix crashes due to wrong initialization of variables
+- Update dependencies

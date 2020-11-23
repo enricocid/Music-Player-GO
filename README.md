@@ -8,7 +8,7 @@
   <!-- Latest Release -->
     <a href="https://github.com/enricocid/Music-Player-GO/releases">
       <img alt="GitHub release"
-      src="https://img.shields.io/static/v1?label=Tag&message=v4.3.1&color=58F5D1">
+      src="https://img.shields.io/static/v1?label=Tag&message=v4.3.2&color=58F5D1">
     </a>
    <!-- Minimum SDK -->
     <a>
