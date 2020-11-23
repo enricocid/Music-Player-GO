@@ -262,7 +262,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
         }
     }
 
-    private fun formatMilliHzToK(milliHz: Int): String? {
+    private fun formatMilliHzToK(milliHz: Int): String {
         return if (milliHz < 1000000) {
             (milliHz / 1000).toString()
         } else {
