@@ -3,6 +3,7 @@ package com.iven.musicplayergo.helpers
 import android.content.Context
 import android.view.Gravity
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,12 +30,11 @@ object DialogHelper {
 
     @JvmStatic
     fun showQueueSongsDialog(
-            context: Context,
-            mediaPlayerHolder: MediaPlayerHolder
+        context: Context,
+        mediaPlayerHolder: MediaPlayerHolder
     ) = MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
         title(R.string.queue)
-        val queueDialog = this
         val queueAdapter = QueueAdapter(context, this, mediaPlayerHolder)
 
         customListAdapter(queueAdapter)
@@ -57,25 +57,21 @@ object DialogHelper {
 
         recyclerView.addBidirectionalSwipeHandler(true) { viewHolder: RecyclerView.ViewHolder,
                                                           _: Int ->
-            mediaPlayerHolder.apply {
-                queueSongs.removeAt(viewHolder.adapterPosition)
-                queueAdapter.swapQueueSongs(queueSongs)
-                if (queueSongs.isEmpty()) {
-                    isQueue = false
-                    mediaPlayerInterface.onQueueStartedOrEnded(false)
-                    queueDialog.dismiss()
-                }
+            val title = viewHolder.itemView.findViewById<TextView>(R.id.title)
+            if (!queueAdapter.performQueueSongDeletion(viewHolder.adapterPosition, title, true)) {
+                queueAdapter.notifyItemChanged(viewHolder.adapterPosition)
             }
         }
     }
 
     @JvmStatic
     fun showDeleteQueueSongDialog(
-            context: Context,
-            song: Pair<Music, Int>,
-            queueSongsDialog: MaterialDialog,
-            queueAdapter: QueueAdapter,
-            mediaPlayerHolder: MediaPlayerHolder
+        context: Context,
+        song: Pair<Music, Int>,
+        queueSongsDialog: MaterialDialog,
+        queueAdapter: QueueAdapter,
+        mediaPlayerHolder: MediaPlayerHolder,
+        isSwipe: Boolean
     ) {
 
         MaterialDialog(context).show {
@@ -83,10 +79,10 @@ object DialogHelper {
             title(R.string.queue)
 
             message(
-                    text = context.getString(
-                            R.string.queue_song_remove,
-                            song.first.title
-                    )
+                text = context.getString(
+                    R.string.queue_song_remove,
+                    song.first.title
+                )
             )
             positiveButton(R.string.yes) {
 
@@ -101,14 +97,18 @@ object DialogHelper {
                     }
                 }
             }
-            negativeButton(R.string.no)
+            negativeButton(R.string.no) {
+                if (isSwipe) {
+                    queueAdapter.notifyItemChanged(song.second)
+                }
+            }
         }
     }
 
     @JvmStatic
     fun showClearQueueDialog(
-            context: Context,
-            mediaPlayerHolder: MediaPlayerHolder
+        context: Context,
+        mediaPlayerHolder: MediaPlayerHolder
     ) {
 
         MaterialDialog(context).show {
@@ -124,7 +124,7 @@ object DialogHelper {
 
                         restorePreQueueSongs()
                         skip(
-                                true
+                            true
                         )
                     }
                     setQueueEnabled(false)
@@ -136,11 +136,11 @@ object DialogHelper {
 
     @JvmStatic
     fun showLovedSongsDialog(
-            context: Context,
-            uiControlInterface: UIControlInterface,
-            mediaPlayerHolder: MediaPlayerHolder,
-            deviceSongs: MutableList<Music>,
-            deviceAlbumsByArtist: MutableMap<String, List<Album>>?
+        context: Context,
+        uiControlInterface: UIControlInterface,
+        mediaPlayerHolder: MediaPlayerHolder,
+        deviceSongs: MutableList<Music>,
+        deviceAlbumsByArtist: MutableMap<String, List<Album>>?
     ) {
 
         MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
@@ -148,12 +148,12 @@ object DialogHelper {
             title(R.string.loved_songs)
 
             val lovedSongsAdapter = LovedSongsAdapter(
-                    context,
-                    this,
-                    mediaPlayerHolder,
-                    uiControlInterface,
-                    deviceSongs,
-                    deviceAlbumsByArtist
+                context,
+                this,
+                mediaPlayerHolder,
+                uiControlInterface,
+                deviceSongs,
+                deviceAlbumsByArtist
             )
 
             customListAdapter(lovedSongsAdapter)
@@ -166,8 +166,8 @@ object DialogHelper {
                 if (goPreferences.isEdgeToEdge) {
                     window?.apply {
                         ThemeHelper.handleLightSystemBars(
-                                context.resources.configuration,
-                                this
+                            context.resources.configuration,
+                            this
                         )
                         edgeToEdge {
                             recyclerView.fit { Edge.Bottom }
@@ -178,19 +178,17 @@ object DialogHelper {
             }
 
             recyclerView.addBidirectionalSwipeHandler(true) { viewHolder: RecyclerView.ViewHolder, _: Int ->
-                val lovedSongs = goPreferences.lovedSongs?.toMutableList()
-                lovedSongs?.removeAt(viewHolder.adapterPosition)
-                goPreferences.lovedSongs = lovedSongs
-                lovedSongsAdapter.swapSongs(lovedSongs)
+                lovedSongsAdapter.performLovedSongDeletion(viewHolder.adapterPosition, true)
             }
         }
     }
 
     @JvmStatic
     fun showDeleteLovedSongDialog(
-            context: Context,
-            songToDelete: SavedMusic?,
-            lovedSongsAdapter: LovedSongsAdapter
+        context: Context,
+        songToDelete: SavedMusic?,
+        lovedSongsAdapter: LovedSongsAdapter,
+        isSwipe: Pair<Boolean, Int>
     ) {
 
         val lovedSongs = goPreferences.lovedSongs?.toMutableList()
@@ -200,14 +198,14 @@ object DialogHelper {
             title(R.string.loved_songs)
 
             message(
-                    text = context.getString(
-                            R.string.loved_song_remove,
-                            songToDelete?.title,
-                            songToDelete?.startFrom?.toLong()?.toFormattedDuration(
-                                    isAlbum = false,
-                                    isSeekBar = false
-                            )
+                text = context.getString(
+                    R.string.loved_song_remove,
+                    songToDelete?.title,
+                    songToDelete?.startFrom?.toLong()?.toFormattedDuration(
+                        isAlbum = false,
+                        isSeekBar = false
                     )
+                )
             )
             positiveButton(R.string.yes) {
                 lovedSongs?.remove(songToDelete)
@@ -215,14 +213,18 @@ object DialogHelper {
                 lovedSongsAdapter.swapSongs(lovedSongs)
             }
 
-            negativeButton(R.string.no)
+            negativeButton(R.string.no) {
+                if (isSwipe.first) {
+                    lovedSongsAdapter.notifyItemChanged(isSwipe.second)
+                }
+            }
         }
     }
 
     @JvmStatic
     fun showClearLovedSongDialog(
-            context: Context,
-            uiControlInterface: UIControlInterface
+        context: Context,
+        uiControlInterface: UIControlInterface
     ) {
 
         MaterialDialog(context).show {
@@ -239,10 +241,10 @@ object DialogHelper {
 
     @JvmStatic
     fun showHidePopup(
-            context: Context,
-            itemView: View?,
-            stringToFilter: String?,
-            uiControlInterface: UIControlInterface
+        context: Context,
+        itemView: View?,
+        stringToFilter: String?,
+        uiControlInterface: UIControlInterface
     ) {
         itemView?.let { view ->
             PopupMenu(context, view).apply {
@@ -259,11 +261,11 @@ object DialogHelper {
 
     @JvmStatic
     fun showDoSomethingPopup(
-            context: Context,
-            itemView: View?,
-            song: Music?,
-            launchedBy: String,
-            uiControlInterface: UIControlInterface
+        context: Context,
+        itemView: View?,
+        song: Music?,
+        launchedBy: String,
+        uiControlInterface: UIControlInterface
     ) {
         itemView?.let {
             PopupMenu(context, itemView).apply {
@@ -272,10 +274,10 @@ object DialogHelper {
                     when (it.itemId) {
                         R.id.loved_songs_add -> {
                             ListsHelper.addToLovedSongs(
-                                    context,
-                                    song,
-                                    0,
-                                    launchedBy
+                                context,
+                                song,
+                                0,
+                                launchedBy
                             )
                             uiControlInterface.onLovedSongsUpdate(false)
                         }
@@ -293,8 +295,8 @@ object DialogHelper {
 
     @JvmStatic
     fun stopPlaybackDialog(
-            context: Context,
-            mediaPlayerHolder: MediaPlayerHolder
+        context: Context,
+        mediaPlayerHolder: MediaPlayerHolder
     ) {
 
         MaterialDialog(context).show {
