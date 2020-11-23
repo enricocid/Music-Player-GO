@@ -68,8 +68,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private var mSelectedAlbum: Album? = null
 
-    private var sLandscape = false
-
     private var mSongsSorting = GoConstants.TRACK_SORTING
 
     private val sLaunchedByArtistView get() = mLaunchedBy == GoConstants.ARTIST_VIEW
@@ -148,8 +146,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         super.onViewCreated(view, savedInstanceState)
 
         mDetailsFragmentBinding = FragmentDetailsBinding.bind(view)
-
-        sLandscape = ThemeHelper.isDeviceLand(resources)
 
         mMusicViewModel = ViewModelProvider(requireActivity()).get(MusicViewModel::class.java)
 
