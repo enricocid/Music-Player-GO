@@ -1,0 +1,3 @@
+- Ritorna la vecchia ma fantastica icona di Julian Javier Gomez
+- Migliorie Media Player holder
+- Pulizia codice

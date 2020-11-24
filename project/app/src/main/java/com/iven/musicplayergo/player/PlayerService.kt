@@ -8,7 +8,6 @@ import android.os.IBinder
 import android.os.Parcelable
 import android.os.PowerManager
 import android.support.v4.media.session.MediaSessionCompat
-import android.util.Log
 import android.view.KeyEvent
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toSavedMusic
@@ -108,14 +107,12 @@ class PlayerService : Service() {
     fun acquireWakeLock() {
         if (::mWakeLock.isInitialized && !mWakeLock.isHeld) {
             mWakeLock.acquire(WAKELOCK_MILLI)
-            Log.d("acquired", "true")
         }
     }
 
     fun releaseWakeLock() {
         if (::mWakeLock.isInitialized && mWakeLock.isHeld) {
             mWakeLock.release()
-            Log.d("acquired", "false")
         }
     }
 
