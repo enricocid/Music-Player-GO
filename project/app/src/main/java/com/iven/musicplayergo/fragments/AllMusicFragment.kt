@@ -54,8 +54,6 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
     private var sIsFastScroller = false
     private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != GoConstants.DEFAULT_SORTING
 
-    private var sLandscape = false
-
     private lateinit var mUIControlInterface: UIControlInterface
 
     override fun onAttach(context: Context) {
@@ -74,14 +72,12 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
         mAllMusicFragmentBinding = FragmentAllMusicBinding.bind(view)
 
-        sLandscape = ThemeHelper.isDeviceLand(resources)
-
         mMusicViewModel = ViewModelProvider(requireActivity()).get(MusicViewModel::class.java)
 
         mMusicViewModel.deviceMusic.observe(viewLifecycleOwner, { returnedMusic ->
             if (!returnedMusic.isNullOrEmpty()) {
                 mAllMusic =
-                    ListsHelper.getSortedMusicList(mSorting, mMusicViewModel.deviceMusicFiltered)
+                        ListsHelper.getSortedMusicList(mSorting, mMusicViewModel.deviceMusicFiltered)
 
                 setMusicDataSource(mAllMusic)
 
@@ -104,32 +100,32 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                         // GenericViewHolder is `this` here
                         title.text = item.title
                         duration.text = item.duration.toFormattedDuration(
-                            isAlbum = false,
-                            isSeekBar = false
+                                isAlbum = false,
+                                isSeekBar = false
                         )
                         subtitle.text =
-                            getString(R.string.artist_and_album, item.artist, item.album)
+                                getString(R.string.artist_and_album, item.artist, item.album)
                     }
 
                     onClick {
                         mUIControlInterface.onSongSelected(
-                            item,
-                            MusicOrgHelper.getAlbumSongs(
-                                item.artist,
-                                item.album,
-                                mMusicViewModel.deviceAlbumsByArtist
-                            ),
-                            GoConstants.ARTIST_VIEW
+                                item,
+                                MusicOrgHelper.getAlbumSongs(
+                                        item.artist,
+                                        item.album,
+                                        mMusicViewModel.deviceAlbumsByArtist
+                                ),
+                                GoConstants.ARTIST_VIEW
                         )
                     }
 
                     onLongClick { index ->
                         DialogHelper.showDoSomethingPopup(
-                            requireActivity(),
-                            findViewHolderForAdapterPosition(index)?.itemView,
-                            item,
-                            GoConstants.ARTIST_VIEW,
-                            mUIControlInterface
+                                requireActivity(),
+                                findViewHolderForAdapterPosition(index)?.itemView,
+                                item,
+                                GoConstants.ARTIST_VIEW,
+                                mUIControlInterface
                         )
                     }
                 }
@@ -143,8 +139,8 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
             inflateMenu(R.menu.menu_all_music)
 
             overflowIcon = AppCompatResources.getDrawable(
-                requireActivity(),
-                R.drawable.ic_more_vert
+                    requireActivity(),
+                    R.drawable.ic_more_vert
             )
 
             setNavigationOnClickListener {
@@ -169,7 +165,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                         if (sIsFastScrollerVisible) {
                             mAllMusicFragmentBinding.fastscroller.handleViewVisibility(!hasFocus)
                             mAllMusicFragmentBinding.fastscrollerThumb.handleViewVisibility(
-                                !hasFocus
+                                    !hasFocus
                             )
                             setupMusicRecyclerViewPadding(hasFocus)
                         }
@@ -199,42 +195,42 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
             if (sIsFastScroller) {
 
                 mAllMusicFragmentBinding.fastscroller.setupWithRecyclerView(
-                    this,
-                    { position ->
-                        val item = mAllMusic?.get(position) // Get your model object
-                        // or fetch the section at [position] from your database
+                        this,
+                        { position ->
+                            val item = mAllMusic?.get(position) // Get your model object
+                            // or fetch the section at [position] from your database
 
-                        FastScrollItemIndicator.Text(
-                            item?.title?.substring(
-                                0,
-                                1
-                            )?.toUpperCase()!! // Grab the first letter and capitalize it
-                        ) // Return a text tab_indicator
-                    }, showIndicator = { _, indicatorPosition, totalIndicators ->
-                        // Hide every other indicator
-                        if (sLandscape) {
+                            FastScrollItemIndicator.Text(
+                                    item?.title?.substring(
+                                            0,
+                                            1
+                                    )?.toUpperCase()!! // Grab the first letter and capitalize it
+                            ) // Return a text tab_indicator
+                        }, showIndicator = { _, indicatorPosition, totalIndicators ->
+                    // Hide every other indicator
+                    if (ThemeHelper.isDeviceLand(resources)) {
+                        indicatorPosition % 2 == 0
+                    } else {
+                        if (totalIndicators >= 30) {
                             indicatorPosition % 2 == 0
                         } else {
-                            if (totalIndicators >= 30) {
-                                indicatorPosition % 2 == 0
-                            } else {
-                                true
-                            }
+                            true
                         }
                     }
+                }
                 )
 
                 mAllMusicFragmentBinding.fastscrollerThumb.setupWithFastScroller(
-                    mAllMusicFragmentBinding.fastscroller
+                        mAllMusicFragmentBinding.fastscroller
                 )
 
                 mAllMusicFragmentBinding.fastscroller.useDefaultScroller = false
                 mAllMusicFragmentBinding.fastscroller.itemIndicatorSelectedCallbacks += object :
-                    FastScrollerView.ItemIndicatorSelectedCallback {
+                        FastScrollerView.ItemIndicatorSelectedCallback {
                     override fun onItemIndicatorSelected(
-                        indicator: FastScrollItemIndicator,
-                        indicatorCenterY: Int,
-                        itemPosition: Int
+                            indicator: FastScrollItemIndicator,
+                            indicatorCenterY: Int,
+                            itemPosition: Int
                     ) {
                         val artistsLayoutManager = layoutManager as LinearLayoutManager
                         artistsLayoutManager.scrollToPositionWithOffset(itemPosition, 0)
@@ -250,11 +246,11 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
     private fun setupMusicRecyclerViewPadding(forceNoPadding: Boolean) {
         val rvPaddingEnd =
-            if (sIsFastScrollerVisible && !forceNoPadding) {
-                resources.getDimensionPixelSize(R.dimen.fast_scroller_view_dim)
-            } else {
-                0
-            }
+                if (sIsFastScrollerVisible && !forceNoPadding) {
+                    resources.getDimensionPixelSize(R.dimen.fast_scroller_view_dim)
+                } else {
+                    0
+                }
         mAllMusicFragmentBinding.allMusicRv.setPadding(0, 0, rvPaddingEnd, 0)
     }
 
@@ -272,7 +268,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 mSorting = it.order
 
                 mAllMusic =
-                    ListsHelper.getSortedMusicList(mSorting, mMusicViewModel.deviceMusicFiltered)
+                        ListsHelper.getSortedMusicList(mSorting, mMusicViewModel.deviceMusicFiltered)
 
                 handleIndicatorFastScrollerViewVisibility()
 
@@ -281,10 +277,10 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 setMusicDataSource(mAllMusic)
 
                 mSortMenuItem.setTitleColor(
-                    ThemeHelper.resolveColorAttr(
-                        context,
-                        android.R.attr.textColorPrimary
-                    )
+                        ThemeHelper.resolveColorAttr(
+                                context,
+                                android.R.attr.textColorPrimary
+                        )
                 )
 
                 mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, menu).apply {

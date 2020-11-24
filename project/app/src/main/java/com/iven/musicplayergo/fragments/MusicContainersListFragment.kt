@@ -56,7 +56,6 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
     private var sIsFastScroller = false
     private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != GoConstants.DEFAULT_SORTING
-    private var sLandscape = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -78,8 +77,6 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
         super.onViewCreated(view, savedInstanceState)
 
         mMusicContainerListBinding = FragmentMusicContainerListBinding.bind(view)
-
-        sLandscape = ThemeHelper.isDeviceLand(resources)
 
         mMusicViewModel = ViewModelProvider(requireActivity()).get(MusicViewModel::class.java)
 
@@ -287,7 +284,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                         ) // Return a text tab_indicator
                     }, showIndicator = { _, indicatorPosition, totalIndicators ->
                         // Hide every other indicator
-                        if (sLandscape) {
+                        if (ThemeHelper.isDeviceLand(resources)) {
                             indicatorPosition % 2 == 0
                         } else {
                             if (totalIndicators >= 30) {
