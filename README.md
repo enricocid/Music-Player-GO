@@ -123,7 +123,6 @@ please consider a [donation](https://weblate.org/it/donate/new/) :)
 | [Compact disc icon](https://www.svgrepo.com/svg/181020/compact-disc-music) | [svgrepo.com](https://www.svgrepo.com)                       |
 | Badges | [shields.io](https://shields.io/) 
 | gifmaker.me | [gifmaker.me](https://gifmaker.me/)
-|
 
 
 ## License details
