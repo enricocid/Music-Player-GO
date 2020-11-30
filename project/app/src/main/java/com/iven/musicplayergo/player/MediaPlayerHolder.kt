@@ -566,13 +566,14 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                                     .build()
                     )
                 }
+                
+            }
 
-                if (sFocusEnabled && isPlay) {
-                    tryToGetAudioFocus()
-                }
-                if (goPreferences.isPreciseVolumeEnabled) {
-                    setPreciseVolume(currentVolumeInPercent)
-                }
+            if (sFocusEnabled && isPlay) {
+                tryToGetAudioFocus()
+            }
+            if (goPreferences.isPreciseVolumeEnabled) {
+                setPreciseVolume(currentVolumeInPercent)
             }
 
             song?.id?.toContentUri()?.let { uri ->
