@@ -110,8 +110,9 @@ object MusicOrgHelper {
 
                 val groupedSongs = it.groupBy { song -> song.album }
 
-                groupedSongs.keys.iterator().forEach { album ->
-
+                val iterator = groupedSongs.keys.iterator()
+                while (iterator.hasNext()) {
+                    val album = iterator.next()
                     val albumSongs = groupedSongs.getValue(album).toMutableList()
                     albumSongs.sortBy { song -> song.track }
 

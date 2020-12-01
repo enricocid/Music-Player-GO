@@ -20,13 +20,13 @@
 
     <!-- the album's title -->
     <LinearLayout
+        android:id="@+id/np_playing_song_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         android:background="@drawable/ripple"
-        android:onClick="openPlayingArtistAlbum"
         android:orientation="vertical"
         android:paddingTop="16dp"
         android:paddingBottom="16dp">

@@ -117,7 +117,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                         val audioArtist = cursor.getString(artistIndex)
                         val audioYear = cursor.getInt(yearIndex)
                         val audioTrack = cursor.getInt(trackIndex)
-                        val audioTitle = cursor.getString(titleIndex)
+                        var audioTitle = cursor.getString(titleIndex)
                         val audioDisplayName = cursor.getString(displayNameIndex)
                         val audioDuration = cursor.getLong(durationIndex)
                         val audioAlbum = cursor.getString(albumIndex)
@@ -137,6 +137,10 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                                         )
                                     }
                                 }
+
+                        if (audioTitle.isEmpty()) {
+                            audioTitle = audioFolderName
+                        }
 
                         // Add the current music to the list
                         deviceMusicList.add(
@@ -185,14 +189,16 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         // group artists songs by albums
-        deviceSongsByArtist?.keys?.iterator()?.forEach { artist ->
-            artist?.let { artistKey ->
-                deviceAlbumsByArtist?.set(
-                        artistKey, MusicOrgHelper.buildSortedArtistAlbums(
-                        resources,
-                        deviceSongsByArtist?.getValue(artist)
-                )
-                )
+        deviceSongsByArtist?.keys?.iterator()?.let { iterate ->
+            while (iterate.hasNext()) {
+                iterate.next()?.let { artistKey ->
+                    val album = deviceSongsByArtist?.getValue(artistKey)
+                    deviceAlbumsByArtist?.set(
+                            artistKey, MusicOrgHelper.buildSortedArtistAlbums(
+                            resources,
+                            album
+                    ))
+                }
             }
         }
     }

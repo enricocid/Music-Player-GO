@@ -566,7 +566,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                                     .build()
                     )
                 }
-                
             }
 
             if (sFocusEnabled && isPlay) {
@@ -643,16 +642,23 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
                 setEqualizerEnabled(eqSettings.enabled)
 
-                mEqualizer.usePreset(eqSettings.preset.toShort())
+                try {
+                    mEqualizer.usePreset(eqSettings.preset.toShort())
 
-                val bandSettings = eqSettings.bandsSettings
+                    val bandSettings = eqSettings.bandsSettings
 
-                bandSettings?.iterator()?.withIndex()?.forEach {
-                    mEqualizer.setBandLevel(it.index.toShort(), it.value.toInt().toShort())
+                    bandSettings?.iterator()?.withIndex()?.let { iterate ->
+                        while (iterate.hasNext()) {
+                            val item = iterate.next()
+                            mEqualizer.setBandLevel(item.index.toShort(), item.value.toInt().toShort())
+                        }
+                    }
+
+                    mBassBoost.setStrength(eqSettings.bassBoost)
+                    mVirtualizer.setStrength(eqSettings.virtualizer)
+                } catch (e: UnsupportedOperationException) {
+                    e.printStackTrace()
                 }
-
-                mBassBoost.setStrength(eqSettings.bassBoost)
-                mVirtualizer.setStrength(eqSettings.virtualizer)
             }
         }
     }

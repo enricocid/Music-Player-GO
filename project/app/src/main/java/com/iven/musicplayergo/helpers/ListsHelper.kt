@@ -26,9 +26,12 @@ object ListsHelper {
 
         return try {
             // Case insensitive search
-            list?.iterator()?.forEach { filteredString ->
-                if (filteredString.toLowerCase().contains(query?.toLowerCase()!!)) {
-                    filteredStrings.add(filteredString)
+            list?.iterator()?.let { iterate ->
+                while (iterate.hasNext()) {
+                    val filteredString = iterate.next()
+                    if (filteredString.toLowerCase().contains(query?.toLowerCase()!!)) {
+                        filteredStrings.add(filteredString)
+                    }
                 }
             }
             return filteredStrings
@@ -45,9 +48,12 @@ object ListsHelper {
 
         return try {
             // Case insensitive search
-            musicList?.iterator()?.forEach { filteredSong ->
-                if (filteredSong.title?.toLowerCase()!!.contains(query?.toLowerCase()!!)) {
-                    filteredSongs.add(filteredSong)
+            musicList?.iterator()?.let { iterate ->
+                while (iterate.hasNext()) {
+                    val filteredSong = iterate.next()
+                    if (filteredSong.title?.toLowerCase()!!.contains(query?.toLowerCase()!!)) {
+                        filteredSongs.add(filteredSong)
+                    }
                 }
             }
             return filteredSongs

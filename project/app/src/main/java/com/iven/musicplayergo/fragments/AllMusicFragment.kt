@@ -197,15 +197,17 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 mAllMusicFragmentBinding.fastscroller.setupWithRecyclerView(
                         this,
                         { position ->
-                            val item = mAllMusic?.get(position) // Get your model object
-                            // or fetch the section at [position] from your database
 
-                            FastScrollItemIndicator.Text(
-                                    item?.title?.substring(
-                                            0,
-                                            1
-                                    )?.toUpperCase()!! // Grab the first letter and capitalize it
-                            ) // Return a text tab_indicator
+                            // Return a text tab_indicator
+                            mAllMusic?.get(position)?.title?.let { title ->
+                                var charAtZero = ""
+                                if (title.isNotEmpty()) {
+                                    charAtZero = title[0].toString()
+                                }
+                                FastScrollItemIndicator.Text(
+                                        charAtZero.toUpperCase() // Grab the first letter and capitalize it
+                                )
+                            }
                         }, showIndicator = { _, indicatorPosition, totalIndicators ->
                     // Hide every other indicator
                     if (ThemeHelper.isDeviceLand(resources)) {

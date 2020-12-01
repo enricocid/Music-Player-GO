@@ -18,7 +18,6 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
-            android:onClick="openEqualizer"
             android:padding="8dp"
             app:srcCompat="@drawable/ic_equalizer"
             tools:ignore="ContentDescription" />
