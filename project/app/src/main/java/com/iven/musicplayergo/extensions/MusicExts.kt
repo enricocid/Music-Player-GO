@@ -10,12 +10,34 @@ import android.media.MediaFormat
 import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.provider.MediaStore
+import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedMusic
+import com.iven.musicplayergo.player.MediaPlayerHolder
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
+
+fun MediaPlayerHolder.startSongFromQueue(song: Music?) {
+    if (isSongRestoredFromPrefs) {
+        isSongRestoredFromPrefs = false
+    }
+    if (!isPlay) {
+        isPlay = true
+    }
+    if (!isQueueStarted) {
+        isQueueStarted = true
+        mediaPlayerInterface.onQueueStartedOrEnded(true)
+    }
+    setCurrentSong(
+            song,
+            queueSongs,
+            isFromQueue = true,
+            isFolderAlbum = GoConstants.ARTIST_VIEW
+    )
+    initMediaPlayer(song)
+}
 
 fun Long.toContentUri(): Uri = ContentUris.withAppendedId(
         MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,

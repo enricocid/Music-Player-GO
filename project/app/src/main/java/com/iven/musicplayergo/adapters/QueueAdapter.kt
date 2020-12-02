@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
-import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.extensions.startSongFromQueue
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
@@ -16,17 +16,17 @@ import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
 
 class QueueAdapter(
-    private val context: Context,
-    private val queueSongsDialog: MaterialDialog,
-    private val mediaPlayerHolder: MediaPlayerHolder
+        private val context: Context,
+        private val queueSongsDialog: MaterialDialog,
+        private val mediaPlayerHolder: MediaPlayerHolder
 ) :
-    RecyclerView.Adapter<QueueAdapter.QueueHolder>() {
+        RecyclerView.Adapter<QueueAdapter.QueueHolder>() {
 
     private var mQueueSongs = mediaPlayerHolder.queueSongs
     private var mSelectedSong = mediaPlayerHolder.currentSong
 
     private val mDefaultTextColor =
-        ThemeHelper.resolveColorAttr(context, android.R.attr.textColorPrimary)
+            ThemeHelper.resolveColorAttr(context, android.R.attr.textColorPrimary)
 
     fun swapSelectedSong(song: Music?) {
         notifyItemChanged(mQueueSongs.indexOf(mSelectedSong.first))
@@ -41,11 +41,11 @@ class QueueAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QueueHolder {
         return QueueHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.music_item,
-                parent,
-                false
-            )
+                LayoutInflater.from(parent.context).inflate(
+                        R.layout.music_item,
+                        parent,
+                        false
+                )
         )
     }
 
@@ -71,41 +71,19 @@ class QueueAdapter(
 
                     when {
                         mQueueSongs.indexOf(mSelectedSong.first) == adapterPosition && mSelectedSong.second -> setTextColor(
-                            ThemeHelper.resolveThemeAccent(context)
+                                ThemeHelper.resolveThemeAccent(context)
                         )
                         else -> setTextColor(mDefaultTextColor)
                     }
                 }
 
                 duration.text =
-                    song.duration.toFormattedDuration(isAlbum = false, isSeekBar = false)
+                        song.duration.toFormattedDuration(isAlbum = false, isSeekBar = false)
                 subtitle.text =
-                    context.getString(R.string.artist_and_album, song.artist, song.album)
+                        context.getString(R.string.artist_and_album, song.artist, song.album)
 
                 setOnClickListener {
-
-                    mediaPlayerHolder.apply {
-
-                        if (isSongRestoredFromPrefs) {
-                            isSongRestoredFromPrefs = false
-                        }
-                        if (!isPlay) {
-                            isPlay = true
-                        }
-
-                        if (!isQueueStarted) {
-                            isQueueStarted = true
-                            mediaPlayerHolder.mediaPlayerInterface.onQueueStartedOrEnded(true)
-                        }
-
-                        mediaPlayerHolder.setCurrentSong(
-                            song,
-                            queueSongs,
-                            isFromQueue = true,
-                            isFolderAlbum = GoConstants.ARTIST_VIEW
-                        )
-                        initMediaPlayer(song)
-                    }
+                    mediaPlayerHolder.startSongFromQueue(song)
                 }
 
                 setOnLongClickListener {
@@ -120,12 +98,12 @@ class QueueAdapter(
         val song = mQueueSongs[position]
         return if (title.currentTextColor != ThemeHelper.resolveThemeAccent(context)) {
             DialogHelper.showDeleteQueueSongDialog(
-                context,
-                Pair(song, position),
-                queueSongsDialog,
-                this@QueueAdapter,
-                mediaPlayerHolder,
-                isSwipe
+                    context,
+                    Pair(song, position),
+                    queueSongsDialog,
+                    this@QueueAdapter,
+                    mediaPlayerHolder,
+                    isSwipe
             )
             true
         } else {

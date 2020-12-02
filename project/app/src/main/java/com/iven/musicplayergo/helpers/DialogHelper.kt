@@ -18,7 +18,6 @@ import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.extensions.addBidirectionalSwipeHandler
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedMusic
 import com.iven.musicplayergo.player.MediaPlayerHolder
@@ -139,8 +138,7 @@ object DialogHelper {
             context: Context,
             uiControlInterface: UIControlInterface,
             mediaPlayerHolder: MediaPlayerHolder,
-            deviceSongs: MutableList<Music>,
-            deviceAlbumsByArtist: MutableMap<String, List<Album>>?
+            deviceSongs: MutableList<Music>
     ) {
 
         MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
@@ -152,8 +150,7 @@ object DialogHelper {
                     this,
                     mediaPlayerHolder,
                     uiControlInterface,
-                    deviceSongs,
-                    deviceAlbumsByArtist
+                    deviceSongs
             )
 
             customListAdapter(lovedSongsAdapter)
@@ -178,7 +175,7 @@ object DialogHelper {
             }
 
             recyclerView.addBidirectionalSwipeHandler(true) { viewHolder: RecyclerView.ViewHolder, _: Int ->
-                lovedSongsAdapter.performLovedSongDeletion(viewHolder.adapterPosition, true)
+                lovedSongsAdapter.performLovedSongDeletion(viewHolder.adapterPosition, deviceSongs, true)
             }
         }
     }
@@ -188,6 +185,8 @@ object DialogHelper {
             context: Context,
             songToDelete: SavedMusic?,
             lovedSongsAdapter: LovedSongsAdapter,
+            uiControlInterface: UIControlInterface,
+            deviceSongs: MutableList<Music>,
             isSwipe: Pair<Boolean, Int>
     ) {
 
@@ -211,6 +210,7 @@ object DialogHelper {
                 lovedSongs?.remove(songToDelete)
                 goPreferences.lovedSongs = lovedSongs
                 lovedSongsAdapter.swapSongs(lovedSongs)
+                uiControlInterface.onLovedSongAdded(MusicOrgHelper.getSongForRestore(songToDelete, deviceSongs), false)
             }
 
             negativeButton(R.string.no) {
@@ -279,11 +279,11 @@ object DialogHelper {
                                     0,
                                     launchedBy
                             )
+                            uiControlInterface.onLovedSongAdded(song, true)
                             uiControlInterface.onLovedSongsUpdate(false)
                         }
                         R.id.queue_add -> uiControlInterface.onAddToQueue(song)
                     }
-
                     return@setOnMenuItemClickListener true
                 }
                 inflate(R.menu.menu_do_something)

@@ -98,6 +98,17 @@
                     android:padding="8dp"
                     app:srcCompat="@drawable/ic_sort_numeric_descending"
                     tools:ignore="ContentDescription" />
+
+                <ImageButton
+                    android:id="@+id/queue_add_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="8dp"
+                    android:background="?android:attr/actionBarItemBackground"
+                    android:padding="8dp"
+                    app:srcCompat="@drawable/ic_queue_add"
+                    tools:ignore="ContentDescription" />
             </LinearLayout>
 
             <!-- DISC SONGS -->

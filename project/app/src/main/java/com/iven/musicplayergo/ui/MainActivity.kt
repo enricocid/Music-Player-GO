@@ -104,15 +104,19 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private var sBound = false
     private lateinit var mBindingIntent: Intent
 
-    private fun checkIsPlayer(showError: Boolean) = mMediaPlayerHolder.apply {
-        if (!isMediaPlayer && !isSongRestoredFromPrefs && showError) {
+    private var sLovedSongsAddedToQueue = false
+
+    private fun checkIsPlayer(showError: Boolean): Boolean {
+        if (!isMediaPlayerHolder && !mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs && showError) {
             getString(
                     R.string.error_bad_id
             ).toToast(
                     this@MainActivity
             )
+            return false
         }
-    }.isMediaPlayer
+        return true
+    }
 
     // Defines callbacks for service binding, passed to bindService()
     private val connection = object : ServiceConnection {
@@ -777,6 +781,23 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
+    override fun onLovedSongAdded(song: Music?, isAdded: Boolean) {
+        if (checkIsPlayer(true)) {
+            mMediaPlayerHolder.apply {
+                if (queueSongs.isNotEmpty() && sLovedSongsAddedToQueue) {
+                    song?.let { songToProcess ->
+                        if (isAdded) {
+                            queueSongs.add(songToProcess)
+                        } else {
+                            queueSongs.remove(songToProcess)
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
     override fun onLovedSongsUpdate(clear: Boolean) {
 
         val lovedSongs = goPreferences.lovedSongs
@@ -1125,7 +1146,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mMediaPlayerHolder.onSaveEqualizerSettings(selectedPreset, bassBoost, virtualizer)
     }
 
-    fun openEqualizer() {
+    private fun openEqualizer() {
         if (checkIsPlayer(true)) {
             if (!EqualizerUtils.hasEqualizer(this)) {
                 if (!sEqFragmentExpanded) {
@@ -1171,6 +1192,44 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     ).toToast(
                             this@MainActivity
                     )
+                    if (!isPlaying) {
+                        startSongFromQueue(song)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onAddAlbumToQueue(albumTitle: String?, songs: MutableList<Music>?, isAlbumOrFolder: Pair<Boolean, Music?>) {
+        if (checkIsPlayer(true)) {
+            mMediaPlayerHolder.apply {
+                if (queueSongs.isEmpty()) {
+                    setQueueEnabled(true)
+                }
+                songs?.let { songsToQueue ->
+                    if (sLovedSongsAddedToQueue) {
+                        val differences = songsToQueue.minus(queueSongs)
+                        queueSongs.addAll(differences)
+                    } else {
+                        queueSongs.addAll(songsToQueue)
+                    }
+
+                    getString(
+                            R.string.queue_song_add,
+                            albumTitle
+                    ).toToast(
+                            this@MainActivity
+                    )
+                }
+
+                if (!isAlbumOrFolder.first) {
+                    sLovedSongsAddedToQueue = true
+                }
+
+                if (!isPlaying) {
+                    isAlbumOrFolder.second?.let { song ->
+                        startSongFromQueue(song)
+                    }
                 }
             }
         }
@@ -1207,8 +1266,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     this,
                     this,
                     mMediaPlayerHolder,
-                    mMusicViewModel.deviceMusicList,
-                    mMusicViewModel.deviceAlbumsByArtist
+                    mMusicViewModel.deviceMusicList
             )
         } else {
             getString(R.string.error_no_loved_songs).toToast(this)
@@ -1296,10 +1354,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     when {
                         started -> ThemeHelper.resolveThemeAccent(this@MainActivity)
                         mMediaPlayerHolder.isQueue -> R.color.widgetsColor.decodeColor(this@MainActivity)
-                        else -> ThemeHelper.resolveColorAttr(
-                                this@MainActivity,
-                                android.R.attr.colorButtonNormal
-                        )
+                        else -> {
+                            ThemeHelper.resolveColorAttr(
+                                    this@MainActivity,
+                                    android.R.attr.colorButtonNormal
+                            )
+                        }
                     }
             )
         }

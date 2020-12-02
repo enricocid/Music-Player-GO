@@ -13,22 +13,28 @@
 
     <group android:id="@+id/more_options_folder">
 
+        <item
+            android:id="@+id/action_add_queue"
+            android:orderInCategory="0"
+            android:title="@string/queue_add"
+            app:showAsAction="never" />
+
         <!-- am = all artist music, sa = selected album -->
         <item
             android:id="@+id/action_shuffle_am"
-            android:orderInCategory="0"
+            android:orderInCategory="1"
             android:title="@string/shuffle_am"
             app:showAsAction="never" />
 
         <item
             android:id="@+id/action_shuffle_sa"
-            android:orderInCategory="1"
+            android:orderInCategory="2"
             android:title="@string/shuffle_sa"
             app:showAsAction="never" />
 
         <item
             android:id="@+id/sorting"
-            android:orderInCategory="2"
+            android:orderInCategory="3"
             android:title="@string/sorting_pref">
 
             <menu>

@@ -73,7 +73,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private val sLaunchedByArtistView get() = mLaunchedBy == GoConstants.ARTIST_VIEW
     private val sLaunchedByFolderView get() = mLaunchedBy == GoConstants.FOLDER_VIEW
 
-    private val sLoadCovers = goPreferences.isCovers
     private var sLoadDelay = true
 
     override fun onAttach(context: Context) {
@@ -235,6 +234,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             )
                     )
                 }
+            }
+
+            mDetailsFragmentBinding.queueAddButton.setOnClickListener {
+                mUIControlInterface.onAddAlbumToQueue(mSelectedAlbum?.title, mSelectedAlbum?.music, Pair(true, mSelectedAlbum?.music?.get(0)))
             }
 
         } else {
@@ -416,6 +419,14 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             setOnMenuItemClickListener {
 
                 when (it.itemId) {
+                    R.id.action_add_queue -> {
+                        val albumTitle = if (sLaunchedByArtistView) {
+                            mSelectedAlbum?.title
+                        } else {
+                            mSelectedArtistOrFolder
+                        }
+                        mUIControlInterface.onAddAlbumToQueue(albumTitle, mSongsList?.toMutableList(), Pair(true, mSelectedAlbum?.music?.get(0)))
+                    }
                     R.id.action_shuffle_am -> mUIControlInterface.onShuffleSongs(
                             mSongsList?.toMutableList(),
                             mLaunchedBy
@@ -502,7 +513,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             0
                         }
 
-                        if (sLoadCovers) {
+                        if (goPreferences.isCovers) {
                             imageView.loadCover(
                                     requireActivity().getImageLoader(),
                                     item.music?.get(0),
