@@ -406,9 +406,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
             startForeground()
 
-            if (!isPlay) {
-                isPlay = true
-            }
+            isPlay = true
         }
     }
 

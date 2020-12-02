@@ -1082,9 +1082,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         if (isMediaPlayerHolder) {
             mMediaPlayerHolder.apply {
                 isSongRestoredFromPrefs = false
-                if (!isPlay) {
-                    isPlay = true
-                }
+                isPlay = true
                 if (isQueue) {
                     setQueueEnabled(false)
                 }
@@ -1343,6 +1341,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
 
         override fun onQueueCleared() {
+            sLovedSongsAddedToQueue = false
             if (::mQueueDialog.isInitialized && mQueueDialog.isShowing) {
                 mQueueDialog.dismiss()
             }
