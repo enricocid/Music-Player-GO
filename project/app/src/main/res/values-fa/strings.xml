@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="covers_pref_summary_off">نمایش جلد جُنگ‌ها</string>
+    <string name="covers_pref_summary_on">پنهان‌سازی جلد جُنگ‌ها</string>
+    <string name="repeat_disabled">تکرار ∞ خاموش است.</string>
+    <string name="repeat_loop_enabled">تکرار ∞ روشن است.</string>
+    <string name="open_git_pref_summary">برای دانستنی بیشتر، تاربرگ برنامه را باز کنید :)</string>
+    <string name="error_no_filter">پالایشی یافت نشد.</string>
+    <string name="open_git_pref_title">برگه گیت‌هاب</string>
+    <string name="error_no_music">موسیقی یافت نشد :(</string>
+    <string name="filter_popup_title">پنهان‌سازی</string>
+    <string name="songs">آهنگ‌ها</string>
+    <string name="albums">جُنگ‌ها</string>
+    <string name="sorting_pref">چیدمان</string>
+    <string name="filter_pref_title">پالایش</string>
+    <string name="on_list_ended_pref_stop_title">ایست</string>
+    <string name="theme_pref_auto_title">خودکار</string>
+    <string name="theme_pref_dark_title">تیره</string>
+    <string name="theme_pref_light_title">روشن</string>
+    <string name="theme_pref_title">پوسته</string>
+    <string name="category_general">فراگیر</string>
+    <string name="settings">ساماندهی</string>
+    <string name="sorting_pref_default">پیشگزیده</string>
+    <string name="folders">پوشه‌ها</string>
+    <string name="artists">هنرمندان</string>
+    <string name="no">نه</string>
+    <string name="yes">بله</string>
+</resources>

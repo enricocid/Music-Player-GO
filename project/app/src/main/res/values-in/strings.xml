@@ -13,7 +13,7 @@
     <string name="folders">Folder</string>
     <!-- Main - Artists/Folder RecyclerViews items  -->
     <string name="artist_info">%1d Album, %2d Lagu</string>
-    <string name="folder_info">%2d Lagu</string>
+    <string name="folder_info">%1d Lagu</string>
     <!-- Popup/Menu titles -->
     <string name="sorting_pref">Urutan</string>
     <string name="sorting_pref_default">Bawaan</string>
@@ -34,25 +34,25 @@
     <!-- Messages - Errors -->
     <string name="error_no_loved_songs">Tidak ada lagu favorit yang ditemukan!</string>
     <string name="error_no_music">Musik tidak ditemukan :(</string>
-    <string name="error_not_ready">Ada masalah saat memuat pustaka musik! :( Mungkin disebabkan oleh kartu sd yang tidak lagi terpasang dan memaksa MediaStore Android membangun ulang basis datanya. Solusi: silakan coba lagi nanti :)</string>
+    <string name="error_not_ready">Tidak bisa memuat pustaka musik! :( Mungkin disebabkan oleh kartu sd yang tidak lagi terpasang dan memaksa MediaStore Android membangun ulang basis datanya. Silakan coba lagi nanti.</string>
     <string name="error_unknown_unsupported">Telah terjadi kesalahan! :( Mungkin format tidak didukung atau folder tidak bisa diakses (bukan kesalahan aplikasi!)</string>
-    <string name="error_media_buttons">Telah terjadi kesalahan! :( Silakan mulai ulang pemutaran dari aplikasi</string>
-    <string name="error_no_browser">Peramban tidak ditemukan!</string>
-    <string name="error_bad_id">Putar lagu terlebih dahulu!</string>
-    <string name="error_no_filter">Tidak ada filter yang ditemukan!</string>
-    <string name="error_no_queue">Tidak ada lagu dalam antrean!</string>
+    <string name="error_media_buttons">Telah terjadi kesalahan! :( Silakan mulai ulang pemutaran dari aplikasi.</string>
+    <string name="error_no_browser">Peramban tidak ditemukan.</string>
+    <string name="error_bad_id">Putar lagu terlebih dahulu.</string>
+    <string name="error_no_filter">Tidak ada filter yang ditemukan.</string>
+    <string name="error_no_queue">Tidak ada lagu dalam antrean.</string>
     <!-- Messages - Permission rationale -->
-    <string name="perm_rationale">Music Player GO membutuhkan akses ke berkas musik untuk dapat memutar musik!</string>
+    <string name="perm_rationale">Music Player GO membutuhkan akses ke berkas musik untuk memutar musik.</string>
     <!-- Messages - Repeat -->
-    <string name="repeat_enabled">1x pengulangan diaktifkan!</string>
-    <string name="repeat_loop_enabled">∞ pengulangan diaktifkan!</string>
-    <string name="repeat_disabled">∞ pengulangan dinonaktifkan!</string>
+    <string name="repeat_enabled">1x pengulangan diaktifkan.</string>
+    <string name="repeat_loop_enabled">∞ pengulangan diaktifkan.</string>
+    <string name="repeat_disabled">∞ pengulangan dinonaktifkan.</string>
     <!-- Preferences - Categories -->
     <string name="settings">Pengaturan</string>
     <string name="category_general">Umum</string>
     <!-- Preferences - Git page -->
     <string name="open_git_pref_title">Laman GitHub</string>
-    <string name="open_git_pref_summary">Buka halaman proyek untuk informasi lebih lanjut :)</string>
+    <string name="open_git_pref_summary">Buka halaman web proyek untuk informasi lebih lanjut :)</string>
     <!-- Preferences - FAQ -->
     <string name="faq_summary">Pertanyaan yang sering diajukan dan format media yang didukung :P</string>
     <!-- Preferences - Found songs -->
@@ -86,17 +86,23 @@
     <string name="filter_pref_title">Filter</string>
     <string name="fast_seeking_actions_pref_title">Tindakan notifikasi tambahan</string>
     <string name="fast_seeking_pref_summary">Langkah pencarian maju/mundur cepat (detik)</string>
-    <string name="fast_seeking_pref_title">Pencarian cepat</string>
+    <string name="fast_seeking_pref_title">Laju lagu</string>
     <string name="song_visual_pref_fn_title">Nama berkas</string>
     <string name="song_visual_pref_tl_title">Judul</string>
     <string name="song_visual_pref_title">Visualisasi lagu</string>
     <string name="on_list_ended_pref_continue_title">Lanjutkan</string>
     <string name="on_list_ended_pref_stop_title">Setop</string>
-    <string name="covers_pref_summary_off">Sembunyikan kover album</string>
-    <string name="covers_pref_summary_on">Tampilkan kover album</string>
+    <string name="covers_pref_summary_off">Kover album disembunyikan</string>
+    <string name="covers_pref_summary_on">Kover album ditampilkan</string>
     <string name="covers_pref_title">Kover album tersemat</string>
     <string name="equalizer_v">Audio surround</string>
     <string name="equalizer_bb">Penguat bas</string>
     <string name="equalizer">Equalizer</string>
     <string name="albums">Album</string>
+    <string name="eq_pref_note_summary">Catatan: Equalizer sistem akan dipilih kecuali anda menonaktifkan \"equalizer sistem\" dari pengaturan sistem. :)</string>
+    <string name="on_list_ended_pref_title">Saat daftar lagu berakhir …</string>
+    <string name="error_eq">Ups, telah terjadi kesalahan!</string>
+    <string name="error_list_ended">Daftar telah berakhir.</string>
+    <string name="fast_seeking_actions_pref_summary_off">Laju lagu dinonaktifkan</string>
+    <string name="fast_seeking_actions_pref_summary_on">Laju lagu diaktifkan</string>
 </resources>
