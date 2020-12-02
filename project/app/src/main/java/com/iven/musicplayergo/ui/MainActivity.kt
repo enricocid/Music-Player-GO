@@ -7,7 +7,6 @@ import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.media.audiofx.BassBoost
 import android.media.audiofx.Equalizer
 import android.media.audiofx.Virtualizer
@@ -246,19 +245,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         setContentView(mMainActivityBinding.root)
 
-        if (goPreferences.isEdgeToEdge) {
-            window?.apply {
-                if (!VersioningHelper.isQ()) {
-                    statusBarColor = Color.TRANSPARENT
-                    navigationBarColor = Color.TRANSPARENT
-                }
-                ThemeHelper.handleLightSystemBars(resources.configuration, this)
-            }
-            edgeToEdge {
-                mMainActivityBinding.root.fit { Edge.Top + Edge.Bottom }
-            }
-        }
-
         initMediaButtons()
 
         sRestoreSettingsFragment =
@@ -299,6 +285,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mPlayerControlsPanelBinding.playerView.animate().apply {
                     duration = 500
                     alpha(1.0F)
+                }
+
+                if (goPreferences.isEdgeToEdge) {
+                    window.apply {
+                        val sbColor = R.color.windowBackground.decodeColor(this@MainActivity)
+                        statusBarColor = sbColor
+                        navigationBarColor = sbColor
+                        ThemeHelper.handleLightSystemBars(resources.configuration, this)
+                    }
+                    edgeToEdge {
+                        mMainActivityBinding.root.fit { Edge.Top + Edge.Bottom }
+                    }
                 }
             }
         } else {
