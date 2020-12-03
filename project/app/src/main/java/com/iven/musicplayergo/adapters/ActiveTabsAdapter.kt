@@ -120,7 +120,7 @@ class ActiveTabsAdapter(private val ctx: Context) :
     }
 
     // https://mobikul.com/drag-and-drop-item-on-recyclerview/
-    var itemTouchCallback: ItemTouchHelper.Callback = object : ItemTouchHelper.Callback() {
+    val itemTouchCallback: ItemTouchHelper.Callback = object : ItemTouchHelper.Callback() {
 
         override fun getMovementFlags(
             recyclerView: RecyclerView,
