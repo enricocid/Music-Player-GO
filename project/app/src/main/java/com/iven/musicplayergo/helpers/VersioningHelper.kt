@@ -3,6 +3,10 @@ package com.iven.musicplayergo.helpers
 import android.os.Build
 
 object VersioningHelper {
+
+    @JvmStatic
+    fun isR() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
+
     @JvmStatic
     fun isQ() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
 
