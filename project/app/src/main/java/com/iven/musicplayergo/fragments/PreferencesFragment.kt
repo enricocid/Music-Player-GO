@@ -170,7 +170,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     @SuppressLint("QueryPermissionsNeeded")
     private fun openCustomTab(link: String) {
         val customTabsIntent = CustomTabsIntent.Builder()
-                .addDefaultShareMenuItem()
+                .setShareState(CustomTabsIntent.SHARE_STATE_ON)
                 .setShowTitle(true)
                 .build()
 
