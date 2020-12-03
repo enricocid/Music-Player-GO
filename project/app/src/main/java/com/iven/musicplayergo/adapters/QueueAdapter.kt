@@ -10,13 +10,14 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.startSongFromQueue
 import com.iven.musicplayergo.extensions.toFormattedDuration
+import com.iven.musicplayergo.extensions.toSpanned
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
 
 class QueueAdapter(
-        private val context: Context,
+        private val ctx: Context,
         private val queueSongsDialog: MaterialDialog,
         private val mediaPlayerHolder: MediaPlayerHolder
 ) :
@@ -26,7 +27,7 @@ class QueueAdapter(
     private var mSelectedSong = mediaPlayerHolder.currentSong
 
     private val mDefaultTextColor =
-            ThemeHelper.resolveColorAttr(context, android.R.attr.textColorPrimary)
+            ThemeHelper.resolveColorAttr(ctx, android.R.attr.textColorPrimary)
 
     fun swapSelectedSong(song: Music?) {
         notifyItemChanged(mQueueSongs.indexOf(mSelectedSong.first))
@@ -77,8 +78,15 @@ class QueueAdapter(
                     }
                 }
 
-                duration.text =
-                        song.duration.toFormattedDuration(isAlbum = false, isSeekBar = false)
+                duration.text = ctx.getString(
+                    R.string.loved_song_subtitle,
+                    song.startFrom.toLong().toFormattedDuration(
+                        isAlbum = false,
+                        isSeekBar = false
+                    ),
+                    song.duration.toFormattedDuration(isAlbum = false, isSeekBar = false)
+                ).toSpanned()
+
                 subtitle.text =
                         context.getString(R.string.artist_and_album, song.artist, song.album)
 
@@ -96,9 +104,9 @@ class QueueAdapter(
 
     fun performQueueSongDeletion(position: Int, title: TextView, isSwipe: Boolean): Boolean {
         val song = mQueueSongs[position]
-        return if (title.currentTextColor != ThemeHelper.resolveThemeAccent(context)) {
+        return if (title.currentTextColor != ThemeHelper.resolveThemeAccent(ctx)) {
             DialogHelper.showDeleteQueueSongDialog(
-                    context,
+                    ctx,
                     Pair(song, position),
                     queueSongsDialog,
                     this@QueueAdapter,

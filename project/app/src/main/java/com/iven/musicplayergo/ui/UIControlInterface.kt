@@ -15,7 +15,7 @@ interface UIControlInterface {
     fun onLovedSongAdded(song: Music?, isAdded: Boolean)
     fun onCloseActivity()
     fun onAddToQueue(song: Music?)
-    fun onAddAlbumToQueue(albumTitle: String?, songs: MutableList<Music>?, isAlbumOrFolder: Pair<Boolean, Music?>)
+    fun onAddAlbumToQueue(songs: MutableList<Music>?, isAlbumOrFolder: Pair<Boolean, Music?>)
     fun onAddToFilter(stringToFilter: String?)
     fun onDenyPermission()
     fun onHandleFocusPref()

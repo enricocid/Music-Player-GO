@@ -5,8 +5,8 @@ import androidx.preference.PreferenceManager
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.iven.musicplayergo.helpers.VersioningHelper
+import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedEqualizerSettings
-import com.iven.musicplayergo.models.SavedMusic
 import java.lang.reflect.Type
 
 class GoPreferences(context: Context) {
@@ -53,16 +53,16 @@ class GoPreferences(context: Context) {
     private val typeSavedEqualizerSettings = object : TypeToken<SavedEqualizerSettings>() {}.type
 
     // last played song is a SavedMusic
-    private val typeLastPlayedSong = object : TypeToken<SavedMusic>() {}.type
+    private val typeLastPlayedSong = object : TypeToken<Music>() {}.type
 
     //loved songs is a list of SavedMusic
-    private val typeLovedSongs = object : TypeToken<MutableList<SavedMusic>>() {}.type
+    private val typeLovedSongs = object : TypeToken<MutableList<Music>>() {}.type
 
     var latestVolume: Int
         get() = mPrefs.getInt(prefsLatestVolume, 100)
         set(value) = mPrefs.edit().putInt(prefsLatestVolume, value).apply()
 
-    var latestPlayedSong: SavedMusic?
+    var latestPlayedSong: Music?
         get() = getObject(
                 prefsLatestPlayedSong,
                 typeLastPlayedSong
@@ -76,7 +76,7 @@ class GoPreferences(context: Context) {
         )
         set(value) = putObject(prefsSavedEqualizerSettings, value)
 
-    var lovedSongs: MutableList<SavedMusic>?
+    var lovedSongs: MutableList<Music>?
         get() = getObject(
                 prefsLovedSongs,
                 typeLovedSongs

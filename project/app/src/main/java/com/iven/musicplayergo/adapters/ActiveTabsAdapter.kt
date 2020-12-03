@@ -14,7 +14,7 @@ import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 
 class ActiveTabsAdapter(
-        private val context: Context
+        private val ctx: Context
 ) :
         RecyclerView.Adapter<ActiveTabsAdapter.CheckableItemsHolder>() {
 
@@ -107,13 +107,13 @@ class ActiveTabsAdapter(
         when {
             condition -> {
                 indicator.handleViewVisibility(true)
-                ThemeHelper.updateIconTint(icon, ThemeHelper.resolveThemeAccent(context))
+                ThemeHelper.updateIconTint(icon, ThemeHelper.resolveThemeAccent(ctx))
             }
             else -> {
                 indicator.handleViewVisibility(false)
                 ThemeHelper.updateIconTint(
                         icon,
-                        ThemeHelper.getAlphaAccent(context, ThemeHelper.getAlphaForAccent())
+                        ThemeHelper.getAlphaAccent(ctx, ThemeHelper.getAlphaForAccent())
                 )
             }
         }

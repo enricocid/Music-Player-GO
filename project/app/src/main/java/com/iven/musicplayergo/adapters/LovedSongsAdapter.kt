@@ -12,32 +12,21 @@ import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.extensions.toSpanned
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
-import com.iven.musicplayergo.helpers.MusicOrgHelper
 import com.iven.musicplayergo.models.Music
-import com.iven.musicplayergo.models.SavedMusic
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.UIControlInterface
 
 class LovedSongsAdapter(
-        private val ctx: Context,
-        private val lovedSongsDialog: MaterialDialog,
-        private val mediaPlayerHolder: MediaPlayerHolder,
-        private val uiControlInterface: UIControlInterface,
-        private val deviceSongs: MutableList<Music>
+    private val ctx: Context,
+    private val lovedSongsDialog: MaterialDialog,
+    private val mediaPlayerHolder: MediaPlayerHolder,
+    private val uiControlInterface: UIControlInterface
 ) :
-        RecyclerView.Adapter<LovedSongsAdapter.LoveHolder>() {
+    RecyclerView.Adapter<LovedSongsAdapter.LoveHolder>() {
 
-    private var mConvertedSongs = mutableListOf<Music>()
+    private var mLovedSongs = goPreferences.lovedSongs?.toMutableList()
 
-    private var mLovedSongs = goPreferences.lovedSongs?.toMutableList()?.apply {
-        val iterator = iterator()
-        while (iterator.hasNext()) {
-            val item = iterator.next()
-            mConvertedSongs.add(MusicOrgHelper.getSongForRestore(item, deviceSongs))
-        }
-    }
-
-    fun swapSongs(lovedSongs: MutableList<SavedMusic>?) {
+    fun swapSongs(lovedSongs: MutableList<Music>?) {
         mLovedSongs = lovedSongs
         notifyDataSetChanged()
         uiControlInterface.onLovedSongsUpdate(false)
@@ -48,11 +37,11 @@ class LovedSongsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LoveHolder {
         return LoveHolder(
-                LayoutInflater.from(parent.context).inflate(
-                        R.layout.music_item,
-                        parent,
-                        false
-                )
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.music_item,
+                parent,
+                false
+            )
         )
     }
 
@@ -66,7 +55,7 @@ class LovedSongsAdapter(
 
     inner class LoveHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindItems(lovedSong: SavedMusic?) {
+        fun bindItems(lovedSong: Music?) {
 
             val title = itemView.findViewById<TextView>(R.id.title)
             val duration = itemView.findViewById<TextView>(R.id.duration)
@@ -74,40 +63,38 @@ class LovedSongsAdapter(
 
             title.text = lovedSong?.title
             duration.text = ctx.getString(
-                    R.string.loved_song_subtitle,
-                    lovedSong?.startFrom?.toLong()?.toFormattedDuration(
-                            isAlbum = false,
-                            isSeekBar = false
-                    ),
-                    lovedSong?.duration?.toFormattedDuration(isAlbum = false, isSeekBar = false)
+                R.string.loved_song_subtitle,
+                lovedSong?.startFrom?.toLong()?.toFormattedDuration(
+                    isAlbum = false,
+                    isSeekBar = false
+                ),
+                lovedSong?.duration?.toFormattedDuration(isAlbum = false, isSeekBar = false)
             ).toSpanned()
             subtitle.text =
-                    ctx.getString(R.string.artist_and_album, lovedSong?.artist, lovedSong?.album)
+                ctx.getString(R.string.artist_and_album, lovedSong?.artist, lovedSong?.album)
 
             itemView.apply {
                 setOnClickListener {
-
                     mediaPlayerHolder.isSongFromLovedSongs =
-                            Pair(true, lovedSong?.startFrom!!)
-                    uiControlInterface.onAddAlbumToQueue(ctx.getString(R.string.queue_song_add, ctx.getString(R.string.loved_songs)), mConvertedSongs, Pair(false, MusicOrgHelper.getSongForRestore(lovedSong, deviceSongs)))
+                        Pair(true, lovedSong?.startFrom!!)
+                    uiControlInterface.onAddAlbumToQueue(mLovedSongs, Pair(false, lovedSong))
                 }
                 setOnLongClickListener {
-                    performLovedSongDeletion(adapterPosition, deviceSongs, false)
+                    performLovedSongDeletion(adapterPosition, false)
                     return@setOnLongClickListener true
                 }
             }
         }
     }
 
-    fun performLovedSongDeletion(position: Int, deviceSongs: MutableList<Music>, isSwipe: Boolean) {
+    fun performLovedSongDeletion(position: Int, isSwipe: Boolean) {
         mLovedSongs?.get(position).let { song ->
             DialogHelper.showDeleteLovedSongDialog(
-                    ctx,
-                    song,
-                    this@LovedSongsAdapter,
-                    uiControlInterface,
-                    deviceSongs,
-                    Pair(isSwipe, position)
+                ctx,
+                song,
+                this@LovedSongsAdapter,
+                uiControlInterface,
+                Pair(isSwipe, position)
             )
         }
     }

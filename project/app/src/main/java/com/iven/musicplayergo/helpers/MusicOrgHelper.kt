@@ -10,7 +10,6 @@ import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
-import com.iven.musicplayergo.models.SavedMusic
 import com.iven.musicplayergo.player.MediaPlayerHolder
 
 
@@ -22,15 +21,15 @@ object MusicOrgHelper {
     // if selected artist differs from played artist -1 will be returned
     @JvmStatic
     fun getPlayingAlbumPosition(
-            selectedArtist: String?,
-            mediaPlayerHolder: MediaPlayerHolder,
-            deviceAlbumsByArtist: MutableMap<String, List<Album>>?
+        selectedArtist: String?,
+        mediaPlayerHolder: MediaPlayerHolder,
+        deviceAlbumsByArtist: MutableMap<String, List<Album>>?
     ) = try {
         val currentSong = mediaPlayerHolder.currentSong.first
         val album = getAlbumFromList(
-                selectedArtist,
-                currentSong?.album,
-                deviceAlbumsByArtist
+            selectedArtist,
+            currentSong?.album,
+            deviceAlbumsByArtist
         )
         album.second
     } catch (e: Exception) {
@@ -40,14 +39,14 @@ object MusicOrgHelper {
 
     @JvmStatic
     fun getAlbumSongs(
-            artist: String?,
-            album: String?,
-            deviceAlbumsByArtist: MutableMap<String, List<Album>>?
+        artist: String?,
+        album: String?,
+        deviceAlbumsByArtist: MutableMap<String, List<Album>>?
     ) = try {
         getAlbumFromList(
-                artist,
-                album,
-                deviceAlbumsByArtist
+            artist,
+            album,
+            deviceAlbumsByArtist
         ).first.music
     } catch (e: Exception) {
         e.printStackTrace()
@@ -57,9 +56,9 @@ object MusicOrgHelper {
     @JvmStatic
     // Returns a pair of album and its position given a list of albums
     fun getAlbumFromList(
-            artist: String?,
-            album: String?,
-            deviceAlbumsByArtist: MutableMap<String, List<Album>>?
+        artist: String?,
+        album: String?,
+        deviceAlbumsByArtist: MutableMap<String, List<Album>>?
     ): Pair<Album, Int> {
         val albums = deviceAlbumsByArtist?.get(artist)
         return try {
@@ -72,34 +71,25 @@ object MusicOrgHelper {
     }
 
     @JvmStatic
-    fun getSongForRestore(savedMusic: SavedMusic?, deviceSongs: MutableList<Music>): Music {
-        return deviceSongs.firstOrNull { s ->
-            s.artist == savedMusic?.artist && s.title == savedMusic?.title && s.displayName == savedMusic?.displayName
-                    && s.year == savedMusic?.year && s.duration == savedMusic.duration && s.album == savedMusic.album
-        } ?: deviceSongs.random()
-    }
-
-
-    @JvmStatic
     fun saveLatestSong(
-            latestSong: Music?,
-            mediaPlayerHolder: MediaPlayerHolder,
-            launchedBy: String
+        latestSong: Music?,
+        mediaPlayerHolder: MediaPlayerHolder,
+        launchedBy: String
     ) {
         val playerPosition = mediaPlayerHolder.playerPosition
         latestSong?.let { musicToSave ->
             val toSave = musicToSave.toSavedMusic(playerPosition, launchedBy)
             if (goPreferences.latestPlayedSong != toSave) {
                 goPreferences.latestPlayedSong =
-                        toSave
+                    toSave
             }
         }
     }
 
     @JvmStatic
     fun buildSortedArtistAlbums(
-            resources: Resources,
-            artistSongs: List<Music>?
+        resources: Resources,
+        artistSongs: List<Music>?
     ): List<Album> {
 
         val sortedAlbums = mutableListOf<Album>()
@@ -117,12 +107,12 @@ object MusicOrgHelper {
                     albumSongs.sortBy { song -> song.track }
 
                     sortedAlbums.add(
-                            Album(
-                                    album,
-                                    albumSongs[0].year.toFormattedYear(resources),
-                                    albumSongs,
-                                    albumSongs.map { song -> song.duration }.sum()
-                            )
+                        Album(
+                            album,
+                            albumSongs[0].year.toFormattedYear(resources),
+                            albumSongs,
+                            albumSongs.map { song -> song.duration }.sum()
+                        )
                     )
                 }
 
@@ -138,26 +128,26 @@ object MusicOrgHelper {
     @JvmStatic
     @SuppressLint("InlinedApi")
     fun getMusicCursor(contentResolver: ContentResolver) = contentResolver.query(
-            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-            arrayOf(
-                    AudioColumns.ARTIST, // 0
-                    AudioColumns.YEAR, // 1
-                    AudioColumns.TRACK, // 2
-                    AudioColumns.TITLE, // 3
-                    AudioColumns.DISPLAY_NAME, // 4,
-                    AudioColumns.DURATION, //5,
-                    AudioColumns.ALBUM, // 6
-                    getPathColumn(), // 7
-                    AudioColumns._ID //8
-            ), AudioColumns.IS_MUSIC + "=1", null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER
+        MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+        arrayOf(
+            AudioColumns.ARTIST, // 0
+            AudioColumns.YEAR, // 1
+            AudioColumns.TRACK, // 2
+            AudioColumns.TITLE, // 3
+            AudioColumns.DISPLAY_NAME, // 4,
+            AudioColumns.DURATION, //5,
+            AudioColumns.ALBUM, // 6
+            getPathColumn(), // 7
+            AudioColumns._ID //8
+        ), AudioColumns.IS_MUSIC + "=1", null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER
     )
 
     @JvmStatic
     @Suppress("DEPRECATION")
     fun getPathColumn() =
-            if (VersioningHelper.isQ()) {
-                AudioColumns.BUCKET_DISPLAY_NAME
-            } else {
-                AudioColumns.DATA
-            }
+        if (VersioningHelper.isQ()) {
+            AudioColumns.BUCKET_DISPLAY_NAME
+        } else {
+            AudioColumns.DATA
+        }
 }

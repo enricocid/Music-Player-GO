@@ -168,6 +168,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     var isSongRestoredFromPrefs = false
     var isSongFromLovedSongs = Pair(false, 0)
 
+    var isLovedSongsQueued = false
+
     var state = GoConstants.PAUSED
     var isPlay = false
 
@@ -604,6 +606,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
 
         if (isQueue) {
+            if (isLovedSongsQueued) {
+                mediaPlayer.seekTo(currentSong.first?.startFrom!!)
+            }
             mediaPlayerInterface.onQueueStartedOrEnded(isQueueStarted)
         }
 
@@ -740,6 +745,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             }
             else -> {
                 queueSongs.clear()
+                isLovedSongsQueued = false
                 mediaPlayerInterface.onQueueCleared()
                 mediaPlayerInterface.onQueueStartedOrEnded(false)
             }
