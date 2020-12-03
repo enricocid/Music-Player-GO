@@ -10,6 +10,8 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**Izzy**](https://github.com/IzzySoft) and [**Poussinou**](https://github.com/Poussinou) for setting up the F-Droid repository
 
+- [**Drhaal**](https://github.com/Drhaal) for Always On Display (AOD) [fixes](https://github.com/enricocid/Music-Player-GO/pull/186) and the following implementations: [190](https://github.com/enricocid/Music-Player-GO/pull/190), [193](https://github.com/enricocid/Music-Player-GO/pull/193), [230](https://github.com/enricocid/Music-Player-GO/pull/230), [240](https://github.com/enricocid/Music-Player-GO/pull/240)
+
 - [**Arianna Masciolini**](https://github.com/harisont) for the original precise volume control implementation
 
 - [**Steven Schoen**](https://github.com/DSteve595) for the search function [fixes](https://github.com/enricocid/Music-Player-GO/commit/1c27ff3421dbf7820608237dc60a974955efb022) and quick [support](https://github.com/reddit/IndicatorFastScroll/issues/30)
@@ -29,8 +31,6 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 - [**Johnett Mathew**](https://github.com/Johnett) for these [fixes](https://github.com/enricocid/Music-Player-GO/pull/149)
 
 - [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes](https://github.com/enricocid/Music-Player-GO/pull/121)
-
-- [**Drhaal**](https://github.com/Drhaal) for Always On Display (AOD) [fixes](https://github.com/enricocid/Music-Player-GO/pull/186) and the following implementations: [190](https://github.com/enricocid/Music-Player-GO/pull/190), [193](https://github.com/enricocid/Music-Player-GO/pull/193), [230](https://github.com/enricocid/Music-Player-GO/pull/230)
 
 - [**Ricardo**](https://github.com/RickyM7) for [multiple reports](https://github.com/enricocid/Music-Player-GO/issues/220)
 
