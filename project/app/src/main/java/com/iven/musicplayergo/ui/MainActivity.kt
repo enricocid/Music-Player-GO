@@ -745,6 +745,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
+    override fun onPreciseVolumeToggled() {
+        //avoid having user stuck at lowered volume without knowing why
+        mMediaPlayerHolder.setPreciseVolume(100)
+    }
+
     private fun updatePlayingStatus(isNowPlaying: Boolean) {
         val isPlaying = mMediaPlayerHolder.state != GoConstants.PAUSED
         val drawable =

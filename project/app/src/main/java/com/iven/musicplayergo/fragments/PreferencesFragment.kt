@@ -140,6 +140,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
+            getString(R.string.precise_volume_pref) -> mUIControlInterface.onPreciseVolumeToggled()
             getString(R.string.theme_pref) -> {
                 mThemePreference?.icon =
                     AppCompatResources.getDrawable(
