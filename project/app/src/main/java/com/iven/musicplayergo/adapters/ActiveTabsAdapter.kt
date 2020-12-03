@@ -7,16 +7,15 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 
-class ActiveTabsAdapter(
-        private val ctx: Context
-) :
-        RecyclerView.Adapter<ActiveTabsAdapter.CheckableItemsHolder>() {
+class ActiveTabsAdapter(private val ctx: Context) :
+    RecyclerView.Adapter<ActiveTabsAdapter.CheckableItemsHolder>() {
 
     private val mAvailableItems = goPreferences.prefsActiveFragmentsDef
     private val mActiveItems = goPreferences.activeFragments.toMutableList()
@@ -29,11 +28,11 @@ class ActiveTabsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckableItemsHolder {
         return CheckableItemsHolder(
-                LayoutInflater.from(parent.context).inflate(
-                        R.layout.active_tab_item,
-                        parent,
-                        false
-                )
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.active_tab_item,
+                parent,
+                false
+            )
         )
     }
 
@@ -47,7 +46,7 @@ class ActiveTabsAdapter(
 
         fun bindItems() {
 
-            itemView.apply {
+            itemView.run {
 
                 val tabImageButton = findViewById<ImageButton>(R.id.tab_image)
                 val indicator = findViewById<ImageButton>(R.id.tab_indicator)
@@ -58,39 +57,39 @@ class ActiveTabsAdapter(
 
                 if (isEnabled) {
                     manageIndicatorsStatus(
-                            mActiveItems.contains(adapterPosition),
-                            tabImageButton,
-                            indicator
+                        mActiveItems.contains(adapterPosition),
+                        tabImageButton,
+                        indicator
                     )
                 } else {
-                    indicator.apply {
+                    indicator.run {
                         visibility = View.VISIBLE
-                        drawable.alpha = ThemeHelper.getAlphaForAccent()
+                        drawable.alpha = GoConstants.ALPHA
                     }
                     ThemeHelper.updateIconTint(
-                            tabImageButton,
-                            ThemeHelper.getAlphaAccent(context, ThemeHelper.getAlphaForAccent())
+                        tabImageButton,
+                        ThemeHelper.getAlphaAccent(ctx)
                     )
                 }
 
                 setOnClickListener {
 
                     manageIndicatorsStatus(
-                            indicator.visibility != View.VISIBLE,
-                            tabImageButton,
-                            indicator
+                        indicator.visibility != View.VISIBLE,
+                        tabImageButton,
+                        indicator
                     )
 
                     if (indicator.visibility != View.VISIBLE) {
                         mActiveItems.remove(
-                                adapterPosition
+                            adapterPosition
                         )
                     } else {
                         mActiveItems.add(adapterPosition)
                     }
                     if (mActiveItems.size < 2) {
                         context.getString(R.string.active_fragments_pref_warning)
-                                .toToast(context)
+                            .toToast(context)
                         mActiveItems.add(adapterPosition)
                         manageIndicatorsStatus(true, tabImageButton, indicator)
                     }
@@ -100,9 +99,9 @@ class ActiveTabsAdapter(
     }
 
     private fun manageIndicatorsStatus(
-            condition: Boolean,
-            icon: ImageButton,
-            indicator: ImageView
+        condition: Boolean,
+        icon: ImageButton,
+        indicator: ImageView
     ) {
         when {
             condition -> {
@@ -112,8 +111,8 @@ class ActiveTabsAdapter(
             else -> {
                 indicator.handleViewVisibility(false)
                 ThemeHelper.updateIconTint(
-                        icon,
-                        ThemeHelper.getAlphaAccent(ctx, ThemeHelper.getAlphaForAccent())
+                    icon,
+                    ThemeHelper.getAlphaAccent(ctx)
                 )
             }
         }

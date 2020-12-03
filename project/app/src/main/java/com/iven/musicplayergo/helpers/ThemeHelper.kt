@@ -46,7 +46,7 @@ object ThemeHelper {
                     or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     or Intent.FLAG_ACTIVITY_NEW_TASK
         )
-        activity.apply {
+        activity.run {
             finishAfterTransition()
             startActivity(intent)
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -87,9 +87,6 @@ object ThemeHelper {
     @JvmStatic
     private fun isThemeNight(configuration: Configuration) =
         configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-
-    @JvmStatic
-    fun getAlphaForAccent() = 150
 
     @JvmStatic
     @TargetApi(Build.VERSION_CODES.O_MR1)
@@ -167,14 +164,6 @@ object ThemeHelper {
         Pair(R.style.BaseTheme_DeepPurple, 3)
     }
 
-    @ColorInt
-    @JvmStatic
-    fun getColor(context: Context, color: Int, emergencyColor: Int) = try {
-        color.decodeColor(context)
-    } catch (e: Exception) {
-        emergencyColor.decodeColor(context)
-    }
-
     @JvmStatic
     fun updateIconTint(imageButton: ImageButton, tint: Int) {
         ImageViewCompat.setImageTintList(
@@ -192,11 +181,7 @@ object ThemeHelper {
             accent = R.color.deep_purple
             goPreferences.accent = accent
         }
-        return getColor(
-            context,
-            accent,
-            R.color.deep_purple
-        )
+        return accent.decodeColor(context)
     }
 
     @ColorInt
@@ -222,11 +207,9 @@ object ThemeHelper {
         TypedValue().apply { context.theme.resolveAttribute(attrRes, this, true) }
 
     @JvmStatic
-    fun getAlphaAccent(context: Context, alpha: Int) =
+    fun getAlphaAccent(context: Context) =
         ColorUtils.setAlphaComponent(
-            resolveThemeAccent(
-                context
-            ), alpha
+            resolveThemeAccent(context), GoConstants.ALPHA
         )
 
     @JvmStatic

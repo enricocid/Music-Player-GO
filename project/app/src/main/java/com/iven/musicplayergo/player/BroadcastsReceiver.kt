@@ -13,8 +13,8 @@ private const val HEADSET_DISCONNECTED = 0
 private const val HEADSET_CONNECTED = 1
 
 class NotificationReceiver(
-        private val playerService: PlayerService,
-        private val mediaPlayerHolder: MediaPlayerHolder
+    private val playerService: PlayerService,
+    private val mediaPlayerHolder: MediaPlayerHolder
 ) : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -23,7 +23,7 @@ class NotificationReceiver(
             val action = intent?.action
 
             if (action != null) {
-                mediaPlayerHolder.apply {
+                mediaPlayerHolder.run {
                     when (action) {
                         GoConstants.PREV_ACTION -> instantReset()
                         GoConstants.PLAY_PAUSE_ACTION -> resumeOrPause()
@@ -34,7 +34,7 @@ class NotificationReceiver(
                         }
                         GoConstants.CLOSE_ACTION -> if (playerService.isRunning && isMediaPlayer) {
                             stopPlaybackService(
-                                    stopPlayback = true
+                                stopPlayback = true
                             )
                         }
 

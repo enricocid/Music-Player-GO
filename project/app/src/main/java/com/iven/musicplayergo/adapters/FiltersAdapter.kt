@@ -12,7 +12,7 @@ import com.iven.musicplayergo.goPreferences
 
 
 class FiltersAdapter :
-        RecyclerView.Adapter<FiltersAdapter.CheckableItemsHolder>() {
+    RecyclerView.Adapter<FiltersAdapter.CheckableItemsHolder>() {
 
     private val mItemsToRemove = mutableListOf<String>()
 
@@ -25,11 +25,11 @@ class FiltersAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckableItemsHolder {
         return CheckableItemsHolder(
-                LayoutInflater.from(parent.context).inflate(
-                        R.layout.filter_item,
-                        parent,
-                        false
-                )
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.filter_item,
+                parent,
+                false
+            )
         )
     }
 
@@ -43,7 +43,7 @@ class FiltersAdapter :
 
         fun bindItems(item: String?) {
 
-            itemView.apply {
+            itemView.run {
 
                 val checkBox = findViewById<MaterialCheckBox>(R.id.checkbox)
                 val filter = findViewById<TextView>(R.id.filter).apply {

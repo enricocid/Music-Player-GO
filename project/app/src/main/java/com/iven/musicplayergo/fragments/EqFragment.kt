@@ -70,10 +70,10 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
     fun onHandleBackPressed(): Animator {
         if (!mEqAnimator.isRunning) {
             mEqAnimator =
-                    mEqFragmentBinding.root.createCircularReveal(
-                            isErrorFragment = false,
-                            show = false
-                    )
+                mEqFragmentBinding.root.createCircularReveal(
+                    isErrorFragment = false,
+                    show = false
+                )
         }
         return mEqAnimator
     }
@@ -118,15 +118,15 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
     private fun saveEqSettings() {
         mUIControlInterface.onSaveEqualizerSettings(
-                mSelectedPreset,
-                mEqFragmentBinding.sliderBass.value.toInt().toShort(),
-                mEqFragmentBinding.sliderVirt.value.toInt().toShort()
+            mSelectedPreset,
+            mEqFragmentBinding.sliderBass.value.toInt().toShort(),
+            mEqFragmentBinding.sliderVirt.value.toInt().toShort()
         )
     }
 
     private fun finishSetupEqualizer(view: View) {
 
-        mEqFragmentBinding.apply {
+        mEqFragmentBinding.run {
             mSliders[0] = slider0
             mSlidersLabels[0] = freq0
             mSliders[1] = slider1
@@ -144,17 +144,17 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
         }
 
         val shapeAppearanceModel = ShapeAppearanceModel()
-                .toBuilder()
-                .setAllCorners(CornerFamily.ROUNDED, resources.getDimension(R.dimen.md_corner_radius))
-                .build()
+            .toBuilder()
+            .setAllCorners(CornerFamily.ROUNDED, resources.getDimension(R.dimen.md_corner_radius))
+            .build()
         val roundedTextBackground = MaterialShapeDrawable(shapeAppearanceModel).apply {
             strokeColor = ColorStateList.valueOf(ThemeHelper.resolveThemeAccent(requireActivity()))
             strokeWidth = 0.50F
             fillColor =
-                    ColorStateList.valueOf(R.color.windowBackground.decodeColor(requireActivity()))
+                ColorStateList.valueOf(R.color.windowBackground.decodeColor(requireActivity()))
         }
 
-        mEqualizer.first.apply {
+        mEqualizer.first.run {
             val bandLevelRange = bandLevelRange
             val minBandLevel = bandLevelRange[0]
             val maxBandLevel = bandLevelRange[1]
@@ -170,31 +170,31 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                         if (fromUser) {
                             if (mSliders[item.index] == selectedSlider) {
                                 mEqualizer.first.setBandLevel(
-                                        item.index.toShort(),
-                                        value.toInt().toShort()
+                                    item.index.toShort(),
+                                    value.toInt().toShort()
                                 )
                             }
                         }
                     }
-                    mSlidersLabels[item.index]?.apply {
-                        text = formatMilliHzToK(getCenterFreq(item.index.toShort()))
-                        background = roundedTextBackground
+                    mSlidersLabels[item.index]?.let { textView ->
+                        textView.text = formatMilliHzToK(getCenterFreq(item.index.toShort()))
+                        textView.background = roundedTextBackground
                     }
                 }
             }
 
-            mEqFragmentBinding.presets.apply {
+            mEqFragmentBinding.presets.run {
                 setup {
                     withDataSource(mDataSource)
                     withItem<String, PresetsViewHolder>(R.layout.eq_preset_item) {
                         onBind(::PresetsViewHolder) { index, item ->
                             presetTitle.text = item
                             val textColor = if (mSelectedPreset == index) {
-                                ThemeHelper.resolveThemeAccent(context)
+                                ThemeHelper.resolveThemeAccent(requireActivity())
                             } else {
                                 ThemeHelper.resolveColorAttr(
-                                        requireActivity(),
-                                        android.R.attr.textColorPrimary
+                                    requireActivity(),
+                                    android.R.attr.textColorPrimary
                                 )
                             }
                             presetTitle.setTextColor(textColor)
@@ -219,24 +219,24 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
         view.afterMeasured {
             mEqAnimator =
-                    mEqFragmentBinding.root.createCircularReveal(
-                            isErrorFragment = false,
-                            show = true
-                    )
+                mEqFragmentBinding.root.createCircularReveal(
+                    isErrorFragment = false,
+                    show = true
+                )
         }
     }
 
     private fun setupToolbar() {
-        mEqFragmentBinding.eqToolbar.apply {
+        mEqFragmentBinding.eqToolbar.run {
 
             setNavigationOnClickListener {
                 requireActivity().onBackPressed()
             }
 
             inflateMenu(R.menu.menu_eq)
-            menu.apply {
+            menu.run {
                 val equalizerSwitchMaterial =
-                        findItem(R.id.equalizerSwitch).actionView as SwitchMaterial
+                    findItem(R.id.equalizerSwitch).actionView as SwitchMaterial
                 equalizerSwitchMaterial.isChecked = mEqualizer.first.enabled
                 equalizerSwitchMaterial.setOnCheckedChangeListener { _, isChecked ->
                     Timer().schedule(1000) {

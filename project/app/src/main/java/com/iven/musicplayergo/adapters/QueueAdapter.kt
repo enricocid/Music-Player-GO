@@ -17,17 +17,17 @@ import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
 
 class QueueAdapter(
-        private val ctx: Context,
-        private val queueSongsDialog: MaterialDialog,
-        private val mediaPlayerHolder: MediaPlayerHolder
+    private val ctx: Context,
+    private val queueSongsDialog: MaterialDialog,
+    private val mediaPlayerHolder: MediaPlayerHolder
 ) :
-        RecyclerView.Adapter<QueueAdapter.QueueHolder>() {
+    RecyclerView.Adapter<QueueAdapter.QueueHolder>() {
 
     private var mQueueSongs = mediaPlayerHolder.queueSongs
     private var mSelectedSong = mediaPlayerHolder.currentSong
 
     private val mDefaultTextColor =
-            ThemeHelper.resolveColorAttr(ctx, android.R.attr.textColorPrimary)
+        ThemeHelper.resolveColorAttr(ctx, android.R.attr.textColorPrimary)
 
     fun swapSelectedSong(song: Music?) {
         notifyItemChanged(mQueueSongs.indexOf(mSelectedSong.first))
@@ -42,11 +42,11 @@ class QueueAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QueueHolder {
         return QueueHolder(
-                LayoutInflater.from(parent.context).inflate(
-                        R.layout.music_item,
-                        parent,
-                        false
-                )
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.music_item,
+                parent,
+                false
+            )
         )
     }
 
@@ -60,19 +60,19 @@ class QueueAdapter(
 
         fun bindItems(song: Music) {
 
-            itemView.apply {
+            itemView.run {
 
                 val title = findViewById<TextView>(R.id.title)
                 val duration = findViewById<TextView>(R.id.duration)
                 val subtitle = findViewById<TextView>(R.id.subtitle)
 
-                title.apply {
+                title.run {
 
                     text = song.title
 
                     when {
                         mQueueSongs.indexOf(mSelectedSong.first) == adapterPosition && mSelectedSong.second -> setTextColor(
-                                ThemeHelper.resolveThemeAccent(context)
+                            ThemeHelper.resolveThemeAccent(ctx)
                         )
                         else -> setTextColor(mDefaultTextColor)
                     }
@@ -88,7 +88,7 @@ class QueueAdapter(
                 ).toSpanned()
 
                 subtitle.text =
-                        context.getString(R.string.artist_and_album, song.artist, song.album)
+                    context.getString(R.string.artist_and_album, song.artist, song.album)
 
                 setOnClickListener {
                     mediaPlayerHolder.startSongFromQueue(song)
@@ -106,12 +106,12 @@ class QueueAdapter(
         val song = mQueueSongs[position]
         return if (title.currentTextColor != ThemeHelper.resolveThemeAccent(ctx)) {
             DialogHelper.showDeleteQueueSongDialog(
-                    ctx,
-                    Pair(song, position),
-                    queueSongsDialog,
-                    this@QueueAdapter,
-                    mediaPlayerHolder,
-                    isSwipe
+                ctx,
+                Pair(song, position),
+                queueSongsDialog,
+                this@QueueAdapter,
+                mediaPlayerHolder,
+                isSwipe
             )
             true
         } else {

@@ -52,4 +52,8 @@ object GoConstants {
     const val REWIND_ACTION = "REWIND_GO"
     const val REPEAT_ACTION = "REPEAT_GO"
     const val CLOSE_ACTION = "CLOSE_GO"
+
+    // alpha value for accent
+    const val ALPHA = 150
+
 }

@@ -43,11 +43,11 @@ object DialogHelper {
             recyclerView.layoutManager = GridLayoutManager(context, 3)
         } else {
             if (goPreferences.isEdgeToEdge) {
-                window?.apply {
-                    ThemeHelper.handleLightSystemBars(context.resources.configuration, this)
+                window?.let { win ->
+                    ThemeHelper.handleLightSystemBars(context.resources.configuration, win)
                     edgeToEdge {
                         recyclerView.fit { Edge.Bottom }
-                        decorView.fit { Edge.Top }
+                        win.decorView.fit { Edge.Top }
                     }
                 }
             }
@@ -84,7 +84,7 @@ object DialogHelper {
             )
             positiveButton(R.string.yes) {
 
-                mediaPlayerHolder.apply {
+                mediaPlayerHolder.run {
                     queueSongs.removeAt(song.second)
                     queueAdapter.swapQueueSongs(queueSongs)
 
@@ -117,7 +117,7 @@ object DialogHelper {
 
             positiveButton(R.string.yes) {
 
-                mediaPlayerHolder.apply {
+                mediaPlayerHolder.run {
                     if (isQueueStarted && isPlaying) {
 
                         restorePreQueueSongs()
@@ -158,14 +158,14 @@ object DialogHelper {
                 recyclerView.layoutManager = GridLayoutManager(context, 3)
             } else {
                 if (goPreferences.isEdgeToEdge) {
-                    window?.apply {
+                    window?.let { win ->
                         ThemeHelper.handleLightSystemBars(
                             context.resources.configuration,
-                            this
+                            win
                         )
                         edgeToEdge {
                             recyclerView.fit { Edge.Bottom }
-                            decorView.fit { Edge.Top }
+                            win.decorView.fit { Edge.Top }
                         }
                     }
                 }

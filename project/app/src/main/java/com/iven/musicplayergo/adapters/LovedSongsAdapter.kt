@@ -73,7 +73,7 @@ class LovedSongsAdapter(
             subtitle.text =
                 ctx.getString(R.string.artist_and_album, lovedSong?.artist, lovedSong?.album)
 
-            itemView.apply {
+            itemView.run {
                 setOnClickListener {
                     mediaPlayerHolder.isSongFromLovedSongs =
                         Pair(true, lovedSong?.startFrom!!)
