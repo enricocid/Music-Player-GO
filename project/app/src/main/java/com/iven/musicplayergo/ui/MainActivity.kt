@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private val mMusicViewModel: MusicViewModel by viewModels()
 
     // Fragments
-    private val mActiveFragments: List<Int> = goPreferences.activeFragments.toList()
+    private val mActiveFragments: List<String> = goPreferences.activeFragments.toList()
     private var mArtistsFragment: MusicContainersListFragment? = null
     private var mAllMusicFragment: AllMusicFragment? = null
     private var mFoldersFragment: MusicContainersListFragment? = null
@@ -329,7 +329,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 TabLayoutMediator(this, mMainActivityBinding.viewPager2) { tab, position ->
                     val fragmentIndex = mActiveFragments[position]
                     tab.setIcon(ThemeHelper.getTabIcon(fragmentIndex))
-                    initFragmentAtPosition(fragmentIndex)
+                    initFragmentAt(fragmentIndex)
                 }.attach()
             }
 
@@ -367,21 +367,21 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    private fun initFragmentAtPosition(fragmentIndex: Int) {
+    private fun initFragmentAt(fragmentIndex: String) {
         when (fragmentIndex) {
-            0 -> if (mArtistsFragment == null) {
+            GoConstants.ARTISTS_TAB -> if (mArtistsFragment == null) {
                 mArtistsFragment =
                     MusicContainersListFragment.newInstance(GoConstants.ARTIST_VIEW)
             }
-            1 -> if (mAlbumsFragment == null) {
+            GoConstants.ALBUM_TAB -> if (mAlbumsFragment == null) {
                 mAlbumsFragment =
                     MusicContainersListFragment.newInstance(GoConstants.ALBUM_VIEW)
             }
-            2 -> if (mAllMusicFragment == null) {
+            GoConstants.SONGS_TAB -> if (mAllMusicFragment == null) {
                 mAllMusicFragment =
                     AllMusicFragment.newInstance()
             }
-            3 -> if (mFoldersFragment == null) {
+            GoConstants.FOLDERS_TAB -> if (mFoldersFragment == null) {
                 mFoldersFragment =
                     MusicContainersListFragment.newInstance(GoConstants.FOLDER_VIEW)
             }
@@ -400,11 +400,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         else -> getFragmentForIndex(mActiveFragments[4])
     }
 
-    private fun getFragmentForIndex(index: Int) = when (index) {
-        0 -> mArtistsFragment
-        1 -> mAlbumsFragment
-        2 -> mAllMusicFragment
-        3 -> mFoldersFragment
+    private fun getFragmentForIndex(index: String) = when (index) {
+        GoConstants.ARTISTS_TAB -> mArtistsFragment
+        GoConstants.ALBUM_TAB -> mAlbumsFragment
+        GoConstants.SONGS_TAB -> mAllMusicFragment
+        GoConstants.FOLDERS_TAB -> mFoldersFragment
         else -> mSettingsFragment
     }
 

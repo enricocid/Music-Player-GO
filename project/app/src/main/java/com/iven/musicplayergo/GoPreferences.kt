@@ -21,8 +21,8 @@ class GoPreferences(context: Context) {
     private val prefsAccent = context.getString(R.string.accent_pref)
     private val prefsEdgeToEdge = context.getString(R.string.edge_pref)
 
+    private val prefsActiveFragmentsDef = context.getString(R.string.active_fragments_def_pref)
     private val prefsActiveFragments = context.getString(R.string.active_fragments_pref)
-    val prefsActiveFragmentsDef = setOf(0, 1, 2, 3, 4)
 
     private val prefsCover = context.getString(R.string.covers_pref)
 
@@ -47,7 +47,7 @@ class GoPreferences(context: Context) {
     private val mGson = GsonBuilder().create()
 
     // active fragments type
-    private val typeActiveFragments = object : TypeToken<Set<Int>>() {}.type
+    private val typeActiveFragments = object : TypeToken<Set<String>>() {}.type
 
     // saved equalizer settings is a SavedEqualizerSettings
     private val typeSavedEqualizerSettings = object : TypeToken<SavedEqualizerSettings>() {}.type
@@ -98,8 +98,14 @@ class GoPreferences(context: Context) {
         ) && VersioningHelper.isOreoMR1()
         set(value) = mPrefs.edit().putBoolean(prefsEdgeToEdge, value).apply()
 
-    var activeFragments: Set<Int>
-        get() = getObject(prefsActiveFragments, typeActiveFragments) ?: prefsActiveFragmentsDef
+    var activeFragmentsDef: Set<String>
+        get() = getObject(prefsActiveFragmentsDef, typeActiveFragments)
+            ?: GoConstants.DEFAULT_ACTIVE_FRAGMENTS
+        set(value) = putObject(prefsActiveFragmentsDef, value)
+
+    var activeFragments: Set<String>
+        get() = getObject(prefsActiveFragments, typeActiveFragments)
+            ?: GoConstants.DEFAULT_ACTIVE_FRAGMENTS
         set(value) = putObject(prefsActiveFragments, value)
 
     var onListEnded

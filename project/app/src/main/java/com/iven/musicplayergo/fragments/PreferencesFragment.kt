@@ -14,6 +14,8 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
@@ -224,8 +226,13 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             customListAdapter(activeTabsAdapter)
 
-            getRecyclerView().layoutManager =
-                LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+            getRecyclerView().run {
+                val gridLayoutManager = GridLayoutManager(context, 2)
+                gridLayoutManager.spanSizeLookup = activeTabsAdapter.spanSizeLookup
+                layoutManager = gridLayoutManager
+                val touchHelper = ItemTouchHelper(activeTabsAdapter.itemTouchCallback)
+                touchHelper.attachToRecyclerView(this)
+            }
 
             positiveButton(android.R.string.ok) {
                 goPreferences.activeFragments = activeTabsAdapter.getUpdatedItems()
