@@ -245,6 +245,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         setContentView(mMainActivityBinding.root)
 
+        if (goPreferences.isEdgeToEdge) {
+            window.apply {
+                val sbColor = R.color.windowBackground.decodeColor(this@MainActivity)
+                statusBarColor = sbColor
+                navigationBarColor = sbColor
+                ThemeHelper.handleLightSystemBars(resources.configuration, this)
+            }
+            edgeToEdge {
+                mMainActivityBinding.root.fit { Edge.Top + Edge.Bottom }
+            }
+        }
+
         initMediaButtons()
 
         sRestoreSettingsFragment =
@@ -285,18 +297,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mPlayerControlsPanelBinding.playerView.animate().apply {
                     duration = 500
                     alpha(1.0F)
-                }
-
-                if (goPreferences.isEdgeToEdge) {
-                    window.apply {
-                        val sbColor = R.color.windowBackground.decodeColor(this@MainActivity)
-                        statusBarColor = sbColor
-                        navigationBarColor = sbColor
-                        ThemeHelper.handleLightSystemBars(resources.configuration, this)
-                    }
-                    edgeToEdge {
-                        mMainActivityBinding.root.fit { Edge.Top + Edge.Bottom }
-                    }
                 }
             }
         } else {
@@ -1196,26 +1196,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    override fun onAddAlbumToQueue(albumTitle: String?, songs: MutableList<Music>?, isAlbumOrFolder: Pair<Boolean, Music?>) {
-        if (checkIsPlayer(true)) {
+    override fun onAddAlbumToQueue(songs: MutableList<Music>?, isAlbumOrFolder: Pair<Boolean, Music?>) {
+        if (checkIsPlayer(true) && !sLovedSongsAddedToQueue) {
             mMediaPlayerHolder.apply {
                 if (queueSongs.isEmpty()) {
                     setQueueEnabled(true)
                 }
                 songs?.let { songsToQueue ->
-                    if (sLovedSongsAddedToQueue) {
-                        val differences = songsToQueue.minus(queueSongs)
-                        queueSongs.addAll(differences)
-                    } else {
-                        queueSongs.addAll(songsToQueue)
-                    }
-
-                    getString(
-                            R.string.queue_song_add,
-                            albumTitle
-                    ).toToast(
-                            this@MainActivity
-                    )
+                    queueSongs.addAll(songsToQueue)
                 }
 
                 if (!isAlbumOrFolder.first) {
