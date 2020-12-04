@@ -27,5 +27,5 @@
     <color name="windowBackground">#151515</color>
     <color name="dialogsBackground">#212121</color>
     <color name="widgetsColor">#fafafa</color>
-    <color name="navBarColor">@android:color/background_dark</color>
+    <color name="systemBarsColor">#313131</color>
 </resources>

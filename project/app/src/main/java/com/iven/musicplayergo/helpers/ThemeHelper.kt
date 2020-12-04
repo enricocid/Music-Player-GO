@@ -1,7 +1,6 @@
 package com.iven.musicplayergo.helpers
 
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -10,12 +9,8 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.RippleDrawable
-import android.os.Build
 import android.text.Spanned
 import android.util.TypedValue
-import android.view.View
-import android.view.Window
-import android.view.WindowInsetsController
 import android.widget.ImageButton
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
@@ -83,37 +78,6 @@ object ThemeHelper {
     @JvmStatic
     fun isDeviceLand(resources: Resources) =
         resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-
-    @JvmStatic
-    private fun isThemeNight(configuration: Configuration) =
-        configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-
-    @JvmStatic
-    @TargetApi(Build.VERSION_CODES.O_MR1)
-    @Suppress("DEPRECATION")
-    fun handleLightSystemBars(configuration: Configuration, window: Window) {
-        if (VersioningHelper.isR()) {
-            window.decorView.windowInsetsController?.run {
-                val appearance =
-                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS or WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
-                val mask = if (isThemeNight(configuration)) {
-                    0
-                } else {
-                    appearance
-                }
-                setSystemBarsAppearance(appearance, mask)
-            }
-        } else {
-            val decorView = window.decorView
-            val flags = decorView.systemUiVisibility
-            decorView.systemUiVisibility =
-                if (isThemeNight(configuration)) {
-                    flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv() and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
-                } else {
-                    flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-                }
-        }
-    }
 
     // Fixed array of pairs (first: accent, second: theme, third: color primary dark)
     @JvmStatic

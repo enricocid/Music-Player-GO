@@ -42,9 +42,8 @@ object DialogHelper {
         if (ThemeHelper.isDeviceLand(context.resources)) {
             recyclerView.layoutManager = GridLayoutManager(context, 3)
         } else {
-            if (goPreferences.isEdgeToEdge) {
+            if (VersioningHelper.isOreoMR1()) {
                 window?.let { win ->
-                    ThemeHelper.handleLightSystemBars(context.resources.configuration, win)
                     edgeToEdge {
                         recyclerView.fit { Edge.Bottom }
                         win.decorView.fit { Edge.Top }
@@ -157,12 +156,8 @@ object DialogHelper {
             if (ThemeHelper.isDeviceLand(context.resources)) {
                 recyclerView.layoutManager = GridLayoutManager(context, 3)
             } else {
-                if (goPreferences.isEdgeToEdge) {
+                if (VersioningHelper.isOreoMR1()) {
                     window?.let { win ->
-                        ThemeHelper.handleLightSystemBars(
-                            context.resources.configuration,
-                            win
-                        )
                         edgeToEdge {
                             recyclerView.fit { Edge.Bottom }
                             win.decorView.fit { Edge.Top }

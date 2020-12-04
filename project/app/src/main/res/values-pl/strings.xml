@@ -64,9 +64,6 @@
     <string name="theme_pref_auto_title">Automatyczny</string>
     <!-- Preferences - Accent -->
     <string name="accent_pref_title">Odcień koloru</string>
-    <!-- Preferences - Edge-to-edge -->
-    <string name="edge_pref_summary_on">Wyłącz edge-to-edge</string>
-    <string name="edge_pref_summary_off">Włącz edge-to-edge</string>
     <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">Aktywuj zakładki</string>
     <string name="active_fragments_pref_warning">Po prostu nie możesz usunąć wszystkich zakładek! :P</string>

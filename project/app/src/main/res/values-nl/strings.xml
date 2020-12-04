@@ -45,8 +45,6 @@
     <string name="theme_pref_dark_title">Donker</string>
     <string name="theme_pref_auto_title">Automatisch</string>
     <string name="accent_pref_title">Accent</string>
-    <string name="edge_pref_summary_on">Beeldvullende modus uitschakelen</string>
-    <string name="edge_pref_summary_off">Beeldvullende modus inschakelen</string>
     <string name="active_fragments_pref_title">Actieve tabbladen</string>
     <string name="active_fragments_pref_warning">Je kunt niet álle tabbladen verwijderen! :P</string>
     <string name="sorting_pref_default">Standaard</string>

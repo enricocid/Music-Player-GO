@@ -46,8 +46,6 @@
     <string name="theme_pref_dark_title">Oscuro</string>
     <string name="theme_pref_auto_title">Automático</string>
     <string name="accent_pref_title">Acento</string>
-    <string name="edge_pref_summary_on">Activar modo de extremo a extremo</string>
-    <string name="edge_pref_summary_off">Desactivar modo de extremo a extremo</string>
     <string name="active_fragments_pref_title">Pestañas activas</string>
     <string name="active_fragments_pref_warning">¡No puedes remover todas las pestañas! :P</string>
     <string name="sorting_pref_default">Predeterminado</string>

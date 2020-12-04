@@ -1,0 +1,17 @@
+<resources>
+
+    <style name="BaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="indicatorFastScrollerStyle">@style/FastScrollerColorFull</item>
+        <item name="md_background_color">@color/dialogsBackground</item>
+        <item name="md_corner_radius">@dimen/md_corner_radius</item>
+        <item name="preferenceTheme">@style/PrefTheme</item>
+        <item name="popupMenuStyle">@style/PopupMenu</item>
+        <item name="alertDialogTheme">@style/DialogsStyle</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="android:statusBarColor">@color/windowBackground</item>
+        <item name="android:navigationBarColor">@color/windowBackground</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+</resources>

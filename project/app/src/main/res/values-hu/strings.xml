@@ -41,8 +41,6 @@
     <string name="theme_pref_dark_title">Sötét</string>
     <string name="theme_pref_auto_title">Automatikus</string>
     <string name="accent_pref_title">Kiemelés</string>
-    <string name="edge_pref_summary_on">Széltől szélig mód kikapcsolása</string>
-    <string name="edge_pref_summary_off">Széltől szélig mód bekapcsolása</string>
     <string name="active_fragments_pref_title">Aktív oldalak</string>
     <string name="active_fragments_pref_warning">Nem tudja eltávolítani az összes oldalt! :P</string>
     <string name="sorting_pref_default">Alapértelmezett</string>

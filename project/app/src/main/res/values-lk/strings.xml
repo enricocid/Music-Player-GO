@@ -79,10 +79,6 @@
     <!-- Preferences - Accent -->
     <string name="accent_pref_title">උච්චාරණය</string>
 
-    <!-- Preferences - Edge-to-edge -->
-    <string name="edge_pref_summary_on">දාරයේ සිට දාරය අක්රීය කරන්න</string>
-    <string name="edge_pref_summary_off">දාරයේ සිට දාරය සක්රීය කරන්න</string>
-
     <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">සක්රිය ටැබ්</string>
     <string name="active_fragments_pref_warning">ඔබට සියලු ටැබ් ඉවත් කළ නොහැක! :P</string>

@@ -41,8 +41,6 @@
     <string name="theme_pref_dark_title">Escuro</string>
     <string name="theme_pref_auto_title">Automático</string>
     <string name="accent_pref_title">Cor de destaque</string>
-    <string name="edge_pref_summary_on">Desligar edge-to-edge</string>
-    <string name="edge_pref_summary_off">Ligar edge-to-edge</string>
     <string name="active_fragments_pref_title">Abas ativas</string>
     <string name="active_fragments_pref_warning">Você não pode simplesmente remover todas as abas! :P</string>
     <string name="sorting_pref_default">Padrão</string>

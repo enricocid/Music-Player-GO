@@ -48,8 +48,6 @@
     <string name="theme_pref_dark_title">Scuro</string>
     <string name="theme_pref_auto_title">Automatico</string>
     <string name="accent_pref_title">Accento</string>
-    <string name="edge_pref_summary_on">Disabilita edge-to-edge</string>
-    <string name="edge_pref_summary_off">Abilita edge-to-edge</string>
     <string name="covers_pref_title">Cover album incorporate</string>
     <string name="covers_pref_summary_on">Nascondi le cover degli album</string>
     <string name="covers_pref_summary_off">Mostra le cover degli album</string>

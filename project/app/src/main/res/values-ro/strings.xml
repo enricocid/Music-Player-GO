@@ -42,8 +42,6 @@
     <string name="theme_pref_dark_title">Întunecat</string>
     <string name="theme_pref_auto_title">Automatică</string>
     <string name="accent_pref_title">Culoare accentuată</string>
-    <string name="edge_pref_summary_on">Dezactivați edge-to-edge</string>
-    <string name="edge_pref_summary_off">Activati edge-to-edge</string>
     <string name="active_fragments_pref_title">Filele active</string>
     <string name="active_fragments_pref_warning">Nu puteți elimina toate filele! : P</string>
     <string name="sorting_pref">Sortare</string>

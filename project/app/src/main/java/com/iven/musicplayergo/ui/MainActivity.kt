@@ -243,13 +243,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         setContentView(mMainActivityBinding.root)
 
-        if (goPreferences.isEdgeToEdge) {
-            window.run {
-                val sbColor = R.color.windowBackground.decodeColor(this@MainActivity)
-                statusBarColor = sbColor
-                navigationBarColor = sbColor
-                ThemeHelper.handleLightSystemBars(resources.configuration, this)
-            }
+        if (VersioningHelper.isOreoMR1()) {
             edgeToEdge {
                 mMainActivityBinding.root.fit { Edge.Top + Edge.Bottom }
             }
@@ -713,15 +707,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     mNowPlayingBinding.npSeekBar.setOnSeekBarChangeListener(null)
                 }
 
-                if (goPreferences.isEdgeToEdge && !ThemeHelper.isDeviceLand(resources)) {
-                    window?.let { win ->
-                        ThemeHelper.handleLightSystemBars(
-                            this@MainActivity.resources.configuration,
-                            win
-                        )
-                        edgeToEdge {
-                            mNowPlayingBinding.root.fit { Edge.Bottom }
-                        }
+                if (VersioningHelper.isOreoMR1() && !ThemeHelper.isDeviceLand(resources)) {
+                    edgeToEdge {
+                        mNowPlayingBinding.root.fit { Edge.Bottom }
                     }
                 }
 

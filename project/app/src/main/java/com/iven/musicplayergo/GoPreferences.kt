@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedEqualizerSettings
 import java.lang.reflect.Type
@@ -19,7 +18,6 @@ class GoPreferences(context: Context) {
     private val prefsTheme = context.getString(R.string.theme_pref)
     private val prefsThemeDef = context.getString(R.string.theme_pref_light)
     private val prefsAccent = context.getString(R.string.accent_pref)
-    private val prefsEdgeToEdge = context.getString(R.string.edge_pref)
 
     private val prefsActiveFragmentsDef = context.getString(R.string.active_fragments_def_pref)
     private val prefsActiveFragments = context.getString(R.string.active_fragments_pref)
@@ -90,13 +88,6 @@ class GoPreferences(context: Context) {
     var accent
         get() = mPrefs.getInt(prefsAccent, R.color.deep_purple)
         set(value) = mPrefs.edit().putInt(prefsAccent, value).apply()
-
-    var isEdgeToEdge
-        get() = mPrefs.getBoolean(
-            prefsEdgeToEdge,
-            false
-        ) && VersioningHelper.isOreoMR1()
-        set(value) = mPrefs.edit().putBoolean(prefsEdgeToEdge, value).apply()
 
     var activeFragmentsDef: Set<String>
         get() = getObject(prefsActiveFragmentsDef, typeActiveFragments)

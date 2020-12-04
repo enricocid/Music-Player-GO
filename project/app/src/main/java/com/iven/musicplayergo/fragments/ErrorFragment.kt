@@ -11,7 +11,7 @@ import com.iven.musicplayergo.databinding.FragmentErrorBinding
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.createCircularReveal
 import com.iven.musicplayergo.extensions.decodeColor
-import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 
 /**
@@ -71,7 +71,7 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
 
         mErrorFragmentBinding.root.afterMeasured {
             createCircularReveal(isErrorFragment = true, show = true).doOnEnd {
-                if (!goPreferences.isEdgeToEdge) {
+                if (!VersioningHelper.isOreoMR1()) {
                     requireActivity().window.run {
                         val red = R.color.red.decodeColor(requireActivity())
                         statusBarColor = red

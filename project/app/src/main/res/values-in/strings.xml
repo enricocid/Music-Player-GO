@@ -64,9 +64,6 @@
     <string name="theme_pref_auto_title">Otomatis</string>
     <!-- Preferences - Accent -->
     <string name="accent_pref_title">Aksen</string>
-    <!-- Preferences - Edge-to-edge -->
-    <string name="edge_pref_summary_on">Edge-to-edge diaktifkan</string>
-    <string name="edge_pref_summary_off">Edge-to-edge dinonaktifkan</string>
     <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">Tab aktif</string>
     <string name="active_fragments_pref_warning">Anda tidak bisa menyembunyikan semua tab! :P</string>

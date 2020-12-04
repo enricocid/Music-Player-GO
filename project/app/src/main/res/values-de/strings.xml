@@ -31,8 +31,6 @@
     <string name="covers_pref_summary_off">Albencover anzeigen</string>
     <string name="covers_pref_summary_on">Albencover ausblenden</string>
     <string name="covers_pref_title">Eingebettete Albencover</string>
-    <string name="edge_pref_summary_off">Edge-to-edge aktivieren</string>
-    <string name="edge_pref_summary_on">Edge-to-edge deaktivieren</string>
     <string name="accent_pref_title">Akzentfarbe</string>
     <string name="theme_pref_auto_title">Automatisch</string>
     <string name="theme_pref_dark_title">Dunkel</string>

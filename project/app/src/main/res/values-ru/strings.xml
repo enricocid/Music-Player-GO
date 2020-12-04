@@ -10,8 +10,6 @@
     <string name="active_fragments_pref_warning">Вы не можете закрыть все вкладки! :D</string>
     <string name="artists">Исполнители</string>
     <string name="category_general">Общее</string>
-    <string name="edge_pref_summary_off">Включить от края до края</string>
-    <string name="edge_pref_summary_on">Отключить от края до края</string>
     <string name="error_no_queue">В очереди нет треков.</string>
     <string name="error_no_loved_songs">В избранном нет треков!</string>
     <string name="error_unknown_unsupported">Что-то пошло не так! :( Возможно, формат не поддерживается или папка недоступна (не вина приложения!).</string>

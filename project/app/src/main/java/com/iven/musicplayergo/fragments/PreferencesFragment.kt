@@ -151,10 +151,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                     )
                 mUIControlInterface.onThemeChanged()
             }
-            getString(R.string.edge_pref) -> mUIControlInterface.onAppearanceChanged(
-                isAccentChanged = false,
-                restoreSettings = true
-            )
             getString(R.string.accent_pref) -> {
                 mAccentsDialog.dismiss()
                 mUIControlInterface.onAppearanceChanged(

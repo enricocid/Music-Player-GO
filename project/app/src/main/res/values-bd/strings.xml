@@ -79,10 +79,6 @@
     <!-- Preferences - Accent -->
     <string name="accent_pref_title">স্বরাঘাত</string>
 
-    <!-- Preferences - Edge-to-edge -->
-    <string name="edge_pref_summary_on">প্রান্ত থেকে প্রান্ত অক্ষম করুন</string>
-    <string name="edge_pref_summary_off">প্রান্ত থেকে প্রান্ত সক্ষম করুন</string>
-
     <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">সক্রিয় ট্যাবগুলি</string>
     <string name="active_fragments_pref_warning">আপনি সব ট্যাব সরাতে পারবেন না! :P</string>
