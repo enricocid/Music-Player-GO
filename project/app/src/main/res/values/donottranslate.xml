@@ -32,7 +32,6 @@
     <string name="faq_title">FAQ</string>
     <string name="category_ui">UI</string>
     <string name="accent_and_hex">&lt;b>%1s&lt;/b>:&#160;%2s</string>
-    <string name="edge_pref_title">Edge-to-edge</string>
 
     <!-- Preferences keys used in settings-->
     <string name="open_git_pref">open_git_pref</string>
@@ -43,7 +42,6 @@
     <string name="theme_pref_dark">theme_pref_dark</string>
     <string name="theme_pref_auto">theme_pref_auto</string>
     <string name="accent_pref">accent_pref</string>
-    <string name="edge_pref">edge_pref</string>
     <string name="covers_pref">covers_pref</string>
     <string name="active_fragments_def_pref">active_fragments_def_pref</string>
     <string name="active_fragments_pref">active_fragments_pref</string>

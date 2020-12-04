@@ -9,8 +9,8 @@
         <item name="popupMenuStyle">@style/PopupMenu</item>
         <item name="alertDialogTheme">@style/DialogsStyle</item>
         <item name="android:windowBackground">@color/windowBackground</item>
-        <item name="android:statusBarColor">@android:color/background_dark</item>
-        <item name="android:navigationBarColor">@color/navBarColor</item>
+        <item name="android:statusBarColor">@color/systemBarsColor</item>
+        <item name="android:navigationBarColor">@color/systemBarsColor</item>
     </style>
 
     <style name="PrefTheme" parent="PreferenceThemeOverlay">
