@@ -10,7 +10,7 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**Izzy**](https://github.com/IzzySoft) and [**Poussinou**](https://github.com/Poussinou) for setting up the F-Droid repository
 
-- [**Drhaal**](https://github.com/Drhaal) for Always On Display (AOD) [fixes](https://github.com/enricocid/Music-Player-GO/pull/186) and the following implementations: [190](https://github.com/enricocid/Music-Player-GO/pull/190), [193](https://github.com/enricocid/Music-Player-GO/pull/193), [230](https://github.com/enricocid/Music-Player-GO/pull/230), [240](https://github.com/enricocid/Music-Player-GO/pull/240)
+- [**Drhaal**](https://github.com/Drhaal) for Always On Display (AOD) [fixes](https://github.com/enricocid/Music-Player-GO/pull/186) and the following implementations: [190](https://github.com/enricocid/Music-Player-GO/pull/190), [193](https://github.com/enricocid/Music-Player-GO/pull/193), [230](https://github.com/enricocid/Music-Player-GO/pull/230), [234](https://github.com/enricocid/Music-Player-GO/pull/234), [240](https://github.com/enricocid/Music-Player-GO/pull/240)
 
 - [**Arianna Masciolini**](https://github.com/harisont) for the original precise volume control implementation
 
