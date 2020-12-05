@@ -78,20 +78,21 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
         mMusicContainerListBinding = FragmentMusicContainerListBinding.bind(view)
 
-        mMusicViewModel = ViewModelProvider(requireActivity()).get(MusicViewModel::class.java)
+        mMusicViewModel =
+            ViewModelProvider(requireActivity()).get(MusicViewModel::class.java).apply {
+                deviceMusic.observe(viewLifecycleOwner, { returnedMusic ->
+                    if (!returnedMusic.isNullOrEmpty()) {
+                        mSorting = getSortingMethodFromPrefs()
 
-        mMusicViewModel.deviceMusic.observe(viewLifecycleOwner, { returnedMusic ->
-            if (!returnedMusic.isNullOrEmpty()) {
-                mSorting = getSortingMethodFromPrefs()
+                        mList =
+                            getSortedItemKeys()?.filter { !goPreferences.filters?.contains(it)!! }
+                                ?.toMutableList()
+                        setListDataSource(mList)
 
-                mList =
-                    getSortedItemKeys()?.filter { !goPreferences.filters?.contains(it)!! }
-                        ?.toMutableList()
-                setListDataSource(mList)
-
-                finishSetup()
+                        finishSetup()
+                    }
+                })
             }
-        })
     }
 
     private fun finishSetup() {

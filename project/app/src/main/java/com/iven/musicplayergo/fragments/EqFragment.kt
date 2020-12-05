@@ -177,8 +177,10 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                         }
                     }
                     mSlidersLabels[item.index]?.let { textView ->
-                        textView.text = formatMilliHzToK(getCenterFreq(item.index.toShort()))
-                        textView.background = roundedTextBackground
+                        textView.run {
+                            text = formatMilliHzToK(getCenterFreq(item.index.toShort()))
+                            background = roundedTextBackground
+                        }
                     }
                 }
             }

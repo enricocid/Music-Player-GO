@@ -72,18 +72,22 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
         mAllMusicFragmentBinding = FragmentAllMusicBinding.bind(view)
 
-        mMusicViewModel = ViewModelProvider(requireActivity()).get(MusicViewModel::class.java)
+        mMusicViewModel =
+            ViewModelProvider(requireActivity()).get(MusicViewModel::class.java).apply {
+                deviceMusic.observe(viewLifecycleOwner, { returnedMusic ->
+                    if (!returnedMusic.isNullOrEmpty()) {
+                        mAllMusic =
+                            ListsHelper.getSortedMusicList(
+                                mSorting,
+                                mMusicViewModel.deviceMusicFiltered
+                            )
 
-        mMusicViewModel.deviceMusic.observe(viewLifecycleOwner, { returnedMusic ->
-            if (!returnedMusic.isNullOrEmpty()) {
-                mAllMusic =
-                    ListsHelper.getSortedMusicList(mSorting, mMusicViewModel.deviceMusicFiltered)
+                        setMusicDataSource(mAllMusic)
 
-                setMusicDataSource(mAllMusic)
-
-                finishSetup()
+                        finishSetup()
+                    }
+                })
             }
-        })
     }
 
     private fun finishSetup() {

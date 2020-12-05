@@ -145,17 +145,18 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
         mDetailsFragmentBinding = FragmentDetailsBinding.bind(view)
 
-        mMusicViewModel = ViewModelProvider(requireActivity()).get(MusicViewModel::class.java)
+        mMusicViewModel =
+            ViewModelProvider(requireActivity()).get(MusicViewModel::class.java).apply {
+                deviceMusic.observe(viewLifecycleOwner, { returnedMusic ->
+                    if (!returnedMusic.isNullOrEmpty()) {
+                        mSongsList = getSongSource()
 
-        mMusicViewModel.deviceMusic.observe(viewLifecycleOwner, { returnedMusic ->
-            if (!returnedMusic.isNullOrEmpty()) {
-                mSongsList = getSongSource()
+                        setupToolbar()
 
-                setupToolbar()
-
-                setupViews(view)
+                        setupViews(view)
+                    }
+                })
             }
-        })
     }
 
     private fun setupToolbar() {

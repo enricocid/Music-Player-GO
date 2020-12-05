@@ -60,22 +60,23 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mErrorFragmentBinding = FragmentErrorBinding.bind(view)
-        mErrorFragmentBinding.errorMessage.text = getString(mErrorString)
-        mErrorFragmentBinding.errorIcon.setImageResource(mErrorIcon)
-        mErrorFragmentBinding.root.setOnClickListener { mUIControlInterface.onCloseActivity() }
+        mErrorFragmentBinding = FragmentErrorBinding.bind(view).apply {
+            errorMessage.text = getString(mErrorString)
+            errorIcon.setImageResource(mErrorIcon)
+            root.setOnClickListener { mUIControlInterface.onCloseActivity() }
 
-        mErrorFragmentBinding.errorToolbar.setNavigationOnClickListener {
-            mUIControlInterface.onCloseActivity()
-        }
+            errorToolbar.setNavigationOnClickListener {
+                mUIControlInterface.onCloseActivity()
+            }
 
-        mErrorFragmentBinding.root.afterMeasured {
-            createCircularReveal(isErrorFragment = true, show = true).doOnEnd {
-                if (!VersioningHelper.isOreoMR1()) {
-                    requireActivity().window.run {
-                        val red = R.color.red.decodeColor(requireActivity())
-                        statusBarColor = red
-                        navigationBarColor = red
+            root.afterMeasured {
+                createCircularReveal(isErrorFragment = true, show = true).doOnEnd {
+                    if (!VersioningHelper.isOreoMR1()) {
+                        requireActivity().window.run {
+                            val red = R.color.red.decodeColor(requireActivity())
+                            statusBarColor = red
+                            navigationBarColor = red
+                        }
                     }
                 }
             }
