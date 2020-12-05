@@ -238,8 +238,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
             mDetailsFragmentBinding.queueAddButton.setOnClickListener {
                 mUIControlInterface.onAddAlbumToQueue(
-                    mSongsList?.toMutableList(),
-                    Pair(true, mSongsList?.toMutableList()?.get(0))
+                    mSelectedAlbum?.music,
+                    Pair(true, mSelectedAlbum?.music?.get(0)),
+                    false,
+                    mLaunchedBy
                 )
             }
 
@@ -337,7 +339,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
             addBidirectionalSwipeHandler(false) { viewHolder: RecyclerView.ViewHolder,
                                                   _: Int ->
-                mUIControlInterface.onAddToQueue(mSongsList!![viewHolder.adapterPosition])
+                mUIControlInterface.onAddToQueue(
+                    mSongsList!![viewHolder.adapterPosition],
+                    mLaunchedBy
+                )
                 adapter?.notifyDataSetChanged()
             }
         }
@@ -424,14 +429,18 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 when (it.itemId) {
                     R.id.action_add_queue -> mUIControlInterface.onAddAlbumToQueue(
                         mSongsList?.toMutableList(),
-                        Pair(true, mSongsList?.get(0))
+                        Pair(true, mSongsList?.get(0)),
+                        false,
+                        mLaunchedBy
                     )
                     R.id.action_shuffle_am -> mUIControlInterface.onShuffleSongs(
                         mSongsList?.toMutableList(),
+                        mSongsList?.size!! < 30, // only queue if album size don't exceed 30
                         mLaunchedBy
                     )
                     R.id.action_shuffle_sa -> mUIControlInterface.onShuffleSongs(
                         mSelectedAlbum?.music,
+                        mSongsList?.size!! < 30, // only queue if album size don't exceed 30
                         mLaunchedBy
                     )
                     R.id.default_sorting -> applySortingToMusic(GoConstants.DEFAULT_SORTING)

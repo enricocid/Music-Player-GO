@@ -169,6 +169,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     var isSongFromLovedSongs = Pair(false, 0)
 
     var isLovedSongsQueued = false
+    var isShuffledSongsQueued = false
 
     var state = GoConstants.PAUSED
     var isPlay = false
@@ -749,6 +750,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             else -> {
                 queueSongs.clear()
                 isLovedSongsQueued = false
+                isShuffledSongsQueued = false
                 mediaPlayerInterface.onQueueCleared()
                 mediaPlayerInterface.onQueueStartedOrEnded(false)
             }

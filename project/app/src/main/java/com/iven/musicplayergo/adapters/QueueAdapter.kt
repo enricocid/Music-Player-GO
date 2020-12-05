@@ -91,7 +91,7 @@ class QueueAdapter(
                     context.getString(R.string.artist_and_album, song.artist, song.album)
 
                 setOnClickListener {
-                    mediaPlayerHolder.startSongFromQueue(song)
+                    mediaPlayerHolder.startSongFromQueue(song, mediaPlayerHolder.launchedBy)
                 }
 
                 setOnLongClickListener {

@@ -276,7 +276,7 @@ object DialogHelper {
                             uiControlInterface.onLovedSongAdded(song, true)
                             uiControlInterface.onLovedSongsUpdate(false)
                         }
-                        R.id.queue_add -> uiControlInterface.onAddToQueue(song)
+                        R.id.queue_add -> uiControlInterface.onAddToQueue(song, launchedBy)
                     }
                     return@setOnMenuItemClickListener true
                 }

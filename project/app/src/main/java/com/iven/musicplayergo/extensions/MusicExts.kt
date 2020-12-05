@@ -10,7 +10,6 @@ import android.media.MediaFormat
 import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.provider.MediaStore
-import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
@@ -18,7 +17,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
-fun MediaPlayerHolder.startSongFromQueue(song: Music?) {
+fun MediaPlayerHolder.startSongFromQueue(song: Music?, launchedBy: String) {
     if (isSongRestoredFromPrefs) {
         isSongRestoredFromPrefs = false
     }
@@ -31,7 +30,7 @@ fun MediaPlayerHolder.startSongFromQueue(song: Music?) {
         song,
         queueSongs,
         isFromQueue = true,
-        isFolderAlbum = GoConstants.ARTIST_VIEW
+        launchedBy
     )
     initMediaPlayer(song)
 }

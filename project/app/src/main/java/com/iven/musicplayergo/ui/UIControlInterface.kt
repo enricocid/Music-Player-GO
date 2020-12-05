@@ -11,12 +11,17 @@ interface UIControlInterface {
     fun onPreciseVolumeToggled()
     fun onArtistOrFolderSelected(artistOrFolder: String, launchedBy: String)
     fun onSongSelected(song: Music?, songs: List<Music>?, launchedBy: String)
-    fun onShuffleSongs(songs: MutableList<Music>?, launchedBy: String)
+    fun onShuffleSongs(songs: MutableList<Music>?, toBeQueued: Boolean, launchedBy: String)
     fun onLovedSongsUpdate(clear: Boolean)
     fun onLovedSongAdded(song: Music?, isAdded: Boolean)
     fun onCloseActivity()
-    fun onAddToQueue(song: Music?)
-    fun onAddAlbumToQueue(songs: MutableList<Music>?, isAlbumOrFolder: Pair<Boolean, Music?>)
+    fun onAddToQueue(song: Music?, launchedBy: String)
+    fun onAddAlbumToQueue(
+        songs: MutableList<Music>?,
+        isAlbumOrFolder: Pair<Boolean, Music?>,
+        isShuffleMode: Boolean,
+        launchedBy: String
+    )
     fun onAddToFilter(stringToFilter: String?)
     fun onDenyPermission()
     fun onHandleFocusPref()

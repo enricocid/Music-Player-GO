@@ -77,7 +77,12 @@ class LovedSongsAdapter(
                 setOnClickListener {
                     mediaPlayerHolder.isSongFromLovedSongs =
                         Pair(true, lovedSong?.startFrom!!)
-                    uiControlInterface.onAddAlbumToQueue(mLovedSongs, Pair(false, lovedSong))
+                    uiControlInterface.onAddAlbumToQueue(
+                        mLovedSongs,
+                        Pair(false, lovedSong),
+                        false,
+                        mediaPlayerHolder.launchedBy
+                    )
                 }
                 setOnLongClickListener {
                     performLovedSongDeletion(adapterPosition, false)

@@ -1161,7 +1161,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    override fun onAddToQueue(song: Music?) {
+    override fun onAddToQueue(song: Music?, launchedBy: String) {
         if (checkIsPlayer(true)) {
             mMediaPlayerHolder.run {
                 if (queueSongs.isEmpty()) {
@@ -1176,7 +1176,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         this@MainActivity
                     )
                     if (!isPlaying || state == GoConstants.PAUSED) {
-                        startSongFromQueue(song)
+                        startSongFromQueue(song, launchedBy)
                     }
                 }
             }
@@ -1185,35 +1185,68 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onAddAlbumToQueue(
         songs: MutableList<Music>?,
-        isAlbumOrFolder: Pair<Boolean, Music?>
+        isAlbumOrFolder: Pair<Boolean, Music?>,
+        isShuffleMode: Boolean,
+        launchedBy: String
     ) {
-        if (checkIsPlayer(true) && !mMediaPlayerHolder.isLovedSongsQueued) {
+        if (checkIsPlayer(true)) {
+            val wasShuffleMode = mMediaPlayerHolder.isShuffledSongsQueued
+            if (isShuffleMode) {
+                mMediaPlayerHolder.isLovedSongsQueued = false
+            } else {
+                mMediaPlayerHolder.isShuffledSongsQueued = false
+            }
+
             mMediaPlayerHolder.run {
                 if (queueSongs.isEmpty()) {
                     setQueueEnabled(true)
                 }
+
+                if (isShuffleMode || wasShuffleMode || !isAlbumOrFolder.first) {
+                    queueSongs.clear()
+                }
                 songs?.let { songsToQueue ->
-                    queueSongs.addAll(songsToQueue)
+                    if (queueSongs.isEmpty()) {
+                        queueSongs.addAll(songsToQueue)
+                    } else {
+                        // don't add duplicates
+                        val filteredSongs = songsToQueue.minus(queueSongs)
+                        queueSongs.addAll(filteredSongs)
+                    }
                 }
 
-                if (!isAlbumOrFolder.first) {
+                if (!isAlbumOrFolder.first && !isShuffleMode) {
                     isLovedSongsQueued = true
                 }
+                if (isShuffleMode) {
+                    isShuffledSongsQueued = true
+                }
 
-                if (!isPlaying || state == GoConstants.PAUSED || !isAlbumOrFolder.first) {
+                if (!isPlaying && !isAlbumOrFolder.first || !isAlbumOrFolder.first) {
                     isAlbumOrFolder.second?.let { song ->
-                        startSongFromQueue(song)
+                        startSongFromQueue(song, launchedBy)
                     }
                 }
             }
         }
     }
 
-    override fun onShuffleSongs(songs: MutableList<Music>?, launchedBy: String) {
+    override fun onShuffleSongs(
+        songs: MutableList<Music>?,
+        toBeQueued: Boolean,
+        launchedBy: String
+    ) {
         val randomNumber = (0 until songs?.size!!).getRandom()
         songs.shuffle()
         val song = songs[randomNumber]
-        onSongSelected(song, songs, launchedBy)
+        if (checkIsPlayer(true) && isMediaPlayerHolder && mMediaPlayerHolder.isLovedSongsQueued) {
+            mMediaPlayerHolder.isLovedSongsQueued = false
+        }
+        if (toBeQueued) {
+            onAddAlbumToQueue(songs, Pair(false, song), true, launchedBy)
+        } else {
+            onSongSelected(song, songs, launchedBy)
+        }
     }
 
     override fun onAddToFilter(stringToFilter: String?) {

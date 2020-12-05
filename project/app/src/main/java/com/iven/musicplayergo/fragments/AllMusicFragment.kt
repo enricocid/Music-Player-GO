@@ -158,7 +158,8 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 }
 
                 findItem(R.id.action_shuffle_am).setOnMenuItemClickListener {
-                    mUIControlInterface.onShuffleSongs(mAllMusic, GoConstants.ARTIST_VIEW)
+                    // don't queue the music library if it exceed 30 items
+                    mUIControlInterface.onShuffleSongs(mAllMusic, mAllMusic?.size!! < 30, GoConstants.ARTIST_VIEW)
                     return@setOnMenuItemClickListener true
                 }
 
