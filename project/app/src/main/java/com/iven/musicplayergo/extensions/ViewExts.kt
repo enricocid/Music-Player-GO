@@ -2,6 +2,7 @@ package com.iven.musicplayergo.extensions
 
 import android.animation.Animator
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.text.Html
@@ -32,6 +33,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.models.Music
+import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import kotlinx.coroutines.*
 import kotlin.math.max
 
@@ -47,6 +49,17 @@ inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
             }
         }
     })
+}
+
+@SuppressLint("DefaultLocale")
+fun String.getFastScrollerItem(context: Context): FastScrollItemIndicator {
+    var charAtZero = context.getString(R.string.fastscroller_dummy_item)
+    if (isNotEmpty()) {
+        charAtZero = get(0).toString()
+    }
+    return FastScrollItemIndicator.Text(
+        charAtZero.toUpperCase() // Grab the first letter and capitalize it
+    )
 }
 
 /**

@@ -83,6 +83,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private var sAppearanceChanged = false
     private var sRestoreSettingsFragment = false
 
+    // Loved songs dialog
+    private lateinit var mLovedSongsDialog: MaterialDialog
+
     // Now playing
     private lateinit var mNowPlayingDialog: MaterialDialog
     private lateinit var mNowPlayingBinding: NowPlayingBinding
@@ -1065,6 +1068,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onSongSelected(song: Music?, songs: List<Music>?, launchedBy: String) {
         if (isMediaPlayerHolder) {
+            if (sDetailsFragmentExpanded) {
+                mDetailsFragment.onDisableShuffle(false)
+            }
             mMediaPlayerHolder.run {
                 isSongRestoredFromPrefs = false
                 isPlay = true
@@ -1186,6 +1192,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     override fun onAddAlbumToQueue(
         songs: MutableList<Music>?,
         isAlbumOrFolder: Pair<Boolean, Music?>,
+        isLovedSongs: Boolean,
         isShuffleMode: Boolean,
         launchedBy: String
     ) {
@@ -1211,23 +1218,38 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     } else {
                         // don't add duplicates
                         val filteredSongs = songsToQueue.minus(queueSongs)
-                        queueSongs.addAll(filteredSongs)
+                        addFilteredSongsToQueue(this, filteredSongs)
                     }
                 }
 
-                if (!isAlbumOrFolder.first && !isShuffleMode) {
-                    isLovedSongsQueued = true
-                }
-                if (isShuffleMode) {
-                    isShuffledSongsQueued = true
-                }
+                isLovedSongsQueued = isLovedSongs
+                isShuffledSongsQueued = isShuffleMode
 
-                if (!isPlaying && !isAlbumOrFolder.first || !isAlbumOrFolder.first) {
+                if (!isPlaying || isLovedSongs || isShuffleMode) {
                     isAlbumOrFolder.second?.let { song ->
                         startSongFromQueue(song, launchedBy)
                     }
                 }
+                if (isLovedSongs && ::mLovedSongsDialog.isInitialized && mLovedSongsDialog.isShowing) {
+                    mLovedSongsDialog.dismiss()
+                    mLovedSongsDialog.onDismiss {
+                        openQueueDialog()
+                    }
+                }
+                if (sDetailsFragmentExpanded) {
+                    mDetailsFragment.onDisableShuffle(isShuffleMode)
+                }
             }
+        }
+    }
+
+    private fun addFilteredSongsToQueue(
+        mediaPlayerHolder: MediaPlayerHolder,
+        filteredSongs: List<Music>
+    ) {
+        // don't add duplicates
+        if (filteredSongs.isNotEmpty()) {
+            mediaPlayerHolder.queueSongs.addAll(filteredSongs)
         }
     }
 
@@ -1236,17 +1258,25 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         toBeQueued: Boolean,
         launchedBy: String
     ) {
-        val randomNumber = (0 until songs?.size!!).getRandom()
-        songs.shuffle()
-        val song = songs[randomNumber]
-        if (checkIsPlayer(true) && isMediaPlayerHolder && mMediaPlayerHolder.isLovedSongsQueued) {
-            mMediaPlayerHolder.isLovedSongsQueued = false
+        songs?.let { songsList ->
+            songsList.shuffle()
+            val song = songsList[0]
+            if (checkIsPlayer(true) && isMediaPlayerHolder && mMediaPlayerHolder.isLovedSongsQueued) {
+                mMediaPlayerHolder.isLovedSongsQueued = false
+            }
+            if (toBeQueued) {
+                onAddAlbumToQueue(
+                    songsList,
+                    Pair(false, song),
+                    isLovedSongs = false,
+                    isShuffleMode = true,
+                    launchedBy
+                )
+            } else {
+                onSongSelected(song, songsList, launchedBy)
+            }
         }
-        if (toBeQueued) {
-            onAddAlbumToQueue(songs, Pair(false, song), true, launchedBy)
-        } else {
-            onSongSelected(song, songs, launchedBy)
-        }
+
     }
 
     override fun onAddToFilter(stringToFilter: String?) {
@@ -1269,7 +1299,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun openLovedSongsDialog() {
         if (!goPreferences.lovedSongs.isNullOrEmpty()) {
-            DialogHelper.showLovedSongsDialog(
+            mLovedSongsDialog = DialogHelper.showLovedSongsDialog(
                 this,
                 this,
                 mMediaPlayerHolder

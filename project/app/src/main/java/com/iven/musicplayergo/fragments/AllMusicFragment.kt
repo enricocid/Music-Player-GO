@@ -1,6 +1,5 @@
 package com.iven.musicplayergo.fragments
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.Menu
@@ -18,10 +17,7 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentAllMusicBinding
-import com.iven.musicplayergo.extensions.afterMeasured
-import com.iven.musicplayergo.extensions.handleViewVisibility
-import com.iven.musicplayergo.extensions.setTitleColor
-import com.iven.musicplayergo.extensions.toFormattedDuration
+import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
@@ -159,7 +155,11 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
                 findItem(R.id.action_shuffle_am).setOnMenuItemClickListener {
                     // don't queue the music library if it exceed 30 items
-                    mUIControlInterface.onShuffleSongs(mAllMusic, mAllMusic?.size!! < 30, GoConstants.ARTIST_VIEW)
+                    mUIControlInterface.onShuffleSongs(
+                        mAllMusic,
+                        mAllMusic?.size!! < 30,
+                        GoConstants.ARTIST_VIEW
+                    )
                     return@setOnMenuItemClickListener true
                 }
 
@@ -189,7 +189,6 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
         }
     }
 
-    @SuppressLint("DefaultLocale")
     private fun setupIndicatorFastScrollerView() {
 
         // Set indexes if artists rv is scrollable
@@ -202,16 +201,9 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 mAllMusicFragmentBinding.fastscroller.setupWithRecyclerView(
                     this,
                     { position ->
-
                         // Return a text tab_indicator
-                        mAllMusic?.get(position)?.title?.let { title ->
-                            var charAtZero = ""
-                            if (title.isNotEmpty()) {
-                                charAtZero = title[0].toString()
-                            }
-                            FastScrollItemIndicator.Text(
-                                charAtZero.toUpperCase() // Grab the first letter and capitalize it
-                            )
+                        mAllMusic?.get(position)?.title?.run {
+                            getFastScrollerItem(requireActivity())
                         }
                     }, showIndicator = { _, indicatorPosition, totalIndicators ->
                         // Hide every other indicator

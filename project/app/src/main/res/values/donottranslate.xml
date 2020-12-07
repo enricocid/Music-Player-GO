@@ -15,6 +15,7 @@
     <string name="loved_song_subtitle">&lt;b>%1s&lt;/b>&#160;-&#160;%2s</string>
 
     <!-- Formatting symbols -->
+    <string name="fastscroller_dummy_item">&#8230;</string>
     <string name="space_delimiter">&#160;</string>
     <string name="underscore_delimiter">&#95;</string>
     <string name="slash">/</string>

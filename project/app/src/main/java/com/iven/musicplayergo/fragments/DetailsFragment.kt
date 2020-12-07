@@ -72,6 +72,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private val sLaunchedByArtistView get() = mLaunchedBy == GoConstants.ARTIST_VIEW
     private val sLaunchedByFolderView get() = mLaunchedBy == GoConstants.FOLDER_VIEW
 
+    private var sWasShuffling = false
     private var sLoadDelay = true
 
     override fun onAttach(context: Context) {
@@ -240,7 +241,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 mUIControlInterface.onAddAlbumToQueue(
                     mSelectedAlbum?.music,
                     Pair(true, mSelectedAlbum?.music?.get(0)),
-                    false,
+                    isLovedSongs = false,
+                    isShuffleMode = false,
                     mLaunchedBy
                 )
             }
@@ -309,14 +311,26 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                         val selectedPlaylist =
                             if (sLaunchedByFolderView) {
+                                if (sWasShuffling && item.album == mSelectedArtistOrFolder) {
+                                    mSongsList = getSongSource()
+                                }
                                 mSongsList
                             } else {
-                                MusicOrgHelper.getAlbumSongs(
+                                val playlist = MusicOrgHelper.getAlbumSongs(
                                     item.artist,
                                     item.album,
                                     mMusicViewModel.deviceAlbumsByArtist
                                 )
+                                if (sWasShuffling && item.album == mSelectedAlbum?.title) {
+                                    ListsHelper.getSortedMusicList(
+                                        mSongsSorting,
+                                        playlist
+                                    )
+                                }
+                                playlist
                             }
+
+                        sWasShuffling = false
 
                         mUIControlInterface.onSongSelected(
                             item,
@@ -430,7 +444,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     R.id.action_add_queue -> mUIControlInterface.onAddAlbumToQueue(
                         mSongsList?.toMutableList(),
                         Pair(true, mSongsList?.get(0)),
-                        false,
+                        isLovedSongs = false,
+                        isShuffleMode = false,
                         mLaunchedBy
                     )
                     R.id.action_shuffle_am -> mUIControlInterface.onShuffleSongs(
@@ -438,11 +453,14 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         mSongsList?.size!! < 30, // only queue if album size don't exceed 30
                         mLaunchedBy
                     )
-                    R.id.action_shuffle_sa -> mUIControlInterface.onShuffleSongs(
-                        mSelectedAlbum?.music,
-                        mSongsList?.size!! < 30, // only queue if album size don't exceed 30
-                        mLaunchedBy
-                    )
+                    R.id.action_shuffle_sa -> {
+                        sWasShuffling = true
+                        mUIControlInterface.onShuffleSongs(
+                            mSelectedAlbum?.music,
+                            mSelectedAlbum?.music?.size!! < 30, // only queue if album size don't exceed 30
+                            mLaunchedBy
+                        )
+                    }
                     R.id.default_sorting -> applySortingToMusic(GoConstants.DEFAULT_SORTING)
                     R.id.descending_sorting -> applySortingToMusic(GoConstants.DESCENDING_SORTING)
                     R.id.ascending_sorting -> applySortingToMusic(GoConstants.ASCENDING_SORTING)
@@ -581,6 +599,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             mDetailsFragmentBinding.albumsRv.smoothSnapToPosition(
                 snapPosition
             )
+        }
+    }
+
+    fun onDisableShuffle(isShuffleMode: Boolean) {
+        if (sWasShuffling && !isShuffleMode) {
+            sWasShuffling = false
         }
     }
 

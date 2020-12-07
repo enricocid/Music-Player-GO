@@ -19,6 +19,7 @@ interface UIControlInterface {
     fun onAddAlbumToQueue(
         songs: MutableList<Music>?,
         isAlbumOrFolder: Pair<Boolean, Music?>,
+        isLovedSongs: Boolean,
         isShuffleMode: Boolean,
         launchedBy: String
     )

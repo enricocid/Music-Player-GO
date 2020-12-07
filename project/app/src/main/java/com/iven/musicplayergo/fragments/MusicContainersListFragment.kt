@@ -1,6 +1,5 @@
 package com.iven.musicplayergo.fragments
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.Menu
@@ -19,6 +18,7 @@ import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentMusicContainerListBinding
 import com.iven.musicplayergo.extensions.afterMeasured
+import com.iven.musicplayergo.extensions.getFastScrollerItem
 import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.extensions.setTitleColor
 import com.iven.musicplayergo.goPreferences
@@ -261,7 +261,6 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
         mMusicViewModel.deviceSongsByArtist?.getValue(item)?.size
     )
 
-    @SuppressLint("DefaultLocale")
     private fun setupIndicatorFastScrollerView() {
 
         // Set indexes if artists rv is scrollable
@@ -275,14 +274,8 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                     this,
                     { position ->
                         // Return a text tab_indicator
-                        mList?.get(position)?.let { item ->
-                            var charAtZero = ""
-                            if (item.isNotEmpty()) {
-                                charAtZero = item[0].toString()
-                            }
-                            FastScrollItemIndicator.Text(
-                                charAtZero.toUpperCase() // Grab the first letter and capitalize it
-                            )
+                        mList?.get(position)?.run {
+                            getFastScrollerItem(requireActivity())
                         }
                     }, showIndicator = { _, indicatorPosition, totalIndicators ->
                         // Hide every other indicator

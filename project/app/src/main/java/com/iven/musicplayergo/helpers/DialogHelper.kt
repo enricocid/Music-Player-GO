@@ -117,7 +117,7 @@ object DialogHelper {
             positiveButton(R.string.yes) {
 
                 mediaPlayerHolder.run {
-                    if (isQueueStarted && isPlaying) {
+                    if (isQueueStarted) {
 
                         restorePreQueueSongs()
                         skip(
@@ -136,42 +136,39 @@ object DialogHelper {
         context: Context,
         uiControlInterface: UIControlInterface,
         mediaPlayerHolder: MediaPlayerHolder
-    ) {
+    ): MaterialDialog = MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
-        MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
+        title(R.string.loved_songs)
 
-            title(R.string.loved_songs)
+        val lovedSongsAdapter = LovedSongsAdapter(
+            context,
+            this,
+            mediaPlayerHolder,
+            uiControlInterface
+        )
 
-            val lovedSongsAdapter = LovedSongsAdapter(
-                context,
-                this,
-                mediaPlayerHolder,
-                uiControlInterface
-            )
+        customListAdapter(lovedSongsAdapter)
 
-            customListAdapter(lovedSongsAdapter)
+        val recyclerView = getRecyclerView()
 
-            val recyclerView = getRecyclerView()
-
-            if (ThemeHelper.isDeviceLand(context.resources)) {
-                recyclerView.layoutManager = GridLayoutManager(context, 3)
-            } else {
-                if (VersioningHelper.isOreoMR1()) {
-                    window?.let { win ->
-                        edgeToEdge {
-                            recyclerView.fit { Edge.Bottom }
-                            win.decorView.fit { Edge.Top }
-                        }
+        if (ThemeHelper.isDeviceLand(context.resources)) {
+            recyclerView.layoutManager = GridLayoutManager(context, 3)
+        } else {
+            if (VersioningHelper.isOreoMR1()) {
+                window?.let { win ->
+                    edgeToEdge {
+                        recyclerView.fit { Edge.Bottom }
+                        win.decorView.fit { Edge.Top }
                     }
                 }
             }
+        }
 
-            recyclerView.addBidirectionalSwipeHandler(true) { viewHolder: RecyclerView.ViewHolder, _: Int ->
-                lovedSongsAdapter.performLovedSongDeletion(
-                    viewHolder.adapterPosition,
-                    true
-                )
-            }
+        recyclerView.addBidirectionalSwipeHandler(true) { viewHolder: RecyclerView.ViewHolder, _: Int ->
+            lovedSongsAdapter.performLovedSongDeletion(
+                viewHolder.adapterPosition,
+                true
+            )
         }
     }
 

@@ -68,6 +68,12 @@ Every media app should request and receive the audio focus. This option is enabl
 2. **lower** its volume when a new message is received.
 
 
+### How to clear queued or loved songs?
+
+Just long click on the buttons from the bottom panel.
+To clear the queue You can also start playback from artist's details.
+
+
 ### Does Music Player GO play music tracks from online sources?
 
 No, Music Player GO doesn't play music tracks from any online source.

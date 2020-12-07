@@ -80,7 +80,8 @@ class LovedSongsAdapter(
                     uiControlInterface.onAddAlbumToQueue(
                         mLovedSongs,
                         Pair(false, lovedSong),
-                        false,
+                        isLovedSongs = true,
+                        isShuffleMode = false,
                         mediaPlayerHolder.launchedBy
                     )
                 }

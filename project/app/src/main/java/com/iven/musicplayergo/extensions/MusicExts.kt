@@ -15,7 +15,6 @@ import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.random.Random
 
 fun MediaPlayerHolder.startSongFromQueue(song: Music?, launchedBy: String) {
     if (isSongRestoredFromPrefs) {
@@ -78,8 +77,6 @@ fun Music.getCover(context: Context): Bitmap? {
         retriever.release()
     }
 }
-
-fun IntRange.getRandom() = Random.nextInt(start, endInclusive + 1)
 
 fun Long.toFormattedDuration(isAlbum: Boolean, isSeekBar: Boolean) = try {
 
