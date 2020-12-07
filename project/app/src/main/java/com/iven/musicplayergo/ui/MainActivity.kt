@@ -999,7 +999,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         openDetailsFragment(
                             selectedArtistOrFolder,
                             mMediaPlayerHolder.launchedBy,
-                            checkIsPlayer(true) && mMediaPlayerHolder.isShuffledSongsQueued && mMediaPlayerHolder.currentSong.first?.artist == selectedArtistOrFolder
+                            checkIsPlayer(false) && mMediaPlayerHolder.isShuffledSongsQueued
                         )
                     }
                 } else {
@@ -1015,7 +1015,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 openDetailsFragment(
                     selectedArtistOrFolder,
                     mMediaPlayerHolder.launchedBy,
-                    checkIsPlayer(true) && mMediaPlayerHolder.isShuffledSongsQueued
+                    checkIsPlayer(false) && mMediaPlayerHolder.isShuffledSongsQueued
                 )
             }
 
@@ -1056,7 +1056,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         openDetailsFragment(
             artistOrFolder,
             launchedBy,
-            checkIsPlayer(true) && mMediaPlayerHolder.isShuffledSongsQueued && mMediaPlayerHolder.currentSong.first?.artist == artistOrFolder
+            checkIsPlayer(false) && mMediaPlayerHolder.isShuffledSongsQueued && mMediaPlayerHolder.currentSong.first?.artist == artistOrFolder
         )
     }
 
