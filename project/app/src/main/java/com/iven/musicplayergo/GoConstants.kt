@@ -33,6 +33,7 @@ object GoConstants {
     const val ASCENDING_SORTING = 2
     const val TRACK_SORTING = 3
     const val TRACK_SORTING_INVERTED = 4
+    const val SHUFFLE_SORTING = 5
 
     // error tags
     const val TAG_NO_PERMISSION = "NO_PERMISSION"

@@ -414,7 +414,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun openDetailsFragment(
         selectedArtistOrFolder: String?,
-        launchedBy: String
+        launchedBy: String,
+        isShuffleMode: Boolean
     ) {
         if (!sDetailsFragmentExpanded) {
             mDetailsFragment =
@@ -425,7 +426,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         selectedArtistOrFolder,
                         mMediaPlayerHolder,
                         mMusicViewModel.deviceAlbumsByArtist
-                    )
+                    ),
+                    isShuffleMode
                 )
             sCloseDetailsFragment = true
             supportFragmentManager.addFragment(
@@ -996,7 +998,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     synchronized(super.onBackPressed()) {
                         openDetailsFragment(
                             selectedArtistOrFolder,
-                            mMediaPlayerHolder.launchedBy
+                            mMediaPlayerHolder.launchedBy,
+                            checkIsPlayer(true) && mMediaPlayerHolder.isShuffledSongsQueued && mMediaPlayerHolder.currentSong.first?.artist == selectedArtistOrFolder
                         )
                     }
                 } else {
@@ -1009,7 +1012,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     )
                 }
             } else {
-                openDetailsFragment(selectedArtistOrFolder, mMediaPlayerHolder.launchedBy)
+                openDetailsFragment(
+                    selectedArtistOrFolder,
+                    mMediaPlayerHolder.launchedBy,
+                    checkIsPlayer(true) && mMediaPlayerHolder.isShuffledSongsQueued
+                )
             }
 
             closeNowPlayingDialog()
@@ -1048,7 +1055,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     override fun onArtistOrFolderSelected(artistOrFolder: String, launchedBy: String) {
         openDetailsFragment(
             artistOrFolder,
-            launchedBy
+            launchedBy,
+            checkIsPlayer(true) && mMediaPlayerHolder.isShuffledSongsQueued && mMediaPlayerHolder.currentSong.first?.artist == artistOrFolder
         )
     }
 
@@ -1257,26 +1265,25 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         songs: MutableList<Music>?,
         toBeQueued: Boolean,
         launchedBy: String
-    ) {
-        songs?.let { songsList ->
-            songsList.shuffle()
-            val song = songsList[0]
-            if (checkIsPlayer(true) && isMediaPlayerHolder && mMediaPlayerHolder.isLovedSongsQueued) {
+    ): MutableList<Music>? {
+        return songs?.apply {
+            shuffle()
+            val song = get(0)
+            if (checkIsPlayer(true) && mMediaPlayerHolder.isLovedSongsQueued) {
                 mMediaPlayerHolder.isLovedSongsQueued = false
             }
             if (toBeQueued) {
                 onAddAlbumToQueue(
-                    songsList,
+                    this,
                     Pair(false, song),
                     isLovedSongs = false,
                     isShuffleMode = true,
                     launchedBy
                 )
             } else {
-                onSongSelected(song, songsList, launchedBy)
+                onSongSelected(song, this, launchedBy)
             }
         }
-
     }
 
     override fun onAddToFilter(stringToFilter: String?) {
