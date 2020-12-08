@@ -69,7 +69,7 @@
 
         <SwitchPreferenceCompat
             android:summaryOff="@string/precise_volume_pref_summary_off"
-            app:defaultValue="true"
+            app:defaultValue="false"
             app:key="@string/precise_volume_pref"
             app:summaryOn="@string/precise_volume_pref_summary_on"
             app:title="@string/precise_volume_pref_title" />
