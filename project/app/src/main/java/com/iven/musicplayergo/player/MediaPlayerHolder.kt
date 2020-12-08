@@ -253,9 +253,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         song: Music?,
         songs: List<Music>?,
         isFromQueue: Boolean,
-        isFolderAlbum: String
+        songLaunchedBy: String
     ) {
-        launchedBy = isFolderAlbum
+        launchedBy = songLaunchedBy
         currentSong = Pair(song, isFromQueue)
         mPlayingAlbumSongs = songs
     }
@@ -448,7 +448,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     queueSongs[0],
                     queueSongs,
                     isFromQueue = true,
-                    isFolderAlbum = GoConstants.ARTIST_VIEW
+                    songLaunchedBy = GoConstants.ARTIST_VIEW
                 )
                 isQueueStarted = true
             }
@@ -461,15 +461,27 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     private fun getSkipSong(isNext: Boolean): Music? {
+
+        // to correctly get skip song when song is restored
+        if (isSongRestoredFromPrefs) {
+            currentSong.first?.run {
+                val song =
+                    mPlayingAlbumSongs?.find { it.title == title && it.duration == duration && it.displayName == displayName && it.track == track }
+                currentSong = Pair(song, false)
+            }
+        }
+
         if (isNext) {
-            if (mNextSong != null) {
-                return mNextSong
+            val nextSong = mNextSong
+            if (nextSong != null) {
+                return nextSong
             } else if (isQueue) {
                 return stopQueueAndGetSkipSong(true)
             }
         } else {
-            if (mPrevSong != null) {
-                return mPrevSong
+            val prevSong = mPrevSong
+            if (prevSong != null) {
+                return prevSong
             } else if (isQueue) {
                 return stopQueueAndGetSkipSong(false)
             }

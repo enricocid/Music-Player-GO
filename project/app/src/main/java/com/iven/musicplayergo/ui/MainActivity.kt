@@ -999,7 +999,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         openDetailsFragment(
                             selectedArtistOrFolder,
                             mMediaPlayerHolder.launchedBy,
-                            checkIsPlayer(false) && mMediaPlayerHolder.isShuffledSongsQueued
+                            checkIsPlayer(false) && mMediaPlayerHolder.isShuffledSongsQueued && mMediaPlayerHolder.currentSong.first?.artist == selectedArtistOrFolder && mMediaPlayerHolder.launchedBy != GoConstants.ALBUM_VIEW && mMediaPlayerHolder.launchedBy != GoConstants.FOLDER_VIEW
                         )
                     }
                 } else {
@@ -1015,7 +1015,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 openDetailsFragment(
                     selectedArtistOrFolder,
                     mMediaPlayerHolder.launchedBy,
-                    checkIsPlayer(false) && mMediaPlayerHolder.isShuffledSongsQueued
+                    checkIsPlayer(false) && mMediaPlayerHolder.isShuffledSongsQueued && mMediaPlayerHolder.currentSong.first?.artist == selectedArtistOrFolder && mMediaPlayerHolder.launchedBy != GoConstants.ALBUM_VIEW && mMediaPlayerHolder.launchedBy != GoConstants.FOLDER_VIEW
                 )
             }
 
@@ -1056,7 +1056,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         openDetailsFragment(
             artistOrFolder,
             launchedBy,
-            checkIsPlayer(false) && mMediaPlayerHolder.isShuffledSongsQueued && mMediaPlayerHolder.currentSong.first?.artist == artistOrFolder
+            checkIsPlayer(false) && mMediaPlayerHolder.isShuffledSongsQueued && mMediaPlayerHolder.currentSong.first?.artist == artistOrFolder && mMediaPlayerHolder.launchedBy != GoConstants.ALBUM_VIEW && mMediaPlayerHolder.launchedBy != GoConstants.FOLDER_VIEW
         )
     }
 
@@ -1068,7 +1068,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 )
             }
             mMediaPlayerHolder.run {
-                setCurrentSong(song, songs, isFromQueue = false, isFolderAlbum = launchedBy)
+                setCurrentSong(song, songs, isFromQueue = false, songLaunchedBy = launchedBy)
                 initMediaPlayer(song)
             }
         }
@@ -1202,14 +1202,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         isAlbumOrFolder: Pair<Boolean, Music?>,
         isLovedSongs: Boolean,
         isShuffleMode: Boolean,
+        clearShuffleMode: Boolean,
         launchedBy: String
     ) {
         if (checkIsPlayer(true)) {
-            val wasShuffleMode = mMediaPlayerHolder.isShuffledSongsQueued
+            val wasShuffleMode = mMediaPlayerHolder.isShuffledSongsQueued && !clearShuffleMode
             if (isShuffleMode) {
                 mMediaPlayerHolder.isLovedSongsQueued = false
-            } else {
-                mMediaPlayerHolder.isShuffledSongsQueued = false
             }
 
             mMediaPlayerHolder.run {
@@ -1229,10 +1228,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         addFilteredSongsToQueue(this, filteredSongs)
                     }
                 }
-
-                isLovedSongsQueued = isLovedSongs
-                isShuffledSongsQueued = isShuffleMode
-
                 if (!isPlaying || isLovedSongs || isShuffleMode) {
                     isAlbumOrFolder.second?.let { song ->
                         startSongFromQueue(song, launchedBy)
@@ -1244,9 +1239,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         openQueueDialog()
                     }
                 }
-                if (sDetailsFragmentExpanded) {
-                    mDetailsFragment.onDisableShuffle(isShuffleMode)
+                if (clearShuffleMode) {
+                    isShuffledSongsQueued = false
+                } else {
+                    if (sDetailsFragmentExpanded) {
+                        mDetailsFragment.onDisableShuffle(isShuffleMode)
+                    }
                 }
+                isLovedSongsQueued = isLovedSongs
             }
         }
     }
@@ -1278,6 +1278,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     Pair(false, song),
                     isLovedSongs = false,
                     isShuffleMode = true,
+                    clearShuffleMode = mMediaPlayerHolder.isShuffledSongsQueued,
                     launchedBy
                 )
             } else {
@@ -1388,6 +1389,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         override fun onQueueCleared() {
             if (::mQueueDialog.isInitialized && mQueueDialog.isShowing) {
                 mQueueDialog.dismiss()
+            }
+            if (checkIsPlayer(false) && sDetailsFragmentExpanded && !mMediaPlayerHolder.isShuffledSongsQueued) {
+                mDetailsFragment.onRestoreSorting()
             }
         }
 

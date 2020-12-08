@@ -82,6 +82,7 @@ class LovedSongsAdapter(
                         Pair(false, lovedSong),
                         isLovedSongs = true,
                         isShuffleMode = false,
+                        clearShuffleMode = true,
                         mediaPlayerHolder.launchedBy
                     )
                 }

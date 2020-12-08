@@ -21,6 +21,7 @@ interface UIControlInterface {
         isAlbumOrFolder: Pair<Boolean, Music?>,
         isLovedSongs: Boolean,
         isShuffleMode: Boolean,
+        clearShuffleMode: Boolean,
         launchedBy: String
     )
     fun onAddToFilter(stringToFilter: String?)

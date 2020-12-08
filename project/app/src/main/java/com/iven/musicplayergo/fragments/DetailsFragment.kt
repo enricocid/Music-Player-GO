@@ -93,8 +93,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
 
         arguments?.getBoolean(TAG_IS_SHUFFLING)?.let { isShuffleMode ->
-            sWasShuffling = Pair(isShuffleMode, null)
-            if (sWasShuffling.first) {
+            if (isShuffleMode) {
                 mSongsSorting = GoConstants.SHUFFLE_SORTING
             }
         }
@@ -229,18 +228,16 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 }
             }
 
+            if (mSongsSorting == GoConstants.SHUFFLE_SORTING) {
+                sWasShuffling = Pair(true, mSelectedAlbum?.title)
+            }
+
             setupAlbumsContainer()
 
             mDetailsFragmentBinding.sortButton.run {
                 setOnClickListener {
                     mSongsSorting = ListsHelper.getSongsSorting(mSongsSorting)
-                    setImageResource(ThemeHelper.resolveSortAlbumSongsIcon(mSongsSorting))
-                    setSongsDataSource(
-                        ListsHelper.getSortedMusicList(
-                            mSongsSorting,
-                            mSelectedAlbum?.music
-                        )
-                    )
+                    updateSorting(mSongsSorting)
                 }
             }
 
@@ -250,6 +247,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     Pair(true, mSelectedAlbum?.music?.get(0)),
                     isLovedSongs = false,
                     isShuffleMode = false,
+                    clearShuffleMode = sWasShuffling.first,
                     mLaunchedBy
                 )
             }
@@ -417,6 +415,20 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
     }
 
+    private fun updateSorting(sorting: Int) {
+        mDetailsFragmentBinding.sortButton.setImageResource(
+            ThemeHelper.resolveSortAlbumSongsIcon(
+                sorting
+            )
+        )
+        setSongsDataSource(
+            ListsHelper.getSortedMusicList(
+                sorting,
+                mSelectedAlbum?.music
+            )
+        )
+    }
+
     override fun onQueryTextChange(newText: String?): Boolean {
         setSongsDataSource(
             ListsHelper.processQueryForMusic(newText, mSongsList)
@@ -462,6 +474,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         Pair(true, mSongsList?.get(0)),
                         isLovedSongs = false,
                         isShuffleMode = false,
+                        clearShuffleMode = sWasShuffling.first,
                         mLaunchedBy
                     )
                     R.id.action_shuffle_am -> mUIControlInterface.onShuffleSongs(
@@ -596,6 +609,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                                 mSelectedAlbum = item
                                 mSelectedAlbumPosition = index
                                 updateSelectedAlbumTitle()
+
                                 swapAlbum(item.title, item.music)
                             }
                         } else {
@@ -631,6 +645,14 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     fun onDisableShuffle(isShuffleMode: Boolean) {
         if (sWasShuffling.first && !isShuffleMode) {
             sWasShuffling = Pair(false, null)
+        }
+    }
+
+    fun onRestoreSorting() {
+        if (sWasShuffling.first && mSelectedAlbum?.title == sWasShuffling.second) {
+            mSongsSorting = GoConstants.TRACK_SORTING
+            updateSorting(mSongsSorting)
+            onDisableShuffle(false)
         }
     }
 
