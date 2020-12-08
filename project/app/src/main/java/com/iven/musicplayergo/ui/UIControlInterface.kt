@@ -11,7 +11,7 @@ interface UIControlInterface {
     fun onPreciseVolumeToggled()
     fun onArtistOrFolderSelected(artistOrFolder: String, launchedBy: String)
     fun onSongSelected(song: Music?, songs: List<Music>?, launchedBy: String)
-    fun onShuffleSongs(songs: MutableList<Music>?, toBeQueued: Boolean, launchedBy: String) : MutableList<Music>?
+    fun onShuffleSongs(albumTitle: String?, songs: MutableList<Music>?, toBeQueued: Boolean, launchedBy: String) : MutableList<Music>?
     fun onLovedSongsUpdate(clear: Boolean)
     fun onLovedSongAdded(song: Music?, isAdded: Boolean)
     fun onCloseActivity()

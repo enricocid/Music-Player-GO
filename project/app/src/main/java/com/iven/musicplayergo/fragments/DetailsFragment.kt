@@ -72,6 +72,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private val sLaunchedByArtistView get() = mLaunchedBy == GoConstants.ARTIST_VIEW
     private val sLaunchedByFolderView get() = mLaunchedBy == GoConstants.FOLDER_VIEW
 
+    private var mShuffledAlbum: String? = null
     private var sWasShuffling: Pair<Boolean, String?> = Pair(false, null)
     private var sLoadDelay = true
 
@@ -96,6 +97,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             if (isShuffleMode) {
                 mSongsSorting = GoConstants.SHUFFLE_SORTING
             }
+        }
+
+        arguments?.getString(TAG_SHUFFLED_ALBUM)?.let { selectedAlbum ->
+            mShuffledAlbum = selectedAlbum
         }
 
         // This makes sure that the container activity has implemented
@@ -229,7 +234,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             }
 
             if (mSongsSorting == GoConstants.SHUFFLE_SORTING) {
-                sWasShuffling = Pair(true, mSelectedAlbum?.title)
+                sWasShuffling = Pair(true, mShuffledAlbum)
             }
 
             setupAlbumsContainer()
@@ -246,8 +251,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     mSelectedAlbum?.music,
                     Pair(true, mSelectedAlbum?.music?.get(0)),
                     isLovedSongs = false,
-                    isShuffleMode = false,
-                    clearShuffleMode = sWasShuffling.first,
+                    isShuffleMode = sWasShuffling.first,
+                    clearShuffleMode = !sWasShuffling.first,
                     mLaunchedBy
                 )
             }
@@ -326,16 +331,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                                     item.album,
                                     mMusicViewModel.deviceAlbumsByArtist
                                 )
-                                if (sWasShuffling.first && item.album == mSelectedAlbum?.title) {
-                                    ListsHelper.getSortedMusicList(
-                                        mSongsSorting,
-                                        playlist
-                                    )
-                                }
+                                onRestoreSorting()
                                 playlist
                             }
-
-                        sWasShuffling = Pair(false, null)
 
                         mUIControlInterface.onSongSelected(
                             item,
@@ -385,7 +383,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         if (sLaunchedByArtistView) {
             mDetailsFragmentBinding.sortButton.run {
 
-                if (sWasShuffling.first) {
+                if (sWasShuffling.first && sWasShuffling.second == mSelectedAlbum?.title) {
                     mDetailsFragmentBinding.sortButton.setImageResource(
                         ThemeHelper.resolveSortAlbumSongsIcon(
                             mSongsSorting
@@ -473,11 +471,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         mSongsList?.toMutableList(),
                         Pair(true, mSongsList?.get(0)),
                         isLovedSongs = false,
-                        isShuffleMode = false,
-                        clearShuffleMode = sWasShuffling.first,
+                        isShuffleMode = sWasShuffling.first,
+                        clearShuffleMode = !sWasShuffling.first,
                         mLaunchedBy
                     )
                     R.id.action_shuffle_am -> mUIControlInterface.onShuffleSongs(
+                        null,
                         mSongsList?.toMutableList(),
                         mSongsList?.size!! < 30, // only queue if album size don't exceed 30
                         mLaunchedBy
@@ -485,6 +484,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     R.id.action_shuffle_sa -> {
                         sWasShuffling = Pair(true, mSelectedAlbum?.title)
                         val music = mUIControlInterface.onShuffleSongs(
+                            mSelectedAlbum?.title,
                             mSelectedAlbum?.music,
                             true,
                             mLaunchedBy
@@ -517,11 +517,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         } else {
             mMusicViewModel.deviceMusicByAlbum?.get(mSelectedArtistOrFolder)
         }
-        mSongsList = ListsHelper.getSortedMusicList(
-            order,
-            selectedList?.toMutableList()
-        )
-        setSongsDataSource(mSongsList)
+        if (!sWasShuffling.first) {
+            mSongsList = ListsHelper.getSortedMusicList(
+                order,
+                selectedList?.toMutableList()
+            )
+            setSongsDataSource(mSongsList)
+        }
     }
 
     private fun setupAlbumsContainer() {
@@ -686,6 +688,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         private const val TAG_IS_FOLDER = "IS_FOLDER"
         private const val TAG_SELECTED_ALBUM_POSITION = "SELECTED_ALBUM_POSITION"
         private const val TAG_IS_SHUFFLING = "IS_SHUFFLING"
+        private const val TAG_SHUFFLED_ALBUM = "SHUFFLED_ALBUM"
 
         /**
          * Use this factory method to create a new instance of
@@ -698,14 +701,15 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             selectedArtistOrFolder: String?,
             launchedBy: String,
             playedAlbumPosition: Int,
-            isShuffleMode: Boolean
+            isShuffleMode: Pair<Boolean, String?>,
         ) =
             DetailsFragment().apply {
                 arguments = Bundle().apply {
                     putString(TAG_ARTIST_FOLDER, selectedArtistOrFolder)
                     putString(TAG_IS_FOLDER, launchedBy)
                     putInt(TAG_SELECTED_ALBUM_POSITION, playedAlbumPosition)
-                    putBoolean(TAG_IS_SHUFFLING, isShuffleMode)
+                    putBoolean(TAG_IS_SHUFFLING, isShuffleMode.first)
+                    putString(TAG_SHUFFLED_ALBUM, isShuffleMode.second)
                 }
             }
     }
