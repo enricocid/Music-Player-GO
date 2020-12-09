@@ -1,23 +1,20 @@
-# Caratteristiche
+<b>Caratteristiche</b>
 
 - Interfaccia minimale
 - Equalizzatore
-- Musica organizzata per Artista, Album, Canzoni e Cartelle
+- Musica organizzata per Artista, Album, Canzoni e Cartelle - le tabs sono organizzabili
 - Personalizzazione: temi chiaro, scuro, automatico e accenti
 - Now playing
 - Supporto per le cover integrate
 - Avanzamento veloce (tap lungo sui pulsanti precedente/prossima canzone)
 - Semplice gestione del focus audio, volume preciso e delle cuffie
 - Altre funzioni: ricerca, ordinamento, shuffle, barra di scorrimento nella notifica, apertura musica da altre app ..
-- Code base moderna e ... Kotlin!
 
 
 Vuoi di meno?
-Di una occhiata a Simple Music Player:
-https://github.com/enricocid/Be-Simple-Music-Player
+Di una occhiata a <a href="https://github.com/enricocid/Be-Simple-Music-Player/">Simple Music Player</a>
 
 
-# Vuoi contribuire alle traduzioni?
+<b>Vuoi contribuire alle traduzioni?</b>
 
-Unisciti a noi su Weblate:
-https://hosted.weblate.org/engage/music-player-go/
+Unisciti a noi su <a href="https://hosted.weblate.org/engage/music-player-go/">Weblate</a>/

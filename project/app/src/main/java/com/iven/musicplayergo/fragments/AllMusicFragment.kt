@@ -157,6 +157,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                     // don't queue the music library if it exceed 30 items
                     mUIControlInterface.onShuffleSongs(
                         null,
+                        null,
                         mAllMusic,
                         mAllMusic?.size!! < 30,
                         GoConstants.ARTIST_VIEW

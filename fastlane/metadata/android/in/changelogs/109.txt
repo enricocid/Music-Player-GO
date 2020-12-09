@@ -1,3 +1,0 @@
-- Fix a crash when trying to change song from notification when app is closed (thanks to @sagorahmed for issue reporting)
-- Improve code
-- Update Kotlin plugin 

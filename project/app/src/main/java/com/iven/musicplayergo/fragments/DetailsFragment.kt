@@ -331,7 +331,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                                     item.album,
                                     mMusicViewModel.deviceAlbumsByArtist
                                 )
-                                onRestoreSorting()
                                 playlist
                             }
 
@@ -477,6 +476,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     )
                     R.id.action_shuffle_am -> mUIControlInterface.onShuffleSongs(
                         null,
+                        null,
                         mSongsList?.toMutableList(),
                         mSongsList?.size!! < 30, // only queue if album size don't exceed 30
                         mLaunchedBy
@@ -485,6 +485,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         sWasShuffling = Pair(true, mSelectedAlbum?.title)
                         val music = mUIControlInterface.onShuffleSongs(
                             mSelectedAlbum?.title,
+                            mSelectedArtistAlbums,
                             mSelectedAlbum?.music,
                             true,
                             mLaunchedBy
@@ -646,15 +647,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     fun onDisableShuffle(isShuffleMode: Boolean) {
         if (sWasShuffling.first && !isShuffleMode) {
-            sWasShuffling = Pair(false, null)
-        }
-    }
-
-    fun onRestoreSorting() {
-        if (sWasShuffling.first && mSelectedAlbum?.title == sWasShuffling.second) {
             mSongsSorting = GoConstants.TRACK_SORTING
-            updateSorting(mSongsSorting)
-            onDisableShuffle(false)
+            if (sWasShuffling.first && mSelectedAlbum?.title == sWasShuffling.second) {
+                updateSorting(mSongsSorting)
+            }
+            sWasShuffling = Pair(false, null)
         }
     }
 

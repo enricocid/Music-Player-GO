@@ -29,7 +29,9 @@ import com.iven.musicplayergo.extensions.toContentUri
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.fragments.EqFragment
 import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
+import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedEqualizerSettings
 import com.iven.musicplayergo.ui.MainActivity
@@ -171,7 +173,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     var isLovedSongsQueued = false
 
     //first: boolean, second: shuffled album
-    var isShuffledSongsQueued : Pair<Boolean, String?> = Pair(false, null)
+    var isShuffledSongsQueued: Pair<Boolean, String?> = Pair(false, null)
+    var albumsForShuffleMode: List<Album>? = null
 
     var state = GoConstants.PAUSED
     var isPlay = false
@@ -764,11 +767,26 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             else -> {
                 queueSongs.clear()
                 isLovedSongsQueued = false
-                isShuffledSongsQueued = Pair(false, null)
+
+                restoreShuffledSongs()
+
                 mediaPlayerInterface.onQueueCleared()
                 mediaPlayerInterface.onQueueStartedOrEnded(false)
             }
         }
+    }
+
+    fun restoreShuffledSongs() {
+        if (isShuffledSongsQueued.first && albumsForShuffleMode != null) {
+            albumsForShuffleMode?.find { isShuffledSongsQueued.second == it.title }?.run {
+                ListsHelper.getSortedMusicList(
+                    GoConstants.TRACK_SORTING,
+                    music
+                )
+            }
+        }
+        isShuffledSongsQueued = Pair(false, null)
+        albumsForShuffleMode = null
     }
 
     fun skip(isNext: Boolean) {

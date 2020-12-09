@@ -1,3 +1,0 @@
-- Landscape: fix overlap issues between indicators and artists/folders list
-- Landscape: fix crash when dialogs (e.g. now playing) are displayed
-- Update Spanish translations

@@ -1,2 +1,0 @@
-- Android 10: add support for notification's SeekBar
-- Music service simplifications

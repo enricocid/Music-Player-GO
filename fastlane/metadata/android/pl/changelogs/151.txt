@@ -1,6 +1,0 @@
-- Fix AOD (Always On Display) not showing informations (thanks to Drhaal)
-- Audio focus improvements
-- Improvements to the saving mechanism of the last reproduced song
-- Add Romanian translations (thanks to 1t3x)
-- Add Galego (Galician) translations (thanks to Xose M)
-- Upgrade libs and dependencies

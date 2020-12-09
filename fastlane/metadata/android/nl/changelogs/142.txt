@@ -1,8 +1,0 @@
-- Quick jump feature review: it now supports folders
-- Fix and improve lists/fast scroller overlaps handling
-- Erros: show an error screen instead of finishing the app
-- Improve shuffling
-- Physical media buttons: fixes (thanks abirke)
-- Code optimization and other fixes
-- Add Brazilian Portuguese language (thanks Glaucio Santos)
-- Update translations (thanks everyone)

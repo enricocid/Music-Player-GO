@@ -1,3 +1,0 @@
-- Fix a crash
-- Update Indonesian translations (thanks zmni)
-- Added Indonesian and Dutch PlayStore listing descriptions. Thanks zmni and Heimen Stoffels

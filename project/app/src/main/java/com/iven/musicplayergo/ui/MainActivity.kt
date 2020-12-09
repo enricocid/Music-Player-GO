@@ -42,6 +42,7 @@ import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.*
+import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.EqualizerUtils
 import com.iven.musicplayergo.player.MediaPlayerHolder
@@ -1242,13 +1243,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         openQueueDialog()
                     }
                 }
-                if (clearShuffleMode && !wasShuffleMode.first) {
-                    isShuffledSongsQueued = Pair(false, null)
+                isLovedSongsQueued = isLovedSongs
+                if (clearShuffleMode && !wasShuffleMode.first || isLovedSongsQueued) {
+                    if (isLovedSongsQueued) {
+                        restoreShuffledSongs()
+                    }
                     if (sDetailsFragmentExpanded) {
                         mDetailsFragment.onDisableShuffle(isShuffleMode)
                     }
                 }
-                isLovedSongsQueued = isLovedSongs
 
                 if (!isPlaying || isLovedSongs || clearShuffleMode && !isAlbumOrFolder.first) {
                     isAlbumOrFolder.second?.let { song ->
@@ -1271,6 +1274,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onShuffleSongs(
         albumTitle: String?,
+        artistAlbums: List<Album>?,
         songs: MutableList<Music>?,
         toBeQueued: Boolean,
         launchedBy: String
@@ -1284,6 +1288,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         isLovedSongsQueued = false
                     }
                     isShuffledSongsQueued = Pair(true, albumTitle)
+                    albumsForShuffleMode = artistAlbums
                     if (toBeQueued) {
                         onAddAlbumToQueue(
                             songs,
@@ -1405,7 +1410,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mQueueDialog.dismiss()
             }
             if (checkIsPlayer(false) && sDetailsFragmentExpanded && !mMediaPlayerHolder.isShuffledSongsQueued.first) {
-                mDetailsFragment.onRestoreSorting()
+                mDetailsFragment.onDisableShuffle(false)
             }
         }
 

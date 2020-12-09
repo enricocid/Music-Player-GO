@@ -1,3 +1,0 @@
-- Review WaveView
-- Minor UI changes
-- Fixes to artist details layout

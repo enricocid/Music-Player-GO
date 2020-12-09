@@ -1,23 +1,22 @@
-# Features
+<i>Music Player GO</i> is a simple yet fully-featured local music player aiming at simplicity and performance.
+
+<b>Features</b>
 
 - Minimalistic interface
 - Equalizer
-- Music organized by Artist, Albums, Songs and Folders
+- Music organized by Artist, Albums, Songs and Folders - tabs are organisable
 - Personalization: light, dark, automatic themes and accents
 - Now playing
 - Embedded covers support
 - Fast seeking (long click on skip buttons)
 - Simple audio focus, precise volume and headsets management
 - Other features: search, sorting, shuffle, notification's SeekBar, audios opening from other apps ...
-- Modern code base and ... Kotlin!
 
 
 Want less?
-Check Be Simple Music Player:
-https://github.com/enricocid/Be-Simple-Music-Player
+Check <a href="https://github.com/enricocid/Be-Simple-Music-Player/">Simple Music Player</a>
 
 
-# Want to contribute to translations?
+<b>Want to contribute to translations?</b>
 
-Join us at Weblate:
-https://hosted.weblate.org/engage/music-player-go/
+Join us at <a href="https://hosted.weblate.org/engage/music-player-go/">Weblate</a>

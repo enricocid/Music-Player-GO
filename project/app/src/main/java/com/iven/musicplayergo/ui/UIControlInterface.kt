@@ -3,6 +3,7 @@ package com.iven.musicplayergo.ui
 import android.media.audiofx.BassBoost
 import android.media.audiofx.Equalizer
 import android.media.audiofx.Virtualizer
+import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
 
 interface UIControlInterface {
@@ -11,7 +12,14 @@ interface UIControlInterface {
     fun onPreciseVolumeToggled()
     fun onArtistOrFolderSelected(artistOrFolder: String, launchedBy: String)
     fun onSongSelected(song: Music?, songs: List<Music>?, launchedBy: String)
-    fun onShuffleSongs(albumTitle: String?, songs: MutableList<Music>?, toBeQueued: Boolean, launchedBy: String) : MutableList<Music>?
+    fun onShuffleSongs(
+        albumTitle: String?,
+        artistAlbums: List<Album>?,
+        songs: MutableList<Music>?,
+        toBeQueued: Boolean,
+        launchedBy: String
+    ): MutableList<Music>?
+
     fun onLovedSongsUpdate(clear: Boolean)
     fun onLovedSongAdded(song: Music?, isAdded: Boolean)
     fun onCloseActivity()
@@ -24,6 +32,7 @@ interface UIControlInterface {
         clearShuffleMode: Boolean,
         launchedBy: String
     )
+
     fun onAddToFilter(stringToFilter: String?)
     fun onDenyPermission()
     fun onHandleFocusPref()

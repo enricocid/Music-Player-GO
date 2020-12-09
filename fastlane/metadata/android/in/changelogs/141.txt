@@ -1,5 +1,0 @@
-- Fixed a crash on boot
-- Fixed a music service leak when rotating the device
-- Code optimization (removed 299 lines of code!)
-- Permission dialog: "Yes" and "No" are now replaced by "Ok" and "Cancel"
-- Turkish & Hindi translations update

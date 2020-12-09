@@ -1,5 +1,0 @@
-- Fix missing player controls when handling play from other apps
-- Fix issues with theming (automatic)/light system bars
-- Improve seek text when music duration is above 60 minutes
-- Update Russian translations
-- Code improvements

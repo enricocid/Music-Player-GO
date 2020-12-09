@@ -1,3 +1,0 @@
-- Fix a crash on Android M thanks to @sagorahmed and Alex Lockwood (@alexjlockwood)
-- Added Hindi support thanks to Somesh Kumar (@TheSomeshKumar)
-- Update the app's building blocks (libs, etc) 

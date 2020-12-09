@@ -1,0 +1,12 @@
+- Organize tabs
+- Add albums to queue
+- Manage loved/shuffled songs from queue
+- Make edge to edge default
+- Android 11: fix edge to edge
+- Fix audio focus (thanks Drhaal)
+- Reset volume when precise volume control is off (thanks Drhaal)
+- Review system bars color
+- Many code improvements and fixes
+- Update/add translations
+
+PS: loved songs will be cleared due to the changes to save mechanisms

@@ -1,2 +1,0 @@
-- Review/improve the loading music mechanism
-- Fix Turkish translations (credits: Adem Furkan ÖZCAN)

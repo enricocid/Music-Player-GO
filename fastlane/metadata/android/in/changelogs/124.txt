@@ -1,1 +1,0 @@
-Move songs list to top when switching albums

@@ -1,14 +1,14 @@
 <h1 align="center">Music Player GO</h1>
 
 <p align="center">
-<img height="500" src="art.gif">
+<img height="500" src="art1.gif">
 </p>
 
 <p align="center">
   <!-- Latest Release -->
     <a href="https://github.com/enricocid/Music-Player-GO/releases">
       <img alt="GitHub release"
-      src="https://img.shields.io/static/v1?label=Tag&message=v4.3.3&color=58F5D1">
+      src="https://img.shields.io/static/v1?label=Tag&message=v4.3.4&color=58F5D1">
     </a>
    <!-- Minimum SDK -->
     <a>
@@ -66,7 +66,7 @@ This repo contains the source code of the **Music Player GO** Android app: a sim
 
 - Minimalistic interface
 - Equalizer
-- Music organized by Artist, Albums, Songs and Folders
+- Music organized by Artist, Albums, Songs and Folders - tabs are organisable
 - Personalization: light, dark, automatic themes and accents
 - Now playing
 - Embedded covers support

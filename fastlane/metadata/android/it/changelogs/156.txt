@@ -1,0 +1,12 @@
+- Organizzazione tabs
+- Aggiunta degli album alla coda
+- Gestisci le canzoni preferite/mescolate dalla coda
+- Edge to edge è di default ora
+- Android 11: correzioni edge to edge
+- Corretto audio focus (grazie Drhaal)
+- Ripristina il volume se il volume preciso è off (grazie Drhaal)
+- Revisione colore barre di sistema
+- Molte migliorie e correzioni del codice
+- Aggiornate/aggiunte traduzioni
+
+PS le canzoni preferite saranno cancellate per via dei cambiamenti nel meccanismo di salvataggio

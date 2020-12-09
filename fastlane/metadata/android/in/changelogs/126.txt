@@ -1,3 +1,0 @@
-- Indicator Fast scroll: make the selected index the first visible item in artists list
-- Fix artists sorting
-- Upgrade Indicator Fast Scroll library
