@@ -170,7 +170,7 @@ object ListsHelper {
         val songToSave = song?.toSavedMusic(playerPosition, launchedBy)
 
         songToSave?.let { savedSong ->
-            if (lovedSongs?.contains(songToSave)!!) {
+            if (!lovedSongs?.contains(songToSave)!!) {
                 lovedSongs.add(savedSong)
             }
             goPreferences.lovedSongs = lovedSongs

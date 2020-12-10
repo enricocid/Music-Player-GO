@@ -16,7 +16,7 @@ class GoPreferences(context: Context) {
     private val prefsLovedSongs = context.getString(R.string.loved_songs_pref)
 
     private val prefsTheme = context.getString(R.string.theme_pref)
-    private val prefsThemeDef = context.getString(R.string.theme_pref_light)
+    private val prefsThemeDef = context.getString(R.string.theme_pref_auto)
     private val prefsAccent = context.getString(R.string.accent_pref)
 
     private val prefsActiveFragmentsDef = context.getString(R.string.active_fragments_def_pref)
