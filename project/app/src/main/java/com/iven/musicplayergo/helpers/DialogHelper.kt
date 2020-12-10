@@ -1,6 +1,7 @@
 package com.iven.musicplayergo.helpers
 
 import android.content.Context
+import android.text.Spanned
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
@@ -17,6 +18,7 @@ import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.extensions.addBidirectionalSwipeHandler
 import com.iven.musicplayergo.extensions.toFormattedDuration
+import com.iven.musicplayergo.extensions.toSpanned
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
@@ -265,7 +267,6 @@ object DialogHelper {
                     when (it.itemId) {
                         R.id.loved_songs_add -> {
                             ListsHelper.addToLovedSongs(
-                                context,
                                 song,
                                 0,
                                 launchedBy
@@ -302,5 +303,21 @@ object DialogHelper {
                 mediaPlayerHolder.stopPlaybackService(false)
             }
         }
+    }
+
+    @JvmStatic
+    fun computeDurationText(lovedSong: Music?, ctx: Context): Spanned? {
+        if (lovedSong?.startFrom != null && lovedSong.startFrom > 0L) {
+            return ctx.getString(
+                    R.string.loved_song_subtitle,
+                    lovedSong.startFrom.toLong().toFormattedDuration(
+                            isAlbum = false,
+                            isSeekBar = false
+                    ),
+                    lovedSong.duration.toFormattedDuration(isAlbum = false, isSeekBar = false)
+            ).toSpanned()
+        }
+        return lovedSong?.duration?.toFormattedDuration(isAlbum = false, isSeekBar = false)
+                ?.toSpanned()
     }
 }

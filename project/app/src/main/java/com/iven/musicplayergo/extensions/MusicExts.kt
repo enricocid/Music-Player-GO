@@ -150,3 +150,18 @@ fun Music.toSavedMusic(playerPosition: Int, savedLaunchedBy: String) =
         savedLaunchedBy,
         playerPosition
     )
+
+fun Music.toSavedMusicWithoutPosition( savedLaunchedBy: String) =
+    Music(
+        artist,
+        year,
+        track,
+        title,
+        displayName,
+        duration,
+        album,
+        relativePath,
+        id,
+        savedLaunchedBy,
+        0
+    )

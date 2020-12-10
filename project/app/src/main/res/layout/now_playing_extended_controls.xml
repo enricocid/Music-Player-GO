@@ -12,6 +12,16 @@
         android:padding="16dp">
 
         <ImageButton
+            android:id="@+id/np_save_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="16dp"
+            android:background="?android:attr/actionBarItemBackground"
+            app:srcCompat="@drawable/ic_save_time"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
             android:id="@+id/np_love"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

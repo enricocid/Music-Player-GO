@@ -19,6 +19,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -605,6 +606,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         mNowPlayingExtendedControlsBinding.npVolume,
                         ThemeHelper.resolveThemeAccent(this@MainActivity)
                     )
+
                 }
             }
 
@@ -635,11 +637,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mNowPlayingExtendedControlsBinding =
                     NowPlayingExtendedControlsBinding.bind(mNowPlayingBinding.root)
 
+                mNowPlayingExtendedControlsBinding.npSaveTime.setOnClickListener { savePlayerPosition() }
+
                 mNowPlayingBinding.npSong.isSelected = true
                 mNowPlayingBinding.npArtistAlbum.isSelected = true
 
                 mNowPlayingBinding.npPlayingSongContainer.setOnClickListener { openPlayingArtistAlbum() }
                 mNowPlayingControlsBinding.npEq.setOnClickListener { openEqualizer() }
+
                 mNowPlayingControlsBinding.npSkipPrev.run {
                     setOnClickListener { skip(false) }
                     setOnLongClickListener {
@@ -678,13 +683,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 }
 
                 mNowPlayingExtendedControlsBinding.npLove.setOnClickListener {
-                    ListsHelper.addToLovedSongs(
-                        this@MainActivity,
+                    ListsHelper.addOrRemoveFromLovedSongs(
                         mMediaPlayerHolder.currentSong.first,
-                        mMediaPlayerHolder.playerPosition,
+                        0,
                         mMediaPlayerHolder.launchedBy
                     )
                     onLovedSongsUpdate(false)
+                    updateNowPlayingLovedIcon(context)
                 }
 
                 if (goPreferences.isPreciseVolumeEnabled) {
@@ -725,6 +730,47 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 }
             }
         }
+    }
+
+    private fun savePlayerPosition() {
+        if (mMediaPlayerHolder.playerPosition > 0) {
+            ListsHelper.addToLovedSongs(
+                    mMediaPlayerHolder.currentSong.first,
+                    mMediaPlayerHolder.playerPosition,
+                    mMediaPlayerHolder.launchedBy
+            )
+            onLovedSongsUpdate(false)
+            getString(R.string.player_position_saved).toToast(this)
+        }else {
+            getString(R.string.cannot_save_position).toToast(this)
+        }
+    }
+
+    private fun updateNowPlayingLovedIcon(context: Context) {
+        if (this::mNowPlayingExtendedControlsBinding.isInitialized) {
+            mMediaPlayerHolder.currentSong.first.let {
+                val isLoved = isInLovedSongs(it!!)
+                val lovedSongsButtonColor = if (isLoved)
+                    R.color.red.decodeColor(context) else ThemeHelper.resolveColorAttr(
+                        context,
+                        android.R.attr.colorButtonNormal
+                )
+                ThemeHelper.updateIconTint(
+                        mNowPlayingExtendedControlsBinding.npLove,
+                        lovedSongsButtonColor
+                )
+            }
+        }
+    }
+
+    private fun isInLovedSongs(song: Music): Boolean {
+        val lovedSongs = goPreferences.lovedSongs
+        if (lovedSongs != null) {
+            val convertedSong =
+                    song.toSavedMusicWithoutPosition(mMediaPlayerHolder.launchedBy)
+            return lovedSongs.contains(convertedSong)
+        }
+        return false
     }
 
     private fun saveSongToPref() {
@@ -976,7 +1022,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mNowPlayingBinding.npRates.text =
                 getString(R.string.rates, bitrateInfo.first, bitrateInfo.second)
         }
-
+        updateNowPlayingLovedIcon(this)
         updatePlayingStatus(true)
     }
 
