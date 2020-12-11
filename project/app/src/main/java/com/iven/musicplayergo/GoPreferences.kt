@@ -2,11 +2,12 @@ package com.iven.musicplayergo
 
 import android.content.Context
 import androidx.preference.PreferenceManager
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedEqualizerSettings
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import java.lang.reflect.Type
+
 
 class GoPreferences(context: Context) {
 
@@ -42,44 +43,36 @@ class GoPreferences(context: Context) {
     private val prefsFilter = context.getString(R.string.filter_pref)
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
-    private val mGson = GsonBuilder().create()
 
-    // active fragments type
-    private val typeActiveFragments = object : TypeToken<Set<String>>() {}.type
-
-    // saved equalizer settings is a SavedEqualizerSettings
-    private val typeSavedEqualizerSettings = object : TypeToken<SavedEqualizerSettings>() {}.type
-
-    // last played song is a SavedMusic
-    private val typeLastPlayedSong = object : TypeToken<Music>() {}.type
+    private val mMoshi = Moshi.Builder().build()
 
     //loved songs is a list of SavedMusic
-    private val typeLovedSongs = object : TypeToken<MutableList<Music>>() {}.type
+    private val typeLovedSongs = Types.newParameterizedType(MutableList::class.java, Music::class.java)
 
     var latestVolume: Int
         get() = mPrefs.getInt(prefsLatestVolume, 100)
         set(value) = mPrefs.edit().putInt(prefsLatestVolume, value).apply()
 
     var latestPlayedSong: Music?
-        get() = getObject(
-            prefsLatestPlayedSong,
-            typeLastPlayedSong
+        get() = getObjectForClass(
+                prefsLatestPlayedSong,
+                Music::class.java
         )
-        set(value) = putObject(prefsLatestPlayedSong, value)
+        set(value) = putObjectForClass(prefsLatestPlayedSong, value, Music::class.java)
 
     var savedEqualizerSettings: SavedEqualizerSettings?
-        get() = getObject(
-            prefsSavedEqualizerSettings,
-            typeSavedEqualizerSettings
+        get() = getObjectForClass(
+                prefsSavedEqualizerSettings,
+                SavedEqualizerSettings::class.java
         )
-        set(value) = putObject(prefsSavedEqualizerSettings, value)
+        set(value) = putObjectForClass(prefsSavedEqualizerSettings, value, SavedEqualizerSettings::class.java)
 
     var lovedSongs: MutableList<Music>?
-        get() = getObject(
-            prefsLovedSongs,
-            typeLovedSongs
+        get() = getObjectForType(
+                prefsLovedSongs,
+                typeLovedSongs
         )
-        set(value) = putObject(prefsLovedSongs, value)
+        set(value) = putObjectForType(prefsLovedSongs, value, typeLovedSongs)
 
     var theme
         get() = mPrefs.getString(prefsTheme, prefsThemeDef)
@@ -90,14 +83,14 @@ class GoPreferences(context: Context) {
         set(value) = mPrefs.edit().putInt(prefsAccent, value).apply()
 
     var activeFragmentsDef: Set<String>
-        get() = getObject(prefsActiveFragmentsDef, typeActiveFragments)
-            ?: GoConstants.DEFAULT_ACTIVE_FRAGMENTS
-        set(value) = putObject(prefsActiveFragmentsDef, value)
+        get() = mPrefs.getStringSet(prefsActiveFragmentsDef, GoConstants.DEFAULT_ACTIVE_FRAGMENTS)
+                ?: GoConstants.DEFAULT_ACTIVE_FRAGMENTS
+        set(value) = mPrefs.edit().putStringSet(prefsActiveFragmentsDef, value).apply()
 
     var activeFragments: Set<String>
-        get() = getObject(prefsActiveFragments, typeActiveFragments)
-            ?: GoConstants.DEFAULT_ACTIVE_FRAGMENTS
-        set(value) = putObject(prefsActiveFragments, value)
+        get() = mPrefs.getStringSet(prefsActiveFragments, GoConstants.DEFAULT_ACTIVE_FRAGMENTS)
+                ?: GoConstants.DEFAULT_ACTIVE_FRAGMENTS
+        set(value) = mPrefs.edit().putStringSet(prefsActiveFragments, value).apply()
 
     var onListEnded
         get() = mPrefs.getString(prefsOnListEnded, GoConstants.CONTINUE)
@@ -151,27 +144,30 @@ class GoPreferences(context: Context) {
         get() = mPrefs.getBoolean(prefsHeadsetPlug, true)
         set(value) = mPrefs.edit().putBoolean(prefsHeadsetPlug, value).apply()
 
-    /**
-     * Saves object into the Preferences.
-     * Only the fields are stored. Methods, Inner classes, Nested classes and inner interfaces are not stored.
-     **/
-    private fun <T> putObject(key: String, y: T) {
-        //Convert object to JSON String.
-        val inString = mGson.toJson(y)
-        //Save that String in SharedPreferences
-        mPrefs.edit().putString(key, inString).apply()
+    // Saves object into the Preferences using Moshi
+    private fun <T : Any> putObjectForType(key: String, value: T?, type: Type) {
+        val json = mMoshi.adapter<T>(type).toJson(value)
+        mPrefs.edit().putString(key, json).apply()
     }
 
-    /**
-     * Get object from the Preferences.
-     **/
-    private fun <T> getObject(key: String, t: Type): T? {
-        //We read JSON String which was saved.
-        val value = mPrefs.getString(key, null)
+    private fun <T : Any> getObjectForType(key: String, type: Type): T? {
+        mPrefs.getString(key, null)?.let { json ->
+            return mMoshi.adapter<T>(type).fromJson(json)
+        }
+        return null
+    }
 
-        //JSON String was found which means object can be read.
-        //We convert this JSON String to model object. Parameter "c" (of type Class<T>" is used to cast.
-        return mGson.fromJson(value, t)
+    private fun <T : Any> putObjectForClass(key: String, value: T?, clazz: Class<T>) {
+        val json = mMoshi.adapter(clazz).toJson(value)
+        mPrefs.edit().putString(key, json).apply()
+    }
+
+    private fun <T : Any> getObjectForClass(key: String, clazz: Class<T>): T? {
+
+        mPrefs.getString(key, null)?.let { json ->
+            return mMoshi.adapter(clazz).fromJson(json)
+        }
+        return null
     }
 }
 

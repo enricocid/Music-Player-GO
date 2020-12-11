@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
@@ -78,8 +79,9 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
 
 // Third-party
-    //https://github.com/google/gson/blob/master/CHANGELOG.md
-    implementation 'com.google.code.gson:gson:2.8.6'
+    //https://github.com/square/moshi/release
+    implementation("com.squareup.moshi:moshi:1.11.0")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.11.0")
 
     //https://github.com/reddit/IndicatorFastScroll/releases
     implementation 'com.reddit:indicator-fast-scroll:1.3.0'
@@ -94,6 +96,6 @@ dependencies {
     //https://github.com/beworker/edge-to-edge/blob/master/CHANGELOG.md
     implementation 'de.halfbit:edge-to-edge:0.10'
 
-    //https://github.com/coil-kt/coil
+    //https://github.com/coil-kt/coil/releases
     implementation 'io.coil-kt:coil:1.0.0'
 }
