@@ -50,7 +50,7 @@ class GoPreferences(context: Context) {
     // active fragments type
     private val typeActiveTabs = Types.newParameterizedType(MutableList::class.java, String::class.java)
 
-    //loved songs is a list of SavedMusic
+    //loved songs is a list of Music
     private val typeLovedSongs = Types.newParameterizedType(MutableList::class.java, Music::class.java)
 
     var latestVolume: Int
@@ -148,7 +148,7 @@ class GoPreferences(context: Context) {
         get() = mPrefs.getBoolean(prefsHeadsetPlug, true)
         set(value) = mPrefs.edit().putBoolean(prefsHeadsetPlug, value).apply()
 
-    // Saves object into the Preferences using Moshi
+    // Retrieve object from the Preferences using Moshi
     private fun <T : Any> putObjectForType(key: String, value: T?, type: Type) {
         val json = mMoshi.adapter<T>(type).toJson(value)
         mPrefs.edit().putString(key, json).apply()
@@ -161,13 +161,13 @@ class GoPreferences(context: Context) {
         return null
     }
 
+    // Saves object into the Preferences using Moshi
     private fun <T : Any> putObjectForClass(key: String, value: T?, clazz: Class<T>) {
         val json = mMoshi.adapter(clazz).toJson(value)
         mPrefs.edit().putString(key, json).apply()
     }
 
     private fun <T : Any> getObjectForClass(key: String, clazz: Class<T>): T? {
-
         mPrefs.getString(key, null)?.let { json ->
             return mMoshi.adapter(clazz).fromJson(json)
         }
