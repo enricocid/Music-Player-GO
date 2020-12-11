@@ -155,7 +155,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     private val mPrevSong: Music?
         get() = when {
-            mPrevSongIndex <= mCurrentAlbumSize && mPrevSongIndex != -1 -> mPlayingAlbumSongs?.get(
+            mPrevSongIndex in 0..mCurrentAlbumSize -> mPlayingAlbumSongs?.get(
                 mPrevSongIndex
             )
             isQueue -> stopQueueAndGetSkipSong(false)
