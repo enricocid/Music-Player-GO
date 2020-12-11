@@ -52,7 +52,6 @@ import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 
 
-@Suppress("UNUSED_PARAMETER")
 class MainActivity : AppCompatActivity(), UIControlInterface {
 
     // View binding classes
