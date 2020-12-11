@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private val mMusicViewModel: MusicViewModel by viewModels()
 
     // Fragments
-    private val mActiveFragments: List<String> = goPreferences.activeFragments.toList()
+    private val mActiveFragments: List<String> = goPreferences.activeTabs.toList()
     private var mArtistsFragment: MusicContainersListFragment? = null
     private var mAllMusicFragment: AllMusicFragment? = null
     private var mFoldersFragment: MusicContainersListFragment? = null

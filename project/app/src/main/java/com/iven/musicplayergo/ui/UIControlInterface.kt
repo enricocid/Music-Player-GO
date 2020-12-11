@@ -13,11 +13,11 @@ interface UIControlInterface {
     fun onArtistOrFolderSelected(artistOrFolder: String, launchedBy: String)
     fun onSongSelected(song: Music?, songs: List<Music>?, launchedBy: String)
     fun onShuffleSongs(
-        albumTitle: String?,
-        artistAlbums: List<Album>?,
-        songs: MutableList<Music>?,
-        toBeQueued: Boolean,
-        launchedBy: String
+            albumTitle: String?,
+            artistAlbums: List<Album>?,
+            songs: MutableList<Music>?,
+            toBeQueued: Boolean,
+            launchedBy: String
     ): MutableList<Music>?
 
     fun onLovedSongsUpdate(clear: Boolean)
@@ -25,12 +25,12 @@ interface UIControlInterface {
     fun onCloseActivity()
     fun onAddToQueue(song: Music?, launchedBy: String)
     fun onAddAlbumToQueue(
-        songs: MutableList<Music>?,
-        isAlbumOrFolder: Pair<Boolean, Music?>,
-        isLovedSongs: Boolean,
-        isShuffleMode: Boolean,
-        clearShuffleMode: Boolean,
-        launchedBy: String
+            songs: MutableList<Music>?,
+            isAlbumOrFolder: Pair<Boolean, Music?>,
+            isLovedSongs: Boolean,
+            isShuffleMode: Boolean,
+            clearShuffleMode: Boolean,
+            launchedBy: String
     )
 
     fun onAddToFilter(stringToFilter: String?)

@@ -54,7 +54,7 @@
             app:title="@string/accent_pref_title" />
 
         <Preference
-            app:key="@string/active_fragments_pref"
+            app:key="@string/active_tabs_pref"
             app:title="@string/active_fragments_pref_title" />
     </PreferenceCategory>
 

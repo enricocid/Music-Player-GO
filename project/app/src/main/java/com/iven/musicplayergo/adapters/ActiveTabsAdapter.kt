@@ -16,38 +16,38 @@ import com.iven.musicplayergo.helpers.ThemeHelper
 import java.util.*
 
 class ActiveTabsAdapter(private val ctx: Context) :
-    RecyclerView.Adapter<ActiveTabsAdapter.CheckableItemsHolder>() {
+        RecyclerView.Adapter<ActiveTabsAdapter.CheckableItemsHolder>() {
 
-    private val mAvailableItems = goPreferences.activeFragmentsDef.toMutableList()
-    private val mActiveItems = goPreferences.activeFragments.toMutableList()
+    private val mAvailableItems = goPreferences.activeTabsDef
+    private val mActiveItems = goPreferences.activeTabs
 
     //method used to make the last item of the staggered rv full width
     //https://medium.com/android-dev-journal/how-to-make-first-item-of-recyclerview-of-full-width-with-a-gridlayoutmanager-66456a4bfffe
     val spanSizeLookup: GridLayoutManager.SpanSizeLookup =
-        object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return if (position == mAvailableItems.size - 1) {
-                    2
-                } else {
-                    1
+            object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return if (position == mAvailableItems.size - 1) {
+                        2
+                    } else {
+                        1
+                    }
                 }
             }
-        }
 
-    fun getUpdatedItems(): Set<String> {
-        goPreferences.activeFragmentsDef = mAvailableItems.toSet()
+    fun getUpdatedItems(): List<String> {
+        goPreferences.activeTabsDef = mAvailableItems
         // make sure to respect tabs order
         val differences = mAvailableItems.minus(mActiveItems)
-        return mAvailableItems.minus(differences).toSet()
+        return mAvailableItems.minus(differences)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckableItemsHolder {
         return CheckableItemsHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.active_tab_item,
-                parent,
-                false
-            )
+                LayoutInflater.from(parent.context).inflate(
+                        R.layout.active_tab_item,
+                        parent,
+                        false
+                )
         )
     }
 
@@ -72,21 +72,21 @@ class ActiveTabsAdapter(private val ctx: Context) :
 
                 if (isEnabled) {
                     manageTabStatus(
-                        mActiveItems.contains(mAvailableItems[adapterPosition]),
-                        tabImageButton
+                            mActiveItems.contains(mAvailableItems[adapterPosition]),
+                            tabImageButton
                     )
                 } else {
                     ThemeHelper.updateIconTint(
-                        tabImageButton,
-                        ThemeHelper.getAlphaAccent(ctx)
+                            tabImageButton,
+                            ThemeHelper.getAlphaAccent(ctx)
                     )
                 }
 
                 setOnClickListener {
 
                     manageTabStatus(
-                        !tabImageButton.isSelected,
-                        tabImageButton
+                            !tabImageButton.isSelected,
+                            tabImageButton
                     )
 
                     val toggledItem = mAvailableItems[adapterPosition]
@@ -97,7 +97,7 @@ class ActiveTabsAdapter(private val ctx: Context) :
                     }
                     if (mActiveItems.size < 2) {
                         context.getString(R.string.active_fragments_pref_warning)
-                            .toToast(context)
+                                .toToast(context)
                         mActiveItems.add(toggledItem)
                         manageTabStatus(true, tabImageButton)
                     }
@@ -107,8 +107,8 @@ class ActiveTabsAdapter(private val ctx: Context) :
     }
 
     private fun manageTabStatus(
-        condition: Boolean,
-        icon: ImageButton
+            condition: Boolean,
+            icon: ImageButton
     ) {
         icon.isSelected = condition
         val color = if (condition) {
@@ -123,18 +123,18 @@ class ActiveTabsAdapter(private val ctx: Context) :
     val itemTouchCallback: ItemTouchHelper.Callback = object : ItemTouchHelper.Callback() {
 
         override fun getMovementFlags(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder
         ): Int {
             val dragFlags =
-                ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.END or ItemTouchHelper.START
+                    ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.END or ItemTouchHelper.START
             return makeMovementFlags(dragFlags, 0)
         }
 
         override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
         ): Boolean {
             return (mAvailableItems[viewHolder.adapterPosition] != GoConstants.SETTINGS_TAB).apply {
                 if (this) {

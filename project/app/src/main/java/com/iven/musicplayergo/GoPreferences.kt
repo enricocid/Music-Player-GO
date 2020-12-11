@@ -20,8 +20,9 @@ class GoPreferences(context: Context) {
     private val prefsThemeDef = context.getString(R.string.theme_pref_auto)
     private val prefsAccent = context.getString(R.string.accent_pref)
 
-    private val prefsActiveFragmentsDef = context.getString(R.string.active_fragments_def_pref)
-    private val prefsActiveFragments = context.getString(R.string.active_fragments_pref)
+    private val prefsDefaultFragments = mutableListOf(GoConstants.ARTISTS_TAB, GoConstants.ALBUM_TAB, GoConstants.SONGS_TAB, GoConstants.FOLDERS_TAB, GoConstants.SETTINGS_TAB)
+    private val prefsActiveTabsDef = context.getString(R.string.active_tabs_def_pref)
+    private val prefsActiveTabs = context.getString(R.string.active_tabs_pref)
 
     private val prefsCover = context.getString(R.string.covers_pref)
 
@@ -45,6 +46,9 @@ class GoPreferences(context: Context) {
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
 
     private val mMoshi = Moshi.Builder().build()
+
+    // active fragments type
+    private val typeActiveTabs = Types.newParameterizedType(MutableList::class.java, String::class.java)
 
     //loved songs is a list of SavedMusic
     private val typeLovedSongs = Types.newParameterizedType(MutableList::class.java, Music::class.java)
@@ -82,15 +86,15 @@ class GoPreferences(context: Context) {
         get() = mPrefs.getInt(prefsAccent, R.color.deep_purple)
         set(value) = mPrefs.edit().putInt(prefsAccent, value).apply()
 
-    var activeFragmentsDef: Set<String>
-        get() = mPrefs.getStringSet(prefsActiveFragmentsDef, GoConstants.DEFAULT_ACTIVE_FRAGMENTS)
-                ?: GoConstants.DEFAULT_ACTIVE_FRAGMENTS
-        set(value) = mPrefs.edit().putStringSet(prefsActiveFragmentsDef, value).apply()
+    var activeTabsDef: MutableList<String>
+        get() = getObjectForType(prefsActiveTabsDef, typeActiveTabs)
+                ?: prefsDefaultFragments
+        set(value) = putObjectForType(prefsActiveTabsDef, value, typeActiveTabs)
 
-    var activeFragments: Set<String>
-        get() = mPrefs.getStringSet(prefsActiveFragments, GoConstants.DEFAULT_ACTIVE_FRAGMENTS)
-                ?: GoConstants.DEFAULT_ACTIVE_FRAGMENTS
-        set(value) = mPrefs.edit().putStringSet(prefsActiveFragments, value).apply()
+    var activeTabs: MutableList<String>
+        get() = getObjectForType(prefsActiveTabs, typeActiveTabs)
+                ?: prefsDefaultFragments
+        set(value) = putObjectForType(prefsActiveTabs, value, typeActiveTabs)
 
     var onListEnded
         get() = mPrefs.getString(prefsOnListEnded, GoConstants.CONTINUE)

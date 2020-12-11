@@ -13,18 +13,18 @@ import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 
 class AccentsAdapter(private val activity: Activity) :
-    RecyclerView.Adapter<AccentsAdapter.AccentsHolder>() {
+        RecyclerView.Adapter<AccentsAdapter.AccentsHolder>() {
 
     private val mAccents = ThemeHelper.accents
     private var mSelectedAccent = goPreferences.accent
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccentsHolder {
         return AccentsHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.accent_item,
-                parent,
-                false
-            )
+                LayoutInflater.from(parent.context).inflate(
+                        R.layout.accent_item,
+                        parent,
+                        false
+                )
         )
     }
 

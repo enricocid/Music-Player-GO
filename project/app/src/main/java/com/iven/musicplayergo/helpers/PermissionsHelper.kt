@@ -16,21 +16,21 @@ object PermissionsHelper {
 
     @JvmStatic
     fun hasToAskForReadStoragePermission(activity: Activity) =
-        VersioningHelper.isMarshMallow() && ContextCompat.checkSelfPermission(
-            activity,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        ) != PackageManager.PERMISSION_GRANTED
+            VersioningHelper.isMarshMallow() && ContextCompat.checkSelfPermission(
+                    activity,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
 
     @JvmStatic
     fun manageAskForReadStoragePermission(
-        activity: Activity,
-        uiControlInterface: UIControlInterface
+            activity: Activity,
+            uiControlInterface: UIControlInterface
     ) {
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(
-                activity,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
+                        activity,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                )
         ) {
 
             MaterialDialog(activity).show {
@@ -42,7 +42,7 @@ object PermissionsHelper {
                 message(R.string.perm_rationale)
                 positiveButton(android.R.string.ok) {
                     askForReadStoragePermission(
-                        activity
+                            activity
                     )
                 }
                 negativeButton {
@@ -51,7 +51,7 @@ object PermissionsHelper {
             }
         } else {
             askForReadStoragePermission(
-                activity
+                    activity
             )
         }
     }
@@ -59,9 +59,9 @@ object PermissionsHelper {
     @TargetApi(Build.VERSION_CODES.M)
     private fun askForReadStoragePermission(activity: Activity) {
         ActivityCompat.requestPermissions(
-            activity,
-            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-            GoConstants.PERMISSION_REQUEST_READ_EXTERNAL_STORAGE
+                activity,
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                GoConstants.PERMISSION_REQUEST_READ_EXTERNAL_STORAGE
         )
     }
 }
