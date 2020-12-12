@@ -1,0 +1,6 @@
+- Bug fixes
+- Una vecchia libreria, usata per salvare le canzoni e che stava causando problemi, è
+stata rimpiazzata con una più moderna. Alla luce di questi cambiamenti le canzoni
+preferite andranno perse. Sono dispiaciuto ma era necessario. :)
+- Il tema automatico è di default adesso (grazie Drhaal per il suggerimento)
+- Aggiornamento librerie/dipendenze

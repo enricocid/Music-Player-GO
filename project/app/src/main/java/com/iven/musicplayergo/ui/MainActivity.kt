@@ -794,7 +794,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onLovedSongsUpdate(clear: Boolean) {
 
-        val lovedSongs = goPreferences.lovedSongs
+        val lovedSongs = goPreferences.lovedSongs?.toMutableList()
 
         if (clear) {
             lovedSongs?.clear()

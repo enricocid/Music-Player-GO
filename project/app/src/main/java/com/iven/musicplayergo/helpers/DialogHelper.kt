@@ -199,7 +199,7 @@ object DialogHelper {
             )
             positiveButton(R.string.yes) {
                 lovedSongs?.remove(songToDelete)
-                goPreferences.lovedSongs = lovedSongs
+                goPreferences.lovedSongs = lovedSongs?.toList()
                 lovedSongsAdapter.swapSongs(lovedSongs)
                 uiControlInterface.onLovedSongAdded(songToDelete, false)
             }

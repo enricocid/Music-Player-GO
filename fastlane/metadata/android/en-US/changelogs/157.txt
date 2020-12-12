@@ -1,0 +1,6 @@
+- Bug fixes
+- Just replaced an old library, used for saving songs and causing issues, with a more
+modern one. In light of this change loved songs will be lost. I'm sorry but it was
+needed :)
+- Make automatic theme the default one (thanks Drhaal for the suggestion)
+- Update libraries/dependencies

@@ -18,8 +18,8 @@ import java.util.*
 class ActiveTabsAdapter(private val ctx: Context) :
         RecyclerView.Adapter<ActiveTabsAdapter.CheckableItemsHolder>() {
 
-    private val mAvailableItems = goPreferences.activeTabsDef
-    private val mActiveItems = goPreferences.activeTabs
+    private val mAvailableItems = goPreferences.activeTabsDef.toMutableList()
+    private val mActiveItems = goPreferences.activeTabs.toMutableList()
 
     //method used to make the last item of the staggered rv full width
     //https://medium.com/android-dev-journal/how-to-make-first-item-of-recyclerview-of-full-width-with-a-gridlayoutmanager-66456a4bfffe

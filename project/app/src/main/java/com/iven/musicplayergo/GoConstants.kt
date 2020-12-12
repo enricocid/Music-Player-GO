@@ -14,6 +14,8 @@ object GoConstants {
     const val FOLDERS_TAB = "FOLDERS_TAB"
     const val SETTINGS_TAB = "SETTINGS_TAB"
 
+    val DEFAULT_ACTIVE_FRAGMENTS = listOf(ARTISTS_TAB, ALBUM_TAB, SONGS_TAB, FOLDERS_TAB, SETTINGS_TAB)
+
     // launched by, used to determine which MusicContainerListFragment is instantiated by the ViewPager
     const val ARTIST_VIEW = "0"
     const val ALBUM_VIEW = "1"

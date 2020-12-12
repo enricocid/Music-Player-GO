@@ -163,14 +163,12 @@ object ListsHelper {
     ) {
         val lovedSongs =
                 if (goPreferences.lovedSongs != null) {
-                    goPreferences.lovedSongs
+                    goPreferences.lovedSongs?.toMutableList()
                 } else {
                     mutableListOf()
                 }
 
-        val songToSave = song?.toSavedMusic(playerPosition, launchedBy)
-
-        songToSave?.let { savedSong ->
+        song?.toSavedMusic(playerPosition, launchedBy)?.let { savedSong ->
             if (!lovedSongs?.contains(savedSong)!!) {
                 lovedSongs.add(
                         savedSong
@@ -183,7 +181,7 @@ object ListsHelper {
                                 isSeekBar = false
                         )
                 ).toToast(context)
-                goPreferences.lovedSongs = lovedSongs
+                goPreferences.lovedSongs = lovedSongs.toList()
             }
         }
     }
