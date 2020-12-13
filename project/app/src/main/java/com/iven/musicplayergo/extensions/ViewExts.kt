@@ -5,6 +5,7 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
@@ -28,6 +29,8 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.load
 import coil.request.ImageRequest
+import coil.size.Scale
+import coil.size.ViewSizeResolver
 import coil.transform.RoundedCornersTransformation
 import com.google.android.material.animation.ArgbEvaluatorCompat
 import com.iven.musicplayergo.R
@@ -90,13 +93,12 @@ fun ImageView.loadCover(
 
     val request = ImageRequest.Builder(context)
             .data(music?.getCover(context) ?: defaultCover)
-            .allowHardware(false)
-
+            .scale(Scale.FIT)
+            .size(ViewSizeResolver(this))
             .target(
                     onSuccess = { result ->
                         // Handle the successful result.
                         load(result) {
-
                             if (isCircleCrop) {
                                 transformations(RoundedCornersTransformation(resources.getDimension(R.dimen.md_corner_radius)))
                             }
@@ -114,7 +116,7 @@ fun ImageView.loadCover(
                         0
                     }
             )
-            imageLoader.execute(request)
+            imageLoader.enqueue(request)
         }
     }
 }
