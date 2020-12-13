@@ -659,14 +659,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         mediaPlayer.run {
             val savedEqualizerSettings = goPreferences.savedEqualizerSettings
 
-            savedEqualizerSettings?.let { eqSettings ->
+            savedEqualizerSettings?.let { (enabled, preset, bandSettings, bassBoost, virtualizer) ->
 
-                setEqualizerEnabled(eqSettings.enabled)
+                setEqualizerEnabled(enabled)
 
                 try {
-                    mEqualizer.usePreset(eqSettings.preset.toShort())
-
-                    val bandSettings = eqSettings.bandsSettings
+                    mEqualizer.usePreset(preset.toShort())
 
                     bandSettings?.iterator()?.withIndex()?.let { iterate ->
                         while (iterate.hasNext()) {
@@ -678,8 +676,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                         }
                     }
 
-                    mBassBoost.setStrength(eqSettings.bassBoost)
-                    mVirtualizer.setStrength(eqSettings.virtualizer)
+                    mBassBoost.setStrength(bassBoost)
+                    mVirtualizer.setStrength(virtualizer)
                 } catch (e: UnsupportedOperationException) {
                     e.printStackTrace()
                 }

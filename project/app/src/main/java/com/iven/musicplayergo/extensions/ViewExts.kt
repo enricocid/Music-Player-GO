@@ -55,7 +55,7 @@ inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
 fun String.getFastScrollerItem(context: Context): FastScrollItemIndicator {
     var charAtZero = context.getString(R.string.fastscroller_dummy_item)
     if (isNotEmpty()) {
-        charAtZero = get(0).toString()
+        charAtZero = "${get(0)}"
     }
     return FastScrollItemIndicator.Text(
             charAtZero.toUpperCase() // Grab the first letter and capitalize it

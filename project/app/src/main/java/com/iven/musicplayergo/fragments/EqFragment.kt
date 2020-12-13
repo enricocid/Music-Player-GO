@@ -101,8 +101,8 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
         }
 
         val equalizer = mEqualizer.first
-        for (i in 0 until equalizer.numberOfPresets) {
-            mPresetsList.add(equalizer.getPresetName(i.toShort()))
+        (0 until equalizer.numberOfPresets).mapTo(mPresetsList) {
+            equalizer.getPresetName(it.toShort())
         }
 
         mDataSource.set(mPresetsList)
