@@ -14,8 +14,5 @@ object VersioningHelper {
     fun isOreo() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 
     @JvmStatic
-    fun isNougat() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-
-    @JvmStatic
     fun isMarshMallow() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 }
