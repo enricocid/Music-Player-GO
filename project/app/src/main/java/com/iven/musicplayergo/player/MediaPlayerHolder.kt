@@ -639,10 +639,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         playerService.releaseWakeLock()
 
-        if (mediaPlayer.audioSessionId != AudioEffect.ERROR_BAD_VALUE && !::mEqualizer.isInitialized && !::mBassBoost.isInitialized && !::mVirtualizer.isInitialized) {
-            // instantiate custom equalizer
-            createCustomEqualizer()
-        }
+        // instantiate custom equalizer
+        createCustomEqualizer()
     }
 
     private fun play() {
