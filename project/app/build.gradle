@@ -17,7 +17,7 @@ android {
 
     //retrieve version number
     applicationVariants.all { variant ->
-        resValue "string", "versionName", getVersion()
+        resValue "string", "versionName", variant.versionName
     }
 
     buildFeatures {
