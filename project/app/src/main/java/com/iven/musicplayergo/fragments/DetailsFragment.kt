@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -701,13 +702,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 isShuffleMode: Pair<Boolean, String?>,
         ) =
                 DetailsFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(TAG_ARTIST_FOLDER, selectedArtistOrFolder)
-                        putString(TAG_IS_FOLDER, launchedBy)
-                        putInt(TAG_SELECTED_ALBUM_POSITION, playedAlbumPosition)
-                        putBoolean(TAG_IS_SHUFFLING, isShuffleMode.first)
-                        putString(TAG_SHUFFLED_ALBUM, isShuffleMode.second)
-                    }
+                    arguments = bundleOf(
+                        TAG_ARTIST_FOLDER to selectedArtistOrFolder,
+                        TAG_IS_FOLDER to launchedBy,
+                        TAG_SELECTED_ALBUM_POSITION to playedAlbumPosition,
+                        TAG_IS_SHUFFLING to isShuffleMode.first,
+                        TAG_SHUFFLED_ALBUM to isShuffleMode.second
+                    )
                 }
     }
 }

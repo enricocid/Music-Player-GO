@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentSettingsBinding
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -38,9 +39,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             mUIControlInterface.onCloseActivity()
         }
 
-        childFragmentManager.beginTransaction().apply {
+        childFragmentManager.commit {
             replace(R.id.fragment_layout, PreferencesFragment.newInstance())
-            commit()
         }
     }
 

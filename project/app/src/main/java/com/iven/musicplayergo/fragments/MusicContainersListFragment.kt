@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -386,9 +387,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
          */
         @JvmStatic
         fun newInstance(launchedBy: String) = MusicContainersListFragment().apply {
-            arguments = Bundle().apply {
-                putString(TAG_LAUNCHED_BY, launchedBy)
-            }
+            arguments = bundleOf(TAG_LAUNCHED_BY to launchedBy)
         }
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.animation.doOnEnd
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
@@ -95,9 +96,7 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
          */
         @JvmStatic
         fun newInstance(errorType: String) = ErrorFragment().apply {
-            arguments = Bundle().apply {
-                putString(TAG_ERROR, errorType)
-            }
+            arguments = bundleOf(TAG_ERROR to errorType)
         }
     }
 }

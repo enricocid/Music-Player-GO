@@ -5,7 +5,6 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
-import android.text.Html
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
@@ -18,8 +17,10 @@ import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
+import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.commit
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearSmoothScroller
@@ -31,7 +32,6 @@ import coil.transform.RoundedCornersTransformation
 import com.google.android.material.animation.ArgbEvaluatorCompat
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.helpers.ThemeHelper
-import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.models.Music
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import kotlinx.coroutines.*
@@ -122,13 +122,7 @@ fun ImageView.loadCover(
 @ColorInt
 fun Int.decodeColor(context: Context) = ContextCompat.getColor(context, this)
 
-@Suppress("DEPRECATION")
-fun String.toSpanned(): Spanned = if (VersioningHelper.isNougat()) {
-    Html.fromHtml(
-            this,
-            Html.FROM_HTML_MODE_LEGACY
-    )
-} else Html.fromHtml(this)
+fun String.toSpanned(): Spanned = this.parseAsHtml()
 
 // Extension to set menu items text color
 fun MenuItem.setTitleColor(color: Int) {
@@ -139,14 +133,13 @@ fun MenuItem.setTitleColor(color: Int) {
 }
 
 fun FragmentManager.addFragment(fragment: Fragment, tag: String?) {
-    beginTransaction().apply {
+    commit {
         addToBackStack(null)
         add(
                 R.id.container,
                 fragment,
                 tag
         )
-        commit()
     }
 }
 

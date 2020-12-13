@@ -4,7 +4,6 @@ import android.app.Activity
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Context.AUDIO_SERVICE
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
@@ -23,6 +22,7 @@ import android.os.PowerManager
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat.ACTION_SEEK_TO
 import android.support.v4.media.session.PlaybackStateCompat.Builder
+import androidx.core.content.getSystemService
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toContentUri
@@ -82,7 +82,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private lateinit var mVirtualizer: Virtualizer
 
     // Audio focus
-    private var mAudioManager = playerService.getSystemService(AUDIO_SERVICE) as AudioManager
+    private var mAudioManager = playerService.getSystemService<AudioManager>()!!
     private lateinit var mAudioFocusRequestOreo: AudioFocusRequest
     private val mHandler = Handler(Looper.getMainLooper())
 
