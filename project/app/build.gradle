@@ -4,7 +4,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "com.iven.musicplayergo"
         minSdkVersion 21
@@ -12,16 +12,16 @@ android {
         versionCode 157
         versionName "4.3.5"
 
-        vectorDrawables.useSupportLibrary = true
+        vectorDrawables.useSupportLibrary true
     }
 
     //retrieve version number
     applicationVariants.all { variant ->
-        variant.resValue "string", "versionName", variant.versionName
+        resValue "string", "versionName", getVersion()
     }
 
-    buildFeatures{
-        viewBinding = true
+    buildFeatures {
+        viewBinding true
     }
 
     buildTypes {
@@ -36,14 +36,14 @@ android {
     // language features (either in its source code or
     // through dependencies).
     compileOptions {
-        encoding = 'UTF-8'
+        encoding "UTF-8"
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
     // For Kotlin projects
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
     lintOptions {
@@ -74,12 +74,11 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.1.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     //https://github.com/material-components/material-components-android/releases
     implementation 'com.google.android.material:material:1.2.1'
 
 // Third-party
-    //https://github.com/square/moshi/release
+    //https://github.com/square/moshi/releases
     implementation 'com.squareup.moshi:moshi:1.11.0'
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.11.0'
 
