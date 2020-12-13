@@ -5,12 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.app.ActivityCompat
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -173,7 +174,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 .setShowTitle(true)
                 .build()
 
-        val parsedUri = Uri.parse(link)
+        val parsedUri = link.toUri()
         val manager = requireActivity().packageManager
         val infos = manager.queryIntentActivities(customTabsIntent.intent, 0)
         if (infos.size > 0) {
@@ -255,7 +256,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             positiveButton(android.R.string.ok) {
                 goPreferences.filters = filtersAdapter.getUpdatedItems()
-                requireActivity().recreate()
+                ActivityCompat.recreate(requireActivity())
             }
 
             negativeButton(android.R.string.cancel)

@@ -965,9 +965,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         mNowPlayingBinding.npSeekBar.max = selectedSong.duration.toInt()
 
-        selectedSong.id?.toContentUri()?.toBitrate(this)?.let { bitrateInfo ->
+        selectedSong.id?.toContentUri()?.toBitrate(this)?.let { (first, second) ->
             mNowPlayingBinding.npRates.text =
-                    getString(R.string.rates, bitrateInfo.first, bitrateInfo.second)
+                    getString(R.string.rates, first, second)
         }
 
         updatePlayingStatus(true)

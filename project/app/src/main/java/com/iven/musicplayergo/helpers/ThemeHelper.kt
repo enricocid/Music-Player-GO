@@ -121,7 +121,7 @@ object ThemeHelper {
     // Search theme from accents array of Pair, returns a Pair(theme, position)
     @JvmStatic
     fun getAccentedTheme() = try {
-        val pair = accents.find { pair -> pair.first == goPreferences.accent }
+        val pair = accents.find { (first) -> first == goPreferences.accent }
         val theme = pair!!.second
         val position = accents.indexOf(pair)
         Pair(theme, position)

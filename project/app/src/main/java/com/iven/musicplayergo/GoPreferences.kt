@@ -1,6 +1,7 @@
 package com.iven.musicplayergo
 
 import android.content.Context
+import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedEqualizerSettings
@@ -54,7 +55,7 @@ class GoPreferences(context: Context) {
 
     var latestVolume: Int
         get() = mPrefs.getInt(prefsLatestVolume, 100)
-        set(value) = mPrefs.edit().putInt(prefsLatestVolume, value).apply()
+        set(value) = mPrefs.edit { putInt(prefsLatestVolume, value) }
 
     var latestPlayedSong: Music?
         get() = getObjectForClass(
@@ -79,11 +80,11 @@ class GoPreferences(context: Context) {
 
     var theme
         get() = mPrefs.getString(prefsTheme, prefsThemeDef)
-        set(value) = mPrefs.edit().putString(prefsTheme, value).apply()
+        set(value) = mPrefs.edit { putString(prefsTheme, value) }
 
     var accent
         get() = mPrefs.getInt(prefsAccent, R.color.deep_purple)
-        set(value) = mPrefs.edit().putInt(prefsAccent, value).apply()
+        set(value) = mPrefs.edit { putInt(prefsAccent, value) }
 
     var activeTabsDef: List<String>
         get() = getObjectForType(prefsActiveTabsDef, typeActiveTabs)
@@ -97,60 +98,60 @@ class GoPreferences(context: Context) {
 
     var onListEnded
         get() = mPrefs.getString(prefsOnListEnded, GoConstants.CONTINUE)
-        set(value) = mPrefs.edit().putString(prefsOnListEnded, value).apply()
+        set(value) = mPrefs.edit { putString(prefsOnListEnded, value) }
 
     var isCovers: Boolean
         get() = mPrefs.getBoolean(prefsCover, false)
-        set(value) = mPrefs.edit().putBoolean(prefsCover, value).apply()
+        set(value) = mPrefs.edit { putBoolean(prefsCover, value) }
 
     var songsVisualization
         get() = mPrefs.getString(prefsSongsVisual, GoConstants.TITLE)
-        set(value) = mPrefs.edit().putString(prefsSongsVisual, value.toString()).apply()
+        set(value) = mPrefs.edit { putString(prefsSongsVisual, value.toString()) }
 
     var artistsSorting
         get() = mPrefs.getInt(prefsArtistsSorting, GoConstants.DESCENDING_SORTING)
-        set(value) = mPrefs.edit().putInt(prefsArtistsSorting, value).apply()
+        set(value) = mPrefs.edit { putInt(prefsArtistsSorting, value) }
 
     var foldersSorting
         get() = mPrefs.getInt(prefsFoldersSorting, GoConstants.DEFAULT_SORTING)
-        set(value) = mPrefs.edit().putInt(prefsFoldersSorting, value).apply()
+        set(value) = mPrefs.edit { putInt(prefsFoldersSorting, value) }
 
     var albumsSorting
         get() = mPrefs.getInt(prefsAlbumsSorting, GoConstants.DEFAULT_SORTING)
-        set(value) = mPrefs.edit().putInt(prefsAlbumsSorting, value).apply()
+        set(value) = mPrefs.edit { putInt(prefsAlbumsSorting, value) }
 
     var allMusicSorting
         get() = mPrefs.getInt(prefsAllMusicSorting, GoConstants.DEFAULT_SORTING)
-        set(value) = mPrefs.edit().putInt(prefsAllMusicSorting, value).apply()
+        set(value) = mPrefs.edit { putInt(prefsAllMusicSorting, value) }
 
     var filters: Set<String>?
         get() = mPrefs.getStringSet(prefsFilter, setOf())
-        set(value) = mPrefs.edit().putStringSet(prefsFilter, value).apply()
+        set(value) = mPrefs.edit { putStringSet(prefsFilter, value) }
 
     var fastSeekingStep
         get() = mPrefs.getInt(prefsFastSeek, 5)
-        set(value) = mPrefs.edit().putInt(prefsFastSeek, value).apply()
+        set(value) = mPrefs.edit { putInt(prefsFastSeek, value) }
 
     var isFastSeekingActions: Boolean
         get() = mPrefs.getBoolean(prefsFastSeekActions, false)
-        set(value) = mPrefs.edit().putBoolean(prefsFastSeekActions, value).apply()
+        set(value) = mPrefs.edit { putBoolean(prefsFastSeekActions, value) }
 
     var isPreciseVolumeEnabled
         get() = mPrefs.getBoolean(prefsPreciseVolume, false)
-        set(value) = mPrefs.edit().putBoolean(prefsPreciseVolume, value).apply()
+        set(value) = mPrefs.edit { putBoolean(prefsPreciseVolume, value) }
 
     var isFocusEnabled
         get() = mPrefs.getBoolean(prefsFocus, true)
-        set(value) = mPrefs.edit().putBoolean(prefsFocus, value).apply()
+        set(value) = mPrefs.edit { putBoolean(prefsFocus, value) }
 
     var isHeadsetPlugEnabled
         get() = mPrefs.getBoolean(prefsHeadsetPlug, true)
-        set(value) = mPrefs.edit().putBoolean(prefsHeadsetPlug, value).apply()
+        set(value) = mPrefs.edit { putBoolean(prefsHeadsetPlug, value) }
 
     // Retrieve object from the Preferences using Moshi
     private fun <T : Any> putObjectForType(key: String, value: T?, type: Type) {
         val json = mMoshi.adapter<T>(type).toJson(value)
-        mPrefs.edit().putString(key, json).apply()
+        mPrefs.edit { putString(key, json) }
     }
 
     private fun <T : Any> getObjectForType(key: String, type: Type): T? {
@@ -163,7 +164,7 @@ class GoPreferences(context: Context) {
     // Saves object into the Preferences using Moshi
     private fun <T : Any> putObjectForClass(key: String, value: T?, clazz: Class<T>) {
         val json = mMoshi.adapter(clazz).toJson(value)
-        mPrefs.edit().putString(key, json).apply()
+        mPrefs.edit { putString(key, json) }
     }
 
     private fun <T : Any> getObjectForClass(key: String, clazz: Class<T>): T? {
