@@ -27,7 +27,6 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toContentUri
 import com.iven.musicplayergo.extensions.toToast
-import com.iven.musicplayergo.fragments.EqFragment
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
@@ -227,12 +226,15 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     private fun createCustomEqualizer() {
-        if (mediaPlayer.audioSessionId != AudioEffect.ERROR_BAD_VALUE && !::mEqualizer.isInitialized && !::mBassBoost.isInitialized && !::mVirtualizer.isInitialized) {
-            mBassBoost = BassBoost(0, mediaPlayer.audioSessionId)
-            mVirtualizer = Virtualizer(0, mediaPlayer.audioSessionId)
-            mEqualizer = Equalizer(0, mediaPlayer.audioSessionId)
-            setEqualizerEnabled(false)
-            restoreCustomEqSettings()
+        if (!::mEqualizer.isInitialized) {
+            try {
+                mBassBoost = BassBoost(0, mediaPlayer.audioSessionId)
+                mVirtualizer = Virtualizer(0, mediaPlayer.audioSessionId)
+                mEqualizer = Equalizer(0, mediaPlayer.audioSessionId)
+                restoreCustomEqSettings()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -584,7 +586,11 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             song?.id?.toContentUri()?.let { uri ->
                 mediaPlayer.setDataSource(playerService, uri)
             }
-            mediaPlayer.prepare()
+            mediaPlayer.prepareAsync()
+
+            if (sFocusEnabled && isPlay) {
+                tryToGetAudioFocus()
+            }
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -600,15 +606,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     override fun onPrepared(mp: MediaPlayer) {
-
-        EqualizerUtils.openAudioEffectSession(
-            playerService.applicationContext,
-            mediaPlayer.audioSessionId
-        )
-
-        if (sFocusEnabled && isPlay) {
-            tryToGetAudioFocus()
-        }
 
         if (isSongRestoredFromPrefs) {
             if (goPreferences.isPreciseVolumeEnabled) {
@@ -639,8 +636,17 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         playerService.releaseWakeLock()
 
-        // instantiate custom equalizer
-        createCustomEqualizer()
+        // instantiate equalizer
+        if (mediaPlayer.audioSessionId != AudioEffect.ERROR_BAD_VALUE) {
+            if (EqualizerUtils.hasEqualizer(playerService.applicationContext)) {
+                EqualizerUtils.openAudioEffectSession(
+                    playerService.applicationContext,
+                    mediaPlayer.audioSessionId
+                )
+            } else {
+                createCustomEqualizer()
+            }
+        }
     }
 
     private fun play() {
@@ -658,24 +664,20 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
                 setEqualizerEnabled(enabled)
 
-                try {
-                    mEqualizer.usePreset(preset.toShort())
+                mEqualizer.usePreset(preset.toShort())
 
-                    bandSettings?.iterator()?.withIndex()?.let { iterate ->
-                        while (iterate.hasNext()) {
-                            val item = iterate.next()
-                            mEqualizer.setBandLevel(
-                                item.index.toShort(),
-                                item.value.toInt().toShort()
-                            )
-                        }
+                bandSettings?.iterator()?.withIndex()?.let { iterate ->
+                    while (iterate.hasNext()) {
+                        val item = iterate.next()
+                        mEqualizer.setBandLevel(
+                            item.index.toShort(),
+                            item.value.toInt().toShort()
+                        )
                     }
-
-                    mBassBoost.setStrength(bassBoost)
-                    mVirtualizer.setStrength(virtualizer)
-                } catch (e: UnsupportedOperationException) {
-                    e.printStackTrace()
                 }
+
+                mBassBoost.setStrength(bassBoost)
+                mVirtualizer.setStrength(virtualizer)
             }
         }
     }
@@ -684,15 +686,16 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         EqualizerUtils.openEqualizer(activity, mediaPlayer)
     }
 
-    fun openEqualizerCustom() = EqFragment.newInstance()
-
     fun release() {
         if (isMediaPlayer) {
-            EqualizerUtils.closeAudioEffectSession(
-                playerService,
-                mediaPlayer.audioSessionId
-            )
-            releaseCustomEqualizer()
+            if (EqualizerUtils.hasEqualizer(playerService.applicationContext)) {
+                EqualizerUtils.closeAudioEffectSession(
+                    playerService.applicationContext,
+                    mediaPlayer.audioSessionId
+                )
+            } else {
+                releaseCustomEqualizer()
+            }
             mediaPlayer.release()
             if (sFocusEnabled) {
                 giveUpAudioFocus()
