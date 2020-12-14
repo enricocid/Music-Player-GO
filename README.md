@@ -102,7 +102,7 @@ please consider a [donation](https://weblate.org/it/donate/new/) :)
 
 | Name                                                        | Author                  |
 | ----------------------------------------------------------- | ------------------------- |
-| [Moshi](https://github.com/square/moshi)                  | Square                       |
+| [Moshi](https://github.com/square/moshi)                  | [Square](https://square.github.io/)                       |
 | [Indicator Fast Scroll](https://github.com/reddit/IndicatorFastScroll)                  | Reddit                       |
 | [material-dialogs](https://github.com/afollestad/material-dialogs)                  | [Aidan Afollestad](https://github.com/afollestad)                       |
 | [recyclical](https://github.com/afollestad/recyclical)                  | [Aidan Afollestad](https://github.com/afollestad)                       |
