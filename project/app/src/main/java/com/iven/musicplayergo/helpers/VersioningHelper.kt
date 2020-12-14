@@ -9,10 +9,4 @@ object VersioningHelper {
 
     @JvmStatic
     fun isOreoMR1() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1
-
-    @JvmStatic
-    fun isOreo() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-
-    @JvmStatic
-    fun isMarshMallow() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 }

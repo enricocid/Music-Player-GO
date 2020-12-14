@@ -8,6 +8,7 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -18,7 +19,6 @@ import com.iven.musicplayergo.extensions.getCover
 import com.iven.musicplayergo.extensions.toSpanned
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
-import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.ui.MainActivity
 
 class MusicNotificationManager(private val playerService: PlayerService) {
@@ -66,7 +66,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         mNotificationBuilder =
                 NotificationCompat.Builder(playerService, GoConstants.NOTIFICATION_CHANNEL_ID)
 
-        if (VersioningHelper.isOreo()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel()
         }
 
