@@ -260,6 +260,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
         } else {
 
+            mDetailsFragmentBinding.albumsRv.handleViewVisibility(false)
+            mDetailsFragmentBinding.selectedAlbumContainer.handleViewVisibility(false)
+
             mDetailsFragmentBinding.detailsToolbar.subtitle = getString(
                 R.string.folder_info,
                 mSongsList?.size
