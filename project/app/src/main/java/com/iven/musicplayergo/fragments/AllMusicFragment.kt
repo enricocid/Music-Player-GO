@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.fragments
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.os.Bundle
 import android.view.Menu
@@ -7,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
+import androidx.core.animation.doOnEnd
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -134,13 +136,27 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
         setupIndicatorFastScrollerView()
 
+        val fabRotateAnimator = getRotateAnimatorForFab()
+
+        mAllMusicFragmentBinding.shuffleFab.setOnClickListener {
+            fabRotateAnimator.doOnEnd {
+                mUIControlInterface.onShuffleSongs(
+                        null,
+                        null,
+                        mAllMusic,
+                        mAllMusic?.size!! < 30,
+                        GoConstants.ARTIST_VIEW
+                )
+            }
+        }
+
         mAllMusicFragmentBinding.searchToolbar.run {
 
-            inflateMenu(R.menu.menu_all_music)
+            inflateMenu(R.menu.menu_search)
 
             overflowIcon = AppCompatResources.getDrawable(
                     requireActivity(),
-                    R.drawable.ic_more_vert
+                    R.drawable.ic_sort
             )
 
             setNavigationOnClickListener {
@@ -151,18 +167,6 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
                 mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, this).apply {
                     setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
-                }
-
-                findItem(R.id.action_shuffle_am).setOnMenuItemClickListener {
-                    // don't queue the music library if it exceed 30 items
-                    mUIControlInterface.onShuffleSongs(
-                            null,
-                            null,
-                            mAllMusic,
-                            mAllMusic?.size!! < 30,
-                            GoConstants.ARTIST_VIEW
-                    )
-                    return@setOnMenuItemClickListener true
                 }
 
                 val searchView = findItem(R.id.action_search).actionView as SearchView
@@ -176,7 +180,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                             )
                             setupMusicRecyclerViewPadding(hasFocus)
                         }
-                        menu.setGroupVisible(R.id.more_options_music, !hasFocus)
+                        menu.setGroupVisible(R.id.sorting, !hasFocus)
                     }
                 }
 
@@ -253,6 +257,16 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                     0
                 }
         mAllMusicFragmentBinding.allMusicRv.setPadding(0, 0, rvPaddingEnd, 0)
+    }
+
+    private fun getRotateAnimatorForFab() = ObjectAnimator.ofFloat(
+            mAllMusicFragmentBinding.shuffleFab,
+            View.ROTATION,
+            0f,
+            360f
+    ).apply {
+        duration = 750
+        start()
     }
 
     private fun handleIndicatorFastScrollerViewVisibility() {
