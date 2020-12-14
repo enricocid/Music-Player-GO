@@ -187,7 +187,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         if (sBound) {
             unbindService(connection)
         }
-        if (isMediaPlayerHolder && !mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning) {
+        if (isMediaPlayerHolder && !mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning && !mMediaPlayerHolder.isSongRestoredFromPrefs) {
             mPlayerService.stopForeground(true)
             stopService(mBindingIntent)
         }
@@ -195,7 +195,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onResume() {
         super.onResume()
-        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) {
+        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs) {
             mMediaPlayerHolder.onRestartSeekBarCallback()
         }
     }
@@ -203,7 +203,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     // Pause SeekBar callback
     override fun onPause() {
         super.onPause()
-        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) {
+        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs) {
             saveSongToPref()
             mMediaPlayerHolder.run {
                 onPauseSeekBarCallback()
