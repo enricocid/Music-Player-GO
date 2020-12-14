@@ -492,10 +492,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
             setOnClickListener { openNowPlaying() }
             setOnLongClickListener {
-                if (checkIsPlayer(true)) {
-                    if (!sDetailsFragmentExpanded || sDetailsFragmentExpanded and !sEqFragmentExpanded) {
-                        openPlayingArtistAlbum()
-                    }
+                if (!sDetailsFragmentExpanded || sDetailsFragmentExpanded and !sEqFragmentExpanded) {
+                    openPlayingArtistAlbum()
                 }
                 return@setOnLongClickListener true
             }
