@@ -56,9 +56,7 @@ class PlayerService : Service() {
         }
     }
 
-    fun getMediaSession(): MediaSessionCompat {
-        return mMediaSessionCompat
-    }
+    fun getMediaSession(): MediaSessionCompat = mMediaSessionCompat
 
     override fun onDestroy() {
         super.onDestroy()

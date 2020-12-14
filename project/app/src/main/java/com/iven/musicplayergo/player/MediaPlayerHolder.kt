@@ -362,7 +362,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 .build()
     }
 
-    @Suppress("DEPRECATION")
     fun giveUpAudioFocus() {
         AudioManagerCompat.abandonAudioFocusRequest(mAudioManager, mAudioFocusRequestCompat)
         mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
