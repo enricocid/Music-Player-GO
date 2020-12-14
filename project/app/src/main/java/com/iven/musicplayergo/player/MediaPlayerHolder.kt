@@ -75,9 +75,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     lateinit var mediaPlayerInterface: MediaPlayerInterface
 
     // Equalizer
-    private lateinit var mEqualizer: Equalizer
-    private lateinit var mBassBoost: BassBoost
-    private lateinit var mVirtualizer: Virtualizer
+    private var mEqualizer: Equalizer? = null
+    private var mBassBoost: BassBoost? = null
+    private var mVirtualizer: Virtualizer? = null
+    private var sHasOpenedAudioEffects = false
 
     // Audio focus
     private var mAudioManager = playerService.getSystemService<AudioManager>()!!
@@ -146,7 +147,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private val mPrevSongIndex get() = mCurrentSongIndex - 1
     private val mNextSong: Music?
         get() = when {
-            mNextSongIndex <= mCurrentAlbumSize -> mPlayingAlbumSongs?.get(mNextSongIndex)
+            mNextSongIndex in 0..mCurrentAlbumSize -> mPlayingAlbumSongs?.get(mNextSongIndex)
             isQueue -> stopQueueAndGetSkipSong(true)
             else -> mPlayingAlbumSongs?.get(0)
         }
@@ -224,7 +225,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     private fun createCustomEqualizer() {
-        if (!::mEqualizer.isInitialized) {
+        if (mEqualizer == null) {
             try {
                 mBassBoost = BassBoost(0, mediaPlayer.audioSessionId)
                 mVirtualizer = Virtualizer(0, mediaPlayer.audioSessionId)
@@ -239,19 +240,21 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun getEqualizer() = Triple(mEqualizer, mBassBoost, mVirtualizer)
 
     fun setEqualizerEnabled(isEnabled: Boolean) {
-        mEqualizer.enabled = isEnabled
-        mBassBoost.enabled = isEnabled
-        mVirtualizer.enabled = isEnabled
+        mEqualizer?.enabled = isEnabled
+        mBassBoost?.enabled = isEnabled
+        mVirtualizer?.enabled = isEnabled
     }
 
     fun onSaveEqualizerSettings(selectedPreset: Int, bassBoost: Short, virtualizer: Short) {
-        goPreferences.savedEqualizerSettings = SavedEqualizerSettings(
-                mEqualizer.enabled,
-                selectedPreset,
-                mEqualizer.properties.bandLevels.toList(),
-                bassBoost,
-                virtualizer
-        )
+        mEqualizer?.let { equalizer ->
+            goPreferences.savedEqualizerSettings = SavedEqualizerSettings(
+                    equalizer.enabled,
+                    selectedPreset,
+                    equalizer.properties.bandLevels.toList(),
+                    bassBoost,
+                    virtualizer
+            )
+        }
     }
 
     fun setCurrentSong(
@@ -456,7 +459,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (isSongRestoredFromPrefs) {
             currentSong.first?.run {
                 val song =
-                        mPlayingAlbumSongs?.find { it.title == title && it.duration == duration && it.displayName == displayName && it.track == track }
+                        mPlayingAlbumSongs?.find { it.title == title && it.displayName == displayName && it.track == track }
                 currentSong = Pair(song, false)
             }
         }
@@ -622,10 +625,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         // instantiate equalizer
         if (mediaPlayer.audioSessionId != AudioEffect.ERROR_BAD_VALUE) {
             if (EqualizerUtils.hasEqualizer(playerService.applicationContext)) {
-                EqualizerUtils.openAudioEffectSession(
-                        playerService.applicationContext,
-                        mediaPlayer.audioSessionId
-                )
+                if (!sHasOpenedAudioEffects) {
+                    sHasOpenedAudioEffects = true
+                    EqualizerUtils.openAudioEffectSession(
+                            playerService.applicationContext,
+                            mediaPlayer.audioSessionId
+                    )
+                }
             } else {
                 createCustomEqualizer()
             }
@@ -647,26 +653,38 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
                 setEqualizerEnabled(enabled)
 
-                mEqualizer.usePreset(preset.toShort())
+                mEqualizer?.usePreset(preset.toShort())
 
                 bandSettings?.iterator()?.withIndex()?.let { iterate ->
                     while (iterate.hasNext()) {
                         val item = iterate.next()
-                        mEqualizer.setBandLevel(
+                        mEqualizer?.setBandLevel(
                                 item.index.toShort(),
                                 item.value.toInt().toShort()
                         )
                     }
                 }
 
-                mBassBoost.setStrength(bassBoost)
-                mVirtualizer.setStrength(virtualizer)
+                mBassBoost?.setStrength(bassBoost)
+                mVirtualizer?.setStrength(virtualizer)
             }
         }
     }
 
     fun openEqualizer(activity: Activity) {
+        if (mEqualizer != null) {
+            releaseCustomEqualizer()
+            sHasOpenedAudioEffects = true
+            EqualizerUtils.openAudioEffectSession(playerService.applicationContext, mediaPlayer.audioSessionId)
+        }
         EqualizerUtils.openEqualizer(activity, mediaPlayer)
+    }
+
+    fun onOpenEqualizerCustom() {
+        if (sHasOpenedAudioEffects) {
+            EqualizerUtils.closeAudioEffectSession(playerService.applicationContext, mediaPlayer.audioSessionId)
+            sHasOpenedAudioEffects = false
+        }
     }
 
     fun release() {
@@ -689,10 +707,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     private fun releaseCustomEqualizer() {
-        if (::mEqualizer.isInitialized) {
-            mEqualizer.release()
-            mBassBoost.release()
-            mVirtualizer.release()
+        if (mEqualizer != null) {
+            mEqualizer = null
+            mEqualizer?.release()
+            mBassBoost = null
+            mBassBoost?.release()
+            mVirtualizer = null
+            mVirtualizer?.release()
         }
     }
 
