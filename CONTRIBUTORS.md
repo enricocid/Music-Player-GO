@@ -58,6 +58,8 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 
 - [**john2020star**](https://github.com/john2020star) for having contributed to fix this [issue](https://github.com/enricocid/Music-Player-GO/issues/196)
 
+- **Soyeb Mullick** for having reported this [issue](https://github.com/enricocid/Music-Player-GO/commit/dd1c91d3b62efcd2978a74ef5d64d1615b685c4a)
+
 
 ### Big thanks to translators:
 

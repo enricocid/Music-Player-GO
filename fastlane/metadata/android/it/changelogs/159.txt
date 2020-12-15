@@ -1,0 +1,3 @@
+Now playing dialog: la copertina ora viene aggiornata correttamente
+
+Grazie a Soyeb Mullick per averlo riportato
