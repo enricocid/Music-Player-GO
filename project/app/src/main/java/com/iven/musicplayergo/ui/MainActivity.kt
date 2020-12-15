@@ -92,6 +92,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mNowPlayingBinding: NowPlayingBinding
     private lateinit var mNowPlayingControlsBinding: NowPlayingControlsBinding
     private lateinit var mNowPlayingExtendedControlsBinding: NowPlayingExtendedControlsBinding
+    private var mSelectedArtistAlbumForNP: Pair<String?, String?> = Pair("", "")
 
     // Music player things
     private lateinit var mQueueDialog: MaterialDialog
@@ -549,22 +550,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 })
     }
 
-    private fun setCovers() {
+    private fun setupNowPlayingWithCovers() {
         if (goPreferences.isCovers) {
             if (!ThemeHelper.isDeviceLand(resources)) {
                 mNowPlayingBinding.npArtistAlbum.textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
                 mNowPlayingBinding.npSong.textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
             }
-            mNowPlayingBinding.npCover.loadCover(
-                    getImageLoader(),
-                    mMediaPlayerHolder.currentSong.first,
-                    BitmapFactory.decodeResource(
-                            resources,
-                            R.drawable.album_art
-                    ),
-                    isCircleCrop = true,
-                    isLoadDelay = false
-            )
         } else {
             mNowPlayingBinding.npCover.handleViewVisibility(false)
         }
@@ -656,7 +647,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     }
                 }
 
-                setCovers()
+                setupNowPlayingWithCovers()
 
                 mNowPlayingControlsBinding.npRepeat.run {
                     setImageResource(
@@ -703,9 +694,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 updateNowPlayingInfo()
 
                 onShow {
-                    mNowPlayingBinding.npSeek.text =
-                            mMediaPlayerHolder.currentSong.first?.startFrom!!.toLong()
-                                    .toFormattedDuration(false, isSeekBar = true)
+                    mMediaPlayerHolder.currentSong.first?.let { song ->
+                        if (goPreferences.isCovers) {
+                            loadNowPlayingCover(song)
+                        }
+                        mNowPlayingBinding.npSeek.text =
+                                song.startFrom.toLong()
+                                        .toFormattedDuration(false, isSeekBar = true)
+                    }
+
                     mNowPlayingBinding.npSeekBar.progress =
                             mPlayerControlsPanelBinding.songProgress.progress
                 }
@@ -947,28 +944,46 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
+    private fun loadNowPlayingCover(selectedSong: Music) {
+        mSelectedArtistAlbumForNP = Pair(selectedSong.artist, selectedSong.album)
+        mNowPlayingBinding.npCover.loadCover(
+                getImageLoader(),
+                selectedSong,
+                BitmapFactory.decodeResource(
+                        resources,
+                        R.drawable.album_art
+                ),
+                isCircleCrop = true,
+                isLoadDelay = false
+        )
+    }
+
     private fun updateNowPlayingInfo() {
 
-        val selectedSong = mMediaPlayerHolder.currentSong.first
-        val selectedSongDuration = selectedSong?.duration!!
+        mMediaPlayerHolder.currentSong.first?.let { song ->
+            val selectedSongDuration = song.duration
+            if (mSelectedArtistAlbumForNP != Pair(song.artist, song.album) && goPreferences.isCovers && ::mNowPlayingDialog.isInitialized && mNowPlayingDialog.isShowing) {
+                loadNowPlayingCover(song)
+            }
 
-        mNowPlayingBinding.npSong.text = selectedSong.title
+            mNowPlayingBinding.npSong.text = song.title
 
-        mNowPlayingBinding.npArtistAlbum.text =
-                getString(
-                        R.string.artist_and_album,
-                        selectedSong.artist,
-                        selectedSong.album
-                )
+            mNowPlayingBinding.npArtistAlbum.text =
+                    getString(
+                            R.string.artist_and_album,
+                            song.artist,
+                            song.album
+                    )
 
-        mNowPlayingBinding.npDuration.text =
-                selectedSongDuration.toFormattedDuration(false, isSeekBar = true)
+            mNowPlayingBinding.npDuration.text =
+                    selectedSongDuration.toFormattedDuration(false, isSeekBar = true)
 
-        mNowPlayingBinding.npSeekBar.max = selectedSong.duration.toInt()
+            mNowPlayingBinding.npSeekBar.max = song.duration.toInt()
 
-        selectedSong.id?.toContentUri()?.toBitrate(this)?.let { (first, second) ->
-            mNowPlayingBinding.npRates.text =
-                    getString(R.string.rates, first, second)
+            song.id?.toContentUri()?.toBitrate(this)?.let { (first, second) ->
+                mNowPlayingBinding.npRates.text =
+                        getString(R.string.rates, first, second)
+            }
         }
 
         updatePlayingStatus(true)
