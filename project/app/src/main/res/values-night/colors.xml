@@ -28,4 +28,6 @@
     <color name="dialogsBackground">#212121</color>
     <color name="widgetsColor">#fafafa</color>
     <color name="systemBarsColor">#313131</color>
+
+    <color name="shuffleFabTint">@color/dialogsBackground</color>
 </resources>

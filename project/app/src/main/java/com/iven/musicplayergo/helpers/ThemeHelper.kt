@@ -16,13 +16,13 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.os.bundleOf
+import androidx.core.text.parseAsHtml
 import androidx.core.widget.ImageViewCompat
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.extensions.decodeColor
-import com.iven.musicplayergo.extensions.toSpanned
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.MainActivity
@@ -115,7 +115,7 @@ object ThemeHelper {
                 R.string.accent_and_hex,
                 accentName,
                 context.getString(accent).toUpperCase()
-        ).toSpanned()
+        ).parseAsHtml()
     }
 
     // Search theme from accents array of Pair, returns a Pair(theme, position)
@@ -146,7 +146,7 @@ object ThemeHelper {
             accent = R.color.deep_purple
             goPreferences.accent = accent
         }
-        return accent.decodeColor(context)
+        return ContextCompat.getColor(context, accent)
     }
 
     @ColorInt
@@ -164,7 +164,7 @@ object ThemeHelper {
                 } else {
                     resolvedAttr.data
                 }
-        return colorRes.decodeColor(context)
+        return ContextCompat.getColor(context, colorRes)
     }
 
     @JvmStatic

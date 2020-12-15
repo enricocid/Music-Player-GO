@@ -9,6 +9,7 @@ import android.media.audiofx.Virtualizer
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
@@ -22,7 +23,6 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentEqualizerBinding
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.createCircularReveal
-import com.iven.musicplayergo.extensions.decodeColor
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
@@ -152,7 +152,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
             strokeColor = ColorStateList.valueOf(ThemeHelper.resolveThemeAccent(requireActivity()))
             strokeWidth = 0.50F
             fillColor =
-                    ColorStateList.valueOf(R.color.windowBackground.decodeColor(requireActivity()))
+                    ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.windowBackground))
         }
 
         mEqualizer.first?.run {

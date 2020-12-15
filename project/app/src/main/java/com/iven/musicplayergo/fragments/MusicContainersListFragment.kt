@@ -125,7 +125,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                     onLongClick { index ->
                         if (::mUIControlInterface.isInitialized) {
                             DialogHelper.showPopupForHide(
-                                    context,
+                                    requireActivity(),
                                     findViewHolderForAdapterPosition(index)?.itemView,
                                     item,
                                     mUIControlInterface
@@ -143,7 +143,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
             inflateMenu(R.menu.menu_search)
 
             overflowIcon =
-                    AppCompatResources.getDrawable(context, R.drawable.ic_sort)
+                    AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_sort)
 
             title = getFragmentTitle()
 
@@ -172,7 +172,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                         menu.setGroupVisible(R.id.sorting, !hasFocus)
                     }
                 }
-                setMenuOnItemClickListener(requireActivity(), this)
+                setMenuOnItemClickListener(this)
             }
         }
     }
@@ -331,7 +331,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
         mMusicContainerListBinding.fastscrollerThumb.handleViewVisibility(sIsFastScrollerVisible)
     }
 
-    private fun setMenuOnItemClickListener(context: Context, menu: Menu) {
+    private fun setMenuOnItemClickListener(menu: Menu) {
         mMusicContainerListBinding.searchToolbar.setOnMenuItemClickListener {
 
             if (it.itemId != R.id.action_search) {
@@ -348,7 +348,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
                 mSortMenuItem.setTitleColor(
                         ThemeHelper.resolveColorAttr(
-                                context,
+                                requireActivity(),
                                 android.R.attr.textColorPrimary
                         )
                 )

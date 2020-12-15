@@ -12,11 +12,11 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.text.parseAsHtml
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.getCover
-import com.iven.musicplayergo.extensions.toSpanned
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.ui.MainActivity
@@ -151,7 +151,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                             playerService.getString(
                                     R.string.song_title_notification,
                                     song.title
-                            ).toSpanned()
+                            ).parseAsHtml()
                     )
                     .setLargeIcon(cover)
                     .setColorized(true)

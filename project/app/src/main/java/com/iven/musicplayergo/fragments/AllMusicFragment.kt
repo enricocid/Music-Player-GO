@@ -136,17 +136,24 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
         setupIndicatorFastScrollerView()
 
-        val fabRotateAnimator = getRotateAnimatorForFab()
-
         mAllMusicFragmentBinding.shuffleFab.setOnClickListener {
-            fabRotateAnimator.doOnEnd {
-                mUIControlInterface.onShuffleSongs(
-                        null,
-                        null,
-                        mAllMusic,
-                        mAllMusic?.size!! < 30,
-                        GoConstants.ARTIST_VIEW
-                )
+            ObjectAnimator.ofFloat(
+                    it,
+                    View.ROTATION,
+                    0f,
+                    360f
+            ).apply {
+                duration = 750
+                start()
+                doOnEnd {
+                    mUIControlInterface.onShuffleSongs(
+                            null,
+                            null,
+                            mAllMusic,
+                            mAllMusic?.size!! < 30,
+                            GoConstants.ARTIST_VIEW
+                    )
+                }
             }
         }
 
@@ -184,7 +191,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                     }
                 }
 
-                setMenuOnItemClickListener(requireActivity(), this)
+                setMenuOnItemClickListener(this)
             }
         }
     }
@@ -259,22 +266,12 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
         mAllMusicFragmentBinding.allMusicRv.setPadding(0, 0, rvPaddingEnd, 0)
     }
 
-    private fun getRotateAnimatorForFab() = ObjectAnimator.ofFloat(
-            mAllMusicFragmentBinding.shuffleFab,
-            View.ROTATION,
-            0f,
-            360f
-    ).apply {
-        duration = 750
-        start()
-    }
-
     private fun handleIndicatorFastScrollerViewVisibility() {
         mAllMusicFragmentBinding.fastscroller.handleViewVisibility(sIsFastScrollerVisible)
         mAllMusicFragmentBinding.fastscrollerThumb.handleViewVisibility(sIsFastScrollerVisible)
     }
 
-    private fun setMenuOnItemClickListener(context: Context, menu: Menu) {
+    private fun setMenuOnItemClickListener(menu: Menu) {
 
         mAllMusicFragmentBinding.searchToolbar.setOnMenuItemClickListener {
 
@@ -293,7 +290,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
                 mSortMenuItem.setTitleColor(
                         ThemeHelper.resolveColorAttr(
-                                context,
+                                requireActivity(),
                                 android.R.attr.textColorPrimary
                         )
                 )

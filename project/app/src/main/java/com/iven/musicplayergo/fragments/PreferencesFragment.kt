@@ -190,7 +190,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 requireActivity().startActivity(browserIntent)
             } else {
                 Toast.makeText(
-                        context,
+                        requireActivity(),
                         requireActivity().getString(R.string.error_no_browser),
                         Toast.LENGTH_SHORT
                 ).show()
@@ -225,7 +225,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             customListAdapter(activeTabsAdapter)
 
             getRecyclerView().run {
-                val gridLayoutManager = GridLayoutManager(context, 2)
+                val gridLayoutManager = GridLayoutManager(requireActivity(), 2)
                 gridLayoutManager.spanSizeLookup = activeTabsAdapter.spanSizeLookup
                 layoutManager = gridLayoutManager
                 val touchHelper = ItemTouchHelper(activeTabsAdapter.itemTouchCallback)

@@ -60,7 +60,7 @@
         android:layout_gravity="bottom|center"
         android:layout_margin="16dp"
         android:contentDescription="@string/shuffle_am"
-        app:backgroundTint="@color/windowBackground"
+        app:backgroundTint="@color/shuffleFabTint"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
         app:srcCompat="@drawable/ic_shuffle"
         app:tint="?attr/colorPrimary" />

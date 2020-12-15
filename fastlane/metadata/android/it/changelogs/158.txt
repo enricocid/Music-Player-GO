@@ -1,0 +1,5 @@
+- Corretto un crash all'apertura della app che si verificava alla scorretta
+inizializzazione dell'equalizzatore
+- Corretto un crash dovuto all'opzione delle copertine
+- Aggiunto un pulsante flottante nella tab delle canzoni per mescolarle
+- Miglioramenti codice (grazie TacoTheDank)

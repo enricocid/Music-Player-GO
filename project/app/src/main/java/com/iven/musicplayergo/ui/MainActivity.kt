@@ -19,6 +19,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -580,7 +581,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mNowPlayingExtendedControlsBinding.npVolumeSeek.progress = this
         }
 
-        val resolvedIconsColor = R.color.widgetsColor.decodeColor(this)
+        val resolvedIconsColor = ContextCompat.getColor(this, R.color.widgetsColor)
 
         mNowPlayingExtendedControlsBinding.npVolumeSeek.setOnSeekBarChangeListener(object :
                 SeekBar.OnSeekBarChangeListener {
@@ -668,7 +669,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                             if (mMediaPlayerHolder.isRepeat1X || mMediaPlayerHolder.isLooping) {
                                 ThemeHelper.resolveThemeAccent(this@MainActivity)
                             } else {
-                                R.color.widgetsColor.decodeColor(this@MainActivity)
+                                ContextCompat.getColor(this@MainActivity, R.color.widgetsColor)
                             }
                     )
                     setOnClickListener { setRepeat() }
@@ -807,7 +808,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     android.R.attr.colorButtonNormal
             )
         } else {
-            R.color.red.decodeColor(this)
+            ContextCompat.getColor(this, R.color.red)
         }
         ThemeHelper.updateIconTint(
                 mPlayerControlsPanelBinding.lovedSongsButton,
@@ -920,7 +921,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun updateRepeatStatus(onPlaybackCompletion: Boolean) {
-        val resolvedIconsColor = R.color.widgetsColor.decodeColor(this@MainActivity)
+        val resolvedIconsColor = ContextCompat.getColor(this, R.color.widgetsColor)
         if (isNowPlaying) {
             mNowPlayingControlsBinding.npRepeat.setImageResource(
                     ThemeHelper.getRepeatIcon(
@@ -1395,7 +1396,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         override fun onQueueEnabled() {
             ThemeHelper.updateIconTint(
                     mPlayerControlsPanelBinding.queueButton,
-                    R.color.widgetsColor.decodeColor(this@MainActivity)
+                    ContextCompat.getColor(this@MainActivity, R.color.widgetsColor)
             )
         }
 
@@ -1413,7 +1414,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     mPlayerControlsPanelBinding.queueButton,
                     when {
                         started -> ThemeHelper.resolveThemeAccent(this@MainActivity)
-                        mMediaPlayerHolder.isQueue -> R.color.widgetsColor.decodeColor(this@MainActivity)
+                        mMediaPlayerHolder.isQueue -> ContextCompat.getColor(this@MainActivity, R.color.widgetsColor)
                         else -> {
                             ThemeHelper.resolveColorAttr(
                                     this@MainActivity,

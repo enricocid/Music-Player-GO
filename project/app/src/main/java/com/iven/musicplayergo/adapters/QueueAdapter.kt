@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.text.parseAsHtml
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.startSongFromQueue
 import com.iven.musicplayergo.extensions.toFormattedDuration
-import com.iven.musicplayergo.extensions.toSpanned
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.Music
@@ -85,7 +85,7 @@ class QueueAdapter(
                                 isSeekBar = false
                         ),
                         song.duration.toFormattedDuration(isAlbum = false, isSeekBar = false)
-                ).toSpanned()
+                ).parseAsHtml()
 
                 subtitle.text =
                         context.getString(R.string.artist_and_album, song.artist, song.album)

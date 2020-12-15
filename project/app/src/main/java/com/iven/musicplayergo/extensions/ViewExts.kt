@@ -6,7 +6,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.text.SpannableString
-import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.view.MenuItem
 import android.view.View
@@ -14,10 +13,8 @@ import android.view.ViewAnimationUtils
 import android.view.ViewTreeObserver
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.annotation.ColorInt
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
-import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -120,11 +117,6 @@ fun ImageView.loadCover(
     }
 }
 
-@ColorInt
-fun Int.decodeColor(context: Context) = ContextCompat.getColor(context, this)
-
-fun String.toSpanned(): Spanned = this.parseAsHtml()
-
 // Extension to set menu items text color
 fun MenuItem.setTitleColor(color: Int) {
     SpannableString(title).apply {
@@ -203,7 +195,7 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
                 start()
             }
 
-    val windowBackground = R.color.windowBackground.decodeColor(context)
+    val windowBackground = ContextCompat.getColor(context, R.color.windowBackground)
     val closeColor = ThemeHelper.resolveColorAttr(context, R.attr.colorControlHighlight)
     val accent = if (!show) {
         windowBackground
@@ -212,7 +204,7 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
     }
 
     val startColor = if (isErrorFragment) {
-        R.color.red.decodeColor(context)
+        ContextCompat.getColor(context, R.color.red)
     } else {
         accent
     }
@@ -232,7 +224,7 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
                 background =
                         ThemeHelper.createColouredRipple(
                                 context,
-                                R.color.red.decodeColor(context),
+                                ContextCompat.getColor(context, R.color.red),
                                 R.drawable.ripple
                         )
             }

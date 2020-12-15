@@ -18,7 +18,7 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**TacoTheDank**](https://github.com/TacoTheDank) for upgrades to gradle, java 1.8, translations and improvements [247](https://github.com/enricocid/Music-Player-GO/issues/247), [248](https://github.com/enricocid/Music-Player-GO/pull/248)
 
-- [**bullhead**](https://github.com/bullheadandplato) for its equalizer implementation: I learned so much about how an equalizer works
+- [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes (https://github.com/enricocid/Music-Player-GO/pull/121) and its equalizer implementation: I learned so much about how an equalizer works
 
 - [**svgrepo.com**](https://www.svgrepo.com/) for the [compact disc](https://www.svgrepo.com/svg/181020/compact-disc-music) icon, opportunely modified (background color).
 This work is licensed under a [CC 0](https://creativecommons.org/share-your-work/public-domain/cc0/) license
@@ -31,8 +31,6 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 - **Luigi Sforza**, [**Friso Smith**](https://github.com/fwSmit), [**GuinnessX**](https://github.com/GuinnessX) for having reported a critical [issue](https://github.com/enricocid/Music-Player-GO/issues/105) and for debugging
 
 - [**Johnett Mathew**](https://github.com/Johnett) for these [fixes](https://github.com/enricocid/Music-Player-GO/pull/149)
-
-- [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes](https://github.com/enricocid/Music-Player-GO/pull/121)
 
 - [**Ricardo**](https://github.com/RickyM7) for [multiple reports](https://github.com/enricocid/Music-Player-GO/issues/220)
 
