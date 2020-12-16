@@ -52,8 +52,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
     private var mSelectedPreset = 0
 
-    private val mSliders: Array<Slider?> = arrayOfNulls(5)
-    private val mSlidersLabels: Array<TextView?> = arrayOfNulls(5)
+    private val mSliders = mutableMapOf<Slider?, TextView?>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -128,16 +127,11 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
     private fun finishSetupEqualizer(view: View) {
 
         mEqFragmentBinding.run {
-            mSliders[0] = slider0
-            mSlidersLabels[0] = freq0
-            mSliders[1] = slider1
-            mSlidersLabels[1] = freq1
-            mSliders[2] = slider2
-            mSlidersLabels[2] = freq2
-            mSliders[3] = slider3
-            mSlidersLabels[3] = freq3
-            mSliders[4] = slider4
-            mSlidersLabels[4] = freq4
+            mSliders[slider0] = freq0
+            mSliders[slider1] = freq1
+            mSliders[slider2] = freq2
+            mSliders[slider3] = freq3
+            mSliders[slider4] = freq4
         }
 
         goPreferences.savedEqualizerSettings?.let { savedEqualizerSettings ->
@@ -164,12 +158,12 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
             while (iterator.hasNext()) {
                 val item = iterator.next()
-                item.value?.let { slider ->
+                item.value.key?.let { slider ->
                     slider.valueFrom = minBandLevel.toFloat()
                     slider.valueTo = maxBandLevel.toFloat()
                     slider.addOnChangeListener { selectedSlider, value, fromUser ->
                         if (fromUser) {
-                            if (mSliders[item.index] == selectedSlider) {
+                            if (slider == selectedSlider) {
                                 mEqualizer.first?.setBandLevel(
                                         item.index.toShort(),
                                         value.toInt().toShort()
@@ -177,7 +171,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                             }
                         }
                     }
-                    mSlidersLabels[item.index]?.let { textView ->
+                    mSliders[slider]?.let { textView ->
                         textView.run {
                             text = formatMilliHzToK(getCenterFreq(item.index.toShort()))
                             background = roundedTextBackground
@@ -258,7 +252,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
             while (iterator.hasNext()) {
                 val item = iterator.next()
                 mEqualizer.first?.let { equalizer ->
-                    item.value?.let { slider ->
+                    item.value.key?.let { slider ->
                         slider.value = equalizer.getBandLevel(item.index.toShort()).toFloat()
                     }
                 }
