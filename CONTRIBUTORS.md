@@ -16,7 +16,7 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**Steven Schoen**](https://github.com/DSteve595) for the search function [fixes](https://github.com/enricocid/Music-Player-GO/commit/1c27ff3421dbf7820608237dc60a974955efb022) and quick [support](https://github.com/reddit/IndicatorFastScroll/issues/30)
 
-- [**TacoTheDank**](https://github.com/TacoTheDank) for upgrades to gradle, java 1.8, translations and improvements [247](https://github.com/enricocid/Music-Player-GO/issues/247), [248](https://github.com/enricocid/Music-Player-GO/pull/248)
+- [**TacoTheDank**](https://github.com/TacoTheDank) for upgrades to gradle, java 1.8, translations and improvements [247](https://github.com/enricocid/Music-Player-GO/issues/247), [248](https://github.com/enricocid/Music-Player-GO/pull/248), [250](https://github.com/enricocid/Music-Player-GO/pull/250)
 
 - [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes (https://github.com/enricocid/Music-Player-GO/pull/121) and its equalizer implementation: I learned so much about how an equalizer works
 
