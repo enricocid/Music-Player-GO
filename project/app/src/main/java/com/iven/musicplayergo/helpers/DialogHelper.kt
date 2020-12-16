@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
+import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
 import com.iven.musicplayergo.R
@@ -95,6 +96,11 @@ object DialogHelper {
                 }
             }
             negativeButton(R.string.no) {
+                if (isSwipe) {
+                    queueAdapter.notifyItemChanged(song.second)
+                }
+            }
+            onCancel {
                 if (isSwipe) {
                     queueAdapter.notifyItemChanged(song.second)
                 }
@@ -205,6 +211,11 @@ object DialogHelper {
             }
 
             negativeButton(R.string.no) {
+                if (isSwipe.first) {
+                    lovedSongsAdapter.notifyItemChanged(isSwipe.second)
+                }
+            }
+            onCancel {
                 if (isSwipe.first) {
                     lovedSongsAdapter.notifyItemChanged(isSwipe.second)
                 }
