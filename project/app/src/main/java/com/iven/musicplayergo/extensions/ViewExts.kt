@@ -82,7 +82,7 @@ fun Context.getImageLoader() = ImageLoader.Builder(this)
 fun ImageView.loadCover(
         imageLoader: ImageLoader,
         music: Music?,
-        defaultCover: Bitmap,
+        defaultCover: Bitmap?,
         isCircleCrop: Boolean,
         isLoadDelay: Boolean
 ) {

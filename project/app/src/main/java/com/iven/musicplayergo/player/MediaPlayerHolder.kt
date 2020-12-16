@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -20,6 +19,8 @@ import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat.ACTION_SEEK_TO
 import android.support.v4.media.session.PlaybackStateCompat.Builder
 import androidx.core.content.getSystemService
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.media.AudioAttributesCompat
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
@@ -282,10 +283,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ARTIST, currentSong.first?.album)
             putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, currentSong.first?.album)
             putString(MediaMetadataCompat.METADATA_KEY_ALBUM, currentSong.first?.album)
-            BitmapFactory.decodeResource(playerService.resources, R.drawable.ic_music_note)
-                    ?.let { bmp ->
-                        putBitmap(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON, bmp)
-                    }
+            ResourcesCompat.getDrawable(playerService.resources, R.drawable.ic_music_note, null)?.toBitmap()?.let { bmp ->
+                putBitmap(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON, bmp)
+            }
         }
         playerService.getMediaSession().setMetadata(mediaMediaPlayerCompat.build())
     }
@@ -332,7 +332,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         stopUpdatingCallbackWithPosition()
     }
 
-    fun onUpdateDefaultAlbumArt(bitmapRes: Bitmap) {
+    fun onUpdateDefaultAlbumArt(bitmapRes: Bitmap?) {
         mMusicNotificationManager.onUpdateDefaultAlbumArt(bitmapRes, isPlaying)
     }
 

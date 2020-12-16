@@ -7,11 +7,12 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.text.parseAsHtml
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.GoConstants
@@ -33,8 +34,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
     private val sFastSeekingActions get() = goPreferences.isFastSeekingActions
 
-    private var mAlbumArt =
-            BitmapFactory.decodeResource(playerService.resources, R.drawable.album_art)
+    private var mAlbumArt = ResourcesCompat.getDrawable(playerService.resources, R.drawable.album_art, null)?.toBitmap()
 
     private fun playerAction(action: String): PendingIntent {
 
@@ -108,7 +108,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                 )
     }
 
-    fun onUpdateDefaultAlbumArt(bitmapRes: Bitmap, updateNotification: Boolean) {
+    fun onUpdateDefaultAlbumArt(bitmapRes: Bitmap?, updateNotification: Boolean) {
         mAlbumArt = bitmapRes
         if (updateNotification) {
             onHandleNotificationUpdate(false)

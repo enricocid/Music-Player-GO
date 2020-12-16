@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.graphics.BitmapFactory
 import android.media.audiofx.BassBoost
 import android.media.audiofx.Equalizer
 import android.media.audiofx.Virtualizer
@@ -20,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -859,12 +860,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         notifyError(GoConstants.TAG_SD_NOT_READY)
                     }
                 }
-                onUpdateDefaultAlbumArt(
-                        BitmapFactory.decodeResource(
-                                resources,
-                                R.drawable.album_art
-                        )
-                )
+                onUpdateDefaultAlbumArt(ResourcesCompat.getDrawable(
+                        resources,
+                        R.drawable.album_art,
+                        null
+                )?.toBitmap())
             }
         }
     }
@@ -950,10 +950,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mNowPlayingBinding.npCover.loadCover(
                 getImageLoader(),
                 selectedSong,
-                BitmapFactory.decodeResource(
+                ResourcesCompat.getDrawable(
                         resources,
-                        R.drawable.album_art
-                ),
+                        R.drawable.album_art,
+                        null
+                )?.toBitmap(),
                 isCircleCrop = true,
                 isLoadDelay = false
         )

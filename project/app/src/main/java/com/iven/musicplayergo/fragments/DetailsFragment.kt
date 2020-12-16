@@ -2,7 +2,6 @@ package com.iven.musicplayergo.fragments
 
 import android.animation.Animator
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -12,6 +11,8 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
@@ -588,10 +589,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             imageView.loadCover(
                                     requireActivity().getImageLoader(),
                                     item.music?.get(0),
-                                    BitmapFactory.decodeResource(
+                                    ResourcesCompat.getDrawable(
                                             resources,
-                                            R.drawable.album_art
-                                    ),
+                                            R.drawable.album_art,
+                                            null
+                                    )?.toBitmap(),
                                     isCircleCrop = false,
                                     isLoadDelay = sLoadDelay
                             )
