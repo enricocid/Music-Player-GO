@@ -97,6 +97,8 @@ class PlayerService : Service() {
             mediaPlayerHolder = MediaPlayerHolder(this).apply {
                 registerActionsReceiver()
             }
+        }
+        if (!::musicNotificationManager.isInitialized) {
             musicNotificationManager = MusicNotificationManager(this)
         }
         return binder
