@@ -136,7 +136,9 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
         setupIndicatorFastScrollerView()
 
+        val fabCompatElevation = mAllMusicFragmentBinding.shuffleFab.compatElevation
         mAllMusicFragmentBinding.shuffleFab.setOnClickListener {
+            mAllMusicFragmentBinding.shuffleFab.compatElevation = 0F
             ObjectAnimator.ofFloat(
                 it,
                 View.ROTATION,
@@ -146,6 +148,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 duration = 750
                 start()
                 doOnEnd {
+                    mAllMusicFragmentBinding.shuffleFab.compatElevation = fabCompatElevation
                     mUIControlInterface.onShuffleSongs(
                         null,
                         null,
