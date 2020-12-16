@@ -59,22 +59,26 @@ class GoPreferences(context: Context) {
 
     var latestPlayedSong: Music?
         get() = getObjectForClass(
-                prefsLatestPlayedSong,
-                Music::class.java
+            prefsLatestPlayedSong,
+            Music::class.java
         )
         set(value) = putObjectForClass(prefsLatestPlayedSong, value, Music::class.java)
 
     var savedEqualizerSettings: SavedEqualizerSettings?
         get() = getObjectForClass(
-                prefsSavedEqualizerSettings,
-                SavedEqualizerSettings::class.java
+            prefsSavedEqualizerSettings,
+            SavedEqualizerSettings::class.java
         )
-        set(value) = putObjectForClass(prefsSavedEqualizerSettings, value, SavedEqualizerSettings::class.java)
+        set(value) = putObjectForClass(
+            prefsSavedEqualizerSettings,
+            value,
+            SavedEqualizerSettings::class.java
+        )
 
     var lovedSongs: List<Music>?
         get() = getObjectForType(
-                prefsLovedSongs,
-                typeLovedSongs
+            prefsLovedSongs,
+            typeLovedSongs
         )
         set(value) = putObjectForType(prefsLovedSongs, value, typeLovedSongs)
 
@@ -88,12 +92,12 @@ class GoPreferences(context: Context) {
 
     var activeTabsDef: List<String>
         get() = getObjectForType(prefsActiveTabsDef, typeActiveTabs)
-                ?: GoConstants.DEFAULT_ACTIVE_FRAGMENTS
+            ?: GoConstants.DEFAULT_ACTIVE_FRAGMENTS
         set(value) = putObjectForType(prefsActiveTabsDef, value, typeActiveTabs)
 
     var activeTabs: List<String>
         get() = getObjectForType(prefsActiveTabs, typeActiveTabs)
-                ?: GoConstants.DEFAULT_ACTIVE_FRAGMENTS
+            ?: GoConstants.DEFAULT_ACTIVE_FRAGMENTS
         set(value) = putObjectForType(prefsActiveTabs, value, typeActiveTabs)
 
     var onListEnded

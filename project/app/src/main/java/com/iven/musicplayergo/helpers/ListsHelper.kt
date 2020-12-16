@@ -18,8 +18,8 @@ object ListsHelper {
 
     @JvmStatic
     fun processQueryForStringsLists(
-            query: String?,
-            list: List<String>?
+        query: String?,
+        list: List<String>?
     ): List<String>? {
         // In real app you'd have it instantiated just once
         val filteredStrings = mutableListOf<String>()
@@ -65,8 +65,8 @@ object ListsHelper {
 
     @JvmStatic
     fun getSortedList(
-            id: Int,
-            list: MutableList<String>?
+        id: Int,
+        list: MutableList<String>?
     ) = when (id) {
         GoConstants.DESCENDING_SORTING -> {
             list?.apply {
@@ -86,8 +86,8 @@ object ListsHelper {
 
     @JvmStatic
     fun getSortedListWithNull(
-            id: Int,
-            list: MutableList<String?>?
+        id: Int,
+        list: MutableList<String?>?
     ): MutableList<String>? {
         val withoutNulls = list?.map {
             transformNullToEmpty(it)
@@ -111,8 +111,8 @@ object ListsHelper {
 
     @JvmStatic
     fun getSortedMusicList(
-            id: Int,
-            list: MutableList<Music>?
+        id: Int,
+        list: MutableList<Music>?
     ) = when (id) {
 
         GoConstants.DESCENDING_SORTING -> {
@@ -156,30 +156,30 @@ object ListsHelper {
 
     @JvmStatic
     fun addToLovedSongs(
-            context: Context,
-            song: Music?,
-            playerPosition: Int,
-            launchedBy: String
+        context: Context,
+        song: Music?,
+        playerPosition: Int,
+        launchedBy: String
     ) {
         val lovedSongs =
-                if (goPreferences.lovedSongs != null) {
-                    goPreferences.lovedSongs?.toMutableList()
-                } else {
-                    mutableListOf()
-                }
+            if (goPreferences.lovedSongs != null) {
+                goPreferences.lovedSongs?.toMutableList()
+            } else {
+                mutableListOf()
+            }
 
         song?.toSavedMusic(playerPosition, launchedBy)?.let { savedSong ->
             if (!lovedSongs?.contains(savedSong)!!) {
                 lovedSongs.add(
-                        savedSong
+                    savedSong
                 )
                 context.getString(
-                        R.string.loved_song_added,
-                        savedSong.title,
-                        savedSong.startFrom.toLong().toFormattedDuration(
-                                isAlbum = false,
-                                isSeekBar = false
-                        )
+                    R.string.loved_song_added,
+                    savedSong.title,
+                    savedSong.startFrom.toLong().toFormattedDuration(
+                        isAlbum = false,
+                        isSeekBar = false
+                    )
                 ).toToast(context)
                 goPreferences.lovedSongs = lovedSongs.toList()
             }

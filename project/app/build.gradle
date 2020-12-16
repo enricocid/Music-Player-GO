@@ -47,7 +47,8 @@ android {
     }
 
     lintOptions {
-        disable 'MissingTranslation'
+        disable 'MissingTranslation', 'AllowBackup',
+                'GoogleAppIndexingWarning'
     }
 
     packagingOptions {

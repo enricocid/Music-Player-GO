@@ -39,14 +39,14 @@ class PlayerService : Service() {
 
         override fun onSeekTo(pos: Long) {
             mediaPlayerHolder.seekTo(
-                    pos.toInt(),
-                    updatePlaybackStatus = true,
-                    restoreProgressCallBack = false
+                pos.toInt(),
+                updatePlaybackStatus = true,
+                restoreProgressCallBack = false
             )
         }
 
         override fun onMediaButtonEvent(mediaButtonEvent: Intent?) =
-                handleMediaIntent(mediaButtonEvent)
+            handleMediaIntent(mediaButtonEvent)
     }
 
     private fun configureMediaSession() {
@@ -66,7 +66,7 @@ class PlayerService : Service() {
             mediaPlayerHolder.run {
                 currentSong.first?.let { musicToSave ->
                     goPreferences.latestPlayedSong =
-                            musicToSave.toSavedMusic(playerPosition, launchedBy)
+                        musicToSave.toSavedMusic(playerPosition, launchedBy)
                 }
             }
 
@@ -136,7 +136,7 @@ class PlayerService : Service() {
         try {
             intent?.let {
                 val event =
-                        intent.getParcelableExtra<Parcelable>(Intent.EXTRA_KEY_EVENT) as KeyEvent
+                    intent.getParcelableExtra<Parcelable>(Intent.EXTRA_KEY_EVENT) as KeyEvent
                 if (event.action == KeyEvent.ACTION_DOWN) {
                     when (event.keyCode) {
                         KeyEvent.KEYCODE_MEDIA_PAUSE, KeyEvent.KEYCODE_MEDIA_PLAY, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, KeyEvent.KEYCODE_HEADSETHOOK -> {
