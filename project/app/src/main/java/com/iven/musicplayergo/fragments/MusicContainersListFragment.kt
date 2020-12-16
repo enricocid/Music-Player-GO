@@ -242,10 +242,13 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
         }
     }
 
-    fun onListFiltered(stringToFilter: String?) {
-        stringToFilter?.let { string ->
-            mList?.remove(string)
+    fun onListFiltered(stringToFilter: String): Boolean {
+        return if (mList == null) {
+            false
+        } else {
+            mList?.remove(stringToFilter)
             setListDataSource(mList)
+            true
         }
     }
 

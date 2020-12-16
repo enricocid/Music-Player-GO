@@ -150,14 +150,11 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                                 requireActivity(),
                                 ThemeHelper.resolveThemeIcon(requireActivity())
                         )
-                mUIControlInterface.onThemeChanged()
+                mUIControlInterface.onAppearanceChanged(true)
             }
             getString(R.string.accent_pref) -> {
                 mAccentsDialog.dismiss()
-                mUIControlInterface.onAppearanceChanged(
-                        isAccentChanged = true,
-                        restoreSettings = true
-                )
+                mUIControlInterface.onAppearanceChanged(false)
             }
             getString(R.string.focus_pref) -> mUIControlInterface.onHandleFocusPref()
             getString(R.string.covers_pref) -> mUIControlInterface.onHandleNotificationUpdate(false)
@@ -234,10 +231,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             positiveButton(android.R.string.ok) {
                 goPreferences.activeTabs = activeTabsAdapter.getUpdatedItems().toMutableList()
-                mUIControlInterface.onAppearanceChanged(
-                        isAccentChanged = false,
-                        restoreSettings = true
-                )
+                mUIControlInterface.onAppearanceChanged(false)
             }
 
             negativeButton(android.R.string.cancel)

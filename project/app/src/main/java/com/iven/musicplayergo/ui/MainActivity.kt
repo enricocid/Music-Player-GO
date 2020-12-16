@@ -72,6 +72,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mDetailsFragment: DetailsFragment
     private lateinit var mEqualizerFragment: EqFragment
 
+    private val mMusicContainersFragments = mutableListOf<MusicContainersListFragment>()
+
     // Booleans
     private val sDetailsFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.DETAILS_FRAGMENT_TAG)
     private val sErrorFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.ERROR_FRAGMENT_TAG)
@@ -81,8 +83,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private var sRevealAnimationRunning = false
 
-    private var sAppearanceChanged = false
-    private var sRestoreSettingsFragment = false
+    private var mFragmentToRestore = 0
 
     // Loved songs dialog
     private lateinit var mLovedSongsDialog: MaterialDialog
@@ -174,11 +175,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        if (sAppearanceChanged) {
+        if (mFragmentToRestore != 0) {
             super.onSaveInstanceState(outState)
-            outState.putBoolean(
-                    GoConstants.RESTORE_SETTINGS_FRAGMENT,
-                    true
+            outState.putInt(
+                    GoConstants.FRAGMENT_TO_RESTORE,
+                    mFragmentToRestore
             )
         }
     }
@@ -256,11 +257,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         initMediaButtons()
 
-        sRestoreSettingsFragment =
-                savedInstanceState?.getBoolean(GoConstants.RESTORE_SETTINGS_FRAGMENT)
-                        ?: intent.getBooleanExtra(
-                                GoConstants.RESTORE_SETTINGS_FRAGMENT,
-                                false
+        mFragmentToRestore =
+                savedInstanceState?.getInt(GoConstants.FRAGMENT_TO_RESTORE)
+                        ?: intent.getIntExtra(
+                                GoConstants.FRAGMENT_TO_RESTORE,
+                                0
                         )
 
         if (PermissionsHelper.hasToAskForReadStoragePermission(this)) {
@@ -288,7 +289,16 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
             mMainActivityBinding.loadingProgressBar.handleViewVisibility(false)
 
-            initViewPager()
+            synchronized(initViewPager()) {
+                val fragmentsIterator = mActiveFragments.iterator().withIndex()
+                while (fragmentsIterator.hasNext()) {
+                    val fragmentIndex = fragmentsIterator.next().value
+                    val fragment = getFragmentForIndex(fragmentIndex)
+                    if (fragment is MusicContainersListFragment && !mMusicContainersFragments.contains(fragment)) {
+                        mMusicContainersFragments.add(fragment)
+                    }
+                }
+            }
 
             synchronized(handleRestore()) {
                 mPlayerControlsPanelBinding.playerView.animate().apply {
@@ -347,20 +357,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 }
             })
 
-            getTabAt(
-                    if (sRestoreSettingsFragment) {
-                        mMainActivityBinding.viewPager2.offscreenPageLimit
-                    } else {
-                        0
-                    }
-            )?.icon?.setTint(
+            getTabAt(mFragmentToRestore)?.icon?.setTint(
                     ThemeHelper.resolveThemeAccent(this@MainActivity)
             )
         }
 
-        if (sRestoreSettingsFragment) {
+        if (mFragmentToRestore != 0) {
             mMainActivityBinding.viewPager2.setCurrentItem(
-                    mMainActivityBinding.viewPager2.offscreenPageLimit,
+                    mFragmentToRestore,
                     false
             )
         }
@@ -733,21 +737,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    override fun onThemeChanged() {
-        sAppearanceChanged = true
+    override fun onAppearanceChanged(isThemeChanged: Boolean) {
+        mFragmentToRestore = mMainActivityBinding.viewPager2.currentItem
         synchronized(saveSongToPref()) {
-            AppCompatDelegate.setDefaultNightMode(
-                    ThemeHelper.getDefaultNightMode(
-                            this
-                    )
-            )
-        }
-    }
-
-    override fun onAppearanceChanged(isAccentChanged: Boolean, restoreSettings: Boolean) {
-        sAppearanceChanged = true
-        synchronized(saveSongToPref()) {
-            ThemeHelper.applyChanges(this)
+            if (isThemeChanged) {
+                AppCompatDelegate.setDefaultNightMode(
+                        ThemeHelper.getDefaultNightMode(
+                                this
+                        )
+                )
+            } else {
+                ThemeHelper.applyChanges(this, mFragmentToRestore)
+            }
         }
     }
 
@@ -962,7 +963,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         mMediaPlayerHolder.currentSong.first?.let { song ->
             val selectedSongDuration = song.duration
-            if (mSelectedArtistAlbumForNP != Pair(song.artist, song.album) && goPreferences.isCovers && ::mNowPlayingDialog.isInitialized && mNowPlayingDialog.isShowing) {
+            if (mSelectedArtistAlbumForNP != Pair(
+                            song.artist,
+                            song.album
+                    ) && goPreferences.isCovers && ::mNowPlayingDialog.isInitialized && mNowPlayingDialog.isShowing
+            ) {
                 loadNowPlayingCover(song)
             }
 
@@ -1318,10 +1323,19 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onAddToFilter(stringToFilter: String?) {
         stringToFilter?.let { string ->
-            mArtistsFragment?.onListFiltered(string)
-            mAlbumsFragment?.onListFiltered(string)
-            mFoldersFragment?.onListFiltered(string)
-            ListsHelper.addToHiddenItems(string)
+            synchronized(ListsHelper.addToHiddenItems(string)) {
+                if (mMusicContainersFragments.isNotEmpty() && !mMusicContainersFragments[0].onListFiltered(stringToFilter)) {
+                    ThemeHelper.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
+                } else {
+                    val musicContainersIterator = mMusicContainersFragments.iterator().withIndex()
+                    while (musicContainersIterator.hasNext()) {
+                        val item = musicContainersIterator.next()
+                        if (item.index != 0) {
+                            item.value.onListFiltered(string)
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -1429,7 +1443,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     mPlayerControlsPanelBinding.queueButton,
                     when {
                         started -> ThemeHelper.resolveThemeAccent(this@MainActivity)
-                        mMediaPlayerHolder.isQueue -> ContextCompat.getColor(this@MainActivity, R.color.widgetsColor)
+                        mMediaPlayerHolder.isQueue -> ContextCompat.getColor(
+                                this@MainActivity,
+                                R.color.widgetsColor
+                        )
                         else -> {
                             ThemeHelper.resolveColorAttr(
                                     this@MainActivity,

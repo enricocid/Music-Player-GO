@@ -31,10 +31,10 @@ import com.iven.musicplayergo.ui.MainActivity
 object ThemeHelper {
 
     @JvmStatic
-    fun applyChanges(activity: Activity) {
+    fun applyChanges(activity: Activity, currentPage: Int) {
         val intent = Intent(activity, MainActivity::class.java)
 
-        val bundle = bundleOf(Pair(GoConstants.RESTORE_SETTINGS_FRAGMENT, true))
+        val bundle = bundleOf(GoConstants.FRAGMENT_TO_RESTORE to currentPage)
         intent.putExtras(bundle)
         intent.addFlags(
                 Intent.FLAG_ACTIVITY_CLEAR_TOP

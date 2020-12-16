@@ -7,8 +7,7 @@ import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
 
 interface UIControlInterface {
-    fun onAppearanceChanged(isAccentChanged: Boolean, restoreSettings: Boolean)
-    fun onThemeChanged()
+    fun onAppearanceChanged(isThemeChanged: Boolean)
     fun onPreciseVolumeToggled()
     fun onArtistOrFolderSelected(artistOrFolder: String, launchedBy: String)
     fun onSongSelected(song: Music?, songs: List<Music>?, launchedBy: String)
