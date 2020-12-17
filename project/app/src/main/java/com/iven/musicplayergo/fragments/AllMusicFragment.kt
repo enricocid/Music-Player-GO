@@ -310,8 +310,11 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
     }
 
     fun onListFiltered(stringToFilter: String) : Int {
-        mAllMusic = mAllMusic?.filter { !it.artist.equals(stringToFilter) and !it.album.equals(stringToFilter) and !it.relativePath.equals(stringToFilter) }?.toMutableList()
+        mMusicViewModel.run {
+            deviceMusicFiltered = deviceMusicFiltered?.filter { !it.artist.equals(stringToFilter) and !it.album.equals(stringToFilter) and !it.relativePath.equals(stringToFilter) }?.toMutableList()
+            mAllMusic = deviceMusicFiltered
             setMusicDataSource(mAllMusic)
+        }
         return mAllMusic?.size!!
     }
 

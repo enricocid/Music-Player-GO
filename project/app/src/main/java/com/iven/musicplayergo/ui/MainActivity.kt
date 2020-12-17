@@ -835,7 +835,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                     val song =
                         if (isSongRestoredFromPrefs) {
-                            goPreferences.latestPlayedSong
+                            val savedSong = goPreferences.latestPlayedSong
+                            goPreferences.filters?.let { ft ->
+                                if (ft.contains(savedSong?.artist) || ft.contains(savedSong?.album) || ft.contains(savedSong?.relativePath)) {
+                                   mMusicViewModel.randomMusic
+                                }
+                            }
+                            savedSong
                         } else {
                             mMusicViewModel.randomMusic
                         }
@@ -1345,6 +1351,24 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     }
                     val size = mAllMusicFragment?.onListFiltered(stringToFilter)!!
                     mSettingsFragment?.onFiltersChanged(size)
+
+                    if (isMediaPlayerHolder) {
+                        val currentSong = mMediaPlayerHolder.currentSong.first
+                        goPreferences.filters?.let { ft ->
+                            if (ft.contains(currentSong?.artist) || ft.contains(currentSong?.album) || ft.contains(
+                                    currentSong?.relativePath
+                                )
+                            ) {
+                                val newSong = mMusicViewModel.randomMusic
+                                val songs = MusicOrgHelper.getAlbumSongs(
+                                    newSong.artist,
+                                    newSong.album,
+                                    mMusicViewModel.deviceAlbumsByArtist
+                                )
+                                onSongSelected(newSong, songs, newSong.launchedBy)
+                            }
+                        }
+                    }
                 }
             }
         }
