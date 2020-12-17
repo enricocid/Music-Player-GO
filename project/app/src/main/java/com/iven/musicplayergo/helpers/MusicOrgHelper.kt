@@ -5,12 +5,14 @@ import android.content.ContentResolver
 import android.content.res.Resources
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
+import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.extensions.toFormattedYear
 import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
+import com.iven.musicplayergo.ui.UIControlInterface
 
 
 object MusicOrgHelper {
@@ -150,4 +152,45 @@ object MusicOrgHelper {
         } else {
             AudioColumns.DATA
         }
+
+    @JvmStatic
+    fun updateMediaPlayerHolderLists(mediaPlayerHolder: MediaPlayerHolder, musicViewModel: MusicViewModel, uiControlInterface: UIControlInterface): Music? {
+
+        val currentSong = mediaPlayerHolder.currentSong.first
+
+        fun selectNewSong(filter: Set<String>): Music? {
+            if (musicListContains(currentSong, filter)) {
+                return musicViewModel.randomMusic
+            }
+            return null
+        }
+
+        goPreferences.filters?.let { ft ->
+            goPreferences.lovedSongs?.toMutableList()?.let { bookmarks ->
+                val songs = bookmarks.filter { lovedSong ->
+                    musicListContains(lovedSong, ft)
+                }
+                bookmarks.removeAll(songs)
+                goPreferences.lovedSongs = bookmarks.toList()
+                if (bookmarks.isEmpty()) {
+                    uiControlInterface.onLovedSongsUpdate(true)
+                }
+            }
+            if (mediaPlayerHolder.isQueue && musicListContains(currentSong, ft)) {
+                mediaPlayerHolder.queueSongs.run {
+                    val songs = filter { queueSong ->
+                        musicListContains(queueSong, ft)
+                    }
+                    removeAll(songs)
+                    mediaPlayerHolder.skip(true)
+                }
+            } else {
+                return selectNewSong(ft)
+            }
+        }
+        return null
+    }
+
+    @JvmStatic
+    private fun musicListContains(song: Music?, filter: Set<String>) = filter.contains(song?.artist) || filter.contains(song?.album) || filter.contains(song?.relativePath)
 }

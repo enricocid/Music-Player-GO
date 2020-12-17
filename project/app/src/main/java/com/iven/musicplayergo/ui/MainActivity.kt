@@ -852,22 +852,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         mMusicViewModel.deviceAlbumsByArtist
                     )
 
-                    if (!songs.isNullOrEmpty()) {
-
-                        isPlay = false
-
-                        startPlayback(
-                            song,
-                            songs,
-                            getLatestSongLaunchedBy()
-                        )
-
-                        updatePlayingInfo(false)
-
-                        mPlayerControlsPanelBinding.songProgress.progress = song?.startFrom!!
-                    } else {
-                        notifyError(GoConstants.TAG_SD_NOT_READY)
-                    }
+                    startPlaybackAndUpdateUI(song, songs)
                 }
                 onUpdateDefaultAlbumArt(
                     ResourcesCompat.getDrawable(
@@ -1115,13 +1100,33 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mDetailsFragment.onDisableShuffle(false)
             }
             mMediaPlayerHolder.run {
-                isSongRestoredFromPrefs = false
-                isPlay = true
+                if (isSongRestoredFromPrefs) {
+                    isSongRestoredFromPrefs = false
+                    isPlay = true
+                }
                 if (isQueue) {
                     setQueueEnabled(false)
                 }
                 startPlayback(song, songs, launchedBy)
             }
+        }
+    }
+
+    private fun startPlaybackAndUpdateUI(song: Music?, songs: MutableList<Music>?) {
+        if (!songs.isNullOrEmpty()) {
+            mMediaPlayerHolder.isPlay = false
+
+            startPlayback(
+                    song,
+                    songs,
+                    getLatestSongLaunchedBy()
+            )
+
+            updatePlayingInfo(false)
+
+            mPlayerControlsPanelBinding.songProgress.progress = song?.startFrom!!
+        } else {
+            notifyError(GoConstants.TAG_SD_NOT_READY)
         }
     }
 
@@ -1337,8 +1342,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         stringToFilter?.let { string ->
             synchronized(ListsHelper.addToHiddenItems(string)) {
                 if (mMusicContainersFragments.isNotEmpty() && !mMusicContainersFragments[0].onListFiltered(
-                        stringToFilter
-                    )
+                                stringToFilter
+                        )
                 ) {
                     ThemeHelper.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
                 } else {
@@ -1352,21 +1357,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     val size = mAllMusicFragment?.onListFiltered(stringToFilter)!!
                     mSettingsFragment?.onFiltersChanged(size)
 
+                    // be sure to update queue, loved songs and the controls panel
                     if (isMediaPlayerHolder) {
-                        val currentSong = mMediaPlayerHolder.currentSong.first
-                        goPreferences.filters?.let { ft ->
-                            if (ft.contains(currentSong?.artist) || ft.contains(currentSong?.album) || ft.contains(
-                                    currentSong?.relativePath
-                                )
-                            ) {
-                                val newSong = mMusicViewModel.randomMusic
-                                val songs = MusicOrgHelper.getAlbumSongs(
-                                    newSong.artist,
-                                    newSong.album,
+                        MusicOrgHelper.updateMediaPlayerHolderLists(mMediaPlayerHolder, mMusicViewModel, this)?.run {
+                            val songs = MusicOrgHelper.getAlbumSongs(
+                                    artist,
+                                    album,
                                     mMusicViewModel.deviceAlbumsByArtist
-                                )
-                                onSongSelected(newSong, songs, newSong.launchedBy)
-                            }
+                            )
+                            startPlaybackAndUpdateUI(this, songs)
                         }
                     }
                 }
