@@ -10,7 +10,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.core.app.ActivityCompat
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
@@ -26,7 +25,6 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.AccentsAdapter
 import com.iven.musicplayergo.adapters.ActiveTabsAdapter
 import com.iven.musicplayergo.adapters.FiltersAdapter
-import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -90,10 +88,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         ViewModelProvider(requireActivity()).get(MusicViewModel::class.java).apply {
             deviceMusic.observe(viewLifecycleOwner, { returnedMusic ->
                 if (!returnedMusic.isNullOrEmpty()) {
-                    findPreference<Preference>(getString(R.string.found_songs_pref))?.let { preference ->
-                        preference.title =
-                            getString(R.string.found_songs_pref_title, musicDatabaseSize)
-                    }
+                    updateFiltersPreferences(musicDatabaseSize!!)
                 }
             })
         }
@@ -131,10 +126,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             getString(R.string.accent_pref) -> showAccentsDialog()
             getString(R.string.filter_pref) -> if (!goPreferences.filters.isNullOrEmpty()) {
                 showFiltersDialog()
-            } else {
-                getString(
-                    R.string.error_no_filter
-                ).toToast(requireActivity())
             }
             getString(R.string.active_tabs_pref) -> showActiveFragmentsDialog()
         }
@@ -161,6 +152,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             getString(R.string.fast_seeking_actions_pref) -> mUIControlInterface.onHandleNotificationUpdate(
                 true
             )
+            getString(R.string.filter_pref) -> mUIControlInterface.onAppearanceChanged(false)
         }
     }
 
@@ -244,16 +236,30 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             title(R.string.filter_pref_title)
 
-            val filtersAdapter = FiltersAdapter()
+            val filtersAdapter = FiltersAdapter(requireActivity())
 
             customListAdapter(filtersAdapter)
 
             positiveButton(android.R.string.ok) {
-                goPreferences.filters = filtersAdapter.getUpdatedItems()
-                ActivityCompat.recreate(requireActivity())
+                if (goPreferences.filters != filtersAdapter.getUpdatedItems()) {
+                    goPreferences.filters = filtersAdapter.getUpdatedItems()
+                }
             }
 
             negativeButton(android.R.string.cancel)
+        }
+    }
+
+    fun updateFiltersPreferences(databaseSize: Int) {
+        findPreference<Preference>(getString(R.string.found_songs_pref))?.let { preference ->
+            preference.title =
+                    getString(R.string.found_songs_pref_title, databaseSize)
+        }
+        findPreference<Preference>(getString(R.string.filter_pref))?.let { preference ->
+            goPreferences.filters?.let { ft ->
+                preference.summary = ft.size.toString()
+                preference.isEnabled = ft.isNotEmpty()
+            }
         }
     }
 

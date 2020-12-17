@@ -60,7 +60,6 @@
     <string name="headset_pref_summary_off">Activer la gestion du branchement du casque</string>
     <string name="filter_pref_title">Filtres</string>
     <string name="filter_popup_title">Masquer</string>
-    <string name="error_no_filter">Aucun filtre trouvé.</string>
     <string name="fast_seeking_actions_pref_summary_on">Préférer les actions d\\\'avance rapide</string>
     <string name="fast_seeking_actions_pref_summary_off">Préférer les actions rapprochées/répétées</string>
     <string name="fast_seeking_actions_pref_title">Actions de notification supplémentaires</string>

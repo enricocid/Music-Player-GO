@@ -309,6 +309,12 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
         }
     }
 
+    fun onListFiltered(stringToFilter: String) : Int {
+        mAllMusic = mAllMusic?.filter { !it.artist.equals(stringToFilter) and !it.album.equals(stringToFilter) and !it.relativePath.equals(stringToFilter) }?.toMutableList()
+            setMusicDataSource(mAllMusic)
+        return mAllMusic?.size!!
+    }
+
     override fun onQueryTextChange(newText: String?): Boolean {
         setMusicDataSource(ListsHelper.processQueryForMusic(newText, mAllMusic) ?: mAllMusic)
         return false

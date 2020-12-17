@@ -39,7 +39,6 @@
     <string name="error_media_buttons">Coś poszło nie tak! :( Proszę uruchomić ponownie odtwarzanie w aplikacji</string>
     <string name="error_no_browser">Nie znaleziono przeglądarki!</string>
     <string name="error_bad_id">Najpierw coś odtwórz!</string>
-    <string name="error_no_filter">Nie znaleziono filtrów!</string>
     <string name="error_no_queue">Brak utworów w kolejce!</string>
     <!-- Messages - Permission rationale -->
     <string name="perm_rationale">Music Player GO wymaga dostępu do plików, aby odtwarzać muzykę!</string>

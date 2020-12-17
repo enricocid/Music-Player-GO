@@ -19,6 +19,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private lateinit var mSettingsFragmentBinding: FragmentSettingsBinding
     private lateinit var mUIControlInterface: UIControlInterface
 
+    private var mPreferencesFragment: PreferencesFragment? = null
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         // This makes sure that the container activity has implemented
@@ -39,9 +41,16 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             mUIControlInterface.onCloseActivity()
         }
 
-        childFragmentManager.commit {
-            replace(R.id.fragment_layout, PreferencesFragment.newInstance())
+        mPreferencesFragment = PreferencesFragment.newInstance()
+        mPreferencesFragment?.let { fm ->
+            childFragmentManager.commit {
+                replace(R.id.fragment_layout, fm)
+            }
         }
+    }
+
+    fun onFiltersChanged(databaseSize: Int) {
+        mPreferencesFragment?.updateFiltersPreferences(databaseSize)
     }
 
     companion object {

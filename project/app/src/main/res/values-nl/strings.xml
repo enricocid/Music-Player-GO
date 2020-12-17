@@ -59,7 +59,6 @@
     <string name="headset_pref_summary_off">Headset-plugbeheer inschakelen</string>
     <string name="filter_pref_title">Filters</string>
     <string name="filter_popup_title">Verbergen</string>
-    <string name="error_no_filter">Geen filters.</string>
     <string name="eq_pref_note_summary">Let op: de systeemequalizer krijgt de voorkeur, tenzij je in de systeeminstellingen de systeemequalizer uitschakelt voor deze app. :)</string>
     <string name="fast_seeking_pref_title">Doorspoelen</string>
     <string name="fast_seeking_actions_pref_summary_on">Voorkeur voor doorspoelacties</string>

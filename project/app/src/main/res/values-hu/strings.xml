@@ -70,7 +70,6 @@
     <string name="found_songs_pref_title">%1d dal található</string>
     <string name="error_eq">Hoppá, hiba történt!</string>
     <string name="error_list_ended">A lista befejeződött.</string>
-    <string name="error_no_filter">Nem található szűrő.</string>
     <string name="filter_popup_title">Elrejtés</string>
     <string name="sorting_pref_track_inv">Szám szerint, ↑ sorrendben</string>
     <string name="sorting_pref_track">Szám szerint, ↓ sorrendben</string>

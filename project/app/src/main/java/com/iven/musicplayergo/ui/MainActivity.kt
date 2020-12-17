@@ -1343,6 +1343,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                             item.value.onListFiltered(string)
                         }
                     }
+                    val size = mAllMusicFragment?.onListFiltered(stringToFilter)!!
+                    mSettingsFragment?.onFiltersChanged(size)
                 }
             }
         }

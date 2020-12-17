@@ -39,7 +39,6 @@
     <string name="error_media_buttons">Algo fallou! :( Por favor reinicia a reprodución desde a app.</string>
     <string name="error_no_browser">Non se atopou navegador.</string>
     <string name="error_bad_id">Reproduce primeiro unha pista.</string>
-    <string name="error_no_filter">Non se atopan filtros.</string>
     <string name="error_no_queue">Sen cancións na cola.</string>
     <!-- Messages - Permission rationale -->
     <string name="perm_rationale">Music Player GO precisa acceder ós ficheiros para poder reproducilos.</string>

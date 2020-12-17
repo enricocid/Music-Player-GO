@@ -45,7 +45,6 @@
     <string name="error_media_buttons">केहि गलत भयो! :( कृपया अनुप्रयोगबाट प्लेब्याक पुनःस्टार्ट गर्नुहोस्।</string>
     <string name="error_no_browser">कुनै ब्राउजर फेला परेन!</string>
     <string name="error_bad_id">पहिले गीत बजाउनुहोस्!</string>
-    <string name="error_no_filter">कुनै फिल्टर फेला परेन!</string>
     <string name="error_no_queue">कुनै गीत लाममा छैन!</string>
 
     <!-- Messages - Permission rationale -->

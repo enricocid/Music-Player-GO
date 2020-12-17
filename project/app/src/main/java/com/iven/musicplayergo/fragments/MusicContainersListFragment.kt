@@ -85,9 +85,8 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                     if (!returnedMusic.isNullOrEmpty()) {
                         mSorting = getSortingMethodFromPrefs()
 
-                        mList =
-                            getSortedItemKeys()?.filter { !goPreferences.filters?.contains(it)!! }
-                                ?.toMutableList()
+                        mList = getSortedItemKeys()
+
                         setListDataSource(mList)
 
                         finishSetup()

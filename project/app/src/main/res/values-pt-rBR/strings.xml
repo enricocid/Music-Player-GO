@@ -55,7 +55,6 @@
     <string name="headset_pref_summary_off">Ligar gerenciamento de entrada do fone de ouvido</string>
     <string name="filter_pref_title">Filtros</string>
     <string name="filter_popup_title">Ocultar</string>
-    <string name="error_no_filter">Nenhum filtro encontrado.</string>
     <string name="found_songs_pref_title">Músicas encontradas: %1d</string>
     <string name="sorting_pref">Classificação</string>
     <string name="sorting_pref_track">Pelo número da faixa ↓</string>
