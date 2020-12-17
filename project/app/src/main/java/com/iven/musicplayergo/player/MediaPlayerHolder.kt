@@ -342,6 +342,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun tryToGetAudioFocus() {
+        if (!::mAudioFocusRequestCompat.isInitialized) {
+            initializeAudioFocusRequestCompat()
+        }
         val requestFocus =
             AudioManagerCompat.requestAudioFocus(mAudioManager, mAudioFocusRequestCompat)
         mCurrentAudioFocusState = when (requestFocus) {
@@ -364,8 +367,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun giveUpAudioFocus() {
-        AudioManagerCompat.abandonAudioFocusRequest(mAudioManager, mAudioFocusRequestCompat)
-        mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
+        if (::mAudioFocusRequestCompat.isInitialized) {
+            AudioManagerCompat.abandonAudioFocusRequest(mAudioManager, mAudioFocusRequestCompat)
+            mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
+        }
     }
 
     private fun updatePlaybackStatus(updateUI: Boolean) {
