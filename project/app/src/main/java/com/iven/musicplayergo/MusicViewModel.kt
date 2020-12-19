@@ -6,6 +6,7 @@ import android.content.res.Resources
 import android.provider.MediaStore
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.iven.musicplayergo.extensions.savedSongIsAvailable
 import com.iven.musicplayergo.helpers.MusicOrgHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.models.Album
@@ -231,6 +232,14 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                         )
                     )
                 }
+            }
+        }
+
+        // fallback to random song is saved song is not available (if deleted by user from device) or if filtered
+        goPreferences.latestPlayedSong?.let { savedSong ->
+            val song = mDeviceMusicList.savedSongIsAvailable(savedSong)
+            if (song == null || goPreferences.filters != null && MusicOrgHelper.musicListContains(song, goPreferences.filters!!)) {
+                goPreferences.latestPlayedSong = randomMusic
             }
         }
     }

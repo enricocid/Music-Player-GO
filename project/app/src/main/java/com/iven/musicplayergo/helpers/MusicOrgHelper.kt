@@ -162,5 +162,5 @@ object MusicOrgHelper {
     }
 
     @JvmStatic
-    private fun musicListContains(song: Music?, filter: Set<String>) = filter.contains(song?.artist) || filter.contains(song?.album) || filter.contains(song?.relativePath)
+    fun musicListContains(song: Music?, filter: Set<String>) = filter.contains(song?.artist) || filter.contains(song?.album) || filter.contains(song?.relativePath)
 }

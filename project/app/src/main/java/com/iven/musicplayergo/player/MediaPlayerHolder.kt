@@ -26,6 +26,7 @@ import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.extensions.savedSongIsAvailable
 import com.iven.musicplayergo.extensions.toContentUri
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
@@ -463,8 +464,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         // to correctly get skip song when song is restored
         if (isSongRestoredFromPrefs) {
             currentSong.first?.run {
-                val song =
-                    mPlayingAlbumSongs?.find { it.title == title && it.displayName == displayName && it.track == track }
+                val song = mPlayingAlbumSongs?.savedSongIsAvailable(this)
                 currentSong = Pair(song, false)
             }
         }

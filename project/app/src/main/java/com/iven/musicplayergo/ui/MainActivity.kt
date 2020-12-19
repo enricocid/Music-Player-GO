@@ -859,13 +859,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                     val song =
                         if (isSongRestoredFromPrefs) {
-                            val savedSong = goPreferences.latestPlayedSong
-                            goPreferences.filters?.let { ft ->
-                                if (ft.contains(savedSong?.artist) || ft.contains(savedSong?.album) || ft.contains(savedSong?.relativePath)) {
-                                   mMusicViewModel.randomMusic
-                                }
-                            }
-                            savedSong
+                            goPreferences.latestPlayedSong
                         } else {
                             mMusicViewModel.randomMusic
                         }
@@ -876,7 +870,21 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         mMusicViewModel.deviceAlbumsByArtist
                     )
 
-                    startPlaybackAndUpdateUI(song, songs)
+                    if (!songs.isNullOrEmpty()) {
+                        mMediaPlayerHolder.isPlay = false
+
+                        startPlayback(
+                                song,
+                                songs,
+                                getLatestSongLaunchedBy()
+                        )
+
+                        updatePlayingInfo(false)
+
+                        mPlayerControlsPanelBinding.songProgress.progress = song?.startFrom!!
+                    } else {
+                        notifyError(GoConstants.TAG_SD_NOT_READY)
+                    }
                 }
                 onUpdateDefaultAlbumArt(
                     ResourcesCompat.getDrawable(
@@ -1137,33 +1145,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mDetailsFragment.onDisableShuffle(false)
             }
             mMediaPlayerHolder.run {
-                if (isSongRestoredFromPrefs) {
-                    isSongRestoredFromPrefs = false
-                    isPlay = true
-                }
+                isSongRestoredFromPrefs = false
+                isPlay = true
                 if (isQueue) {
                     setQueueEnabled(false)
                 }
                 startPlayback(song, songs, launchedBy)
             }
-        }
-    }
-
-    private fun startPlaybackAndUpdateUI(song: Music?, songs: MutableList<Music>?) {
-        if (!songs.isNullOrEmpty()) {
-            mMediaPlayerHolder.isPlay = false
-
-            startPlayback(
-                    song,
-                    songs,
-                    getLatestSongLaunchedBy()
-            )
-
-            updatePlayingInfo(false)
-
-            mPlayerControlsPanelBinding.songProgress.progress = song?.startFrom!!
-        } else {
-            notifyError(GoConstants.TAG_SD_NOT_READY)
         }
     }
 
@@ -1378,10 +1366,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     override fun onAddToFilter(stringToFilter: String?) {
         stringToFilter?.let { string ->
             synchronized(ListsHelper.addToHiddenItems(string)) {
-                if (mMusicContainersFragments.isNotEmpty() && !mMusicContainersFragments[0].onListFiltered(
-                                stringToFilter
-                        )
-                ) {
+                if (mMusicContainersFragments.isNotEmpty() && !mMusicContainersFragments[0].onListFiltered(stringToFilter)) {
                     ThemeHelper.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
                 } else {
                     val musicContainersIterator = mMusicContainersFragments.iterator().withIndex()
@@ -1402,7 +1387,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                                     album,
                                     mMusicViewModel.deviceAlbumsByArtist
                             )
-                            startPlaybackAndUpdateUI(this, songs)
+                            mMediaPlayerHolder.isPlay = mMediaPlayerHolder.isPlaying
+                            mMediaPlayerHolder.setCurrentSong(this, songs, isFromQueue = false, songLaunchedBy = launchedBy)
+                            mMediaPlayerHolder.initMediaPlayer(this)
+                            updatePlayingInfo(false)
                         }
                     }
                 }

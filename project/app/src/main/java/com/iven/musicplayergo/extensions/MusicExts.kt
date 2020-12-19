@@ -160,3 +160,5 @@ fun Music.toSavedMusic(playerPosition: Int, savedLaunchedBy: String) =
             savedLaunchedBy,
             playerPosition
     )
+
+fun List<Music>.savedSongIsAvailable(first: Music) : Music? = find { first.title == it.title && first.displayName == it.displayName && first.track == it.track && first.albumId == it.albumId && first.album == it.album }
