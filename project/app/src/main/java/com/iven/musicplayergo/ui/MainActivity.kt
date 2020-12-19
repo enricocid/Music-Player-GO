@@ -1249,15 +1249,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     setQueueEnabled(true)
                 }
                 song?.let { songToQueue ->
-                    queueSongs.add(songToQueue)
-                    getString(
-                        R.string.queue_song_add,
-                        songToQueue.title
-                    ).toToast(
-                        this@MainActivity
-                    )
-                    if (!isPlaying || state == GoConstants.PAUSED) {
-                        startSongFromQueue(song, launchedBy)
+                    if (!queueSongs.contains(songToQueue)) {
+                        queueSongs.add(songToQueue)
+
+                        if (!isPlaying || state == GoConstants.PAUSED) {
+                            startSongFromQueue(song, launchedBy)
+                        }
+
+                        getString(
+                                R.string.queue_song_add,
+                                songToQueue.title
+                        ).toToast(this@MainActivity)
                     }
                 }
             }
