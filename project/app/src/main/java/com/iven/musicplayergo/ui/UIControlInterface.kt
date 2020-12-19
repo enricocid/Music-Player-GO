@@ -33,6 +33,7 @@ interface UIControlInterface {
     )
 
     fun onAddToFilter(stringToFilter: String?)
+    fun onSongVisualizationChanged()
     fun onDenyPermission()
     fun onHandleFocusPref()
     fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean)

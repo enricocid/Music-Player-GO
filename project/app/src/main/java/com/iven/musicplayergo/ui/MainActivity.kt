@@ -1363,6 +1363,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
+    override fun onSongVisualizationChanged() {
+        mAllMusicFragment?.onSongVisualizationChanged()
+    }
+
     override fun onAddToFilter(stringToFilter: String?) {
         stringToFilter?.let { string ->
             synchronized(ListsHelper.addToHiddenItems(string)) {

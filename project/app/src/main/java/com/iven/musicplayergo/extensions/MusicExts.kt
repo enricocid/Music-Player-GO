@@ -17,6 +17,7 @@ import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import java.util.*
 import java.util.concurrent.TimeUnit
+import java.util.regex.Pattern
 
 
 fun MediaPlayerHolder.startSongFromQueue(song: Music?, launchedBy: String) {
@@ -35,6 +36,14 @@ fun MediaPlayerHolder.startSongFromQueue(song: Music?, launchedBy: String) {
         launchedBy
     )
     initMediaPlayer(song)
+}
+
+//https://codereview.stackexchange.com/a/97819
+fun String?.toFilenameWithoutExtension() = try {
+    Pattern.compile("(?<=.)\\.[^.]+$").matcher(this!!).replaceAll("")
+} catch (e: Exception) {
+    e.printStackTrace()
+    this
 }
 
 fun Long.toContentUri(): Uri = ContentUris.withAppendedId(

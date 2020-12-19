@@ -100,11 +100,15 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 withItem<Music, SongsViewHolder>(R.layout.music_item) {
                     onBind(::SongsViewHolder) { _, item ->
                         // GenericViewHolder is `this` here
-                        title.text = item.title
                         duration.text = item.duration.toFormattedDuration(
                             isAlbum = false,
                             isSeekBar = false
                         )
+                        title.text = if (goPreferences.songsVisualization != GoConstants.TITLE) {
+                            item.displayName.toFilenameWithoutExtension()
+                        } else {
+                            item.title
+                        }
                         subtitle.text =
                             getString(R.string.artist_and_album, item.artist, item.album)
                     }
@@ -307,6 +311,10 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
             return@setOnMenuItemClickListener true
         }
+    }
+
+    fun onSongVisualizationChanged() {
+        mAllMusicFragmentBinding.allMusicRv.adapter?.notifyDataSetChanged()
     }
 
     fun onListFiltered(stringToFilter: String) : Int {

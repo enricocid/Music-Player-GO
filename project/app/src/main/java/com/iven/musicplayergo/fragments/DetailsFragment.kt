@@ -335,7 +335,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                         val displayedTitle =
                             if (goPreferences.songsVisualization != GoConstants.TITLE) {
-                                item.displayName
+                                item.displayName?.toFilenameWithoutExtension()
                             } else {
                                 getString(
                                     R.string.track_song,
