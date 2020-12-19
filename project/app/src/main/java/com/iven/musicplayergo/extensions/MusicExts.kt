@@ -67,7 +67,9 @@ fun Long.getCoverFromPFD(context: Context): Bitmap? {
     val uri = ContentUris.withAppendedId(albumArtUri, this)
     return try {
         context.contentResolver.openFileDescriptor(uri, "r")?.let { pfd ->
-            return BitmapFactory.decodeFileDescriptor(pfd.fileDescriptor)
+            val bitmap = BitmapFactory.decodeFileDescriptor(pfd.fileDescriptor)
+            pfd.close()
+            return bitmap
         }
     } catch (e: Exception) {
         e.printStackTrace()
@@ -79,12 +81,12 @@ fun Long.getCoverFromPFD(context: Context): Bitmap? {
     }
 }
 
-fun Long.getCoverFromURI(): Any = try {
+fun Long.getCoverFromURI(): Uri? = try {
     val albumArtUri = ("content://media/external/audio/albumart").toUri()
     ContentUris.withAppendedId(albumArtUri, this)
 } catch (e: Exception) {
     e.printStackTrace()
-    R.drawable.album_art
+    Uri.EMPTY
 }
 
 fun Long.toFormattedDuration(isAlbum: Boolean, isSeekBar: Boolean) = try {

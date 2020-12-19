@@ -586,8 +586,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         mDetailsFragmentBinding.albumsRv.run {
 
             setHasFixedSize(true)
-            setItemViewCacheSize(25)
-            setRecycledViewPool(RecyclerView.RecycledViewPool())
 
             setup {
 
@@ -616,23 +614,26 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             0
                         }
 
-                        if (goPreferences.isCovers) {
+                        if (sIsCovers) {
                             val request = ImageRequest.Builder(context)
-                                    .data(item.music?.get(0)?.albumId?.getCoverFromURI())
-                                    .target(
-                                            onSuccess = { result ->
-                                                // Handle the successful result.
-                                               imageView.load(result)
-                                            }
-                                    )
-                                    .build()
+                                        .data(item.music?.get(0)?.albumId?.getCoverFromURI())
+                                        .target(
+                                                onSuccess = { result ->
+                                                    // Handle the successful result.
+                                                    imageView.load(result)
+                                                },
+                                                onError = {
+                                                    imageView.load(R.drawable.album_art)
+                                                }
+                                        )
+                                        .build()
 
-                            mLoadCoverIoScope.launch {
-                                withContext(mLoadCoverIoDispatcher) {
-                                    mImageLoader.enqueue(request)
+                                mLoadCoverIoScope.launch {
+                                    withContext(mLoadCoverIoDispatcher) {
+                                        mImageLoader.enqueue(request)
+                                    }
                                 }
                             }
-                        }
                     }
 
                     onClick { index ->
@@ -649,6 +650,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                                 mSelectedAlbum = item
                                 mSelectedAlbumPosition = index
+
                                 updateSelectedAlbumTitle()
 
                                 swapAlbum(item.title, item.music)
