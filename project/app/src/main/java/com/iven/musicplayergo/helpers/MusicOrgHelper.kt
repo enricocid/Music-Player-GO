@@ -1,10 +1,6 @@
 package com.iven.musicplayergo.helpers
 
-import android.annotation.SuppressLint
-import android.content.ContentResolver
 import android.content.res.Resources
-import android.provider.MediaStore
-import android.provider.MediaStore.Audio.AudioColumns
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.extensions.toFormattedYear
 import com.iven.musicplayergo.extensions.toSavedMusic
@@ -126,32 +122,6 @@ object MusicOrgHelper {
 
         return sortedAlbums
     }
-
-    @JvmStatic
-    @SuppressLint("InlinedApi")
-    fun getMusicCursor(contentResolver: ContentResolver) = contentResolver.query(
-        MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-        arrayOf(
-            AudioColumns.ARTIST, // 0
-            AudioColumns.YEAR, // 1
-            AudioColumns.TRACK, // 2
-            AudioColumns.TITLE, // 3
-            AudioColumns.DISPLAY_NAME, // 4,
-            AudioColumns.DURATION, //5,
-            AudioColumns.ALBUM, // 6
-            getPathColumn(), // 7
-            AudioColumns._ID //8
-        ), AudioColumns.IS_MUSIC + "=1", null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER
-    )
-
-    @JvmStatic
-    @Suppress("DEPRECATION")
-    fun getPathColumn() =
-        if (VersioningHelper.isQ()) {
-            AudioColumns.BUCKET_DISPLAY_NAME
-        } else {
-            AudioColumns.DATA
-        }
 
     @JvmStatic
     fun updateMediaPlayerHolderLists(mediaPlayerHolder: MediaPlayerHolder, musicViewModel: MusicViewModel, uiControlInterface: UIControlInterface): Music? {

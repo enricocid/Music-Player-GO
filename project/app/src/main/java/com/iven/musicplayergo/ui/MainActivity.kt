@@ -24,6 +24,10 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import coil.ImageLoader
+import coil.load
+import coil.request.ImageRequest
+import coil.transform.RoundedCornersTransformation
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
@@ -52,6 +56,7 @@ import com.iven.musicplayergo.player.MediaPlayerInterface
 import com.iven.musicplayergo.player.PlayerService
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
+import kotlinx.coroutines.*
 
 
 class MainActivity : AppCompatActivity(), UIControlInterface {
@@ -94,6 +99,22 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mNowPlayingBinding: NowPlayingBinding
     private lateinit var mNowPlayingControlsBinding: NowPlayingControlsBinding
     private lateinit var mNowPlayingExtendedControlsBinding: NowPlayingExtendedControlsBinding
+
+    /**
+     * This is the job for all coroutines started by this ViewModel.
+     * Cancelling this job will cancel all coroutines started by this ViewModel.
+     */
+    private val mLoadCoverJob = SupervisorJob()
+
+    private val mLoadCoverHandler = CoroutineExceptionHandler { _, exception ->
+        exception.printStackTrace()
+    }
+
+    private val mLoadCoverIoDispatcher = Dispatchers.IO + mLoadCoverJob + mLoadCoverHandler
+    private val mLoadCoverIoScope = CoroutineScope(mLoadCoverIoDispatcher)
+
+    private lateinit var mImageLoader: ImageLoader
+
     private var mSelectedArtistAlbumForNP: Pair<String?, String?> = Pair("", "")
 
     // Music player things
@@ -187,6 +208,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onDestroy() {
         super.onDestroy()
+        if (goPreferences.isCovers) {
+            mLoadCoverJob.cancel()
+        }
         mMusicViewModel.cancel()
         if (sBound) {
             unbindService(connection)
@@ -942,18 +966,31 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun loadNowPlayingCover(selectedSong: Music) {
+        if (!::mImageLoader.isInitialized) {
+            mImageLoader = ImageLoader.Builder(this)
+                    .bitmapPoolingEnabled(false)
+                    .crossfade(true)
+                    .build()
+        }
+
         mSelectedArtistAlbumForNP = Pair(selectedSong.artist, selectedSong.album)
-        mNowPlayingBinding.npCover.loadCover(
-            getImageLoader(),
-            selectedSong,
-            ResourcesCompat.getDrawable(
-                resources,
-                R.drawable.album_art,
-                null
-            )?.toBitmap(),
-            isCircleCrop = true,
-            isLoadDelay = false
-        )
+        val request = ImageRequest.Builder(this)
+                .data(selectedSong.albumId?.getCoverFromPFD(this))
+                .target(
+                        onSuccess = { result ->
+                            // Handle the successful result.
+                            mNowPlayingBinding.npCover.load(result) {
+                                transformations(RoundedCornersTransformation(16.0F))
+                            }
+                        }
+                )
+                .build()
+
+        mLoadCoverIoScope.launch {
+            withContext(mLoadCoverIoDispatcher) {
+                mImageLoader.enqueue(request)
+            }
+        }
     }
 
     private fun updateNowPlayingInfo() {

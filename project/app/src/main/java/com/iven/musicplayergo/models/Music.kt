@@ -11,6 +11,7 @@ data class Music(
     val displayName: String?,
     val duration: Long,
     val album: String?,
+    val albumId: Long?,
     val relativePath: String?,
     val id: Long?,
     val launchedBy: String,

@@ -7,9 +7,11 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.MediaExtractor
 import android.media.MediaFormat
-import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.provider.MediaStore
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toBitmap
+import androidx.core.net.toUri
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
@@ -60,26 +62,29 @@ fun Uri.toBitrate(context: Context): Pair<Int, Int>? {
     }
 }
 
-fun Music.getCover(context: Context): Bitmap? {
-    val contentUri = id?.toContentUri()
-    val retriever = MediaMetadataRetriever()
+fun Long.getCoverFromPFD(context: Context): Bitmap? {
+    val albumArtUri = ("content://media/external/audio/albumart").toUri()
+    val uri = ContentUris.withAppendedId(albumArtUri, this)
     return try {
-        retriever.setDataSource(context, contentUri)
-
-        val picture = retriever.embeddedPicture
-
-        if (picture != null) {
-            BitmapFactory
-                .decodeByteArray(picture, 0, picture.size)
-        } else {
-            null
+        context.contentResolver.openFileDescriptor(uri, "r")?.let { pfd ->
+            return BitmapFactory.decodeFileDescriptor(pfd.fileDescriptor)
         }
     } catch (e: Exception) {
         e.printStackTrace()
-        null
-    } finally {
-        retriever.release()
+        ResourcesCompat.getDrawable(
+                context.resources,
+                R.drawable.album_art,
+                null
+        )?.toBitmap()
     }
+}
+
+fun Long.getCoverFromURI(): Any = try {
+    val albumArtUri = ("content://media/external/audio/albumart").toUri()
+    ContentUris.withAppendedId(albumArtUri, this)
+} catch (e: Exception) {
+    e.printStackTrace()
+    R.drawable.album_art
 }
 
 fun Long.toFormattedDuration(isAlbum: Boolean, isSeekBar: Boolean) = try {
@@ -142,15 +147,16 @@ fun Int.toFormattedYear(resources: Resources) =
 
 fun Music.toSavedMusic(playerPosition: Int, savedLaunchedBy: String) =
     Music(
-        artist,
-        year,
-        track,
-        title,
-        displayName,
-        duration,
-        album,
-        relativePath,
-        id,
-        savedLaunchedBy,
-        playerPosition
+            artist,
+            year,
+            track,
+            title,
+            displayName,
+            duration,
+            album,
+            albumId,
+            relativePath,
+            id,
+            savedLaunchedBy,
+            playerPosition
     )

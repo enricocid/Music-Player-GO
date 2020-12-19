@@ -11,14 +11,15 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
+import coil.load
+import coil.request.ImageRequest
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
@@ -38,6 +39,7 @@ import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.AlbumsViewHolder
 import com.iven.musicplayergo.ui.GenericViewHolder
 import com.iven.musicplayergo.ui.UIControlInterface
+import kotlinx.coroutines.*
 
 
 /**
@@ -78,7 +80,22 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private var mShuffledAlbum: String? = null
     private var sWasShuffling: Pair<Boolean, String?> = Pair(false, null)
-    private var sLoadDelay = true
+
+    /**
+     * This is the job for all coroutines started by this ViewModel.
+     * Cancelling this job will cancel all coroutines started by this ViewModel.
+     */
+    private val mLoadCoverJob = SupervisorJob()
+
+    private val mLoadCoverHandler = CoroutineExceptionHandler { _, exception ->
+        exception.printStackTrace()
+    }
+
+    private val mLoadCoverIoDispatcher = Dispatchers.IO + mLoadCoverJob + mLoadCoverHandler
+    private val mLoadCoverIoScope = CoroutineScope(mLoadCoverIoDispatcher)
+
+    private var sIsCovers = false
+    private lateinit var mImageLoader: ImageLoader
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -113,6 +130,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             mUIControlInterface = activity as UIControlInterface
         } catch (e: ClassCastException) {
             e.printStackTrace()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (sIsCovers) {
+            mLoadCoverJob.cancel()
         }
     }
 
@@ -227,6 +251,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private fun setupViews(view: View) {
 
         if (sLaunchedByArtistView) {
+            sIsCovers = goPreferences.isCovers
+            if (sIsCovers) {
+                mImageLoader = ImageLoader.Builder(requireActivity())
+                        .bitmapPoolingEnabled(false)
+                        .crossfade(true)
+                        .build()
+            }
             mSelectedAlbum = when {
                 mSelectedAlbumPosition != -1 -> mSelectedArtistAlbums?.get(
                     mSelectedAlbumPosition
@@ -586,17 +617,21 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         }
 
                         if (goPreferences.isCovers) {
-                            imageView.loadCover(
-                                requireActivity().getImageLoader(),
-                                item.music?.get(0),
-                                ResourcesCompat.getDrawable(
-                                    resources,
-                                    R.drawable.album_art,
-                                    null
-                                )?.toBitmap(),
-                                isCircleCrop = false,
-                                isLoadDelay = sLoadDelay
-                            )
+                            val request = ImageRequest.Builder(context)
+                                    .data(item.music?.get(0)?.albumId?.getCoverFromURI())
+                                    .target(
+                                            onSuccess = { result ->
+                                                // Handle the successful result.
+                                               imageView.load(result)
+                                            }
+                                    )
+                                    .build()
+
+                            mLoadCoverIoScope.launch {
+                                withContext(mLoadCoverIoDispatcher) {
+                                    mImageLoader.enqueue(request)
+                                }
+                            }
                         }
                     }
 
@@ -605,8 +640,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         if (index != mSelectedAlbumPosition) {
 
                             adapter?.let { albumsAdapter ->
-
-                                sLoadDelay = false
 
                                 albumsAdapter.notifyItemChanged(
                                     mSelectedAlbumPosition

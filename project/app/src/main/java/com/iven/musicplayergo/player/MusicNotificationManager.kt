@@ -17,7 +17,7 @@ import androidx.core.text.parseAsHtml
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.extensions.getCover
+import com.iven.musicplayergo.extensions.getCoverFromPFD
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.ui.MainActivity
@@ -135,10 +135,8 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         val mediaPlayerHolder = playerService.mediaPlayerHolder
         mediaPlayerHolder.currentSong.first?.let { song ->
 
-            val cover = if (goPreferences.isCovers) {
-                song.getCover(playerService) ?: mAlbumArt
-            } else {
-                mAlbumArt
+            if (goPreferences.isCovers) {
+                mAlbumArt = song.albumId?.getCoverFromPFD(playerService)
             }
 
             mNotificationBuilder.setContentText(
@@ -154,7 +152,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                         song.title
                     ).parseAsHtml()
                 )
-                .setLargeIcon(cover)
+                .setLargeIcon(mAlbumArt)
                 .setColorized(true)
                 .setSmallIcon(getNotificationSmallIcon(mediaPlayerHolder))
         }
