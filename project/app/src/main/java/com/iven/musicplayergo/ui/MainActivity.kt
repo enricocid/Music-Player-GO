@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private lateinit var mImageLoader: ImageLoader
 
-    private var mSelectedArtistAlbumForNP: Pair<String?, String?> = Pair("", "")
+    private var mSelectedArtistAlbumForNP: Pair<String?, Long?> = Pair("", -1)
 
     // Music player things
     private lateinit var mQueueDialog: MaterialDialog
@@ -981,7 +981,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     .build()
         }
 
-        mSelectedArtistAlbumForNP = Pair(selectedSong.artist, selectedSong.album)
+        mSelectedArtistAlbumForNP = Pair(selectedSong.artist, selectedSong.albumId)
         val request = ImageRequest.Builder(this)
                 .data(selectedSong.albumId?.getCoverFromPFD(this) ?: ResourcesCompat.getDrawable(
                         resources,
@@ -1393,7 +1393,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                     // be sure to update queue, loved songs and the controls panel
                     if (isMediaPlayerHolder) {
-                        MusicOrgHelper.updateMediaPlayerHolderLists(mMediaPlayerHolder, mMusicViewModel, this)?.run {
+                        MusicOrgHelper.updateMediaPlayerHolderLists(mMediaPlayerHolder, this, mMusicViewModel.randomMusic)?.run {
                             val songs = MusicOrgHelper.getAlbumSongs(
                                     artist,
                                     album,

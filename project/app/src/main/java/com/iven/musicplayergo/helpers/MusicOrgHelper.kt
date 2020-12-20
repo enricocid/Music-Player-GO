@@ -1,7 +1,6 @@
 package com.iven.musicplayergo.helpers
 
 import android.content.res.Resources
-import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.extensions.toFormattedYear
 import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.goPreferences
@@ -124,13 +123,14 @@ object MusicOrgHelper {
     }
 
     @JvmStatic
-    fun updateMediaPlayerHolderLists(mediaPlayerHolder: MediaPlayerHolder, musicViewModel: MusicViewModel, uiControlInterface: UIControlInterface): Music? {
+    fun updateMediaPlayerHolderLists(mediaPlayerHolder: MediaPlayerHolder, uiControlInterface: UIControlInterface, randomMusic: Music): Music? {
 
         val currentSong = mediaPlayerHolder.currentSong.first
 
         fun selectNewSong(filter: Set<String>): Music? {
             if (musicListContains(currentSong, filter)) {
-                return musicViewModel.randomMusic
+                goPreferences.latestPlayedSong = randomMusic
+                return randomMusic
             }
             return null
         }
