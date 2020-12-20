@@ -135,8 +135,10 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         val mediaPlayerHolder = playerService.mediaPlayerHolder
         mediaPlayerHolder.currentSong.first?.let { song ->
 
-            if (goPreferences.isCovers) {
-                mAlbumArt = song.albumId?.getCoverFromPFD(playerService)
+            val cover = if (goPreferences.isCovers) {
+                song.albumId?.getCoverFromPFD(playerService) ?: mAlbumArt
+            } else {
+                mAlbumArt
             }
 
             mNotificationBuilder.setContentText(
@@ -152,7 +154,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                         song.title
                     ).parseAsHtml()
                 )
-                .setLargeIcon(mAlbumArt)
+                .setLargeIcon(cover)
                 .setColorized(true)
                 .setSmallIcon(getNotificationSmallIcon(mediaPlayerHolder))
         }

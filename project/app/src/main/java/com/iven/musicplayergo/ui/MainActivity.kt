@@ -983,7 +983,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         mSelectedArtistAlbumForNP = Pair(selectedSong.artist, selectedSong.album)
         val request = ImageRequest.Builder(this)
-                .data(selectedSong.albumId?.getCoverFromPFD(this))
+                .data(selectedSong.albumId?.getCoverFromPFD(this) ?: ResourcesCompat.getDrawable(
+                        resources,
+                        R.drawable.album_art,
+                        null
+                )?.toBitmap())
                 .target(
                         onSuccess = { result ->
                             // Handle the successful result.

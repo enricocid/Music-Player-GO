@@ -9,8 +9,6 @@ import android.media.MediaExtractor
 import android.media.MediaFormat
 import android.net.Uri
 import android.provider.MediaStore
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.models.Music
@@ -82,11 +80,7 @@ fun Long.getCoverFromPFD(context: Context): Bitmap? {
         }
     } catch (e: Exception) {
         e.printStackTrace()
-        ResourcesCompat.getDrawable(
-                context.resources,
-                R.drawable.album_art,
-                null
-        )?.toBitmap()
+        null
     }
 }
 

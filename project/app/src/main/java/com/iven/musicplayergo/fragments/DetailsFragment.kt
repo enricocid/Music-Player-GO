@@ -2,6 +2,7 @@ package com.iven.musicplayergo.fragments
 
 import android.animation.Animator
 import android.content.Context
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -11,6 +12,8 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
@@ -96,6 +99,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private var sIsCovers = false
     private lateinit var mImageLoader: ImageLoader
+    private var mAlbumArt: Bitmap? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -257,6 +261,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         .bitmapPoolingEnabled(false)
                         .crossfade(true)
                         .build()
+                mAlbumArt = ResourcesCompat.getDrawable(resources, R.drawable.album_art, null)?.toBitmap()
             }
             mSelectedAlbum = when {
                 mSelectedAlbumPosition != -1 -> mSelectedArtistAlbums?.get(
@@ -623,7 +628,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                                                     imageView.load(result)
                                                 },
                                                 onError = {
-                                                    imageView.load(R.drawable.album_art)
+                                                    imageView.load(mAlbumArt)
                                                 }
                                         )
                                         .build()
