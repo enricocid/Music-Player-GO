@@ -513,7 +513,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         null,
                         null,
                         mSongsList?.toMutableList(),
-                        mSongsList?.size!! < 30, // only queue if album size don't exceed 30
+                        mSongsList?.size!! <= 50, // only queue if album size don't exceed 30
                         mLaunchedBy
                     )
                     R.id.action_shuffle_sa -> {

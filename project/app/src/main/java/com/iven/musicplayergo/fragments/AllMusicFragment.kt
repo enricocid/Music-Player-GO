@@ -157,7 +157,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                         null,
                         null,
                         mAllMusic,
-                        mAllMusic?.size!! < 30,
+                        mAllMusic?.size!! <= 50,
                         GoConstants.ARTIST_VIEW
                     )
                 }
