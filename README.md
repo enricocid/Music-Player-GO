@@ -73,10 +73,6 @@ This repo contains the source code of the **Music Player GO** Android app: a sim
 - Fast seeking (long click on skip buttons)
 - Simple audio focus, precise volume and headsets management
 - Other features: search, sorting, shuffle, notification's SeekBar, audios opening from other apps ...
-- Modern code base and ... Kotlin!
-
-Want less?
-Check [Be Simple Music Player](https://github.com/enricocid/Be-Simple-Music-Player)!
  
 
 # Translations
