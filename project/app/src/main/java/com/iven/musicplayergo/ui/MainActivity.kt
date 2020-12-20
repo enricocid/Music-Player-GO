@@ -1366,7 +1366,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onSongVisualizationChanged() {
-        mAllMusicFragment?.onSongVisualizationChanged()
+        if (mAllMusicFragment != null && !mAllMusicFragment?.onSongVisualizationChanged()!!) {
+            ThemeHelper.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
+        }
     }
 
     override fun onAddToFilter(stringToFilter: String?) {

@@ -241,15 +241,13 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
         }
     }
 
-    fun onListFiltered(stringToFilter: String): Boolean {
-        return if (mList == null) {
+    fun onListFiltered(stringToFilter: String) = if (mList == null) {
             false
         } else {
             mList?.remove(stringToFilter)
             setListDataSource(mList)
             true
         }
-    }
 
     override fun onQueryTextChange(newText: String?): Boolean {
         setListDataSource(ListsHelper.processQueryForStringsLists(newText, mList) ?: mList)

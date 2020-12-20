@@ -313,8 +313,11 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
         }
     }
 
-    fun onSongVisualizationChanged() {
+    fun onSongVisualizationChanged() = if (::mAllMusicFragmentBinding.isInitialized) {
         mAllMusicFragmentBinding.allMusicRv.adapter?.notifyDataSetChanged()
+        true
+    } else {
+        false
     }
 
     fun onListFiltered(stringToFilter: String) : Int {
