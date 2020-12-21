@@ -5,7 +5,7 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.ColorDrawable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.*
@@ -23,7 +23,6 @@ import com.google.android.material.animation.ArgbEvaluatorCompat
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
-import kotlin.math.absoluteValue
 import kotlin.math.max
 
 
@@ -220,31 +219,35 @@ private fun instantiateSwipeHandler(
     ) {
 
         val resources = context.resources
+        val red = ContextCompat.getColor(context, R.color.red)
 
-        val firstIcon = if (isDialog) {
-            resources.getDrawable(R.drawable.ic_delete, null)
-        } else {
-            resources.getDrawable(R.drawable.ic_queue_add, null)
+        val firstIcon = resources.getDrawable(R.drawable.ic_queue_add, null).apply {
+            mutate().setTint(ContextCompat.getColor(context, R.color.green))
         }
+
+        val firstIconAlt = resources.getDrawable(R.drawable.ic_delete, null).apply {
+            mutate().setTint(red)
+        }
+
         val secondIcon = if (isDialog) {
             resources.getDrawable(R.drawable.ic_delete, null)
         } else {
             resources.getDrawable(R.drawable.ic_favorite, null)
+        }.apply {
+            mutate().setTint(red)
         }
 
         var selectedIcon = firstIcon
 
-        var firstColor = ContextCompat.getColor(context, R.color.swipeActionDeleteColor)
+        var firstColor = ColorDrawable(ContextCompat.getColor(context, R.color.swipeActionDeleteColor))
 
         var secondColor = if (isDialog) {
             firstColor
         } else {
-            ContextCompat.getColor(context, R.color.swipeActionAddColor)
+            ColorDrawable(ContextCompat.getColor(context, R.color.swipeActionAddColor))
         }
 
-        val windowColor = ContextCompat.getColor(context, R.color.windowBackground)
-
-        var background = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, intArrayOf(secondColor, windowColor))
+        var background = secondColor
 
         override fun onMove(
             recyclerView: RecyclerView,
@@ -268,9 +271,11 @@ private fun instantiateSwipeHandler(
 
             when {
                 dX > 0 -> {
-                    selectedIcon = firstIcon
-                    if (!isDialog) {
-                        background = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, intArrayOf(secondColor, windowColor))
+                    selectedIcon = if (isDialog) {
+                        firstIconAlt
+                    } else {
+                        background = secondColor
+                        firstIcon
                     }
 
                     val iconMargin = (itemView.height - selectedIcon.intrinsicHeight) / 2
@@ -289,7 +294,7 @@ private fun instantiateSwipeHandler(
                 }
                 dX < 0 -> {
                     selectedIcon = secondIcon
-                    background = GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, intArrayOf(firstColor, windowColor))
+                    background = firstColor
 
                     val iconMargin = (itemView.height - selectedIcon.intrinsicHeight) / 2
                     val iconTop = itemView.top + (itemView.height - selectedIcon.intrinsicHeight) / 2
@@ -311,16 +316,8 @@ private fun instantiateSwipeHandler(
                     background.setBounds(0,0,0,0)
                 }
             }
-
-            if ((dX / itemView.measuredWidth).absoluteValue > getSwipeThreshold(viewHolder)) {
-                recyclerView.performHapticFeedback(
-                        HapticFeedbackConstants.VIRTUAL_KEY,
-                        HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
-                )
-            }
-
             background.draw(c)
-            selectedIcon?.draw(c)
+            selectedIcon.draw(c)
         }
     }
 }
