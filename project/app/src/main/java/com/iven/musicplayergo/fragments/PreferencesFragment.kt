@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
@@ -94,10 +93,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         }
 
         mThemePreference = findPreference<Preference>(getString(R.string.theme_pref))?.apply {
-            icon = AppCompatResources.getDrawable(
-                requireActivity(),
-                ThemeHelper.resolveThemeIcon(requireActivity())
-            )
+            icon = requireActivity().getDrawable(ThemeHelper.resolveThemeIcon(requireActivity()))
         }
 
         findPreference<Preference>(getString(R.string.accent_pref))?.let { preference ->
@@ -136,11 +132,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         when (key) {
             getString(R.string.precise_volume_pref) -> mUIControlInterface.onPreciseVolumeToggled()
             getString(R.string.theme_pref) -> {
-                mThemePreference?.icon =
-                    AppCompatResources.getDrawable(
-                        requireActivity(),
-                        ThemeHelper.resolveThemeIcon(requireActivity())
-                    )
+                mThemePreference?.icon = requireActivity().getDrawable(ThemeHelper.resolveThemeIcon(requireActivity()))
                 mUIControlInterface.onAppearanceChanged(true)
             }
             getString(R.string.accent_pref) -> {

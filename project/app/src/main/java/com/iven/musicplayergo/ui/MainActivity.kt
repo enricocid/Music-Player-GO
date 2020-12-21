@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -887,11 +886,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     }
                 }
                 onUpdateDefaultAlbumArt(
-                    ResourcesCompat.getDrawable(
-                        resources,
-                        R.drawable.album_art,
-                        null
-                    )?.toBitmap()
+                    getDrawable(R.drawable.album_art)?.toBitmap()
                 )
             }
         }
@@ -983,11 +978,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         mSelectedArtistAlbumForNP = Pair(selectedSong.artist, selectedSong.albumId)
         val request = ImageRequest.Builder(this)
-                .data(selectedSong.albumId?.getCoverFromPFD(this) ?: ResourcesCompat.getDrawable(
-                        resources,
-                        R.drawable.album_art,
-                        null
-                )?.toBitmap())
+                .data(selectedSong.albumId?.getCoverFromPFD(this) ?: getDrawable(R.drawable.album_art)?.toBitmap())
                 .target(
                         onSuccess = { result ->
                             // Handle the successful result.

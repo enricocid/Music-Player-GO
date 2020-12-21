@@ -11,7 +11,6 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.text.parseAsHtml
 import androidx.media.app.NotificationCompat.MediaStyle
@@ -34,8 +33,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
     private val sFastSeekingActions get() = goPreferences.isFastSeekingActions
 
-    private var mAlbumArt =
-        ResourcesCompat.getDrawable(playerService.resources, R.drawable.album_art, null)?.toBitmap()
+    private var mAlbumArt = playerService.resources.getDrawable(R.drawable.album_art, null)?.toBitmap()
 
     private fun playerAction(action: String): PendingIntent {
 

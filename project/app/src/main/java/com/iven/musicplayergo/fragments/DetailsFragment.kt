@@ -8,11 +8,9 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
@@ -207,8 +205,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private fun setupToolbar() {
         mDetailsFragmentBinding.detailsToolbar.run {
 
-            overflowIcon = AppCompatResources.getDrawable(
-                requireActivity(),
+            overflowIcon = requireActivity().getDrawable(
                 if (sLaunchedByArtistView) {
                     R.drawable.ic_shuffle
                 } else {
@@ -262,7 +259,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         .bitmapPoolingEnabled(false)
                         .crossfade(true)
                         .build()
-                mAlbumArt = ResourcesCompat.getDrawable(resources, R.drawable.album_art, null)?.toBitmap()
+                mAlbumArt = requireActivity().getDrawable(R.drawable.album_art)?.toBitmap()
             }
             mSelectedAlbum = when {
                 mSelectedAlbumPosition != -1 -> mSelectedArtistAlbums?.get(
