@@ -27,7 +27,10 @@
     <color name="windowBackground">#fafafa</color>
     <color name="dialogsBackground">@color/windowBackground</color>
     <color name="widgetsColor">#212121</color>
-    <color name="systemBarsColor">#BFBFBF</color>
+    <color name="systemBarsColor">#bfbfbf</color>
 
     <color name="shuffleFabTint">@color/windowBackground</color>
+
+    <color name="swipeActionDeleteColor">#ffebee</color>
+    <color name="swipeActionAddColor">#e8f5e9</color>
 </resources>

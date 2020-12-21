@@ -100,8 +100,8 @@ please consider a [donation](https://weblate.org/it/donate/new/) :)
 | ----------------------------------------------------------- | ------------------------- |
 | [Moshi](https://github.com/square/moshi)                  | [Square](https://square.github.io/)                       |
 | [Indicator Fast Scroll](https://github.com/reddit/IndicatorFastScroll)                  | Reddit                       |
-| [material-dialogs](https://github.com/afollestad/material-dialogs)                  | [Aidan Afollestad](https://github.com/afollestad)                       |
-| [recyclical](https://github.com/afollestad/recyclical)                  | [Aidan Afollestad](https://github.com/afollestad)                       |
+| [material-dialogs](https://github.com/afollestad/material-dialogs)                  | [Aidan Follestad](https://github.com/afollestad)                       |
+| [recyclical](https://github.com/afollestad/recyclical)                  | [Aidan Follestad](https://github.com/afollestad)                       |
 | [Edge-to-Edge](https://github.com/beworker/edge-to-edge)                  | [Sergej Shafarenka](https://github.com/beworker)                       |
 | [coil](https://github.com/coil-kt/coil)                  | [coil-kt](https://github.com/coil-kt)                       |
 

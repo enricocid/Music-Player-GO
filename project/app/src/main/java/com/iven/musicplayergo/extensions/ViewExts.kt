@@ -4,12 +4,11 @@ import android.animation.Animator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.drawable.GradientDrawable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewAnimationUtils
-import android.view.ViewTreeObserver
+import android.view.*
 import android.widget.Toast
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
@@ -24,13 +23,14 @@ import com.google.android.material.animation.ArgbEvaluatorCompat
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
+import kotlin.math.absoluteValue
 import kotlin.math.max
+
 
 // viewTreeObserver extension to measure layout params
 // https://antonioleiva.com/kotlin-ongloballayoutlistener/
 inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
-    viewTreeObserver.addOnGlobalLayoutListener(object :
-        ViewTreeObserver.OnGlobalLayoutListener {
+    viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
         override fun onGlobalLayout() {
             if (measuredWidth > 0 && measuredHeight > 0) {
                 viewTreeObserver.removeOnGlobalLayoutListener(this)
@@ -191,33 +191,60 @@ fun RecyclerView.smoothSnapToPosition(position: Int) {
 
 //add swipe features to a RecyclerView
 fun RecyclerView.addBidirectionalSwipeHandler(
-    isRightToLeftEnabled: Boolean,
-    onSwiped: (
-        viewHolder: RecyclerView.ViewHolder,
-        direction: Int
-    ) -> Unit
+        context: Context,
+        isDialog: Boolean,
+        onSwiped: (
+                viewHolder: RecyclerView.ViewHolder,
+                direction: Int
+        ) -> Unit
 ) {
-    val swipeLeftCallback = instantiateSwipeHandler(ItemTouchHelper.RIGHT, onSwiped)
-    val swipeLeftHelper = ItemTouchHelper(swipeLeftCallback)
-    swipeLeftHelper.attachToRecyclerView(this)
-    if (isRightToLeftEnabled) {
-        val swipeRightCallback = instantiateSwipeHandler(ItemTouchHelper.LEFT, onSwiped)
-        val swipeRightHelper = ItemTouchHelper(swipeRightCallback)
-        swipeRightHelper.attachToRecyclerView(this)
-    }
+    val swipeLeftCallback = instantiateSwipeHandler(context, isDialog, ItemTouchHelper.RIGHT, onSwiped)
+    ItemTouchHelper(swipeLeftCallback).attachToRecyclerView(this)
+
+    val swipeRightCallback = instantiateSwipeHandler(context, isDialog, ItemTouchHelper.LEFT, onSwiped)
+    ItemTouchHelper(swipeRightCallback).attachToRecyclerView(this)
 }
 
 private fun instantiateSwipeHandler(
-    direction: Int,
-    onSwiped: (
-        viewHolder: RecyclerView.ViewHolder,
-        direction: Int
-    ) -> Unit
+        context: Context,
+        isDialog: Boolean,
+        direction: Int,
+        onSwiped: (
+            viewHolder: RecyclerView.ViewHolder,
+            direction: Int
+        ) -> Unit
 ): ItemTouchHelper.SimpleCallback {
     return object : ItemTouchHelper.SimpleCallback(
         0,
         direction
     ) {
+
+        val resources = context.resources
+
+        val firstIcon = if (isDialog) {
+            resources.getDrawable(R.drawable.ic_delete, null)
+        } else {
+            resources.getDrawable(R.drawable.ic_queue_add, null)
+        }
+        val secondIcon = if (isDialog) {
+            resources.getDrawable(R.drawable.ic_delete, null)
+        } else {
+            resources.getDrawable(R.drawable.ic_favorite, null)
+        }
+
+        var selectedIcon = firstIcon
+
+        var firstColor = ContextCompat.getColor(context, R.color.swipeActionDeleteColor)
+
+        var secondColor = if (isDialog) {
+            firstColor
+        } else {
+            ContextCompat.getColor(context, R.color.swipeActionAddColor)
+        }
+
+        val windowColor = ContextCompat.getColor(context, R.color.windowBackground)
+
+        var background = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, intArrayOf(secondColor, windowColor))
 
         override fun onMove(
             recyclerView: RecyclerView,
@@ -231,6 +258,70 @@ private fun instantiateSwipeHandler(
         ) {
             onSwiped(viewHolder, direction)
         }
+
+        // Credits to Aidan Follestad :)
+        // https://github.com/afollestad/recyclical/blob/master/swipe/src/main/java/com/afollestad/recyclical/swipe/SwipeItemTouchListener.kt#L120
+        override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+
+            val itemView = viewHolder.itemView
+
+            when {
+                dX > 0 -> {
+                    selectedIcon = firstIcon
+                    if (!isDialog) {
+                        background = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, intArrayOf(secondColor, windowColor))
+                    }
+
+                    val iconMargin = (itemView.height - selectedIcon.intrinsicHeight) / 2
+                    val iconTop = itemView.top + (itemView.height - selectedIcon.intrinsicHeight) / 2
+                    val iconBottom = iconTop + selectedIcon!!.intrinsicHeight
+                    val iconLeft = itemView.left + iconMargin
+                    val iconRight = iconLeft + selectedIcon.intrinsicWidth
+
+                    selectedIcon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+                    background.setBounds(
+                            itemView.left,
+                            itemView.top,
+                            itemView.left + dX.toInt(),
+                            itemView.bottom
+                    )
+                }
+                dX < 0 -> {
+                    selectedIcon = secondIcon
+                    background = GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, intArrayOf(firstColor, windowColor))
+
+                    val iconMargin = (itemView.height - selectedIcon.intrinsicHeight) / 2
+                    val iconTop = itemView.top + (itemView.height - selectedIcon.intrinsicHeight) / 2
+                    val iconBottom = iconTop + selectedIcon.intrinsicHeight
+                    val iconRight = itemView.right - iconMargin
+                    val iconLeft = iconRight - selectedIcon.intrinsicWidth
+
+                    selectedIcon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+
+                    background.setBounds(
+                            itemView.right + dX.toInt(),
+                            itemView.top,
+                            itemView.right,
+                            itemView.bottom
+                    )
+                }
+                else -> {
+                    selectedIcon = null
+                    background.setBounds(0,0,0,0)
+                }
+            }
+
+            if ((dX / itemView.measuredWidth).absoluteValue > getSwipeThreshold(viewHolder)) {
+                recyclerView.performHapticFeedback(
+                        HapticFeedbackConstants.VIRTUAL_KEY,
+                        HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
+                )
+            }
+
+            background.draw(c)
+            selectedIcon?.draw(c)
+        }
     }
 }
 
@@ -242,8 +333,6 @@ fun View.handleViewVisibility(show: Boolean) {
     }
 }
 
-fun String.toToast(
-    context: Context
-) {
+fun String.toToast(context: Context) {
     Toast.makeText(context, this, Toast.LENGTH_LONG).show()
 }

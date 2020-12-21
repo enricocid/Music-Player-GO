@@ -53,7 +53,7 @@ object DialogHelper {
             }
         }
 
-        recyclerView.addBidirectionalSwipeHandler(true) { viewHolder: RecyclerView.ViewHolder,
+        recyclerView.addBidirectionalSwipeHandler(context, true) { viewHolder: RecyclerView.ViewHolder,
                                                           _: Int ->
             val title = viewHolder.itemView.findViewById<TextView>(R.id.title)
             if (!queueAdapter.performQueueSongDeletion(viewHolder.adapterPosition, title, true)) {
@@ -170,7 +170,7 @@ object DialogHelper {
             }
         }
 
-        recyclerView.addBidirectionalSwipeHandler(true) { viewHolder: RecyclerView.ViewHolder, _: Int ->
+        recyclerView.addBidirectionalSwipeHandler(context, true) { viewHolder: RecyclerView.ViewHolder, _: Int ->
             lovedSongsAdapter.performLovedSongDeletion(
                 viewHolder.adapterPosition,
                 true
@@ -274,16 +274,7 @@ object DialogHelper {
                 setOnMenuItemClickListener {
 
                     when (it.itemId) {
-                        R.id.loved_songs_add -> {
-                            ListsHelper.addToLovedSongs(
-                                context,
-                                song,
-                                0,
-                                launchedBy
-                            )
-                            uiControlInterface.onLovedSongAdded(song, true)
-                            uiControlInterface.onLovedSongsUpdate(false)
-                        }
+                        R.id.loved_songs_add -> addToLovedSongs(context, song, launchedBy, uiControlInterface)
                         R.id.queue_add -> uiControlInterface.onAddToQueue(song, launchedBy)
                     }
                     return@setOnMenuItemClickListener true
@@ -293,6 +284,18 @@ object DialogHelper {
                 show()
             }
         }
+    }
+
+    @JvmStatic
+    fun addToLovedSongs(context: Context, song: Music?, launchedBy: String, uiControlInterface: UIControlInterface) {
+        ListsHelper.addToLovedSongs(
+                context,
+                song,
+                0,
+                launchedBy
+        )
+        uiControlInterface.onLovedSongAdded(song, true)
+        uiControlInterface.onLovedSongsUpdate(false)
     }
 
     @JvmStatic
