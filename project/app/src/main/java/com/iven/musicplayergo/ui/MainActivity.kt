@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.drawable.GradientDrawable
 import android.media.audiofx.BassBoost
 import android.media.audiofx.Equalizer
 import android.media.audiofx.Virtualizer
@@ -19,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -677,6 +679,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         return@setOnLongClickListener true
                     }
                 }
+
+                val accent = ThemeHelper.resolveThemeAccent(this@MainActivity)
+                val gradientColorStart = ColorUtils.blendARGB(ContextCompat.getColor(this@MainActivity, R.color.seekBarBgColorLight), accent, 0.35F)
+                val gradientColorEnd = ColorUtils.blendARGB(ContextCompat.getColor(this@MainActivity, R.color.seekBarBgColorDark), accent, 0.25F)
+
+                mNowPlayingBinding.npSeekBar.background = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, intArrayOf(gradientColorStart, gradientColorEnd))
 
                 setupNowPlayingWithCovers()
 

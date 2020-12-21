@@ -73,14 +73,14 @@
             android:id="@+id/np_seek_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/seekbar_np_track"
             android:clickable="true"
             android:focusable="true"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:progressDrawable="@android:color/transparent"
             android:splitTrack="false"
-            android:thumb="@drawable/seekbar_np_thumb" />
+            android:thumb="@drawable/seekbar_np_thumb"
+            android:thumbOffset="0dp" />
 
         <TextView
             android:id="@+id/np_rates"
