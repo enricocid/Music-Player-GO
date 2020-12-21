@@ -218,37 +218,6 @@ private fun instantiateSwipeHandler(
         direction
     ) {
 
-        val resources = context.resources
-        val red = ContextCompat.getColor(context, R.color.red)
-
-        val firstIcon = resources.getDrawable(R.drawable.ic_queue_add, null).apply {
-            mutate().setTint(ContextCompat.getColor(context, R.color.green))
-        }
-
-        val firstIconAlt = resources.getDrawable(R.drawable.ic_delete, null).apply {
-            mutate().setTint(red)
-        }
-
-        val secondIcon = if (isDialog) {
-            resources.getDrawable(R.drawable.ic_delete, null)
-        } else {
-            resources.getDrawable(R.drawable.ic_favorite, null)
-        }.apply {
-            mutate().setTint(red)
-        }
-
-        var selectedIcon = firstIcon
-
-        var firstColor = ColorDrawable(ContextCompat.getColor(context, R.color.swipeActionDeleteColor))
-
-        var secondColor = if (isDialog) {
-            firstColor
-        } else {
-            ColorDrawable(ContextCompat.getColor(context, R.color.swipeActionAddColor))
-        }
-
-        var background = secondColor
-
         override fun onMove(
             recyclerView: RecyclerView,
             viewHolder: RecyclerView.ViewHolder,
@@ -269,40 +238,70 @@ private fun instantiateSwipeHandler(
 
             val itemView = viewHolder.itemView
 
+            val resources = context.resources
+            val red = ContextCompat.getColor(context, R.color.red)
+
+            val firstIcon = resources.getDrawable(R.drawable.ic_queue_add, null).apply {
+                mutate().setTint(ContextCompat.getColor(context, R.color.green))
+            }
+
+            val firstIconAlt = resources.getDrawable(R.drawable.ic_delete, null).apply {
+                mutate().setTint(red)
+            }
+
+            val secondIcon = if (isDialog) {
+                resources.getDrawable(R.drawable.ic_delete, null)
+            } else {
+                resources.getDrawable(R.drawable.ic_favorite, null)
+            }.apply {
+                mutate().setTint(red)
+            }
+
+            val firstColor = ColorDrawable(ContextCompat.getColor(context, R.color.swipeActionDeleteColor))
+
+            val secondColor = if (isDialog) {
+                firstColor
+            } else {
+                ColorDrawable(ContextCompat.getColor(context, R.color.swipeActionAddColor))
+            }
+
+            var background = secondColor
+
             when {
                 dX > 0 -> {
-                    selectedIcon = if (isDialog) {
+                    val icon = if (isDialog) {
                         firstIconAlt
                     } else {
                         background = secondColor
                         firstIcon
                     }
 
-                    val iconMargin = (itemView.height - selectedIcon.intrinsicHeight) / 2
-                    val iconTop = itemView.top + (itemView.height - selectedIcon.intrinsicHeight) / 2
-                    val iconBottom = iconTop + selectedIcon!!.intrinsicHeight
+                    val iconMargin = (itemView.height - icon.intrinsicHeight) / 2
+                    val iconTop = itemView.top + (itemView.height - icon.intrinsicHeight) / 2
+                    val iconBottom = iconTop + icon.intrinsicHeight
                     val iconLeft = itemView.left + iconMargin
-                    val iconRight = iconLeft + selectedIcon.intrinsicWidth
+                    val iconRight = iconLeft + icon.intrinsicWidth
 
-                    selectedIcon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+                    icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
                     background.setBounds(
                             itemView.left,
                             itemView.top,
                             itemView.left + dX.toInt(),
                             itemView.bottom
                     )
+                    background.draw(c)
+                    icon.draw(c)
                 }
                 dX < 0 -> {
-                    selectedIcon = secondIcon
                     background = firstColor
 
-                    val iconMargin = (itemView.height - selectedIcon.intrinsicHeight) / 2
-                    val iconTop = itemView.top + (itemView.height - selectedIcon.intrinsicHeight) / 2
-                    val iconBottom = iconTop + selectedIcon.intrinsicHeight
+                    val iconMargin = (itemView.height - secondIcon.intrinsicHeight) / 2
+                    val iconTop = itemView.top + (itemView.height - secondIcon.intrinsicHeight) / 2
+                    val iconBottom = iconTop + secondIcon.intrinsicHeight
                     val iconRight = itemView.right - iconMargin
-                    val iconLeft = iconRight - selectedIcon.intrinsicWidth
+                    val iconLeft = iconRight - secondIcon.intrinsicWidth
 
-                    selectedIcon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+                    secondIcon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
 
                     background.setBounds(
                             itemView.right + dX.toInt(),
@@ -310,14 +309,13 @@ private fun instantiateSwipeHandler(
                             itemView.right,
                             itemView.bottom
                     )
+                    background.draw(c)
+                    secondIcon.draw(c)
                 }
                 else -> {
-                    selectedIcon = null
                     background.setBounds(0,0,0,0)
                 }
             }
-            background.draw(c)
-            selectedIcon.draw(c)
         }
     }
 }
