@@ -302,14 +302,10 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
         false
     }
 
-    fun onListFiltered(stringToFilter: String) : Int {
-        mMusicViewModel.run {
-            deviceMusicFiltered = deviceMusicFiltered?.filter { !it.artist.equals(stringToFilter) and !it.album.equals(stringToFilter) and !it.relativePath.equals(stringToFilter) }?.toMutableList()
-            mAllMusic = deviceMusicFiltered
-            setMusicDataSource(mAllMusic)
-            mAllMusicFragmentBinding.shuffleFab.text = mAllMusic?.size.toString()
-        }
-        return mAllMusic?.size!!
+    fun onListFiltered(newMusic: MutableList<Music>?) {
+        mAllMusic = newMusic
+        setMusicDataSource(mAllMusic)
+        mAllMusicFragmentBinding.shuffleFab.text = newMusic?.size.toString()
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {

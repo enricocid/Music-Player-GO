@@ -52,7 +52,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
     //keys: artist || value: songs contained in the folder
     var deviceMusicByFolder: Map<String, List<Music>>? = null
 
-    val randomMusic get() = mDeviceMusicList.random()
+    val randomMusic get() = deviceMusicFiltered?.random()
 
     val musicDatabaseSize get() = deviceMusicFiltered?.size
 

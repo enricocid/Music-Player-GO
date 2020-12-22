@@ -250,12 +250,12 @@ object DialogHelper {
     ) {
         itemView?.let { view ->
             PopupMenu(context, view).apply {
+                inflate(R.menu.popup_filter)
+                gravity = Gravity.END
                 setOnMenuItemClickListener {
                     uiControlInterface.onAddToFilter(stringToFilter)
                     return@setOnMenuItemClickListener true
                 }
-                inflate(R.menu.popup_filter)
-                gravity = Gravity.END
                 show()
             }
         }
@@ -271,6 +271,8 @@ object DialogHelper {
     ) {
         itemView?.let {
             PopupMenu(context, itemView).apply {
+                inflate(R.menu.popup_songs)
+                gravity = Gravity.END
                 setOnMenuItemClickListener {
 
                     when (it.itemId) {
@@ -279,8 +281,6 @@ object DialogHelper {
                     }
                     return@setOnMenuItemClickListener true
                 }
-                inflate(R.menu.popup_songs)
-                gravity = Gravity.END
                 show()
             }
         }

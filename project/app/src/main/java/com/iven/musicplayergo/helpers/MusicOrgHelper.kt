@@ -123,7 +123,7 @@ object MusicOrgHelper {
     }
 
     @JvmStatic
-    fun updateMediaPlayerHolderLists(mediaPlayerHolder: MediaPlayerHolder, uiControlInterface: UIControlInterface, randomMusic: Music): Music? {
+    fun updateMediaPlayerHolderLists(mediaPlayerHolder: MediaPlayerHolder, uiControlInterface: UIControlInterface, randomMusic: Music?): Music? {
 
         val currentSong = mediaPlayerHolder.currentSong.first
 
