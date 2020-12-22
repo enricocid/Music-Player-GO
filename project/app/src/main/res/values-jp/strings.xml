@@ -26,26 +26,26 @@
     <string name="filter_popup_title">隠す</string>
     <!-- Queue -->
     <string name="queue">キュー</string>
-    <string name="queue_song_add">%1s はキューに追加されました</string>
+    <string name="queue_song_add">%1s はキューに追加されました!</string>
     <string name="queue_song_remove">%1s はキューから削除されます。よろしいですか？</string>
     <!-- Loved songs -->
     <string name="loved_songs">お気に入り</string>
     <string name="loved_song_added">%1s (%2s) はお気に入りに追加されました</string>
     <!-- Messages - Errors -->
-    <string name="error_no_loved_songs">お気に入りはありません</string>
+    <string name="error_no_loved_songs">お気に入りはありません!</string>
     <string name="error_no_music">音楽が見つかりません</string>
     <string name="error_not_ready">音楽ライブラリの読み込み中に問題が発生しました。 SDカードのマウントが解除され、Androidメディアストレージのデータベースを再構築している可能性があります。後でもう一度お試しください。</string>
     <string name="error_unknown_unsupported">問題が発生しました。選択した形式がサポートされていないか、フォルダにアクセスできません（アプリのせいではありません）。</string>
     <string name="error_media_buttons">問題が発生しました。アプリから再生を再開してください。</string>
-    <string name="error_no_browser">ブラウザが見つかりませんでした</string>
-    <string name="error_bad_id">はじめに曲を再生してください</string>
-    <string name="error_no_queue">キューに入っている曲はありません</string>
+    <string name="error_no_browser">ブラウザが見つかりませんでした.</string>
+    <string name="error_bad_id">はじめに曲を再生してください。</string>
+    <string name="error_no_queue">キューに入っている曲はありません。</string>
     <!-- Messages - Permission rationale -->
     <string name="perm_rationale">Music Player GOが音楽を再生するには、ファイルへのアクセス権が必要です。</string>
     <!-- Messages - Repeat -->
-    <string name="repeat_enabled">１回リピート</string>
-    <string name="repeat_loop_enabled">無限リピート</string>
-    <string name="repeat_disabled">リピートなし</string>
+    <string name="repeat_enabled">１回リピート。</string>
+    <string name="repeat_loop_enabled">無限リピート。</string>
+    <string name="repeat_disabled">リピートなし。</string>
     <!-- Preferences - Categories -->
     <string name="settings">設定</string>
     <string name="category_general">全般</string>
@@ -80,7 +80,7 @@
     <string name="headset_pref_summary_off">有効</string>
     <!-- Preferences - Filters -->
     <string name="filter_pref_title">フィルター</string>
-    <string name="error_list_ended">キューにある曲を再生し終えました</string>
+    <string name="error_list_ended">キューにある曲を再生し終えました。</string>
     <string name="eq_pref_note_summary">端末の設定からシステムのイコライザーを無効にしないと使用できません</string>
     <string name="fast_seeking_actions_pref_summary_on">早送り・早戻しボタン</string>
     <string name="fast_seeking_actions_pref_summary_off">終了・リピートボタン</string>
@@ -90,9 +90,9 @@
     <string name="covers_pref_summary_off">表示する</string>
     <string name="covers_pref_summary_on">表示しない</string>
     <string name="covers_pref_title">アルバムカバーの表示</string>
-    <string name="on_list_ended_pref_title">キューにある曲を再生し終えた場合</string>
+    <string name="on_list_ended_pref_title">キューにある曲を再生し終えた場合 …</string>
     <string name="song_visual_pref_title">曲の表示方法</string>
-    <string name="error_eq">エラーが発生しました</string>
+    <string name="error_eq">エラーが発生しました!</string>
     <string name="song_visual_pref_tl_title">曲名</string>
     <string name="song_visual_pref_fn_title">ファイル名</string>
     <string name="on_list_ended_pref_stop_title">停止する</string>

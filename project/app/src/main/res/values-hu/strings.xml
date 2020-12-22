@@ -77,4 +77,6 @@
     <string name="equalizer_v">Térhatású hang</string>
     <string name="equalizer_bb">Basszuserősítés</string>
     <string name="albums">Albumok</string>
+    <string name="fast_seeking_actions_pref_summary_on">Gyors keresés műveletek előnyben részesítése</string>
+    <string name="fast_seeking_actions_pref_summary_off">Bezárás/ismétlés műveletek előnyben részesítése</string>
 </resources>
