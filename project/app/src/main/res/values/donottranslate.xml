@@ -52,7 +52,7 @@
     <string name="precise_volume_pref">precise_volume_pref</string>
     <string name="focus_pref">focus_pref</string>
     <string name="headset_pref">headsets_pref</string>
-    <string name="filter_pref">filter_pref</string>
+    <string name="filter_pref">strings_filter_pref</string>
 
     <!-- Sorting -->
     <string name="artists_sorting_pref">artists_sorting_pref</string>
@@ -63,7 +63,7 @@
     <!-- Other preferences keys -->
     <string name="saved_eq_settings">eq_settings_pref</string>
     <string name="latest_played_song_pref">restore_song_pref</string>
-    <string name="loved_songs_pref">pref_songs_pref</string>
+    <string name="loved_songs_pref">favorites_pref</string>
     <string name="latest_volume_pref">latest_volume_pref</string>
     <string name="song_visual_pref">song_visual_pref</string>
 </resources>
