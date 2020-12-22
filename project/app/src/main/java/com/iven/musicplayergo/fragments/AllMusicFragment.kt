@@ -1,13 +1,11 @@
 package com.iven.musicplayergo.fragments
 
-import android.animation.ObjectAnimator
 import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.core.animation.doOnEnd
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -139,28 +137,16 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
         setupIndicatorFastScrollerView()
 
-        val fabCompatElevation = mAllMusicFragmentBinding.shuffleFab.compatElevation
+        mAllMusicFragmentBinding.shuffleFab.text = mAllMusic?.size.toString()
+
         mAllMusicFragmentBinding.shuffleFab.setOnClickListener {
-            mAllMusicFragmentBinding.shuffleFab.compatElevation = 0F
-            ObjectAnimator.ofFloat(
-                it,
-                View.ROTATION,
-                0f,
-                360f
-            ).apply {
-                duration = 750
-                start()
-                doOnEnd {
-                    mAllMusicFragmentBinding.shuffleFab.compatElevation = fabCompatElevation
-                    mUIControlInterface.onShuffleSongs(
-                        null,
-                        null,
-                        mAllMusic,
-                        mAllMusic?.size!! <= 50,
-                        GoConstants.ARTIST_VIEW
-                    )
-                }
-            }
+            mUIControlInterface.onShuffleSongs(
+                    null,
+                    null,
+                    mAllMusic,
+                    mAllMusic?.size!! <= 50,
+                    GoConstants.ARTIST_VIEW
+            )
         }
 
         mAllMusicFragmentBinding.searchToolbar.run {
@@ -321,6 +307,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
             deviceMusicFiltered = deviceMusicFiltered?.filter { !it.artist.equals(stringToFilter) and !it.album.equals(stringToFilter) and !it.relativePath.equals(stringToFilter) }?.toMutableList()
             mAllMusic = deviceMusicFiltered
             setMusicDataSource(mAllMusic)
+            mAllMusicFragmentBinding.shuffleFab.text = mAllMusic?.size.toString()
         }
         return mAllMusic?.size!!
     }
