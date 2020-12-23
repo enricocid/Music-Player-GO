@@ -203,7 +203,7 @@ object ThemeHelper {
 
     @JvmStatic
     fun createColouredRipple(context: Context, rippleColor: Int, rippleId: Int): Drawable {
-        val ripple = context.resources.getDrawable(rippleId, null) as RippleDrawable
+        val ripple = context.getDrawable(rippleId) as RippleDrawable
         return ripple.apply {
             setColor(ColorStateList.valueOf(rippleColor))
         }

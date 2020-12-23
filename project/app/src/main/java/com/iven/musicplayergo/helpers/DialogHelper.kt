@@ -124,7 +124,6 @@ object DialogHelper {
 
                 mediaPlayerHolder.run {
                     if (isQueueStarted) {
-
                         restorePreQueueSongs()
                         skip(
                             true
@@ -274,7 +273,6 @@ object DialogHelper {
                 inflate(R.menu.popup_songs)
                 gravity = Gravity.END
                 setOnMenuItemClickListener {
-
                     when (it.itemId) {
                         R.id.loved_songs_add -> addToLovedSongs(context, song, launchedBy, uiControlInterface)
                         R.id.queue_add -> uiControlInterface.onAddToQueue(song, launchedBy)

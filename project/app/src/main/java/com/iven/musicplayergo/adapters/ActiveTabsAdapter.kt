@@ -63,7 +63,7 @@ class ActiveTabsAdapter(private val ctx: Context) :
 
             itemView.run {
 
-                val tabImageButton = itemView.findViewById<ImageButton>(R.id.tab_image)
+                val tabImageButton = findViewById<ImageButton>(R.id.tab_image)
 
                 tabImageButton.setImageResource(ThemeHelper.getTabIcon(mAvailableItems[adapterPosition]))
 
@@ -83,7 +83,6 @@ class ActiveTabsAdapter(private val ctx: Context) :
                 }
 
                 setOnClickListener {
-
                     manageTabStatus(
                         !tabImageButton.isSelected,
                         tabImageButton

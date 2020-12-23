@@ -237,7 +237,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mMediaPlayerHolder.run {
                 onPauseSeekBarCallback()
                 if (!isPlaying) {
-                    mMediaPlayerHolder.giveUpAudioFocus()
+                    giveUpAudioFocus()
                 }
             }
         }
@@ -363,13 +363,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
             tabIconTint = ColorStateList.valueOf(resolvedAlphaAccentColor)
 
-            mPlayerControlsPanelBinding.tabLayout.run {
-                TabLayoutMediator(this, mMainActivityBinding.viewPager2) { tab, position ->
-                    val fragmentIndex = mActiveFragments[position]
-                    tab.setIcon(ThemeHelper.getTabIcon(fragmentIndex))
-                    initFragmentAt(fragmentIndex)
-                }.attach()
-            }
+            TabLayoutMediator(this, mMainActivityBinding.viewPager2) { tab, position ->
+                val fragmentIndex = mActiveFragments[position]
+                tab.setIcon(ThemeHelper.getTabIcon(fragmentIndex))
+                initFragmentAt(fragmentIndex)
+            }.attach()
 
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
@@ -524,7 +522,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         onLovedSongsUpdate(false)
 
         mPlayerControlsPanelBinding.playingSongContainer.run {
-
             setOnClickListener { openNowPlaying() }
             setOnLongClickListener {
                 if (!sDetailsFragmentExpanded || sDetailsFragmentExpanded and !sEqFragmentExpanded) {
@@ -855,7 +852,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             // update the controls panel
             mMediaPlayerHolder.run {
 
-                if (isMediaPlayer && mMediaPlayerHolder.isPlaying) {
+                if (isMediaPlayer && isPlaying) {
 
                     onRestartSeekBarCallback()
                     updatePlayingInfo(true)
@@ -878,7 +875,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     )
 
                     if (!songs.isNullOrEmpty()) {
-                        mMediaPlayerHolder.isPlay = false
+                        isPlay = false
 
                         startPlayback(
                                 song,

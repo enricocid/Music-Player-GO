@@ -169,7 +169,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                     slider.addOnChangeListener { selectedSlider, value, fromUser ->
                         if (fromUser) {
                             if (slider == selectedSlider) {
-                                mEqualizer.first?.setBandLevel(
+                                setBandLevel(
                                     item.index.toShort(),
                                     value.toInt().toShort()
                                 )
