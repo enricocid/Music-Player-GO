@@ -68,18 +68,16 @@ object ListsHelper {
         id: Int,
         list: MutableList<String>?
     ) = when (id) {
-        GoConstants.DESCENDING_SORTING -> {
+        GoConstants.ASCENDING_SORTING -> {
             list?.apply {
                 Collections.sort(this, String.CASE_INSENSITIVE_ORDER)
             }
-            list
         }
 
-        GoConstants.ASCENDING_SORTING -> {
-            list?.let { listToSort ->
-                Collections.sort(listToSort, String.CASE_INSENSITIVE_ORDER)
-            }
-            list?.asReversed()
+        GoConstants.DESCENDING_SORTING -> {
+            list?.apply {
+                Collections.sort(this, String.CASE_INSENSITIVE_ORDER)
+            }?.asReversed()
         }
         else -> list
     }
@@ -113,38 +111,52 @@ object ListsHelper {
     fun getSortedMusicList(
         id: Int,
         list: MutableList<Music>?
-    ) = when (id) {
+    ) : MutableList<Music>? {
 
-        GoConstants.DESCENDING_SORTING -> {
-            list?.sortBy { it.title }
-            list
+        fun getSortByForTitle(song: Music) = if (goPreferences.songsVisualization != GoConstants.TITLE) {
+            song.displayName
+        } else {
+            song.title
         }
 
-        GoConstants.ASCENDING_SORTING -> {
-            list?.sortBy { it.title }
-            list?.asReversed()
-        }
+        return when (id) {
 
-        GoConstants.TRACK_SORTING -> {
-            list?.sortBy { it.track }
-            list
-        }
+            GoConstants.ASCENDING_SORTING -> {
+                list?.sortBy { getSortByForTitle(it) }
+                list
+            }
 
-        GoConstants.TRACK_SORTING_INVERTED -> {
-            list?.sortBy { it.track }
-            list?.asReversed()
+            GoConstants.DESCENDING_SORTING -> {
+                list?.sortBy { getSortByForTitle(it) }
+                list?.asReversed()
+            }
+
+            GoConstants.TRACK_SORTING -> {
+                list?.sortBy { it.track }
+                list
+            }
+
+            GoConstants.TRACK_SORTING_INVERTED -> {
+                list?.sortBy { it.track }
+                list?.asReversed()
+            }
+            else -> list
         }
-        else -> list
     }
 
     @JvmStatic
-    fun getSongsSorting(currentSorting: Int): Int {
-        return when (currentSorting) {
-            GoConstants.TRACK_SORTING -> GoConstants.TRACK_SORTING_INVERTED
-            GoConstants.TRACK_SORTING_INVERTED -> GoConstants.ASCENDING_SORTING
-            GoConstants.ASCENDING_SORTING -> GoConstants.DESCENDING_SORTING
-            else -> GoConstants.TRACK_SORTING
-        }
+    fun getSongsSorting(currentSorting: Int) = when (currentSorting) {
+        GoConstants.TRACK_SORTING -> GoConstants.TRACK_SORTING_INVERTED
+        GoConstants.TRACK_SORTING_INVERTED -> GoConstants.ASCENDING_SORTING
+        GoConstants.ASCENDING_SORTING -> GoConstants.DESCENDING_SORTING
+        else -> GoConstants.TRACK_SORTING
+    }
+
+    @JvmStatic
+    fun getSongsDisplayNameSorting(currentSorting: Int) = if (currentSorting == GoConstants.ASCENDING_SORTING) {
+        GoConstants.DESCENDING_SORTING
+    } else {
+        GoConstants.ASCENDING_SORTING
     }
 
     @JvmStatic

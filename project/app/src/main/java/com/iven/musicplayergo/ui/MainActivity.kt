@@ -1010,7 +1010,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             val selectedSongDuration = song.duration
             if (mSelectedArtistAlbumForNP != Pair(
                     song.artist,
-                    song.album
+                    song.albumId
                 ) && goPreferences.isCovers && ::mNowPlayingDialog.isInitialized && mNowPlayingDialog.isShowing
             ) {
                 loadNowPlayingCover(song)
@@ -1399,6 +1399,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 // be sure to update queue, loved songs and the controls panel
                 if (isMediaPlayerHolder) {
+
                     MusicOrgHelper.updateMediaPlayerHolderLists(mMediaPlayerHolder, this, mMusicViewModel.randomMusic)?.run {
                         val songs = MusicOrgHelper.getAlbumSongs(
                                 artist,

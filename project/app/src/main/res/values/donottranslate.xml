@@ -58,10 +58,10 @@
     <string name="filter_pref">strings_filter_pref</string>
 
     <!-- Sorting -->
-    <string name="artists_sorting_pref">artists_sorting_pref</string>
-    <string name="albums_sorting_pref">albums_sorting_pref</string>
-    <string name="folders_sorting_pref">folders_sorting_pref</string>
-    <string name="all_music_sorting_pref">all_music_sorting_pref</string>
+    <string name="artists_sorting_pref">sorting_artists_pref</string>
+    <string name="albums_sorting_pref">sorting_albums_pref</string>
+    <string name="folders_sorting_pref">sorting_folders_pref</string>
+    <string name="all_music_sorting_pref">sorting_all_music_pref</string>
 
     <!-- Other preferences keys -->
     <string name="saved_eq_settings">eq_settings_pref</string>

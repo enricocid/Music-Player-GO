@@ -55,18 +55,6 @@
                     android:orderInCategory="2"
                     android:title="@string/sorting_pref_descending"
                     app:showAsAction="never" />
-
-                <item
-                    android:id="@+id/track_sorting"
-                    android:orderInCategory="3"
-                    android:title="@string/sorting_pref_track"
-                    app:showAsAction="never" />
-
-                <item
-                    android:id="@+id/track_sorting_inv"
-                    android:orderInCategory="4"
-                    android:title="@string/sorting_pref_track_inv"
-                    app:showAsAction="never" />
             </menu>
         </item>
     </group>

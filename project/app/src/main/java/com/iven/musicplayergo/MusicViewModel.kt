@@ -203,7 +203,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
         // Removing duplicates by comparing everything except path which is different
         // if the same song is hold in different paths
         deviceMusicFiltered =
-            mDeviceMusicList.distinctBy { it.artist to it.year to it.track to it.title to it.duration to it.album }
+            mDeviceMusicList.distinctBy { it.artist to it.year to it.track to it.title to it.duration to it.album to it.albumId }
                 .toMutableList()
 
         goPreferences.filters?.let { filter ->

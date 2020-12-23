@@ -113,7 +113,7 @@ class GoPreferences(context: Context) {
         set(value) = mPrefs.edit { putString(prefsSongsVisual, value.toString()) }
 
     var artistsSorting
-        get() = mPrefs.getInt(prefsArtistsSorting, GoConstants.DESCENDING_SORTING)
+        get() = mPrefs.getInt(prefsArtistsSorting, GoConstants.ASCENDING_SORTING)
         set(value) = mPrefs.edit { putInt(prefsArtistsSorting, value) }
 
     var foldersSorting
