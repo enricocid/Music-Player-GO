@@ -1,0 +1,13 @@
+- Covers: miglioramento performace/ridotta probabilità di crash/ANRs.
+  Nota: è stato necessario cambiare il meccanismo di caricamento delle canzoni.
+  Ciò significa che le canzoni preferite andranno perse. Mi spiace :)
+
+- Migliorata opz. filtri
+- Migliorate le azioni di swipe
+- Migliorata opz. visualizzazione canzoni
+- Corretto opz. ordinamento
+- Corretto aggiunta album alla coda
+- Lollipop: corretta la seekbar della schermata Now Playing
+- Molti altri bug fixes e miglioramenti
+- Tab musica: viene mostrato il n° canzoni
+- Aggiornamento traduzioni

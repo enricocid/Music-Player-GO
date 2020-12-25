@@ -1,4 +1,4 @@
-<i>Music Player GO</i> is a simple yet fully-featured local music player aiming at simplicity and performance.
+<b>Music Player GO</b> is a minimal yet fully-featured local music player aiming at <b>simplicity</b> and performance.
 
 <b>Features</b>
 
@@ -10,11 +10,7 @@
 - Embedded covers support
 - Fast seeking (long click on skip buttons)
 - Simple audio focus, precise volume and headsets management
-- Other features: search, sorting, shuffle, notification's SeekBar, audios opening from other apps ...
-
-
-Want less?
-Check <a href="https://github.com/enricocid/Be-Simple-Music-Player/">Simple Music Player</a>
+- Other features: search, sorting, shuffle ...
 
 
 <b>Want to contribute to translations?</b>
