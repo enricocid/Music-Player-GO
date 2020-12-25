@@ -1141,16 +1141,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onSongSelected(song: Music?, songs: List<Music>?, launchedBy: String) {
         if (isMediaPlayerHolder) {
-            if (sDetailsFragmentExpanded) {
-                mDetailsFragment.onDisableShuffle(false)
-            }
             mMediaPlayerHolder.run {
                 isSongRestoredFromPrefs = false
                 isPlay = true
                 if (isQueue) {
                     setQueueEnabled(false)
                 }
-                startPlayback(song, songs, launchedBy)
+                val selectedSongs = if (sDetailsFragmentExpanded) {
+                    mDetailsFragment.onDisableShuffle(isShuffleMode = false, isMusicListOutputRequired = true)
+                } else {
+                    songs
+                }
+                startPlayback(song, selectedSongs, launchedBy)
             }
         }
     }
@@ -1308,7 +1310,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         restoreShuffledSongs()
                     }
                     if (sDetailsFragmentExpanded) {
-                        mDetailsFragment.onDisableShuffle(isShuffleMode)
+                        mDetailsFragment.onDisableShuffle(isShuffleMode = false, isMusicListOutputRequired = false)
                     }
                 }
 
@@ -1508,7 +1510,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mQueueDialog.dismiss()
             }
             if (checkIsPlayer(false) && sDetailsFragmentExpanded && !mMediaPlayerHolder.isShuffledSongsQueued.first) {
-                mDetailsFragment.onDisableShuffle(false)
+                mDetailsFragment.onDisableShuffle(isShuffleMode = false, isMusicListOutputRequired = false)
             }
         }
 
