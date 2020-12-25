@@ -11,11 +11,12 @@
       src="https://img.shields.io/static/v1?label=Tag&message=v4.3.8&color=58F5D1">
     </a>
    <!-- Minimum SDK -->
-    <a>
-      <img alt="Minimum SDK"
-      src="https://img.shields.io/static/v1?label=API&message=21&color=32B5ED">
-    </a>
+    <img alt="Minimum SDK" src="https://img.shields.io/static/v1?label=API&message=21&color=32B5ED">
+     <!-- Android CI integration -->
+    <a href="https://github.com/enricocid/Music-Player-GO/actions">
+    <img alt="CI" src="https://github.com/enricocid/Music-Player-GO/workflows/Music%20Player%20GO%20CI/badge.svg">
 </p>
+    </a>
 
   <h3 align="center">
   <a href="https://hosted.weblate.org/engage/music-player-go/">
