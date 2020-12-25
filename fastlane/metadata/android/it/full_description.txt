@@ -8,11 +8,7 @@
 - Supporto per le cover integrate
 - Avanzamento veloce (tap lungo sui pulsanti precedente/prossima canzone)
 - Semplice gestione del focus audio, volume preciso e delle cuffie
-- Altre funzioni: ricerca, ordinamento, shuffle, barra di scorrimento nella notifica, apertura musica da altre app ..
-
-
-Vuoi di meno?
-Di una occhiata a <a href="https://github.com/enricocid/Be-Simple-Music-Player/">Simple Music Player</a>
+- Altre funzioni: ricerca, ordinamento, shuffle ...
 
 
 <b>Vuoi contribuire alle traduzioni?</b>

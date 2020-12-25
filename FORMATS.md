@@ -20,9 +20,13 @@ Music Player GO relies on native [MediaPlayer API](https://developer.android.com
 
 ### Instructions to get certain codecs working
 
-Opus, for example, has been supported natively since Android 5.0, but only in the Matroska (.mkv) container.
+Example:
+
+Opus format is natively since Android 5.0, but only in the Matroska (.mkv) or Ogg (.ogg) container.
 The Opus file type/container itself is neither detected nor supported by MediaPlayer API.
-A simple workaround to detect and play Opus encoded files is to **replace their extension** (.opus) with the supported container (.mkv).
-Check the "Supported File Type(s) / Container Formats" from the [supported media formats](https://developer.android.com/guide/topics/media/media-formats) page to see the supported container given the format/codec.
+
+A simple workaround to detect and play Opus encoded files is to **replace their extension** (.opus) with the supported container (.mkv or .ogg).
+
+Check the "Supported File Type(s) / Container Formats" from the [supported media formats](https://developer.android.com/guide/topics/media/media-formats) page for more info.
 
 **Thanks for using Music Player GO!**

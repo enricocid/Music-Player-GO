@@ -1,14 +1,14 @@
 <h1 align="center">Music Player GO</h1>
 
 <p align="center">
-<img height="500" src="art1.gif">
+<img height="500" src="art2.gif">
 </p>
 
 <p align="center">
   <!-- Latest Release -->
     <a href="https://github.com/enricocid/Music-Player-GO/releases">
       <img alt="GitHub release"
-      src="https://img.shields.io/static/v1?label=Tag&message=v4.3.7&color=58F5D1">
+      src="https://img.shields.io/static/v1?label=Tag&message=v4.3.8&color=58F5D1">
     </a>
    <!-- Minimum SDK -->
     <a>
@@ -72,7 +72,7 @@ This repo contains the source code of the **Music Player GO** Android app: a sim
 - Embedded covers support
 - Fast seeking (long click on skip buttons)
 - Simple audio focus, precise volume and headsets management
-- Other features: search, sorting, shuffle, notification's SeekBar, audios opening from other apps ...
+- Other features: search, sorting, shuffle ...
  
 
 # Translations
