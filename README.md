@@ -41,7 +41,7 @@
 - [Translations](#translations)
 - [License](#license)
   - [Authors / Copyright](#authors--copyright)
-  - [Third-party component licenses](#third-party-component-licenses)
+  - [Third-party component](#third-party-component)
     - [Libraries](#libraries)
     - [Tools](#tools)
   - [License details](#license-details)
