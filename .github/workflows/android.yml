@@ -19,5 +19,9 @@ jobs:
         java-version: 1.8
     - name: Grant execute permission for gradlew
       run: cd project && chmod +x gradlew
-    - name: Build with Gradle
-      run: cd project && ./gradlew build
+    - name: Build debug apk with Gradle
+      run: cd project && ./gradlew clean assemble
+    - uses: actions/upload-artifact@v2
+      with:
+        name: app-debug.apk
+        path: project/app/build/outputs/apk/debug/app-debug.apk
