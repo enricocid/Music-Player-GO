@@ -92,14 +92,14 @@ please consider a [donation](https://weblate.org/it/donate/new/) :)
 2020 (c) Enrico D'Ortenzio.
 
 
-## Third-party component licenses
+## Third-party component
 
 ### Libraries
 
 | Name                                                        | Author                  |
 | ----------------------------------------------------------- | ------------------------- |
 | [Moshi](https://github.com/square/moshi)                  | [Square](https://square.github.io/)                       |
-| [Indicator Fast Scroll](https://github.com/reddit/IndicatorFastScroll)                  | Reddit                       |
+| [Indicator Fast Scroll](https://github.com/reddit/IndicatorFastScroll)                  | [Reddit](https://github.com/reddit) - [Steven Schoen](https://github.com/DSteve595)                      |
 | [material-dialogs](https://github.com/afollestad/material-dialogs)                  | [Aidan Follestad](https://github.com/afollestad)                       |
 | [recyclical](https://github.com/afollestad/recyclical)                  | [Aidan Follestad](https://github.com/afollestad)                       |
 | [Edge-to-Edge](https://github.com/beworker/edge-to-edge)                  | [Sergej Shafarenka](https://github.com/beworker)                       |
