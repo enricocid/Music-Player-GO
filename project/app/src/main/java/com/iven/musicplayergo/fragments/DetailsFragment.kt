@@ -426,10 +426,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private fun setSongsDataSource(musicList: List<Music>?, isApplySorting: Boolean) {
 
         val songs = if (isApplySorting) {
-                ListsHelper.getSortedMusicList(mSongsSorting, musicList?.toMutableList())
-            } else {
-                musicList
-            }
+            ListsHelper.getSortedMusicList(mSongsSorting, musicList?.toMutableList())
+        } else {
+            musicList
+        }
 
         if (sLaunchedByArtistView) {
             mDetailsFragmentBinding.sortButton.run {

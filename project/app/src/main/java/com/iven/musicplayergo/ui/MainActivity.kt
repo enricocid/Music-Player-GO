@@ -973,10 +973,21 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    private fun checkIfSongIsAvailable(song: Music?) : Music? = if (mMusicViewModel.deviceMusicFiltered?.savedSongIsAvailable(song) == null) {
-        mMusicViewModel.randomMusic
-    } else {
-        song
+    private fun checkIfSongIsAvailable(song: Music?) : Music? = try {
+        if (mMusicViewModel.deviceMusicFiltered?.savedSongIsAvailable(song) == null) {
+            saveRandomSongToPrefs()
+        } else {
+            song
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+        saveRandomSongToPrefs()
+    }
+
+    private fun saveRandomSongToPrefs() : Music? {
+        val randomMusic = mMusicViewModel.randomMusic
+        goPreferences.latestPlayedSong = randomMusic
+        return randomMusic
     }
 
     private fun loadNowPlayingCover(selectedSong: Music) {
