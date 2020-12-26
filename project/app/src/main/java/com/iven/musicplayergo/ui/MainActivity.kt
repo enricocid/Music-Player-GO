@@ -863,7 +863,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                     val song =
                         if (isSongRestoredFromPrefs) {
-                            goPreferences.latestPlayedSong
+                            checkIfSongIsAvailable(goPreferences.latestPlayedSong)
                         } else {
                             mMusicViewModel.randomMusic
                         }
@@ -971,6 +971,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 )
             }
         }
+    }
+
+    private fun checkIfSongIsAvailable(song: Music?) : Music? = if (mMusicViewModel.deviceMusicFiltered?.savedSongIsAvailable(song) == null) {
+        mMusicViewModel.randomMusic
+    } else {
+        song
     }
 
     private fun loadNowPlayingCover(selectedSong: Music) {

@@ -6,7 +6,6 @@ import android.content.res.Resources
 import android.provider.MediaStore
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.iven.musicplayergo.extensions.savedSongIsAvailable
 import com.iven.musicplayergo.helpers.MusicOrgHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.models.Album
@@ -233,20 +232,6 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                     )
                 }
             }
-        }
-
-        // trigger fallback to random song if saved song is not available (if deleted by user from device)
-        try {
-            if (goPreferences.latestPlayedSong != null) {
-                goPreferences.latestPlayedSong?.let { song ->
-                    if (deviceMusicFiltered?.savedSongIsAvailable(song) == null) {
-                        goPreferences.latestPlayedSong = null
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            goPreferences.latestPlayedSong = null
         }
     }
 }
