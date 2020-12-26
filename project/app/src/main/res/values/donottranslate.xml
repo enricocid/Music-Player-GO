@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Music Player GO</string>
+    <string name="app_name_release">Music Player GO</string>
+    <string name="app_name_debug">MPGO debug</string>
     <string name="category_audio">Audio</string>
 
     <!-- External links -->
