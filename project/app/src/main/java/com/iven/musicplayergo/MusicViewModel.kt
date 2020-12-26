@@ -235,12 +235,18 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
 
-        // fallback to random song is saved song is not available (if deleted by user from device) or if filtered
-        goPreferences.latestPlayedSong?.let { savedSong ->
-            val song = mDeviceMusicList.savedSongIsAvailable(savedSong)
-            if (song == null || goPreferences.filters != null && MusicOrgHelper.musicListContains(song, goPreferences.filters!!)) {
-                goPreferences.latestPlayedSong = randomMusic
+        // trigger fallback to random song if saved song is not available (if deleted by user from device)
+        try {
+            if (goPreferences.latestPlayedSong != null) {
+                goPreferences.latestPlayedSong?.let { song ->
+                    if (mDeviceMusicList.savedSongIsAvailable(song) == null) {
+                        goPreferences.latestPlayedSong = null
+                    }
+                }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            goPreferences.latestPlayedSong = null
         }
     }
 }

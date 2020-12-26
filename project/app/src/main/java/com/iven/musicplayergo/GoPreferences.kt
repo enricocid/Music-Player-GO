@@ -7,6 +7,7 @@ import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedEqualizerSettings
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
+import java.lang.Exception
 import java.lang.reflect.Type
 
 
@@ -172,10 +173,17 @@ class GoPreferences(context: Context) {
     }
 
     private fun <T : Any> getObjectForClass(key: String, clazz: Class<T>): T? {
-        mPrefs.getString(key, null)?.let { json ->
-            return mMoshi.adapter(clazz).fromJson(json)
+        val json = mPrefs.getString(key, null)
+        return if (json == null) {
+            null
+        } else {
+            try {
+                mMoshi.adapter(clazz).fromJson(json)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
         }
-        return null
     }
 }
 
