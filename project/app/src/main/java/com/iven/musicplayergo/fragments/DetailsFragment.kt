@@ -293,8 +293,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
             mDetailsFragmentBinding.queueAddButton.setOnClickListener {
                 mUIControlInterface.onAddAlbumToQueue(
-                    mSongsList?.toMutableList(),
-                    Pair(true, mSongsList?.get(0)),
+                    mSelectedAlbum?.music,
+                    Pair(true, mSelectedAlbum?.music?.get(0)),
                     isLovedSongs = false,
                     isShuffleMode = sWasShuffling.first,
                     clearShuffleMode = false,
@@ -424,11 +424,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     }
 
     private fun setSongsDataSource(musicList: List<Music>?, isApplySorting: Boolean) {
-        mSongsList = if (isApplySorting) {
-            ListsHelper.getSortedMusicList(mSongsSorting, musicList?.toMutableList())
-        } else {
-            musicList
-        }
+
+        val songs = if (isApplySorting) {
+                ListsHelper.getSortedMusicList(mSongsSorting, musicList?.toMutableList())
+            } else {
+                musicList
+            }
+
         if (sLaunchedByArtistView) {
             mDetailsFragmentBinding.sortButton.run {
 
@@ -452,9 +454,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             }
             mDetailsFragmentBinding.detailsToolbar.menu.findItem(R.id.action_shuffle_sa).isEnabled =
                     mSelectedAlbum?.music?.size!! >= 2
+        } else {
+            mSongsList = songs
         }
 
-        mSongsList?.let { newSongsList ->
+        songs?.let { newSongsList ->
             mSongsDataSource.set(newSongsList)
         }
     }
