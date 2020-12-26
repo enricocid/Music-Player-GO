@@ -1,0 +1,1 @@
+Corretto un crash all'avvio
