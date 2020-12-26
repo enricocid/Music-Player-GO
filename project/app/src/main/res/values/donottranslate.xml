@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name_release" tools:ignore="UnusedResource">Music Player GO</string>
-    <string name="app_name_debug" tools:ignore="UnusedResource">MPGO debug</string>
-    <string name="category_audio">Audio</string>
+<resources>
+
+    <!--suppress AndroidLintUnusedResources -->
+    <string name="app_name_release">Music Player GO</string>
+
+    <!--suppress AndroidLintUnusedResources -->
+    <string name="app_name_debug">MPGO debug</string>
 
     <!-- External links -->
     <string name="app_git">https://github.com/enricocid/Music-Player-GO</string>
@@ -36,6 +39,7 @@
     <!-- Other preferences titles/subtitles -->
     <string name="faq_title">FAQ</string>
     <string name="category_ui">UI</string>
+    <string name="category_audio">Audio</string>
     <string name="accent_and_hex">&lt;b>%1s&lt;/b>:&#160;%2s</string>
 
     <!-- Preferences keys used in settings-->
