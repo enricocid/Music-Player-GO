@@ -239,7 +239,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
         try {
             if (goPreferences.latestPlayedSong != null) {
                 goPreferences.latestPlayedSong?.let { song ->
-                    if (mDeviceMusicList.savedSongIsAvailable(song) == null) {
+                    if (deviceMusicFiltered?.savedSongIsAvailable(song) == null) {
                         goPreferences.latestPlayedSong = null
                     }
                 }
