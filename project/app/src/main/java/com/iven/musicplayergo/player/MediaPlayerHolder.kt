@@ -578,10 +578,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             }
             mediaPlayer.prepareAsync()
 
-            if (sFocusEnabled && isPlay) {
-                tryToGetAudioFocus()
-            }
-
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -625,6 +621,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
 
         if (isPlay) {
+            if (sFocusEnabled && mCurrentAudioFocusState != AUDIO_FOCUSED) {
+                tryToGetAudioFocus()
+            }
             play()
         }
 
