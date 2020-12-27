@@ -1391,41 +1391,44 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onAddToFilter(stringToFilter: String?) {
-        stringToFilter?.let { string ->
+        if (mMusicViewModel.deviceMusicFiltered?.size == 1) {
+            getString(R.string.error_eq).toToast(this)
+        } else {
+            stringToFilter?.let { string ->
 
-            ListsHelper.addToHiddenItems(string)
+                ListsHelper.addToHiddenItems(string)
 
-            if (!mMusicContainersFragments.isNullOrEmpty() && !mMusicContainersFragments[0].onListFiltered(string)) {
+                if (!mMusicContainersFragments.isNullOrEmpty() && !mMusicContainersFragments[0].onListFiltered(string)) {
                 ThemeHelper.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
-            } else {
-                if (!mMusicContainersFragments.isNullOrEmpty() && mMusicContainersFragments.size >= 1) {
-                    val musicContainersIterator = mMusicContainersFragments.iterator().withIndex()
-                    while (musicContainersIterator.hasNext()) {
-                        val item = musicContainersIterator.next()
-                        if (item.index != 0) {
-                            item.value.onListFiltered(string)
+                } else {
+                    if (!mMusicContainersFragments.isNullOrEmpty() && mMusicContainersFragments.size >= 1) {
+                        val musicContainersIterator = mMusicContainersFragments.iterator().withIndex()
+                        while (musicContainersIterator.hasNext()) {
+                            val item = musicContainersIterator.next()
+                            if (item.index != 0) {
+                                item.value.onListFiltered(string)
+                            }
                         }
                     }
-                }
 
-                mMusicViewModel.deviceMusicFiltered = mMusicViewModel.deviceMusicFiltered?.filter { !it.artist.equals(string) and !it.album.equals(string) and !it.relativePath.equals(string) }?.toMutableList()
+                    mMusicViewModel.deviceMusicFiltered = mMusicViewModel.deviceMusicFiltered?.filter { !it.artist.equals(string) and !it.album.equals(string) and !it.relativePath.equals(string) }?.toMutableList()
 
-                mAllMusicFragment?.onListFiltered(mMusicViewModel.deviceMusicFiltered)
-                mSettingsFragment?.onFiltersChanged(mMusicViewModel.deviceMusicFiltered?.size!!)
+                    mAllMusicFragment?.onListFiltered(mMusicViewModel.deviceMusicFiltered)
+                    mSettingsFragment?.onFiltersChanged(mMusicViewModel.deviceMusicFiltered?.size!!)
 
-                // be sure to update queue, loved songs and the controls panel
-                if (isMediaPlayerHolder) {
-
-                    MusicOrgHelper.updateMediaPlayerHolderLists(mMediaPlayerHolder, this, mMusicViewModel.randomMusic)?.run {
-                        val songs = MusicOrgHelper.getAlbumSongs(
+                    // be sure to update queue, loved songs and the controls panel
+                    if (isMediaPlayerHolder) {
+                        MusicOrgHelper.updateMediaPlayerHolderLists(mMediaPlayerHolder, this, mMusicViewModel.randomMusic)?.run {
+                            val songs = MusicOrgHelper.getAlbumSongs(
                                 artist,
                                 album,
                                 mMusicViewModel.deviceAlbumsByArtist
-                        )
-                        mMediaPlayerHolder.isPlay = mMediaPlayerHolder.isPlaying
-                        mMediaPlayerHolder.setCurrentSong(this, songs, isFromQueue = false, songLaunchedBy = launchedBy)
-                        mMediaPlayerHolder.initMediaPlayer(this)
-                        updatePlayingInfo(false)
+                            )
+                            mMediaPlayerHolder.isPlay = mMediaPlayerHolder.isPlaying
+                            mMediaPlayerHolder.setCurrentSong(this, songs, isFromQueue = false, songLaunchedBy = launchedBy)
+                            mMediaPlayerHolder.initMediaPlayer(this)
+                            updatePlayingInfo(false)
+                        }
                     }
                 }
             }
