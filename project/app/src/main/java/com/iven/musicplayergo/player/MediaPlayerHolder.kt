@@ -576,6 +576,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             song?.id?.toContentUri()?.let { uri ->
                 mediaPlayer.setDataSource(playerService, uri)
             }
+
             mediaPlayer.prepareAsync()
 
         } catch (e: Exception) {
