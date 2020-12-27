@@ -213,11 +213,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mLoadCoverJob.cancel()
         }
         mMusicViewModel.cancel()
-        if (sBound) {
-            unbindService(connection)
-        }
         if (isMediaPlayerHolder && !mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning && !mMediaPlayerHolder.isSongRestoredFromPrefs) {
             mPlayerService.stopForeground(true)
+        }
+        if (sBound) {
+            unbindService(connection)
             stopService(mBindingIntent)
         }
     }
