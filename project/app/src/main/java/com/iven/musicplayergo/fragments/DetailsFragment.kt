@@ -292,9 +292,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             }
 
             mDetailsFragmentBinding.queueAddButton.setOnClickListener {
+                val queuedMusicSorted = ListsHelper.getSortedMusicList(mSongsSorting, mSelectedAlbum?.music)
                 mUIControlInterface.onAddAlbumToQueue(
-                    mSelectedAlbum?.music,
-                    Pair(true, mSelectedAlbum?.music?.get(0)),
+                    queuedMusicSorted,
+                    Pair(true, queuedMusicSorted?.get(0)),
                     isLovedSongs = false,
                     isShuffleMode = sWasShuffling.first,
                     clearShuffleMode = false,
@@ -533,7 +534,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                                 null,
                                 null,
                                 mSongsList?.toMutableList(),
-                                mSongsList?.size!! <= 50, // only queue if album size don't exceed 30
+                                true,
                                 mLaunchedBy
                         )
                     }
