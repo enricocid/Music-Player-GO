@@ -1,0 +1,8 @@
+- Fix and improve shuffle/queue
+Note about songs tab: shuffled music will be queued only if it doesn't exceed 1000 entries
+- Fix a crash when removing the app from recents
+- Fix a crash due to incorrect audio focus handling
+- Fix a crash when trying to filter the last element of the lists
+- Minor code review
+
+Special thanks goes to Ricardo and Matt
