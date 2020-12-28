@@ -1,0 +1,8 @@
+- Correzioni/migliorie alla mescolazione/coda
+Nota sulla tab della canzoni: le canzoni mescolate saranno accodate solo se non sono più di 1000
+- Corretto un crash alla rimozione della app dai recenti
+- Corretto un crash dovuto alla scorretta gestione del focus
+- Corretto un crash che accade quando si prova a filtrare l'ultimo elemento di una lista
+- Revisione minore del codice
+
+Un ringraziamento speciale va a Ricardo e Matt :)
