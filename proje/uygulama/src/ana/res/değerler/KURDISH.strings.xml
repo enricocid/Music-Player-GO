@@ -1,0 +1,112 @@
+<resources>
+
+    <!-- Dialogs / Buttons -->
+    <string name="Erê">Na</string>
+    <string name="Na">Na</string>
+    <string name="on_close_activity">Tu dixwazî stran li dawiyê bilîze?</string>
+    <string name="queue_songs_clear">Rêze wê jê bibe. Berdewamke?</string>
+    <string name="loved_songs_clear">Strana ku tu jê hezdikî wê biçe. Berdewamke?</string>
+    <string name="loved_song_remove">%1s (%2s) Wê ji strana tu hezdikî jêbibe. Berdewamke?</string>
+
+    <!-- Main - Fragments titles -->
+    <string name="stranbêj">Stranbêj</string>
+    <string name="albûm">Albûm</string>
+    <string name="stran">Stran</string>
+    <string name="dosya">Dosya</string>
+
+    <!-- Main - Artists/Folder RecyclerViews items  -->
+    <string name="artist_info">%1d&#160;Albûm,&#160;%2d&#160;Stran</string>
+    <string name="folder_info">%1d&#160;Stran</string>
+
+    <!-- Popup/Menu titles -->
+    <string name="sorting_pref">Rêze</string>
+    <string name="sorting_pref_default">Default</string>
+    <string name="sorting_pref_track">Jimara stran. &#8595;</string>
+    <string name="sorting_pref_track_inv">Jimara stran. &#8593;</string>
+    <string name="shuffle_am">Strana binguhêhevxe</string>
+    <string name="shuffle_sa">Vê albûma tevlohevke</string>
+    <string name="queue_add">Têx rêze</string>
+    <string name="loved_song_add">Bavêje nav stranan ku tu jê hezdikî</string>
+    <string name="filter_popup_title">Veșêr</string>
+
+    <!-- Queue -->
+    <string name="queue">Terî</string>
+    <string name="queue_song_add">%1s ket nav teriyê!</string>
+    <string name="queue_song_remove">%1s wê ji nav teriyê jêbibe. Berdewamke?</string>
+
+    <!-- Loved songs -->
+    <string name="loved_songs">Stranên tên hezkirin</string>
+    <string name="loved_song_added">%1s (%2s) ket nav stranên tên hezkirin</string>
+
+    <!-- Messages - Errors -->
+    <string name="error_no_loved_songs">Stranên ku tu jê hezdikî ne hat dîtin!</string>
+    <string name="error_no_music">Stran tune ye :(</string>
+    <string name="error_not_ready">Wexta ku stran hat avêtin pirsgirêk derket! :( This could be due to the SD card getting unmounted, forcing the Android\'s MediaStore to rebuild its database records. Solution: try again later.</string>
+    <string name="error_unknown_unsupported">Li cîna șașî çêbu! :( Perhaps the chosen format is not supported, or the folder is not accessible (not an app\'s fault!).</string>
+    <string name="error_media_buttons">Li cîna șașî çêbu! :( Please restart playback from the app.</string>
+    <string name="error_no_browser">Browser he hat dîtin!</string>
+    <string name="error_bad_id">Ewilî stranekî lêxe!</string>
+    <string name="error_no_eq">Equalizer ne hat dîtin!</string>
+    <string name="error_no_filter">Parzinandin ne hat dîtin!</string>
+    <string name="error_no_queue">Li rêze stran tune ye
+    <!-- Messages - Permission rationale -->
+    <string name="perm_rationale">Music Player GO dixwazê xwe bigîhîjîne nav dosyayên te!</string>
+
+    <!-- Messages - Repeat -->
+    <string name="repeat_enabled">Carekî tenê dubare bike!</string>
+    <string name="repeat_loop_enabled">Dubare &#8734; enabled!</string>
+    <string name="repeat_disabled">Dubare &#8734; asteng bû!</string>
+
+    <!-- Preferences - Categories -->
+    <string name="settings">Eyar</string>
+    <string name="category_general">Giștî</string>
+
+    <!-- Preferences - Git page -->
+    <string name="open_git_pref_title">GitHub page</string>
+    <string name="open_git_pref_summary">Open the project\'s page for more info :)</string>
+
+    <!-- Preferences - FAQ -->
+    <string name="faq_summary">FAQ and supported media formats :P</string>
+
+    <!-- Preferences - Found songs -->
+    <string name="found_songs_pref_title">Found songs: %1d</string>
+
+    <!-- Preferences - Themes -->
+    <string name="theme_pref_title">Tema</string>
+    <string name="theme_pref_light_title">Ronahî</string>
+    <string name="theme_pref_dark_title">Tarî</string>
+    <string name="theme_pref_auto_title">Otomatîq</string>
+
+    <!-- Preferences - Accent -->
+    <string name="accent_pref_title">Accent</string>
+
+    <!-- Preferences - Edge-to-edge -->
+    <string name="edge_pref_summary_on">Disable edge-to-edge</string>
+    <string name="edge_pref_summary_off">Enable edge-to-edge</string>
+
+    <!-- Preferences - Active tabs -->
+    <string name="active_fragments_pref_title">Active tabs</string>
+    <string name="active_fragments_pref_warning">You can\'t just remove all the tabs! :P</string>
+
+    <!-- Preferences - Fine volume control -->
+    <string name="precise_volume_pref_title">Precise volume control</string>
+    <string name="precise_volume_pref_summary_on">Disable precise volume control</string>
+    <string name="precise_volume_pref_summary_off">Enable precise volume control</string>
+
+    <!-- Preferences - Focus -->
+    <string name="focus_pref_title">Audio focus</string>
+    <string name="focus_pref_summary_on">Disable audio focus management</string>
+    <string name="focus_pref_summary_off">Enable audio focus management</string>
+
+    <!-- Preferences - Headsets -->
+    <string name="headset_pref_title">Headset plug</string>
+    <string name="headset_pref_summary_on">Disable headset plug management</string>
+    <string name="headset_pref_summary_off">Enable headset plug management</string>
+
+    <!-- Preferences - Filters -->
+    <string name="filter_pref_title">Filters</string>
+
+    <string name="covers_pref_title">Embedded album\'s covers</string>
+    <string name="covers_pref_summary_on">Show embedded album\'s covers</string>
+    <string name="covers_pref_summary_off">Don\'t show embedded album\'s covers</string>
+</resources>
