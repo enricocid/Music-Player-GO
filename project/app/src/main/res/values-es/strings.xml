@@ -59,7 +59,6 @@
     <string name="headset_pref_summary_on">Desactivar control de la conexión de auriculares</string>
     <string name="headset_pref_summary_off">Activar control de la conexión de auriculares</string>
     <string name="filter_pref_title">Filtros</string>
-    <string name="error_no_filter">No se han encoltrado filtros.</string>
     <string name="error_not_ready">No se pudo cargar la librería de música :( Esto pudo deberse a un error con la tarjeta SD, forzando a la librería multimedia de Android a reconstruir su registro de base de datos. Vuelve a intentarlo más tarde.</string>
     <string name="equalizer_bb">Mejora de graves</string>
     <string name="fast_seeking_actions_pref_summary_off">Acciones de cerrar/repetir preferidas</string>

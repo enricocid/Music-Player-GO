@@ -1,16 +1,14 @@
 package com.iven.musicplayergo.helpers
 
-import android.annotation.SuppressLint
-import android.content.ContentResolver
 import android.content.res.Resources
-import android.provider.MediaStore
-import android.provider.MediaStore.Audio.AudioColumns
+import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.extensions.toFormattedYear
 import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
+import com.iven.musicplayergo.ui.UIControlInterface
 
 
 object MusicOrgHelper {
@@ -126,28 +124,43 @@ object MusicOrgHelper {
     }
 
     @JvmStatic
-    @SuppressLint("InlinedApi")
-    fun getMusicCursor(contentResolver: ContentResolver) = contentResolver.query(
-        MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-        arrayOf(
-            AudioColumns.ARTIST, // 0
-            AudioColumns.YEAR, // 1
-            AudioColumns.TRACK, // 2
-            AudioColumns.TITLE, // 3
-            AudioColumns.DISPLAY_NAME, // 4,
-            AudioColumns.DURATION, //5,
-            AudioColumns.ALBUM, // 6
-            getPathColumn(), // 7
-            AudioColumns._ID //8
-        ), AudioColumns.IS_MUSIC + "=1", null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER
-    )
+    fun updateMediaPlayerHolderLists(mediaPlayerHolder: MediaPlayerHolder, musicViewModel: MusicViewModel, uiControlInterface: UIControlInterface): Music? {
+
+        val currentSong = mediaPlayerHolder.currentSong.first
+
+        fun selectNewSong(filter: Set<String>): Music? {
+            if (musicListContains(currentSong, filter)) {
+                return musicViewModel.randomMusic
+            }
+            return null
+        }
+
+        goPreferences.filters?.let { ft ->
+            goPreferences.lovedSongs?.toMutableList()?.let { bookmarks ->
+                val songs = bookmarks.filter { lovedSong ->
+                    musicListContains(lovedSong, ft)
+                }
+                bookmarks.removeAll(songs)
+                goPreferences.lovedSongs = bookmarks
+                if (bookmarks.isEmpty()) {
+                    uiControlInterface.onLovedSongsUpdate(true)
+                }
+            }
+            if (mediaPlayerHolder.isQueue && musicListContains(currentSong, ft)) {
+                mediaPlayerHolder.queueSongs.run {
+                    val songs = filter { queueSong ->
+                        musicListContains(queueSong, ft)
+                    }
+                    removeAll(songs)
+                    mediaPlayerHolder.skip(true)
+                }
+            } else {
+                return selectNewSong(ft)
+            }
+        }
+        return null
+    }
 
     @JvmStatic
-    @Suppress("DEPRECATION")
-    fun getPathColumn() =
-        if (VersioningHelper.isQ()) {
-            AudioColumns.BUCKET_DISPLAY_NAME
-        } else {
-            AudioColumns.DATA
-        }
+    fun musicListContains(song: Music?, filter: Set<String>) = filter.contains(song?.artist) || filter.contains(song?.album) || filter.contains(song?.relativePath)
 }

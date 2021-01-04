@@ -39,7 +39,7 @@
         app:title="@string/category_ui">
 
         <ListPreference
-            android:defaultValue="@string/theme_pref_light"
+            android:defaultValue="@string/theme_pref_auto"
             app:dialogTitle="@string/theme_pref_title"
             app:entries="@array/themeListArray"
             app:entryValues="@array/themeEntryArray"
@@ -54,7 +54,7 @@
             app:title="@string/accent_pref_title" />
 
         <Preference
-            app:key="@string/active_fragments_pref"
+            app:key="@string/active_tabs_pref"
             app:title="@string/active_fragments_pref_title" />
     </PreferenceCategory>
 

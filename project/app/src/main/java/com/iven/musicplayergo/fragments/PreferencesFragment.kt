@@ -5,12 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -25,7 +25,6 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.AccentsAdapter
 import com.iven.musicplayergo.adapters.ActiveTabsAdapter
 import com.iven.musicplayergo.adapters.FiltersAdapter
-import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -89,10 +88,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         ViewModelProvider(requireActivity()).get(MusicViewModel::class.java).apply {
             deviceMusic.observe(viewLifecycleOwner, { returnedMusic ->
                 if (!returnedMusic.isNullOrEmpty()) {
-                    findPreference<Preference>(getString(R.string.found_songs_pref))?.let { preference ->
-                        preference.title =
-                            getString(R.string.found_songs_pref_title, musicDatabaseSize)
-                    }
+                    updateFiltersPreferences(musicDatabaseSize!!)
                 }
             })
         }
@@ -113,8 +109,8 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             preference.onPreferenceClickListener = this@PreferencesFragment
         }
 
-        findPreference<Preference>(getString(R.string.active_fragments_pref))?.let { preference ->
-            preference.summary = goPreferences.activeFragments.size.toString()
+        findPreference<Preference>(getString(R.string.active_tabs_pref))?.let { preference ->
+            preference.summary = goPreferences.activeTabs.size.toString()
             preference.onPreferenceClickListener = this@PreferencesFragment
         }
     }
@@ -130,12 +126,8 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             getString(R.string.accent_pref) -> showAccentsDialog()
             getString(R.string.filter_pref) -> if (!goPreferences.filters.isNullOrEmpty()) {
                 showFiltersDialog()
-            } else {
-                getString(
-                    R.string.error_no_filter
-                ).toToast(requireActivity())
             }
-            getString(R.string.active_fragments_pref) -> showActiveFragmentsDialog()
+            getString(R.string.active_tabs_pref) -> showActiveFragmentsDialog()
         }
         return false
     }
@@ -149,20 +141,18 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                         requireActivity(),
                         ThemeHelper.resolveThemeIcon(requireActivity())
                     )
-                mUIControlInterface.onThemeChanged()
+                mUIControlInterface.onAppearanceChanged(true)
             }
             getString(R.string.accent_pref) -> {
                 mAccentsDialog.dismiss()
-                mUIControlInterface.onAppearanceChanged(
-                    isAccentChanged = true,
-                    restoreSettings = true
-                )
+                mUIControlInterface.onAppearanceChanged(false)
             }
             getString(R.string.focus_pref) -> mUIControlInterface.onHandleFocusPref()
             getString(R.string.covers_pref) -> mUIControlInterface.onHandleNotificationUpdate(false)
             getString(R.string.fast_seeking_actions_pref) -> mUIControlInterface.onHandleNotificationUpdate(
                 true
             )
+            getString(R.string.filter_pref) -> mUIControlInterface.onAppearanceChanged(false)
         }
     }
 
@@ -173,7 +163,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             .setShowTitle(true)
             .build()
 
-        val parsedUri = Uri.parse(link)
+        val parsedUri = link.toUri()
         val manager = requireActivity().packageManager
         val infos = manager.queryIntentActivities(customTabsIntent.intent, 0)
         if (infos.size > 0) {
@@ -189,7 +179,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 requireActivity().startActivity(browserIntent)
             } else {
                 Toast.makeText(
-                    context,
+                    requireActivity(),
                     requireActivity().getString(R.string.error_no_browser),
                     Toast.LENGTH_SHORT
                 ).show()
@@ -224,7 +214,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             customListAdapter(activeTabsAdapter)
 
             getRecyclerView().run {
-                val gridLayoutManager = GridLayoutManager(context, 2)
+                val gridLayoutManager = GridLayoutManager(requireActivity(), 2)
                 gridLayoutManager.spanSizeLookup = activeTabsAdapter.spanSizeLookup
                 layoutManager = gridLayoutManager
                 val touchHelper = ItemTouchHelper(activeTabsAdapter.itemTouchCallback)
@@ -232,11 +222,8 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             }
 
             positiveButton(android.R.string.ok) {
-                goPreferences.activeFragments = activeTabsAdapter.getUpdatedItems()
-                mUIControlInterface.onAppearanceChanged(
-                    isAccentChanged = false,
-                    restoreSettings = true
-                )
+                goPreferences.activeTabs = activeTabsAdapter.getUpdatedItems().toMutableList()
+                mUIControlInterface.onAppearanceChanged(false)
             }
 
             negativeButton(android.R.string.cancel)
@@ -249,16 +236,30 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             title(R.string.filter_pref_title)
 
-            val filtersAdapter = FiltersAdapter()
+            val filtersAdapter = FiltersAdapter(requireActivity())
 
             customListAdapter(filtersAdapter)
 
             positiveButton(android.R.string.ok) {
-                goPreferences.filters = filtersAdapter.getUpdatedItems()
-                requireActivity().recreate()
+                if (goPreferences.filters != filtersAdapter.getUpdatedItems()) {
+                    goPreferences.filters = filtersAdapter.getUpdatedItems()
+                }
             }
 
             negativeButton(android.R.string.cancel)
+        }
+    }
+
+    fun updateFiltersPreferences(databaseSize: Int) {
+        findPreference<Preference>(getString(R.string.found_songs_pref))?.let { preference ->
+            preference.title =
+                    getString(R.string.found_songs_pref_title, databaseSize)
+        }
+        findPreference<Preference>(getString(R.string.filter_pref))?.let { preference ->
+            goPreferences.filters?.let { ft ->
+                preference.summary = ft.size.toString()
+                preference.isEnabled = ft.isNotEmpty()
+            }
         }
     }
 

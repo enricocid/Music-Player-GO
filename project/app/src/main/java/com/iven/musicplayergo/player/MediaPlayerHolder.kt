@@ -4,33 +4,33 @@ import android.app.Activity
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Context.AUDIO_SERVICE
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.media.AudioAttributes
-import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.audiofx.AudioEffect
 import android.media.audiofx.BassBoost
 import android.media.audiofx.Equalizer
 import android.media.audiofx.Virtualizer
-import android.os.Handler
-import android.os.Looper
 import android.os.PowerManager
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat.ACTION_SEEK_TO
 import android.support.v4.media.session.PlaybackStateCompat.Builder
+import androidx.core.content.getSystemService
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toBitmap
+import androidx.media.AudioAttributesCompat
+import androidx.media.AudioFocusRequestCompat
+import androidx.media.AudioManagerCompat
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.extensions.savedSongIsAvailable
 import com.iven.musicplayergo.extensions.toContentUri
 import com.iven.musicplayergo.extensions.toToast
-import com.iven.musicplayergo.fragments.EqFragment
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ListsHelper
-import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedEqualizerSettings
@@ -77,14 +77,14 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     lateinit var mediaPlayerInterface: MediaPlayerInterface
 
     // Equalizer
-    private lateinit var mEqualizer: Equalizer
-    private lateinit var mBassBoost: BassBoost
-    private lateinit var mVirtualizer: Virtualizer
+    private var mEqualizer: Equalizer? = null
+    private var mBassBoost: BassBoost? = null
+    private var mVirtualizer: Virtualizer? = null
+    private var sHasOpenedAudioEffects = false
 
     // Audio focus
-    private var mAudioManager = playerService.getSystemService(AUDIO_SERVICE) as AudioManager
-    private lateinit var mAudioFocusRequestOreo: AudioFocusRequest
-    private val mHandler = Handler(Looper.getMainLooper())
+    private var mAudioManager = playerService.getSystemService<AudioManager>()!!
+    private lateinit var mAudioFocusRequestCompat: AudioFocusRequestCompat
 
     private val sFocusEnabled get() = goPreferences.isFocusEnabled
     private var mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
@@ -149,13 +149,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private val mPrevSongIndex get() = mCurrentSongIndex - 1
     private val mNextSong: Music?
         get() = when {
-            mNextSongIndex <= mCurrentAlbumSize -> mPlayingAlbumSongs?.get(mNextSongIndex)
+            mNextSongIndex in 0..mCurrentAlbumSize -> mPlayingAlbumSongs?.get(mNextSongIndex)
             isQueue -> stopQueueAndGetSkipSong(true)
             else -> mPlayingAlbumSongs?.get(0)
         }
     private val mPrevSong: Music?
         get() = when {
-            mPrevSongIndex <= mCurrentAlbumSize && mPrevSongIndex != -1 -> mPlayingAlbumSongs?.get(
+            mPrevSongIndex in 0..mCurrentAlbumSize -> mPlayingAlbumSongs?.get(
                 mPrevSongIndex
             )
             isQueue -> stopQueueAndGetSkipSong(false)
@@ -227,31 +227,36 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     private fun createCustomEqualizer() {
-        if (mediaPlayer.audioSessionId != AudioEffect.ERROR_BAD_VALUE && !::mEqualizer.isInitialized && !::mBassBoost.isInitialized && !::mVirtualizer.isInitialized) {
-            mBassBoost = BassBoost(0, mediaPlayer.audioSessionId)
-            mVirtualizer = Virtualizer(0, mediaPlayer.audioSessionId)
-            mEqualizer = Equalizer(0, mediaPlayer.audioSessionId)
-            setEqualizerEnabled(false)
-            restoreCustomEqSettings()
+        if (mEqualizer == null) {
+            try {
+                mBassBoost = BassBoost(0, mediaPlayer.audioSessionId)
+                mVirtualizer = Virtualizer(0, mediaPlayer.audioSessionId)
+                mEqualizer = Equalizer(0, mediaPlayer.audioSessionId)
+                restoreCustomEqSettings()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
     fun getEqualizer() = Triple(mEqualizer, mBassBoost, mVirtualizer)
 
     fun setEqualizerEnabled(isEnabled: Boolean) {
-        mEqualizer.enabled = isEnabled
-        mBassBoost.enabled = isEnabled
-        mVirtualizer.enabled = isEnabled
+        mEqualizer?.enabled = isEnabled
+        mBassBoost?.enabled = isEnabled
+        mVirtualizer?.enabled = isEnabled
     }
 
     fun onSaveEqualizerSettings(selectedPreset: Int, bassBoost: Short, virtualizer: Short) {
-        goPreferences.savedEqualizerSettings = SavedEqualizerSettings(
-            mEqualizer.enabled,
-            selectedPreset,
-            mEqualizer.properties.bandLevels.toList(),
-            bassBoost,
-            virtualizer
-        )
+        mEqualizer?.let { equalizer ->
+            goPreferences.savedEqualizerSettings = SavedEqualizerSettings(
+                equalizer.enabled,
+                selectedPreset,
+                equalizer.properties.bandLevels.toList(),
+                bassBoost,
+                virtualizer
+            )
+        }
     }
 
     fun setCurrentSong(
@@ -279,8 +284,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ARTIST, currentSong.first?.album)
             putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, currentSong.first?.album)
             putString(MediaMetadataCompat.METADATA_KEY_ALBUM, currentSong.first?.album)
-            BitmapFactory.decodeResource(playerService.resources, R.drawable.ic_music_note)
-                ?.let { bmp ->
+            ResourcesCompat.getDrawable(playerService.resources, R.drawable.ic_music_note, null)
+                ?.toBitmap()?.let { bmp ->
                     putBitmap(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON, bmp)
                 }
         }
@@ -329,7 +334,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         stopUpdatingCallbackWithPosition()
     }
 
-    fun onUpdateDefaultAlbumArt(bitmapRes: Bitmap) {
+    fun onUpdateDefaultAlbumArt(bitmapRes: Bitmap?) {
         mMusicNotificationManager.onUpdateDefaultAlbumArt(bitmapRes, isPlaying)
     }
 
@@ -338,46 +343,35 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun tryToGetAudioFocus() {
-        mCurrentAudioFocusState = when (getAudioFocusResult()) {
+        if (!::mAudioFocusRequestCompat.isInitialized) {
+            initializeAudioFocusRequestCompat()
+        }
+        val requestFocus =
+            AudioManagerCompat.requestAudioFocus(mAudioManager, mAudioFocusRequestCompat)
+        mCurrentAudioFocusState = when (requestFocus) {
             AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> AUDIO_FOCUSED
             else -> AUDIO_NO_FOCUS_NO_DUCK
         }
     }
 
-    @Suppress("DEPRECATION")
-    private fun getAudioFocusResult() = when {
-        VersioningHelper.isOreoMR1() -> {
-            mAudioFocusRequestOreo =
-                AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN).run {
-                    setAudioAttributes(AudioAttributes.Builder().run {
-                        setUsage(AudioAttributes.USAGE_MEDIA)
-                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                            .build()
-                    })
-                    setAcceptsDelayedFocusGain(true)
-                    setOnAudioFocusChangeListener(mOnAudioFocusChangeListener, mHandler)
-                    build()
-                }
-            mAudioManager.requestAudioFocus(mAudioFocusRequestOreo)
-        }
-        else -> mAudioManager.requestAudioFocus(
-            mOnAudioFocusChangeListener,
-            AudioManager.STREAM_MUSIC,
-            AudioManager.AUDIOFOCUS_GAIN
-        )
+    private fun initializeAudioFocusRequestCompat() {
+        val audioAttributes = AudioAttributesCompat.Builder()
+            .setUsage(AudioAttributesCompat.USAGE_MEDIA)
+            .setContentType(AudioAttributesCompat.CONTENT_TYPE_MUSIC)
+            .build()
+        mAudioFocusRequestCompat =
+            AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN)
+                .setAudioAttributes(audioAttributes)
+                .setOnAudioFocusChangeListener(mOnAudioFocusChangeListener)
+                .setWillPauseWhenDucked(true)
+                .build()
     }
 
-    @Suppress("DEPRECATION")
     fun giveUpAudioFocus() {
-        when {
-            VersioningHelper.isOreo() -> if (::mAudioFocusRequestOreo.isInitialized) {
-                mAudioManager.abandonAudioFocusRequest(
-                    mAudioFocusRequestOreo
-                )
-            }
-            else -> mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener)
+        if (::mAudioFocusRequestCompat.isInitialized) {
+            AudioManagerCompat.abandonAudioFocusRequest(mAudioManager, mAudioFocusRequestCompat)
+            mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
         }
-        mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
     }
 
     private fun updatePlaybackStatus(updateUI: Boolean) {
@@ -470,8 +464,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         // to correctly get skip song when song is restored
         if (isSongRestoredFromPrefs) {
             currentSong.first?.run {
-                val song =
-                    mPlayingAlbumSongs?.find { it.title == title && it.duration == duration && it.displayName == displayName && it.track == track }
+                val song = mPlayingAlbumSongs?.savedSongIsAvailable(this)
                 currentSong = Pair(song, false)
             }
         }
@@ -568,11 +561,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             } else {
                 mediaPlayer = MediaPlayer().apply {
 
-                    EqualizerUtils.openAudioEffectSession(
-                        playerService.applicationContext,
-                        audioSessionId
-                    )
-
                     setOnPreparedListener(this@MediaPlayerHolder)
                     setOnCompletionListener(this@MediaPlayerHolder)
                     setOnErrorListener(this@MediaPlayerHolder)
@@ -586,17 +574,14 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 }
             }
 
-            if (sFocusEnabled && isPlay) {
-                tryToGetAudioFocus()
-            }
-            if (goPreferences.isPreciseVolumeEnabled) {
-                setPreciseVolume(currentVolumeInPercent)
-            }
-
             song?.id?.toContentUri()?.let { uri ->
                 mediaPlayer.setDataSource(playerService, uri)
             }
-            mediaPlayer.prepare()
+            mediaPlayer.prepareAsync()
+
+            if (sFocusEnabled && isPlay) {
+                tryToGetAudioFocus()
+            }
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -611,7 +596,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         return false
     }
 
-    override fun onPrepared(mediaPlayer: MediaPlayer) {
+    override fun onPrepared(mp: MediaPlayer) {
 
         if (isSongRestoredFromPrefs) {
             if (goPreferences.isPreciseVolumeEnabled) {
@@ -636,15 +621,29 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             startUpdatingCallbackWithPosition()
         }
 
+        if (!::mAudioFocusRequestCompat.isInitialized) {
+            initializeAudioFocusRequestCompat()
+        }
+
         if (isPlay) {
             play()
         }
 
         playerService.releaseWakeLock()
 
-        if (mediaPlayer.audioSessionId != AudioEffect.ERROR_BAD_VALUE && !::mEqualizer.isInitialized && !::mBassBoost.isInitialized && !::mVirtualizer.isInitialized) {
-            // instantiate custom equalizer
-            createCustomEqualizer()
+        // instantiate equalizer
+        if (mediaPlayer.audioSessionId != AudioEffect.ERROR_BAD_VALUE) {
+            if (EqualizerUtils.hasEqualizer(playerService.applicationContext)) {
+                if (!sHasOpenedAudioEffects) {
+                    sHasOpenedAudioEffects = true
+                    EqualizerUtils.openAudioEffectSession(
+                        playerService.applicationContext,
+                        mediaPlayer.audioSessionId
+                    )
+                }
+            } else {
+                createCustomEqualizer()
+            }
         }
     }
 
@@ -659,47 +658,60 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         mediaPlayer.run {
             val savedEqualizerSettings = goPreferences.savedEqualizerSettings
 
-            savedEqualizerSettings?.let { eqSettings ->
+            savedEqualizerSettings?.let { (enabled, preset, bandSettings, bassBoost, virtualizer) ->
 
-                setEqualizerEnabled(eqSettings.enabled)
+                setEqualizerEnabled(enabled)
 
-                try {
-                    mEqualizer.usePreset(eqSettings.preset.toShort())
+                mEqualizer?.usePreset(preset.toShort())
 
-                    val bandSettings = eqSettings.bandsSettings
-
-                    bandSettings?.iterator()?.withIndex()?.let { iterate ->
-                        while (iterate.hasNext()) {
-                            val item = iterate.next()
-                            mEqualizer.setBandLevel(
-                                item.index.toShort(),
-                                item.value.toInt().toShort()
-                            )
-                        }
+                bandSettings?.iterator()?.withIndex()?.let { iterate ->
+                    while (iterate.hasNext()) {
+                        val item = iterate.next()
+                        mEqualizer?.setBandLevel(
+                            item.index.toShort(),
+                            item.value.toInt().toShort()
+                        )
                     }
-
-                    mBassBoost.setStrength(eqSettings.bassBoost)
-                    mVirtualizer.setStrength(eqSettings.virtualizer)
-                } catch (e: UnsupportedOperationException) {
-                    e.printStackTrace()
                 }
+
+                mBassBoost?.setStrength(bassBoost)
+                mVirtualizer?.setStrength(virtualizer)
             }
         }
     }
 
     fun openEqualizer(activity: Activity) {
+        if (mEqualizer != null) {
+            releaseCustomEqualizer()
+            sHasOpenedAudioEffects = true
+            EqualizerUtils.openAudioEffectSession(
+                playerService.applicationContext,
+                mediaPlayer.audioSessionId
+            )
+        }
         EqualizerUtils.openEqualizer(activity, mediaPlayer)
     }
 
-    fun openEqualizerCustom() = EqFragment.newInstance()
+    fun onOpenEqualizerCustom() {
+        if (sHasOpenedAudioEffects) {
+            EqualizerUtils.closeAudioEffectSession(
+                playerService.applicationContext,
+                mediaPlayer.audioSessionId
+            )
+            sHasOpenedAudioEffects = false
+        }
+    }
 
     fun release() {
         if (isMediaPlayer) {
-            EqualizerUtils.closeAudioEffectSession(
-                playerService,
-                mediaPlayer.audioSessionId
-            )
-            releaseCustomEqualizer()
+            if (EqualizerUtils.hasEqualizer(playerService.applicationContext)) {
+                EqualizerUtils.closeAudioEffectSession(
+                    playerService.applicationContext,
+                    mediaPlayer.audioSessionId
+                )
+            } else {
+                releaseCustomEqualizer()
+            }
             mediaPlayer.release()
             if (sFocusEnabled) {
                 giveUpAudioFocus()
@@ -710,10 +722,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     private fun releaseCustomEqualizer() {
-        if (::mEqualizer.isInitialized) {
-            mEqualizer.release()
-            mBassBoost.release()
-            mVirtualizer.release()
+        if (mEqualizer != null) {
+            mEqualizer = null
+            mEqualizer?.release()
+            mBassBoost = null
+            mBassBoost?.release()
+            mVirtualizer = null
+            mVirtualizer?.release()
         }
     }
 

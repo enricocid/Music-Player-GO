@@ -7,14 +7,16 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.MediaExtractor
 import android.media.MediaFormat
-import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.provider.MediaStore
+import androidx.core.net.toUri
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import java.util.*
 import java.util.concurrent.TimeUnit
+import java.util.regex.Pattern
+
 
 fun MediaPlayerHolder.startSongFromQueue(song: Music?, launchedBy: String) {
     if (isSongRestoredFromPrefs) {
@@ -26,17 +28,25 @@ fun MediaPlayerHolder.startSongFromQueue(song: Music?, launchedBy: String) {
         mediaPlayerInterface.onQueueStartedOrEnded(true)
     }
     setCurrentSong(
-        song,
-        queueSongs,
-        isFromQueue = true,
-        launchedBy
+            song,
+            queueSongs,
+            isFromQueue = true,
+            launchedBy
     )
     initMediaPlayer(song)
 }
 
-fun Long.toContentUri(): Uri = ContentUris.withAppendedId(
-    MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+//https://codereview.stackexchange.com/a/97819
+fun String?.toFilenameWithoutExtension() = try {
+    Pattern.compile("(?<=.)\\.[^.]+$").matcher(this!!).replaceAll("")
+} catch (e: Exception) {
+    e.printStackTrace()
     this
+}
+
+fun Long.toContentUri(): Uri = ContentUris.withAppendedId(
+        MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+        this
 )
 
 fun Uri.toBitrate(context: Context): Pair<Int, Int>? {
@@ -59,23 +69,27 @@ fun Uri.toBitrate(context: Context): Pair<Int, Int>? {
     }
 }
 
-fun Music.getCover(context: Context): Bitmap? {
-    val contentUri = id?.toContentUri()
-    val retriever = MediaMetadataRetriever()
+fun Long.getCoverFromPFD(context: Context): Bitmap? {
+    val albumArtUri = ("content://media/external/audio/albumart").toUri()
+    val uri = ContentUris.withAppendedId(albumArtUri, this)
     return try {
-        retriever.setDataSource(context, contentUri)
-
-        val picture = retriever.embeddedPicture
-
-        if (picture != null) {
-            BitmapFactory
-                .decodeByteArray(picture, 0, picture.size)
-        } else {
-            null
+        context.contentResolver.openFileDescriptor(uri, "r")?.let { pfd ->
+            val bitmap = BitmapFactory.decodeFileDescriptor(pfd.fileDescriptor)
+            pfd.close()
+            return bitmap
         }
-    } finally {
-        retriever.release()
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
     }
+}
+
+fun Long.getCoverFromURI(): Uri? = try {
+    val albumArtUri = ("content://media/external/audio/albumart").toUri()
+    ContentUris.withAppendedId(albumArtUri, this)
+} catch (e: Exception) {
+    e.printStackTrace()
+    Uri.EMPTY
 }
 
 fun Long.toFormattedDuration(isAlbum: Boolean, isSeekBar: Boolean) = try {
@@ -92,23 +106,23 @@ fun Long.toFormattedDuration(isAlbum: Boolean, isSeekBar: Boolean) = try {
 
     if (minutes < 60) {
         String.format(
-            Locale.getDefault(), defaultFormat,
-            minutes,
-            seconds - TimeUnit.MINUTES.toSeconds(minutes)
+                Locale.getDefault(), defaultFormat,
+                minutes,
+                seconds - TimeUnit.MINUTES.toSeconds(minutes)
         )
     } else {
         // https://stackoverflow.com/a/9027379
         when {
             isSeekBar -> String.format(
-                "%02d:%02d:%02d",
-                hours,
-                minutes - TimeUnit.HOURS.toMinutes(hours),
-                seconds - TimeUnit.MINUTES.toSeconds(minutes)
+                    "%02d:%02d:%02d",
+                    hours,
+                    minutes - TimeUnit.HOURS.toMinutes(hours),
+                    seconds - TimeUnit.MINUTES.toSeconds(minutes)
             )
             else -> String.format(
-                "%02dh:%02dm",
-                hours,
-                minutes - TimeUnit.HOURS.toMinutes(hours)
+                    "%02dh:%02dm",
+                    hours,
+                    minutes - TimeUnit.HOURS.toMinutes(hours)
             )
         }
     }
@@ -130,38 +144,44 @@ fun Int.toFormattedTrack() = try {
 }
 
 fun Int.toFormattedYear(resources: Resources) =
-    if (this != 0) {
-        toString()
-    } else {
-        resources.getString(R.string.unknown_year)
-    }
+        if (this != 0) {
+            toString()
+        } else {
+            resources.getString(R.string.unknown_year)
+        }
 
 fun Music.toSavedMusic(playerPosition: Int, savedLaunchedBy: String) =
-    Music(
-        artist,
-        year,
-        track,
-        title,
-        displayName,
-        duration,
-        album,
-        relativePath,
-        id,
-        savedLaunchedBy,
-        playerPosition
-    )
+        Music(
+                artist,
+                year,
+                track,
+                title,
+                displayName,
+                duration,
+                album,
+                albumId,
+                relativePath,
+                id,
+                savedLaunchedBy,
+                playerPosition
+        )
 
-fun Music.toSavedMusicWithoutPosition( savedLaunchedBy: String) =
-    Music(
-        artist,
-        year,
-        track,
-        title,
-        displayName,
-        duration,
-        album,
-        relativePath,
-        id,
-        savedLaunchedBy,
-        0
-    )
+
+fun Music.toSavedMusicWithoutPosition(savedLaunchedBy: String) =
+        Music(
+                artist,
+                year,
+                track,
+                title,
+                displayName,
+                duration,
+                album,
+                albumId,
+                relativePath,
+                id,
+                savedLaunchedBy,
+                0
+        )
+
+fun List<Music>.savedSongIsAvailable(first: Music): Music? = find { first.title == it.title && first.displayName == it.displayName && first.track == it.track && first.albumId == it.albumId && first.album == it.album }
+

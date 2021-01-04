@@ -81,5 +81,4 @@
     <string name="headset_pref_summary_off">Abilita gestione inserimento cuffie</string>
     <string name="filter_pref_title">Filtri</string>
     <string name="filter_popup_title">Nascondi</string>
-    <string name="error_no_filter">Nessun filtro trovato.</string>
 </resources>

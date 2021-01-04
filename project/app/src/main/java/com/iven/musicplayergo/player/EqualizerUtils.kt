@@ -11,6 +11,7 @@ import com.iven.musicplayergo.extensions.toToast
 
 object EqualizerUtils {
 
+    @JvmStatic
     fun hasEqualizer(context: Context): Boolean {
         val pm = context.packageManager
         val ri =
@@ -18,7 +19,8 @@ object EqualizerUtils {
         return ri != null
     }
 
-    internal fun openAudioEffectSession(context: Context, sessionId: Int) {
+    @JvmStatic
+    fun openAudioEffectSession(context: Context, sessionId: Int) {
         Intent(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION).apply {
             putExtra(AudioEffect.EXTRA_AUDIO_SESSION, sessionId)
             putExtra(AudioEffect.EXTRA_PACKAGE_NAME, context.packageName)
@@ -27,15 +29,18 @@ object EqualizerUtils {
         }
     }
 
-    internal fun closeAudioEffectSession(context: Context, sessionId: Int) {
+    @JvmStatic
+    fun closeAudioEffectSession(context: Context, sessionId: Int) {
         Intent(AudioEffect.ACTION_CLOSE_AUDIO_EFFECT_CONTROL_SESSION).apply {
-            putExtra(AudioEffect.EXTRA_AUDIO_SESSION, sessionId)
             putExtra(AudioEffect.EXTRA_PACKAGE_NAME, context.packageName)
+            putExtra(AudioEffect.EXTRA_AUDIO_SESSION, sessionId)
+            putExtra(AudioEffect.EXTRA_CONTENT_TYPE, AudioEffect.CONTENT_TYPE_MUSIC)
             context.sendBroadcast(this)
         }
     }
 
-    internal fun openEqualizer(activity: Activity, mediaPlayer: MediaPlayer) {
+    @JvmStatic
+    fun openEqualizer(activity: Activity, mediaPlayer: MediaPlayer) {
         when (mediaPlayer.audioSessionId) {
             AudioEffect.ERROR_BAD_VALUE -> activity.getString(R.string.error_bad_id).toToast(
                 activity

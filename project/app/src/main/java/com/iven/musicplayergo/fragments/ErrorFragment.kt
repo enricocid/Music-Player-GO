@@ -4,13 +4,14 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.animation.doOnEnd
+import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentErrorBinding
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.createCircularReveal
-import com.iven.musicplayergo.extensions.decodeColor
 import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 
@@ -73,7 +74,7 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
                 createCircularReveal(isErrorFragment = true, show = true).doOnEnd {
                     if (!VersioningHelper.isOreoMR1()) {
                         requireActivity().window.run {
-                            val red = R.color.red.decodeColor(requireActivity())
+                            val red = ContextCompat.getColor(requireActivity(), R.color.red)
                             statusBarColor = red
                             navigationBarColor = red
                         }
@@ -95,9 +96,7 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
          */
         @JvmStatic
         fun newInstance(errorType: String) = ErrorFragment().apply {
-            arguments = Bundle().apply {
-                putString(TAG_ERROR, errorType)
-            }
+            arguments = bundleOf(TAG_ERROR to errorType)
         }
     }
 }

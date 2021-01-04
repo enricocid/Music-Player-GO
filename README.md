@@ -8,7 +8,7 @@
   <!-- Latest Release -->
     <a href="https://github.com/enricocid/Music-Player-GO/releases">
       <img alt="GitHub release"
-      src="https://img.shields.io/static/v1?label=Tag&message=v4.3.4&color=58F5D1">
+      src="https://img.shields.io/static/v1?label=Tag&message=v4.3.7&color=58F5D1">
     </a>
    <!-- Minimum SDK -->
     <a>
@@ -73,10 +73,6 @@ This repo contains the source code of the **Music Player GO** Android app: a sim
 - Fast seeking (long click on skip buttons)
 - Simple audio focus, precise volume and headsets management
 - Other features: search, sorting, shuffle, notification's SeekBar, audios opening from other apps ...
-- Modern code base and ... Kotlin!
-
-Want less?
-Check [Be Simple Music Player](https://github.com/enricocid/Be-Simple-Music-Player)!
  
 
 # Translations
@@ -102,7 +98,7 @@ please consider a [donation](https://weblate.org/it/donate/new/) :)
 
 | Name                                                        | Author                  |
 | ----------------------------------------------------------- | ------------------------- |
-| [GSON](https://github.com/google/gson)                  | Google                       |
+| [Moshi](https://github.com/square/moshi)                  | [Square](https://square.github.io/)                       |
 | [Indicator Fast Scroll](https://github.com/reddit/IndicatorFastScroll)                  | Reddit                       |
 | [material-dialogs](https://github.com/afollestad/material-dialogs)                  | [Aidan Afollestad](https://github.com/afollestad)                       |
 | [recyclical](https://github.com/afollestad/recyclical)                  | [Aidan Afollestad](https://github.com/afollestad)                       |

@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -84,9 +85,8 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                     if (!returnedMusic.isNullOrEmpty()) {
                         mSorting = getSortingMethodFromPrefs()
 
-                        mList =
-                            getSortedItemKeys()?.filter { !goPreferences.filters?.contains(it)!! }
-                                ?.toMutableList()
+                        mList = getSortedItemKeys()
+
                         setListDataSource(mList)
 
                         finishSetup()
@@ -123,8 +123,8 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
                     onLongClick { index ->
                         if (::mUIControlInterface.isInitialized) {
-                            DialogHelper.showHidePopup(
-                                context,
+                            DialogHelper.showPopupForHide(
+                                requireActivity(),
                                 findViewHolderForAdapterPosition(index)?.itemView,
                                 item,
                                 mUIControlInterface
@@ -142,7 +142,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
             inflateMenu(R.menu.menu_search)
 
             overflowIcon =
-                AppCompatResources.getDrawable(context, R.drawable.ic_sort)
+                AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_sort)
 
             title = getFragmentTitle()
 
@@ -171,7 +171,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                         menu.setGroupVisible(R.id.sorting, !hasFocus)
                     }
                 }
-                setMenuOnItemClickListener(requireActivity(), this)
+                setMenuOnItemClickListener(this)
             }
         }
     }
@@ -241,12 +241,13 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
         }
     }
 
-    fun onListFiltered(stringToFilter: String?) {
-        stringToFilter?.let { string ->
-            mList?.remove(string)
+    fun onListFiltered(stringToFilter: String) = if (mList == null) {
+            false
+        } else {
+            mList?.remove(stringToFilter)
             setListDataSource(mList)
+            true
         }
-    }
 
     override fun onQueryTextChange(newText: String?): Boolean {
         setListDataSource(ListsHelper.processQueryForStringsLists(newText, mList) ?: mList)
@@ -330,7 +331,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
         mMusicContainerListBinding.fastscrollerThumb.handleViewVisibility(sIsFastScrollerVisible)
     }
 
-    private fun setMenuOnItemClickListener(context: Context, menu: Menu) {
+    private fun setMenuOnItemClickListener(menu: Menu) {
         mMusicContainerListBinding.searchToolbar.setOnMenuItemClickListener {
 
             if (it.itemId != R.id.action_search) {
@@ -347,7 +348,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
                 mSortMenuItem.setTitleColor(
                     ThemeHelper.resolveColorAttr(
-                        context,
+                        requireActivity(),
                         android.R.attr.textColorPrimary
                     )
                 )
@@ -386,9 +387,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
          */
         @JvmStatic
         fun newInstance(launchedBy: String) = MusicContainersListFragment().apply {
-            arguments = Bundle().apply {
-                putString(TAG_LAUNCHED_BY, launchedBy)
-            }
+            arguments = bundleOf(TAG_LAUNCHED_BY to launchedBy)
         }
     }
 }

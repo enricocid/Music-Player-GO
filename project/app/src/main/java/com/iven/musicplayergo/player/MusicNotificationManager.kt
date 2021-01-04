@@ -7,18 +7,19 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toBitmap
+import androidx.core.text.parseAsHtml
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.extensions.getCover
-import com.iven.musicplayergo.extensions.toSpanned
+import com.iven.musicplayergo.extensions.getCoverFromPFD
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
-import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.ui.MainActivity
 
 class MusicNotificationManager(private val playerService: PlayerService) {
@@ -34,7 +35,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     private val sFastSeekingActions get() = goPreferences.isFastSeekingActions
 
     private var mAlbumArt =
-        BitmapFactory.decodeResource(playerService.resources, R.drawable.album_art)
+        ResourcesCompat.getDrawable(playerService.resources, R.drawable.album_art, null)?.toBitmap()
 
     private fun playerAction(action: String): PendingIntent {
 
@@ -66,7 +67,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         mNotificationBuilder =
             NotificationCompat.Builder(playerService, GoConstants.NOTIFICATION_CHANNEL_ID)
 
-        if (VersioningHelper.isOreo()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel()
         }
 
@@ -108,7 +109,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             )
     }
 
-    fun onUpdateDefaultAlbumArt(bitmapRes: Bitmap, updateNotification: Boolean) {
+    fun onUpdateDefaultAlbumArt(bitmapRes: Bitmap?, updateNotification: Boolean) {
         mAlbumArt = bitmapRes
         if (updateNotification) {
             onHandleNotificationUpdate(false)
@@ -135,7 +136,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         mediaPlayerHolder.currentSong.first?.let { song ->
 
             val cover = if (goPreferences.isCovers) {
-                song.getCover(playerService) ?: mAlbumArt
+                song.albumId?.getCoverFromPFD(playerService) ?: mAlbumArt
             } else {
                 mAlbumArt
             }
@@ -151,7 +152,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                     playerService.getString(
                         R.string.song_title_notification,
                         song.title
-                    ).toSpanned()
+                    ).parseAsHtml()
                 )
                 .setLargeIcon(cover)
                 .setColorized(true)

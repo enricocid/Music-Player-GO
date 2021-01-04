@@ -16,7 +16,9 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**Steven Schoen**](https://github.com/DSteve595) for the search function [fixes](https://github.com/enricocid/Music-Player-GO/commit/1c27ff3421dbf7820608237dc60a974955efb022) and quick [support](https://github.com/reddit/IndicatorFastScroll/issues/30)
 
-- [**bullhead**](https://github.com/bullheadandplato) for its equalizer implementation: I learned so much about how an equalizer works
+- [**TacoTheDank**](https://github.com/TacoTheDank) for upgrades to gradle, java 1.8, translations and improvements [247](https://github.com/enricocid/Music-Player-GO/issues/247), [248](https://github.com/enricocid/Music-Player-GO/pull/248), [250](https://github.com/enricocid/Music-Player-GO/pull/250)
+
+- [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes (https://github.com/enricocid/Music-Player-GO/pull/121) and its equalizer implementation: I learned so much about how an equalizer works
 
 - [**svgrepo.com**](https://www.svgrepo.com/) for the [compact disc](https://www.svgrepo.com/svg/181020/compact-disc-music) icon, opportunely modified (background color).
 This work is licensed under a [CC 0](https://creativecommons.org/share-your-work/public-domain/cc0/) license
@@ -30,8 +32,6 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 
 - [**Johnett Mathew**](https://github.com/Johnett) for these [fixes](https://github.com/enricocid/Music-Player-GO/pull/149)
 
-- [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes](https://github.com/enricocid/Music-Player-GO/pull/121)
-
 - [**Ricardo**](https://github.com/RickyM7) for [multiple reports](https://github.com/enricocid/Music-Player-GO/issues/220)
 
 - [**seventhsonmizo**](https://github.com/seventhsonmizo) for Android Q [issue](https://github.com/enricocid/Music-Player-GO/issues/110) report and debugging
@@ -39,8 +39,6 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 - [**Jnss98b**](https://github.com/Jnss98b) for helping me to implement [edge-to-edge](https://github.com/enricocid/Music-Player-GO/issues/86) and for having reported/debugged this [issue](https://github.com/enricocid/VectorifyDaHome/issues/17)
 
 - [**Pirhszm Yfiz**](https://github.com/pirhszm) for reporting this [issue](https://github.com/enricocid/Music-Player-GO/issues/110#issuecomment-573424280)
-
-- [**TacoTheDank**](https://github.com/TacoTheDank) for upgrades to gradle, java 1.8 and translations
 
 - [**Dankan1890**](https://github.com/dankan1890) for some fixes to bluetooth devices
 
@@ -59,6 +57,8 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 - **Stephan Maier** for having reported this [issue](https://github.com/enricocid/Music-Player-GO/commit/06b0375eda3f7c214881af205e64dffbca29dfe7) via F-Droid
 
 - [**john2020star**](https://github.com/john2020star) for having contributed to fix this [issue](https://github.com/enricocid/Music-Player-GO/issues/196)
+
+- **Soyeb Mullick** for having reported this [issue](https://github.com/enricocid/Music-Player-GO/commit/dd1c91d3b62efcd2978a74ef5d64d1615b685c4a)
 
 
 ### Big thanks to translators:

@@ -12,14 +12,14 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/np_eq"
+            android:id="@+id/np_actions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
             android:padding="8dp"
-            app:srcCompat="@drawable/ic_equalizer"
+            app:srcCompat="@drawable/ic_more_vert"
             tools:ignore="ContentDescription" />
 
         <ImageButton

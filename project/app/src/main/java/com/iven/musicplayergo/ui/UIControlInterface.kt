@@ -7,8 +7,7 @@ import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
 
 interface UIControlInterface {
-    fun onAppearanceChanged(isAccentChanged: Boolean, restoreSettings: Boolean)
-    fun onThemeChanged()
+    fun onAppearanceChanged(isThemeChanged: Boolean)
     fun onPreciseVolumeToggled()
     fun onArtistOrFolderSelected(artistOrFolder: String, launchedBy: String)
     fun onSongSelected(song: Music?, songs: List<Music>?, launchedBy: String)
@@ -34,10 +33,11 @@ interface UIControlInterface {
     )
 
     fun onAddToFilter(stringToFilter: String?)
+    fun onSongVisualizationChanged()
     fun onDenyPermission()
     fun onHandleFocusPref()
     fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean)
-    fun onGetEqualizer(): Triple<Equalizer, BassBoost, Virtualizer>
+    fun onGetEqualizer(): Triple<Equalizer?, BassBoost?, Virtualizer?>
     fun onEnableEqualizer(isEnabled: Boolean)
     fun onSaveEqualizerSettings(selectedPreset: Int, bassBoost: Short, virtualizer: Short)
 }

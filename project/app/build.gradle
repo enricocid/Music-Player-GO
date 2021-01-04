@@ -1,26 +1,27 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "com.iven.musicplayergo"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 156
-        versionName "4.3.4"
+        versionCode 159
+        versionName "4.3.7"
 
-        vectorDrawables.useSupportLibrary = true
+        vectorDrawables.useSupportLibrary true
     }
 
     //retrieve version number
     applicationVariants.all { variant ->
-        variant.resValue "string", "versionName", variant.versionName
+        resValue "string", "versionName", variant.versionName
     }
 
-    buildFeatures{
-        viewBinding = true
+    buildFeatures {
+        viewBinding true
     }
 
     buildTypes {
@@ -35,18 +36,19 @@ android {
     // language features (either in its source code or
     // through dependencies).
     compileOptions {
-        encoding = 'UTF-8'
+        encoding "UTF-8"
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
     // For Kotlin projects
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
     lintOptions {
-        disable 'MissingTranslation'
+        disable 'MissingTranslation', 'AllowBackup',
+                'GoogleAppIndexingWarning'
     }
 
     packagingOptions {
@@ -59,8 +61,8 @@ dependencies {
     //https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     //https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
 
 // Support
     //https://developer.android.com/jetpack/androidx/versions
@@ -73,13 +75,13 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.1.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     //https://github.com/material-components/material-components-android/releases
     implementation 'com.google.android.material:material:1.2.1'
 
 // Third-party
-    //https://github.com/google/gson/blob/master/CHANGELOG.md
-    implementation 'com.google.code.gson:gson:2.8.6'
+    //https://github.com/square/moshi/releases
+    implementation 'com.squareup.moshi:moshi:1.11.0'
+    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.11.0'
 
     //https://github.com/reddit/IndicatorFastScroll/releases
     implementation 'com.reddit:indicator-fast-scroll:1.3.0'
@@ -94,6 +96,6 @@ dependencies {
     //https://github.com/beworker/edge-to-edge/blob/master/CHANGELOG.md
     implementation 'de.halfbit:edge-to-edge:0.10'
 
-    //https://github.com/coil-kt/coil
-    implementation 'io.coil-kt:coil:1.0.0'
+    //https://github.com/coil-kt/coil/releases
+    implementation 'io.coil-kt:coil:1.1.0'
 }

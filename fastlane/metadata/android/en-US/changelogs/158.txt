@@ -1,0 +1,4 @@
+- Fix crash on boot while initializing the equalizer
+- Fix crash due to embedded covers option
+- Added a floating button on "all music" tab to shuffle songs
+- Code improvements (thanks TacoTheDank)

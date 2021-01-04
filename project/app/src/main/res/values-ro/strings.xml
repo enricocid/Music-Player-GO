@@ -59,5 +59,4 @@
     <string name="headset_pref_summary_off">Activați gestionarea conexiunii cu căști</string>
     <string name="filter_pref_title">Filtruri</string>
     <string name="filter_popup_title">Mascați</string>
-    <string name="error_no_filter">Nici un filtru a fost găsit !</string>
 </resources>

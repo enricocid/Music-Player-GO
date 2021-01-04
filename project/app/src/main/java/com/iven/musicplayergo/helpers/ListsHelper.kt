@@ -178,6 +178,27 @@ object ListsHelper {
     }
 
     @JvmStatic
+    fun removeFromLovedSongs(
+            song: Music?,
+            playerPosition: Int,
+            launchedBy: String
+    ) {
+        val lovedSongs =
+                if (goPreferences.lovedSongs != null) {
+                    goPreferences.lovedSongs
+                } else {
+                    mutableListOf()
+                }
+
+        val songToSave = song?.toSavedMusic(playerPosition, launchedBy)
+
+        songToSave?.let { savedSong ->
+            lovedSongs?.remove(savedSong)
+            goPreferences.lovedSongs = lovedSongs
+        }
+    }
+
+    @JvmStatic
     fun addOrRemoveFromLovedSongs(
         song: Music?,
         playerPosition: Int,
@@ -185,11 +206,10 @@ object ListsHelper {
     ) {
         val lovedSongs =
             if (goPreferences.lovedSongs != null) {
-                goPreferences.lovedSongs
+                goPreferences.lovedSongs?.toMutableList()
             } else {
                 mutableListOf()
             }
-
         val songToSave = song?.toSavedMusic(playerPosition, launchedBy)
 
         songToSave?.let { savedSong ->

@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.text.parseAsHtml
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
+import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.extensions.toFilenameWithoutExtension
 import com.iven.musicplayergo.extensions.toFormattedDuration
-import com.iven.musicplayergo.extensions.toSpanned
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.models.Music
@@ -63,9 +65,16 @@ class LovedSongsAdapter(
             val duration = itemView.findViewById<TextView>(R.id.duration)
             val subtitle = itemView.findViewById<TextView>(R.id.subtitle)
 
-            title.text = lovedSong?.title
+            val displayedTitle =
+                    if (goPreferences.songsVisualization != GoConstants.TITLE) {
+                        lovedSong?.displayName?.toFilenameWithoutExtension()
+                    } else {
+                        lovedSong?.title
+                    }
+            title.text = displayedTitle
             duration.text =
                     DialogHelper.computeDurationText(lovedSong,ctx)
+
 
             subtitle.text =
                 ctx.getString(R.string.artist_and_album, lovedSong?.artist, lovedSong?.album)

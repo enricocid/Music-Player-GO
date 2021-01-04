@@ -1,7 +1,6 @@
 package com.iven.musicplayergo.player
 
 import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
@@ -9,6 +8,7 @@ import android.os.Parcelable
 import android.os.PowerManager
 import android.support.v4.media.session.MediaSessionCompat
 import android.view.KeyEvent
+import androidx.core.content.getSystemService
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.extensions.toToast
@@ -56,9 +56,7 @@ class PlayerService : Service() {
         }
     }
 
-    fun getMediaSession(): MediaSessionCompat {
-        return mMediaSessionCompat
-    }
+    fun getMediaSession(): MediaSessionCompat = mMediaSessionCompat
 
     override fun onDestroy() {
         super.onDestroy()
@@ -99,6 +97,8 @@ class PlayerService : Service() {
             mediaPlayerHolder = MediaPlayerHolder(this).apply {
                 registerActionsReceiver()
             }
+        }
+        if (!::musicNotificationManager.isInitialized) {
             musicNotificationManager = MusicNotificationManager(this)
         }
         return binder
@@ -119,7 +119,7 @@ class PlayerService : Service() {
     override fun onCreate() {
         super.onCreate()
         if (!::mWakeLock.isInitialized) {
-            val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+            val powerManager = getSystemService<PowerManager>()!!
             mWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, javaClass.name)
             mWakeLock.setReferenceCounted(false)
         }

@@ -5,7 +5,7 @@ import android.support.v4.media.session.PlaybackStateCompat
 object GoConstants {
 
     const val PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 2588
-    const val RESTORE_SETTINGS_FRAGMENT = "RESTORE_SETTINGS_FRAGMENT"
+    const val FRAGMENT_TO_RESTORE = "FRAGMENT_TO_RESTORE"
 
     // active fragments
     const val ARTISTS_TAB = "ARTISTS_TAB"
@@ -14,7 +14,8 @@ object GoConstants {
     const val FOLDERS_TAB = "FOLDERS_TAB"
     const val SETTINGS_TAB = "SETTINGS_TAB"
 
-    val DEFAULT_ACTIVE_FRAGMENTS = setOf(ARTISTS_TAB, ALBUM_TAB, SONGS_TAB, FOLDERS_TAB, SETTINGS_TAB)
+    val DEFAULT_ACTIVE_FRAGMENTS =
+        listOf(ARTISTS_TAB, ALBUM_TAB, SONGS_TAB, FOLDERS_TAB, SETTINGS_TAB)
 
     // launched by, used to determine which MusicContainerListFragment is instantiated by the ViewPager
     const val ARTIST_VIEW = "0"

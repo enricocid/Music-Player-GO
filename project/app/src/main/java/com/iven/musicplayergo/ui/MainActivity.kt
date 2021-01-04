@@ -6,23 +6,30 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.graphics.BitmapFactory
 import android.media.audiofx.BassBoost
 import android.media.audiofx.Equalizer
 import android.media.audiofx.Virtualizer
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
+import android.widget.PopupMenu
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import coil.ImageLoader
+import coil.load
+import coil.request.ImageRequest
+import coil.transform.RoundedCornersTransformation
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
@@ -51,9 +58,9 @@ import com.iven.musicplayergo.player.MediaPlayerInterface
 import com.iven.musicplayergo.player.PlayerService
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
+import kotlinx.coroutines.*
 
 
-@Suppress("UNUSED_PARAMETER")
 class MainActivity : AppCompatActivity(), UIControlInterface {
 
     // View binding classes
@@ -64,7 +71,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private val mMusicViewModel: MusicViewModel by viewModels()
 
     // Fragments
-    private val mActiveFragments: List<String> = goPreferences.activeFragments.toList()
+    private val mActiveFragments: List<String> = goPreferences.activeTabs.toList()
     private var mArtistsFragment: MusicContainersListFragment? = null
     private var mAllMusicFragment: AllMusicFragment? = null
     private var mFoldersFragment: MusicContainersListFragment? = null
@@ -72,6 +79,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private var mSettingsFragment: SettingsFragment? = null
     private lateinit var mDetailsFragment: DetailsFragment
     private lateinit var mEqualizerFragment: EqFragment
+
+    private val mMusicContainersFragments = mutableListOf<MusicContainersListFragment>()
 
     // Booleans
     private val sDetailsFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.DETAILS_FRAGMENT_TAG)
@@ -82,8 +91,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private var sRevealAnimationRunning = false
 
-    private var sAppearanceChanged = false
-    private var sRestoreSettingsFragment = false
+    private var mFragmentToRestore = 0
 
     // Loved songs dialog
     private lateinit var mLovedSongsDialog: MaterialDialog
@@ -93,6 +101,23 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private lateinit var mNowPlayingBinding: NowPlayingBinding
     private lateinit var mNowPlayingControlsBinding: NowPlayingControlsBinding
     private lateinit var mNowPlayingExtendedControlsBinding: NowPlayingExtendedControlsBinding
+
+    /**
+     * This is the job for all coroutines started by this ViewModel.
+     * Cancelling this job will cancel all coroutines started by this ViewModel.
+     */
+    private val mLoadCoverJob = SupervisorJob()
+
+    private val mLoadCoverHandler = CoroutineExceptionHandler { _, exception ->
+        exception.printStackTrace()
+    }
+
+    private val mLoadCoverIoDispatcher = Dispatchers.IO + mLoadCoverJob + mLoadCoverHandler
+    private val mLoadCoverIoScope = CoroutineScope(mLoadCoverIoDispatcher)
+
+    private lateinit var mImageLoader: ImageLoader
+
+    private var mSelectedArtistAlbumForNP: Pair<String?, String?> = Pair("", "")
 
     // Music player things
     private lateinit var mQueueDialog: MaterialDialog
@@ -111,9 +136,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun checkIsPlayer(showError: Boolean): Boolean {
         if (!isMediaPlayerHolder && !mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs && showError) {
             getString(
-                R.string.error_bad_id
+                    R.string.error_bad_id
             ).toToast(
-                this@MainActivity
+                    this@MainActivity
             )
             return false
         }
@@ -159,12 +184,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             sErrorFragmentExpanded -> finishAndRemoveTask()
             else -> if (mMainActivityBinding.viewPager2.currentItem != 0) {
                 mMainActivityBinding.viewPager2.currentItem =
-                    0
+                        0
             } else {
                 if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) {
                     DialogHelper.stopPlaybackDialog(
-                        this,
-                        mMediaPlayerHolder
+                            this,
+                            mMediaPlayerHolder
                     )
                 } else {
                     onCloseActivity()
@@ -174,22 +199,25 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        if (sAppearanceChanged) {
+        if (mFragmentToRestore != 0) {
             super.onSaveInstanceState(outState)
-            outState.putBoolean(
-                GoConstants.RESTORE_SETTINGS_FRAGMENT,
-                true
+            outState.putInt(
+                    GoConstants.FRAGMENT_TO_RESTORE,
+                    mFragmentToRestore
             )
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        if (goPreferences.isCovers) {
+            mLoadCoverJob.cancel()
+        }
         mMusicViewModel.cancel()
         if (sBound) {
             unbindService(connection)
         }
-        if (isMediaPlayerHolder && !mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning) {
+        if (isMediaPlayerHolder && !mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning && !mMediaPlayerHolder.isSongRestoredFromPrefs) {
             mPlayerService.stopForeground(true)
             stopService(mBindingIntent)
         }
@@ -197,7 +225,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onResume() {
         super.onResume()
-        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) {
+        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs) {
             mMediaPlayerHolder.onRestartSeekBarCallback()
         }
     }
@@ -205,7 +233,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     // Pause SeekBar callback
     override fun onPause() {
         super.onPause()
-        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer) {
+        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs) {
             saveSongToPref()
             mMediaPlayerHolder.run {
                 onPauseSeekBarCallback()
@@ -218,8 +246,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     // Manage request permission result
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>, grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<String>, grantResults: IntArray
     ) {
         when (requestCode) {
             GoConstants.PERMISSION_REQUEST_READ_EXTERNAL_STORAGE -> {
@@ -256,16 +284,16 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         initMediaButtons()
 
-        sRestoreSettingsFragment =
-            savedInstanceState?.getBoolean(GoConstants.RESTORE_SETTINGS_FRAGMENT)
-                ?: intent.getBooleanExtra(
-                    GoConstants.RESTORE_SETTINGS_FRAGMENT,
-                    false
-                )
+        mFragmentToRestore =
+                savedInstanceState?.getInt(GoConstants.FRAGMENT_TO_RESTORE)
+                        ?: intent.getIntExtra(
+                                GoConstants.FRAGMENT_TO_RESTORE,
+                                0
+                        )
 
         if (PermissionsHelper.hasToAskForReadStoragePermission(this)) {
             PermissionsHelper.manageAskForReadStoragePermission(
-                activity = this, uiControlInterface = this
+                    activity = this, uiControlInterface = this
             )
         } else {
             doBindService()
@@ -277,8 +305,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mMainActivityBinding.loadingProgressBar.handleViewVisibility(false)
         mMainActivityBinding.viewPager2.handleViewVisibility(false)
         supportFragmentManager.addFragment(
-            ErrorFragment.newInstance(errorType),
-            GoConstants.ERROR_FRAGMENT_TAG
+                ErrorFragment.newInstance(errorType),
+                GoConstants.ERROR_FRAGMENT_TAG
         )
     }
 
@@ -288,7 +316,19 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
             mMainActivityBinding.loadingProgressBar.handleViewVisibility(false)
 
-            initViewPager()
+            synchronized(initViewPager()) {
+                val fragmentsIterator = mActiveFragments.iterator().withIndex()
+                while (fragmentsIterator.hasNext()) {
+                    val fragmentIndex = fragmentsIterator.next().value
+                    val fragment = getFragmentForIndex(fragmentIndex)
+                    if (fragment is MusicContainersListFragment && !mMusicContainersFragments.contains(
+                                    fragment
+                            )
+                    ) {
+                        mMusicContainersFragments.add(fragment)
+                    }
+                }
+            }
 
             synchronized(handleRestore()) {
                 mPlayerControlsPanelBinding.playerView.animate().apply {
@@ -305,7 +345,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun handleRestore() {
         if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null) {
             handleIntent(
-                intent
+                    intent
             )
         } else {
             restorePlayerStatus()
@@ -347,21 +387,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 }
             })
 
-            getTabAt(
-                if (sRestoreSettingsFragment) {
-                    mMainActivityBinding.viewPager2.offscreenPageLimit
-                } else {
-                    0
-                }
-            )?.icon?.setTint(
-                ThemeHelper.resolveThemeAccent(this@MainActivity)
+            getTabAt(mFragmentToRestore)?.icon?.setTint(
+                    ThemeHelper.resolveThemeAccent(this@MainActivity)
             )
         }
 
-        if (sRestoreSettingsFragment) {
+        if (mFragmentToRestore != 0) {
             mMainActivityBinding.viewPager2.setCurrentItem(
-                mMainActivityBinding.viewPager2.offscreenPageLimit,
-                false
+                    mFragmentToRestore,
+                    false
             )
         }
     }
@@ -370,23 +404,23 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         when (fragmentIndex) {
             GoConstants.ARTISTS_TAB -> if (mArtistsFragment == null) {
                 mArtistsFragment =
-                    MusicContainersListFragment.newInstance(GoConstants.ARTIST_VIEW)
+                        MusicContainersListFragment.newInstance(GoConstants.ARTIST_VIEW)
             }
             GoConstants.ALBUM_TAB -> if (mAlbumsFragment == null) {
                 mAlbumsFragment =
-                    MusicContainersListFragment.newInstance(GoConstants.ALBUM_VIEW)
+                        MusicContainersListFragment.newInstance(GoConstants.ALBUM_VIEW)
             }
             GoConstants.SONGS_TAB -> if (mAllMusicFragment == null) {
                 mAllMusicFragment =
-                    AllMusicFragment.newInstance()
+                        AllMusicFragment.newInstance()
             }
             GoConstants.FOLDERS_TAB -> if (mFoldersFragment == null) {
                 mFoldersFragment =
-                    MusicContainersListFragment.newInstance(GoConstants.FOLDER_VIEW)
+                        MusicContainersListFragment.newInstance(GoConstants.FOLDER_VIEW)
             }
             else -> if (mSettingsFragment == null) {
                 mSettingsFragment =
-                    SettingsFragment.newInstance()
+                        SettingsFragment.newInstance()
             }
         }
     }
@@ -415,26 +449,26 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun openDetailsFragment(
-        selectedArtistOrFolder: String?,
-        launchedBy: String,
-        isShuffleMode: Pair<Boolean, String?>
+            selectedArtistOrFolder: String?,
+            launchedBy: String,
+            isShuffleMode: Pair<Boolean, String?>
     ) {
         if (!sDetailsFragmentExpanded) {
             mDetailsFragment =
-                DetailsFragment.newInstance(
-                    selectedArtistOrFolder,
-                    launchedBy,
-                    MusicOrgHelper.getPlayingAlbumPosition(
-                        selectedArtistOrFolder,
-                        mMediaPlayerHolder,
-                        mMusicViewModel.deviceAlbumsByArtist
-                    ),
-                    isShuffleMode
-                )
+                    DetailsFragment.newInstance(
+                            selectedArtistOrFolder,
+                            launchedBy,
+                            MusicOrgHelper.getPlayingAlbumPosition(
+                                    selectedArtistOrFolder,
+                                    mMediaPlayerHolder,
+                                    mMusicViewModel.deviceAlbumsByArtist
+                            ),
+                            isShuffleMode
+                    )
             sCloseDetailsFragment = true
             supportFragmentManager.addFragment(
-                mDetailsFragment,
-                GoConstants.DETAILS_FRAGMENT_TAG
+                    mDetailsFragment,
+                    GoConstants.DETAILS_FRAGMENT_TAG
             )
         }
     }
@@ -467,8 +501,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             setOnLongClickListener {
                 if (checkIsPlayer(true) && mMediaPlayerHolder.isQueue) {
                     DialogHelper.showClearQueueDialog(
-                        this@MainActivity,
-                        mMediaPlayerHolder
+                            this@MainActivity,
+                            mMediaPlayerHolder
                     )
                 }
                 return@setOnLongClickListener true
@@ -480,8 +514,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             setOnLongClickListener {
                 if (!goPreferences.lovedSongs.isNullOrEmpty()) {
                     DialogHelper.showClearLovedSongDialog(
-                        this@MainActivity,
-                        this@MainActivity
+                            this@MainActivity,
+                            this@MainActivity
                     )
                 }
                 return@setOnLongClickListener true
@@ -494,10 +528,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
             setOnClickListener { openNowPlaying() }
             setOnLongClickListener {
-                if (checkIsPlayer(true)) {
-                    if (!sDetailsFragmentExpanded || sDetailsFragmentExpanded and !sEqFragmentExpanded) {
-                        openPlayingArtistAlbum()
-                    }
+                if (!sDetailsFragmentExpanded || sDetailsFragmentExpanded and !sEqFragmentExpanded) {
+                    openPlayingArtistAlbum()
                 }
                 return@setOnLongClickListener true
             }
@@ -507,67 +539,57 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun setSeekBarProgressListener() {
 
         mNowPlayingBinding.npSeekBar.setOnSeekBarChangeListener(
-            object : SeekBar.OnSeekBarChangeListener {
+                object : SeekBar.OnSeekBarChangeListener {
 
-                val defaultPositionColor = mNowPlayingBinding.npSeek.currentTextColor
-                val selectedColor = ThemeHelper.resolveThemeAccent(this@MainActivity)
-                var userSelectedPosition = 0
-                var isUserSeeking = false
+                    val defaultPositionColor = mNowPlayingBinding.npSeek.currentTextColor
+                    val selectedColor = ThemeHelper.resolveThemeAccent(this@MainActivity)
+                    var userSelectedPosition = 0
+                    var isUserSeeking = false
 
-                override fun onProgressChanged(
-                    seekBar: SeekBar?,
-                    progress: Int,
-                    fromUser: Boolean
-                ) {
-                    if (isUserSeeking) {
-                        userSelectedPosition = progress
-                        mNowPlayingBinding.npSeek.setTextColor(
-                            selectedColor
+                    override fun onProgressChanged(
+                            seekBar: SeekBar?,
+                            progress: Int,
+                            fromUser: Boolean
+                    ) {
+                        if (isUserSeeking) {
+                            userSelectedPosition = progress
+                            mNowPlayingBinding.npSeek.setTextColor(
+                                    selectedColor
+                            )
+                        }
+                        mNowPlayingBinding.npSeek.text =
+                                progress.toLong().toFormattedDuration(isAlbum = false, isSeekBar = true)
+                    }
+
+                    override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                        isUserSeeking = true
+                    }
+
+                    override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                        if (isUserSeeking) {
+                            mNowPlayingBinding.npSeek.setTextColor(defaultPositionColor)
+                            mMediaPlayerHolder.onPauseSeekBarCallback()
+                            isUserSeeking = false
+                        }
+                        if (mMediaPlayerHolder.state != GoConstants.PLAYING) {
+                            mPlayerControlsPanelBinding.songProgress.progress = userSelectedPosition
+                            mNowPlayingBinding.npSeekBar.progress = userSelectedPosition
+                        }
+                        mMediaPlayerHolder.seekTo(
+                                userSelectedPosition,
+                                updatePlaybackStatus = mMediaPlayerHolder.isPlaying,
+                                restoreProgressCallBack = !isUserSeeking
                         )
                     }
-                    mNowPlayingBinding.npSeek.text =
-                        progress.toLong().toFormattedDuration(isAlbum = false, isSeekBar = true)
-                }
-
-                override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                    isUserSeeking = true
-                }
-
-                override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                    if (isUserSeeking) {
-                        mNowPlayingBinding.npSeek.setTextColor(defaultPositionColor)
-                        mMediaPlayerHolder.onPauseSeekBarCallback()
-                        isUserSeeking = false
-                    }
-                    if (mMediaPlayerHolder.state != GoConstants.PLAYING) {
-                        mPlayerControlsPanelBinding.songProgress.progress = userSelectedPosition
-                        mNowPlayingBinding.npSeekBar.progress = userSelectedPosition
-                    }
-                    mMediaPlayerHolder.seekTo(
-                        userSelectedPosition,
-                        updatePlaybackStatus = mMediaPlayerHolder.isPlaying,
-                        restoreProgressCallBack = !isUserSeeking
-                    )
-                }
-            })
+                })
     }
 
-    private fun setCovers() {
+    private fun setupNowPlayingWithCovers() {
         if (goPreferences.isCovers) {
             if (!ThemeHelper.isDeviceLand(resources)) {
                 mNowPlayingBinding.npArtistAlbum.textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
                 mNowPlayingBinding.npSong.textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
             }
-            mNowPlayingBinding.npCover.loadCover(
-                getImageLoader(),
-                mMediaPlayerHolder.currentSong.first,
-                BitmapFactory.decodeResource(
-                    resources,
-                    R.drawable.album_art
-                ),
-                isCircleCrop = true,
-                isLoadDelay = false
-            )
         } else {
             mNowPlayingBinding.npCover.handleViewVisibility(false)
         }
@@ -577,17 +599,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         mMediaPlayerHolder.currentVolumeInPercent.run {
             mNowPlayingExtendedControlsBinding.npVolume.setImageResource(
-                ThemeHelper.getPreciseVolumeIcon(
-                    this
-                )
+                    ThemeHelper.getPreciseVolumeIcon(
+                            this
+                    )
             )
             mNowPlayingExtendedControlsBinding.npVolumeSeek.progress = this
         }
 
-        val resolvedIconsColor = R.color.widgetsColor.decodeColor(this)
+        val resolvedIconsColor = ContextCompat.getColor(this, R.color.widgetsColor)
 
         mNowPlayingExtendedControlsBinding.npVolumeSeek.setOnSeekBarChangeListener(object :
-            SeekBar.OnSeekBarChangeListener {
+                SeekBar.OnSeekBarChangeListener {
 
             var isUserSeeking = false
 
@@ -597,14 +619,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     mMediaPlayerHolder.setPreciseVolume(progress)
 
                     mNowPlayingExtendedControlsBinding.npVolume.setImageResource(
-                        ThemeHelper.getPreciseVolumeIcon(
-                            progress
-                        )
+                            ThemeHelper.getPreciseVolumeIcon(
+                                    progress
+                            )
                     )
 
                     ThemeHelper.updateIconTint(
-                        mNowPlayingExtendedControlsBinding.npVolume,
-                        ThemeHelper.resolveThemeAccent(this@MainActivity)
+                            mNowPlayingExtendedControlsBinding.npVolume,
+                            ThemeHelper.resolveThemeAccent(this@MainActivity)
                     )
 
                 }
@@ -617,8 +639,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 isUserSeeking = false
                 ThemeHelper.updateIconTint(
-                    mNowPlayingExtendedControlsBinding.npVolume,
-                    resolvedIconsColor
+                        mNowPlayingExtendedControlsBinding.npVolume,
+                        resolvedIconsColor
                 )
             }
         })
@@ -635,15 +657,40 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mNowPlayingBinding = NowPlayingBinding.bind(getCustomView())
                 mNowPlayingControlsBinding = NowPlayingControlsBinding.bind(mNowPlayingBinding.root)
                 mNowPlayingExtendedControlsBinding =
-                    NowPlayingExtendedControlsBinding.bind(mNowPlayingBinding.root)
-
-                mNowPlayingExtendedControlsBinding.npSaveTime.setOnClickListener { savePlayerPosition() }
+                        NowPlayingExtendedControlsBinding.bind(mNowPlayingBinding.root)
 
                 mNowPlayingBinding.npSong.isSelected = true
                 mNowPlayingBinding.npArtistAlbum.isSelected = true
 
                 mNowPlayingBinding.npPlayingSongContainer.setOnClickListener { openPlayingArtistAlbum() }
-                mNowPlayingControlsBinding.npEq.setOnClickListener { openEqualizer() }
+
+
+
+                mNowPlayingControlsBinding.npActions.setOnClickListener { equalizerButton ->
+                    val popup = PopupMenu(this@MainActivity, equalizerButton);
+                    popup.menuInflater.inflate(R.menu.menu_now_playing_actions, popup.menu);
+
+                    popup.setOnMenuItemClickListener() {
+                        when (it.itemId) {
+                            R.id.equalizer -> openEqualizer()
+                            R.id.savePlayerPosition -> {
+                                val song = mMediaPlayerHolder.currentSong.first
+                                ListsHelper.addToLovedSongs(song, mMediaPlayerHolder.playerPosition, mMediaPlayerHolder.launchedBy)
+                                onLovedSongAdded(song, true)
+                                context.getString(
+                                        R.string.loved_song_added,
+                                        song?.title,
+                                        song?.startFrom?.toLong()?.toFormattedDuration(
+                                                isAlbum = false,
+                                                isSeekBar = false
+                                        )
+                                ).toToast(context)
+                            }
+                        }
+                        true
+                    }
+                    popup.show()
+                }
 
                 mNowPlayingControlsBinding.npSkipPrev.run {
                     setOnClickListener { skip(false) }
@@ -663,31 +710,28 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     }
                 }
 
-                setCovers()
+                setupNowPlayingWithCovers()
 
                 mNowPlayingControlsBinding.npRepeat.run {
                     setImageResource(
-                        ThemeHelper.getRepeatIcon(
-                            mMediaPlayerHolder
-                        )
+                            ThemeHelper.getRepeatIcon(
+                                    mMediaPlayerHolder
+                            )
                     )
                     ThemeHelper.updateIconTint(
-                        this,
-                        if (mMediaPlayerHolder.isRepeat1X || mMediaPlayerHolder.isLooping) {
-                            ThemeHelper.resolveThemeAccent(this@MainActivity)
-                        } else {
-                            R.color.widgetsColor.decodeColor(this@MainActivity)
-                        }
+                            this,
+                            if (mMediaPlayerHolder.isRepeat1X || mMediaPlayerHolder.isLooping) {
+                                ThemeHelper.resolveThemeAccent(this@MainActivity)
+                            } else {
+                                ContextCompat.getColor(this@MainActivity, R.color.widgetsColor)
+                            }
                     )
                     setOnClickListener { setRepeat() }
                 }
 
                 mNowPlayingExtendedControlsBinding.npLove.setOnClickListener {
-                    ListsHelper.addOrRemoveFromLovedSongs(
-                        mMediaPlayerHolder.currentSong.first,
-                        0,
-                        mMediaPlayerHolder.launchedBy
-                    )
+                    ListsHelper.addOrRemoveFromLovedSongs(mMediaPlayerHolder.currentSong.first,
+                            0, mMediaPlayerHolder.launchedBy)
                     onLovedSongsUpdate(false)
                     updateNowPlayingLovedIcon(context)
                 }
@@ -697,11 +741,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 } else {
                     mNowPlayingExtendedControlsBinding.npVolumeSeek.isEnabled = false
                     ThemeHelper.updateIconTint(
-                        mNowPlayingExtendedControlsBinding.npVolume,
-                        ThemeHelper.resolveColorAttr(
-                            this@MainActivity,
-                            android.R.attr.colorButtonNormal
-                        )
+                            mNowPlayingExtendedControlsBinding.npVolume,
+                            ThemeHelper.resolveColorAttr(
+                                    this@MainActivity,
+                                    android.R.attr.colorButtonNormal
+                            )
                     )
                 }
 
@@ -710,8 +754,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 updateNowPlayingInfo()
 
                 onShow {
+                    mMediaPlayerHolder.currentSong.first?.let { song ->
+                        if (goPreferences.isCovers) {
+                            loadNowPlayingCover(song)
+                        }
+                        mNowPlayingBinding.npSeek.text =
+                                song.startFrom.toLong()
+                                        .toFormattedDuration(false, isSeekBar = true)
+                    }
+
                     mNowPlayingBinding.npSeekBar.progress =
-                        mPlayerControlsPanelBinding.songProgress.progress
+                            mPlayerControlsPanelBinding.songProgress.progress
                 }
 
                 onDismiss {
@@ -732,26 +785,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    private fun savePlayerPosition() {
-        if (mMediaPlayerHolder.playerPosition > 0) {
-            ListsHelper.addToLovedSongs(
-                    mMediaPlayerHolder.currentSong.first,
-                    mMediaPlayerHolder.playerPosition,
-                    mMediaPlayerHolder.launchedBy
-            )
-            onLovedSongsUpdate(false)
-            getString(R.string.player_position_saved).toToast(this)
-        }else {
-            getString(R.string.cannot_save_position).toToast(this)
-        }
-    }
 
     private fun updateNowPlayingLovedIcon(context: Context) {
         if (this::mNowPlayingExtendedControlsBinding.isInitialized) {
             mMediaPlayerHolder.currentSong.first.let {
                 val isLoved = isInLovedSongs(it!!)
                 val lovedSongsButtonColor = if (isLoved)
-                    R.color.red.decodeColor(context) else ThemeHelper.resolveColorAttr(
+                    ThemeHelper.resolveThemeAccent(context) else ThemeHelper.resolveColorAttr(
                         context,
                         android.R.attr.colorButtonNormal
                 )
@@ -763,9 +803,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    private fun isInLovedSongs(song: Music): Boolean {
+    private fun isInLovedSongs(song: Music?): Boolean {
         val lovedSongs = goPreferences.lovedSongs
-        if (lovedSongs != null) {
+        if (lovedSongs != null && song != null) {
             val convertedSong =
                     song.toSavedMusicWithoutPosition(mMediaPlayerHolder.launchedBy)
             return lovedSongs.contains(convertedSong)
@@ -781,21 +821,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    override fun onThemeChanged() {
-        sAppearanceChanged = true
+    override fun onAppearanceChanged(isThemeChanged: Boolean) {
+        mFragmentToRestore = mMainActivityBinding.viewPager2.currentItem
         synchronized(saveSongToPref()) {
-            AppCompatDelegate.setDefaultNightMode(
-                ThemeHelper.getDefaultNightMode(
-                    this
+            if (isThemeChanged) {
+                AppCompatDelegate.setDefaultNightMode(
+                        ThemeHelper.getDefaultNightMode(
+                                this
+                        )
                 )
-            )
-        }
-    }
-
-    override fun onAppearanceChanged(isAccentChanged: Boolean, restoreSettings: Boolean) {
-        sAppearanceChanged = true
-        synchronized(saveSongToPref()) {
-            ThemeHelper.applyChanges(this)
+            } else {
+                ThemeHelper.applyChanges(this, mFragmentToRestore)
+            }
         }
     }
 
@@ -807,16 +844,16 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun updatePlayingStatus(isNowPlaying: Boolean) {
         val isPlaying = mMediaPlayerHolder.state != GoConstants.PAUSED
         val drawable =
-            if (isPlaying) {
-                R.drawable.ic_pause
-            } else {
-                R.drawable.ic_play
-            }
+                if (isPlaying) {
+                    R.drawable.ic_pause
+                } else {
+                    R.drawable.ic_play
+                }
         if (isNowPlaying) {
             mNowPlayingControlsBinding.npPlay.setImageResource(drawable)
         } else {
             mPlayerControlsPanelBinding.playPauseButton.setImageResource(
-                drawable
+                    drawable
             )
         }
     }
@@ -836,11 +873,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 }
             }
         }
+        onLovedSongsUpdate(false)
+        updateNowPlayingLovedIcon(this@MainActivity)
     }
 
     override fun onLovedSongsUpdate(clear: Boolean) {
 
-        val lovedSongs = goPreferences.lovedSongs
+        val lovedSongs = goPreferences.lovedSongs?.toMutableList()
 
         if (clear) {
             lovedSongs?.clear()
@@ -849,15 +888,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         val lovedSongsButtonColor = if (lovedSongs.isNullOrEmpty()) {
             ThemeHelper.resolveColorAttr(
-                this,
-                android.R.attr.colorButtonNormal
+                    this,
+                    android.R.attr.colorButtonNormal
             )
         } else {
-            R.color.red.decodeColor(this)
+            ContextCompat.getColor(this, R.color.red)
         }
         ThemeHelper.updateIconTint(
-            mPlayerControlsPanelBinding.lovedSongsButton,
-            lovedSongsButtonColor
+                mPlayerControlsPanelBinding.lovedSongsButton,
+                lovedSongsButtonColor
         )
     }
 
@@ -877,52 +916,47 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     isSongRestoredFromPrefs = goPreferences.latestPlayedSong != null
 
                     val song =
-                        if (isSongRestoredFromPrefs) {
-                            goPreferences.latestPlayedSong
-                        } else {
-                            mMusicViewModel.randomMusic
-                        }
+                            if (isSongRestoredFromPrefs) {
+                                goPreferences.latestPlayedSong
+                            } else {
+                                mMusicViewModel.randomMusic
+                            }
 
                     val songs = MusicOrgHelper.getAlbumSongs(
-                        song?.artist,
-                        song?.album,
-                        mMusicViewModel.deviceAlbumsByArtist
+                            song?.artist,
+                            song?.album,
+                            mMusicViewModel.deviceAlbumsByArtist
                     )
 
                     if (!songs.isNullOrEmpty()) {
-
-                        isPlay = false
+                        mMediaPlayerHolder.isPlay = false
 
                         startPlayback(
-                            song,
-                            songs,
-                            getLatestSongLaunchedBy()
+                                song,
+                                songs,
+                                getLatestSongLaunchedBy()
                         )
 
                         updatePlayingInfo(false)
 
-                        mPlayerControlsPanelBinding.songProgress.progress =
-                            if (isSongRestoredFromPrefs) {
-                                goPreferences.latestPlayedSong?.startFrom!!
-                            } else {
-                                0
-                            }
+                        mPlayerControlsPanelBinding.songProgress.progress = song?.startFrom!!
                     } else {
                         notifyError(GoConstants.TAG_SD_NOT_READY)
                     }
                 }
                 onUpdateDefaultAlbumArt(
-                    BitmapFactory.decodeResource(
-                        resources,
-                        R.drawable.album_art
-                    )
+                        ResourcesCompat.getDrawable(
+                                resources,
+                                R.drawable.album_art,
+                                null
+                        )?.toBitmap()
                 )
             }
         }
     }
 
     private fun getLatestSongLaunchedBy() = goPreferences.latestPlayedSong?.launchedBy
-        ?: GoConstants.ARTIST_VIEW
+            ?: GoConstants.ARTIST_VIEW
 
     // method to update info on controls panel
     private fun updatePlayingInfo(restore: Boolean) {
@@ -935,11 +969,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mPlayerControlsPanelBinding.playingSong.text = selectedSong.title
 
         mPlayerControlsPanelBinding.playingArtist.text =
-            getString(
-                R.string.artist_and_album,
-                selectedSong.artist,
-                selectedSong.album
-            )
+                getString(
+                        R.string.artist_and_album,
+                        selectedSong.artist,
+                        selectedSong.album
+                )
 
         updateRepeatStatus(false)
 
@@ -971,56 +1005,94 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun updateRepeatStatus(onPlaybackCompletion: Boolean) {
-        val resolvedIconsColor = R.color.widgetsColor.decodeColor(this@MainActivity)
+        val resolvedIconsColor = ContextCompat.getColor(this, R.color.widgetsColor)
         if (isNowPlaying) {
             mNowPlayingControlsBinding.npRepeat.setImageResource(
-                ThemeHelper.getRepeatIcon(
-                    mMediaPlayerHolder
-                )
+                    ThemeHelper.getRepeatIcon(
+                            mMediaPlayerHolder
+                    )
             )
             when {
                 onPlaybackCompletion -> ThemeHelper.updateIconTint(
-                    mNowPlayingControlsBinding.npRepeat,
-                    resolvedIconsColor
+                        mNowPlayingControlsBinding.npRepeat,
+                        resolvedIconsColor
                 )
                 mMediaPlayerHolder.isRepeat1X or mMediaPlayerHolder.isLooping -> {
                     ThemeHelper.updateIconTint(
-                        mNowPlayingControlsBinding.npRepeat,
-                        ThemeHelper.resolveThemeAccent(this)
+                            mNowPlayingControlsBinding.npRepeat,
+                            ThemeHelper.resolveThemeAccent(this)
                     )
                 }
                 else -> ThemeHelper.updateIconTint(
-                    mNowPlayingControlsBinding.npRepeat,
-                    resolvedIconsColor
+                        mNowPlayingControlsBinding.npRepeat,
+                        resolvedIconsColor
                 )
+            }
+        }
+    }
+
+    private fun loadNowPlayingCover(selectedSong: Music) {
+        if (!::mImageLoader.isInitialized) {
+            mImageLoader = ImageLoader.Builder(this)
+                    .bitmapPoolingEnabled(false)
+                    .crossfade(true)
+                    .build()
+        }
+
+        mSelectedArtistAlbumForNP = Pair(selectedSong.artist, selectedSong.album)
+        val request = ImageRequest.Builder(this)
+                .data(selectedSong.albumId?.getCoverFromPFD(this) ?: ResourcesCompat.getDrawable(
+                        resources,
+                        R.drawable.album_art,
+                        null
+                )?.toBitmap())
+                .target(
+                        onSuccess = { result ->
+                            // Handle the successful result.
+                            mNowPlayingBinding.npCover.load(result) {
+                                transformations(RoundedCornersTransformation(16.0F))
+                            }
+                        }
+                )
+                .build()
+
+        mLoadCoverIoScope.launch {
+            withContext(mLoadCoverIoDispatcher) {
+                mImageLoader.enqueue(request)
             }
         }
     }
 
     private fun updateNowPlayingInfo() {
 
-        val selectedSong = mMediaPlayerHolder.currentSong.first
-        val selectedSongDuration = selectedSong?.duration!!
+        mMediaPlayerHolder.currentSong.first?.let { song ->
+            val selectedSongDuration = song.duration
+            if (mSelectedArtistAlbumForNP != Pair(
+                            song.artist,
+                            song.album
+                    ) && goPreferences.isCovers && ::mNowPlayingDialog.isInitialized && mNowPlayingDialog.isShowing
+            ) {
+                loadNowPlayingCover(song)
+            }
 
-        mNowPlayingBinding.npSong.text = selectedSong.title
+            mNowPlayingBinding.npSong.text = song.title
 
-        mNowPlayingBinding.npArtistAlbum.text =
-            getString(
-                R.string.artist_and_album,
-                selectedSong.artist,
-                selectedSong.album
-            )
+            mNowPlayingBinding.npArtistAlbum.text =
+                    getString(
+                            R.string.artist_and_album,
+                            song.artist,
+                            song.album
+                    )
 
-        mNowPlayingBinding.npSeek.text =
-            mMediaPlayerHolder.playerPosition.toLong().toFormattedDuration(false, isSeekBar = true)
-        mNowPlayingBinding.npDuration.text =
-            selectedSongDuration.toFormattedDuration(false, isSeekBar = true)
+            mNowPlayingBinding.npDuration.text =
+                    selectedSongDuration.toFormattedDuration(false, isSeekBar = true)
 
-        mNowPlayingBinding.npSeekBar.max = selectedSong.duration.toInt()
+            mNowPlayingBinding.npSeekBar.max = song.duration.toInt()
 
-        selectedSong.id?.toContentUri()?.toBitrate(this)?.let { bitrateInfo ->
-            mNowPlayingBinding.npRates.text =
-                getString(R.string.rates, bitrateInfo.first, bitrateInfo.second)
+            song.id?.toContentUri()?.toBitrate(this)?.let { (first, second) ->
+                mNowPlayingBinding.npRates.text =
+                        getString(R.string.rates, first, second)
+            }
         }
         updateNowPlayingLovedIcon(this)
         updatePlayingStatus(true)
@@ -1036,7 +1108,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun openPlayingArtistAlbum() {
         if (isMediaPlayerHolder && mMediaPlayerHolder.isCurrentSong) {
-
             val isPlayingFromFolder = mMediaPlayerHolder.launchedBy
             val selectedSong = mMediaPlayerHolder.currentSong.first
             val selectedArtistOrFolder = getSongSource(selectedSong, isPlayingFromFolder)
@@ -1044,31 +1115,31 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 if (mDetailsFragment.hasToUpdate(selectedArtistOrFolder)) {
                     synchronized(super.onBackPressed()) {
                         openDetailsFragment(
-                            selectedArtistOrFolder,
-                            mMediaPlayerHolder.launchedBy,
-                            Pair(
-                                checkIsPlayer(false) && mMediaPlayerHolder.isShuffledSongsQueued.first && mMediaPlayerHolder.currentSong.first?.artist == selectedArtistOrFolder && mMediaPlayerHolder.launchedBy != GoConstants.ALBUM_VIEW && mMediaPlayerHolder.launchedBy != GoConstants.FOLDER_VIEW,
-                                mMediaPlayerHolder.isShuffledSongsQueued.second
-                            )
+                                selectedArtistOrFolder,
+                                mMediaPlayerHolder.launchedBy,
+                                Pair(
+                                        checkIsPlayer(false) && mMediaPlayerHolder.isShuffledSongsQueued.first && mMediaPlayerHolder.currentSong.first?.artist == selectedArtistOrFolder && mMediaPlayerHolder.launchedBy != GoConstants.ALBUM_VIEW && mMediaPlayerHolder.launchedBy != GoConstants.FOLDER_VIEW,
+                                        mMediaPlayerHolder.isShuffledSongsQueued.second
+                                )
                         )
                     }
                 } else {
                     mDetailsFragment.tryToSnapToAlbumPosition(
-                        MusicOrgHelper.getPlayingAlbumPosition(
-                            selectedArtistOrFolder,
-                            mMediaPlayerHolder,
-                            mMusicViewModel.deviceAlbumsByArtist
-                        )
+                            MusicOrgHelper.getPlayingAlbumPosition(
+                                    selectedArtistOrFolder,
+                                    mMediaPlayerHolder,
+                                    mMusicViewModel.deviceAlbumsByArtist
+                            )
                     )
                 }
             } else {
                 openDetailsFragment(
-                    selectedArtistOrFolder,
-                    mMediaPlayerHolder.launchedBy,
-                    Pair(
-                        checkIsPlayer(false) && mMediaPlayerHolder.isShuffledSongsQueued.first && mMediaPlayerHolder.currentSong.first?.artist == selectedArtistOrFolder && mMediaPlayerHolder.launchedBy != GoConstants.ALBUM_VIEW && mMediaPlayerHolder.launchedBy != GoConstants.FOLDER_VIEW,
-                        mMediaPlayerHolder.isShuffledSongsQueued.second
-                    )
+                        selectedArtistOrFolder,
+                        mMediaPlayerHolder.launchedBy,
+                        Pair(
+                                checkIsPlayer(false) && mMediaPlayerHolder.isShuffledSongsQueued.first && mMediaPlayerHolder.currentSong.first?.artist == selectedArtistOrFolder && mMediaPlayerHolder.launchedBy != GoConstants.ALBUM_VIEW && mMediaPlayerHolder.launchedBy != GoConstants.FOLDER_VIEW,
+                                mMediaPlayerHolder.isShuffledSongsQueued.second
+                        )
                 )
             }
 
@@ -1079,8 +1150,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     override fun onCloseActivity() {
         if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) {
             DialogHelper.stopPlaybackDialog(
-                this,
-                mMediaPlayerHolder
+                    this,
+                    mMediaPlayerHolder
             )
         } else {
             finishAndRemoveTask()
@@ -1107,12 +1178,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onArtistOrFolderSelected(artistOrFolder: String, launchedBy: String) {
         openDetailsFragment(
-            artistOrFolder,
-            launchedBy,
-            Pair(
-                checkIsPlayer(false) && mMediaPlayerHolder.isShuffledSongsQueued.first && mMediaPlayerHolder.currentSong.first?.artist == artistOrFolder && mMediaPlayerHolder.launchedBy != GoConstants.ALBUM_VIEW && mMediaPlayerHolder.launchedBy != GoConstants.FOLDER_VIEW,
-                mMediaPlayerHolder.isShuffledSongsQueued.second
-            )
+                artistOrFolder,
+                launchedBy,
+                Pair(
+                        checkIsPlayer(false) && mMediaPlayerHolder.isShuffledSongsQueued.first && mMediaPlayerHolder.currentSong.first?.artist == artistOrFolder && mMediaPlayerHolder.launchedBy != GoConstants.ALBUM_VIEW && mMediaPlayerHolder.launchedBy != GoConstants.FOLDER_VIEW,
+                        mMediaPlayerHolder.isShuffledSongsQueued.second
+                )
         )
     }
 
@@ -1120,7 +1191,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         if (isMediaPlayerHolder) {
             if (::mPlayerService.isInitialized && !mPlayerService.isRunning) {
                 startService(
-                    mBindingIntent
+                        mBindingIntent
                 )
             }
             mMediaPlayerHolder.run {
@@ -1170,7 +1241,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             }
             if (mMediaPlayerHolder.isSongRestoredFromPrefs) {
                 mMediaPlayerHolder.isSongRestoredFromPrefs =
-                    false
+                        false
             }
         }
     }
@@ -1182,8 +1253,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    override fun onGetEqualizer(): Triple<Equalizer, BassBoost, Virtualizer> =
-        mMediaPlayerHolder.getEqualizer()
+    override fun onGetEqualizer(): Triple<Equalizer?, BassBoost?, Virtualizer?> =
+            mMediaPlayerHolder.getEqualizer()
 
     override fun onEnableEqualizer(isEnabled: Boolean) {
         if (::mMediaPlayerHolder.isInitialized) {
@@ -1192,9 +1263,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onSaveEqualizerSettings(
-        selectedPreset: Int,
-        bassBoost: Short,
-        virtualizer: Short
+            selectedPreset: Int,
+            bassBoost: Short,
+            virtualizer: Short
     ) {
         mMediaPlayerHolder.onSaveEqualizerSettings(selectedPreset, bassBoost, virtualizer)
     }
@@ -1202,14 +1273,16 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun openEqualizer() {
         if (checkIsPlayer(true)) {
             if (!EqualizerUtils.hasEqualizer(this)) {
-                if (!sEqFragmentExpanded) {
-                    mEqualizerFragment = mMediaPlayerHolder.openEqualizerCustom()
-                    synchronized(closeNowPlayingDialog()) {
-                        sCloseDetailsFragment = !sDetailsFragmentExpanded
-                        supportFragmentManager.addFragment(
-                            mEqualizerFragment,
-                            GoConstants.EQ_FRAGMENT_TAG
-                        )
+                synchronized(mMediaPlayerHolder.onOpenEqualizerCustom()) {
+                    if (!sEqFragmentExpanded) {
+                        mEqualizerFragment = EqFragment.newInstance()
+                        synchronized(closeNowPlayingDialog()) {
+                            sCloseDetailsFragment = !sDetailsFragmentExpanded
+                            supportFragmentManager.addFragment(
+                                    mEqualizerFragment,
+                                    GoConstants.EQ_FRAGMENT_TAG
+                            )
+                        }
                     }
                 }
             } else {
@@ -1238,15 +1311,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     setQueueEnabled(true)
                 }
                 song?.let { songToQueue ->
-                    queueSongs.add(songToQueue)
-                    getString(
-                        R.string.queue_song_add,
-                        songToQueue.title
-                    ).toToast(
-                        this@MainActivity
-                    )
-                    if (!isPlaying || state == GoConstants.PAUSED) {
-                        startSongFromQueue(song, launchedBy)
+                    if (!queueSongs.contains(songToQueue)) {
+                        queueSongs.add(songToQueue)
+
+                        if (!isPlaying || state == GoConstants.PAUSED) {
+                            startSongFromQueue(song, launchedBy)
+                        }
+
+                        getString(
+                                R.string.queue_song_add,
+                                songToQueue.title
+                        ).toToast(this@MainActivity)
                     }
                 }
             }
@@ -1254,12 +1329,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onAddAlbumToQueue(
-        songs: MutableList<Music>?,
-        isAlbumOrFolder: Pair<Boolean, Music?>,
-        isLovedSongs: Boolean,
-        isShuffleMode: Boolean,
-        clearShuffleMode: Boolean,
-        launchedBy: String
+            songs: MutableList<Music>?,
+            isAlbumOrFolder: Pair<Boolean, Music?>,
+            isLovedSongs: Boolean,
+            isShuffleMode: Boolean,
+            clearShuffleMode: Boolean,
+            launchedBy: String
     ) {
         if (checkIsPlayer(true)) {
             if (isShuffleMode) {
@@ -1309,8 +1384,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun addFilteredSongsToQueue(
-        mediaPlayerHolder: MediaPlayerHolder,
-        filteredSongs: List<Music>
+            mediaPlayerHolder: MediaPlayerHolder,
+            filteredSongs: List<Music>
     ) {
         // don't add duplicates
         if (filteredSongs.isNotEmpty()) {
@@ -1319,11 +1394,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onShuffleSongs(
-        albumTitle: String?,
-        artistAlbums: List<Album>?,
-        songs: MutableList<Music>?,
-        toBeQueued: Boolean,
-        launchedBy: String
+            albumTitle: String?,
+            artistAlbums: List<Album>?,
+            songs: MutableList<Music>?,
+            toBeQueued: Boolean,
+            launchedBy: String
     ): MutableList<Music>? {
         return songs?.apply {
             if (checkIsPlayer(true)) {
@@ -1337,12 +1412,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     albumsForShuffleMode = artistAlbums
                     if (toBeQueued) {
                         onAddAlbumToQueue(
-                            songs,
-                            Pair(false, song),
-                            isLovedSongs = false,
-                            isShuffleMode = isShuffledSongsQueued.first,
-                            clearShuffleMode = true,
-                            launchedBy
+                                songs,
+                                Pair(false, song),
+                                isLovedSongs = false,
+                                isShuffleMode = isShuffledSongsQueued.first,
+                                clearShuffleMode = true,
+                                launchedBy
                         )
                     } else {
                         onSongSelected(song, songs, launchedBy)
@@ -1352,12 +1427,44 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
+    override fun onSongVisualizationChanged() {
+        if (mAllMusicFragment != null && !mAllMusicFragment?.onSongVisualizationChanged()!!) {
+            ThemeHelper.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
+        }
+    }
+
     override fun onAddToFilter(stringToFilter: String?) {
         stringToFilter?.let { string ->
-            mArtistsFragment?.onListFiltered(string)
-            mAlbumsFragment?.onListFiltered(string)
-            mFoldersFragment?.onListFiltered(string)
-            ListsHelper.addToHiddenItems(string)
+            synchronized(ListsHelper.addToHiddenItems(string)) {
+                if (mMusicContainersFragments.isNotEmpty() && !mMusicContainersFragments[0].onListFiltered(stringToFilter)) {
+                    ThemeHelper.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
+                } else {
+                    val musicContainersIterator = mMusicContainersFragments.iterator().withIndex()
+                    while (musicContainersIterator.hasNext()) {
+                        val item = musicContainersIterator.next()
+                        if (item.index != 0) {
+                            item.value.onListFiltered(string)
+                        }
+                    }
+                    val size = mAllMusicFragment?.onListFiltered(stringToFilter)!!
+                    mSettingsFragment?.onFiltersChanged(size)
+
+                    // be sure to update queue, loved songs and the controls panel
+                    if (isMediaPlayerHolder) {
+                        MusicOrgHelper.updateMediaPlayerHolderLists(mMediaPlayerHolder, mMusicViewModel, this)?.run {
+                            val songs = MusicOrgHelper.getAlbumSongs(
+                                    artist,
+                                    album,
+                                    mMusicViewModel.deviceAlbumsByArtist
+                            )
+                            mMediaPlayerHolder.isPlay = mMediaPlayerHolder.isPlaying
+                            mMediaPlayerHolder.setCurrentSong(this, songs, isFromQueue = false, songLaunchedBy = launchedBy)
+                            mMediaPlayerHolder.initMediaPlayer(this)
+                            updatePlayingInfo(false)
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -1373,9 +1480,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun openLovedSongsDialog() {
         if (!goPreferences.lovedSongs.isNullOrEmpty()) {
             mLovedSongsDialog = DialogHelper.showLovedSongsDialog(
-                this,
-                this,
-                mMediaPlayerHolder
+                    this,
+                    this,
+                    mMediaPlayerHolder
             )
         } else {
             getString(R.string.error_no_loved_songs).toToast(this)
@@ -1394,9 +1501,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 val song = mMusicViewModel.getSongFromIntent(cursor.getString(displayNameIndex))
                 //get album songs and sort them
                 val albumSongs = MusicOrgHelper.getAlbumSongs(
-                    song?.artist,
-                    song?.album,
-                    mMusicViewModel.deviceAlbumsByArtist
+                        song?.artist,
+                        song?.album,
+                        mMusicViewModel.deviceAlbumsByArtist
                 )
 
                 onSongSelected(song, albumSongs, GoConstants.ARTIST_VIEW)
@@ -1438,7 +1545,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 updatePlayingInfo(false)
                 if (::mQueueDialog.isInitialized && mQueueDialog.isShowing && mMediaPlayerHolder.isQueue) {
                     mQueueAdapter.swapSelectedSong(
-                        mMediaPlayerHolder.currentSong.first
+                            mMediaPlayerHolder.currentSong.first
                     )
                 }
             }
@@ -1446,8 +1553,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         override fun onQueueEnabled() {
             ThemeHelper.updateIconTint(
-                mPlayerControlsPanelBinding.queueButton,
-                R.color.widgetsColor.decodeColor(this@MainActivity)
+                    mPlayerControlsPanelBinding.queueButton,
+                    ContextCompat.getColor(this@MainActivity, R.color.widgetsColor)
             )
         }
 
@@ -1462,17 +1569,20 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         override fun onQueueStartedOrEnded(started: Boolean) {
             ThemeHelper.updateIconTint(
-                mPlayerControlsPanelBinding.queueButton,
-                when {
-                    started -> ThemeHelper.resolveThemeAccent(this@MainActivity)
-                    mMediaPlayerHolder.isQueue -> R.color.widgetsColor.decodeColor(this@MainActivity)
-                    else -> {
-                        ThemeHelper.resolveColorAttr(
-                            this@MainActivity,
-                            android.R.attr.colorButtonNormal
+                    mPlayerControlsPanelBinding.queueButton,
+                    when {
+                        started -> ThemeHelper.resolveThemeAccent(this@MainActivity)
+                        mMediaPlayerHolder.isQueue -> ContextCompat.getColor(
+                                this@MainActivity,
+                                R.color.widgetsColor
                         )
+                        else -> {
+                            ThemeHelper.resolveColorAttr(
+                                    this@MainActivity,
+                                    android.R.attr.colorButtonNormal
+                            )
+                        }
                     }
-                }
             )
         }
 
@@ -1494,6 +1604,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         override fun getItemCount(): Int = mActiveFragments.size
 
         override fun createFragment(position: Int): Fragment =
-            handleOnNavigationItemSelected(position)!!
+                handleOnNavigationItemSelected(position)!!
     }
 }

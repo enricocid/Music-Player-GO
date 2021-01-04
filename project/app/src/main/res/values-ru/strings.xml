@@ -56,7 +56,6 @@
     <string name="found_songs_pref_title">Найдены треки: %1d</string>
     <string name="filter_pref_title">Фильтры</string>
     <string name="filter_popup_title">Спрятать</string>
-    <string name="error_no_filter">Фильтры не найдены.</string>
     <string name="repeat_loop_enabled">Повтор ∞ включен.</string>
     <string name="error_no_music">Музыка не найдена :(</string>
     <string name="error_media_buttons">Что-то пошло не так! :( Пожалуйста перезапустите воспроизведение из приложения.</string>

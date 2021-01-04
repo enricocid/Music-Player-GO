@@ -20,7 +20,7 @@
         android:padding="16dp"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        android:textColor="?android:attr/textColorSecondary" />
+        android:textColor="@color/widgetsColor" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/checkbox"

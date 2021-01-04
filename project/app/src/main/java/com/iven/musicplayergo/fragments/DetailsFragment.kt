@@ -2,7 +2,7 @@ package com.iven.musicplayergo.fragments
 
 import android.animation.Animator
 import android.content.Context
-import android.graphics.BitmapFactory
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -11,10 +11,18 @@ import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toBitmap
+import androidx.core.os.bundleOf
+import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
+import coil.load
+import coil.request.ImageRequest
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
@@ -34,6 +42,7 @@ import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.AlbumsViewHolder
 import com.iven.musicplayergo.ui.GenericViewHolder
 import com.iven.musicplayergo.ui.UIControlInterface
+import kotlinx.coroutines.*
 
 
 /**
@@ -74,7 +83,23 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private var mShuffledAlbum: String? = null
     private var sWasShuffling: Pair<Boolean, String?> = Pair(false, null)
-    private var sLoadDelay = true
+
+    /**
+     * This is the job for all coroutines started by this ViewModel.
+     * Cancelling this job will cancel all coroutines started by this ViewModel.
+     */
+    private val mLoadCoverJob = SupervisorJob()
+
+    private val mLoadCoverHandler = CoroutineExceptionHandler { _, exception ->
+        exception.printStackTrace()
+    }
+
+    private val mLoadCoverIoDispatcher = Dispatchers.IO + mLoadCoverJob + mLoadCoverHandler
+    private val mLoadCoverIoScope = CoroutineScope(mLoadCoverIoDispatcher)
+
+    private var sIsCovers = false
+    private lateinit var mImageLoader: ImageLoader
+    private var mAlbumArt: Bitmap? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -109,6 +134,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             mUIControlInterface = activity as UIControlInterface
         } catch (e: ClassCastException) {
             e.printStackTrace()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (sIsCovers) {
+            mLoadCoverJob.cancel()
         }
     }
 
@@ -223,6 +255,14 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private fun setupViews(view: View) {
 
         if (sLaunchedByArtistView) {
+            sIsCovers = goPreferences.isCovers
+            if (sIsCovers) {
+                mImageLoader = ImageLoader.Builder(requireActivity())
+                        .bitmapPoolingEnabled(false)
+                        .crossfade(true)
+                        .build()
+                mAlbumArt = ResourcesCompat.getDrawable(resources, R.drawable.album_art, null)?.toBitmap()
+            }
             mSelectedAlbum = when {
                 mSelectedAlbumPosition != -1 -> mSelectedArtistAlbums?.get(
                     mSelectedAlbumPosition
@@ -300,13 +340,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                         val displayedTitle =
                             if (goPreferences.songsVisualization != GoConstants.TITLE) {
-                                item.displayName
+                                item.displayName?.toFilenameWithoutExtension()
                             } else {
                                 getString(
                                     R.string.track_song,
                                     item.track.toFormattedTrack(),
                                     item.title
-                                ).toSpanned()
+                                ).parseAsHtml()
                             }
 
                         // GenericViewHolder is `this` here
@@ -342,7 +382,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     }
 
                     onLongClick { index ->
-                        DialogHelper.showDoSomethingPopup(
+                        DialogHelper.showPopupForSongs(
                             requireActivity(),
                             findViewHolderForAdapterPosition(index)?.itemView,
                             item,
@@ -393,7 +433,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     ThemeHelper.updateIconTint(
                         this,
                         if (isEnabled) {
-                            R.color.widgetsColor.decodeColor(requireActivity())
+                            ContextCompat.getColor(requireActivity(), R.color.widgetsColor)
                         } else {
                             ThemeHelper.resolveColorAttr(
                                 requireActivity(),
@@ -478,7 +518,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         null,
                         null,
                         mSongsList?.toMutableList(),
-                        mSongsList?.size!! < 30, // only queue if album size don't exceed 30
+                        mSongsList?.size!! <= 50, // only queue if album size don't exceed 30
                         mLaunchedBy
                     )
                     R.id.action_shuffle_sa -> {
@@ -551,8 +591,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         mDetailsFragmentBinding.albumsRv.run {
 
             setHasFixedSize(true)
-            setItemViewCacheSize(25)
-            setRecycledViewPool(RecyclerView.RecycledViewPool())
 
             setup {
 
@@ -581,18 +619,26 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             0
                         }
 
-                        if (goPreferences.isCovers) {
-                            imageView.loadCover(
-                                requireActivity().getImageLoader(),
-                                item.music?.get(0),
-                                BitmapFactory.decodeResource(
-                                    resources,
-                                    R.drawable.album_art
-                                ),
-                                isCircleCrop = false,
-                                isLoadDelay = sLoadDelay
-                            )
-                        }
+                        if (sIsCovers) {
+                            val request = ImageRequest.Builder(context)
+                                        .data(item.music?.get(0)?.albumId?.getCoverFromURI())
+                                        .target(
+                                                onSuccess = { result ->
+                                                    // Handle the successful result.
+                                                    imageView.load(result)
+                                                },
+                                                onError = {
+                                                    imageView.load(mAlbumArt)
+                                                }
+                                        )
+                                        .build()
+
+                                mLoadCoverIoScope.launch {
+                                    withContext(mLoadCoverIoDispatcher) {
+                                        mImageLoader.enqueue(request)
+                                    }
+                                }
+                            }
                     }
 
                     onClick { index ->
@@ -600,8 +646,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         if (index != mSelectedAlbumPosition) {
 
                             adapter?.let { albumsAdapter ->
-
-                                sLoadDelay = false
 
                                 albumsAdapter.notifyItemChanged(
                                     mSelectedAlbumPosition
@@ -611,6 +655,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                                 mSelectedAlbum = item
                                 mSelectedAlbumPosition = index
+
                                 updateSelectedAlbumTitle()
 
                                 swapAlbum(item.title, item.music)
@@ -701,13 +746,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             isShuffleMode: Pair<Boolean, String?>,
         ) =
             DetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(TAG_ARTIST_FOLDER, selectedArtistOrFolder)
-                    putString(TAG_IS_FOLDER, launchedBy)
-                    putInt(TAG_SELECTED_ALBUM_POSITION, playedAlbumPosition)
-                    putBoolean(TAG_IS_SHUFFLING, isShuffleMode.first)
-                    putString(TAG_SHUFFLED_ALBUM, isShuffleMode.second)
-                }
+                arguments = bundleOf(
+                    TAG_ARTIST_FOLDER to selectedArtistOrFolder,
+                    TAG_IS_FOLDER to launchedBy,
+                    TAG_SELECTED_ALBUM_POSITION to playedAlbumPosition,
+                    TAG_IS_SHUFFLING to isShuffleMode.first,
+                    TAG_SHUFFLED_ALBUM to isShuffleMode.second
+                )
             }
     }
 }

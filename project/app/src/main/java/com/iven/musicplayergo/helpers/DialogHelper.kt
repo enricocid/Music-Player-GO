@@ -6,11 +6,13 @@ import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.text.toSpanned
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
+import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
 import com.iven.musicplayergo.R
@@ -18,7 +20,7 @@ import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.extensions.addBidirectionalSwipeHandler
 import com.iven.musicplayergo.extensions.toFormattedDuration
-import com.iven.musicplayergo.extensions.toSpanned
+import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
@@ -97,6 +99,11 @@ object DialogHelper {
                 }
             }
             negativeButton(R.string.no) {
+                if (isSwipe) {
+                    queueAdapter.notifyItemChanged(song.second)
+                }
+            }
+            onCancel {
                 if (isSwipe) {
                     queueAdapter.notifyItemChanged(song.second)
                 }
@@ -211,6 +218,42 @@ object DialogHelper {
                     lovedSongsAdapter.notifyItemChanged(isSwipe.second)
                 }
             }
+            onCancel {
+                if (isSwipe.first) {
+                    lovedSongsAdapter.notifyItemChanged(isSwipe.second)
+                }
+            }
+        }
+    }
+
+    @JvmStatic
+    fun showAddLovedSongDialog(
+        context: Context,
+        uiControlInterface: UIControlInterface,
+        song: Music?,
+        playerPosition: Int,
+        launchedBy: String
+    ) {
+        MaterialDialog(context).show {
+
+            title(R.string.loved_songs)
+
+            message(R.string.loved_songs_save_time)
+
+            positiveButton(R.string.yes) {
+                if (playerPosition > 0) {
+                    ListsHelper.addToLovedSongs(song, playerPosition, launchedBy)
+                    uiControlInterface.onLovedSongAdded(song,true)
+                } else {
+                    context.getString(R.string.cannot_save_position).toToast(context)
+                }
+
+            }
+
+            negativeButton(R.string.no) {
+                ListsHelper.addToLovedSongs(song, 0, launchedBy)
+                uiControlInterface.onLovedSongAdded(song,true)
+            }
         }
     }
 
@@ -233,7 +276,7 @@ object DialogHelper {
     }
 
     @JvmStatic
-    fun showHidePopup(
+    fun showPopupForHide(
         context: Context,
         itemView: View?,
         stringToFilter: String?,
@@ -245,7 +288,7 @@ object DialogHelper {
                     uiControlInterface.onAddToFilter(stringToFilter)
                     return@setOnMenuItemClickListener true
                 }
-                inflate(R.menu.menu_filter)
+                inflate(R.menu.popup_filter)
                 gravity = Gravity.END
                 show()
             }
@@ -253,7 +296,7 @@ object DialogHelper {
     }
 
     @JvmStatic
-    fun showDoSomethingPopup(
+    fun showPopupForSongs(
         context: Context,
         itemView: View?,
         song: Music?,
@@ -278,7 +321,7 @@ object DialogHelper {
                     }
                     return@setOnMenuItemClickListener true
                 }
-                inflate(R.menu.menu_do_something)
+                inflate(R.menu.popup_songs)
                 gravity = Gravity.END
                 show()
             }

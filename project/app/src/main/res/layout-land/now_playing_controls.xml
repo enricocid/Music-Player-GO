@@ -12,7 +12,7 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/np_eq"
+            android:id="@+id/np_actions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

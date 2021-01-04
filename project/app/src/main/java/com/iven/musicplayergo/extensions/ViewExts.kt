@@ -4,37 +4,26 @@ import android.animation.Animator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
-import android.text.Html
 import android.text.SpannableString
-import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewTreeObserver
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.annotation.ColorInt
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.commit
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
-import coil.ImageLoader
-import coil.load
-import coil.request.ImageRequest
-import coil.transform.RoundedCornersTransformation
 import com.google.android.material.animation.ArgbEvaluatorCompat
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.helpers.ThemeHelper
-import com.iven.musicplayergo.helpers.VersioningHelper
-import com.iven.musicplayergo.models.Music
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
-import kotlinx.coroutines.*
 import kotlin.math.max
 
 // viewTreeObserver extension to measure layout params
@@ -55,80 +44,12 @@ inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
 fun String.getFastScrollerItem(context: Context): FastScrollItemIndicator {
     var charAtZero = context.getString(R.string.fastscroller_dummy_item)
     if (isNotEmpty()) {
-        charAtZero = get(0).toString()
+        charAtZero = "${get(0)}"
     }
     return FastScrollItemIndicator.Text(
         charAtZero.toUpperCase() // Grab the first letter and capitalize it
     )
 }
-
-/**
- * This is the job for all coroutines started by this ViewModel.
- * Cancelling this job will cancel all coroutines started by this ViewModel.
- */
-private val viewModelJob = SupervisorJob()
-
-private val handler = CoroutineExceptionHandler { _, exception ->
-    exception.printStackTrace()
-}
-
-private val ioDispatcher = Dispatchers.IO + viewModelJob + handler
-private val ioScope = CoroutineScope(ioDispatcher)
-
-fun Context.getImageLoader() = ImageLoader.Builder(this)
-    .bitmapPoolingEnabled(false)
-    .crossfade(true)
-    .build()
-
-fun ImageView.loadCover(
-    imageLoader: ImageLoader,
-    music: Music?,
-    defaultCover: Bitmap,
-    isCircleCrop: Boolean,
-    isLoadDelay: Boolean
-) {
-
-    val request = ImageRequest.Builder(context)
-        .data(music?.getCover(context) ?: defaultCover)
-        .allowHardware(false)
-
-        .target(
-            onSuccess = { result ->
-                // Handle the successful result.
-                load(result) {
-
-                    if (isCircleCrop) {
-                        transformations(RoundedCornersTransformation(resources.getDimension(R.dimen.md_corner_radius)))
-                    }
-                }
-            }
-        )
-        .build()
-
-    ioScope.launch {
-        withContext(ioDispatcher) {
-            delay(
-                if (isLoadDelay) {
-                    1000
-                } else {
-                    0
-                }
-            )
-            imageLoader.execute(request)
-        }
-    }
-}
-
-@ColorInt
-fun Int.decodeColor(context: Context) = ContextCompat.getColor(context, this)
-
-@Suppress("DEPRECATION")
-fun String.toSpanned(): Spanned = if (VersioningHelper.isNougat()) {
-    Html.fromHtml(
-        this,
-        Html.FROM_HTML_MODE_LEGACY
-    )
-} else Html.fromHtml(this)
 
 // Extension to set menu items text color
 fun MenuItem.setTitleColor(color: Int) {
@@ -139,14 +60,13 @@ fun MenuItem.setTitleColor(color: Int) {
 }
 
 fun FragmentManager.addFragment(fragment: Fragment, tag: String?) {
-    beginTransaction().apply {
+    commit {
         addToBackStack(null)
         add(
             R.id.container,
             fragment,
             tag
         )
-        commit()
     }
 }
 
@@ -209,7 +129,7 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
             start()
         }
 
-    val windowBackground = R.color.windowBackground.decodeColor(context)
+    val windowBackground = ContextCompat.getColor(context, R.color.windowBackground)
     val closeColor = ThemeHelper.resolveColorAttr(context, R.attr.colorControlHighlight)
     val accent = if (!show) {
         windowBackground
@@ -218,7 +138,7 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
     }
 
     val startColor = if (isErrorFragment) {
-        R.color.red.decodeColor(context)
+        ContextCompat.getColor(context, R.color.red)
     } else {
         accent
     }
@@ -238,7 +158,7 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
                 background =
                     ThemeHelper.createColouredRipple(
                         context,
-                        R.color.red.decodeColor(context),
+                        ContextCompat.getColor(context, R.color.red),
                         R.drawable.ripple
                     )
             }

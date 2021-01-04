@@ -1,51 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/search_toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/windowBackground"
-        android:elevation="@dimen/search_bar_elevation"
-        android:theme="@style/ToolbarStyle"
-        app:collapseIcon="@drawable/ic_navigate_before"
-        app:navigationIcon="@drawable/ic_close"
-        app:title="@string/songs"
-        app:titleTextAppearance="@style/ToolbarStyle.Title"
-        app:titleTextColor="?android:attr/textColorPrimary" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <!-- MUSIC LIST -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/all_music_rv"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/search_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:scrollbars="none"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="3" />
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/windowBackground"
+            android:elevation="@dimen/search_bar_elevation"
+            android:theme="@style/ToolbarStyle"
+            app:collapseIcon="@drawable/ic_navigate_before"
+            app:navigationIcon="@drawable/ic_close"
+            app:title="@string/songs"
+            app:titleTextAppearance="@style/ToolbarStyle.Title"
+            app:titleTextColor="?android:attr/textColorPrimary" />
 
-        <com.reddit.indicatorfastscroll.FastScrollerView
-            android:id="@+id/fastscroller"
-            android:layout_width="@dimen/fast_scroller_view_dim"
-            android:layout_height="match_parent"
-            android:layout_gravity="end|center"
-            android:background="@color/windowBackground" />
+        <!-- MUSIC LIST -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <com.reddit.indicatorfastscroll.FastScrollerThumbView
-            android:id="@+id/fastscroller_thumb"
-            android:layout_width="56dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:layout_marginEnd="@dimen/fast_scroller_view_dim"
-            android:textAppearance="@style/IndicatorThumbTextAppearance" />
-    </FrameLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/all_music_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="3" />
 
-</LinearLayout>
+            <com.reddit.indicatorfastscroll.FastScrollerView
+                android:id="@+id/fastscroller"
+                android:layout_width="@dimen/fast_scroller_view_dim"
+                android:layout_height="match_parent"
+                android:layout_gravity="end|center"
+                android:background="@color/windowBackground" />
+
+            <com.reddit.indicatorfastscroll.FastScrollerThumbView
+                android:id="@+id/fastscroller_thumb"
+                android:layout_width="56dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/fast_scroller_view_dim"
+                android:textAppearance="@style/IndicatorThumbTextAppearance" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/shuffle_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/shuffle_am"
+        app:backgroundTint="@color/shuffleFabTint"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
+        app:srcCompat="@drawable/ic_shuffle"
+        app:tint="?attr/colorPrimary" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -5,7 +5,6 @@
     <string name="repeat_disabled">تکرار ∞ خاموش است.</string>
     <string name="repeat_loop_enabled">تکرار ∞ روشن است.</string>
     <string name="open_git_pref_summary">برای دانستنی بیشتر، تاربرگ برنامه را باز کنید :)</string>
-    <string name="error_no_filter">پالایشی یافت نشد.</string>
     <string name="open_git_pref_title">برگه گیت‌هاب</string>
     <string name="error_no_music">موسیقی یافت نشد :(</string>
     <string name="filter_popup_title">پنهان‌سازی</string>

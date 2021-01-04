@@ -1,12 +1,14 @@
 package com.iven.musicplayergo
 
 import android.content.Context
+import androidx.core.content.edit
 import androidx.preference.PreferenceManager
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedEqualizerSettings
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import java.lang.reflect.Type
+
 
 class GoPreferences(context: Context) {
 
@@ -19,8 +21,8 @@ class GoPreferences(context: Context) {
     private val prefsThemeDef = context.getString(R.string.theme_pref_auto)
     private val prefsAccent = context.getString(R.string.accent_pref)
 
-    private val prefsActiveFragmentsDef = context.getString(R.string.active_fragments_def_pref)
-    private val prefsActiveFragments = context.getString(R.string.active_fragments_pref)
+    private val prefsActiveTabsDef = context.getString(R.string.active_tabs_def_pref)
+    private val prefsActiveTabs = context.getString(R.string.active_tabs_pref)
 
     private val prefsCover = context.getString(R.string.covers_pref)
 
@@ -42,136 +44,138 @@ class GoPreferences(context: Context) {
     private val prefsFilter = context.getString(R.string.filter_pref)
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
-    private val mGson = GsonBuilder().create()
+
+    private val mMoshi = Moshi.Builder().build()
 
     // active fragments type
-    private val typeActiveFragments = object : TypeToken<Set<String>>() {}.type
+    private val typeActiveTabs = Types.newParameterizedType(List::class.java, String::class.java)
 
-    // saved equalizer settings is a SavedEqualizerSettings
-    private val typeSavedEqualizerSettings = object : TypeToken<SavedEqualizerSettings>() {}.type
-
-    // last played song is a SavedMusic
-    private val typeLastPlayedSong = object : TypeToken<Music>() {}.type
-
-    //loved songs is a list of SavedMusic
-    private val typeLovedSongs = object : TypeToken<MutableList<Music>>() {}.type
+    //loved songs is a list of Music
+    private val typeLovedSongs = Types.newParameterizedType(List::class.java, Music::class.java)
 
     var latestVolume: Int
         get() = mPrefs.getInt(prefsLatestVolume, 100)
-        set(value) = mPrefs.edit().putInt(prefsLatestVolume, value).apply()
+        set(value) = mPrefs.edit { putInt(prefsLatestVolume, value) }
 
     var latestPlayedSong: Music?
-        get() = getObject(
+        get() = getObjectForClass(
             prefsLatestPlayedSong,
-            typeLastPlayedSong
+            Music::class.java
         )
-        set(value) = putObject(prefsLatestPlayedSong, value)
+        set(value) = putObjectForClass(prefsLatestPlayedSong, value, Music::class.java)
 
     var savedEqualizerSettings: SavedEqualizerSettings?
-        get() = getObject(
+        get() = getObjectForClass(
             prefsSavedEqualizerSettings,
-            typeSavedEqualizerSettings
+            SavedEqualizerSettings::class.java
         )
-        set(value) = putObject(prefsSavedEqualizerSettings, value)
+        set(value) = putObjectForClass(
+            prefsSavedEqualizerSettings,
+            value,
+            SavedEqualizerSettings::class.java
+        )
 
     var lovedSongs: MutableList<Music>?
-        get() = getObject(
+        get() = getObjectForType(
             prefsLovedSongs,
             typeLovedSongs
         )
-        set(value) = putObject(prefsLovedSongs, value)
+        set(value) = putObjectForType(prefsLovedSongs, value, typeLovedSongs)
 
     var theme
         get() = mPrefs.getString(prefsTheme, prefsThemeDef)
-        set(value) = mPrefs.edit().putString(prefsTheme, value).apply()
+        set(value) = mPrefs.edit { putString(prefsTheme, value) }
 
     var accent
         get() = mPrefs.getInt(prefsAccent, R.color.deep_purple)
-        set(value) = mPrefs.edit().putInt(prefsAccent, value).apply()
+        set(value) = mPrefs.edit { putInt(prefsAccent, value) }
 
-    var activeFragmentsDef: Set<String>
-        get() = getObject(prefsActiveFragmentsDef, typeActiveFragments)
+    var activeTabsDef: List<String>
+        get() = getObjectForType(prefsActiveTabsDef, typeActiveTabs)
             ?: GoConstants.DEFAULT_ACTIVE_FRAGMENTS
-        set(value) = putObject(prefsActiveFragmentsDef, value)
+        set(value) = putObjectForType(prefsActiveTabsDef, value, typeActiveTabs)
 
-    var activeFragments: Set<String>
-        get() = getObject(prefsActiveFragments, typeActiveFragments)
+    var activeTabs: List<String>
+        get() = getObjectForType(prefsActiveTabs, typeActiveTabs)
             ?: GoConstants.DEFAULT_ACTIVE_FRAGMENTS
-        set(value) = putObject(prefsActiveFragments, value)
+        set(value) = putObjectForType(prefsActiveTabs, value, typeActiveTabs)
 
     var onListEnded
         get() = mPrefs.getString(prefsOnListEnded, GoConstants.CONTINUE)
-        set(value) = mPrefs.edit().putString(prefsOnListEnded, value).apply()
+        set(value) = mPrefs.edit { putString(prefsOnListEnded, value) }
 
     var isCovers: Boolean
         get() = mPrefs.getBoolean(prefsCover, false)
-        set(value) = mPrefs.edit().putBoolean(prefsCover, value).apply()
+        set(value) = mPrefs.edit { putBoolean(prefsCover, value) }
 
     var songsVisualization
         get() = mPrefs.getString(prefsSongsVisual, GoConstants.TITLE)
-        set(value) = mPrefs.edit().putString(prefsSongsVisual, value.toString()).apply()
+        set(value) = mPrefs.edit { putString(prefsSongsVisual, value.toString()) }
 
     var artistsSorting
         get() = mPrefs.getInt(prefsArtistsSorting, GoConstants.DESCENDING_SORTING)
-        set(value) = mPrefs.edit().putInt(prefsArtistsSorting, value).apply()
+        set(value) = mPrefs.edit { putInt(prefsArtistsSorting, value) }
 
     var foldersSorting
         get() = mPrefs.getInt(prefsFoldersSorting, GoConstants.DEFAULT_SORTING)
-        set(value) = mPrefs.edit().putInt(prefsFoldersSorting, value).apply()
+        set(value) = mPrefs.edit { putInt(prefsFoldersSorting, value) }
 
     var albumsSorting
         get() = mPrefs.getInt(prefsAlbumsSorting, GoConstants.DEFAULT_SORTING)
-        set(value) = mPrefs.edit().putInt(prefsAlbumsSorting, value).apply()
+        set(value) = mPrefs.edit { putInt(prefsAlbumsSorting, value) }
 
     var allMusicSorting
         get() = mPrefs.getInt(prefsAllMusicSorting, GoConstants.DEFAULT_SORTING)
-        set(value) = mPrefs.edit().putInt(prefsAllMusicSorting, value).apply()
+        set(value) = mPrefs.edit { putInt(prefsAllMusicSorting, value) }
 
     var filters: Set<String>?
         get() = mPrefs.getStringSet(prefsFilter, setOf())
-        set(value) = mPrefs.edit().putStringSet(prefsFilter, value).apply()
+        set(value) = mPrefs.edit { putStringSet(prefsFilter, value) }
 
     var fastSeekingStep
         get() = mPrefs.getInt(prefsFastSeek, 5)
-        set(value) = mPrefs.edit().putInt(prefsFastSeek, value).apply()
+        set(value) = mPrefs.edit { putInt(prefsFastSeek, value) }
 
     var isFastSeekingActions: Boolean
         get() = mPrefs.getBoolean(prefsFastSeekActions, false)
-        set(value) = mPrefs.edit().putBoolean(prefsFastSeekActions, value).apply()
+        set(value) = mPrefs.edit { putBoolean(prefsFastSeekActions, value) }
 
     var isPreciseVolumeEnabled
         get() = mPrefs.getBoolean(prefsPreciseVolume, false)
-        set(value) = mPrefs.edit().putBoolean(prefsPreciseVolume, value).apply()
+        set(value) = mPrefs.edit { putBoolean(prefsPreciseVolume, value) }
 
     var isFocusEnabled
         get() = mPrefs.getBoolean(prefsFocus, true)
-        set(value) = mPrefs.edit().putBoolean(prefsFocus, value).apply()
+        set(value) = mPrefs.edit { putBoolean(prefsFocus, value) }
 
     var isHeadsetPlugEnabled
         get() = mPrefs.getBoolean(prefsHeadsetPlug, true)
-        set(value) = mPrefs.edit().putBoolean(prefsHeadsetPlug, value).apply()
+        set(value) = mPrefs.edit { putBoolean(prefsHeadsetPlug, value) }
 
-    /**
-     * Saves object into the Preferences.
-     * Only the fields are stored. Methods, Inner classes, Nested classes and inner interfaces are not stored.
-     **/
-    private fun <T> putObject(key: String, y: T) {
-        //Convert object to JSON String.
-        val inString = mGson.toJson(y)
-        //Save that String in SharedPreferences
-        mPrefs.edit().putString(key, inString).apply()
+    // Retrieve object from the Preferences using Moshi
+    private fun <T : Any> putObjectForType(key: String, value: T?, type: Type) {
+        val json = mMoshi.adapter<T>(type).toJson(value)
+        mPrefs.edit { putString(key, json) }
     }
 
-    /**
-     * Get object from the Preferences.
-     **/
-    private fun <T> getObject(key: String, t: Type): T? {
-        //We read JSON String which was saved.
-        val value = mPrefs.getString(key, null)
+    private fun <T : Any> getObjectForType(key: String, type: Type): T? {
+        mPrefs.getString(key, null)?.let { json ->
+            return mMoshi.adapter<T>(type).fromJson(json)
+        }
+        return null
+    }
 
-        //JSON String was found which means object can be read.
-        //We convert this JSON String to model object. Parameter "c" (of type Class<T>" is used to cast.
-        return mGson.fromJson(value, t)
+    // Saves object into the Preferences using Moshi
+    private fun <T : Any> putObjectForClass(key: String, value: T?, clazz: Class<T>) {
+        val json = mMoshi.adapter(clazz).toJson(value)
+        mPrefs.edit { putString(key, json) }
+    }
+
+    private fun <T : Any> getObjectForClass(key: String, clazz: Class<T>): T? {
+        mPrefs.getString(key, null)?.let { json ->
+            return mMoshi.adapter(clazz).fromJson(json)
+        }
+        return null
     }
 }
 

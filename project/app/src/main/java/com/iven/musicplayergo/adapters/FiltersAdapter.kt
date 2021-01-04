@@ -1,22 +1,31 @@
 package com.iven.musicplayergo.adapters
 
-import android.graphics.Paint
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.helpers.ThemeHelper
 
 
-class FiltersAdapter :
+class FiltersAdapter(val activity: Activity) :
     RecyclerView.Adapter<FiltersAdapter.CheckableItemsHolder>() {
 
     private val mItemsToRemove = mutableListOf<String>()
 
     private val mAvailableItems = goPreferences.filters?.sorted()?.toMutableList()
+
+    private val mUncheckedColor = ThemeHelper.resolveColorAttr(
+            activity,
+            android.R.attr.colorButtonNormal
+    )
+
+    private val mCheckedColor = ContextCompat.getColor(activity, R.color.widgetsColor)
 
     fun getUpdatedItems(): Set<String>? {
         mAvailableItems?.removeAll(mItemsToRemove.toSet())
@@ -49,16 +58,14 @@ class FiltersAdapter :
                 val filter = findViewById<TextView>(R.id.filter).apply {
                     text = item
                 }
-                val filterPaintFlags = filter.paintFlags
 
                 setOnClickListener {
                     checkBox.isChecked = !checkBox.isChecked
-
                     if (checkBox.isChecked) {
-                        filter.paintFlags = filterPaintFlags
+                        filter.setTextColor(mCheckedColor)
                         mItemsToRemove.remove(item)
                     } else {
-                        filter.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG or filterPaintFlags
+                        filter.setTextColor(mUncheckedColor)
                         mItemsToRemove.add(item!!)
                     }
                 }
