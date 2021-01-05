@@ -12,6 +12,8 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**Drhaal**](https://github.com/Drhaal) for Always On Display (AOD) [fixes](https://github.com/enricocid/Music-Player-GO/pull/186) and the following implementations: [190](https://github.com/enricocid/Music-Player-GO/pull/190), [193](https://github.com/enricocid/Music-Player-GO/pull/193), [230](https://github.com/enricocid/Music-Player-GO/pull/230), [234](https://github.com/enricocid/Music-Player-GO/pull/234), [240](https://github.com/enricocid/Music-Player-GO/pull/240)
 
+- [**Aidan Follestad**](https://github.com/afollestad) for the [RecyclerView's swipe implementation](https://github.com/afollestad/recyclical/blob/master/swipe/src/main/java/com/afollestad/recyclical/swipe/SwipeItemTouchListener.kt#L120) found in details fragment and queue/loved songs dialogs
+
 - [**Arianna Masciolini**](https://github.com/harisont) for the original precise volume control implementation
 
 - [**Steven Schoen**](https://github.com/DSteve595) for the search function [fixes](https://github.com/enricocid/Music-Player-GO/commit/1c27ff3421dbf7820608237dc60a974955efb022) and quick [support](https://github.com/reddit/IndicatorFastScroll/issues/30)
@@ -20,10 +22,12 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes (https://github.com/enricocid/Music-Player-GO/pull/121) and its equalizer implementation: I learned so much about how an equalizer works
 
-- [**svgrepo.com**](https://www.svgrepo.com/) for the [compact disc](https://www.svgrepo.com/svg/181020/compact-disc-music) icon, opportunely modified (background color).
-This work is licensed under a [CC 0](https://creativecommons.org/share-your-work/public-domain/cc0/) license
+- [**Ricardo**](https://github.com/RickyM7) for [multiple reports](https://github.com/enricocid/Music-Player-GO/issues/220), other suggestions and testing
 
 - [**Mathieu Aubin**](https://github.com/mathieu-aubin) for the readme's [GIF optimization](https://github.com/mathieu-aubin/tempgif)
+
+- [**svgrepo.com**](https://www.svgrepo.com/) for the [compact disc](https://www.svgrepo.com/svg/181020/compact-disc-music) icon, opportunely modified (background color).
+This work is licensed under a [CC 0](https://creativecommons.org/share-your-work/public-domain/cc0/) license
 
 
 ### General credits:
@@ -31,8 +35,6 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 - **Luigi Sforza**, [**Friso Smith**](https://github.com/fwSmit), [**GuinnessX**](https://github.com/GuinnessX) for having reported a critical [issue](https://github.com/enricocid/Music-Player-GO/issues/105) and for debugging
 
 - [**Johnett Mathew**](https://github.com/Johnett) for these [fixes](https://github.com/enricocid/Music-Player-GO/pull/149)
-
-- [**Ricardo**](https://github.com/RickyM7) for [multiple reports](https://github.com/enricocid/Music-Player-GO/issues/220)
 
 - [**seventhsonmizo**](https://github.com/seventhsonmizo) for Android Q [issue](https://github.com/enricocid/Music-Player-GO/issues/110) report and debugging
 
@@ -59,6 +61,8 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 - [**john2020star**](https://github.com/john2020star) for having contributed to fix this [issue](https://github.com/enricocid/Music-Player-GO/issues/196)
 
 - **Soyeb Mullick** for having reported this [issue](https://github.com/enricocid/Music-Player-GO/commit/dd1c91d3b62efcd2978a74ef5d64d1615b685c4a)
+
+- **Matt Medeiros** for having reported shuffle issues
 
 
 ### Big thanks to translators:

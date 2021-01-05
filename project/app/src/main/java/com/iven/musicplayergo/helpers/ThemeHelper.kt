@@ -15,7 +15,6 @@ import android.widget.ImageButton
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.os.bundleOf
@@ -66,13 +65,21 @@ object ThemeHelper {
         else -> R.drawable.ic_night
     }
 
-    fun resolveSortAlbumSongsIcon(sort: Int): Int {
+    fun getSortIconForSongs(sort: Int): Int {
         return when (sort) {
             GoConstants.SHUFFLE_SORTING -> R.drawable.ic_shuffle
             GoConstants.ASCENDING_SORTING -> R.drawable.ic_sort_alphabetical_descending
             GoConstants.DESCENDING_SORTING -> R.drawable.ic_sort_alphabetical_ascending
             GoConstants.TRACK_SORTING -> R.drawable.ic_sort_numeric_descending
             else -> R.drawable.ic_sort_numeric_ascending
+        }
+    }
+
+    fun getSortIconForSongsDisplayName(sort: Int) : Int {
+        return when (sort) {
+            GoConstants.SHUFFLE_SORTING -> R.drawable.ic_shuffle
+            GoConstants.ASCENDING_SORTING -> R.drawable.ic_sort_alphabetical_descending
+            else -> R.drawable.ic_sort_alphabetical_ascending
         }
     }
 
@@ -196,7 +203,7 @@ object ThemeHelper {
 
     @JvmStatic
     fun createColouredRipple(context: Context, rippleColor: Int, rippleId: Int): Drawable {
-        val ripple = AppCompatResources.getDrawable(context, rippleId) as RippleDrawable
+        val ripple = context.getDrawable(rippleId) as RippleDrawable
         return ripple.apply {
             setColor(ColorStateList.valueOf(rippleColor))
         }

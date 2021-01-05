@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -141,8 +140,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
             inflateMenu(R.menu.menu_search)
 
-            overflowIcon =
-                AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_sort)
+            overflowIcon = requireActivity().getDrawable(R.drawable.ic_sort)
 
             title = getFragmentTitle()
 

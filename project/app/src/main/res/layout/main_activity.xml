@@ -20,6 +20,7 @@
             android:layout_gravity="center"
             android:clickable="false"
             android:indeterminateTint="?attr/colorPrimary"
+            android:indeterminateTintMode="src_in"
             android:visibility="gone" />
 
         <FrameLayout

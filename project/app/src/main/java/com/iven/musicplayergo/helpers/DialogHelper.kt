@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.text.parseAsHtml
-import androidx.core.text.toSpanned
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.LayoutMode
@@ -57,7 +56,7 @@ object DialogHelper {
             }
         }
 
-        recyclerView.addBidirectionalSwipeHandler(true) { viewHolder: RecyclerView.ViewHolder,
+        recyclerView.addBidirectionalSwipeHandler(context, true) { viewHolder: RecyclerView.ViewHolder,
                                                           _: Int ->
             val title = viewHolder.itemView.findViewById<TextView>(R.id.title)
             if (!queueAdapter.performQueueSongDeletion(viewHolder.adapterPosition, title, true)) {
@@ -128,7 +127,6 @@ object DialogHelper {
 
                 mediaPlayerHolder.run {
                     if (isQueueStarted) {
-
                         restorePreQueueSongs()
                         skip(
                             true
@@ -174,7 +172,7 @@ object DialogHelper {
             }
         }
 
-        recyclerView.addBidirectionalSwipeHandler(true) { viewHolder: RecyclerView.ViewHolder, _: Int ->
+        recyclerView.addBidirectionalSwipeHandler(context, true) { viewHolder: RecyclerView.ViewHolder, _: Int ->
             lovedSongsAdapter.performLovedSongDeletion(
                 viewHolder.adapterPosition,
                 true
@@ -228,37 +226,6 @@ object DialogHelper {
     }
 
     @JvmStatic
-    fun showAddLovedSongDialog(
-        context: Context,
-        uiControlInterface: UIControlInterface,
-        song: Music?,
-        playerPosition: Int,
-        launchedBy: String
-    ) {
-        MaterialDialog(context).show {
-
-            title(R.string.loved_songs)
-
-            message(R.string.loved_songs_save_time)
-
-            positiveButton(R.string.yes) {
-                if (playerPosition > 0) {
-                    ListsHelper.addToLovedSongs(song, playerPosition, launchedBy)
-                    uiControlInterface.onLovedSongAdded(song,true)
-                } else {
-                    context.getString(R.string.cannot_save_position).toToast(context)
-                }
-
-            }
-
-            negativeButton(R.string.no) {
-                ListsHelper.addToLovedSongs(song, 0, launchedBy)
-                uiControlInterface.onLovedSongAdded(song,true)
-            }
-        }
-    }
-
-    @JvmStatic
     fun showClearLovedSongDialog(
         context: Context,
         uiControlInterface: UIControlInterface
@@ -285,12 +252,12 @@ object DialogHelper {
     ) {
         itemView?.let { view ->
             PopupMenu(context, view).apply {
+                inflate(R.menu.popup_filter)
+                gravity = Gravity.END
                 setOnMenuItemClickListener {
                     uiControlInterface.onAddToFilter(stringToFilter)
                     return@setOnMenuItemClickListener true
                 }
-                inflate(R.menu.popup_filter)
-                gravity = Gravity.END
                 show()
             }
         }
@@ -306,8 +273,9 @@ object DialogHelper {
     ) {
         itemView?.let {
             PopupMenu(context, itemView).apply {
+                inflate(R.menu.popup_songs)
+                gravity = Gravity.END
                 setOnMenuItemClickListener {
-
                     when (it.itemId) {
                         R.id.loved_songs_add -> {
                             ListsHelper.addToLovedSongs(
@@ -318,15 +286,25 @@ object DialogHelper {
                             uiControlInterface.onLovedSongAdded(song, true)
                             uiControlInterface.onLovedSongsUpdate(false)
                         }
+
                         R.id.queue_add -> uiControlInterface.onAddToQueue(song, launchedBy)
                     }
                     return@setOnMenuItemClickListener true
                 }
-                inflate(R.menu.popup_songs)
-                gravity = Gravity.END
                 show()
             }
         }
+    }
+
+    @JvmStatic
+    fun addToLovedSongs(song: Music?, launchedBy: String, uiControlInterface: UIControlInterface) {
+        ListsHelper.addToLovedSongs(
+                song,
+                0,
+                launchedBy
+        )
+        uiControlInterface.onLovedSongAdded(song, true)
+        uiControlInterface.onLovedSongsUpdate(false)
     }
 
     @JvmStatic
@@ -337,7 +315,7 @@ object DialogHelper {
 
         MaterialDialog(context).show {
 
-            title(R.string.app_name)
+            title(R.string.app_name_release)
 
             message(R.string.on_close_activity)
             positiveButton(R.string.yes) {

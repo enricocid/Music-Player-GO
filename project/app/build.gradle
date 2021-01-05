@@ -9,8 +9,8 @@ android {
         applicationId "com.iven.musicplayergo"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 159
-        versionName "4.3.7"
+        versionCode 162
+        versionName "4.4.0"
 
         vectorDrawables.useSupportLibrary true
     }
@@ -29,6 +29,12 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue "string", "app_name", "@string/app_name_release"
+        }
+        debug {
+            applicationIdSuffix ".debug"
+            resValue "string", "app_name", "@string/app_name_debug"
+            debuggable true
         }
     }
 

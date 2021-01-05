@@ -19,7 +19,6 @@ import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat.ACTION_SEEK_TO
 import android.support.v4.media.session.PlaybackStateCompat.Builder
 import androidx.core.content.getSystemService
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.media.AudioAttributesCompat
 import androidx.media.AudioFocusRequestCompat
@@ -284,7 +283,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ARTIST, currentSong.first?.album)
             putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, currentSong.first?.album)
             putString(MediaMetadataCompat.METADATA_KEY_ALBUM, currentSong.first?.album)
-            ResourcesCompat.getDrawable(playerService.resources, R.drawable.ic_music_note, null)
+            playerService.resources.getDrawable(R.drawable.ic_music_note, null)
                 ?.toBitmap()?.let { bmp ->
                     putBitmap(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON, bmp)
                 }
@@ -577,11 +576,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             song?.id?.toContentUri()?.let { uri ->
                 mediaPlayer.setDataSource(playerService, uri)
             }
-            mediaPlayer.prepareAsync()
 
-            if (sFocusEnabled && isPlay) {
-                tryToGetAudioFocus()
-            }
+            mediaPlayer.prepareAsync()
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -626,6 +622,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
 
         if (isPlay) {
+            if (sFocusEnabled && mCurrentAudioFocusState != AUDIO_FOCUSED) {
+                tryToGetAudioFocus()
+            }
             play()
         }
 

@@ -6,7 +6,6 @@ import android.content.res.Resources
 import android.provider.MediaStore
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.iven.musicplayergo.extensions.savedSongIsAvailable
 import com.iven.musicplayergo.helpers.MusicOrgHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.models.Album
@@ -52,7 +51,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
     //keys: artist || value: songs contained in the folder
     var deviceMusicByFolder: Map<String, List<Music>>? = null
 
-    val randomMusic get() = mDeviceMusicList.random()
+    val randomMusic get() = deviceMusicFiltered?.random()
 
     val musicDatabaseSize get() = deviceMusicFiltered?.size
 
@@ -209,7 +208,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
         // Removing duplicates by comparing everything except path which is different
         // if the same song is hold in different paths
         deviceMusicFiltered =
-            mDeviceMusicList.distinctBy { it.artist to it.year to it.track to it.title to it.duration to it.album }
+            mDeviceMusicList.distinctBy { it.artist to it.year to it.track to it.title to it.duration to it.album to it.albumId }
                 .toMutableList()
 
         goPreferences.filters?.let { filter ->
@@ -238,14 +237,6 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                         )
                     )
                 }
-            }
-        }
-
-        // fallback to random song is saved song is not available (if deleted by user from device) or if filtered
-        goPreferences.latestPlayedSong?.let { savedSong ->
-            val song = mDeviceMusicList.savedSongIsAvailable(savedSong)
-            if (song == null || goPreferences.filters != null && MusicOrgHelper.musicListContains(song, goPreferences.filters!!)) {
-                goPreferences.latestPlayedSong = randomMusic
             }
         }
     }

@@ -183,5 +183,10 @@ fun Music.toSavedMusicWithoutPosition(savedLaunchedBy: String) =
                 0
         )
 
-fun List<Music>.savedSongIsAvailable(first: Music): Music? = find { first.title == it.title && first.displayName == it.displayName && first.track == it.track && first.albumId == it.albumId && first.album == it.album }
+fun List<Music>.savedSongIsAvailable(first: Music?) : Music? {
+    first?.let { song ->
+        return find { song.title == it.title && song.displayName == it.displayName && song.track == it.track && song.albumId == it.albumId && song.album == it.album }
+    }
+    return null
+}
 

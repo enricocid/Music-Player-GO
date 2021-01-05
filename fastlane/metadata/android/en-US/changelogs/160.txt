@@ -1,0 +1,13 @@
+- Covers: improve performance & reduce ANRs probability.
+  Note: the mechanism to retrieve music had to be changed.
+  This means loved songs will be lost. I'm sorry :)
+
+- Improve filter opt.
+- Improve swiping
+- Improve songs visualization opt.
+- Fix sorting
+- Fix add album to queue
+- Lollipop: fix Now Playing's seekbar
+- Many other bug fixes and improvements
+- Music tab: show no. of songs
+- Update translations

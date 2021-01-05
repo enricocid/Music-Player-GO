@@ -1,4 +1,4 @@
-<!---->
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="error_bad_id">З початку оберіть пісню!</string>
     <string name="error_no_browser">Браузер не знайдено!</string>

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Music Player GO</string>
-    <string name="category_audio">Audio</string>
+
+    <!--suppress AndroidLintUnusedResources -->
+    <string name="app_name_release">Music Player GO</string>
+
+    <!--suppress AndroidLintUnusedResources -->
+    <string name="app_name_debug">MPGO debug</string>
 
     <!-- External links -->
     <string name="app_git">https://github.com/enricocid/Music-Player-GO</string>
@@ -29,9 +33,13 @@
     <!-- Notifications -->
     <string name="song_title_notification">&lt;b>%1s&lt;/b></string>
 
+    <!-- Extended FAB placeholder -->
+    <string name="extended_fab_placeholder">0</string>
+
     <!-- Other preferences titles/subtitles -->
     <string name="faq_title">FAQ</string>
     <string name="category_ui">UI</string>
+    <string name="category_audio">Audio</string>
     <string name="accent_and_hex">&lt;b>%1s&lt;/b>:&#160;%2s</string>
 
     <!-- Preferences keys used in settings-->
@@ -52,18 +60,18 @@
     <string name="precise_volume_pref">precise_volume_pref</string>
     <string name="focus_pref">focus_pref</string>
     <string name="headset_pref">headsets_pref</string>
-    <string name="filter_pref">filter_pref</string>
+    <string name="filter_pref">strings_filter_pref</string>
 
     <!-- Sorting -->
-    <string name="artists_sorting_pref">artists_sorting_pref</string>
-    <string name="albums_sorting_pref">albums_sorting_pref</string>
-    <string name="folders_sorting_pref">folders_sorting_pref</string>
-    <string name="all_music_sorting_pref">all_music_sorting_pref</string>
+    <string name="artists_sorting_pref">sorting_artists_pref</string>
+    <string name="albums_sorting_pref">sorting_albums_pref</string>
+    <string name="folders_sorting_pref">sorting_folders_pref</string>
+    <string name="all_music_sorting_pref">sorting_all_music_pref</string>
 
     <!-- Other preferences keys -->
     <string name="saved_eq_settings">eq_settings_pref</string>
     <string name="latest_played_song_pref">restore_song_pref</string>
-    <string name="loved_songs_pref">pref_songs_pref</string>
+    <string name="loved_songs_pref">favorites_pref</string>
     <string name="latest_volume_pref">latest_volume_pref</string>
     <string name="song_visual_pref">song_visual_pref</string>
 </resources>

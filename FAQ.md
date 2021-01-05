@@ -46,13 +46,13 @@ Instead, desaturated colors can be used as a more legible alternative.
 
 ### Does Music Player GO use an equalizer?
 
-Yes, Music Player GO uses the system (default) equalizer (if it exists) on the device.
-The equalizer can be found in the "now playing" dialog.
+Yes, Music Player GO uses the system (default) equalizer (if it exists) found on the device or the built-in one.
+The equalizer can be found in the "Now Playing" dialog.
 
 
 ### Is there a built-in equalizer?
 
-Yes, Music Player GO has a built-in equalizer. It is similar to the stock equalizer and it is intended for devices without system equalizer. If You want to use this one please disable the system equalizer from system settings.
+Yes, Music Player GO has a built-in equalizer. It is similar to the stock equalizer and it is intended for devices not provived with a system equalizer. If You want to use this one please disable the system equalizer from system settings.
 
 
 ### The built-in equalizer is not being enabled
@@ -94,15 +94,14 @@ Folders can be considered albums.
 Each album consists of tracks of the same album.
 
 
-### Where is the edge-to-edge option (Lollipop, Marshmallow, Nougat, or Oreo (8.0))?
-
-This feature is not supported on these Android versions.
-It has been added in API level 27 (Android 8.1 (Oreo MR1)) to avoid issues with navigation bar button visibility: [light navigation bar](https://developer.android.com/reference/android/R.attr#windowLightNavigationBar) is in fact available since API 27.
-
-
 ### Can I exclude folders from my library?
 
-No, the music library is scanned by the operating system. To exclude folders, create a file and name it ".nomedia", and place it in the respective folder.
+You can filter them once the app has loaded.
+
+
+### Why does shuffled music is not added to queue?
+
+To avoid performance issues queue built from shuffled song is actually limited to 50 items.
 
 
 ### What about features requests/crash reports?

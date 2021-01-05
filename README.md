@@ -1,21 +1,22 @@
 <h1 align="center">Music Player GO</h1>
 
 <p align="center">
-<img height="500" src="art1.gif">
+<img height="500" src="art2.gif">
 </p>
 
 <p align="center">
   <!-- Latest Release -->
     <a href="https://github.com/enricocid/Music-Player-GO/releases">
       <img alt="GitHub release"
-      src="https://img.shields.io/static/v1?label=Tag&message=v4.3.7&color=58F5D1">
+      src="https://img.shields.io/static/v1?label=Tag&message=v4.4.0&color=58F5D1">
     </a>
    <!-- Minimum SDK -->
-    <a>
-      <img alt="Minimum SDK"
-      src="https://img.shields.io/static/v1?label=API&message=21&color=32B5ED">
-    </a>
+    <img alt="Minimum SDK" src="https://img.shields.io/static/v1?label=API&message=21&color=32B5ED">
+     <!-- Android CI integration -->
+    <a href="https://github.com/enricocid/Music-Player-GO/actions">
+    <img alt="CI" src="https://github.com/enricocid/Music-Player-GO/workflows/Music%20Player%20GO%20CI/badge.svg">
 </p>
+    </a>
 
   <h3 align="center">
   <a href="https://hosted.weblate.org/engage/music-player-go/">
@@ -41,7 +42,7 @@
 - [Translations](#translations)
 - [License](#license)
   - [Authors / Copyright](#authors--copyright)
-  - [Third-party component licenses](#third-party-component-licenses)
+  - [Third-party component](#third-party-component)
     - [Libraries](#libraries)
     - [Tools](#tools)
   - [License details](#license-details)
@@ -49,7 +50,7 @@
 
 # Description
 
-This repo contains the source code of the **Music Player GO** Android app: a simple yet fully-featured local music player aiming at simplicity and performance.
+This repo contains the source code of the **Music Player GO** Android app: a minimal yet fully-featured local music player aiming at simplicity and performance.
 
 
 # Download
@@ -72,7 +73,7 @@ This repo contains the source code of the **Music Player GO** Android app: a sim
 - Embedded covers support
 - Fast seeking (long click on skip buttons)
 - Simple audio focus, precise volume and headsets management
-- Other features: search, sorting, shuffle, notification's SeekBar, audios opening from other apps ...
+- Other features: search, sorting, shuffle ...
  
 
 # Translations
@@ -92,16 +93,16 @@ please consider a [donation](https://weblate.org/it/donate/new/) :)
 2020 (c) Enrico D'Ortenzio.
 
 
-## Third-party component licenses
+## Third-party component
 
 ### Libraries
 
 | Name                                                        | Author                  |
 | ----------------------------------------------------------- | ------------------------- |
 | [Moshi](https://github.com/square/moshi)                  | [Square](https://square.github.io/)                       |
-| [Indicator Fast Scroll](https://github.com/reddit/IndicatorFastScroll)                  | Reddit                       |
-| [material-dialogs](https://github.com/afollestad/material-dialogs)                  | [Aidan Afollestad](https://github.com/afollestad)                       |
-| [recyclical](https://github.com/afollestad/recyclical)                  | [Aidan Afollestad](https://github.com/afollestad)                       |
+| [Indicator Fast Scroll](https://github.com/reddit/IndicatorFastScroll)                  | [Reddit](https://github.com/reddit) - [Steven Schoen](https://github.com/DSteve595)                      |
+| [material-dialogs](https://github.com/afollestad/material-dialogs)                  | [Aidan Follestad](https://github.com/afollestad)                       |
+| [recyclical](https://github.com/afollestad/recyclical)                  | [Aidan Follestad](https://github.com/afollestad)                       |
 | [Edge-to-Edge](https://github.com/beworker/edge-to-edge)                  | [Sergej Shafarenka](https://github.com/beworker)                       |
 | [coil](https://github.com/coil-kt/coil)                  | [coil-kt](https://github.com/coil-kt)                       |
 

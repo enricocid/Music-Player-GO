@@ -8,16 +8,15 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
@@ -35,7 +34,6 @@ import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
-import com.iven.musicplayergo.helpers.MusicOrgHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
@@ -76,10 +74,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private var mSelectedAlbum: Album? = null
 
-    private var mSongsSorting = GoConstants.TRACK_SORTING
+    private var mSongsSorting = getDefSortingModeForArtistView()
 
     private val sLaunchedByArtistView get() = mLaunchedBy == GoConstants.ARTIST_VIEW
     private val sLaunchedByFolderView get() = mLaunchedBy == GoConstants.FOLDER_VIEW
+
+    private val sShowDisplayName get() = goPreferences.songsVisualization != GoConstants.TITLE
 
     private var mShuffledAlbum: String? = null
     private var sWasShuffling: Pair<Boolean, String?> = Pair(false, null)
@@ -195,6 +195,16 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     if (!returnedMusic.isNullOrEmpty()) {
                         mSongsList = getSongSource()
 
+                        if (sLaunchedByArtistView) {
+                            mSelectedAlbum = when {
+                                mSelectedAlbumPosition != -1 -> mSelectedArtistAlbums?.get(mSelectedAlbumPosition)
+                                else -> {
+                                    mSelectedAlbumPosition = 0
+                                    mSelectedArtistAlbums?.get(0)
+                                }
+                            }
+                        }
+
                         setupToolbar()
 
                         setupViews(view)
@@ -206,8 +216,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private fun setupToolbar() {
         mDetailsFragmentBinding.detailsToolbar.run {
 
-            overflowIcon = AppCompatResources.getDrawable(
-                requireActivity(),
+            overflowIcon = requireActivity().getDrawable(
                 if (sLaunchedByArtistView) {
                     R.drawable.ic_shuffle
                 } else {
@@ -261,16 +270,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         .bitmapPoolingEnabled(false)
                         .crossfade(true)
                         .build()
-                mAlbumArt = ResourcesCompat.getDrawable(resources, R.drawable.album_art, null)?.toBitmap()
-            }
-            mSelectedAlbum = when {
-                mSelectedAlbumPosition != -1 -> mSelectedArtistAlbums?.get(
-                    mSelectedAlbumPosition
-                )
-                else -> {
-                    mSelectedAlbumPosition = 0
-                    mSelectedArtistAlbums?.get(0)
-                }
+                mAlbumArt = requireActivity().getDrawable(R.drawable.album_art)?.toBitmap()
             }
 
             if (mSongsSorting == GoConstants.SHUFFLE_SORTING) {
@@ -280,19 +280,25 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             setupAlbumsContainer()
 
             mDetailsFragmentBinding.sortButton.run {
+                setImageResource(getDefSortingIconForArtistView(mSongsSorting))
                 setOnClickListener {
-                    mSongsSorting = ListsHelper.getSongsSorting(mSongsSorting)
-                    updateSorting(mSongsSorting)
+                    mSongsSorting = if (sShowDisplayName) {
+                        ListsHelper.getSongsDisplayNameSorting(mSongsSorting)
+                    } else {
+                        ListsHelper.getSongsSorting(mSongsSorting)
+                    }
+                    setSongsDataSource(mSelectedAlbum?.music, true)
                 }
             }
 
             mDetailsFragmentBinding.queueAddButton.setOnClickListener {
+                val queuedMusicSorted = ListsHelper.getSortedMusicList(mSongsSorting, mSelectedAlbum?.music)
                 mUIControlInterface.onAddAlbumToQueue(
-                    mSelectedAlbum?.music,
-                    Pair(true, mSelectedAlbum?.music?.get(0)),
+                    queuedMusicSorted,
+                    Pair(true, queuedMusicSorted?.get(0)),
                     isLovedSongs = false,
                     isShuffleMode = sWasShuffling.first,
-                    clearShuffleMode = !sWasShuffling.first,
+                    clearShuffleMode = false,
                     mLaunchedBy
                 )
             }
@@ -321,11 +327,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
 
         setSongsDataSource(
-            if (sLaunchedByArtistView) {
-                mSelectedAlbum?.music
-            } else {
-                mSongsList
-            }
+                if (sLaunchedByArtistView) {
+                    mSelectedAlbum?.music
+                } else {
+                    mSongsList
+                },
+                true
         )
 
         mDetailsFragmentBinding.songsRv.run {
@@ -339,7 +346,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     onBind(::GenericViewHolder) { _, item ->
 
                         val displayedTitle =
-                            if (goPreferences.songsVisualization != GoConstants.TITLE) {
+                            if (sShowDisplayName) {
                                 item.displayName?.toFilenameWithoutExtension()
                             } else {
                                 getString(
@@ -359,24 +366,18 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                     onClick {
 
-                        val selectedPlaylist =
-                            if (sLaunchedByFolderView) {
-                                if (sWasShuffling.first && item.album == mSelectedArtistOrFolder) {
-                                    mSongsList = getSongSource()
-                                }
-                                mSongsList
-                            } else {
-                                val playlist = MusicOrgHelper.getAlbumSongs(
-                                    item.artist,
-                                    item.album,
-                                    mMusicViewModel.deviceAlbumsByArtist
-                                )
-                                playlist
+                        val selectedPlaylist = if (sLaunchedByArtistView) {
+                            mSelectedAlbum?.music
+                        } else {
+                            if (sWasShuffling.first && item.album == mSelectedArtistOrFolder) {
+                                mSongsList = getSongSource()
                             }
+                            mSongsList
+                        }
 
                         mUIControlInterface.onSongSelected(
                             item,
-                            selectedPlaylist,
+                            selectedPlaylist?.toMutableList(),
                             mLaunchedBy
                         )
                     }
@@ -393,12 +394,17 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 }
             }
 
-            addBidirectionalSwipeHandler(false) { viewHolder: RecyclerView.ViewHolder,
-                                                  _: Int ->
-                mUIControlInterface.onAddToQueue(
-                    mSongsList!![viewHolder.adapterPosition],
-                    mLaunchedBy
-                )
+            addBidirectionalSwipeHandler(requireActivity(), false) { viewHolder: RecyclerView.ViewHolder,
+                                                  direction: Int ->
+                val song = mSelectedAlbum?.music?.get(viewHolder.adapterPosition)
+                if (direction == ItemTouchHelper.RIGHT) {
+                    mUIControlInterface.onAddToQueue(
+                            song,
+                            mLaunchedBy
+                    )
+                } else {
+                    DialogHelper.addToLovedSongs(song, mLaunchedBy, mUIControlInterface)
+                }
                 adapter?.notifyDataSetChanged()
             }
         }
@@ -418,17 +424,21 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
     }
 
-    private fun setSongsDataSource(musicList: List<Music>?) {
+    private fun setSongsDataSource(musicList: List<Music>?, isApplySorting: Boolean) {
+
+        val songs = if (isApplySorting) {
+            ListsHelper.getSortedMusicList(mSongsSorting, musicList?.toMutableList())
+        } else {
+            musicList
+        }
+
         if (sLaunchedByArtistView) {
             mDetailsFragmentBinding.sortButton.run {
 
                 if (sWasShuffling.first && sWasShuffling.second == mSelectedAlbum?.title) {
-                    mDetailsFragmentBinding.sortButton.setImageResource(
-                        ThemeHelper.resolveSortAlbumSongsIcon(
-                            mSongsSorting
-                        )
-                    )
+                    setImageResource(getDefSortingIconForArtistView(mSongsSorting))
                 } else {
+                    setImageResource(getDefSortingIconForArtistView(mSongsSorting))
                     isEnabled = mSelectedAlbum?.music?.size!! >= 2
                     ThemeHelper.updateIconTint(
                         this,
@@ -444,32 +454,37 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 }
             }
             mDetailsFragmentBinding.detailsToolbar.menu.findItem(R.id.action_shuffle_sa).isEnabled =
-                mSelectedAlbum?.music?.size!! >= 2
+                    mSelectedAlbum?.music?.size!! >= 2
+        } else {
+            mSongsList = songs
         }
 
-        musicList?.let { songs ->
-            mSongsDataSource.set(songs)
+        songs?.let { newSongsList ->
+            mSongsDataSource.set(newSongsList)
         }
     }
 
-    private fun updateSorting(sorting: Int) {
-        mDetailsFragmentBinding.sortButton.setImageResource(
-            ThemeHelper.resolveSortAlbumSongsIcon(
+    private fun getDefSortingIconForArtistView(sorting: Int) = if (sShowDisplayName) {
+        ThemeHelper.getSortIconForSongsDisplayName(
                 sorting
-            )
         )
-        setSongsDataSource(
-            ListsHelper.getSortedMusicList(
-                sorting,
-                mSelectedAlbum?.music
-            )
+    } else {
+        ThemeHelper.getSortIconForSongs(
+                sorting
         )
+    }
+
+    private fun getDefSortingModeForArtistView() = if (sShowDisplayName) {
+        GoConstants.ASCENDING_SORTING
+    } else {
+        GoConstants.TRACK_SORTING
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
         setSongsDataSource(
             ListsHelper.processQueryForMusic(newText, mSongsList)
-                ?: mSongsList
+                ?: mSongsList,
+            true
         )
         return false
     }
@@ -489,17 +504,16 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             inflateMenu(menuToInflate)
 
             menu.run {
-                findItem(R.id.action_shuffle_am).isEnabled =
-                    if (sLaunchedByArtistView) {
-                        mSelectedArtistAlbums?.size!! >= 2
-                    } else {
-                        mSongsList?.size!! >= 2
-                    }
-
-                findItem(R.id.action_shuffle_sa).isEnabled = sLaunchedByArtistView
-                if (!sLaunchedByArtistView) {
+                if (sLaunchedByArtistView) {
+                    findItem(R.id.action_shuffle_am).isEnabled = mSelectedArtistAlbums?.size!! >= 2
+                    findItem(R.id.action_shuffle_sa).isEnabled = mSelectedAlbum?.music?.size!! >= 2
+                } else {
+                    findItem(R.id.action_shuffle_am).isEnabled = mSongsList?.size!! >= 2
+                    findItem(R.id.action_shuffle_sa).isEnabled = false
+                    findItem(R.id.track_sorting).isEnabled = !sShowDisplayName
+                    findItem(R.id.track_sorting_inv).isEnabled = !sShowDisplayName
                     findItem(R.id.sorting).isEnabled =
-                        mSongsList?.size!! >= 2
+                            mSongsList?.size!! >= 2
                 }
             }
 
@@ -511,16 +525,19 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         Pair(true, mSongsList?.get(0)),
                         isLovedSongs = false,
                         isShuffleMode = sWasShuffling.first,
-                        clearShuffleMode = !sWasShuffling.first,
+                        clearShuffleMode = false,
                         mLaunchedBy
                     )
-                    R.id.action_shuffle_am -> mUIControlInterface.onShuffleSongs(
-                        null,
-                        null,
-                        mSongsList?.toMutableList(),
-                        mSongsList?.size!! <= 50, // only queue if album size don't exceed 30
-                        mLaunchedBy
-                    )
+                    R.id.action_shuffle_am -> {
+                        onDisableShuffle(isShuffleMode = false, isMusicListOutputRequired = false)
+                        mUIControlInterface.onShuffleSongs(
+                                null,
+                                null,
+                                mSongsList?.toMutableList(),
+                                true,
+                                mLaunchedBy
+                        )
+                    }
                     R.id.action_shuffle_sa -> {
                         sWasShuffling = Pair(true, mSelectedAlbum?.title)
                         val music = mUIControlInterface.onShuffleSongs(
@@ -533,17 +550,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         mSongsSorting = GoConstants.SHUFFLE_SORTING
 
                         if (sLaunchedByArtistView) {
-                            mDetailsFragmentBinding.sortButton.setImageResource(
-                                ThemeHelper.resolveSortAlbumSongsIcon(
-                                    mSongsSorting
-                                )
-                            )
+                            mDetailsFragmentBinding.sortButton.setImageResource(getDefSortingIconForArtistView(mSongsSorting))
                         }
-                        setSongsDataSource(music)
+                        setSongsDataSource(music, true)
                     }
                     R.id.default_sorting -> applySortingToMusic(GoConstants.DEFAULT_SORTING)
-                    R.id.descending_sorting -> applySortingToMusic(GoConstants.DESCENDING_SORTING)
                     R.id.ascending_sorting -> applySortingToMusic(GoConstants.ASCENDING_SORTING)
+                    R.id.descending_sorting -> applySortingToMusic(GoConstants.DESCENDING_SORTING)
                     R.id.track_sorting -> applySortingToMusic(GoConstants.TRACK_SORTING)
                     R.id.track_sorting_inv -> applySortingToMusic(GoConstants.TRACK_SORTING_INVERTED)
                 }
@@ -553,17 +566,14 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     }
 
     private fun applySortingToMusic(order: Int) {
+        mSongsSorting = order
         val selectedList = if (sLaunchedByFolderView) {
             mMusicViewModel.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
         } else {
             mMusicViewModel.deviceMusicByAlbum?.get(mSelectedArtistOrFolder)
         }
         if (!sWasShuffling.first) {
-            mSongsList = ListsHelper.getSortedMusicList(
-                order,
-                selectedList?.toMutableList()
-            )
-            setSongsDataSource(mSongsList)
+            setSongsDataSource(selectedList, true)
         }
     }
 
@@ -690,13 +700,24 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
     }
 
-    fun onDisableShuffle(isShuffleMode: Boolean) {
+    fun onDisableShuffle(isShuffleMode: Boolean, isMusicListOutputRequired: Boolean) : MutableList<Music>? {
+        val songsSource = if (sLaunchedByArtistView) {
+            mSelectedAlbum?.music
+        } else {
+            mSongsList
+        }
+        val selectedSongs = ListsHelper.getSortedMusicList(mSongsSorting, songsSource?.toMutableList())
         if (sWasShuffling.first && !isShuffleMode) {
-            mSongsSorting = GoConstants.TRACK_SORTING
-            if (sWasShuffling.first && mSelectedAlbum?.title == sWasShuffling.second) {
-                updateSorting(mSongsSorting)
+            mSongsSorting = getDefSortingModeForArtistView()
+            if (mSelectedAlbum?.title == sWasShuffling.second) {
+                setSongsDataSource(selectedSongs, false)
             }
             sWasShuffling = Pair(false, null)
+        }
+        return if (isMusicListOutputRequired) {
+            selectedSongs
+        } else {
+            null
         }
     }
 
@@ -713,14 +734,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         mSongsSorting = if (sWasShuffling.first && sWasShuffling.second == title) {
             GoConstants.SHUFFLE_SORTING
         } else {
-            GoConstants.TRACK_SORTING
+            if (sShowDisplayName) {
+                GoConstants.ASCENDING_SORTING
+            } else {
+                GoConstants.TRACK_SORTING
+            }
         }
-        mDetailsFragmentBinding.sortButton.setImageResource(
-            ThemeHelper.resolveSortAlbumSongsIcon(
-                mSongsSorting
-            )
-        )
-        setSongsDataSource(songs)
+        setSongsDataSource(songs, true)
         mDetailsFragmentBinding.songsRv.scrollToPosition(0)
     }
 
