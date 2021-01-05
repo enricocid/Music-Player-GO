@@ -19,7 +19,7 @@
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
             android:padding="8dp"
-            app:srcCompat="@drawable/ic_more_vert"
+            app:srcCompat="@drawable/ic_more"
             tools:ignore="ContentDescription" />
 
         <ImageButton

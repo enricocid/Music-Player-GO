@@ -18,7 +18,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
-            app:srcCompat="@drawable/ic_equalizer"
+            app:srcCompat="@drawable/ic_more"
             tools:ignore="ContentDescription" />
 
         <ImageButton
