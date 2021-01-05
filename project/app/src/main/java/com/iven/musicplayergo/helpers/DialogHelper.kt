@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.text.parseAsHtml
 import androidx.core.text.toSpanned
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -358,9 +359,9 @@ object DialogHelper {
                             isSeekBar = false
                     ),
                     lovedSong.duration.toFormattedDuration(isAlbum = false, isSeekBar = false)
-            ).toSpanned()
+            ).parseAsHtml()
         }
         return lovedSong?.duration?.toFormattedDuration(isAlbum = false, isSeekBar = false)
-                ?.toSpanned()
+                ?.parseAsHtml()
     }
 }
