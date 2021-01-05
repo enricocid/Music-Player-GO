@@ -672,17 +672,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         when (it.itemId) {
                             R.id.equalizer -> openEqualizer()
                             R.id.savePlayerPosition -> {
-                                val song = mMediaPlayerHolder.currentSong.first
-                                ListsHelper.addToLovedSongs(song, mMediaPlayerHolder.playerPosition, mMediaPlayerHolder.launchedBy)
-                                onLovedSongAdded(song, true)
-                                context.getString(
-                                        R.string.loved_song_added,
-                                        song?.title,
-                                        song?.startFrom?.toLong()?.toFormattedDuration(
-                                                isAlbum = false,
-                                                isSeekBar = false
-                                        )
-                                ).toToast(context)
+                                savePlayerPosition()
                             }
                         }
                         true
@@ -786,6 +776,25 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     mNowPlayingDialog.setPeekHeight(height)
                 }
             }
+        }
+    }
+
+    private fun savePlayerPosition(){
+        val song = mMediaPlayerHolder.currentSong.first
+        val position = mMediaPlayerHolder.playerPosition
+        if(position > 0) {
+            ListsHelper.addToLovedSongs(song, mMediaPlayerHolder.playerPosition, mMediaPlayerHolder.launchedBy)
+            onLovedSongAdded(song, true)
+            this.getString(
+                    R.string.loved_song_added,
+                    song?.title,
+                    mMediaPlayerHolder.playerPosition.toLong().toFormattedDuration(
+                            isAlbum = false,
+                            isSeekBar = false
+                    )
+            ).toToast(this)
+        }else {
+            this.getString(R.string.cannot_save_position).toToast(this)
         }
     }
 
