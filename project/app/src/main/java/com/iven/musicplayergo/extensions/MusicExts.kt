@@ -166,23 +166,6 @@ fun Music.toSavedMusic(playerPosition: Int, savedLaunchedBy: String) =
             playerPosition
         )
 
-
-fun Music.toSavedMusicWithoutPosition(savedLaunchedBy: String) =
-        Music(
-                artist,
-                year,
-                track,
-                title,
-                displayName,
-                duration,
-                album,
-                albumId,
-                relativePath,
-                id,
-                savedLaunchedBy,
-                0
-        )
-
 fun List<Music>.savedSongIsAvailable(first: Music?) : Music? {
     first?.let { song ->
         return find { song.title == it.title && song.displayName == it.displayName && song.track == it.track && song.albumId == it.albumId && song.album == it.album }
