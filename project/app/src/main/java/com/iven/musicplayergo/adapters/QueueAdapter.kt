@@ -87,14 +87,7 @@ class QueueAdapter(
                     }
                 }
 
-                duration.text = ctx.getString(
-                    R.string.loved_song_subtitle,
-                    song.startFrom.toLong().toFormattedDuration(
-                        isAlbum = false,
-                        isSeekBar = false
-                    ),
-                    song.duration.toFormattedDuration(isAlbum = false, isSeekBar = false)
-                ).parseAsHtml()
+                duration.text = DialogHelper.computeDurationText(song,ctx)
 
                 subtitle.text =
                     context.getString(R.string.artist_and_album, song.artist, song.album)

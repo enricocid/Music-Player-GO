@@ -28,10 +28,10 @@ fun MediaPlayerHolder.startSongFromQueue(song: Music?, launchedBy: String) {
         mediaPlayerInterface.onQueueStartedOrEnded(true)
     }
     setCurrentSong(
-        song,
-        queueSongs,
-        isFromQueue = true,
-        launchedBy
+            song,
+            queueSongs,
+            isFromQueue = true,
+            launchedBy
     )
     initMediaPlayer(song)
 }
@@ -45,8 +45,8 @@ fun String?.toFilenameWithoutExtension() = try {
 }
 
 fun Long.toContentUri(): Uri = ContentUris.withAppendedId(
-    MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-    this
+        MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+        this
 )
 
 fun Uri.toBitrate(context: Context): Pair<Int, Int>? {
@@ -106,23 +106,23 @@ fun Long.toFormattedDuration(isAlbum: Boolean, isSeekBar: Boolean) = try {
 
     if (minutes < 60) {
         String.format(
-            Locale.getDefault(), defaultFormat,
-            minutes,
-            seconds - TimeUnit.MINUTES.toSeconds(minutes)
+                Locale.getDefault(), defaultFormat,
+                minutes,
+                seconds - TimeUnit.MINUTES.toSeconds(minutes)
         )
     } else {
         // https://stackoverflow.com/a/9027379
         when {
             isSeekBar -> String.format(
-                "%02d:%02d:%02d",
-                hours,
-                minutes - TimeUnit.HOURS.toMinutes(hours),
-                seconds - TimeUnit.MINUTES.toSeconds(minutes)
+                    "%02d:%02d:%02d",
+                    hours,
+                    minutes - TimeUnit.HOURS.toMinutes(hours),
+                    seconds - TimeUnit.MINUTES.toSeconds(minutes)
             )
             else -> String.format(
-                "%02dh:%02dm",
-                hours,
-                minutes - TimeUnit.HOURS.toMinutes(hours)
+                    "%02dh:%02dm",
+                    hours,
+                    minutes - TimeUnit.HOURS.toMinutes(hours)
             )
         }
     }
@@ -144,27 +144,44 @@ fun Int.toFormattedTrack() = try {
 }
 
 fun Int.toFormattedYear(resources: Resources) =
-    if (this != 0) {
-        toString()
-    } else {
-        resources.getString(R.string.unknown_year)
-    }
+        if (this != 0) {
+            toString()
+        } else {
+            resources.getString(R.string.unknown_year)
+        }
 
 fun Music.toSavedMusic(playerPosition: Int, savedLaunchedBy: String) =
-    Music(
-            artist,
-            year,
-            track,
-            title,
-            displayName,
-            duration,
-            album,
-            albumId,
-            relativePath,
-            id,
-            savedLaunchedBy,
-            playerPosition
-    )
+        Music(
+                artist,
+                year,
+                track,
+                title,
+                displayName,
+                duration,
+                album,
+                albumId,
+                relativePath,
+                id,
+                savedLaunchedBy,
+                playerPosition
+        )
+
+
+fun Music.toSavedMusicWithoutPosition(savedLaunchedBy: String) =
+        Music(
+                artist,
+                year,
+                track,
+                title,
+                displayName,
+                duration,
+                album,
+                albumId,
+                relativePath,
+                id,
+                savedLaunchedBy,
+                0
+        )
 
 fun List<Music>.savedSongIsAvailable(first: Music?) : Music? {
     first?.let { song ->
@@ -172,3 +189,4 @@ fun List<Music>.savedSongIsAvailable(first: Music?) : Music? {
     }
     return null
 }
+

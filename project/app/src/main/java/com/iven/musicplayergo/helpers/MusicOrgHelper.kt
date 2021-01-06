@@ -141,7 +141,7 @@ object MusicOrgHelper {
                     musicListContains(lovedSong, ft)
                 }
                 bookmarks.removeAll(songs)
-                goPreferences.lovedSongs = bookmarks.toList()
+                goPreferences.lovedSongs = bookmarks
                 if (bookmarks.isEmpty()) {
                     uiControlInterface.onLovedSongsUpdate(true)
                 }

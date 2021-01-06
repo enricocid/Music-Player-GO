@@ -168,7 +168,50 @@ object ListsHelper {
 
     @JvmStatic
     fun addToLovedSongs(
-        context: Context,
+            song: Music?,
+            playerPosition: Int,
+            launchedBy: String
+    ) {
+        val lovedSongs =
+                if (goPreferences.lovedSongs != null) {
+                    goPreferences.lovedSongs
+                } else {
+                    mutableListOf()
+                }
+
+        val songToSave = song?.toSavedMusic(playerPosition, launchedBy)
+
+        songToSave?.let { savedSong ->
+            if (!lovedSongs?.contains(songToSave)!!) {
+                lovedSongs.add(savedSong)
+            }
+            goPreferences.lovedSongs = lovedSongs
+        }
+    }
+
+    @JvmStatic
+    fun removeFromLovedSongs(
+            song: Music?,
+            playerPosition: Int,
+            launchedBy: String
+    ) {
+        val lovedSongs =
+                if (goPreferences.lovedSongs != null) {
+                    goPreferences.lovedSongs
+                } else {
+                    mutableListOf()
+                }
+
+        val songToSave = song?.toSavedMusic(playerPosition, launchedBy)
+
+        songToSave?.let { savedSong ->
+            lovedSongs?.remove(savedSong)
+            goPreferences.lovedSongs = lovedSongs
+        }
+    }
+
+    @JvmStatic
+    fun addOrRemoveFromLovedSongs(
         song: Music?,
         playerPosition: Int,
         launchedBy: String
@@ -179,22 +222,15 @@ object ListsHelper {
             } else {
                 mutableListOf()
             }
+        val songToSave = song?.toSavedMusic(playerPosition, launchedBy)
 
-        song?.toSavedMusic(playerPosition, launchedBy)?.let { savedSong ->
-            if (!lovedSongs?.contains(savedSong)!!) {
-                lovedSongs.add(
-                    savedSong
-                )
-                context.getString(
-                    R.string.loved_song_added,
-                    savedSong.title,
-                    savedSong.startFrom.toLong().toFormattedDuration(
-                        isAlbum = false,
-                        isSeekBar = false
-                    )
-                ).toToast(context)
-                goPreferences.lovedSongs = lovedSongs.toList()
+        songToSave?.let { savedSong ->
+            if (lovedSongs?.contains(songToSave)!!) {
+                lovedSongs.remove(songToSave)
+            } else {
+                lovedSongs.add(savedSong)
             }
+            goPreferences.lovedSongs = lovedSongs
         }
     }
 }

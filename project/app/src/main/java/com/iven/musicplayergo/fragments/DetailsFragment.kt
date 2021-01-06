@@ -403,7 +403,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             mLaunchedBy
                     )
                 } else {
-                    DialogHelper.addToLovedSongs(requireActivity(), song, mLaunchedBy, mUIControlInterface)
+                    DialogHelper.addToLovedSongs(song, mLaunchedBy, mUIControlInterface)
                 }
                 adapter?.notifyDataSetChanged()
             }

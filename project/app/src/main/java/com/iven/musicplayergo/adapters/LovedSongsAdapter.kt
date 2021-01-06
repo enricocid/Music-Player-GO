@@ -1,6 +1,7 @@
 package com.iven.musicplayergo.adapters
 
 import android.content.Context
+import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,6 +56,7 @@ class LovedSongsAdapter(
         holder.bindItems(mLovedSongs?.get(holder.adapterPosition))
     }
 
+
     inner class LoveHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindItems(lovedSong: Music?) {
@@ -70,15 +72,10 @@ class LovedSongsAdapter(
                         lovedSong?.title
                     }
             title.text = displayedTitle
+            duration.text =
+                    DialogHelper.computeDurationText(lovedSong,ctx)
 
-            duration.text = ctx.getString(
-                R.string.loved_song_subtitle,
-                lovedSong?.startFrom?.toLong()?.toFormattedDuration(
-                    isAlbum = false,
-                    isSeekBar = false
-                ),
-                lovedSong?.duration?.toFormattedDuration(isAlbum = false, isSeekBar = false)
-            ).parseAsHtml()
+
             subtitle.text =
                 ctx.getString(R.string.artist_and_album, lovedSong?.artist, lovedSong?.album)
 
