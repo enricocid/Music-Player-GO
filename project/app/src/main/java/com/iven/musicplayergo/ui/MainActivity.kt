@@ -13,7 +13,6 @@ import android.media.audiofx.Virtualizer
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
-import android.widget.PopupMenu
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -292,9 +291,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 )
 
         if (PermissionsHelper.hasToAskForReadStoragePermission(this)) {
-            PermissionsHelper.manageAskForReadStoragePermission(
-                activity = this, uiControlInterface = this
-            )
+            PermissionsHelper.manageAskForReadStoragePermission(this)
         } else {
             doBindService()
         }
@@ -512,7 +509,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             setOnLongClickListener {
                 if (!goPreferences.lovedSongs.isNullOrEmpty()) {
                     DialogHelper.showClearLovedSongDialog(
-                        this@MainActivity,
                         this@MainActivity
                     )
                 }
@@ -660,20 +656,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 mNowPlayingBinding.npPlayingSongContainer.setOnClickListener { openPlayingArtistAlbum() }
 
-                mNowPlayingControlsBinding.npActions.setOnClickListener { equalizerButton ->
-                    val popup = PopupMenu(this@MainActivity, equalizerButton)
-                    popup.menuInflater.inflate(R.menu.menu_now_playing_actions, popup.menu)
-
-                    popup.setOnMenuItemClickListener {
-                        when (it.itemId) {
-                            R.id.equalizer -> openEqualizer()
-                            R.id.savePlayerPosition -> {
-                                savePlayerPosition()
-                            }
-                        }
-                        true
-                    }
-                    popup.show()
+                mNowPlayingControlsBinding.npActions.setOnClickListener { view ->
+                    DialogHelper.showPopupForOverflowMenu(this@MainActivity, view)
                 }
 
                 mNowPlayingControlsBinding.npSkipPrev.run {
@@ -774,7 +758,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    private fun savePlayerPosition(){
+    override fun onSaveSongPosition() {
         if (isMediaPlayerHolder) {
             val song = mMediaPlayerHolder.currentSong.first
             when (val position = mMediaPlayerHolder.playerPosition) {
@@ -902,7 +886,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 android.R.attr.colorButtonNormal
             )
         } else {
-            ContextCompat.getColor(this, R.color.red)
+            ThemeHelper.resolveThemeAccent(this)
         }
         ThemeHelper.updateIconTint(
             mPlayerControlsPanelBinding.lovedSongsButton,
@@ -1291,7 +1275,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mMediaPlayerHolder.onSaveEqualizerSettings(selectedPreset, bassBoost, virtualizer)
     }
 
-    private fun openEqualizer() {
+    override fun onOpenEqualizer() {
         if (checkIsPlayer(true)) {
             if (!EqualizerUtils.hasEqualizer(this)) {
                 synchronized(mMediaPlayerHolder.onOpenEqualizerCustom()) {
@@ -1511,7 +1495,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun openLovedSongsDialog() {
         if (!goPreferences.lovedSongs.isNullOrEmpty()) {
             mLovedSongsDialog = DialogHelper.showLovedSongsDialog(
-                this,
                 this,
                 mMediaPlayerHolder
             )

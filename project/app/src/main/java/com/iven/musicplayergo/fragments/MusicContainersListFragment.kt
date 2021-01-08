@@ -125,8 +125,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                             DialogHelper.showPopupForHide(
                                 requireActivity(),
                                 findViewHolderForAdapterPosition(index)?.itemView,
-                                item,
-                                mUIControlInterface
+                                item
                             )
                         }
                     }

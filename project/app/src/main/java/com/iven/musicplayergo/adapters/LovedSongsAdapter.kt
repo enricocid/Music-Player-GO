@@ -1,6 +1,6 @@
 package com.iven.musicplayergo.adapters
 
-import android.content.Context
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,20 +16,21 @@ import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.UIControlInterface
 
+
 class LovedSongsAdapter(
-    private val ctx: Context,
+    private val activity: Activity,
     private val lovedSongsDialog: MaterialDialog,
-    private val mediaPlayerHolder: MediaPlayerHolder,
-    private val uiControlInterface: UIControlInterface
+    private val mediaPlayerHolder: MediaPlayerHolder
 ) :
     RecyclerView.Adapter<LovedSongsAdapter.LoveHolder>() {
 
     private var mLovedSongs = goPreferences.lovedSongs?.toMutableList()
+    private val mUiControlInterface = activity as UIControlInterface
 
     fun swapSongs(lovedSongs: MutableList<Music>?) {
         mLovedSongs = lovedSongs
         notifyDataSetChanged()
-        uiControlInterface.onLovedSongsUpdate(false)
+        mUiControlInterface.onLovedSongsUpdate(false)
         if (mLovedSongs?.isEmpty()!!) {
             lovedSongsDialog.dismiss()
         }
@@ -70,17 +71,17 @@ class LovedSongsAdapter(
                     }
             title.text = displayedTitle
             duration.text =
-                    DialogHelper.computeDurationText(lovedSong,ctx)
+                    DialogHelper.computeDurationText(activity, lovedSong)
 
 
             subtitle.text =
-                ctx.getString(R.string.artist_and_album, lovedSong?.artist, lovedSong?.album)
+                activity.getString(R.string.artist_and_album, lovedSong?.artist, lovedSong?.album)
 
             itemView.run {
                 setOnClickListener {
                     mediaPlayerHolder.isSongFromLovedSongs =
                         Pair(true, lovedSong?.startFrom!!)
-                    uiControlInterface.onAddAlbumToQueue(
+                    mUiControlInterface.onAddAlbumToQueue(
                         mLovedSongs,
                         Pair(false, lovedSong),
                         isLovedSongs = true,
@@ -100,10 +101,9 @@ class LovedSongsAdapter(
     fun performLovedSongDeletion(position: Int, isSwipe: Boolean) {
         mLovedSongs?.get(position).let { song ->
             DialogHelper.showDeleteLovedSongDialog(
-                ctx,
+                activity,
                 song,
                 this@LovedSongsAdapter,
-                uiControlInterface,
                 Pair(isSwipe, position)
             )
         }

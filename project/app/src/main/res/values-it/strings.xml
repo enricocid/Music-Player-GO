@@ -22,7 +22,8 @@
     <string name="loved_songs">Canzoni preferite</string>
     <string name="loved_song_added">%1s (%2s) aggiunta alle canzoni preferite</string>
     <string name="loved_song_remove">%1s (%2s) sarà rimossa dalle canzoni preferite. Continuare?</string>
-    <string name="loved_song_add">Aggiungi a canzoni preferite</string>
+    <string name="loved_songs_save_time">Salva posizione canzone</string>
+    <string name="loved_song_add">Aggiungi a preferiti</string>
     <string name="loved_songs_clear">Le canzoni preferite saranno cancellate. Continuare?</string>
     <string name="error_no_loved_songs">Nessuna canzone preferita trovata!</string>
     <string name="perm_rationale">Music Player GO deve poter accedere ai tuoi file per eseguire la musica.</string>

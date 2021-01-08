@@ -23,8 +23,7 @@ object PermissionsHelper {
 
     @JvmStatic
     fun manageAskForReadStoragePermission(
-        activity: Activity,
-        uiControlInterface: UIControlInterface
+        activity: Activity
     ) {
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(
@@ -46,7 +45,7 @@ object PermissionsHelper {
                     )
                 }
                 negativeButton {
-                    uiControlInterface.onDenyPermission()
+                    (activity as UIControlInterface).onDenyPermission()
                 }
             }
         } else {

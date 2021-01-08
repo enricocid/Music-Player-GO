@@ -85,7 +85,7 @@ class QueueAdapter(
                     }
                 }
 
-                duration.text = DialogHelper.computeDurationText(song,ctx)
+                duration.text = DialogHelper.computeDurationText(ctx, song)
 
                 subtitle.text =
                     context.getString(R.string.artist_and_album, song.artist, song.album)

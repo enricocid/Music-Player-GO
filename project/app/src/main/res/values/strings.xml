@@ -6,9 +6,9 @@
     <string name="no">No</string>
     <string name="on_close_activity">Do you want to stop playback?</string>
     <string name="queue_songs_clear">Queue will be cleared. Continue?</string>
-    <string name="loved_songs_clear">Loved songs will be cleared. Continue?</string>
-    <string name="loved_song_remove">%1s (%2s) will be deleted from loved songs. Continue?</string>
-    <string name="loved_songs_save_time">Save player position</string>
+    <string name="loved_songs_clear">Favorite songs will be cleared. Continue?</string>
+    <string name="loved_song_remove">%1s (%2s) will be deleted from favorite songs. Continue?</string>
+    <string name="loved_songs_save_time">Save song position</string>
 
     <!-- Main - Fragments titles -->
     <string name="artists">Artists</string>
@@ -33,7 +33,7 @@
     <string name="shuffle_am">Shuffle all songs</string>
     <string name="shuffle_sa">Shuffle selected album</string>
     <string name="queue_add">Add to queue</string>
-    <string name="loved_song_add">Add to loved songs</string>
+    <string name="loved_song_add">Add to favorite songs</string>
     <string name="filter_popup_title">Hide</string>
 
     <!-- Queue -->
@@ -42,11 +42,11 @@
     <string name="queue_song_remove">%1s will be removed from the queue. Continue?</string>
 
     <!-- Loved songs -->
-    <string name="loved_songs">Loved songs</string>
-    <string name="loved_song_added">%1s (%2s) added to loved songs</string>
+    <string name="loved_songs">Favorite songs</string>
+    <string name="loved_song_added">%1s (%2s) added to favorite songs</string>
 
     <!-- Messages - Errors -->
-    <string name="error_no_loved_songs">No loved songs found!</string>
+    <string name="error_no_loved_songs">No favorite songs found!</string>
     <string name="error_no_music">No music found :(</string>
     <string name="error_not_ready">Could not load the music library! :( This could be due to the SD card getting unmounted, forcing the Android\'s MediaStore to rebuild its database records. Try again later.</string>
     <string name="error_unknown_unsupported">Something went wrong! :( Perhaps the chosen format is not supported, or the folder is not accessible (not the app\'s fault!).</string>

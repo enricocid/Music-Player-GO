@@ -2,9 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/equalizer"
+        android:icon="@drawable/ic_equalizer"
         android:title="@string/equalizer" />
     <item
         android:id="@+id/savePlayerPosition"
-        android:title="@string/loved_songs_save_time"/>
+        android:icon="@drawable/ic_save_time"
+        android:title="@string/loved_songs_save_time" />
 
 </menu>

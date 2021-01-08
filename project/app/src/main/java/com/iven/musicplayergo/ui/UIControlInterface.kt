@@ -21,6 +21,7 @@ interface UIControlInterface {
 
     fun onLovedSongsUpdate(clear: Boolean)
     fun onLovedSongAdded(song: Music?, isAdded: Boolean)
+    fun onSaveSongPosition()
     fun onCloseActivity()
     fun onAddToQueue(song: Music?, launchedBy: String)
     fun onAddAlbumToQueue(
@@ -38,6 +39,7 @@ interface UIControlInterface {
     fun onHandleFocusPref()
     fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean)
     fun onGetEqualizer(): Triple<Equalizer?, BassBoost?, Virtualizer?>
+    fun onOpenEqualizer()
     fun onEnableEqualizer(isEnabled: Boolean)
     fun onSaveEqualizerSettings(selectedPreset: Int, bassBoost: Short, virtualizer: Short)
 }

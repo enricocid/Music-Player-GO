@@ -12,14 +12,14 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/np_actions"
+            android:id="@+id/np_repeat"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
             android:padding="8dp"
-            app:srcCompat="@drawable/ic_more"
+            app:srcCompat="@drawable/ic_repeat_one"
             tools:ignore="ContentDescription" />
 
         <ImageButton
@@ -56,14 +56,15 @@
             tools:ignore="ContentDescription" />
 
         <ImageButton
-            android:id="@+id/np_repeat"
+            android:id="@+id/np_actions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
             android:padding="8dp"
-            app:srcCompat="@drawable/ic_repeat_one"
+            app:srcCompat="@drawable/ic_more_vert"
             tools:ignore="ContentDescription" />
+
     </LinearLayout>
 </merge>

@@ -127,8 +127,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                             requireActivity(),
                             findViewHolderForAdapterPosition(index)?.itemView,
                             item,
-                            GoConstants.ARTIST_VIEW,
-                            mUIControlInterface
+                            GoConstants.ARTIST_VIEW
                         )
                     }
                 }
