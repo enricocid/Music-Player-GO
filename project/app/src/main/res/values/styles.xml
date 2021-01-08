@@ -59,9 +59,9 @@
         <item name="searchIcon">@drawable/ic_search</item>
     </style>
 
-    <style name="ToolbarStyle.Title" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+    <style name="ToolbarStyle.Title" parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title">
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="ToolbarStyle.Subtitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle" />
+    <style name="ToolbarStyle.Subtitle" parent="@android:style/TextAppearance.Material.Widget.ActionBar.Subtitle" />
 </resources>
