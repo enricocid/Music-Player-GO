@@ -160,10 +160,17 @@ class GoPreferences(context: Context) {
     }
 
     private fun <T : Any> getObjectForType(key: String, type: Type): T? {
-        mPrefs.getString(key, null)?.let { json ->
-            return mMoshi.adapter<T>(type).fromJson(json)
+        val json = mPrefs.getString(key, null)
+        return if (json == null) {
+            null
+        } else {
+            try {
+                mMoshi.adapter<T>(type).fromJson(json)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
         }
-        return null
     }
 
     // Saves object into the Preferences using Moshi
