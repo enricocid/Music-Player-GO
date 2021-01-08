@@ -1,9 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<!----><resources>
     <string name="error_bad_id">З початку оберіть пісню!</string>
     <string name="error_no_browser">Браузер не знайдено!</string>
     <string name="perm_rationale">Для відтворення музики потрібен доступ Music Player-GO до Ваших файлів</string>
-    <string name="artist_info">%1d&#160;Aльбомів,&#160;%2d&#160;Пісень</string>
+    <string name="artist_info">%1d Aльбомів, %2d Пісень</string>
     <string name="yes">так</string>
     <string name="no">ні</string>
+    <string name="repeat_disabled">Повтор ∞ вимкнений.</string>
+    <string name="repeat_loop_enabled">Повтор ∞ включений.</string>
+    <string name="repeat_enabled">Одноразове повторення включено.</string>
+    <string name="error_eq">Упс, сталася помилка!</string>
+    <string name="error_list_ended">Список закінчився.</string>
+    <string name="error_no_queue">У черзі немає треків.</string>
+    <string name="error_media_buttons">Щось пішло не так! :( Будь ласка перезапустіть відтворення з додатка.</string>
+    <string name="error_unknown_unsupported">Щось пішло не так! :( Можливо, формат не підтримується або папка недоступна (не провина програми!).</string>
+    <string name="error_not_ready">При завантаженні музичної бібліотеки виникла проблема! :( Це могло статися через те, що SD-карта була відключена, тому Android MediaStore перебудував свої записи в базі даних. Будь ласка, спробуйте пізніше.</string>
+    <string name="error_no_music">Музику не знайдено :(</string>
+    <string name="error_no_loved_songs">В обраному немає треків!</string>
+    <string name="loved_song_added">%1s (%2s) додано в обране</string>
+    <string name="loved_songs">Обране</string>
+    <string name="queue_song_remove">%1s буде видалена з черги. Продовжити\?</string>
+    <string name="queue_song_add">%1s додана в чергу!</string>
+    <string name="queue">Черга</string>
+    <string name="filter_popup_title">Сховати</string>
+    <string name="loved_song_add">Додати в обране</string>
+    <string name="queue_add">Додати в чергу</string>
+    <string name="shuffle_sa">Перемішати обраний альбом</string>
+    <string name="shuffle_am">Перемішати треки</string>
+    <string name="sorting_pref_track_inv">За номером треку ↑</string>
+    <string name="sorting_pref_track">За номером треку ↓</string>
+    <string name="sorting_pref_default">За замовчуванням</string>
+    <string name="sorting_pref">Сортування</string>
+    <string name="folder_info">%1d Треки</string>
+    <string name="equalizer_v">Об\'ємний звук</string>
+    <string name="equalizer_bb">Підсилення басів</string>
+    <string name="equalizer">Еквалайзер</string>
+    <string name="folders">Папки</string>
+    <string name="songs">Треки</string>
+    <string name="albums">Альбоми</string>
+    <string name="artists">Виконавці</string>
+    <string name="loved_song_remove">%1s (%2s) буде видалена з обраного. Продовжити\?</string>
+    <string name="loved_songs_clear">Обрані будуть очищені. Продовжити\?</string>
+    <string name="queue_songs_clear">Очередь будет очищена. Продолжить\?</string>
+    <string name="on_close_activity">Ви бажаєте зупинити відтворення\?</string>
 </resources>

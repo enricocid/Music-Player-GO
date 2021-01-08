@@ -24,10 +24,10 @@
     <string name="headset_pref_summary_on">Выключить управление гарнитурой</string>
     <string name="headset_pref_title">Гарнитура</string>
     <string name="loved_song_add">Добавить в избранное</string>
-    <string name="loved_song_added">%1s (%2s) добавленно в избранное</string>
+    <string name="loved_song_added">%1s (%2s) добавлено в избранное</string>
     <string name="loved_song_remove">%1s (%2s) будет удалена из избранного. Продолжить?</string>
     <string name="loved_songs">Избранное</string>
-    <string name="loved_songs_clear">Избранные будут очищенны. Продолжить?</string>
+    <string name="loved_songs_clear">Избранные будут очищены. Продолжить\?</string>
     <string name="on_close_activity">Вы хотите остановить воспроизведение?</string>
     <string name="open_git_pref_title">Страница на GitHub</string>
     <string name="open_git_pref_summary">Откройте свойства проекта что бы узнать детальнее</string>
@@ -39,7 +39,7 @@
     <string name="queue_song_add">%1s добавлена в очередь!</string>
     <string name="queue_song_remove">%1s будет удалена из очереди. Продолжить?</string>
     <string name="queue_songs_clear">Очередь будет очищена. Продолжить?</string>
-    <string name="repeat_disabled">Однократное повторение выключено.</string>
+    <string name="repeat_disabled">Повтор ∞ выключен.</string>
     <string name="repeat_enabled">Однократное повторение включено.</string>
     <string name="settings">Настройки</string>
     <string name="shuffle_am">Перемешать треки</string>
@@ -59,7 +59,7 @@
     <string name="repeat_loop_enabled">Повтор ∞ включен.</string>
     <string name="error_no_music">Музыка не найдена :(</string>
     <string name="error_media_buttons">Что-то пошло не так! :( Пожалуйста перезапустите воспроизведение из приложения.</string>
-    <string name="error_not_ready">При загрузке музыкальной библиотеки возникла проблема! :( Это могло произойти из-за того, что SD-карта была отключена, из-за чего магазин Android MediaStore перестроил свои записи в базе данных. Решение: Повторите попытку позже.</string>
+    <string name="error_not_ready">При загрузке музыкальной библиотеки возникла проблема! :( Это могло произойти из-за того, что SD-карта была отключена, из-за чего Android MediaStore перестроил свои записи в базе данных. Повторите попытку позже.</string>
     <string name="albums">Альбомы</string>
     <string name="fast_seeking_actions_pref_summary_on">Предпочитать действия быстрого поиска</string>
     <string name="fast_seeking_actions_pref_summary_off">Предпочитать действия закрыть/повтор</string>

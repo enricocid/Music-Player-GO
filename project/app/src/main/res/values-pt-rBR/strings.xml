@@ -3,8 +3,8 @@
     <string name="yes">Sim</string>
     <string name="no">Não</string>
     <string name="artists">Artistas</string>
-    <string name="artist_info">%1d Álbuns, %2d Músicas</string>
-    <string name="folder_info">%1d Músicas</string>
+    <string name="artist_info">%1d Álbum(ns), %2d Música(s)</string>
+    <string name="folder_info">%1d Música(s)</string>
     <string name="songs">Músicas</string>
     <string name="shuffle_am">Reproduzir todas as músicas aleatoriamente</string>
     <string name="shuffle_sa">Reproduzir aleatoriamente o álbum selecionado</string>

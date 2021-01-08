@@ -17,10 +17,10 @@
     <string name="error_no_queue">Aucun titre dans la file d\'attente.</string>
     <string name="loved_songs">Titres favoris</string>
     <string name="loved_song_added">%1s (%2s) ajouté aux titres favoris</string>
+    <string name="loved_songs_save_time">Sauvegarder position</string>
     <string name="loved_song_remove">%1s (%2s) va être retiré des titres favoris. Continuer ?</string>
     <string name="loved_songs_clear">La liste des titres favoris va être effacée. Continuer ?</string>
     <string name="loved_song_add">Ajouter aux titres favoris</string>
-    <string name="loved_songs_save_time">Sauvegarder position</string>
     <string name="error_no_loved_songs">Aucun titre favoris !</string>
     <string name="perm_rationale">Music Player GO a besoin d\'accéder à vos fichiers pour lire de la musique.</string>
     <string name="error_no_browser">Aucun navigateur Web n\'a été trouvé.</string>
@@ -62,8 +62,6 @@
     <string name="filter_pref_title">Filtres</string>
     <string name="filter_popup_title">Masquer</string>
     <string name="fast_seeking_actions_pref_summary_on">Préférer les actions d\'avance rapide</string>
-
-
     <string name="fast_seeking_actions_pref_summary_off">Préférer les actions rapprochées/répétées</string>
     <string name="fast_seeking_actions_pref_title">Actions de notification supplémentaires</string>
     <string name="fast_seeking_pref_summary">Pas d\'avance rapide (en secondes)</string>
@@ -81,7 +79,7 @@
     <string name="equalizer_bb">Augmenter les basses</string>
     <string name="equalizer">Égaliseur</string>
     <string name="albums">Albums</string>
-    <string name="eq_pref_note_summary">Remarque : L\'égaliseur système sera utilisé à moins que vous ne désactiviez l\'option « égaliseur du système » depuis les paramètres. :)</string>
+    <string name="eq_pref_note_summary">Remarque : L\'égaliseur système sera utilisé à moins que vous ne désactiviez l\'option « égaliseur du système » depuis les paramètres. :)</string>
     <string name="on_list_ended_pref_title">Lorsqu\'une liste se termine…</string>
     <string name="error_eq">Oups, une erreur s\'est produite !</string>
 </resources>
