@@ -67,6 +67,8 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 
 ### Big thanks to translators:
 
+- - [**z1q7p3m9**](https://github.com/z1q7p3m9) for **Kurdish** translations
+
 - [**Allan Nordhøy**](https://github.com/comradekingu) 
 for [strings improvements](https://github.com/enricocid/Music-Player-GO/pull/227)
 
@@ -101,3 +103,5 @@ for [strings improvements](https://github.com/enricocid/Music-Player-GO/pull/227
 - [**AimerNeige**](https://github.com/aimerneige) for **Chinese-Shimply & Chinese-Traditional Support** translations
 
 - [**Krishan**](https://github.com/k7bura) for **Hindi** translations
+
+... and many others from Weblate! : )
