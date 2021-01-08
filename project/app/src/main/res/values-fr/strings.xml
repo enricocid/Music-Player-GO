@@ -22,8 +22,6 @@
     <string name="loved_song_add">Ajouter aux titres favoris</string>
     <string name="loved_songs_save_time">Sauvegarder position</string>
     <string name="error_no_loved_songs">Aucun titre favoris !</string>
-    <string name="player_position_saved">Position du lecteur sauvegardée</string>
-    <string name="cannot_save_position">Impossible d\'enregistrer la position à 0 secondes</string>
     <string name="perm_rationale">Music Player GO a besoin d\'accéder à vos fichiers pour lire de la musique.</string>
     <string name="error_no_browser">Aucun navigateur Web n\'a été trouvé.</string>
     <string name="error_bad_id">Lancez d\'abord la lecture d\'un titre.</string>

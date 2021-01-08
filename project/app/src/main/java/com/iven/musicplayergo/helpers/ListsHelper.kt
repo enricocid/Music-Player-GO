@@ -1,14 +1,11 @@
 package com.iven.musicplayergo.helpers
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.Menu
 import android.view.MenuItem
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.extensions.toSavedMusic
-import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
 import java.util.*
@@ -168,16 +165,15 @@ object ListsHelper {
 
     @JvmStatic
     fun addToLovedSongs(
-            song: Music?,
-            playerPosition: Int,
-            launchedBy: String
+        song: Music?,
+        playerPosition: Int,
+        launchedBy: String
     ) {
-        val lovedSongs =
-                if (goPreferences.lovedSongs != null) {
-                    goPreferences.lovedSongs
-                } else {
-                    mutableListOf()
-                }
+        val lovedSongs = if (goPreferences.lovedSongs != null) {
+            goPreferences.lovedSongs?.toMutableList()
+        } else {
+            mutableListOf()
+        }
 
         val songToSave = song?.toSavedMusic(playerPosition, launchedBy)
 
@@ -185,27 +181,6 @@ object ListsHelper {
             if (!lovedSongs?.contains(songToSave)!!) {
                 lovedSongs.add(savedSong)
             }
-            goPreferences.lovedSongs = lovedSongs
-        }
-    }
-
-    @JvmStatic
-    fun removeFromLovedSongs(
-            song: Music?,
-            playerPosition: Int,
-            launchedBy: String
-    ) {
-        val lovedSongs =
-                if (goPreferences.lovedSongs != null) {
-                    goPreferences.lovedSongs
-                } else {
-                    mutableListOf()
-                }
-
-        val songToSave = song?.toSavedMusic(playerPosition, launchedBy)
-
-        songToSave?.let { savedSong ->
-            lovedSongs?.remove(savedSong)
             goPreferences.lovedSongs = lovedSongs
         }
     }

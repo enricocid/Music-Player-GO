@@ -20,7 +20,6 @@ import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.extensions.addBidirectionalSwipeHandler
 import com.iven.musicplayergo.extensions.toFormattedDuration
-import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
@@ -299,9 +298,9 @@ object DialogHelper {
     @JvmStatic
     fun addToLovedSongs(song: Music?, launchedBy: String, uiControlInterface: UIControlInterface) {
         ListsHelper.addToLovedSongs(
-                song,
-                0,
-                launchedBy
+            song,
+            0,
+            launchedBy
         )
         uiControlInterface.onLovedSongAdded(song, true)
         uiControlInterface.onLovedSongsUpdate(false)
@@ -315,7 +314,7 @@ object DialogHelper {
 
         MaterialDialog(context).show {
 
-            title(R.string.app_name_release)
+            title(R.string.app_name)
 
             message(R.string.on_close_activity)
             positiveButton(R.string.yes) {
@@ -331,12 +330,12 @@ object DialogHelper {
     fun computeDurationText(lovedSong: Music?, ctx: Context): Spanned? {
         if (lovedSong?.startFrom != null && lovedSong.startFrom > 0L) {
             return ctx.getString(
-                    R.string.loved_song_subtitle,
-                    lovedSong.startFrom.toLong().toFormattedDuration(
-                            isAlbum = false,
-                            isSeekBar = false
-                    ),
-                    lovedSong.duration.toFormattedDuration(isAlbum = false, isSeekBar = false)
+                R.string.loved_song_subtitle,
+                lovedSong.startFrom.toLong().toFormattedDuration(
+                    isAlbum = false,
+                    isSeekBar = false
+                ),
+                lovedSong.duration.toFormattedDuration(isAlbum = false, isSeekBar = false)
             ).parseAsHtml()
         }
         return lovedSong?.duration?.toFormattedDuration(isAlbum = false, isSeekBar = false)

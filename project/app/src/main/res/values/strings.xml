@@ -45,10 +45,6 @@
     <string name="loved_songs">Loved songs</string>
     <string name="loved_song_added">%1s (%2s) added to loved songs</string>
 
-    <!-- Player position -->
-    <string name="player_position_saved">Player position saved</string>
-    <string name="cannot_save_position">Cannot save position at 0 second</string>
-
     <!-- Messages - Errors -->
     <string name="error_no_loved_songs">No loved songs found!</string>
     <string name="error_no_music">No music found :(</string>

@@ -723,7 +723,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     ListsHelper.addOrRemoveFromLovedSongs(mMediaPlayerHolder.currentSong.first,
                             0, mMediaPlayerHolder.launchedBy)
                     onLovedSongsUpdate(false)
-                    updateNowPlayingLovedIcon(context)
+                    updateNowPlayingLovedIcon(this@MainActivity)
                 }
 
                 if (goPreferences.isPreciseVolumeEnabled) {
@@ -749,8 +749,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                             loadNowPlayingCover(song)
                         }
                         mNowPlayingBinding.npSeek.text =
-                            song.startFrom.toLong()
-                                .toFormattedDuration(false, isSeekBar = true)
+                            mMediaPlayerHolder.playerPosition.toLong().toFormattedDuration(false, isSeekBar = true)
                     }
 
                     mNowPlayingBinding.npSeekBar.progress =
@@ -776,47 +775,49 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun savePlayerPosition(){
-        val song = mMediaPlayerHolder.currentSong.first
-        val position = mMediaPlayerHolder.playerPosition
-        if(position > 0) {
-            ListsHelper.addToLovedSongs(song, mMediaPlayerHolder.playerPosition, mMediaPlayerHolder.launchedBy)
-            onLovedSongAdded(song, true)
-            this.getString(
-                    R.string.loved_song_added,
-                    song?.title,
-                    mMediaPlayerHolder.playerPosition.toLong().toFormattedDuration(
+        if (isMediaPlayerHolder) {
+            val song = mMediaPlayerHolder.currentSong.first
+            when (val position = mMediaPlayerHolder.playerPosition) {
+                0 -> mNowPlayingExtendedControlsBinding.npLove.callOnClick()
+                else -> if (!isInLovedSongs(song, position)) {
+                    ListsHelper.addToLovedSongs(song, mMediaPlayerHolder.playerPosition, mMediaPlayerHolder.launchedBy)
+                    onLovedSongAdded(song, true)
+                    getString(
+                        R.string.loved_song_added,
+                        song?.title,
+                        mMediaPlayerHolder.playerPosition.toLong().toFormattedDuration(
                             isAlbum = false,
                             isSeekBar = false
-                    )
-            ).toToast(this)
-        }else {
-            this.getString(R.string.cannot_save_position).toToast(this)
+                        )
+                    ).toToast(this)
+                }
+            }
         }
     }
 
-
     private fun updateNowPlayingLovedIcon(context: Context) {
-        if (this::mNowPlayingExtendedControlsBinding.isInitialized) {
-            mMediaPlayerHolder.currentSong.first.let {
-                val isLoved = isInLovedSongs(it!!)
-                val lovedSongsButtonColor = if (isLoved)
-                    ThemeHelper.resolveThemeAccent(context) else ThemeHelper.resolveColorAttr(
-                        context,
-                        android.R.attr.colorButtonNormal
+        if (isMediaPlayerHolder && ::mNowPlayingExtendedControlsBinding.isInitialized) {
+            mMediaPlayerHolder.currentSong.first.let { music ->
+                val isLoved = isInLovedSongs(music, 0)
+                val lovedSongsButtonColor = if (isLoved) {
+                    ThemeHelper.resolveThemeAccent(context)
+                } else ThemeHelper.resolveColorAttr(
+                    context,
+                    android.R.attr.colorButtonNormal
                 )
                 ThemeHelper.updateIconTint(
-                        mNowPlayingExtendedControlsBinding.npLove,
-                        lovedSongsButtonColor
+                    mNowPlayingExtendedControlsBinding.npLove,
+                    lovedSongsButtonColor
                 )
             }
         }
     }
 
-    private fun isInLovedSongs(song: Music?): Boolean {
+    private fun isInLovedSongs(song: Music?, playerPosition: Int): Boolean {
         val lovedSongs = goPreferences.lovedSongs
         if (lovedSongs != null && song != null) {
             val convertedSong =
-                    song.toSavedMusic(0, mMediaPlayerHolder.launchedBy)
+                    song.toSavedMusic(playerPosition, mMediaPlayerHolder.launchedBy)
             return lovedSongs.contains(convertedSong)
         }
         return false

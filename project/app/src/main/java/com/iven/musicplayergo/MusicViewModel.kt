@@ -184,13 +184,6 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
              null
          }
 
-    private fun toFormattedTrackNumber(track: String): Int{
-        if(track.startsWith("0")){
-            return track.toInt()
-        }
-        return track.toInt()
-    }
-
     private fun getMusic(application: Application): MutableList<Music> {
         synchronized(startQuery(application)) {
             buildLibrary(application.resources)

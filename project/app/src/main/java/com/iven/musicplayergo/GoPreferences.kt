@@ -76,7 +76,7 @@ class GoPreferences(context: Context) {
             SavedEqualizerSettings::class.java
         )
 
-    var lovedSongs: MutableList<Music>?
+    var lovedSongs: List<Music>?
         get() = getObjectForType(
             prefsLovedSongs,
             typeLovedSongs
