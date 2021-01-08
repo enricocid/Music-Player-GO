@@ -46,7 +46,7 @@ fun String.getFastScrollerItem(context: Context): FastScrollItemIndicator {
         charAtZero = "${get(0)}"
     }
     return FastScrollItemIndicator.Text(
-        charAtZero.toUpperCase() // Grab the first letter and capitalize it
+            charAtZero.toUpperCase() // Grab the first letter and capitalize it
     )
 }
 
@@ -62,16 +62,28 @@ fun FragmentManager.addFragment(fragment: Fragment, tag: String?) {
     commit {
         addToBackStack(null)
         add(
-            R.id.container,
-            fragment,
-            tag
+                R.id.container,
+                fragment,
+                tag
         )
     }
 }
 
-fun FragmentManager.goBackFromFragment(isFragmentExpanded: Boolean) {
-    if (isFragmentExpanded && backStackEntryCount >= 1) {
-        popBackStack()
+fun FragmentManager.removeDatFragment(fragment: Fragment) {
+    if (fragment.isSafe()) {
+        commit {
+            remove(fragment)
+        }
+    }
+}
+
+fun FragmentManager.goBackFromFragmentNow(isFragmentExpanded: Boolean) {
+    if (isFragmentExpanded && backStackEntryCount >= 0) {
+        commit {
+            runOnCommit {
+                popBackStack()
+            }
+        }
     }
 }
 
@@ -79,6 +91,8 @@ fun FragmentManager.isFragment(fragmentTag: String): Boolean {
     val df = findFragmentByTag(fragmentTag)
     return df != null && df.isVisible && df.isAdded
 }
+
+fun Fragment.isSafe() = !(isDetached || !isAdded || isRemoving || activity == null  || view == null)
 
 fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator {
 
@@ -112,11 +126,11 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
     }
     val animator =
         ViewAnimationUtils.createCircularReveal(
-            this,
-            cx,
-            cy,
-            startRadius,
-            finalRadius
+                this,
+                cx,
+                cy,
+                startRadius,
+                finalRadius
         ).apply {
             interpolator = FastOutSlowInInterpolator()
             duration = revealDuration
@@ -156,9 +170,9 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
             doOnEnd {
                 background =
                     ThemeHelper.createColouredRipple(
-                        context,
-                        ContextCompat.getColor(context, R.color.red),
-                        R.drawable.ripple
+                            context,
+                            ContextCompat.getColor(context, R.color.red),
+                            R.drawable.ripple
                     )
             }
         }
@@ -209,24 +223,24 @@ private fun instantiateSwipeHandler(
         isDialog: Boolean,
         direction: Int,
         onSwiped: (
-            viewHolder: RecyclerView.ViewHolder,
-            direction: Int
+                viewHolder: RecyclerView.ViewHolder,
+                direction: Int
         ) -> Unit
 ): ItemTouchHelper.SimpleCallback {
     return object : ItemTouchHelper.SimpleCallback(
-        0,
-        direction
+            0,
+            direction
     ) {
 
         override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
         ): Boolean = false
 
         override fun onSwiped(
-            viewHolder: RecyclerView.ViewHolder,
-            direction: Int
+                viewHolder: RecyclerView.ViewHolder,
+                direction: Int
         ) {
             onSwiped(viewHolder, direction)
         }
@@ -313,7 +327,7 @@ private fun instantiateSwipeHandler(
                     secondIcon.draw(c)
                 }
                 else -> {
-                    background.setBounds(0,0,0,0)
+                    background.setBounds(0, 0, 0, 0)
                 }
             }
         }

@@ -85,6 +85,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private val sDetailsFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.DETAILS_FRAGMENT_TAG)
     private val sErrorFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.ERROR_FRAGMENT_TAG)
     private val sEqFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.EQ_FRAGMENT_TAG)
+    private var sAllowCommit = true
 
     private var sCloseDetailsFragment = true
 
@@ -198,6 +199,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        sAllowCommit = false
         if (mFragmentToRestore != 0) {
             super.onSaveInstanceState(outState)
             outState.putInt(
@@ -205,6 +207,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mFragmentToRestore
             )
         }
+    }
+
+    override fun onResumeFragments() {
+        sAllowCommit = true
+        super.onResumeFragments()
     }
 
     override fun onDestroy() {
@@ -281,6 +288,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             }
         }
 
+        sAllowCommit = true
+
         initMediaButtons()
 
         mFragmentToRestore =
@@ -301,10 +310,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mPlayerControlsPanelBinding.playerView.handleViewVisibility(false)
         mMainActivityBinding.loadingProgressBar.handleViewVisibility(false)
         mMainActivityBinding.viewPager2.handleViewVisibility(false)
-        supportFragmentManager.addFragment(
-            ErrorFragment.newInstance(errorType),
-            GoConstants.ERROR_FRAGMENT_TAG
-        )
+        if (sAllowCommit) {
+            supportFragmentManager.addFragment(
+                    ErrorFragment.newInstance(errorType),
+                    GoConstants.ERROR_FRAGMENT_TAG
+            )
+        }
     }
 
     private fun finishSetup(music: MutableList<Music>?) {
@@ -438,8 +449,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun closeFragments() {
         supportFragmentManager.run {
-            goBackFromFragment(sEqFragmentExpanded)
-            goBackFromFragment(sDetailsFragmentExpanded)
+            goBackFromFragmentNow(sEqFragmentExpanded)
+            goBackFromFragmentNow(sDetailsFragmentExpanded)
         }
     }
 
@@ -461,10 +472,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     isShuffleMode
                 )
             sCloseDetailsFragment = true
-            supportFragmentManager.addFragment(
-                mDetailsFragment,
-                GoConstants.DETAILS_FRAGMENT_TAG
-            )
+            if (sAllowCommit) {
+                supportFragmentManager.addFragment(
+                        mDetailsFragment,
+                        GoConstants.DETAILS_FRAGMENT_TAG
+                )
+            }
         }
     }
 
@@ -473,9 +486,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mDetailsFragment.onHandleBackPressed().apply {
                 sRevealAnimationRunning = true
                 doOnEnd {
-                    synchronized(supportFragmentManager.goBackFromFragment(true)) {
-                        sRevealAnimationRunning = false
-                    }
+                    supportFragmentManager.removeDatFragment(mDetailsFragment)
+                    sRevealAnimationRunning = false
                 }
             }
         }
@@ -1116,7 +1128,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             val selectedArtistOrFolder = getSongSource(selectedSong, isPlayingFromFolder)
             if (sDetailsFragmentExpanded) {
                 if (mDetailsFragment.hasToUpdate(selectedArtistOrFolder)) {
-                    synchronized(super.onBackPressed()) {
+                    synchronized(closeDetailsFragment()) {
                         openDetailsFragment(
                             selectedArtistOrFolder,
                             mMediaPlayerHolder.launchedBy,
@@ -1283,10 +1295,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         mEqualizerFragment = EqFragment.newInstance()
                         synchronized(closeNowPlayingDialog()) {
                             sCloseDetailsFragment = !sDetailsFragmentExpanded
-                            supportFragmentManager.addFragment(
-                                mEqualizerFragment,
-                                GoConstants.EQ_FRAGMENT_TAG
-                            )
+                            if (sAllowCommit) {
+                                supportFragmentManager.addFragment(
+                                        mEqualizerFragment,
+                                        GoConstants.EQ_FRAGMENT_TAG
+                                )
+                            }
                         }
                     }
                 }
@@ -1299,12 +1313,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun closeEqualizerFragment() {
         if (!sRevealAnimationRunning) {
             mEqualizerFragment.onHandleBackPressed().run {
-                sRevealAnimationRunning = true
-                doOnEnd {
-                    synchronized(supportFragmentManager.goBackFromFragment(true)) {
+                    sRevealAnimationRunning = true
+                    doOnEnd {
+                        supportFragmentManager.removeDatFragment(mEqualizerFragment)
                         sRevealAnimationRunning = false
                     }
-                }
             }
         }
     }
