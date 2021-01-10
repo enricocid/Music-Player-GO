@@ -108,7 +108,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
             }
             // Update the player state based on the change
-            if (isMediaPlayer) {
+            if (isPlaying) {
                 configurePlayerState()
             }
         }
@@ -141,25 +141,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     val isCurrentSong get() = ::currentSong.isInitialized
     var isRepeat1X = false
     var isLooping = false
-
-    private val mCurrentAlbumSize get() = mPlayingAlbumSongs?.size!! - 1
-    private val mCurrentSongIndex get() = mPlayingAlbumSongs?.indexOf(currentSong.first)!!
-    private val mNextSongIndex get() = mCurrentSongIndex + 1
-    private val mPrevSongIndex get() = mCurrentSongIndex - 1
-    private val mNextSong: Music?
-        get() = when {
-            mNextSongIndex in 0..mCurrentAlbumSize -> mPlayingAlbumSongs?.get(mNextSongIndex)
-            isQueue -> stopQueueAndGetSkipSong(true)
-            else -> mPlayingAlbumSongs?.get(0)
-        }
-    private val mPrevSong: Music?
-        get() = when {
-            mPrevSongIndex in 0..mCurrentAlbumSize -> mPlayingAlbumSongs?.get(
-                mPrevSongIndex
-            )
-            isQueue -> stopQueueAndGetSkipSong(false)
-            else -> mPlayingAlbumSongs?.get(mPlayingAlbumSongs?.lastIndex!!)
-        }
 
     var isQueue = false
     var isQueueStarted = false
@@ -361,8 +342,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         mAudioFocusRequestCompat =
             AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN)
                 .setAudioAttributes(audioAttributes)
-                .setOnAudioFocusChangeListener(mOnAudioFocusChangeListener)
                 .setWillPauseWhenDucked(true)
+                .setOnAudioFocusChangeListener(mOnAudioFocusChangeListener)
                 .build()
     }
 
@@ -468,22 +449,27 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             }
         }
 
-        if (isNext) {
-            val nextSong = mNextSong
-            if (nextSong != null) {
-                return nextSong
-            } else if (isQueue) {
-                return stopQueueAndGetSkipSong(true)
-            }
-        } else {
-            val prevSong = mPrevSong
-            if (prevSong != null) {
-                return prevSong
-            } else if (isQueue) {
-                return stopQueueAndGetSkipSong(false)
+        val currentIndex = mPlayingAlbumSongs?.indexOf(currentSong.first)
+
+        try {
+            return mPlayingAlbumSongs?.get(
+                    if (isNext) currentIndex?.plus(1)!! else currentIndex?.minus(
+                            1
+                    )!!
+            )
+        } catch (e: IndexOutOfBoundsException) {
+            e.printStackTrace()
+            return when {
+                isQueue -> stopQueueAndGetSkipSong(isNext)
+                else -> if (currentIndex != 0) {
+                    mPlayingAlbumSongs?.get(0)
+                } else {
+                    mPlayingAlbumSongs?.get(
+                            mPlayingAlbumSongs?.size?.minus(1)!!
+                    )
+                }
             }
         }
-        return null
     }
 
     private fun stopQueueAndGetSkipSong(restorePreviousAlbum: Boolean): Music? =
@@ -549,11 +535,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
      */
     fun initMediaPlayer(song: Music?) {
 
-        if (isRepeat1X or isLooping) {
-            isRepeat1X = false
-            isLooping = false
-        }
-
         try {
             if (isMediaPlayer) {
                 mediaPlayer.reset()
@@ -577,7 +558,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 mediaPlayer.setDataSource(playerService, uri)
             }
 
-            mediaPlayer.prepareAsync()
+            mediaPlayer.prepare()
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -593,6 +574,11 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     override fun onPrepared(mp: MediaPlayer) {
+
+        if (isRepeat1X or isLooping) {
+            isRepeat1X = false
+            isLooping = false
+        }
 
         if (isSongRestoredFromPrefs) {
             if (goPreferences.isPreciseVolumeEnabled) {
@@ -853,23 +839,20 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
      * settings.
      */
     private fun configurePlayerState() {
-
-        if (isMediaPlayer) {
-            when (mCurrentAudioFocusState) {
-                AUDIO_NO_FOCUS_NO_DUCK -> pauseMediaPlayer()
-                else -> {
-                    when (mCurrentAudioFocusState) {
-                        AUDIO_NO_FOCUS_CAN_DUCK -> mediaPlayer.setVolume(VOLUME_DUCK, VOLUME_DUCK)
-                        else -> mediaPlayer.setVolume(VOLUME_NORMAL, VOLUME_NORMAL)
-                    }
-                    // If we were playing when we lost focus, we need to resume playing.
-                    if (sPlayOnFocusGain) {
-                        resumeMediaPlayer()
-                        sPlayOnFocusGain = false
+        when (mCurrentAudioFocusState) {
+            AUDIO_NO_FOCUS_NO_DUCK -> pauseMediaPlayer()
+            else -> {
+                when (mCurrentAudioFocusState) {
+                    AUDIO_NO_FOCUS_CAN_DUCK -> mediaPlayer.setVolume(VOLUME_DUCK, VOLUME_DUCK)
+                    else -> mediaPlayer.setVolume(VOLUME_NORMAL, VOLUME_NORMAL)
+                }
+                // If we were playing when we lost focus, we need to resume playing.
+                if (sPlayOnFocusGain) {
+                    resumeMediaPlayer()
+                    sPlayOnFocusGain = false
                     }
                 }
             }
-        }
     }
 
     /* Sets the volume of the media player */
