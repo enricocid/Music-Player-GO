@@ -1143,7 +1143,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         MusicOrgHelper.getPlayingAlbumPosition(
                             selectedArtistOrFolder,
                             mMediaPlayerHolder,
-                            mMusicViewModel.deviceAlbumsByArtist
+                            mMusicViewModel.deviceAlbumsByArtist,
                         )
                     )
                 }
@@ -1568,7 +1568,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         override fun onStateChanged() {
             updatePlayingStatus(false)
             updatePlayingStatus(isNowPlaying)
-            if (mMediaPlayerHolder.state != GoConstants.RESUMED && mMediaPlayerHolder.state != GoConstants.PAUSED) {
+            if (isMediaPlayerHolder && mMediaPlayerHolder.state != GoConstants.RESUMED && mMediaPlayerHolder.state != GoConstants.PAUSED) {
                 updatePlayingInfo(false)
                 if (::mQueueDialog.isInitialized && mQueueDialog.isShowing && mMediaPlayerHolder.isQueue) {
                     mQueueAdapter.swapSelectedSong(

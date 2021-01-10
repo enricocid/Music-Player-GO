@@ -24,7 +24,7 @@ import com.iven.musicplayergo.ui.MainActivity
 class MusicNotificationManager(private val playerService: PlayerService) {
 
     //notification manager/builder
-    private val mNotificationManager = NotificationManagerCompat.from(playerService)
+    private val mNotificationManager get() = NotificationManagerCompat.from(playerService)
     private lateinit var mNotificationBuilder: NotificationCompat.Builder
 
     private val mNotificationActions
@@ -100,11 +100,13 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     }
 
     fun updateNotification() {
-        mNotificationManager
-            .notify(
-                GoConstants.NOTIFICATION_ID,
-                mNotificationBuilder.build()
-            )
+        if (::mNotificationBuilder.isInitialized) {
+            mNotificationManager
+                    .notify(
+                            GoConstants.NOTIFICATION_ID,
+                            mNotificationBuilder.build()
+                    )
+        }
     }
 
     fun onUpdateDefaultAlbumArt(bitmapRes: Bitmap?, updateNotification: Boolean) {
