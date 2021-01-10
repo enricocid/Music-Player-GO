@@ -84,6 +84,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private var mShuffledAlbum: String? = null
     private var sWasShuffling: Pair<Boolean, String?> = Pair(false, null)
 
+    private var sPlayFirstSong = true
+
     /**
      * This is the job for all coroutines started by this ViewModel.
      * Cancelling this job will cancel all coroutines started by this ViewModel.
@@ -670,11 +672,15 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                                 swapAlbum(item.title, item.music)
                             }
                         } else {
-                            mUIControlInterface.onSongSelected(
-                                item.music?.get(0),
-                                item.music,
-                                mLaunchedBy
-                            )
+                            if (sPlayFirstSong) {
+                                mUIControlInterface.onSongSelected(
+                                        item.music?.get(0),
+                                        item.music,
+                                        mLaunchedBy
+                                )
+                            } else {
+                                sPlayFirstSong = true
+                            }
                         }
                     }
                 }
@@ -692,6 +698,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         selectedArtistOrFolder != mSelectedArtistOrFolder
 
     fun tryToSnapToAlbumPosition(snapPosition: Int) {
+        sPlayFirstSong = false
         if (sLaunchedByArtistView && snapPosition != -1) {
             mDetailsFragmentBinding.albumsRv.smoothSnapToPosition(
                 snapPosition
