@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!--suppress AndroidLintUnusedResources -->
-    <string name="app_name_release">Music Player GO</string>
-
-    <!--suppress AndroidLintUnusedResources -->
-    <string name="app_name_debug">MPGO debug</string>
+    <!-- App name for debug and release flavors -->
+    <string name="app_name_release" tools:ignore="UnusedResources">Music Player GO</string>
+    <string name="app_name_debug" tools:ignore="UnusedResources">MPGO debug</string>
 
     <!-- External links -->
     <string name="app_git">https://github.com/enricocid/Music-Player-GO</string>
