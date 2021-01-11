@@ -36,6 +36,8 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 
 - [**Johnett Mathew**](https://github.com/Johnett) for these [fixes](https://github.com/enricocid/Music-Player-GO/pull/149)
 
+- [**Surendrajat**](https://github.com/Surendrajat) for [CI's improvement](https://github.com/enricocid/Music-Player-GO/pull/257)
+
 - [**seventhsonmizo**](https://github.com/seventhsonmizo) for Android Q [issue](https://github.com/enricocid/Music-Player-GO/issues/110) report and debugging
 
 - [**Jnss98b**](https://github.com/Jnss98b) for helping me to implement [edge-to-edge](https://github.com/enricocid/Music-Player-GO/issues/86) and for having reported/debugged this [issue](https://github.com/enricocid/VectorifyDaHome/issues/17)
@@ -47,8 +49,6 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 - [**Harry**](https://github.com/HarryHeights) for the privacy policy
 
 - [**olayhemy**](https://github.com/olayhemy) for the FAQ
-
-- [**andOTP**](https://github.com/andOTP) for the "Get it on GitHub" download badge
 
 - **Martin Teboul** for having reported tabs [issue](https://github.com/enricocid/Music-Player-GO/issues/178) and for testing
 
@@ -67,7 +67,7 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 
 ### Big thanks to translators:
 
-- - [**z1q7p3m9**](https://github.com/z1q7p3m9) for **Kurdish** translations
+- [**z1q7p3m9**](https://github.com/z1q7p3m9) for **Kurdish** translations
 
 - [**Allan Nordhøy**](https://github.com/comradekingu) 
 for [strings improvements](https://github.com/enricocid/Music-Player-GO/pull/227)
