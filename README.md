@@ -14,9 +14,9 @@
     <img alt="Minimum SDK" src="https://img.shields.io/static/v1?label=API&message=21&color=32B5ED">
      <!-- Android CI integration -->
     <a href="https://github.com/enricocid/Music-Player-GO/actions">
-    <img alt="CI" src="https://github.com/enricocid/Music-Player-GO/workflows/Music%20Player%20GO%20CI/badge.svg">
-</p>
+    <img alt="CI" src="https://github.com/enricocid/Music-Player-GO/workflows/Android%20CI/badge.svg">
     </a>
+</p>
 
   <h3 align="center">
   <a href="https://hosted.weblate.org/engage/music-player-go/">
@@ -90,7 +90,7 @@ please consider a [donation](https://weblate.org/it/donate/new/) :)
 
 ## Authors / Copyright
 
-2020 (c) Enrico D'Ortenzio.
+2021 (c) Enrico D'Ortenzio.
 
 
 ## Third-party component

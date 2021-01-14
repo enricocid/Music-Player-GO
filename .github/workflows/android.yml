@@ -1,4 +1,4 @@
-name: Music Player GO CI
+name: Android CI
   
 on:
   push:
