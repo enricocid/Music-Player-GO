@@ -3,13 +3,20 @@ package com.iven.musicplayergo.extensions
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Canvas
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.InsetDrawable
+import android.text.Spannable
 import android.text.SpannableString
+import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -55,6 +62,43 @@ fun MenuItem.setTitleColor(color: Int) {
     SpannableString(title).apply {
         setSpan(ForegroundColorSpan(color), 0, length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
         title = this
+    }
+}
+
+// Extension to set span to menu title
+fun MenuItem.setTitle(color: Int, title: String?) {
+
+    val spanString = SpannableString(if (title?.length!! > 20) {
+        TextUtils.concat(title.substring(0,20), "...")
+    } else {
+        title
+    })
+    spanString.setSpan(RelativeSizeSpan(0.75f), 0, spanString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    spanString.setSpan(ForegroundColorSpan(color), 0, spanString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    setTitle(spanString)
+}
+
+@SuppressLint("RestrictedApi")
+fun Menu.enablePopupIcons(activity: Activity) {
+    val iconMarginPx = activity.resources.getDimensionPixelSize(R.dimen.player_controls_padding_start)
+    try {
+        if (this is MenuBuilder) {
+            setOptionalIconsVisible(true)
+            val visibleItemsIterator = visibleItems.iterator()
+            while (visibleItemsIterator.hasNext()) {
+                visibleItemsIterator.next().run {
+                    if (icon != null) {
+                        icon = InsetDrawable(icon, iconMarginPx, 0, iconMarginPx, 0)
+                        iconTintList = ColorStateList.valueOf(ThemeHelper.resolveColorAttr(
+                                activity,
+                                android.R.attr.colorButtonNormal
+                        ))
+                    }
+                }
+            }
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
     }
 }
 

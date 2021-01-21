@@ -1,16 +1,11 @@
 package com.iven.musicplayergo.helpers
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.drawable.InsetDrawable
 import android.text.Spanned
 import android.view.Gravity
-import android.view.Menu
 import android.view.View
 import android.widget.TextView
-import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.text.parseAsHtml
 import androidx.recyclerview.widget.GridLayoutManager
@@ -25,6 +20,8 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.extensions.addBidirectionalSwipeHandler
+import com.iven.musicplayergo.extensions.enablePopupIcons
+import com.iven.musicplayergo.extensions.setTitle
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
@@ -32,6 +29,7 @@ import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.UIControlInterface
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
+
 
 object DialogHelper {
 
@@ -254,7 +252,9 @@ object DialogHelper {
             PopupMenu(activity, view).apply {
 
                 inflate(R.menu.popup_filter)
-                enablePopupIcons(activity, menu)
+
+                menu.findItem(R.id.music_container_title).setTitle(ThemeHelper.resolveThemeAccent(activity), stringToFilter)
+                menu.enablePopupIcons(activity)
                 gravity = Gravity.END
 
                 setOnMenuItemClickListener {
@@ -280,7 +280,9 @@ object DialogHelper {
             PopupMenu(activity, view).apply {
 
                 inflate(R.menu.popup_songs)
-                enablePopupIcons(activity, menu)
+
+                menu.findItem(R.id.song_title).setTitle(ThemeHelper.resolveThemeAccent(activity), song?.title)
+                menu.enablePopupIcons(activity)
                 gravity = Gravity.END
 
                 setOnMenuItemClickListener { menuItem ->
@@ -311,7 +313,7 @@ object DialogHelper {
         PopupMenu(activity, view).apply {
 
             inflate(R.menu.popup_np_actions)
-            enablePopupIcons(activity, menu)
+            menu.enablePopupIcons(activity)
             gravity = Gravity.END
 
             setOnMenuItemClickListener {
@@ -370,30 +372,5 @@ object DialogHelper {
         }
         return lovedSong?.duration?.toFormattedDuration(isAlbum = false, isSeekBar = false)
                 ?.parseAsHtml()
-    }
-
-    @SuppressLint("RestrictedApi")
-    @JvmStatic
-    private fun enablePopupIcons(activity: Activity, menu: Menu) {
-        val iconMarginPx = activity.resources.getDimensionPixelSize(R.dimen.player_controls_padding_start)
-        try {
-            if (menu is MenuBuilder) {
-                menu.setOptionalIconsVisible(true)
-                val visibleItemsIterator = menu.visibleItems.iterator()
-                while (visibleItemsIterator.hasNext()) {
-                    visibleItemsIterator.next().run {
-                        if (icon != null) {
-                            icon = InsetDrawable(icon, iconMarginPx, 0, iconMarginPx, 0)
-                            iconTintList = ColorStateList.valueOf(ThemeHelper.resolveColorAttr(
-                                    activity,
-                                    android.R.attr.colorButtonNormal
-                            ))
-                        }
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
     }
 }

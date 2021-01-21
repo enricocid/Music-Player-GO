@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/song_title"
+        android:enabled="false"
+        android:title="" />
+    <item
         android:id="@+id/loved_songs_add"
         android:icon="@drawable/ic_favorite"
         android:title="@string/loved_song_add" />
