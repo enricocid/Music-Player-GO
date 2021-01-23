@@ -163,7 +163,8 @@ fun Music.toSavedMusic(playerPosition: Int, savedLaunchedBy: String) =
             relativePath,
             id,
             savedLaunchedBy,
-            playerPosition
+            playerPosition,
+            dateAdded
         )
 
 fun List<Music>.savedSongIsAvailable(first: Music?) : Music? {

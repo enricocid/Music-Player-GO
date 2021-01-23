@@ -137,6 +137,11 @@ object ListsHelper {
                 list?.sortBy { it.track }
                 list?.asReversed()
             }
+
+            GoConstants.DATE_ADDED_SORTING -> {
+                list?.sortBy { it.dateAdded }
+                list
+            }
             else -> list
         }
     }
