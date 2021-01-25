@@ -99,7 +99,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                         MediaStore.Audio.AudioColumns.ALBUM, // 6
                         MediaStore.Audio.AudioColumns.ALBUM_ID, // 7
                         pathColumn, // 8
-                        MediaStore.Audio.AudioColumns._ID // 9
+                        MediaStore.Audio.AudioColumns._ID, // 9
                         MediaStore.Audio.AudioColumns.DATE_ADDED // 10
                 )
 
