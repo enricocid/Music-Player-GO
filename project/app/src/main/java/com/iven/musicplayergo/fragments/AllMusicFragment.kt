@@ -263,7 +263,10 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
         mAllMusicFragmentBinding.searchToolbar.setOnMenuItemClickListener {
 
-            if (it.itemId == R.id.default_sorting || it.itemId == R.id.ascending_sorting || it.itemId == R.id.descending_sorting) {
+            if (it.itemId == R.id.default_sorting
+                    || it.itemId == R.id.ascending_sorting
+                    || it.itemId == R.id.descending_sorting
+                    || it.itemId == R.id.date_added_sorting) {
 
                 mSorting = it.order
 

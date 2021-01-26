@@ -30,5 +30,11 @@
             android:orderInCategory="2"
             android:title="@string/sorting_pref_descending"
             app:showAsAction="never" />
+
+        <item
+            android:id="@+id/date_added_sorting"
+            android:orderInCategory="6"
+            android:title="@string/sorting_pref_date_added"
+            app:showAsAction="never" />
     </group>
 </menu>
