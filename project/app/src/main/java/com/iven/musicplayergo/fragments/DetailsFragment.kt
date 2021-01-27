@@ -674,9 +674,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         } else {
                             if (sPlayFirstSong) {
                                 mUIControlInterface.onSongSelected(
-                                        item.music?.get(0),
-                                        item.music,
-                                        mLaunchedBy
+                                    ListsHelper.getSortedMusicList(mSongsSorting, item.music?.toMutableList())?.get(0),
+                                    item.music,
+                                    mLaunchedBy
                                 )
                             } else {
                                 sPlayFirstSong = true
