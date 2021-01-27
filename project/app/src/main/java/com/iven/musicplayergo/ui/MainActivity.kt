@@ -13,6 +13,7 @@ import android.media.audiofx.Virtualizer
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
+import android.util.Log
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -472,6 +473,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     isShuffleMode
                 )
             sCloseDetailsFragment = true
+            Log.d("sAllowCommit", sAllowCommit.toString())
             if (sAllowCommit) {
                 supportFragmentManager.addFragment(
                     mDetailsFragment,
@@ -1128,7 +1130,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             val selectedArtistOrFolder = getSongSource(selectedSong, isPlayingFromFolder)
             if (sDetailsFragmentExpanded) {
                 if (mDetailsFragment.hasToUpdate(selectedArtistOrFolder)) {
-                    synchronized(closeDetailsFragment()) {
+                    synchronized(super.onBackPressed()) {
+                        supportFragmentManager.removeDatFragment(mDetailsFragment)
                         openDetailsFragment(
                             selectedArtistOrFolder,
                             mMediaPlayerHolder.launchedBy,
