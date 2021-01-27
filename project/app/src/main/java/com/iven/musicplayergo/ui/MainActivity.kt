@@ -312,8 +312,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mMainActivityBinding.viewPager2.handleViewVisibility(false)
         if (sAllowCommit) {
             supportFragmentManager.addFragment(
-                    ErrorFragment.newInstance(errorType),
-                    GoConstants.ERROR_FRAGMENT_TAG
+                ErrorFragment.newInstance(errorType),
+                GoConstants.ERROR_FRAGMENT_TAG
             )
         }
     }
@@ -474,8 +474,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             sCloseDetailsFragment = true
             if (sAllowCommit) {
                 supportFragmentManager.addFragment(
-                        mDetailsFragment,
-                        GoConstants.DETAILS_FRAGMENT_TAG
+                    mDetailsFragment,
+                    GoConstants.DETAILS_FRAGMENT_TAG
                 )
             }
         }
@@ -1297,8 +1297,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                             sCloseDetailsFragment = !sDetailsFragmentExpanded
                             if (sAllowCommit) {
                                 supportFragmentManager.addFragment(
-                                        mEqualizerFragment,
-                                        GoConstants.EQ_FRAGMENT_TAG
+                                    mEqualizerFragment,
+                                    GoConstants.EQ_FRAGMENT_TAG
                                 )
                             }
                         }
@@ -1313,11 +1313,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun closeEqualizerFragment() {
         if (!sRevealAnimationRunning) {
             mEqualizerFragment.onHandleBackPressed().run {
-                    sRevealAnimationRunning = true
-                    doOnEnd {
-                        supportFragmentManager.removeDatFragment(mEqualizerFragment)
-                        sRevealAnimationRunning = false
-                    }
+                sRevealAnimationRunning = true
+                doOnEnd {
+                    supportFragmentManager.removeDatFragment(mEqualizerFragment)
+                    sRevealAnimationRunning = false
+                }
             }
         }
     }

@@ -53,7 +53,7 @@ fun String.getFastScrollerItem(context: Context): FastScrollItemIndicator {
         charAtZero = "${get(0)}"
     }
     return FastScrollItemIndicator.Text(
-            charAtZero.toUpperCase() // Grab the first letter and capitalize it
+        charAtZero.toUpperCase() // Grab the first letter and capitalize it
     )
 }
 
@@ -106,9 +106,9 @@ fun FragmentManager.addFragment(fragment: Fragment, tag: String?) {
     commit {
         addToBackStack(null)
         add(
-                R.id.container,
-                fragment,
-                tag
+            R.id.container,
+            fragment,
+            tag
         )
     }
 }
@@ -170,11 +170,11 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
     }
     val animator =
         ViewAnimationUtils.createCircularReveal(
-                this,
-                cx,
-                cy,
-                startRadius,
-                finalRadius
+            this,
+            cx,
+            cy,
+            startRadius,
+            finalRadius
         ).apply {
             interpolator = FastOutSlowInInterpolator()
             duration = revealDuration
@@ -214,9 +214,9 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
             doOnEnd {
                 background =
                     ThemeHelper.createColouredRipple(
-                            context,
-                            ContextCompat.getColor(context, R.color.red),
-                            R.drawable.ripple
+                        context,
+                        ContextCompat.getColor(context, R.color.red),
+                        R.drawable.ripple
                     )
             }
         }
@@ -267,8 +267,8 @@ private fun instantiateSwipeHandler(
         isDialog: Boolean,
         direction: Int,
         onSwiped: (
-                viewHolder: RecyclerView.ViewHolder,
-                direction: Int
+            viewHolder: RecyclerView.ViewHolder,
+            direction: Int
         ) -> Unit
 ): ItemTouchHelper.SimpleCallback {
     return object : ItemTouchHelper.SimpleCallback(
@@ -277,14 +277,14 @@ private fun instantiateSwipeHandler(
     ) {
 
         override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
         ): Boolean = false
 
         override fun onSwiped(
-                viewHolder: RecyclerView.ViewHolder,
-                direction: Int
+            viewHolder: RecyclerView.ViewHolder,
+            direction: Int
         ) {
             onSwiped(viewHolder, direction)
         }
