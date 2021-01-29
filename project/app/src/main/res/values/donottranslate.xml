@@ -10,6 +10,7 @@
     <string name="app_faq">https://github.com/enricocid/Music-Player-GO/blob/master/FAQ.md</string>
 
     <!-- Formatted strings used in RVs items and other TextViews -->
+    <string name="popup_menu_title">%1s&#8230;</string>
     <string name="rates">%1d&#160;kHz,&#160;%2d&#160;kbps</string>
     <string name="artist_and_album">%1s&#160;/&#160;%2s</string>
     <string name="track_song">&lt;b>%1d&lt;/b>&#160;-&#160;%2s</string>

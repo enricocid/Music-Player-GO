@@ -253,7 +253,7 @@ object DialogHelper {
 
                 inflate(R.menu.popup_filter)
 
-                menu.findItem(R.id.music_container_title).setTitle(ThemeHelper.resolveThemeAccent(activity), stringToFilter)
+                menu.findItem(R.id.music_container_title).setTitle(activity, stringToFilter)
                 menu.enablePopupIcons(activity)
                 gravity = Gravity.END
 
@@ -281,7 +281,7 @@ object DialogHelper {
 
                 inflate(R.menu.popup_songs)
 
-                menu.findItem(R.id.song_title).setTitle(ThemeHelper.resolveThemeAccent(activity), song?.title)
+                menu.findItem(R.id.song_title).setTitle(activity, song?.title)
                 menu.enablePopupIcons(activity)
                 gravity = Gravity.END
 
