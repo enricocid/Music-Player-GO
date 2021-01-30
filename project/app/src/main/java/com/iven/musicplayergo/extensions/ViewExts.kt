@@ -5,7 +5,6 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.content.res.ColorStateList
 import android.graphics.Canvas
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.InsetDrawable
@@ -90,10 +89,6 @@ fun Menu.enablePopupIcons(activity: Activity) {
             visibleItemsIterator.next().run {
                 if (icon != null) {
                     icon = InsetDrawable(icon, iconMarginPx, 0, iconMarginPx, 0)
-                    iconTintList = ColorStateList.valueOf(ThemeHelper.resolveColorAttr(
-                            activity,
-                            android.R.attr.colorButtonNormal
-                    ))
                 }
             }
         }
