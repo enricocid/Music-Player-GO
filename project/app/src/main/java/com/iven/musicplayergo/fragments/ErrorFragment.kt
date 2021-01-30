@@ -26,7 +26,7 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
     private lateinit var mUIControlInterface: UIControlInterface
 
     private var mErrorString = R.string.perm_rationale
-    private var mErrorIcon = R.drawable.ic_folder
+    private var mErrorIcon = R.drawable.ic_folder_music
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

@@ -208,7 +208,7 @@ object ThemeHelper {
         GoConstants.ARTISTS_TAB -> R.drawable.ic_artist
         GoConstants.ALBUM_TAB -> R.drawable.ic_library_music
         GoConstants.SONGS_TAB -> R.drawable.ic_music_note
-        GoConstants.FOLDERS_TAB -> R.drawable.ic_folder
+        GoConstants.FOLDERS_TAB -> R.drawable.ic_folder_music
         else -> R.drawable.ic_settings
     }
 
