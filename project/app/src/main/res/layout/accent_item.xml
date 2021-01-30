@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@android:dimen/app_icon_size"
     android:layout_height="@android:dimen/app_icon_size"
-    android:layout_margin="4dp"
-    android:padding="6dp"
+    android:layout_margin="2dp"
+    android:padding="2dp"
     tools:viewBindingIgnore="true">
 
     <ImageButton
