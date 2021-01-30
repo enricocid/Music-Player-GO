@@ -41,8 +41,8 @@
             android:layout_marginStart="8dp"
             android:background="@android:color/transparent"
             android:clickable="false"
+            android:contentDescription="@string/precise_volume_pref_title"
             android:focusable="false"
-            app:srcCompat="@drawable/ic_volume_up"
-            tools:ignore="ContentDescription" />
+            app:srcCompat="@drawable/ic_volume_up" />
     </LinearLayout>
 </merge>

@@ -47,6 +47,7 @@ class AccentsAdapter(private val activity: Activity) :
                     itemView.background = this
                 }
 
+                contentDescription = ThemeHelper.getAccentName(mAccents[adapterPosition].first, activity)
                 findViewById<ImageButton>(R.id.check).handleViewVisibility(color == mSelectedAccent)
 
                 setOnClickListener {

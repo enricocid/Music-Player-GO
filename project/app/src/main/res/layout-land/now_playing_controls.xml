@@ -18,8 +18,8 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
-            app:srcCompat="@drawable/ic_equalizer"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@string/equalizer"
+            app:srcCompat="@drawable/ic_equalizer" />
 
         <ImageButton
             android:id="@+id/np_skip_prev"
@@ -28,8 +28,8 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
-            app:srcCompat="@drawable/ic_skip_previous"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@string/content_skip_prev"
+            app:srcCompat="@drawable/ic_skip_previous" />
 
         <ImageButton
             android:id="@+id/np_play"
@@ -37,10 +37,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
+            android:contentDescription="@string/content_play"
             android:padding="16dp"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_play"
-            tools:ignore="ContentDescription" />
+            app:srcCompat="@drawable/ic_play" />
 
         <ImageButton
             android:id="@+id/np_skip_next"
@@ -49,8 +49,8 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
-            app:srcCompat="@drawable/ic_skip_next"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@string/content_skip_next"
+            app:srcCompat="@drawable/ic_skip_next" />
 
         <ImageButton
             android:id="@+id/np_repeat"
@@ -59,7 +59,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
-            app:srcCompat="@drawable/ic_repeat_one"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@string/content_repeat"
+            app:srcCompat="@drawable/ic_repeat_one" />
     </LinearLayout>
 </merge>

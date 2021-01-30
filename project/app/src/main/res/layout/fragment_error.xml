@@ -22,18 +22,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
         tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:id="@+id/error_icon"
             android:layout_width="@android:dimen/notification_large_icon_height"
             android:layout_height="@android:dimen/notification_large_icon_height"
-            android:tint="@color/red"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@string/error_no_music"
+            android:tint="@color/red" />
 
         <TextView
             android:id="@+id/error_message"

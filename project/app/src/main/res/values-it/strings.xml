@@ -16,6 +16,11 @@
     <string name="queue">Coda</string>
     <string name="queue_add">Aggiungi alla coda</string>
     <string name="queue_song_add">%1s aggiunta alla coda!</string>
+    <string name="content_skip_prev">Vai a traccia precedente</string>
+    <string name="content_play">Play/pausa</string>
+    <string name="content_skip_next">Vai a traccia successiva</string>
+    <string name="content_repeat">Abilita/disattiva opzioni ripeti</string>
+
     <string name="open_details_fragment">Apri dettagli artista/cartella</string>
     <string name="queue_song_remove">%1s sarà rimossa dalla coda. Continuare?</string>
     <string name="queue_songs_clear">La coda verrà cancellata. Continuare?</string>

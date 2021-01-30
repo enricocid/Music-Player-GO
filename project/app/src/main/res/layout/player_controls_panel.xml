@@ -2,8 +2,8 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="@layout/main_activity"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.MainActivity"
+    tools:showIn="@layout/main_activity">
 
     <LinearLayout
         android:id="@+id/player_view"
@@ -76,9 +76,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="?android:attr/actionBarItemBackground"
+                android:contentDescription="@string/content_play"
                 android:padding="8dp"
-                app:srcCompat="@drawable/ic_play"
-                tools:ignore="ContentDescription" />
+                app:srcCompat="@drawable/ic_play" />
 
             <ImageButton
                 android:id="@+id/queue_button"
@@ -86,9 +86,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="?android:attr/actionBarItemBackground"
+                android:contentDescription="@string/queue"
                 android:padding="8dp"
-                app:srcCompat="@drawable/ic_queue_music"
-                tools:ignore="ContentDescription" />
+                app:srcCompat="@drawable/ic_queue_music" />
 
             <ImageButton
                 android:id="@+id/loved_songs_button"
@@ -96,9 +96,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="?android:attr/actionBarItemBackground"
+                android:contentDescription="@string/loved_songs"
                 android:padding="8dp"
-                app:srcCompat="@drawable/ic_favorite"
-                tools:ignore="ContentDescription" />
+                app:srcCompat="@drawable/ic_favorite" />
         </LinearLayout>
 
         <com.google.android.material.tabs.TabLayout
