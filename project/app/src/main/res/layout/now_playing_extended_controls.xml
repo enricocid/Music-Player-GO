@@ -11,15 +11,14 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
-        <ImageButton
-            android:id="@+id/np_love"
+        <TextView
+            android:id="@+id/np_volume_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginEnd="16dp"
-            android:background="?android:attr/actionBarItemBackground"
-            app:srcCompat="@drawable/ic_favorite"
-            tools:ignore="ContentDescription" />
+            android:layout_marginEnd="4dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:textColor="?android:attr/textColorSecondary" />
 
         <!-- VOLUME SEEKBAR -->
         <SeekBar
@@ -29,19 +28,21 @@
             android:layout_weight="1"
             android:clickable="true"
             android:focusable="true"
-            android:max="100" />
+            android:max="100"
+            android:progressTint="@color/widgetsColor"
+            android:splitTrack="false"
+            android:thumbTint="@android:color/transparent" />
 
         <ImageButton
             android:id="@+id/np_volume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:background="@android:color/transparent"
             android:clickable="false"
             android:focusable="false"
             app:srcCompat="@drawable/ic_volume_up"
             tools:ignore="ContentDescription" />
-
     </LinearLayout>
 </merge>

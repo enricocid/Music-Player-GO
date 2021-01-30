@@ -306,28 +306,6 @@ object DialogHelper {
     }
 
     @JvmStatic
-    fun showPopupForOverflowMenu(activity: Activity, view: View) {
-
-        val uiControlInterface = activity as UIControlInterface
-
-        PopupMenu(activity, view).apply {
-
-            inflate(R.menu.popup_np_actions)
-            menu.enablePopupIcons(activity)
-            gravity = Gravity.END
-
-            setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.equalizer -> uiControlInterface.onOpenEqualizer()
-                    else -> uiControlInterface.onSaveSongPosition()
-                }
-                true
-            }
-            show()
-        }
-    }
-
-    @JvmStatic
     fun addToLovedSongs(song: Music?, launchedBy: String, uiControlInterface: UIControlInterface) {
         ListsHelper.addToLovedSongs(
                 song,

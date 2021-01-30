@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.graphics.drawable.GradientDrawable
 import android.media.audiofx.BassBoost
 import android.media.audiofx.Equalizer
 import android.media.audiofx.Virtualizer
@@ -14,14 +13,15 @@ import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
 import android.util.Log
+import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -100,6 +100,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     // Now playing
     private lateinit var mNowPlayingDialog: MaterialDialog
     private lateinit var mNowPlayingBinding: NowPlayingBinding
+    private lateinit var mNowPlayingCoverBinding: NowPlayingCoverBinding
     private lateinit var mNowPlayingControlsBinding: NowPlayingControlsBinding
     private lateinit var mNowPlayingExtendedControlsBinding: NowPlayingExtendedControlsBinding
 
@@ -558,11 +559,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     progress: Int,
                     fromUser: Boolean
                 ) {
-                    if (isUserSeeking) {
+                    if (fromUser) {
                         userSelectedPosition = progress
-                        mNowPlayingBinding.npSeek.setTextColor(
-                            selectedColor
-                        )
                     }
                     mNowPlayingBinding.npSeek.text =
                         progress.toLong().toFormattedDuration(isAlbum = false, isSeekBar = true)
@@ -570,6 +568,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
                     isUserSeeking = true
+                    mNowPlayingBinding.npSeek.setTextColor(
+                            selectedColor
+                    )
                 }
 
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
@@ -591,65 +592,103 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             })
     }
 
-    private fun setupNowPlayingWithCovers() {
-        if (goPreferences.isCovers) {
-            if (!ThemeHelper.isDeviceLand(resources)) {
-                mNowPlayingBinding.npArtistAlbum.textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
-                mNowPlayingBinding.npSong.textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
+    private fun setupNowPlayingWithCover() {
+
+        if (!ThemeHelper.isDeviceLand(resources)) {
+            mNowPlayingBinding.npArtistAlbum.textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
+            mNowPlayingBinding.npSong.textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
+        }
+
+        mNowPlayingCoverBinding.run {
+
+            npSaveTime.setOnClickListener { saveSongPosition() }
+
+            npOpenDetails.setOnClickListener { openPlayingArtistAlbum() }
+
+            npLove.setOnClickListener {
+                ListsHelper.addOrRemoveFromLovedSongs(mMediaPlayerHolder.currentSong.first,
+                        0, mMediaPlayerHolder.launchedBy)
+                onLovedSongsUpdate(false)
+                updateNowPlayingLovedIcon(this@MainActivity)
             }
-        } else {
-            mNowPlayingBinding.npCover.handleViewVisibility(false)
+            setupNowPlayingCoverButtonsToasts(npSaveTime, npOpenDetails, npLove)
+        }
+    }
+
+    private fun setupNowPlayingCoverButtonsToasts(vararg imageButtons: ImageButton) {
+        val iterator = imageButtons.iterator()
+        while (iterator.hasNext()) {
+            iterator.next().setOnLongClickListener { btn ->
+                Toast.makeText(this@MainActivity, btn.contentDescription, Toast.LENGTH_SHORT).show()
+                return@setOnLongClickListener true
+            }
         }
     }
 
     private fun setupPreciseVolumeHandler() {
 
-        mMediaPlayerHolder.currentVolumeInPercent.run {
-            mNowPlayingExtendedControlsBinding.npVolume.setImageResource(
-                ThemeHelper.getPreciseVolumeIcon(
-                    this
-                )
-            )
-            mNowPlayingExtendedControlsBinding.npVolumeSeek.progress = this
-        }
-
+        val defaultValueColor = mNowPlayingExtendedControlsBinding.npVolumeValue.currentTextColor
+        val selectedColor = ThemeHelper.resolveThemeAccent(this@MainActivity)
         val resolvedIconsColor = ContextCompat.getColor(this, R.color.widgetsColor)
 
-        mNowPlayingExtendedControlsBinding.npVolumeSeek.setOnSeekBarChangeListener(object :
-            SeekBar.OnSeekBarChangeListener {
+        mNowPlayingExtendedControlsBinding.run {
 
-            var isUserSeeking = false
-
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, b: Boolean) {
-                if (isUserSeeking) {
-
-                    mMediaPlayerHolder.setPreciseVolume(progress)
-
-                    mNowPlayingExtendedControlsBinding.npVolume.setImageResource(
-                        ThemeHelper.getPreciseVolumeIcon(
-                            progress
-                        )
-                    )
-
-                    ThemeHelper.updateIconTint(
-                        mNowPlayingExtendedControlsBinding.npVolume,
-                        ThemeHelper.resolveThemeAccent(this@MainActivity)
-                    )
-                }
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar) {
-                isUserSeeking = true
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar) {
-                isUserSeeking = false
+            if (!goPreferences.isPreciseVolumeEnabled) {
+                npVolumeValue.isEnabled = false
+                npVolumeSeek.isEnabled = false
                 ThemeHelper.updateIconTint(
-                        mNowPlayingExtendedControlsBinding.npVolume,
-                        resolvedIconsColor
+                        npVolume,
+                        ThemeHelper.resolveColorAttr(
+                                this@MainActivity,
+                                android.R.attr.colorButtonNormal
+                        )
                 )
             }
-        })
+
+            mMediaPlayerHolder.currentVolumeInPercent.run {
+                npVolume.setImageResource(
+                        ThemeHelper.getPreciseVolumeIcon(
+                                this
+                        )
+                )
+                npVolumeSeek.progress = this
+                npVolumeValue.text = this.toString()
+            }
+
+            npVolumeSeek.setOnSeekBarChangeListener(object :
+                    SeekBar.OnSeekBarChangeListener {
+
+                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                    if (fromUser) {
+
+                        mMediaPlayerHolder.setPreciseVolume(progress)
+
+                        npVolumeValue.text = progress.toString()
+                        npVolume.setImageResource(
+                                ThemeHelper.getPreciseVolumeIcon(
+                                        progress
+                                )
+                        )
+                    }
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar) {
+                    npVolumeValue.setTextColor(selectedColor)
+                    ThemeHelper.updateIconTint(
+                            npVolume,
+                            ThemeHelper.resolveThemeAccent(this@MainActivity)
+                    )
+                }
+
+                override fun onStopTrackingTouch(seekBar: SeekBar) {
+                    npVolumeValue.setTextColor(defaultValueColor)
+                    ThemeHelper.updateIconTint(
+                            npVolume,
+                            resolvedIconsColor
+                    )
+                }
+            })
+        }
     }
 
     private fun openNowPlaying() {
@@ -661,6 +700,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 customView(R.layout.now_playing)
 
                 mNowPlayingBinding = NowPlayingBinding.bind(getCustomView())
+                mNowPlayingCoverBinding = NowPlayingCoverBinding.bind(mNowPlayingBinding.root)
                 mNowPlayingControlsBinding = NowPlayingControlsBinding.bind(mNowPlayingBinding.root)
                 mNowPlayingExtendedControlsBinding =
                     NowPlayingExtendedControlsBinding.bind(mNowPlayingBinding.root)
@@ -668,11 +708,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mNowPlayingBinding.npSong.isSelected = true
                 mNowPlayingBinding.npArtistAlbum.isSelected = true
 
-                mNowPlayingBinding.npPlayingSongContainer.setOnClickListener { openPlayingArtistAlbum() }
+                setupNowPlayingWithCover()
 
-                mNowPlayingControlsBinding.npActions.setOnClickListener { view ->
-                    DialogHelper.showPopupForOverflowMenu(this@MainActivity, view)
-                }
+                mNowPlayingControlsBinding.npEqualizer.setOnClickListener { openEqualizer() }
 
                 mNowPlayingControlsBinding.npSkipPrev.run {
                     setOnClickListener { skip(false) }
@@ -692,14 +730,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     }
                 }
 
-                val accent = ThemeHelper.resolveThemeAccent(this@MainActivity)
-                val gradientColorStart = ColorUtils.blendARGB(ContextCompat.getColor(this@MainActivity, R.color.seekBarBgColorLight), accent, 0.35F)
-                val gradientColorEnd = ColorUtils.blendARGB(ContextCompat.getColor(this@MainActivity, R.color.seekBarBgColorDark), accent, 0.25F)
-
-                mNowPlayingBinding.npSeekBar.background = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, intArrayOf(gradientColorStart, gradientColorEnd))
-
-                setupNowPlayingWithCovers()
-
                 mNowPlayingControlsBinding.npRepeat.run {
                     setImageResource(
                             ThemeHelper.getRepeatIcon(
@@ -717,25 +747,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     setOnClickListener { setRepeat() }
                 }
 
-                mNowPlayingExtendedControlsBinding.npLove.setOnClickListener {
-                    ListsHelper.addOrRemoveFromLovedSongs(mMediaPlayerHolder.currentSong.first,
-                            0, mMediaPlayerHolder.launchedBy)
-                    onLovedSongsUpdate(false)
-                    updateNowPlayingLovedIcon(this@MainActivity)
-                }
-
-                if (goPreferences.isPreciseVolumeEnabled) {
-                    setupPreciseVolumeHandler()
-                } else {
-                    mNowPlayingExtendedControlsBinding.npVolumeSeek.isEnabled = false
-                    ThemeHelper.updateIconTint(
-                        mNowPlayingExtendedControlsBinding.npVolume,
-                        ThemeHelper.resolveColorAttr(
-                            this@MainActivity,
-                            android.R.attr.colorButtonNormal
-                        )
-                    )
-                }
+                setupPreciseVolumeHandler()
 
                 setSeekBarProgressListener()
 
@@ -772,11 +784,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
-    override fun onSaveSongPosition() {
+    private fun saveSongPosition() {
         if (isMediaPlayerHolder) {
             val song = mMediaPlayerHolder.currentSong.first
             when (val position = mMediaPlayerHolder.playerPosition) {
-                0 -> mNowPlayingExtendedControlsBinding.npLove.callOnClick()
+                0 -> mNowPlayingCoverBinding.npLove.callOnClick()
                 else -> if (!isInLovedSongs(song, position)) {
                     ListsHelper.addToLovedSongs(song, mMediaPlayerHolder.playerPosition, mMediaPlayerHolder.launchedBy)
                     onLovedSongAdded(song, true)
@@ -799,12 +811,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 val isLoved = isInLovedSongs(music, 0)
                 val lovedSongsButtonColor = if (isLoved) {
                     ThemeHelper.resolveThemeAccent(context)
-                } else ThemeHelper.resolveColorAttr(
-                    context,
-                    android.R.attr.colorButtonNormal
-                )
+                } else {
+                    ThemeHelper.resolveColorAttr(
+                            context,
+                            android.R.attr.colorButtonNormal
+                    )
+                }
                 ThemeHelper.updateIconTint(
-                    mNowPlayingExtendedControlsBinding.npLove,
+                    mNowPlayingCoverBinding.npLove,
                     lovedSongsButtonColor
                 )
             }
@@ -1066,7 +1080,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 .target(
                         onSuccess = { result ->
                             // Handle the successful result.
-                            mNowPlayingBinding.npCover.load(result) {
+                            mNowPlayingCoverBinding.npCover.load(result) {
                                 transformations(RoundedCornersTransformation(16.0F))
                             }
                         }
@@ -1290,7 +1304,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mMediaPlayerHolder.onSaveEqualizerSettings(selectedPreset, bassBoost, virtualizer)
     }
 
-    override fun onOpenEqualizer() {
+    private fun openEqualizer() {
         if (checkIsPlayer(true)) {
             if (!EqualizerUtils.hasEqualizer(this)) {
                 synchronized(mMediaPlayerHolder.onOpenEqualizerCustom()) {
