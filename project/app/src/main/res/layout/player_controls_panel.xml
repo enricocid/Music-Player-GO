@@ -2,7 +2,8 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="@layout/main_activity">
+    tools:showIn="@layout/main_activity"
+    tools:context=".ui.MainActivity">
 
     <LinearLayout
         android:id="@+id/player_view"
@@ -11,8 +12,7 @@
         android:alpha="0"
         android:background="@color/windowBackground"
         android:elevation="@dimen/search_bar_elevation"
-        android:orientation="vertical"
-        tools:context=".ui.MainActivity">
+        android:orientation="vertical">
 
         <ProgressBar
             android:id="@+id/song_progress"

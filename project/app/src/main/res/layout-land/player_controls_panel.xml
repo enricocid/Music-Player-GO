@@ -3,7 +3,8 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="@layout/main_activity">
+    tools:showIn="@layout/main_activity"
+    tools:context=".ui.MainActivity">
 
     <LinearLayout
         android:id="@+id/player_view"
@@ -13,8 +14,7 @@
         android:background="@color/windowBackground"
         android:baselineAligned="false"
         android:elevation="@dimen/search_bar_elevation"
-        android:orientation="horizontal"
-        tools:context=".ui.MainActivity">
+        android:orientation="horizontal">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
