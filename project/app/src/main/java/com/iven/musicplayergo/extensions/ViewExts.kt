@@ -203,16 +203,6 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
         setEvaluator(ArgbEvaluatorCompat())
         addUpdateListener { valueAnimator -> setBackgroundColor((valueAnimator.animatedValue as Int)) }
         duration = revealDuration
-        if (isErrorFragment) {
-            doOnEnd {
-                background =
-                    ThemeHelper.createColouredRipple(
-                        context,
-                        ContextCompat.getColor(context, R.color.red),
-                        R.drawable.ripple
-                    )
-            }
-        }
         start()
     }
     return animator
