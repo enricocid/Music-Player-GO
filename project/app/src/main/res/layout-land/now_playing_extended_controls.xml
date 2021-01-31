@@ -11,28 +11,23 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="8dp">
 
-        <TextView
-            android:id="@+id/np_volume_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginEnd="4dp"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-            android:textColor="?android:attr/textColorSecondary" />
-
-        <!-- VOLUME SEEKBAR -->
-        <SeekBar
-            android:id="@+id/np_volume_seek"
+        <!-- VOLUME SLIDER -->
+        <com.google.android.material.slider.Slider
+            android:id="@+id/np_volume_slider"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:clickable="true"
             android:focusable="true"
-            android:max="100"
-            android:progressTint="@color/widgetsColor"
-            android:thumbTint="@android:color/transparent" />
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:valueTo="100"
+            app:haloRadius="12dp"
+            style="@style/Widget.App.Slider"
+            app:thumbColor="@android:color/transparent"
+            app:thumbRadius="0dp" />
 
         <ImageButton
             android:id="@+id/np_volume"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,19 +9,10 @@
     android:orientation="vertical"
     tools:context=".ui.MainActivity">
 
-    <!-- the album's cover -->
+    <!-- the album's cover + actions -->
     <include layout="@layout/now_playing_cover" />
 
-    <SeekBar
-        android:id="@+id/np_seek_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:splitTrack="false" />
-
+    <!-- the Slider + seek value -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,23 +20,30 @@
 
         <TextView
             android:id="@+id/np_seek"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textAlignment="textStart"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             android:textColor="?android:attr/textColorSecondary" />
 
-        <TextView
-            android:id="@+id/np_duration"
+        <com.google.android.material.slider.Slider
+            android:id="@+id/np_seek_slider"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textAlignment="textEnd"
+            android:clickable="true"
+            android:focusable="true"
+            app:haloRadius="12dp"
+            app:labelBehavior="gone"
+            app:thumbRadius="6dp" />
+
+        <TextView
+            android:id="@+id/np_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="16dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             android:textColor="?android:attr/textColorSecondary" />
 
