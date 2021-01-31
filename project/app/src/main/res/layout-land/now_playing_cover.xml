@@ -23,6 +23,17 @@
         android:orientation="horizontal">
 
         <ImageButton
+            android:id="@+id/np_open_details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="?android:attr/actionBarItemBackground"
+            android:contentDescription="@string/open_details_fragment"
+            android:padding="8dp"
+            app:srcCompat="@drawable/ic_launch_details" />
+
+        <ImageButton
             android:id="@+id/np_save_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -43,16 +54,5 @@
             android:contentDescription="@string/loved_song_add"
             android:padding="8dp"
             app:srcCompat="@drawable/ic_favorite" />
-
-        <ImageButton
-            android:id="@+id/np_open_details"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="?android:attr/actionBarItemBackground"
-            android:contentDescription="@string/open_details_fragment"
-            android:padding="8dp"
-            app:srcCompat="@drawable/ic_artist" />
     </LinearLayout>
 </LinearLayout>
