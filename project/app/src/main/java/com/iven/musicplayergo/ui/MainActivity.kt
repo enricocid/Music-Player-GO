@@ -14,6 +14,7 @@ import android.os.IBinder
 import android.provider.OpenableColumns
 import android.util.Log
 import android.widget.ImageButton
+import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -38,7 +39,6 @@ import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.list.getListAdapter
-import com.google.android.material.slider.Slider
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.iven.musicplayergo.GoConstants
@@ -59,7 +59,6 @@ import com.iven.musicplayergo.player.PlayerService
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.coroutines.*
-import kotlin.math.roundToInt
 
 
 class MainActivity : AppCompatActivity(), UIControlInterface {
@@ -547,45 +546,50 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun setSeekBarProgressListener() {
 
-        mNowPlayingBinding.run {
+        mNowPlayingBinding.npSeekBar.setOnSeekBarChangeListener(
+            object : SeekBar.OnSeekBarChangeListener {
 
-            val defaultPositionColor = mNowPlayingBinding.npSeek.currentTextColor
-            val selectedColor = ThemeHelper.resolveThemeAccent(this@MainActivity)
-            var isUserSeeking = false
+                val defaultPositionColor = mNowPlayingBinding.npSeek.currentTextColor
+                val selectedColor = ThemeHelper.resolveThemeAccent(this@MainActivity)
+                var userSelectedPosition = 0
+                var isUserSeeking = false
 
-            npSeekSlider.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
-                override fun onStartTrackingTouch(slider: Slider) {
-                   isUserSeeking = true
-                   mNowPlayingBinding.npSeek.setTextColor(
-                           selectedColor
-                   )
+                override fun onProgressChanged(
+                    seekBar: SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean
+                ) {
+                    if (fromUser) {
+                        userSelectedPosition = progress
+                    }
+                    mNowPlayingBinding.npSeek.text =
+                        progress.toLong().toFormattedDuration(isAlbum = false, isSeekBar = true)
                 }
 
-               override fun onStopTrackingTouch(slider: Slider) {
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                    isUserSeeking = true
+                    mNowPlayingBinding.npSeek.setTextColor(
+                            selectedColor
+                    )
+                }
 
-                   if (isUserSeeking) {
-                       npSeek.setTextColor(defaultPositionColor)
-                       mMediaPlayerHolder.onPauseSeekBarCallback()
-                       isUserSeeking = false
-                   }
-
-                   if (mMediaPlayerHolder.state != GoConstants.PLAYING) {
-                       mPlayerControlsPanelBinding.songProgress.progress = slider.value.toInt()
-                   }
-
-                   mMediaPlayerHolder.seekTo(
-                           slider.value.toInt(),
-                           updatePlaybackStatus = mMediaPlayerHolder.isPlaying,
-                           restoreProgressCallBack = !isUserSeeking
-                   )
-               }
-           })
-
-            npSeekSlider.addOnChangeListener { _, value, _ ->
-                mNowPlayingBinding.npSeek.text =
-                        value.toLong().toFormattedDuration(isAlbum = false, isSeekBar = true)
-            }
-        }
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                    if (isUserSeeking) {
+                        mNowPlayingBinding.npSeek.setTextColor(defaultPositionColor)
+                        mMediaPlayerHolder.onPauseSeekBarCallback()
+                        isUserSeeking = false
+                    }
+                    if (mMediaPlayerHolder.state != GoConstants.PLAYING) {
+                        mPlayerControlsPanelBinding.songProgress.progress = userSelectedPosition
+                        mNowPlayingBinding.npSeekBar.progress = userSelectedPosition
+                    }
+                    mMediaPlayerHolder.seekTo(
+                        userSelectedPosition,
+                        updatePlaybackStatus = mMediaPlayerHolder.isPlaying,
+                        restoreProgressCallBack = !isUserSeeking
+                    )
+                }
+            })
     }
 
     private fun setupNowPlayingWithCover() {
@@ -623,16 +627,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun setupPreciseVolumeHandler() {
 
-        val selectedColor = ThemeHelper.resolveThemeAccent(this@MainActivity)
-        val resolvedIconsColor = ContextCompat.getColor(this, R.color.widgetsColor)
+        val defaultValueColor = mNowPlayingExtendedControlsBinding.npVolumeValue.currentTextColor
+        val selectedColor = ThemeHelper.resolveThemeAccent(this)
 
         mNowPlayingExtendedControlsBinding.run {
 
             if (!goPreferences.isPreciseVolumeEnabled) {
-                npVolumeSlider.isEnabled = false
+                npVolumeValue.isEnabled = false
+                npVolumeSeek.isEnabled = false
                 ThemeHelper.updateIconTint(
                         npVolume,
-                        npVolumeSlider.trackActiveTintList.defaultColor
+                        npVolumeSeek.progressTintList?.defaultColor!!
                 )
             }
 
@@ -642,43 +647,41 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                                 this
                         )
                 )
-                npVolumeSlider.value = this.toFloat()
+                npVolumeSeek.progress = this
+                npVolumeValue.text = this.toString()
             }
 
-            mNowPlayingExtendedControlsBinding.run {
+            npVolumeSeek.setOnSeekBarChangeListener(object :
+                    SeekBar.OnSeekBarChangeListener {
 
-                npVolumeSlider.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
-                    override fun onStartTrackingTouch(slider: Slider) {
-                        ThemeHelper.updateIconTint(
-                                npVolume,
-                                selectedColor
-                        )
-                    }
-                    override fun onStopTrackingTouch(slider: Slider) {
-                        ThemeHelper.updateIconTint(
-                                npVolume,
-                                resolvedIconsColor
-                        )
-                    }
-                })
-
-                npVolumeSlider.addOnChangeListener { _, value, fromUser ->
+                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                     if (fromUser) {
-
-                        mMediaPlayerHolder.setPreciseVolume(value.toInt())
-
+                        mMediaPlayerHolder.setPreciseVolume(progress)
+                        npVolumeValue.text = progress.toString()
                         npVolume.setImageResource(
                                 ThemeHelper.getPreciseVolumeIcon(
-                                        value.toInt()
+                                        progress
                                 )
                         )
                     }
                 }
 
-                npVolumeSlider.setLabelFormatter { volume ->
-                    return@setLabelFormatter volume.roundToInt().toString()
+                override fun onStartTrackingTouch(seekBar: SeekBar) {
+                    npVolumeValue.setTextColor(selectedColor)
+                    ThemeHelper.updateIconTint(
+                            npVolume,
+                            selectedColor
+                    )
                 }
-            }
+
+                override fun onStopTrackingTouch(seekBar: SeekBar) {
+                    npVolumeValue.setTextColor(defaultValueColor)
+                    ThemeHelper.updateIconTint(
+                            npVolume,
+                            defaultValueColor
+                    )
+                }
+            })
         }
     }
 
@@ -753,8 +756,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                             mMediaPlayerHolder.playerPosition.toLong().toFormattedDuration(false, isSeekBar = true)
                     }
 
-                    mNowPlayingBinding.npSeekSlider.value =
-                        mPlayerControlsPanelBinding.songProgress.progress.toFloat()
+                    mNowPlayingBinding.npSeekBar.progress =
+                        mPlayerControlsPanelBinding.songProgress.progress
+                }
+
+                onDismiss {
+                    mNowPlayingBinding.npSeekBar.setOnSeekBarChangeListener(null)
                 }
 
                 if (VersioningHelper.isOreoMR1() && !ThemeHelper.isDeviceLand(resources)) {
@@ -1105,7 +1112,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mNowPlayingBinding.npDuration.text =
                 selectedSongDuration.toFormattedDuration(false, isSeekBar = true)
 
-            mNowPlayingBinding.npSeekSlider.valueTo = song.duration.toFloat()
+            mNowPlayingBinding.npSeekBar.max = song.duration.toInt()
 
             song.id?.toContentUri()?.toBitrate(this)?.let { (first, second) ->
                 mNowPlayingBinding.npRates.text =
@@ -1565,7 +1572,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         override fun onPositionChanged(position: Int) {
             mPlayerControlsPanelBinding.songProgress.progress = position
             if (isNowPlaying) {
-                mNowPlayingBinding.npSeekSlider.value = position.toFloat()
+                mNowPlayingBinding.npSeekBar.progress = position
             }
         }
 

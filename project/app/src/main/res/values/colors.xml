@@ -50,7 +50,4 @@
 
     <color name="swipeActionDeleteColor">#ffebee</color>
     <color name="swipeActionAddColor">#e8f5e9</color>
-
-    <color name="volume_slider_color_600">#757575</color>
-    <color name="volume_slider_color_200">#f5f5f5</color>
 </resources>
