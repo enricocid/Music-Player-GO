@@ -18,6 +18,7 @@ import android.os.PowerManager
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat.ACTION_SEEK_TO
 import android.support.v4.media.session.PlaybackStateCompat.Builder
+import android.widget.Toast
 import androidx.core.content.getSystemService
 import androidx.core.graphics.drawable.toBitmap
 import androidx.media.AudioAttributesCompat
@@ -27,7 +28,6 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.savedSongIsAvailable
 import com.iven.musicplayergo.extensions.toContentUri
-import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.models.Album
@@ -739,8 +739,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             }
             else -> isRepeat1X = true
         }
-        playerService.getString(toastMessage)
-            .toToast(playerService)
+        Toast.makeText(playerService, playerService.getString(toastMessage), Toast.LENGTH_LONG)
+                .show()
     }
 
     fun repeat(updatePlaybackStatus: Boolean) {

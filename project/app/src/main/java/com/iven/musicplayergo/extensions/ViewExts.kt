@@ -13,7 +13,6 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
@@ -367,8 +366,4 @@ fun View.handleViewVisibility(show: Boolean) {
     } else {
         View.GONE
     }
-}
-
-fun String.toToast(context: Context) {
-    Toast.makeText(context, this, Toast.LENGTH_LONG).show()
 }

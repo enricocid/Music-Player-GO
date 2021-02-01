@@ -137,11 +137,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun checkIsPlayer(showError: Boolean): Boolean {
         if (!isMediaPlayerHolder && !mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs && showError) {
-            getString(
-                R.string.error_bad_id
-            ).toToast(
-                this@MainActivity
-            )
+            Toast.makeText(this, getString(R.string.error_bad_id), Toast.LENGTH_LONG)
+                    .show()
             return false
         }
         return true
@@ -786,14 +783,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 else -> if (!isInLovedSongs(song, position)) {
                     ListsHelper.addToLovedSongs(song, mMediaPlayerHolder.playerPosition, mMediaPlayerHolder.launchedBy)
                     onLovedSongAdded(song, true)
-                    getString(
-                        R.string.loved_song_added,
-                        song?.title,
-                        mMediaPlayerHolder.playerPosition.toLong().toFormattedDuration(
-                            isAlbum = false,
-                            isSeekBar = false
-                        )
-                    ).toToast(this)
+                    Toast.makeText(
+                            this,
+                            getString(
+                                    R.string.loved_song_added,
+                                    song?.title,
+                                    mMediaPlayerHolder.playerPosition.toLong().toFormattedDuration(
+                                            isAlbum = false,
+                                            isSeekBar = false
+                                    )
+                            ),
+                            Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }
@@ -1347,10 +1348,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                             startSongFromQueue(song, launchedBy)
                         }
 
-                        getString(
-                                R.string.queue_song_add,
-                                songToQueue.title
-                        ).toToast(this@MainActivity)
+                        Toast.makeText(
+                                this@MainActivity,
+                                getString(
+                                        R.string.queue_song_add,
+                                        songToQueue.title
+                                ),
+                                Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
             }
@@ -1464,14 +1469,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onAddToFilter(stringToFilter: String?) {
         if (mMusicViewModel.deviceMusicFiltered?.size == 1) {
-            getString(R.string.error_eq).toToast(this)
+            Toast.makeText(
+                    this,
+                    getString(R.string.error_eq),
+                    Toast.LENGTH_LONG
+            ).show()
         } else {
             stringToFilter?.let { string ->
 
                 ListsHelper.addToHiddenItems(string)
 
                 if (!mMusicContainersFragments.isNullOrEmpty() && !mMusicContainersFragments[0].onListFiltered(string)) {
-                ThemeHelper.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
+                    ThemeHelper.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
                 } else {
                     if (!mMusicContainersFragments.isNullOrEmpty() && mMusicContainersFragments.size >= 1) {
                         val musicContainersIterator = mMusicContainersFragments.iterator().withIndex()
@@ -1512,7 +1521,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             mQueueDialog = DialogHelper.showQueueSongsDialog(this, mMediaPlayerHolder)
             mQueueAdapter = mQueueDialog.getListAdapter() as QueueAdapter
         } else {
-            getString(R.string.error_no_queue).toToast(this)
+            Toast.makeText(this, getString(R.string.error_no_queue), Toast.LENGTH_LONG)
+                    .show()
         }
     }
 
@@ -1523,7 +1533,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                 mMediaPlayerHolder
             )
         } else {
-            getString(R.string.error_no_loved_songs).toToast(this)
+            Toast.makeText(
+                    this,
+                    getString(R.string.error_no_loved_songs),
+                    Toast.LENGTH_LONG
+            ).show()
         }
     }
 
@@ -1633,7 +1647,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
 
         override fun onPlaylistEnded() {
-            getString(R.string.error_list_ended).toToast(this@MainActivity)
+            Toast.makeText(this@MainActivity, getString(R.string.error_list_ended), Toast.LENGTH_LONG)
+                    .show()
         }
     }
 

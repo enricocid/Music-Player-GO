@@ -6,8 +6,9 @@ import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.media.audiofx.AudioEffect
+import android.widget.Toast
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.extensions.toToast
+
 
 object EqualizerUtils {
 
@@ -42,9 +43,8 @@ object EqualizerUtils {
     @JvmStatic
     fun openEqualizer(activity: Activity, mediaPlayer: MediaPlayer) {
         when (mediaPlayer.audioSessionId) {
-            AudioEffect.ERROR_BAD_VALUE -> activity.getString(R.string.error_bad_id).toToast(
-                activity
-            )
+            AudioEffect.ERROR_BAD_VALUE -> Toast.makeText(activity, activity.getString(R.string.error_bad_id), Toast.LENGTH_LONG)
+                    .show()
             else -> {
                 try {
                     Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL).apply {
