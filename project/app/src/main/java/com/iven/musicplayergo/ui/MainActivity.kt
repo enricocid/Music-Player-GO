@@ -626,15 +626,24 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         val defaultValueColor = mNpExtControlsBinding.npVolumeValue.currentTextColor
         val selectedColor = ThemeHelper.resolveThemeAccent(this)
+        val inactiveColor = ThemeHelper.resolveColorAttr(
+                this@MainActivity,
+                android.R.attr.colorButtonNormal
+        )
 
         mNpExtControlsBinding.run {
 
             if (!goPreferences.isPreciseVolumeEnabled) {
                 npVolumeValue.isEnabled = false
-                npVolumeSeek.isEnabled = false
+                npVolumeValue.setTextColor(inactiveColor)
+                npVolumeSeek.run {
+                    isEnabled = false
+                    progressTintList = ColorStateList.valueOf(inactiveColor)
+                    thumbTintList = ColorStateList.valueOf(inactiveColor)
+                }
                 ThemeHelper.updateIconTint(
                         npVolume,
-                        npVolumeSeek.progressTintList?.defaultColor!!
+                        inactiveColor
                 )
             }
 
