@@ -12,7 +12,6 @@ import android.media.audiofx.Virtualizer
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
-import android.util.Log
 import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.TextView
@@ -471,7 +470,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     isShuffleMode
                 )
             sCloseDetailsFragment = true
-            Log.d("sAllowCommit", sAllowCommit.toString())
             if (sAllowCommit) {
                 supportFragmentManager.addFragment(
                     mDetailsFragment,

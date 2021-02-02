@@ -13,8 +13,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
-        android:contentDescription="@string/covers_pref_title"
-        android:src="@drawable/album_art" />
+        android:contentDescription="@string/covers_pref_title" />
 
     <LinearLayout
         android:layout_width="wrap_content"
