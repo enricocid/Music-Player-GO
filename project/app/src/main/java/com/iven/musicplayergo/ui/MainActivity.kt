@@ -746,9 +746,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                 onShow {
                     mMediaPlayerHolder.currentSong.first?.let { song ->
-                        if (goPreferences.isCovers) {
-                            loadNpCover(song)
-                        }
+                        loadNpCover(song)
                         mNpBinding.npSeek.text =
                             mMediaPlayerHolder.playerPosition.toLong().toFormattedDuration(false, isSeekBar = true)
                     }
@@ -1071,7 +1069,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         mSelectedArtistAlbumForNP = Pair(selectedSong.artist, selectedSong.albumId)
         val request = ImageRequest.Builder(this)
-                .data(selectedSong.albumId?.getCoverFromPFD(this) ?: getDrawable(R.drawable.album_art)?.toBitmap())
+                .data(if (goPreferences.isCovers) {
+                    selectedSong.albumId?.getCoverFromPFD(this) ?: getDrawable(R.drawable.album_art)
+                } else {
+                    getDrawable(R.drawable.album_art)?.toBitmap()
+                })
                 .target(
                         onSuccess = { result ->
                             // Handle the successful result.
