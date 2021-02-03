@@ -909,11 +909,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
 
         val lovedSongsButtonColor = if (lovedSongs.isNullOrEmpty()) {
+            mPlayerControlsPanelBinding.lovedSongsButton.setImageResource(R.drawable.ic_book_music_empty)
             ThemeHelper.resolveColorAttr(
                 this,
                 android.R.attr.colorButtonNormal
             )
         } else {
+            mPlayerControlsPanelBinding.lovedSongsButton.setImageResource(R.drawable.ic_book_music)
             ThemeHelper.resolveThemeAccent(this)
         }
         ThemeHelper.updateIconTint(

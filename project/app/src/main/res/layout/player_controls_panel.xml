@@ -97,8 +97,7 @@
                 android:layout_gravity="center"
                 android:background="?android:attr/actionBarItemBackground"
                 android:contentDescription="@string/loved_songs"
-                android:padding="8dp"
-                app:srcCompat="@drawable/ic_favorite" />
+                android:padding="8dp" />
         </LinearLayout>
 
         <com.google.android.material.tabs.TabLayout
