@@ -250,6 +250,15 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         mPlayingAlbumSongs = songs
     }
 
+    fun updateCurrentSongs() {
+        val sorting = if (goPreferences.songsVisualization != GoConstants.TITLE) {
+            GoConstants.ASCENDING_SORTING
+        } else {
+            GoConstants.TRACK_SORTING
+        }
+        mPlayingAlbumSongs = ListsHelper.getSortedMusicList(sorting, mPlayingAlbumSongs?.toMutableList())
+    }
+
     private fun updateMediaSessionMetaData() {
         val mediaMediaPlayerCompat = MediaMetadataCompat.Builder().apply {
             putLong(

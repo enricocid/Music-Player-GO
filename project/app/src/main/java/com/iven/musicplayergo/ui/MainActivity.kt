@@ -1471,6 +1471,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onSongVisualizationChanged() {
+        if (isMediaPlayerHolder) {
+            // update current song to reflect this change
+            mMediaPlayerHolder.updateCurrentSongs()
+        }
         if (mAllMusicFragment != null && !mAllMusicFragment?.onSongVisualizationChanged()!!) {
             ThemeHelper.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
         }
