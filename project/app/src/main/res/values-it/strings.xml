@@ -89,7 +89,7 @@
     <string name="headset_pref_summary_off">Abilita gestione inserimento cuffie</string>
     <string name="filter_pref_title">Filtri</string>
     <string name="filter_popup_title">Nascondi</string>
-    <string name="playback_pref_title">Salva velocità riproduzione</string>
+    <string name="playback_pref_title">Velocità riproduzione</string>
     <string name="playback_pref_summary_on">Non mantenere la velocità riproduzione selezionata</string>
     <string name="playback_pref_summary_off">Mantieni la velocità riproduzione selezionata</string>
 </resources>

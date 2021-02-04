@@ -147,7 +147,7 @@
     <string name="filter_pref_title">Filters</string>
 
     <!-- Preferences - Playback speed -->
-    <string name="playback_pref_title">Save playback speed</string>
+    <string name="playback_pref_title">Playback speed</string>
     <string name="playback_pref_summary_on">Don\'t persist selected playback speed</string>
     <string name="playback_pref_summary_off">Persist selected playback speed</string>
 </resources>
