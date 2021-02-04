@@ -21,7 +21,7 @@
     <string name="loved_songs_clear">Suas músicas favoritas serão limpas. Continuar\?</string>
     <string name="loved_song_add">Adicionar às músicas favoritas</string>
     <string name="error_no_loved_songs">Nenhuma música favorita encontrada!</string>
-    <string name="perm_rationale">Music Player GO precisa acessar seus arquivos para reproduzir música.</string>
+    <string name="perm_rationale">O Music Player GO precisa acessar seus arquivos para reproduzir músicas.</string>
     <string name="error_no_browser">Nenhum navegador encontrado.</string>
     <string name="error_bad_id">Toque uma música primeiro.</string>
     <string name="error_no_music">Nenhuma música encontrada :(</string>
@@ -77,8 +77,14 @@
     <string name="song_visual_pref_title">Visualização de música</string>
     <string name="on_list_ended_pref_continue_title">Continuar</string>
     <string name="on_list_ended_pref_stop_title">Parar</string>
-    <string name="on_list_ended_pref_title">Quando uma lista terminar …</string>
+    <string name="on_list_ended_pref_title">Quando uma lista terminar…</string>
     <string name="covers_pref_summary_off">Mostrar capas de álbuns</string>
     <string name="covers_pref_summary_on">Ocultar capas de álbuns</string>
     <string name="covers_pref_title">Capas de álbuns integradas</string>
+    <string name="loved_songs_save_time">Salvar a posição da música</string>
+    <string name="open_details_fragment">Abrir detalhes do artista/pasta</string>
+    <string name="content_repeat">Ativar/desativar opções de repetição</string>
+    <string name="content_skip_next">Pular para a próxima faixa</string>
+    <string name="content_play">Tocar/pausar</string>
+    <string name="content_skip_prev">Pular para a faixa anterior</string>
 </resources>

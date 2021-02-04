@@ -82,4 +82,9 @@
     <string name="eq_pref_note_summary">Remarque : L\'égaliseur système sera utilisé à moins que vous ne désactiviez l\'option « égaliseur du système » depuis les paramètres. :)</string>
     <string name="on_list_ended_pref_title">Lorsqu\'une liste se termine…</string>
     <string name="error_eq">Oups, une erreur s\'est produite !</string>
+    <string name="open_details_fragment">Ouvrir les informations sur l\'artiste/le dossier</string>
+    <string name="content_repeat">Activer/Désactiver les options de répétition</string>
+    <string name="content_skip_next">Passer au titre suivant</string>
+    <string name="content_play">Lecture/Pause</string>
+    <string name="content_skip_prev">Passer au titre précédent</string>
 </resources>

@@ -38,8 +38,8 @@
     <string name="error_not_ready">加载音乐库时出现问题！ :( 这可能是由于SD卡已卸载，从而迫使Android的MediaStore重建其数据库记录。解决方案：请稍后再试。</string>
     <string name="error_unknown_unsupported">出问题了！ :( 可能不支持所选的格式，或者无法访问该文件夹（不是应用程序的错！）。</string>
     <string name="error_media_buttons">出问题了！ :( 请从应用程序重新开始播放。</string>
-    <string name="error_no_browser">喂，你也太挫了吧，连个浏览器都没有？</string>
-    <string name="error_bad_id">先放首歌呗～～</string>
+    <string name="error_no_browser">未找到浏览器。</string>
+    <string name="error_bad_id">先放首歌呗。</string>
     <string name="error_no_queue">歌曲队列中无歌曲。</string>
     <!-- Messages - Permission rationale -->
     <string name="perm_rationale">音乐播放器GO需要访问您的文件才能播放音乐，请赋予软件访问文件权限。</string>
@@ -88,7 +88,7 @@
     <string name="equalizer_v">环绕声</string>
     <string name="equalizer">均衡器</string>
     <string name="covers_pref_title">专辑封面设置</string>
-    <string name="on_list_ended_pref_title">当列表播放完毕时：</string>
+    <string name="on_list_ended_pref_title">歌单播放完毕后要做什么捏 …</string>
     <string name="eq_pref_note_summary">请注意：您需要关闭系统内置的均衡器才可以使用此均衡器：）</string>
     <string name="song_visual_pref_fn_title">文件名</string>
     <string name="on_list_ended_pref_continue_title">继续</string>
@@ -96,5 +96,10 @@
     <string name="covers_pref_summary_off">显示专辑封面</string>
     <string name="covers_pref_summary_on">隐藏专辑封面</string>
     <string name="error_list_ended">到底了。</string>
-    <string name="error_eq">emmmm，看起来程序好像遇到了点小问题呢。</string>
+    <string name="error_eq">哎哟，程序发生了一个错误！</string>
+    <string name="fast_seeking_actions_pref_summary_on">偏好快速寻找操作</string>
+    <string name="fast_seeking_actions_pref_summary_off">偏好关闭/重复操作</string>
+    <string name="fast_seeking_pref_summary">快进/退 （秒）</string>
+    <string name="equalizer_bb">低音增强</string>
+    <string name="loved_songs_save_time">保存歌曲位置</string>
 </resources>

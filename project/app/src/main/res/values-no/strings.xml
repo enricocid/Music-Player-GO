@@ -101,4 +101,5 @@
     <string name="equalizer_bb">Bassforsterking</string>
     <string name="equalizer">Tonekontroll</string>
     <string name="albums">Album</string>
+    <string name="loved_songs_save_time">Lagre sporposisjon</string>
 </resources>

@@ -81,4 +81,5 @@
     <string name="equalizer_v">Объемный звук</string>
     <string name="equalizer_bb">Усиление басов</string>
     <string name="equalizer">Эквалайзер</string>
+    <string name="loved_songs_save_time">Сохранить позицию песни</string>
 </resources>
