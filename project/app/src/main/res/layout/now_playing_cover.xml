@@ -34,6 +34,17 @@
             app:srcCompat="@drawable/ic_launch_details" />
 
         <ImageButton
+            android:id="@+id/np_playback_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="?android:attr/actionBarItemBackground"
+            android:contentDescription="@string/content_playback_speed"
+            android:padding="8dp"
+            app:srcCompat="@drawable/ic_speed" />
+
+        <ImageButton
             android:id="@+id/np_save_time"
             android:layout_width="wrap_content"
             android:layout_height="0dp"

@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.player
 
+import android.annotation.TargetApi
 import android.app.Activity
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
@@ -14,6 +15,7 @@ import android.media.audiofx.AudioEffect
 import android.media.audiofx.BassBoost
 import android.media.audiofx.Equalizer
 import android.media.audiofx.Virtualizer
+import android.os.Build
 import android.os.PowerManager
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat.ACTION_SEEK_TO
@@ -30,6 +32,7 @@ import com.iven.musicplayergo.extensions.savedSongIsAvailable
 import com.iven.musicplayergo.extensions.toContentUri
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ListsHelper
+import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedEqualizerSettings
@@ -125,6 +128,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private var mPlayingAlbumSongs: List<Music>? = null
 
     var currentVolumeInPercent = goPreferences.latestVolume
+
+    private var currentPlaybackSpeed = goPreferences.latestPlaybackSpeed
+
     val playerPosition
         get() = if (!isMediaPlayer) {
             goPreferences.latestPlayedSong?.startFrom!!
@@ -380,13 +386,21 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
+    private fun startOrChangePlaybackSpeed() {
+        if (goPreferences.isPlaybackSpeedPersisted && VersioningHelper.isMarshmallow()) {
+            mediaPlayer.playbackParams = mediaPlayer.playbackParams.setSpeed(currentPlaybackSpeed)
+        } else {
+            mediaPlayer.start()
+        }
+    }
+
     fun resumeMediaPlayer() {
         if (!isPlaying) {
             if (isMediaPlayer) {
                 if (sFocusEnabled) {
                     tryToGetAudioFocus()
                 }
-                mediaPlayer.start()
+                startOrChangePlaybackSpeed()
             }
             state = if (isSongRestoredFromPrefs) {
                 isSongRestoredFromPrefs = false
@@ -644,7 +658,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     private fun play() {
-        mediaPlayer.start()
+        startOrChangePlaybackSpeed()
         state = GoConstants.PLAYING
         updatePlaybackStatus(true)
         startForeground()
@@ -864,6 +878,20 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     }
                 }
             }
+    }
+
+    /* Sets the playback speed of the media player */
+    @TargetApi(Build.VERSION_CODES.M)
+    fun setPlaybackSpeed(speed: Float) {
+        if (isMediaPlayer) {
+            currentPlaybackSpeed = speed
+            if (goPreferences.isPlaybackSpeedPersisted) {
+                goPreferences.latestPlaybackSpeed = currentPlaybackSpeed
+            }
+            if (state != GoConstants.PAUSED) {
+                mediaPlayer.playbackParams = mediaPlayer.playbackParams.setSpeed(currentPlaybackSpeed)
+            }
+        }
     }
 
     /* Sets the volume of the media player */

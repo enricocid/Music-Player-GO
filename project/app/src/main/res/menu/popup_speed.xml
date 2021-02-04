@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/speed_0"
+        android:title="@string/speed_0" />
+    <item
+        android:id="@+id/speed_1"
+        android:title="@string/speed_1" />
+    <item
+        android:id="@+id/speed_2"
+        android:title="@string/speed_2" />
+    <item
+        android:id="@+id/speed_3"
+        android:title="@string/speed_3" />
+    <item
+        android:id="@+id/speed_4"
+        android:title="@string/speed_4" />
+    <item
+        android:id="@+id/speed_5"
+        android:title="@string/speed_5" />
+    <item
+        android:id="@+id/speed_6"
+        android:title="@string/speed_6" />
+    <item
+        android:id="@+id/speed_7"
+        android:title="@string/speed_7" />
+    <item
+        android:id="@+id/speed_8"
+        android:title="@string/speed_8" />
+    <item
+        android:id="@+id/speed_9"
+        android:title="@string/speed_9" />
+</menu>

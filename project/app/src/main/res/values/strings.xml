@@ -45,6 +45,10 @@
     <string name="loved_songs">Favorite songs</string>
     <string name="loved_song_added">%1s (%2s) added to favorite songs</string>
 
+    <!-- Playback speed -->
+    <string name="content_playback_speed">Playback speed</string>
+    <string name="speed_3">Normal</string>
+
     <!-- other content descriptions -->
     <string name="content_skip_prev">Skip to previous track</string>
     <string name="content_play">Play/pause</string>
@@ -141,4 +145,9 @@
 
     <!-- Preferences - Filters -->
     <string name="filter_pref_title">Filters</string>
+
+    <!-- Preferences - Playback speed -->
+    <string name="playback_pref_title">Save playback speed</string>
+    <string name="playback_pref_summary_on">Don\'t persist selected playback speed</string>
+    <string name="playback_pref_summary_off">Persist selected playback speed</string>
 </resources>

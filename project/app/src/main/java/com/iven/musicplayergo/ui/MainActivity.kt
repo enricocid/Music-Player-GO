@@ -12,6 +12,7 @@ import android.media.audiofx.Virtualizer
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
+import android.view.View
 import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.TextView
@@ -596,9 +597,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         mNpCoverBinding.run {
 
-            npSaveTime.setOnClickListener { saveSongPosition() }
-
             npOpenDetails.setOnClickListener { openPlayingArtistAlbum() }
+            if (VersioningHelper.isMarshmallow()) {
+                setupNPCoverButtonsToasts(npPlaybackSpeed)
+                npPlaybackSpeed.setOnClickListener { view ->
+                    DialogHelper.showPopupForPlaybackSpeed(this@MainActivity, view)
+                }
+            } else {
+                npPlaybackSpeed.visibility = View.GONE
+            }
+
+            npSaveTime.setOnClickListener { saveSongPosition() }
 
             npLove.setOnClickListener {
                 ListsHelper.addOrRemoveFromLovedSongs(mMediaPlayerHolder.currentSong.first,
@@ -780,6 +789,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
+    override fun onChangePlaybackSpeed(speed: Float) {
+        mMediaPlayerHolder.setPlaybackSpeed(speed)
+    }
+
     private fun saveSongPosition() {
         if (isMediaPlayerHolder) {
             val song = mMediaPlayerHolder.currentSong.first
@@ -858,9 +871,23 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
+    override fun onPlaybackSpeedToggled() {
+        //avoid having user stuck at selected playback speed
+        mMediaPlayerHolder.setPlaybackSpeed(if (goPreferences.isPlaybackSpeedPersisted) {
+            goPreferences.latestPlaybackSpeed
+        } else {
+            1.0F
+        })
+    }
+
     override fun onPreciseVolumeToggled() {
         //avoid having user stuck at lowered volume without knowing why
-        mMediaPlayerHolder.setPreciseVolume(100)
+        mMediaPlayerHolder.setPreciseVolume(if (!goPreferences.isPreciseVolumeEnabled) {
+            goPreferences.latestVolume = mMediaPlayerHolder.currentVolumeInPercent
+            100
+        } else {
+            goPreferences.latestVolume
+        })
     }
 
     private fun updatePlayingStatus(isNowPlaying: Boolean) {

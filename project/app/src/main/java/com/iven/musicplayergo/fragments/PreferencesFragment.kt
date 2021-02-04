@@ -130,6 +130,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
             getString(R.string.precise_volume_pref) -> mUIControlInterface.onPreciseVolumeToggled()
+            getString(R.string.playback_speed_pref) -> mUIControlInterface.onPlaybackSpeedToggled()
             getString(R.string.theme_pref) -> {
                 mThemePreference?.icon = requireActivity().getDrawable(ThemeHelper.resolveThemeIcon(requireActivity()))
                 mUIControlInterface.onAppearanceChanged(true)
