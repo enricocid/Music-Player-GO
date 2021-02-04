@@ -259,6 +259,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         mPlayingAlbumSongs = ListsHelper.getSortedMusicList(sorting, mPlayingAlbumSongs?.toMutableList())
     }
 
+    fun getCurrentAlbumSize() = mPlayingAlbumSongs?.size ?: 0
+
     private fun updateMediaSessionMetaData() {
         val mediaMediaPlayerCompat = MediaMetadataCompat.Builder().apply {
             putLong(

@@ -1473,7 +1473,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onSongVisualizationChanged() {
-        if (isMediaPlayerHolder) {
+        val currentAlbumSize = mMediaPlayerHolder.getCurrentAlbumSize()
+        if (isMediaPlayerHolder && currentAlbumSize != 0 && currentAlbumSize > 1) {
             // update current song to reflect this change
             mMediaPlayerHolder.updateCurrentSongs()
         }
