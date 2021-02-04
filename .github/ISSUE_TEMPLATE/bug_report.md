@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: "[bug] A clear and concise title describing the bug"
+title: "[BUG] A clear and concise title describing the bug"
 labels: bug
 assignees: enricocid
 
