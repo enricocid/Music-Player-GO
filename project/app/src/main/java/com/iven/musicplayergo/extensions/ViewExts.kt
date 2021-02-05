@@ -278,23 +278,22 @@ private fun instantiateSwipeHandler(
 
             val itemView = viewHolder.itemView
 
-            val resources = context.resources
             val red = ContextCompat.getColor(context, R.color.red)
 
-            val firstIcon = resources.getDrawable(R.drawable.ic_queue_add, null).apply {
-                mutate().setTint(ContextCompat.getColor(context, R.color.green))
+            val firstIcon = ContextCompat.getDrawable(context, R.drawable.ic_queue_add).apply {
+                this?.mutate()?.setTint(ContextCompat.getColor(context, R.color.green))
             }
 
-            val firstIconAlt = resources.getDrawable(R.drawable.ic_delete, null).apply {
-                mutate().setTint(red)
+            val firstIconAlt = ContextCompat.getDrawable(context, R.drawable.ic_delete).apply {
+                this?.mutate()?.setTint(red)
             }
 
             val secondIcon = if (isDialog) {
-                resources.getDrawable(R.drawable.ic_delete, null)
+                ContextCompat.getDrawable(context, R.drawable.ic_delete)
             } else {
-                resources.getDrawable(R.drawable.ic_favorite, null)
+                ContextCompat.getDrawable(context, R.drawable.ic_favorite)
             }.apply {
-                mutate().setTint(red)
+                this?.mutate()?.setTint(red)
             }
 
             val firstColor = ColorDrawable(ContextCompat.getColor(context, R.color.swipeActionDeleteColor))
@@ -309,48 +308,51 @@ private fun instantiateSwipeHandler(
 
             when {
                 dX > 0 -> {
-                    val icon = if (isDialog) {
+                    if (isDialog) {
                         firstIconAlt
                     } else {
                         background = secondColor
                         firstIcon
-                    }
+                    }?.let { icon ->
+                        val iconMargin = (itemView.height - icon.intrinsicHeight) / 2
+                        val iconTop = itemView.top + (itemView.height - icon.intrinsicHeight) / 2
+                        val iconBottom = iconTop + icon.intrinsicHeight
+                        val iconLeft = itemView.left + iconMargin
+                        val iconRight = iconLeft + icon.intrinsicWidth
 
-                    val iconMargin = (itemView.height - icon.intrinsicHeight) / 2
-                    val iconTop = itemView.top + (itemView.height - icon.intrinsicHeight) / 2
-                    val iconBottom = iconTop + icon.intrinsicHeight
-                    val iconLeft = itemView.left + iconMargin
-                    val iconRight = iconLeft + icon.intrinsicWidth
-
-                    icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
-                    background.setBounds(
+                        icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+                        background.setBounds(
                             itemView.left,
                             itemView.top,
                             itemView.left + dX.toInt(),
                             itemView.bottom
-                    )
-                    background.draw(c)
-                    icon.draw(c)
+                        )
+                        background.draw(c)
+                        icon.draw(c)
+                    }
                 }
                 dX < 0 -> {
                     background = firstColor
 
-                    val iconMargin = (itemView.height - secondIcon.intrinsicHeight) / 2
-                    val iconTop = itemView.top + (itemView.height - secondIcon.intrinsicHeight) / 2
-                    val iconBottom = iconTop + secondIcon.intrinsicHeight
-                    val iconRight = itemView.right - iconMargin
-                    val iconLeft = iconRight - secondIcon.intrinsicWidth
+                    secondIcon?.let { icon ->
 
-                    secondIcon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+                        val iconMargin = (itemView.height - icon.intrinsicHeight) / 2
+                        val iconTop = itemView.top + (itemView.height - icon.intrinsicHeight) / 2
+                        val iconBottom = iconTop + icon.intrinsicHeight
+                        val iconRight = itemView.right - iconMargin
+                        val iconLeft = iconRight - icon.intrinsicWidth
 
-                    background.setBounds(
+                        icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+
+                        background.setBounds(
                             itemView.right + dX.toInt(),
                             itemView.top,
                             itemView.right,
                             itemView.bottom
-                    )
-                    background.draw(c)
-                    secondIcon.draw(c)
+                        )
+                        background.draw(c)
+                        icon.draw(c)
+                    }
                 }
                 else -> {
                     background.setBounds(0, 0, 0, 0)

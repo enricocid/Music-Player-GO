@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
-    <ProgressBar
+    <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/loading_progress_bar"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:clickable="false"
         android:indeterminate="true"
-        android:indeterminateTint="?attr/colorPrimary"
-        android:indeterminateTintMode="src_in"
-        android:visibility="gone" />
+        app:indicatorColor="@array/loadingProgressColors"
+        app:indeterminateAnimationType="contiguous" />
 
     <LinearLayout
         android:layout_width="match_parent"

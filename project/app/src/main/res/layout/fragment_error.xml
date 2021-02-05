@@ -33,7 +33,7 @@
             android:layout_width="@android:dimen/notification_large_icon_height"
             android:layout_height="@android:dimen/notification_large_icon_height"
             android:contentDescription="@string/error_no_music"
-            android:tint="@color/red" />
+            app:tint="@color/red" />
 
         <TextView
             android:id="@+id/error_message"

@@ -9,12 +9,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
@@ -92,7 +94,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         }
 
         mThemePreference = findPreference<Preference>(getString(R.string.theme_pref))?.apply {
-            icon = requireActivity().getDrawable(ThemeHelper.resolveThemeIcon(requireActivity()))
+            icon = ContextCompat.getDrawable(requireActivity(), ThemeHelper.resolveThemeIcon(requireActivity()))
         }
 
         findPreference<Preference>(getString(R.string.accent_pref))?.let { preference ->
@@ -132,7 +134,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             getString(R.string.precise_volume_pref) -> mUIControlInterface.onPreciseVolumeToggled()
             getString(R.string.playback_speed_pref) -> mUIControlInterface.onPlaybackSpeedToggled()
             getString(R.string.theme_pref) -> {
-                mThemePreference?.icon = requireActivity().getDrawable(ThemeHelper.resolveThemeIcon(requireActivity()))
+                mThemePreference?.icon = ContextCompat.getDrawable(requireActivity(), ThemeHelper.resolveThemeIcon(requireActivity()))
                 mUIControlInterface.onAppearanceChanged(true)
             }
             getString(R.string.accent_pref) -> {
@@ -189,7 +191,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             customListAdapter(AccentsAdapter(requireActivity()))
 
             getRecyclerView().apply {
-                layoutManager = GridLayoutManager(requireActivity(), 5, GridLayoutManager.VERTICAL, false)
+                layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
                 scrollToPosition(ThemeHelper.getAccentedTheme().second)
             }
         }

@@ -110,15 +110,14 @@
                     android:padding="8dp" />
             </LinearLayout>
 
-            <ProgressBar
+            <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/song_progress"
-                style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="wrap_content"
                 android:clickable="false"
-                android:indeterminateTint="?attr/colorPrimary"
-                android:indeterminateTintMode="src_in"
-                android:progressBackgroundTint="?attr/colorControlNormal" />
+                app:indicatorColor="?attr/colorPrimary"
+                app:trackCornerRadius="2dp"
+                app:trackThickness="2dp" />
         </LinearLayout>
     </LinearLayout>
 </merge>

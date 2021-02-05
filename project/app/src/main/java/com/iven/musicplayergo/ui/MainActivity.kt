@@ -165,7 +165,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun doBindService() {
-        mMainActivityBinding.loadingProgressBar.handleViewVisibility(true)
         mBindingIntent = Intent(this, PlayerService::class.java).also {
             bindService(it, connection, Context.BIND_AUTO_CREATE)
         }
@@ -576,7 +575,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                         isUserSeeking = false
                     }
                     if (mMediaPlayerHolder.state != GoConstants.PLAYING) {
-                        mPlayerControlsPanelBinding.songProgress.progress = userSelectedPosition
+                        mPlayerControlsPanelBinding.songProgress.setProgressCompat(userSelectedPosition, true)
                         mNpBinding.npSeekBar.progress = userSelectedPosition
                     }
                     mMediaPlayerHolder.seekTo(
@@ -990,13 +989,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
                         updatePlayingInfo(false)
 
-                        mPlayerControlsPanelBinding.songProgress.progress = song?.startFrom!!
+                        mPlayerControlsPanelBinding.songProgress.setProgressCompat(song?.startFrom!!, true)
                     } else {
                         notifyError(GoConstants.TAG_SD_NOT_READY)
                     }
                 }
                 onUpdateDefaultAlbumArt(
-                    getDrawable(R.drawable.album_art)?.toBitmap()
+                    ContextCompat.getDrawable(this@MainActivity, R.drawable.album_art)?.toBitmap()
                 )
             }
         }
@@ -1106,9 +1105,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mSelectedArtistAlbumForNP = Pair(selectedSong.artist, selectedSong.albumId)
         val request = ImageRequest.Builder(this)
                 .data(if (goPreferences.isCovers) {
-                    selectedSong.albumId?.getCoverFromPFD(this) ?: getDrawable(R.drawable.album_art)
+                    selectedSong.albumId?.getCoverFromPFD(this) ?: ContextCompat.getDrawable(this, R.drawable.album_art)
                 } else {
-                    getDrawable(R.drawable.album_art)?.toBitmap()
+                    ContextCompat.getDrawable(this, R.drawable.album_art)?.toBitmap()
                 })
                 .target(
                         onSuccess = { result ->
@@ -1627,7 +1626,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
 
         override fun onPositionChanged(position: Int) {
-            mPlayerControlsPanelBinding.songProgress.progress = position
+            mPlayerControlsPanelBinding.songProgress.setProgressCompat(position, true)
             if (isNowPlaying) {
                 mNpBinding.npSeekBar.progress = position
             }

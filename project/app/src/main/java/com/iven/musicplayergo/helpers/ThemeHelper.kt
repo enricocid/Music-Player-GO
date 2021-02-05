@@ -108,26 +108,7 @@ object ThemeHelper {
         Pair(R.color.deep_orange, R.style.BaseTheme_DeepOrange),
         Pair(R.color.brown, R.style.BaseTheme_Brown),
         Pair(R.color.grey, R.style.BaseTheme_Grey),
-        Pair(R.color.blue_grey, R.style.BaseTheme_BlueGrey),
-        Pair(R.color.red_300, R.style.BaseTheme_Red300),
-        Pair(R.color.pink_300, R.style.BaseTheme_Pink300),
-        Pair(R.color.purple_300, R.style.BaseTheme_Purple300),
-        Pair(R.color.deep_purple_300, R.style.BaseTheme_DeepPurple300),
-        Pair(R.color.indigo_300, R.style.BaseTheme_Indigo300),
-        Pair(R.color.blue_300, R.style.BaseTheme_Blue300),
-        Pair(R.color.light_blue_300, R.style.BaseTheme_LightBlue300),
-        Pair(R.color.cyan_300, R.style.BaseTheme_Cyan300),
-        Pair(R.color.teal_300, R.style.BaseTheme_Teal300),
-        Pair(R.color.green_300, R.style.BaseTheme_Green300),
-        Pair(R.color.light_green_300, R.style.BaseTheme_LightGreen300),
-        Pair(R.color.lime_300, R.style.BaseTheme_Lime300),
-        Pair(R.color.yellow_300, R.style.BaseTheme_Yellow300),
-        Pair(R.color.amber_300, R.style.BaseTheme_Amber300),
-        Pair(R.color.orange_300, R.style.BaseTheme_Orange300),
-        Pair(R.color.deep_orange_300, R.style.BaseTheme_DeepOrange300),
-        Pair(R.color.brown_300, R.style.BaseTheme_Brown300),
-        Pair(R.color.grey_300, R.style.BaseTheme_Grey300),
-        Pair(R.color.blue_grey_300, R.style.BaseTheme_BlueGrey300)
+        Pair(R.color.blue_grey, R.style.BaseTheme_BlueGrey)
     )
 
     @JvmStatic
@@ -222,7 +203,7 @@ object ThemeHelper {
 
     @JvmStatic
     fun createColouredRipple(context: Context, rippleColor: Int, rippleId: Int): Drawable {
-        val ripple = context.getDrawable(rippleId) as RippleDrawable
+        val ripple = ContextCompat.getDrawable(context, rippleId) as RippleDrawable
         return ripple.apply {
             setColor(ColorStateList.valueOf(rippleColor))
         }
