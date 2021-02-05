@@ -19,10 +19,7 @@ import com.afollestad.materialdialogs.list.getRecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.adapters.QueueAdapter
-import com.iven.musicplayergo.extensions.addBidirectionalSwipeHandler
-import com.iven.musicplayergo.extensions.enablePopupIcons
-import com.iven.musicplayergo.extensions.setTitle
-import com.iven.musicplayergo.extensions.toFormattedDuration
+import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
@@ -253,7 +250,7 @@ object DialogHelper {
 
                 inflate(R.menu.popup_filter)
 
-                menu.findItem(R.id.music_container_title).setTitle(ThemeHelper.resolveThemeAccent(activity), stringToFilter)
+                menu.findItem(R.id.music_container_title).setTitle(activity, stringToFilter)
                 menu.enablePopupIcons(activity)
                 gravity = Gravity.END
 
@@ -281,7 +278,7 @@ object DialogHelper {
 
                 inflate(R.menu.popup_songs)
 
-                menu.findItem(R.id.song_title).setTitle(ThemeHelper.resolveThemeAccent(activity), song?.title)
+                menu.findItem(R.id.song_title).setTitle(activity, song?.title)
                 menu.enablePopupIcons(activity)
                 gravity = Gravity.END
 
@@ -306,25 +303,53 @@ object DialogHelper {
     }
 
     @JvmStatic
-    fun showPopupForOverflowMenu(activity: Activity, view: View) {
-
-        val uiControlInterface = activity as UIControlInterface
+    fun showPopupForPlaybackSpeed(
+            activity: Activity,
+            view: View
+    ) {
 
         PopupMenu(activity, view).apply {
-
-            inflate(R.menu.popup_np_actions)
-            menu.enablePopupIcons(activity)
+            inflate(R.menu.popup_speed)
             gravity = Gravity.END
 
-            setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.equalizer -> uiControlInterface.onOpenEqualizer()
-                    else -> uiControlInterface.onSaveSongPosition()
+            if (goPreferences.isPlaybackSpeedPersisted) {
+                menu.findItem(getSelectedPlaybackItem(goPreferences.latestPlaybackSpeed)).setTitleColor(ThemeHelper.resolveThemeAccent(activity))
+            }
+
+            setOnMenuItemClickListener { menuItem ->
+                val playbackSpeed = when (menuItem.itemId) {
+                    R.id.speed_0 -> 0.25F
+                    R.id.speed_1 -> 0.5F
+                    R.id.speed_2 -> 0.75F
+                    R.id.speed_3 -> 1.0F
+                    R.id.speed_4 -> 1.25F
+                    R.id.speed_5 -> 1.5F
+                    R.id.speed_6 -> 1.75F
+                    R.id.speed_7 -> 2.0F
+                    R.id.speed_8 -> 2.5F
+                    else -> 2.5F
                 }
-                true
+                if (goPreferences.isPlaybackSpeedPersisted) {
+                    menu.findItem(getSelectedPlaybackItem(playbackSpeed)).setTitleColor(ThemeHelper.resolveThemeAccent(activity))
+                }
+                (activity as UIControlInterface).onChangePlaybackSpeed(playbackSpeed)
+                return@setOnMenuItemClickListener true
             }
             show()
         }
+    }
+
+    private fun getSelectedPlaybackItem(playbackSpeed: Float) = when (playbackSpeed) {
+        0.25F -> R.id.speed_0
+        0.5F -> R.id.speed_1
+        0.75F -> R.id.speed_2
+        1.0F -> R.id.speed_3
+        1.25F -> R.id.speed_4
+        1.5F -> R.id.speed_5
+        1.75F -> R.id.speed_6
+        2.0F -> R.id.speed_7
+        2.25F -> R.id.speed_8
+        else -> R.id.speed_9
     }
 
     @JvmStatic

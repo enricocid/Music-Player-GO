@@ -101,4 +101,10 @@
     <string name="albums">Álbumes</string>
     <string name="eq_pref_note_summary">Nota: o ecualizador do sistema terá preferencia a non ser que desactives a app \"ecualizador do sistema\" nos axustes do sistema. :)</string>
     <string name="error_eq">Mágoa, algo fallou!</string>
+    <string name="loved_songs_save_time">Gardar posición da canción</string>
+    <string name="open_details_fragment">Abrir detalles do cartafol/artista</string>
+    <string name="content_repeat">Activar/desactivar opcións de repetición</string>
+    <string name="content_skip_next">Ir á canción seguinte</string>
+    <string name="content_play">Reprd./Pausa</string>
+    <string name="content_skip_prev">Ir á canción anterior</string>
 </resources>

@@ -8,9 +8,9 @@
     android:layout_marginBottom="4dp"
     android:background="?attr/selectableItemBackground"
     android:clickable="false"
+    android:contentDescription="@string/active_fragments_pref_title"
     android:focusable="false"
     android:padding="8dp"
     android:scaleType="fitCenter"
-    tools:ignore="ContentDescription"
     tools:viewBindingIgnore="true" />
 

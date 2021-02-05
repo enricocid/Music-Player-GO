@@ -2,6 +2,15 @@
 
 <resources>
 
+    <integer-array name="loadingProgressColors">
+        <item>@color/red</item>
+        <item>@color/purple</item>
+        <item>@color/blue</item>
+        <item>@color/green</item>
+        <item>@color/yellow</item>
+        <item>@color/orange</item>
+    </integer-array>
+
     <string-array name="themeListArray">
         <item>@string/theme_pref_light_title</item>
         <item>@string/theme_pref_dark_title</item>

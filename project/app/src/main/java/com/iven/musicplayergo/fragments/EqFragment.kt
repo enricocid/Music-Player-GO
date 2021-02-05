@@ -9,6 +9,7 @@ import android.media.audiofx.Virtualizer
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.afollestad.recyclical.datasource.emptyDataSource
@@ -23,7 +24,6 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentEqualizerBinding
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.createCircularReveal
-import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.ui.PresetsViewHolder
@@ -274,7 +274,8 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
         } catch (e: UnsupportedOperationException) {
             e.printStackTrace()
-            getString(R.string.error_eq).toToast(requireActivity())
+            Toast.makeText(requireActivity(),  getString(R.string.error_eq), Toast.LENGTH_LONG)
+                    .show()
         }
     }
 

@@ -73,7 +73,7 @@ This repo contains the source code of the **Music Player GO** Android app: a min
 - Embedded covers support
 - Fast seeking (long click on skip buttons)
 - Simple audio focus, precise volume and headsets management
-- Other features: search, sorting, shuffle ...
+- Other features: search, playback speed, sorting, shuffle ...
  
 
 # Translations

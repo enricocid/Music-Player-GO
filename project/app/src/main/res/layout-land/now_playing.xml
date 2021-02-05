@@ -8,15 +8,8 @@
     android:orientation="horizontal"
     tools:context=".ui.MainActivity">
 
-    <!-- the album's cover -->
-    <ImageView
-        android:id="@+id/np_cover"
-        android:layout_width="@android:dimen/thumbnail_height"
-        android:layout_height="@android:dimen/thumbnail_height"
-        android:layout_gravity="center"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        tools:ignore="ContentDescription" />
+    <!-- the album's cover + actions -->
+    <include layout="@layout/now_playing_cover" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +23,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/ripple"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingTop="8dp"
@@ -48,7 +40,7 @@
                 android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textStyle="bold" />
 
@@ -63,78 +55,59 @@
                 android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 android:textColor="?android:attr/textColorSecondary" />
         </LinearLayout>
 
-        <!-- the SeekBar -->
+        <!-- the SeekBar + seek value -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <SeekBar
-                    android:id="@+id/np_seek_bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:progressDrawable="@android:color/transparent"
-                    android:splitTrack="false"
-                    android:thumb="@drawable/seekbar_np_thumb"
-                    android:thumbOffset="0dp" />
-
-                <TextView
-                    android:id="@+id/np_rates"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:alpha="0.5"
-                    android:text="@string/unknown_year"
-                    android:textAlignment="center"
-                    android:textAppearance="@android:style/TextAppearance.Material.Caption"
-                    android:textColor="?android:attr/textColorPrimary" />
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/np_seek"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:textAppearance="@android:style/TextAppearance.Material.Caption"
+                android:textColor="?android:attr/textColorSecondary" />
 
-                <TextView
-                    android:id="@+id/np_seek"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:textAlignment="textStart"
-                    android:textAppearance="@android:style/TextAppearance.Material.Caption"
-                    android:textColor="?android:attr/textColorSecondary" />
+            <SeekBar
+                android:id="@+id/np_seek_bar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:splitTrack="false" />
 
-                <TextView
-                    android:id="@+id/np_duration"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:textAlignment="textEnd"
-                    android:textAppearance="@android:style/TextAppearance.Material.Caption"
-                    android:textColor="?android:attr/textColorSecondary" />
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/np_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="16dp"
+                android:textAppearance="@android:style/TextAppearance.Material.Caption"
+                android:textColor="?android:attr/textColorSecondary" />
 
         </LinearLayout>
 
         <include layout="@layout/now_playing_controls" />
 
         <include layout="@layout/now_playing_extended_controls" />
+
+        <TextView
+            android:id="@+id/np_rates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="6dp"
+            android:alpha="0.5"
+            android:text="@string/unknown_year"
+            android:textAlignment="center"
+            android:textAppearance="@android:style/TextAppearance.Material.Caption"
+            android:textColor="?android:attr/textColorTertiary" />
     </LinearLayout>
 </LinearLayout>

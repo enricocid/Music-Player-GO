@@ -15,6 +15,7 @@ class GoPreferences(context: Context) {
 
     private val prefsSavedEqualizerSettings = context.getString(R.string.saved_eq_settings)
     private val prefsLatestVolume = context.getString(R.string.latest_volume_pref)
+    private val prefsLatestPlaybackSpeed = context.getString(R.string.latest_playback_speed_pref)
     private val prefsLatestPlayedSong = context.getString(R.string.latest_played_song_pref)
     private val prefsLovedSongs = context.getString(R.string.loved_songs_pref)
 
@@ -44,6 +45,8 @@ class GoPreferences(context: Context) {
 
     private val prefsFilter = context.getString(R.string.filter_pref)
 
+    private val prefsPlaybackSpeed = context.getString(R.string.playback_speed_pref)
+
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
 
     private val mMoshi = Moshi.Builder().build()
@@ -57,6 +60,10 @@ class GoPreferences(context: Context) {
     var latestVolume: Int
         get() = mPrefs.getInt(prefsLatestVolume, 100)
         set(value) = mPrefs.edit { putInt(prefsLatestVolume, value) }
+
+    var latestPlaybackSpeed: Float
+        get() = mPrefs.getFloat(prefsLatestPlaybackSpeed, 1.0F)
+        set(value) = mPrefs.edit { putFloat(prefsLatestPlaybackSpeed, value) }
 
     var latestPlayedSong: Music?
         get() = getObjectForClass(
@@ -152,6 +159,10 @@ class GoPreferences(context: Context) {
     var isHeadsetPlugEnabled
         get() = mPrefs.getBoolean(prefsHeadsetPlug, true)
         set(value) = mPrefs.edit { putBoolean(prefsHeadsetPlug, value) }
+
+    var isPlaybackSpeedPersisted
+        get() = mPrefs.getBoolean(prefsPlaybackSpeed, false)
+        set(value) = mPrefs.edit { putBoolean(prefsPlaybackSpeed, value) }
 
     // Retrieve object from the Preferences using Moshi
     private fun <T : Any> putObjectForType(key: String, value: T?, type: Type) {

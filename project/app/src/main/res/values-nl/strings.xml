@@ -81,4 +81,10 @@
     <string name="equalizer_bb">Basversterking</string>
     <string name="equalizer">Equalizer</string>
     <string name="albums">Albums</string>
+    <string name="loved_songs_save_time">Afspeelpositie opslaan</string>
+    <string name="open_details_fragment">Artiestmap/-informatie openen</string>
+    <string name="content_repeat">Herhaalopties in-/uitschakelen</string>
+    <string name="content_skip_next">Doorspoelen naar volgende nummer</string>
+    <string name="content_play">Afspelen/Pauzeren</string>
+    <string name="content_skip_prev">Terugspoelen naar vorige nummer</string>
 </resources>

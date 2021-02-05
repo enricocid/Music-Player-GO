@@ -7,7 +7,7 @@
     android:background="@color/windowBackground"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/error_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -22,6 +22,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?android:attr/selectableItemBackground"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp"
@@ -31,8 +32,8 @@
             android:id="@+id/error_icon"
             android:layout_width="@android:dimen/notification_large_icon_height"
             android:layout_height="@android:dimen/notification_large_icon_height"
-            android:tint="@color/red"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@string/error_no_music"
+            app:tint="@color/red" />
 
         <TextView
             android:id="@+id/error_message"

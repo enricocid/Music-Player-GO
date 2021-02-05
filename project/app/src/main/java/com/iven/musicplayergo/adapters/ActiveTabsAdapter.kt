@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 import java.util.*
@@ -95,8 +95,8 @@ class ActiveTabsAdapter(private val ctx: Context) :
                         mActiveItems.add(toggledItem)
                     }
                     if (mActiveItems.size < 2) {
-                        context.getString(R.string.active_fragments_pref_warning)
-                            .toToast(context)
+                        Toast.makeText(context,  context.getString(R.string.active_fragments_pref_warning), Toast.LENGTH_LONG)
+                                .show()
                         mActiveItems.add(toggledItem)
                         manageTabStatus(true, tabImageButton)
                     }

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?><!-- the album's cover -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/np_cover"
+        android:layout_width="@android:dimen/thumbnail_height"
+        android:layout_height="@android:dimen/thumbnail_height"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/covers_pref_title" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/np_open_details"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="?android:attr/actionBarItemBackground"
+            android:contentDescription="@string/open_details_fragment"
+            android:padding="8dp"
+            app:srcCompat="@drawable/ic_launch_details" />
+
+        <ImageButton
+            android:id="@+id/np_playback_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="?android:attr/actionBarItemBackground"
+            android:contentDescription="@string/content_playback_speed"
+            android:padding="8dp"
+            app:srcCompat="@drawable/ic_speed" />
+
+        <ImageButton
+            android:id="@+id/np_save_time"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="?android:attr/actionBarItemBackground"
+            android:contentDescription="@string/loved_songs_save_time"
+            android:padding="8dp"
+            app:srcCompat="@drawable/ic_save_time" />
+
+        <ImageButton
+            android:id="@+id/np_love"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="?android:attr/actionBarItemBackground"
+            android:contentDescription="@string/loved_song_add"
+            android:padding="8dp"
+            app:srcCompat="@drawable/ic_favorite" />
+    </LinearLayout>
+</LinearLayout>

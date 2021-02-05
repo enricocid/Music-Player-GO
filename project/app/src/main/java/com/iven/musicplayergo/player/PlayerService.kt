@@ -8,10 +8,10 @@ import android.os.Parcelable
 import android.os.PowerManager
 import android.support.v4.media.session.MediaSessionCompat
 import android.view.KeyEvent
+import android.widget.Toast
 import androidx.core.content.getSystemService
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toSavedMusic
-import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 
 
@@ -166,7 +166,8 @@ class PlayerService : Service() {
             }
         } catch (e: Exception) {
             isSuccess = false
-            getString(R.string.error_media_buttons).toToast(this)
+            Toast.makeText(this, getString(R.string.error_media_buttons), Toast.LENGTH_LONG)
+                    .show()
             e.printStackTrace()
         }
 

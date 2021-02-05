@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.player
 
+import android.annotation.TargetApi
 import android.app.Activity
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
@@ -14,10 +15,13 @@ import android.media.audiofx.AudioEffect
 import android.media.audiofx.BassBoost
 import android.media.audiofx.Equalizer
 import android.media.audiofx.Virtualizer
+import android.os.Build
 import android.os.PowerManager
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat.ACTION_SEEK_TO
 import android.support.v4.media.session.PlaybackStateCompat.Builder
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.graphics.drawable.toBitmap
 import androidx.media.AudioAttributesCompat
@@ -27,9 +31,9 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.savedSongIsAvailable
 import com.iven.musicplayergo.extensions.toContentUri
-import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ListsHelper
+import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedEqualizerSettings
@@ -125,6 +129,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private var mPlayingAlbumSongs: List<Music>? = null
 
     var currentVolumeInPercent = goPreferences.latestVolume
+
+    private var currentPlaybackSpeed = goPreferences.latestPlaybackSpeed
+
     val playerPosition
         get() = if (!isMediaPlayer) {
             goPreferences.latestPlayedSong?.startFrom!!
@@ -250,6 +257,17 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         mPlayingAlbumSongs = songs
     }
 
+    fun updateCurrentSongs() {
+        val sorting = if (goPreferences.songsVisualization != GoConstants.TITLE) {
+            GoConstants.ASCENDING_SORTING
+        } else {
+            GoConstants.TRACK_SORTING
+        }
+        mPlayingAlbumSongs = ListsHelper.getSortedMusicList(sorting, mPlayingAlbumSongs?.toMutableList())
+    }
+
+    fun getCurrentAlbumSize() = mPlayingAlbumSongs?.size ?: 0
+
     private fun updateMediaSessionMetaData() {
         val mediaMediaPlayerCompat = MediaMetadataCompat.Builder().apply {
             putLong(
@@ -264,7 +282,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ARTIST, currentSong.first?.album)
             putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, currentSong.first?.album)
             putString(MediaMetadataCompat.METADATA_KEY_ALBUM, currentSong.first?.album)
-            playerService.resources.getDrawable(R.drawable.ic_music_note, null)
+            ContextCompat.getDrawable(playerService, R.drawable.ic_music_note)
                 ?.toBitmap()?.let { bmp ->
                     putBitmap(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON, bmp)
                 }
@@ -369,13 +387,21 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
+    private fun startOrChangePlaybackSpeed() {
+        if (goPreferences.isPlaybackSpeedPersisted && VersioningHelper.isMarshmallow()) {
+            mediaPlayer.playbackParams = mediaPlayer.playbackParams.setSpeed(currentPlaybackSpeed)
+        } else {
+            mediaPlayer.start()
+        }
+    }
+
     fun resumeMediaPlayer() {
         if (!isPlaying) {
             if (isMediaPlayer) {
                 if (sFocusEnabled) {
                     tryToGetAudioFocus()
                 }
-                mediaPlayer.start()
+                startOrChangePlaybackSpeed()
             }
             state = if (isSongRestoredFromPrefs) {
                 isSongRestoredFromPrefs = false
@@ -633,7 +659,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     private fun play() {
-        mediaPlayer.start()
+        startOrChangePlaybackSpeed()
         state = GoConstants.PLAYING
         updatePlaybackStatus(true)
         startForeground()
@@ -739,8 +765,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             }
             else -> isRepeat1X = true
         }
-        playerService.getString(toastMessage)
-            .toToast(playerService)
+        Toast.makeText(playerService, playerService.getString(toastMessage), Toast.LENGTH_LONG)
+                .show()
     }
 
     fun repeat(updatePlaybackStatus: Boolean) {
@@ -853,6 +879,20 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     }
                 }
             }
+    }
+
+    /* Sets the playback speed of the media player */
+    @TargetApi(Build.VERSION_CODES.M)
+    fun setPlaybackSpeed(speed: Float) {
+        if (isMediaPlayer) {
+            currentPlaybackSpeed = speed
+            if (goPreferences.isPlaybackSpeedPersisted) {
+                goPreferences.latestPlaybackSpeed = currentPlaybackSpeed
+            }
+            if (state != GoConstants.PAUSED) {
+                mediaPlayer.playbackParams = mediaPlayer.playbackParams.setSpeed(currentPlaybackSpeed)
+            }
+        }
     }
 
     /* Sets the volume of the media player */

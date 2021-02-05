@@ -218,7 +218,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private fun setupToolbar() {
         mDetailsFragmentBinding.detailsToolbar.run {
 
-            overflowIcon = requireActivity().getDrawable(
+            overflowIcon = ContextCompat.getDrawable(
+                requireActivity(),
                 if (sLaunchedByArtistView) {
                     R.drawable.ic_shuffle
                 } else {
@@ -272,7 +273,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         .bitmapPoolingEnabled(false)
                         .crossfade(true)
                         .build()
-                mAlbumArt = requireActivity().getDrawable(R.drawable.album_art)?.toBitmap()
+                mAlbumArt = ContextCompat.getDrawable(requireActivity(), R.drawable.album_art)?.toBitmap()
             }
 
             if (mSongsSorting == GoConstants.SHUFFLE_SORTING) {
@@ -674,9 +675,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         } else {
                             if (sPlayFirstSong) {
                                 mUIControlInterface.onSongSelected(
-                                        item.music?.get(0),
-                                        item.music,
-                                        mLaunchedBy
+                                    ListsHelper.getSortedMusicList(mSongsSorting, item.music?.toMutableList())?.get(0),
+                                    item.music,
+                                    mLaunchedBy
                                 )
                             } else {
                                 sPlayFirstSong = true

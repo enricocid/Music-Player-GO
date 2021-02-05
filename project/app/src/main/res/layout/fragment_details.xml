@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/windowBackground"
@@ -9,7 +8,7 @@
     android:focusable="true"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/details_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -35,7 +34,7 @@
         android:id="@+id/selected_album_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ripple"
+        android:background="?android:attr/selectableItemBackground"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -80,9 +79,9 @@
             android:layout_gravity="center"
             android:layout_marginEnd="8dp"
             android:background="?android:attr/actionBarItemBackground"
+            android:contentDescription="@string/sorting_pref"
             android:padding="8dp"
-            app:srcCompat="@drawable/ic_sort_numeric_descending"
-            tools:ignore="ContentDescription" />
+            app:srcCompat="@drawable/ic_sort_numeric_descending" />
 
         <ImageButton
             android:id="@+id/queue_add_button"
@@ -91,9 +90,9 @@
             android:layout_gravity="center"
             android:layout_marginEnd="8dp"
             android:background="?android:attr/actionBarItemBackground"
+            android:contentDescription="@string/queue"
             android:padding="8dp"
-            app:srcCompat="@drawable/ic_queue_add"
-            tools:ignore="ContentDescription" />
+            app:srcCompat="@drawable/ic_queue_add" />
     </LinearLayout>
 
     <!-- DISC SONGS -->

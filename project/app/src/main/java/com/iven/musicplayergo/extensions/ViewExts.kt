@@ -5,17 +5,14 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.content.res.ColorStateList
 import android.graphics.Canvas
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.InsetDrawable
 import android.text.Spannable
 import android.text.SpannableString
-import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
@@ -53,7 +50,7 @@ fun String.getFastScrollerItem(context: Context): FastScrollItemIndicator {
         charAtZero = "${get(0)}"
     }
     return FastScrollItemIndicator.Text(
-            charAtZero.toUpperCase() // Grab the first letter and capitalize it
+        charAtZero.toUpperCase() // Grab the first letter and capitalize it
     )
 }
 
@@ -66,39 +63,34 @@ fun MenuItem.setTitleColor(color: Int) {
 }
 
 // Extension to set span to menu title
-fun MenuItem.setTitle(color: Int, title: String?) {
+fun MenuItem.setTitle(activity: Activity, title: String?) {
+
+    val accent = ThemeHelper.resolveThemeAccent(activity)
 
     val spanString = SpannableString(if (title?.length!! > 20) {
-        TextUtils.concat(title.substring(0,20), "...")
+        activity.getString(R.string.popup_menu_title, title.substring(0,20))
     } else {
         title
     })
     spanString.setSpan(RelativeSizeSpan(0.75f), 0, spanString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-    spanString.setSpan(ForegroundColorSpan(color), 0, spanString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    spanString.setSpan(ForegroundColorSpan(accent), 0, spanString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
     setTitle(spanString)
 }
 
 @SuppressLint("RestrictedApi")
 fun Menu.enablePopupIcons(activity: Activity) {
     val iconMarginPx = activity.resources.getDimensionPixelSize(R.dimen.player_controls_padding_start)
-    try {
-        if (this is MenuBuilder) {
-            setOptionalIconsVisible(true)
-            val visibleItemsIterator = visibleItems.iterator()
-            while (visibleItemsIterator.hasNext()) {
-                visibleItemsIterator.next().run {
-                    if (icon != null) {
-                        icon = InsetDrawable(icon, iconMarginPx, 0, iconMarginPx, 0)
-                        iconTintList = ColorStateList.valueOf(ThemeHelper.resolveColorAttr(
-                                activity,
-                                android.R.attr.colorButtonNormal
-                        ))
-                    }
+
+    if (this is MenuBuilder) {
+        setOptionalIconsVisible(true)
+        val visibleItemsIterator = visibleItems.iterator()
+        while (visibleItemsIterator.hasNext()) {
+            visibleItemsIterator.next().run {
+                if (icon != null) {
+                    icon = InsetDrawable(icon, iconMarginPx, 0, iconMarginPx, 0)
                 }
             }
         }
-    } catch (e: Exception) {
-        e.printStackTrace()
     }
 }
 
@@ -106,9 +98,9 @@ fun FragmentManager.addFragment(fragment: Fragment, tag: String?) {
     commit {
         addToBackStack(null)
         add(
-                R.id.container,
-                fragment,
-                tag
+            R.id.container,
+            fragment,
+            tag
         )
     }
 }
@@ -170,11 +162,11 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
     }
     val animator =
         ViewAnimationUtils.createCircularReveal(
-                this,
-                cx,
-                cy,
-                startRadius,
-                finalRadius
+            this,
+            cx,
+            cy,
+            startRadius,
+            finalRadius
         ).apply {
             interpolator = FastOutSlowInInterpolator()
             duration = revealDuration
@@ -210,16 +202,6 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
         setEvaluator(ArgbEvaluatorCompat())
         addUpdateListener { valueAnimator -> setBackgroundColor((valueAnimator.animatedValue as Int)) }
         duration = revealDuration
-        if (isErrorFragment) {
-            doOnEnd {
-                background =
-                    ThemeHelper.createColouredRipple(
-                            context,
-                            ContextCompat.getColor(context, R.color.red),
-                            R.drawable.ripple
-                    )
-            }
-        }
         start()
     }
     return animator
@@ -267,8 +249,8 @@ private fun instantiateSwipeHandler(
         isDialog: Boolean,
         direction: Int,
         onSwiped: (
-                viewHolder: RecyclerView.ViewHolder,
-                direction: Int
+            viewHolder: RecyclerView.ViewHolder,
+            direction: Int
         ) -> Unit
 ): ItemTouchHelper.SimpleCallback {
     return object : ItemTouchHelper.SimpleCallback(
@@ -277,14 +259,14 @@ private fun instantiateSwipeHandler(
     ) {
 
         override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
         ): Boolean = false
 
         override fun onSwiped(
-                viewHolder: RecyclerView.ViewHolder,
-                direction: Int
+            viewHolder: RecyclerView.ViewHolder,
+            direction: Int
         ) {
             onSwiped(viewHolder, direction)
         }
@@ -296,23 +278,22 @@ private fun instantiateSwipeHandler(
 
             val itemView = viewHolder.itemView
 
-            val resources = context.resources
             val red = ContextCompat.getColor(context, R.color.red)
 
-            val firstIcon = resources.getDrawable(R.drawable.ic_queue_add, null).apply {
-                mutate().setTint(ContextCompat.getColor(context, R.color.green))
+            val firstIcon = ContextCompat.getDrawable(context, R.drawable.ic_queue_add).apply {
+                this?.mutate()?.setTint(ContextCompat.getColor(context, R.color.green))
             }
 
-            val firstIconAlt = resources.getDrawable(R.drawable.ic_delete, null).apply {
-                mutate().setTint(red)
+            val firstIconAlt = ContextCompat.getDrawable(context, R.drawable.ic_delete).apply {
+                this?.mutate()?.setTint(red)
             }
 
             val secondIcon = if (isDialog) {
-                resources.getDrawable(R.drawable.ic_delete, null)
+                ContextCompat.getDrawable(context, R.drawable.ic_delete)
             } else {
-                resources.getDrawable(R.drawable.ic_favorite, null)
+                ContextCompat.getDrawable(context, R.drawable.ic_favorite)
             }.apply {
-                mutate().setTint(red)
+                this?.mutate()?.setTint(red)
             }
 
             val firstColor = ColorDrawable(ContextCompat.getColor(context, R.color.swipeActionDeleteColor))
@@ -327,48 +308,51 @@ private fun instantiateSwipeHandler(
 
             when {
                 dX > 0 -> {
-                    val icon = if (isDialog) {
+                    if (isDialog) {
                         firstIconAlt
                     } else {
                         background = secondColor
                         firstIcon
-                    }
+                    }?.let { icon ->
+                        val iconMargin = (itemView.height - icon.intrinsicHeight) / 2
+                        val iconTop = itemView.top + (itemView.height - icon.intrinsicHeight) / 2
+                        val iconBottom = iconTop + icon.intrinsicHeight
+                        val iconLeft = itemView.left + iconMargin
+                        val iconRight = iconLeft + icon.intrinsicWidth
 
-                    val iconMargin = (itemView.height - icon.intrinsicHeight) / 2
-                    val iconTop = itemView.top + (itemView.height - icon.intrinsicHeight) / 2
-                    val iconBottom = iconTop + icon.intrinsicHeight
-                    val iconLeft = itemView.left + iconMargin
-                    val iconRight = iconLeft + icon.intrinsicWidth
-
-                    icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
-                    background.setBounds(
+                        icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+                        background.setBounds(
                             itemView.left,
                             itemView.top,
                             itemView.left + dX.toInt(),
                             itemView.bottom
-                    )
-                    background.draw(c)
-                    icon.draw(c)
+                        )
+                        background.draw(c)
+                        icon.draw(c)
+                    }
                 }
                 dX < 0 -> {
                     background = firstColor
 
-                    val iconMargin = (itemView.height - secondIcon.intrinsicHeight) / 2
-                    val iconTop = itemView.top + (itemView.height - secondIcon.intrinsicHeight) / 2
-                    val iconBottom = iconTop + secondIcon.intrinsicHeight
-                    val iconRight = itemView.right - iconMargin
-                    val iconLeft = iconRight - secondIcon.intrinsicWidth
+                    secondIcon?.let { icon ->
 
-                    secondIcon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+                        val iconMargin = (itemView.height - icon.intrinsicHeight) / 2
+                        val iconTop = itemView.top + (itemView.height - icon.intrinsicHeight) / 2
+                        val iconBottom = iconTop + icon.intrinsicHeight
+                        val iconRight = itemView.right - iconMargin
+                        val iconLeft = iconRight - icon.intrinsicWidth
 
-                    background.setBounds(
+                        icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+
+                        background.setBounds(
                             itemView.right + dX.toInt(),
                             itemView.top,
                             itemView.right,
                             itemView.bottom
-                    )
-                    background.draw(c)
-                    secondIcon.draw(c)
+                        )
+                        background.draw(c)
+                        icon.draw(c)
+                    }
                 }
                 else -> {
                     background.setBounds(0, 0, 0, 0)
@@ -384,8 +368,4 @@ fun View.handleViewVisibility(show: Boolean) {
     } else {
         View.GONE
     }
-}
-
-fun String.toToast(context: Context) {
-    Toast.makeText(context, this, Toast.LENGTH_LONG).show()
 }

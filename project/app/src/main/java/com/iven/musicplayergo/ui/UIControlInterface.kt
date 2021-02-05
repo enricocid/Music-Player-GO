@@ -9,6 +9,7 @@ import com.iven.musicplayergo.models.Music
 interface UIControlInterface {
     fun onAppearanceChanged(isThemeChanged: Boolean)
     fun onPreciseVolumeToggled()
+    fun onPlaybackSpeedToggled()
     fun onArtistOrFolderSelected(artistOrFolder: String, launchedBy: String)
     fun onSongSelected(song: Music?, songs: List<Music>?, launchedBy: String)
     fun onShuffleSongs(
@@ -21,7 +22,6 @@ interface UIControlInterface {
 
     fun onLovedSongsUpdate(clear: Boolean)
     fun onLovedSongAdded(song: Music?, isAdded: Boolean)
-    fun onSaveSongPosition()
     fun onCloseActivity()
     fun onAddToQueue(song: Music?, launchedBy: String)
     fun onAddAlbumToQueue(
@@ -39,7 +39,7 @@ interface UIControlInterface {
     fun onHandleFocusPref()
     fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean)
     fun onGetEqualizer(): Triple<Equalizer?, BassBoost?, Virtualizer?>
-    fun onOpenEqualizer()
     fun onEnableEqualizer(isEnabled: Boolean)
     fun onSaveEqualizerSettings(selectedPreset: Int, bassBoost: Short, virtualizer: Short)
+    fun onChangePlaybackSpeed(speed: Float)
 }

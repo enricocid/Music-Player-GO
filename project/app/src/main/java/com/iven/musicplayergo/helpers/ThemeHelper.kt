@@ -189,7 +189,7 @@ object ThemeHelper {
         GoConstants.ARTISTS_TAB -> R.drawable.ic_artist
         GoConstants.ALBUM_TAB -> R.drawable.ic_library_music
         GoConstants.SONGS_TAB -> R.drawable.ic_music_note
-        GoConstants.FOLDERS_TAB -> R.drawable.ic_folder
+        GoConstants.FOLDERS_TAB -> R.drawable.ic_folder_music
         else -> R.drawable.ic_settings
     }
 
@@ -203,7 +203,7 @@ object ThemeHelper {
 
     @JvmStatic
     fun createColouredRipple(context: Context, rippleColor: Int, rippleId: Int): Drawable {
-        val ripple = context.getDrawable(rippleId) as RippleDrawable
+        val ripple = ContextCompat.getDrawable(context, rippleId) as RippleDrawable
         return ripple.apply {
             setColor(ColorStateList.valueOf(rippleColor))
         }

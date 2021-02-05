@@ -3,7 +3,7 @@
     <!-- Dialogs / Buttons -->
     <string name="yes">Iya</string>
     <string name="no">Tidak</string>
-    <string name="on_close_activity">Apakah anda ingin berhenti memutar musik?</string>
+    <string name="on_close_activity">Apakah Anda ingin berhenti memutar musik\?</string>
     <string name="queue_songs_clear">Antrean akan dikosongkan. Lanjutkan?</string>
     <string name="loved_songs_clear">Favorit akan dikosongkan. Lanjutkan?</string>
     <string name="loved_song_remove">%1s (%2s) akan dihapus dari favorit. Lanjutkan?</string>
@@ -35,7 +35,7 @@
     <string name="error_no_loved_songs">Tidak ada lagu favorit yang ditemukan!</string>
     <string name="error_no_music">Musik tidak ditemukan :(</string>
     <string name="error_not_ready">Tidak bisa memuat pustaka musik! :( Mungkin disebabkan oleh kartu sd yang tidak lagi terpasang dan memaksa MediaStore Android membangun ulang basis datanya. Silakan coba lagi nanti.</string>
-    <string name="error_unknown_unsupported">Telah terjadi kesalahan! :( Mungkin format tidak didukung atau folder tidak bisa diakses (bukan kesalahan aplikasi!)</string>
+    <string name="error_unknown_unsupported">Telah terjadi kesalahan! :( Mungkin format tidak didukung atau folder tidak bisa diakses (bukan kesalahan aplikasi!).</string>
     <string name="error_media_buttons">Telah terjadi kesalahan! :( Silakan mulai ulang pemutaran dari aplikasi.</string>
     <string name="error_no_browser">Peramban tidak ditemukan.</string>
     <string name="error_bad_id">Putar lagu terlebih dahulu.</string>
@@ -95,10 +95,16 @@
     <string name="equalizer_bb">Penguat bas</string>
     <string name="equalizer">Equalizer</string>
     <string name="albums">Album</string>
-    <string name="eq_pref_note_summary">Catatan: Equalizer sistem akan dipilih kecuali anda menonaktifkan \"equalizer sistem\" dari pengaturan sistem. :)</string>
+    <string name="eq_pref_note_summary">Catatan: Equalizer sistem akan dipilih kecuali Anda menonaktifkan \"equalizer sistem\" dari pengaturan sistem. :)</string>
     <string name="on_list_ended_pref_title">Saat daftar lagu berakhir …</string>
     <string name="error_eq">Ups, telah terjadi kesalahan!</string>
     <string name="error_list_ended">Daftar telah berakhir.</string>
     <string name="fast_seeking_actions_pref_summary_off">Laju lagu dinonaktifkan</string>
     <string name="fast_seeking_actions_pref_summary_on">Laju lagu diaktifkan</string>
+    <string name="loved_songs_save_time">Simpan posisi lagu</string>
+    <string name="open_details_fragment">Buka detail artis/folder</string>
+    <string name="content_repeat">Aktifkan/nonaktifkan opsi pengulangan</string>
+    <string name="content_skip_next">Lewati ke lagu selanjutnya</string>
+    <string name="content_play">Putar/jeda</string>
+    <string name="content_skip_prev">Lewati ke lagu sebelumnya</string>
 </resources>

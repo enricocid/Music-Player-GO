@@ -10,7 +10,7 @@
 - Embedded covers support
 - Fast seeking (long click on skip buttons)
 - Simple audio focus, precise volume and headsets management
-- Other features: search, sorting, shuffle ...
+- Other features: search, playback speed, sorting, shuffle ...
 
 
 <b>Want to contribute to translations?</b>

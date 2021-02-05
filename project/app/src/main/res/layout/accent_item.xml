@@ -6,6 +6,7 @@
     android:layout_height="@android:dimen/app_icon_size"
     android:layout_margin="4dp"
     android:padding="6dp"
+    tools:ignore="ContentDescription"
     tools:viewBindingIgnore="true">
 
     <ImageButton
@@ -16,8 +17,7 @@
         android:clickable="false"
         android:focusable="false"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/ic_circle"
-        tools:ignore="ContentDescription" />
+        app:srcCompat="@drawable/ic_circle" />
 
     <ImageButton
         android:id="@+id/check"
@@ -29,6 +29,5 @@
         android:scaleType="fitCenter"
         android:scaleX="0.50"
         android:scaleY="0.50"
-        app:srcCompat="@drawable/ic_check"
-        tools:ignore="ContentDescription" />
+        app:srcCompat="@drawable/ic_check" />
 </FrameLayout>

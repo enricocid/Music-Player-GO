@@ -81,4 +81,10 @@
     <string name="equalizer_bb">Bas güçlendirme</string>
     <string name="equalizer">Dengeleyici</string>
     <string name="albums">Albümler</string>
+    <string name="loved_songs_save_time">Şarkı konumunu kaydet</string>
+    <string name="open_details_fragment">Sanatçı/klasör ayrıntılarını aç</string>
+    <string name="content_repeat">Tekrar seçeneklerini etkinleştir/devre dışı bırak</string>
+    <string name="content_skip_next">Sonraki şarkıya geç</string>
+    <string name="content_skip_prev">Önceki şarkıya geç</string>
+    <string name="content_play">Oynat/duraklat</string>
 </resources>

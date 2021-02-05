@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -152,7 +153,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
             inflateMenu(R.menu.menu_search)
 
-            overflowIcon = requireActivity().getDrawable(R.drawable.ic_sort)
+            overflowIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_sort)
 
             setNavigationOnClickListener {
                 mUIControlInterface.onCloseActivity()

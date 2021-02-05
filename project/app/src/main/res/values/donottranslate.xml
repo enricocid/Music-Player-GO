@@ -10,6 +10,7 @@
     <string name="app_faq">https://github.com/enricocid/Music-Player-GO/blob/master/FAQ.md</string>
 
     <!-- Formatted strings used in RVs items and other TextViews -->
+    <string name="popup_menu_title">%1s&#8230;</string>
     <string name="rates">%1d&#160;kHz,&#160;%2d&#160;kbps</string>
     <string name="artist_and_album">%1s&#160;/&#160;%2s</string>
     <string name="track_song">&lt;b>%1d&lt;/b>&#160;-&#160;%2s</string>
@@ -23,6 +24,17 @@
     <string name="slash">/</string>
     <string name="unknown_year">N&#x2F;A</string>
     <string name="freq_k">%1dk</string>
+
+    <!-- Playback speed menu -->
+    <string name="speed_0">0.25x</string>
+    <string name="speed_1">0.5x</string>
+    <string name="speed_2">0.75x</string>
+    <string name="speed_4">1.25x</string>
+    <string name="speed_5">1.5x</string>
+    <string name="speed_6">1.75x</string>
+    <string name="speed_7">2.0x</string>
+    <string name="speed_8">2.25x</string>
+    <string name="speed_9">2.5x</string>
 
     <!-- Sorting menu -->
     <string name="sorting_pref_ascending">A-Z</string>
@@ -71,5 +83,7 @@
     <string name="latest_played_song_pref">restore_song_pref</string>
     <string name="loved_songs_pref">favorites_pref</string>
     <string name="latest_volume_pref">latest_volume_pref</string>
+    <string name="latest_playback_speed_pref">latest_playback_speed_pref</string>
     <string name="song_visual_pref">song_visual_pref</string>
+    <string name="playback_speed_pref">playback_speed_pref</string>
 </resources>

@@ -16,7 +16,7 @@ object PermissionsHelper {
 
     @JvmStatic
     fun hasToAskForReadStoragePermission(activity: Activity) =
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(
+        VersioningHelper.isMarshmallow() && ContextCompat.checkSelfPermission(
             activity,
             Manifest.permission.READ_EXTERNAL_STORAGE
         ) != PackageManager.PERMISSION_GRANTED
