@@ -98,11 +98,23 @@ object ListsHelper {
         return toTrans
     }
 
-    fun getSelectedSorting(sorting: Int, menu: Menu): MenuItem = when (sorting) {
-        GoConstants.DEFAULT_SORTING -> menu.findItem(R.id.default_sorting)
-        GoConstants.ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
-        GoConstants.DESCENDING_SORTING -> menu.findItem(R.id.descending_sorting)
-        else -> menu.findItem(R.id.date_added_sorting)
+    fun getSelectedSorting(sorting: Int, menu: Menu, isAllMusic: Boolean): MenuItem {
+        if (isAllMusic) {
+            return when (sorting) {
+                GoConstants.DEFAULT_SORTING -> menu.findItem(R.id.default_sorting)
+                GoConstants.ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
+                GoConstants.DESCENDING_SORTING -> menu.findItem(R.id.descending_sorting)
+                GoConstants.DATE_ADDED_SORTING -> menu.findItem(R.id.date_added_sorting)
+                else -> menu.findItem(R.id.default_sorting)
+            }
+        } else {
+            return when (sorting) {
+                GoConstants.DEFAULT_SORTING -> menu.findItem(R.id.default_sorting)
+                GoConstants.ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
+                GoConstants.DESCENDING_SORTING -> menu.findItem(R.id.descending_sorting)
+                else -> menu.findItem(R.id.default_sorting)
+            }
+        }
     }
 
     @JvmStatic
