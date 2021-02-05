@@ -151,7 +151,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
         mAllMusicFragmentBinding.searchToolbar.run {
 
-            inflateMenu(R.menu.menu_search)
+            inflateMenu(R.menu.menu_music_search)
 
             overflowIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_sort)
 
@@ -161,7 +161,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
             menu.run {
 
-                mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, this).apply {
+                mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, this, true).apply {
                     setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
                 }
 
@@ -264,7 +264,10 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
         mAllMusicFragmentBinding.searchToolbar.setOnMenuItemClickListener {
 
-            if (it.itemId == R.id.default_sorting || it.itemId == R.id.ascending_sorting || it.itemId == R.id.descending_sorting) {
+            if (it.itemId == R.id.default_sorting
+                    || it.itemId == R.id.ascending_sorting
+                    || it.itemId == R.id.descending_sorting
+                    || it.itemId == R.id.date_added_sorting) {
 
                 mSorting = it.order
 
@@ -284,7 +287,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                     )
                 )
 
-                mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, menu).apply {
+                mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, menu, true).apply {
                     setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
                 }
 
