@@ -30,6 +30,7 @@
     <string name="sorting_pref_default">Default</string>
     <string name="sorting_pref_track">By track no. &#8595;</string>
     <string name="sorting_pref_track_inv">By track no. &#8593;</string>
+    <string name="sorting_pref_date_added">By Date Added</string>
     <string name="shuffle_am">Shuffle all songs</string>
     <string name="shuffle_sa">Shuffle selected album</string>
     <string name="queue_add">Add to queue</string>

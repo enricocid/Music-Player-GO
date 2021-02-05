@@ -99,7 +99,8 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                         MediaStore.Audio.AudioColumns.ALBUM, // 6
                         MediaStore.Audio.AudioColumns.ALBUM_ID, // 7
                         pathColumn, // 8
-                        MediaStore.Audio.AudioColumns._ID // 9
+                        MediaStore.Audio.AudioColumns._ID, // 9
+                        MediaStore.MediaColumns.DATE_MODIFIED // 10
                 )
 
                 val selection = "${MediaStore.Audio.AudioColumns.IS_MUSIC} = 1"
@@ -130,6 +131,8 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                             cursor.getColumnIndexOrThrow(pathColumn)
                     val idIndex =
                             cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns._ID)
+                    val dateAddedIndex =
+                            cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATE_MODIFIED)
 
                     while (cursor.moveToNext()) {
 
@@ -159,6 +162,9 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                                         )
                                     }
                                 }
+
+                        val audioDateAdded = cursor.getString(dateAddedIndex)
+
                         // Add the current music to the list
                         mDeviceMusicList.add(
                                 Music(
@@ -173,7 +179,8 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                                         audioFolderName,
                                         audioId,
                                         GoConstants.ARTIST_VIEW,
-                                        0
+                                        0,
+                                        audioDateAdded
                                 )
                         )
                     }
