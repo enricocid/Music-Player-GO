@@ -165,7 +165,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
             menu.run {
 
-                mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, this).apply {
+                mSortMenuItem = ListsHelper.getSelectedSortingForAllMusic(mSorting, this).apply {
                     setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
                 }
 
