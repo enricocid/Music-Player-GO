@@ -14,9 +14,9 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**Aidan Follestad**](https://github.com/afollestad) for the [RecyclerView's swipe implementation](https://github.com/afollestad/recyclical/blob/master/swipe/src/main/java/com/afollestad/recyclical/swipe/SwipeItemTouchListener.kt#L120) found in details fragment and queue/loved songs dialogs
 
-- [**vtkhatri**](https://github.com/vtkhatri) for the original [date added sorting] implementation(https://github.com/enricocid/Music-Player-GO/commit/fe8077b1c067a7722f2605a0b89afe7e6805311d)
+- [**vtkhatri**](https://github.com/vtkhatri) for the original [date added sorting](https://github.com/enricocid/Music-Player-GO/commit/fe8077b1c067a7722f2605a0b89afe7e6805311d) implementation
 
-- [**Arianna Masciolini**](https://github.com/harisont) for the [original precise volume control implementation](https://github.com/enricocid/Music-Player-GO/commits?author=harisont)
+- [**Arianna Masciolini**](https://github.com/harisont) for the [original precise volume control](https://github.com/enricocid/Music-Player-GO/commits?author=harisont) implementation
 
 - [**Steven Schoen**](https://github.com/DSteve595) for the search function [fixes](https://github.com/enricocid/Music-Player-GO/commit/1c27ff3421dbf7820608237dc60a974955efb022) and quick [support](https://github.com/reddit/IndicatorFastScroll/issues/30)
 
