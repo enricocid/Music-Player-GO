@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:title=""
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="collapseActionView|always"
+        tools:ignore="AlwaysShowAction" />
+
+    <group android:id="@+id/sorting">
+
+        <item
+            android:id="@+id/default_sorting"
+            android:orderInCategory="0"
+            android:title="@string/sorting_pref_default"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/ascending_sorting"
+            android:orderInCategory="1"
+            android:title="@string/sorting_pref_ascending"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/descending_sorting"
+            android:orderInCategory="2"
+            android:title="@string/sorting_pref_descending"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/date_added_sorting"
+            android:orderInCategory="6"
+            android:title="@string/sorting_pref_date_added"
+            app:showAsAction="never" />
+    </group>
+</menu>
