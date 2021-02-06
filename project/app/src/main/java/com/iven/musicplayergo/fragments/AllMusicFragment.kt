@@ -48,7 +48,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
     private var mSorting = goPreferences.allMusicSorting
 
     private var sIsFastScroller = false
-    private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != GoConstants.DEFAULT_SORTING
+    private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != GoConstants.DEFAULT_SORTING && mSorting != GoConstants.DATE_ADDED_SORTING && mSorting != GoConstants.DATE_ADDED_SORTING_INV
 
     private lateinit var mUIControlInterface: UIControlInterface
 
@@ -98,10 +98,14 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 withItem<Music, SongsViewHolder>(R.layout.music_item) {
                     onBind(::SongsViewHolder) { _, item ->
                         // GenericViewHolder is `this` here
-                        duration.text = item.duration.toFormattedDuration(
+
+                        val formattedDuration = item.duration.toFormattedDuration(
                             isAlbum = false,
                             isSeekBar = false
                         )
+
+                        duration.text = getString(R.string.duration_date_added, formattedDuration, item.dateAdded.toFormattedDate())
+
                         title.text = if (goPreferences.songsVisualization != GoConstants.TITLE) {
                             item.displayName.toFilenameWithoutExtension()
                         } else {
@@ -161,7 +165,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
             menu.run {
 
-                mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, this, true).apply {
+                mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, this).apply {
                     setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
                 }
 
@@ -265,9 +269,10 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
         mAllMusicFragmentBinding.searchToolbar.setOnMenuItemClickListener {
 
             if (it.itemId == R.id.default_sorting
-                    || it.itemId == R.id.ascending_sorting
-                    || it.itemId == R.id.descending_sorting
-                    || it.itemId == R.id.date_added_sorting) {
+                || it.itemId == R.id.ascending_sorting
+                || it.itemId == R.id.descending_sorting
+                || it.itemId == R.id.date_added_sorting
+                || it.itemId == R.id.date_added_sorting_inv) {
 
                 mSorting = it.order
 
@@ -287,7 +292,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                     )
                 )
 
-                mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, menu, true).apply {
+                mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, menu).apply {
                     setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
                 }
 

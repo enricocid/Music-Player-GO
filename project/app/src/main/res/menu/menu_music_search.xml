@@ -36,5 +36,11 @@
             android:orderInCategory="6"
             android:title="@string/sorting_pref_date_added"
             app:showAsAction="never" />
+
+        <item
+            android:id="@+id/date_added_sorting_inv"
+            android:orderInCategory="7"
+            android:title="@string/sorting_pref_date_added_inv"
+            app:showAsAction="never" />
     </group>
 </menu>

@@ -98,22 +98,14 @@ object ListsHelper {
         return toTrans
     }
 
-    fun getSelectedSorting(sorting: Int, menu: Menu, isAllMusic: Boolean): MenuItem {
-        if (isAllMusic) {
-            return when (sorting) {
-                GoConstants.DEFAULT_SORTING -> menu.findItem(R.id.default_sorting)
-                GoConstants.ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
-                GoConstants.DESCENDING_SORTING -> menu.findItem(R.id.descending_sorting)
-                GoConstants.DATE_ADDED_SORTING -> menu.findItem(R.id.date_added_sorting)
-                else -> menu.findItem(R.id.default_sorting)
-            }
-        } else {
-            return when (sorting) {
-                GoConstants.DEFAULT_SORTING -> menu.findItem(R.id.default_sorting)
-                GoConstants.ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
-                GoConstants.DESCENDING_SORTING -> menu.findItem(R.id.descending_sorting)
-                else -> menu.findItem(R.id.default_sorting)
-            }
+    fun getSelectedSorting(sorting: Int, menu: Menu): MenuItem {
+        return when (sorting) {
+            GoConstants.DEFAULT_SORTING -> menu.findItem(R.id.default_sorting)
+            GoConstants.ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
+            GoConstants.DESCENDING_SORTING -> menu.findItem(R.id.descending_sorting)
+            GoConstants.DATE_ADDED_SORTING -> menu.findItem(R.id.date_added_sorting)
+            GoConstants.DATE_ADDED_SORTING_INV -> menu.findItem(R.id.date_added_sorting_inv)
+            else -> menu.findItem(R.id.default_sorting)
         }
     }
 
@@ -155,6 +147,12 @@ object ListsHelper {
                 list?.sortBy { it.dateAdded }
                 list?.asReversed()
             }
+
+            GoConstants.DATE_ADDED_SORTING_INV -> {
+                list?.sortBy { it.dateAdded }
+                list
+            }
+
             else -> list
         }
     }
@@ -165,14 +163,16 @@ object ListsHelper {
         GoConstants.TRACK_SORTING_INVERTED -> GoConstants.ASCENDING_SORTING
         GoConstants.ASCENDING_SORTING -> GoConstants.DESCENDING_SORTING
         GoConstants.DESCENDING_SORTING -> GoConstants.DATE_ADDED_SORTING
+        GoConstants.DATE_ADDED_SORTING -> GoConstants.DATE_ADDED_SORTING_INV
         else -> GoConstants.TRACK_SORTING
     }
 
     @JvmStatic
-    fun getSongsDisplayNameSorting(currentSorting: Int) = if (currentSorting == GoConstants.ASCENDING_SORTING) {
-        GoConstants.DESCENDING_SORTING
-    } else {
-        GoConstants.ASCENDING_SORTING
+    fun getSongsDisplayNameSorting(currentSorting: Int) = when (currentSorting) {
+        GoConstants.ASCENDING_SORTING -> GoConstants.DESCENDING_SORTING
+        GoConstants.DESCENDING_SORTING -> GoConstants.DATE_ADDED_SORTING
+        GoConstants.DATE_ADDED_SORTING -> GoConstants.DATE_ADDED_SORTING_INV
+        else -> GoConstants.ASCENDING_SORTING
     }
 
     @JvmStatic

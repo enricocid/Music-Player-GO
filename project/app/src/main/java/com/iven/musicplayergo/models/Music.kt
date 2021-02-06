@@ -16,5 +16,5 @@ data class Music(
     val id: Long?,
     val launchedBy: String,
     val startFrom: Int,
-    val dateAdded: String?,
+    val dateAdded: Int,
 )

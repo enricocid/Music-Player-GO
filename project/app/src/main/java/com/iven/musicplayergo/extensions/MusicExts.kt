@@ -13,6 +13,7 @@ import androidx.core.net.toUri
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
@@ -130,6 +131,17 @@ fun Long.toFormattedDuration(isAlbum: Boolean, isSeekBar: Boolean) = try {
 } catch (e: Exception) {
     e.printStackTrace()
     ""
+}
+
+fun Int.toFormattedDate(): String {
+    return try {
+        val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        val netDate = Date(this.toLong() * 1000)
+        sdf.format(netDate)
+    } catch (e: Exception) {
+        e.printStackTrace()
+        ""
+    }
 }
 
 fun Int.toFormattedTrack() = try {

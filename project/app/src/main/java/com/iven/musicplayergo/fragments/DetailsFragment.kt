@@ -561,6 +561,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     R.id.descending_sorting -> applySortingToMusic(GoConstants.DESCENDING_SORTING)
                     R.id.track_sorting -> applySortingToMusic(GoConstants.TRACK_SORTING)
                     R.id.track_sorting_inv -> applySortingToMusic(GoConstants.TRACK_SORTING_INVERTED)
+                    R.id.date_added_sorting -> applySortingToMusic(GoConstants.DATE_ADDED_SORTING)
+                    R.id.date_added_sorting_inv -> applySortingToMusic(GoConstants.DATE_ADDED_SORTING_INV)
                 }
                 return@setOnMenuItemClickListener true
             }

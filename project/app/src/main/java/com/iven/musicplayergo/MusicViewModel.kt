@@ -13,6 +13,7 @@ import com.iven.musicplayergo.models.Music
 import kotlinx.coroutines.*
 import java.io.File
 
+
 class MusicViewModel(application: Application) : AndroidViewModel(application) {
 
     /**
@@ -132,7 +133,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                     val idIndex =
                             cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns._ID)
                     val dateAddedIndex =
-                            cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATE_MODIFIED)
+                            cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DATE_MODIFIED)
 
                     while (cursor.moveToNext()) {
 
@@ -147,6 +148,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                         val audioAlbum = cursor.getString(albumIndex)
                         val albumId = cursor.getLong(albumIdIndex)
                         val audioRelativePath = cursor.getString(relativePathIndex)
+                        val audioDateAdded = cursor.getInt(dateAddedIndex)
 
                         val audioFolderName =
                                 if (VersioningHelper.isQ()) {
@@ -162,8 +164,6 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                                         )
                                     }
                                 }
-
-                        val audioDateAdded = cursor.getString(dateAddedIndex)
 
                         // Add the current music to the list
                         mDeviceMusicList.add(

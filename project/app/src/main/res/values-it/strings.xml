@@ -78,6 +78,8 @@
     <string name="sorting_pref_default">Predefinito</string>
     <string name="sorting_pref_track">Per n° traccia ↓</string>
     <string name="sorting_pref_track_inv">Per n° traccia ↑</string>
+    <string name="sorting_pref_date_added">Data più recente</string>
+    <string name="sorting_pref_date_added_inv">Data meno recente</string>
     <string name="precise_volume_pref_title">Controllo preciso del volume</string>
     <string name="precise_volume_pref_summary_on">Disabilita controllo preciso del volume</string>
     <string name="precise_volume_pref_summary_off">Abilita controllo preciso del volume</string>

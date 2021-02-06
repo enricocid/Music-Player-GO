@@ -150,7 +150,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
             menu.run {
 
-                mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, this, false).apply {
+                mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, this).apply {
                     setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
                 }
 
@@ -351,7 +351,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                     )
                 )
 
-                mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, menu, false).apply {
+                mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, menu).apply {
                     setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
                 }
 
