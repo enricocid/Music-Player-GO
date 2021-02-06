@@ -14,8 +14,7 @@
         android:layout_gravity="center"
         android:clickable="false"
         android:indeterminate="true"
-        app:indicatorColor="@array/loadingProgressColors"
-        app:indeterminateAnimationType="contiguous" />
+        app:indicatorColor="?attr/colorPrimary" />
 
     <LinearLayout
         android:layout_width="match_parent"
