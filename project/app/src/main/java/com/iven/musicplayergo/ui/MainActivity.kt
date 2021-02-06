@@ -320,26 +320,21 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
         if (!music.isNullOrEmpty()) {
 
-            mMainActivityBinding.loadingProgressBar.handleViewVisibility(false)
-
-            synchronized(initViewPager()) {
-                val fragmentsIterator = mActiveFragments.iterator().withIndex()
-                while (fragmentsIterator.hasNext()) {
-                    val fragmentIndex = fragmentsIterator.next().value
-                    val fragment = getFragmentForIndex(fragmentIndex)
-                    if (fragment is MusicContainersListFragment && !mMusicContainersFragments.contains(
-                            fragment
-                        )
-                    ) {
-                        mMusicContainersFragments.add(fragment)
+            mMainActivityBinding.loadingProgressBar.animate().run {
+                duration = 750
+                alpha(0.0F)
+                withStartAction {
+                    mPlayerControlsPanelBinding.playerView.animate().run {
+                        duration = 750
+                        alpha(1.0F)
+                        withStartAction { handleRestore() }
                     }
                 }
-            }
-
-            synchronized(handleRestore()) {
-                mPlayerControlsPanelBinding.playerView.animate().apply {
-                    duration = 500
-                    alpha(1.0F)
+                withEndAction {
+                    mMainActivityBinding.loadingProgressBar.handleViewVisibility(false)
+                    synchronized(initViewPager()) {
+                        initTabLayout()
+                    }
                 }
             }
         } else {
@@ -364,6 +359,16 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mMainActivityBinding.viewPager2.offscreenPageLimit = mActiveFragments.size.minus(1)
         mMainActivityBinding.viewPager2.adapter = pagerAdapter
 
+        if (mFragmentToRestore != 0) {
+            mMainActivityBinding.viewPager2.setCurrentItem(
+                mFragmentToRestore,
+                false
+            )
+        }
+    }
+
+    private fun initTabLayout() {
+
         val resolvedAlphaAccentColor = ThemeHelper.getAlphaAccent(this)
 
         mPlayerControlsPanelBinding.tabLayout.run {
@@ -371,9 +376,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             tabIconTint = ColorStateList.valueOf(resolvedAlphaAccentColor)
 
             TabLayoutMediator(this, mMainActivityBinding.viewPager2) { tab, position ->
-                val fragmentIndex = mActiveFragments[position]
-                tab.setIcon(ThemeHelper.getTabIcon(fragmentIndex))
-                initFragmentAt(fragmentIndex)
+                tab.setIcon(ThemeHelper.getTabIcon(mActiveFragments[position]))
             }.attach()
 
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -392,57 +395,53 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             })
 
             getTabAt(mFragmentToRestore)?.icon?.setTint(
-                ThemeHelper.resolveThemeAccent(this@MainActivity)
+                    ThemeHelper.resolveThemeAccent(this@MainActivity)
             )
-        }
-
-        if (mFragmentToRestore != 0) {
-            mMainActivityBinding.viewPager2.setCurrentItem(
-                mFragmentToRestore,
-                false
-            )
+            mPlayerControlsPanelBinding.tabLayout.animate().run {
+                duration = 750
+                alpha(1.0F)
+            }
         }
     }
 
-    private fun initFragmentAt(fragmentIndex: String) {
-        when (fragmentIndex) {
+    private fun initFragmentAt(position: Int) : Fragment {
+        when (mActiveFragments[position]) {
             GoConstants.ARTISTS_TAB -> if (mArtistsFragment == null) {
-                mArtistsFragment =
-                    MusicContainersListFragment.newInstance(GoConstants.ARTIST_VIEW)
+                mArtistsFragment = MusicContainersListFragment.newInstance(GoConstants.ARTIST_VIEW)
+                mMusicContainersFragments.add(mArtistsFragment!!)
             }
             GoConstants.ALBUM_TAB -> if (mAlbumsFragment == null) {
-                mAlbumsFragment =
-                    MusicContainersListFragment.newInstance(GoConstants.ALBUM_VIEW)
+                mAlbumsFragment = MusicContainersListFragment.newInstance(GoConstants.ALBUM_VIEW)
+                mMusicContainersFragments.add(mAlbumsFragment!!)
             }
             GoConstants.SONGS_TAB -> if (mAllMusicFragment == null) {
-                mAllMusicFragment =
-                    AllMusicFragment.newInstance()
+                mAllMusicFragment = AllMusicFragment.newInstance()
             }
             GoConstants.FOLDERS_TAB -> if (mFoldersFragment == null) {
-                mFoldersFragment =
-                    MusicContainersListFragment.newInstance(GoConstants.FOLDER_VIEW)
+                mFoldersFragment = MusicContainersListFragment.newInstance(GoConstants.FOLDER_VIEW)
+                mMusicContainersFragments.add(mFoldersFragment!!)
             }
             else -> if (mSettingsFragment == null) {
-                mSettingsFragment =
-                    SettingsFragment.newInstance()
+                mSettingsFragment = SettingsFragment.newInstance()
             }
         }
+        return handleOnNavigationItemSelected(position)
     }
 
     private fun handleOnNavigationItemSelected(itemId: Int) = when (itemId) {
-        0 -> getFragmentForIndex(mActiveFragments[0])
-        1 -> getFragmentForIndex(mActiveFragments[1])
-        2 -> getFragmentForIndex(mActiveFragments[2])
-        3 -> getFragmentForIndex(mActiveFragments[3])
-        else -> getFragmentForIndex(mActiveFragments[4])
+        0 -> getFragmentForIndex(0)
+        1 -> getFragmentForIndex(1)
+        2 -> getFragmentForIndex(2)
+        3 -> getFragmentForIndex(3)
+        else -> getFragmentForIndex(4)
     }
 
-    private fun getFragmentForIndex(index: String) = when (index) {
-        GoConstants.ARTISTS_TAB -> mArtistsFragment
-        GoConstants.ALBUM_TAB -> mAlbumsFragment
-        GoConstants.SONGS_TAB -> mAllMusicFragment
-        GoConstants.FOLDERS_TAB -> mFoldersFragment
-        else -> mSettingsFragment
+    private fun getFragmentForIndex(index: Int) = when (mActiveFragments[index]) {
+        GoConstants.ARTISTS_TAB -> mArtistsFragment ?: initFragmentAt(index)
+        GoConstants.ALBUM_TAB -> mAlbumsFragment ?: initFragmentAt(index)
+        GoConstants.SONGS_TAB -> mAllMusicFragment ?: initFragmentAt(index)
+        GoConstants.FOLDERS_TAB -> mFoldersFragment ?: initFragmentAt(index)
+        else -> mSettingsFragment ?: initFragmentAt(index)
     }
 
     private fun closeFragments() {
@@ -1697,8 +1696,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     // ViewPager2 adapter class
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = mActiveFragments.size
-
-        override fun createFragment(position: Int): Fragment =
-            handleOnNavigationItemSelected(position)!!
+        override fun createFragment(position: Int): Fragment = handleOnNavigationItemSelected(position)
     }
 }
