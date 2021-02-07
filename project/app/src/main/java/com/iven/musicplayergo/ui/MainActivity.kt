@@ -198,6 +198,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onSaveInstanceState(outState: Bundle) {
         sAllowCommit = false
+        mFragmentToRestore = mMainActivityBinding.viewPager2.currentItem
         if (mFragmentToRestore != 0) {
             super.onSaveInstanceState(outState)
             outState.putInt(
@@ -854,7 +855,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onAppearanceChanged(isThemeChanged: Boolean) {
-        mFragmentToRestore = mMainActivityBinding.viewPager2.currentItem
         synchronized(saveSongToPref()) {
             if (isThemeChanged) {
                 AppCompatDelegate.setDefaultNightMode(
@@ -863,6 +863,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
                     )
                 )
             } else {
+                mFragmentToRestore = mMainActivityBinding.viewPager2.currentItem
                 ThemeHelper.applyChanges(this, mFragmentToRestore)
             }
         }
