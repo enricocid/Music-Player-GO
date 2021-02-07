@@ -435,8 +435,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     private fun closeFragments() {
         supportFragmentManager.run {
-            goBackFromFragmentNow(sEqFragmentExpanded)
-            goBackFromFragmentNow(sDetailsFragmentExpanded)
+            if (sDetailsFragmentExpanded) {
+                goBackFromFragmentNow(sDetailsFragmentExpanded)
+                removeDatFragment(mDetailsFragment)
+            }
+            if (sEqFragmentExpanded) {
+                goBackFromFragmentNow(sEqFragmentExpanded)
+                removeDatFragment(mEqualizerFragment)
+            }
         }
     }
 
@@ -468,14 +474,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun closeDetailsFragment() {
-        if (!sRevealAnimationRunning) {
-            mDetailsFragment.onHandleBackPressed().apply {
-                sRevealAnimationRunning = true
-                doOnEnd {
-                    supportFragmentManager.removeDatFragment(mDetailsFragment)
-                    sRevealAnimationRunning = false
+        if (goPreferences.isAnimations) {
+            if (!sRevealAnimationRunning) {
+                mDetailsFragment.onHandleBackPressed().apply {
+                    sRevealAnimationRunning = true
+                    doOnEnd {
+                        supportFragmentManager.goBackFromFragmentNow(sEqFragmentExpanded)
+                        sRevealAnimationRunning = false
+                    }
                 }
             }
+        } else {
+            supportFragmentManager.goBackFromFragmentNow(sDetailsFragmentExpanded)
         }
     }
 
@@ -1348,14 +1358,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     private fun closeEqualizerFragment() {
-        if (!sRevealAnimationRunning) {
-            mEqualizerFragment.onHandleBackPressed().run {
-                sRevealAnimationRunning = true
-                doOnEnd {
-                    supportFragmentManager.removeDatFragment(mEqualizerFragment)
-                    sRevealAnimationRunning = false
+        if (goPreferences.isAnimations) {
+            if (!sRevealAnimationRunning) {
+                mEqualizerFragment.onHandleBackPressed().run {
+                    sRevealAnimationRunning = true
+                    doOnEnd {
+                        supportFragmentManager.goBackFromFragmentNow(sEqFragmentExpanded)
+                        sRevealAnimationRunning = false
+                    }
                 }
             }
+        } else {
+            supportFragmentManager.goBackFromFragmentNow(sEqFragmentExpanded)
         }
     }
 

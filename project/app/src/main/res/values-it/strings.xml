@@ -89,6 +89,9 @@
     <string name="headset_pref_title">Inserimento cuffie</string>
     <string name="headset_pref_summary_on">Disabilita gestione inserimento cuffie</string>
     <string name="headset_pref_summary_off">Abilita gestione inserimento cuffie</string>
+    <string name="anim_pref_title">Animazioni</string>
+    <string name="anim_pref_summary_on">Disabilita animazioni</string>
+    <string name="anim_pref_summary_off">Abilita animazioni</string>
     <string name="filter_pref_title">Filtri</string>
     <string name="filter_popup_title">Nascondi</string>
     <string name="playback_pref_title">Velocità riproduzione</string>

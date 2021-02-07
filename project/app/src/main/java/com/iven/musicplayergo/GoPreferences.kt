@@ -43,6 +43,8 @@ class GoPreferences(context: Context) {
     private val prefsFocus = context.getString(R.string.focus_pref)
     private val prefsHeadsetPlug = context.getString(R.string.headset_pref)
 
+    private val prefsAnim = context.getString(R.string.anim_pref)
+
     private val prefsFilter = context.getString(R.string.filter_pref)
 
     private val prefsPlaybackSpeed = context.getString(R.string.playback_speed_pref)
@@ -163,6 +165,10 @@ class GoPreferences(context: Context) {
     var isPlaybackSpeedPersisted
         get() = mPrefs.getBoolean(prefsPlaybackSpeed, false)
         set(value) = mPrefs.edit { putBoolean(prefsPlaybackSpeed, value) }
+
+    var isAnimations
+        get() = mPrefs.getBoolean(prefsAnim, true)
+        set(value) = mPrefs.edit { putBoolean(prefsAnim, value) }
 
     // Retrieve object from the Preferences using Moshi
     private fun <T : Any> putObjectForType(key: String, value: T?, type: Type) {

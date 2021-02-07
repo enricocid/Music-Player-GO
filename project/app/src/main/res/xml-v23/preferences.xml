@@ -88,6 +88,13 @@
             app:summaryOn="@string/headset_pref_summary_on"
             app:title="@string/headset_pref_title" />
 
+        <SwitchPreferenceCompat
+            android:summaryOff="@string/playback_pref_summary_off"
+            app:defaultValue="false"
+            app:key="@string/playback_speed_pref"
+            app:summaryOn="@string/playback_pref_summary_on"
+            app:title="@string/playback_pref_title" />
+
         <ListPreference
             android:defaultValue="0"
             app:dialogTitle="@string/on_list_ended_pref_title"
@@ -136,11 +143,11 @@
             app:useSimpleSummaryProvider="true" />
 
         <SwitchPreferenceCompat
-            android:summaryOff="@string/playback_pref_summary_off"
-            app:defaultValue="false"
-            app:key="@string/playback_speed_pref"
-            app:summaryOn="@string/playback_pref_summary_on"
-            app:title="@string/playback_pref_title" />
+            android:summaryOff="@string/anim_pref_summary_off"
+            app:defaultValue="true"
+            app:key="@string/anim_pref"
+            app:summaryOn="@string/anim_pref_summary_on"
+            app:title="@string/anim_pref_title" />
 
         <Preference
             app:key="@string/filter_pref"

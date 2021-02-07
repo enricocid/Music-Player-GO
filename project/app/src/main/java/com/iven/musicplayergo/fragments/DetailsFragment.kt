@@ -411,12 +411,14 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             }
         }
 
-        view.afterMeasured {
+        if (goPreferences.isAnimations) {
+            view.afterMeasured {
             mArtistDetailsAnimator =
                 mDetailsFragmentBinding.root.createCircularReveal(
                     isErrorFragment = false,
                     show = true
                 )
+            }
         }
     }
 

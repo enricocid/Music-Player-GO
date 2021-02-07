@@ -71,6 +71,7 @@
     <string name="precise_volume_pref">precise_volume_pref</string>
     <string name="focus_pref">focus_pref</string>
     <string name="headset_pref">headsets_pref</string>
+    <string name="anim_pref">anim_pref</string>
     <string name="filter_pref">strings_filter_pref</string>
 
     <!-- Sorting -->

@@ -145,6 +145,11 @@
     <string name="headset_pref_summary_on">Turn off headset plug management</string>
     <string name="headset_pref_summary_off">Turn on headset plug management</string>
 
+    <!-- Preferences - Animations/Circular reveal fragments -->
+    <string name="anim_pref_title">Animations</string>
+    <string name="anim_pref_summary_on">Turn off animations</string>
+    <string name="anim_pref_summary_off">Turn on animations</string>
+
     <!-- Preferences - Filters -->
     <string name="filter_pref_title">Filters</string>
 

@@ -219,12 +219,14 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
         setupToolbar()
 
-        view.afterMeasured {
-            mEqAnimator =
-                mEqFragmentBinding.root.createCircularReveal(
-                    isErrorFragment = false,
-                    show = true
-                )
+        if (goPreferences.isAnimations) {
+            view.afterMeasured {
+                mEqAnimator =
+                        mEqFragmentBinding.root.createCircularReveal(
+                                isErrorFragment = false,
+                                show = true
+                        )
+            }
         }
     }
 
