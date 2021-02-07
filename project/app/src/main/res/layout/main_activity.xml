@@ -8,12 +8,14 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.MainActivity">
 
-    <com.google.android.material.progressindicator.LinearProgressIndicator
+    <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/loading_progress_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/Widget.App.CircularProgressIndicator"
+        android:layout_width="@android:dimen/app_icon_size"
+        android:layout_height="@android:dimen/app_icon_size"
         android:layout_gravity="center"
         android:clickable="false"
+        android:focusable="false"
         android:indeterminate="true"
         app:indicatorColor="?attr/colorPrimary" />
 

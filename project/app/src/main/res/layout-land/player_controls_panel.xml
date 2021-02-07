@@ -21,7 +21,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:alpha="0"
             android:background="@color/windowBackground"
             app:tabGravity="fill"
             app:tabIndicator="@drawable/tab_indicator"

@@ -319,17 +319,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun finishSetup(music: MutableList<Music>?) {
 
         if (!music.isNullOrEmpty()) {
-
-            mMainActivityBinding.loadingProgressBar.animate().run {
+            mPlayerControlsPanelBinding.playerView.animate().run {
                 duration = 750
-                alpha(0.0F)
-                withStartAction {
-                    mPlayerControlsPanelBinding.playerView.animate().run {
-                        duration = 750
-                        alpha(1.0F)
-                        withStartAction { handleRestore() }
-                    }
-                }
+                alpha(1.0F)
+                withStartAction { handleRestore() }
                 withEndAction {
                     mMainActivityBinding.loadingProgressBar.handleViewVisibility(false)
                     synchronized(initViewPager()) {
@@ -397,10 +390,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
             getTabAt(mFragmentToRestore)?.icon?.setTint(
                     ThemeHelper.resolveThemeAccent(this@MainActivity)
             )
-            mPlayerControlsPanelBinding.tabLayout.animate().run {
-                duration = 750
-                alpha(1.0F)
-            }
         }
     }
 

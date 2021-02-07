@@ -102,8 +102,7 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:alpha="0"
+            android:layout_height="wrap_content"
             android:background="@color/windowBackground"
             app:tabGravity="fill"
             app:tabIndicator="@drawable/tab_indicator"
