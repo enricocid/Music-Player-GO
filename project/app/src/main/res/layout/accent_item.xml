@@ -5,7 +5,7 @@
     android:layout_width="@android:dimen/app_icon_size"
     android:layout_height="@android:dimen/app_icon_size"
     android:layout_margin="4dp"
-    android:padding="6dp"
+    android:padding="4dp"
     tools:ignore="ContentDescription"
     tools:viewBindingIgnore="true">
 
