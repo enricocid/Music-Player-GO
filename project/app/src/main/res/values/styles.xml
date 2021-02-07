@@ -16,10 +16,6 @@
         <item name="android:scrollbars">none</item>
     </style>
 
-    <style name="Widget.App.CircularProgressIndicator" parent="Widget.MaterialComponents.CircularProgressIndicator">
-        <item name="trackThickness">20dp</item>
-    </style>
-
     <style name="DialogsStyle" parent="Theme.MaterialComponents.DayNight.Dialog">
         <item name="colorBackgroundFloating">@color/dialogsBackground</item>
         <item name="android:windowTitleStyle">@style/DialogsStyle.Title</item>

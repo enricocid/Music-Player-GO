@@ -198,7 +198,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
     override fun onSaveInstanceState(outState: Bundle) {
         sAllowCommit = false
-        mFragmentToRestore = mMainActivityBinding.viewPager2.currentItem
         if (mFragmentToRestore != 0) {
             super.onSaveInstanceState(outState)
             outState.putInt(
@@ -320,15 +319,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     private fun finishSetup(music: MutableList<Music>?) {
 
         if (!music.isNullOrEmpty()) {
-            mPlayerControlsPanelBinding.playerView.animate().run {
-                duration = 750
-                alpha(1.0F)
-                withStartAction { handleRestore() }
-                withEndAction {
-                    mMainActivityBinding.loadingProgressBar.handleViewVisibility(false)
-                    synchronized(initViewPager()) {
-                        initTabLayout()
-                    }
+
+            mMainActivityBinding.loadingProgressBar.handleViewVisibility(false)
+
+            initViewPager()
+            synchronized(handleRestore()) {
+                mPlayerControlsPanelBinding.playerView.animate().apply {
+                    duration = 500
+                    alpha(1.0F)
+                    withEndAction { mMainActivityBinding.loadingProgressBar.handleViewVisibility(false) }
                 }
             }
         } else {
@@ -353,12 +352,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         mMainActivityBinding.viewPager2.offscreenPageLimit = mActiveFragments.size.minus(1)
         mMainActivityBinding.viewPager2.adapter = pagerAdapter
 
-        if (mFragmentToRestore != 0) {
-            mMainActivityBinding.viewPager2.setCurrentItem(
-                mFragmentToRestore,
-                false
-            )
-        }
+        initTabLayout()
     }
 
     private fun initTabLayout() {
@@ -390,6 +384,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
 
             getTabAt(mFragmentToRestore)?.icon?.setTint(
                     ThemeHelper.resolveThemeAccent(this@MainActivity)
+            )
+        }
+
+        if (mFragmentToRestore != 0) {
+            mMainActivityBinding.viewPager2.setCurrentItem(
+                    mFragmentToRestore,
+                    false
             )
         }
     }
