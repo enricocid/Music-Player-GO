@@ -349,7 +349,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     onBind(::GenericViewHolder) { _, item ->
 
                         val displayedTitle =
-                            if (sShowDisplayName) {
+                            if (sShowDisplayName || sLaunchedByFolderView) {
                                 item.displayName?.toFilenameWithoutExtension()
                             } else {
                                 getString(
@@ -361,10 +361,17 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                         // GenericViewHolder is `this` here
                         title.text = displayedTitle
-                        subtitle.text = item.duration.toFormattedDuration(
-                            isAlbum = false,
-                            isSeekBar = false
+
+                        val duration = item.duration.toFormattedDuration(
+                                isAlbum = false,
+                                isSeekBar = false
                         )
+
+                        subtitle.text = if (sLaunchedByFolderView) {
+                            getString(R.string.duration_date_added, duration, item.artist)
+                        } else {
+                            duration
+                        }
                     }
 
                     onClick {
@@ -431,7 +438,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private fun setSongsDataSource(musicList: List<Music>?, isApplySorting: Boolean) {
 
         val songs = if (isApplySorting) {
-            ListsHelper.getSortedMusicList(mSongsSorting, musicList?.toMutableList())
+            if (sLaunchedByFolderView) {
+                ListsHelper.getSortedMusicListForFolder(mSongsSorting, musicList?.toMutableList())
+            } else {
+                ListsHelper.getSortedMusicList(mSongsSorting, musicList?.toMutableList())
+            }
         } else {
             musicList
         }
@@ -501,23 +512,32 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
             val menuToInflate = when {
                 sLaunchedByArtistView -> R.menu.menu_artist_details
-                sLaunchedByFolderView -> R.menu.menu_album_details
+                sLaunchedByFolderView -> R.menu.menu_folder_details
                 else -> R.menu.menu_album_details
             }
 
             inflateMenu(menuToInflate)
 
             menu.run {
-                if (sLaunchedByArtistView) {
-                    findItem(R.id.action_shuffle_am).isEnabled = mSelectedArtistAlbums?.size!! >= 2
-                    findItem(R.id.action_shuffle_sa).isEnabled = mSelectedAlbum?.music?.size!! >= 2
-                } else {
-                    findItem(R.id.action_shuffle_am).isEnabled = mSongsList?.size!! >= 2
-                    findItem(R.id.action_shuffle_sa).isEnabled = false
-                    findItem(R.id.track_sorting).isEnabled = !sShowDisplayName
-                    findItem(R.id.track_sorting_inv).isEnabled = !sShowDisplayName
-                    findItem(R.id.sorting).isEnabled =
-                            mSongsList?.size!! >= 2
+                when {
+                    sLaunchedByArtistView -> {
+                        findItem(R.id.action_shuffle_am).isEnabled = mSelectedArtistAlbums?.size!! >= 2
+                        findItem(R.id.action_shuffle_sa).isEnabled = mSelectedAlbum?.music?.size!! >= 2
+                    }
+                    sLaunchedByFolderView -> {
+                        findItem(R.id.action_shuffle_am).isEnabled = mSongsList?.size!! >= 2
+                        findItem(R.id.action_shuffle_sa).isEnabled = false
+                        findItem(R.id.sorting).isEnabled =
+                                mSongsList?.size!! >= 2
+                    }
+                    else -> {
+                        findItem(R.id.action_shuffle_am).isEnabled = mSongsList?.size!! >= 2
+                        findItem(R.id.action_shuffle_sa).isEnabled = false
+                        findItem(R.id.track_sorting).isEnabled = !sShowDisplayName
+                        findItem(R.id.track_sorting_inv).isEnabled = !sShowDisplayName
+                        findItem(R.id.sorting).isEnabled =
+                                mSongsList?.size!! >= 2
+                    }
                 }
             }
 
@@ -565,6 +585,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     R.id.track_sorting_inv -> applySortingToMusic(GoConstants.TRACK_SORTING_INVERTED)
                     R.id.date_added_sorting -> applySortingToMusic(GoConstants.DATE_ADDED_SORTING)
                     R.id.date_added_sorting_inv -> applySortingToMusic(GoConstants.DATE_ADDED_SORTING_INV)
+                    R.id.artist_sorting -> applySortingToMusic(GoConstants.ARTIST_SORTING)
+                    R.id.artist_sorting_inv-> applySortingToMusic(GoConstants.ARTIST_SORTING_INV)
                 }
                 return@setOnMenuItemClickListener true
             }

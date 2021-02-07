@@ -169,6 +169,48 @@ object ListsHelper {
     }
 
     @JvmStatic
+    fun getSortedMusicListForFolder(
+            id: Int,
+            list: MutableList<Music>?
+    ) : MutableList<Music>? {
+
+        return when (id) {
+
+            GoConstants.ASCENDING_SORTING -> {
+                list?.sortBy { it.displayName }
+                list
+            }
+
+            GoConstants.DESCENDING_SORTING -> {
+                list?.sortBy { it.displayName }
+                list?.asReversed()
+            }
+
+            GoConstants.DATE_ADDED_SORTING -> {
+                list?.sortBy { it.dateAdded }
+                list?.asReversed()
+            }
+
+            GoConstants.DATE_ADDED_SORTING_INV -> {
+                list?.sortBy { it.dateAdded }
+                list
+            }
+
+            GoConstants.ARTIST_SORTING -> {
+                list?.sortBy { it.artist }
+                list
+            }
+
+            GoConstants.ARTIST_SORTING_INV -> {
+                list?.sortBy { it.artist }
+                list?.asReversed()
+            }
+
+            else -> list
+        }
+    }
+
+    @JvmStatic
     fun getSongsSorting(currentSorting: Int) = when (currentSorting) {
         GoConstants.TRACK_SORTING -> GoConstants.TRACK_SORTING_INVERTED
         GoConstants.TRACK_SORTING_INVERTED -> GoConstants.ASCENDING_SORTING
