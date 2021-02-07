@@ -81,6 +81,8 @@
                 android:layout_weight="1"
                 android:clickable="true"
                 android:focusable="true"
+                android:progressBackgroundTintMode="src_in"
+                android:progressBackgroundTint="?attr/colorPrimary"
                 android:splitTrack="false" />
 
             <TextView
