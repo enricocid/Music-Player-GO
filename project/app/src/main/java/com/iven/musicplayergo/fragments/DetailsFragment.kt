@@ -368,7 +368,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         )
 
                         subtitle.text = if (sLaunchedByFolderView) {
-                            getString(R.string.duration_date_added, duration, item.artist)
+                            getString(R.string.duration_artist_date_added, duration, item.artist, item.dateAdded.toFormattedDate())
                         } else {
                             duration
                         }
