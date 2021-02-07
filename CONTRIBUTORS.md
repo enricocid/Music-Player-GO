@@ -26,6 +26,8 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**Ricardo**](https://github.com/RickyM7) for [multiple reports](https://github.com/enricocid/Music-Player-GO/issues/220), other suggestions and testing
 
+- [**TheOtherDoctor**](https://github.com/TheOtherDoctor) for multiple reports/suggestions
+
 - [**Mathieu Aubin**](https://github.com/mathieu-aubin) for the readme's [GIF optimization](https://github.com/mathieu-aubin/tempgif)
 
 - [**svgrepo.com**](https://www.svgrepo.com/) for the [compact disc](https://www.svgrepo.com/svg/181020/compact-disc-music) icon, opportunely modified (background color).
