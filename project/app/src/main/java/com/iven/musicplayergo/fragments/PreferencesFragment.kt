@@ -141,7 +141,10 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 mUIControlInterface.onAppearanceChanged(false)
             }
             getString(R.string.focus_pref) -> mUIControlInterface.onHandleFocusPref()
-            getString(R.string.covers_pref) -> mUIControlInterface.onHandleNotificationUpdate(false)
+            getString(R.string.covers_pref) -> {
+                mUIControlInterface.onHandleCoverOptionsUpdate()
+                mUIControlInterface.onHandleNotificationUpdate(false)
+            }
             getString(R.string.fast_seeking_actions_pref) -> mUIControlInterface.onHandleNotificationUpdate(
                 true
             )

@@ -1234,6 +1234,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
         }
     }
 
+    override fun onHandleCoverOptionsUpdate() {
+        mAlbumsFragment?.onUpdateCoverOption()
+    }
+
     override fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean) {
         if (isMediaPlayerHolder) {
             mMediaPlayerHolder.onHandleNotificationUpdate(isAdditionalActionsChanged)

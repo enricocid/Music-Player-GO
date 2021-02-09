@@ -37,7 +37,7 @@ import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
-import com.iven.musicplayergo.ui.AlbumsViewHolder
+import com.iven.musicplayergo.ui.DetailsAlbumsViewHolder
 import com.iven.musicplayergo.ui.GenericViewHolder
 import com.iven.musicplayergo.ui.UIControlInterface
 import kotlinx.coroutines.*
@@ -99,7 +99,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private val mLoadCoverIoDispatcher = Dispatchers.IO + mLoadCoverJob + mLoadCoverHandler
     private val mLoadCoverIoScope = CoroutineScope(mLoadCoverIoDispatcher)
 
-    private var sIsCovers = false
+    private val sIsCovers get() = goPreferences.isCovers
     private lateinit var mImageLoader: ImageLoader
     private var mAlbumArt: Bitmap? = null
 
@@ -141,7 +141,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     override fun onDestroy() {
         super.onDestroy()
-        if (sIsCovers) {
+        if (sLaunchedByArtistView && sIsCovers) {
             mLoadCoverJob.cancel()
         }
     }
@@ -267,7 +267,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private fun setupViews(view: View) {
 
         if (sLaunchedByArtistView) {
-            sIsCovers = goPreferences.isCovers
             if (sIsCovers) {
                 mImageLoader = ImageLoader.Builder(requireActivity())
                         .bitmapPoolingEnabled(false)
@@ -636,9 +635,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                 mAlbumsRecyclerViewLayoutManager = layoutManager as LinearLayoutManager
 
-                withItem<Album, AlbumsViewHolder>(R.layout.album_item) {
+                withItem<Album, DetailsAlbumsViewHolder>(R.layout.album_item) {
 
-                    onBind(::AlbumsViewHolder) { _, item ->
+                    onBind(::DetailsAlbumsViewHolder) { _, item ->
                         // AlbumsViewHolder is `this` here
 
                         val cardView = itemView as MaterialCardView
@@ -658,15 +657,15 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         }
 
                         if (sIsCovers) {
-                            val request = ImageRequest.Builder(context)
+                            val request = ImageRequest.Builder(requireActivity())
                                         .data(item.music?.get(0)?.albumId?.getCoverFromURI())
                                         .target(
                                                 onSuccess = { result ->
                                                     // Handle the successful result.
-                                                    imageView.load(result)
+                                                    albumCover.load(result)
                                                 },
                                                 onError = {
-                                                    imageView.load(mAlbumArt)
+                                                    albumCover.load(mAlbumArt)
                                                 }
                                         )
                                         .build()
@@ -676,7 +675,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                                         mImageLoader.enqueue(request)
                                     }
                                 }
-                            }
+                        }
                     }
 
                     onClick { index ->

@@ -38,6 +38,7 @@ interface UIControlInterface {
     fun onDenyPermission()
     fun onHandleFocusPref()
     fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean)
+    fun onHandleCoverOptionsUpdate()
     fun onGetEqualizer(): Triple<Equalizer?, BassBoost?, Virtualizer?>
     fun onEnableEqualizer(isEnabled: Boolean)
     fun onSaveEqualizerSettings(selectedPreset: Int, bassBoost: Short, virtualizer: Short)

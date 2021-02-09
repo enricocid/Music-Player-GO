@@ -1,16 +1,21 @@
 package com.iven.musicplayergo.fragments
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.ImageLoader
+import coil.load
+import coil.request.ImageRequest
 import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
@@ -18,18 +23,17 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentMusicContainerListBinding
-import com.iven.musicplayergo.extensions.afterMeasured
-import com.iven.musicplayergo.extensions.getFastScrollerItem
-import com.iven.musicplayergo.extensions.handleViewVisibility
-import com.iven.musicplayergo.extensions.setTitleColor
+import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.ui.ContainersAlbumViewHolder
 import com.iven.musicplayergo.ui.GenericViewHolder
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerView
+import kotlinx.coroutines.*
 
 /**
  * A simple [Fragment] subclass.
@@ -55,8 +59,27 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     private lateinit var mSortMenuItem: MenuItem
     private var mSorting = GoConstants.DESCENDING_SORTING
 
+    private val sLaunchedByAlbumView get() = mLaunchedBy == GoConstants.ALBUM_VIEW
+
     private var sIsFastScroller = false
     private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != GoConstants.DEFAULT_SORTING
+
+    /**
+     * This is the job for all coroutines started by this ViewModel.
+     * Cancelling this job will cancel all coroutines started by this ViewModel.
+     */
+    private val mLoadCoverJob = SupervisorJob()
+
+    private val mLoadCoverHandler = CoroutineExceptionHandler { _, exception ->
+        exception.printStackTrace()
+    }
+
+    private val mLoadCoverIoDispatcher = Dispatchers.IO + mLoadCoverJob + mLoadCoverHandler
+    private val mLoadCoverIoScope = CoroutineScope(mLoadCoverIoDispatcher)
+
+    private val sIsCovers get() = goPreferences.isCovers
+    private lateinit var mImageLoader: ImageLoader
+    private var mAlbumArt: Bitmap? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -71,6 +94,13 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
             mUIControlInterface = activity as UIControlInterface
         } catch (e: ClassCastException) {
             e.printStackTrace()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (sLaunchedByAlbumView && sIsCovers) {
+            mLoadCoverJob.cancel()
         }
     }
 
@@ -96,6 +126,15 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     }
 
     private fun finishSetup() {
+
+        if (sLaunchedByAlbumView) {
+            mImageLoader = ImageLoader.Builder(requireActivity())
+                    .bitmapPoolingEnabled(false)
+                    .crossfade(true)
+                    .build()
+            mAlbumArt = ContextCompat.getDrawable(requireActivity(), R.drawable.album_art)?.toBitmap()
+        }
+
         mMusicContainerListBinding.artistsFoldersRv.run {
 
             // setup{} is an extension method on RecyclerView
@@ -104,30 +143,60 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                 // item is a `val` in `this` here
                 withDataSource(mDataSource)
 
-                withItem<String, GenericViewHolder>(R.layout.generic_item) {
+                if (sLaunchedByAlbumView) {
+                    withItem<String, ContainersAlbumViewHolder>(R.layout.containers_album_item) {
+                        onBind(::ContainersAlbumViewHolder) { _, item ->
+                            // ContainersAlbumViewHolder is `this` here
 
-                    onBind(::GenericViewHolder) { _, item ->
-                        // GenericViewHolder is `this` here
-                        title.text = item
-                        subtitle.text = getItemsSubtitle(item)
-                    }
+                            if (sIsCovers) {
+                                val request = ImageRequest.Builder(requireActivity())
+                                        .data(mMusicViewModel.deviceMusicByAlbum?.get(item)?.get(0)?.albumId?.getCoverFromURI())
+                                        .target(
+                                                onSuccess = { result ->
+                                                    // Handle the successful result.
+                                                    albumCover.load(result)
+                                                },
+                                                onError = {
+                                                    albumCover.load(mAlbumArt)
+                                                }
+                                        )
+                                        .build()
 
-                    onClick {
-                        if (::mUIControlInterface.isInitialized) {
-                            mUIControlInterface.onArtistOrFolderSelected(
-                                item,
-                                mLaunchedBy
-                            )
+                                mLoadCoverIoScope.launch {
+                                    withContext(mLoadCoverIoDispatcher) {
+                                        mImageLoader.enqueue(request)
+                                    }
+                                }
+                            } else {
+                                albumCover.load(mAlbumArt)
+                            }
+
+                            title.text = item
+                            subtitle.text = getItemsSubtitle(item)
+                        }
+
+                        onClick {
+                            respondToTouch(false, item, null)
+                        }
+
+                        onLongClick { index ->
+                            respondToTouch(true, item, findViewHolderForAdapterPosition(index)?.itemView)
                         }
                     }
+                } else {
+                    withItem<String, GenericViewHolder>(R.layout.generic_item) {
+                        onBind(::GenericViewHolder) { _, item ->
+                            // GenericViewHolder is `this` here
+                            title.text = item
+                            subtitle.text = getItemsSubtitle(item)
+                        }
 
-                    onLongClick { index ->
-                        if (::mUIControlInterface.isInitialized) {
-                            DialogHelper.showPopupForHide(
-                                requireActivity(),
-                                findViewHolderForAdapterPosition(index)?.itemView,
-                                item
-                            )
+                        onClick {
+                            respondToTouch(false, item, null)
+                        }
+
+                        onLongClick { index ->
+                            respondToTouch(true, item, findViewHolderForAdapterPosition(index)?.itemView)
                         }
                     }
                 }
@@ -170,6 +239,25 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                     }
                 }
                 setMenuOnItemClickListener(this)
+            }
+        }
+    }
+
+    private fun respondToTouch(isLongClick: Boolean, item: String, itemView: View?) {
+        if (isLongClick) {
+            if (::mUIControlInterface.isInitialized) {
+                DialogHelper.showPopupForHide(
+                        requireActivity(),
+                        itemView,
+                        item
+                )
+            }
+        } else {
+            if (::mUIControlInterface.isInitialized) {
+                mUIControlInterface.onArtistOrFolderSelected(
+                        item,
+                        mLaunchedBy
+                )
             }
         }
     }
@@ -237,6 +325,10 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
         if (!selectedList.isNullOrEmpty()) {
             mDataSource.set(selectedList)
         }
+    }
+
+    fun onUpdateCoverOption() {
+        mMusicContainerListBinding.artistsFoldersRv.adapter?.notifyDataSetChanged()
     }
 
     fun onListFiltered(stringToFilter: String) = if (mList == null) {
