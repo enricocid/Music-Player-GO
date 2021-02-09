@@ -14,8 +14,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:contentDescription="@string/covers_pref_title"
-        android:scaleType="centerCrop"
-        android:src="@drawable/album_art" />
+        android:scaleType="centerCrop" />
 
     <LinearLayout
         android:layout_width="0dp"
