@@ -130,7 +130,6 @@ object ThemeHelper {
         Pair(R.color.orange_300, R.style.BaseTheme_Orange300),
         Pair(R.color.deep_orange_300, R.style.BaseTheme_DeepOrange300),
         Pair(R.color.brown_300, R.style.BaseTheme_Brown300),
-        Pair(R.color.grey_300, R.style.BaseTheme_Grey300),
         Pair(R.color.blue_grey_300, R.style.BaseTheme_BlueGrey300)
     )
 

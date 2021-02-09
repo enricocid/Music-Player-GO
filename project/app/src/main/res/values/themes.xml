@@ -181,11 +181,6 @@
         <item name="colorSecondary">@color/brown_300</item>
     </style>
 
-    <style name="BaseTheme.Grey300" parent="BaseTheme">
-        <item name="colorPrimary">@color/grey_300</item>
-        <item name="colorSecondary">@color/grey_300</item>
-    </style>
-
     <style name="BaseTheme.BlueGrey300" parent="BaseTheme">
         <item name="colorPrimary">@color/blue_grey_300</item>
         <item name="colorSecondary">@color/blue_grey_300</item>
