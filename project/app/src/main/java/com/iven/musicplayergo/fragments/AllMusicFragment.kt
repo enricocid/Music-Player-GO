@@ -48,7 +48,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
     private var mSorting = goPreferences.allMusicSorting
 
     private var sIsFastScroller = false
-    private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != GoConstants.DEFAULT_SORTING && mSorting != GoConstants.DATE_ADDED_SORTING && mSorting != GoConstants.DATE_ADDED_SORTING_INV
+    private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != GoConstants.DEFAULT_SORTING && mSorting != GoConstants.DATE_ADDED_SORTING && mSorting != GoConstants.DATE_ADDED_SORTING_INV && mSorting != GoConstants.ARTIST_SORTING && mSorting != GoConstants.ARTIST_SORTING_INV && mSorting != GoConstants.ALBUM_SORTING && mSorting != GoConstants.ALBUM_SORTING_INV
 
     private lateinit var mUIControlInterface: UIControlInterface
 
@@ -73,7 +73,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 deviceMusic.observe(viewLifecycleOwner, { returnedMusic ->
                     if (!returnedMusic.isNullOrEmpty()) {
                         mAllMusic =
-                            ListsHelper.getSortedMusicList(
+                            ListsHelper.getSortedMusicListForAllMusic(
                                 mSorting,
                                 mMusicViewModel.deviceMusicFiltered
                             )
@@ -272,12 +272,16 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 || it.itemId == R.id.ascending_sorting
                 || it.itemId == R.id.descending_sorting
                 || it.itemId == R.id.date_added_sorting
-                || it.itemId == R.id.date_added_sorting_inv) {
+                || it.itemId == R.id.date_added_sorting_inv
+                || it.itemId == R.id.artist_sorting
+                || it.itemId == R.id.artist_sorting_inv
+                || it.itemId == R.id.album_sorting
+                || it.itemId == R.id.album_sorting_inv) {
 
                 mSorting = it.order
 
                 mAllMusic =
-                    ListsHelper.getSortedMusicList(mSorting, mMusicViewModel.deviceMusicFiltered)
+                    ListsHelper.getSortedMusicListForAllMusic(mSorting, mMusicViewModel.deviceMusicFiltered)
 
                 handleIndicatorFastScrollerViewVisibility()
 
@@ -292,7 +296,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                     )
                 )
 
-                mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, menu).apply {
+                mSortMenuItem = ListsHelper.getSelectedSortingForAllMusic(mSorting, menu).apply {
                     setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
                 }
 

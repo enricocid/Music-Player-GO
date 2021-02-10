@@ -116,6 +116,10 @@ object ListsHelper {
             GoConstants.DESCENDING_SORTING -> menu.findItem(R.id.descending_sorting)
             GoConstants.DATE_ADDED_SORTING -> menu.findItem(R.id.date_added_sorting)
             GoConstants.DATE_ADDED_SORTING_INV -> menu.findItem(R.id.date_added_sorting_inv)
+            GoConstants.ARTIST_SORTING -> menu.findItem(R.id.artist_sorting)
+            GoConstants.ARTIST_SORTING_INV -> menu.findItem(R.id.artist_sorting_inv)
+            GoConstants.ALBUM_SORTING -> menu.findItem(R.id.album_sorting)
+            GoConstants.ALBUM_SORTING_INV -> menu.findItem(R.id.album_sorting_inv)
             else -> menu.findItem(R.id.default_sorting)
         }
     }
@@ -154,6 +158,44 @@ object ListsHelper {
                 list?.asReversed()
             }
 
+            else -> list
+        }
+    }
+
+    @JvmStatic
+    fun getSortedMusicListForAllMusic(
+            id: Int,
+            list: MutableList<Music>?
+    ) : MutableList<Music>? {
+
+        fun getSortByForTitle(song: Music) = if (goPreferences.songsVisualization != GoConstants.TITLE) {
+            song.displayName
+        } else {
+            song.title
+        }
+
+        return when (id) {
+
+            GoConstants.ASCENDING_SORTING -> {
+                list?.sortBy { getSortByForTitle(it) }
+                list
+            }
+
+            GoConstants.DESCENDING_SORTING -> {
+                list?.sortBy { getSortByForTitle(it) }
+                list?.asReversed()
+            }
+
+            GoConstants.TRACK_SORTING -> {
+                list?.sortBy { it.track }
+                list
+            }
+
+            GoConstants.TRACK_SORTING_INVERTED -> {
+                list?.sortBy { it.track }
+                list?.asReversed()
+            }
+
             GoConstants.DATE_ADDED_SORTING -> {
                 list?.sortBy { it.dateAdded }
                 list?.asReversed()
@@ -161,6 +203,26 @@ object ListsHelper {
 
             GoConstants.DATE_ADDED_SORTING_INV -> {
                 list?.sortBy { it.dateAdded }
+                list
+            }
+
+            GoConstants.ARTIST_SORTING -> {
+                list?.sortBy { it.artist }
+                list?.asReversed()
+            }
+
+            GoConstants.ARTIST_SORTING_INV -> {
+                list?.sortBy { it.artist }
+                list
+            }
+
+            GoConstants.ALBUM_SORTING -> {
+                list?.sortBy { it.album }
+                list?.asReversed()
+            }
+
+            GoConstants.ALBUM_SORTING_INV -> {
+                list?.sortBy { it.album }
                 list
             }
 

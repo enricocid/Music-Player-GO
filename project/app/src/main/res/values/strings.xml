@@ -34,6 +34,8 @@
     <string name="sorting_pref_date_added_inv">Oldest date first</string>
     <string name="sorting_pref_artist">By artist A-Z</string>
     <string name="sorting_pref_artist_inv">By artist Z-A</string>
+    <string name="sorting_pref_album">By album A-Z</string>
+    <string name="sorting_pref_album_inv">By album Z-A</string>
     <string name="shuffle_am">Shuffle all songs</string>
     <string name="shuffle_sa">Shuffle selected album</string>
     <string name="queue_add">Add to queue</string>

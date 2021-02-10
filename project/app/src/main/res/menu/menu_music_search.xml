@@ -42,5 +42,29 @@
             android:orderInCategory="7"
             android:title="@string/sorting_pref_date_added_inv"
             app:showAsAction="never" />
+
+        <item
+            android:id="@+id/artist_sorting"
+            android:orderInCategory="8"
+            android:title="@string/sorting_pref_artist"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/artist_sorting_inv"
+            android:orderInCategory="9"
+            android:title="@string/sorting_pref_artist_inv"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/album_sorting"
+            android:orderInCategory="10"
+            android:title="@string/sorting_pref_album"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/album_sorting_inv"
+            android:orderInCategory="11"
+            android:title="@string/sorting_pref_album_inv"
+            app:showAsAction="never" />
     </group>
 </menu>

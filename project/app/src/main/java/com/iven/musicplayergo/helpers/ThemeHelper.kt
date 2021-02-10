@@ -71,8 +71,6 @@ object ThemeHelper {
             GoConstants.ASCENDING_SORTING -> R.drawable.ic_sort_alphabetical_descending
             GoConstants.DESCENDING_SORTING -> R.drawable.ic_sort_alphabetical_ascending
             GoConstants.TRACK_SORTING -> R.drawable.ic_sort_numeric_descending
-            GoConstants.DATE_ADDED_SORTING -> R.drawable.ic_sort_calendar_descending
-            GoConstants.DATE_ADDED_SORTING_INV -> R.drawable.ic_sort_calendar_ascending
             else -> R.drawable.ic_sort_numeric_ascending
         }
     }
@@ -81,8 +79,6 @@ object ThemeHelper {
         return when (sort) {
             GoConstants.SHUFFLE_SORTING -> R.drawable.ic_shuffle
             GoConstants.ASCENDING_SORTING -> R.drawable.ic_sort_alphabetical_descending
-            GoConstants.DATE_ADDED_SORTING -> R.drawable.ic_sort_calendar_descending
-            GoConstants.DATE_ADDED_SORTING_INV -> R.drawable.ic_sort_calendar_ascending
             else -> R.drawable.ic_sort_alphabetical_ascending
         }
     }
