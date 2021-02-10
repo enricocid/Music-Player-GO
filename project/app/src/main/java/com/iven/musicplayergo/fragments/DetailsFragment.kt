@@ -6,10 +6,9 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.os.bundleOf
@@ -78,6 +77,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private val sLaunchedByArtistView get() = mLaunchedBy == GoConstants.ARTIST_VIEW
     private val sLaunchedByFolderView get() = mLaunchedBy == GoConstants.FOLDER_VIEW
+    private val sLaunchedByAlbumView get() = mLaunchedBy == GoConstants.ALBUM_VIEW
 
     private val sShowDisplayName get() = goPreferences.songsVisualization != GoConstants.TITLE
 
@@ -141,7 +141,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     override fun onDestroy() {
         super.onDestroy()
-        if (sLaunchedByArtistView && sIsCovers) {
+        if (sIsCovers) {
             mLoadCoverJob.cancel()
         }
     }
@@ -155,17 +155,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 )
         }
         return mArtistDetailsAnimator
-    }
-
-    // https://stackoverflow.com/a/38241603
-    private fun getTitleTextView(toolbar: Toolbar) = try {
-        val toolbarClass = Toolbar::class.java
-        val titleTextViewField = toolbarClass.getDeclaredField("mTitleTextView")
-        titleTextViewField.isAccessible = true
-        titleTextViewField.get(toolbar) as TextView
-    } catch (e: Exception) {
-        e.printStackTrace()
-        null
     }
 
     private fun getSongSource(): List<Music>? {
@@ -227,14 +216,15 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 }
             )
 
-            title = mSelectedArtistOrFolder
-
-            // Make toolbar's title scrollable
-            getTitleTextView(this)?.let { tV ->
-                tV.isSelected = true
-                tV.setHorizontallyScrolling(true)
-                tV.ellipsize = TextUtils.TruncateAt.MARQUEE
-                tV.marqueeRepeatLimit = -1
+            if (sLaunchedByArtistView || sLaunchedByFolderView) {
+                title = mSelectedArtistOrFolder
+                // Make toolbar's title scrollable
+                this.getTitleTextView()?.let { tV ->
+                    tV.isSelected = true
+                    tV.setHorizontallyScrolling(true)
+                    tV.ellipsize = TextUtils.TruncateAt.MARQUEE
+                    tV.marqueeRepeatLimit = -1
+                }
             }
 
             setupToolbarSpecs()
@@ -249,7 +239,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private fun setupToolbarSpecs() {
         mDetailsFragmentBinding.detailsToolbar.run {
-            elevation = if (!sLaunchedByArtistView) {
+
+            elevation = if (sLaunchedByFolderView) {
                 resources.getDimensionPixelSize(R.dimen.search_bar_elevation).toFloat()
             } else {
                 0F
@@ -266,15 +257,17 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private fun setupViews(view: View) {
 
-        if (sLaunchedByArtistView) {
-            if (sIsCovers) {
-                mImageLoader = ImageLoader.Builder(requireActivity())
-                        .bitmapPoolingEnabled(false)
-                        .crossfade(true)
-                        .build()
-                mAlbumArt = ContextCompat.getDrawable(requireActivity(), R.drawable.album_art)?.toBitmap()
-            }
+        if (sIsCovers && sLaunchedByArtistView || sIsCovers && sLaunchedByAlbumView) {
+            mImageLoader = ImageLoader.Builder(requireActivity())
+                    .bitmapPoolingEnabled(false)
+                    .crossfade(true)
+                    .build()
+            mAlbumArt = ContextCompat.getDrawable(requireActivity(), R.drawable.album_art)?.toBitmap()
+        }
 
+        if (sLaunchedByArtistView) {
+
+            mDetailsFragmentBinding.albumViewCoverContainer.handleViewVisibility(false)
             if (mSongsSorting == GoConstants.SHUFFLE_SORTING) {
                 sWasShuffling = Pair(true, mShuffledAlbum)
             }
@@ -307,13 +300,36 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
         } else {
 
-            mDetailsFragmentBinding.albumsRv.handleViewVisibility(false)
-            mDetailsFragmentBinding.selectedAlbumContainer.handleViewVisibility(false)
+            mDetailsFragmentBinding.run {
 
-            mDetailsFragmentBinding.detailsToolbar.subtitle = getString(
-                R.string.folder_info,
-                mSongsList?.size
-            )
+                albumsRv.handleViewVisibility(false)
+                selectedAlbumContainer.handleViewVisibility(false)
+
+                if (sLaunchedByFolderView) {
+
+                    albumViewCoverContainer.handleViewVisibility(false)
+                    mDetailsFragmentBinding.detailsToolbar.subtitle = getString(
+                            R.string.folder_info,
+                            mSongsList?.size
+                    )
+                } else {
+
+                    val firstSong = mSongsList?.get(0)
+                    selectedAlbumViewTitle.text = mSelectedArtistOrFolder
+                    selectedAlbumViewTitle.isSelected = true
+                    selectedAlbumViewArtistSize.text = getString(
+                            R.string.album_artist_size,
+                            firstSong?.artist,
+                            getString(
+                                R.string.folder_info,
+                                mSongsList?.size
+                            )).parseAsHtml()
+
+                    if (sIsCovers) {
+                        loadCoverIntoTarget(firstSong, albumViewArt)
+                    }
+                }
+            }
 
             val searchView =
                 mDetailsFragmentBinding.detailsToolbar.menu.findItem(R.id.action_search).actionView as SearchView
@@ -657,24 +673,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         }
 
                         if (sIsCovers) {
-                            val request = ImageRequest.Builder(requireActivity())
-                                        .data(item.music?.get(0)?.albumId?.getCoverFromURI())
-                                        .target(
-                                                onSuccess = { result ->
-                                                    // Handle the successful result.
-                                                    albumCover.load(result)
-                                                },
-                                                onError = {
-                                                    albumCover.load(mAlbumArt)
-                                                }
-                                        )
-                                        .build()
-
-                                mLoadCoverIoScope.launch {
-                                    withContext(mLoadCoverIoDispatcher) {
-                                        mImageLoader.enqueue(request)
-                                    }
-                                }
+                            loadCoverIntoTarget(item.music?.get(0), albumCover)
                         }
                     }
 
@@ -716,6 +715,27 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     mSelectedAlbumPosition,
                     0
                 )
+            }
+        }
+    }
+
+    private fun loadCoverIntoTarget(song: Music?, target: ImageView) {
+        val request = ImageRequest.Builder(requireActivity())
+                .data(song?.albumId?.getCoverFromURI())
+                .target(
+                        onSuccess = { result ->
+                            // Handle the successful result.
+                            target.load(result)
+                        },
+                        onError = {
+                            target.load(mAlbumArt)
+                        }
+                )
+                .build()
+
+        mLoadCoverIoScope.launch {
+            withContext(mLoadCoverIoDispatcher) {
+                mImageLoader.enqueue(request)
             }
         }
     }

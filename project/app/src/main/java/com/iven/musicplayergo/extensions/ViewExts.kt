@@ -13,7 +13,9 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.view.*
+import android.widget.TextView
 import androidx.appcompat.view.menu.MenuBuilder
+import androidx.appcompat.widget.Toolbar
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -41,6 +43,17 @@ inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
             }
         }
     })
+}
+
+// https://stackoverflow.com/a/38241603
+fun Toolbar.getTitleTextView() = try {
+    val toolbarClass = Toolbar::class.java
+    val titleTextViewField = toolbarClass.getDeclaredField("mTitleTextView")
+    titleTextViewField.isAccessible = true
+    titleTextViewField.get(this) as TextView
+} catch (e: Exception) {
+    e.printStackTrace()
+    null
 }
 
 @SuppressLint("DefaultLocale")
