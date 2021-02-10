@@ -277,8 +277,6 @@ object ListsHelper {
         GoConstants.TRACK_SORTING -> GoConstants.TRACK_SORTING_INVERTED
         GoConstants.TRACK_SORTING_INVERTED -> GoConstants.ASCENDING_SORTING
         GoConstants.ASCENDING_SORTING -> GoConstants.DESCENDING_SORTING
-        GoConstants.DESCENDING_SORTING -> GoConstants.DATE_ADDED_SORTING
-        GoConstants.DATE_ADDED_SORTING -> GoConstants.DATE_ADDED_SORTING_INV
         else -> GoConstants.TRACK_SORTING
     }
 
