@@ -22,6 +22,7 @@ import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.UIControlInterface
 import de.halfbit.edgetoedge.Edge
@@ -206,7 +207,7 @@ object DialogHelper {
                 lovedSongs?.remove(songToDelete)
                 goPreferences.lovedSongs = lovedSongs
                 lovedSongsAdapter.swapSongs(lovedSongs)
-                (activity as UIControlInterface).onLovedSongAdded(songToDelete, false)
+                (activity as MediaControlInterface).onLovedSongAdded(songToDelete, false)
             }
 
             negativeButton(R.string.no) {
@@ -270,8 +271,7 @@ object DialogHelper {
             song: Music?,
             launchedBy: String
     ) {
-        val uiControlInterface = activity as UIControlInterface
-
+        val mediaControlInterface = activity as MediaControlInterface
         itemView?.let { view ->
 
             PopupMenu(activity, view).apply {
@@ -290,10 +290,10 @@ object DialogHelper {
                                     0,
                                     launchedBy
                             )
-                            uiControlInterface.onLovedSongAdded(song, true)
-                            uiControlInterface.onLovedSongsUpdate(false)
+                            mediaControlInterface.onLovedSongAdded(song, true)
+                            (activity as UIControlInterface).onLovedSongsUpdate(false)
                         }
-                        else -> uiControlInterface.onAddToQueue(song, launchedBy)
+                        else -> mediaControlInterface.onAddToQueue(song, launchedBy)
                     }
                     return@setOnMenuItemClickListener true
                 }
@@ -332,7 +332,7 @@ object DialogHelper {
                 if (goPreferences.isPlaybackSpeedPersisted) {
                     menu.findItem(getSelectedPlaybackItem(playbackSpeed)).setTitleColor(ThemeHelper.resolveThemeAccent(activity))
                 }
-                (activity as UIControlInterface).onChangePlaybackSpeed(playbackSpeed)
+                (activity as MediaControlInterface).onChangePlaybackSpeed(playbackSpeed)
                 return@setOnMenuItemClickListener true
             }
             show()
@@ -353,14 +353,14 @@ object DialogHelper {
     }
 
     @JvmStatic
-    fun addToLovedSongs(song: Music?, launchedBy: String, uiControlInterface: UIControlInterface) {
+    fun addToLovedSongs(activity: Activity, song: Music?, launchedBy: String) {
         ListsHelper.addToLovedSongs(
                 song,
                 0,
                 launchedBy
         )
-        uiControlInterface.onLovedSongAdded(song, true)
-        uiControlInterface.onLovedSongsUpdate(false)
+        (activity as MediaControlInterface).onLovedSongAdded(song, true)
+        (activity as UIControlInterface).onLovedSongsUpdate(false)
     }
 
     @JvmStatic

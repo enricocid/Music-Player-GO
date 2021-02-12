@@ -18,8 +18,10 @@
         android:indeterminateTintMode="src_in" />
 
     <LinearLayout
+        android:id="@+id/main_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:alpha="0"
         android:orientation="vertical">
 
         <FrameLayout

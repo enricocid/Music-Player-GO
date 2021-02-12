@@ -178,7 +178,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             )
             sNotificationForeground = true
         } else {
-            mMusicNotificationManager.run {
+            with(mMusicNotificationManager) {
                 updateNotificationContent()
                 updatePlayPauseAction()
                 updateRepeatIcon()
@@ -292,13 +292,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                         putLong(METADATA_KEY_TRACK_NUMBER, songs.indexOf(song).toLong())
                     }
                     updateCover(this, song)
+
+                    ContextCompat.getDrawable(playerService, R.drawable.ic_music_note)
+                            ?.toBitmap()?.let { bmp ->
+                                putBitmap(METADATA_KEY_DISPLAY_ICON, bmp)
+                            }
                 }
             }
-
-            ContextCompat.getDrawable(playerService, R.drawable.ic_music_note)
-                    ?.toBitmap()?.let { bmp ->
-                        putBitmap(METADATA_KEY_DISPLAY_ICON, bmp)
-                    }
 
             playerService.getMediaSession().setMetadata(build())
         }
@@ -441,7 +441,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         sNotificationForeground = false
         state = GoConstants.PAUSED
         updatePlaybackStatus(true)
-        mMusicNotificationManager.run {
+        with(mMusicNotificationManager) {
             updatePlayPauseAction()
             updateNotification()
         }

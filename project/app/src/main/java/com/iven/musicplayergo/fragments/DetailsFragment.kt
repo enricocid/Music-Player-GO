@@ -36,6 +36,7 @@ import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.DetailsAlbumsViewHolder
 import com.iven.musicplayergo.ui.GenericViewHolder
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -70,6 +71,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private var mSelectedAlbumPosition = -1
 
     private lateinit var mUIControlInterface: UIControlInterface
+    private lateinit var mMediaControlInterface: MediaControlInterface
 
     private var mSelectedAlbum: Album? = null
 
@@ -103,6 +105,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private lateinit var mImageLoader: ImageLoader
     private var mAlbumArt: Bitmap? = null
 
+    private var sOpenNewDetailsFragment = false
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -134,6 +138,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         // the callback interface. If not, it throws an exception
         try {
             mUIControlInterface = activity as UIControlInterface
+            mMediaControlInterface = activity as MediaControlInterface
         } catch (e: ClassCastException) {
             e.printStackTrace()
         }
@@ -288,7 +293,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
             mDetailsFragmentBinding.queueAddButton.setOnClickListener {
                 val queuedMusicSorted = ListsHelper.getSortedMusicList(mSongsSorting, mSelectedAlbum?.music)
-                mUIControlInterface.onAddAlbumToQueue(
+                mMediaControlInterface.onAddAlbumToQueue(
                     queuedMusicSorted,
                     Pair(true, queuedMusicSorted?.get(0)),
                     isLovedSongs = false,
@@ -400,7 +405,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             mSongsList
                         }
 
-                        mUIControlInterface.onSongSelected(
+                        mMediaControlInterface.onSongSelected(
                             item,
                             selectedPlaylist?.toMutableList(),
                             mLaunchedBy
@@ -422,12 +427,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                                                   direction: Int ->
                 val song = mSelectedAlbum?.music?.get(viewHolder.adapterPosition)
                 if (direction == ItemTouchHelper.RIGHT) {
-                    mUIControlInterface.onAddToQueue(
+                    mMediaControlInterface.onAddToQueue(
                             song,
                             mLaunchedBy
                     )
                 } else {
-                    DialogHelper.addToLovedSongs(song, mLaunchedBy, mUIControlInterface)
+                    DialogHelper.addToLovedSongs(requireActivity(), song, mLaunchedBy)
                 }
                 adapter?.notifyDataSetChanged()
             }
@@ -533,7 +538,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
             inflateMenu(menuToInflate)
 
-            menu.run {
+            with (menu) {
                 when {
                     sLaunchedByArtistView -> {
                         findItem(R.id.action_shuffle_am).isEnabled = mSelectedArtistAlbums?.size!! >= 2
@@ -559,7 +564,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             setOnMenuItemClickListener {
 
                 when (it.itemId) {
-                    R.id.action_add_queue -> mUIControlInterface.onAddAlbumToQueue(
+                    R.id.action_add_queue -> mMediaControlInterface.onAddAlbumToQueue(
                         mSongsList?.toMutableList(),
                         Pair(true, mSongsList?.get(0)),
                         isLovedSongs = false,
@@ -569,7 +574,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     )
                     R.id.action_shuffle_am -> {
                         onDisableShuffle(isShuffleMode = false, isMusicListOutputRequired = false)
-                        mUIControlInterface.onShuffleSongs(
+                        mMediaControlInterface.onShuffleSongs(
                                 null,
                                 null,
                                 mSongsList?.toMutableList(),
@@ -579,7 +584,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     }
                     R.id.action_shuffle_sa -> {
                         sWasShuffling = Pair(true, mSelectedAlbum?.title)
-                        val music = mUIControlInterface.onShuffleSongs(
+                        val music = mMediaControlInterface.onShuffleSongs(
                             mSelectedAlbum?.title,
                             mSelectedArtistAlbums,
                             mSelectedAlbum?.music,
@@ -698,7 +703,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             }
                         } else {
                             if (sPlayFirstSong) {
-                                mUIControlInterface.onSongSelected(
+                                mMediaControlInterface.onSongSelected(
                                     ListsHelper.getSortedMusicList(mSongsSorting, item.music?.toMutableList())?.get(0),
                                     item.music,
                                     mLaunchedBy
@@ -716,6 +721,14 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     0
                 )
             }
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        if (sOpenNewDetailsFragment) {
+            mUIControlInterface.onOpenNewDetailsFragment()
+            sOpenNewDetailsFragment = false
         }
     }
 
@@ -740,8 +753,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
     }
 
-    fun hasToUpdate(selectedArtistOrFolder: String?) =
-        selectedArtistOrFolder != mSelectedArtistOrFolder
+    fun hasToUpdate(selectedArtistOrFolder: String?) : Boolean {
+       sOpenNewDetailsFragment = selectedArtistOrFolder != mSelectedArtistOrFolder
+       return sOpenNewDetailsFragment
+    }
 
     fun tryToSnapToAlbumPosition(snapPosition: Int) {
         sPlayFirstSong = false

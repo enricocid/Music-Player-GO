@@ -26,6 +26,7 @@ import com.iven.musicplayergo.adapters.ActiveTabsAdapter
 import com.iven.musicplayergo.adapters.FiltersAdapter
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 
 
@@ -36,9 +37,10 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     private lateinit var mActiveFragmentsDialog: MaterialDialog
     private lateinit var mFiltersDialog: MaterialDialog
 
-    private lateinit var mUIControlInterface: UIControlInterface
-
     private var mThemePreference: Preference? = null
+
+    private lateinit var mUIControlInterface: UIControlInterface
+    private lateinit var mMediaControlInterface: MediaControlInterface
 
     override fun setDivider(divider: Drawable?) {
         super.setDivider(null)
@@ -70,6 +72,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         // the callback interface. If not, it throws an exception
         try {
             mUIControlInterface = activity as UIControlInterface
+            mMediaControlInterface = activity as MediaControlInterface
         } catch (e: ClassCastException) {
             e.printStackTrace()
         }
@@ -130,8 +133,8 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            getString(R.string.precise_volume_pref) -> mUIControlInterface.onPreciseVolumeToggled()
-            getString(R.string.playback_speed_pref) -> mUIControlInterface.onPlaybackSpeedToggled()
+            getString(R.string.precise_volume_pref) -> mMediaControlInterface.onPreciseVolumeToggled()
+            getString(R.string.playback_speed_pref) -> mMediaControlInterface.onPlaybackSpeedToggled()
             getString(R.string.theme_pref) -> {
                 mThemePreference?.icon = ContextCompat.getDrawable(requireActivity(), ThemeHelper.resolveThemeIcon(requireActivity()))
                 mUIControlInterface.onAppearanceChanged(true)
@@ -140,12 +143,12 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 mAccentsDialog.dismiss()
                 mUIControlInterface.onAppearanceChanged(false)
             }
-            getString(R.string.focus_pref) -> mUIControlInterface.onHandleFocusPref()
+            getString(R.string.focus_pref) -> mMediaControlInterface.onHandleFocusPref()
             getString(R.string.covers_pref) -> {
-                mUIControlInterface.onHandleCoverOptionsUpdate()
-                mUIControlInterface.onHandleNotificationUpdate(false)
+                mMediaControlInterface.onHandleCoverOptionsUpdate()
+                mMediaControlInterface.onHandleNotificationUpdate(false)
             }
-            getString(R.string.fast_seeking_actions_pref) -> mUIControlInterface.onHandleNotificationUpdate(
+            getString(R.string.fast_seeking_actions_pref) -> mMediaControlInterface.onHandleNotificationUpdate(
                 true
             )
             getString(R.string.song_visual_pref) -> mUIControlInterface.onSongVisualizationChanged()

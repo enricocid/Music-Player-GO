@@ -24,6 +24,7 @@ import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.MusicOrgHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.SongsViewHolder
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
@@ -51,6 +52,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
     private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != GoConstants.DEFAULT_SORTING && mSorting != GoConstants.DATE_ADDED_SORTING && mSorting != GoConstants.DATE_ADDED_SORTING_INV && mSorting != GoConstants.ARTIST_SORTING && mSorting != GoConstants.ARTIST_SORTING_INV && mSorting != GoConstants.ALBUM_SORTING && mSorting != GoConstants.ALBUM_SORTING_INV
 
     private lateinit var mUIControlInterface: UIControlInterface
+    private lateinit var mMediaControlInterface: MediaControlInterface
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -58,6 +60,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
         // the callback interface. If not, it throws an exception
         try {
             mUIControlInterface = activity as UIControlInterface
+            mMediaControlInterface = activity as MediaControlInterface
         } catch (e: ClassCastException) {
             e.printStackTrace()
         }
@@ -116,7 +119,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                     }
 
                     onClick {
-                        mUIControlInterface.onSongSelected(
+                        mMediaControlInterface.onSongSelected(
                             item,
                             MusicOrgHelper.getAlbumSongs(
                                 item.artist,
@@ -144,7 +147,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
         mAllMusicFragmentBinding.shuffleFab.text = mAllMusic?.size.toString()
 
         mAllMusicFragmentBinding.shuffleFab.setOnClickListener {
-            mUIControlInterface.onShuffleSongs(
+            mMediaControlInterface.onShuffleSongs(
                     null,
                     null,
                     mAllMusic,
@@ -169,8 +172,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                     setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
                 }
 
-                val searchView = findItem(R.id.action_search).actionView as SearchView
-                searchView.run {
+                with (findItem(R.id.action_search).actionView as SearchView) {
                     setOnQueryTextListener(this@AllMusicFragment)
                     setOnQueryTextFocusChangeListener { _, hasFocus ->
                         if (sIsFastScrollerVisible) {

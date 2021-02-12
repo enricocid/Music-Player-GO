@@ -67,22 +67,20 @@ class QueueAdapter(
                 val duration = findViewById<TextView>(R.id.duration)
                 val subtitle = findViewById<TextView>(R.id.subtitle)
 
-                title.run {
+                val displayedTitle =
+                        if (goPreferences.songsVisualization != GoConstants.TITLE) {
+                            song.displayName?.toFilenameWithoutExtension()
+                        } else {
+                            song.title
+                        }
 
-                    val displayedTitle =
-                            if (goPreferences.songsVisualization != GoConstants.TITLE) {
-                                song.displayName?.toFilenameWithoutExtension()
-                            } else {
-                                song.title
-                            }
-                    text = displayedTitle
+                title.text = displayedTitle
 
-                    when {
-                        mQueueSongs.indexOf(mSelectedSong.first) == adapterPosition && mSelectedSong.second -> setTextColor(
+                when {
+                    mQueueSongs.indexOf(mSelectedSong.first) == adapterPosition && mSelectedSong.second -> title.setTextColor(
                             ThemeHelper.resolveThemeAccent(ctx)
-                        )
-                        else -> setTextColor(mDefaultTextColor)
-                    }
+                    )
+                    else -> title.setTextColor(mDefaultTextColor)
                 }
 
                 duration.text = DialogHelper.computeDurationText(ctx, song)

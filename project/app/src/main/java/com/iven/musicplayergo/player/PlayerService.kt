@@ -125,7 +125,7 @@ class PlayerService : Service() {
             val action = intent?.action
 
             if (action != null) {
-                mediaPlayerHolder.run {
+                with(mediaPlayerHolder) {
                     when (action) {
                         GoConstants.REWIND_ACTION -> fastSeek(false)
                         GoConstants.PREV_ACTION -> instantReset()

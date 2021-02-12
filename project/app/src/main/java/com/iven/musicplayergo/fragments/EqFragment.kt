@@ -26,6 +26,7 @@ import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.createCircularReveal
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.PresetsViewHolder
 import com.iven.musicplayergo.ui.UIControlInterface
 import java.util.*
@@ -42,7 +43,6 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
     private lateinit var mEqualizer: Triple<Equalizer?, BassBoost?, Virtualizer?>
 
     private lateinit var mEqFragmentBinding: FragmentEqualizerBinding
-    private lateinit var mUIControlInterface: UIControlInterface
 
     private lateinit var mEqAnimator: Animator
 
@@ -54,6 +54,9 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
     private val mSliders = mutableMapOf<Slider?, TextView?>()
 
+    private lateinit var mUIControlInterface: UIControlInterface
+    private lateinit var mMediaControlInterface: MediaControlInterface
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -61,6 +64,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
         // the callback interface. If not, it throws an exception
         try {
             mUIControlInterface = activity as UIControlInterface
+            mMediaControlInterface = activity as MediaControlInterface
         } catch (e: ClassCastException) {
             e.printStackTrace()
         }
@@ -81,7 +85,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
         super.onViewCreated(view, savedInstanceState)
 
         if (!::mEqualizer.isInitialized) {
-            mEqualizer = mUIControlInterface.onGetEqualizer()
+            mEqualizer = mMediaControlInterface.onGetEqualizer()
         }
 
         mEqFragmentBinding = FragmentEqualizerBinding.bind(view).apply {
@@ -117,7 +121,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
     }
 
     private fun saveEqSettings() {
-        mUIControlInterface.onSaveEqualizerSettings(
+        mMediaControlInterface.onSaveEqualizerSettings(
             mSelectedPreset,
             mEqFragmentBinding.sliderBass.value.toInt().toShort(),
             mEqFragmentBinding.sliderVirt.value.toInt().toShort()
@@ -246,7 +250,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                 }
                 equalizerSwitchMaterial.setOnCheckedChangeListener { _, isChecked ->
                     Timer().schedule(1000) {
-                        mUIControlInterface.onEnableEqualizer(isChecked)
+                        mMediaControlInterface.onEnableEqualizer(isChecked)
                     }
                 }
             }

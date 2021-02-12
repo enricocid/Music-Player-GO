@@ -23,7 +23,7 @@ class NotificationReceiver(
             val action = intent?.action
 
             if (action != null) {
-                mediaPlayerHolder.run {
+                with(mediaPlayerHolder) {
                     when (action) {
                         GoConstants.PREV_ACTION -> instantReset()
                         GoConstants.PLAY_PAUSE_ACTION -> resumeOrPause()

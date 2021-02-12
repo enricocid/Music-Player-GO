@@ -13,6 +13,7 @@ import com.iven.musicplayergo.extensions.toFilenameWithoutExtension
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.UIControlInterface
 
@@ -77,11 +78,11 @@ class LovedSongsAdapter(
             subtitle.text =
                 activity.getString(R.string.artist_and_album, lovedSong?.artist, lovedSong?.album)
 
-            itemView.run {
+            with(itemView) {
                 setOnClickListener {
                     mediaPlayerHolder.isSongFromLovedSongs =
                         Pair(true, lovedSong?.startFrom!!)
-                    mUiControlInterface.onAddAlbumToQueue(
+                    (activity as MediaControlInterface).onAddAlbumToQueue(
                         mLovedSongs,
                         Pair(false, lovedSong),
                         isLovedSongs = true,

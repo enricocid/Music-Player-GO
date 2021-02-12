@@ -223,9 +223,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                     setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
                 }
 
-                val searchView = findItem(R.id.action_search).actionView as SearchView
-
-                searchView.run {
+                with(findItem(R.id.action_search).actionView as SearchView) {
                     setOnQueryTextListener(this@MusicContainersListFragment)
                     setOnQueryTextFocusChangeListener { _, hasFocus ->
                         if (sIsFastScrollerVisible) {
