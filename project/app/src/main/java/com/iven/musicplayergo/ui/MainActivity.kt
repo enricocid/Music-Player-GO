@@ -1235,6 +1235,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface {
     }
 
     override fun onHandleCoverOptionsUpdate() {
+        if (isMediaPlayerHolder) {
+            mMediaPlayerHolder.updateMediaSessionMetaData(true)
+        }
         mAlbumsFragment?.onUpdateCoverOption()
     }
 

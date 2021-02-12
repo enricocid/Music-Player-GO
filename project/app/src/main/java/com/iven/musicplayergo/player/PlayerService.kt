@@ -1,6 +1,8 @@
 package com.iven.musicplayergo.player
 
+import android.app.PendingIntent
 import android.app.Service
+import android.content.ComponentName
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
@@ -10,6 +12,7 @@ import android.support.v4.media.session.MediaSessionCompat
 import android.view.KeyEvent
 import android.widget.Toast
 import androidx.core.content.getSystemService
+import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.goPreferences
@@ -37,22 +40,47 @@ class PlayerService : Service() {
 
     private val mMediaSessionCallback = object : MediaSessionCompat.Callback() {
 
+        override fun onPlay() {
+            mediaPlayerHolder.resumeOrPause()
+        }
+
+        override fun onPause() {
+            mediaPlayerHolder.resumeOrPause()
+        }
+
+        override fun onSkipToNext() {
+            mediaPlayerHolder.skip(true)
+        }
+
+        override fun onSkipToPrevious() {
+            mediaPlayerHolder.skip(false)
+        }
+
+        override fun onStop() {
+            mediaPlayerHolder.stopPlaybackService(true)
+        }
+
         override fun onSeekTo(pos: Long) {
             mediaPlayerHolder.seekTo(
-                pos.toInt(),
-                updatePlaybackStatus = true,
-                restoreProgressCallBack = false
+                    pos.toInt(),
+                    updatePlaybackStatus = true,
+                    restoreProgressCallBack = false
             )
         }
 
-        override fun onMediaButtonEvent(mediaButtonEvent: Intent?) =
-            handleMediaIntent(mediaButtonEvent)
+        override fun onMediaButtonEvent(mediaButtonEvent: Intent?) = handleMediaIntent(mediaButtonEvent)
     }
 
     private fun configureMediaSession() {
-        mMediaSessionCompat = MediaSessionCompat(this, packageName).apply {
+
+        val mediaButtonIntent = Intent(Intent.ACTION_MEDIA_BUTTON)
+        val mediaButtonReceiverComponentName = ComponentName(applicationContext, MediaPlayerHolder.MediaBtnReceiver::class.java)
+        val mediaButtonReceiverPendingIntent = PendingIntent.getBroadcast(applicationContext, 0, mediaButtonIntent, 0)
+
+        mMediaSessionCompat = MediaSessionCompat(this, packageName, mediaButtonReceiverComponentName, mediaButtonReceiverPendingIntent).apply {
             isActive = true
             setCallback(mMediaSessionCallback)
+            setMediaButtonReceiver(mediaButtonReceiverPendingIntent)
         }
     }
 
@@ -73,9 +101,12 @@ class PlayerService : Service() {
             goPreferences.latestVolume = mediaPlayerHolder.currentVolumeInPercent
 
             if (::mMediaSessionCompat.isInitialized && mMediaSessionCompat.isActive) {
-                mMediaSessionCompat.isActive = false
-                mMediaSessionCompat.setCallback(null)
-                mMediaSessionCompat.release()
+                with(mMediaSessionCompat) {
+                    isActive = false
+                    setCallback(null)
+                    setMediaButtonReceiver(null)
+                    release()
+                }
             }
 
             mediaPlayerHolder.release()
@@ -89,6 +120,31 @@ class PlayerService : Service() {
         and stopped to run for arbitrary periods of time, such as a service
         performing background music playback.*/
         isRunning = true
+
+        try {
+            val action = intent?.action
+
+            if (action != null) {
+                mediaPlayerHolder.run {
+                    when (action) {
+                        GoConstants.REWIND_ACTION -> fastSeek(false)
+                        GoConstants.PREV_ACTION -> instantReset()
+                        GoConstants.PLAY_PAUSE_ACTION -> resumeOrPause()
+                        GoConstants.NEXT_ACTION -> skip(true)
+                        GoConstants.FAST_FORWARD_ACTION -> fastSeek(true)
+                        GoConstants.REPEAT_ACTION -> {
+                            repeat(true)
+                            mediaPlayerInterface.onUpdateRepeatStatus()
+                        }
+                        GoConstants.CLOSE_ACTION -> if (isRunning && isMediaPlayer) {
+                            stopPlaybackService(true)
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         return START_NOT_STICKY
     }
 
@@ -131,7 +187,7 @@ class PlayerService : Service() {
         fun getService() = this@PlayerService
     }
 
-    private fun handleMediaIntent(intent: Intent?): Boolean {
+    fun handleMediaIntent(intent: Intent?): Boolean {
 
         var isSuccess = false
 
@@ -139,6 +195,7 @@ class PlayerService : Service() {
             intent?.let {
                 val event =
                     intent.getParcelableExtra<Parcelable>(Intent.EXTRA_KEY_EVENT) as KeyEvent
+
                 if (event.action == KeyEvent.ACTION_DOWN) {
                     when (event.keyCode) {
                         KeyEvent.KEYCODE_MEDIA_PAUSE, KeyEvent.KEYCODE_MEDIA_PLAY, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, KeyEvent.KEYCODE_HEADSETHOOK -> {
