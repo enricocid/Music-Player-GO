@@ -2,7 +2,9 @@ package com.iven.musicplayergo.player
 
 import android.app.PendingIntent
 import android.app.Service
+import android.content.BroadcastReceiver
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
@@ -74,7 +76,7 @@ class PlayerService : Service() {
     private fun configureMediaSession() {
 
         val mediaButtonIntent = Intent(Intent.ACTION_MEDIA_BUTTON)
-        val mediaButtonReceiverComponentName = ComponentName(applicationContext, MediaPlayerHolder.MediaBtnReceiver::class.java)
+        val mediaButtonReceiverComponentName = ComponentName(applicationContext, MediaBtnReceiver::class.java)
         val mediaButtonReceiverPendingIntent = PendingIntent.getBroadcast(applicationContext, 0, mediaButtonIntent, 0)
 
         mMediaSessionCompat = MediaSessionCompat(this, packageName, mediaButtonReceiverComponentName, mediaButtonReceiverPendingIntent).apply {
@@ -229,5 +231,13 @@ class PlayerService : Service() {
         }
 
         return isSuccess
+    }
+
+    private inner class MediaBtnReceiver: BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (handleMediaIntent(intent) && isOrderedBroadcast) {
+                abortBroadcast()
+            }
+        }
     }
 }

@@ -992,12 +992,4 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             }
         }
     }
-
-    inner class MediaBtnReceiver: BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            if (playerService.handleMediaIntent(intent) && isOrderedBroadcast) {
-                abortBroadcast()
-            }
-        }
-    }
 }
