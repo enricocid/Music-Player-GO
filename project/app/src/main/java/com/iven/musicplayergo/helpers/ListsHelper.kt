@@ -281,11 +281,10 @@ object ListsHelper {
     }
 
     @JvmStatic
-    fun getSongsDisplayNameSorting(currentSorting: Int) = when (currentSorting) {
-        GoConstants.ASCENDING_SORTING -> GoConstants.DESCENDING_SORTING
-        GoConstants.DESCENDING_SORTING -> GoConstants.DATE_ADDED_SORTING
-        GoConstants.DATE_ADDED_SORTING -> GoConstants.DATE_ADDED_SORTING_INV
-        else -> GoConstants.ASCENDING_SORTING
+    fun getSongsDisplayNameSorting(currentSorting: Int) = if (currentSorting == GoConstants.ASCENDING_SORTING) {
+        GoConstants.DESCENDING_SORTING
+    } else {
+        GoConstants.ASCENDING_SORTING
     }
 
     @JvmStatic
