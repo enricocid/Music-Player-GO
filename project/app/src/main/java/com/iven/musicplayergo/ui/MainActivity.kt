@@ -436,13 +436,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private fun closeFragments() {
         with(supportFragmentManager) {
             if (sEqFragmentExpanded) {
-                supportFragmentManager.removeDatFragment(mEqualizerFragment)
+                goBackFromFragmentNow(mEqualizerFragment)
             }
             if (sDetailsFragmentExpanded) {
-                supportFragmentManager.removeDatFragment(mDetailsFragment)
+                goBackFromFragmentNow(mDetailsFragment)
             }
-            goBackFromFragmentNow(sEqFragmentExpanded)
-            goBackFromFragmentNow(sDetailsFragmentExpanded)
         }
     }
 
@@ -479,15 +477,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 mDetailsFragment.onHandleBackPressed().apply {
                     sRevealAnimationRunning = true
                     doOnEnd {
-                        supportFragmentManager.removeDatFragment(mDetailsFragment)
-                        supportFragmentManager.goBackFromFragmentNow(sDetailsFragmentExpanded)
+                        supportFragmentManager.goBackFromFragmentNow(mDetailsFragment)
                         sRevealAnimationRunning = false
                     }
                 }
             }
         } else {
-            supportFragmentManager.removeDatFragment(mDetailsFragment)
-            supportFragmentManager.goBackFromFragmentNow(sDetailsFragmentExpanded)
+            supportFragmentManager.goBackFromFragmentNow(mDetailsFragment)
         }
     }
 
@@ -1372,15 +1368,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 mEqualizerFragment.onHandleBackPressed().run {
                     sRevealAnimationRunning = true
                     doOnEnd {
-                        supportFragmentManager.removeDatFragment(mEqualizerFragment)
-                        supportFragmentManager.goBackFromFragmentNow(sEqFragmentExpanded)
+                        supportFragmentManager.goBackFromFragmentNow(mEqualizerFragment)
                         sRevealAnimationRunning = false
                     }
                 }
             }
         } else {
-            supportFragmentManager.removeDatFragment(mEqualizerFragment)
-            supportFragmentManager.goBackFromFragmentNow(sEqFragmentExpanded)
+            supportFragmentManager.goBackFromFragmentNow(mEqualizerFragment)
         }
     }
 

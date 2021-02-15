@@ -118,20 +118,11 @@ fun FragmentManager.addFragment(fragment: Fragment, tag: String?) {
     }
 }
 
-fun FragmentManager.removeDatFragment(fragment: Fragment) {
-    if (fragment.isSafe()) {
+fun FragmentManager.goBackFromFragmentNow(fragment: Fragment) {
+    if (backStackEntryCount >= 0) {
         commit {
             remove(fragment)
-        }
-    }
-}
-
-fun FragmentManager.goBackFromFragmentNow(isFragmentExpanded: Boolean) {
-    if (isFragmentExpanded && backStackEntryCount >= 0) {
-        commit {
-            runOnCommit {
-                popBackStack()
-            }
+            popBackStack()
         }
     }
 }
@@ -140,8 +131,6 @@ fun FragmentManager.isFragment(fragmentTag: String): Boolean {
     val df = findFragmentByTag(fragmentTag)
     return df != null && df.isVisible && df.isAdded
 }
-
-fun Fragment.isSafe() = !(isDetached || !isAdded || isRemoving || activity == null  || view == null)
 
 fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator {
 
