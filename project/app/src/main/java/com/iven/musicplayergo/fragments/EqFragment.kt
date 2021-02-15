@@ -7,7 +7,9 @@ import android.media.audiofx.BassBoost
 import android.media.audiofx.Equalizer
 import android.media.audiofx.Virtualizer
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -40,9 +42,9 @@ import kotlin.concurrent.schedule
  */
 class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
-    private lateinit var mEqualizer: Triple<Equalizer?, BassBoost?, Virtualizer?>
+    private var _eqFragmentBinding: FragmentEqualizerBinding? = null
 
-    private lateinit var mEqFragmentBinding: FragmentEqualizerBinding
+    private lateinit var mEqualizer: Triple<Equalizer?, BassBoost?, Virtualizer?>
 
     private lateinit var mEqAnimator: Animator
 
@@ -72,13 +74,24 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
     fun onHandleBackPressed(): Animator {
         if (!mEqAnimator.isRunning) {
-            mEqAnimator =
-                mEqFragmentBinding.root.createCircularReveal(
-                    isErrorFragment = false,
-                    show = false
+            _eqFragmentBinding?.root?.run {
+                mEqAnimator = createCircularReveal(
+                        isErrorFragment = false,
+                        show = false
                 )
+            }
         }
         return mEqAnimator
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _eqFragmentBinding = null
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _eqFragmentBinding = FragmentEqualizerBinding.inflate(inflater, container, false)
+        return _eqFragmentBinding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -88,7 +101,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
             mEqualizer = mMediaControlInterface.onGetEqualizer()
         }
 
-        mEqFragmentBinding = FragmentEqualizerBinding.bind(view).apply {
+        _eqFragmentBinding?.run {
             sliderBass.addOnChangeListener { _, value, fromUser ->
                 // Responds to when slider's value is changed
                 if (fromUser) {
@@ -121,16 +134,18 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
     }
 
     private fun saveEqSettings() {
-        mMediaControlInterface.onSaveEqualizerSettings(
-            mSelectedPreset,
-            mEqFragmentBinding.sliderBass.value.toInt().toShort(),
-            mEqFragmentBinding.sliderVirt.value.toInt().toShort()
-        )
+        _eqFragmentBinding?.run {
+            mMediaControlInterface.onSaveEqualizerSettings(
+                    mSelectedPreset,
+                    sliderBass.value.toInt().toShort(),
+                    sliderVirt.value.toInt().toShort()
+            )
+        }
     }
 
     private fun finishSetupEqualizer(view: View) {
 
-        mEqFragmentBinding.run {
+        _eqFragmentBinding?.run {
             mSliders[slider0] = freq0
             mSliders[slider1] = freq1
             mSliders[slider2] = freq2
@@ -189,7 +204,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                 }
             }
 
-            mEqFragmentBinding.presets.run {
+            _eqFragmentBinding?.presets?.run {
                 setup {
                     withDataSource(mDataSource)
                     withItem<String, PresetsViewHolder>(R.layout.eq_preset_item) {
@@ -225,17 +240,18 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
         if (goPreferences.isAnimations) {
             view.afterMeasured {
-                mEqAnimator =
-                        mEqFragmentBinding.root.createCircularReveal(
-                                isErrorFragment = false,
-                                show = true
-                        )
+                _eqFragmentBinding?.root?.run {
+                    mEqAnimator = createCircularReveal(
+                            isErrorFragment = false,
+                            show = true
+                    )
+                }
             }
         }
     }
 
     private fun setupToolbar() {
-        mEqFragmentBinding.eqToolbar.run {
+        _eqFragmentBinding?.eqToolbar?.run {
 
             setNavigationOnClickListener {
                 requireActivity().onBackPressed()
@@ -269,12 +285,14 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                 }
             }
 
-            if (!isPresetChanged) {
-                goPreferences.savedEqualizerSettings?.let { eqSettings ->
-                    mEqFragmentBinding.sliderBass.value = eqSettings.bassBoost.toFloat()
-                }
-                mEqualizer.third?.let { virtualizer ->
-                    mEqFragmentBinding.sliderVirt.value = virtualizer.roundedStrength.toFloat()
+            _eqFragmentBinding?.run {
+                if (!isPresetChanged) {
+                    goPreferences.savedEqualizerSettings?.let { eqSettings ->
+                        sliderBass.value = eqSettings.bassBoost.toFloat()
+                    }
+                    mEqualizer.third?.let { virtualizer ->
+                        sliderVirt.value = virtualizer.roundedStrength.toFloat()
+                    }
                 }
             }
 

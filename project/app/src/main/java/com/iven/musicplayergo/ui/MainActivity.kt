@@ -637,40 +637,40 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 android.R.attr.colorButtonNormal
         )
 
-        mNpExtControlsBinding.run {
+        mNpExtControlsBinding.let { npe ->
 
             if (!goPreferences.isPreciseVolumeEnabled) {
-                npVolumeValue.isEnabled = false
-                npVolumeValue.setTextColor(inactiveColor)
-                npVolumeSeek.run {
+                npe.npVolumeValue.isEnabled = false
+                npe.npVolumeValue.setTextColor(inactiveColor)
+                npe.npVolumeSeek.run {
                     isEnabled = false
                     progressTintList = ColorStateList.valueOf(inactiveColor)
                     thumbTintList = ColorStateList.valueOf(inactiveColor)
                 }
                 ThemeHelper.updateIconTint(
-                        npVolume,
+                        npe.npVolume,
                         inactiveColor
                 )
             }
 
             mMediaPlayerHolder.currentVolumeInPercent.run {
-                npVolume.setImageResource(
+                npe.npVolume.setImageResource(
                         ThemeHelper.getPreciseVolumeIcon(
                                 this
                         )
                 )
-                npVolumeSeek.progress = this
-                npVolumeValue.text = this.toString()
+                npe.npVolumeSeek.progress = this
+                npe.npVolumeValue.text = this.toString()
             }
 
-            npVolumeSeek.setOnSeekBarChangeListener(object :
+            npe.npVolumeSeek.setOnSeekBarChangeListener(object :
                     SeekBar.OnSeekBarChangeListener {
 
                 override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                     if (fromUser) {
                         mMediaPlayerHolder.setPreciseVolume(progress)
-                        npVolumeValue.text = progress.toString()
-                        npVolume.setImageResource(
+                        npe.npVolumeValue.text = progress.toString()
+                        npe.npVolume.setImageResource(
                                 ThemeHelper.getPreciseVolumeIcon(
                                         progress
                                 )
@@ -679,17 +679,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar) {
-                    npVolumeValue.setTextColor(selectedColor)
+                    npe.npVolumeValue.setTextColor(selectedColor)
                     ThemeHelper.updateIconTint(
-                            npVolume,
+                            npe.npVolume,
                             selectedColor
                     )
                 }
 
                 override fun onStopTrackingTouch(seekBar: SeekBar) {
-                    npVolumeValue.setTextColor(defaultValueColor)
+                    npe.npVolumeValue.setTextColor(defaultValueColor)
                     ThemeHelper.updateIconTint(
-                            npVolume,
+                            npe.npVolume,
                             defaultValueColor
                     )
                 }

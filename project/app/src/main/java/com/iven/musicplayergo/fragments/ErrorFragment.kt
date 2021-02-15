@@ -2,7 +2,9 @@ package com.iven.musicplayergo.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -23,7 +25,8 @@ import com.iven.musicplayergo.ui.UIControlInterface
  */
 class ErrorFragment : Fragment(R.layout.fragment_error) {
 
-    private lateinit var mErrorFragmentBinding: FragmentErrorBinding
+    private var _errorFragmentBinding: FragmentErrorBinding? = null
+
     private lateinit var mUIControlInterface: UIControlInterface
 
     private var mErrorString = R.string.perm_rationale
@@ -59,27 +62,35 @@ class ErrorFragment : Fragment(R.layout.fragment_error) {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _errorFragmentBinding = null
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _errorFragmentBinding = FragmentErrorBinding.inflate(inflater, container, false)
+        return _errorFragmentBinding?.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mErrorFragmentBinding = FragmentErrorBinding.bind(view).apply {
-            errorMessage.text = getString(mErrorString)
-            errorIcon.setImageResource(mErrorIcon)
-            root.setOnClickListener { mUIControlInterface.onCloseActivity() }
+        _errorFragmentBinding?.let { _binding ->
+            _binding.errorMessage.text = getString(mErrorString)
+            _binding.errorIcon.setImageResource(mErrorIcon)
+            _binding.root.setOnClickListener { mUIControlInterface.onCloseActivity() }
 
-            errorToolbar.setNavigationOnClickListener {
+            _binding.errorToolbar.setNavigationOnClickListener {
                 mUIControlInterface.onCloseActivity()
             }
 
             if (goPreferences.isAnimations) {
-                root.afterMeasured {
+                _binding.root.afterMeasured {
                     createCircularReveal(isErrorFragment = true, show = true).doOnEnd {
                         if (!VersioningHelper.isOreoMR1()) {
-                            requireActivity().window.run {
-                                val red = ContextCompat.getColor(requireActivity(), R.color.red)
-                                statusBarColor = red
-                                navigationBarColor = red
-                            }
+                            val red = ContextCompat.getColor(requireActivity(), R.color.red)
+                            requireActivity().window.statusBarColor = red
+                            requireActivity().window.navigationBarColor = red
                         }
                     }
                 }

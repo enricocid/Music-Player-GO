@@ -2,7 +2,9 @@ package com.iven.musicplayergo.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.iven.musicplayergo.R
@@ -16,7 +18,8 @@ import com.iven.musicplayergo.ui.UIControlInterface
  */
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
-    private lateinit var mSettingsFragmentBinding: FragmentSettingsBinding
+    private var _fragmentSettingsBinding: FragmentSettingsBinding? = null
+
     private lateinit var mUIControlInterface: UIControlInterface
 
     private var mPreferencesFragment: PreferencesFragment? = null
@@ -32,12 +35,20 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _fragmentSettingsBinding = null
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _fragmentSettingsBinding = FragmentSettingsBinding.inflate(inflater, container, false)
+        return _fragmentSettingsBinding?.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mSettingsFragmentBinding = FragmentSettingsBinding.bind(view)
-
-        mSettingsFragmentBinding.searchToolbar.setNavigationOnClickListener {
+        _fragmentSettingsBinding?.searchToolbar?.setNavigationOnClickListener {
             mUIControlInterface.onCloseActivity()
         }
 

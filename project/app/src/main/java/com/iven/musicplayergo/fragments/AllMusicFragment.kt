@@ -2,9 +2,7 @@ package com.iven.musicplayergo.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -37,7 +35,7 @@ import com.reddit.indicatorfastscroll.FastScrollerView
  */
 class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQueryTextListener {
 
-    private lateinit var mAllMusicFragmentBinding: FragmentAllMusicBinding
+    private var _allMusicFragmentBinding: FragmentAllMusicBinding? = null
 
     // View model
     private lateinit var mMusicViewModel: MusicViewModel
@@ -66,10 +64,18 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _allMusicFragmentBinding = null
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _allMusicFragmentBinding = FragmentAllMusicBinding.inflate(inflater, container, false)
+        return _allMusicFragmentBinding?.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        mAllMusicFragmentBinding = FragmentAllMusicBinding.bind(view)
 
         mMusicViewModel =
             ViewModelProvider(requireActivity()).get(MusicViewModel::class.java).apply {
@@ -90,10 +96,10 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
     }
 
     private fun finishSetup() {
-        mAllMusicFragmentBinding.allMusicRv.run {
+        _allMusicFragmentBinding?.allMusicRv?.let { rv ->
 
             // setup{} is an extension method on RecyclerView
-            setup {
+            rv.setup {
 
                 // item is a `val` in `this` here
                 withDataSource(mDataSource)
@@ -133,7 +139,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                     onLongClick { index ->
                         DialogHelper.showPopupForSongs(
                             requireActivity(),
-                            findViewHolderForAdapterPosition(index)?.itemView,
+                            rv.findViewHolderForAdapterPosition(index)?.itemView,
                             item,
                             GoConstants.ARTIST_VIEW
                         )
@@ -144,49 +150,49 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
         setupIndicatorFastScrollerView()
 
-        mAllMusicFragmentBinding.shuffleFab.text = mAllMusic?.size.toString()
+        _allMusicFragmentBinding?.let { _binding ->
+            _binding.shuffleFab.text = mAllMusic?.size.toString()
 
-        mAllMusicFragmentBinding.shuffleFab.setOnClickListener {
-            mMediaControlInterface.onShuffleSongs(
-                    null,
-                    null,
-                    mAllMusic,
-                    mAllMusic?.size!! <= 1000,
-                    GoConstants.ARTIST_VIEW
-            )
-        }
-
-        mAllMusicFragmentBinding.searchToolbar.run {
-
-            inflateMenu(R.menu.menu_music_search)
-
-            overflowIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_sort)
-
-            setNavigationOnClickListener {
-                mUIControlInterface.onCloseActivity()
+            _binding.shuffleFab.setOnClickListener {
+                mMediaControlInterface.onShuffleSongs(
+                        null,
+                        null,
+                        mAllMusic,
+                        mAllMusic?.size!! <= 1000,
+                        GoConstants.ARTIST_VIEW
+                )
             }
 
-            menu.run {
+            _binding.searchToolbar.let { stb ->
 
-                mSortMenuItem = ListsHelper.getSelectedSortingForAllMusic(mSorting, this).apply {
-                    setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
+                stb.inflateMenu(R.menu.menu_music_search)
+
+                stb.overflowIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_sort)
+
+                stb.setNavigationOnClickListener {
+                    mUIControlInterface.onCloseActivity()
                 }
 
-                with (findItem(R.id.action_search).actionView as SearchView) {
-                    setOnQueryTextListener(this@AllMusicFragment)
-                    setOnQueryTextFocusChangeListener { _, hasFocus ->
-                        if (sIsFastScrollerVisible) {
-                            mAllMusicFragmentBinding.fastscroller.handleViewVisibility(!hasFocus)
-                            mAllMusicFragmentBinding.fastscrollerThumb.handleViewVisibility(
-                                !hasFocus
-                            )
-                            setupMusicRecyclerViewPadding(hasFocus)
-                        }
-                        menu.setGroupVisible(R.id.sorting, !hasFocus)
+                with(stb.menu) {
+
+                    mSortMenuItem = ListsHelper.getSelectedSortingForAllMusic(mSorting, this).apply {
+                        setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
                     }
-                }
 
-                setMenuOnItemClickListener(this)
+                    with (findItem(R.id.action_search).actionView as SearchView) {
+                        setOnQueryTextListener(this@AllMusicFragment)
+                        setOnQueryTextFocusChangeListener { _, hasFocus ->
+                            if (sIsFastScrollerVisible) {
+                                _binding.fastscroller.handleViewVisibility(!hasFocus)
+                                _binding.fastscrollerThumb.handleViewVisibility(!hasFocus)
+                                setupMusicRecyclerViewPadding(hasFocus)
+                            }
+                            stb.menu.setGroupVisible(R.id.sorting, !hasFocus)
+                        }
+                    }
+
+                    setMenuOnItemClickListener(stb.menu)
+                }
             }
         }
     }
@@ -200,20 +206,22 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
     private fun setupIndicatorFastScrollerView() {
 
         // Set indexes if artists rv is scrollable
-        mAllMusicFragmentBinding.allMusicRv.afterMeasured {
+        _allMusicFragmentBinding?.let { _binding ->
 
-            sIsFastScroller = computeVerticalScrollRange() > height
+            _binding.allMusicRv.afterMeasured {
 
-            if (sIsFastScroller) {
+                sIsFastScroller = computeVerticalScrollRange() > height
 
-                mAllMusicFragmentBinding.fastscroller.setupWithRecyclerView(
-                    this,
-                    { position ->
-                        // Return a text tab_indicator
-                        mAllMusic?.get(position)?.title?.run {
-                            getFastScrollerItem(requireActivity())
-                        }
-                    }, showIndicator = { _, indicatorPosition, totalIndicators ->
+                if (sIsFastScroller) {
+
+                    _binding.fastscroller.setupWithRecyclerView(
+                            this,
+                            { position ->
+                                // Return a text tab_indicator
+                                mAllMusic?.get(position)?.title?.run {
+                                    getFastScrollerItem(requireActivity())
+                                }
+                            }, showIndicator = { _, indicatorPosition, totalIndicators ->
                         // Hide every other indicator
                         if (ThemeHelper.isDeviceLand(resources)) {
                             indicatorPosition % 2 == 0
@@ -225,29 +233,30 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                             }
                         }
                     }
-                )
+                    )
 
-                mAllMusicFragmentBinding.fastscrollerThumb.setupWithFastScroller(
-                    mAllMusicFragmentBinding.fastscroller
-                )
+                    _binding.fastscrollerThumb.setupWithFastScroller(
+                            _binding.fastscroller
+                    )
 
-                mAllMusicFragmentBinding.fastscroller.useDefaultScroller = false
-                mAllMusicFragmentBinding.fastscroller.itemIndicatorSelectedCallbacks += object :
-                    FastScrollerView.ItemIndicatorSelectedCallback {
-                    override fun onItemIndicatorSelected(
-                        indicator: FastScrollItemIndicator,
-                        indicatorCenterY: Int,
-                        itemPosition: Int
-                    ) {
-                        val artistsLayoutManager = layoutManager as LinearLayoutManager
-                        artistsLayoutManager.scrollToPositionWithOffset(itemPosition, 0)
+                    _binding.fastscroller.useDefaultScroller = false
+                    _binding.fastscroller.itemIndicatorSelectedCallbacks += object :
+                            FastScrollerView.ItemIndicatorSelectedCallback {
+                        override fun onItemIndicatorSelected(
+                                indicator: FastScrollItemIndicator,
+                                indicatorCenterY: Int,
+                                itemPosition: Int
+                        ) {
+                            val artistsLayoutManager = layoutManager as LinearLayoutManager
+                            artistsLayoutManager.scrollToPositionWithOffset(itemPosition, 0)
+                        }
                     }
                 }
+
+                handleIndicatorFastScrollerViewVisibility()
+
+                setupMusicRecyclerViewPadding(false)
             }
-
-            handleIndicatorFastScrollerViewVisibility()
-
-            setupMusicRecyclerViewPadding(false)
         }
     }
 
@@ -258,17 +267,17 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
             } else {
                 0
             }
-        mAllMusicFragmentBinding.allMusicRv.setPadding(0, 0, rvPaddingEnd, 0)
+        _allMusicFragmentBinding?.allMusicRv?.setPadding(0, 0, rvPaddingEnd, 0)
     }
 
     private fun handleIndicatorFastScrollerViewVisibility() {
-        mAllMusicFragmentBinding.fastscroller.handleViewVisibility(sIsFastScrollerVisible)
-        mAllMusicFragmentBinding.fastscrollerThumb.handleViewVisibility(sIsFastScrollerVisible)
+        _allMusicFragmentBinding?.fastscroller?.handleViewVisibility(sIsFastScrollerVisible)
+        _allMusicFragmentBinding?.fastscrollerThumb?.handleViewVisibility(sIsFastScrollerVisible)
     }
 
     private fun setMenuOnItemClickListener(menu: Menu) {
 
-        mAllMusicFragmentBinding.searchToolbar.setOnMenuItemClickListener {
+        _allMusicFragmentBinding?.searchToolbar?.setOnMenuItemClickListener {
 
             if (it.itemId == R.id.default_sorting
                 || it.itemId == R.id.ascending_sorting
@@ -309,8 +318,8 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
         }
     }
 
-    fun onSongVisualizationChanged() = if (::mAllMusicFragmentBinding.isInitialized) {
-        mAllMusicFragmentBinding.allMusicRv.adapter?.notifyDataSetChanged()
+    fun onSongVisualizationChanged() = if (_allMusicFragmentBinding != null) {
+        _allMusicFragmentBinding?.allMusicRv?.adapter?.notifyDataSetChanged()
         true
     } else {
         false
@@ -319,7 +328,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
     fun onListFiltered(newMusic: MutableList<Music>?) {
         mAllMusic = newMusic
         setMusicDataSource(mAllMusic)
-        mAllMusicFragmentBinding.shuffleFab.text = newMusic?.size.toString()
+        _allMusicFragmentBinding?.shuffleFab?.text = newMusic?.size.toString()
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
