@@ -16,6 +16,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
@@ -195,10 +196,9 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             customListAdapter(AccentsAdapter(requireActivity()))
 
-            getRecyclerView().apply {
-                layoutManager = GridLayoutManager(requireActivity(), 5, GridLayoutManager.VERTICAL, false)
-                scrollToPosition(ThemeHelper.getAccentedTheme().second)
-            }
+            val rv = getRecyclerView()
+            rv.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+            rv.scrollToPosition(ThemeHelper.getAccentedTheme().second)
         }
     }
 
