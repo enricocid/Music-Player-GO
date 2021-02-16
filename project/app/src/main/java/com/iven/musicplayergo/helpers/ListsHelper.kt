@@ -130,23 +130,11 @@ object ListsHelper {
         list: MutableList<Music>?
     ) : MutableList<Music>? {
 
-        fun getSortByForTitle(song: Music) = if (goPreferences.songsVisualization != GoConstants.TITLE) {
-            song.displayName
-        } else {
-            song.title
-        }
-
         return when (id) {
 
-            GoConstants.ASCENDING_SORTING -> {
-                list?.sortBy { getSortByForTitle(it) }
-                list
-            }
+            GoConstants.ASCENDING_SORTING -> getSortedListBySelectedVisualization(list)?.toMutableList()
 
-            GoConstants.DESCENDING_SORTING -> {
-                list?.sortBy { getSortByForTitle(it) }
-                list?.asReversed()
-            }
+            GoConstants.DESCENDING_SORTING -> getSortedListBySelectedVisualization(list)?.toMutableList()?.asReversed()
 
             GoConstants.TRACK_SORTING -> {
                 list?.sortBy { it.track }
@@ -168,23 +156,11 @@ object ListsHelper {
             list: MutableList<Music>?
     ) : MutableList<Music>? {
 
-        fun getSortByForTitle(song: Music) = if (goPreferences.songsVisualization != GoConstants.TITLE) {
-            song.displayName
-        } else {
-            song.title
-        }
-
         return when (id) {
 
-            GoConstants.ASCENDING_SORTING -> {
-                list?.sortBy { getSortByForTitle(it) }
-                list
-            }
+            GoConstants.ASCENDING_SORTING -> getSortedListBySelectedVisualization(list)?.toMutableList()
 
-            GoConstants.DESCENDING_SORTING -> {
-                list?.sortBy { getSortByForTitle(it) }
-                list?.asReversed()
-            }
+            GoConstants.DESCENDING_SORTING -> getSortedListBySelectedVisualization(list)?.toMutableList()?.asReversed()
 
             GoConstants.TRACK_SORTING -> {
                 list?.sortBy { it.track }
@@ -228,6 +204,12 @@ object ListsHelper {
 
             else -> list
         }
+    }
+
+    private fun getSortedListBySelectedVisualization(list: MutableList<Music>?) = if (goPreferences.songsVisualization != GoConstants.TITLE) {
+        list?.sortedBy { it.displayName }
+    } else {
+        list?.sortedBy { it.title }
     }
 
     @JvmStatic

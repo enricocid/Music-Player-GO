@@ -218,9 +218,13 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                             this,
                             { position ->
                                 // Return a text tab_indicator
-                                mAllMusic?.get(position)?.title?.run {
-                                    getFastScrollerItem(requireActivity())
+                                val song = mAllMusic?.get(position)
+                                val stringToProcess = if (goPreferences.songsVisualization != GoConstants.TITLE) {
+                                    song?.displayName
+                                } else {
+                                    song?.title
                                 }
+                                stringToProcess?.getFastScrollerItem(requireActivity())
                             }, showIndicator = { _, indicatorPosition, totalIndicators ->
                         // Hide every other indicator
                         if (ThemeHelper.isDeviceLand(resources)) {
@@ -292,7 +296,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 mSorting = it.order
 
                 mAllMusic =
-                    ListsHelper.getSortedMusicListForAllMusic(mSorting, mMusicViewModel.deviceMusicFiltered)
+                    ListsHelper.getSortedMusicListForAllMusic(mSorting, mAllMusic)
 
                 handleIndicatorFastScrollerViewVisibility()
 
@@ -319,6 +323,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
     }
 
     fun onSongVisualizationChanged() = if (_allMusicFragmentBinding != null) {
+        mAllMusic = ListsHelper.getSortedMusicListForAllMusic(mSorting, mAllMusic)
         _allMusicFragmentBinding?.allMusicRv?.adapter?.notifyDataSetChanged()
         true
     } else {
