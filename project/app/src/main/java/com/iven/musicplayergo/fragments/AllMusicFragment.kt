@@ -40,7 +40,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
     // View model
     private lateinit var mMusicViewModel: MusicViewModel
 
-    private var mAllMusic: MutableList<Music>? = null
+    private var mAllMusic: List<Music>? = null
     private val mDataSource = emptyDataSource()
 
     private lateinit var mSortMenuItem: MenuItem

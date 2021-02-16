@@ -1407,7 +1407,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     override fun onAddAlbumToQueue(
-        songs: MutableList<Music>?,
+        songs: List<Music>?,
         isAlbumOrFolder: Pair<Boolean, Music?>,
         isLovedSongs: Boolean,
         isShuffleMode: Boolean,
@@ -1474,14 +1474,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     override fun onShuffleSongs(
         albumTitle: String?,
         artistAlbums: List<Album>?,
-        songs: MutableList<Music>?,
+        songs: List<Music>?,
         toBeQueued: Boolean,
         launchedBy: String
-    ): MutableList<Music>? {
+    ): List<Music>? {
         return songs?.apply {
             if (checkIsPlayer(true)) {
-                shuffle()
-                val song = get(0)
+                val shuffledSongs = toMutableList()
+                shuffledSongs.shuffle()
+                val song = shuffledSongs[0]
                 mMediaPlayerHolder.run {
                     if (isLovedSongsQueued) {
                         isLovedSongsQueued = false
@@ -1490,7 +1491,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     albumsForShuffleMode = artistAlbums
                     if (toBeQueued) {
                         onAddAlbumToQueue(
-                            songs,
+                            shuffledSongs,
                             Pair(false, song),
                             isLovedSongs = false,
                             isShuffleMode = isShuffledSongsQueued.first,
@@ -1498,7 +1499,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                             launchedBy
                         )
                     } else {
-                        onSongSelected(song, songs, launchedBy)
+                        onSongSelected(song, shuffledSongs, launchedBy)
                     }
                 }
             }

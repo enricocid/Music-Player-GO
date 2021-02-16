@@ -11,13 +11,13 @@ interface MediaControlInterface {
     fun onShuffleSongs(
             albumTitle: String?,
             artistAlbums: List<Album>?,
-            songs: MutableList<Music>?,
+            songs: List<Music>?,
             toBeQueued: Boolean,
             launchedBy: String
-    ): MutableList<Music>?
+    ): List<Music>?
     fun onAddToQueue(song: Music?, launchedBy: String)
     fun onAddAlbumToQueue(
-            songs: MutableList<Music>?,
+            songs: List<Music>?,
             isAlbumOrFolder: Pair<Boolean, Music?>,
             isLovedSongs: Boolean,
             isShuffleMode: Boolean,

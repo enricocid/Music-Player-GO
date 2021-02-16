@@ -128,23 +128,17 @@ object ListsHelper {
     fun getSortedMusicList(
         id: Int,
         list: MutableList<Music>?
-    ) : MutableList<Music>? {
+    ) : List<Music>? {
 
         return when (id) {
 
-            GoConstants.ASCENDING_SORTING -> getSortedListBySelectedVisualization(list)?.toMutableList()
+            GoConstants.ASCENDING_SORTING -> getSortedListBySelectedVisualization(list)
 
-            GoConstants.DESCENDING_SORTING -> getSortedListBySelectedVisualization(list)?.toMutableList()?.asReversed()
+            GoConstants.DESCENDING_SORTING -> getSortedListBySelectedVisualization(list)?.asReversed()
 
-            GoConstants.TRACK_SORTING -> {
-                list?.sortBy { it.track }
-                list
-            }
+            GoConstants.TRACK_SORTING -> list?.sortedBy { it.track }
 
-            GoConstants.TRACK_SORTING_INVERTED -> {
-                list?.sortBy { it.track }
-                list?.asReversed()
-            }
+            GoConstants.TRACK_SORTING_INVERTED -> list?.sortedBy { it.track }?.asReversed()
 
             else -> list
         }
@@ -153,60 +147,36 @@ object ListsHelper {
     @JvmStatic
     fun getSortedMusicListForAllMusic(
             id: Int,
-            list: MutableList<Music>?
-    ) : MutableList<Music>? {
+            list: List<Music>?
+    ) : List<Music>? {
 
         return when (id) {
 
-            GoConstants.ASCENDING_SORTING -> getSortedListBySelectedVisualization(list)?.toMutableList()
+            GoConstants.ASCENDING_SORTING -> getSortedListBySelectedVisualization(list)
 
-            GoConstants.DESCENDING_SORTING -> getSortedListBySelectedVisualization(list)?.toMutableList()?.asReversed()
+            GoConstants.DESCENDING_SORTING -> getSortedListBySelectedVisualization(list)?.asReversed()
 
-            GoConstants.TRACK_SORTING -> {
-                list?.sortBy { it.track }
-                list
-            }
+            GoConstants.TRACK_SORTING -> list?.sortedBy { it.track }
 
-            GoConstants.TRACK_SORTING_INVERTED -> {
-                list?.sortBy { it.track }
-                list?.asReversed()
-            }
+            GoConstants.TRACK_SORTING_INVERTED -> list?.sortedBy { it.track }?.asReversed()
 
-            GoConstants.DATE_ADDED_SORTING -> {
-                list?.sortBy { it.dateAdded }
-                list?.asReversed()
-            }
+            GoConstants.DATE_ADDED_SORTING -> list?.sortedBy { it.dateAdded }?.asReversed()
 
-            GoConstants.DATE_ADDED_SORTING_INV -> {
-                list?.sortBy { it.dateAdded }
-                list
-            }
+            GoConstants.DATE_ADDED_SORTING_INV -> list?.sortedBy { it.dateAdded }
 
-            GoConstants.ARTIST_SORTING -> {
-                list?.sortBy { it.artist }
-                list?.asReversed()
-            }
+            GoConstants.ARTIST_SORTING -> list?.sortedBy { it.artist }?.asReversed()
 
-            GoConstants.ARTIST_SORTING_INV -> {
-                list?.sortBy { it.artist }
-                list
-            }
+            GoConstants.ARTIST_SORTING_INV -> list?.sortedBy { it.artist }
 
-            GoConstants.ALBUM_SORTING -> {
-                list?.sortBy { it.album }
-                list?.asReversed()
-            }
+            GoConstants.ALBUM_SORTING -> list?.sortedBy { it.album }?.asReversed()
 
-            GoConstants.ALBUM_SORTING_INV -> {
-                list?.sortBy { it.album }
-                list
-            }
+            GoConstants.ALBUM_SORTING_INV -> list?.sortedBy { it.album }
 
             else -> list
         }
     }
 
-    private fun getSortedListBySelectedVisualization(list: MutableList<Music>?) = if (goPreferences.songsVisualization != GoConstants.TITLE) {
+    private fun getSortedListBySelectedVisualization(list: List<Music>?) = if (goPreferences.songsVisualization != GoConstants.TITLE) {
         list?.sortedBy { it.displayName }
     } else {
         list?.sortedBy { it.title }
@@ -216,39 +186,21 @@ object ListsHelper {
     fun getSortedMusicListForFolder(
             id: Int,
             list: MutableList<Music>?
-    ) : MutableList<Music>? {
+    ) : List<Music>? {
 
         return when (id) {
 
-            GoConstants.ASCENDING_SORTING -> {
-                list?.sortBy { it.displayName }
-                list
-            }
+            GoConstants.ASCENDING_SORTING -> list?.sortedBy { it.displayName }
 
-            GoConstants.DESCENDING_SORTING -> {
-                list?.sortBy { it.displayName }
-                list?.asReversed()
-            }
+            GoConstants.DESCENDING_SORTING -> list?.sortedBy { it.displayName }?.asReversed()
 
-            GoConstants.DATE_ADDED_SORTING -> {
-                list?.sortBy { it.dateAdded }
-                list?.asReversed()
-            }
+            GoConstants.DATE_ADDED_SORTING -> list?.sortedBy { it.dateAdded }?.asReversed()
 
-            GoConstants.DATE_ADDED_SORTING_INV -> {
-                list?.sortBy { it.dateAdded }
-                list
-            }
+            GoConstants.DATE_ADDED_SORTING_INV -> list?.sortedBy { it.dateAdded }
 
-            GoConstants.ARTIST_SORTING -> {
-                list?.sortBy { it.artist }
-                list
-            }
+            GoConstants.ARTIST_SORTING -> list?.sortedBy { it.artist }
 
-            GoConstants.ARTIST_SORTING_INV -> {
-                list?.sortBy { it.artist }
-                list?.asReversed()
-            }
+            GoConstants.ARTIST_SORTING_INV -> list?.sortedBy { it.artist }?.asReversed()
 
             else -> list
         }

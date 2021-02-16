@@ -780,7 +780,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
     }
 
-    fun onDisableShuffle(isShuffleMode: Boolean, isMusicListOutputRequired: Boolean) : MutableList<Music>? {
+    fun onDisableShuffle(isShuffleMode: Boolean, isMusicListOutputRequired: Boolean) : List<Music>? {
         val songsSource = if (sLaunchedByArtistView) {
             mSelectedAlbum?.music
         } else {
