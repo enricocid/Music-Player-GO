@@ -120,7 +120,6 @@ object ThemeHelper {
             Pair(R.color.green_300, R.style.BaseTheme_Green300),
             Pair(R.color.light_green_300, R.style.BaseTheme_LightGreen300),
             Pair(R.color.lime_300, R.style.BaseTheme_Lime300),
-            Pair(R.color.yellow_300, R.style.BaseTheme_Yellow300),
             Pair(R.color.amber_300, R.style.BaseTheme_Amber300),
             Pair(R.color.orange_300, R.style.BaseTheme_Orange300),
             Pair(R.color.deep_orange_300, R.style.BaseTheme_DeepOrange300),
@@ -198,7 +197,7 @@ object ThemeHelper {
     @JvmStatic
     fun getAlphaAccent(context: Context) : Int {
         val accent = goPreferences.accent
-        var alpha = if (accent == R.color.yellow || accent == R.color.yellow_300) {
+        var alpha = if (accent == R.color.yellow) {
             200
         } else {
             150

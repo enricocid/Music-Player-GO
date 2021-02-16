@@ -156,11 +156,6 @@
         <item name="colorSecondary">@color/lime_300</item>
     </style>
 
-    <style name="BaseTheme.Yellow300" parent="BaseTheme">
-        <item name="colorPrimary">@color/yellow_300</item>
-        <item name="colorSecondary">@color/yellow_300</item>
-    </style>
-
     <style name="BaseTheme.Amber300" parent="BaseTheme">
         <item name="colorPrimary">@color/amber_300</item>
         <item name="colorSecondary">@color/amber_300</item>
