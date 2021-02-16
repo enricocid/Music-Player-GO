@@ -41,9 +41,8 @@ object ThemeHelper {
                         or Intent.FLAG_ACTIVITY_NEW_TASK
         )
         with(activity) {
-            finishAfterTransition()
+            finish()
             startActivity(intent)
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
     }
 
