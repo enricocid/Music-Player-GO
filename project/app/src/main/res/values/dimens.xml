@@ -4,7 +4,7 @@
     <dimen name="preset_dim">56dp</dimen>
     <dimen name="album_height">148dp</dimen>
     <dimen name="album_width">124dp</dimen>
-    <dimen name="md_corner_radius">16dp</dimen>
+    <dimen name="md_corner_radius">8dp</dimen>
     <dimen name="search_bar_elevation">2dp</dimen>
     <dimen name="player_controls_padding_normal">4dp</dimen>
     <dimen name="player_controls_padding_start">8dp</dimen>
