@@ -324,7 +324,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
     fun onSongVisualizationChanged() = if (_allMusicFragmentBinding != null) {
         mAllMusic = ListsHelper.getSortedMusicListForAllMusic(mSorting, mAllMusic)
-        _allMusicFragmentBinding?.allMusicRv?.adapter?.notifyDataSetChanged()
+        setMusicDataSource(mAllMusic)
         true
     } else {
         false
