@@ -46,7 +46,7 @@ object DialogHelper {
 
         val recyclerView = getRecyclerView()
 
-        val touchHelper = ItemTouchHelper(ItemTouchCallback(queueAdapter.queueSongs))
+        val touchHelper = ItemTouchHelper(ItemTouchCallback(queueAdapter.queueSongs, false))
         touchHelper.attachToRecyclerView(recyclerView)
 
         if (ThemeHelper.isDeviceLand(context.resources)) {

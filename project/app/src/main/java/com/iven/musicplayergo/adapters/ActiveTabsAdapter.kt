@@ -4,9 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
@@ -20,18 +20,8 @@ class ActiveTabsAdapter(private val ctx: Context) :
     var availableItems = goPreferences.activeTabsDef.toMutableList()
     private val mActiveItems = goPreferences.activeTabs.toMutableList()
 
-    //method used to make the last item of the staggered rv full width
-    //https://medium.com/android-dev-journal/how-to-make-first-item-of-recyclerview-of-full-width-with-a-gridlayoutmanager-66456a4bfffe
-    val spanSizeLookup: GridLayoutManager.SpanSizeLookup =
-        object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return if (position == availableItems.size - 1) {
-                    2
-                } else {
-                    1
-                }
-            }
-        }
+    private val mDisabledColor = ThemeHelper.resolveColorAttr(ctx, android.R.attr.colorButtonNormal)
+    private val mDefaultTextColor = ThemeHelper.resolveColorAttr(ctx, android.R.attr.textColorPrimary)
 
     fun getUpdatedItems(): List<String> {
         goPreferences.activeTabsDef = availableItems
@@ -62,8 +52,12 @@ class ActiveTabsAdapter(private val ctx: Context) :
 
             itemView.run {
 
-                val tabImageButton = findViewById<ImageButton>(R.id.tab_image)
+                val tabDragHandle = findViewById<ImageView>(R.id.tab_drag_handle)
 
+                val tabText = findViewById<TextView>(R.id.tab_text)
+                tabText.text = ctx.getString(getTabText(availableItems[adapterPosition]))
+
+                val tabImageButton = findViewById<ImageView>(R.id.tab_image)
                 tabImageButton.setImageResource(ThemeHelper.getTabIcon(availableItems[adapterPosition]))
 
                 isEnabled = availableItems[adapterPosition] != GoConstants.SETTINGS_TAB
@@ -72,18 +66,25 @@ class ActiveTabsAdapter(private val ctx: Context) :
                 if (isEnabled) {
                     manageTabStatus(
                         mActiveItems.contains(availableItems[adapterPosition]),
+                        tabDragHandle,
+                        tabText,
                         tabImageButton
                     )
                 } else {
+                    ThemeHelper.updateIconTint(tabDragHandle, mDisabledColor)
+                    tabText.setTextColor(mDisabledColor)
                     ThemeHelper.updateIconTint(
                         tabImageButton,
-                        ThemeHelper.getAlphaAccent(ctx)
+                        mDisabledColor
                     )
                 }
 
                 setOnClickListener {
+
                     manageTabStatus(
                         !tabImageButton.isSelected,
+                        tabDragHandle,
+                        tabText,
                         tabImageButton
                     )
 
@@ -97,7 +98,7 @@ class ActiveTabsAdapter(private val ctx: Context) :
                         Toast.makeText(context,  context.getString(R.string.active_fragments_pref_warning), Toast.LENGTH_LONG)
                                 .show()
                         mActiveItems.add(toggledItem)
-                        manageTabStatus(true, tabImageButton)
+                        manageTabStatus(true, tabDragHandle, tabText, tabImageButton)
                     }
                 }
             }
@@ -106,14 +107,31 @@ class ActiveTabsAdapter(private val ctx: Context) :
 
     private fun manageTabStatus(
         condition: Boolean,
-        icon: ImageButton
+        dragHandle: ImageView,
+        textView: TextView,
+        icon: ImageView
     ) {
         icon.isSelected = condition
-        val color = if (condition) {
+        val iconColor = if (condition) {
             ThemeHelper.resolveThemeAccent(ctx)
         } else {
-            ThemeHelper.getAlphaAccent(ctx)
+            mDisabledColor
         }
-        ThemeHelper.updateIconTint(icon, color)
+        val textColor = if (condition) {
+            mDefaultTextColor
+        } else {
+            mDisabledColor
+        }
+        ThemeHelper.updateIconTint(dragHandle, textColor)
+        textView.setTextColor(textColor)
+        ThemeHelper.updateIconTint(icon, iconColor)
+    }
+
+    private fun getTabText(tab: String) = when (tab) {
+        GoConstants.ARTISTS_TAB -> R.string.artists
+        GoConstants.ALBUM_TAB -> R.string.albums
+        GoConstants.SONGS_TAB -> R.string.songs
+        GoConstants.FOLDERS_TAB -> R.string.folders
+        else -> R.string.settings
     }
 }

@@ -14,7 +14,6 @@ import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
@@ -213,13 +212,8 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             customListAdapter(activeTabsAdapter)
 
-            getRecyclerView().run {
-                val gridLayoutManager = GridLayoutManager(requireActivity(), 2)
-                gridLayoutManager.spanSizeLookup = activeTabsAdapter.spanSizeLookup
-                layoutManager = gridLayoutManager
-                val touchHelper = ItemTouchHelper(ItemTouchCallback(activeTabsAdapter.availableItems))
-                touchHelper.attachToRecyclerView(this)
-            }
+            val touchHelper = ItemTouchHelper(ItemTouchCallback(activeTabsAdapter.availableItems, true))
+            touchHelper.attachToRecyclerView(getRecyclerView())
 
             positiveButton(android.R.string.ok) {
                 goPreferences.activeTabs = activeTabsAdapter.getUpdatedItems().toMutableList()

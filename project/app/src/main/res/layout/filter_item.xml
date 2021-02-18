@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
+    android:background="?android:attr/selectableItemBackground"
     android:gravity="center"
     android:orientation="horizontal"
     tools:viewBindingIgnore="true">
@@ -19,7 +20,7 @@
         android:padding="16dp"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        android:textColor="@color/widgetsColor" />
+        android:textColor="?android:attr/textColorPrimary" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/checkbox"

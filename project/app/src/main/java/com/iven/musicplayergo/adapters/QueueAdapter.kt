@@ -45,7 +45,7 @@ class QueueAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QueueHolder {
         return QueueHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.music_item,
+                R.layout.queue_item,
                 parent,
                 false
             )

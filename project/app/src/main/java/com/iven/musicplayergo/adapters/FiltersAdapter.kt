@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.iven.musicplayergo.R
@@ -20,12 +19,12 @@ class FiltersAdapter(val activity: Activity) :
 
     private val mAvailableItems = goPreferences.filters?.sorted()?.toMutableList()
 
-    private val mUncheckedColor = ThemeHelper.resolveColorAttr(
+    private val mDisabledColor = ThemeHelper.resolveColorAttr(
             activity,
             android.R.attr.colorButtonNormal
     )
 
-    private val mCheckedColor = ContextCompat.getColor(activity, R.color.widgetsColor)
+    private val mDefaultTextColor = ThemeHelper.resolveColorAttr(activity, android.R.attr.textColorPrimary)
 
     fun getUpdatedItems(): Set<String>? {
         mAvailableItems?.removeAll(mItemsToRemove.toSet())
@@ -62,10 +61,10 @@ class FiltersAdapter(val activity: Activity) :
                 setOnClickListener {
                     checkBox.isChecked = !checkBox.isChecked
                     if (checkBox.isChecked) {
-                        filter.setTextColor(mCheckedColor)
+                        filter.setTextColor(mDefaultTextColor)
                         mItemsToRemove.remove(item)
                     } else {
-                        filter.setTextColor(mUncheckedColor)
+                        filter.setTextColor(mDisabledColor)
                         mItemsToRemove.add(item!!)
                     }
                 }

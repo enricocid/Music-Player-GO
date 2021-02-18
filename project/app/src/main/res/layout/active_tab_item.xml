@@ -1,16 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageButton xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/tab_image"
-    android:layout_width="match_parent"
-    android:layout_height="@android:dimen/app_icon_size"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
-    android:background="?attr/selectableItemBackground"
-    android:clickable="false"
-    android:contentDescription="@string/active_fragments_pref_title"
-    android:focusable="false"
-    android:padding="8dp"
-    android:scaleType="fitCenter"
-    tools:viewBindingIgnore="true" />
 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:background="?android:attr/selectableItemBackground"
+    android:gravity="center"
+    android:orientation="horizontal"
+    tools:viewBindingIgnore="true">
+
+    <ImageView
+        android:id="@+id/tab_drag_handle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_drag_handle"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tab_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:padding="16dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:textColor="?android:attr/textColorPrimary" />
+
+    <ImageView
+        android:id="@+id/tab_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="24dp"
+        android:clickable="false"
+        android:contentDescription="@string/active_fragments_pref_title"
+        android:src="@drawable/ic_launch_details" />
+</LinearLayout>
