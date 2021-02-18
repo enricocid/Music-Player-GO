@@ -25,6 +25,7 @@ import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.player.MediaPlayerHolder
+import com.iven.musicplayergo.adapters.ItemTouchCallback
 import com.iven.musicplayergo.ui.UIControlInterface
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
@@ -45,7 +46,7 @@ object DialogHelper {
 
         val recyclerView = getRecyclerView()
 
-        val touchHelper = ItemTouchHelper(queueAdapter.itemTouchCallback)
+        val touchHelper = ItemTouchHelper(ItemTouchCallback(queueAdapter.queueSongs))
         touchHelper.attachToRecyclerView(recyclerView)
 
         if (ThemeHelper.isDeviceLand(context.resources)) {

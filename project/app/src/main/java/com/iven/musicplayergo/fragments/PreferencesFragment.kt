@@ -27,6 +27,7 @@ import com.iven.musicplayergo.adapters.ActiveTabsAdapter
 import com.iven.musicplayergo.adapters.FiltersAdapter
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.adapters.ItemTouchCallback
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 
@@ -216,7 +217,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 val gridLayoutManager = GridLayoutManager(requireActivity(), 2)
                 gridLayoutManager.spanSizeLookup = activeTabsAdapter.spanSizeLookup
                 layoutManager = gridLayoutManager
-                val touchHelper = ItemTouchHelper(activeTabsAdapter.itemTouchCallback)
+                val touchHelper = ItemTouchHelper(ItemTouchCallback(activeTabsAdapter.availableItems))
                 touchHelper.attachToRecyclerView(this)
             }
 
