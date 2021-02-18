@@ -324,7 +324,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
             synchronized(handleRestore()) {
                 mMainActivityBinding.mainView.animate().apply {
-                    duration = 500
+                    duration = 750
                     alpha(1.0F)
                 }
             }

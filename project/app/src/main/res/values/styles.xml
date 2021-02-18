@@ -42,6 +42,8 @@
     <style name="WindowAnimationTransition">
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+        <item name="android:windowEnterTransition">@android:anim/fade_in</item>
+        <item name="android:windowExitTransition">@android:anim/fade_out</item>
     </style>
 
     <!-- Style for search bar -->
