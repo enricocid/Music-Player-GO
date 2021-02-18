@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.text.parseAsHtml
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
@@ -43,6 +44,9 @@ object DialogHelper {
         customListAdapter(queueAdapter)
 
         val recyclerView = getRecyclerView()
+
+        val touchHelper = ItemTouchHelper(queueAdapter.itemTouchCallback)
+        touchHelper.attachToRecyclerView(recyclerView)
 
         if (ThemeHelper.isDeviceLand(context.resources)) {
             recyclerView.layoutManager = GridLayoutManager(context, 3)

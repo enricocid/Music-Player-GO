@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.iven.musicplayergo.GoConstants
@@ -16,6 +17,7 @@ import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
+import java.util.*
 
 class QueueAdapter(
     private val ctx: Context,
@@ -91,11 +93,6 @@ class QueueAdapter(
                 setOnClickListener {
                     mediaPlayerHolder.startSongFromQueue(song, mediaPlayerHolder.launchedBy)
                 }
-
-                setOnLongClickListener {
-                    performQueueSongDeletion(adapterPosition, title, false)
-                    return@setOnLongClickListener true
-                }
             }
         }
     }
@@ -115,5 +112,42 @@ class QueueAdapter(
         } else {
             false
         }
+    }
+
+    // https://mobikul.com/drag-and-drop-item-on-recyclerview/
+    val itemTouchCallback: ItemTouchHelper.Callback = object : ItemTouchHelper.Callback() {
+
+        override fun getMovementFlags(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder
+        ): Int {
+            val dragFlags =
+                    ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.END or ItemTouchHelper.START
+            return makeMovementFlags(dragFlags, 0)
+        }
+
+        override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+        ) = onItemMoved(viewHolder.adapterPosition, target.adapterPosition)
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
+
+        override fun isLongPressDragEnabled() = true
+    }
+
+    private fun onItemMoved(fromPosition: Int, toPosition: Int) : Boolean {
+        if (fromPosition < toPosition) {
+            for (i in fromPosition until toPosition) {
+                Collections.swap(mQueueSongs, i, i + 1)
+            }
+        } else {
+            for (i in fromPosition downTo toPosition + 1) {
+                Collections.swap(mQueueSongs, i, i - 1)
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition)
+        return true
     }
 }

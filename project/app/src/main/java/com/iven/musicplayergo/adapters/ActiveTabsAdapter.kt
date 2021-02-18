@@ -144,9 +144,7 @@ class ActiveTabsAdapter(private val ctx: Context) :
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
 
-        override fun isLongPressDragEnabled(): Boolean {
-            return true
-        }
+        override fun isLongPressDragEnabled() = true
     }
 
     private fun onItemMoved(fromPosition: Int, toPosition: Int) {
