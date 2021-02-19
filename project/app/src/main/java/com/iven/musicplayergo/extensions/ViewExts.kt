@@ -5,8 +5,6 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.InsetDrawable
 import android.text.Spannable
 import android.text.SpannableString
@@ -22,7 +20,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.animation.ArgbEvaluatorCompat
@@ -199,13 +196,14 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
         closeColor
     }
 
-    ValueAnimator().apply {
+    with(ValueAnimator()) {
         setIntValues(startColor, endColor)
         setEvaluator(ArgbEvaluatorCompat())
         addUpdateListener { valueAnimator -> setBackgroundColor((valueAnimator.animatedValue as Int)) }
         duration = revealDuration
         start()
     }
+
     return animator
 }
 
@@ -228,140 +226,6 @@ fun RecyclerView.smoothSnapToPosition(position: Int) {
     }
     smoothScroller.targetPosition = position
     layoutManager?.startSmoothScroll(smoothScroller)
-}
-
-//add swipe features to a RecyclerView
-fun RecyclerView.addBidirectionalSwipeHandler(
-        context: Context,
-        isDialog: Boolean,
-        onSwiped: (
-                viewHolder: RecyclerView.ViewHolder,
-                direction: Int
-        ) -> Unit
-) {
-    val swipeLeftCallback = instantiateSwipeHandler(context, isDialog, ItemTouchHelper.RIGHT, onSwiped)
-    ItemTouchHelper(swipeLeftCallback).attachToRecyclerView(this)
-
-    val swipeRightCallback = instantiateSwipeHandler(context, isDialog, ItemTouchHelper.LEFT, onSwiped)
-    ItemTouchHelper(swipeRightCallback).attachToRecyclerView(this)
-}
-
-private fun instantiateSwipeHandler(
-        context: Context,
-        isDialog: Boolean,
-        direction: Int,
-        onSwiped: (
-            viewHolder: RecyclerView.ViewHolder,
-            direction: Int
-        ) -> Unit
-): ItemTouchHelper.SimpleCallback {
-    return object : ItemTouchHelper.SimpleCallback(
-            0,
-            direction
-    ) {
-
-        override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
-        ): Boolean = false
-
-        override fun onSwiped(
-            viewHolder: RecyclerView.ViewHolder,
-            direction: Int
-        ) {
-            onSwiped(viewHolder, direction)
-        }
-
-        // Credits to Aidan Follestad :)
-        // https://github.com/afollestad/recyclical/blob/master/swipe/src/main/java/com/afollestad/recyclical/swipe/SwipeItemTouchListener.kt#L120
-        override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
-            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-
-            val itemView = viewHolder.itemView
-
-            val red = ContextCompat.getColor(context, R.color.red)
-
-            val firstIcon = ContextCompat.getDrawable(context, R.drawable.ic_queue_add).apply {
-                this?.mutate()?.setTint(ContextCompat.getColor(context, R.color.green))
-            }
-
-            val firstIconAlt = ContextCompat.getDrawable(context, R.drawable.ic_delete).apply {
-                this?.mutate()?.setTint(red)
-            }
-
-            val secondIcon = if (isDialog) {
-                ContextCompat.getDrawable(context, R.drawable.ic_delete)
-            } else {
-                ContextCompat.getDrawable(context, R.drawable.ic_favorite)
-            }.apply {
-                this?.mutate()?.setTint(red)
-            }
-
-            val firstColor = ColorDrawable(ContextCompat.getColor(context, R.color.swipeActionDeleteColor))
-
-            val secondColor = if (isDialog) {
-                firstColor
-            } else {
-                ColorDrawable(ContextCompat.getColor(context, R.color.swipeActionAddColor))
-            }
-
-            var background = secondColor
-
-            when {
-                dX > 0 -> {
-                    if (isDialog) {
-                        firstIconAlt
-                    } else {
-                        background = secondColor
-                        firstIcon
-                    }?.let { icon ->
-                        val iconMargin = (itemView.height - icon.intrinsicHeight) / 2
-                        val iconTop = itemView.top + (itemView.height - icon.intrinsicHeight) / 2
-                        val iconBottom = iconTop + icon.intrinsicHeight
-                        val iconLeft = itemView.left + iconMargin
-                        val iconRight = iconLeft + icon.intrinsicWidth
-
-                        icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
-                        background.setBounds(
-                            itemView.left,
-                            itemView.top,
-                            itemView.left + dX.toInt(),
-                            itemView.bottom
-                        )
-                        background.draw(c)
-                        icon.draw(c)
-                    }
-                }
-                dX < 0 -> {
-                    background = firstColor
-
-                    secondIcon?.let { icon ->
-
-                        val iconMargin = (itemView.height - icon.intrinsicHeight) / 2
-                        val iconTop = itemView.top + (itemView.height - icon.intrinsicHeight) / 2
-                        val iconBottom = iconTop + icon.intrinsicHeight
-                        val iconRight = itemView.right - iconMargin
-                        val iconLeft = iconRight - icon.intrinsicWidth
-
-                        icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
-
-                        background.setBounds(
-                            itemView.right + dX.toInt(),
-                            itemView.top,
-                            itemView.right,
-                            itemView.bottom
-                        )
-                        background.draw(c)
-                        icon.draw(c)
-                    }
-                }
-                else -> {
-                    background.setBounds(0, 0, 0, 0)
-                }
-            }
-        }
-    }
 }
 
 fun View.handleViewVisibility(show: Boolean) {

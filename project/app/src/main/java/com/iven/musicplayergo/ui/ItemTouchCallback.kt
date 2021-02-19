@@ -1,14 +1,11 @@
-package com.iven.musicplayergo.adapters
+package com.iven.musicplayergo.ui
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
 
-class ItemTouchCallback<T>(private val collection: MutableList<T>, private val isActiveTabs: Boolean) : ItemTouchHelper.Callback() {
-
-    override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) =
-            makeMovementFlags(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0)
+class ItemTouchCallback<T>(private val collection: MutableList<T>, private val isActiveTabs: Boolean) : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
 
     override fun onMove(
             recyclerView: RecyclerView,

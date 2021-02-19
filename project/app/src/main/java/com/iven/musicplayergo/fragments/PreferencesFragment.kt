@@ -26,7 +26,7 @@ import com.iven.musicplayergo.adapters.ActiveTabsAdapter
 import com.iven.musicplayergo.adapters.FiltersAdapter
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
-import com.iven.musicplayergo.adapters.ItemTouchCallback
+import com.iven.musicplayergo.ui.ItemTouchCallback
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 

@@ -18,6 +18,7 @@ import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.ui.ItemSwipeCallback
 import com.iven.musicplayergo.adapters.LovedSongsAdapter
 import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.extensions.*
@@ -25,7 +26,7 @@ import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.player.MediaPlayerHolder
-import com.iven.musicplayergo.adapters.ItemTouchCallback
+import com.iven.musicplayergo.ui.ItemTouchCallback
 import com.iven.musicplayergo.ui.UIControlInterface
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
@@ -46,8 +47,15 @@ object DialogHelper {
 
         val recyclerView = getRecyclerView()
 
-        val touchHelper = ItemTouchHelper(ItemTouchCallback(queueAdapter.queueSongs, false))
-        touchHelper.attachToRecyclerView(recyclerView)
+        ItemTouchHelper(ItemTouchCallback(queueAdapter.queueSongs, false))
+                .attachToRecyclerView(recyclerView)
+
+        ItemTouchHelper(ItemSwipeCallback(context, true) { viewHolder: RecyclerView.ViewHolder, _: Int ->
+            val title = viewHolder.itemView.findViewById<TextView>(R.id.title)
+            if (!queueAdapter.performQueueSongDeletion(viewHolder.adapterPosition, title)) {
+                queueAdapter.notifyItemChanged(viewHolder.adapterPosition)
+            }
+        }).attachToRecyclerView(recyclerView)
 
         if (ThemeHelper.isDeviceLand(context.resources)) {
             recyclerView.layoutManager = GridLayoutManager(context, 3)
@@ -59,14 +67,6 @@ object DialogHelper {
                         win.decorView.fit { Edge.Top }
                     }
                 }
-            }
-        }
-
-        recyclerView.addBidirectionalSwipeHandler(context, true) { viewHolder: RecyclerView.ViewHolder,
-                                                                   _: Int ->
-            val title = viewHolder.itemView.findViewById<TextView>(R.id.title)
-            if (!queueAdapter.performQueueSongDeletion(viewHolder.adapterPosition, title)) {
-                queueAdapter.notifyItemChanged(viewHolder.adapterPosition)
             }
         }
     }
@@ -166,8 +166,8 @@ object DialogHelper {
             }
         }
 
-        recyclerView.addBidirectionalSwipeHandler(context, false) { viewHolder: RecyclerView.ViewHolder,
-                                                                    direction: Int ->
+        ItemTouchHelper(ItemSwipeCallback(context, false) { viewHolder: RecyclerView.ViewHolder,
+                                                            direction: Int ->
             if (direction == ItemTouchHelper.RIGHT) {
                 lovedSongsAdapter.addLovedSongToQueue(viewHolder.adapterPosition)
             } else {
@@ -177,7 +177,7 @@ object DialogHelper {
                 )
             }
             lovedSongsAdapter.notifyDataSetChanged()
-        }
+        }).attachToRecyclerView(recyclerView)
     }
 
     @JvmStatic

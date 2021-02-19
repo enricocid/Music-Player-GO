@@ -30,6 +30,7 @@ import com.google.android.material.card.MaterialCardView
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.ui.ItemSwipeCallback
 import com.iven.musicplayergo.databinding.FragmentDetailsBinding
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.goPreferences
@@ -434,8 +435,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 }
             }
 
-            rv.addBidirectionalSwipeHandler(requireActivity(), false) { viewHolder: RecyclerView.ViewHolder,
-                                                  direction: Int ->
+            ItemTouchHelper(ItemSwipeCallback(requireActivity(), false) { viewHolder: RecyclerView.ViewHolder,
+                                                                          direction: Int ->
                 val song = mSelectedAlbum?.music?.get(viewHolder.adapterPosition)
                 if (direction == ItemTouchHelper.RIGHT) {
                     mMediaControlInterface.onAddToQueue(
@@ -446,7 +447,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     DialogHelper.addToLovedSongs(requireActivity(), song, mLaunchedBy)
                 }
                 rv.adapter?.notifyDataSetChanged()
-            }
+            }).attachToRecyclerView(rv)
         }
 
         if (goPreferences.isAnimations) {
