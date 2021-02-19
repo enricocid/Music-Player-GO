@@ -46,6 +46,8 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 
 - [**Jnss98b**](https://github.com/Jnss98b) for helping me to implement [edge-to-edge](https://github.com/enricocid/Music-Player-GO/issues/86) and for having reported/debugged this [issue](https://github.com/enricocid/VectorifyDaHome/issues/17)
 
+- **Arlin Daniel** and **Dan Muntz** for having helped me to fix an issue with [notification controls](https://github.com/enricocid/Music-Player-GO/issues/265)
+
 - [**Pirhszm Yfiz**](https://github.com/pirhszm) for reporting this [issue](https://github.com/enricocid/Music-Player-GO/issues/110#issuecomment-573424280)
 
 - [**Dankan1890**](https://github.com/dankan1890) for some fixes to bluetooth devices
