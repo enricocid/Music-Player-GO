@@ -65,7 +65,7 @@ object DialogHelper {
         recyclerView.addBidirectionalSwipeHandler(context, true) { viewHolder: RecyclerView.ViewHolder,
                                                                    _: Int ->
             val title = viewHolder.itemView.findViewById<TextView>(R.id.title)
-            if (!queueAdapter.performQueueSongDeletion(viewHolder.adapterPosition, title, true)) {
+            if (!queueAdapter.performQueueSongDeletion(viewHolder.adapterPosition, title)) {
                 queueAdapter.notifyItemChanged(viewHolder.adapterPosition)
             }
         }
@@ -77,8 +77,7 @@ object DialogHelper {
             song: Pair<Music, Int>,
             queueSongsDialog: MaterialDialog,
             queueAdapter: QueueAdapter,
-            mediaPlayerHolder: MediaPlayerHolder,
-            isSwipe: Boolean
+            mediaPlayerHolder: MediaPlayerHolder
     ) {
 
         MaterialDialog(context).show {
@@ -104,16 +103,7 @@ object DialogHelper {
                     }
                 }
             }
-            negativeButton(R.string.no) {
-                if (isSwipe) {
-                    queueAdapter.notifyItemChanged(song.second)
-                }
-            }
-            onCancel {
-                if (isSwipe) {
-                    queueAdapter.notifyItemChanged(song.second)
-                }
-            }
+            negativeButton(R.string.no)
         }
     }
 
@@ -176,11 +166,17 @@ object DialogHelper {
             }
         }
 
-        recyclerView.addBidirectionalSwipeHandler(context, true) { viewHolder: RecyclerView.ViewHolder, _: Int ->
-            lovedSongsAdapter.performLovedSongDeletion(
-                    viewHolder.adapterPosition,
-                    true
-            )
+        recyclerView.addBidirectionalSwipeHandler(context, false) { viewHolder: RecyclerView.ViewHolder,
+                                                                    direction: Int ->
+            if (direction == ItemTouchHelper.RIGHT) {
+                lovedSongsAdapter.addLovedSongToQueue(viewHolder.adapterPosition)
+            } else {
+                lovedSongsAdapter.performLovedSongDeletion(
+                        viewHolder.adapterPosition,
+                        true
+                )
+            }
+            lovedSongsAdapter.notifyDataSetChanged()
         }
     }
 

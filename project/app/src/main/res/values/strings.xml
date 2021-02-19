@@ -4,6 +4,7 @@
     <!-- Dialogs / Buttons -->
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="delete">Delete</string>
     <string name="on_close_activity">Do you want to stop playback?</string>
     <string name="queue_songs_clear">Queue will be cleared. Continue?</string>
     <string name="loved_songs_clear">Favorite songs will be cleared. Continue?</string>
