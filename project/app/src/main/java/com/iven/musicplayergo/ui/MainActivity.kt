@@ -987,6 +987,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     } else {
                         notifyError(GoConstants.TAG_SD_NOT_READY)
                     }
+
+                    if (intent != null && intent.getStringExtra(GoConstants.LAUNCHED_BY_TILE) != null) {
+                        mMediaPlayerHolder.resumeMediaPlayer()
+                    }
                 }
                 onUpdateDefaultAlbumArt(
                     ContextCompat.getDrawable(this@MainActivity, R.drawable.album_art)?.toBitmap()
