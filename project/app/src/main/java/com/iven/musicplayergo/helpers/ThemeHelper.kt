@@ -35,11 +35,7 @@ object ThemeHelper {
 
         val bundle = bundleOf(GoConstants.FRAGMENT_TO_RESTORE to currentPage)
         intent.putExtras(bundle)
-        intent.addFlags(
-                Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        or Intent.FLAG_ACTIVITY_NEW_TASK
-        )
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         with(activity) {
             finishAfterTransition()
             startActivity(intent)

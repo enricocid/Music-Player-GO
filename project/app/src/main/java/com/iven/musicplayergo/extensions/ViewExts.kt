@@ -104,21 +104,25 @@ fun Menu.enablePopupIcons(activity: Activity) {
     }
 }
 
-fun FragmentManager.addFragment(fragment: Fragment, tag: String?) {
-    commit {
-        addToBackStack(null)
-        add(
-            R.id.container,
-            fragment,
-            tag
-        )
+fun FragmentManager.addFragment(fragment: Fragment?, tag: String?) {
+    fragment?.let { fm ->
+        commit {
+            addToBackStack(null)
+            add(
+                    R.id.container,
+                    fm,
+                    tag
+            )
+        }
     }
 }
 
-fun FragmentManager.goBackFromFragmentNow(fragment: Fragment) {
+fun FragmentManager.goBackFromFragmentNow(fragment: Fragment?) {
     if (backStackEntryCount >= 0) {
         commit {
-            remove(fragment)
+            fragment?.let { fm ->
+                remove(fm)
+            }
             popBackStack()
         }
     }

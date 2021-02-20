@@ -74,15 +74,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private var mFoldersFragment: MusicContainersListFragment? = null
     private var mAlbumsFragment: MusicContainersListFragment? = null
     private var mSettingsFragment: SettingsFragment? = null
-    private lateinit var mDetailsFragment: DetailsFragment
-    private lateinit var mEqualizerFragment: EqFragment
+    private var mDetailsFragment: DetailsFragment? = null
+    private var mEqualizerFragment: EqFragment? = null
 
     private val mMusicContainersFragments = mutableListOf<MusicContainersListFragment>()
 
     // Booleans
-    private val sDetailsFragmentExpanded get() = ::mDetailsFragment.isInitialized && supportFragmentManager.isFragment(GoConstants.DETAILS_FRAGMENT_TAG)
+    private val sDetailsFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.DETAILS_FRAGMENT_TAG)
     private val sErrorFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.ERROR_FRAGMENT_TAG)
-    private val sEqFragmentExpanded get() = ::mEqualizerFragment.isInitialized && supportFragmentManager.isFragment(GoConstants.EQ_FRAGMENT_TAG)
+    private val sEqFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.EQ_FRAGMENT_TAG)
     private var sAllowCommit = true
 
     private var sCloseDetailsFragment = true
@@ -170,11 +170,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     override fun onBackPressed() {
         when {
             sDetailsFragmentExpanded and !sEqFragmentExpanded -> closeDetailsFragment(goPreferences.isAnimations)
-            !sDetailsFragmentExpanded and sEqFragmentExpanded -> closeEqualizerFragment()
+            !sDetailsFragmentExpanded and sEqFragmentExpanded -> closeEqualizerFragment(goPreferences.isAnimations)
             sEqFragmentExpanded and sDetailsFragmentExpanded -> if (sCloseDetailsFragment) {
                 closeDetailsFragment(goPreferences.isAnimations)
             } else {
-                closeEqualizerFragment()
+                closeEqualizerFragment(goPreferences.isAnimations)
             }
             sErrorFragmentExpanded -> finishAndRemoveTask()
             else -> if (mMainActivityBinding.viewPager2.currentItem != 0) {
@@ -474,7 +474,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private fun closeDetailsFragment(isAnimation: Boolean) {
         if (isAnimation) {
             if (!sRevealAnimationRunning) {
-                mDetailsFragment.onHandleBackPressed().apply {
+                mDetailsFragment?.onHandleBackPressed()?.run {
                     sRevealAnimationRunning = true
                     doOnEnd {
                         supportFragmentManager.goBackFromFragmentNow(mDetailsFragment)
@@ -1172,10 +1172,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         if (isMediaPlayerHolder && mMediaPlayerHolder.isCurrentSong) {
             val selectedArtistOrFolder = getSongSource()
             if (sDetailsFragmentExpanded) {
-                if (mDetailsFragment.hasToUpdate(selectedArtistOrFolder)) {
+                if (mDetailsFragment?.hasToUpdate(selectedArtistOrFolder)!!) {
                     closeDetailsFragment(false)
                 } else {
-                    mDetailsFragment.tryToSnapToAlbumPosition(
+                    mDetailsFragment?.tryToSnapToAlbumPosition(
                         MusicOrgHelper.getPlayingAlbumPosition(
                             selectedArtistOrFolder,
                             mMediaPlayerHolder,
@@ -1281,7 +1281,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     setQueueEnabled(false)
                 }
                 val selectedSongs = if (sDetailsFragmentExpanded) {
-                    mDetailsFragment.onDisableShuffle(isShuffleMode = false, isMusicListOutputRequired = true)
+                    mDetailsFragment?.onDisableShuffle(isShuffleMode = false, isMusicListOutputRequired = true)
                 } else {
                     songs
                 }
@@ -1366,10 +1366,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
-    private fun closeEqualizerFragment() {
-        if (goPreferences.isAnimations) {
+    private fun closeEqualizerFragment(isAnimation: Boolean) {
+        if (isAnimation) {
             if (!sRevealAnimationRunning) {
-                mEqualizerFragment.onHandleBackPressed().run {
+                mEqualizerFragment?.onHandleBackPressed()?.run {
                     sRevealAnimationRunning = true
                     doOnEnd {
                         supportFragmentManager.goBackFromFragmentNow(mEqualizerFragment)
@@ -1452,7 +1452,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                         restoreShuffledSongs()
                     }
                     if (sDetailsFragmentExpanded) {
-                        mDetailsFragment.onDisableShuffle(isShuffleMode = false, isMusicListOutputRequired = false)
+                        mDetailsFragment?.onDisableShuffle(isShuffleMode = false, isMusicListOutputRequired = false)
                     }
                 }
 
@@ -1669,7 +1669,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 mQueueDialog.dismiss()
             }
             if (checkIsPlayer(false) && sDetailsFragmentExpanded && !mMediaPlayerHolder.isShuffledSongsQueued.first) {
-                mDetailsFragment.onDisableShuffle(isShuffleMode = false, isMusicListOutputRequired = false)
+                mDetailsFragment?.onDisableShuffle(isShuffleMode = false, isMusicListOutputRequired = false)
             }
         }
 
