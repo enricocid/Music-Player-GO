@@ -60,5 +60,6 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="ToolbarStyle.Subtitle" parent="@android:style/TextAppearance.Material.Widget.ActionBar.Subtitle" />
+    <style name="ToolbarStyle.Subtitle" parent="@style/TextAppearance.MaterialComponents.Caption" />
+
 </resources>

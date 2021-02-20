@@ -1,17 +1,11 @@
 package com.iven.musicplayergo.fragments
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
-import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -19,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
-import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.adapters.AccentsAdapter
 import com.iven.musicplayergo.adapters.ActiveTabsAdapter
@@ -82,20 +75,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        findPreference<Preference>(getString(R.string.open_git_pref))?.onPreferenceClickListener =
-            this
-
-        findPreference<Preference>(getString(R.string.faq_pref))?.onPreferenceClickListener =
-            this
-
-        ViewModelProvider(requireActivity()).get(MusicViewModel::class.java).apply {
-            deviceMusic.observe(viewLifecycleOwner, { returnedMusic ->
-                if (!returnedMusic.isNullOrEmpty()) {
-                    updateFiltersPreferences(musicDatabaseSize!!)
-                }
-            })
-        }
-
         mThemePreference = findPreference<Preference>(getString(R.string.theme_pref))?.apply {
             icon = ContextCompat.getDrawable(requireActivity(), ThemeHelper.resolveThemeIcon(requireActivity()))
         }
@@ -113,6 +92,8 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             preference.summary = goPreferences.activeTabs.size.toString()
             preference.onPreferenceClickListener = this@PreferencesFragment
         }
+
+        updateFiltersPreferences()
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -121,8 +102,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     override fun onPreferenceClick(preference: Preference?): Boolean {
         when (preference?.key) {
-            getString(R.string.open_git_pref) -> openCustomTab(getString(R.string.app_git))
-            getString(R.string.faq_pref) -> openCustomTab(getString(R.string.app_faq))
             getString(R.string.accent_pref) -> showAccentsDialog()
             getString(R.string.filter_pref) -> if (!goPreferences.filters.isNullOrEmpty()) {
                 showFiltersDialog()
@@ -154,37 +133,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             )
             getString(R.string.song_visual_pref) -> mUIControlInterface.onSongVisualizationChanged()
             getString(R.string.filter_pref) -> mUIControlInterface.onAppearanceChanged(false)
-        }
-    }
-
-    @SuppressLint("QueryPermissionsNeeded")
-    private fun openCustomTab(link: String) {
-        val customTabsIntent = CustomTabsIntent.Builder()
-            .setShareState(CustomTabsIntent.SHARE_STATE_ON)
-            .setShowTitle(true)
-            .build()
-
-        val parsedUri = link.toUri()
-        val manager = requireActivity().packageManager
-        val infos = manager.queryIntentActivities(customTabsIntent.intent, 0)
-        if (infos.size > 0) {
-            customTabsIntent.launchUrl(requireActivity(), parsedUri)
-        } else {
-
-            //from: https://github.com/immuni-app/immuni-app-android/blob/development/extensions/src/main/java/it/ministerodellasalute/immuni/extensions/utils/ExternalLinksHelper.kt
-            val browserIntent = Intent(Intent.ACTION_VIEW, parsedUri)
-            browserIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-
-            val fallbackInfos = manager.queryIntentActivities(browserIntent, 0)
-            if (fallbackInfos.size > 0) {
-                requireActivity().startActivity(browserIntent)
-            } else {
-                Toast.makeText(
-                    requireActivity(),
-                    requireActivity().getString(R.string.error_no_browser),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
         }
     }
 
@@ -244,11 +192,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         }
     }
 
-    fun updateFiltersPreferences(databaseSize: Int) {
-        findPreference<Preference>(getString(R.string.found_songs_pref))?.let { preference ->
-            preference.title =
-                    getString(R.string.found_songs_pref_title, databaseSize)
-        }
+    fun updateFiltersPreferences() {
         findPreference<Preference>(getString(R.string.filter_pref))?.let { preference ->
             goPreferences.filters?.let { ft ->
                 preference.summary = ft.size.toString()

@@ -1549,7 +1549,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     mMusicViewModel.deviceMusicFiltered = mMusicViewModel.deviceMusicFiltered?.filter { !it.artist.equals(string) and !it.album.equals(string) and !it.relativePath.equals(string) }?.toMutableList()
 
                     mAllMusicFragment?.onListFiltered(mMusicViewModel.deviceMusicFiltered)
-                    mSettingsFragment?.onFiltersChanged(mMusicViewModel.deviceMusicFiltered?.size!!)
+                    mSettingsFragment?.onFiltersChanged()
 
                     // be sure to update queue, loved songs and the controls panel
                     if (isMediaPlayerHolder) {

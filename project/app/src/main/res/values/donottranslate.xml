@@ -7,7 +7,6 @@
 
     <!-- External links -->
     <string name="app_git">https://github.com/enricocid/Music-Player-GO</string>
-    <string name="app_faq">https://github.com/enricocid/Music-Player-GO/blob/master/FAQ.md</string>
 
     <!-- Formatted strings used in RVs items and other TextViews -->
     <string name="album_artist_size">&lt;b>%1s&lt;/b>&#160;-&#160;%2s</string>
@@ -50,15 +49,11 @@
     <string name="extended_fab_placeholder">0</string>
 
     <!-- Other preferences titles/subtitles -->
-    <string name="faq_title">FAQ</string>
     <string name="category_ui">UI</string>
     <string name="category_audio">Audio</string>
     <string name="accent_and_hex">&lt;b>%1s&lt;/b>:&#160;%2s</string>
 
     <!-- Preferences keys used in settings-->
-    <string name="open_git_pref">open_git_pref</string>
-    <string name="faq_pref">faq_pref</string>
-    <string name="found_songs_pref">found_songs_pref</string>
     <string name="theme_pref">theme_pref</string>
     <string name="theme_pref_light">theme_pref_light</string>
     <string name="theme_pref_dark">theme_pref_dark</string>

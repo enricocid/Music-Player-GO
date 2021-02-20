@@ -54,8 +54,6 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
 
     val randomMusic get() = deviceMusicFiltered?.random()
 
-    val musicDatabaseSize get() = deviceMusicFiltered?.size
-
     /**
      * Cancel all coroutines when the ViewModel is cleared
      */
