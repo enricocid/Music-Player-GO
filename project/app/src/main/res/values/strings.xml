@@ -63,6 +63,7 @@
     <string name="content_repeat">Enable/disable repeat options</string>
 
     <!-- Messages - Errors -->
+    <string name="open_git_pref_summary">Open the project\'s webpage for more info :)</string>
     <string name="open_details_fragment">Open artist/folder\'s details</string>
     <string name="error_no_loved_songs">No favorite songs found!</string>
     <string name="error_no_music">No music found :(</string>
@@ -86,16 +87,6 @@
     <!-- Preferences - Categories -->
     <string name="settings">Settings</string>
     <string name="category_general">General</string>
-
-    <!-- Preferences - Git page -->
-    <string name="open_git_pref_title">GitHub page</string>
-    <string name="open_git_pref_summary">Open the project\'s webpage for more info :)</string>
-
-    <!-- Preferences - FAQ -->
-    <string name="faq_summary">FAQ and supported media formats :P</string>
-
-    <!-- Preferences - Found songs -->
-    <string name="found_songs_pref_title">Songs found: %1d</string>
 
     <!-- Preferences - Themes -->
     <string name="theme_pref_title">Theme</string>
