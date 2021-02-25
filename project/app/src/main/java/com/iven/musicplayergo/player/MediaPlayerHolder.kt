@@ -943,15 +943,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         override fun onReceive(context: Context, intent: Intent) {
 
             try {
-                val action = intent.action
+                intent.action?.let { act ->
 
-                if (action != null) {
-                    when (action) {
+                    when (act) {
 
                         BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (::currentSong.isInitialized && goPreferences.isHeadsetPlugEnabled) {
                             pauseMediaPlayer()
                         }
-
                         BluetoothDevice.ACTION_ACL_CONNECTED -> if (::currentSong.isInitialized && goPreferences.isHeadsetPlugEnabled) {
                             resumeMediaPlayer()
                         }
@@ -984,6 +982,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                         }
                     }
                 }
+
                 if (isOrderedBroadcast) {
                     abortBroadcast()
                 }

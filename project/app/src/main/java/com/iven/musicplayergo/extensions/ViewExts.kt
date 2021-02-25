@@ -96,8 +96,8 @@ fun Menu.enablePopupIcons(activity: Activity) {
         val visibleItemsIterator = visibleItems.iterator()
         while (visibleItemsIterator.hasNext()) {
             visibleItemsIterator.next().run {
-                if (icon != null) {
-                    icon = InsetDrawable(icon, iconMarginPx, 0, iconMarginPx, 0)
+                icon?.let { ic ->
+                    icon = InsetDrawable(ic, iconMarginPx, 0, iconMarginPx, 0)
                 }
             }
         }

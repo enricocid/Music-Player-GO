@@ -124,11 +124,10 @@ class PlayerService : Service() {
         isRunning = true
 
         try {
-            val action = intent?.action
+            intent?.action?.let { act ->
 
-            if (action != null) {
                 with(mediaPlayerHolder) {
-                    when (action) {
+                    when (act) {
                         GoConstants.REWIND_ACTION -> fastSeek(false)
                         GoConstants.PREV_ACTION -> instantReset()
                         GoConstants.PLAY_PAUSE_ACTION -> resumeOrPause()

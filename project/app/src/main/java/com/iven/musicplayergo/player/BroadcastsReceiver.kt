@@ -18,13 +18,11 @@ class NotificationReceiver(
 ) : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
-
         try {
-            val action = intent?.action
+            intent?.action?.let { act ->
 
-            if (action != null) {
                 with(mediaPlayerHolder) {
-                    when (action) {
+                    when (act) {
                         GoConstants.PREV_ACTION -> instantReset()
                         GoConstants.PLAY_PAUSE_ACTION -> resumeOrPause()
                         GoConstants.NEXT_ACTION -> skip(true)
@@ -34,7 +32,7 @@ class NotificationReceiver(
                         }
                         GoConstants.CLOSE_ACTION -> if (playerService.isRunning && isMediaPlayer) {
                             stopPlaybackService(
-                                stopPlayback = true
+                                    stopPlayback = true
                             )
                         }
 
@@ -73,6 +71,7 @@ class NotificationReceiver(
                     }
                 }
             }
+
             if (isOrderedBroadcast) {
                 abortBroadcast()
             }
