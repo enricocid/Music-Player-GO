@@ -48,6 +48,9 @@
     <!-- Extended FAB placeholder -->
     <string name="extended_fab_placeholder">0</string>
 
+    <!-- Extended FAB placeholder -->
+    <string name="eq">EQ</string>
+
     <!-- Other preferences titles/subtitles -->
     <string name="category_ui">UI</string>
     <string name="category_audio">Audio</string>

@@ -10,13 +10,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import android.widget.AdapterView.OnItemSelectedListener
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.afollestad.recyclical.datasource.emptyDataSource
-import com.afollestad.recyclical.setup
-import com.afollestad.recyclical.withItem
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
@@ -29,7 +27,6 @@ import com.iven.musicplayergo.extensions.createCircularReveal
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.ui.MediaControlInterface
-import com.iven.musicplayergo.ui.PresetsViewHolder
 import com.iven.musicplayergo.ui.UIControlInterface
 import java.util.*
 import kotlin.concurrent.schedule
@@ -86,6 +83,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        saveEqSettings()
         _eqFragmentBinding = null
     }
 
@@ -127,12 +125,6 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
         finishSetupEqualizer(view)
     }
 
-    override fun onDetach() {
-        synchronized(saveEqSettings()) {
-            super.onDetach()
-        }
-    }
-
     private fun saveEqSettings() {
         _eqFragmentBinding?.run {
             mMediaControlInterface.onSaveEqualizerSettings(
@@ -166,10 +158,10 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
             strokeWidth = 0.50F
             fillColor =
                 ColorStateList.valueOf(
-                    ContextCompat.getColor(
-                        requireActivity(),
-                        R.color.windowBackground
-                    )
+                        ContextCompat.getColor(
+                                requireActivity(),
+                                R.color.windowBackground
+                        )
                 )
         }
 
@@ -189,8 +181,8 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                         if (fromUser) {
                             if (slider == selectedSlider) {
                                 setBandLevel(
-                                    item.index.toShort(),
-                                    value.toInt().toShort()
+                                        item.index.toShort(),
+                                        value.toInt().toShort()
                                 )
                             }
                         }
@@ -202,35 +194,6 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                         }
                     }
                 }
-            }
-
-            _eqFragmentBinding?.presets?.run {
-                setup {
-                    withDataSource(mDataSource)
-                    withItem<String, PresetsViewHolder>(R.layout.eq_preset_item) {
-                        onBind(::PresetsViewHolder) { index, item ->
-                            presetTitle.text = item
-                            val textColor = if (mSelectedPreset == index) {
-                                ThemeHelper.resolveThemeAccent(requireActivity())
-                            } else {
-                                ThemeHelper.resolveColorAttr(
-                                    requireActivity(),
-                                    android.R.attr.textColorPrimary
-                                )
-                            }
-                            presetTitle.setTextColor(textColor)
-                        }
-
-                        onClick { index ->
-                            adapter?.notifyItemChanged(mSelectedPreset)
-                            mSelectedPreset = index
-                            adapter?.notifyItemChanged(mSelectedPreset)
-                            mEqualizer.first?.usePreset(mSelectedPreset.toShort())
-                            updateBandLevels(true)
-                        }
-                    }
-                }
-                scrollToPosition(mSelectedPreset)
             }
         }
 
@@ -258,15 +221,34 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
             }
 
             inflateMenu(R.menu.menu_eq)
-            menu.run {
-                val equalizerSwitchMaterial =
-                    findItem(R.id.equalizerSwitch).actionView as SwitchMaterial
-                mEqualizer.first?.let { equalizer ->
-                    equalizerSwitchMaterial.isChecked = equalizer.enabled
+
+            val equalizerSwitchMaterial =
+                    menu.findItem(R.id.equalizerSwitch).actionView as SwitchMaterial
+
+            mEqualizer.first?.let { equalizer ->
+                equalizerSwitchMaterial.isChecked = equalizer.enabled
+            }
+            equalizerSwitchMaterial.setOnCheckedChangeListener { _, isChecked ->
+                Timer().schedule(1000) {
+                    mMediaControlInterface.onEnableEqualizer(isChecked)
                 }
-                equalizerSwitchMaterial.setOnCheckedChangeListener { _, isChecked ->
-                    Timer().schedule(1000) {
-                        mMediaControlInterface.onEnableEqualizer(isChecked)
+            }
+
+            with(menu.findItem(R.id.miSpinner).actionView as Spinner) {
+                // set Spinner Adapter
+                val spinnerAdapter = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_dropdown_item, mPresetsList)
+                spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                adapter = spinnerAdapter
+
+                setSelection(mSelectedPreset)
+
+                onItemSelectedListener = object : OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        mSelectedPreset = position
+                        mEqualizer.first?.usePreset(mSelectedPreset.toShort())
+                        updateBandLevels(true)
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
                     }
                 }
             }
@@ -285,8 +267,8 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                 }
             }
 
-            _eqFragmentBinding?.run {
-                if (!isPresetChanged) {
+            if (!isPresetChanged) {
+                _eqFragmentBinding?.run {
                     goPreferences.savedEqualizerSettings?.let { eqSettings ->
                         sliderBass.value = eqSettings.bassBoost.toFloat()
                     }
@@ -298,7 +280,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
         } catch (e: UnsupportedOperationException) {
             e.printStackTrace()
-            Toast.makeText(requireActivity(),  getString(R.string.error_eq), Toast.LENGTH_LONG)
+            Toast.makeText(requireActivity(), getString(R.string.error_eq), Toast.LENGTH_LONG)
                     .show()
         }
     }
