@@ -64,10 +64,7 @@
     <string name="theme_pref_dark_title">어두운 테마</string>
     <string name="theme_pref_light_title">밝은 테마</string>
     <string name="theme_pref_title">테마</string>
-    <string name="found_songs_pref_title">찾은 노래 수: %1d</string>
-    <string name="faq_summary">자주 묻는 질문들과 지원되는 미디어 형식 :P</string>
     <string name="open_git_pref_summary">더 많은 정보를 위해 프로젝트 웹사이트 방문 :)</string>
-    <string name="open_git_pref_title">GitHub 페이지</string>
     <string name="shuffle_am">전체 셔플</string>
     <string name="sorting_pref_track">트랙 순서 ↓</string>
     <string name="sorting_pref_track_inv">트랙 순서 ↑</string>

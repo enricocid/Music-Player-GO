@@ -30,10 +30,7 @@
     <string name="on_close_activity">Oynatmayı durdurmak ister misin?</string>
     <string name="settings">Ayarlar</string>
     <string name="category_general">Genel</string>
-    <string name="open_git_pref_title">GitHub Sayfası</string>
     <string name="open_git_pref_summary">Daha fazla bilgi için projenin internet sayfasını açın :)</string>
-    <string name="faq_summary">SSS ve desteklenen medya formatları :P</string>
-    <string name="found_songs_pref_title">Bulunan şarkılar: %1d</string>
     <string name="theme_pref_title">Tema</string>
     <string name="theme_pref_light_title">Açık</string>
     <string name="theme_pref_dark_title">Koyu</string>
@@ -87,4 +84,19 @@
     <string name="content_skip_next">Sonraki şarkıya geç</string>
     <string name="content_skip_prev">Önceki şarkıya geç</string>
     <string name="content_play">Oynat/duraklat</string>
+    <string name="playback_pref_summary_off">Seçilen oynatma hızını sürdür</string>
+    <string name="playback_pref_summary_on">Seçilen oynatma hızını sürdürme</string>
+    <string name="playback_pref_title">Oynatma hızı</string>
+    <string name="speed_3">Normal</string>
+    <string name="content_playback_speed">Oynatma hızı</string>
+    <string name="anim_pref_summary_off">Animasyonları aç</string>
+    <string name="anim_pref_summary_on">Animasyonları kapat</string>
+    <string name="anim_pref_title">Animasyonlar</string>
+    <string name="sorting_pref_artist_inv">Sanatçıya göre Z-A\'ya sırala</string>
+    <string name="sorting_pref_artist">Sanatçıya göre A-Z\'ye sırala</string>
+    <string name="sorting_pref_date_added_inv">Önce en eski eklenen</string>
+    <string name="sorting_pref_date_added">Önce en yeni eklenen</string>
+    <string name="sorting_pref_album_inv">Albüme göre Z-A\'ya sırala</string>
+    <string name="sorting_pref_album">Albüme göre A-Z\'ye sırala</string>
+    <string name="delete">Sil</string>
 </resources>

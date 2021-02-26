@@ -33,9 +33,7 @@
     <string name="repeat_disabled">∞ ismétlés kikapcsolva.</string>
     <string name="settings">Beállítások</string>
     <string name="category_general">Általános</string>
-    <string name="open_git_pref_title">GitHub oldal</string>
     <string name="open_git_pref_summary">Nyissa meg a projekt oldalát több információért :)</string>
-    <string name="faq_summary">GYIK és támogatott média formátumok :P</string>
     <string name="theme_pref_title">Téma</string>
     <string name="theme_pref_light_title">Világos</string>
     <string name="theme_pref_dark_title">Sötét</string>
@@ -67,7 +65,6 @@
     <string name="covers_pref_summary_off">Albumborítók megjelenítése</string>
     <string name="covers_pref_summary_on">Albumborítók elrejtése</string>
     <string name="covers_pref_title">Beágyazott albumborítók</string>
-    <string name="found_songs_pref_title">%1d dal található</string>
     <string name="error_eq">Hoppá, hiba történt!</string>
     <string name="error_list_ended">A lista befejeződött.</string>
     <string name="filter_popup_title">Elrejtés</string>

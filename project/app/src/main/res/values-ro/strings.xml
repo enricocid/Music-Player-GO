@@ -33,10 +33,7 @@
     <string name="repeat_disabled">Repetarea &#8734; dezactivată !</string>
     <string name="settings">Setări</string>
     <string name="category_general">General</string>
-    <string name="open_git_pref_title">Pagină GitHub</string>
     <string name="open_git_pref_summary">Deschide pagina proiectului pentru mai multe informații :)</string>
-    <string name="faq_summary">Întrebări frecvente și formate acceptate: P</string>
-    <string name="found_songs_pref_title">Titluri găsite: %1d</string>
     <string name="theme_pref_title">Temă</string>
     <string name="theme_pref_light_title">Clar</string>
     <string name="theme_pref_dark_title">Întunecat</string>

@@ -13,7 +13,6 @@
     <string name="error_no_queue">В очереди нет треков.</string>
     <string name="error_no_loved_songs">В избранном нет треков!</string>
     <string name="error_unknown_unsupported">Что-то пошло не так! :( Возможно, формат не поддерживается или папка недоступна (не вина приложения!).</string>
-    <string name="faq_summary">FAQ и поддерживаемые форматы :D</string>
     <string name="focus_pref_summary_off">Включить управление фокусировкой аудио</string>
     <string name="focus_pref_summary_on">Выключить управление фокусировкой аудио</string>
     <string name="folders">Папки</string>
@@ -29,7 +28,6 @@
     <string name="loved_songs">Избранное</string>
     <string name="loved_songs_clear">Избранные будут очищены. Продолжить\?</string>
     <string name="on_close_activity">Вы хотите остановить воспроизведение?</string>
-    <string name="open_git_pref_title">Страница на GitHub</string>
     <string name="open_git_pref_summary">Откройте свойства проекта что бы узнать детальнее</string>
     <string name="precise_volume_pref_summary_off">Включить точный контроль громкости</string>
     <string name="precise_volume_pref_summary_on">Выключить точный контроль громкости</string>
@@ -53,7 +51,6 @@
     <string name="sorting_pref">Сортировка</string>
     <string name="sorting_pref_track">По номеру трека ↓</string>
     <string name="sorting_pref_track_inv">По номеру трека ↑</string>
-    <string name="found_songs_pref_title">Найдены треки: %1d</string>
     <string name="filter_pref_title">Фильтры</string>
     <string name="filter_popup_title">Спрятать</string>
     <string name="repeat_loop_enabled">Повтор ∞ включен.</string>
@@ -82,4 +79,24 @@
     <string name="equalizer_bb">Усиление басов</string>
     <string name="equalizer">Эквалайзер</string>
     <string name="loved_songs_save_time">Сохранить позицию песни</string>
+    <string name="playback_pref_summary_off">Сохранять выбранную скорость воспроизведения</string>
+    <string name="playback_pref_summary_on">Не сохранять выбранную скорость воспроизведения</string>
+    <string name="playback_pref_title">Скорость воспроизведения</string>
+    <string name="anim_pref_summary_off">Включить анимации</string>
+    <string name="anim_pref_summary_on">Отключить анимации</string>
+    <string name="anim_pref_title">Анимации</string>
+    <string name="sorting_pref_artist_inv">Исполнитель: Я-А</string>
+    <string name="sorting_pref_artist">Исполнитель: А-Я</string>
+    <string name="sorting_pref_date_added_inv">Сначала старая дата</string>
+    <string name="sorting_pref_date_added">Сначала новая дата</string>
+    <string name="open_details_fragment">Открыть сведения об исполнителе/папке</string>
+    <string name="content_repeat">Включить/отключить параметры повтора</string>
+    <string name="content_skip_next">Перейти к следующему треку</string>
+    <string name="content_play">Воспроизведение/пауза</string>
+    <string name="content_skip_prev">Перейти к предыдущему треку</string>
+    <string name="speed_3">Нормальная</string>
+    <string name="content_playback_speed">Скорость воспроизведения</string>
+    <string name="sorting_pref_album_inv">По альбому: Я-А</string>
+    <string name="sorting_pref_album">По альбому: А-Я</string>
+    <string name="delete">Удалить</string>
 </resources>

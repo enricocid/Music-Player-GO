@@ -33,9 +33,7 @@
     <string name="repeat_disabled">Repetir ∞ desligado.</string>
     <string name="settings">Configurações</string>
     <string name="category_general">Geral</string>
-    <string name="open_git_pref_title">Página no GitHub</string>
     <string name="open_git_pref_summary">Abra a página do projeto para mais informações :)</string>
-    <string name="faq_summary">Dúvidas frequentes e formatos de mídia suportados :P</string>
     <string name="theme_pref_title">Tema</string>
     <string name="theme_pref_light_title">Claro</string>
     <string name="theme_pref_dark_title">Escuro</string>
@@ -55,7 +53,6 @@
     <string name="headset_pref_summary_off">Ligar gerenciamento de entrada do fone de ouvido</string>
     <string name="filter_pref_title">Filtros</string>
     <string name="filter_popup_title">Ocultar</string>
-    <string name="found_songs_pref_title">Músicas encontradas: %1d</string>
     <string name="sorting_pref">Classificação</string>
     <string name="sorting_pref_track">Pelo número da faixa ↓</string>
     <string name="sorting_pref_track_inv">Pelo número da faixa ↑</string>
@@ -87,4 +84,19 @@
     <string name="content_skip_next">Pular para a próxima faixa</string>
     <string name="content_play">Tocar/pausar</string>
     <string name="content_skip_prev">Pular para a faixa anterior</string>
+    <string name="playback_pref_summary_off">Manter a velocidade de reprodução selecionada</string>
+    <string name="playback_pref_summary_on">Não manter a velocidade de reprodução selecionada</string>
+    <string name="playback_pref_title">Velocidade de reprodução</string>
+    <string name="speed_3">Normal</string>
+    <string name="content_playback_speed">Velocidade de reprodução</string>
+    <string name="anim_pref_summary_off">Ativar animações</string>
+    <string name="anim_pref_summary_on">Desativar animações</string>
+    <string name="sorting_pref_artist">Pelo artista A-Z</string>
+    <string name="sorting_pref_date_added">Data mais recente primeiro</string>
+    <string name="anim_pref_title">Animações</string>
+    <string name="sorting_pref_artist_inv">Pelo artista Z-A</string>
+    <string name="sorting_pref_date_added_inv">Data mais antiga primeiro</string>
+    <string name="sorting_pref_album_inv">Pelo álbum Z-A</string>
+    <string name="sorting_pref_album">Pelo álbum A-Z</string>
+    <string name="delete">Excluir</string>
 </resources>

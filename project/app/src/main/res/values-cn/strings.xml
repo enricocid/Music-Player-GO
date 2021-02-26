@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Dialogs / Buttons -->
     <string name="yes">是</string>
     <string name="no">否</string>
     <string name="on_close_activity">确定要停止播放吗？</string>
     <string name="queue_songs_clear">队列将被清空，是否继续？</string>
     <string name="loved_songs_clear">\"我喜欢\"列表将会被清空，是否继续？</string>
     <string name="loved_song_remove">『%1s (%2s) 将从\"我喜欢\"列表中删除。继续？</string>
-    <!-- Main - Fragments titles -->
     <string name="artists">歌手</string>
     <string name="songs">歌曲</string>
     <string name="albums">专辑</string>
     <string name="folders">文件夹</string>
-    <!-- Main - Artists/Folder RecyclerViews items  -->
     <string name="artist_info">%1d 专辑, %2d 歌曲</string>
     <string name="folder_info">%1d 歌曲</string>
-    <!-- Popup/Menu titles -->
     <string name="sorting_pref">排序</string>
     <string name="sorting_pref_default">默认</string>
     <string name="sorting_pref_track">按轨道号 ↓</string>
@@ -25,14 +21,11 @@
     <string name="queue_add">添加到队列</string>
     <string name="loved_song_add">加入\"我喜欢\"列表</string>
     <string name="filter_popup_title">隐藏</string>
-    <!-- Queue -->
     <string name="queue">队列</string>
     <string name="queue_song_add">%1s 已加入队列！</string>
     <string name="queue_song_remove">%1s 将从队列中删除。继续？</string>
-    <!-- Loved songs -->
     <string name="loved_songs">喜爱的歌曲</string>
     <string name="loved_song_added">%1s (%2s) 添加到喜欢的歌曲</string>
-    <!-- Messages - Errors -->
     <string name="error_no_loved_songs">找不到喜欢的歌曲！</string>
     <string name="error_no_music">找不到音乐 :(</string>
     <string name="error_not_ready">加载音乐库时出现问题！ :( 这可能是由于SD卡已卸载，从而迫使Android的MediaStore重建其数据库记录。解决方案：请稍后再试。</string>
@@ -41,45 +34,29 @@
     <string name="error_no_browser">未找到浏览器。</string>
     <string name="error_bad_id">先放首歌呗。</string>
     <string name="error_no_queue">歌曲队列中无歌曲。</string>
-    <!-- Messages - Permission rationale -->
     <string name="perm_rationale">音乐播放器GO需要访问您的文件才能播放音乐，请赋予软件访问文件权限。</string>
-    <!-- Messages - Repeat -->
     <string name="repeat_enabled">循环一次模式启动。</string>
     <string name="repeat_loop_enabled">无限循环模式启动。</string>
     <string name="repeat_disabled">无限循环已禁用。</string>
-    <!-- Preferences - Categories -->
     <string name="settings">设置</string>
     <string name="category_general">通用</string>
-    <!-- Preferences - Git page -->
-    <string name="open_git_pref_title">GitHub主页</string>
     <string name="open_git_pref_summary">打开项目页面以获取更多信息 :)</string>
-    <!-- Preferences - FAQ -->
-    <string name="faq_summary">常见问题解答和支持的媒体格式 :P</string>
-    <!-- Preferences - Found songs -->
-    <string name="found_songs_pref_title">找到歌曲: %1d</string>
-    <!-- Preferences - Themes -->
     <string name="theme_pref_title">主题</string>
     <string name="theme_pref_light_title">浅色</string>
     <string name="theme_pref_dark_title">深色</string>
     <string name="theme_pref_auto_title">自动</string>
-    <!-- Preferences - Accent -->
     <string name="accent_pref_title">强调色</string>
-    <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">标签管理</string>
     <string name="active_fragments_pref_warning">您不能删除所有标签！ :P</string>
-    <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">精确的音量控制</string>
     <string name="precise_volume_pref_summary_on">禁用精确的音量控制</string>
     <string name="precise_volume_pref_summary_off">实现精确的音量控制</string>
-    <!-- Preferences - Focus -->
     <string name="focus_pref_title">音频焦点</string>
     <string name="focus_pref_summary_on">禁用音频焦点管理</string>
     <string name="focus_pref_summary_off">启用音频焦点管理</string>
-    <!-- Preferences - Headsets -->
     <string name="headset_pref_title">耳机插头</string>
     <string name="headset_pref_summary_on">禁用耳机插头管理</string>
     <string name="headset_pref_summary_off">启用耳机插头管理</string>
-    <!-- Preferences - Filters -->
     <string name="filter_pref_title">过滤器</string>
     <string name="fast_seeking_actions_pref_title">额外通知操作</string>
     <string name="fast_seeking_pref_title">快速查找</string>

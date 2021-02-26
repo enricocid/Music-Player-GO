@@ -40,45 +40,29 @@
     <string name="error_no_browser">Non se atopou navegador.</string>
     <string name="error_bad_id">Reproduce primeiro unha pista.</string>
     <string name="error_no_queue">Sen cancións na cola.</string>
-    <!-- Messages - Permission rationale -->
     <string name="perm_rationale">Music Player GO precisa acceder ós ficheiros para poder reproducilos.</string>
-    <!-- Messages - Repeat -->
     <string name="repeat_enabled">Activouse repetir 1 vez.</string>
     <string name="repeat_loop_enabled">Repetir ∞ activado.</string>
     <string name="repeat_disabled">Repetir ∞ desactivado.</string>
-    <!-- Preferences - Categories -->
     <string name="settings">Axustes</string>
     <string name="category_general">Xeral</string>
-    <!-- Preferences - Git page -->
-    <string name="open_git_pref_title">páxina GitHub</string>
     <string name="open_git_pref_summary">Abre a páxina do proxecto para máis info :)</string>
-    <!-- Preferences - FAQ -->
-    <string name="faq_summary">PMF e tipos de ficheiro soportados :P</string>
-    <!-- Preferences - Found songs -->
-    <string name="found_songs_pref_title">Cancións atopadas: %1d</string>
-    <!-- Preferences - Themes -->
     <string name="theme_pref_title">Decorado</string>
     <string name="theme_pref_light_title">Claro</string>
     <string name="theme_pref_dark_title">Escuro</string>
     <string name="theme_pref_auto_title">Automático</string>
-    <!-- Preferences - Accent -->
     <string name="accent_pref_title">Cor</string>
-    <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">Lapelas activas</string>
     <string name="active_fragments_pref_warning">Non podes eliminar todas as lapelas! :P</string>
-    <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">Control preciso do volume</string>
     <string name="precise_volume_pref_summary_on">Desactivar control preciso do volume</string>
     <string name="precise_volume_pref_summary_off">Activar control preciso do volume</string>
-    <!-- Preferences - Focus -->
     <string name="focus_pref_title">Foco do Audio</string>
     <string name="focus_pref_summary_on">Desactivar xestión do foco sobre o audio</string>
     <string name="focus_pref_summary_off">Activar xestión do foco sobre o audio</string>
-    <!-- Preferences - Headsets -->
     <string name="headset_pref_title">Conexión de auriculares</string>
     <string name="headset_pref_summary_on">Desactivar xestión da conexión de auriculares</string>
     <string name="headset_pref_summary_off">Activar xestión da conexión de auriculares</string>
-    <!-- Preferences - Filters -->
     <string name="filter_pref_title">Filtros</string>
     <string name="fast_seeking_actions_pref_summary_on">Preferir accións de busca rápida</string>
     <string name="fast_seeking_actions_pref_summary_off">Preferir accións pechar/repetir</string>
@@ -107,4 +91,19 @@
     <string name="content_skip_next">Ir á canción seguinte</string>
     <string name="content_play">Reprd./Pausa</string>
     <string name="content_skip_prev">Ir á canción anterior</string>
+    <string name="playback_pref_summary_off">Continuar coa velocidade seleccionada</string>
+    <string name="playback_pref_summary_on">Non continuar coa velocidade seleccionada</string>
+    <string name="playback_pref_title">Velocidade de reprodución</string>
+    <string name="speed_3">Normal</string>
+    <string name="content_playback_speed">Velocidade de reprodución</string>
+    <string name="anim_pref_summary_off">Activar animacións</string>
+    <string name="anim_pref_summary_on">Desactivar animacións</string>
+    <string name="anim_pref_title">Animacións</string>
+    <string name="sorting_pref_artist_inv">Por artista Z-A</string>
+    <string name="sorting_pref_artist">Por artista A-Z</string>
+    <string name="sorting_pref_date_added_inv">Primeiro o máis antigo</string>
+    <string name="sorting_pref_date_added">Primeiro o máis recente</string>
+    <string name="sorting_pref_album_inv">Por álbume Z-A</string>
+    <string name="sorting_pref_album">Por álbume A-Z</string>
+    <string name="delete">Eliminar</string>
 </resources>

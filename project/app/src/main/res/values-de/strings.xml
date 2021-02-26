@@ -36,10 +36,7 @@
     <string name="theme_pref_dark_title">Dunkel</string>
     <string name="theme_pref_light_title">Hell</string>
     <string name="theme_pref_title">Thema</string>
-    <string name="found_songs_pref_title">Gefundene Lieder: %1d</string>
-    <string name="faq_summary">FAQ und unterstützte Medienformate</string>
     <string name="open_git_pref_summary">Projektseite für mehr Infos öffnen :)</string>
-    <string name="open_git_pref_title">GitHub-Seite</string>
     <string name="category_general">Allgemein</string>
     <string name="settings">Einstellungen</string>
     <string name="repeat_disabled">Unendliche ∞ Wiederholung aus.</string>
@@ -81,4 +78,14 @@
     <string name="on_list_ended_pref_title">Wenn die Liste zu Ende ist…</string>
     <string name="error_eq">Ups, ein Fehler ist aufgetreten!</string>
     <string name="error_list_ended">Liste am Ende.</string>
+    <string name="playback_pref_title">Abspielgeschwindigkeit</string>
+    <string name="anim_pref_summary_off">Animationen anschalten</string>
+    <string name="anim_pref_summary_on">Animationen ausschalten</string>
+    <string name="anim_pref_title">Animationen</string>
+    <string name="speed_3">Normal</string>
+    <string name="content_playback_speed">Abspielgeschwindigkeit</string>
+    <string name="sorting_pref_artist_inv">Nach Künstler Z-A</string>
+    <string name="sorting_pref_artist">Nach Künstler A-Z</string>
+    <string name="sorting_pref_date_added_inv">Ältestes Datum zuerst</string>
+    <string name="sorting_pref_date_added">Neuestes Datum zuerst</string>
 </resources>

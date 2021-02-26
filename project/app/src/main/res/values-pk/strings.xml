@@ -1,23 +1,15 @@
 <resources>
-
-    <!-- Dialogs / Buttons -->
     <string name="yes">جی ہاں</string>
     <string name="no">نہیں</string>
     <string name="on_close_activity">کیا آپ پلے بیک کو روکنا چاہتے ہیں؟</string>
     <string name="queue_songs_clear">قطار صاف ہو جائے گی۔ جاری رہے؟</string>
     <string name="loved_songs_clear">پیارے گانے صاف ہوجائیں گے۔ جاری رہے؟</string>
     <string name="loved_song_remove">%1s (%2s) کو پیارے گانوں سے حذف کردیا جائے گا۔ جاری رہے؟</string>
-
-    <!-- Main - Fragments titles -->
     <string name="artists">فنکار</string>
     <string name="songs">گانے</string>
     <string name="folders">فولڈرز</string>
-
-    <!-- Main - Artists/Folder RecyclerViews items  -->
     <string name="artist_info">%1d&#160;البمز I %2d&#160;گانے</string>
     <string name="folder_info">%1d&#160; گانے </string>
-
-    <!-- Popup/Menu titles -->
     <string name="sorting_pref">چھانٹ</string>
     <string name="sorting_pref_default">پہلے سے طے شدہ</string>
     <string name="sorting_pref_track">&#8595;ٹریک نمبر </string>
@@ -27,17 +19,11 @@
     <string name="queue_add">قطار میں شامل کریں</string>
     <string name="loved_song_add">پسندیدہ گانوں میں شامل کریں</string>
     <string name="filter_popup_title">چھپائیں</string>
-
-    <!-- Queue -->
     <string name="queue">قطار</string>
     <string name="queue_song_add">%1s قطار میں کا اضافہ ہوا!</string>
     <string name="queue_song_remove">%1s کو قطار سے حذف کردیا جائے گا۔ جاری رہے؟</string>
-
-    <!-- Loved songs -->
     <string name="loved_songs">پیارے گانے</string>
     <string name="loved_song_added">%1s (%2s) نے پسندیدہ گانوں میں اضافہ کیا</string>
-
-    <!-- Messages - Errors -->
     <string name="error_no_loved_songs">کوئی پیارا گانا نہیں ملا!</string>
     <string name="error_no_music">کوئی موسیقی نہیں ملی :(</string>
     <string name="error_not_ready">میوزک لائبریری لوڈ کرتے وقت ایک مسئلہ تھا! :( اس کی وجہ ایسڈی کارڈ کی انماؤنٹ نہیں ہوسکتی ہے ، جس کی وجہ سے اینڈرائڈ کے میڈیا اسٹور کو اپنے ڈیٹا بیس ریکارڈوں کو دوبارہ تعمیر کرنا پڑتا ہے۔ حل: بعد میں دوبارہ کوشش کریں۔</string>
@@ -46,57 +32,28 @@
     <string name="error_no_browser">کوئی براؤزر نہیں ملا!</string>
     <string name="error_bad_id">پہلے گانا چلائیں!</string>
     <string name="error_no_queue">کوئی گانوں کی قطار نہیں ہے!</string>
-
-    <!-- Messages - Permission rationale -->
     <string name="perm_rationale">میوزک پلیئر کو موسیقی بجانے کے ل play آپ کی فائلوں تک رسائی کی ضرورت ہے!</string>
-
-    <!-- Messages - Repeat -->
     <string name="repeat_enabled">دہرائیں 1x قابل!</string>
     <string name="repeat_loop_enabled">دہرائیں ∞ قابل!</string>
     <string name="repeat_disabled">دہرائیں ∞ غیر فعال!</string>
-
-    <!-- Preferences - Categories -->
     <string name="settings">ترتیبات</string>
     <string name="category_general">جنرل</string>
-
-    <!-- Preferences - Git page -->
-    <string name="open_git_pref_title">گٹ ہب صفحہ</string>
     <string name="open_git_pref_summary">مزید معلومات کے لئے پروجیکٹ کے صفحے کو کھولیں :)</string>
-
-    <!-- Preferences - FAQ -->
-    <string name="faq_summary">عمومی سوالنامہ اور حمایت یافتہ میڈیا فارمیٹس :P</string>
-
-    <!-- Preferences - Found songs -->
-    <string name="found_songs_pref_title">%1d: ملا گانے</string>
-
-    <!-- Preferences - Themes -->
     <string name="theme_pref_title">خیالیہ</string>
     <string name="theme_pref_light_title">روشنی</string>
     <string name="theme_pref_dark_title">گہرا</string>
     <string name="theme_pref_auto_title">خودکار</string>
-
-    <!-- Preferences - Accent -->
     <string name="accent_pref_title">لہجہ</string>
-
-    <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">فعال ٹیبز</string>
     <string name="active_fragments_pref_warning">آپ صرف تمام ٹیبز کو نہیں ہٹا سکتے ہیں! :P</string>
-
-    <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">عین مطابق حجم کنٹرول</string>
     <string name="precise_volume_pref_summary_on">عین مطابق حجم کنٹرول کو غیر فعال کریں</string>
     <string name="precise_volume_pref_summary_off">عین مطابق حجم کنٹرول کو فعال کریں</string>
-
-    <!-- Preferences - Focus -->
     <string name="focus_pref_title">آڈیو فوکس</string>
     <string name="focus_pref_summary_on">آڈیو فوکس مینجمنٹ کو غیر فعال کریں</string>
     <string name="focus_pref_summary_off">آڈیو فوکس مینجمنٹ کو قابل بنائیں</string>
-
-    <!-- Preferences - Headsets -->
     <string name="headset_pref_title">ہیڈسیٹ پلگ</string>
     <string name="headset_pref_summary_on">ہیڈسیٹ پلگ مینجمنٹ کو غیر فعال کریں</string>
     <string name="headset_pref_summary_off">ہیڈسیٹ پلگ مینجمنٹ کو فعال کریں</string>
-
-    <!-- Preferences - Filters -->
     <string name="filter_pref_title">فلٹرز</string>
 </resources>

@@ -37,10 +37,7 @@
     <string name="sorting_pref_track_inv">Por nro. de récord ↑</string>
     <string name="settings">Preferencias</string>
     <string name="category_general">General</string>
-    <string name="open_git_pref_title">Página de GitHub</string>
     <string name="open_git_pref_summary">Visita la página del proyecto para obtener más información</string>
-    <string name="faq_summary">Preguntas frecuentes y los formatos de medio soportados :P</string>
-    <string name="found_songs_pref_title">Canciones encontradas: %1d</string>
     <string name="theme_pref_title">Tema</string>
     <string name="theme_pref_light_title">Claro</string>
     <string name="theme_pref_dark_title">Oscuro</string>
@@ -81,4 +78,22 @@
     <string name="error_list_ended">Lista terminada.</string>
     <string name="equalizer">Ecualizador</string>
     <string name="albums">Albumes</string>
+    <string name="playback_pref_summary_off">Conservar la velocidad de reproducción seleccionada</string>
+    <string name="playback_pref_summary_on">No conservar la velocidad de reproducción seleccionada</string>
+    <string name="playback_pref_title">Velocidad de reproducción</string>
+    <string name="anim_pref_summary_off">Activar animaciones</string>
+    <string name="anim_pref_summary_on">Desactivar animaciones</string>
+    <string name="anim_pref_title">Animaciones</string>
+    <string name="open_details_fragment">Abrir datos del artista/carpeta</string>
+    <string name="content_repeat">Activar/desactivar opciones de repetición</string>
+    <string name="content_play">Reproducir/pausar</string>
+    <string name="content_skip_next">Saltar a la pista siguiente</string>
+    <string name="content_skip_prev">Saltar a la pista anterior</string>
+    <string name="speed_3">Normal</string>
+    <string name="content_playback_speed">Velocidad de reproducción</string>
+    <string name="sorting_pref_artist_inv">Por artista Z-A</string>
+    <string name="sorting_pref_artist">Por artista A-Z</string>
+    <string name="sorting_pref_date_added">Fecha más reciente primero</string>
+    <string name="sorting_pref_date_added_inv">Fecha más antigua primero</string>
+    <string name="loved_songs_save_time">Guardar la posición de la canción</string>
 </resources>

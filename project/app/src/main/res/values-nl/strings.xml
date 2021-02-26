@@ -36,10 +36,7 @@
     <string name="repeat_disabled">∞ herhalen uitgeschakeld.</string>
     <string name="settings">Instellingen</string>
     <string name="category_general">Algemeen</string>
-    <string name="open_git_pref_title">GitHub-pagina</string>
     <string name="open_git_pref_summary">Bekijk de projectpagina voor meer informatie :)</string>
-    <string name="faq_summary">Veelgestelde vragen en ondersteunde mediaformaten :P</string>
-    <string name="found_songs_pref_title">Aangetroffen nummers: %1d</string>
     <string name="theme_pref_title">Thema</string>
     <string name="theme_pref_light_title">Licht</string>
     <string name="theme_pref_dark_title">Donker</string>
@@ -87,4 +84,19 @@
     <string name="content_skip_next">Doorspoelen naar volgende nummer</string>
     <string name="content_play">Afspelen/Pauzeren</string>
     <string name="content_skip_prev">Terugspoelen naar vorige nummer</string>
+    <string name="playback_pref_summary_off">Afspeelsnelheid instellen als standaard</string>
+    <string name="playback_pref_summary_on">Afspeelsnelheid niet instellen als standaard</string>
+    <string name="playback_pref_title">Afspeelsnelheid</string>
+    <string name="speed_3">Normaal</string>
+    <string name="content_playback_speed">Afspeelsnelheid</string>
+    <string name="anim_pref_summary_off">Animaties inschakelen</string>
+    <string name="anim_pref_summary_on">Animaties uitschakelen</string>
+    <string name="anim_pref_title">Animaties</string>
+    <string name="sorting_pref_artist_inv">Op artiest (Z-A)</string>
+    <string name="sorting_pref_artist">Op artiest (A-Z)</string>
+    <string name="sorting_pref_date_added_inv">Oudste eerst</string>
+    <string name="sorting_pref_date_added">Nieuwste eerst</string>
+    <string name="sorting_pref_album_inv">Op album (Z-A)</string>
+    <string name="sorting_pref_album">Op album (A-Z)</string>
+    <string name="delete">Verwijderen</string>
 </resources>

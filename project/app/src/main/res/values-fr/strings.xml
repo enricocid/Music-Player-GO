@@ -35,10 +35,7 @@
     <string name="repeat_disabled">Répétition ∞ désactivée.</string>
     <string name="settings">Paramètres</string>
     <string name="category_general">Général</string>
-    <string name="open_git_pref_title">Page GitHub</string>
     <string name="open_git_pref_summary">Ouvre la page Web du projet pour plus d\'informations :)</string>
-    <string name="faq_summary">FAQ et formats supportés :P</string>
-    <string name="found_songs_pref_title">Titres trouvés : %1d</string>
     <string name="theme_pref_title">Thème</string>
     <string name="theme_pref_light_title">Clair</string>
     <string name="theme_pref_dark_title">Sombre</string>
@@ -87,4 +84,19 @@
     <string name="content_skip_next">Passer au titre suivant</string>
     <string name="content_play">Lecture/Pause</string>
     <string name="content_skip_prev">Passer au titre précédent</string>
+    <string name="playback_pref_summary_off">Maintenir la vitesse de lecture sélectionnée</string>
+    <string name="playback_pref_summary_on">Ne pas maintenir la vitesse de lecture sélectionnée</string>
+    <string name="playback_pref_title">Vitesse de lecture</string>
+    <string name="speed_3">Normale</string>
+    <string name="content_playback_speed">Vitesse de lecture</string>
+    <string name="anim_pref_summary_off">Activer les animations</string>
+    <string name="anim_pref_summary_on">Désactiver les animations</string>
+    <string name="anim_pref_title">Animations</string>
+    <string name="sorting_pref_artist_inv">Par artiste Z-A</string>
+    <string name="sorting_pref_artist">Par artiste A-Z</string>
+    <string name="sorting_pref_date_added_inv">Plus anciens en premier</string>
+    <string name="sorting_pref_date_added">Plus récents en premier</string>
+    <string name="sorting_pref_album_inv">Par album Z-A</string>
+    <string name="sorting_pref_album">Par album A-Z</string>
+    <string name="delete">Supprimer</string>
 </resources>

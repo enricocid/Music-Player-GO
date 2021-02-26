@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Dialogs / Buttons -->
     <string name="yes">是</string>
     <string name="no">否</string>
     <string name="on_close_activity">您要停止播放嗎？</string>
     <string name="queue_songs_clear">隊列將被清除，繼續？</string>
     <string name="loved_songs_clear">喜愛的歌曲將被清除，繼續？</string>
     <string name="loved_song_remove">%1s (%2s) 將從喜愛的歌曲中刪除。繼續？</string>
-
-    <!-- Main - Fragments titles -->
     <string name="artists">藝術家</string>
     <string name="songs">歌曲</string>
     <string name="albums">專輯</string>
     <string name="folders">資料夾</string>
-
-    <!-- Main - Artists/Folder RecyclerViews items  -->
     <string name="artist_info">%1d&#160;專輯,&#160;%2d&#160;歌曲</string>
     <string name="folder_info">%1d&#160;歌曲</string>
-
-    <!-- Popup/Menu titles -->
     <string name="sorting_pref">排序</string>
     <string name="sorting_pref_default">默認</string>
     <string name="sorting_pref_track">按軌道號 &#8595;</string>
@@ -28,17 +21,11 @@
     <string name="queue_add">添加到隊列</string>
     <string name="loved_song_add">加入喜歡的歌曲</string>
     <string name="filter_popup_title">隱藏</string>
-
-    <!-- Queue -->
     <string name="queue">隊列</string>
     <string name="queue_song_add">%1s 已加入隊列！</string>
     <string name="queue_song_remove">%1s 將從隊列中刪除，繼續？</string>
-
-    <!-- Loved songs -->
     <string name="loved_songs">喜愛的歌曲</string>
     <string name="loved_song_added">%1s (%2s) 添加到喜歡的歌曲</string>
-
-    <!-- Messages - Errors -->
     <string name="error_no_loved_songs">找不到喜歡的歌曲！</string>
     <string name="error_no_music">找不到音樂 :(</string>
     <string name="error_not_ready">加載音樂庫時出現問題！ :( 這可能是由於SD卡已卸載，從而迫使Android的MediaStore重建其數據庫記錄。解決方案：請稍後再試。</string>
@@ -47,57 +34,28 @@
     <string name="error_no_browser">找不到瀏覽器！</string>
     <string name="error_bad_id">首先播放歌曲！</string>
     <string name="error_no_queue">沒有歌曲排隊！</string>
-
-    <!-- Messages - Permission rationale -->
     <string name="perm_rationale">音樂播放器GO需要訪問您的文件才能播放音樂！</string>
-
-    <!-- Messages - Repeat -->
     <string name="repeat_enabled">循環一次！</string>
     <string name="repeat_loop_enabled">無限循環！</string>
     <string name="repeat_disabled">無限循環已禁用！</string>
-
-    <!-- Preferences - Categories -->
     <string name="settings">設定</string>
     <string name="category_general">一般</string>
-
-    <!-- Preferences - Git page -->
-    <string name="open_git_pref_title">GitHub頁面</string>
     <string name="open_git_pref_summary">打開項目頁面以獲取更多信息 :)</string>
-
-    <!-- Preferences - FAQ -->
-    <string name="faq_summary">常見問題解答和支持的媒體格式 :P</string>
-
-    <!-- Preferences - Found songs -->
-    <string name="found_songs_pref_title">找到的歌曲: %1d</string>
-
-    <!-- Preferences - Themes -->
     <string name="theme_pref_title">主題色調</string>
     <string name="theme_pref_light_title">淺色</string>
     <string name="theme_pref_dark_title">深色</string>
     <string name="theme_pref_auto_title">強調色</string>
-
-    <!-- Preferences - Accent -->
     <string name="accent_pref_title">自定義</string>
-
-    <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">標籤管理</string>
     <string name="active_fragments_pref_warning">您不能刪除所有標籤！ :P</string>
-
-    <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">精確的音量控制</string>
     <string name="precise_volume_pref_summary_on">禁用精確的音量控制</string>
     <string name="precise_volume_pref_summary_off">實現精確的音量控制</string>
-
-    <!-- Preferences - Focus -->
     <string name="focus_pref_title">音頻焦點</string>
     <string name="focus_pref_summary_on">禁用音頻焦點管理</string>
     <string name="focus_pref_summary_off">啟用音頻焦點管理</string>
-
-    <!-- Preferences - Headsets -->
     <string name="headset_pref_title">耳機插頭</string>
     <string name="headset_pref_summary_on">禁用耳機插頭管理</string>
     <string name="headset_pref_summary_off">啟用耳機插頭管理</string>
-
-    <!-- Preferences - Filters -->
     <string name="filter_pref_title">過濾器</string>
 </resources>

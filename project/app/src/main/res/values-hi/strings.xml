@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Dialogs / Buttons -->
     <string name="yes">हाँ</string>
     <string name="no">नहीं</string>
     <string name="on_close_activity">क्या आप प्लेबैक को रोकना चाहते हैं?</string>
     <string name="queue_songs_clear">कतार साफ हो जाएगी। जारी रखें?</string>
     <string name="loved_songs_clear">प्रिय गीत साफ हो जाएंगे। जारी रखें?</string>
     <string name="loved_song_remove">%1s (%2s) प्रिय गीतों से हटा दिया जाएगा। जारी रखें?</string>
-    <!-- Main - Fragments titles -->
     <string name="artists">कलाकार</string>
     <string name="albums">एल्बम</string>
     <string name="songs">गीत</string>
     <string name="folders">फ़ोल्डर</string>
-    <!-- Equalizer -->
     <string name="equalizer">इक्वलाइज़र </string>
     <string name="equalizer_bb">बॉस बूस्ट </string>
     <string name="equalizer_v">सराउंड ऑडियो</string>
-    <!-- Main - Artists/Folder RecyclerViews items  -->
     <string name="artist_info">%1d एल्बम, %2d गीत</string>
     <string name="folder_info">%1d गीत</string>
-    <!-- Popup/Menu titles -->
     <string name="sorting_pref">क्रमबद्ध</string>
     <string name="sorting_pref_default">डिफ़ॉल्ट</string>
     <string name="sorting_pref_track">ट्रैक नं. ↓ के द्वारा</string>
@@ -29,14 +24,11 @@
     <string name="queue_add">क़तार में जोड़ें</string>
     <string name="loved_song_add">प्रिय भरे गीतों में जोड़ें</string>
     <string name="filter_popup_title">छिपाए</string>
-    <!-- Queue -->
     <string name="queue">पंक्ति</string>
     <string name="queue_song_add">%1s कतार में जोड़ा गया!</string>
     <string name="queue_song_remove">%1s कतार से हटा दिया जाएगा। जारी रखें?</string>
-    <!-- Loved songs -->
     <string name="loved_songs">प्रिय गीत</string>
     <string name="loved_song_added">%1s (%2s) प्रिय गीत में जोड़ा गया</string>
-    <!-- Messages - Errors -->
     <string name="error_no_loved_songs">कोई प्रिय गीत नहीं मिला!</string>
     <string name="error_no_music">कोई संगीत नहीं मिला :(</string>
     <string name="error_not_ready">संगीत लायब्रेरी को लोड करने में एक समस्या है! :( यह शायद ऐस डी कार्ड के अनमाउंट होने के कारण है जो कभी-कभी एंड्रॉयड के मीडिया स्टोर को अपने डेटाबेस रिकॉर्ड को फिर से बनाने के लिए के लिए मजबूर करता है। समाधान: दोबारा प्रयास करें |</string>
@@ -46,63 +38,43 @@
     <string name="error_bad_id">पहले एक गाना चलाएं |</string>
     <string name="error_no_queue">कोई गीत पंक्तिबद्ध नहीं |</string>
     <string name="error_list_ended">प्लेलिस्ट ख़त्म |</string>
-    <!-- Messages - Permission rationale -->
     <string name="perm_rationale">Music Player GO को संगीत चलाने के लिए आपकी फाइलों तक पहुंच की जरूरत होती है |</string>
-    <!-- Messages - Repeat -->
     <string name="repeat_enabled">दोहराना 1x सक्षम |</string>
     <string name="repeat_loop_enabled">दोहराना ∞ सक्षम |</string>
     <string name="repeat_disabled">दोहराना ∞ अक्षम |</string>
-    <!-- Preferences - Categories -->
     <string name="settings">सेटिंग्स</string>
     <string name="category_general">सामान्य</string>
-    <!-- Preferences - Git page -->
-    <string name="open_git_pref_title">GitHub पेज</string>
     <string name="open_git_pref_summary">अधिक जानकारी के लिए प्रोजेक्ट का पेज खोलें :)</string>
-    <!-- Preferences - FAQ -->
-    <string name="faq_summary">पूछे जाने वाले प्रश्न और समर्थित मीडिया प्रारूप :P</string>
-    <!-- Preferences - Found songs -->
-    <string name="found_songs_pref_title">गाने मिले: %1d</string>
-    <!-- Preferences - Themes -->
     <string name="theme_pref_title">थीम</string>
     <string name="theme_pref_light_title">सफ़ेद</string>
     <string name="theme_pref_dark_title">गहरा</string>
     <string name="theme_pref_auto_title">स्वचलित</string>
-    <!-- Preferences - Accent -->
     <string name="accent_pref_title">एक्सेंट</string>
-    <!-- Preferences - covers -->
     <string name="covers_pref_title">एल्बम के कवर सन्निहित करें</string>
     <string name="covers_pref_summary_on">एल्बम के कवर दिखाए</string>
     <string name="covers_pref_summary_off">एल्बम के कवर हटाए</string>
-    <!-- Preferences - choose what to do when a playlist ends -->
     <string name="on_list_ended_pref_title">जब एक प्लेलिस्ट ख़त्म हो …</string>
     <string name="on_list_ended_pref_stop_title">बंद</string>
     <string name="on_list_ended_pref_continue_title">जारी</string>
-    <!-- Preferences - Song visualization options (tl = title, fn = full name) -->
     <string name="song_visual_pref_title">गीत दृश्यकरण</string>
     <string name="song_visual_pref_tl_title">शीर्षक</string>
     <string name="song_visual_pref_fn_title">फ़ाइल नाम</string>
-    <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">सक्रिय टैब</string>
     <string name="active_fragments_pref_warning">आप सभी टैब नहीं निकाल सकते हैं! :P</string>
-    <!-- Preferences - Fast seeking -->
     <string name="fast_seeking_pref_title">फ़ास्ट सीकिंग</string>
     <string name="fast_seeking_pref_summary">फ़ास्ट फॉरवर्ड/रिवाइंड स्टैप (सेकण्ड)</string>
     <string name="fast_seeking_actions_pref_title">अन्य  नोटिफिकेशन एक्शन</string>
     <string name="fast_seeking_actions_pref_summary_off">बंद/पुनराव्रत्ति एक्शन चुने</string>
     <string name="fast_seeking_actions_pref_summary_on">फ़ास्ट सीकिंग एक्शन चुने</string>
-    <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">सटीक वॉल्यूम नियंत्रण</string>
     <string name="precise_volume_pref_summary_on">सटीक वॉल्यूम नियंत्रण अक्षम करें</string>
     <string name="precise_volume_pref_summary_off">सटीक वॉल्यूम नियंत्रण सक्षम करें</string>
-    <!-- Preferences - Focus -->
     <string name="focus_pref_title">ऑडियो फोकस</string>
     <string name="focus_pref_summary_on">ऑडियो फ़ोकस मैनेजरों को अक्षम करें</string>
     <string name="focus_pref_summary_off">ऑडियो फ़ोकस प्रबंधन सक्षम करें</string>
-    <!-- Preferences - Headsets -->
     <string name="headset_pref_title">हेडसेट प्लग</string>
     <string name="headset_pref_summary_on">हेडसेट प्लग प्रबंधन अक्षम करें</string>
     <string name="headset_pref_summary_off">हेडसेट प्लग प्रबंधन सक्षम करें</string>
-    <!-- Preferences - Filters -->
     <string name="filter_pref_title">फिल्टर</string>
     <string name="error_eq">कोई त्रुटि हुई है!</string>
     <string name="eq_pref_note_summary">ध्यान दें : system equalizer इस्तेमाल होगा जब तक एप्प \"system equalizer\" सेटिंग से बंद नही कीया जाता. :)</string>

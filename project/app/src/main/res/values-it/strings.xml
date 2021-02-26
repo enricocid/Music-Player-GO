@@ -47,10 +47,7 @@
     <string name="repeat_disabled">Ripeti ∞ off.</string>
     <string name="settings">Opzioni</string>
     <string name="category_general">Generali</string>
-    <string name="open_git_pref_title">Pagina GitHub</string>
     <string name="open_git_pref_summary">Apri la pagina del progetto per maggiori info :)</string>
-    <string name="faq_summary">FAQ e formati media supportati :P</string>
-    <string name="found_songs_pref_title">Canzoni trovate: %1d</string>
     <string name="theme_pref_title">Tema</string>
     <string name="theme_pref_light_title">Chiaro</string>
     <string name="theme_pref_dark_title">Scuro</string>
@@ -101,4 +98,5 @@
     <string name="playback_pref_title">Velocità riproduzione</string>
     <string name="playback_pref_summary_on">Non mantenere la velocità riproduzione selezionata</string>
     <string name="playback_pref_summary_off">Mantieni la velocità riproduzione selezionata</string>
+    <string name="delete">Rimuovi</string>
 </resources>

@@ -1,23 +1,15 @@
 <resources>
-
-    <!-- Dialogs / Buttons -->
     <string name="yes">ඔව්</string>
     <string name="no">නොමැත</string>
     <string name="on_close_activity">ඔබට නැවත ධාවනය නැවැත්වීමට අවශ්යද?</string>
     <string name="queue_songs_clear">පෝලිම් ඉවත් කරනු ලැබේ. දිගටම කරගෙන යන්න?</string>
     <string name="loved_songs_clear">ආදරණීය ගීත නිෂ්කාශනය වේ. දිගටම කරගෙන යන්න?</string>
     <string name="loved_song_remove">%1s (%2s) ආදරණීය ගීත වලින් මකා දැමෙනු ඇත. දිගටම කරගෙන යන්න?</string>
-
-    <!-- Main - Fragments titles -->
     <string name="artists">කලාකරුවන්</string>
     <string name="songs">ගීත</string>
     <string name="folders">ෆෝල්ඩර</string>
-
-    <!-- Main - Artists/Folder RecyclerViews items  -->
     <string name="artist_info">%1d&#160;ඇල්බම,&#160;%2d&#160;ගීත</string>
     <string name="folder_info">%1d&#160;ගීත</string>
-
-    <!-- Popup/Menu titles -->
     <string name="sorting_pref">වර්ග කිරීම</string>
     <string name="sorting_pref_default">පෙරනිමිය</string>
     <string name="sorting_pref_track">මාර්ග අංකයෙන්. &#8595;</string>
@@ -27,17 +19,11 @@
     <string name="queue_add">පෝලිමට එකතු කරන්න</string>
     <string name="loved_song_add">ආදරණීය ගීත වලට එකතු කරන්න</string>
     <string name="filter_popup_title">සඟවන්න</string>
-
-    <!-- Queue -->
     <string name="queue">පෝලිම්</string>
     <string name="queue_song_add">%1s පෝලිමට එකතු විය!</string>
     <string name="queue_song_remove">%1s පෝලිම් වලින් මකා දැමෙනු ඇත. දිගටම කරගෙන යන්න?</string>
-
-    <!-- Loved songs -->
     <string name="loved_songs">ආදරණීය ගීත</string>
     <string name="loved_song_added">%1s (%2s) ආදරණීය ගීත වලට එකතු කරන ලදි</string>
-
-    <!-- Messages - Errors -->
     <string name="error_no_loved_songs">ආදරණීය ගීත කිසිවක් හමු නොවීය!</string>
     <string name="error_no_music">සංගීතයක් හමු නොවීය :(</string>
     <string name="error_not_ready">සංගීත පුස්තකාලය පූරණය කිරීමේදී ගැටලුවක් ඇති විය! :( මෙය SD කාඩ් පත නොසලකා හැරීම නිසා විය හැකිය, ඇන්ඩ්රොයිඩ් හි මීඩියා ස්ටෝර් එහි දත්ත සමුදා වාර්තා නැවත ගොඩනඟා ගැනීමට බල කරයි. විසඳුම: පසුව නැවත උත්සාහ කරන්න.</string>
@@ -46,57 +32,28 @@
     <string name="error_no_browser">බ්රව්සරයක් හමු නොවීය!</string>
     <string name="error_bad_id">මුලින්ම ගීතයක් වාදනය කරන්න!</string>
     <string name="error_no_queue">ගීත කිසිවක් පෝලිම් නැත!</string>
-
-    <!-- Messages - Permission rationale -->
     <string name="perm_rationale">සංගීත වාදකය GO ට සංගීතය වාදනය කිරීමට ඔබගේ ලිපිගොනු වෙත ප්රවේශය අවශ්ය වේ!</string>
-
-    <!-- Messages - Repeat -->
     <string name="repeat_enabled">1x සක්රීය කරන්න නැවත කරන්න!</string>
     <string name="repeat_loop_enabled">නැවත සක්රීය කරන්න ∞ සක්රීය!</string>
     <string name="repeat_disabled">නැවත අක්රීය කරන්න!</string>
-
-    <!-- Preferences - Categories -->
     <string name="settings">සැකසුම්</string>
     <string name="category_general">පොදු</string>
-
-    <!-- Preferences - Git page -->
-    <string name="open_git_pref_title">GitHub පිටුව</string>
     <string name="open_git_pref_summary">වැඩි විස්තර සඳහා ව්යාපෘතියේ පිටුව විවෘත කරන්න :)</string>
-
-    <!-- Preferences - FAQ -->
-    <string name="faq_summary">නිති අසන පැන සහ සහාය දක්වන මාධ්ය ආකෘති :P</string>
-
-    <!-- Preferences - Found songs -->
-    <string name="found_songs_pref_title">සොයාගත් ගීත: %1d</string>
-
-    <!-- Preferences - Themes -->
     <string name="theme_pref_title">තේමාව</string>
     <string name="theme_pref_light_title">ආලෝකය</string>
     <string name="theme_pref_dark_title">අඳුරු</string>
     <string name="theme_pref_auto_title">ස්වයංක්රීය</string>
-
-    <!-- Preferences - Accent -->
     <string name="accent_pref_title">උච්චාරණය</string>
-
-    <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">සක්රිය ටැබ්</string>
     <string name="active_fragments_pref_warning">ඔබට සියලු ටැබ් ඉවත් කළ නොහැක! :P</string>
-
-    <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">නිවැරදි පරිමාව පාලනය කිරීම</string>
     <string name="precise_volume_pref_summary_on">නිවැරදි පරිමාව පාලනය අක්රීය කරන්න</string>
     <string name="precise_volume_pref_summary_off">නිවැරදි පරිමාව පාලනය කරන්න</string>
-
-    <!-- Preferences - Focus -->
     <string name="focus_pref_title">ශ්රව්ය නාභිගත කිරීම</string>
     <string name="focus_pref_summary_on">ශ්රව්ය නාභිගත කළමනාකරණය අක්රීය කරන්න</string>
     <string name="focus_pref_summary_off">ශ්රව්ය නාභිගත කළමනාකරණය සක්රීය කරන්න</string>
-
-    <!-- Preferences - Headsets -->
     <string name="headset_pref_title">හෙඩ්සෙට් ප්ලග්</string>
     <string name="headset_pref_summary_on">හෙඩ්සෙට් ප්ලග් කළමනාකරණය අක්රීය කරන්න</string>
     <string name="headset_pref_summary_off">හෙඩ්සෙට් ප්ලග් කළමනාකරණය සක්රීය කරන්න</string>
-
-    <!-- Preferences - Filters -->
     <string name="filter_pref_title">පෙරහන්</string>
 </resources>

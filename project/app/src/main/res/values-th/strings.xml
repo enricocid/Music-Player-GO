@@ -1,23 +1,15 @@
 <resources>
-
-    <!-- Dialogs / Buttons -->
     <string name="yes">ใช่</string>
     <string name="no">ไม่</string>
     <string name="on_close_activity">คุณต้องการหยุดเล่นหรือไม่?</string>
     <string name="queue_songs_clear">คิวจะถูกล้าง ต่อหรือไม่?</string>
     <string name="loved_songs_clear">เพลงที่รักจะถูกล้าง ต่อหรือไม่?</string>
     <string name="loved_song_remove">%1s (%2s) จะถูกลบจากเพลงที่รัก ต่อหรือไม่?</string>
-
-    <!-- Main - Fragments titles -->
     <string name="artists">ศิลปิน</string>
     <string name="songs">เพลง</string>
     <string name="folders">โฟลเดอร์</string>
-
-    <!-- Main - Artists/Folder RecyclerViews items  -->
     <string name="artist_info">%1d&#160;ยอัลบั้มย,&#160;%2d&#160; ยเพลง</string>
     <string name="folder_info">%1d&#160;ยเพลง</string>
-
-    <!-- Popup/Menu titles -->
     <string name="sorting_pref">การเรียงลำดับ</string>
     <string name="sorting_pref_default">ค่าเริ่มต้น</string>
     <string name="sorting_pref_track">ตามหมายเลขแทร็ค &#8595;</string>
@@ -27,17 +19,11 @@
     <string name="queue_add">เพิ่มลงในคิว</string>
     <string name="loved_song_add">เพิ่มไปยังเพลงที่รัก</string>
     <string name="filter_popup_title">ซ่อน</string>
-
-    <!-- Queue -->
     <string name="queue">คิว</string>
     <string name="queue_song_add">%1s เพิ่มลงในคิวแล้ว!!</string>
     <string name="queue_song_remove">%1s จะถูกลบออกจากคิว ต่อหรือไม่?</string>
-
-    <!-- Loved songs -->
     <string name="loved_songs">เพลงที่ชอบ</string>
     <string name="loved_song_added">%1s (%2s) เพิ่มในเพลงที่รัก</string>
-
-    <!-- Messages - Errors -->
     <string name="error_no_loved_songs">ไม่พบเพลงที่รัก!</string>
     <string name="error_no_music">ไม่พบเพลง :(</string>
     <string name="error_not_ready">เกิดปัญหาขณะโหลดคลังเพลง! :( นี่อาจเป็นเพราะการ์ด SD ถูกยกเลิกการเมานท์บังคับให้ MediaStore ของ Android สร้างเร็กคอร์ดฐานข้อมูลขึ้นใหม่วิธีแก้ไข: ลองอีกครั้งในภายหลัง</string>
@@ -46,57 +32,28 @@
     <string name="error_no_browser">ไม่พบเบราว์เซอร์!</string>
     <string name="error_bad_id">เล่นเพลงก่อน!</string>
     <string name="error_no_queue">ไม่มีคิวเพลง!</string>
-
-    <!-- Messages - Permission rationale -->
     <string name="perm_rationale">Music Player GO ต้องการการเข้าถึงไฟล์ของคุณเพื่อเล่นเพลง!</string>
-
-    <!-- Messages - Repeat -->
     <string name="repeat_enabled">เปิดใช้งานซ้ำ 1x!</string>
     <string name="repeat_loop_enabled">ทำซ้ำ &#8734;เปิดการใช้งาน!</string>
     <string name="repeat_disabled">ทำซ้ำ &#8734;พิการ!</string>
-
-    <!-- Preferences - Categories -->
     <string name="settings">การตั้งค่า</string>
     <string name="category_general">ทั่วไป</string>
-
-    <!-- Preferences - Git page -->
-    <string name="open_git_pref_title">หน้า GitHub</string>
     <string name="open_git_pref_summary">เปิดหน้าโครงการสำหรับข้อมูลเพิ่มเติม :)</string>
-
-    <!-- Preferences - FAQ -->
-    <string name="faq_summary">คำถามที่พบบ่อยและรูปแบบสื่อที่รองรับ :P</string>
-
-    <!-- Preferences - Found songs -->
-    <string name="found_songs_pref_title">พบเพลง: %1d</string>
-
-    <!-- Preferences - Themes -->
     <string name="theme_pref_title">กระทู้</string>
     <string name="theme_pref_light_title">เบา</string>
     <string name="theme_pref_dark_title">มืด</string>
     <string name="theme_pref_auto_title">อัตโนมัติ</string>
-
-    <!-- Preferences - Accent -->
     <string name="accent_pref_title">สำเนียง</string>
-
-    <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">แท็บที่ใช้งานอยู่</string>
     <string name="active_fragments_pref_warning">คุณไม่สามารถลบแท็บทั้งหมดออกได้! :P</string>
-
-    <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">การควบคุมระดับเสียงที่แม่นยำ</string>
     <string name="precise_volume_pref_summary_on">ปิดใช้งานการควบคุมระดับเสียงที่แม่นยำ</string>
     <string name="precise_volume_pref_summary_off">เปิดใช้งานการควบคุมระดับเสียงที่แม่นยำ</string>
-
-    <!-- Preferences - Focus -->
     <string name="focus_pref_title">เน้นเสียง</string>
     <string name="focus_pref_summary_on">ปิดใช้งานการจัดการโฟกัสเสียง</string>
     <string name="focus_pref_summary_off">เปิดใช้งานการจัดการโฟกัสเสียง</string>
-
-    <!-- Preferences - Headsets -->
     <string name="headset_pref_title">ปลั๊กชุดหูฟัง</string>
     <string name="headset_pref_summary_on">ปิดใช้งานการจัดการปลั๊กชุดหูฟัง</string>
     <string name="headset_pref_summary_off">เปิดใช้งานการจัดการปลั๊กชุดหูฟัง</string>
-
-    <!-- Preferences - Filters -->
     <string name="filter_pref_title">ฟิลเตอร์</string>
 </resources>
