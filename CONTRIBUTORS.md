@@ -24,6 +24,9 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes (https://github.com/enricocid/Music-Player-GO/pull/121) and its equalizer implementation: I learned so much about how an equalizer works
 
+- [**Allan Nordhøy**](https://github.com/comradekingu) 
+for [strings](https://github.com/enricocid/Music-Player-GO/pull/227) and [readme](https://github.com/enricocid/Music-Player-GO/pull/277) improvements
+
 - [**Ricardo**](https://github.com/RickyM7) for [multiple reports](https://github.com/enricocid/Music-Player-GO/issues/220), other suggestions and testing
 
 - [**TheOtherDoctor**](https://github.com/TheOtherDoctor) for multiple reports/suggestions
@@ -74,9 +77,6 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 ### Big thanks to translators:
 
 - [**z1q7p3m9**](https://github.com/z1q7p3m9) for **Kurdish** translations
-
-- [**Allan NordhÃ¸y**](https://github.com/comradekingu) 
-for [strings improvements](https://github.com/enricocid/Music-Player-GO/pull/227)
 
 - [**keddad**](https://github.com/keddad) and [**yafna**](https://github.com/yafna) for **Russian** translations
 
