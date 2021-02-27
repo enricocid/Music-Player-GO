@@ -41,45 +41,44 @@
 - [Features](#features)
 - [Translations](#translations)
 - [License](#license)
-  - [Authors / Copyright](#authors--copyright)
-  - [Third-party component](#third-party-component)
+  - [Authors / Copyleft Copyright](#authors--copyleft-copyright)
+  - [Third-party component](#third-party-components)
     - [Libraries](#libraries)
-    - [Tools](#tools)
+    - [Tools / Graphics](#tools--graphics)
   - [License details](#license-details)
 
 
 # Description
 
-This repo contains the source code of the **Music Player GO** Android app: a minimal yet fully-featured local music player aiming at simplicity and performance.
+Source code for the Android music player **Music Player GO**
 
 
 # Download
 
-[<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
-    alt="Get it on Google Play"
-    height="80">](https://play.google.com/store/apps/details?id=com.iven.musicplayergo)
 [<img src="https://raw.githubusercontent.com/enricocid/fdroid-custom-badges/main/badge_get-it-on.png"
     alt="Get it on F-Droid"
     height="80">](https://f-droid.org/packages/com.iven.musicplayergo/)
-
+[<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+    alt="Get it on Google Play"
+    height="80">](https://play.google.com/store/apps/details?id=com.iven.musicplayergo)
   
 # Features
 
-- Minimalistic interface
+- Minimal interface
 - Equalizer
-- Music organized by Artist, Albums, Songs and Folders - tabs are organisable
-- Personalization: light, dark, automatic themes and accents
-- Now playing
-- Embedded covers support
-- Fast seeking (long click on skip buttons)
-- Simple audio focus, precise volume and headsets management
-- Other features: search, playback speed, sorting, shuffle ...
+- Music organised by artist, albums, songs and folders—tabs are organisable
+- Light, dark, automatic themes and accents
+- Now playing…
+- Embedded covers
+- Fast-seeking (by long-clicking the "Skip" buttons)
+- Audio focus, precise volume- and headset management
+- Search, playback speed, sorting, shuffle…
  
 
 # Translations
 
-The project is now hosted on [weblate](https://hosted.weblate.org/engage/music-player-go/). If You want to support weblate guys
-please consider a [donation](https://weblate.org/it/donate/new/) :)
+Help translate the project on [Hosted Weblate](https://hosted.weblate.org/engage/music-player-go/).
+Consider supporting the Weblate guys by sending a [donation](https://weblate.org/donate/new/) with our full approval:)
 
 <a href="https://hosted.weblate.org/engage/music-player-go/">
   <img src="https://hosted.weblate.org/widgets/music-player-go/-/88x31-white.png" />
@@ -88,12 +87,12 @@ please consider a [donation](https://weblate.org/it/donate/new/) :)
 
 # License
 
-## Authors / Copyright
+## Authors / Copyleft Copyright
 
-2021 (c) Enrico D'Ortenzio.
+2021 🄯© Enrico D'Ortenzio.
 
 
-## Third-party component
+## Third-party components
 
 ### Libraries
 
@@ -106,11 +105,11 @@ please consider a [donation](https://weblate.org/it/donate/new/) :)
 | [Edge-to-Edge](https://github.com/beworker/edge-to-edge)                  | [Sergej Shafarenka](https://github.com/beworker)                       |
 | [coil](https://github.com/coil-kt/coil)                  | [coil-kt](https://github.com/coil-kt)                       |
 
-### Tools/Graphics
+### Tools / Graphics
 
 | Name                                                        | Author                  |
 | ----------------------------------------------------------- | ------------------------- |
-| [GIF optimization script](https://github.com/mathieu-aubin/tempgif)                  | [Mathieu Aubin](https://github.com/mathieu-aubin)                       |
+| [GIF optimisation-script](https://github.com/mathieu-aubin/tempgif)                  | [Mathieu Aubin](https://github.com/mathieu-aubin)                       |
 | [Screener - Better screenshots](https://play.google.com/store/apps/details?id=de.toastcode.screener) | [Toastcode](https://toastco.de/)                       |
 | [Round icons](https://material.io/tools/icons/?style=round) | Google                       |
 | [sort-alphabetical-descending-variant icon](https://materialdesignicons.com/icon/sort-alphabetical-descending-variant) | Austin Andrews [templatarian](https://twitter.com/templarian)                       |
@@ -124,4 +123,5 @@ please consider a [donation](https://weblate.org/it/donate/new/) :)
 
 ## License details
 
-The licence for this repository is a [GNU General Public License, Version 3.0](http://www.gnu.org/licenses/#GPL). Please see the [LICENSE](LICENSE.md) file for full reference.
+This repository is copylefted libre software, licensed [GPLv3](https://www.gnu.org/licenses/#GPL), as described in the [LICENSE](LICENSE.md) file.
+Use, study, change and share at will; with all.
