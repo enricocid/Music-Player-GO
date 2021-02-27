@@ -5,7 +5,7 @@ import android.support.v4.media.session.PlaybackStateCompat
 object GoConstants {
 
     const val PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 2588
-    const val FRAGMENT_TO_RESTORE = "FRAGMENT_TO_RESTORE"
+    const val RESTORE_SETTINGS_FRAGMENT = "RESTORE_SETTINGS_FRAGMENT"
     const val LAUNCHED_BY_TILE = "LAUNCHED_BY_TILE"
 
     // active fragments

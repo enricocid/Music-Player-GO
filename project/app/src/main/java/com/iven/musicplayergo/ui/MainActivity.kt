@@ -89,7 +89,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private var sRevealAnimationRunning = false
 
-    private var mFragmentToRestore = 0
+    private var sRestoreSettingsFragment = false
+    private var sAppearanceChanged = false
 
     // Loved songs dialog
     private lateinit var mLovedSongsDialog: MaterialDialog
@@ -195,11 +196,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun onSaveInstanceState(outState: Bundle) {
         sAllowCommit = false
-        if (mFragmentToRestore != 0) {
+        if (sAppearanceChanged) {
             super.onSaveInstanceState(outState)
-            outState.putInt(
-                GoConstants.FRAGMENT_TO_RESTORE,
-                mFragmentToRestore
+            outState.putBoolean(
+                GoConstants.RESTORE_SETTINGS_FRAGMENT,
+                true
             )
         }
     }
@@ -288,11 +289,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         initMediaButtons()
 
-        mFragmentToRestore =
-            savedInstanceState?.getInt(GoConstants.FRAGMENT_TO_RESTORE)
-                ?: intent.getIntExtra(
-                    GoConstants.FRAGMENT_TO_RESTORE,
-                    0
+        sRestoreSettingsFragment =
+            savedInstanceState?.getBoolean(GoConstants.RESTORE_SETTINGS_FRAGMENT)
+                ?: intent.getBooleanExtra(
+                    GoConstants.RESTORE_SETTINGS_FRAGMENT,
+                    false
                 )
 
         if (PermissionsHelper.hasToAskForReadStoragePermission(this)) {
@@ -380,14 +381,20 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 }
             })
 
-            getTabAt(mFragmentToRestore)?.icon?.setTint(
+            getTabAt(
+                    if (sRestoreSettingsFragment) {
+                        mMainActivityBinding.viewPager2.offscreenPageLimit
+                    } else {
+                        0
+                    }
+            )?.icon?.setTint(
                     ThemeHelper.resolveThemeAccent(this@MainActivity)
             )
         }
 
-        if (mFragmentToRestore != 0) {
+        if (sRestoreSettingsFragment) {
             mMainActivityBinding.viewPager2.setCurrentItem(
-                    mFragmentToRestore,
+                    mMainActivityBinding.viewPager2.offscreenPageLimit,
                     false
             )
         }
@@ -850,7 +857,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     override fun onAppearanceChanged(isThemeChanged: Boolean) {
-        mFragmentToRestore = mMainActivityBinding.viewPager2.currentItem
+        sAppearanceChanged = true
         synchronized(saveSongToPref()) {
             if (isThemeChanged) {
                 AppCompatDelegate.setDefaultNightMode(
@@ -859,7 +866,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     )
                 )
             } else {
-                ThemeHelper.applyChanges(this, mFragmentToRestore)
+                ThemeHelper.applyChanges(this)
             }
         }
     }
@@ -1517,7 +1524,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             mMediaPlayerHolder.updateCurrentSongs()
         }
         if (mAllMusicFragment != null && !mAllMusicFragment?.onSongVisualizationChanged()!!) {
-            ThemeHelper.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
+            ThemeHelper.applyChanges(this)
         }
     }
 
@@ -1534,7 +1541,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 ListsHelper.addToHiddenItems(string)
 
                 if (!mMusicContainersFragments.isNullOrEmpty() && !mMusicContainersFragments[0].onListFiltered(string)) {
-                    ThemeHelper.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
+                    ThemeHelper.applyChanges(this)
                 } else {
                     if (!mMusicContainersFragments.isNullOrEmpty() && mMusicContainersFragments.size >= 1) {
                         val musicContainersIterator = mMusicContainersFragments.iterator().withIndex()
