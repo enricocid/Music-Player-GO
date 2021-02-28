@@ -21,67 +21,80 @@
         app:titleTextColor="?android:attr/textColorPrimary" />
 
     <!-- ALBUM COVER FOR ALBUM VIEW -->
-    <com.google.android.material.card.MaterialCardView
+
+    <LinearLayout
         android:id="@+id/album_view_cover_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        app:cardCornerRadius="8dp">
+        android:gravity="center"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:id="@+id/selected_album_view_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="marquee"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/selected_album_view_artist_size"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="marquee"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:paddingTop="4dp"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                    android:textColor="?android:attr/textColorSecondary" />
-            </LinearLayout>
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp">
 
             <ImageView
                 android:id="@+id/album_view_art"
-                android:layout_width="@android:dimen/app_icon_size"
-                android:layout_height="@android:dimen/app_icon_size"
-                android:layout_margin="16dp"
+                android:layout_width="@android:dimen/thumbnail_height"
+                android:layout_height="@android:dimen/thumbnail_height"
                 android:contentDescription="@string/covers_pref_title"
-                android:scaleType="centerCrop"
                 android:src="@drawable/album_art" />
 
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/selected_album_view_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/selected_album_view_artist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingTop="4dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/selected_album_view_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingTop="4dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                android:textColor="?android:attr/textColorTertiary" />
         </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
 
     <!-- ALBUMS -->
     <androidx.recyclerview.widget.RecyclerView

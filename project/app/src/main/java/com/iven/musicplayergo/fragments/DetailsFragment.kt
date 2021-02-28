@@ -334,17 +334,14 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     val firstSong = mSongsList?.get(0)
                     selectedAlbumViewTitle.text = mSelectedArtistOrFolder
                     selectedAlbumViewTitle.isSelected = true
-                    selectedAlbumViewArtistSize.text = getString(
-                            R.string.album_artist_size,
-                            firstSong?.artist,
-                            getString(
-                                R.string.folder_info,
-                                mSongsList?.size
-                            )).parseAsHtml()
-
-                    if (sIsCovers) {
-                        loadCoverIntoTarget(firstSong, albumViewArt)
-                    }
+                    selectedAlbumViewArtist.text = firstSong?.artist
+                    selectedAlbumViewArtist.isSelected = true
+                    selectedAlbumViewSize.text = getString(
+                            R.string.folder_info,
+                            mSongsList?.size
+                    )
+                    selectedAlbumViewSize.isSelected = true
+                    loadCoverIntoTarget(firstSong, albumViewArt)
                 }
 
                 val searchView =
