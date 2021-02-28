@@ -28,7 +28,7 @@ Join us on [Hosted Weblate](https://hosted.weblate.org/engage/music-player-go/).
  - Dark
  - Automatic: still follows system settings in Android Q and battery levels in pre-Q as suggested in the [guidelines](https://developer.android.com/guide/topics/ui/look-and-feel/darktheme).
 
-2. 19 accent colours.
+2. 36 accent colours.
 
 ### Where is the deep black dark theme?
 
