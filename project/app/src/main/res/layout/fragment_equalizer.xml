@@ -44,7 +44,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="16dp"
-            android:minHeight="0dp" />
+            android:minHeight="0dp"
+            app:haloRadius="12dp"
+            app:thumbRadius="6dp" />
     </LinearLayout>
 
 
@@ -70,7 +72,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="16dp"
-            android:minHeight="0dp" />
+            android:minHeight="0dp"
+            app:haloRadius="12dp"
+            app:thumbRadius="6dp" />
     </LinearLayout>
 
 
@@ -96,7 +100,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="16dp"
-            android:minHeight="0dp" />
+            android:minHeight="0dp"
+            app:haloRadius="12dp"
+            app:thumbRadius="6dp" />
     </LinearLayout>
 
 
@@ -122,7 +128,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="16dp"
-            android:minHeight="0dp" />
+            android:minHeight="0dp"
+            app:haloRadius="12dp"
+            app:thumbRadius="6dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -147,7 +155,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="16dp"
-            android:minHeight="0dp" />
+            android:minHeight="0dp"
+            app:haloRadius="12dp"
+            app:thumbRadius="6dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -160,17 +170,20 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:text="@string/equalizer_bb"
-            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-            android:textColor="?android:attr/textColorPrimary" />
+            android:textColor="?android:attr/textColorPrimary"
+            android:textStyle="bold" />
 
         <com.google.android.material.slider.Slider
             android:id="@+id/sliderBass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="0dp"
-            android:valueTo="1000" />
+            android:valueTo="1000"
+            app:haloRadius="12dp"
+            app:thumbRadius="6dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -183,16 +196,19 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:text="@string/equalizer_v"
-            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-            android:textColor="?android:attr/textColorPrimary" />
+            android:textColor="?android:attr/textColorPrimary"
+            android:textStyle="bold" />
 
         <com.google.android.material.slider.Slider
             android:id="@+id/sliderVirt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="0dp"
-            android:valueTo="1000" />
+            android:valueTo="1000"
+            app:haloRadius="12dp"
+            app:thumbRadius="6dp" />
     </LinearLayout>
 </LinearLayout>

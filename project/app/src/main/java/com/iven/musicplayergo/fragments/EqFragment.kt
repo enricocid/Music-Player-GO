@@ -235,6 +235,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
             }
 
             with(menu.findItem(R.id.miSpinner).actionView as Spinner) {
+
                 // set Spinner Adapter
                 val spinnerAdapter = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_dropdown_item, mPresetsList)
                 spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
