@@ -353,6 +353,21 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                                 R.id.more_options_folder,
                                 !hasFocus
                         )
+                        if (sLaunchedByAlbumView) {
+                            albumViewCoverContainer.afterMeasured {
+                                animate()?.let { anim ->
+                                    anim.duration = 500
+                                    var newY = 0F
+                                    if (hasFocus) {
+                                        newY = -(height.toFloat() + detailsToolbar.height)
+                                        anim.withEndAction { albumViewCoverContainer.handleViewVisibility(false) }
+                                    } else {
+                                        anim.withStartAction { albumViewCoverContainer.handleViewVisibility(true) }
+                                    }
+                                    anim.translationY(newY)
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -501,8 +516,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 _binding.detailsToolbar.menu.findItem(R.id.action_shuffle_sa).isEnabled =
                         mSelectedAlbum?.music?.size!! >= 2
             }
-        } else {
-            mSongsList = songs
         }
 
         songs?.let { newSongsList ->
