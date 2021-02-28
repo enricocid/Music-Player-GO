@@ -33,8 +33,8 @@
     <string name="error_no_browser">Fant ingen nettlesere.</string>
     <string name="error_bad_id">Spill en spor først.</string>
     <string name="error_no_queue">Ingen spor i kø.</string>
-    <string name="perm_rationale">Music Player GO trenger tilgang til filene dine for å spille musikk!</string>
-    <string name="repeat_enabled">Gjenta 1x aktivert!</string>
+    <string name="perm_rationale">Music Player GO trenger tilgang til filene dine for å spille musikk.</string>
+    <string name="repeat_enabled">Enkel gjentagelse på.</string>
     <string name="repeat_loop_enabled">Gjenta ∞ på.</string>
     <string name="repeat_disabled">Gjenta ∞ av.</string>
     <string name="settings">innstillinger</string>
