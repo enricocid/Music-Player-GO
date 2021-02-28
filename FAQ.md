@@ -7,88 +7,79 @@ This FAQ will be continually updated to accommodate new information with respect
 
 ### What is Music Player GO?
 
-It is a lightweight, original, privacy-friendly, and **ads-free** music player that plays music from your local music library. It has a colorful and extremely simple UI.
+A lightweight, original, privacy-friendly, **ad-free** music player playing music from your local music library, in acolorful and simple UI.
 
 
 ### Where can I download Music Player GO?
 
-Music Player GO can be downloaded [here](https://play.google.com/store/apps/details?id=com.iven.musicplayergo) on the Google Play Store, and [here](https://f-droid.org/packages/com.iven.musicplayergo/) on F-Droid. 
-
+[Here](https://f-droid.org/packages/com.iven.musicplayergo/) on F-Droid.
+[Here](https://play.google.com/store/apps/details?id=com.iven.musicplayergo) on the Google Play Store.
 
 ### How can I contribute to translations?
 
-Join us on [Weblate](https://hosted.weblate.org/engage/music-player-go/). :)
+Join us on [Hosted Weblate](https://hosted.weblate.org/engage/music-player-go/). :)
 
 
-### Can I customize the app's theme to my taste?
+### Can I customise the app's theme to my taste?
 
-1. Yes, you can choose between 3 themes:
+1. Yes, choose between 3 themes:
 
  - Light
  - Dark
- - Automatic: this mode will follow system settings in Android Q and battery levels in pre-Q as suggested in the [guidelines](https://developer.android.com/guide/topics/ui/look-and-feel/darktheme).
+ - Automatic: still follows system settings in Android Q and battery levels in pre-Q as suggested in the [guidelines](https://developer.android.com/guide/topics/ui/look-and-feel/darktheme).
 
-2. 19 colorful accents... sounds good?
-
+2. 19 accent colours.
 
 ### Where is the deep black dark theme?
 
 Deep black dark theme is not available. To express elevation and depth, it is highly recommended to "darken with grey rather than black".
-Moreover, **accessibility** has to be taken into account.
-Having said that, feature requests asking for deep black theme won't be considered. Guidelines can be found [here](https://material.io/design/color/dark-theme.html).
-
+Moreover, accessibility has to be taken into account.
+That said, feature requests for it doesn't change matters. The guidelines can be found [here](https://material.io/design/color/dark-theme.html).
 
 ### Why are accents 'lighter' in the dark theme?
 
-As per [guidelines](https://material.io/design/color/dark-theme.html), primary colors are desaturated for **accessibility**: saturated colors also produce optical vibrations against a dark background, which can induce eye strain.
+As per [guidelines](https://material.io/design/color/dark-theme.html), primary colors are desaturated for accessibility: saturated colors also produce optical vibrations against a dark background, which can induce eye strain.
 Instead, desaturated colors can be used as a more legible alternative.
 
 
-### Does Music Player GO use an equalizer?
+### Does Music Player GO have or use an equaliser?
 
-Yes, Music Player GO uses the system (default) equalizer (if it exists) found on the device or the built-in one.
-The equalizer can be found in the "Now Playing" dialog.
-
-
-### Is there a built-in equalizer?
-
-Yes, Music Player GO has a built-in equalizer. It is similar to the stock equalizer and it is intended for devices not provived with a system equalizer. If You want to use this one please disable the system equalizer from system settings.
+Music Player GO uses the system (default) equaliser (if it exists) found on the device.
+The equaliser can be found in the "Now Playing" dialog.
+There is also a built-in equalizer. You can use by turning off the one in your system, or if your system doesn't have one.
 
 
-### The built-in equalizer is not being enabled
+### The built-in equalizer is not being turned on
 
 Just toggle the switch button again.
 
 
 ### What is audio focus?
 
-Audio focus is an Android feature to moderate media app's playback and prevent multiple media app to play at the same time.
-Every media app should request and receive the audio focus. This option is enabled by default so that MPGO can:
+It is an Android feature to moderate playback in media apps and prevents multiple media apps from playing at the same time.
+Every media app should request and receive the audio focus. This option is on by default so that MPGO can:
 1. **pause** if another app requests audio focus.
 2. **lower** its volume when a new message is received.
 
 
 ### How to clear queued or loved songs?
 
-Just long click on the buttons from the bottom panel.
-To clear the queue You can also start playback from artist's details.
-
+Long-click on the buttons from the bottom panel.
+To clear the queue You can also start playback from "Artist" details.
 
 ### Does Music Player GO play music tracks from online sources?
 
-No, Music Player GO doesn't play music tracks from any online source.
-It only plays from the local library.
+No, it only plays from the local library.
 
+### Does Music Player GO access the Internet?
 
-### Does Music Player GO access the internet?
-
-No, Music Player GO does not access the internet.
-The internet permission is not required by this app.
+No.
+Internet permission is not requested.
 
 
 ### How does Music Player GO categorized music tracks?
 
-Music is categorized by artists, folders and albums.
+By artists, folders, and albums.
 Artists' music are in turn categorized by albums.
 Folders can be considered albums.
 Each album consists of tracks of the same album.
@@ -96,31 +87,29 @@ Each album consists of tracks of the same album.
 
 ### Can I exclude folders from my library?
 
-You can filter them once the app has loaded.
+Filter them once the app has loaded.
 
 
-### Why does shuffled music is not added to queue?
+### Why is shuffled music not added to my queue?
 
-To avoid performance issues queue built from shuffled song is actually limited to 50 items.
+To avoid performance issues queue built from shuffled songs is actually limited to 50 items.
 
 
 ### What about features requests/crash reports?
 
-1. Not all requests can be taken into considerationk unfortunately. This could happen for a variety of reasons:
+1. Unfortunately, not all requests can be taken into consideration, for a variety of reasons:
 
-   - The feature is too complex, clashing with the philosophy behind the app: KISS (keep it simple, stupid)
-   - The developer is kinda poor and can't afford resources like real devices needed for testing purposes (a dying Nexus 5 being his testing device for now), or a good computer that can ensure emulator usage. This is the case of issues [#29](https://github.com/enricocid/Music-Player-GO/issues/29) and [#51](https://github.com/enricocid/Music-Player-GO/issues/51).
-   - The feature just does not match the developer's needs. Keep in mind that this app is built around the developer's usage needs and that it was shared for the love of open-source.
-   - The developer is a chemist with an unstable work condition in real life, sometimes time is just short...
-   - Lack of motivation/interest
+   - The feature is too complex, clashing with the philosophy behind the app: KISS. Keep it snimple snupid :)
+   - The rather poor developer is rocking a dying Nexus 5 as the only test device for now. A good computer could ensure emulator usage. This is the case of issues [#29](https://github.com/enricocid/Music-Player-GO/issues/29) and [#51](https://github.com/enricocid/Music-Player-GO/issues/51).
+   - The feature just does not match the developer's needs. Keep in mind that this app is built around the developer's usage needs and is shared for the love of libre software.
+   - The developer is a chemist with an unstable work condition in real life, sometimes time is just short…
+   - Lack of motivation/interest/you didn't do it yourself
 
-2. A crash report is useful only when a logcat and detailed explanation on how to reproduce the bug is provided. If you don't know how to proceed, just send an email to the developer to receive guidance.
-
-
-### Does this app keeps any information or data about me or my device?
-
-**Information or data is not kept by this app**. Neither the device's nor owner's information is obtained by this app.
+2. A crash report is useful only when a logcat and detailed explanation on how to reproduce the bug is provided. If you don't know how to proceed, send an e-mail to the developer to receive guidance.
 
 
-If you have other questions that are not listed in the above FAQ, kindly ask by creating an issue.
-We will be available to give answers to your questions.
+### Does this app keep any info or data about me or my device?
+
+No. Neither the device's nor owner info.
+
+Pose other questions by creating issues, and we will answer them.
