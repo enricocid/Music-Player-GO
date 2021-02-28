@@ -89,7 +89,7 @@ Consider supporting the Weblate guys by sending a [donation](https://weblate.org
 
 ## Authors / Copyleft Copyright
 
-2021 🄯© Enrico D'Ortenzio.
+2021 � Enrico D'Ortenzio.
 
 
 ## Third-party components
