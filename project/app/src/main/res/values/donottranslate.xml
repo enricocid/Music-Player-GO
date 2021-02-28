@@ -9,7 +9,6 @@
     <string name="app_git">https://github.com/enricocid/Music-Player-GO</string>
 
     <!-- Formatted strings used in RVs items and other TextViews -->
-    <string name="album_artist_size">&lt;b>%1s&lt;/b>&#160;-&#160;%2s</string>
     <string name="duration_artist_date_added">%1s, %2s, %3s</string>
     <string name="duration_date_added">%1s, %2s</string>
     <string name="popup_menu_title">%1s&#8230;</string>
