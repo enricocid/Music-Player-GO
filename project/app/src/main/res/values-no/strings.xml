@@ -89,4 +89,14 @@
     <string name="content_skip_prev">Hopp til forrige spor</string>
     <string name="speed_3">Normal</string>
     <string name="content_playback_speed">Avspillingshastighet</string>
+    <string name="delete">Slett</string>
+    <string name="anim_pref_summary_off">Skru på animasjoner</string>
+    <string name="anim_pref_summary_on">Skru av animasjoner</string>
+    <string name="anim_pref_title">Animasjoner</string>
+    <string name="sorting_pref_album_inv">Etter album Å-A</string>
+    <string name="sorting_pref_album">Etter album A-Å</string>
+    <string name="sorting_pref_artist_inv">Etter artist Å-A</string>
+    <string name="sorting_pref_artist">Etter artist A-Å</string>
+    <string name="sorting_pref_date_added_inv">Eldste dato først</string>
+    <string name="sorting_pref_date_added">Nyeste dato først</string>
 </resources>
