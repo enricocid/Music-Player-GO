@@ -397,7 +397,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                             GoConstants.PAUSED
                         },
                         mediaPlayer.currentPosition.toLong(),
-                        1F
+                        currentPlaybackSpeed
                 ).build()
         )
         if (updateUI) {
@@ -907,6 +907,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 goPreferences.latestPlaybackSpeed = currentPlaybackSpeed
             }
             if (state != GoConstants.PAUSED) {
+                updatePlaybackStatus(false)
                 mediaPlayer.playbackParams = mediaPlayer.playbackParams.setSpeed(currentPlaybackSpeed)
             }
         }
