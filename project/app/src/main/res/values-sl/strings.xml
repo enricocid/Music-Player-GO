@@ -97,4 +97,6 @@
     <string name="delete">Briši</string>
     <string name="no">Ne</string>
     <string name="yes">Da</string>
+    <string name="accent_pref_title">Akcent</string>
+    <string name="equalizer_v">Prostorski zvok</string>
 </resources>
