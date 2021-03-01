@@ -2,15 +2,15 @@
 
 <b>Features</b>
 
-- Minimalistic interface
+- Minimal interface
 - Equalizer
-- Music organized by Artist, Albums, Songs and Folders - tabs are organisable
-- Personalization: light, dark, automatic themes and accents
-- Now playing
-- Embedded covers support
-- Fast seeking (long click on skip buttons)
-- Simple audio focus, precise volume and headsets management
-- Other features: search, playback speed, sorting, shuffle ...
+- Music organised by artist, albums, songs and foldersâ€”tabs are organisable
+- Light, dark, automatic themes and accents
+- Now playing...
+- Embedded covers
+- Fast-seeking (by long-clicking the "Skip" buttons)
+- Audio focus, precise volume and headset management
+- Search, playback speed, sorting, shuffle...
 
 
 <b>Want to contribute to translations?</b>

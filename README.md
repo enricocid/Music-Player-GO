@@ -1,14 +1,14 @@
 <h1 align="center">Music Player GO</h1>
 
 <p align="center">
-<img height="500" src="art2.gif">
+<img height="500" src="art3.gif">
 </p>
 
 <p align="center">
   <!-- Latest Release -->
     <a href="https://github.com/enricocid/Music-Player-GO/releases">
       <img alt="GitHub release"
-      src="https://img.shields.io/static/v1?label=Tag&message=v4.4.0&color=58F5D1">
+      src="https://img.shields.io/static/v1?label=Tag&message=v4.4.1&color=58F5D1">
     </a>
    <!-- Minimum SDK -->
     <img alt="Minimum SDK" src="https://img.shields.io/static/v1?label=API&message=21&color=32B5ED">
@@ -66,13 +66,13 @@ Source code for the Android music player **Music Player GO**
 
 - Minimal interface
 - Equalizer
-- Music organised by artist, albums, songs and folders—tabs are organisable
+- Music organised by artist, albums, songs and folders; tabs are organisable
 - Light, dark, automatic themes and accents
-- Now playing…
+- Now playing...
 - Embedded covers
 - Fast-seeking (by long-clicking the "Skip" buttons)
-- Audio focus, precise volume- and headset management
-- Search, playback speed, sorting, shuffle…
+- Audio focus, precise volume and headset management
+- Search, playback speed, sorting, shuffle...
  
 
 # Translations

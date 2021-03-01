@@ -4,13 +4,13 @@
 
 - Interfaccia minimale
 - Equalizzatore
-- Musica organizzata per Artista, Album, Canzoni e Cartelle - le tabs sono organizzabili
+- Musica organizzata per artista, album, canzoni e cartelle; le tabs sono organizzabili
 - Personalizzazione: temi chiaro, scuro, automatico e accenti
-- Now playing
+- Now playing...
 - Supporto per le cover integrate
 - Avanzamento veloce (tap lungo sui pulsanti precedente/prossima canzone)
-- Semplice gestione del focus audio, volume preciso e delle cuffie
-- Altre funzioni: ricerca, velocità riproduzione, ordinamento, shuffle ...
+- Gestione del focus audio, volume preciso e delle cuffie
+- Ricerca, velocità di riproduzione, ordinamento, shuffle...
 
 
 <b>Vuoi contribuire alle traduzioni?</b>

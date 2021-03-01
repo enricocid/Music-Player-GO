@@ -1,0 +1,18 @@
+- New: playback speed
+- New: organize queue songs
+- New: option to disable animations
+- New: quick tile
+- Add new sorting options
+  - Thanks vtkhatri
+- Review Now Playind
+  - Added new buttons (long click for description)
+  - Thanks Drhaal
+- Show covers in album tab/details
+- Fix notification actions (Samsung)
+  - Thanks Arlin Daniel and Dan Muntz
+- Improve headphone buttons support
+- Review settings
+- Many fixes
+- Update translations and dependencies
+
+- Note: favorite songs will be wiped. Sorry. :)

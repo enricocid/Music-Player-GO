@@ -1,0 +1,18 @@
+- New: velocità riproduzione
+- New: organizza la coda
+- New: opzione per disattivare le animazioni
+- New: quick tile
+- Nuove opzioni ordinamento
+  - Grazie vtkhatri
+- Rivisitazione Now Playing
+  - Aggiunti nuovi pulsanti (long click per descrizione)
+  - Grazie Drhaal
+- Mostra cover nella tab/dettagli album
+- Corrette azioni notifiche (Samsung)
+  - Grazie Arlin Daniel and Dan Muntz
+- Migliorato supporto pulsanti cuffie
+- Riviste opzioni
+- Molte correzioni
+- Aggiornate traduzioni e dipendenze
+
+- Nota: le canzoni favorite saranno cancellate. Mi spiace. :)
