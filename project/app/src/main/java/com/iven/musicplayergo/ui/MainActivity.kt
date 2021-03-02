@@ -304,14 +304,23 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     private fun notifyError(errorType: String) {
-        mPlayerControlsPanelBinding.playerView.handleViewVisibility(false)
-        mMainActivityBinding.loadingProgressBar.handleViewVisibility(false)
-        mMainActivityBinding.viewPager2.handleViewVisibility(false)
-        if (sAllowCommit) {
-            supportFragmentManager.addFragment(
-                ErrorFragment.newInstance(errorType),
-                GoConstants.ERROR_FRAGMENT_TAG
-            )
+
+        mMainActivityBinding.mainView.animate().apply {
+            withStartAction {
+                mPlayerControlsPanelBinding.playerView.handleViewVisibility(false)
+                mMainActivityBinding.loadingProgressBar.handleViewVisibility(false)
+                mMainActivityBinding.viewPager2.handleViewVisibility(false)
+            }
+            duration = 250
+            alpha(1.0F)
+            withEndAction {
+                if (sAllowCommit) {
+                    supportFragmentManager.addFragment(
+                            ErrorFragment.newInstance(errorType),
+                            GoConstants.ERROR_FRAGMENT_TAG
+                    )
+                }
+            }
         }
     }
 
