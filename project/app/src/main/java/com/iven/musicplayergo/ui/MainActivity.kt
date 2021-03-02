@@ -135,7 +135,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun checkIsPlayer(showError: Boolean): Boolean {
         if (!isMediaPlayerHolder && !mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs && showError) {
-            Toast.makeText(this, getString(R.string.error_bad_id), Toast.LENGTH_LONG)
+            Toast.makeText(this, R.string.error_bad_id, Toast.LENGTH_LONG)
                     .show()
             return false
         }
@@ -1532,7 +1532,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         if (mMusicViewModel.deviceMusicFiltered?.size == 1) {
             Toast.makeText(
                     this,
-                    getString(R.string.error_eq),
+                    R.string.error_eq,
                     Toast.LENGTH_LONG
             ).show()
         } else {
@@ -1582,7 +1582,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             mQueueDialog = DialogHelper.showQueueSongsDialog(this, mMediaPlayerHolder)
             mQueueAdapter = mQueueDialog.getListAdapter() as QueueAdapter
         } else {
-            Toast.makeText(this, getString(R.string.error_no_queue), Toast.LENGTH_LONG)
+            Toast.makeText(this, R.string.error_no_queue, Toast.LENGTH_LONG)
                     .show()
         }
     }
@@ -1596,7 +1596,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         } else {
             Toast.makeText(
                     this,
-                    getString(R.string.error_no_loved_songs),
+                    R.string.error_no_loved_songs,
                     Toast.LENGTH_LONG
             ).show()
         }
@@ -1708,7 +1708,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
 
         override fun onPlaylistEnded() {
-            Toast.makeText(this@MainActivity, getString(R.string.error_list_ended), Toast.LENGTH_LONG)
+            Toast.makeText(this@MainActivity, R.string.error_list_ended, Toast.LENGTH_LONG)
                     .show()
         }
     }

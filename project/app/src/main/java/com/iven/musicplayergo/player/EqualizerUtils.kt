@@ -43,7 +43,7 @@ object EqualizerUtils {
     @JvmStatic
     fun openEqualizer(activity: Activity, mediaPlayer: MediaPlayer) {
         when (mediaPlayer.audioSessionId) {
-            AudioEffect.ERROR_BAD_VALUE -> Toast.makeText(activity, activity.getString(R.string.error_bad_id), Toast.LENGTH_LONG)
+            AudioEffect.ERROR_BAD_VALUE -> Toast.makeText(activity, R.string.error_bad_id, Toast.LENGTH_LONG)
                     .show()
             else -> {
                 try {

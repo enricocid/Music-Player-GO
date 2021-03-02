@@ -95,7 +95,7 @@ class ActiveTabsAdapter(private val ctx: Context) :
                         mActiveItems.add(toggledItem)
                     }
                     if (mActiveItems.size < 2) {
-                        Toast.makeText(context,  context.getString(R.string.active_fragments_pref_warning), Toast.LENGTH_LONG)
+                        Toast.makeText(context, R.string.active_fragments_pref_warning, Toast.LENGTH_LONG)
                                 .show()
                         mActiveItems.add(toggledItem)
                         manageTabStatus(true, tabDragHandle, tabText, tabImageButton)

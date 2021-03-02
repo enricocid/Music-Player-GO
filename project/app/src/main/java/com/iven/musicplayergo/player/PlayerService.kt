@@ -224,7 +224,7 @@ class PlayerService : Service() {
             }
         } catch (e: Exception) {
             isSuccess = false
-            Toast.makeText(this, getString(R.string.error_media_buttons), Toast.LENGTH_LONG)
+            Toast.makeText(this, R.string.error_media_buttons, Toast.LENGTH_LONG)
                     .show()
             e.printStackTrace()
         }

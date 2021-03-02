@@ -787,7 +787,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             }
             else -> isRepeat1X = true
         }
-        Toast.makeText(playerService, playerService.getString(toastMessage), Toast.LENGTH_LONG)
+        Toast.makeText(playerService, toastMessage, Toast.LENGTH_LONG)
                 .show()
     }
 

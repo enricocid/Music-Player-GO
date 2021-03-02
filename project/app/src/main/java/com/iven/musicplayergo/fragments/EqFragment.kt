@@ -281,7 +281,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
         } catch (e: UnsupportedOperationException) {
             e.printStackTrace()
-            Toast.makeText(requireActivity(), getString(R.string.error_eq), Toast.LENGTH_LONG)
+            Toast.makeText(requireActivity(), R.string.error_eq, Toast.LENGTH_LONG)
                     .show()
         }
     }

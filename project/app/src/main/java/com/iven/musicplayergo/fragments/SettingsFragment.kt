@@ -97,7 +97,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             } else {
                 Toast.makeText(
                         requireActivity(),
-                        requireActivity().getString(R.string.error_no_browser),
+                        R.string.error_no_browser,
                         Toast.LENGTH_SHORT
                 ).show()
             }
