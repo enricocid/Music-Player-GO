@@ -1,0 +1,3 @@
+- Corretta opzione velocità di riproduzione
+- Corretta visibilità schermata errore
+- Semplificazioni codice

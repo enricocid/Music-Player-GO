@@ -1,0 +1,3 @@
+- Fix playback speed option
+- Fix error screen visibility
+- Code simplifications
