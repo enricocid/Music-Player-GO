@@ -146,6 +146,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private var sNotificationForeground = false
 
     val isCurrentSong get() = ::currentSong.isInitialized
+    private val sPlaybackSpeedPersisted get() = goPreferences.isPlaybackSpeedPersisted
     var isRepeat1X = false
     var isLooping = false
 
@@ -406,7 +407,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     private fun startOrChangePlaybackSpeed() {
-        if (goPreferences.isPlaybackSpeedPersisted && VersioningHelper.isMarshmallow()) {
+        if (sPlaybackSpeedPersisted && VersioningHelper.isMarshmallow()) {
             mediaPlayer.playbackParams = mediaPlayer.playbackParams.setSpeed(currentPlaybackSpeed)
         } else {
             mediaPlayer.start()
@@ -617,6 +618,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     override fun onPrepared(mp: MediaPlayer) {
+
+        if (!sPlaybackSpeedPersisted) {
+            currentPlaybackSpeed = 1.0F
+        }
 
         if (isRepeat1X or isLooping) {
             isRepeat1X = false
@@ -903,7 +908,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun setPlaybackSpeed(speed: Float) {
         if (isMediaPlayer) {
             currentPlaybackSpeed = speed
-            if (goPreferences.isPlaybackSpeedPersisted) {
+            if (sPlaybackSpeedPersisted) {
                 goPreferences.latestPlaybackSpeed = currentPlaybackSpeed
             }
             if (state != GoConstants.PAUSED) {
