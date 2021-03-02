@@ -2,7 +2,7 @@
 
 For a list of **supported media formats** and related issues, please refer to [supported formats page](https://github.com/enricocid/Music-Player-GO/blob/master/FORMATS.md).
 
-This FAQ will be continually updated to accommodate new information with respect to new updates and changes on the app, and will be used inside the app to help users find answers to their questions.
+This FAQ will be continually updated to accommodate new information with respect to new updates and changes on the app, and will be used to help users find answers to their questions.
 
 
 ### What is Music Player GO?
@@ -92,7 +92,7 @@ Filter them once the app has loaded.
 
 ### Why is shuffled music not added to my queue?
 
-To avoid performance issues queue built from shuffled songs is actually limited to 50 items.
+To avoid performance issues queue built from shuffled songs is actually limited to 1000 items.
 
 
 ### What about features requests/crash reports?
