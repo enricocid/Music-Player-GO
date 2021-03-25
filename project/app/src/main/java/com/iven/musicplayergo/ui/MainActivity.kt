@@ -26,10 +26,7 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import coil.Coil
-import coil.ImageLoader
 import coil.load
-import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
@@ -1093,7 +1090,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun loadNpCover(selectedSong: Music) {
         if (goPreferences.isCovers) {
-            mNpCoverBinding.npCover.load(selectedSong.albumId.getCoverFromURI()) {
+            mNpCoverBinding.npCover.load(selectedSong.albumId?.toAlbumArtURI()) {
                 transformations(RoundedCornersTransformation(16.0F))
             }
         } else {
@@ -1200,7 +1197,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun onHandleCoverOptionsUpdate() {
         if (isMediaPlayerHolder) {
-            mMediaPlayerHolder.updateMediaSessionMetaData(true)
+            mMediaPlayerHolder.updateMediaSessionMetaData()
         }
         mAlbumsFragment?.onUpdateCoverOption()
     }

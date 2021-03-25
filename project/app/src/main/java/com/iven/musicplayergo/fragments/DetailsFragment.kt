@@ -2,7 +2,6 @@ package com.iven.musicplayergo.fragments
 
 import android.animation.Animator
 import android.content.Context
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
@@ -20,9 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import coil.ImageLoader
 import coil.load
-import coil.request.ImageRequest
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
@@ -725,7 +721,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     }
 
     private fun loadCoverIntoTarget(song: Music?, target: ImageView) {
-        target.load(song?.albumId?.getCoverFromURI())
+        target.load(song?.albumId?.toAlbumArtURI())
     }
 
     fun hasToUpdate(selectedArtistOrFolder: String?) : Boolean {

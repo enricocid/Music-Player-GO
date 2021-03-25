@@ -1,19 +1,15 @@
 package com.iven.musicplayergo.fragments
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import coil.ImageLoader
 import coil.load
-import coil.request.ImageRequest
 import com.afollestad.recyclical.datasource.emptyDataSource
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
@@ -121,7 +117,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                         onBind(::ContainersAlbumViewHolder) { _, item ->
                             // ContainersAlbumViewHolder is `this` here
                             if (goPreferences.isCovers) {
-                                val uri = mMusicViewModel.deviceMusicByAlbum?.get(item)?.get(0)?.albumId?.getCoverFromURI()
+                                val uri = mMusicViewModel.deviceMusicByAlbum?.get(item)?.get(0)?.albumId?.toAlbumArtURI()
 
                                 albumCover.load(uri) {
 

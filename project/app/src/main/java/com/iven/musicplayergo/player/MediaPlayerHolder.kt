@@ -30,9 +30,9 @@ import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.extensions.getCoverFromPFD
 import com.iven.musicplayergo.extensions.savedSongIsAvailable
 import com.iven.musicplayergo.extensions.toContentUri
+import com.iven.musicplayergo.extensions.waitForCover
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
@@ -173,17 +173,19 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private fun startForeground() {
         if (!sNotificationForeground) {
-            playerService.startForeground(
-                    GoConstants.NOTIFICATION_ID,
-                    mMusicNotificationManager.createNotification()
-            )
-            sNotificationForeground = true
+            mMusicNotificationManager.createNotification {
+                playerService.startForeground(GoConstants.NOTIFICATION_ID, it)
+
+                sNotificationForeground = true
+            }
+
         } else {
             with(mMusicNotificationManager) {
-                updateNotificationContent()
                 updatePlayPauseAction()
                 updateRepeatIcon()
-                updateNotification()
+                updateNotificationContent {
+                    updateNotification()
+                }
             }
         }
     }
@@ -262,46 +264,44 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun getCurrentAlbumSize() = mPlayingAlbumSongs?.size ?: 0
 
-    fun updateMediaSessionMetaData(isCoverChanged: Boolean) {
-
-        fun updateCover(builder: MediaMetadataCompat.Builder, song: Music) {
-            builder.putBitmap(METADATA_KEY_ALBUM_ART, if (goPreferences.isCovers) {
-                song.albumId.getCoverFromPFD(playerService)
-            } else {
-                null
-            })
-        }
-
+    fun updateMediaSessionMetaData() {
         with(MediaMetadataCompat.Builder()) {
+            val song = currentSong.first
 
-            currentSong.first?.let { song ->
-
-                if (isCoverChanged) {
-                    updateCover(this, song)
-                } else {
-                    putLong(METADATA_KEY_DURATION, song.duration)
-                    putString(METADATA_KEY_ARTIST, song.artist)
-                    putString(METADATA_KEY_AUTHOR, song.artist)
-                    putString(METADATA_KEY_COMPOSER, song.artist)
-                    putString(METADATA_KEY_TITLE, song.title)
-                    putString(METADATA_KEY_DISPLAY_TITLE, song.title)
-                    putString(METADATA_KEY_ALBUM_ARTIST, song.album)
-                    putString(METADATA_KEY_DISPLAY_SUBTITLE, song.album)
-                    putString(METADATA_KEY_ALBUM, song.album)
-                    mPlayingAlbumSongs?.let { songs ->
-                        putLong(METADATA_KEY_NUM_TRACKS, songs.size.toLong())
-                        putLong(METADATA_KEY_TRACK_NUMBER, songs.indexOf(song).toLong())
-                    }
-                    updateCover(this, song)
-
-                    ContextCompat.getDrawable(playerService, R.drawable.ic_music_note)
-                            ?.toBitmap()?.let { bmp ->
-                                putBitmap(METADATA_KEY_DISPLAY_ICON, bmp)
-                            }
+            if (song != null) {
+                putLong(METADATA_KEY_DURATION, song.duration)
+                putString(METADATA_KEY_ARTIST, song.artist)
+                putString(METADATA_KEY_AUTHOR, song.artist)
+                putString(METADATA_KEY_COMPOSER, song.artist)
+                putString(METADATA_KEY_TITLE, song.title)
+                putString(METADATA_KEY_DISPLAY_TITLE, song.title)
+                putString(METADATA_KEY_ALBUM_ARTIST, song.album)
+                putString(METADATA_KEY_DISPLAY_SUBTITLE, song.album)
+                putString(METADATA_KEY_ALBUM, song.album)
+                putBitmap(
+                    METADATA_KEY_DISPLAY_ICON,
+                    ContextCompat.getDrawable(playerService, R.drawable.ic_music_note)?.toBitmap()
+                )
+                mPlayingAlbumSongs?.let { songs ->
+                    putLong(METADATA_KEY_NUM_TRACKS, songs.size.toLong())
+                    putLong(METADATA_KEY_TRACK_NUMBER, songs.indexOf(song).toLong())
                 }
-            }
 
-            playerService.getMediaSession().setMetadata(build())
+                if (goPreferences.isCovers) {
+                    song.albumId?.waitForCover(playerService) { bmp ->
+                        putBitmap(METADATA_KEY_ALBUM_ART, bmp)
+
+                        playerService.getMediaSession().setMetadata(build())
+                    }
+                } else {
+                    putBitmap(
+                        METADATA_KEY_ALBUM_ART,
+                        ContextCompat.getDrawable(playerService, R.drawable.album_art
+                    )?.toBitmap())
+                }
+            } else {
+                playerService.getMediaSession().setMetadata(build())
+            }
         }
     }
 
@@ -645,7 +645,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             mediaPlayerInterface.onQueueStartedOrEnded(isQueueStarted)
         }
 
-        updateMediaSessionMetaData(false)
+        updateMediaSessionMetaData()
 
         if (mExecutor == null) {
             startUpdatingCallbackWithPosition()
