@@ -62,23 +62,6 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     private var sIsFastScroller = false
     private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != GoConstants.DEFAULT_SORTING
 
-    /**
-     * This is the job for all coroutines started by this ViewModel.
-     * Cancelling this job will cancel all coroutines started by this ViewModel.
-     */
-    private val mLoadCoverJob = SupervisorJob()
-
-    private val mLoadCoverHandler = CoroutineExceptionHandler { _, exception ->
-        exception.printStackTrace()
-    }
-
-    private val mLoadCoverIoDispatcher = Dispatchers.IO + mLoadCoverJob + mLoadCoverHandler
-    private val mLoadCoverIoScope = CoroutineScope(mLoadCoverIoDispatcher)
-
-    private val sIsCovers get() = goPreferences.isCovers
-    private lateinit var mImageLoader: ImageLoader
-    private var mAlbumArt: Bitmap? = null
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -92,13 +75,6 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
             mUIControlInterface = activity as UIControlInterface
         } catch (e: ClassCastException) {
             e.printStackTrace()
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (sLaunchedByAlbumView && sIsCovers) {
-            mLoadCoverJob.cancel()
         }
     }
 
@@ -132,15 +108,6 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     }
 
     private fun finishSetup() {
-
-        if (sLaunchedByAlbumView) {
-            mImageLoader = ImageLoader.Builder(requireActivity())
-                    .bitmapPoolingEnabled(false)
-                    .crossfade(true)
-                    .build()
-            mAlbumArt = ContextCompat.getDrawable(requireActivity(), R.drawable.album_art)?.toBitmap()
-        }
-
         _musicContainerListBinding?.artistsFoldersRv?.let { rv ->
 
             // setup{} is an extension method on RecyclerView
@@ -153,27 +120,14 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                     withItem<String, ContainersAlbumViewHolder>(R.layout.containers_album_item) {
                         onBind(::ContainersAlbumViewHolder) { _, item ->
                             // ContainersAlbumViewHolder is `this` here
-                            if (sIsCovers) {
-                                val request = ImageRequest.Builder(requireActivity())
-                                        .data(mMusicViewModel.deviceMusicByAlbum?.get(item)?.get(0)?.albumId?.getCoverFromURI())
-                                        .target(
-                                                onSuccess = { result ->
-                                                    // Handle the successful result.
-                                                    albumCover.load(result)
-                                                },
-                                                onError = {
-                                                    albumCover.load(mAlbumArt)
-                                                }
-                                        )
-                                        .build()
+                            if (goPreferences.isCovers) {
+                                val uri = mMusicViewModel.deviceMusicByAlbum?.get(item)?.get(0)?.albumId?.getCoverFromURI()
 
-                                mLoadCoverIoScope.launch {
-                                    withContext(mLoadCoverIoDispatcher) {
-                                        mImageLoader.enqueue(request)
-                                    }
+                                albumCover.load(uri) {
+
                                 }
                             } else {
-                                albumCover.load(mAlbumArt)
+                                albumCover.setImageResource(R.drawable.album_art)
                             }
 
                             title.text = item

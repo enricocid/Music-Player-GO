@@ -1093,7 +1093,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun loadNpCover(selectedSong: Music) {
         if (goPreferences.isCovers) {
-            mNpCoverBinding.npCover.load(selectedSong.albumId.getCoverFromPFD(this)) {
+            mNpCoverBinding.npCover.load(selectedSong.albumId.getCoverFromURI()) {
                 transformations(RoundedCornersTransformation(16.0F))
             }
         } else {
