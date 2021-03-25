@@ -140,7 +140,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         mediaPlayerHolder.currentSong.first?.let { song ->
 
             val cover = if (goPreferences.isCovers) {
-                song.albumId?.getCoverFromPFD(playerService) ?: mAlbumArt
+                song.albumId.getCoverFromPFD(playerService) ?: mAlbumArt
             } else {
                 mAlbumArt
             }

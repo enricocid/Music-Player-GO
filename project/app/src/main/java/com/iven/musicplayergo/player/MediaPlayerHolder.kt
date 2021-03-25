@@ -266,7 +266,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         fun updateCover(builder: MediaMetadataCompat.Builder, song: Music) {
             builder.putBitmap(METADATA_KEY_ALBUM_ART, if (goPreferences.isCovers) {
-                song.albumId?.getCoverFromPFD(playerService)
+                song.albumId.getCoverFromPFD(playerService)
             } else {
                 null
             })
