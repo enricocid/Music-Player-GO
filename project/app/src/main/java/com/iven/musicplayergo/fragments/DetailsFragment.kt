@@ -721,7 +721,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     }
 
     private fun loadCoverIntoTarget(song: Music?, target: ImageView) {
-        target.load(song?.albumId?.toAlbumArtURI())
+        if (goPreferences.isCovers) {
+            target.load(song?.albumId?.toAlbumArtURI())
+        } else {
+            target.setImageResource(R.drawable.album_art)
+        }
     }
 
     fun hasToUpdate(selectedArtistOrFolder: String?) : Boolean {

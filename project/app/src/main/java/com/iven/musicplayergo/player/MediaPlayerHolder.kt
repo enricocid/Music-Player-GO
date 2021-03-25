@@ -298,6 +298,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                         METADATA_KEY_ALBUM_ART,
                         ContextCompat.getDrawable(playerService, R.drawable.album_art
                     )?.toBitmap())
+
+                    playerService.getMediaSession().setMetadata(build())
                 }
             } else {
                 playerService.getMediaSession().setMetadata(build())
