@@ -2,7 +2,6 @@ package com.iven.musicplayergo.fragments
 
 import android.animation.Animator
 import android.content.Context
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
@@ -20,9 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import coil.ImageLoader
 import coil.load
-import coil.request.ImageRequest
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
@@ -91,23 +87,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private var sPlayFirstSong = true
 
-    /**
-     * This is the job for all coroutines started by this ViewModel.
-     * Cancelling this job will cancel all coroutines started by this ViewModel.
-     */
-    private val mLoadCoverJob = SupervisorJob()
-
-    private val mLoadCoverHandler = CoroutineExceptionHandler { _, exception ->
-        exception.printStackTrace()
-    }
-
-    private val mLoadCoverIoDispatcher = Dispatchers.IO + mLoadCoverJob + mLoadCoverHandler
-    private val mLoadCoverIoScope = CoroutineScope(mLoadCoverIoDispatcher)
-
-    private val sIsCovers get() = goPreferences.isCovers
-    private lateinit var mImageLoader: ImageLoader
-    private var mAlbumArt: Bitmap? = null
-
     private var sOpenNewDetailsFragment = false
 
     override fun onAttach(context: Context) {
@@ -144,13 +123,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             mMediaControlInterface = activity as MediaControlInterface
         } catch (e: ClassCastException) {
             e.printStackTrace()
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (sIsCovers) {
-            mLoadCoverJob.cancel()
         }
     }
 
@@ -273,14 +245,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     }
 
     private fun setupViews(view: View) {
-
-        if (sIsCovers && sLaunchedByArtistView || sIsCovers && sLaunchedByAlbumView) {
-            mImageLoader = ImageLoader.Builder(requireActivity())
-                    .bitmapPoolingEnabled(false)
-                    .crossfade(true)
-                    .build()
-            mAlbumArt = ContextCompat.getDrawable(requireActivity(), R.drawable.album_art)?.toBitmap()
-        }
 
         if (sLaunchedByArtistView) {
 
@@ -701,7 +665,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             0
                         }
 
-                        if (sIsCovers) {
+                        if (goPreferences.isCovers) {
                             loadCoverIntoTarget(item.music?.get(0), albumCover)
                         }
                     }
@@ -757,23 +721,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     }
 
     private fun loadCoverIntoTarget(song: Music?, target: ImageView) {
-        val request = ImageRequest.Builder(requireActivity())
-                .data(song?.albumId?.getCoverFromURI())
-                .target(
-                        onSuccess = { result ->
-                            // Handle the successful result.
-                            target.load(result)
-                        },
-                        onError = {
-                            target.load(mAlbumArt)
-                        }
-                )
-                .build()
-
-        mLoadCoverIoScope.launch {
-            withContext(mLoadCoverIoDispatcher) {
-                mImageLoader.enqueue(request)
-            }
+        if (goPreferences.isCovers) {
+            target.load(song?.albumId?.toAlbumArtURI())
+        } else {
+            target.setImageResource(R.drawable.album_art)
         }
     }
 

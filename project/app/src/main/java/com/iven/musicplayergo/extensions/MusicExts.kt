@@ -9,7 +9,10 @@ import android.media.MediaExtractor
 import android.media.MediaFormat
 import android.net.Uri
 import android.provider.MediaStore
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
+import coil.Coil
+import coil.request.ImageRequest
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
@@ -70,27 +73,20 @@ fun Uri.toBitrate(context: Context): Pair<Int, Int>? {
     }
 }
 
-fun Long.getCoverFromPFD(context: Context): Bitmap? {
-    val albumArtUri = ("content://media/external/audio/albumart").toUri()
-    val uri = ContentUris.withAppendedId(albumArtUri, this)
-    return try {
-        context.contentResolver.openFileDescriptor(uri, "r")?.let { pfd ->
-            val bitmap = BitmapFactory.decodeFileDescriptor(pfd.fileDescriptor)
-            pfd.close()
-            return bitmap
-        }
-    } catch (e: Exception) {
-        e.printStackTrace()
-        null
-    }
+fun Long.toAlbumArtURI(): Uri {
+    return ContentUris.withAppendedId("content://media/external/audio/albumart".toUri(), this)
 }
 
-fun Long.getCoverFromURI(): Uri? = try {
-    val albumArtUri = ("content://media/external/audio/albumart").toUri()
-    ContentUris.withAppendedId(albumArtUri, this)
-} catch (e: Exception) {
-    e.printStackTrace()
-    Uri.EMPTY
+fun Long.waitForCover(context: Context, onDone: (Bitmap?) -> Unit) {
+    Coil.imageLoader(context).enqueue(
+        ImageRequest.Builder(context)
+            .data(toAlbumArtURI())
+            .target(
+                onSuccess = { onDone(it.toBitmap()) },
+                onError = { onDone(null) }
+            )
+            .build()
+    )
 }
 
 fun Long.toFormattedDuration(isAlbum: Boolean, isSeekBar: Boolean) = try {

@@ -20,7 +20,7 @@ import androidx.core.text.parseAsHtml
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.extensions.getCoverFromPFD
+import com.iven.musicplayergo.extensions.waitForCover
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.ui.MainActivity
@@ -59,7 +59,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         GoConstants.CLOSE_ACTION
     }
 
-    fun createNotification(): Notification {
+    fun createNotification(onCreated: (Notification) -> Unit) {
 
         mNotificationBuilder =
             NotificationCompat.Builder(playerService, GoConstants.NOTIFICATION_CHANNEL_ID)
@@ -78,7 +78,6 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                 openPlayerIntent, 0
         )
 
-        updateNotificationContent()
 
         mNotificationBuilder
             .setContentIntent(contentIntent)
@@ -95,7 +94,10 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                             .setShowActionsInCompactView(1, 2, 3)
             )
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-        return mNotificationBuilder.build()
+
+        updateNotificationContent {
+            onCreated(mNotificationBuilder.build())
+        }
     }
 
     fun cancelNotification() {
@@ -123,8 +125,9 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean) {
         if (::mNotificationBuilder.isInitialized) {
             if (!isAdditionalActionsChanged) {
-                updateNotificationContent()
-                updateNotification()
+                updateNotificationContent {
+                    updateNotification()
+                }
             } else {
                 mNotificationActions[0] =
                     getNotificationAction(getFirstAdditionalAction())
@@ -135,28 +138,33 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         }
     }
 
-    fun updateNotificationContent() {
+    fun updateNotificationContent(onDone: (() -> Unit)? = null) {
         val mediaPlayerHolder = playerService.mediaPlayerHolder
+
         mediaPlayerHolder.currentSong.first?.let { song ->
-
-            val cover = if (goPreferences.isCovers) {
-                song.albumId?.getCoverFromPFD(playerService) ?: mAlbumArt
-            } else {
-                mAlbumArt
-            }
-
             mNotificationBuilder
                     .setContentText(song.artist)
                     .setContentTitle(
-                            playerService.getString(
+                        playerService.getString(
                                     R.string.song_title_notification,
                                     song.title
                             ).parseAsHtml()
                     )
                     .setSubText(song.album)
-                    .setLargeIcon(cover)
                     .setColorized(true)
                     .setSmallIcon(getNotificationSmallIcon(mediaPlayerHolder))
+
+            if (goPreferences.isCovers) {
+                song.albumId?.waitForCover(playerService) { bitmap ->
+                    mNotificationBuilder.setLargeIcon(bitmap)
+
+                    onDone?.invoke()
+                }
+            } else {
+                mNotificationBuilder.setLargeIcon(mAlbumArt)
+
+                onDone?.invoke()
+            }
         }
     }
 
