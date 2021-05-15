@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.datasource.dataSourceTypedOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
@@ -450,7 +449,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         if (selectedPos > -1) {
             var songView: View? = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(selectedPos)
             if (songView == null) {
-                _detailsFragmentBinding?.songsRv?.smoothScrollToPosition(selectedPos)
                 //Wait for song to appear on screen
                 _detailsFragmentBinding?.songsRv?.addOnScrollListener(object :
                     RecyclerView.OnScrollListener() {
@@ -463,6 +461,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         }
                     }
                 })
+                _detailsFragmentBinding?.songsRv?.smoothScrollToPosition(selectedPos)
             } else {
                 animateHighlightedSong(songView)
             }
@@ -732,9 +731,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                                 updateSelectedAlbumTitle()
 
-
-                                val song = arguments?.getLong(TAG_HIGHLIGHTED_SONG_ID)
-                                swapAlbum(item.title, item.music, song)
+                                swapAlbum(item.title, item.music)
                             }
                         } else {
                             if (sPlayFirstSong) {
@@ -782,12 +779,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     fun tryToSnapToAlbumPosition(snapPosition: Int, highlightedSongId: Long?) {
         sPlayFirstSong = false
-        if (sLaunchedByArtistView && snapPosition != -1) {
-            _detailsFragmentBinding?.albumsRv?.smoothSnapToPosition(
-                snapPosition
-            )
-        }
-
         highlightedSongId?.let {
             _detailsFragmentBinding?.songsRv?.addOnLayoutChangeListener(object: View.OnLayoutChangeListener {
                 override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
@@ -795,6 +786,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     _detailsFragmentBinding?.songsRv?.removeOnLayoutChangeListener(this)
                 }
             })
+        }
+
+        if (sLaunchedByArtistView && snapPosition != -1) {
+            _detailsFragmentBinding?.albumsRv?.smoothSnapToPosition(
+                snapPosition
+            )
         }
     }
 
@@ -830,7 +827,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
     }
 
-    private fun swapAlbum(title: String?, songs: MutableList<Music>?, songId: Long?) {
+    private fun swapAlbum(title: String?, songs: MutableList<Music>?) {
         mSongsSorting = if (sWasShuffling.first && sWasShuffling.second == title) {
             GoConstants.SHUFFLE_SORTING
         } else {
