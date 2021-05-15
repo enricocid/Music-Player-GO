@@ -1156,7 +1156,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                             selectedArtistOrFolder,
                             mMediaPlayerHolder,
                             mMusicViewModel.deviceAlbumsByArtist,
-                        )
+                        ),
+                        mMediaPlayerHolder.currentSong.first?.id
                     )
                 }
                 mDetailsFragment?.highlightSong(mMediaPlayerHolder.currentSong.first?.id)

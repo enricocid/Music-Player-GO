@@ -440,7 +440,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
     }
 
-    public fun highlightSong(songId: Long?) {
+    fun highlightSong(songId: Long?) {
         if(songId == null) return
 
         val selectedPos = mSongsDataSource.indexOfFirst {
@@ -539,6 +539,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
         songs?.let { newSongsList ->
             mSongsDataSource.set(newSongsList)
+            _detailsFragmentBinding?.songsRv?.adapter?.notifyDataSetChanged()
         }
     }
 
@@ -742,7 +743,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                                 updateSelectedAlbumTitle()
 
-                                swapAlbum(item.title, item.music)
+
+                                val song = arguments?.getLong(TAG_HIGHLIGHTED_SONG_ID)
+                                swapAlbum(item.title, item.music, song)
                             }
                         } else {
                             if (sPlayFirstSong) {
@@ -788,12 +791,22 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
        return sOpenNewDetailsFragment
     }
 
-    fun tryToSnapToAlbumPosition(snapPosition: Int) {
+    fun tryToSnapToAlbumPosition(snapPosition: Int, highlightedSongId: Long?) {
         sPlayFirstSong = false
         if (sLaunchedByArtistView && snapPosition != -1) {
             _detailsFragmentBinding?.albumsRv?.smoothSnapToPosition(
                 snapPosition
             )
+        }
+
+        highlightedSongId?.let {
+            _detailsFragmentBinding?.songsRv?.addOnLayoutChangeListener(object: View.OnLayoutChangeListener {
+                @Override
+                override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
+                    highlightSong(highlightedSongId)
+                    _detailsFragmentBinding?.songsRv?.removeOnLayoutChangeListener(this)
+                }
+            })
         }
     }
 
@@ -829,7 +842,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
     }
 
-    private fun swapAlbum(title: String?, songs: MutableList<Music>?) {
+    private fun swapAlbum(title: String?, songs: MutableList<Music>?, songId: Long?) {
         mSongsSorting = if (sWasShuffling.first && sWasShuffling.second == title) {
             GoConstants.SHUFFLE_SORTING
         } else {
@@ -841,6 +854,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
         setSongsDataSource(songs, true)
         _detailsFragmentBinding?.songsRv?.scrollToPosition(0)
+
     }
 
     companion object {
