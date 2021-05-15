@@ -448,48 +448,38 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
 
         if (selectedPos > -1) {
-            var songItem: View? = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(selectedPos)
-            if (songItem == null) {
+            var songView: View? = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(selectedPos)
+            if (songView == null) {
                 _detailsFragmentBinding?.songsRv?.smoothScrollToPosition(selectedPos)
+                //Wait for song to appear on screen
                 _detailsFragmentBinding?.songsRv?.addOnScrollListener(object :
                     RecyclerView.OnScrollListener() {
                     override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                         super.onScrollStateChanged(recyclerView, newState)
                         if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                            songItem = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(selectedPos)
-
-                            songItem?.let {
-                                val unpressRunnable = java.lang.Runnable {
-                                    songItem?.isPressed = false
-                                }
-
-                                val pressRunnable = java.lang.Runnable {
-                                    songItem?.isPressed = true
-                                    songItem?.postOnAnimationDelayed(unpressRunnable, 1000)
-                                }
-                                pressRunnable.run()
-                            }
-
-
+                            songView = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(selectedPos)
+                                animateHighlightedSong(songView)
                             _detailsFragmentBinding?.songsRv?.clearOnScrollListeners()
                         }
                     }
                 })
             } else {
-                songItem?.let {
-                    val unpressRunnable = java.lang.Runnable {
-                        songItem?.isPressed = false
-                    }
-
-                    val pressRunnable = java.lang.Runnable {
-                        songItem?.isPressed = true
-                        songItem?.postOnAnimationDelayed(unpressRunnable, 1000)
-                    }
-                    pressRunnable.run()
-                }
-
-
+                animateHighlightedSong(songView)
             }
+        }
+    }
+
+    private fun animateHighlightedSong(songView: View?){
+        songView?.let {
+            val unpressRunnable = java.lang.Runnable {
+                songView.isPressed = false
+            }
+
+            val pressRunnable = java.lang.Runnable {
+                songView.isPressed = true
+                songView.postOnAnimationDelayed(unpressRunnable, 1000)
+            }
+            pressRunnable.run()
         }
     }
 
@@ -801,7 +791,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
         highlightedSongId?.let {
             _detailsFragmentBinding?.songsRv?.addOnLayoutChangeListener(object: View.OnLayoutChangeListener {
-                @Override
                 override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
                     highlightSong(highlightedSongId)
                     _detailsFragmentBinding?.songsRv?.removeOnLayoutChangeListener(this)
