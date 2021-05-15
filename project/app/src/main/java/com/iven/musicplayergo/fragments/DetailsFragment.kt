@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.afollestad.recyclical.datasource.dataSourceOf
+import com.afollestad.recyclical.datasource.dataSourceTypedOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.google.android.material.card.MaterialCardView
@@ -58,8 +59,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private lateinit var mArtistDetailsAnimator: Animator
     private lateinit var mAlbumsRecyclerViewLayoutManager: LinearLayoutManager
 
-    private val mSelectedAlbumsDataSource = dataSourceOf()
-    private val mSongsDataSource = dataSourceOf()
+    private val mSelectedAlbumsDataSource = dataSourceTypedOf<Album>()
+    private val mSongsDataSource = dataSourceTypedOf<Music>()
 
     private var mLaunchedBy = GoConstants.ARTIST_VIEW
 
@@ -426,14 +427,68 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             }).attachToRecyclerView(rv)
         }
 
-        if (goPreferences.isAnimations) {
-            view.afterMeasured {
+        view.afterMeasured {
+            if (goPreferences.isAnimations) {
                 _detailsFragmentBinding?.root?.run {
                     mArtistDetailsAnimator = createCircularReveal(
                             isErrorFragment = false,
                             show = true
                     )
                 }
+            }
+            highlightSong(arguments?.getLong(TAG_HIGHLIGHTED_SONG_ID))
+        }
+    }
+
+    public fun highlightSong(songId: Long?) {
+        if(songId == null) return
+
+        val selectedPos = mSongsDataSource.indexOfFirst {
+            it.id == songId
+        }
+
+        if (selectedPos > -1) {
+            var songItem: View? = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(selectedPos)
+            if (songItem == null) {
+                _detailsFragmentBinding?.songsRv?.smoothScrollToPosition(selectedPos)
+                _detailsFragmentBinding?.songsRv?.addOnScrollListener(object :
+                    RecyclerView.OnScrollListener() {
+                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                        super.onScrollStateChanged(recyclerView, newState)
+                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                            songItem = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(selectedPos)
+
+                            songItem?.let {
+                                val unpressRunnable = java.lang.Runnable {
+                                    songItem?.isPressed = false
+                                }
+
+                                val pressRunnable = java.lang.Runnable {
+                                    songItem?.isPressed = true
+                                    songItem?.postOnAnimationDelayed(unpressRunnable, 1000)
+                                }
+                                pressRunnable.run()
+                            }
+
+
+                            _detailsFragmentBinding?.songsRv?.clearOnScrollListeners()
+                        }
+                    }
+                })
+            } else {
+                songItem?.let {
+                    val unpressRunnable = java.lang.Runnable {
+                        songItem?.isPressed = false
+                    }
+
+                    val pressRunnable = java.lang.Runnable {
+                        songItem?.isPressed = true
+                        songItem?.postOnAnimationDelayed(unpressRunnable, 1000)
+                    }
+                    pressRunnable.run()
+                }
+
+
             }
         }
     }
@@ -795,6 +850,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         private const val TAG_SELECTED_ALBUM_POSITION = "SELECTED_ALBUM_POSITION"
         private const val TAG_IS_SHUFFLING = "IS_SHUFFLING"
         private const val TAG_SHUFFLED_ALBUM = "SHUFFLED_ALBUM"
+        private const val TAG_HIGHLIGHTED_SONG_ID = "HIGHLIGHTED_SONG_ID"
 
         /**
          * Use this factory method to create a new instance of
@@ -808,6 +864,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             launchedBy: String,
             playedAlbumPosition: Int,
             isShuffleMode: Pair<Boolean, String?>,
+            highlightedSongId: Long?
         ) =
             DetailsFragment().apply {
                 arguments = bundleOf(
@@ -815,7 +872,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     TAG_IS_FOLDER to launchedBy,
                     TAG_SELECTED_ALBUM_POSITION to playedAlbumPosition,
                     TAG_IS_SHUFFLING to isShuffleMode.first,
-                    TAG_SHUFFLED_ALBUM to isShuffleMode.second
+                    TAG_SHUFFLED_ALBUM to isShuffleMode.second,
+                    TAG_HIGHLIGHTED_SONG_ID to highlightedSongId
                 )
             }
     }
