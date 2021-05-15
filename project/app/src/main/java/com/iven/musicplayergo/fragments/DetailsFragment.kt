@@ -529,7 +529,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
         songs?.let { newSongsList ->
             mSongsDataSource.set(newSongsList)
-            _detailsFragmentBinding?.songsRv?.adapter?.notifyDataSetChanged()
         }
     }
 
