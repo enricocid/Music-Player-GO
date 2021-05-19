@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.afollestad.recyclical.datasource.dataSourceOf
+import com.afollestad.recyclical.datasource.dataSourceTypedOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.google.android.material.card.MaterialCardView
@@ -58,8 +58,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private lateinit var mArtistDetailsAnimator: Animator
     private lateinit var mAlbumsRecyclerViewLayoutManager: LinearLayoutManager
 
-    private val mSelectedAlbumsDataSource = dataSourceOf()
-    private val mSongsDataSource = dataSourceOf()
+    private val mSelectedAlbumsDataSource = dataSourceTypedOf<Album>()
+    private val mSongsDataSource = dataSourceTypedOf<Music>()
 
     private var mLaunchedBy = GoConstants.ARTIST_VIEW
 
@@ -426,8 +426,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             }).attachToRecyclerView(rv)
         }
 
-        if (goPreferences.isAnimations) {
-            view.afterMeasured {
+        view.afterMeasured {
+            if (goPreferences.isAnimations) {
                 _detailsFragmentBinding?.root?.run {
                     mArtistDetailsAnimator = createCircularReveal(
                             isErrorFragment = false,
@@ -435,6 +435,50 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     )
                 }
             }
+            highlightSong(arguments?.getLong(TAG_HIGHLIGHTED_SONG_ID))
+        }
+    }
+
+    fun highlightSong(songId: Long?) {
+        if(songId == null) return
+
+        val selectedPos = mSongsDataSource.indexOfFirst {
+            it.id == songId
+        }
+
+        if (selectedPos > -1) {
+            var songView: View? = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(selectedPos)
+            if (songView == null) {
+                //Wait for song to appear on screen
+                _detailsFragmentBinding?.songsRv?.addOnScrollListener(object :
+                    RecyclerView.OnScrollListener() {
+                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                        super.onScrollStateChanged(recyclerView, newState)
+                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                            songView = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(selectedPos)
+                                animateHighlightedSong(songView)
+                            _detailsFragmentBinding?.songsRv?.clearOnScrollListeners()
+                        }
+                    }
+                })
+                _detailsFragmentBinding?.songsRv?.smoothScrollToPosition(selectedPos)
+            } else {
+                animateHighlightedSong(songView)
+            }
+        }
+    }
+
+    private fun animateHighlightedSong(songView: View?){
+        songView?.let {
+            val unpressRunnable = java.lang.Runnable {
+                songView.isPressed = false
+            }
+
+            val pressRunnable = java.lang.Runnable {
+                songView.isPressed = true
+                songView.postOnAnimationDelayed(unpressRunnable, 1000)
+            }
+            pressRunnable.run()
         }
     }
 
@@ -733,8 +777,17 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
        return sOpenNewDetailsFragment
     }
 
-    fun tryToSnapToAlbumPosition(snapPosition: Int) {
+    fun tryToSnapToAlbumPosition(snapPosition: Int, highlightedSongId: Long?) {
         sPlayFirstSong = false
+        highlightedSongId?.let {
+            _detailsFragmentBinding?.songsRv?.addOnLayoutChangeListener(object: View.OnLayoutChangeListener {
+                override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
+                    highlightSong(highlightedSongId)
+                    _detailsFragmentBinding?.songsRv?.removeOnLayoutChangeListener(this)
+                }
+            })
+        }
+
         if (sLaunchedByArtistView && snapPosition != -1) {
             _detailsFragmentBinding?.albumsRv?.smoothSnapToPosition(
                 snapPosition
@@ -786,6 +839,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
         setSongsDataSource(songs, true)
         _detailsFragmentBinding?.songsRv?.scrollToPosition(0)
+
     }
 
     companion object {
@@ -795,6 +849,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         private const val TAG_SELECTED_ALBUM_POSITION = "SELECTED_ALBUM_POSITION"
         private const val TAG_IS_SHUFFLING = "IS_SHUFFLING"
         private const val TAG_SHUFFLED_ALBUM = "SHUFFLED_ALBUM"
+        private const val TAG_HIGHLIGHTED_SONG_ID = "HIGHLIGHTED_SONG_ID"
 
         /**
          * Use this factory method to create a new instance of
@@ -808,6 +863,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             launchedBy: String,
             playedAlbumPosition: Int,
             isShuffleMode: Pair<Boolean, String?>,
+            highlightedSongId: Long?
         ) =
             DetailsFragment().apply {
                 arguments = bundleOf(
@@ -815,7 +871,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     TAG_IS_FOLDER to launchedBy,
                     TAG_SELECTED_ALBUM_POSITION to playedAlbumPosition,
                     TAG_IS_SHUFFLING to isShuffleMode.first,
-                    TAG_SHUFFLED_ALBUM to isShuffleMode.second
+                    TAG_SHUFFLED_ALBUM to isShuffleMode.second,
+                    TAG_HIGHLIGHTED_SONG_ID to highlightedSongId
                 )
             }
     }
