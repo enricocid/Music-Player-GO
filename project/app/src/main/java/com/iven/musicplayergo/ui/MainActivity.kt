@@ -624,70 +624,57 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun setupPreciseVolumeHandler() {
 
-        val defaultValueColor = mNpExtControlsBinding.npVolumeValue.currentTextColor
-        val selectedColor = ThemeHelper.resolveThemeAccent(this)
-        val inactiveColor = ThemeHelper.resolveColorAttr(
-                this@MainActivity,
-                android.R.attr.colorButtonNormal
-        )
-
         mNpExtControlsBinding.let { npe ->
 
-            if (!goPreferences.isPreciseVolumeEnabled) {
-                npe.npVolumeValue.isEnabled = false
-                npe.npVolumeValue.setTextColor(inactiveColor)
-                npe.npVolumeSeek.run {
-                    isEnabled = false
-                    progressTintList = ColorStateList.valueOf(inactiveColor)
-                    thumbTintList = ColorStateList.valueOf(inactiveColor)
-                }
-                ThemeHelper.updateIconTint(
-                        npe.npVolume,
-                        inactiveColor
-                )
-            }
+            val isVolumeEnabled = goPreferences.isPreciseVolumeEnabled
+            npe.npVolumeValue.handleViewVisibility(isVolumeEnabled)
+            npe.npVolume.handleViewVisibility(isVolumeEnabled)
+            npe.npVolumeSeek.handleViewVisibility(isVolumeEnabled)
 
-            mMediaPlayerHolder.currentVolumeInPercent.run {
-                npe.npVolume.setImageResource(
+            if (isVolumeEnabled) {
+
+                mMediaPlayerHolder.currentVolumeInPercent.run {
+                    npe.npVolume.setImageResource(
                         ThemeHelper.getPreciseVolumeIcon(
-                                this
+                            this
                         )
-                )
-                npe.npVolumeSeek.progress = this
-                npe.npVolumeValue.text = this.toString()
-            }
-
-            npe.npVolumeSeek.setOnSeekBarChangeListener(object :
-                    SeekBar.OnSeekBarChangeListener {
-
-                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                    if (fromUser) {
-                        mMediaPlayerHolder.setPreciseVolume(progress)
-                        npe.npVolumeValue.text = progress.toString()
-                        npe.npVolume.setImageResource(
-                                ThemeHelper.getPreciseVolumeIcon(
-                                        progress
-                                )
-                        )
-                    }
+                    )
+                    npe.npVolumeSeek.progress = this
+                    npe.npVolumeValue.text = this.toString()
                 }
 
-                override fun onStartTrackingTouch(seekBar: SeekBar) {
-                    npe.npVolumeValue.setTextColor(selectedColor)
-                    ThemeHelper.updateIconTint(
+                npe.npVolumeSeek.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+                    val defaultValueColor = mNpExtControlsBinding.npVolumeValue.currentTextColor
+                    val selectedColor = ThemeHelper.resolveThemeAccent(this@MainActivity)
+
+                    override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                        if (fromUser) {
+                            mMediaPlayerHolder.setPreciseVolume(progress)
+                            npe.npVolumeValue.text = progress.toString()
+                            npe.npVolume.setImageResource(
+                                ThemeHelper.getPreciseVolumeIcon(
+                                    progress
+                                )
+                            )
+                        }
+                    }
+                    override fun onStartTrackingTouch(seekBar: SeekBar) {
+                        npe.npVolumeValue.setTextColor(selectedColor)
+                        ThemeHelper.updateIconTint(
                             npe.npVolume,
                             selectedColor
-                    )
-                }
-
-                override fun onStopTrackingTouch(seekBar: SeekBar) {
-                    npe.npVolumeValue.setTextColor(defaultValueColor)
-                    ThemeHelper.updateIconTint(
+                        )
+                    }
+                    override fun onStopTrackingTouch(seekBar: SeekBar) {
+                        npe.npVolumeValue.setTextColor(defaultValueColor)
+                        ThemeHelper.updateIconTint(
                             npe.npVolume,
                             defaultValueColor
-                    )
-                }
-            })
+                        )
+                    }
+                })
+            }
         }
     }
 
