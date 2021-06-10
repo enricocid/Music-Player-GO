@@ -485,12 +485,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
-    private fun closeNpDialog() {
-        if (::mNpDialog.isInitialized && mNpDialog.isShowing) {
-            mNpDialog.dismiss()
-        }
-    }
-
     private fun initMediaButtons() {
 
         mPlayerControlsPanelBinding.playPauseButton.setOnClickListener { resumeOrPause() }
@@ -715,6 +709,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 mNpBinding.npArtistAlbum.isSelected = true
 
                 setupNPCoverLayout()
+
+                mNpBinding.npPlayingSongContainer.setOnClickListener {
+                    mNpDialog.dismiss()
+                    mNpDialog.onDismiss {
+                        openPlayingArtistAlbum()
+                    }
+                }
 
                 mNpControlsBinding.npSkipPrev.setOnClickListener { skip(false) }
 
@@ -1151,8 +1152,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     mMediaPlayerHolder.currentSong.first?.id
                 )
             }
-
-            closeNpDialog()
         }
     }
 
@@ -1309,7 +1308,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 synchronized(mMediaPlayerHolder.onOpenEqualizerCustom()) {
                     if (!sEqFragmentExpanded) {
                         mEqualizerFragment = EqFragment.newInstance()
-                        synchronized(closeNpDialog()) {
+                        mNpDialog.dismiss()
+                        mNpDialog.onDismiss {
                             sCloseDetailsFragment = !sDetailsFragmentExpanded
                             if (sAllowCommit) {
                                 supportFragmentManager.addFragment(
