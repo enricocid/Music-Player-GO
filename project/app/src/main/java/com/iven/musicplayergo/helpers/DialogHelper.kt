@@ -50,7 +50,7 @@ object DialogHelper {
         ItemTouchHelper(ItemTouchCallback(queueAdapter.queueSongs, false))
                 .attachToRecyclerView(recyclerView)
 
-        ItemTouchHelper(ItemSwipeCallback(context, true) { viewHolder: RecyclerView.ViewHolder, _: Int ->
+        ItemTouchHelper(ItemSwipeCallback(context, isQueueDialog = true, isLovedDialog = false) { viewHolder: RecyclerView.ViewHolder, _: Int ->
             val title = viewHolder.itemView.findViewById<TextView>(R.id.title)
             if (!queueAdapter.performQueueSongDeletion(viewHolder.adapterPosition, title)) {
                 queueAdapter.notifyItemChanged(viewHolder.adapterPosition)
@@ -166,7 +166,7 @@ object DialogHelper {
             }
         }
 
-        ItemTouchHelper(ItemSwipeCallback(context, false) { viewHolder: RecyclerView.ViewHolder,
+        ItemTouchHelper(ItemSwipeCallback(context, isQueueDialog = false, isLovedDialog = true) { viewHolder: RecyclerView.ViewHolder,
                                                             direction: Int ->
             if (direction == ItemTouchHelper.RIGHT) {
                 lovedSongsAdapter.addLovedSongToQueue(viewHolder.adapterPosition)

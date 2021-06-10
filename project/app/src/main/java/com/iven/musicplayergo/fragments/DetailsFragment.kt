@@ -411,7 +411,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 }
             }
 
-            ItemTouchHelper(ItemSwipeCallback(requireActivity(), false) { viewHolder: RecyclerView.ViewHolder,
+            ItemTouchHelper(ItemSwipeCallback(requireActivity(), isQueueDialog = false, isLovedDialog = false) { viewHolder: RecyclerView.ViewHolder,
                                                                           direction: Int ->
                 val song = mSelectedAlbum?.music?.get(viewHolder.adapterPosition)
                 if (direction == ItemTouchHelper.RIGHT) {

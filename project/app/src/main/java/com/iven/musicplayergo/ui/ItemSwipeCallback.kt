@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
 
 
-class ItemSwipeCallback(private val ctx: Context, private val isDialog: Boolean, private val onSwipedAction: (viewHolder: RecyclerView.ViewHolder, direction: Int) -> Unit) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
+class ItemSwipeCallback(private val ctx: Context, private val isQueueDialog: Boolean, private val isLovedDialog: Boolean, private val onSwipedAction: (viewHolder: RecyclerView.ViewHolder, direction: Int) -> Unit) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
 
     private val red = ContextCompat.getColor(ctx, R.color.red)
 
@@ -23,7 +23,7 @@ class ItemSwipeCallback(private val ctx: Context, private val isDialog: Boolean,
 
     private val secondIcon = ContextCompat.getDrawable(
             ctx,
-            if (isDialog) {
+            if (isQueueDialog || isLovedDialog) {
                 R.drawable.ic_delete
             } else {
                 R.drawable.ic_favorite
@@ -34,7 +34,7 @@ class ItemSwipeCallback(private val ctx: Context, private val isDialog: Boolean,
 
     private val firstColor = ColorDrawable(ContextCompat.getColor(ctx, R.color.swipeActionDeleteColor))
 
-    private val secondColor = if (isDialog) {
+    private val secondColor = if (isQueueDialog) {
         firstColor
     } else {
         ColorDrawable(ContextCompat.getColor(ctx, R.color.swipeActionAddColor))
@@ -64,7 +64,7 @@ class ItemSwipeCallback(private val ctx: Context, private val isDialog: Boolean,
 
         when {
             dX > 0 -> {
-                if (isDialog) {
+                if (isQueueDialog && !isLovedDialog) {
                     firstIconAlt
                 } else {
                     background = secondColor
