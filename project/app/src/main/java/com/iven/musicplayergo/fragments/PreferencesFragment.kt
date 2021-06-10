@@ -10,7 +10,10 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.bottomsheets.BottomSheet
+import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
 import com.iven.musicplayergo.R
@@ -80,7 +83,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         }
 
         findPreference<Preference>(getString(R.string.accent_pref))?.let { preference ->
-            preference.summary = ThemeHelper.getAccentName(goPreferences.accent, requireActivity())
+            preference.summary = ThemeHelper.getAccentName(requireActivity(), goPreferences.accent)
             preference.onPreferenceClickListener = this@PreferencesFragment
         }
 
@@ -138,21 +141,30 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     private fun showAccentsDialog() {
 
-        mAccentsDialog = MaterialDialog(requireActivity()).show {
+        mAccentsDialog = MaterialDialog(requireActivity(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
             title(R.string.accent_pref_title)
 
-            customListAdapter(AccentsAdapter(requireActivity()))
+            val accentsAdapter = AccentsAdapter(requireActivity())
+            customListAdapter(accentsAdapter)
 
             val rv = getRecyclerView()
             rv.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
             rv.scrollToPosition(ThemeHelper.getAccentedTheme().second)
+
+            positiveButton(android.R.string.ok) {
+                dismiss()
+                onDismiss {
+                    accentsAdapter.applyTheming()
+                }
+            }
+            negativeButton(android.R.string.cancel)
         }
     }
 
     private fun showActiveFragmentsDialog() {
 
-        mActiveFragmentsDialog = MaterialDialog(requireActivity()).show {
+        mActiveFragmentsDialog = MaterialDialog(requireActivity(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
             title(R.string.active_fragments_pref_title)
 
@@ -167,7 +179,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 goPreferences.activeTabs = activeTabsAdapter.getUpdatedItems().toMutableList()
                 mUIControlInterface.onAppearanceChanged(false)
             }
-
             negativeButton(android.R.string.cancel)
         }
     }

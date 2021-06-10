@@ -126,17 +126,25 @@ object ThemeHelper {
 
     @JvmStatic
     @SuppressLint("DefaultLocale")
-    fun getAccentName(accent: Int, context: Context): Spanned {
+    fun getAccentName(context: Context, accent: Int): Spanned {
         val accentName = context.resources.getResourceEntryName(accent).replace(
                 context.getString(R.string.underscore_delimiter),
                 context.getString(R.string.space_delimiter)
         ).replaceFirstChar { it.uppercase() }
         return context.getString(
-                R.string.accent_and_hex,
-                accentName,
-                context.getString(accent).uppercase()
+            R.string.accent_and_hex,
+            accentName,
+            context.getString(accent).uppercase()
         ).parseAsHtml()
     }
+
+    @JvmStatic
+    @SuppressLint("DefaultLocale")
+    fun getAccentNameForPref(context: Context, accent: Int) =
+        context.resources.getResourceEntryName(accent).replace(
+            context.getString(R.string.underscore_delimiter),
+            context.getString(R.string.space_delimiter)
+        ).replaceFirstChar { it.uppercase() }
 
     // Search theme from accents array of Pair, returns a Pair(theme, position)
     @JvmStatic
@@ -221,14 +229,6 @@ object ThemeHelper {
         in 34..67 -> R.drawable.ic_volume_down
         in 68..100 -> R.drawable.ic_volume_up
         else -> R.drawable.ic_volume_off
-    }
-
-    @JvmStatic
-    fun createColouredRipple(context: Context, rippleColor: Int, rippleId: Int): Drawable {
-        val ripple = ContextCompat.getDrawable(context, rippleId) as RippleDrawable
-        return ripple.apply {
-            setColor(ColorStateList.valueOf(rippleColor))
-        }
     }
 
     @JvmStatic

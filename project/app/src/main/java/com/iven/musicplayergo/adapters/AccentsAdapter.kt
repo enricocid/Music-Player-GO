@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 
@@ -17,6 +18,11 @@ class AccentsAdapter(private val activity: Activity) :
 
     private val mAccents = ThemeHelper.accents
     private var mSelectedAccent = goPreferences.accent
+    private var mSelectedPosition = RecyclerView.NO_POSITION
+
+    fun applyTheming() {
+        goPreferences.accent = mSelectedAccent
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccentsHolder {
         return AccentsHolder(
@@ -42,18 +48,35 @@ class AccentsAdapter(private val activity: Activity) :
 
                 val circle = findViewById<ImageButton>(R.id.circle)
                 val accent = ContextCompat.getColor(activity, color)
+                val accentName = ThemeHelper.getAccentNameForPref(activity, mAccents[absoluteAdapterPosition].first)
                 ThemeHelper.updateIconTint(circle, accent)
-                ThemeHelper.createColouredRipple(activity, accent, R.drawable.ripple_oval).apply {
-                    itemView.background = this
+
+                contentDescription = accentName
+
+                val cardView = itemView as MaterialCardView
+                val colorText = itemView.findViewById<TextView>(R.id.color)
+
+                cardView.strokeColor = accent
+
+                if (color == mSelectedAccent) {
+                    mSelectedPosition = absoluteAdapterPosition
+                    cardView.strokeWidth = resources.getDimensionPixelSize(R.dimen.album_stroke)
+                    colorText.setTextColor(accent)
+                } else {
+                    cardView.strokeWidth = 0
+                    colorText.setTextColor(ThemeHelper.resolveColorAttr(
+                        activity,
+                        android.R.attr.colorButtonNormal
+                    ))
                 }
 
-                contentDescription = ThemeHelper.getAccentName(mAccents[absoluteAdapterPosition].first, activity)
-                findViewById<ImageButton>(R.id.check).handleViewVisibility(color == mSelectedAccent)
+                colorText.text = accentName
 
                 setOnClickListener {
                     if (mAccents[absoluteAdapterPosition].first != mSelectedAccent) {
+                        notifyItemChanged(mSelectedPosition)
                         mSelectedAccent = mAccents[absoluteAdapterPosition].first
-                        goPreferences.accent = mSelectedAccent
+                        notifyItemChanged(absoluteAdapterPosition)
                     }
                 }
             }
