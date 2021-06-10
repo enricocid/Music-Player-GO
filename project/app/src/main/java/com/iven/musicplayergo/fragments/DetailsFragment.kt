@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.widget.SearchView
+import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
@@ -68,6 +69,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private var mSelectedArtistOrFolder: String? = null
     private var mSelectedAlbumPosition = -1
+    private var mSelectedSongId: Long? = null
+    private var mSelectedSongPosition = -1
 
     private lateinit var mUIControlInterface: UIControlInterface
     private lateinit var mMediaControlInterface: MediaControlInterface
@@ -106,6 +109,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             }
         }
 
+        arguments?.getLong(TAG_HIGHLIGHTED_SONG_ID)?.let { selectedSongId ->
+            mSelectedSongId = selectedSongId
+        }
+
         arguments?.getBoolean(TAG_IS_SHUFFLING)?.let { isShuffleMode ->
             if (isShuffleMode) {
                 mSongsSorting = GoConstants.SHUFFLE_SORTING
@@ -130,8 +137,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         if (!mArtistDetailsAnimator.isRunning) {
             _detailsFragmentBinding?.root?.run {
                 mArtistDetailsAnimator = createCircularReveal(
-                        isErrorFragment = false,
-                        show = false
+                    isErrorFragment = false,
+                    show = false
                 )
             }
         }
@@ -186,7 +193,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         }
 
                         setupToolbar()
-
                         setupViews(view)
                     }
                 })
@@ -287,11 +293,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 selectedAlbumContainer.handleViewVisibility(false)
 
                 if (sLaunchedByFolderView) {
-
                     albumViewCoverContainer.handleViewVisibility(false)
                     detailsToolbar.subtitle = getString(
-                            R.string.folder_info,
-                            mSongsList?.size
+                        R.string.folder_info,
+                        mSongsList?.size
                     )
                 } else {
 
@@ -301,21 +306,21 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     selectedAlbumViewArtist.text = firstSong?.artist
                     selectedAlbumViewArtist.isSelected = true
                     selectedAlbumViewSize.text = getString(
-                            R.string.folder_info,
-                            mSongsList?.size
+                        R.string.folder_info,
+                        mSongsList?.size
                     )
                     selectedAlbumViewSize.isSelected = true
                     loadCoverIntoTarget(firstSong, albumViewArt)
                 }
 
                 val searchView =
-                        detailsToolbar.menu.findItem(R.id.action_search).actionView as SearchView
+                    detailsToolbar.menu.findItem(R.id.action_search).actionView as SearchView
                 searchView.run {
                     setOnQueryTextListener(this@DetailsFragment)
                     setOnQueryTextFocusChangeListener { _, hasFocus ->
                         detailsToolbar.menu.setGroupVisible(
-                                R.id.more_options_folder,
-                                !hasFocus
+                            R.id.more_options_folder,
+                            !hasFocus
                         )
                         if (sLaunchedByAlbumView) {
                             albumViewCoverContainer.afterMeasured {
@@ -338,15 +343,18 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
 
         setSongsDataSource(
-                if (sLaunchedByArtistView) {
-                    mSelectedAlbum?.music
-                } else {
-                    mSongsList
-                },
-                true
+            if (sLaunchedByArtistView) {
+                mSelectedAlbum?.music
+            } else {
+                mSongsList
+                   },
+            true
         )
 
         _detailsFragmentBinding?.songsRv?.let { rv ->
+
+            val defaultTextColor = ThemeHelper.resolveColorAttr(requireActivity(), android.R.attr.textColorPrimary)
+            val accentTextColor = ThemeHelper.resolveThemeAccent(requireActivity())
 
             // setup{} is an extension method on RecyclerView
             rv.setup {
@@ -370,9 +378,17 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         // GenericViewHolder is `this` here
                         title.text = displayedTitle
 
+                        val titleColor = if (mSelectedSongId == item.id) {
+                            mSelectedSongPosition = absoluteAdapterPosition
+                            accentTextColor
+                        } else {
+                            defaultTextColor
+                        }
+                        title.setTextColor(titleColor)
+
                         val duration = item.duration.toFormattedDuration(
-                                isAlbum = false,
-                                isSeekBar = false
+                            isAlbum = false,
+                            isSeekBar = false
                         )
 
                         subtitle.text = if (sLaunchedByFolderView) {
@@ -382,7 +398,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         }
                     }
 
-                    onClick {
+                    onClick { index ->
 
                         val selectedPlaylist = if (sLaunchedByArtistView) {
                             mSelectedAlbum?.music
@@ -398,6 +414,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             selectedPlaylist?.toMutableList(),
                             mLaunchedBy
                         )
+
+                        if (mSelectedSongId != item.id) {
+                            rv.adapter?.notifyItemChanged(mSelectedSongPosition)
+                            mSelectedSongId = item.id
+                            rv.adapter?.notifyItemChanged(index)
+                        }
                     }
 
                     onLongClick { index ->
@@ -416,8 +438,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 val song = mSelectedAlbum?.music?.get(viewHolder.absoluteAdapterPosition)
                 if (direction == ItemTouchHelper.RIGHT) {
                     mMediaControlInterface.onAddToQueue(
-                            song,
-                            mLaunchedBy
+                        song,
+                        mLaunchedBy
                     )
                 } else {
                     DialogHelper.addToLovedSongs(requireActivity(), song, mLaunchedBy)
@@ -430,20 +452,24 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             if (goPreferences.isAnimations) {
                 _detailsFragmentBinding?.root?.run {
                     mArtistDetailsAnimator = createCircularReveal(
-                            isErrorFragment = false,
-                            show = true
+                        isErrorFragment = false,
+                        show = true
                     )
+                    mArtistDetailsAnimator.doOnEnd {
+                        highlightSong(mSelectedSongId)
+                    }
                 }
             }
-            highlightSong(arguments?.getLong(TAG_HIGHLIGHTED_SONG_ID))
         }
     }
 
     fun highlightSong(songId: Long?) {
-        if(songId == null) return
+        if(songId == null) {
+            return
+        }
 
-        val selectedPos = mSongsDataSource.indexOfFirst {
-            it.id == songId
+        val selectedPos = mSongsDataSource.indexOfFirst { song ->
+            song.id == songId
         }
 
         if (selectedPos > -1) {
@@ -456,7 +482,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         super.onScrollStateChanged(recyclerView, newState)
                         if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                             songView = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(selectedPos)
-                                animateHighlightedSong(songView)
+                            animateHighlightedSong(songView)
                             _detailsFragmentBinding?.songsRv?.clearOnScrollListeners()
                         }
                     }
@@ -470,13 +496,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private fun animateHighlightedSong(songView: View?){
         songView?.let {
-            val unpressRunnable = java.lang.Runnable {
+            val unpressedRunnable = Runnable {
                 songView.isPressed = false
             }
 
-            val pressRunnable = java.lang.Runnable {
+            val pressRunnable = Runnable {
                 songView.isPressed = true
-                songView.postOnAnimationDelayed(unpressRunnable, 1000)
+                songView.postOnAnimationDelayed(unpressedRunnable, 1000)
             }
             pressRunnable.run()
         }
@@ -514,15 +540,15 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                                     ContextCompat.getColor(requireActivity(), R.color.widgetsColor)
                                 } else {
                                     ThemeHelper.resolveColorAttr(
-                                            requireActivity(),
-                                            android.R.attr.colorButtonNormal
+                                        requireActivity(),
+                                        android.R.attr.colorButtonNormal
                                     )
                                 }
                         )
                     }
                 }
                 _binding.detailsToolbar.menu.findItem(R.id.action_shuffle_sa).isEnabled =
-                        mSelectedAlbum?.music?.size!! >= 2
+                    mSelectedAlbum?.music?.size!! >= 2
             }
         }
 
@@ -533,11 +559,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private fun getDefSortingIconForArtistView(sorting: Int) = if (sShowDisplayName) {
         ThemeHelper.getSortIconForSongsDisplayName(
-                sorting
+            sorting
         )
     } else {
         ThemeHelper.getSortIconForSongs(
-                sorting
+            sorting
         )
     }
 
@@ -588,7 +614,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         findItem(R.id.track_sorting).isEnabled = !sShowDisplayName
                         findItem(R.id.track_sorting_inv).isEnabled = !sShowDisplayName
                         findItem(R.id.sorting).isEnabled =
-                                mSongsList?.size!! >= 2
+                            mSongsList?.size!! >= 2
                     }
                 }
             }
@@ -607,11 +633,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     R.id.action_shuffle_am -> {
                         onDisableShuffle(isShuffleMode = false, isMusicListOutputRequired = false)
                         mMediaControlInterface.onShuffleSongs(
-                                null,
-                                null,
-                                mSongsList?.toMutableList(),
-                                true,
-                                mLaunchedBy
+                            null,
+                            null,
+                            mSongsList?.toMutableList(),
+                            true,
+                            mLaunchedBy
                         )
                     }
                     R.id.action_shuffle_sa -> {
@@ -779,10 +805,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     fun tryToSnapToAlbumPosition(snapPosition: Int, highlightedSongId: Long?) {
         sPlayFirstSong = false
-        highlightedSongId?.let {
+        highlightedSongId?.let { selectedSongId ->
+            mSelectedSongId = selectedSongId
             _detailsFragmentBinding?.songsRv?.addOnLayoutChangeListener(object: View.OnLayoutChangeListener {
                 override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
-                    highlightSong(highlightedSongId)
+                    highlightSong(selectedSongId)
                     _detailsFragmentBinding?.songsRv?.removeOnLayoutChangeListener(this)
                 }
             })
@@ -820,9 +847,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         _detailsFragmentBinding?.run {
             selectedAlbum.text = mSelectedAlbum?.title
             albumYearDuration.text = getString(
-                    R.string.year_and_duration,
-                    mSelectedAlbum?.totalDuration?.toFormattedDuration(isAlbum = true, isSeekBar = false),
-                    mSelectedAlbum?.year
+                R.string.year_and_duration,
+                mSelectedAlbum?.totalDuration?.toFormattedDuration(isAlbum = true, isSeekBar = false),
+                mSelectedAlbum?.year
             )
         }
     }
@@ -838,8 +865,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             }
         }
         setSongsDataSource(songs, true)
-        _detailsFragmentBinding?.songsRv?.scrollToPosition(0)
-
+        _detailsFragmentBinding?.songsRv?.afterMeasured {
+            scrollToPosition(0)
+            highlightSong(mSelectedSongId)
+        }
     }
 
     companion object {
