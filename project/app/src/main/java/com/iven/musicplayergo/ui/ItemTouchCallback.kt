@@ -12,9 +12,9 @@ class ItemTouchCallback<T>(private val collection: MutableList<T>, private val i
             viewHolder: RecyclerView.ViewHolder,
             target: RecyclerView.ViewHolder
     ) : Boolean {
-        return (isActiveTabs && viewHolder.adapterPosition != collection.size -1 || !isActiveTabs).apply {
+        return (isActiveTabs && viewHolder.absoluteAdapterPosition != collection.size -1 || !isActiveTabs).apply {
             if (this) {
-                onItemMove(viewHolder.adapterPosition, target.adapterPosition, recyclerView.adapter)
+                onItemMove(viewHolder.absoluteAdapterPosition, target.absoluteAdapterPosition, recyclerView.adapter)
             }
         }
     }

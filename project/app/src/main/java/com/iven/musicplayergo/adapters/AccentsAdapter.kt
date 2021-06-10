@@ -31,7 +31,7 @@ class AccentsAdapter(private val activity: Activity) :
     override fun getItemCount() = mAccents.size
 
     override fun onBindViewHolder(holder: AccentsHolder, position: Int) {
-        holder.bindItems(mAccents[holder.adapterPosition].first)
+        holder.bindItems(mAccents[holder.absoluteAdapterPosition].first)
     }
 
     inner class AccentsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -47,12 +47,12 @@ class AccentsAdapter(private val activity: Activity) :
                     itemView.background = this
                 }
 
-                contentDescription = ThemeHelper.getAccentName(mAccents[adapterPosition].first, activity)
+                contentDescription = ThemeHelper.getAccentName(mAccents[absoluteAdapterPosition].first, activity)
                 findViewById<ImageButton>(R.id.check).handleViewVisibility(color == mSelectedAccent)
 
                 setOnClickListener {
-                    if (mAccents[adapterPosition].first != mSelectedAccent) {
-                        mSelectedAccent = mAccents[adapterPosition].first
+                    if (mAccents[absoluteAdapterPosition].first != mSelectedAccent) {
+                        mSelectedAccent = mAccents[absoluteAdapterPosition].first
                         goPreferences.accent = mSelectedAccent
                     }
                 }

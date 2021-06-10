@@ -413,7 +413,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
             ItemTouchHelper(ItemSwipeCallback(requireActivity(), isQueueDialog = false, isLovedDialog = false) { viewHolder: RecyclerView.ViewHolder,
                                                                           direction: Int ->
-                val song = mSelectedAlbum?.music?.get(viewHolder.adapterPosition)
+                val song = mSelectedAlbum?.music?.get(viewHolder.absoluteAdapterPosition)
                 if (direction == ItemTouchHelper.RIGHT) {
                     mMediaControlInterface.onAddToQueue(
                             song,

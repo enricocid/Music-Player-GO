@@ -60,7 +60,7 @@ fun String.getFastScrollerItem(context: Context): FastScrollItemIndicator {
         charAtZero = "${get(0)}"
     }
     return FastScrollItemIndicator.Text(
-        charAtZero.toUpperCase() // Grab the first letter and capitalize it
+        charAtZero.uppercase() // Grab the first letter and capitalize it
     )
 }
 

@@ -130,11 +130,11 @@ object ThemeHelper {
         val accentName = context.resources.getResourceEntryName(accent).replace(
                 context.getString(R.string.underscore_delimiter),
                 context.getString(R.string.space_delimiter)
-        ).capitalize()
+        ).replaceFirstChar { it.uppercase() }
         return context.getString(
                 R.string.accent_and_hex,
                 accentName,
-                context.getString(accent).toUpperCase()
+                context.getString(accent).uppercase()
         ).parseAsHtml()
     }
 

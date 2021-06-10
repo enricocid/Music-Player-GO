@@ -55,7 +55,7 @@ class QueueAdapter(
     override fun getItemCount() = queueSongs.size
 
     override fun onBindViewHolder(holder: QueueHolder, position: Int) {
-        holder.bindItems(queueSongs[holder.adapterPosition])
+        holder.bindItems(queueSongs[holder.absoluteAdapterPosition])
     }
 
     inner class QueueHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -78,7 +78,7 @@ class QueueAdapter(
                 title.text = displayedTitle
 
                 when {
-                    queueSongs.indexOf(mSelectedSong.first) == adapterPosition && mSelectedSong.second -> title.setTextColor(
+                    queueSongs.indexOf(mSelectedSong.first) == absoluteAdapterPosition && mSelectedSong.second -> title.setTextColor(
                             ThemeHelper.resolveThemeAccent(ctx)
                     )
                     else -> title.setTextColor(mDefaultTextColor)

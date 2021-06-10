@@ -55,17 +55,17 @@ class ActiveTabsAdapter(private val ctx: Context) :
                 val tabDragHandle = findViewById<ImageView>(R.id.tab_drag_handle)
 
                 val tabText = findViewById<TextView>(R.id.tab_text)
-                tabText.text = ctx.getString(getTabText(availableItems[adapterPosition]))
+                tabText.text = ctx.getString(getTabText(availableItems[absoluteAdapterPosition]))
 
                 val tabImageButton = findViewById<ImageView>(R.id.tab_image)
-                tabImageButton.setImageResource(ThemeHelper.getTabIcon(availableItems[adapterPosition]))
+                tabImageButton.setImageResource(ThemeHelper.getTabIcon(availableItems[absoluteAdapterPosition]))
 
-                isEnabled = availableItems[adapterPosition] != GoConstants.SETTINGS_TAB
+                isEnabled = availableItems[absoluteAdapterPosition] != GoConstants.SETTINGS_TAB
                 isClickable = isEnabled
 
                 if (isEnabled) {
                     manageTabStatus(
-                        mActiveItems.contains(availableItems[adapterPosition]),
+                        mActiveItems.contains(availableItems[absoluteAdapterPosition]),
                         tabDragHandle,
                         tabText,
                         tabImageButton
@@ -88,7 +88,7 @@ class ActiveTabsAdapter(private val ctx: Context) :
                         tabImageButton
                     )
 
-                    val toggledItem = availableItems[adapterPosition]
+                    val toggledItem = availableItems[absoluteAdapterPosition]
                     if (!tabImageButton.isSelected) {
                         mActiveItems.remove(toggledItem)
                     } else {

@@ -57,7 +57,7 @@ class LovedSongsAdapter(
     }
 
     override fun onBindViewHolder(holder: LoveHolder, position: Int) {
-        holder.bindItems(mLovedSongs?.get(holder.adapterPosition))
+        holder.bindItems(mLovedSongs?.get(holder.absoluteAdapterPosition))
     }
 
 
@@ -97,7 +97,7 @@ class LovedSongsAdapter(
                     )
                 }
                 setOnLongClickListener {
-                    showPopupForFavoriteSongs(adapterPosition, this)
+                    showPopupForFavoriteSongs(absoluteAdapterPosition, this)
                     return@setOnLongClickListener true
                 }
             }

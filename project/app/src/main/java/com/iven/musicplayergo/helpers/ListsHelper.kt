@@ -26,7 +26,7 @@ object ListsHelper {
             list?.iterator()?.let { iterate ->
                 while (iterate.hasNext()) {
                     val filteredString = iterate.next()
-                    if (filteredString.toLowerCase().contains(query?.toLowerCase()!!)) {
+                    if (filteredString.lowercase().contains(query?.lowercase()!!)) {
                         filteredStrings.add(filteredString)
                     }
                 }
@@ -48,7 +48,7 @@ object ListsHelper {
             musicList?.iterator()?.let { iterate ->
                 while (iterate.hasNext()) {
                     val filteredSong = iterate.next()
-                    if (filteredSong.title?.toLowerCase()!!.contains(query?.toLowerCase()!!)) {
+                    if (filteredSong.title?.lowercase()!!.contains(query?.lowercase()!!)) {
                         filteredSongs.add(filteredSong)
                     }
                 }
