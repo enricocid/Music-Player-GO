@@ -23,17 +23,6 @@
         android:orientation="vertical">
 
         <ImageButton
-            android:id="@+id/np_open_details"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="?android:attr/actionBarItemBackground"
-            android:contentDescription="@string/open_details_fragment"
-            android:padding="8dp"
-            app:srcCompat="@drawable/ic_launch_details" />
-
-        <ImageButton
             android:id="@+id/np_playback_speed"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -56,6 +45,17 @@
             app:srcCompat="@drawable/ic_save_time" />
 
         <ImageButton
+            android:id="@+id/np_equalizer"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="?android:attr/actionBarItemBackground"
+            android:contentDescription="@string/equalizer"
+            android:padding="8dp"
+            app:srcCompat="@drawable/ic_equalizer" />
+
+        <ImageButton
             android:id="@+id/np_love"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -65,5 +65,16 @@
             android:contentDescription="@string/loved_song_add"
             android:padding="8dp"
             app:srcCompat="@drawable/ic_favorite" />
+
+        <ImageButton
+            android:id="@+id/np_repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="?android:attr/actionBarItemBackground"
+            android:contentDescription="@string/content_repeat"
+            android:padding="8dp"
+            app:srcCompat="@drawable/ic_repeat_one" />
     </LinearLayout>
 </LinearLayout>

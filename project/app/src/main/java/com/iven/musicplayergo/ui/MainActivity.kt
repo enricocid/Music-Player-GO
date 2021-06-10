@@ -590,7 +590,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         mNpCoverBinding.run {
 
-            npOpenDetails.setOnClickListener { openPlayingArtistAlbum() }
             if (VersioningHelper.isMarshmallow()) {
                 setupNPCoverButtonsToasts(npPlaybackSpeed)
                 npPlaybackSpeed.setOnClickListener { view ->
@@ -602,13 +601,33 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
             npSaveTime.setOnClickListener { saveSongPosition() }
 
+            npEqualizer.setOnClickListener { openEqualizer() }
+
             npLove.setOnClickListener {
                 ListsHelper.addOrRemoveFromLovedSongs(mMediaPlayerHolder.currentSong.first,
                         0, mMediaPlayerHolder.launchedBy)
                 onLovedSongsUpdate(false)
                 updateNpFavoritesIcon(this@MainActivity)
             }
-            setupNPCoverButtonsToasts(npSaveTime, npOpenDetails, npLove)
+
+            with(npRepeat) {
+                setImageResource(
+                    ThemeHelper.getRepeatIcon(
+                        mMediaPlayerHolder
+                    )
+                )
+                ThemeHelper.updateIconTint(
+                    this,
+                    if (mMediaPlayerHolder.isRepeat1X || mMediaPlayerHolder.isLooping) {
+                        ThemeHelper.resolveThemeAccent(this@MainActivity)
+                    } else {
+                        ContextCompat.getColor(this@MainActivity, R.color.widgetsColor)
+                    }
+                )
+                setOnClickListener { setRepeat() }
+            }
+
+            setupNPCoverButtonsToasts(npSaveTime, npLove, npEqualizer, npRepeat)
         }
     }
 
@@ -697,42 +716,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
                 setupNPCoverLayout()
 
-                mNpControlsBinding.npEqualizer.setOnClickListener { openEqualizer() }
+                mNpControlsBinding.npSkipPrev.setOnClickListener { skip(false) }
 
-                with(mNpControlsBinding.npSkipPrev) {
-                    setOnClickListener { skip(false) }
-                    setOnLongClickListener {
-                        fastSeek(false)
-                        return@setOnLongClickListener true
-                    }
-                }
+                mNpControlsBinding.npFastRewind.setOnClickListener { fastSeek(false) }
 
                 mNpControlsBinding.npPlay.setOnClickListener { resumeOrPause() }
 
-                with(mNpControlsBinding.npSkipNext) {
-                    setOnClickListener { skip(true) }
-                    setOnLongClickListener {
-                        fastSeek(true)
-                        return@setOnLongClickListener true
-                    }
-                }
+                mNpControlsBinding.npSkipNext.setOnClickListener { skip(true) }
 
-                with(mNpControlsBinding.npRepeat) {
-                    setImageResource(
-                            ThemeHelper.getRepeatIcon(
-                                mMediaPlayerHolder
-                            )
-                    )
-                    ThemeHelper.updateIconTint(
-                        this,
-                        if (mMediaPlayerHolder.isRepeat1X || mMediaPlayerHolder.isLooping) {
-                            ThemeHelper.resolveThemeAccent(this@MainActivity)
-                        } else {
-                            ContextCompat.getColor(this@MainActivity, R.color.widgetsColor)
-                        }
-                    )
-                    setOnClickListener { setRepeat() }
-                }
+                mNpControlsBinding.npFastForward.setOnClickListener { fastSeek(true) }
 
                 setupPreciseVolumeHandler()
 
@@ -1036,24 +1028,24 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private fun updateRepeatStatus(onPlaybackCompletion: Boolean) {
         val resolvedIconsColor = ContextCompat.getColor(this, R.color.widgetsColor)
         if (isNowPlaying) {
-            mNpControlsBinding.npRepeat.setImageResource(
+            mNpCoverBinding.npRepeat.setImageResource(
                 ThemeHelper.getRepeatIcon(
                     mMediaPlayerHolder
                 )
             )
             when {
                 onPlaybackCompletion -> ThemeHelper.updateIconTint(
-                    mNpControlsBinding.npRepeat,
+                    mNpCoverBinding.npRepeat,
                     resolvedIconsColor
                 )
                 mMediaPlayerHolder.isRepeat1X or mMediaPlayerHolder.isLooping -> {
                     ThemeHelper.updateIconTint(
-                        mNpControlsBinding.npRepeat,
+                        mNpCoverBinding.npRepeat,
                         ThemeHelper.resolveThemeAccent(this)
                     )
                 }
                 else -> ThemeHelper.updateIconTint(
-                    mNpControlsBinding.npRepeat,
+                    mNpCoverBinding.npRepeat,
                     resolvedIconsColor
                 )
             }

@@ -12,15 +12,15 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/np_equalizer"
+            android:id="@+id/np_fast_rewind"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
-            android:contentDescription="@string/equalizer"
+            android:contentDescription="@string/fast_seeking_pref_title"
             android:padding="8dp"
-            app:srcCompat="@drawable/ic_equalizer" />
+            app:srcCompat="@drawable/ic_fast_rewind" />
 
         <ImageButton
             android:id="@+id/np_skip_prev"
@@ -56,15 +56,15 @@
             app:srcCompat="@drawable/ic_skip_next" />
 
         <ImageButton
-            android:id="@+id/np_repeat"
+            android:id="@+id/np_fast_forward"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
-            android:contentDescription="@string/content_repeat"
+            android:contentDescription="@string/fast_seeking_pref_title"
             android:padding="8dp"
-            app:srcCompat="@drawable/ic_repeat_one" />
+            app:srcCompat="@drawable/ic_fast_forward" />
 
     </LinearLayout>
 </merge>
