@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
@@ -48,10 +49,10 @@ class AccentsAdapter(private val activity: Activity) :
 
                 val circle = findViewById<ImageButton>(R.id.circle)
                 val accent = ContextCompat.getColor(activity, color)
-                val accentName = ThemeHelper.getAccentNameForPref(activity, mAccents[absoluteAdapterPosition].first)
+                val accentFullName = ThemeHelper.getAccentName(activity, mAccents[absoluteAdapterPosition].first)
                 ThemeHelper.updateIconTint(circle, accent)
 
-                contentDescription = accentName
+                contentDescription = accentFullName
 
                 val cardView = itemView as MaterialCardView
                 val colorText = itemView.findViewById<TextView>(R.id.color)
@@ -70,7 +71,7 @@ class AccentsAdapter(private val activity: Activity) :
                     ))
                 }
 
-                colorText.text = accentName
+                colorText.text = ThemeHelper.getAccentNameForPref(activity, mAccents[absoluteAdapterPosition].first)
 
                 setOnClickListener {
                     if (mAccents[absoluteAdapterPosition].first != mSelectedAccent) {
@@ -78,6 +79,12 @@ class AccentsAdapter(private val activity: Activity) :
                         mSelectedAccent = mAccents[absoluteAdapterPosition].first
                         notifyItemChanged(absoluteAdapterPosition)
                     }
+                }
+
+                setOnLongClickListener {
+                    Toast.makeText(activity, accentFullName, Toast.LENGTH_LONG)
+                        .show()
+                    return@setOnLongClickListener true
                 }
             }
         }
