@@ -103,5 +103,5 @@ dependencies {
     implementation 'de.halfbit:edge-to-edge:0.10'
 
     //https://github.com/coil-kt/coil/releases
-    implementation 'io.coil-kt:coil:1.1.1'
+    implementation 'io.coil-kt:coil:1.2.2'
 }
