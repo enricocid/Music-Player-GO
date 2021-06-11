@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private fun checkIsPlayer(showError: Boolean): Boolean {
         if (!isMediaPlayerHolder && !mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs && showError) {
             Toast.makeText(this, R.string.error_bad_id, Toast.LENGTH_LONG)
-                    .show()
+                .show()
             return false
         }
         return true
@@ -296,8 +296,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             withEndAction {
                 if (sAllowCommit) {
                     supportFragmentManager.addFragment(
-                            ErrorFragment.newInstance(errorType),
-                            GoConstants.ERROR_FRAGMENT_TAG
+                        ErrorFragment.newInstance(errorType),
+                        GoConstants.ERROR_FRAGMENT_TAG
                     )
                 }
             }
@@ -371,20 +371,20 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             })
 
             getTabAt(
-                    if (sRestoreSettingsFragment) {
-                        mMainActivityBinding.viewPager2.offscreenPageLimit
-                    } else {
-                        0
-                    }
+                if (sRestoreSettingsFragment) {
+                    mMainActivityBinding.viewPager2.offscreenPageLimit
+                } else {
+                    0
+                }
             )?.icon?.setTint(
-                    ThemeHelper.resolveThemeAccent(this@MainActivity)
+                ThemeHelper.resolveThemeAccent(this@MainActivity)
             )
         }
 
         if (sRestoreSettingsFragment) {
             mMainActivityBinding.viewPager2.setCurrentItem(
-                    mMainActivityBinding.viewPager2.offscreenPageLimit,
-                    false
+                mMainActivityBinding.viewPager2.offscreenPageLimit,
+                false
             )
         }
     }
@@ -552,7 +552,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
                     isUserSeeking = true
                     mNpBinding.npSeek.setTextColor(
-                            selectedColor
+                        selectedColor
                     )
                 }
 
@@ -598,8 +598,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             npEqualizer.setOnClickListener { openEqualizer() }
 
             npLove.setOnClickListener {
-                ListsHelper.addOrRemoveFromLovedSongs(mMediaPlayerHolder.currentSong.first,
-                        0, mMediaPlayerHolder.launchedBy)
+                ListsHelper.addOrRemoveFromLovedSongs(
+                    mMediaPlayerHolder.currentSong.first,
+                    0,
+                    mMediaPlayerHolder.launchedBy)
                 onLovedSongsUpdate(false)
                 updateNpFavoritesIcon(this@MainActivity)
             }
@@ -775,8 +777,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     ListsHelper.addToLovedSongs(song, mMediaPlayerHolder.playerPosition, mMediaPlayerHolder.launchedBy)
                     onLovedSongAdded(song, true)
                     Toast.makeText(
-                            this,
-                            getString(
+                        this,
+                        getString(
                                     R.string.loved_song_added,
                                     song?.title,
                                     mMediaPlayerHolder.playerPosition.toLong().toFormattedDuration(
@@ -784,7 +786,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                                             isSeekBar = false
                                     )
                             ),
-                            Toast.LENGTH_LONG
+                        Toast.LENGTH_LONG
                     ).show()
                 }
             }
@@ -799,8 +801,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     ThemeHelper.resolveThemeAccent(context)
                 } else {
                     ThemeHelper.resolveColorAttr(
-                            context,
-                            android.R.attr.colorButtonNormal
+                        context,
+                        android.R.attr.colorButtonNormal
                     )
                 }
                 ThemeHelper.updateIconTint(
@@ -815,7 +817,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         val lovedSongs = goPreferences.lovedSongs
         if (lovedSongs != null && song != null) {
             val convertedSong =
-                    song.toSavedMusic(playerPosition, mMediaPlayerHolder.launchedBy)
+                song.toSavedMusic(playerPosition, mMediaPlayerHolder.launchedBy)
             return lovedSongs.contains(convertedSong)
         }
         return false
@@ -1194,13 +1196,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     override fun onOpenNewDetailsFragment() {
         with(getSongSource()) {
             openDetailsFragment(
-                    this,
-                    mMediaPlayerHolder.launchedBy,
-                    Pair(
-                            checkIsPlayer(false) && mMediaPlayerHolder.isShuffledSongsQueued.first && mMediaPlayerHolder.currentSong.first?.artist == this && mMediaPlayerHolder.launchedBy != GoConstants.ALBUM_VIEW && mMediaPlayerHolder.launchedBy != GoConstants.FOLDER_VIEW,
-                            mMediaPlayerHolder.isShuffledSongsQueued.second
-                    ),
-                    null
+                this,
+                mMediaPlayerHolder.launchedBy,
+                Pair(
+                    checkIsPlayer(false) && mMediaPlayerHolder.isShuffledSongsQueued.first && mMediaPlayerHolder.currentSong.first?.artist == this && mMediaPlayerHolder.launchedBy != GoConstants.ALBUM_VIEW && mMediaPlayerHolder.launchedBy != GoConstants.FOLDER_VIEW,
+                    mMediaPlayerHolder.isShuffledSongsQueued.second
+                ),
+                null
             )
         }
     }
@@ -1357,12 +1359,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                         }
 
                         Toast.makeText(
-                                this@MainActivity,
-                                getString(
+                            this@MainActivity,
+                            getString(
                                         R.string.queue_song_add,
                                         songToQueue.title
                                 ),
-                                Toast.LENGTH_LONG
+                            Toast.LENGTH_LONG
                         ).show()
                     }
                 }
@@ -1484,9 +1486,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     override fun onAddToFilter(stringToFilter: String?) {
         if (mMusicViewModel.deviceMusicFiltered?.size == 1) {
             Toast.makeText(
-                    this,
-                    R.string.error_eq,
-                    Toast.LENGTH_LONG
+                this,
+                R.string.error_eq,
+                Toast.LENGTH_LONG
             ).show()
         } else {
             stringToFilter?.let { string ->
@@ -1536,7 +1538,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             mQueueAdapter = mQueueDialog.getListAdapter() as QueueAdapter
         } else {
             Toast.makeText(this, R.string.error_no_queue, Toast.LENGTH_LONG)
-                    .show()
+                .show()
         }
     }
 
@@ -1548,9 +1550,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             )
         } else {
             Toast.makeText(
-                    this,
-                    R.string.error_no_loved_songs,
-                    Toast.LENGTH_LONG
+                this,
+                R.string.error_no_loved_songs,
+                Toast.LENGTH_LONG
             ).show()
         }
     }

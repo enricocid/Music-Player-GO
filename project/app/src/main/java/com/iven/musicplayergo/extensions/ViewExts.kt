@@ -109,9 +109,9 @@ fun FragmentManager.addFragment(fragment: Fragment?, tag: String?) {
         commit {
             addToBackStack(null)
             add(
-                    R.id.container,
-                    fm,
-                    tag
+                R.id.container,
+                fm,
+                tag
             )
         }
     }

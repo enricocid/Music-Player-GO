@@ -92,11 +92,8 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                 deviceMusic.observe(viewLifecycleOwner, { returnedMusic ->
                     if (!returnedMusic.isNullOrEmpty()) {
                         mSorting = getSortingMethodFromPrefs()
-
                         mList = getSortedItemKeys()
-
                         setListDataSource(mList)
-
                         finishSetup()
                     }
                 })
@@ -118,10 +115,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                             // ContainersAlbumViewHolder is `this` here
                             if (goPreferences.isCovers) {
                                 val uri = mMusicViewModel.deviceMusicByAlbum?.get(item)?.get(0)?.albumId?.toAlbumArtURI()
-
-                                albumCover.load(uri) {
-
-                                }
+                                albumCover.load(uri)
                             } else {
                                 albumCover.setImageResource(R.drawable.album_art)
                             }
@@ -200,16 +194,16 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
         if (isLongClick) {
             if (::mUIControlInterface.isInitialized) {
                 DialogHelper.showPopupForHide(
-                        requireActivity(),
-                        itemView,
-                        item
+                    requireActivity(),
+                    itemView,
+                    item
                 )
             }
         } else {
             if (::mUIControlInterface.isInitialized) {
                 mUIControlInterface.onArtistOrFolderSelected(
-                        item,
-                        mLaunchedBy
+                    item,
+                    mLaunchedBy
                 )
             }
         }
@@ -285,12 +279,12 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     }
 
     fun onListFiltered(stringToFilter: String) = if (mList == null) {
-            false
-        } else {
-            mList?.remove(stringToFilter)
-            setListDataSource(mList)
-            true
-        }
+        false
+    } else {
+        mList?.remove(stringToFilter)
+        setListDataSource(mList)
+        true
+    }
 
     override fun onQueryTextChange(newText: String?): Boolean {
         setListDataSource(ListsHelper.processQueryForStringsLists(newText, mList) ?: mList)
@@ -334,18 +328,16 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                                 true
                             }
                         }
-                    }
-                    )
+                    })
 
                     _binding.fastscrollerThumb.setupWithFastScroller(_binding.fastscroller)
-
                     _binding.fastscroller.useDefaultScroller = false
                     _binding.fastscroller.itemIndicatorSelectedCallbacks += object :
-                            FastScrollerView.ItemIndicatorSelectedCallback {
+                        FastScrollerView.ItemIndicatorSelectedCallback {
                         override fun onItemIndicatorSelected(
-                                indicator: FastScrollItemIndicator,
-                                indicatorCenterY: Int,
-                                itemPosition: Int
+                            indicator: FastScrollItemIndicator,
+                            indicatorCenterY: Int,
+                            itemPosition: Int
                         ) {
                             val artistsLayoutManager = layoutManager as LinearLayoutManager
                             artistsLayoutManager.scrollToPositionWithOffset(itemPosition, 0)

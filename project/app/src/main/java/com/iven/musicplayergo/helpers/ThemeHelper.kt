@@ -7,8 +7,6 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.content.res.Resources
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.RippleDrawable
 import android.text.Spanned
 import android.util.TypedValue
 import android.widget.ImageView
@@ -32,7 +30,6 @@ object ThemeHelper {
     @JvmStatic
     fun applyChanges(activity: Activity) {
         val intent = Intent(activity, MainActivity::class.java)
-
         val bundle = bundleOf(GoConstants.RESTORE_SETTINGS_FRAGMENT to true)
         intent.putExtras(bundle)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -86,50 +83,50 @@ object ThemeHelper {
     // Fixed array of pairs (first: accent, second: theme, third: color primary dark)
     @JvmStatic
     val accents = arrayOf(
-            Pair(R.color.red, R.style.BaseTheme_Red),
-            Pair(R.color.pink, R.style.BaseTheme_Pink),
-            Pair(R.color.purple, R.style.BaseTheme_Purple),
-            Pair(R.color.deep_purple, R.style.BaseTheme_DeepPurple),
-            Pair(R.color.indigo, R.style.BaseTheme_Indigo),
-            Pair(R.color.blue, R.style.BaseTheme_Blue),
-            Pair(R.color.light_blue, R.style.BaseTheme_LightBlue),
-            Pair(R.color.cyan, R.style.BaseTheme_Cyan),
-            Pair(R.color.teal, R.style.BaseTheme_Teal),
-            Pair(R.color.green, R.style.BaseTheme_Green),
-            Pair(R.color.light_green, R.style.BaseTheme_LightGreen),
-            Pair(R.color.lime, R.style.BaseTheme_Lime),
-            Pair(R.color.yellow, R.style.BaseTheme_Yellow),
-            Pair(R.color.amber, R.style.BaseTheme_Amber),
-            Pair(R.color.orange, R.style.BaseTheme_Orange),
-            Pair(R.color.deep_orange, R.style.BaseTheme_DeepOrange),
-            Pair(R.color.brown, R.style.BaseTheme_Brown),
-            Pair(R.color.grey, R.style.BaseTheme_Grey),
-            Pair(R.color.blue_grey, R.style.BaseTheme_BlueGrey),
-            Pair(R.color.red_300, R.style.BaseTheme_Red300),
-            Pair(R.color.pink_300, R.style.BaseTheme_Pink300),
-            Pair(R.color.purple_300, R.style.BaseTheme_Purple300),
-            Pair(R.color.deep_purple_300, R.style.BaseTheme_DeepPurple300),
-            Pair(R.color.indigo_300, R.style.BaseTheme_Indigo300),
-            Pair(R.color.blue_300, R.style.BaseTheme_Blue300),
-            Pair(R.color.light_blue_300, R.style.BaseTheme_LightBlue300),
-            Pair(R.color.cyan_300, R.style.BaseTheme_Cyan300),
-            Pair(R.color.teal_300, R.style.BaseTheme_Teal300),
-            Pair(R.color.green_300, R.style.BaseTheme_Green300),
-            Pair(R.color.light_green_300, R.style.BaseTheme_LightGreen300),
-            Pair(R.color.lime_300, R.style.BaseTheme_Lime300),
-            Pair(R.color.amber_300, R.style.BaseTheme_Amber300),
-            Pair(R.color.orange_300, R.style.BaseTheme_Orange300),
-            Pair(R.color.deep_orange_300, R.style.BaseTheme_DeepOrange300),
-            Pair(R.color.brown_300, R.style.BaseTheme_Brown300),
-            Pair(R.color.blue_grey_300, R.style.BaseTheme_BlueGrey300)
+        Pair(R.color.red, R.style.BaseTheme_Red),
+        Pair(R.color.pink, R.style.BaseTheme_Pink),
+        Pair(R.color.purple, R.style.BaseTheme_Purple),
+        Pair(R.color.deep_purple, R.style.BaseTheme_DeepPurple),
+        Pair(R.color.indigo, R.style.BaseTheme_Indigo),
+        Pair(R.color.blue, R.style.BaseTheme_Blue),
+        Pair(R.color.light_blue, R.style.BaseTheme_LightBlue),
+        Pair(R.color.cyan, R.style.BaseTheme_Cyan),
+        Pair(R.color.teal, R.style.BaseTheme_Teal),
+        Pair(R.color.green, R.style.BaseTheme_Green),
+        Pair(R.color.light_green, R.style.BaseTheme_LightGreen),
+        Pair(R.color.lime, R.style.BaseTheme_Lime),
+        Pair(R.color.yellow, R.style.BaseTheme_Yellow),
+        Pair(R.color.amber, R.style.BaseTheme_Amber),
+        Pair(R.color.orange, R.style.BaseTheme_Orange),
+        Pair(R.color.deep_orange, R.style.BaseTheme_DeepOrange),
+        Pair(R.color.brown, R.style.BaseTheme_Brown),
+        Pair(R.color.grey, R.style.BaseTheme_Grey),
+        Pair(R.color.blue_grey, R.style.BaseTheme_BlueGrey),
+        Pair(R.color.red_300, R.style.BaseTheme_Red300),
+        Pair(R.color.pink_300, R.style.BaseTheme_Pink300),
+        Pair(R.color.purple_300, R.style.BaseTheme_Purple300),
+        Pair(R.color.deep_purple_300, R.style.BaseTheme_DeepPurple300),
+        Pair(R.color.indigo_300, R.style.BaseTheme_Indigo300),
+        Pair(R.color.blue_300, R.style.BaseTheme_Blue300),
+        Pair(R.color.light_blue_300, R.style.BaseTheme_LightBlue300),
+        Pair(R.color.cyan_300, R.style.BaseTheme_Cyan300),
+        Pair(R.color.teal_300, R.style.BaseTheme_Teal300),
+        Pair(R.color.green_300, R.style.BaseTheme_Green300),
+        Pair(R.color.light_green_300, R.style.BaseTheme_LightGreen300),
+        Pair(R.color.lime_300, R.style.BaseTheme_Lime300),
+        Pair(R.color.amber_300, R.style.BaseTheme_Amber300),
+        Pair(R.color.orange_300, R.style.BaseTheme_Orange300),
+        Pair(R.color.deep_orange_300, R.style.BaseTheme_DeepOrange300),
+        Pair(R.color.brown_300, R.style.BaseTheme_Brown300),
+        Pair(R.color.blue_grey_300, R.style.BaseTheme_BlueGrey300)
     )
 
     @JvmStatic
     @SuppressLint("DefaultLocale")
     fun getAccentName(context: Context, accent: Int): Spanned {
         val accentName = context.resources.getResourceEntryName(accent).replace(
-                context.getString(R.string.underscore_delimiter),
-                context.getString(R.string.space_delimiter)
+            context.getString(R.string.underscore_delimiter),
+            context.getString(R.string.space_delimiter)
         ).replaceFirstChar { it.uppercase() }
         return context.getString(
             R.string.accent_and_hex,
@@ -160,7 +157,7 @@ object ThemeHelper {
     @JvmStatic
     fun updateIconTint(imageView: ImageView, tint: Int) {
         ImageViewCompat.setImageTintList(
-                imageView, ColorStateList.valueOf(tint)
+            imageView, ColorStateList.valueOf(tint)
         )
     }
 

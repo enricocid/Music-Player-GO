@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="16dp"
-    android:layout_marginBottom="16dp"
     android:layout_marginStart="8dp"
+    android:layout_marginTop="16dp"
     android:layout_marginEnd="8dp"
+    android:layout_marginBottom="16dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="0dp"
     tools:ignore="ContentDescription"
@@ -16,28 +16,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="16dp">
+        android:layout_margin="16dp"
+        android:orientation="vertical">
 
         <ImageButton
             android:id="@+id/circle"
             android:layout_width="@android:dimen/notification_large_icon_height"
             android:layout_height="@android:dimen/notification_large_icon_height"
+            android:layout_marginBottom="8dp"
             android:background="@android:color/transparent"
             android:clickable="false"
             android:focusable="false"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_circle"
-            android:layout_marginBottom="8dp"/>
+            app:srcCompat="@drawable/ic_circle" />
 
         <TextView
             android:id="@+id/color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:singleLine="true"
             android:ellipsize="marquee"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
     </LinearLayout>
 

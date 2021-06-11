@@ -158,21 +158,21 @@ fun Int.toFormattedYear(resources: Resources) =
     }
 
 fun Music.toSavedMusic(playerPosition: Int, savedLaunchedBy: String) =
-        Music(
-            artist,
-            year,
-            track,
-            title,
-            displayName,
-            duration,
-            album,
-            albumId,
-            relativePath,
-            id,
-            savedLaunchedBy,
-            playerPosition,
-            dateAdded
-        )
+    Music(
+        artist,
+        year,
+        track,
+        title,
+        displayName,
+        duration,
+        album,
+        albumId,
+        relativePath,
+        id,
+        savedLaunchedBy,
+        playerPosition,
+        dateAdded
+    )
 
 fun List<Music>.savedSongIsAvailable(first: Music?) : Music? {
     first?.let { song ->

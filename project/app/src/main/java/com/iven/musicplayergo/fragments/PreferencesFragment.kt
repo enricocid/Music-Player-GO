@@ -190,7 +190,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             title(R.string.filter_pref_title)
 
             val filtersAdapter = FiltersAdapter(requireActivity())
-
             customListAdapter(filtersAdapter)
 
             positiveButton(android.R.string.ok) {
@@ -198,7 +197,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                     goPreferences.filters = filtersAdapter.getUpdatedItems()
                 }
             }
-
             negativeButton(android.R.string.cancel)
         }
     }

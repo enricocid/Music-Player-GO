@@ -83,106 +83,105 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
 
          try {
              val pathColumn = if (VersioningHelper.isQ()) {
-                    MediaStore.Audio.AudioColumns.BUCKET_DISPLAY_NAME
-                } else {
-                    MediaStore.Audio.AudioColumns.DATA
-                }
+                 MediaStore.Audio.AudioColumns.BUCKET_DISPLAY_NAME
+             } else {
+                 MediaStore.Audio.AudioColumns.DATA
+             }
 
-                val projection = arrayOf(
-                        MediaStore.Audio.AudioColumns.ARTIST, // 0
-                        MediaStore.Audio.AudioColumns.YEAR, // 1
-                        MediaStore.Audio.AudioColumns.TRACK, // 2
-                        MediaStore.Audio.AudioColumns.TITLE, // 3
-                        MediaStore.Audio.AudioColumns.DISPLAY_NAME, // 4,
-                        MediaStore.Audio.AudioColumns.DURATION, //5,
-                        MediaStore.Audio.AudioColumns.ALBUM, // 6
-                        MediaStore.Audio.AudioColumns.ALBUM_ID, // 7
-                        pathColumn, // 8
-                        MediaStore.Audio.AudioColumns._ID, // 9
-                        MediaStore.MediaColumns.DATE_MODIFIED // 10
-                )
+             val projection = arrayOf(
+                 MediaStore.Audio.AudioColumns.ARTIST, // 0
+                 MediaStore.Audio.AudioColumns.YEAR, // 1
+                 MediaStore.Audio.AudioColumns.TRACK, // 2
+                 MediaStore.Audio.AudioColumns.TITLE, // 3
+                 MediaStore.Audio.AudioColumns.DISPLAY_NAME, // 4,
+                 MediaStore.Audio.AudioColumns.DURATION, //5,
+                 MediaStore.Audio.AudioColumns.ALBUM, // 6
+                 MediaStore.Audio.AudioColumns.ALBUM_ID, // 7
+                 pathColumn, // 8
+                 MediaStore.Audio.AudioColumns._ID, // 9
+                 MediaStore.MediaColumns.DATE_MODIFIED // 10
+             )
 
-                val selection = "${MediaStore.Audio.AudioColumns.IS_MUSIC} = 1"
-                val sortOrder = MediaStore.Audio.Media.DEFAULT_SORT_ORDER
+             val selection = "${MediaStore.Audio.AudioColumns.IS_MUSIC} = 1"
+             val sortOrder = MediaStore.Audio.Media.DEFAULT_SORT_ORDER
 
-                val musicCursor = application.contentResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, projection, selection, null, sortOrder)
+             val musicCursor = application.contentResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, projection, selection, null, sortOrder)
 
-                // Query the storage for music files
-                musicCursor?.use { cursor ->
+             // Query the storage for music files
+             musicCursor?.use { cursor ->
 
-                    val artistIndex =
-                            cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ARTIST)
-                    val yearIndex =
-                            cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.YEAR)
-                    val trackIndex =
-                            cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.TRACK)
-                    val titleIndex =
-                            cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.TITLE)
-                    val displayNameIndex =
-                            cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DISPLAY_NAME)
-                    val durationIndex =
-                            cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DURATION)
-                    val albumIndex =
-                            cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ALBUM)
-                    val albumIdIndex =
-                            cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ALBUM_ID)
-                    val relativePathIndex =
-                            cursor.getColumnIndexOrThrow(pathColumn)
-                    val idIndex =
-                            cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns._ID)
-                    val dateAddedIndex =
-                            cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DATE_MODIFIED)
+                 val artistIndex =
+                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ARTIST)
+                 val yearIndex =
+                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.YEAR)
+                 val trackIndex =
+                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.TRACK)
+                 val titleIndex =
+                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.TITLE)
+                 val displayNameIndex =
+                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DISPLAY_NAME)
+                 val durationIndex =
+                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DURATION)
+                 val albumIndex =
+                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ALBUM)
+                 val albumIdIndex =
+                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ALBUM_ID)
+                 val relativePathIndex =
+                     cursor.getColumnIndexOrThrow(pathColumn)
+                 val idIndex =
+                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns._ID)
+                 val dateAddedIndex =
+                     cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DATE_MODIFIED)
 
-                    while (cursor.moveToNext()) {
+                 while (cursor.moveToNext()) {
+                     // Now loop through the music files
+                     val audioId = cursor.getLong(idIndex)
+                     val audioArtist = cursor.getString(artistIndex)
+                     val audioYear = cursor.getInt(yearIndex)
+                     val audioTrack = cursor.getInt(trackIndex)
+                     val audioTitle = cursor.getString(titleIndex)
+                     val audioDisplayName = cursor.getString(displayNameIndex)
+                     val audioDuration = cursor.getLong(durationIndex)
+                     val audioAlbum = cursor.getString(albumIndex)
+                     val albumId = cursor.getLong(albumIdIndex)
+                     val audioRelativePath = cursor.getString(relativePathIndex)
+                     val audioDateAdded = cursor.getInt(dateAddedIndex)
 
-                        // Now loop through the music files
-                        val audioId = cursor.getLong(idIndex)
-                        val audioArtist = cursor.getString(artistIndex)
-                        val audioYear = cursor.getInt(yearIndex)
-                        val audioTrack = cursor.getInt(trackIndex)
-                        val audioTitle = cursor.getString(titleIndex)
-                        val audioDisplayName = cursor.getString(displayNameIndex)
-                        val audioDuration = cursor.getLong(durationIndex)
-                        val audioAlbum = cursor.getString(albumIndex)
-                        val albumId = cursor.getLong(albumIdIndex)
-                        val audioRelativePath = cursor.getString(relativePathIndex)
-                        val audioDateAdded = cursor.getInt(dateAddedIndex)
-
-                        val audioFolderName =
-                                if (VersioningHelper.isQ()) {
-                                    audioRelativePath ?: application.getString(R.string.slash)
-                                } else {
-                                    val returnedPath = File(audioRelativePath).parentFile?.name
-                                            ?: application.getString(R.string.slash)
-                                    if (returnedPath != "0") {
-                                        returnedPath
-                                    } else {
-                                        application.getString(
+                     val audioFolderName =
+                         if (VersioningHelper.isQ()) {
+                             audioRelativePath ?: application.getString(R.string.slash)
+                         } else {
+                             val returnedPath = File(audioRelativePath).parentFile?.name
+                                 ?: application.getString(R.string.slash)
+                             if (returnedPath != "0") {
+                                 returnedPath
+                             } else {
+                                 application.getString(
                                                 R.string.slash
                                         )
-                                    }
-                                }
+                             }
+                         }
 
-                        // Add the current music to the list
-                        mDeviceMusicList.add(
-                                Music(
-                                        audioArtist,
-                                        audioYear,
-                                        audioTrack,
-                                        audioTitle,
-                                        audioDisplayName,
-                                        audioDuration,
-                                        audioAlbum,
-                                        albumId,
-                                        audioFolderName,
-                                        audioId,
-                                        GoConstants.ARTIST_VIEW,
-                                        0,
-                                        audioDateAdded
-                                )
-                        )
-                    }
-                }
+                     // Add the current music to the list
+                     mDeviceMusicList.add(
+                         Music(
+                             audioArtist,
+                             audioYear,
+                             audioTrack,
+                             audioTitle,
+                             audioDisplayName,
+                             audioDuration,
+                             audioAlbum,
+                             albumId,
+                             audioFolderName,
+                             audioId,
+                             GoConstants.ARTIST_VIEW,
+                             0,
+                             audioDateAdded
+                         )
+                     )
+                 }
+             }
              mDeviceMusicList
          } catch (e: Exception) {
              e.printStackTrace()

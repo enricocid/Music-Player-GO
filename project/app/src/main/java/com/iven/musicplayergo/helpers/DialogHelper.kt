@@ -36,8 +36,8 @@ object DialogHelper {
 
     @JvmStatic
     fun showQueueSongsDialog(
-            context: Context,
-            mediaPlayerHolder: MediaPlayerHolder
+        context: Context,
+        mediaPlayerHolder: MediaPlayerHolder
     ) = MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
         title(R.string.queue)
@@ -73,11 +73,11 @@ object DialogHelper {
 
     @JvmStatic
     fun showDeleteQueueSongDialog(
-            context: Context,
-            song: Pair<Music, Int>,
-            queueSongsDialog: MaterialDialog,
-            queueAdapter: QueueAdapter,
-            mediaPlayerHolder: MediaPlayerHolder
+        context: Context,
+        song: Pair<Music, Int>,
+        queueSongsDialog: MaterialDialog,
+        queueAdapter: QueueAdapter,
+        mediaPlayerHolder: MediaPlayerHolder
     ) {
 
         MaterialDialog(context).show {
@@ -85,7 +85,7 @@ object DialogHelper {
             title(R.string.queue)
 
             message(
-                    text = context.getString(
+                text = context.getString(
                             R.string.queue_song_remove,
                             song.first.title
                     )
@@ -109,8 +109,8 @@ object DialogHelper {
 
     @JvmStatic
     fun showClearQueueDialog(
-            context: Context,
-            mediaPlayerHolder: MediaPlayerHolder
+        context: Context,
+        mediaPlayerHolder: MediaPlayerHolder
     ) {
 
         MaterialDialog(context).show {
@@ -125,7 +125,7 @@ object DialogHelper {
                     if (isQueueStarted) {
                         restorePreQueueSongs()
                         skip(
-                                true
+                            true
                         )
                     }
                     setQueueEnabled(false)
@@ -137,16 +137,16 @@ object DialogHelper {
 
     @JvmStatic
     fun showLovedSongsDialog(
-            activity: Activity,
-            mediaPlayerHolder: MediaPlayerHolder
+        activity: Activity,
+        mediaPlayerHolder: MediaPlayerHolder
     ): MaterialDialog = MaterialDialog(activity, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
         title(R.string.loved_songs)
 
         val lovedSongsAdapter = LovedSongsAdapter(
-                activity,
-                this,
-                mediaPlayerHolder
+            activity,
+            this,
+            mediaPlayerHolder
         )
 
         customListAdapter(lovedSongsAdapter)
@@ -172,8 +172,8 @@ object DialogHelper {
                 lovedSongsAdapter.addLovedSongToQueue(viewHolder.absoluteAdapterPosition)
             } else {
                 lovedSongsAdapter.performLovedSongDeletion(
-                        viewHolder.absoluteAdapterPosition,
-                        true
+                    viewHolder.absoluteAdapterPosition,
+                    true
                 )
             }
             lovedSongsAdapter.notifyDataSetChanged()
@@ -182,10 +182,10 @@ object DialogHelper {
 
     @JvmStatic
     fun showDeleteLovedSongDialog(
-            activity: Activity,
-            songToDelete: Music?,
-            lovedSongsAdapter: LovedSongsAdapter,
-            isSwipe: Pair<Boolean, Int>
+        activity: Activity,
+        songToDelete: Music?,
+        lovedSongsAdapter: LovedSongsAdapter,
+        isSwipe: Pair<Boolean, Int>
     ) {
 
         val lovedSongs = goPreferences.lovedSongs?.toMutableList()
@@ -195,7 +195,7 @@ object DialogHelper {
             title(R.string.loved_songs)
 
             message(
-                    text = context.getString(
+                text = context.getString(
                             R.string.loved_song_remove,
                             songToDelete?.title,
                             songToDelete?.startFrom?.toLong()?.toFormattedDuration(
@@ -226,7 +226,7 @@ object DialogHelper {
 
     @JvmStatic
     fun showClearLovedSongDialog(
-            activity: Activity
+        activity: Activity
     ) {
         MaterialDialog(activity).show {
 
@@ -242,9 +242,9 @@ object DialogHelper {
 
     @JvmStatic
     fun showPopupForHide(
-            activity: Activity,
-            itemView: View?,
-            stringToFilter: String?
+        activity: Activity,
+        itemView: View?,
+        stringToFilter: String?
     ) {
         itemView?.let { view ->
 
@@ -267,10 +267,10 @@ object DialogHelper {
 
     @JvmStatic
     fun showPopupForSongs(
-            activity: Activity,
-            itemView: View?,
-            song: Music?,
-            launchedBy: String
+        activity: Activity,
+        itemView: View?,
+        song: Music?,
+        launchedBy: String
     ) {
         val mediaControlInterface = activity as MediaControlInterface
         itemView?.let { view ->
@@ -287,9 +287,9 @@ object DialogHelper {
                     when (menuItem.itemId) {
                         R.id.loved_songs_add -> {
                             ListsHelper.addToLovedSongs(
-                                    song,
-                                    0,
-                                    launchedBy
+                                song,
+                                0,
+                                launchedBy
                             )
                             mediaControlInterface.onLovedSongAdded(song, true)
                             (activity as UIControlInterface).onLovedSongsUpdate(false)
@@ -305,8 +305,8 @@ object DialogHelper {
 
     @JvmStatic
     fun showPopupForPlaybackSpeed(
-            activity: Activity,
-            view: View
+        activity: Activity,
+        view: View
     ) {
 
         PopupMenu(activity, view).apply {
@@ -356,9 +356,9 @@ object DialogHelper {
     @JvmStatic
     fun addToLovedSongs(activity: Activity, song: Music?, launchedBy: String) {
         ListsHelper.addToLovedSongs(
-                song,
-                0,
-                launchedBy
+            song,
+            0,
+            launchedBy
         )
         (activity as MediaControlInterface).onLovedSongAdded(song, true)
         (activity as UIControlInterface).onLovedSongsUpdate(false)
@@ -366,8 +366,8 @@ object DialogHelper {
 
     @JvmStatic
     fun stopPlaybackDialog(
-            context: Context,
-            mediaPlayerHolder: MediaPlayerHolder
+        context: Context,
+        mediaPlayerHolder: MediaPlayerHolder
     ) {
 
         MaterialDialog(context).show {

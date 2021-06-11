@@ -20,7 +20,6 @@ class NotificationReceiver(
     override fun onReceive(context: Context?, intent: Intent?) {
         try {
             intent?.action?.let { act ->
-
                 with(mediaPlayerHolder) {
                     when (act) {
                         GoConstants.PREV_ACTION -> instantReset()

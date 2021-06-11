@@ -70,15 +70,14 @@ class LovedSongsAdapter(
             val subtitle = itemView.findViewById<TextView>(R.id.subtitle)
 
             val displayedTitle =
-                    if (goPreferences.songsVisualization != GoConstants.TITLE) {
-                        lovedSong?.displayName?.toFilenameWithoutExtension()
-                    } else {
-                        lovedSong?.title
-                    }
+                if (goPreferences.songsVisualization != GoConstants.TITLE) {
+                    lovedSong?.displayName?.toFilenameWithoutExtension()
+                } else {
+                    lovedSong?.title
+                }
             title.text = displayedTitle
             duration.text =
                     DialogHelper.computeDurationText(activity, lovedSong)
-
 
             subtitle.text =
                 activity.getString(R.string.artist_and_album, lovedSong?.artist, lovedSong?.album)
@@ -105,8 +104,8 @@ class LovedSongsAdapter(
     }
 
     private fun showPopupForFavoriteSongs(
-            adapterPosition: Int,
-            itemView: View?
+        adapterPosition: Int,
+        itemView: View?
     ) {
         mLovedSongs?.get(adapterPosition)?.let { song ->
             itemView?.let { view ->
@@ -135,8 +134,8 @@ class LovedSongsAdapter(
     fun addLovedSongToQueue(adapterPosition: Int) {
         mLovedSongs?.get(adapterPosition)?.let { song ->
             mMediaControlInterface.onAddToQueue(
-                    song,
-                    song.launchedBy
+                song,
+                song.launchedBy
             )
         }
     }

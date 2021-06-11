@@ -175,7 +175,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (!sNotificationForeground) {
             mMusicNotificationManager.createNotification {
                 playerService.startForeground(GoConstants.NOTIFICATION_ID, it)
-
                 sNotificationForeground = true
             }
 
@@ -233,20 +232,20 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun onSaveEqualizerSettings(selectedPreset: Int, bassBoost: Short, virtualizer: Short) {
         mEqualizer?.let { equalizer ->
             goPreferences.savedEqualizerSettings = SavedEqualizerSettings(
-                    equalizer.enabled,
-                    selectedPreset,
-                    equalizer.properties.bandLevels.toList(),
-                    bassBoost,
-                    virtualizer
+                equalizer.enabled,
+                selectedPreset,
+                equalizer.properties.bandLevels.toList(),
+                bassBoost,
+                virtualizer
             )
         }
     }
 
     fun setCurrentSong(
-            song: Music?,
-            songs: List<Music>?,
-            isFromQueue: Boolean,
-            songLaunchedBy: String
+        song: Music?,
+        songs: List<Music>?,
+        isFromQueue: Boolean,
+        songLaunchedBy: String
     ) {
         launchedBy = songLaunchedBy
         currentSong = Pair(song, isFromQueue)
@@ -392,8 +391,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private fun updatePlaybackStatus(updateUI: Boolean) {
         playerService.getMediaSession().setPlaybackState(
                 PlaybackStateCompat.Builder()
-                        .setActions(mMediaSessionActions)
-                        .setState(
+                    .setActions(mMediaSessionActions)
+                    .setState(
                         if (mediaPlayer.isPlaying) {
                             GoConstants.PLAYING
                         } else {
@@ -470,10 +469,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             isQueueStarted -> currentSong = Pair(getSkipSong(isNext), true)
             else -> {
                 setCurrentSong(
-                        queueSongs[0],
-                        queueSongs,
-                        isFromQueue = true,
-                        songLaunchedBy = GoConstants.ARTIST_VIEW
+                    queueSongs[0],
+                    queueSongs,
+                    isFromQueue = true,
+                    songLaunchedBy = GoConstants.ARTIST_VIEW
                 )
                 isQueueStarted = true
             }
@@ -499,9 +498,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         try {
             return mPlayingAlbumSongs?.get(
-                    if (isNext) currentIndex?.plus(1)!! else currentIndex?.minus(
-                            1
-                    )!!
+                if (isNext) currentIndex?.plus(1)!! else currentIndex?.minus(
+                    1
+                )!!
             )
         } catch (e: IndexOutOfBoundsException) {
             e.printStackTrace()
@@ -540,10 +539,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         mExecutor = Executors.newSingleThreadScheduledExecutor()
         mExecutor?.scheduleAtFixedRate(
-                mSeekBarPositionUpdateTask!!,
-                0,
-                1000,
-                TimeUnit.MILLISECONDS
+            mSeekBarPositionUpdateTask!!,
+            0,
+            1000,
+            TimeUnit.MILLISECONDS
         )
     }
 
@@ -592,10 +591,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     setOnErrorListener(this@MediaPlayerHolder)
                     setWakeMode(playerService, PowerManager.PARTIAL_WAKE_LOCK)
                     setAudioAttributes(
-                            AudioAttributes.Builder()
-                                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                                    .build()
+                        AudioAttributes.Builder()
+                            .setUsage(AudioAttributes.USAGE_MEDIA)
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .build()
                     )
                 }
             }
@@ -672,8 +671,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 if (!sHasOpenedAudioEffects) {
                     sHasOpenedAudioEffects = true
                     EqualizerUtils.openAudioEffectSession(
-                            playerService.applicationContext,
-                            mediaPlayer.audioSessionId
+                        playerService.applicationContext,
+                        mediaPlayer.audioSessionId
                     )
                 }
             } else {
@@ -703,8 +702,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     while (iterate.hasNext()) {
                         val item = iterate.next()
                         mEqualizer?.setBandLevel(
-                                item.index.toShort(),
-                                item.value.toInt().toShort()
+                            item.index.toShort(),
+                            item.value.toInt().toShort()
                         )
                     }
                 }
@@ -720,8 +719,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             releaseCustomEqualizer()
             sHasOpenedAudioEffects = true
             EqualizerUtils.openAudioEffectSession(
-                    playerService.applicationContext,
-                    mediaPlayer.audioSessionId
+                playerService.applicationContext,
+                mediaPlayer.audioSessionId
             )
         }
         EqualizerUtils.openEqualizer(activity, mediaPlayer)
@@ -730,8 +729,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun onOpenEqualizerCustom() {
         if (sHasOpenedAudioEffects) {
             EqualizerUtils.closeAudioEffectSession(
-                    playerService.applicationContext,
-                    mediaPlayer.audioSessionId
+                playerService.applicationContext,
+                mediaPlayer.audioSessionId
             )
             sHasOpenedAudioEffects = false
         }
@@ -741,8 +740,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (isMediaPlayer) {
             if (EqualizerUtils.hasEqualizer(playerService.applicationContext)) {
                 EqualizerUtils.closeAudioEffectSession(
-                        playerService.applicationContext,
-                        mediaPlayer.audioSessionId
+                    playerService.applicationContext,
+                    mediaPlayer.audioSessionId
                 )
             } else {
                 releaseCustomEqualizer()
@@ -830,8 +829,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (isShuffledSongsQueued.first && albumsForShuffleMode != null) {
             albumsForShuffleMode?.find { isShuffledSongsQueued.second == it.title }?.run {
                 ListsHelper.getSortedMusicList(
-                        GoConstants.TRACK_SORTING,
-                        music
+                    GoConstants.TRACK_SORTING,
+                    music
                 )
             }
         }

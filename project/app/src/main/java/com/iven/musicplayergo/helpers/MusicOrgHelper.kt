@@ -77,8 +77,7 @@ object MusicOrgHelper {
         latestSong?.let { musicToSave ->
             val toSave = musicToSave.toSavedMusic(playerPosition, launchedBy)
             if (goPreferences.latestPlayedSong != toSave) {
-                goPreferences.latestPlayedSong =
-                    toSave
+                goPreferences.latestPlayedSong = toSave
             }
         }
     }

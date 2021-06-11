@@ -77,9 +77,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     @SuppressLint("QueryPermissionsNeeded")
     private fun openGitHubPage() {
        val customTabsIntent = CustomTabsIntent.Builder()
-               .setShareState(CustomTabsIntent.SHARE_STATE_ON)
-               .setShowTitle(true)
-               .build()
+           .setShareState(CustomTabsIntent.SHARE_STATE_ON)
+           .setShowTitle(true)
+           .build()
 
         val parsedUri = getString(R.string.app_git).toUri()
         val manager = requireActivity().packageManager
@@ -96,9 +96,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 requireActivity().startActivity(browserIntent)
             } else {
                 Toast.makeText(
-                        requireActivity(),
-                        R.string.error_no_browser,
-                        Toast.LENGTH_SHORT
+                    requireActivity(),
+                    R.string.error_no_browser,
+                    Toast.LENGTH_SHORT
                 ).show()
             }
         }

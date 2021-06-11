@@ -535,15 +535,15 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         setImageResource(getDefSortingIconForArtistView(mSongsSorting))
                         isEnabled = mSelectedAlbum?.music?.size!! >= 2
                         ThemeHelper.updateIconTint(
-                                this,
-                                if (isEnabled) {
-                                    ContextCompat.getColor(requireActivity(), R.color.widgetsColor)
-                                } else {
-                                    ThemeHelper.resolveColorAttr(
-                                        requireActivity(),
-                                        android.R.attr.colorButtonNormal
-                                    )
-                                }
+                            this,
+                            if (isEnabled) {
+                                ContextCompat.getColor(requireActivity(), R.color.widgetsColor)
+                            } else {
+                                ThemeHelper.resolveColorAttr(
+                                    requireActivity(),
+                                    android.R.attr.colorButtonNormal
+                                )
+                            }
                         )
                     }
                 }

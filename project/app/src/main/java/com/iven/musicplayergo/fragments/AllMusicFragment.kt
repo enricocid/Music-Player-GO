@@ -155,11 +155,11 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
             _binding.shuffleFab.setOnClickListener {
                 mMediaControlInterface.onShuffleSongs(
-                        null,
-                        null,
-                        mAllMusic,
-                        mAllMusic?.size!! <= 1000,
-                        GoConstants.ARTIST_VIEW
+                    null,
+                    null,
+                    mAllMusic,
+                    mAllMusic?.size!! <= 1000,
+                    GoConstants.ARTIST_VIEW
                 )
             }
 
@@ -236,20 +236,19 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                                 true
                             }
                         }
-                    }
-                    )
+                    })
 
                     _binding.fastscrollerThumb.setupWithFastScroller(
-                            _binding.fastscroller
+                        _binding.fastscroller
                     )
 
                     _binding.fastscroller.useDefaultScroller = false
                     _binding.fastscroller.itemIndicatorSelectedCallbacks += object :
-                            FastScrollerView.ItemIndicatorSelectedCallback {
+                        FastScrollerView.ItemIndicatorSelectedCallback {
                         override fun onItemIndicatorSelected(
-                                indicator: FastScrollItemIndicator,
-                                indicatorCenterY: Int,
-                                itemPosition: Int
+                            indicator: FastScrollItemIndicator,
+                            indicatorCenterY: Int,
+                            itemPosition: Int
                         ) {
                             val artistsLayoutManager = layoutManager as LinearLayoutManager
                             artistsLayoutManager.scrollToPositionWithOffset(itemPosition, 0)

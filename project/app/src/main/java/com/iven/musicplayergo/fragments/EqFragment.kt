@@ -73,8 +73,8 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
         if (!mEqAnimator.isRunning) {
             _eqFragmentBinding?.root?.run {
                 mEqAnimator = createCircularReveal(
-                        isErrorFragment = false,
-                        show = false
+                    isErrorFragment = false,
+                    show = false
                 )
             }
         }
@@ -128,9 +128,9 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
     private fun saveEqSettings() {
         _eqFragmentBinding?.run {
             mMediaControlInterface.onSaveEqualizerSettings(
-                    mSelectedPreset,
-                    sliderBass.value.toInt().toShort(),
-                    sliderVirt.value.toInt().toShort()
+                mSelectedPreset,
+                sliderBass.value.toInt().toShort(),
+                sliderVirt.value.toInt().toShort()
             )
         }
     }
@@ -158,10 +158,10 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
             strokeWidth = 0.50F
             fillColor =
                 ColorStateList.valueOf(
-                        ContextCompat.getColor(
-                                requireActivity(),
-                                R.color.windowBackground
-                        )
+                    ContextCompat.getColor(
+                        requireActivity(),
+                        R.color.windowBackground
+                    )
                 )
         }
 
@@ -181,8 +181,8 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                         if (fromUser) {
                             if (slider == selectedSlider) {
                                 setBandLevel(
-                                        item.index.toShort(),
-                                        value.toInt().toShort()
+                                    item.index.toShort(),
+                                    value.toInt().toShort()
                                 )
                             }
                         }
@@ -205,8 +205,8 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
             view.afterMeasured {
                 _eqFragmentBinding?.root?.run {
                     mEqAnimator = createCircularReveal(
-                            isErrorFragment = false,
-                            show = true
+                        isErrorFragment = false,
+                        show = true
                     )
                 }
             }
@@ -223,7 +223,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
             inflateMenu(R.menu.menu_eq)
 
             val equalizerSwitchMaterial =
-                    menu.findItem(R.id.equalizerSwitch).actionView as SwitchMaterial
+                menu.findItem(R.id.equalizerSwitch).actionView as SwitchMaterial
 
             mEqualizer.first?.let { equalizer ->
                 equalizerSwitchMaterial.isChecked = equalizer.enabled

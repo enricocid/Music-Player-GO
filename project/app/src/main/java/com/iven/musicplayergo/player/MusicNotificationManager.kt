@@ -74,8 +74,8 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         openPlayerIntent.flags =
             Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         val contentIntent = PendingIntent.getActivity(
-                playerService, GoConstants.NOTIFICATION_INTENT_REQUEST_CODE,
-                openPlayerIntent, 0
+            playerService, GoConstants.NOTIFICATION_INTENT_REQUEST_CODE,
+            openPlayerIntent, 0
         )
 
 
@@ -143,26 +143,24 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
         mediaPlayerHolder.currentSong.first?.let { song ->
             mNotificationBuilder
-                    .setContentText(song.artist)
-                    .setContentTitle(
-                        playerService.getString(
+                .setContentText(song.artist)
+                .setContentTitle(
+                    playerService.getString(
                                     R.string.song_title_notification,
                                     song.title
                             ).parseAsHtml()
-                    )
-                    .setSubText(song.album)
-                    .setColorized(true)
-                    .setSmallIcon(getNotificationSmallIcon(mediaPlayerHolder))
+                )
+                .setSubText(song.album)
+                .setColorized(true)
+                .setSmallIcon(getNotificationSmallIcon(mediaPlayerHolder))
 
             if (goPreferences.isCovers) {
                 song.albumId?.waitForCover(playerService) { bitmap ->
                     mNotificationBuilder.setLargeIcon(bitmap)
-
                     onDone?.invoke()
                 }
             } else {
                 mNotificationBuilder.setLargeIcon(mAlbumArt)
-
                 onDone?.invoke()
             }
         }
@@ -199,7 +197,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             }
         when (action) {
             GoConstants.REPEAT_ACTION -> icon =
-                    ThemeHelper.getRepeatIcon(playerService.mediaPlayerHolder)
+                ThemeHelper.getRepeatIcon(playerService.mediaPlayerHolder)
             GoConstants.PREV_ACTION -> icon = R.drawable.ic_skip_previous
             GoConstants.NEXT_ACTION -> icon = R.drawable.ic_skip_next
             GoConstants.CLOSE_ACTION -> icon = R.drawable.ic_close
@@ -214,9 +212,9 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         with(playerService.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager) {
             if (getNotificationChannel(GoConstants.NOTIFICATION_CHANNEL_ID) == null) {
                 NotificationChannel(
-                        GoConstants.NOTIFICATION_CHANNEL_ID,
-                        playerService.getString(R.string.app_name),
-                        NotificationManager.IMPORTANCE_LOW
+                    GoConstants.NOTIFICATION_CHANNEL_ID,
+                    playerService.getString(R.string.app_name),
+                    NotificationManager.IMPORTANCE_LOW
                 ).apply {
                     description = playerService.getString(R.string.app_name)
                     enableLights(false)

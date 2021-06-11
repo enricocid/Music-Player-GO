@@ -69,17 +69,17 @@ class QueueAdapter(
                 val subtitle = findViewById<TextView>(R.id.subtitle)
 
                 val displayedTitle =
-                        if (goPreferences.songsVisualization != GoConstants.TITLE) {
-                            song.displayName?.toFilenameWithoutExtension()
-                        } else {
-                            song.title
-                        }
+                    if (goPreferences.songsVisualization != GoConstants.TITLE) {
+                        song.displayName?.toFilenameWithoutExtension()
+                    } else {
+                        song.title
+                    }
 
                 title.text = displayedTitle
 
                 when {
                     queueSongs.indexOf(mSelectedSong.first) == absoluteAdapterPosition && mSelectedSong.second -> title.setTextColor(
-                            ThemeHelper.resolveThemeAccent(ctx)
+                        ThemeHelper.resolveThemeAccent(ctx)
                     )
                     else -> title.setTextColor(mDefaultTextColor)
                 }

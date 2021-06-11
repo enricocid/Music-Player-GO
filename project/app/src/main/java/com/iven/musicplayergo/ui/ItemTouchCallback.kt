@@ -8,9 +8,9 @@ import java.util.*
 class ItemTouchCallback<T>(private val collection: MutableList<T>, private val isActiveTabs: Boolean) : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
 
     override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+        target: RecyclerView.ViewHolder
     ) : Boolean {
         return (isActiveTabs && viewHolder.absoluteAdapterPosition != collection.size -1 || !isActiveTabs).apply {
             if (this) {
