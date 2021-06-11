@@ -8,6 +8,7 @@ import android.media.MediaExtractor
 import android.media.MediaFormat
 import android.net.Uri
 import android.provider.MediaStore
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import coil.Coil
@@ -77,12 +78,13 @@ fun Long.toAlbumArtURI(): Uri {
 }
 
 fun Long.waitForCover(context: Context, onDone: (Bitmap?) -> Unit) {
+    val defaultAlbumArt = ContextCompat.getDrawable(context, R.drawable.album_art)?.toBitmap()
     Coil.imageLoader(context).enqueue(
         ImageRequest.Builder(context)
             .data(toAlbumArtURI())
             .target(
                 onSuccess = { onDone(it.toBitmap()) },
-                onError = { onDone(null) }
+                onError = { onDone(defaultAlbumArt) }
             )
             .build()
     )
