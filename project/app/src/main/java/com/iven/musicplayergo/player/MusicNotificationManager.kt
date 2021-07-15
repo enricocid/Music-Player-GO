@@ -79,22 +79,24 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         )
 
 
-        mNotificationBuilder
-            .setContentIntent(contentIntent)
-            .setShowWhen(false)
-            .setOngoing(playerService.mediaPlayerHolder.isPlaying)
-            .addAction(getNotificationAction(getFirstAdditionalAction()))
-            .addAction(getNotificationAction(GoConstants.PREV_ACTION))
-            .addAction(getNotificationAction(GoConstants.PLAY_PAUSE_ACTION))
-            .addAction(getNotificationAction(GoConstants.NEXT_ACTION))
-            .addAction(getNotificationAction(getSecondAdditionalAction()))
-            .setStyle(
-                    MediaStyle()
-                            .setMediaSession(playerService.getMediaSession().sessionToken)
-                            .setShowActionsInCompactView(1, 2, 3)
-            )
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-
+        with(mNotificationBuilder) {
+            setContentIntent(contentIntent)
+                .setShowWhen(false)
+                .setOngoing(playerService.mediaPlayerHolder.isPlaying)
+                .addAction(getNotificationAction(getFirstAdditionalAction()))
+                .addAction(getNotificationAction(GoConstants.PREV_ACTION))
+                .addAction(getNotificationAction(GoConstants.PLAY_PAUSE_ACTION))
+                .addAction(getNotificationAction(GoConstants.NEXT_ACTION))
+                .addAction(getNotificationAction(getSecondAdditionalAction()))
+                .setStyle(
+                        MediaStyle()
+                                .setMediaSession(playerService.getMediaSession().sessionToken)
+                                .setShowActionsInCompactView(1, 2, 3)
+                )
+                .setColorized(true)
+                .setColor(ContextCompat.getColor(playerService as Context, R.color.notification_bg_color))
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+        }
         updateNotificationContent {
             onCreated(mNotificationBuilder.build())
         }
