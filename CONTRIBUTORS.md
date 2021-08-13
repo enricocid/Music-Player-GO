@@ -22,6 +22,8 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes (https://github.com/enricocid/Music-Player-GO/pull/121) and its equalizer implementation: I learned so much about how an equalizer works
 
+- [**SCOTT-HAMILTON**](https://github.com/SCOTT-HAMILTON) for the original [media notification dark implementation](https://github.com/enricocid/Music-Player-GO/pull/308/)
+
 - [**vtkhatri**](https://github.com/vtkhatri) for the original [date added sorting](https://github.com/enricocid/Music-Player-GO/commit/fe8077b1c067a7722f2605a0b89afe7e6805311d) implementation
 
 - [**OxygenCobalti**](https://github.com/OxygenCobalt) for [image loading optimizations](https://github.com/enricocid/Music-Player-GO/pull/287)

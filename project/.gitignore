@@ -5,3 +5,4 @@ local.properties
 .DS_Store
 captures/
 .externalNativeBuild
+.idea
