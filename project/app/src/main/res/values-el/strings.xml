@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sorting_pref_default">Προκαθορισμένο</string>
+    <string name="sorting_pref">Ταξινόμηση</string>
+    <string name="folder_info">%1d Τραγούδια</string>
+    <string name="artist_info">%1d Άλμπουμ, %2d Τραγούδια</string>
+    <string name="equalizer_v">Περιβάλλων ήχος</string>
+    <string name="equalizer_bb">Ενίσχυση μπάσου</string>
+    <string name="equalizer">Ισοσταθμιστής</string>
+    <string name="folders">Φάκελοι</string>
+    <string name="songs">Τραγούδια</string>
+    <string name="albums">Συλλογές</string>
+    <string name="artists">Καλλιτέχνες</string>
+    <string name="favorites_save_time">Αποθήκευση θέσης τραγουδιού</string>
+    <string name="favorite_remove">%1s (%2s) θα διαγραφούν από τα αγαπημένα τραγούδια. Συνεχίστε;</string>
+    <string name="favorites_clear">Τα αγαπημένα τραγούδια θα εκκαθαριστούν. Συνεχίστε;</string>
+    <string name="queue_songs_clear">Η ουρά θα εκκαθαριστεί. Συνεχίστε;</string>
+    <string name="on_close_activity">Θέλετε να διακόψετε την επανάληψη;</string>
+    <string name="delete">Διαγραφή</string>
+    <string name="no">Όχι</string>
+    <string name="yes">Ναι</string>
+    <string name="filter_popup_title">Απόκρυψη</string>
+    <string name="favorite_add">Προσθήκη στα αγαπημένα τραγούδια</string>
+    <string name="queue_add">Προσθέστε στην ουρά</string>
+    <string name="shuffle_sa">Ανακατέψτε το επιλεγμένο άλμπουμ</string>
+    <string name="shuffle_am">Ανακατέψτε όλα τα τραγούδια</string>
+    <string name="sorting_pref_album_inv">Από το λεύκωμα Ω-A</string>
+    <string name="sorting_pref_album">Από το λεύκωμα A-Ω</string>
+    <string name="sorting_pref_artist_inv">Κατά καλλιτέχνη Ω-A</string>
+    <string name="sorting_pref_artist">Κατά καλλιτέχνη A-Ω</string>
+    <string name="sorting_pref_date_added_inv">Παλαιότερη ημερομηνία πρώτα</string>
+    <string name="sorting_pref_date_added">Νεότερη ημερομηνία πρώτα</string>
+    <string name="playback_pref_summary_off">Διατήρηση της επιλεγμένης ταχύτητας αναπαραγωγής</string>
+    <string name="speed_3">Συνήθης</string>
+    <string name="content_playback_speed">Ταχύτητα αναπαραγωγής</string>
+    <string name="favorite_added">%1s (%2s) προστίθενται στα αγαπημένα τραγούδια</string>
+    <string name="favorites">Αγαπημένα τραγούδια</string>
+    <string name="queue_song_remove">%1s θα αφαιρεθεί από την ουρά. Συνεχίστε;</string>
+    <string name="queue">Ουρά</string>
+    <string name="sorting_pref_track_inv">Με τον αριθμό του κομματιού. ↑</string>
+    <string name="sorting_pref_track">Με τον αριθμό του κομματιού. ↓</string>
+</resources>

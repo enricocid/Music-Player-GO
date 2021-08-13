@@ -11,7 +11,7 @@
     <string name="artists">Исполнители</string>
     <string name="category_general">Общее</string>
     <string name="error_no_queue">В очереди нет треков.</string>
-    <string name="error_no_loved_songs">В избранном нет треков!</string>
+    <string name="error_no_favorites">В избранном нет треков!</string>
     <string name="error_unknown_unsupported">Что-то пошло не так! :( Возможно, формат не поддерживается или папка недоступна (не вина приложения!).</string>
     <string name="focus_pref_summary_off">Включить управление фокусировкой аудио</string>
     <string name="focus_pref_summary_on">Выключить управление фокусировкой аудио</string>
@@ -22,11 +22,11 @@
     <string name="headset_pref_summary_off">Включить управление гарнитурой</string>
     <string name="headset_pref_summary_on">Выключить управление гарнитурой</string>
     <string name="headset_pref_title">Гарнитура</string>
-    <string name="loved_song_add">Добавить в избранное</string>
-    <string name="loved_song_added">%1s (%2s) добавлено в избранное</string>
-    <string name="loved_song_remove">%1s (%2s) будет удалена из избранного. Продолжить?</string>
-    <string name="loved_songs">Избранное</string>
-    <string name="loved_songs_clear">Избранные будут очищены. Продолжить\?</string>
+    <string name="favorite_add">Добавить в избранное</string>
+    <string name="favorite_added">%1s (%2s) добавлено в избранное</string>
+    <string name="favorite_remove">%1s (%2s) будет удалена из избранного. Продолжить?</string>
+    <string name="favorites">Избранное</string>
+    <string name="favorites_clear">Избранные будут очищены. Продолжить\?</string>
     <string name="on_close_activity">Вы хотите остановить воспроизведение?</string>
     <string name="open_git_pref_summary">Откройте свойства проекта что бы узнать детальнее</string>
     <string name="precise_volume_pref_summary_off">Включить точный контроль громкости</string>
@@ -78,7 +78,7 @@
     <string name="equalizer_v">Объемный звук</string>
     <string name="equalizer_bb">Усиление басов</string>
     <string name="equalizer">Эквалайзер</string>
-    <string name="loved_songs_save_time">Сохранить позицию песни</string>
+    <string name="favorites_save_time">Сохранить позицию песни</string>
     <string name="playback_pref_summary_off">Сохранять выбранную скорость воспроизведения</string>
     <string name="playback_pref_summary_on">Не сохранять выбранную скорость воспроизведения</string>
     <string name="playback_pref_title">Скорость воспроизведения</string>

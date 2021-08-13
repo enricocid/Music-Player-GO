@@ -17,16 +17,14 @@ interface MediaControlInterface {
     ): List<Music>?
     fun onAddToQueue(song: Music?, launchedBy: String)
     fun onAddAlbumToQueue(
+        isSingleSong: Music?,
         songs: List<Music>?,
-        isAlbumOrFolder: Pair<Boolean, Music?>,
-        isLovedSongs: Boolean,
-        isShuffleMode: Boolean,
-        clearShuffleMode: Boolean,
-        launchedBy: String
+        clearQueue: Boolean,
+        launchedBy: String,
+        playFrom: Boolean
     )
-    fun onLovedSongAdded(song: Music?, isAdded: Boolean)
+    fun onFavoriteAddedOrRemoved()
     fun onGetEqualizer(): Triple<Equalizer?, BassBoost?, Virtualizer?>
-
     fun onPreciseVolumeToggled()
     fun onPlaybackSpeedToggled()
     fun onHandleFocusPref()

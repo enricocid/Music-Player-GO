@@ -5,9 +5,9 @@
         android:enabled="false"
         android:title="" />
     <item
-        android:id="@+id/loved_songs_add"
+        android:id="@+id/favorites_add"
         android:icon="@drawable/ic_favorite"
-        android:title="@string/loved_song_add" />
+        android:title="@string/favorite_add" />
     <item
         android:id="@+id/queue_add"
         android:icon="@drawable/ic_queue_add"

@@ -7,9 +7,9 @@
     <string name="delete">Delete</string>
     <string name="on_close_activity">Do you want to stop playback?</string>
     <string name="queue_songs_clear">Queue will be cleared. Continue?</string>
-    <string name="loved_songs_clear">Favorite songs will be cleared. Continue?</string>
-    <string name="loved_song_remove">%1s (%2s) will be deleted from favorite songs. Continue?</string>
-    <string name="loved_songs_save_time">Save song position</string>
+    <string name="favorites_clear">Favorite songs will be cleared. Continue?</string>
+    <string name="favorite_remove">%1s (%2s) will be deleted from favorite songs. Continue?</string>
+    <string name="favorites_save_time">Save song position</string>
 
     <!-- Main - Fragments titles -->
     <string name="artists">Artists</string>
@@ -40,7 +40,7 @@
     <string name="shuffle_am">Shuffle all songs</string>
     <string name="shuffle_sa">Shuffle selected album</string>
     <string name="queue_add">Add to queue</string>
-    <string name="loved_song_add">Add to favorite songs</string>
+    <string name="favorite_add">Add to favorite songs</string>
     <string name="filter_popup_title">Hide</string>
 
     <!-- Queue -->
@@ -49,8 +49,8 @@
     <string name="queue_song_remove">%1s will be removed from the queue. Continue?</string>
 
     <!-- Loved songs -->
-    <string name="loved_songs">Favorite songs</string>
-    <string name="loved_song_added">%1s (%2s) added to favorite songs</string>
+    <string name="favorites">Favorite songs</string>
+    <string name="favorite_added">%1s (%2s) added to favorite songs</string>
 
     <!-- Playback speed -->
     <string name="content_playback_speed">Playback speed</string>
@@ -65,7 +65,7 @@
     <!-- Messages - Errors -->
     <string name="open_git_pref_summary">Open the project\'s webpage for more info :)</string>
     <string name="open_details_fragment">Open artist/folder\'s details</string>
-    <string name="error_no_loved_songs">No favorite songs found!</string>
+    <string name="error_no_favorites">No favorite songs found!</string>
     <string name="error_no_music">No music found :(</string>
     <string name="error_not_ready">Could not load the music library! :( This could be due to the SD card getting unmounted, forcing the Android\'s MediaStore to rebuild its database records. Try again later.</string>
     <string name="error_unknown_unsupported">Something went wrong! :( Perhaps the chosen format is not supported, or the folder is not accessible (not the app\'s fault!).</string>

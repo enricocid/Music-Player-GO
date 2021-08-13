@@ -204,13 +204,13 @@ object ListsHelper {
     }
 
     @JvmStatic
-    fun addToLovedSongs(
+    fun addToFavorites(
         song: Music?,
         playerPosition: Int,
         launchedBy: String
     ) {
-        val lovedSongs = if (goPreferences.lovedSongs != null) {
-            goPreferences.lovedSongs?.toMutableList()
+        val favorites = if (goPreferences.favorites != null) {
+            goPreferences.favorites?.toMutableList()
         } else {
             mutableListOf()
         }
@@ -218,34 +218,34 @@ object ListsHelper {
         val songToSave = song?.toSavedMusic(playerPosition, launchedBy)
 
         songToSave?.let { savedSong ->
-            if (!lovedSongs?.contains(songToSave)!!) {
-                lovedSongs.add(savedSong)
+            if (!favorites?.contains(songToSave)!!) {
+                favorites.add(savedSong)
             }
-            goPreferences.lovedSongs = lovedSongs
+            goPreferences.favorites = favorites
         }
     }
 
     @JvmStatic
-    fun addOrRemoveFromLovedSongs(
+    fun addOrRemoveFromFavorites(
         song: Music?,
         playerPosition: Int,
         launchedBy: String
     ) {
-        val lovedSongs =
-            if (goPreferences.lovedSongs != null) {
-                goPreferences.lovedSongs?.toMutableList()
+        val favorites =
+            if (goPreferences.favorites != null) {
+                goPreferences.favorites?.toMutableList()
             } else {
                 mutableListOf()
             }
         val songToSave = song?.toSavedMusic(playerPosition, launchedBy)
 
         songToSave?.let { savedSong ->
-            if (lovedSongs?.contains(songToSave)!!) {
-                lovedSongs.remove(songToSave)
+            if (favorites?.contains(songToSave)!!) {
+                favorites.remove(songToSave)
             } else {
-                lovedSongs.add(savedSong)
+                favorites.add(savedSong)
             }
-            goPreferences.lovedSongs = lovedSongs
+            goPreferences.favorites = favorites
         }
     }
 }

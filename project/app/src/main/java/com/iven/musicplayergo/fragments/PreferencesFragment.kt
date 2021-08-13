@@ -120,22 +120,22 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             getString(R.string.playback_speed_pref) -> mMediaControlInterface.onPlaybackSpeedToggled()
             getString(R.string.theme_pref) -> {
                 mThemePreference?.icon = ContextCompat.getDrawable(requireActivity(), ThemeHelper.resolveThemeIcon(requireActivity()))
-                mUIControlInterface.onAppearanceChanged(true)
+                mUIControlInterface.onAppearanceChanged(isThemeChanged = true)
             }
             getString(R.string.accent_pref) -> {
                 mAccentsDialog.dismiss()
-                mUIControlInterface.onAppearanceChanged(false)
+                mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
             }
             getString(R.string.focus_pref) -> mMediaControlInterface.onHandleFocusPref()
             getString(R.string.covers_pref) -> {
                 mMediaControlInterface.onHandleCoverOptionsUpdate()
-                mMediaControlInterface.onHandleNotificationUpdate(false)
+                mMediaControlInterface.onHandleNotificationUpdate(isAdditionalActionsChanged = false)
             }
             getString(R.string.fast_seeking_actions_pref) -> mMediaControlInterface.onHandleNotificationUpdate(
                 true
             )
             getString(R.string.song_visual_pref) -> mUIControlInterface.onSongVisualizationChanged()
-            getString(R.string.filter_pref) -> mUIControlInterface.onAppearanceChanged(false)
+            getString(R.string.filter_pref) -> mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
         }
     }
 
@@ -172,12 +172,12 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             customListAdapter(activeTabsAdapter)
 
-            val touchHelper = ItemTouchHelper(ItemTouchCallback(activeTabsAdapter.availableItems, true))
+            val touchHelper = ItemTouchHelper(ItemTouchCallback(activeTabsAdapter.availableItems, isActiveTabs = true))
             touchHelper.attachToRecyclerView(getRecyclerView())
 
             positiveButton(android.R.string.ok) {
                 goPreferences.activeTabs = activeTabsAdapter.getUpdatedItems().toMutableList()
-                mUIControlInterface.onAppearanceChanged(false)
+                mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
             }
             negativeButton(android.R.string.cancel)
         }

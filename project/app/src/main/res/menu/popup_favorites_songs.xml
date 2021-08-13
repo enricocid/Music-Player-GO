@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_queue_add"
         android:title="@string/queue_add" />
     <item
-        android:id="@+id/loved_songs_delete"
+        android:id="@+id/favorite_delete"
         android:icon="@drawable/ic_delete"
         android:title="@string/delete" />
 </menu>

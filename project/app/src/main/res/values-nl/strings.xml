@@ -18,12 +18,12 @@
     <string name="queue_song_remove">%1s wordt verwijderd uit de wachtrij. Wil je doorgaan?</string>
     <string name="queue_songs_clear">De wachtrij wordt leeggemaakt. Wil je doorgaan?</string>
     <string name="error_no_queue">Er staan geen nummers in de wachtrij.</string>
-    <string name="loved_songs">Favorieten</string>
-    <string name="loved_song_added">%1s (%2s) is toegevoegd aan je favorieten</string>
-    <string name="loved_song_remove">%1s (%2s) wordt verwijderd uit je favorieten. Wil je doorgaan?</string>
-    <string name="loved_songs_clear">Je favorieten worden gewist. Wil je doorgaan?</string>
-    <string name="loved_song_add">Toevoegen aan favorieten</string>
-    <string name="error_no_loved_songs">Je hebt nog geen favorieten!</string>
+    <string name="favorites">Favorieten</string>
+    <string name="favorite_added">%1s (%2s) is toegevoegd aan je favorieten</string>
+    <string name="favorite_remove">%1s (%2s) wordt verwijderd uit je favorieten. Wil je doorgaan?</string>
+    <string name="favorites_clear">Je favorieten worden gewist. Wil je doorgaan?</string>
+    <string name="favorite_add">Toevoegen aan favorieten</string>
+    <string name="error_no_favorites">Je hebt nog geen favorieten!</string>
     <string name="perm_rationale">Music Player GO heeft toegang tot je bestanden nodig om muziek af te spelen.</string>
     <string name="error_no_browser">Geen webbrowser aangetroffen.</string>
     <string name="error_bad_id">Start eerst een nummer.</string>
@@ -78,7 +78,7 @@
     <string name="equalizer_bb">Basversterking</string>
     <string name="equalizer">Equalizer</string>
     <string name="albums">Albums</string>
-    <string name="loved_songs_save_time">Afspeelpositie opslaan</string>
+    <string name="favorites_save_time">Afspeelpositie opslaan</string>
     <string name="open_details_fragment">Artiestmap/-informatie openen</string>
     <string name="content_repeat">Herhaalopties in-/uitschakelen</string>
     <string name="content_skip_next">Doorspoelen naar volgende nummer</string>

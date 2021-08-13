@@ -51,15 +51,15 @@ class PlayerService : Service() {
         }
 
         override fun onSkipToNext() {
-            mediaPlayerHolder.skip(true)
+            mediaPlayerHolder.skip(isNext = true)
         }
 
         override fun onSkipToPrevious() {
-            mediaPlayerHolder.skip(false)
+            mediaPlayerHolder.skip(isNext = false)
         }
 
         override fun onStop() {
-            mediaPlayerHolder.stopPlaybackService(true)
+            mediaPlayerHolder.stopPlaybackService(stopPlayback = true)
         }
 
         override fun onSeekTo(pos: Long) {
@@ -94,7 +94,7 @@ class PlayerService : Service() {
         if (::mediaPlayerHolder.isInitialized && mediaPlayerHolder.isCurrentSong) {
             // Saves last played song and its position
             mediaPlayerHolder.run {
-                currentSong.first?.let { musicToSave ->
+                currentSong?.let { musicToSave ->
                     goPreferences.latestPlayedSong =
                         musicToSave.toSavedMusic(playerPosition, launchedBy)
                 }
@@ -128,17 +128,17 @@ class PlayerService : Service() {
 
                 with(mediaPlayerHolder) {
                     when (act) {
-                        GoConstants.REWIND_ACTION -> fastSeek(false)
+                        GoConstants.REWIND_ACTION -> fastSeek(isForward = false)
                         GoConstants.PREV_ACTION -> instantReset()
                         GoConstants.PLAY_PAUSE_ACTION -> resumeOrPause()
-                        GoConstants.NEXT_ACTION -> skip(true)
-                        GoConstants.FAST_FORWARD_ACTION -> fastSeek(true)
+                        GoConstants.NEXT_ACTION -> skip(isNext = true)
+                        GoConstants.FAST_FORWARD_ACTION -> fastSeek(isForward = true)
                         GoConstants.REPEAT_ACTION -> {
-                            repeat(true)
+                            repeat(updatePlaybackStatus = true)
                             mediaPlayerInterface.onUpdateRepeatStatus()
                         }
                         GoConstants.CLOSE_ACTION -> if (isRunning && isMediaPlayer) {
-                            stopPlaybackService(true)
+                            stopPlaybackService(stopPlayback = true)
                         }
                     }
                 }
@@ -208,7 +208,7 @@ class PlayerService : Service() {
                             isSuccess = true
                         }
                         KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {
-                            mediaPlayerHolder.skip(false)
+                            mediaPlayerHolder.skip(isNext = false)
                             isSuccess = true
                         }
                         KeyEvent.KEYCODE_MEDIA_NEXT -> {

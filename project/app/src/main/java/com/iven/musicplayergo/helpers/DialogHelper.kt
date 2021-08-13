@@ -14,12 +14,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
+import com.afollestad.materialdialogs.bottomsheets.expandBottomSheet
 import com.afollestad.materialdialogs.callbacks.onCancel
+import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.getRecyclerView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.ui.ItemSwipeCallback
-import com.iven.musicplayergo.adapters.LovedSongsAdapter
+import com.iven.musicplayergo.adapters.FavoritesAdapter
 import com.iven.musicplayergo.adapters.QueueAdapter
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.goPreferences
@@ -47,10 +49,10 @@ object DialogHelper {
 
         val recyclerView = getRecyclerView()
 
-        ItemTouchHelper(ItemTouchCallback(queueAdapter.queueSongs, false))
-                .attachToRecyclerView(recyclerView)
+        ItemTouchHelper(ItemTouchCallback(queueAdapter.queueSongs, isActiveTabs = false))
+            .attachToRecyclerView(recyclerView)
 
-        ItemTouchHelper(ItemSwipeCallback(context, isQueueDialog = true, isLovedDialog = false) { viewHolder: RecyclerView.ViewHolder, _: Int ->
+        ItemTouchHelper(ItemSwipeCallback(context, isQueueDialog = true, isFavoritesDialog = false) { viewHolder: RecyclerView.ViewHolder, _: Int ->
             val title = viewHolder.itemView.findViewById<TextView>(R.id.title)
             if (!queueAdapter.performQueueSongDeletion(viewHolder.absoluteAdapterPosition, title)) {
                 queueAdapter.notifyItemChanged(viewHolder.absoluteAdapterPosition)
@@ -69,6 +71,19 @@ object DialogHelper {
                 }
             }
         }
+
+        if (mediaPlayerHolder.isQueue != null && mediaPlayerHolder.isQueueStarted) {
+            recyclerView.addOnLayoutChangeListener(object: View.OnLayoutChangeListener {
+                override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
+                    onShow {
+                        expandBottomSheet()
+                        val indexOfCurrentSong = mediaPlayerHolder.queueSongs.indexOf(mediaPlayerHolder.currentSong)
+                        recyclerView.smoothScrollToPosition(indexOfCurrentSong)
+                    }
+                    recyclerView.removeOnLayoutChangeListener(this)
+                }
+            })
+        }
     }
 
     @JvmStatic
@@ -86,9 +101,9 @@ object DialogHelper {
 
             message(
                 text = context.getString(
-                            R.string.queue_song_remove,
-                            song.first.title
-                    )
+                    R.string.queue_song_remove,
+                    song.first.title
+                )
             )
             positiveButton(R.string.yes) {
 
@@ -97,8 +112,8 @@ object DialogHelper {
                     queueAdapter.swapQueueSongs(queueSongs)
 
                     if (queueSongs.isEmpty()) {
-                        isQueue = false
-                        mediaPlayerInterface.onQueueStartedOrEnded(false)
+                        isQueue = null
+                        mediaPlayerInterface.onQueueStartedOrEnded(started = false)
                         queueSongsDialog.dismiss()
                     }
                 }
@@ -120,15 +135,9 @@ object DialogHelper {
             message(R.string.queue_songs_clear)
 
             positiveButton(R.string.yes) {
-
                 mediaPlayerHolder.run {
-                    if (isQueueStarted) {
-                        restorePreQueueSongs()
-                        skip(
-                            true
-                        )
-                    }
-                    setQueueEnabled(false)
+                    setQueueEnabled(enabled = false)
+                    skip(true)
                 }
             }
             negativeButton(R.string.no)
@@ -136,20 +145,20 @@ object DialogHelper {
     }
 
     @JvmStatic
-    fun showLovedSongsDialog(
+    fun showFavoritesDialog(
         activity: Activity,
         mediaPlayerHolder: MediaPlayerHolder
     ): MaterialDialog = MaterialDialog(activity, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
-        title(R.string.loved_songs)
+        title(R.string.favorites)
 
-        val lovedSongsAdapter = LovedSongsAdapter(
+        val favoritesAdapter = FavoritesAdapter(
             activity,
             this,
             mediaPlayerHolder
         )
 
-        customListAdapter(lovedSongsAdapter)
+        customListAdapter(favoritesAdapter)
 
         val recyclerView = getRecyclerView()
 
@@ -166,37 +175,37 @@ object DialogHelper {
             }
         }
 
-        ItemTouchHelper(ItemSwipeCallback(context, isQueueDialog = false, isLovedDialog = true) { viewHolder: RecyclerView.ViewHolder,
+        ItemTouchHelper(ItemSwipeCallback(context, isQueueDialog = false, isFavoritesDialog = true) { viewHolder: RecyclerView.ViewHolder,
                                                             direction: Int ->
             if (direction == ItemTouchHelper.RIGHT) {
-                lovedSongsAdapter.addLovedSongToQueue(viewHolder.absoluteAdapterPosition)
+                favoritesAdapter.addFavoriteToQueue(viewHolder.absoluteAdapterPosition)
             } else {
-                lovedSongsAdapter.performLovedSongDeletion(
+                favoritesAdapter.performFavoriteDeletion(
                     viewHolder.absoluteAdapterPosition,
                     true
                 )
             }
-            lovedSongsAdapter.notifyDataSetChanged()
+            favoritesAdapter.notifyDataSetChanged()
         }).attachToRecyclerView(recyclerView)
     }
 
     @JvmStatic
-    fun showDeleteLovedSongDialog(
+    fun showDeleteFavoriteDialog(
         activity: Activity,
         songToDelete: Music?,
-        lovedSongsAdapter: LovedSongsAdapter,
+        favoritesAdapter: FavoritesAdapter,
         isSwipe: Pair<Boolean, Int>
     ) {
 
-        val lovedSongs = goPreferences.lovedSongs?.toMutableList()
+        val favorites = goPreferences.favorites?.toMutableList()
 
         MaterialDialog(activity).show {
 
-            title(R.string.loved_songs)
+            title(R.string.favorites)
 
             message(
                 text = context.getString(
-                            R.string.loved_song_remove,
+                            R.string.favorite_remove,
                             songToDelete?.title,
                             songToDelete?.startFrom?.toLong()?.toFormattedDuration(
                                     isAlbum = false,
@@ -205,36 +214,36 @@ object DialogHelper {
                     )
             )
             positiveButton(R.string.yes) {
-                lovedSongs?.remove(songToDelete)
-                goPreferences.lovedSongs = lovedSongs
-                lovedSongsAdapter.swapSongs(lovedSongs)
-                (activity as MediaControlInterface).onLovedSongAdded(songToDelete, false)
+                favorites?.remove(songToDelete)
+                goPreferences.favorites = favorites
+                favoritesAdapter.swapSongs(favorites)
+                (activity as MediaControlInterface).onFavoriteAddedOrRemoved()
             }
 
             negativeButton(R.string.no) {
                 if (isSwipe.first) {
-                    lovedSongsAdapter.notifyItemChanged(isSwipe.second)
+                    favoritesAdapter.notifyItemChanged(isSwipe.second)
                 }
             }
             onCancel {
                 if (isSwipe.first) {
-                    lovedSongsAdapter.notifyItemChanged(isSwipe.second)
+                    favoritesAdapter.notifyItemChanged(isSwipe.second)
                 }
             }
         }
     }
 
     @JvmStatic
-    fun showClearLovedSongDialog(
+    fun showClearFavoritesDialog(
         activity: Activity
     ) {
         MaterialDialog(activity).show {
 
-            title(R.string.loved_songs)
+            title(R.string.favorites)
 
-            message(R.string.loved_songs_clear)
+            message(R.string.favorites_clear)
             positiveButton(R.string.yes) {
-                (activity as UIControlInterface).onLovedSongsUpdate(true)
+                (activity as UIControlInterface).onFavoritesUpdated(clear = true)
             }
             negativeButton(R.string.no)
         }
@@ -285,14 +294,13 @@ object DialogHelper {
 
                 setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
-                        R.id.loved_songs_add -> {
-                            ListsHelper.addToLovedSongs(
+                        R.id.favorites_add -> {
+                            ListsHelper.addToFavorites(
                                 song,
                                 0,
                                 launchedBy
                             )
-                            mediaControlInterface.onLovedSongAdded(song, true)
-                            (activity as UIControlInterface).onLovedSongsUpdate(false)
+                            mediaControlInterface.onFavoriteAddedOrRemoved()
                         }
                         else -> mediaControlInterface.onAddToQueue(song, launchedBy)
                     }
@@ -354,17 +362,6 @@ object DialogHelper {
     }
 
     @JvmStatic
-    fun addToLovedSongs(activity: Activity, song: Music?, launchedBy: String) {
-        ListsHelper.addToLovedSongs(
-            song,
-            0,
-            launchedBy
-        )
-        (activity as MediaControlInterface).onLovedSongAdded(song, true)
-        (activity as UIControlInterface).onLovedSongsUpdate(false)
-    }
-
-    @JvmStatic
     fun stopPlaybackDialog(
         context: Context,
         mediaPlayerHolder: MediaPlayerHolder
@@ -379,24 +376,24 @@ object DialogHelper {
                 mediaPlayerHolder.stopPlaybackService(true)
             }
             negativeButton(R.string.no) {
-                mediaPlayerHolder.stopPlaybackService(false)
+                mediaPlayerHolder.stopPlaybackService(stopPlayback = false)
             }
         }
     }
 
     @JvmStatic
-    fun computeDurationText(ctx: Context, lovedSong: Music?): Spanned? {
-        if (lovedSong?.startFrom != null && lovedSong.startFrom > 0L) {
+    fun computeDurationText(ctx: Context, favorite: Music?): Spanned? {
+        if (favorite?.startFrom != null && favorite.startFrom > 0L) {
             return ctx.getString(
-                    R.string.loved_song_subtitle,
-                    lovedSong.startFrom.toLong().toFormattedDuration(
+                R.string.favorite_subtitle,
+                favorite.startFrom.toLong().toFormattedDuration(
                             isAlbum = false,
                             isSeekBar = false
                     ),
-                    lovedSong.duration.toFormattedDuration(isAlbum = false, isSeekBar = false)
+                favorite.duration.toFormattedDuration(isAlbum = false, isSeekBar = false)
             ).parseAsHtml()
         }
-        return lovedSong?.duration?.toFormattedDuration(isAlbum = false, isSeekBar = false)
-                ?.parseAsHtml()
+        return favorite?.duration?.toFormattedDuration(isAlbum = false, isSeekBar = false)
+            ?.parseAsHtml()
     }
 }

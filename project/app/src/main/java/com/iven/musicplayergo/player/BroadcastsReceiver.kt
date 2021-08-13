@@ -24,9 +24,9 @@ class NotificationReceiver(
                     when (act) {
                         GoConstants.PREV_ACTION -> instantReset()
                         GoConstants.PLAY_PAUSE_ACTION -> resumeOrPause()
-                        GoConstants.NEXT_ACTION -> skip(true)
+                        GoConstants.NEXT_ACTION -> skip(isNext = true)
                         GoConstants.REPEAT_ACTION -> {
-                            repeat(true)
+                            repeat(updatePlaybackStatus = true)
                             mediaPlayerInterface.onUpdateRepeatStatus()
                         }
                         GoConstants.CLOSE_ACTION -> if (playerService.isRunning && isMediaPlayer) {

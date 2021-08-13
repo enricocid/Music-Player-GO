@@ -16,7 +16,7 @@
     <string name="artist_and_album">%1s&#160;/&#160;%2s</string>
     <string name="track_song">&lt;b>%1d&lt;/b>&#160;-&#160;%2s</string>
     <string name="year_and_duration">%1s&#160;-&#160;%2s</string>
-    <string name="loved_song_subtitle">&lt;b>%1s&lt;/b>&#160;-&#160;%2s</string>
+    <string name="favorite_subtitle">&lt;b>%1s&lt;/b>&#160;-&#160;%2s</string>
 
     <!-- Formatting symbols -->
     <string name="fastscroller_dummy_item">&#8230;</string>
@@ -82,7 +82,7 @@
     <!-- Other preferences keys -->
     <string name="saved_eq_settings">eq_settings_pref</string>
     <string name="latest_played_song_pref">to_restore_song_pref</string>
-    <string name="loved_songs_pref">favorite_songs_pref</string>
+    <string name="favorites_pref">favorite_songs_pref</string>
     <string name="latest_volume_pref">latest_volume_pref</string>
     <string name="latest_playback_speed_pref">latest_playback_speed_pref</string>
     <string name="song_visual_pref">song_visual_pref</string>

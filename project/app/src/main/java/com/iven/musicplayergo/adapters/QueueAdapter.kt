@@ -32,9 +32,9 @@ class QueueAdapter(
         ThemeHelper.resolveColorAttr(ctx, android.R.attr.textColorPrimary)
 
     fun swapSelectedSong(song: Music?) {
-        notifyItemChanged(queueSongs.indexOf(mSelectedSong.first))
-        mSelectedSong = Pair(song, true)
-        notifyItemChanged(queueSongs.indexOf(mSelectedSong.first))
+        notifyItemChanged(queueSongs.indexOf(mSelectedSong))
+        mSelectedSong = song
+        notifyItemChanged(queueSongs.indexOf(mSelectedSong))
     }
 
     fun swapQueueSongs(updatedQueueSongs: MutableList<Music>) {
@@ -77,11 +77,10 @@ class QueueAdapter(
 
                 title.text = displayedTitle
 
-                when {
-                    queueSongs.indexOf(mSelectedSong.first) == absoluteAdapterPosition && mSelectedSong.second -> title.setTextColor(
-                        ThemeHelper.resolveThemeAccent(ctx)
-                    )
-                    else -> title.setTextColor(mDefaultTextColor)
+                if (mediaPlayerHolder.isQueue != null && mediaPlayerHolder.isQueueStarted && queueSongs.indexOf(mSelectedSong) == absoluteAdapterPosition) {
+                    title.setTextColor(ThemeHelper.resolveThemeAccent(ctx))
+                } else{
+                    title.setTextColor(mDefaultTextColor)
                 }
 
                 duration.text = DialogHelper.computeDurationText(ctx, song)

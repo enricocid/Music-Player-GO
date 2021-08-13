@@ -5,8 +5,8 @@
     <string name="no">Non</string>
     <string name="on_close_activity">Queres deter a reprodución?</string>
     <string name="queue_songs_clear">A cola quedará baleira. Continuar?</string>
-    <string name="loved_songs_clear">Quitaraslle a marca a todas as favoritas. Continuar?</string>
-    <string name="loved_song_remove">%1s (%2s) serán eliminadas das pistas favoritas. Continuar?</string>
+    <string name="favorites_clear">Quitaraslle a marca a todas as favoritas. Continuar?</string>
+    <string name="favorite_remove">%1s (%2s) serán eliminadas das pistas favoritas. Continuar?</string>
     <!-- Main - Fragments titles -->
     <string name="artists">Artistas</string>
     <string name="songs">Pistas</string>
@@ -22,17 +22,17 @@
     <string name="shuffle_am">Barallar todas as pistas</string>
     <string name="shuffle_sa">Barallar álbume seleccionado</string>
     <string name="queue_add">Engadir a cola</string>
-    <string name="loved_song_add">Engadir a cancións favoritas</string>
+    <string name="favorite_add">Engadir a cancións favoritas</string>
     <string name="filter_popup_title">Agochar</string>
     <!-- Queue -->
     <string name="queue">Cola</string>
     <string name="queue_song_add">%1s á cola!</string>
     <string name="queue_song_remove">Vas quitar %1s da cola. Continuar?</string>
     <!-- Loved songs -->
-    <string name="loved_songs">Cancións favoritas</string>
-    <string name="loved_song_added">%1s (%2s) engadidas a favoritas</string>
+    <string name="favorites">Cancións favoritas</string>
+    <string name="favorite_added">%1s (%2s) engadidas a favoritas</string>
     <!-- Messages - Errors -->
-    <string name="error_no_loved_songs">Sen cancións favoritas!</string>
+    <string name="error_no_favorites">Sen cancións favoritas!</string>
     <string name="error_no_music">Non se atopou música :(</string>
     <string name="error_not_ready">Non se cargou a biblioteca de música! :( Podería deberse a que a tarxeta SD non está montada, forzando ó Almacenaxe de Medios de Android a reconstruír a base de datos. Inténtao máis tarde.</string>
     <string name="error_unknown_unsupported">Algo fallou! :( Quizais o formato escollido non está soportado, ou o cartafol non é accesible (non é culpa da app!).</string>
@@ -85,7 +85,7 @@
     <string name="albums">Álbumes</string>
     <string name="eq_pref_note_summary">Nota: o ecualizador do sistema terá preferencia a non ser que desactives a app \"ecualizador do sistema\" nos axustes do sistema. :)</string>
     <string name="error_eq">Mágoa, algo fallou!</string>
-    <string name="loved_songs_save_time">Gardar posición da canción</string>
+    <string name="favorites_save_time">Gardar posición da canción</string>
     <string name="open_details_fragment">Abrir detalles do cartafol/artista</string>
     <string name="content_repeat">Activar/desactivar opcións de repetición</string>
     <string name="content_skip_next">Ir á canción seguinte</string>

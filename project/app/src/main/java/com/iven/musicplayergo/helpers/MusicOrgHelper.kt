@@ -1,6 +1,7 @@
 package com.iven.musicplayergo.helpers
 
 import android.content.res.Resources
+import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.extensions.toFormattedYear
 import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.goPreferences
@@ -22,16 +23,15 @@ object MusicOrgHelper {
         mediaPlayerHolder: MediaPlayerHolder,
         deviceAlbumsByArtist: MutableMap<String, List<Album>>?
     ) = try {
-        val currentSong = mediaPlayerHolder.currentSong.first
         val album = getAlbumFromList(
             selectedArtist,
-            currentSong?.album,
+            mediaPlayerHolder.currentSong?.album,
             deviceAlbumsByArtist
         )
         album.second
     } catch (e: Exception) {
         e.printStackTrace()
-        -1
+        RecyclerView.NO_POSITION
     }
 
     @JvmStatic
@@ -101,7 +101,6 @@ object MusicOrgHelper {
                     val album = iterator.next()
                     val albumSongs = groupedSongs.getValue(album).toMutableList()
                     albumSongs.sortBy { song -> song.track }
-
                     sortedAlbums.add(
                         Album(
                             album,
@@ -124,7 +123,7 @@ object MusicOrgHelper {
     @JvmStatic
     fun updateMediaPlayerHolderLists(mediaPlayerHolder: MediaPlayerHolder, uiControlInterface: UIControlInterface, randomMusic: Music?): Music? {
 
-        val currentSong = mediaPlayerHolder.currentSong.first
+        val currentSong = mediaPlayerHolder.currentSong
 
         fun selectNewSong(filter: Set<String>): Music? {
             if (musicListContains(currentSong, filter)) {
@@ -135,23 +134,23 @@ object MusicOrgHelper {
         }
 
         goPreferences.filters?.let { ft ->
-            goPreferences.lovedSongs?.toMutableList()?.let { bookmarks ->
-                val songs = bookmarks.filter { lovedSong ->
-                    musicListContains(lovedSong, ft)
+            goPreferences.favorites?.toMutableList()?.let { fav ->
+                val songs = fav.filter { favFt ->
+                    musicListContains(favFt, ft)
                 }
-                bookmarks.removeAll(songs)
-                goPreferences.lovedSongs = bookmarks
-                if (bookmarks.isEmpty()) {
-                    uiControlInterface.onLovedSongsUpdate(true)
+                fav.removeAll(songs)
+                goPreferences.favorites = fav
+                if (fav.isEmpty()) {
+                    uiControlInterface.onFavoritesUpdated(clear = true)
                 }
             }
-            if (mediaPlayerHolder.isQueue && musicListContains(currentSong, ft)) {
+            if (mediaPlayerHolder.isQueue != null && musicListContains(currentSong, ft)) {
                 mediaPlayerHolder.queueSongs.run {
                     val songs = filter { queueSong ->
                         musicListContains(queueSong, ft)
                     }
                     removeAll(songs)
-                    mediaPlayerHolder.skip(true)
+                    mediaPlayerHolder.skip(isNext = true)
                 }
             } else {
                 return selectNewSong(ft)

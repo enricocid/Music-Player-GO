@@ -175,7 +175,7 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
             duration = revealDuration
             doOnEnd {
                 if (!show) {
-                    handleViewVisibility(false)
+                    handleViewVisibility(show = false)
                 }
             }
             start()

@@ -247,7 +247,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                         mSelectedPreset = position
                         mEqualizer.first?.usePreset(mSelectedPreset.toShort())
-                        updateBandLevels(true)
+                        updateBandLevels(isPresetChanged = true)
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                     }
@@ -282,7 +282,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
         } catch (e: UnsupportedOperationException) {
             e.printStackTrace()
             Toast.makeText(requireActivity(), R.string.error_eq, Toast.LENGTH_LONG)
-                    .show()
+                .show()
         }
     }
 

@@ -36,7 +36,6 @@ import com.iven.musicplayergo.extensions.waitForCover
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
-import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedEqualizerSettings
 import com.iven.musicplayergo.ui.MainActivity
@@ -105,7 +104,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     // playback should resume
                     mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
                     sPlayOnFocusGain =
-                            isMediaPlayer && state == GoConstants.PLAYING || state == GoConstants.RESUMED
+                        isMediaPlayer && state == GoConstants.PLAYING || state == GoConstants.RESUMED
                 }
                 AudioManager.AUDIOFOCUS_LOSS ->
                     // Lost audio focus, probably "permanently"
@@ -122,14 +121,11 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private var mExecutor: ScheduledExecutorService? = null
     private var mSeekBarPositionUpdateTask: Runnable? = null
 
-    // First: current song, second: isFromQueue
-    lateinit var currentSong: Pair<Music?, Boolean>
-    var launchedBy = GoConstants.ARTIST_VIEW
-    private var isPlayingFromFolderPreQueue = GoConstants.ARTIST_VIEW
+    var currentSong: Music? = null
     private var mPlayingAlbumSongs: List<Music>? = null
+    var launchedBy = GoConstants.ARTIST_VIEW
 
     var currentVolumeInPercent = goPreferences.latestVolume
-
     private var currentPlaybackSpeed = goPreferences.latestPlaybackSpeed
 
     val playerPosition
@@ -145,24 +141,17 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private var sNotificationForeground = false
 
-    val isCurrentSong get() = ::currentSong.isInitialized
+    val isCurrentSong get() = currentSong != null
     private val sPlaybackSpeedPersisted get() = goPreferences.isPlaybackSpeedPersisted
     var isRepeat1X = false
     var isLooping = false
 
-    var isQueue = false
+    // isQueue is true if pre-queue song is not null
+    var isQueue: Music? = null
     var isQueueStarted = false
-    private lateinit var preQueueSong: Pair<Music?, List<Music>?>
     var queueSongs = mutableListOf<Music>()
 
     var isSongRestoredFromPrefs = false
-    var isSongFromLovedSongs = Pair(false, 0)
-
-    var isLovedSongsQueued = false
-
-    //first: boolean, second: shuffled album
-    var isShuffledSongsQueued: Pair<Boolean, String?> = Pair(false, null)
-    var albumsForShuffleMode: List<Album>? = null
 
     var state = GoConstants.PAUSED
     var isPlay = false
@@ -244,12 +233,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun setCurrentSong(
         song: Music?,
         songs: List<Music>?,
-        isFromQueue: Boolean,
         songLaunchedBy: String
     ) {
         launchedBy = songLaunchedBy
-        currentSong = Pair(song, isFromQueue)
-        mPlayingAlbumSongs = songs
+        currentSong = song
+        if (songs != null) {
+            mPlayingAlbumSongs = songs
+        }
     }
 
     fun updateCurrentSongs() {
@@ -265,40 +255,40 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun updateMediaSessionMetaData() {
         with(MediaMetadataCompat.Builder()) {
-            val song = currentSong.first
+            if (currentSong != null) {
+                currentSong?.run {
+                    putLong(METADATA_KEY_DURATION, duration)
+                    putString(METADATA_KEY_ARTIST, artist)
+                    putString(METADATA_KEY_AUTHOR, artist)
+                    putString(METADATA_KEY_COMPOSER, artist)
+                    putString(METADATA_KEY_TITLE, title)
+                    putString(METADATA_KEY_DISPLAY_TITLE, title)
+                    putString(METADATA_KEY_ALBUM_ARTIST, album)
+                    putString(METADATA_KEY_DISPLAY_SUBTITLE, album)
+                    putString(METADATA_KEY_ALBUM, album)
+                    putBitmap(
+                        METADATA_KEY_DISPLAY_ICON,
+                        ContextCompat.getDrawable(playerService, R.drawable.ic_music_note)?.toBitmap()
+                    )
+                    mPlayingAlbumSongs?.let { songs ->
+                        putLong(METADATA_KEY_NUM_TRACKS, songs.size.toLong())
+                        putLong(METADATA_KEY_TRACK_NUMBER, songs.indexOf(this).toLong())
+                    }
 
-            if (song != null) {
-                putLong(METADATA_KEY_DURATION, song.duration)
-                putString(METADATA_KEY_ARTIST, song.artist)
-                putString(METADATA_KEY_AUTHOR, song.artist)
-                putString(METADATA_KEY_COMPOSER, song.artist)
-                putString(METADATA_KEY_TITLE, song.title)
-                putString(METADATA_KEY_DISPLAY_TITLE, song.title)
-                putString(METADATA_KEY_ALBUM_ARTIST, song.album)
-                putString(METADATA_KEY_DISPLAY_SUBTITLE, song.album)
-                putString(METADATA_KEY_ALBUM, song.album)
-                putBitmap(
-                    METADATA_KEY_DISPLAY_ICON,
-                    ContextCompat.getDrawable(playerService, R.drawable.ic_music_note)?.toBitmap()
-                )
-                mPlayingAlbumSongs?.let { songs ->
-                    putLong(METADATA_KEY_NUM_TRACKS, songs.size.toLong())
-                    putLong(METADATA_KEY_TRACK_NUMBER, songs.indexOf(song).toLong())
-                }
+                    if (goPreferences.isCovers) {
+                        albumId?.waitForCover(playerService) { bmp ->
+                            putBitmap(METADATA_KEY_ALBUM_ART, bmp)
 
-                if (goPreferences.isCovers) {
-                    song.albumId?.waitForCover(playerService) { bmp ->
-                        putBitmap(METADATA_KEY_ALBUM_ART, bmp)
+                            playerService.getMediaSession().setMetadata(build())
+                        }
+                    } else {
+                        putBitmap(
+                            METADATA_KEY_ALBUM_ART,
+                            ContextCompat.getDrawable(playerService, R.drawable.album_art
+                            )?.toBitmap())
 
                         playerService.getMediaSession().setMetadata(build())
                     }
-                } else {
-                    putBitmap(
-                        METADATA_KEY_ALBUM_ART,
-                        ContextCompat.getDrawable(playerService, R.drawable.album_art
-                    )?.toBitmap())
-
-                    playerService.getMediaSession().setMetadata(build())
                 }
             } else {
                 playerService.getMediaSession().setMetadata(build())
@@ -317,14 +307,14 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             isRepeat1X or isLooping -> if (isMediaPlayer) {
                 repeatSong()
             }
-            isQueue -> manageQueue(true)
+            isQueue != null -> manageQueue(isNext = true)
             else -> {
-                if (mPlayingAlbumSongs?.indexOf(currentSong.first) == mPlayingAlbumSongs?.size?.minus(
-                                1
-                        )
+                if (mPlayingAlbumSongs?.indexOf(currentSong) == mPlayingAlbumSongs?.size?.minus(
+                        1
+                    )
                 ) {
                     if (goPreferences.onListEnded == GoConstants.CONTINUE) {
-                        skip(true)
+                        skip(isNext = true)
                     } else {
                         synchronized(pauseMediaPlayer()) {
                             mMusicNotificationManager.cancelNotification()
@@ -332,7 +322,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                         }
                     }
                 } else {
-                    skip(true)
+                    skip(isNext = true)
                 }
             }
         }
@@ -390,16 +380,16 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private fun updatePlaybackStatus(updateUI: Boolean) {
         playerService.getMediaSession().setPlaybackState(
-                PlaybackStateCompat.Builder()
-                    .setActions(mMediaSessionActions)
-                    .setState(
-                        if (mediaPlayer.isPlaying) {
-                            GoConstants.PLAYING
-                        } else {
-                            GoConstants.PAUSED
-                        },
-                        mediaPlayer.currentPosition.toLong(),
-                        currentPlaybackSpeed
+            PlaybackStateCompat.Builder()
+                .setActions(mMediaSessionActions)
+                .setState(
+                    if (mediaPlayer.isPlaying) {
+                        GoConstants.PLAYING
+                    } else {
+                        GoConstants.PAUSED
+                           },
+                    mediaPlayer.currentPosition.toLong(),
+                    currentPlaybackSpeed
                 ).build()
         )
         if (updateUI) {
@@ -429,7 +419,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 GoConstants.RESUMED
             }
 
-            updatePlaybackStatus(true)
+            updatePlaybackStatus(updateUI = true)
 
             startForeground()
 
@@ -442,7 +432,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         playerService.stopForeground(false)
         sNotificationForeground = false
         state = GoConstants.PAUSED
-        updatePlaybackStatus(true)
+        updatePlaybackStatus(updateUI = true)
         with(mMusicNotificationManager) {
             updatePlayPauseAction()
             updateNotification()
@@ -466,65 +456,66 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
 
         when {
-            isQueueStarted -> currentSong = Pair(getSkipSong(isNext), true)
+            isQueueStarted -> currentSong = getSkipSong(isNext)
             else -> {
                 setCurrentSong(
                     queueSongs[0],
-                    queueSongs,
-                    isFromQueue = true,
+                    null,
                     songLaunchedBy = GoConstants.ARTIST_VIEW
                 )
                 isQueueStarted = true
             }
         }
-        initMediaPlayer(currentSong.first)
+        initMediaPlayer(currentSong)
     }
 
-    fun restorePreQueueSongs() {
-        setCurrentSong(preQueueSong.first, preQueueSong.second, false, isPlayingFromFolderPreQueue)
+    private fun getListToSkip() = if (isQueue != null) {
+        queueSongs
+    } else {
+        mPlayingAlbumSongs
     }
 
     private fun getSkipSong(isNext: Boolean): Music? {
 
+        val listToSeek = getListToSkip()
+
         // to correctly get skip song when song is restored
         if (isSongRestoredFromPrefs) {
-            currentSong.first?.run {
-                val song = mPlayingAlbumSongs?.savedSongIsAvailable(this)
-                currentSong = Pair(song, false)
+            currentSong?.run {
+                currentSong = listToSeek?.savedSongIsAvailable(this)
             }
         }
 
-        val currentIndex = mPlayingAlbumSongs?.indexOf(currentSong.first)
+        val currentIndex = listToSeek?.indexOf(currentSong)
 
         try {
-            return mPlayingAlbumSongs?.get(
-                if (isNext) currentIndex?.plus(1)!! else currentIndex?.minus(
-                    1
-                )!!
+            return listToSeek?.get(
+                if (isNext) {
+                    currentIndex?.plus(1)!!
+                } else {
+                    currentIndex?.minus(1)!!
+                }
             )
         } catch (e: IndexOutOfBoundsException) {
             e.printStackTrace()
             return when {
-                isQueue -> stopQueueAndGetSkipSong(isNext)
+                isQueue != null -> stopQueueAndGetSkipSong(isNext)
                 else -> if (currentIndex != 0) {
-                    mPlayingAlbumSongs?.get(0)
+                    listToSeek?.get(0)
                 } else {
-                    mPlayingAlbumSongs?.get(
-                            mPlayingAlbumSongs?.size?.minus(1)!!
-                    )
+                    listToSeek[listToSeek.size.minus(1)]
                 }
             }
         }
     }
 
-    private fun stopQueueAndGetSkipSong(restorePreviousAlbum: Boolean): Music? =
-        if (restorePreviousAlbum) {
+    private fun stopQueueAndGetSkipSong(isNext: Boolean): Music? =
+        if (isNext) {
             setQueueEnabled(false)
-            restorePreQueueSongs()
             getSkipSong(true)
         } else {
             isQueueStarted = false
-            preQueueSong.first
+            isQueue
         }
 
     /**
@@ -613,7 +604,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
         if (what == MediaPlayer.MEDIA_ERROR_SERVER_DIED) {
             mediaPlayer.release()
-            initMediaPlayer(currentSong.first)
+            initMediaPlayer(currentSong)
         }
         return false
     }
@@ -634,15 +625,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 setPreciseVolume(currentVolumeInPercent)
             }
             mediaPlayer.seekTo(goPreferences.latestPlayedSong?.startFrom!!)
-        } else if (isSongFromLovedSongs.first) {
-            mediaPlayer.seekTo(isSongFromLovedSongs.second)
-            isSongFromLovedSongs = Pair(false, 0)
         }
 
-        if (isQueue) {
-            if (isLovedSongsQueued) {
-                mediaPlayer.seekTo(currentSong.first?.startFrom!!)
-            }
+        if (isQueue != null) {
             mediaPlayerInterface.onQueueStartedOrEnded(isQueueStarted)
         }
 
@@ -803,47 +788,26 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun setQueueEnabled(enabled: Boolean) {
-        isQueue = enabled
-        isQueueStarted = false
 
-        when {
-            isQueue -> {
-                preQueueSong = Pair(currentSong.first, mPlayingAlbumSongs)
-                isPlayingFromFolderPreQueue = launchedBy
-                isQueue = true
-                mediaPlayerInterface.onQueueEnabled()
-            }
-            else -> {
-                queueSongs.clear()
-                isLovedSongsQueued = false
-
-                restoreShuffledSongs()
-
-                mediaPlayerInterface.onQueueCleared()
-                mediaPlayerInterface.onQueueStartedOrEnded(false)
-            }
+        if (enabled) {
+            isQueue = currentSong
+            mediaPlayerInterface.onQueueEnabled()
+        } else {
+            currentSong = isQueue
+            isQueue = null
+            isQueueStarted = false
+            queueSongs.clear()
+            mediaPlayerInterface.onQueueCleared()
+            mediaPlayerInterface.onQueueStartedOrEnded(false)
         }
-    }
-
-    fun restoreShuffledSongs() {
-        if (isShuffledSongsQueued.first && albumsForShuffleMode != null) {
-            albumsForShuffleMode?.find { isShuffledSongsQueued.second == it.title }?.run {
-                ListsHelper.getSortedMusicList(
-                    GoConstants.TRACK_SORTING,
-                    music
-                )
-            }
-        }
-        isShuffledSongsQueued = Pair(false, null)
-        albumsForShuffleMode = null
     }
 
     fun skip(isNext: Boolean) {
         when {
-            isQueue -> manageQueue(isNext)
+            isQueue != null -> manageQueue(isNext)
             else -> {
-                currentSong = Pair(getSkipSong(isNext), false)
-                initMediaPlayer(currentSong.first)
+                currentSong = getSkipSong(isNext)
+                initMediaPlayer(currentSong)
             }
         }
     }
@@ -954,10 +918,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
                     when (act) {
 
-                        BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (::currentSong.isInitialized && goPreferences.isHeadsetPlugEnabled) {
+                        BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (currentSong != null && goPreferences.isHeadsetPlugEnabled) {
                             pauseMediaPlayer()
                         }
-                        BluetoothDevice.ACTION_ACL_CONNECTED -> if (::currentSong.isInitialized && goPreferences.isHeadsetPlugEnabled) {
+                        BluetoothDevice.ACTION_ACL_CONNECTED -> if (currentSong != null && goPreferences.isHeadsetPlugEnabled) {
                             resumeMediaPlayer()
                         }
 

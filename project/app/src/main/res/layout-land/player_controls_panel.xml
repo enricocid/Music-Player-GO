@@ -100,12 +100,12 @@
                     app:srcCompat="@drawable/ic_queue_music" />
 
                 <ImageButton
-                    android:id="@+id/loved_songs_button"
+                    android:id="@+id/favorites_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="?android:attr/actionBarItemBackground"
-                    android:contentDescription="@string/loved_songs"
+                    android:contentDescription="@string/favorites"
                     android:padding="8dp" />
             </LinearLayout>
 

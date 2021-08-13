@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.R
 
 
-class ItemSwipeCallback(private val ctx: Context, private val isQueueDialog: Boolean, private val isLovedDialog: Boolean, private val onSwipedAction: (viewHolder: RecyclerView.ViewHolder, direction: Int) -> Unit) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
+class ItemSwipeCallback(private val ctx: Context, private val isQueueDialog: Boolean, private val isFavoritesDialog: Boolean, private val onSwipedAction: (viewHolder: RecyclerView.ViewHolder, direction: Int) -> Unit) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
 
     private val red = ContextCompat.getColor(ctx, R.color.red)
 
@@ -22,12 +22,12 @@ class ItemSwipeCallback(private val ctx: Context, private val isQueueDialog: Boo
     }
 
     private val secondIcon = ContextCompat.getDrawable(
-            ctx,
-            if (isQueueDialog || isLovedDialog) {
-                R.drawable.ic_delete
-            } else {
-                R.drawable.ic_favorite
-            }
+        ctx,
+        if (isQueueDialog || isFavoritesDialog) {
+            R.drawable.ic_delete
+        } else {
+            R.drawable.ic_favorite
+        }
     ).apply {
         this?.mutate()?.setTint(red)
     }
@@ -43,9 +43,9 @@ class ItemSwipeCallback(private val ctx: Context, private val isQueueDialog: Boo
     private var background = secondColor
 
     override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+        target: RecyclerView.ViewHolder
     ): Boolean = false
 
     override fun onSwiped(
@@ -64,7 +64,7 @@ class ItemSwipeCallback(private val ctx: Context, private val isQueueDialog: Boo
 
         when {
             dX > 0 -> {
-                if (isQueueDialog && !isLovedDialog) {
+                if (isQueueDialog && !isFavoritesDialog) {
                     firstIconAlt
                 } else {
                     background = secondColor
@@ -78,10 +78,10 @@ class ItemSwipeCallback(private val ctx: Context, private val isQueueDialog: Boo
 
                     icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
                     background.setBounds(
-                            itemView.left,
-                            itemView.top,
-                            itemView.left + dX.toInt(),
-                            itemView.bottom
+                        itemView.left,
+                        itemView.top,
+                        itemView.left + dX.toInt(),
+                        itemView.bottom
                     )
                     background.draw(c)
                     icon.draw(c)
@@ -101,10 +101,10 @@ class ItemSwipeCallback(private val ctx: Context, private val isQueueDialog: Boo
                     icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
 
                     background.setBounds(
-                            itemView.right + dX.toInt(),
-                            itemView.top,
-                            itemView.right,
-                            itemView.bottom
+                        itemView.right + dX.toInt(),
+                        itemView.top,
+                        itemView.right,
+                        itemView.bottom
                     )
                     background.draw(c)
                     icon.draw(c)

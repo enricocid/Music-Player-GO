@@ -40,7 +40,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
-            android:contentDescription="@string/loved_songs_save_time"
+            android:contentDescription="@string/favorites_save_time"
             android:padding="8dp"
             app:srcCompat="@drawable/ic_save_time" />
 
@@ -62,7 +62,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
-            android:contentDescription="@string/loved_song_add"
+            android:contentDescription="@string/favorite_add"
             android:padding="8dp"
             app:srcCompat="@drawable/ic_favorite" />
 

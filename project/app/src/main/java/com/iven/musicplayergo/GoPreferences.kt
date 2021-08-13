@@ -17,7 +17,7 @@ class GoPreferences(context: Context) {
     private val prefsLatestVolume = context.getString(R.string.latest_volume_pref)
     private val prefsLatestPlaybackSpeed = context.getString(R.string.latest_playback_speed_pref)
     private val prefsLatestPlayedSong = context.getString(R.string.latest_played_song_pref)
-    private val prefsLovedSongs = context.getString(R.string.loved_songs_pref)
+    private val prefsFavorites = context.getString(R.string.favorites_pref)
 
     private val prefsTheme = context.getString(R.string.theme_pref)
     private val prefsThemeDef = context.getString(R.string.theme_pref_auto)
@@ -56,8 +56,8 @@ class GoPreferences(context: Context) {
     // active fragments type
     private val typeActiveTabs = Types.newParameterizedType(List::class.java, String::class.java)
 
-    //loved songs is a list of Music
-    private val typeLovedSongs = Types.newParameterizedType(List::class.java, Music::class.java)
+    // favorites is a list of Music
+    private val typeFavorites = Types.newParameterizedType(List::class.java, Music::class.java)
 
     var latestVolume: Int
         get() = mPrefs.getInt(prefsLatestVolume, 100)
@@ -85,12 +85,12 @@ class GoPreferences(context: Context) {
             SavedEqualizerSettings::class.java
         )
 
-    var lovedSongs: List<Music>?
+    var favorites: List<Music>?
         get() = getObjectForType(
-            prefsLovedSongs,
-            typeLovedSongs
+            prefsFavorites,
+            typeFavorites
         )
-        set(value) = putObjectForType(prefsLovedSongs, value, typeLovedSongs)
+        set(value) = putObjectForType(prefsFavorites, value, typeFavorites)
 
     var theme
         get() = mPrefs.getString(prefsTheme, prefsThemeDef)

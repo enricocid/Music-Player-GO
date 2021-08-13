@@ -15,12 +15,12 @@
     <string name="queue_song_remove">%1s kuyruktan kaldırılacak. Devam edilsin mi\?</string>
     <string name="queue_songs_clear">Kuyruk temizlenecek. Devam et?</string>
     <string name="error_no_queue">Kuyrukta şarkı yok.</string>
-    <string name="loved_songs">Favori şarkılar</string>
-    <string name="loved_song_added">%1s (%2s) favori şarkılara eklendi</string>
-    <string name="loved_song_remove">%1s (%2s) favori şarkılardan silinecek. Devam et?</string>
-    <string name="loved_songs_clear">Favori şarkılar temizlenecek. Devam et?</string>
-    <string name="loved_song_add">Favori şarkılara eklendi</string>
-    <string name="error_no_loved_songs">Favori şarkı bulunamadı!</string>
+    <string name="favorites">Favori şarkılar</string>
+    <string name="favorite_added">%1s (%2s) favori şarkılara eklendi</string>
+    <string name="favorite_remove">%1s (%2s) favori şarkılardan silinecek. Devam et?</string>
+    <string name="favorites_clear">Favori şarkılar temizlenecek. Devam et?</string>
+    <string name="favorite_add">Favori şarkılara eklendi</string>
+    <string name="error_no_favorites">Favori şarkı bulunamadı!</string>
     <string name="perm_rationale">Music Player GO\'nun müzik çalmak için dosyalarınıza erişmesi gerekiyor.</string>
     <string name="error_no_browser">Web tarayıcısı bulunamadı.</string>
     <string name="error_bad_id">Önce bir şarkı çal.</string>
@@ -78,7 +78,7 @@
     <string name="equalizer_bb">Bas güçlendirme</string>
     <string name="equalizer">Dengeleyici</string>
     <string name="albums">Albümler</string>
-    <string name="loved_songs_save_time">Şarkı konumunu kaydet</string>
+    <string name="favorites_save_time">Şarkı konumunu kaydet</string>
     <string name="open_details_fragment">Sanatçı/klasör ayrıntılarını aç</string>
     <string name="content_repeat">Tekrar seçeneklerini etkinleştir/devre dışı bırak</string>
     <string name="content_skip_next">Sonraki şarkıya geç</string>

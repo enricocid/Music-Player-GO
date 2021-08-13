@@ -15,12 +15,12 @@
     <string name="queue_song_remove">%1s será removida da fila. Continuar\?</string>
     <string name="queue_songs_clear">A fila será limpa. Continuar?</string>
     <string name="error_no_queue">Nenhuma música na fila.</string>
-    <string name="loved_songs">Músicas favoritas</string>
-    <string name="loved_song_added">%1s (%2s) adicionada às músicas favoritas</string>
-    <string name="loved_song_remove">%1s (%2s) será removida das músicas favoritas. Continuar\?</string>
-    <string name="loved_songs_clear">Suas músicas favoritas serão limpas. Continuar\?</string>
-    <string name="loved_song_add">Adicionar às músicas favoritas</string>
-    <string name="error_no_loved_songs">Nenhuma música favorita encontrada!</string>
+    <string name="favorites">Músicas favoritas</string>
+    <string name="favorite_added">%1s (%2s) adicionada às músicas favoritas</string>
+    <string name="favorite_remove">%1s (%2s) será removida das músicas favoritas. Continuar\?</string>
+    <string name="favorites_clear">Suas músicas favoritas serão limpas. Continuar\?</string>
+    <string name="favorite_add">Adicionar às músicas favoritas</string>
+    <string name="error_no_favorites">Nenhuma música favorita encontrada!</string>
     <string name="perm_rationale">O Music Player GO precisa acessar seus arquivos para reproduzir músicas.</string>
     <string name="error_no_browser">Nenhum navegador encontrado.</string>
     <string name="error_bad_id">Toque uma música primeiro.</string>
@@ -78,7 +78,7 @@
     <string name="covers_pref_summary_off">Mostrar capas de álbuns</string>
     <string name="covers_pref_summary_on">Ocultar capas de álbuns</string>
     <string name="covers_pref_title">Capas de álbuns integradas</string>
-    <string name="loved_songs_save_time">Salvar a posição da música</string>
+    <string name="favorites_save_time">Salvar a posição da música</string>
     <string name="open_details_fragment">Abrir detalhes do artista/pasta</string>
     <string name="content_repeat">Ativar/desativar opções de repetição</string>
     <string name="content_skip_next">Pular para a próxima faixa</string>

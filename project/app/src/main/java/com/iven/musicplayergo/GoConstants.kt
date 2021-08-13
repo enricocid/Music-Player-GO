@@ -35,13 +35,12 @@ object GoConstants {
     const val DESCENDING_SORTING = 2
     const val TRACK_SORTING = 3
     const val TRACK_SORTING_INVERTED = 4
-    const val SHUFFLE_SORTING = 5
-    const val DATE_ADDED_SORTING = 6
-    const val DATE_ADDED_SORTING_INV = 7
-    const val ARTIST_SORTING = 8
-    const val ARTIST_SORTING_INV = 9
-    const val ALBUM_SORTING = 10
-    const val ALBUM_SORTING_INV = 11
+    const val DATE_ADDED_SORTING = 5
+    const val DATE_ADDED_SORTING_INV = 6
+    const val ARTIST_SORTING = 7
+    const val ARTIST_SORTING_INV = 8
+    const val ALBUM_SORTING = 9
+    const val ALBUM_SORTING_INV = 10
 
     // error tags
     const val TAG_NO_PERMISSION = "NO_PERMISSION"

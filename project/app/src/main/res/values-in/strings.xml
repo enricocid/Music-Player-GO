@@ -4,8 +4,8 @@
     <string name="no">Tidak</string>
     <string name="on_close_activity">Apakah Anda ingin berhenti memutar musik\?</string>
     <string name="queue_songs_clear">Antrean akan dikosongkan. Lanjutkan?</string>
-    <string name="loved_songs_clear">Favorit akan dikosongkan. Lanjutkan?</string>
-    <string name="loved_song_remove">%1s (%2s) akan dihapus dari favorit. Lanjutkan?</string>
+    <string name="favorites_clear">Favorit akan dikosongkan. Lanjutkan?</string>
+    <string name="favorite_remove">%1s (%2s) akan dihapus dari favorit. Lanjutkan?</string>
     <string name="artists">Artis</string>
     <string name="songs">Lagu</string>
     <string name="folders">Folder</string>
@@ -18,14 +18,14 @@
     <string name="shuffle_am">Shuffle semua lagu</string>
     <string name="shuffle_sa">Shuffle album yang dipilih</string>
     <string name="queue_add">Tambahkan ke antrean</string>
-    <string name="loved_song_add">Tambahkan ke favorit</string>
+    <string name="favorite_add">Tambahkan ke favorit</string>
     <string name="filter_popup_title">Sembunyikan</string>
     <string name="queue">Antrean</string>
     <string name="queue_song_add">%1s ditambahkan ke antrean!</string>
     <string name="queue_song_remove">%1s akan dihapus dari antrean. Lanjutkan?</string>
-    <string name="loved_songs">Favorit</string>
-    <string name="loved_song_added">%1s (%2s) ditambahkan ke favorit</string>
-    <string name="error_no_loved_songs">Tidak ada lagu favorit yang ditemukan!</string>
+    <string name="favorites">Favorit</string>
+    <string name="favorite_added">%1s (%2s) ditambahkan ke favorit</string>
+    <string name="error_no_favorites">Tidak ada lagu favorit yang ditemukan!</string>
     <string name="error_no_music">Musik tidak ditemukan :(</string>
     <string name="error_not_ready">Tidak bisa memuat pustaka musik! :( Mungkin disebabkan oleh kartu sd yang tidak lagi terpasang dan memaksa MediaStore Android membangun ulang basis datanya. Silakan coba lagi nanti.</string>
     <string name="error_unknown_unsupported">Telah terjadi kesalahan! :( Mungkin format tidak didukung atau folder tidak bisa diakses (bukan kesalahan aplikasi!).</string>
@@ -70,7 +70,7 @@
     <string name="covers_pref_title">Kover album tersemat</string>
     <string name="equalizer_v">Audio surround</string>
     <string name="equalizer_bb">Penguat bas</string>
-    <string name="equalizer">Equalizer</string>
+    <string name="equalizer">Ekualiser</string>
     <string name="albums">Album</string>
     <string name="eq_pref_note_summary">Catatan: Equalizer sistem akan dipilih kecuali Anda menonaktifkan \"equalizer sistem\" dari pengaturan sistem. :)</string>
     <string name="on_list_ended_pref_title">Saat daftar lagu berakhir …</string>
@@ -78,7 +78,7 @@
     <string name="error_list_ended">Daftar telah berakhir.</string>
     <string name="fast_seeking_actions_pref_summary_off">Laju lagu dinonaktifkan</string>
     <string name="fast_seeking_actions_pref_summary_on">Laju lagu diaktifkan</string>
-    <string name="loved_songs_save_time">Simpan posisi lagu</string>
+    <string name="favorites_save_time">Simpan posisi lagu</string>
     <string name="open_details_fragment">Buka detail artis/folder</string>
     <string name="content_repeat">Aktifkan/nonaktifkan opsi pengulangan</string>
     <string name="content_skip_next">Lewati ke lagu selanjutnya</string>

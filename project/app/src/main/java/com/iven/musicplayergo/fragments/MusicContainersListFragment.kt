@@ -111,37 +111,37 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
                 if (sLaunchedByAlbumView) {
                     withItem<String, ContainersAlbumViewHolder>(R.layout.containers_album_item) {
-                        onBind(::ContainersAlbumViewHolder) { _, item ->
+                        onBind(::ContainersAlbumViewHolder) { _, album ->
                             // ContainersAlbumViewHolder is `this` here
                             if (goPreferences.isCovers) {
-                                val uri = mMusicViewModel.deviceMusicByAlbum?.get(item)?.get(0)?.albumId?.toAlbumArtURI()
+                                val uri = mMusicViewModel.deviceMusicByAlbum?.get(album)?.get(0)?.albumId?.toAlbumArtURI()
                                 albumCover.load(uri)
                             } else {
                                 albumCover.setImageResource(R.drawable.album_art)
                             }
 
-                            title.text = item
-                            subtitle.text = getItemsSubtitle(item)
+                            title.text = album
+                            subtitle.text = getItemsSubtitle(album)
                         }
 
                         onClick {
-                            respondToTouch(false, item, null)
+                            respondToTouch(isLongClick = false, item, null)
                         }
 
                         onLongClick { index ->
-                            respondToTouch(true, item, rv.findViewHolderForAdapterPosition(index)?.itemView)
+                            respondToTouch(isLongClick = true, item, rv.findViewHolderForAdapterPosition(index)?.itemView)
                         }
                     }
                 } else {
                     withItem<String, GenericViewHolder>(R.layout.generic_item) {
-                        onBind(::GenericViewHolder) { _, item ->
+                        onBind(::GenericViewHolder) { _, artistOrFolder ->
                             // GenericViewHolder is `this` here
-                            title.text = item
-                            subtitle.text = getItemsSubtitle(item)
+                            title.text = artistOrFolder
+                            subtitle.text = getItemsSubtitle(artistOrFolder)
                         }
 
                         onClick {
-                            respondToTouch(false, item, null)
+                            respondToTouch(isLongClick = false, item, null)
                         }
 
                         onLongClick { index ->
@@ -345,7 +345,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                     }
                 }
                 handleIndicatorFastScrollerViewVisibility()
-                setupArtistsRecyclerViewPadding(false)
+                setupArtistsRecyclerViewPadding(forceNoPadding = false)
             }
         }
     }
@@ -376,7 +376,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
                 handleIndicatorFastScrollerViewVisibility()
 
-                setupArtistsRecyclerViewPadding(false)
+                setupArtistsRecyclerViewPadding(forceNoPadding = false)
 
                 setListDataSource(mList)
 

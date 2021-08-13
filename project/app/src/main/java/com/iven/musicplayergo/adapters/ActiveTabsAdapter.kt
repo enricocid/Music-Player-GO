@@ -96,9 +96,9 @@ class ActiveTabsAdapter(private val ctx: Context) :
                     }
                     if (mActiveItems.size < 2) {
                         Toast.makeText(context, R.string.active_fragments_pref_warning, Toast.LENGTH_LONG)
-                                .show()
+                            .show()
                         mActiveItems.add(toggledItem)
-                        manageTabStatus(true, tabDragHandle, tabText, tabImageButton)
+                        manageTabStatus(selected = true, tabDragHandle, tabText, tabImageButton)
                     }
                 }
             }
@@ -106,18 +106,18 @@ class ActiveTabsAdapter(private val ctx: Context) :
     }
 
     private fun manageTabStatus(
-        condition: Boolean,
+        selected: Boolean,
         dragHandle: ImageView,
         textView: TextView,
         icon: ImageView
     ) {
-        icon.isSelected = condition
-        val iconColor = if (condition) {
+        icon.isSelected = selected
+        val iconColor = if (selected) {
             ThemeHelper.resolveThemeAccent(ctx)
         } else {
             mDisabledColor
         }
-        val textColor = if (condition) {
+        val textColor = if (selected) {
             mDefaultTextColor
         } else {
             mDisabledColor

@@ -89,9 +89,9 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             .addAction(getNotificationAction(GoConstants.NEXT_ACTION))
             .addAction(getNotificationAction(getSecondAdditionalAction()))
             .setStyle(
-                    MediaStyle()
-                            .setMediaSession(playerService.getMediaSession().sessionToken)
-                            .setShowActionsInCompactView(1, 2, 3)
+                MediaStyle()
+                    .setMediaSession(playerService.getMediaSession().sessionToken)
+                    .setShowActionsInCompactView(1, 2, 3)
             )
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
@@ -141,7 +141,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     fun updateNotificationContent(onDone: (() -> Unit)? = null) {
         val mediaPlayerHolder = playerService.mediaPlayerHolder
 
-        mediaPlayerHolder.currentSong.first?.let { song ->
+        mediaPlayerHolder.currentSong?.let { song ->
             mNotificationBuilder
                 .setContentText(song.artist)
                 .setContentTitle(

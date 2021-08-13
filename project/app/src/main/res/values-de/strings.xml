@@ -47,14 +47,14 @@
     <string name="error_unknown_unsupported">Etwas ging schief. :( Vielleicht wird das gewählte Format nicht unterstützt oder der Zugriff auf den Ordner ist nicht möglich (Nicht die Schuld der Anwendung!).</string>
     <string name="error_not_ready">Es gab ein Problem beim Laden der Musikbibliothek. Dies kann daran liegen, dass die SD-Karte ausgeworfen wurde, was dazu führt, dass die Datenbank des MediaStores von Android neu aufgebaut werden muss. Lösung: Versuchen Sie es später erneut.</string>
     <string name="error_no_music">Keine Musik gefunden :(</string>
-    <string name="error_no_loved_songs">Keine Lieblingslieder gefunden!</string>
-    <string name="loved_song_added">%1s (2%2s) den Lieblingsliedern zugefügt</string>
-    <string name="loved_songs">Lieblingslieder</string>
+    <string name="error_no_favorites">Keine Lieblingslieder gefunden!</string>
+    <string name="favorite_added">%1s (2%2s) den Lieblingsliedern zugefügt</string>
+    <string name="favorites">Lieblingslieder</string>
     <string name="queue_song_remove">%1s wird aus der Warteschlange entfernt. Fortfahren\?</string>
     <string name="queue_song_add">%1s zur Warteschlange hinzugefügt!</string>
     <string name="queue">Warteschlange</string>
     <string name="filter_popup_title">Ausblenden</string>
-    <string name="loved_song_add">Zu den Lieblingsliedern hinzufügen</string>
+    <string name="favorite_add">Zu den Lieblingsliedern hinzufügen</string>
     <string name="queue_add">Zur Warteschlange hinzufügen</string>
     <string name="shuffle_sa">Gewähltes Album zufällig wiedergeben</string>
     <string name="shuffle_am">Alle Lieder zufällig wiedergeben</string>
@@ -70,8 +70,8 @@
     <string name="songs">Lieder</string>
     <string name="albums">Alben</string>
     <string name="artists">Künstler</string>
-    <string name="loved_song_remove">%1s (%2s) wird von der Liste der Lieblingslieder gelöscht. Fortfahren\?</string>
-    <string name="loved_songs_clear">Lieblingslieder werden gelöscht. Fortfahren\\\?</string>
+    <string name="favorite_remove">%1s (%2s) wird von der Liste der Lieblingslieder gelöscht. Fortfahren\?</string>
+    <string name="favorites_clear">Lieblingslieder werden gelöscht. Fortfahren\\\?</string>
     <string name="queue_songs_clear">Warteschlange wird geleert. Fortfahren\?</string>
     <string name="on_close_activity">Wollen Sie die Wiedergabe stoppen\?</string>
     <string name="eq_pref_note_summary">Hinweis: Der systemweite Equalizer wird bevorzugt verwendet, es sei denn du deaktivierst die App \"System Equalizer\" in den Systemeinstellungen. :)</string>
@@ -88,4 +88,15 @@
     <string name="sorting_pref_artist">Nach Künstler A-Z</string>
     <string name="sorting_pref_date_added_inv">Ältestes Datum zuerst</string>
     <string name="sorting_pref_date_added">Neuestes Datum zuerst</string>
+    <string name="playback_pref_summary_off">Gewählte Wiedergabegeschwindigkeit beibehalten</string>
+    <string name="playback_pref_summary_on">Ausgewählte Wiedergabegeschwindigkeit nicht beibehalten</string>
+    <string name="open_details_fragment">Details des Künstlers/Ordners öffnen</string>
+    <string name="content_repeat">Wiederholungsoptionen aktivieren/deaktivieren</string>
+    <string name="content_skip_next">Zum nächsten Titel springen</string>
+    <string name="content_play">Abspielen/pausieren</string>
+    <string name="content_skip_prev">Zum vorherigen Titel springen</string>
+    <string name="sorting_pref_album_inv">Nach Album Z-A</string>
+    <string name="sorting_pref_album">Nach Album A-Z</string>
+    <string name="favorites_save_time">Liedposition speichern</string>
+    <string name="delete">Löschen</string>
 </resources>

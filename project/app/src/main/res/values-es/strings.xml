@@ -15,13 +15,13 @@
     <string name="queue_song_remove">%1s se eliminará de la cola de reproducción. ¿Desea continuar\?</string>
     <string name="queue_songs_clear">Se limpiará la cola de reproducción. ¿Continuar?</string>
     <string name="error_no_queue">No hay canciones en la cola de reproducción.</string>
-    <string name="loved_songs">Canciones favoritas</string>
-    <string name="loved_song_added">%1s (%2s) agredada a canciones favoritas</string>
-    <string name="loved_song_remove">%1s (%2s) será removida de las canciones favoritas. ¿Continuar?</string>
-    <string name="loved_songs_clear">Se limpiará la lista de canciones favoritas. ¿Continuar?</string>
-    <string name="loved_song_add">Agregar a canciones favoritas</string>
+    <string name="favorites">Canciones favoritas</string>
+    <string name="favorite_added">%1s (%2s) agredada a canciones favoritas</string>
+    <string name="favorite_remove">%1s (%2s) será removida de las canciones favoritas. ¿Continuar?</string>
+    <string name="favorites_clear">Se limpiará la lista de canciones favoritas. ¿Continuar?</string>
+    <string name="favorite_add">Agregar a canciones favoritas</string>
     <string name="filter_popup_title">Ocultar</string>
-    <string name="error_no_loved_songs">!No canciones favoritas!</string>
+    <string name="error_no_favorites">!No canciones favoritas!</string>
     <string name="perm_rationale">Music Player GO necesita acceso a tus archivos para reproducir música.</string>
     <string name="error_no_browser">No se encontró un navegador.</string>
     <string name="error_bad_id">Primero reproduzca una canción.</string>
@@ -95,5 +95,5 @@
     <string name="sorting_pref_artist">Por artista A-Z</string>
     <string name="sorting_pref_date_added">Fecha más reciente primero</string>
     <string name="sorting_pref_date_added_inv">Fecha más antigua primero</string>
-    <string name="loved_songs_save_time">Guardar la posición de la canción</string>
+    <string name="favorites_save_time">Guardar la posición de la canción</string>
 </resources>

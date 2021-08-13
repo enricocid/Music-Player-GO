@@ -22,23 +22,23 @@ import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.UIControlInterface
 
 
-class LovedSongsAdapter(
+class FavoritesAdapter(
     private val activity: Activity,
-    private val lovedSongsDialog: MaterialDialog,
+    private val FavoritesDialog: MaterialDialog,
     private val mediaPlayerHolder: MediaPlayerHolder
 ) :
-    RecyclerView.Adapter<LovedSongsAdapter.LoveHolder>() {
+    RecyclerView.Adapter<FavoritesAdapter.LoveHolder>() {
 
-    private var mLovedSongs = goPreferences.lovedSongs?.toMutableList()
+    private var mFavorites = goPreferences.favorites?.toMutableList()
     private val mUiControlInterface = activity as UIControlInterface
     private val mMediaControlInterface = activity as MediaControlInterface
 
-    fun swapSongs(lovedSongs: MutableList<Music>?) {
-        mLovedSongs = lovedSongs
+    fun swapSongs(favorites: MutableList<Music>?) {
+        mFavorites = favorites
         notifyDataSetChanged()
-        mUiControlInterface.onLovedSongsUpdate(false)
-        if (mLovedSongs?.isEmpty()!!) {
-            lovedSongsDialog.dismiss()
+        mUiControlInterface.onFavoritesUpdated(clear = false)
+        if (mFavorites?.isEmpty()!!) {
+            FavoritesDialog.dismiss()
         }
     }
 
@@ -53,17 +53,17 @@ class LovedSongsAdapter(
     }
 
     override fun getItemCount(): Int {
-        return mLovedSongs?.size!!
+        return mFavorites?.size!!
     }
 
     override fun onBindViewHolder(holder: LoveHolder, position: Int) {
-        holder.bindItems(mLovedSongs?.get(holder.absoluteAdapterPosition))
+        holder.bindItems(mFavorites?.get(holder.absoluteAdapterPosition))
     }
 
 
     inner class LoveHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindItems(lovedSong: Music?) {
+        fun bindItems(favorite: Music?) {
 
             val title = itemView.findViewById<TextView>(R.id.title)
             val duration = itemView.findViewById<TextView>(R.id.duration)
@@ -71,28 +71,25 @@ class LovedSongsAdapter(
 
             val displayedTitle =
                 if (goPreferences.songsVisualization != GoConstants.TITLE) {
-                    lovedSong?.displayName?.toFilenameWithoutExtension()
+                    favorite?.displayName?.toFilenameWithoutExtension()
                 } else {
-                    lovedSong?.title
+                    favorite?.title
                 }
             title.text = displayedTitle
             duration.text =
-                    DialogHelper.computeDurationText(activity, lovedSong)
+                    DialogHelper.computeDurationText(activity, favorite)
 
             subtitle.text =
-                activity.getString(R.string.artist_and_album, lovedSong?.artist, lovedSong?.album)
+                activity.getString(R.string.artist_and_album, favorite?.artist, favorite?.album)
 
             with(itemView) {
                 setOnClickListener {
-                    mediaPlayerHolder.isSongFromLovedSongs =
-                        Pair(true, lovedSong?.startFrom!!)
                     (activity as MediaControlInterface).onAddAlbumToQueue(
-                        mLovedSongs,
-                        Pair(false, lovedSong),
-                        isLovedSongs = true,
-                        isShuffleMode = false,
-                        clearShuffleMode = true,
-                        mediaPlayerHolder.launchedBy
+                        favorite,
+                        null,
+                        clearQueue = false,
+                        mediaPlayerHolder.launchedBy,
+                        playFrom = true
                     )
                 }
                 setOnLongClickListener {
@@ -107,7 +104,7 @@ class LovedSongsAdapter(
         adapterPosition: Int,
         itemView: View?
     ) {
-        mLovedSongs?.get(adapterPosition)?.let { song ->
+        mFavorites?.get(adapterPosition)?.let { song ->
             itemView?.let { view ->
 
                 PopupMenu(activity, view).apply {
@@ -120,7 +117,7 @@ class LovedSongsAdapter(
 
                     setOnMenuItemClickListener { menuItem ->
                         when (menuItem.itemId) {
-                            R.id.loved_songs_delete -> performLovedSongDeletion(adapterPosition, false)
+                            R.id.favorite_delete -> performFavoriteDeletion(adapterPosition, isSwipe = false)
                             else -> mMediaControlInterface.onAddToQueue(song, song.launchedBy)
                         }
                         return@setOnMenuItemClickListener true
@@ -131,8 +128,8 @@ class LovedSongsAdapter(
         }
     }
 
-    fun addLovedSongToQueue(adapterPosition: Int) {
-        mLovedSongs?.get(adapterPosition)?.let { song ->
+    fun addFavoriteToQueue(adapterPosition: Int) {
+        mFavorites?.get(adapterPosition)?.let { song ->
             mMediaControlInterface.onAddToQueue(
                 song,
                 song.launchedBy
@@ -140,12 +137,12 @@ class LovedSongsAdapter(
         }
     }
 
-    fun performLovedSongDeletion(position: Int, isSwipe: Boolean) {
-        mLovedSongs?.get(position).let { song ->
-            DialogHelper.showDeleteLovedSongDialog(
+    fun performFavoriteDeletion(position: Int, isSwipe: Boolean) {
+        mFavorites?.get(position).let { song ->
+            DialogHelper.showDeleteFavoriteDialog(
                 activity,
                 song,
-                this@LovedSongsAdapter,
+                this@FavoritesAdapter,
                 Pair(isSwipe, position)
             )
         }

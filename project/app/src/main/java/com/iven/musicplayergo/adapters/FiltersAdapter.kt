@@ -49,23 +49,23 @@ class FiltersAdapter(val activity: Activity) :
 
     inner class CheckableItemsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindItems(item: String?) {
+        fun bindItems(itemFilter: String?) {
 
             itemView.run {
 
                 val checkBox = findViewById<MaterialCheckBox>(R.id.checkbox)
                 val filter = findViewById<TextView>(R.id.filter).apply {
-                    text = item
+                    text = itemFilter
                 }
 
                 setOnClickListener {
                     checkBox.isChecked = !checkBox.isChecked
                     if (checkBox.isChecked) {
                         filter.setTextColor(mDefaultTextColor)
-                        mItemsToRemove.remove(item)
+                        mItemsToRemove.remove(itemFilter)
                     } else {
                         filter.setTextColor(mDisabledColor)
-                        mItemsToRemove.add(item!!)
+                        mItemsToRemove.add(itemFilter!!)
                     }
                 }
             }

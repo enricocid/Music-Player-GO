@@ -19,7 +19,6 @@ import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
-import com.iven.musicplayergo.helpers.MusicOrgHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.MediaControlInterface
@@ -86,9 +85,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                                 mSorting,
                                 mMusicViewModel.deviceMusicFiltered
                             )
-
                         setMusicDataSource(mAllMusic)
-
                         finishSetup()
                     }
                 })
@@ -105,33 +102,31 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 withDataSource(mDataSource)
 
                 withItem<Music, SongsViewHolder>(R.layout.music_item) {
-                    onBind(::SongsViewHolder) { _, item ->
+                    onBind(::SongsViewHolder) { _, song ->
                         // GenericViewHolder is `this` here
 
-                        val formattedDuration = item.duration.toFormattedDuration(
+                        val formattedDuration = song.duration.toFormattedDuration(
                             isAlbum = false,
                             isSeekBar = false
                         )
 
-                        duration.text = getString(R.string.duration_date_added, formattedDuration, item.dateAdded.toFormattedDate())
+                        duration.text = getString(R.string.duration_date_added, formattedDuration, song.dateAdded.toFormattedDate())
 
                         title.text = if (goPreferences.songsVisualization != GoConstants.TITLE) {
-                            item.displayName.toFilenameWithoutExtension()
+                            song.displayName.toFilenameWithoutExtension()
                         } else {
-                            item.title
+                            song.title
                         }
+
                         subtitle.text =
-                            getString(R.string.artist_and_album, item.artist, item.album)
+                            getString(R.string.artist_and_album, song.artist, song.album)
                     }
 
                     onClick {
+
                         mMediaControlInterface.onSongSelected(
                             item,
-                            MusicOrgHelper.getAlbumSongs(
-                                item.artist,
-                                item.album,
-                                mMusicViewModel.deviceAlbumsByArtist
-                            ),
+                            mAllMusic,
                             GoConstants.ARTIST_VIEW
                         )
                     }
@@ -166,9 +161,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
             _binding.searchToolbar.let { stb ->
 
                 stb.inflateMenu(R.menu.menu_music_search)
-
                 stb.overflowIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_sort)
-
                 stb.setNavigationOnClickListener {
                     mUIControlInterface.onCloseActivity()
                 }
@@ -257,7 +250,6 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 }
 
                 handleIndicatorFastScrollerViewVisibility()
-
                 setupMusicRecyclerViewPadding(false)
             }
         }
