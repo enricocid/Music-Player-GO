@@ -1175,7 +1175,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             openDetailsFragment(
                 this,
                 mMediaPlayerHolder.launchedBy,
-                null
+                mMediaPlayerHolder.currentSong?.id
             )
         }
     }
