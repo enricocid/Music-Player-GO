@@ -289,7 +289,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         mSongsList?.size
                     )
                 } else {
-
                     val firstSong = mSongsList?.get(0)
                     selectedAlbumViewTitle.text = mSelectedArtistOrFolder
                     selectedAlbumViewTitle.isSelected = true
@@ -588,7 +587,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         findItem(R.id.action_shuffle_am).isEnabled = mSongsList?.size!! >= 2
                         findItem(R.id.action_shuffle_sa).isEnabled = false
                         findItem(R.id.sorting).isEnabled =
-                                mSongsList?.size!! >= 2
+                            mSongsList?.size!! >= 2
                     }
                     else -> {
                         findItem(R.id.action_shuffle_am).isEnabled = mSongsList?.size!! >= 2

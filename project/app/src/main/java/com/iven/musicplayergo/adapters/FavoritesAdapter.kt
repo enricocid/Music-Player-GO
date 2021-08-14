@@ -79,7 +79,7 @@ class FavoritesAdapter(
                 }
             title.text = displayedTitle
             duration.text =
-                    DialogHelper.computeDurationText(activity, favorite)
+                DialogHelper.computeDurationText(activity, favorite)
 
             subtitle.text =
                 activity.getString(R.string.artist_and_album, favorite?.artist, favorite?.album)

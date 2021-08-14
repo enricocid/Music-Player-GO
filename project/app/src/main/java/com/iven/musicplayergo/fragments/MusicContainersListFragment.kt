@@ -313,24 +313,24 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                 if (sIsFastScroller) {
 
                     _binding.fastscroller.setupWithRecyclerView(
-                            this,
-                            { position ->
-                                // Return a text tab_indicator
-                                mList?.get(position)?.run {
-                                    getFastScrollerItem(requireActivity())
-                                }
-                            }, showIndicator = { _, indicatorPosition, totalIndicators ->
-                        // Hide every other indicator
-                        if (ThemeHelper.isDeviceLand(resources)) {
-                            indicatorPosition % 2 == 0
-                        } else {
-                            if (totalIndicators >= 30) {
+                        this,
+                        { position ->
+                            // Return a text tab_indicator
+                            mList?.get(position)?.run {
+                                getFastScrollerItem(requireActivity())
+                            }
+                        }, showIndicator = { _, indicatorPosition, totalIndicators ->
+                            // Hide every other indicator
+                            if (ThemeHelper.isDeviceLand(resources)) {
                                 indicatorPosition % 2 == 0
                             } else {
-                                true
+                                if (totalIndicators >= 30) {
+                                    indicatorPosition % 2 == 0
+                                } else {
+                                    true
+                                }
                             }
-                        }
-                    })
+                        })
 
                     _binding.fastscrollerThumb.setupWithFastScroller(_binding.fastscroller)
                     _binding.fastscroller.useDefaultScroller = false

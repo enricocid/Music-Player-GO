@@ -278,7 +278,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     if (goPreferences.isCovers) {
                         albumId?.waitForCover(playerService) { bmp ->
                             putBitmap(METADATA_KEY_ALBUM_ART, bmp)
-
                             playerService.getMediaSession().setMetadata(build())
                         }
                     } else {

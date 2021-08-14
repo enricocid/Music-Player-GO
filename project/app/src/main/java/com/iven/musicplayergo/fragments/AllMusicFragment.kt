@@ -208,28 +208,27 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 if (sIsFastScroller) {
 
                     _binding.fastscroller.setupWithRecyclerView(
-                            this,
-                            { position ->
-                                // Return a text tab_indicator
-                                val song = mAllMusic?.get(position)
-                                val stringToProcess = if (goPreferences.songsVisualization != GoConstants.TITLE) {
-                                    song?.displayName
-                                } else {
-                                    song?.title
-                                }
-                                stringToProcess?.getFastScrollerItem(requireActivity())
-                            }, showIndicator = { _, indicatorPosition, totalIndicators ->
-                        // Hide every other indicator
-                        if (ThemeHelper.isDeviceLand(resources)) {
-                            indicatorPosition % 2 == 0
-                        } else {
-                            if (totalIndicators >= 30) {
+                        this,
+                        { position ->
+                            // Return a text tab_indicator
+                            val song = mAllMusic?.get(position)
+                            val stringToProcess = if (goPreferences.songsVisualization != GoConstants.TITLE) {
+                                song?.displayName
+                            } else {
+                                song?.title
+                            }
+                            stringToProcess?.getFastScrollerItem(requireActivity())
+                        }, showIndicator = { _, indicatorPosition, totalIndicators ->
+                            if (ThemeHelper.isDeviceLand(resources)) {
                                 indicatorPosition % 2 == 0
                             } else {
-                                true
+                                if (totalIndicators >= 30) {
+                                    indicatorPosition % 2 == 0
+                                } else {
+                                    true
+                                }
                             }
-                        }
-                    })
+                        })
 
                     _binding.fastscrollerThumb.setupWithFastScroller(
                         _binding.fastscroller
