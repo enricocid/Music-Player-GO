@@ -125,7 +125,7 @@ object ThemeHelper {
         val accentName = context.resources.getResourceEntryName(accent).replace(
             context.getString(R.string.underscore_delimiter),
             context.getString(R.string.space_delimiter)
-        ).replaceFirstChar { it.uppercase() }
+        ).replaceFirstChar(Char::uppercase)
         return context.getString(
             R.string.accent_and_hex,
             accentName,
@@ -139,7 +139,7 @@ object ThemeHelper {
         context.resources.getResourceEntryName(accent).replace(
             context.getString(R.string.underscore_delimiter),
             context.getString(R.string.space_delimiter)
-        ).replaceFirstChar { it.uppercase() }
+        ).replaceFirstChar(Char::uppercase)
 
     // Search theme from accents array of Pair, returns a Pair(theme, position)
     @JvmStatic
