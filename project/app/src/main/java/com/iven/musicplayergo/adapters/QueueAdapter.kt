@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +38,7 @@ class QueueAdapter(
         notifyItemChanged(queueSongs.indexOf(mSelectedSong))
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun swapQueueSongs(updatedQueueSongs: MutableList<Music>) {
         queueSongs = updatedQueueSongs
         notifyDataSetChanged()

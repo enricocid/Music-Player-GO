@@ -23,6 +23,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.waitForCover
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.ui.MainActivity
 
 
@@ -44,7 +45,12 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             action = playerAction
             component = ComponentName(playerService, PlayerService::class.java)
         }
-        return PendingIntent.getService(playerService, GoConstants.NOTIFICATION_INTENT_REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val flags = if (VersioningHelper.isMarshmallow()) {
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        } else {
+            PendingIntent.FLAG_UPDATE_CURRENT
+        }
+        return PendingIntent.getService(playerService, GoConstants.NOTIFICATION_INTENT_REQUEST_CODE, intent, flags)
     }
 
     private fun getFirstAdditionalAction() = if (sFastSeekingActions) {
@@ -73,9 +79,15 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         val openPlayerIntent = Intent(playerService, MainActivity::class.java)
         openPlayerIntent.flags =
             Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+
+        val flags = if (VersioningHelper.isMarshmallow()) {
+            PendingIntent.FLAG_IMMUTABLE or 0
+        } else {
+            0
+        }
         val contentIntent = PendingIntent.getActivity(
             playerService, GoConstants.NOTIFICATION_INTENT_REQUEST_CODE,
-            openPlayerIntent, 0
+            openPlayerIntent, flags
         )
 
 

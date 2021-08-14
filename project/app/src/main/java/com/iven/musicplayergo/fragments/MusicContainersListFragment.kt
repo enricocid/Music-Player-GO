@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.*
@@ -274,6 +275,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun onUpdateCoverOption() {
         _musicContainerListBinding?.artistsFoldersRv?.adapter?.notifyDataSetChanged()
     }

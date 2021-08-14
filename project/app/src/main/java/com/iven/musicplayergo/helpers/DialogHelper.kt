@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.helpers
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.text.Spanned
@@ -144,6 +145,7 @@ object DialogHelper {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @JvmStatic
     fun showFavoritesDialog(
         activity: Activity,

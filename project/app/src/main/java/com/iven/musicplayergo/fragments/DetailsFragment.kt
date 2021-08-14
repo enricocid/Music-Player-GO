@@ -1,6 +1,7 @@
 package com.iven.musicplayergo.fragments
 
 import android.animation.Animator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
@@ -88,6 +89,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private var sOpenNewDetailsFragment = false
 
+    @SuppressLint("NotifyDataSetChanged")
     fun swapSelectedSong(songId: Long?) {
         mSelectedSongId = songId
         _detailsFragmentBinding?.songsRv?.adapter?.notifyDataSetChanged()
@@ -241,6 +243,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setupViews(view: View) {
 
         if (sLaunchedByArtistView) {

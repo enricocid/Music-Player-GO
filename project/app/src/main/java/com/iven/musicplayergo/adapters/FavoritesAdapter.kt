@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.adapters
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -33,6 +34,7 @@ class FavoritesAdapter(
     private val mUiControlInterface = activity as UIControlInterface
     private val mMediaControlInterface = activity as MediaControlInterface
 
+    @SuppressLint("NotifyDataSetChanged")
     fun swapSongs(favorites: MutableList<Music>?) {
         mFavorites = favorites
         notifyDataSetChanged()
