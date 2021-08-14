@@ -27,7 +27,6 @@ class GoApp : Application(), ImageLoaderFactory {
         return ImageLoader.Builder(this)
             .diskCachePolicy(CachePolicy.DISABLED)
             .crossfade(true)
-            .error(R.drawable.album_art)
             .build()
     }
 }

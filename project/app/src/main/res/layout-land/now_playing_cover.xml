@@ -6,14 +6,17 @@
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/np_cover"
         android:layout_width="@android:dimen/thumbnail_height"
         android:layout_height="@android:dimen/thumbnail_height"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
-        android:contentDescription="@string/covers_pref_title" />
+        android:contentDescription="@string/covers_pref_title"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/ImageView.Cover"
+        app:srcCompat="@drawable/album_art" />
 
     <LinearLayout
         android:layout_width="wrap_content"

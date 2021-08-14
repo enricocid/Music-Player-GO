@@ -63,4 +63,9 @@
 
     <style name="ToolbarStyle.Subtitle" parent="@style/TextAppearance.MaterialComponents.Caption" />
 
+    <!-- Style for rounded cover ImageViews -->
+    <style name="ImageView.Cover" parent="">
+        <item name="cornerSize">8dp</item>
+    </style>
+
 </resources>

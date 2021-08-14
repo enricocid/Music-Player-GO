@@ -27,7 +27,7 @@
             android:layout_weight="1"
             android:contentDescription="@string/covers_pref_title"
             android:scaleType="centerCrop"
-            android:src="@drawable/album_art" />
+            app:srcCompat="@drawable/album_art" />
 
         <View
             android:layout_width="match_parent"

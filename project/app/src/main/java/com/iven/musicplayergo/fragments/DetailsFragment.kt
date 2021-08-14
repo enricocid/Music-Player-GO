@@ -706,9 +706,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             0
                         }
 
-                        if (goPreferences.isCovers) {
-                            loadCoverIntoTarget(itemAlbum.music?.get(0), albumCover)
-                        }
+                        loadCoverIntoTarget(itemAlbum.music?.get(0), albumCover)
                     }
 
                     onClick { index ->
@@ -763,9 +761,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private fun loadCoverIntoTarget(song: Music?, target: ImageView) {
         if (goPreferences.isCovers) {
-            target.load(song?.albumId?.toAlbumArtURI())
+            target.load(song?.albumId?.toAlbumArtURI()) {
+                error(ContextCompat.getDrawable(requireActivity(), R.drawable.album_art))
+            }
         } else {
-            target.setImageResource(R.drawable.album_art)
+            target.load(ContextCompat.getDrawable(requireActivity(), R.drawable.album_art))
         }
     }
 

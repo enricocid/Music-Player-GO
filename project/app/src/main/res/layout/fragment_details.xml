@@ -31,20 +31,15 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="0dp">
-
-            <ImageView
-                android:id="@+id/album_view_art"
-                android:layout_width="@android:dimen/thumbnail_height"
-                android:layout_height="@android:dimen/thumbnail_height"
-                android:contentDescription="@string/covers_pref_title"
-                android:src="@drawable/album_art" />
-
-        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/album_view_art"
+            android:layout_width="@android:dimen/thumbnail_height"
+            android:layout_height="@android:dimen/thumbnail_height"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/covers_pref_title"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/ImageView.Cover"
+            app:srcCompat="@drawable/album_art" />
 
         <LinearLayout
             android:layout_width="0dp"
