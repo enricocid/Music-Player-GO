@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private lateinit var mNpControlsBinding: NowPlayingControlsBinding
     private lateinit var mNpExtControlsBinding: NowPlayingExtendedControlsBinding
 
-    private var mSelectedArtistAlbumForNP: Pair<String?, Long?> = Pair("", -1)
+    private var mAlbumIdNp : Long? = -1L
 
     // Music player things
     private lateinit var mQueueDialog: MaterialDialog
@@ -516,9 +516,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         with(mPlayerControlsPanelBinding.playingSongContainer) {
             setOnClickListener { openNowPlaying() }
             setOnLongClickListener {
-                if (checkIsPlayer(showError = false) && mMediaPlayerHolder.isQueue != null) {
-                    openQueueDialog()
-                } else if (!sDetailsFragmentExpanded || sDetailsFragmentExpanded and !sEqFragmentExpanded) {
+                if (!sDetailsFragmentExpanded || sDetailsFragmentExpanded and !sEqFragmentExpanded) {
                     openPlayingArtistAlbum()
                 }
                 return@setOnLongClickListener true
@@ -1055,6 +1053,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun loadNpCover(selectedSong: Music) {
         if (goPreferences.isCovers) {
+            mAlbumIdNp = selectedSong.albumId
             mNpCoverBinding.npCover.load(selectedSong.albumId?.toAlbumArtURI()) {
                 error(ContextCompat.getDrawable(this@MainActivity, R.drawable.album_art))
             }
@@ -1065,10 +1064,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         mMediaPlayerHolder.currentSong?.let { song ->
             val selectedSongDuration = song.duration
-            if (mSelectedArtistAlbumForNP != Pair(
-                    song.artist,
-                    song.albumId
-                ) && goPreferences.isCovers && ::mNpDialog.isInitialized && mNpDialog.isShowing
+            if (mAlbumIdNp != song.albumId && goPreferences.isCovers && ::mNpDialog.isInitialized && mNpDialog.isShowing
             ) {
                 loadNpCover(song)
             }
@@ -1181,7 +1177,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         openDetailsFragment(
             artistOrFolder,
             launchedBy,
-            null
+            mMediaPlayerHolder.currentSong?.id
         )
     }
 

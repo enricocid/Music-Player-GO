@@ -823,7 +823,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 } else {
                     newPosition -= step
                 }
-                seekTo(newPosition, updatePlaybackStatus = true, restoreProgressCallBack = false)
+                seekTo(newPosition, updatePlaybackStatus = false, restoreProgressCallBack = false)
             }
         }
     }

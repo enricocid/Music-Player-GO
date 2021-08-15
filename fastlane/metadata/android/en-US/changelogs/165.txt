@@ -1,0 +1,10 @@
+Maintanance release:
+
+- UI fixes/improvements
+- Settings improvements/review
+- Notification improvements
+- Code optimizations
+- Upgrade libs/dependencies
+- Update translations (THANKS TO EVERYONE)
+
+Credits: OxygenCobalt, Drhaal, SCOTT-HAMILTON and all the translators

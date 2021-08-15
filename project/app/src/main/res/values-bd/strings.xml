@@ -9,8 +9,8 @@
     <string name="artists">শিল্পী</string>
     <string name="songs">গানগুলো</string>
     <string name="folders">ফোল্ডার</string>
-    <string name="artist_info">%1d অ্যালবাম, %2d গান</string>
-    <string name="folder_info">%1d গান</string>
+    <string name="artist_info">%1d অ্যালবাম, %2d গান</string>
+    <string name="folder_info">%1d গান</string>
     <string name="sorting_pref">শ্রেণীবিভাজন</string>
     <string name="sorting_pref_default">ডিফল্ট</string>
     <string name="sorting_pref_track">ট্র্যাক দ্বারা। ↓</string>

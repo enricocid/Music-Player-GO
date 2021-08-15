@@ -185,7 +185,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     private fun showFiltersDialog() {
 
-        MaterialDialog(requireActivity()).show {
+        MaterialDialog(requireActivity(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
             title(R.string.filter_pref_title)
 

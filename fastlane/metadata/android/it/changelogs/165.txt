@@ -1,0 +1,10 @@
+Release di manutenzione:
+
+- Miglioramenti/correzioni UI
+- Miglioramenti/revisione impostazioni
+- Miglioramenti notifica
+- Ottimizzazioni codice
+- Aggiornamento librerie/dipendenze
+- Aggiornamento traduzioni (GRAZIE A TUTTI)
+
+Ringraziamenti: OxygenCobalt, Drhaal, SCOTT-HAMILTON e tutti i traduttori

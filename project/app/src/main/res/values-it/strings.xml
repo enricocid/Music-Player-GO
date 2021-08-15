@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="yes">Si</string>
+    <string name="yes">Sì</string>
     <string name="no">No</string>
     <string name="artists">Artisti</string>
-    <string name="artist_info">%1d Album, %2d Canzoni</string>
-    <string name="folder_info">%1d Canzoni</string>
+    <string name="artist_info">%1d album, %2d canzoni</string>
+    <string name="folder_info">%1d canzoni</string>
     <string name="songs">Canzoni</string>
     <string name="shuffle_am">Mescola tutte le canzoni</string>
     <string name="shuffle_sa">Mescola l\'abum selezionato</string>
     <string name="folders">Cartelle</string>
-    <string name="albums">Albums</string>
+    <string name="albums">Album</string>
     <string name="equalizer">Equalizzatore</string>
     <string name="equalizer_bb">Potenziamento bassi</string>
     <string name="equalizer_v">Audio surround</string>
@@ -17,7 +17,7 @@
     <string name="queue_add">Aggiungi alla coda</string>
     <string name="queue_song_add">%1s aggiunta alla coda!</string>
     <string name="content_skip_prev">Vai a traccia precedente</string>
-    <string name="content_play">Play/pausa</string>
+    <string name="content_play">Riproduci/pausa</string>
     <string name="content_skip_next">Vai a traccia successiva</string>
     <string name="content_repeat">Abilita/disattiva opzioni ripeti</string>
     <string name="content_playback_speed">Velocità riproduzione</string>
@@ -29,7 +29,7 @@
     <string name="favorites">Canzoni preferite</string>
     <string name="favorite_added">%1s (%2s) aggiunta alle canzoni preferite</string>
     <string name="favorite_remove">%1s (%2s) sarà rimossa dalle canzoni preferite. Continuare?</string>
-    <string name="favorites_save_time">Salva posizione canzone</string>
+    <string name="favorites_save_time">Salva la posizione canzone</string>
     <string name="favorite_add">Aggiungi a preferiti</string>
     <string name="favorites_clear">Le canzoni preferite saranno cancellate. Continuare?</string>
     <string name="error_no_favorites">Nessuna canzone preferita trovata!</string>
@@ -37,9 +37,9 @@
     <string name="error_no_browser">Nessun web browser trovato.</string>
     <string name="error_bad_id">Magari esegui una canzone.</string>
     <string name="error_no_music">Nessuna canzone trovata :(</string>
-    <string name="error_not_ready">Non è stato possibile caricare la libreria musicale! :( Ciò è probabilmente dovuto alla scheda SD che qualche volta viene smontata, forzando il MediaStore Android a ricostruire il suo database. Riprova più tardi :)</string>
-    <string name="error_unknown_unsupported">Qualcosa è andato storto! :( Forse il formato della canzone non è supportato o la cartella non è accessibile (non dipende dall\'app!)</string>
-    <string name="error_media_buttons">Qualcosa è andato storto! :( Per favore riavvia la riproduzione dall\'app</string>
+    <string name="error_not_ready">Non è stato possibile caricare la libreria musicale! :( Ciò è probabilmente dovuto alla scheda SD che qualche volta viene smontata, forzando il MediaStore Android a ricostruire la base di dati. Riprova più tardi.</string>
+    <string name="error_unknown_unsupported">Qualcosa è andato storto! :( Forse il formato della canzone non è supportato o la cartella non è accessibile (non dipende dall\'app!).</string>
+    <string name="error_media_buttons">Qualcosa è andato storto! :( Per favore riavvia la riproduzione dall\'applicazione.</string>
     <string name="error_eq">Ooops, qualcosa è andato storto!</string>
     <string name="on_close_activity">Vuoi interrompere la riproduzione?</string>
     <string name="repeat_enabled">Ripeti 1x on.</string>
@@ -73,8 +73,8 @@
     <string name="fast_seeking_actions_pref_summary_on">Preferisci le azioni di avanzamento veloce</string>
     <string name="sorting_pref">Ordine</string>
     <string name="sorting_pref_default">Predefinito</string>
-    <string name="sorting_pref_track">Per n° traccia ↓</string>
-    <string name="sorting_pref_track_inv">Per n° traccia ↑</string>
+    <string name="sorting_pref_track">Per nº traccia ↓</string>
+    <string name="sorting_pref_track_inv">Per nº traccia ↑</string>
     <string name="sorting_pref_date_added">Data più recente</string>
     <string name="sorting_pref_date_added_inv">Data meno recente</string>
     <string name="sorting_pref_artist">Per artista A-Z</string>
@@ -98,5 +98,5 @@
     <string name="playback_pref_title">Velocità riproduzione</string>
     <string name="playback_pref_summary_on">Non mantenere la velocità riproduzione selezionata</string>
     <string name="playback_pref_summary_off">Mantieni la velocità riproduzione selezionata</string>
-    <string name="delete">Rimuovi</string>
+    <string name="delete">Elimina</string>
 </resources>
