@@ -708,10 +708,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 setupNPCoverLayout()
 
                 mNpBinding.npPlayingSongContainer.setOnClickListener {
-                    mNpDialog.dismiss()
                     mNpDialog.onDismiss {
                         openPlayingArtistAlbum()
                     }
+                    mNpDialog.dismiss()
                 }
 
                 mNpControlsBinding.npSkipPrev.setOnClickListener { skip(false) }
@@ -1267,7 +1267,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 synchronized(mMediaPlayerHolder.onOpenEqualizerCustom()) {
                     if (!sEqFragmentExpanded) {
                         mEqualizerFragment = EqFragment.newInstance()
-                        mNpDialog.dismiss()
                         mNpDialog.onDismiss {
                             sCloseDetailsFragment = !sDetailsFragmentExpanded
                             if (sAllowCommit) {
@@ -1277,6 +1276,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                                 )
                             }
                         }
+                        mNpDialog.dismiss()
                     }
                 }
             } else {
@@ -1340,12 +1340,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
             mMediaPlayerHolder.run {
 
-                if (isQueue == null) {
-                    setQueueEnabled(true)
-                }
-
                 if (clearQueue) {
                     queueSongs.clear()
+                }
+
+                if (isQueue == null) {
+                    setQueueEnabled(true)
                 }
 
                 isSingleSong?.let { song ->
@@ -1370,14 +1370,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     startSongFromQueue(song, launchedBy)
 
                     if (::mFavoritesDialog.isInitialized && mFavoritesDialog.isShowing) {
-                        mFavoritesDialog.dismiss()
                         mFavoritesDialog.onDismiss {
                             openQueueDialog()
                         }
-                        return
+                        mFavoritesDialog.dismiss()
+                    } else {
+                        openQueueDialog()
                     }
-
-                    openQueueDialog()
                 }
             }
         }
