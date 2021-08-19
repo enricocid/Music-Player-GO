@@ -22,20 +22,22 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes (https://github.com/enricocid/Music-Player-GO/pull/121) and its equalizer implementation: I learned so much about how an equalizer works
 
-- [**SCOTT-HAMILTON**](https://github.com/SCOTT-HAMILTON) for the original [media notification dark implementation](https://github.com/enricocid/Music-Player-GO/pull/308/)
-
-- [**vtkhatri**](https://github.com/vtkhatri) for the original [date added sorting](https://github.com/enricocid/Music-Player-GO/commit/fe8077b1c067a7722f2605a0b89afe7e6805311d) implementation
-
 - [**OxygenCobalti**](https://github.com/OxygenCobalt) for [image loading optimizations](https://github.com/enricocid/Music-Player-GO/pull/287)
 
 - [**Allan Nordhøy**](https://github.com/comradekingu) 
 for [strings](https://github.com/enricocid/Music-Player-GO/pull/227), [readme](https://github.com/enricocid/Music-Player-GO/pull/277) and [FAQ] (https://github.com/enricocid/Music-Player-GO/pull/278/) improvements
 
+- [**vtkhatri**](https://github.com/vtkhatri) for the original [date added sorting](https://github.com/enricocid/Music-Player-GO/commit/fe8077b1c067a7722f2605a0b89afe7e6805311d) implementation
+
+- [**Mathieu Aubin**](https://github.com/mathieu-aubin) for the readme's [GIF optimization](https://github.com/mathieu-aubin/tempgif)
+
 - [**Ricardo**](https://github.com/RickyM7) for [multiple reports](https://github.com/enricocid/Music-Player-GO/issues/220), other suggestions and testing
 
 - [**TheOtherDoctor**](https://github.com/TheOtherDoctor) for multiple reports/suggestions
 
-- [**Mathieu Aubin**](https://github.com/mathieu-aubin) for the readme's [GIF optimization](https://github.com/mathieu-aubin/tempgif)
+- [**SCOTT-HAMILTON**](https://github.com/SCOTT-HAMILTON) for the original [media notification dark implementation](https://github.com/enricocid/Music-Player-GO/pull/308/)
+
+- [**Ramón**](https://github.com/proideo) for [bug](https://github.com/enricocid/Music-Player-GO/issues/309) reporting
 
 - **Simon Gould** for having reported this [bug](https://github.com/enricocid/Music-Player-GO/commit/f95b81ce49b9f58418de4a416990ede732d9f715)
 

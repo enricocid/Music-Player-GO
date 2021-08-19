@@ -164,7 +164,6 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                 )
                 .setSubText(song.album)
                 .setColorized(true)
-                .setColor(ContextCompat.getColor(playerService, R.color.windowBackground))
                 .setSmallIcon(getNotificationSmallIcon(mediaPlayerHolder))
 
             if (goPreferences.isCovers) {
