@@ -1426,14 +1426,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
-    override fun onSongVisualizationChanged() {
-        val currentAlbumSize = mMediaPlayerHolder.getCurrentAlbumSize()
-        if (isMediaPlayerHolder && currentAlbumSize != 0 && currentAlbumSize > 1) {
-            // update current song to reflect this change
-            mMediaPlayerHolder.updateCurrentSongs()
-        }
-        if (mAllMusicFragment != null && !mAllMusicFragment?.onSongVisualizationChanged()!!) {
-            ThemeHelper.applyChanges(this)
+    override fun onSongsChanged(sortedMusic: List<Music>?) {
+        if (sortedMusic != null) {
+            mMediaPlayerHolder.updateCurrentSongs(sortedMusic)
+        } else {
+            val currentAlbumSize = mMediaPlayerHolder.getCurrentAlbumSize()
+            if (isMediaPlayerHolder && currentAlbumSize != 0 && currentAlbumSize > 1) {
+                // update current song to reflect this change
+                mMediaPlayerHolder.updateCurrentSongs(null)
+            }
+            if (mAllMusicFragment != null && !mAllMusicFragment?.onSongVisualizationChanged()!!) {
+                ThemeHelper.applyChanges(this)
+            }
         }
     }
 

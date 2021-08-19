@@ -1,5 +1,7 @@
 package com.iven.musicplayergo.ui
 
+import com.iven.musicplayergo.models.Music
+
 
 interface UIControlInterface {
     fun onAppearanceChanged(isThemeChanged: Boolean)
@@ -8,6 +10,6 @@ interface UIControlInterface {
     fun onFavoritesUpdated(clear: Boolean)
     fun onCloseActivity()
     fun onAddToFilter(stringToFilter: String?)
-    fun onSongVisualizationChanged()
+    fun onSongsChanged(sortedMusic: List<Music>?)
     fun onDenyPermission()
 }

@@ -242,13 +242,17 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
-    fun updateCurrentSongs() {
-        val sorting = if (goPreferences.songsVisualization != GoConstants.TITLE) {
-            GoConstants.ASCENDING_SORTING
+    fun updateCurrentSongs(sortedMusic: List<Music>?) {
+        mPlayingAlbumSongs = if (sortedMusic != null) {
+            sortedMusic
         } else {
-            GoConstants.TRACK_SORTING
+            val sorting = if (goPreferences.songsVisualization != GoConstants.TITLE) {
+                GoConstants.ASCENDING_SORTING
+            } else {
+                GoConstants.TRACK_SORTING
+            }
+            ListsHelper.getSortedMusicList(sorting, mPlayingAlbumSongs?.toMutableList())
         }
-        mPlayingAlbumSongs = ListsHelper.getSortedMusicList(sorting, mPlayingAlbumSongs?.toMutableList())
     }
 
     fun getCurrentAlbumSize() = mPlayingAlbumSongs?.size ?: 0

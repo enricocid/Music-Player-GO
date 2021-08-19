@@ -134,7 +134,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             getString(R.string.fast_seeking_actions_pref) -> mMediaControlInterface.onHandleNotificationUpdate(
                 true
             )
-            getString(R.string.song_visual_pref) -> mUIControlInterface.onSongVisualizationChanged()
+            getString(R.string.song_visual_pref) -> mUIControlInterface.onSongsChanged(null)
             getString(R.string.filter_pref) -> mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
         }
     }
