@@ -96,4 +96,7 @@
     <string name="sorting_pref_date_added">Fecha más reciente primero</string>
     <string name="sorting_pref_date_added_inv">Fecha más antigua primero</string>
     <string name="favorites_save_time">Guardar la posición de la canción</string>
+    <string name="sorting_pref_album_inv">Por álbum Z-A</string>
+    <string name="sorting_pref_album">Por álbum A-Z</string>
+    <string name="delete">Borrar</string>
 </resources>
