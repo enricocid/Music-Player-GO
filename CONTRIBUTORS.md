@@ -37,6 +37,8 @@ for [strings](https://github.com/enricocid/Music-Player-GO/pull/227), [readme](h
 
 - [**Mathieu Aubin**](https://github.com/mathieu-aubin) for the readme's [GIF optimization](https://github.com/mathieu-aubin/tempgif)
 
+- **Simon Gould** for having reported this [bug](https://github.com/enricocid/Music-Player-GO/commit/f95b81ce49b9f58418de4a416990ede732d9f715)
+
 - [**svgrepo.com**](https://www.svgrepo.com/) for the [compact disc](https://www.svgrepo.com/svg/181020/compact-disc-music) icon, opportunely modified (background color).
 This work is licensed under a [CC 0](https://creativecommons.org/share-your-work/public-domain/cc0/) license
 
