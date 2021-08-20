@@ -1,0 +1,3 @@
+- Fix sorting (thanks Simon)
+- Lollipop: fix notification (thanks Ramón)
+- Add Lituanian and Basque translations/update translations (thanks everyone)

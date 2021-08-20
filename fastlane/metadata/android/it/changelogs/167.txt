@@ -1,0 +1,3 @@
+- Corretto ordinamento
+- Lollipop: corretta notifica
+- Aggiunte traduzioni Lituano e Basco/aggiornate traduzioni
