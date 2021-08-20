@@ -454,7 +454,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                         mMediaPlayerHolder,
                         mMusicViewModel.deviceAlbumsByArtist
                     ),
-                    highlightedSongId
+                    highlightedSongId,
+                    mMediaPlayerHolder.currentSong?.artist == selectedArtistOrFolder
                 )
             sCloseDetailsFragment = true
             if (sAllowCommit) {
@@ -1427,16 +1428,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     override fun onSongsChanged(sortedMusic: List<Music>?) {
-        if (sortedMusic != null) {
-            mMediaPlayerHolder.updateCurrentSongs(sortedMusic)
-        } else {
-            val currentAlbumSize = mMediaPlayerHolder.getCurrentAlbumSize()
-            if (isMediaPlayerHolder && currentAlbumSize != 0 && currentAlbumSize > 1) {
-                // update current song to reflect this change
-                mMediaPlayerHolder.updateCurrentSongs(null)
-            }
-            if (mAllMusicFragment != null && !mAllMusicFragment?.onSongVisualizationChanged()!!) {
-                ThemeHelper.applyChanges(this)
+        if (isMediaPlayerHolder) {
+            if (sortedMusic != null) {
+                mMediaPlayerHolder.updateCurrentSongs(sortedMusic)
+            } else {
+                val currentAlbumSize = mMediaPlayerHolder.getCurrentAlbumSize()
+                if (isMediaPlayerHolder && currentAlbumSize != 0 && currentAlbumSize > 1) {
+                    // update current song to reflect this change
+                    mMediaPlayerHolder.updateCurrentSongs(null)
+                }
+                if (mAllMusicFragment != null && !mAllMusicFragment?.onSongVisualizationChanged()!!) {
+                    ThemeHelper.applyChanges(this)
+                }
             }
         }
     }

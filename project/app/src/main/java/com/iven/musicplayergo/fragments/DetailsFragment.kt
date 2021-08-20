@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -86,6 +87,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private val sShowDisplayName get() = goPreferences.songsVisualization != GoConstants.TITLE
 
     private var sPlayFirstSong = true
+    private var sCanUpdateSongs = false
     private var sAlbumSwapped = false
 
     private var sOpenNewDetailsFragment = false
@@ -115,6 +117,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
         arguments?.getLong(TAG_HIGHLIGHTED_SONG_ID)?.let { selectedSongId ->
             mSelectedSongId = selectedSongId
+        }
+
+        arguments?.getBoolean(TAG_CAN_UPDATE_SONGS)?.let { canUpdateSongs ->
+            sCanUpdateSongs = canUpdateSongs
         }
 
         // This makes sure that the container activity has implemented
@@ -261,7 +267,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     } else {
                         ListsHelper.getSongsSorting(mSongsSorting)
                     }
-                    setSongsDataSource(mSelectedAlbum?.music, isChangeMusicList = !sAlbumSwapped)
+                    Log.d("cacca", sCanUpdateSongs.toString())
+                    setSongsDataSource(mSelectedAlbum?.music, isChangeMusicList = !sAlbumSwapped && sCanUpdateSongs)
                 }
             }
 
@@ -818,6 +825,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         private const val TAG_IS_FOLDER = "IS_FOLDER"
         private const val TAG_SELECTED_ALBUM_POSITION = "SELECTED_ALBUM_POSITION"
         private const val TAG_HIGHLIGHTED_SONG_ID = "HIGHLIGHTED_SONG_ID"
+        private const val TAG_CAN_UPDATE_SONGS = "CAN_UPDATE_SONGS"
 
         /**
          * Use this factory method to create a new instance of
@@ -830,14 +838,16 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             selectedArtistOrFolder: String?,
             launchedBy: String,
             playedAlbumPosition: Int,
-            highlightedSongId: Long?
+            highlightedSongId: Long?,
+            canUpdateSongs: Boolean
         ) =
             DetailsFragment().apply {
                 arguments = bundleOf(
                     TAG_ARTIST_FOLDER to selectedArtistOrFolder,
                     TAG_IS_FOLDER to launchedBy,
                     TAG_SELECTED_ALBUM_POSITION to playedAlbumPosition,
-                    TAG_HIGHLIGHTED_SONG_ID to highlightedSongId
+                    TAG_HIGHLIGHTED_SONG_ID to highlightedSongId,
+                    TAG_CAN_UPDATE_SONGS to canUpdateSongs
                 )
             }
     }
