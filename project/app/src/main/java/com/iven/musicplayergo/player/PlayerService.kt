@@ -204,28 +204,34 @@ class PlayerService : Service() {
                 val event =
                     intent.getParcelableExtra<Parcelable>(Intent.EXTRA_KEY_EVENT) as KeyEvent
 
-                if (event.action == KeyEvent.ACTION_DOWN) {
-                    when (event.keyCode) {
-                        KeyEvent.KEYCODE_MEDIA_PAUSE, KeyEvent.KEYCODE_MEDIA_PLAY, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, KeyEvent.KEYCODE_HEADSETHOOK -> {
-                            mediaPlayerHolder.resumeOrPause()
-                            isSuccess = true
-                        }
-                        KeyEvent.KEYCODE_MEDIA_CLOSE, KeyEvent.KEYCODE_MEDIA_STOP -> {
-                            mediaPlayerHolder.stopPlaybackService(stopPlayback = true)
-                            isSuccess = true
-                        }
-                        KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {
-                            mediaPlayerHolder.skip(isNext = false)
-                            isSuccess = true
-                        }
-                        KeyEvent.KEYCODE_MEDIA_NEXT -> {
-                            mediaPlayerHolder.skip(true)
-                            isSuccess = true
-                        }
-                        KeyEvent.KEYCODE_MEDIA_REWIND -> {
-                            mediaPlayerHolder.repeatSong()
-                            isSuccess = true
-                        }
+                when (event.keyCode) {
+                    KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> {
+                        mediaPlayerHolder.resumeOrPause()
+                        isSuccess = true
+                    }
+                    KeyEvent.KEYCODE_MEDIA_PLAY -> {
+                        mediaPlayerHolder.resumeMediaPlayer()
+                        isSuccess = true
+                    }
+                    KeyEvent.KEYCODE_MEDIA_PAUSE -> {
+                        mediaPlayerHolder.pauseMediaPlayer()
+                        isSuccess = true
+                    }
+                    KeyEvent.KEYCODE_MEDIA_CLOSE, KeyEvent.KEYCODE_MEDIA_STOP -> {
+                        mediaPlayerHolder.stopPlaybackService(stopPlayback = true)
+                        isSuccess = true
+                    }
+                    KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {
+                        mediaPlayerHolder.skip(isNext = false)
+                        isSuccess = true
+                    }
+                    KeyEvent.KEYCODE_MEDIA_NEXT -> {
+                        mediaPlayerHolder.skip(true)
+                        isSuccess = true
+                    }
+                    KeyEvent.KEYCODE_MEDIA_REWIND -> {
+                        mediaPlayerHolder.repeatSong()
+                        isSuccess = true
                     }
                 }
             }
