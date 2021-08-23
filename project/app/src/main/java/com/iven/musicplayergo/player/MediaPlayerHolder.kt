@@ -514,7 +514,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private fun stopQueueAndGetSkipSong(isNext: Boolean): Music? =
         if (isNext) {
-            setQueueEnabled(false)
+            setQueueEnabled(false, canSkip = false)
             getSkipSong(true)
         } else {
             isQueueStarted = false
@@ -614,6 +614,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     override fun onPrepared(mp: MediaPlayer) {
 
+        if (currentSong?.startFrom != 0) {
+            mediaPlayer.seekTo(currentSong?.startFrom!!)
+        }
+
         if (!sPlaybackSpeedPersisted) {
             currentPlaybackSpeed = 1.0F
         }
@@ -627,7 +631,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             if (goPreferences.isPreciseVolumeEnabled) {
                 setPreciseVolume(currentVolumeInPercent)
             }
-            mediaPlayer.seekTo(goPreferences.latestPlayedSong?.startFrom!!)
         }
 
         if (isQueue != null) {
@@ -790,7 +793,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
-    fun setQueueEnabled(enabled: Boolean) {
+    fun setQueueEnabled(enabled: Boolean, canSkip: Boolean) {
 
         if (enabled) {
             isQueue = currentSong
@@ -802,6 +805,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             queueSongs.clear()
             mediaPlayerInterface.onQueueCleared()
             mediaPlayerInterface.onQueueStartedOrEnded(false)
+            if (canSkip) {
+                skip(true)
+            }
         }
     }
 

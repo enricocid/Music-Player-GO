@@ -1,10 +1,13 @@
 package com.iven.musicplayergo.helpers
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
@@ -205,6 +208,7 @@ object ListsHelper {
 
     @JvmStatic
     fun addToFavorites(
+        activity: Activity,
         song: Music?,
         playerPosition: Int,
         launchedBy: String
@@ -220,6 +224,7 @@ object ListsHelper {
         songToSave?.let { savedSong ->
             if (!favorites?.contains(songToSave)!!) {
                 favorites.add(savedSong)
+                notifyFavoriteAdded(activity, savedSong, playerPosition)
             }
             goPreferences.favorites = favorites
         }
@@ -227,6 +232,7 @@ object ListsHelper {
 
     @JvmStatic
     fun addOrRemoveFromFavorites(
+        activity: Activity,
         song: Music?,
         playerPosition: Int,
         launchedBy: String
@@ -244,8 +250,24 @@ object ListsHelper {
                 favorites.remove(songToSave)
             } else {
                 favorites.add(savedSong)
+                notifyFavoriteAdded(activity, savedSong, playerPosition)
             }
             goPreferences.favorites = favorites
         }
+    }
+
+    private fun notifyFavoriteAdded(activity: Activity, song: Music, playerPosition: Int) {
+        Toast.makeText(
+            activity,
+            activity.getString(
+                R.string.favorite_added,
+                song.title,
+                playerPosition.toLong().toFormattedDuration(
+                    isAlbum = false,
+                    isSeekBar = false
+                )
+            ),
+            Toast.LENGTH_LONG
+        ).show()
     }
 }

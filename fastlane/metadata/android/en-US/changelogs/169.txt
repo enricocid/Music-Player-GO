@@ -1,0 +1,5 @@
+- Fix queue
+- Fix favorites
+- Fix duplicates not being filtered
+- Fix sorting #2
+- Code improvement

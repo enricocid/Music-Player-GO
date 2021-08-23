@@ -49,8 +49,8 @@ class ItemSwipeCallback(private val ctx: Context, private val isQueueDialog: Boo
     ): Boolean = false
 
     override fun onSwiped(
-            viewHolder: RecyclerView.ViewHolder,
-            direction: Int
+        viewHolder: RecyclerView.ViewHolder,
+        direction: Int
     ) {
         onSwipedAction(viewHolder, direction)
     }

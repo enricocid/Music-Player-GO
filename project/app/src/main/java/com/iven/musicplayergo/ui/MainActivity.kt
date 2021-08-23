@@ -89,7 +89,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private var sRestoreSettingsFragment = false
     private var sAppearanceChanged = false
 
-    // Favorites dialog
+    // Queue and favorites dialog
+    private lateinit var mQueueDialog: MaterialDialog
+    private lateinit var mQueueAdapter: QueueAdapter
     private lateinit var mFavoritesDialog: MaterialDialog
 
     // Now playing
@@ -102,10 +104,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private var mAlbumIdNp : Long? = -1L
 
     // Music player things
-    private lateinit var mQueueDialog: MaterialDialog
-    private lateinit var mQueueAdapter: QueueAdapter
-
-    // The player
     private lateinit var mMediaPlayerHolder: MediaPlayerHolder
     private val isMediaPlayerHolder get() = ::mMediaPlayerHolder.isInitialized
     private val isNowPlaying get() = ::mNpDialog.isInitialized && mNpDialog.isShowing
@@ -455,7 +453,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                         mMusicViewModel.deviceAlbumsByArtist
                     ),
                     highlightedSongId,
-                    mMediaPlayerHolder.currentSong?.artist == selectedArtistOrFolder
+                    mMediaPlayerHolder.currentSong?.artist == selectedArtistOrFolder && mMediaPlayerHolder.launchedBy == GoConstants.ARTIST_VIEW
                 )
             sCloseDetailsFragment = true
             if (sAllowCommit) {
@@ -595,6 +593,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             npEqualizer.setOnClickListener { openEqualizer() }
             npLove.setOnClickListener {
                 ListsHelper.addOrRemoveFromFavorites(
+                    this@MainActivity,
                     mMediaPlayerHolder.currentSong,
                     0,
                     mMediaPlayerHolder.launchedBy)
@@ -766,20 +765,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             when (val position = mMediaPlayerHolder.playerPosition) {
                 0 -> mNpCoverBinding.npLove.callOnClick()
                 else -> if (!isInFavorites(song, position)) {
-                    ListsHelper.addToFavorites(song, mMediaPlayerHolder.playerPosition, mMediaPlayerHolder.launchedBy)
+                    ListsHelper.addToFavorites(this, song, mMediaPlayerHolder.playerPosition, mMediaPlayerHolder.launchedBy)
                     onFavoriteAddedOrRemoved()
-                    Toast.makeText(
-                        this,
-                        getString(
-                            R.string.favorite_added,
-                            song?.title,
-                            mMediaPlayerHolder.playerPosition.toLong().toFormattedDuration(
-                                isAlbum = false,
-                                isSeekBar = false
-                            )
-                        ),
-                        Toast.LENGTH_LONG
-                    ).show()
                 }
             }
         }
@@ -1202,7 +1189,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 isSongRestoredFromPrefs = false
                 isPlay = true
                 if (isQueue != null) {
-                    setQueueEnabled(false)
+                    setQueueEnabled(false, canSkip = false)
                 }
                 startPlayback(song, songs, launchedBy)
             }
@@ -1306,7 +1293,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         if (checkIsPlayer(showError = true)) {
             with(mMediaPlayerHolder) {
                 if (queueSongs.isEmpty()) {
-                    setQueueEnabled(true)
+                    setQueueEnabled(true, canSkip = false)
                 }
                 song?.let { songToQueue ->
                     if (!queueSongs.contains(songToQueue)) {
@@ -1346,7 +1333,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 }
 
                 if (isQueue == null) {
-                    setQueueEnabled(true)
+                    setQueueEnabled(true, canSkip = false)
                 }
 
                 isSingleSong?.let { song ->

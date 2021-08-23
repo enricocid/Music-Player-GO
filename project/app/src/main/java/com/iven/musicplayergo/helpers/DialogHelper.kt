@@ -136,10 +136,7 @@ object DialogHelper {
             message(R.string.queue_songs_clear)
 
             positiveButton(R.string.yes) {
-                mediaPlayerHolder.run {
-                    setQueueEnabled(enabled = false)
-                    skip(true)
-                }
+                mediaPlayerHolder.setQueueEnabled(enabled = false, canSkip = mediaPlayerHolder.isQueueStarted)
             }
             negativeButton(R.string.no)
         }
@@ -298,6 +295,7 @@ object DialogHelper {
                     when (menuItem.itemId) {
                         R.id.favorites_add -> {
                             ListsHelper.addToFavorites(
+                                activity,
                                 song,
                                 0,
                                 launchedBy

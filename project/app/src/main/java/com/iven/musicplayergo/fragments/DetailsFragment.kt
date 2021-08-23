@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -87,7 +86,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private val sShowDisplayName get() = goPreferences.songsVisualization != GoConstants.TITLE
 
     private var sPlayFirstSong = true
-    private var sCanUpdateSongs = false
+    private var sCanUpdateSongs = true
     private var sAlbumSwapped = false
 
     private var sOpenNewDetailsFragment = false
@@ -267,16 +266,14 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     } else {
                         ListsHelper.getSongsSorting(mSongsSorting)
                     }
-                    Log.d("cacca", sCanUpdateSongs.toString())
                     setSongsDataSource(mSelectedAlbum?.music, isChangeMusicList = !sAlbumSwapped && sCanUpdateSongs)
                 }
             }
 
             _detailsFragmentBinding?.queueAddButton?.setOnClickListener {
-                val queuedMusicSorted = ListsHelper.getSortedMusicList(mSongsSorting, mSelectedAlbum?.music)
                 mMediaControlInterface.onAddAlbumToQueue(
                     null,
-                    queuedMusicSorted,
+                    mSongsDataSource.toList(),
                     clearQueue = false,
                     mLaunchedBy,
                     playFrom = false
@@ -397,15 +394,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                     onClick { index ->
 
-                        val selectedPlaylist = if (sLaunchedByArtistView) {
-                            mSelectedAlbum?.music
-                        } else {
-                            mSongsList
-                        }
-
                         mMediaControlInterface.onSongSelected(
                             item,
-                            ListsHelper.getSortedMusicList(mSongsSorting, selectedPlaylist?.toMutableList()),
+                            mSongsDataSource.toList(),
                             mLaunchedBy
                         )
 
@@ -413,6 +404,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             rv.adapter?.notifyItemChanged(mSelectedSongPosition)
                             mSelectedSongId = item.id
                             rv.adapter?.notifyItemChanged(index)
+                        }
+                        if (!sCanUpdateSongs) {
+                            sCanUpdateSongs = true
                         }
                         if (sAlbumSwapped) {
                             sAlbumSwapped = false
@@ -432,7 +426,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
             ItemTouchHelper(ItemSwipeCallback(requireActivity(), isQueueDialog = false, isFavoritesDialog = false) { viewHolder: RecyclerView.ViewHolder,
                                                                           direction: Int ->
-                val song = mSelectedAlbum?.music?.get(viewHolder.absoluteAdapterPosition)
+                val song = mSongsDataSource[viewHolder.absoluteAdapterPosition]
                 if (direction == ItemTouchHelper.RIGHT) {
                     mMediaControlInterface.onAddToQueue(
                         song,
@@ -440,6 +434,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     )
                 } else {
                     ListsHelper.addToFavorites(
+                        requireActivity(),
                         song,
                         0,
                         mLaunchedBy
@@ -667,7 +662,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         } else {
             mMusicViewModel.deviceMusicByAlbum?.get(mSelectedArtistOrFolder)
         }
-        setSongsDataSource(selectedList, isChangeMusicList = true)
+        setSongsDataSource(selectedList, isChangeMusicList = sCanUpdateSongs)
     }
 
     private fun setupAlbumsContainer() {
@@ -747,7 +742,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         } else {
                             if (sPlayFirstSong) {
                                 mMediaControlInterface.onSongSelected(
-                                    ListsHelper.getSortedMusicList(mSongsSorting, item.music?.toMutableList())?.get(0),
+                                    mSongsDataSource[0],
                                     item.music,
                                     mLaunchedBy
                                 )

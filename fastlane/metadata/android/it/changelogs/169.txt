@@ -1,0 +1,5 @@
+- Correzioni coda
+- Correzioni favoriti
+- I duplicati ora vengono filtrati correttamente
+- Corretto ordinamento #2
+- Miglioramento codice
