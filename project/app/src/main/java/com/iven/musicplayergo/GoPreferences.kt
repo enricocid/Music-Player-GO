@@ -18,6 +18,7 @@ class GoPreferences(context: Context) {
     private val prefsLatestPlaybackSpeed = context.getString(R.string.latest_playback_speed_pref)
     private val prefsLatestPlayedSong = context.getString(R.string.latest_played_song_pref)
     private val prefsFavorites = context.getString(R.string.favorites_pref)
+    private val prefsQueue = context.getString(R.string.queue_pref)
 
     private val prefsTheme = context.getString(R.string.theme_pref)
     private val prefsThemeDef = context.getString(R.string.theme_pref_auto)
@@ -91,6 +92,13 @@ class GoPreferences(context: Context) {
             typeFavorites
         )
         set(value) = putObjectForType(prefsFavorites, value, typeFavorites)
+
+    var queue: List<Music>?
+        get() = getObjectForType(
+            prefsQueue,
+            typeFavorites
+        )
+        set(value) = putObjectForType(prefsQueue, value, typeFavorites)
 
     var theme
         get() = mPrefs.getString(prefsTheme, prefsThemeDef)

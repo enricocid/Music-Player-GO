@@ -928,6 +928,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                             getLatestSongLaunchedBy()
                         )
 
+                        if (!goPreferences.queue.isNullOrEmpty()) {
+                            queueSongs = goPreferences.queue?.toMutableList()!!
+                            setQueueEnabled(enabled = true, canSkip = false)
+                        }
+
                         updatePlayingInfo(false)
 
                         mPlayerControlsPanelBinding.songProgress.setProgressCompat(song?.startFrom!!, true)
@@ -1563,6 +1568,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             if (::mQueueDialog.isInitialized && mQueueDialog.isShowing) {
                 mQueueDialog.dismiss()
             }
+            goPreferences.queue = null
         }
 
         override fun onQueueStartedOrEnded(started: Boolean) {

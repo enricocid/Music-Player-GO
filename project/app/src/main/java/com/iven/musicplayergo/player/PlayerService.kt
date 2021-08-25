@@ -105,6 +105,9 @@ class PlayerService : Service() {
                     goPreferences.latestPlayedSong =
                         musicToSave.toSavedMusic(playerPosition, launchedBy)
                 }
+                if (!queueSongs.isNullOrEmpty()) {
+                    goPreferences.queue = queueSongs
+                }
             }
 
             goPreferences.latestVolume = mediaPlayerHolder.currentVolumeInPercent

@@ -146,7 +146,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     var isRepeat1X = false
     var isLooping = false
 
-    // isQueue is true if pre-queue song is not null
+    // isQueue saves the current song when queue starts
     var isQueue: Music? = null
     var isQueueStarted = false
     var queueSongs = mutableListOf<Music>()
