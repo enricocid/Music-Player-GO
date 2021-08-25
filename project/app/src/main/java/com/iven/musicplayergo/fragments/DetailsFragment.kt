@@ -273,9 +273,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             _detailsFragmentBinding?.queueAddButton?.setOnClickListener {
                 mMediaControlInterface.onAddAlbumToQueue(
                     mSongsDataSource.toList(),
-                    clearQueue = false,
                     mLaunchedBy,
-                    playFrom = false
+                    forcePlay = false
                 )
             }
 
@@ -615,23 +614,18 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 when (it.itemId) {
                     R.id.action_add_queue -> mMediaControlInterface.onAddAlbumToQueue(
                         mSongsList?.toMutableList(),
-                        clearQueue = false,
                         mLaunchedBy,
-                        playFrom = false
+                        forcePlay = false
                     )
                     R.id.action_shuffle_am -> {
-                        mMediaControlInterface.onShuffleSongs(
-                            null,
-                            null,
+                        mMediaControlInterface.onSongsShuffled(
                             mSongsList?.toMutableList(),
                             true,
                             mLaunchedBy
                         )
                     }
                     R.id.action_shuffle_sa -> {
-                        val music = mMediaControlInterface.onShuffleSongs(
-                            mSelectedAlbum?.title,
-                            mSelectedArtistAlbums,
+                        val music = mMediaControlInterface.onSongsShuffled(
                             mSelectedAlbum?.music,
                             true,
                             mLaunchedBy

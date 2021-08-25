@@ -47,7 +47,6 @@ import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.*
-import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.*
 import de.halfbit.edgetoedge.Edge
@@ -1335,17 +1334,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun onAddAlbumToQueue(
         songs: List<Music>?,
-        clearQueue: Boolean,
         launchedBy: String,
-        playFrom: Boolean
+        forcePlay: Boolean
     ) {
         if (checkIsPlayer(showError = true)) {
 
             mMediaPlayerHolder.run {
-
-                if (clearQueue) {
-                    queueSongs.clear()
-                }
 
                 if (isQueue == null) {
                     setQueueEnabled(true, canSkip = false)
@@ -1361,7 +1355,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     }
                 }
 
-                if (!isPlaying || playFrom) {
+                if (!isPlaying || forcePlay) {
                     startSongFromQueue(songs?.get(0), launchedBy)
                 }
             }
@@ -1378,9 +1372,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
-    override fun onShuffleSongs(
-        albumTitle: String?,
-        artistAlbums: List<Album>?,
+    override fun onSongsShuffled(
         songs: List<Music>?,
         toBeQueued: Boolean,
         launchedBy: String
@@ -1394,9 +1386,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     if (toBeQueued) {
                         onAddAlbumToQueue(
                             shuffledSongs,
-                            clearQueue = false,
                             launchedBy,
-                            playFrom = true
+                            forcePlay = true
                         )
                     } else {
                         onSongSelected(song, shuffledSongs, launchedBy)

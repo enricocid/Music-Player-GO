@@ -3,14 +3,11 @@ package com.iven.musicplayergo.ui
 import android.media.audiofx.BassBoost
 import android.media.audiofx.Equalizer
 import android.media.audiofx.Virtualizer
-import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
 
 interface MediaControlInterface {
     fun onSongSelected(song: Music?, songs: List<Music>?, launchedBy: String)
-    fun onShuffleSongs(
-        albumTitle: String?,
-        artistAlbums: List<Album>?,
+    fun onSongsShuffled(
         songs: List<Music>?,
         toBeQueued: Boolean,
         launchedBy: String
@@ -18,9 +15,8 @@ interface MediaControlInterface {
     fun onAddToQueue(song: Music?, forcePlay: Boolean, launchedBy: String)
     fun onAddAlbumToQueue(
         songs: List<Music>?,
-        clearQueue: Boolean,
         launchedBy: String,
-        playFrom: Boolean
+        forcePlay: Boolean
     )
     fun onFavoriteAddedOrRemoved()
     fun onGetEqualizer(): Triple<Equalizer?, BassBoost?, Virtualizer?>
