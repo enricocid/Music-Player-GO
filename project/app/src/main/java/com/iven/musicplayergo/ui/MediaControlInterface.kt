@@ -18,6 +18,7 @@ interface MediaControlInterface {
         launchedBy: String,
         forcePlay: Boolean
     )
+    fun onUpdatePlayingAlbumSongs(songs: List<Music>?)
     fun onFavoriteAddedOrRemoved()
     fun onGetEqualizer(): Triple<Equalizer?, BassBoost?, Virtualizer?>
     fun onPreciseVolumeToggled()

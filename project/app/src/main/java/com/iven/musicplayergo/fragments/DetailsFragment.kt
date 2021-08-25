@@ -266,7 +266,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     } else {
                         ListsHelper.getSongsSorting(mSongsSorting)
                     }
-                    setSongsDataSource(mSelectedAlbum?.music, isChangeMusicList = !sAlbumSwapped && sCanUpdateSongs)
+                    setSongsDataSource(mSelectedAlbum?.music, updateSongs = !sAlbumSwapped && sCanUpdateSongs)
                 }
             }
 
@@ -340,7 +340,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             } else {
                 mSongsList
             },
-            isChangeMusicList = false
+            updateSongs = false
         )
 
         _detailsFragmentBinding?.songsRv?.let { rv ->
@@ -509,7 +509,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
     }
 
-    private fun setSongsDataSource(musicList: List<Music>?, isChangeMusicList: Boolean) {
+    private fun setSongsDataSource(musicList: List<Music>?, updateSongs: Boolean) {
 
         val songs = if (sLaunchedByFolderView) {
             ListsHelper.getSortedMusicListForFolder(mSongsSorting, musicList?.toMutableList())
@@ -541,8 +541,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
         songs?.let { newSongsList ->
             mSongsDataSource.set(newSongsList)
-            if (isChangeMusicList) {
-                mUIControlInterface.onSongsChanged(songs)
+            if (updateSongs) {
+                mMediaControlInterface.onUpdatePlayingAlbumSongs(songs)
             }
         }
     }
@@ -567,7 +567,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         setSongsDataSource(
             ListsHelper.processQueryForMusic(newText, mSongsList)
                 ?: mSongsList,
-            isChangeMusicList = false
+            updateSongs = false
         )
         return false
     }
@@ -630,7 +630,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             true,
                             mLaunchedBy
                         )
-                        setSongsDataSource(music, isChangeMusicList = false)
+                        setSongsDataSource(music, updateSongs = false)
                     }
                     R.id.default_sorting -> applySortingToMusic(GoConstants.DEFAULT_SORTING)
                     R.id.ascending_sorting -> applySortingToMusic(GoConstants.ASCENDING_SORTING)
@@ -654,7 +654,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         } else {
             mMusicViewModel.deviceMusicByAlbum?.get(mSelectedArtistOrFolder)
         }
-        setSongsDataSource(selectedList, isChangeMusicList = sCanUpdateSongs)
+        setSongsDataSource(selectedList, updateSongs = sCanUpdateSongs)
     }
 
     private fun setupAlbumsContainer() {
@@ -799,7 +799,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private fun swapAlbum(songs: MutableList<Music>?) {
         sAlbumSwapped = true
-        setSongsDataSource(songs, isChangeMusicList = false)
+        setSongsDataSource(songs, updateSongs = false)
         _detailsFragmentBinding?.songsRv?.afterMeasured {
             scrollToPosition(0)
             highlightSong(mSelectedSongId)

@@ -1342,7 +1342,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             mMediaPlayerHolder.run {
 
                 if (isQueue == null) {
-                    setQueueEnabled(true, canSkip = false)
+                    setQueueEnabled(enabled = true, canSkip = false)
                 }
 
                 songs?.let { songsToQueue ->
@@ -1365,9 +1365,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private fun addFilteredSongsToQueue(
         filteredSongs: List<Music>?
     ) {
-        val atIndex = mMediaPlayerHolder.queueSongs.indexOf(mMediaPlayerHolder.currentSong) + 1
-
-        if (filteredSongs != null && filteredSongs.isNotEmpty()) {
+        if (!filteredSongs.isNullOrEmpty()) {
+            val atIndex = mMediaPlayerHolder.queueSongs.indexOf(mMediaPlayerHolder.currentSong) + 1
             mMediaPlayerHolder.queueSongs.addAll(atIndex, filteredSongs)
         }
     }
@@ -1397,10 +1396,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
-    override fun onSongsChanged(sortedMusic: List<Music>?) {
+    override fun onUpdatePlayingAlbumSongs(songs: List<Music>?) {
         if (isMediaPlayerHolder) {
-            if (sortedMusic != null) {
-                mMediaPlayerHolder.updateCurrentSongs(sortedMusic)
+            if (songs != null) {
+                mMediaPlayerHolder.updateCurrentSongs(songs)
             } else {
                 val currentAlbumSize = mMediaPlayerHolder.getCurrentAlbumSize()
                 if (isMediaPlayerHolder && currentAlbumSize != 0 && currentAlbumSize > 1) {
