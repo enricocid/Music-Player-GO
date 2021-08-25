@@ -123,7 +123,6 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                     }
 
                     onClick {
-
                         mMediaControlInterface.onSongSelected(
                             item,
                             mAllMusic,

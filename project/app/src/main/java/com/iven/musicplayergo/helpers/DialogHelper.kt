@@ -302,7 +302,7 @@ object DialogHelper {
                             )
                             mediaControlInterface.onFavoriteAddedOrRemoved()
                         }
-                        else -> mediaControlInterface.onAddToQueue(song, launchedBy)
+                        else -> mediaControlInterface.onAddToQueue(song, forcePlay = false, launchedBy)
                     }
                     return@setOnMenuItemClickListener true
                 }

@@ -308,7 +308,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         when {
             isRepeat1X or isLooping -> if (isMediaPlayer) {
-                repeatSong()
+                repeatSong(0)
             }
             isQueue != null -> manageQueue(isNext = true)
             else -> {
@@ -443,13 +443,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         mediaPlayerInterface.onFocusLoss()
     }
 
-    fun repeatSong() {
+    fun repeatSong(startFrom: Int) {
         isRepeat1X = false
         mediaPlayer.setOnSeekCompleteListener { mp ->
             mp.setOnSeekCompleteListener(null)
             play()
         }
-        mediaPlayer.seekTo(0)
+        mediaPlayer.seekTo(startFrom)
     }
 
     private fun manageQueue(isNext: Boolean) {
@@ -558,7 +558,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (isMediaPlayer && !isSongRestoredFromPrefs) {
             when {
                 mediaPlayer.currentPosition < 5000 -> skip(false)
-                else -> repeatSong()
+                else -> repeatSong(0)
             }
         } else {
             skip(false)

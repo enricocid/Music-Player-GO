@@ -230,7 +230,7 @@ class PlayerService : Service() {
                         isSuccess = true
                     }
                     KeyEvent.KEYCODE_MEDIA_REWIND -> {
-                        mediaPlayerHolder.repeatSong()
+                        mediaPlayerHolder.repeatSong(0)
                         isSuccess = true
                     }
                 }

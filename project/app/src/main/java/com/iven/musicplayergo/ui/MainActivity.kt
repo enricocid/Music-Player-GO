@@ -1186,12 +1186,21 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     override fun onSongSelected(song: Music?, songs: List<Music>?, launchedBy: String) {
         if (isMediaPlayerHolder) {
             mMediaPlayerHolder.run {
-                isSongRestoredFromPrefs = false
-                isPlay = true
+                if (isSongRestoredFromPrefs) {
+                    isSongRestoredFromPrefs = false
+                }
+                if (!isPlay) {
+                    isPlay = true
+                }
                 if (isQueue != null) {
                     setQueueEnabled(false, canSkip = false)
                 }
-                startPlayback(song, songs, launchedBy)
+                val albumSongs = songs ?: MusicOrgHelper.getAlbumSongs(
+                    song?.artist,
+                    song?.album,
+                    mMusicViewModel.deviceAlbumsByArtist
+                )
+                startPlayback(song, albumSongs, launchedBy)
             }
         }
     }
@@ -1289,7 +1298,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
-    override fun onAddToQueue(song: Music?, launchedBy: String) {
+    override fun onAddToQueue(song: Music?, forcePlay: Boolean, launchedBy: String) {
         if (checkIsPlayer(showError = true)) {
             with(mMediaPlayerHolder) {
                 if (queueSongs.isEmpty()) {
@@ -1299,10 +1308,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     if (!queueSongs.contains(songToQueue)) {
                         queueSongs.add(songToQueue)
 
-                        if (!isPlaying || state == GoConstants.PAUSED) {
+                        if (!isPlaying || state == GoConstants.PAUSED || forcePlay) {
                             startSongFromQueue(song, launchedBy)
                         }
-
                         Toast.makeText(
                             this@MainActivity,
                             getString(
@@ -1311,6 +1319,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                                 ),
                             Toast.LENGTH_LONG
                         ).show()
+
+                    } else if (currentSong == songToQueue) {
+                        repeatSong(songToQueue.startFrom)
                     }
                 }
             }
@@ -1318,7 +1329,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     override fun onAddAlbumToQueue(
-        isSingleSong: Music?,
         songs: List<Music>?,
         clearQueue: Boolean,
         launchedBy: String,
@@ -1336,52 +1346,30 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     setQueueEnabled(true, canSkip = false)
                 }
 
-                isSingleSong?.let { song ->
-                    if (!queueSongs.contains(song)) {
-                        addFilteredSongsToQueue(null, song)
-                    }
-                }
-
                 songs?.let { songsToQueue ->
                     if (queueSongs.isEmpty()) {
                         queueSongs.addAll(songsToQueue)
                     } else {
                         // don't add duplicates
                         val filteredSongs = songsToQueue.minus(queueSongs)
-                        addFilteredSongsToQueue(filteredSongs, null)
+                        addFilteredSongsToQueue(filteredSongs)
                     }
                 }
 
                 if (!isPlaying || playFrom) {
-
-                    val song = isSingleSong ?: songs?.get(0)
-                    startSongFromQueue(song, launchedBy)
-
-                    if (::mFavoritesDialog.isInitialized && mFavoritesDialog.isShowing) {
-                        mFavoritesDialog.onDismiss {
-                            openQueueDialog()
-                        }
-                        mFavoritesDialog.dismiss()
-                    } else {
-                        openQueueDialog()
-                    }
+                    startSongFromQueue(songs?.get(0), launchedBy)
                 }
             }
         }
     }
 
     private fun addFilteredSongsToQueue(
-        filteredSongs: List<Music>?,
-        isSingleSong: Music?
+        filteredSongs: List<Music>?
     ) {
         val atIndex = mMediaPlayerHolder.queueSongs.indexOf(mMediaPlayerHolder.currentSong) + 1
 
         if (filteredSongs != null && filteredSongs.isNotEmpty()) {
             mMediaPlayerHolder.queueSongs.addAll(atIndex, filteredSongs)
-        } else {
-            isSingleSong?.let { song ->
-                mMediaPlayerHolder.queueSongs.add(atIndex, song)
-            }
         }
     }
 
@@ -1400,7 +1388,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 mMediaPlayerHolder.run {
                     if (toBeQueued) {
                         onAddAlbumToQueue(
-                            null,
                             shuffledSongs,
                             clearQueue = false,
                             launchedBy,
@@ -1515,14 +1502,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 val displayNameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
                 cursor.moveToFirst()
                 val song = mMusicViewModel.getSongFromIntent(cursor.getString(displayNameIndex))
-                //get album songs and sort them
-                val albumSongs = MusicOrgHelper.getAlbumSongs(
-                    song?.artist,
-                    song?.album,
-                    mMusicViewModel.deviceAlbumsByArtist
-                )
 
-                onSongSelected(song, albumSongs, GoConstants.ARTIST_VIEW)
+                onSongSelected(song, null, GoConstants.ARTIST_VIEW)
 
             } catch (e: Exception) {
                 e.printStackTrace()

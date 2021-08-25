@@ -272,7 +272,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
             _detailsFragmentBinding?.queueAddButton?.setOnClickListener {
                 mMediaControlInterface.onAddAlbumToQueue(
-                    null,
                     mSongsDataSource.toList(),
                     clearQueue = false,
                     mLaunchedBy,
@@ -393,7 +392,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     }
 
                     onClick { index ->
-
                         mMediaControlInterface.onSongSelected(
                             item,
                             mSongsDataSource.toList(),
@@ -430,6 +428,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 if (direction == ItemTouchHelper.RIGHT) {
                     mMediaControlInterface.onAddToQueue(
                         song,
+                        forcePlay = false,
                         mLaunchedBy
                     )
                 } else {
@@ -615,7 +614,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                 when (it.itemId) {
                     R.id.action_add_queue -> mMediaControlInterface.onAddAlbumToQueue(
-                        null,
                         mSongsList?.toMutableList(),
                         clearQueue = false,
                         mLaunchedBy,
