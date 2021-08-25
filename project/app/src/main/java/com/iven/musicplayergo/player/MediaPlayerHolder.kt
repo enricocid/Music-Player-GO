@@ -605,11 +605,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
-        if (what == MediaPlayer.MEDIA_ERROR_SERVER_DIED) {
-            mediaPlayer.release()
-            initMediaPlayer(currentSong)
-        }
-        return false
+        Toast.makeText(playerService, what.toString(), Toast.LENGTH_SHORT).show()
+        mediaPlayer.reset()
+        return true
     }
 
     override fun onPrepared(mp: MediaPlayer) {
