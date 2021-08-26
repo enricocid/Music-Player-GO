@@ -26,7 +26,7 @@ class FavoritesAdapter(
     private val activity: Activity,
     private val FavoritesDialog: MaterialDialog
 ) :
-    RecyclerView.Adapter<FavoritesAdapter.LoveHolder>() {
+    RecyclerView.Adapter<FavoritesAdapter.FavoritesHolder>() {
 
     private var mFavorites = goPreferences.favorites?.toMutableList()
     private val mUiControlInterface = activity as UIControlInterface
@@ -42,8 +42,8 @@ class FavoritesAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LoveHolder {
-        return LoveHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesHolder {
+        return FavoritesHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.music_item,
                 parent,
@@ -56,12 +56,12 @@ class FavoritesAdapter(
         return mFavorites?.size!!
     }
 
-    override fun onBindViewHolder(holder: LoveHolder, position: Int) {
+    override fun onBindViewHolder(holder: FavoritesHolder, position: Int) {
         holder.bindItems(mFavorites?.get(holder.absoluteAdapterPosition))
     }
 
 
-    inner class LoveHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class FavoritesHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindItems(favorite: Music?) {
 
@@ -84,7 +84,12 @@ class FavoritesAdapter(
 
             with(itemView) {
                 setOnClickListener {
-                    mMediaControlInterface.onSongSelected(favorite, null, favorite?.launchedBy!!)
+                    mMediaControlInterface.onAddAlbumToQueue(
+                        favorite,
+                        mFavorites,
+                        favorite?.launchedBy!!,
+                        forcePlay = true
+                    )
                 }
                 setOnLongClickListener {
                     showPopupForFavoriteSongs(absoluteAdapterPosition, this)

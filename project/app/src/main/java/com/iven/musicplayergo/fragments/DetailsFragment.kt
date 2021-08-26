@@ -272,6 +272,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
             _detailsFragmentBinding?.queueAddButton?.setOnClickListener {
                 mMediaControlInterface.onAddAlbumToQueue(
+                    null,
                     mSongsDataSource.toList(),
                     mLaunchedBy,
                     forcePlay = false
@@ -612,6 +613,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                 when (it.itemId) {
                     R.id.action_add_queue -> mMediaControlInterface.onAddAlbumToQueue(
+                        null,
                         mSongsList?.toMutableList(),
                         mLaunchedBy,
                         forcePlay = false

@@ -14,6 +14,7 @@ interface MediaControlInterface {
     ): List<Music>?
     fun onAddToQueue(song: Music?, launchedBy: String)
     fun onAddAlbumToQueue(
+        selectedSong: Music?,
         songs: List<Music>?,
         launchedBy: String,
         forcePlay: Boolean

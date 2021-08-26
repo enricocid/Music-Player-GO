@@ -1333,6 +1333,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     override fun onAddAlbumToQueue(
+        selectedSong: Music?,
         songs: List<Music>?,
         launchedBy: String,
         forcePlay: Boolean
@@ -1356,7 +1357,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 }
 
                 if (!isPlaying || forcePlay) {
-                    startSongFromQueue(songs?.get(0), launchedBy)
+                    startSongFromQueue(selectedSong, launchedBy)
                 }
             }
         }
@@ -1380,16 +1381,16 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             if (checkIsPlayer(showError = true)) {
                 val shuffledSongs = toMutableList()
                 shuffledSongs.shuffle()
-                val song = shuffledSongs[0]
                 mMediaPlayerHolder.run {
                     if (toBeQueued) {
                         onAddAlbumToQueue(
+                            shuffledSongs[0],
                             shuffledSongs,
                             launchedBy,
                             forcePlay = true
                         )
                     } else {
-                        onSongSelected(song, shuffledSongs, launchedBy)
+                        onSongSelected(shuffledSongs[0], shuffledSongs, launchedBy)
                     }
                 }
             }
