@@ -49,7 +49,6 @@ object DialogHelper {
         customListAdapter(queueAdapter)
 
         val recyclerView = getRecyclerView()
-
         ItemTouchHelper(ItemTouchCallback(queueAdapter.queueSongs, isActiveTabs = false))
             .attachToRecyclerView(recyclerView)
 
@@ -73,17 +72,14 @@ object DialogHelper {
             }
         }
 
-        if (mediaPlayerHolder.isQueue != null && mediaPlayerHolder.isQueueStarted) {
-            recyclerView.addOnLayoutChangeListener(object: View.OnLayoutChangeListener {
-                override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
-                    onShow {
-                        expandBottomSheet()
-                        val indexOfCurrentSong = mediaPlayerHolder.queueSongs.indexOf(mediaPlayerHolder.currentSong)
-                        recyclerView.smoothScrollToPosition(indexOfCurrentSong)
-                    }
-                    recyclerView.removeOnLayoutChangeListener(this)
+        onShow {
+            if (mediaPlayerHolder.isQueue != null && mediaPlayerHolder.isQueueStarted) {
+                expandBottomSheet()
+                view.afterMeasured {
+                    val indexOfCurrentSong = mediaPlayerHolder.queueSongs.indexOf(mediaPlayerHolder.currentSong)
+                    recyclerView.scrollToPosition(indexOfCurrentSong)
                 }
-            })
+            }
         }
     }
 
