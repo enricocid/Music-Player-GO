@@ -800,8 +800,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             currentSong = isQueue
             isQueue = null
             isQueueStarted = false
-            queueSongs.clear()
-            mediaPlayerInterface.onQueueCleared()
             mediaPlayerInterface.onQueueStartedOrEnded(false)
             if (canSkip) {
                 skip(true)

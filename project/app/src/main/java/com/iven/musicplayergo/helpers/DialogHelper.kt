@@ -136,7 +136,11 @@ object DialogHelper {
             message(R.string.queue_songs_clear)
 
             positiveButton(R.string.yes) {
-                mediaPlayerHolder.setQueueEnabled(enabled = false, canSkip = mediaPlayerHolder.isQueueStarted)
+                goPreferences.queue = null
+                with(mediaPlayerHolder) {
+                    queueSongs.clear()
+                    setQueueEnabled(enabled = false, canSkip = isQueueStarted)
+                }
             }
             negativeButton(R.string.no)
         }

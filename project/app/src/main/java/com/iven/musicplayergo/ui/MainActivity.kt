@@ -1554,26 +1554,22 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             )
         }
 
-        override fun onQueueCleared() {
-            if (::mQueueDialog.isInitialized && mQueueDialog.isShowing) {
-                mQueueDialog.dismiss()
-            }
-            goPreferences.queue = null
-        }
-
         override fun onQueueStartedOrEnded(started: Boolean) {
             ThemeHelper.updateIconTint(
                 mPlayerControlsPanelBinding.queueButton,
                 when {
                     started -> ThemeHelper.resolveThemeAccent(this@MainActivity)
-                    mMediaPlayerHolder.isQueue != null -> ContextCompat.getColor(
+                    mMediaPlayerHolder.queueSongs.isNullOrEmpty() -> ThemeHelper.resolveColorAttr(
                         this@MainActivity,
-                        R.color.widgetsColor
+                        android.R.attr.colorButtonNormal
                     )
                     else -> {
-                        ThemeHelper.resolveColorAttr(
+                        if (::mQueueDialog.isInitialized && mQueueDialog.isShowing) {
+                            mQueueDialog.dismiss()
+                        }
+                        ContextCompat.getColor(
                             this@MainActivity,
-                            android.R.attr.colorButtonNormal
+                            R.color.widgetsColor
                         )
                     }
                 }

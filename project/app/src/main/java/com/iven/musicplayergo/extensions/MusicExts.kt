@@ -27,10 +27,15 @@ fun MediaPlayerHolder.startSongFromQueue(song: Music?, launchedBy: String) {
         isSongRestoredFromPrefs = false
     }
     isPlay = true
+
+    if (isQueue == null) {
+        isQueue = currentSong
+    }
     if (!isQueueStarted) {
         isQueueStarted = true
         mediaPlayerInterface.onQueueStartedOrEnded(started = true)
     }
+
     setCurrentSong(
         song,
         null,
