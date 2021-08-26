@@ -149,16 +149,14 @@ object DialogHelper {
     @SuppressLint("NotifyDataSetChanged")
     @JvmStatic
     fun showFavoritesDialog(
-        activity: Activity,
-        mediaPlayerHolder: MediaPlayerHolder
+        activity: Activity
     ): MaterialDialog = MaterialDialog(activity, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
 
         title(R.string.favorites)
 
         val favoritesAdapter = FavoritesAdapter(
             activity,
-            this,
-            mediaPlayerHolder
+            this
         )
 
         customListAdapter(favoritesAdapter)
@@ -306,7 +304,7 @@ object DialogHelper {
                             )
                             mediaControlInterface.onFavoriteAddedOrRemoved()
                         }
-                        else -> mediaControlInterface.onAddToQueue(song, forcePlay = false, launchedBy)
+                        else -> mediaControlInterface.onAddToQueue(song, launchedBy)
                     }
                     return@setOnMenuItemClickListener true
                 }

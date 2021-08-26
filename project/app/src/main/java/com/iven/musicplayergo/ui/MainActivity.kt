@@ -1302,7 +1302,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
-    override fun onAddToQueue(song: Music?, forcePlay: Boolean, launchedBy: String) {
+    override fun onAddToQueue(song: Music?, launchedBy: String) {
         if (checkIsPlayer(showError = true)) {
             with(mMediaPlayerHolder) {
                 if (queueSongs.isEmpty()) {
@@ -1312,7 +1312,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     if (!queueSongs.contains(songToQueue)) {
                         queueSongs.add(songToQueue)
 
-                        if (!isPlaying || state == GoConstants.PAUSED || forcePlay) {
+                        if (!isPlaying || state == GoConstants.PAUSED) {
                             startSongFromQueue(song, launchedBy)
                         }
                         Toast.makeText(
@@ -1475,8 +1475,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private fun openFavoritesDialog() {
         if (!goPreferences.favorites.isNullOrEmpty()) {
             mFavoritesDialog = DialogHelper.showFavoritesDialog(
-                this,
-                mMediaPlayerHolder
+                this
             )
         } else {
             Toast.makeText(

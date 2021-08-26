@@ -427,7 +427,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 if (direction == ItemTouchHelper.RIGHT) {
                     mMediaControlInterface.onAddToQueue(
                         song,
-                        forcePlay = false,
                         mLaunchedBy
                     )
                 } else {

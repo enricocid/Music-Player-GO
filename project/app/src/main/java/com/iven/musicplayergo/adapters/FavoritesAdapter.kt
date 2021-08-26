@@ -19,14 +19,12 @@ import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.MediaControlInterface
-import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.UIControlInterface
 
 
 class FavoritesAdapter(
     private val activity: Activity,
-    private val FavoritesDialog: MaterialDialog,
-    private val mediaPlayerHolder: MediaPlayerHolder
+    private val FavoritesDialog: MaterialDialog
 ) :
     RecyclerView.Adapter<FavoritesAdapter.LoveHolder>() {
 
@@ -86,11 +84,7 @@ class FavoritesAdapter(
 
             with(itemView) {
                 setOnClickListener {
-                    if (mediaPlayerHolder.isQueue != null && mediaPlayerHolder.isQueueStarted) {
-                        mMediaControlInterface.onAddToQueue(favorite, forcePlay = true, favorite?.launchedBy!!)
-                    } else {
-                        mMediaControlInterface.onSongSelected(favorite, null, favorite?.launchedBy!!)
-                    }
+                    mMediaControlInterface.onSongSelected(favorite, null, favorite?.launchedBy!!)
                 }
                 setOnLongClickListener {
                     showPopupForFavoriteSongs(absoluteAdapterPosition, this)
@@ -118,7 +112,7 @@ class FavoritesAdapter(
                     setOnMenuItemClickListener { menuItem ->
                         when (menuItem.itemId) {
                             R.id.favorite_delete -> performFavoriteDeletion(adapterPosition, isSwipe = false)
-                            else -> mMediaControlInterface.onAddToQueue(song, forcePlay = false, song.launchedBy)
+                            else -> mMediaControlInterface.onAddToQueue(song, song.launchedBy)
                         }
                         return@setOnMenuItemClickListener true
                     }
@@ -132,7 +126,6 @@ class FavoritesAdapter(
         mFavorites?.get(adapterPosition)?.let { song ->
             mMediaControlInterface.onAddToQueue(
                 song,
-                forcePlay = false,
                 song.launchedBy
             )
         }
