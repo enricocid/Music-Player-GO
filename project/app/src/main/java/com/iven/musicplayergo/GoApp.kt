@@ -23,10 +23,8 @@ class GoApp : Application(), ImageLoaderFactory {
         AppCompatDelegate.setDefaultNightMode(ThemeHelper.getDefaultNightMode(applicationContext))
     }
 
-    override fun newImageLoader(): ImageLoader {
-        return ImageLoader.Builder(this)
-            .diskCachePolicy(CachePolicy.DISABLED)
-            .crossfade(true)
-            .build()
-    }
+    override fun newImageLoader() = ImageLoader.Builder(this)
+        .diskCachePolicy(CachePolicy.DISABLED)
+        .crossfade(true)
+        .build()
 }
