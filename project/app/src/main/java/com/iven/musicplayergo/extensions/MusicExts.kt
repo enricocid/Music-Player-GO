@@ -68,7 +68,7 @@ fun Uri.toBitrate(context: Context): Pair<Int, Int>? {
         val sampleRate = mediaFormat.getInteger(MediaFormat.KEY_SAMPLE_RATE)
         // Get bitrate in bps, divide by 1000 to get Kbps
         val bitrate = mediaFormat.getInteger(MediaFormat.KEY_BIT_RATE) / 1000
-        Pair(sampleRate, bitrate)
+        Pair(first = sampleRate, second = bitrate)
     } catch (e: Exception) {
         e.printStackTrace()
         null

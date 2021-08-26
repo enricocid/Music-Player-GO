@@ -65,7 +65,7 @@ class ActiveTabsAdapter(private val ctx: Context) :
 
                 if (isEnabled) {
                     manageTabStatus(
-                        mActiveItems.contains(availableItems[absoluteAdapterPosition]),
+                        selected = mActiveItems.contains(availableItems[absoluteAdapterPosition]),
                         tabDragHandle,
                         tabText,
                         tabImageButton
@@ -82,7 +82,7 @@ class ActiveTabsAdapter(private val ctx: Context) :
                 setOnClickListener {
 
                     manageTabStatus(
-                        !tabImageButton.isSelected,
+                        selected = !tabImageButton.isSelected,
                         tabDragHandle,
                         tabText,
                         tabImageButton

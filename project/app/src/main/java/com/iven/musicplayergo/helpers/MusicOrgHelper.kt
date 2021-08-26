@@ -60,10 +60,10 @@ object MusicOrgHelper {
         val albums = deviceAlbumsByArtist?.get(artist)
         return try {
             val position = albums?.indexOfFirst { it.title == album }!!
-            Pair(albums[position], position)
+            Pair(first = albums[position], second = position)
         } catch (e: Exception) {
             e.printStackTrace()
-            Pair(albums?.get(0)!!, 0)
+            Pair(first = albums?.get(0)!!, second = 0)
         }
     }
 

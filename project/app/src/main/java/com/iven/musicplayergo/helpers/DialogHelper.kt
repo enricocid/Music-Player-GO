@@ -183,7 +183,7 @@ object DialogHelper {
             } else {
                 favoritesAdapter.performFavoriteDeletion(
                     viewHolder.absoluteAdapterPosition,
-                    true
+                    isSwipe = true
                 )
             }
             favoritesAdapter.notifyDataSetChanged()
@@ -206,13 +206,13 @@ object DialogHelper {
 
             message(
                 text = context.getString(
-                            R.string.favorite_remove,
-                            songToDelete?.title,
-                            songToDelete?.startFrom?.toLong()?.toFormattedDuration(
-                                    isAlbum = false,
-                                    isSeekBar = false
-                            )
+                    R.string.favorite_remove,
+                    songToDelete?.title,
+                    songToDelete?.startFrom?.toLong()?.toFormattedDuration(
+                        isAlbum = false,
+                        isSeekBar = false
                     )
+                )
             )
             positiveButton(R.string.yes) {
                 favorites?.remove(songToDelete)
@@ -375,7 +375,7 @@ object DialogHelper {
 
             message(R.string.on_close_activity)
             positiveButton(R.string.yes) {
-                mediaPlayerHolder.stopPlaybackService(true)
+                mediaPlayerHolder.stopPlaybackService(stopPlayback = true)
             }
             negativeButton(R.string.no) {
                 mediaPlayerHolder.stopPlaybackService(stopPlayback = false)
@@ -389,9 +389,9 @@ object DialogHelper {
             return ctx.getString(
                 R.string.favorite_subtitle,
                 favorite.startFrom.toLong().toFormattedDuration(
-                            isAlbum = false,
-                            isSeekBar = false
-                    ),
+                    isAlbum = false,
+                    isSeekBar = false
+                ),
                 favorite.duration.toFormattedDuration(isAlbum = false, isSeekBar = false)
             ).parseAsHtml()
         }

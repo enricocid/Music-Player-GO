@@ -197,7 +197,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
             }
         }
 
-        updateBandLevels(false)
+        updateBandLevels(isPresetChanged = false)
 
         setupToolbar()
 
@@ -230,7 +230,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
             }
             equalizerSwitchMaterial.setOnCheckedChangeListener { _, isChecked ->
                 Timer().schedule(1000) {
-                    mMediaControlInterface.onEnableEqualizer(isChecked)
+                    mMediaControlInterface.onEnableEqualizer(isEnabled = isChecked)
                 }
             }
 

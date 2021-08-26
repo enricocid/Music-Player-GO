@@ -31,7 +31,7 @@ class NotificationReceiver(
                         }
                         GoConstants.CLOSE_ACTION -> if (playerService.isRunning && isMediaPlayer) {
                             stopPlaybackService(
-                                    stopPlayback = true
+                                stopPlayback = true
                             )
                         }
 

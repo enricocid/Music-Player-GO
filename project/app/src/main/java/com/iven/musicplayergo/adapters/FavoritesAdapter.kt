@@ -37,7 +37,7 @@ class FavoritesAdapter(
         mFavorites = favorites
         notifyDataSetChanged()
         mUiControlInterface.onFavoritesUpdated(clear = false)
-        if (mFavorites?.isEmpty()!!) {
+        if (mFavorites?.isNullOrEmpty()!!) {
             FavoritesDialog.dismiss()
         }
     }
@@ -137,7 +137,7 @@ class FavoritesAdapter(
                 activity,
                 song,
                 this@FavoritesAdapter,
-                Pair(isSwipe, position)
+                Pair(first = isSwipe, second = position)
             )
         }
     }

@@ -229,7 +229,7 @@ class PlayerService : Service() {
                         isSuccess = true
                     }
                     KeyEvent.KEYCODE_MEDIA_NEXT -> {
-                        mediaPlayerHolder.skip(true)
+                        mediaPlayerHolder.skip(isNext = true)
                         isSuccess = true
                     }
                     KeyEvent.KEYCODE_MEDIA_REWIND -> {

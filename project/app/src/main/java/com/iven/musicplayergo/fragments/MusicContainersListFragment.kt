@@ -147,7 +147,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                         }
 
                         onLongClick { index ->
-                            respondToTouch(true, item, rv.findViewHolderForAdapterPosition(index)?.itemView)
+                            respondToTouch(isLongClick = true, item, rv.findViewHolderForAdapterPosition(index)?.itemView)
                         }
                     }
                 }
@@ -178,11 +178,11 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                     setOnQueryTextListener(this@MusicContainersListFragment)
                     setOnQueryTextFocusChangeListener { _, hasFocus ->
                         if (sIsFastScrollerVisible) {
-                            _musicContainerListBinding?.fastscroller?.handleViewVisibility(!hasFocus)
+                            _musicContainerListBinding?.fastscroller?.handleViewVisibility(show = !hasFocus)
                             _musicContainerListBinding?.fastscrollerThumb?.handleViewVisibility(
-                                !hasFocus
+                                show = !hasFocus
                             )
-                            setupArtistsRecyclerViewPadding(hasFocus)
+                            setupArtistsRecyclerViewPadding(forceNoPadding = hasFocus)
                         }
                         stb.menu.setGroupVisible(R.id.sorting, !hasFocus)
                     }
@@ -364,8 +364,8 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     }
 
     private fun handleIndicatorFastScrollerViewVisibility() {
-        _musicContainerListBinding?.fastscroller?.handleViewVisibility(sIsFastScrollerVisible)
-        _musicContainerListBinding?.fastscrollerThumb?.handleViewVisibility(sIsFastScrollerVisible)
+        _musicContainerListBinding?.fastscroller?.handleViewVisibility(show = sIsFastScrollerVisible)
+        _musicContainerListBinding?.fastscrollerThumb?.handleViewVisibility(show = sIsFastScrollerVisible)
     }
 
     private fun setMenuOnItemClickListener(menu: Menu) {

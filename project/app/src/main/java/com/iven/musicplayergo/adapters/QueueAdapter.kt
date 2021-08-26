@@ -103,7 +103,7 @@ class QueueAdapter(
         return if (title.currentTextColor != ThemeHelper.resolveThemeAccent(ctx)) {
             DialogHelper.showDeleteQueueSongDialog(
                 ctx,
-                Pair(song, adapterPosition),
+                Pair(first = song, second = adapterPosition),
                 queueSongsDialog,
                 this@QueueAdapter,
                 mediaPlayerHolder

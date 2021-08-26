@@ -21,6 +21,7 @@ import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.MediaMetadataCompat.*
 import android.support.v4.media.session.PlaybackStateCompat
 import android.support.v4.media.session.PlaybackStateCompat.*
+import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
@@ -342,11 +343,11 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun onUpdateDefaultAlbumArt(bitmapRes: Bitmap?) {
-        mMusicNotificationManager.onUpdateDefaultAlbumArt(bitmapRes, isPlaying)
+        mMusicNotificationManager.onUpdateDefaultAlbumArt(bitmapRes, updateNotification = isPlaying)
     }
 
     fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean) {
-        mMusicNotificationManager.onHandleNotificationUpdate(isAdditionalActionsChanged)
+        mMusicNotificationManager.onHandleNotificationUpdate(isAdditionalActionsChanged = isAdditionalActionsChanged)
     }
 
     fun tryToGetAudioFocus() {
@@ -459,7 +460,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
 
         when {
-            isQueueStarted -> currentSong = getSkipSong(isNext)
+            isQueueStarted -> currentSong = getSkipSong(isNext = isNext)
             else -> {
                 setCurrentSong(
                     queueSongs[0],
@@ -502,7 +503,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         } catch (e: IndexOutOfBoundsException) {
             e.printStackTrace()
             return when {
-                isQueue != null -> stopQueueAndGetSkipSong(isNext)
+                isQueue != null -> if (isNext) {
+                    setQueueEnabled(enabled = false, canSkip = false)
+                    getSkipSong(isNext = true)
+                } else {
+                    isQueueStarted = false
+                    isQueue
+                }
                 else -> if (currentIndex != 0) {
                     listToSeek?.get(0)
                 } else {
@@ -511,15 +518,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             }
         }
     }
-
-    private fun stopQueueAndGetSkipSong(isNext: Boolean): Music? =
-        if (isNext) {
-            setQueueEnabled(false, canSkip = false)
-            getSkipSong(true)
-        } else {
-            isQueueStarted = false
-            isQueue
-        }
 
     /**
      * Syncs the mMediaPlayer position with mPlaybackProgressCallback via recurring task.
@@ -557,11 +555,11 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun instantReset() {
         if (isMediaPlayer && !isSongRestoredFromPrefs) {
             when {
-                mediaPlayer.currentPosition < 5000 -> skip(false)
+                mediaPlayer.currentPosition < 5000 -> skip(isNext = false)
                 else -> repeatSong(0)
             }
         } else {
-            skip(false)
+            skip(isNext = false)
         }
     }
 
@@ -605,7 +603,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
-        Toast.makeText(playerService, what.toString(), Toast.LENGTH_SHORT).show()
+        val errorMessage = "MediaPlayer error: $what"
+        Toast.makeText(playerService, errorMessage, Toast.LENGTH_SHORT).show()
+        Log.d(errorMessage, errorMessage)
         mediaPlayer.reset()
         return true
     }
@@ -632,7 +632,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
 
         if (isQueue != null) {
-            mediaPlayerInterface.onQueueStartedOrEnded(isQueueStarted)
+            mediaPlayerInterface.onQueueStartedOrEnded(started = isQueueStarted)
         }
 
         updateMediaSessionMetaData()
@@ -673,7 +673,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private fun play() {
         startOrChangePlaybackSpeed()
         state = GoConstants.PLAYING
-        updatePlaybackStatus(true)
+        updatePlaybackStatus(updateUI = true)
         startForeground()
     }
 
@@ -683,7 +683,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
             savedEqualizerSettings?.let { (enabled, preset, bandSettings, bassBoost, virtualizer) ->
 
-                setEqualizerEnabled(enabled)
+                setEqualizerEnabled(isEnabled = enabled)
 
                 mEqualizer?.usePreset(preset.toShort())
 
@@ -784,7 +784,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun repeat(updatePlaybackStatus: Boolean) {
         getRepeatMode()
         if (updatePlaybackStatus) {
-            updatePlaybackStatus(true)
+            updatePlaybackStatus(updateUI = true)
         }
         if (isPlaying) {
             mMusicNotificationManager.updateRepeatIcon()
@@ -792,7 +792,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun setQueueEnabled(enabled: Boolean, canSkip: Boolean) {
-
         if (enabled) {
             isQueue = currentSong
             mediaPlayerInterface.onQueueEnabled()
@@ -800,18 +799,18 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             currentSong = isQueue
             isQueue = null
             isQueueStarted = false
-            mediaPlayerInterface.onQueueStartedOrEnded(false)
+            mediaPlayerInterface.onQueueStartedOrEnded(started = false)
             if (canSkip) {
-                skip(true)
+                skip(isNext = true)
             }
         }
     }
 
     fun skip(isNext: Boolean) {
         when {
-            isQueue != null -> manageQueue(isNext)
+            isQueue != null -> manageQueue(isNext = isNext)
             else -> {
-                currentSong = getSkipSong(isNext)
+                currentSong = getSkipSong(isNext = isNext)
                 initMediaPlayer(currentSong)
             }
         }
@@ -842,7 +841,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     startUpdatingCallbackWithPosition()
                 }
                 if (updatePlaybackStatus) {
-                    updatePlaybackStatus(!restoreProgressCallBack)
+                    updatePlaybackStatus(updateUI = !restoreProgressCallBack)
                 }
             }
             mediaPlayer.seekTo(position)
@@ -882,7 +881,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 goPreferences.latestPlaybackSpeed = currentPlaybackSpeed
             }
             if (state != GoConstants.PAUSED) {
-                updatePlaybackStatus(false)
+                updatePlaybackStatus(updateUI = false)
                 mediaPlayer.playbackParams = mediaPlayer.playbackParams.setSpeed(currentPlaybackSpeed)
             }
         }

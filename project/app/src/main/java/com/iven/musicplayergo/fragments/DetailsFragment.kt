@@ -619,14 +619,14 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     R.id.action_shuffle_am -> {
                         mMediaControlInterface.onSongsShuffled(
                             mSongsList?.toMutableList(),
-                            true,
+                            toBeQueued = true,
                             mLaunchedBy
                         )
                     }
                     R.id.action_shuffle_sa -> {
                         val music = mMediaControlInterface.onSongsShuffled(
                             mSelectedAlbum?.music,
-                            true,
+                            toBeQueued = true,
                             mLaunchedBy
                         )
                         setSongsDataSource(music, updateSongs = false)

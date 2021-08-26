@@ -149,12 +149,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun onBackPressed() {
         when {
-            sDetailsFragmentExpanded and !sEqFragmentExpanded -> closeDetailsFragment(goPreferences.isAnimations)
-            !sDetailsFragmentExpanded and sEqFragmentExpanded -> closeEqualizerFragment(goPreferences.isAnimations)
+            sDetailsFragmentExpanded and !sEqFragmentExpanded -> closeDetailsFragment(isAnimation = goPreferences.isAnimations)
+            !sDetailsFragmentExpanded and sEqFragmentExpanded -> closeEqualizerFragment(isAnimation = goPreferences.isAnimations)
             sEqFragmentExpanded and sDetailsFragmentExpanded -> if (sCloseDetailsFragment) {
-                closeDetailsFragment(goPreferences.isAnimations)
+                closeDetailsFragment(isAnimation = goPreferences.isAnimations)
             } else {
-                closeEqualizerFragment(goPreferences.isAnimations)
+                closeEqualizerFragment(isAnimation = goPreferences.isAnimations)
             }
             sErrorFragmentExpanded -> finishAndRemoveTask()
             else -> if (mMainActivityBinding.viewPager2.currentItem != 0) {
@@ -283,9 +283,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         mMainActivityBinding.mainView.animate().apply {
             withStartAction {
-                mPlayerControlsPanelBinding.playerView.handleViewVisibility(false)
-                mMainActivityBinding.loadingProgressBar.handleViewVisibility(false)
-                mMainActivityBinding.viewPager2.handleViewVisibility(false)
+                mPlayerControlsPanelBinding.playerView.handleViewVisibility(show = false)
+                mMainActivityBinding.loadingProgressBar.handleViewVisibility(show = false)
+                mMainActivityBinding.viewPager2.handleViewVisibility(show = false)
             }
             duration = 250
             alpha(1.0F)
@@ -304,7 +304,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         if (!music.isNullOrEmpty()) {
 
-            mMainActivityBinding.loadingProgressBar.handleViewVisibility(false)
+            mMainActivityBinding.loadingProgressBar.handleViewVisibility(show = false)
 
             initViewPager()
 
@@ -452,7 +452,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                         mMusicViewModel.deviceAlbumsByArtist
                     ),
                     highlightedSongId,
-                    mMediaPlayerHolder.currentSong?.artist == selectedArtistOrFolder && mMediaPlayerHolder.launchedBy == GoConstants.ARTIST_VIEW
+                    canUpdateSongs = mMediaPlayerHolder.currentSong?.artist == selectedArtistOrFolder && mMediaPlayerHolder.launchedBy == GoConstants.ARTIST_VIEW
                 )
             sCloseDetailsFragment = true
             if (sAllowCommit) {
@@ -509,7 +509,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             }
         }
 
-        onFavoritesUpdated(false)
+        onFavoritesUpdated(clear = false)
 
         with(mPlayerControlsPanelBinding.playingSongContainer) {
             setOnClickListener { openNowPlaying() }
@@ -596,7 +596,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     mMediaPlayerHolder.currentSong,
                     0,
                     mMediaPlayerHolder.launchedBy)
-                onFavoritesUpdated(false)
+                onFavoritesUpdated(clear = false)
                 updateNpFavoritesIcon(this@MainActivity)
             }
 
@@ -636,9 +636,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         mNpExtControlsBinding.let { npe ->
 
             val isVolumeEnabled = goPreferences.isPreciseVolumeEnabled
-            npe.npVolumeValue.handleViewVisibility(isVolumeEnabled)
-            npe.npVolume.handleViewVisibility(isVolumeEnabled)
-            npe.npVolumeSeek.handleViewVisibility(isVolumeEnabled)
+            npe.npVolumeValue.handleViewVisibility(show = isVolumeEnabled)
+            npe.npVolume.handleViewVisibility(show = isVolumeEnabled)
+            npe.npVolumeSeek.handleViewVisibility(show = isVolumeEnabled)
 
             if (isVolumeEnabled) {
 
@@ -713,11 +713,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     mNpDialog.dismiss()
                 }
 
-                mNpControlsBinding.npSkipPrev.setOnClickListener { skip(false) }
-                mNpControlsBinding.npFastRewind.setOnClickListener { fastSeek(false) }
+                mNpControlsBinding.npSkipPrev.setOnClickListener { skip(isNext = false) }
+                mNpControlsBinding.npFastRewind.setOnClickListener { fastSeek(isForward = false) }
                 mNpControlsBinding.npPlay.setOnClickListener { resumeOrPause() }
-                mNpControlsBinding.npSkipNext.setOnClickListener { skip(true) }
-                mNpControlsBinding.npFastForward.setOnClickListener { fastSeek(true) }
+                mNpControlsBinding.npSkipNext.setOnClickListener { skip(isNext = true) }
+                mNpControlsBinding.npFastForward.setOnClickListener { fastSeek(isForward = true) }
 
                 setupPreciseVolumeHandler()
 
@@ -729,7 +729,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     mMediaPlayerHolder.currentSong?.let { song ->
                         loadNpCover(song)
                         mNpBinding.npSeek.text =
-                            mMediaPlayerHolder.playerPosition.toLong().toFormattedDuration(false, isSeekBar = true)
+                            mMediaPlayerHolder.playerPosition.toLong().toFormattedDuration(isAlbum = false, isSeekBar = true)
                     }
 
                     mNpBinding.npSeekBar.progress =
@@ -861,7 +861,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     override fun onFavoriteAddedOrRemoved() {
-        onFavoritesUpdated(false)
+        onFavoritesUpdated(clear = false)
         updateNpFavoritesIcon(this@MainActivity)
     }
 
@@ -899,7 +899,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 if (isMediaPlayer && isPlaying) {
 
                     onRestartSeekBarCallback()
-                    updatePlayingInfo(true)
+                    updatePlayingInfo(restore = true)
 
                 } else {
 
@@ -932,7 +932,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                             setQueueEnabled(enabled = true, canSkip = false)
                         }
 
-                        updatePlayingInfo(false)
+                        updatePlayingInfo(restore = false)
 
                         mPlayerControlsPanelBinding.songProgress.setProgressCompat(song?.startFrom!!, true)
                     } else {
@@ -970,7 +970,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 selectedSong.album
             )
 
-        updateRepeatStatus(false)
+        updateRepeatStatus(onPlaybackCompletion = false)
 
         if (isNowPlaying) {
             updateNpInfo()
@@ -981,10 +981,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             if (!mMediaPlayerHolder.queueSongs.isNullOrEmpty() && !mMediaPlayerHolder.isQueueStarted) {
                 mMediaPlayerInterface.onQueueEnabled()
             } else {
-                mMediaPlayerInterface.onQueueStartedOrEnded(mMediaPlayerHolder.isQueueStarted)
+                mMediaPlayerInterface.onQueueStartedOrEnded(started = mMediaPlayerHolder.isQueueStarted)
             }
 
-            updatePlayingStatus(false)
+            updatePlayingStatus(isNowPlaying = false)
 
             if (::mPlayerService.isInitialized) {
                 //stop foreground if coming from pause state
@@ -1071,7 +1071,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 )
 
             mNpBinding.npDuration.text =
-                selectedSongDuration.toFormattedDuration(false, isSeekBar = true)
+                selectedSongDuration.toFormattedDuration(isAlbum = false, isSeekBar = true)
 
             mNpBinding.npSeekBar.max = song.duration.toInt()
 
@@ -1081,7 +1081,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             }
         }
         updateNpFavoritesIcon(this)
-        updatePlayingStatus(true)
+        updatePlayingStatus(isNowPlaying = true)
     }
 
     private fun getSongSource(): String? {
@@ -1098,7 +1098,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             val selectedArtistOrFolder = getSongSource()
             if (sDetailsFragmentExpanded) {
                 if (mDetailsFragment?.hasToUpdate(selectedArtistOrFolder)!!) {
-                    closeDetailsFragment(false)
+                    closeDetailsFragment(isAnimation = false)
                 } else {
                     mDetailsFragment?.tryToSnapToAlbumPosition(
                         MusicOrgHelper.getPlayingAlbumPosition(
@@ -1151,7 +1151,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean) {
         if (isMediaPlayerHolder) {
-            mMediaPlayerHolder.onHandleNotificationUpdate(isAdditionalActionsChanged)
+            mMediaPlayerHolder.onHandleNotificationUpdate(isAdditionalActionsChanged = isAdditionalActionsChanged)
         }
     }
 
@@ -1197,7 +1197,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     isPlay = true
                 }
                 if (isQueue != null) {
-                    setQueueEnabled(false, canSkip = false)
+                    setQueueEnabled(enabled = false, canSkip = false)
                 }
                 val albumSongs = songs ?: MusicOrgHelper.getAlbumSongs(
                     song?.artist,
@@ -1217,7 +1217,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun fastSeek(isForward: Boolean) {
         if (checkIsPlayer(showError = true)) {
-            mMediaPlayerHolder.fastSeek(isForward)
+            mMediaPlayerHolder.fastSeek(isForward = isForward)
         }
     }
 
@@ -1227,7 +1227,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 mMediaPlayerHolder.isPlay = true
             }
             if (isNext) {
-                mMediaPlayerHolder.skip(true)
+                mMediaPlayerHolder.skip(isNext = true)
             } else {
                 mMediaPlayerHolder.instantReset()
             }
@@ -1240,8 +1240,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun setRepeat() {
         if (checkIsPlayer(showError = true)) {
-            mMediaPlayerHolder.repeat(mMediaPlayerHolder.isPlaying)
-            updateRepeatStatus(false)
+            mMediaPlayerHolder.repeat(updatePlaybackStatus = mMediaPlayerHolder.isPlaying)
+            updateRepeatStatus(onPlaybackCompletion = false)
         }
     }
 
@@ -1250,7 +1250,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun onEnableEqualizer(isEnabled: Boolean) {
         if (::mMediaPlayerHolder.isInitialized) {
-            mMediaPlayerHolder.setEqualizerEnabled(isEnabled)
+            mMediaPlayerHolder.setEqualizerEnabled(isEnabled = isEnabled)
         }
     }
 
@@ -1306,7 +1306,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         if (checkIsPlayer(showError = true)) {
             with(mMediaPlayerHolder) {
                 if (queueSongs.isEmpty()) {
-                    setQueueEnabled(true, canSkip = false)
+                    setQueueEnabled(enabled = true, canSkip = false)
                 }
                 song?.let { songToQueue ->
                     if (!queueSongs.contains(songToQueue)) {
@@ -1454,7 +1454,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                             mMediaPlayerHolder.isPlay = mMediaPlayerHolder.isPlaying
                             mMediaPlayerHolder.setCurrentSong(this, songs, songLaunchedBy = launchedBy)
                             mMediaPlayerHolder.initMediaPlayer(this)
-                            updatePlayingInfo(false)
+                            updatePlayingInfo(restore = false)
                         }
                     }
                 }
@@ -1510,11 +1510,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private val mMediaPlayerInterface = object : MediaPlayerInterface {
 
         override fun onPlaybackCompleted() {
-            updateRepeatStatus(true)
+            updateRepeatStatus(onPlaybackCompletion = true)
         }
 
         override fun onUpdateRepeatStatus() {
-            updateRepeatStatus(false)
+            updateRepeatStatus(onPlaybackCompletion = false)
         }
 
         override fun onClose() {
@@ -1530,10 +1530,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
 
         override fun onStateChanged() {
-            updatePlayingStatus(false)
-            updatePlayingStatus(isNowPlaying)
+            updatePlayingStatus(isNowPlaying = false)
+            updatePlayingStatus(isNowPlaying = isNowPlaying)
             if (isMediaPlayerHolder && mMediaPlayerHolder.state != GoConstants.RESUMED && mMediaPlayerHolder.state != GoConstants.PAUSED) {
-                updatePlayingInfo(false)
+                updatePlayingInfo(restore = false)
                 if (::mQueueDialog.isInitialized && mQueueDialog.isShowing && mMediaPlayerHolder.isQueue != null) {
                     mQueueAdapter.swapSelectedSong(
                         mMediaPlayerHolder.currentSong

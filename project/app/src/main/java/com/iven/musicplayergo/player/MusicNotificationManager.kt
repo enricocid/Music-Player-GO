@@ -130,7 +130,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     fun onUpdateDefaultAlbumArt(bitmapRes: Bitmap?, updateNotification: Boolean) {
         mAlbumArt = bitmapRes
         if (updateNotification) {
-            onHandleNotificationUpdate(false)
+            onHandleNotificationUpdate(isAdditionalActionsChanged = false)
         }
     }
 

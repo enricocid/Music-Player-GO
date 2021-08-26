@@ -150,7 +150,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
             _binding.shuffleFab.setOnClickListener {
                 mMediaControlInterface.onSongsShuffled(
                     mAllMusic,
-                    mAllMusic?.size!! <= 1000,
+                    toBeQueued = mAllMusic?.size!! <= 1000,
                     GoConstants.ARTIST_VIEW
                 )
             }
@@ -173,9 +173,9 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                         setOnQueryTextListener(this@AllMusicFragment)
                         setOnQueryTextFocusChangeListener { _, hasFocus ->
                             if (sIsFastScrollerVisible) {
-                                _binding.fastscroller.handleViewVisibility(!hasFocus)
-                                _binding.fastscrollerThumb.handleViewVisibility(!hasFocus)
-                                setupMusicRecyclerViewPadding(hasFocus)
+                                _binding.fastscroller.handleViewVisibility(show = !hasFocus)
+                                _binding.fastscrollerThumb.handleViewVisibility(show = !hasFocus)
+                                setupMusicRecyclerViewPadding(forceNoPadding = hasFocus)
                             }
                             stb.menu.setGroupVisible(R.id.sorting, !hasFocus)
                         }
@@ -246,7 +246,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                 }
 
                 handleIndicatorFastScrollerViewVisibility()
-                setupMusicRecyclerViewPadding(false)
+                setupMusicRecyclerViewPadding(forceNoPadding = false)
             }
         }
     }
@@ -262,8 +262,8 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
     }
 
     private fun handleIndicatorFastScrollerViewVisibility() {
-        _allMusicFragmentBinding?.fastscroller?.handleViewVisibility(sIsFastScrollerVisible)
-        _allMusicFragmentBinding?.fastscrollerThumb?.handleViewVisibility(sIsFastScrollerVisible)
+        _allMusicFragmentBinding?.fastscroller?.handleViewVisibility(show = sIsFastScrollerVisible)
+        _allMusicFragmentBinding?.fastscrollerThumb?.handleViewVisibility(show = sIsFastScrollerVisible)
     }
 
     private fun setMenuOnItemClickListener(menu: Menu) {
@@ -287,7 +287,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
                 handleIndicatorFastScrollerViewVisibility()
 
-                setupMusicRecyclerViewPadding(false)
+                setupMusicRecyclerViewPadding(forceNoPadding = false)
 
                 setMusicDataSource(mAllMusic)
 
