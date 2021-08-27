@@ -511,9 +511,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     isQueue
                 }
                 else -> if (currentIndex != 0) {
-                    listToSeek?.get(0)
+                    listToSeek?.first()
                 } else {
-                    listToSeek[listToSeek.size.minus(1)]
+                    listToSeek.last()
                 }
             }
         }
@@ -809,6 +809,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun skip(isNext: Boolean) {
         when {
             isQueue != null -> manageQueue(isNext = isNext)
+            !isQueueStarted && isQueue == null && !queueSongs.isNullOrEmpty() -> {
+                isQueue = currentSong
+                isQueueStarted = true
+                currentSong = queueSongs.last()
+                initMediaPlayer(currentSong)
+            }
             else -> {
                 currentSong = getSkipSong(isNext = isNext)
                 initMediaPlayer(currentSong)
