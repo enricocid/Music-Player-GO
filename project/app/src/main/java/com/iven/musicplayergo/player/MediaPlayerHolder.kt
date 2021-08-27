@@ -151,6 +151,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     var isQueue: Music? = null
     var isQueueStarted = false
     var queueSongs = mutableListOf<Music>()
+    var canRestoreQueue = false
 
     var isSongRestoredFromPrefs = false
 
@@ -231,16 +232,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         }
     }
 
-    fun setCurrentSong(
-        song: Music?,
-        songs: List<Music>?,
-        songLaunchedBy: String
-    ) {
-        launchedBy = songLaunchedBy
+    fun updateCurrentSong(song: Music?, albumSongs: List<Music>?, songLaunchedBy: String) {
         currentSong = song
-        if (songs != null) {
-            mPlayingAlbumSongs = songs
-        }
+        mPlayingAlbumSongs = albumSongs
+        launchedBy = songLaunchedBy
     }
 
     fun updateCurrentSongs(sortedMusic: List<Music>?) {
@@ -462,12 +457,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         when {
             isQueueStarted -> currentSong = getSkipSong(isNext = isNext)
             else -> {
-                setCurrentSong(
-                    queueSongs[0],
-                    null,
-                    songLaunchedBy = GoConstants.ARTIST_VIEW
-                )
                 isQueueStarted = true
+                currentSong = queueSongs[0]
             }
         }
         initMediaPlayer(currentSong)
@@ -808,7 +799,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun skip(isNext: Boolean) {
         when {
             isQueue != null -> manageQueue(isNext = isNext)
-            isQueue == null && !isQueueStarted && !queueSongs.isNullOrEmpty() && !isSongRestoredFromPrefs -> {
+            isQueue == null && !isQueueStarted && !queueSongs.isNullOrEmpty() && !isSongRestoredFromPrefs && canRestoreQueue -> {
+                canRestoreQueue = false
                 isQueue = currentSong
                 isQueueStarted = true
                 currentSong = queueSongs.last()

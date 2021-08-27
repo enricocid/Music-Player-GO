@@ -912,31 +912,34 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                             mMusicViewModel.randomMusic
                         }
 
-                    val songs = MusicOrgHelper.getAlbumSongs(
-                        song?.artist,
-                        song?.album,
-                        mMusicViewModel.deviceAlbumsByArtist
-                    )
+                    song?.let { restoredSong ->
 
-                    if (!songs.isNullOrEmpty()) {
-                        isPlay = false
-
-                        startPlayback(
-                            song,
-                            songs,
-                            getLatestSongLaunchedBy()
+                        val songs = MusicOrgHelper.getAlbumSongs(
+                            restoredSong.artist,
+                            restoredSong.album,
+                            mMusicViewModel.deviceAlbumsByArtist
                         )
 
-                        if (!goPreferences.queue.isNullOrEmpty()) {
-                            queueSongs = goPreferences.queue?.toMutableList()!!
-                            setQueueEnabled(enabled = true, canSkip = false)
+                        if (!songs.isNullOrEmpty()) {
+                            isPlay = false
+
+                            startPlayback(
+                                restoredSong,
+                                songs,
+                                restoredSong.launchedBy
+                            )
+
+                            if (!goPreferences.queue.isNullOrEmpty()) {
+                                queueSongs = goPreferences.queue?.toMutableList()!!
+                                setQueueEnabled(enabled = true, canSkip = false)
+                            }
+
+                            updatePlayingInfo(restore = false)
+
+                            mPlayerControlsPanelBinding.songProgress.setProgressCompat(restoredSong.startFrom, true)
+                        } else {
+                            notifyError(GoConstants.TAG_SD_NOT_READY)
                         }
-
-                        updatePlayingInfo(restore = false)
-
-                        mPlayerControlsPanelBinding.songProgress.setProgressCompat(song?.startFrom!!, true)
-                    } else {
-                        notifyError(GoConstants.TAG_SD_NOT_READY)
                     }
 
                     if (intent != null && intent.getStringExtra(GoConstants.LAUNCHED_BY_TILE) != null) {
@@ -949,9 +952,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             }
         }
     }
-
-    private fun getLatestSongLaunchedBy() = goPreferences.latestPlayedSong?.launchedBy
-        ?: GoConstants.ARTIST_VIEW
 
     // method to update info on controls panel
     private fun updatePlayingInfo(restore: Boolean) {
@@ -1173,7 +1173,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         )
     }
 
-    private fun startPlayback(song: Music?, songs: List<Music>?, launchedBy: String) {
+    private fun startPlayback(song: Music?, songs: List<Music>?, selectedLaunchedBy: String) {
         if (isMediaPlayerHolder) {
             if (::mPlayerService.isInitialized && !mPlayerService.isRunning) {
                 startService(
@@ -1181,13 +1181,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 )
             }
             with(mMediaPlayerHolder) {
-                setCurrentSong(song, songs, songLaunchedBy = launchedBy)
+                updateCurrentSong(song, songs, selectedLaunchedBy)
                 initMediaPlayer(song)
             }
         }
     }
 
-    override fun onSongSelected(song: Music?, songs: List<Music>?, launchedBy: String) {
+    override fun onSongSelected(song: Music?, songs: List<Music>?, songLaunchedBy: String) {
         if (isMediaPlayerHolder) {
             mMediaPlayerHolder.run {
                 if (isSongRestoredFromPrefs) {
@@ -1204,7 +1204,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     song?.album,
                     mMusicViewModel.deviceAlbumsByArtist
                 )
-                startPlayback(song, albumSongs, launchedBy)
+                startPlayback(song, albumSongs, songLaunchedBy)
             }
         }
     }
@@ -1305,28 +1305,36 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     override fun onAddToQueue(song: Music?, launchedBy: String) {
         if (checkIsPlayer(showError = true)) {
             with(mMediaPlayerHolder) {
+
+                canRestoreQueue = isQueue == null && !isQueueStarted && !queueSongs.isNullOrEmpty() && !isSongRestoredFromPrefs
+
                 if (queueSongs.isNullOrEmpty()) {
                     isQueue = currentSong
                     setQueueEnabled(enabled = true, canSkip = false)
                 }
+
                 song?.let { songToQueue ->
                     if (!queueSongs.contains(songToQueue)) {
                         queueSongs.add(songToQueue)
 
                         if (!isPlaying || state == GoConstants.PAUSED) {
-                            startSongFromQueue(song, launchedBy)
+                            startSongFromQueue(song)
                         }
                         Toast.makeText(
                             this@MainActivity,
                             getString(
-                                        R.string.queue_song_add,
-                                        songToQueue.title
-                                ),
+                                R.string.queue_song_add,
+                                songToQueue.title
+                            ),
                             Toast.LENGTH_LONG
                         ).show()
 
                     } else if (currentSong == songToQueue) {
                         repeatSong(songToQueue.startFrom)
+                    } else {
+                        if (!isPlaying || state == GoConstants.PAUSED) {
+                            startSongFromQueue(song)
+                        }
                     }
                 }
             }
@@ -1352,24 +1360,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                         queueSongs.addAll(songsToQueue)
                     } else {
                         // don't add duplicates
-                        val filteredSongs = songsToQueue.minus(queueSongs)
-                        addFilteredSongsToQueue(filteredSongs)
+                        val atIndex = mMediaPlayerHolder.queueSongs.indexOf(mMediaPlayerHolder.currentSong) + 1
+                        mMediaPlayerHolder.queueSongs.addAll(atIndex, songsToQueue.minus(queueSongs))
                     }
                 }
 
                 if (!isPlaying || forcePlay) {
-                    startSongFromQueue(selectedSong, launchedBy)
+                    startSongFromQueue(selectedSong)
                 }
             }
-        }
-    }
-
-    private fun addFilteredSongsToQueue(
-        filteredSongs: List<Music>?
-    ) {
-        if (!filteredSongs.isNullOrEmpty()) {
-            val atIndex = mMediaPlayerHolder.queueSongs.indexOf(mMediaPlayerHolder.currentSong) + 1
-            mMediaPlayerHolder.queueSongs.addAll(atIndex, filteredSongs)
         }
     }
 
@@ -1447,15 +1446,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
                     // be sure to update queue, favorites and the controls panel
                     if (isMediaPlayerHolder) {
-                        MusicOrgHelper.updateMediaPlayerHolderLists(mMediaPlayerHolder, this, mMusicViewModel.randomMusic)?.run {
+                        val selectedSong = MusicOrgHelper.updateMediaPlayerHolderLists(mMediaPlayerHolder, this, mMusicViewModel.randomMusic)
+                        selectedSong?.let { song ->
                             val songs = MusicOrgHelper.getAlbumSongs(
-                                artist,
-                                album,
+                                song.artist,
+                                song.album,
                                 mMusicViewModel.deviceAlbumsByArtist
                             )
-                            mMediaPlayerHolder.isPlay = mMediaPlayerHolder.isPlaying
-                            mMediaPlayerHolder.setCurrentSong(this, songs, songLaunchedBy = launchedBy)
-                            mMediaPlayerHolder.initMediaPlayer(this)
+                            mMediaPlayerHolder.run {
+                                isPlay = isPlaying
+                                updateCurrentSong(song, songs, GoConstants.ARTIST_VIEW)
+                                initMediaPlayer(song)
+                            }
                             updatePlayingInfo(restore = false)
                         }
                     }

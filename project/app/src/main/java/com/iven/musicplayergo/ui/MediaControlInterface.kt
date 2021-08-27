@@ -6,7 +6,7 @@ import android.media.audiofx.Virtualizer
 import com.iven.musicplayergo.models.Music
 
 interface MediaControlInterface {
-    fun onSongSelected(song: Music?, songs: List<Music>?, launchedBy: String)
+    fun onSongSelected(song: Music?, songs: List<Music>?, songLaunchedBy: String)
     fun onSongsShuffled(
         songs: List<Music>?,
         toBeQueued: Boolean,

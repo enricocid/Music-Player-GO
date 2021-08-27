@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
 
 
-fun MediaPlayerHolder.startSongFromQueue(song: Music?, launchedBy: String) {
+fun MediaPlayerHolder.startSongFromQueue(song: Music?) {
     if (isSongRestoredFromPrefs) {
         isSongRestoredFromPrefs = false
     }
@@ -36,11 +36,7 @@ fun MediaPlayerHolder.startSongFromQueue(song: Music?, launchedBy: String) {
         mediaPlayerInterface.onQueueStartedOrEnded(started = true)
     }
 
-    setCurrentSong(
-        song,
-        null,
-        launchedBy
-    )
+    currentSong = song
     initMediaPlayer(song)
 }
 

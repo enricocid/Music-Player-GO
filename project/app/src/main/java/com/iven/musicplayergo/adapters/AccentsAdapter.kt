@@ -20,15 +20,13 @@ class AccentsAdapter(private val activity: Activity) :
     private val mAccents = ThemeHelper.accents
     var selectedAccent = goPreferences.accent
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccentsHolder {
-        return AccentsHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.accent_item,
-                parent,
-                false
-            )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = AccentsHolder(
+        LayoutInflater.from(parent.context).inflate(
+            R.layout.accent_item,
+            parent,
+            false
         )
-    }
+    )
 
     override fun getItemCount() = mAccents.size
 

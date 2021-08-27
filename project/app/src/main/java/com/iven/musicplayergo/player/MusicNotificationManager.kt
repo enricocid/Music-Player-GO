@@ -178,12 +178,15 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         }
     }
 
-    private fun getNotificationSmallIcon(mediaPlayerHolder: MediaPlayerHolder) =
+    private fun getNotificationSmallIcon(mediaPlayerHolder: MediaPlayerHolder) = if (mediaPlayerHolder.isQueue != null && mediaPlayerHolder.isQueueStarted) {
+        R.drawable.ic_music_note
+    } else {
         when (mediaPlayerHolder.launchedBy) {
             GoConstants.FOLDER_VIEW -> R.drawable.ic_folder_music
             GoConstants.ALBUM_VIEW -> R.drawable.ic_library_music
             else -> R.drawable.ic_music_note
         }
+    }
 
     fun updatePlayPauseAction() {
         if (::mNotificationBuilder.isInitialized) {

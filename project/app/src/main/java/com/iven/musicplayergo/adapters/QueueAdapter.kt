@@ -44,15 +44,13 @@ class QueueAdapter(
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QueueHolder {
-        return QueueHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.queue_item,
-                parent,
-                false
-            )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = QueueHolder(
+        LayoutInflater.from(parent.context).inflate(
+            R.layout.queue_item,
+            parent,
+            false
         )
-    }
+    )
 
     override fun getItemCount() = queueSongs.size
 
@@ -91,7 +89,7 @@ class QueueAdapter(
                     context.getString(R.string.artist_and_album, song.artist, song.album)
 
                 setOnClickListener {
-                    mediaPlayerHolder.startSongFromQueue(song, mediaPlayerHolder.launchedBy)
+                    mediaPlayerHolder.startSongFromQueue(song)
                 }
             }
         }

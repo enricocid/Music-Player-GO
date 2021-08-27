@@ -26,20 +26,17 @@ class FiltersAdapter(val activity: Activity) :
 
     private val mDefaultTextColor = ThemeHelper.resolveColorAttr(activity, android.R.attr.textColorPrimary)
 
-    fun getUpdatedItems(): Set<String>? {
-        mAvailableItems?.removeAll(mItemsToRemove.toSet())
-        return mAvailableItems?.toSet()
-    }
+    fun getUpdatedItems() = mAvailableItems?.apply {
+        removeAll(mItemsToRemove.toSet())
+    }?.toSet()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckableItemsHolder {
-        return CheckableItemsHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.filter_item,
-                parent,
-                false
-            )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = CheckableItemsHolder(
+        LayoutInflater.from(parent.context).inflate(
+            R.layout.filter_item,
+            parent,
+            false
         )
-    }
+    )
 
     override fun getItemCount() = mAvailableItems?.size!!
 

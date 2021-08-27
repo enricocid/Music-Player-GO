@@ -42,15 +42,13 @@ class FavoritesAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesHolder {
-        return FavoritesHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.music_item,
-                parent,
-                false
-            )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = FavoritesHolder(
+        LayoutInflater.from(parent.context).inflate(
+            R.layout.music_item,
+            parent,
+            false
         )
-    }
+    )
 
     override fun getItemCount(): Int {
         return mFavorites?.size!!
