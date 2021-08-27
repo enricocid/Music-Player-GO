@@ -18,12 +18,7 @@ class AccentsAdapter(private val activity: Activity) :
     RecyclerView.Adapter<AccentsAdapter.AccentsHolder>() {
 
     private val mAccents = ThemeHelper.accents
-    private var mSelectedAccent = goPreferences.accent
-    private var mSelectedPosition = RecyclerView.NO_POSITION
-
-    fun applyTheming() {
-        goPreferences.accent = mSelectedAccent
-    }
+    var selectedAccent = goPreferences.accent
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccentsHolder {
         return AccentsHolder(
@@ -59,8 +54,7 @@ class AccentsAdapter(private val activity: Activity) :
 
                 cardView.strokeColor = accent
 
-                if (color == mSelectedAccent) {
-                    mSelectedPosition = absoluteAdapterPosition
+                if (color == selectedAccent) {
                     cardView.strokeWidth = resources.getDimensionPixelSize(R.dimen.album_stroke)
                     colorText.setTextColor(accent)
                 } else {
@@ -74,9 +68,11 @@ class AccentsAdapter(private val activity: Activity) :
                 colorText.text = ThemeHelper.getAccentNameForPref(activity, mAccents[absoluteAdapterPosition].first)
 
                 setOnClickListener {
-                    if (mAccents[absoluteAdapterPosition].first != mSelectedAccent) {
-                        notifyItemChanged(mSelectedPosition)
-                        mSelectedAccent = mAccents[absoluteAdapterPosition].first
+                    if (mAccents[absoluteAdapterPosition].first != selectedAccent) {
+                        notifyItemChanged(mAccents.indexOfFirst {
+                            it.first == selectedAccent
+                        })
+                        selectedAccent = mAccents[absoluteAdapterPosition].first
                         notifyItemChanged(absoluteAdapterPosition)
                     }
                 }

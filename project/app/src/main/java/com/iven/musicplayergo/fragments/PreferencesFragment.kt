@@ -155,7 +155,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             positiveButton(android.R.string.ok) {
                 dismiss()
                 onDismiss {
-                    accentsAdapter.applyTheming()
+                    goPreferences.accent = accentsAdapter.selectedAccent
                 }
             }
             negativeButton(android.R.string.cancel)
