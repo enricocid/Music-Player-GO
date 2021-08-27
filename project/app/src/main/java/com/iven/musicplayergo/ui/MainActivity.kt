@@ -487,7 +487,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         with(mPlayerControlsPanelBinding.queueButton) {
             setOnClickListener { openQueueDialog() }
             setOnLongClickListener {
-                if (checkIsPlayer(showError = true) && mMediaPlayerHolder.isQueue != null) {
+                if (checkIsPlayer(showError = true) && !mMediaPlayerHolder.queueSongs.isNullOrEmpty()) {
                     DialogHelper.showClearQueueDialog(
                         this@MainActivity,
                         mMediaPlayerHolder
