@@ -793,7 +793,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun setQueueEnabled(enabled: Boolean, canSkip: Boolean) {
         if (enabled) {
-            isQueue = currentSong
             mediaPlayerInterface.onQueueEnabled()
         } else {
             currentSong = isQueue
@@ -809,7 +808,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun skip(isNext: Boolean) {
         when {
             isQueue != null -> manageQueue(isNext = isNext)
-            !isQueueStarted && isQueue == null && !queueSongs.isNullOrEmpty() -> {
+            isQueue == null && !isQueueStarted && !queueSongs.isNullOrEmpty() && !isSongRestoredFromPrefs -> {
                 isQueue = currentSong
                 isQueueStarted = true
                 currentSong = queueSongs.last()

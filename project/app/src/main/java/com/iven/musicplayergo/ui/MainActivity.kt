@@ -1305,7 +1305,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     override fun onAddToQueue(song: Music?, launchedBy: String) {
         if (checkIsPlayer(showError = true)) {
             with(mMediaPlayerHolder) {
-                if (queueSongs.isEmpty()) {
+                if (queueSongs.isNullOrEmpty()) {
+                    isQueue = currentSong
                     setQueueEnabled(enabled = true, canSkip = false)
                 }
                 song?.let { songToQueue ->
