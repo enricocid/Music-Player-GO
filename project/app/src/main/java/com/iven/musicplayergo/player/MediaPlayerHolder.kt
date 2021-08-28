@@ -464,15 +464,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         initMediaPlayer(currentSong)
     }
 
-    private fun getListToSkip() = if (isQueue != null) {
-        queueSongs
-    } else {
-        mPlayingAlbumSongs
-    }
-
     private fun getSkipSong(isNext: Boolean): Music? {
 
-        val listToSeek = getListToSkip()
+        val listToSeek = if (isQueue != null) {
+            queueSongs
+        } else {
+            mPlayingAlbumSongs
+        }
 
         // to correctly get skip song when song is restored
         if (isSongRestoredFromPrefs) {
@@ -786,8 +784,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (enabled) {
             mediaPlayerInterface.onQueueEnabled()
         } else {
-            currentSong = isQueue
-            isQueue = null
+            if (isQueue != null) {
+                currentSong = isQueue
+                isQueue = null
+            }
             isQueueStarted = false
             mediaPlayerInterface.onQueueStartedOrEnded(started = false)
             if (canSkip) {
