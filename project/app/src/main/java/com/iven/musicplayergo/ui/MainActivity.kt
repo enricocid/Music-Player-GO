@@ -1308,33 +1308,34 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
                 canRestoreQueue = isQueue == null && !isQueueStarted && !queueSongs.isNullOrEmpty() && !isSongRestoredFromPrefs
 
-                if (queueSongs.isNullOrEmpty()) {
-                    isQueue = currentSong
+                if (isQueue == null) {
                     setQueueEnabled(enabled = true, canSkip = false)
                 }
 
                 song?.let { songToQueue ->
-                    if (!queueSongs.contains(songToQueue)) {
-                        queueSongs.add(songToQueue)
 
-                        if (!isPlaying || state == GoConstants.PAUSED) {
-                            startSongFromQueue(song)
-                        }
-                        Toast.makeText(
-                            this@MainActivity,
-                            getString(
-                                R.string.queue_song_add,
-                                songToQueue.title
-                            ),
-                            Toast.LENGTH_LONG
-                        ).show()
+                    if (isPlaying && songToQueue != currentSong && queueSongs.contains(songToQueue)) {
+                        queueSongs.remove(songToQueue)
+                    }
 
-                    } else if (currentSong == songToQueue) {
-                        repeatSong(songToQueue.startFrom)
+                    val atIndex = mMediaPlayerHolder.queueSongs.indexOf(mMediaPlayerHolder.currentSong) + 1
+                    if (atIndex == 0 || atIndex == -1) {
+                        mMediaPlayerHolder.queueSongs.add(songToQueue)
                     } else {
-                        if (!isPlaying || state == GoConstants.PAUSED) {
-                            startSongFromQueue(song)
-                        }
+                        mMediaPlayerHolder.queueSongs.add(atIndex, songToQueue)
+                    }
+
+                    Toast.makeText(
+                        this@MainActivity,
+                        getString(
+                            R.string.queue_song_add,
+                            songToQueue.title
+                        ),
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    if (!isPlaying || state == GoConstants.PAUSED) {
+                        startSongFromQueue(songToQueue)
                     }
                 }
             }
@@ -1351,6 +1352,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
             mMediaPlayerHolder.run {
 
+                canRestoreQueue = isQueue == null && !isQueueStarted && !queueSongs.isNullOrEmpty() && !isSongRestoredFromPrefs
+
                 if (isQueue == null) {
                     setQueueEnabled(enabled = true, canSkip = false)
                 }
@@ -1360,8 +1363,19 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                         queueSongs.addAll(songsToQueue)
                     } else {
                         // don't add duplicates
-                        val atIndex = mMediaPlayerHolder.queueSongs.indexOf(mMediaPlayerHolder.currentSong) + 1
-                        mMediaPlayerHolder.queueSongs.addAll(atIndex, songsToQueue.minus(queueSongs))
+                        mMediaPlayerHolder.queueSongs.removeAll(songsToQueue)
+
+                        if (canRestoreQueue) {
+                            mMediaPlayerHolder.queueSongs.addAll(songsToQueue)
+                            restorePosition = mMediaPlayerHolder.queueSongs.indexOf(songsToQueue[0])
+                        } else {
+                           val atIndex = mMediaPlayerHolder.queueSongs.indexOf(mMediaPlayerHolder.currentSong) + 1
+                            if (atIndex == 0 || atIndex == -1) {
+                                mMediaPlayerHolder.queueSongs.addAll(songsToQueue)
+                            } else {
+                                mMediaPlayerHolder.queueSongs.addAll(atIndex, songsToQueue)
+                            }
+                        }
                     }
                 }
 
