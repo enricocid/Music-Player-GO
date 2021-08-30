@@ -487,7 +487,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         with(mPlayerControlsPanelBinding.queueButton) {
             setOnClickListener { openQueueDialog() }
             setOnLongClickListener {
-                if (checkIsPlayer(showError = true) && !mMediaPlayerHolder.queueSongs.isNullOrEmpty()) {
+                if (checkIsPlayer(showError = true) && mMediaPlayerHolder.queueSongs.isNotEmpty()) {
                     DialogHelper.showClearQueueDialog(
                         this@MainActivity,
                         mMediaPlayerHolder
@@ -978,7 +978,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         if (restore) {
 
-            if (!mMediaPlayerHolder.queueSongs.isNullOrEmpty() && !mMediaPlayerHolder.isQueueStarted) {
+            if (mMediaPlayerHolder.queueSongs.isNotEmpty() && !mMediaPlayerHolder.isQueueStarted) {
                 mMediaPlayerInterface.onQueueEnabled()
             } else {
                 mMediaPlayerInterface.onQueueStartedOrEnded(started = mMediaPlayerHolder.isQueueStarted)
@@ -1302,27 +1302,19 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
-    override fun onAddToQueue(song: Music?, launchedBy: String) {
+    override fun onAddToQueue(song: Music?) {
         if (checkIsPlayer(showError = true)) {
+
+            setCanRestoreQueue()
+
             with(mMediaPlayerHolder) {
-
-                canRestoreQueue = isQueue == null && !isQueueStarted && !queueSongs.isNullOrEmpty() && !isSongRestoredFromPrefs
-
-                if (isQueue == null) {
-                    setQueueEnabled(enabled = true, canSkip = false)
-                }
 
                 song?.let { songToQueue ->
 
-                    if (isPlaying && songToQueue != currentSong && queueSongs.contains(songToQueue)) {
-                        queueSongs.remove(songToQueue)
-                    }
+                    queueSongs.add(songToQueue)
 
-                    val atIndex = mMediaPlayerHolder.queueSongs.indexOf(mMediaPlayerHolder.currentSong) + 1
-                    if (atIndex == 0 || atIndex == -1) {
-                        mMediaPlayerHolder.queueSongs.add(songToQueue)
-                    } else {
-                        mMediaPlayerHolder.queueSongs.add(atIndex, songToQueue)
+                    if (canRestoreQueue && restoreQueuePosition == -1) {
+                        restoreQueuePosition = queueSongs.indexOf(songToQueue)
                     }
 
                     Toast.makeText(
@@ -1343,45 +1335,39 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     override fun onAddAlbumToQueue(
-        selectedSong: Music?,
         songs: List<Music>?,
-        launchedBy: String,
         forcePlay: Boolean
     ) {
         if (checkIsPlayer(showError = true)) {
 
-            mMediaPlayerHolder.run {
+            setCanRestoreQueue()
 
-                canRestoreQueue = isQueue == null && !isQueueStarted && !queueSongs.isNullOrEmpty() && !isSongRestoredFromPrefs
-
-                if (isQueue == null) {
-                    setQueueEnabled(enabled = true, canSkip = false)
-                }
+            with(mMediaPlayerHolder) {
 
                 songs?.let { songsToQueue ->
-                    if (queueSongs.isEmpty()) {
-                        queueSongs.addAll(songsToQueue)
-                    } else {
-                        // don't add duplicates
-                        mMediaPlayerHolder.queueSongs.removeAll(songsToQueue)
 
-                        if (canRestoreQueue) {
-                            mMediaPlayerHolder.queueSongs.addAll(songsToQueue)
-                            restorePosition = mMediaPlayerHolder.queueSongs.indexOf(songsToQueue[0])
-                        } else {
-                           val atIndex = mMediaPlayerHolder.queueSongs.indexOf(mMediaPlayerHolder.currentSong) + 1
-                            if (atIndex == 0 || atIndex == -1) {
-                                mMediaPlayerHolder.queueSongs.addAll(songsToQueue)
-                            } else {
-                                mMediaPlayerHolder.queueSongs.addAll(atIndex, songsToQueue)
-                            }
-                        }
+                    queueSongs.addAll(songsToQueue)
+
+                    if (canRestoreQueue && restoreQueuePosition == -1) {
+                        restoreQueuePosition = queueSongs.indexOf(songsToQueue[0])
+                    }
+
+                    if (!isPlaying || forcePlay) {
+                        startSongFromQueue(songsToQueue[0])
                     }
                 }
+            }
+        }
+    }
 
-                if (!isPlaying || forcePlay) {
-                    startSongFromQueue(selectedSong)
-                }
+    private fun setCanRestoreQueue() {
+        with(mMediaPlayerHolder) {
+            if (!canRestoreQueue) {
+                canRestoreQueue = isQueue == null && !isQueueStarted && queueSongs.isNotEmpty()
+            }
+            if (isQueue == null) {
+                isQueue = currentSong
+                setQueueEnabled(enabled = true, canSkip = false)
             }
         }
     }
@@ -1389,23 +1375,19 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     override fun onSongsShuffled(
         songs: List<Music>?,
         toBeQueued: Boolean,
-        launchedBy: String
+        songLaunchedBy: String
     ): List<Music>? {
         return songs?.apply {
             if (checkIsPlayer(showError = true)) {
                 val shuffledSongs = toMutableList()
                 shuffledSongs.shuffle()
-                mMediaPlayerHolder.run {
-                    if (toBeQueued) {
-                        onAddAlbumToQueue(
-                            shuffledSongs[0],
-                            shuffledSongs,
-                            launchedBy,
-                            forcePlay = true
-                        )
-                    } else {
-                        onSongSelected(shuffledSongs[0], shuffledSongs, launchedBy)
-                    }
+                if (toBeQueued) {
+                    onAddAlbumToQueue(
+                        shuffledSongs,
+                        forcePlay = true
+                    )
+                } else {
+                    onSongSelected(shuffledSongs[0], shuffledSongs, songLaunchedBy)
                 }
             }
         }
@@ -1576,7 +1558,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 mPlayerControlsPanelBinding.queueButton,
                 when {
                     started -> ThemeHelper.resolveThemeAccent(this@MainActivity)
-                    mMediaPlayerHolder.queueSongs.isNullOrEmpty() -> ThemeHelper.resolveColorAttr(
+                    mMediaPlayerHolder.queueSongs.isEmpty() -> ThemeHelper.resolveColorAttr(
                         this@MainActivity,
                         android.R.attr.colorButtonNormal
                     )

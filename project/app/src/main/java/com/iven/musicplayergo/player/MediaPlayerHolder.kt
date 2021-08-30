@@ -152,7 +152,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     var isQueueStarted = false
     var queueSongs = mutableListOf<Music>()
     var canRestoreQueue = false
-    var restorePosition = -1
+    var restoreQueuePosition = -1
 
     var isSongRestoredFromPrefs = false
 
@@ -799,18 +799,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun skip(isNext: Boolean) {
         when {
-            isQueue != null -> manageQueue(isNext = isNext)
-            isQueue == null && !isQueueStarted && !queueSongs.isNullOrEmpty() && !isSongRestoredFromPrefs && canRestoreQueue -> {
+            isQueue != null && !canRestoreQueue -> manageQueue(isNext = isNext)
+            canRestoreQueue -> {
                 canRestoreQueue = false
                 isQueue = currentSong
                 isQueueStarted = true
-                currentSong = if (restorePosition != -1) {
-                    queueSongs[restorePosition].apply {
-                        restorePosition = -1
-                    }
-                } else {
-                    queueSongs.last()
-                }
+                currentSong = queueSongs[restoreQueuePosition]
+                restoreQueuePosition = -1
                 initMediaPlayer(currentSong)
             }
             else -> {

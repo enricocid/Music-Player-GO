@@ -10,13 +10,11 @@ interface MediaControlInterface {
     fun onSongsShuffled(
         songs: List<Music>?,
         toBeQueued: Boolean,
-        launchedBy: String
+        songLaunchedBy: String
     ): List<Music>?
-    fun onAddToQueue(song: Music?, launchedBy: String)
+    fun onAddToQueue(song: Music?)
     fun onAddAlbumToQueue(
-        selectedSong: Music?,
         songs: List<Music>?,
-        launchedBy: String,
         forcePlay: Boolean
     )
     fun onUpdatePlayingAlbumSongs(songs: List<Music>?)

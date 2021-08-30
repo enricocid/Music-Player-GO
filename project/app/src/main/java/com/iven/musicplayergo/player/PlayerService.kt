@@ -108,7 +108,7 @@ class PlayerService : Service() {
                             launchedBy
                         })
                 }
-                if (!queueSongs.isNullOrEmpty()) {
+                if (queueSongs.isNotEmpty()) {
                     goPreferences.queue = queueSongs
                 }
             }

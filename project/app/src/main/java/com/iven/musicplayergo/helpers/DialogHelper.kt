@@ -134,6 +134,7 @@ object DialogHelper {
             positiveButton(R.string.yes) {
                 goPreferences.queue = null
                 with(mediaPlayerHolder) {
+                    restoreQueuePosition = -1
                     queueSongs.clear()
                     setQueueEnabled(enabled = false, canSkip = isQueueStarted)
                 }
@@ -300,7 +301,7 @@ object DialogHelper {
                             )
                             mediaControlInterface.onFavoriteAddedOrRemoved()
                         }
-                        else -> mediaControlInterface.onAddToQueue(song, launchedBy)
+                        else -> mediaControlInterface.onAddToQueue(song)
                     }
                     return@setOnMenuItemClickListener true
                 }

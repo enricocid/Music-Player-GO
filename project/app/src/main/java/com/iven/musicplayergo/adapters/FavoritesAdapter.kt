@@ -83,9 +83,7 @@ class FavoritesAdapter(
             with(itemView) {
                 setOnClickListener {
                     mMediaControlInterface.onAddAlbumToQueue(
-                        favorite,
                         mFavorites,
-                        favorite?.launchedBy!!,
                         forcePlay = true
                     )
                 }
@@ -115,7 +113,7 @@ class FavoritesAdapter(
                     setOnMenuItemClickListener { menuItem ->
                         when (menuItem.itemId) {
                             R.id.favorite_delete -> performFavoriteDeletion(adapterPosition, isSwipe = false)
-                            else -> mMediaControlInterface.onAddToQueue(song, song.launchedBy)
+                            else -> mMediaControlInterface.onAddToQueue(song)
                         }
                         return@setOnMenuItemClickListener true
                     }
@@ -126,12 +124,7 @@ class FavoritesAdapter(
     }
 
     fun addFavoriteToQueue(adapterPosition: Int) {
-        mFavorites?.get(adapterPosition)?.let { song ->
-            mMediaControlInterface.onAddToQueue(
-                song,
-                song.launchedBy
-            )
-        }
+        mMediaControlInterface.onAddToQueue(mFavorites?.get(adapterPosition))
     }
 
     fun performFavoriteDeletion(position: Int, isSwipe: Boolean) {

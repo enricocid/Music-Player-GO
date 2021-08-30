@@ -272,9 +272,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
             _detailsFragmentBinding?.queueAddButton?.setOnClickListener {
                 mMediaControlInterface.onAddAlbumToQueue(
-                    mSongsDataSource[0],
                     mSongsDataSource.toList(),
-                    mLaunchedBy,
                     forcePlay = false
                 )
             }
@@ -427,8 +425,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                 val song = mSongsDataSource[viewHolder.absoluteAdapterPosition]
                 if (direction == ItemTouchHelper.RIGHT) {
                     mMediaControlInterface.onAddToQueue(
-                        song,
-                        mLaunchedBy
+                        song
                     )
                 } else {
                     ListsHelper.addToFavorites(
@@ -613,9 +610,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                 when (it.itemId) {
                     R.id.action_add_queue -> mMediaControlInterface.onAddAlbumToQueue(
-                        mSongsList?.get(0),
                         mSongsList?.toMutableList(),
-                        mLaunchedBy,
                         forcePlay = false
                     )
                     R.id.action_shuffle_am -> {
