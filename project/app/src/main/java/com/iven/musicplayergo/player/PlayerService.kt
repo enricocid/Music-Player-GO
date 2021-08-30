@@ -79,12 +79,11 @@ class PlayerService : Service() {
         val mediaButtonIntent = Intent(Intent.ACTION_MEDIA_BUTTON)
         val mediaButtonReceiverComponentName = ComponentName(applicationContext, MediaBtnReceiver::class.java)
 
-        val flags = if (VersioningHelper.isMarshmallow()) {
+        val mediaButtonReceiverPendingIntent = PendingIntent.getBroadcast(applicationContext, 0, mediaButtonIntent, if (VersioningHelper.isMarshmallow()) {
             PendingIntent.FLAG_IMMUTABLE or 0
         } else {
             0
-        }
-        val mediaButtonReceiverPendingIntent = PendingIntent.getBroadcast(applicationContext, 0, mediaButtonIntent, flags)
+        })
 
         mMediaSessionCompat = MediaSessionCompat(this, packageName, mediaButtonReceiverComponentName, mediaButtonReceiverPendingIntent).apply {
             isActive = true
@@ -211,34 +210,28 @@ class PlayerService : Service() {
                 val event =
                     intent.getParcelableExtra<Parcelable>(Intent.EXTRA_KEY_EVENT) as KeyEvent
 
-                when (event.keyCode) {
-                    KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> {
-                        mediaPlayerHolder.resumeOrPause()
-                        isSuccess = true
-                    }
-                    KeyEvent.KEYCODE_MEDIA_PLAY -> {
-                        mediaPlayerHolder.resumeMediaPlayer()
-                        isSuccess = true
-                    }
-                    KeyEvent.KEYCODE_MEDIA_PAUSE -> {
-                        mediaPlayerHolder.pauseMediaPlayer()
-                        isSuccess = true
-                    }
-                    KeyEvent.KEYCODE_MEDIA_CLOSE, KeyEvent.KEYCODE_MEDIA_STOP -> {
-                        mediaPlayerHolder.stopPlaybackService(stopPlayback = true)
-                        isSuccess = true
-                    }
-                    KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {
-                        mediaPlayerHolder.skip(isNext = false)
-                        isSuccess = true
-                    }
-                    KeyEvent.KEYCODE_MEDIA_NEXT -> {
-                        mediaPlayerHolder.skip(isNext = true)
-                        isSuccess = true
-                    }
-                    KeyEvent.KEYCODE_MEDIA_REWIND -> {
-                        mediaPlayerHolder.repeatSong(0)
-                        isSuccess = true
+                if (event.action == KeyEvent.ACTION_DOWN) {
+                    when (event.keyCode) {
+                        KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, KeyEvent.KEYCODE_MEDIA_PLAY, KeyEvent.KEYCODE_MEDIA_PAUSE, KeyEvent.KEYCODE_HEADSETHOOK -> {
+                            mediaPlayerHolder.resumeOrPause()
+                            isSuccess = true
+                        }
+                        KeyEvent.KEYCODE_MEDIA_CLOSE, KeyEvent.KEYCODE_MEDIA_STOP -> {
+                            mediaPlayerHolder.stopPlaybackService(stopPlayback = true)
+                            isSuccess = true
+                        }
+                        KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {
+                            mediaPlayerHolder.skip(isNext = false)
+                            isSuccess = true
+                        }
+                        KeyEvent.KEYCODE_MEDIA_NEXT -> {
+                            mediaPlayerHolder.skip(isNext = true)
+                            isSuccess = true
+                        }
+                        KeyEvent.KEYCODE_MEDIA_REWIND -> {
+                            mediaPlayerHolder.repeatSong(0)
+                            isSuccess = true
+                        }
                     }
                 }
             }
