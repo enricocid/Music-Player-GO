@@ -6,7 +6,6 @@ import android.content.Context
 import android.text.Spanned
 import android.view.Gravity
 import android.view.View
-import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.text.parseAsHtml
 import androidx.recyclerview.widget.GridLayoutManager
@@ -53,10 +52,7 @@ object DialogHelper {
             .attachToRecyclerView(recyclerView)
 
         ItemTouchHelper(ItemSwipeCallback(context, isQueueDialog = true, isFavoritesDialog = false) { viewHolder: RecyclerView.ViewHolder, _: Int ->
-            val title = viewHolder.itemView.findViewById<TextView>(R.id.title)
-            if (!queueAdapter.performQueueSongDeletion(viewHolder.absoluteAdapterPosition, title)) {
-                queueAdapter.notifyItemChanged(viewHolder.absoluteAdapterPosition)
-            }
+            queueAdapter.performQueueSongDeletion(viewHolder.absoluteAdapterPosition)
         }).attachToRecyclerView(recyclerView)
 
         if (ThemeHelper.isDeviceLand(context.resources)) {
@@ -86,7 +82,7 @@ object DialogHelper {
     @JvmStatic
     fun showDeleteQueueSongDialog(
         context: Context,
-        song: Pair<Music, Int>,
+        song: Music,
         queueSongsDialog: MaterialDialog,
         queueAdapter: QueueAdapter,
         mediaPlayerHolder: MediaPlayerHolder
@@ -99,13 +95,13 @@ object DialogHelper {
             message(
                 text = context.getString(
                     R.string.queue_song_remove,
-                    song.first.title
+                    song.title
                 )
             )
             positiveButton(R.string.yes) {
 
                 mediaPlayerHolder.run {
-                    queueSongs.removeAt(song.second)
+                    queueSongs.remove(song)
                     queueAdapter.swapQueueSongs(queueSongs)
 
                     if (queueSongs.isEmpty()) {

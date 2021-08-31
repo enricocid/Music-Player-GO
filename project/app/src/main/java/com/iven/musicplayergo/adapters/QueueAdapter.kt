@@ -95,20 +95,15 @@ class QueueAdapter(
         }
     }
 
-    fun performQueueSongDeletion(adapterPosition: Int, title: TextView): Boolean {
+    fun performQueueSongDeletion(adapterPosition: Int) {
         val song = queueSongs[adapterPosition]
         notifyItemChanged(adapterPosition)
-        return if (title.currentTextColor != ThemeHelper.resolveThemeAccent(ctx)) {
-            DialogHelper.showDeleteQueueSongDialog(
-                ctx,
-                Pair(first = song, second = adapterPosition),
-                queueSongsDialog,
-                this@QueueAdapter,
-                mediaPlayerHolder
-            )
-            true
-        } else {
-            false
-        }
+        DialogHelper.showDeleteQueueSongDialog(
+            ctx,
+            song,
+            queueSongsDialog,
+            this@QueueAdapter,
+            mediaPlayerHolder
+        )
     }
 }
