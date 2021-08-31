@@ -1310,6 +1310,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
                 song?.let { songToQueue ->
 
+                    // don't add duplicates
+                    queueSongs.remove(songToQueue)
                     queueSongs.add(songToQueue)
 
                     if (canRestoreQueue && restoreQueuePosition == -1) {
@@ -1345,6 +1347,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
                 songs?.let { songsToQueue ->
 
+                    // don't add duplicates
+                    queueSongs.removeAll(songsToQueue)
                     queueSongs.addAll(songsToQueue)
 
                     if (canRestoreQueue && restoreQueuePosition == -1) {
