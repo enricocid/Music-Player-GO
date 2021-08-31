@@ -47,8 +47,8 @@ class AccentsAdapter(private val activity: Activity) :
 
                 contentDescription = accentFullName
 
-                val cardView = itemView as MaterialCardView
-                val colorText = itemView.findViewById<TextView>(R.id.color)
+                val cardView = this as MaterialCardView
+                val colorText = findViewById<TextView>(R.id.color)
 
                 cardView.strokeColor = accent
 

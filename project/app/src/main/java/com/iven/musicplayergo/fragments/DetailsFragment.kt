@@ -213,7 +213,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             if (sLaunchedByArtistView || sLaunchedByFolderView) {
                 title = mSelectedArtistOrFolder
                 // Make toolbar's title scrollable
-                this.getTitleTextView()?.let { tV ->
+                getTitleTextView()?.let { tV ->
                     tV.isSelected = true
                     tV.setHorizontallyScrolling(true)
                     tV.ellipsize = TextUtils.TruncateAt.MARQUEE

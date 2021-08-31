@@ -615,9 +615,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     }
                 )
                 setOnClickListener { setRepeat() }
+                setupNPCoverButtonsToasts(npSaveTime, npLove, npEqualizer, this)
             }
-
-            setupNPCoverButtonsToasts(npSaveTime, npLove, npEqualizer, npRepeat)
         }
     }
 
@@ -1077,7 +1076,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
             song.id?.toContentUri()?.toBitrate(this)?.let { (first, second) ->
                 mNpBinding.npRates.text =
-                        getString(R.string.rates, first, second)
+                    getString(R.string.rates, first, second)
             }
         }
         updateNpFavoritesIcon(this)
@@ -1173,7 +1172,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         )
     }
 
-    private fun startPlayback(song: Music?, songs: List<Music>?, selectedLaunchedBy: String) {
+    private fun startPlayback(song: Music?, songs: List<Music>?, songLaunchedBy: String) {
         if (isMediaPlayerHolder) {
             if (::mPlayerService.isInitialized && !mPlayerService.isRunning) {
                 startService(
@@ -1181,7 +1180,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 )
             }
             with(mMediaPlayerHolder) {
-                updateCurrentSong(song, songs, selectedLaunchedBy)
+                updateCurrentSong(song, songs, songLaunchedBy)
                 initMediaPlayer(song)
             }
         }
