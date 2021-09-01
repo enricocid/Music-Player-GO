@@ -475,19 +475,17 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
         // to correctly get skip song when song is restored
         if (isSongRestoredFromPrefs) {
-            currentSong?.run {
-                currentSong = listToSeek?.savedSongIsAvailable(this)
+            listToSeek?.savedSongIsAvailable(currentSong)?.let { song ->
+                currentSong = song
             }
         }
-
-        val currentIndex = listToSeek?.indexOf(currentSong)
 
         try {
             return listToSeek?.get(
                 if (isNext) {
-                    currentIndex?.plus(1)!!
+                    listToSeek.indexOf(currentSong).plus(1)
                 } else {
-                    currentIndex?.minus(1)!!
+                    listToSeek.indexOf(currentSong).minus(1)
                 }
             )
         } catch (e: IndexOutOfBoundsException) {
@@ -500,7 +498,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     isQueueStarted = false
                     isQueue
                 }
-                else -> if (currentIndex != 0) {
+                else -> if (listToSeek?.indexOf(currentSong) != 0) {
                     listToSeek?.first()
                 } else {
                     listToSeek.last()
@@ -789,6 +787,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 currentSong = isQueue
                 isQueue = null
             }
+            restoreQueuePosition = -1
+            canRestoreQueue = false
             isQueueStarted = false
             mediaPlayerInterface.onQueueStartedOrEnded(started = false)
             if (canSkip) {

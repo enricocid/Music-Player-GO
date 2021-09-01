@@ -1225,14 +1225,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             if (!mMediaPlayerHolder.isPlay) {
                 mMediaPlayerHolder.isPlay = true
             }
+            if (mMediaPlayerHolder.isSongRestoredFromPrefs) {
+                mMediaPlayerHolder.isSongRestoredFromPrefs =
+                    false
+            }
             if (isNext) {
                 mMediaPlayerHolder.skip(isNext = true)
             } else {
                 mMediaPlayerHolder.instantReset()
-            }
-            if (mMediaPlayerHolder.isSongRestoredFromPrefs) {
-                mMediaPlayerHolder.isSongRestoredFromPrefs =
-                    false
             }
         }
     }
