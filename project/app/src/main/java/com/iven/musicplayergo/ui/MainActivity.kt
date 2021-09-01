@@ -263,8 +263,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         sAllowCommit = true
 
-        initMediaButtons()
-
         sRestoreSettingsFragment =
             savedInstanceState?.getBoolean(GoConstants.RESTORE_SETTINGS_FRAGMENT)
                 ?: intent.getBooleanExtra(
@@ -305,6 +303,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         if (!music.isNullOrEmpty()) {
 
             mMainActivityBinding.loadingProgressBar.handleViewVisibility(show = false)
+
+            initMediaButtons()
 
             initViewPager()
 

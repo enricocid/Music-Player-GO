@@ -198,7 +198,7 @@ class PlayerService : Service() {
 
     inner class LocalBinder : Binder() {
         // Return this instance of PlayerService so we can call public methods
-        fun getService() = this@PlayerService
+        fun getService() : PlayerService = this@PlayerService
     }
 
     fun handleMediaIntent(intent: Intent?): Boolean {
