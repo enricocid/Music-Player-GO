@@ -125,12 +125,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     // Defines callbacks for service binding, passed to bindService()
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(componentName: ComponentName, service: IBinder) {
+            // get bound service and instantiate MediaPlayerHolder
             val binder = service as PlayerService.LocalBinder
             mPlayerService = binder.getService()
             sBound = true
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder
             mMediaPlayerHolder.mediaPlayerInterface = mMediaPlayerInterface
+            mPlayerService.initMediaSession()
 
+            // load music and setup UI
             mMusicViewModel.deviceMusic.observe(this@MainActivity, { returnedMusic ->
                 finishSetup(returnedMusic)
             })
