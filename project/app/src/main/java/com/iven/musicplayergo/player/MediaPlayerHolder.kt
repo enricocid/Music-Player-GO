@@ -257,41 +257,30 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun updateMediaSessionMetaData() {
         with(MediaMetadataCompat.Builder()) {
-            if (currentSong != null) {
-                currentSong?.run {
-                    putLong(METADATA_KEY_DURATION, duration)
-                    putString(METADATA_KEY_ARTIST, artist)
-                    putString(METADATA_KEY_AUTHOR, artist)
-                    putString(METADATA_KEY_COMPOSER, artist)
-                    putString(METADATA_KEY_TITLE, title)
-                    putString(METADATA_KEY_DISPLAY_TITLE, title)
-                    putString(METADATA_KEY_ALBUM_ARTIST, album)
-                    putString(METADATA_KEY_DISPLAY_SUBTITLE, album)
-                    putString(METADATA_KEY_ALBUM, album)
-                    putBitmap(
-                        METADATA_KEY_DISPLAY_ICON,
-                        ContextCompat.getDrawable(playerService, R.drawable.ic_music_note)?.toBitmap()
-                    )
-                    mPlayingAlbumSongs?.let { songs ->
-                        putLong(METADATA_KEY_NUM_TRACKS, songs.size.toLong())
-                        putLong(METADATA_KEY_TRACK_NUMBER, songs.indexOf(this).toLong())
-                    }
+            currentSong?.run {
+                putLong(METADATA_KEY_DURATION, duration)
+                putString(METADATA_KEY_ARTIST, artist)
+                putString(METADATA_KEY_AUTHOR, artist)
+                putString(METADATA_KEY_COMPOSER, artist)
+                putString(METADATA_KEY_TITLE, title)
+                putString(METADATA_KEY_DISPLAY_TITLE, title)
+                putString(METADATA_KEY_ALBUM_ARTIST, album)
+                putString(METADATA_KEY_DISPLAY_SUBTITLE, album)
+                putString(METADATA_KEY_ALBUM, album)
+                putBitmap(
+                    METADATA_KEY_DISPLAY_ICON,
+                    ContextCompat.getDrawable(playerService, R.drawable.ic_music_note)?.toBitmap()
+                )
+                mPlayingAlbumSongs?.let { songs ->
+                    putLong(METADATA_KEY_NUM_TRACKS, songs.size.toLong())
+                    putLong(METADATA_KEY_TRACK_NUMBER, songs.indexOf(this).toLong())
+                }
 
-                    if (goPreferences.isCovers) {
-                        albumId?.waitForCover(playerService) { bmp ->
-                            putBitmap(METADATA_KEY_ALBUM_ART, bmp)
-                            playerService.getMediaSession().setMetadata(build())
-                        }
-                    } else {
-                        putBitmap(
-                            METADATA_KEY_ALBUM_ART,
-                            ContextCompat.getDrawable(playerService, R.drawable.album_art
-                            )?.toBitmap())
-
-                        playerService.getMediaSession().setMetadata(build())
+                if (goPreferences.isCovers) {
+                    albumId?.waitForCover(playerService, loadDefault = false) { bmp ->
+                        putBitmap(METADATA_KEY_ALBUM_ART, bmp)
                     }
                 }
-            } else {
                 playerService.getMediaSession().setMetadata(build())
             }
         }
