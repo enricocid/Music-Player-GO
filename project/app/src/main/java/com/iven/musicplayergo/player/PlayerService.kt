@@ -199,8 +199,6 @@ class PlayerService : Service() {
 
     fun handleMediaIntent(intent: Intent?): Boolean {
 
-        var isSuccess = false
-
         try {
             intent?.let {
                 val event =
@@ -210,35 +208,34 @@ class PlayerService : Service() {
                     when (event.keyCode) {
                         KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, KeyEvent.KEYCODE_MEDIA_PLAY, KeyEvent.KEYCODE_MEDIA_PAUSE, KeyEvent.KEYCODE_HEADSETHOOK -> {
                             mediaPlayerHolder.resumeOrPause()
-                            isSuccess = true
+                            return true
                         }
                         KeyEvent.KEYCODE_MEDIA_CLOSE, KeyEvent.KEYCODE_MEDIA_STOP -> {
                             mediaPlayerHolder.stopPlaybackService(stopPlayback = true)
-                            isSuccess = true
+                            return true
                         }
                         KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {
                             mediaPlayerHolder.skip(isNext = false)
-                            isSuccess = true
+                            return true
                         }
                         KeyEvent.KEYCODE_MEDIA_NEXT -> {
                             mediaPlayerHolder.skip(isNext = true)
-                            isSuccess = true
+                            return true
                         }
                         KeyEvent.KEYCODE_MEDIA_REWIND -> {
                             mediaPlayerHolder.repeatSong(0)
-                            isSuccess = true
+                            return true
                         }
                     }
                 }
             }
         } catch (e: Exception) {
-            isSuccess = false
             Toast.makeText(this, R.string.error_media_buttons, Toast.LENGTH_LONG)
                 .show()
             e.printStackTrace()
+            return false
         }
-
-        return isSuccess
+        return false
     }
 
     private inner class MediaBtnReceiver: BroadcastReceiver() {
