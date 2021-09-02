@@ -23,21 +23,30 @@ import java.util.regex.Pattern
 
 
 fun MediaPlayerHolder.startSongFromQueue(song: Music?) {
+    if (canRestoreQueue) {
+        canRestoreQueue = false
+    }
     if (isSongRestoredFromPrefs) {
         isSongRestoredFromPrefs = false
     }
-    isPlay = true
-
-    if (isQueue == null) {
-        isQueue = currentSong
+    if (!isPlay) {
+        isPlay = true
     }
     if (!isQueueStarted) {
         isQueueStarted = true
-        mediaPlayerInterface.onQueueStartedOrEnded(started = true)
     }
-
     currentSong = song
-    initMediaPlayer(song)
+    initMediaPlayer(currentSong)
+}
+
+fun MediaPlayerHolder.setCanRestoreQueue() {
+    if (!canRestoreQueue) {
+        canRestoreQueue = isQueue == null && !isQueueStarted && queueSongs.isNotEmpty()
+    }
+    if (isQueue == null) {
+        isQueue = currentSong
+        setQueueEnabled(enabled = true, canSkip = false)
+    }
 }
 
 //https://codereview.stackexchange.com/a/97819

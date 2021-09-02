@@ -89,7 +89,12 @@ class QueueAdapter(
                     context.getString(R.string.artist_and_album, song.artist, song.album)
 
                 setOnClickListener {
-                    mediaPlayerHolder.startSongFromQueue(song)
+                    with(mediaPlayerHolder) {
+                        if (isQueue == null) {
+                            isQueue = currentSong
+                        }
+                        startSongFromQueue(song)
+                    }
                 }
             }
         }

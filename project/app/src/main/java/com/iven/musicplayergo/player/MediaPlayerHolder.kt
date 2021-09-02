@@ -29,6 +29,7 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.media.AudioAttributesCompat
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.savedSongIsAvailable
@@ -152,7 +153,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     var isQueueStarted = false
     var queueSongs = mutableListOf<Music>()
     var canRestoreQueue = false
-    var restoreQueuePosition = -1
+    var restoreQueuePosition = RecyclerView.NO_POSITION
 
     var isSongRestoredFromPrefs = false
 
@@ -787,7 +788,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 currentSong = isQueue
                 isQueue = null
             }
-            restoreQueuePosition = -1
+            restoreQueuePosition = RecyclerView.NO_POSITION
             canRestoreQueue = false
             isQueueStarted = false
             mediaPlayerInterface.onQueueStartedOrEnded(started = false)
@@ -805,7 +806,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 isQueue = currentSong
                 isQueueStarted = true
                 currentSong = queueSongs[restoreQueuePosition]
-                restoreQueuePosition = -1
+                restoreQueuePosition = RecyclerView.NO_POSITION
                 initMediaPlayer(currentSong)
             }
             else -> {

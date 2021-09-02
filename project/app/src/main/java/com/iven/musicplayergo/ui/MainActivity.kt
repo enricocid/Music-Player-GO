@@ -25,6 +25,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import coil.load
 import com.afollestad.materialdialogs.LayoutMode
@@ -1304,9 +1305,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     override fun onAddToQueue(song: Music?) {
         if (checkIsPlayer(showError = true)) {
 
-            setCanRestoreQueue()
-
             with(mMediaPlayerHolder) {
+
+                setCanRestoreQueue()
 
                 song?.let { songToQueue ->
 
@@ -1314,7 +1315,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     queueSongs.remove(songToQueue)
                     queueSongs.add(songToQueue)
 
-                    if (canRestoreQueue && restoreQueuePosition == -1) {
+                    if (canRestoreQueue && restoreQueuePosition == RecyclerView.NO_POSITION) {
                         restoreQueuePosition = queueSongs.indexOf(songToQueue)
                     }
 
@@ -1341,9 +1342,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     ) {
         if (checkIsPlayer(showError = true)) {
 
-            setCanRestoreQueue()
-
             with(mMediaPlayerHolder) {
+
+                setCanRestoreQueue()
 
                 songs?.let { songsToQueue ->
 
@@ -1351,7 +1352,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     queueSongs.removeAll(songsToQueue)
                     queueSongs.addAll(songsToQueue)
 
-                    if (canRestoreQueue && restoreQueuePosition == -1) {
+                    if (canRestoreQueue && restoreQueuePosition == RecyclerView.NO_POSITION) {
                         restoreQueuePosition = queueSongs.indexOf(songsToQueue[0])
                     }
 
@@ -1359,18 +1360,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                         startSongFromQueue(songsToQueue[0])
                     }
                 }
-            }
-        }
-    }
-
-    private fun setCanRestoreQueue() {
-        with(mMediaPlayerHolder) {
-            if (!canRestoreQueue) {
-                canRestoreQueue = isQueue == null && !isQueueStarted && queueSongs.isNotEmpty()
-            }
-            if (isQueue == null) {
-                isQueue = currentSong
-                setQueueEnabled(enabled = true, canSkip = false)
             }
         }
     }

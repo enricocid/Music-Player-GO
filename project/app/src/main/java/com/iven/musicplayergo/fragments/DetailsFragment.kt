@@ -183,7 +183,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
                         if (sLaunchedByArtistView) {
                             mSelectedAlbum = when {
-                                mSelectedAlbumPosition != -1 -> mSelectedArtistAlbums?.get(mSelectedAlbumPosition)
+                                mSelectedAlbumPosition != RecyclerView.NO_POSITION -> mSelectedArtistAlbums?.get(mSelectedAlbumPosition)
                                 else -> {
                                     mSelectedAlbumPosition = 0
                                     mSelectedArtistAlbums?.get(0)
@@ -741,7 +741,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     }
                 }
             }
-            if (mSelectedAlbumPosition != -1 || mSelectedAlbumPosition != 0) {
+            if (mSelectedAlbumPosition != RecyclerView.NO_POSITION || mSelectedAlbumPosition != 0) {
                 mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
                     mSelectedAlbumPosition,
                     0
