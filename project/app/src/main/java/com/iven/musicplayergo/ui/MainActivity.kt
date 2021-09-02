@@ -25,7 +25,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import coil.load
 import com.afollestad.materialdialogs.LayoutMode
@@ -1315,11 +1314,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 song?.let { songToQueue ->
 
                     // don't add duplicates
-                    queueSongs.remove(songToQueue)
-                    queueSongs.add(songToQueue)
+                    if (restoreQueueSong != songToQueue) {
+                        queueSongs.remove(songToQueue)
+                        queueSongs.add(songToQueue)
+                    }
 
-                    if (canRestoreQueue && restoreQueuePosition == RecyclerView.NO_POSITION) {
-                        restoreQueuePosition = queueSongs.indexOf(songToQueue)
+                    if (canRestoreQueue && restoreQueueSong == null) {
+                        restoreQueueSong = songToQueue
                     }
 
                     Toast.makeText(
@@ -1341,7 +1342,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun onAddAlbumToQueue(
         songs: List<Music>?,
-        forcePlay: Boolean
+        forcePlay: Pair<Boolean, Music?>
     ) {
         if (checkIsPlayer(showError = true)) {
 
@@ -1352,15 +1353,23 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 songs?.let { songsToQueue ->
 
                     // don't add duplicates
-                    queueSongs.removeAll(songsToQueue)
-                    queueSongs.addAll(songsToQueue)
-
-                    if (canRestoreQueue && restoreQueuePosition == RecyclerView.NO_POSITION) {
-                        restoreQueuePosition = queueSongs.indexOf(songsToQueue[0])
+                    if (restoreQueueSong != songsToQueue.first()) {
+                        queueSongs.removeAll(songsToQueue)
+                        queueSongs.addAll(songsToQueue)
+                    } else {
+                        queueSongs.addAll(songsToQueue.minus(songsToQueue.first()))
                     }
 
-                    if (!isPlaying || forcePlay) {
-                        startSongFromQueue(songsToQueue[0])
+                    if (canRestoreQueue && restoreQueueSong == null) {
+                        restoreQueueSong = if (forcePlay.second != null) {
+                            forcePlay.second
+                        } else {
+                            songsToQueue.first()
+                        }
+                    }
+
+                    if (!isPlaying || forcePlay.first) {
+                        startSongFromQueue(restoreQueueSong)
                     }
                 }
             }
@@ -1379,7 +1388,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 if (toBeQueued) {
                     onAddAlbumToQueue(
                         shuffledSongs,
-                        forcePlay = true
+                        forcePlay = Pair(first = true, second = null)
                     )
                 } else {
                     onSongSelected(shuffledSongs[0], shuffledSongs, songLaunchedBy)

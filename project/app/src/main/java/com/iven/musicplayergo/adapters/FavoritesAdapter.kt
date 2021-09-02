@@ -84,7 +84,7 @@ class FavoritesAdapter(
                 setOnClickListener {
                     mMediaControlInterface.onAddAlbumToQueue(
                         mFavorites,
-                        forcePlay = true
+                        forcePlay = Pair(first = true, second = mFavorites?.get(absoluteAdapterPosition))
                     )
                 }
                 setOnLongClickListener {

@@ -15,7 +15,8 @@ interface MediaControlInterface {
     fun onAddToQueue(song: Music?)
     fun onAddAlbumToQueue(
         songs: List<Music>?,
-        forcePlay: Boolean
+        // first: force play, second: restore song
+        forcePlay: Pair<Boolean, Music?>
     )
     fun onUpdatePlayingAlbumSongs(songs: List<Music>?)
     fun onFavoriteAddedOrRemoved()
