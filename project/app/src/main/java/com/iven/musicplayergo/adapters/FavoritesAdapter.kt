@@ -58,7 +58,6 @@ class FavoritesAdapter(
         holder.bindItems(mFavorites?.get(holder.absoluteAdapterPosition))
     }
 
-
     inner class FavoritesHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindItems(favorite: Music?) {

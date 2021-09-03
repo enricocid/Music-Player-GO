@@ -12,11 +12,11 @@ import android.os.Parcelable
 import android.os.PowerManager
 import android.support.v4.media.session.MediaSessionCompat
 import android.view.KeyEvent
-import android.widget.Toast
 import androidx.core.content.getSystemService
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toSavedMusic
+import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.VersioningHelper
 
@@ -104,16 +104,14 @@ class PlayerService : Service() {
         super.onDestroy()
 
         if (::mediaPlayerHolder.isInitialized && mediaPlayerHolder.isCurrentSong) {
+
             // Saves last played song and its position
             mediaPlayerHolder.run {
-                currentSong?.let { musicToSave ->
-                    goPreferences.latestPlayedSong =
-                        musicToSave.toSavedMusic(playerPosition, if (isQueue != null && isQueueStarted) {
-                            GoConstants.ARTIST_VIEW
-                        } else {
-                            launchedBy
-                        })
-                }
+                goPreferences.latestPlayedSong = currentSong?.toSavedMusic(playerPosition, if (isQueue != null && isQueueStarted) {
+                    GoConstants.ARTIST_VIEW
+                } else {
+                    launchedBy
+                })
                 if (queueSongs.isNotEmpty()) {
                     goPreferences.queue = queueSongs
                 }
@@ -230,8 +228,7 @@ class PlayerService : Service() {
                 }
             }
         } catch (e: Exception) {
-            Toast.makeText(this, R.string.error_media_buttons, Toast.LENGTH_LONG)
-                .show()
+            R.string.error_media_buttons.toToast(this)
             e.printStackTrace()
             return false
         }

@@ -115,7 +115,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                         onBind(::ContainersAlbumViewHolder) { _, album ->
                             // ContainersAlbumViewHolder is `this` here
                             if (goPreferences.isCovers) {
-                                albumCover.load(mMusicViewModel.deviceMusicByAlbum?.get(album)?.get(0)?.albumId?.toAlbumArtURI()) {
+                                albumCover.load(mMusicViewModel.deviceMusicByAlbum?.get(album)?.first()?.albumId?.toAlbumArtURI()) {
                                     error(ContextCompat.getDrawable(requireActivity(), R.drawable.album_art))
                                 }
                             } else {

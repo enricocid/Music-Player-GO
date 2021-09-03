@@ -291,6 +291,7 @@ object DialogHelper {
                             ListsHelper.addToFavorites(
                                 activity,
                                 song,
+                                canRemove = false,
                                 0,
                                 launchedBy
                             )

@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 
@@ -76,8 +76,7 @@ class AccentsAdapter(private val activity: Activity) :
                 }
 
                 setOnLongClickListener {
-                    Toast.makeText(activity, accentFullName, Toast.LENGTH_LONG)
-                        .show()
+                    accentFullName.toString().toToast(activity)
                     return@setOnLongClickListener true
                 }
             }

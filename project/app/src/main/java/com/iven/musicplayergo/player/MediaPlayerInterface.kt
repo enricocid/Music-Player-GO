@@ -8,7 +8,5 @@ interface MediaPlayerInterface {
     fun onUpdateRepeatStatus()
     fun onQueueEnabled()
     fun onQueueStartedOrEnded(started: Boolean)
-    fun onSaveSong()
-    fun onFocusLoss()
-    fun onPlaylistEnded()
+    fun onBackupSong()
 }

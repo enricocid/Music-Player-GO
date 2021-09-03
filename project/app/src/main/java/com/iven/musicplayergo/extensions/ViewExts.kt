@@ -12,6 +12,7 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.view.*
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.Toolbar
 import androidx.core.animation.doOnEnd
@@ -57,7 +58,7 @@ fun Toolbar.getTitleTextView() = try {
 fun String.getFastScrollerItem(context: Context): FastScrollItemIndicator {
     var charAtZero = context.getString(R.string.fastscroller_dummy_item)
     if (isNotEmpty()) {
-        charAtZero = "${get(0)}"
+        charAtZero = "${first()}"
     }
     return FastScrollItemIndicator.Text(
         charAtZero.uppercase() // Grab the first letter and capitalize it
@@ -238,4 +239,12 @@ fun View.handleViewVisibility(show: Boolean) {
     } else {
         View.GONE
     }
+}
+
+fun String.toToast(context: Context) {
+    Toast.makeText(context, this, Toast.LENGTH_LONG).show()
+}
+
+fun Int.toToast(context: Context) {
+    Toast.makeText(context, this, Toast.LENGTH_LONG).show()
 }

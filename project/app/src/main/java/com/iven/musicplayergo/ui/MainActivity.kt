@@ -16,7 +16,6 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -114,8 +113,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun checkIsPlayer(showError: Boolean): Boolean {
         if (!isMediaPlayerHolder && !mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs && showError) {
-            Toast.makeText(this, R.string.error_bad_id, Toast.LENGTH_LONG)
-                .show()
+            R.string.error_bad_id.toToast(this)
             return false
         }
         return true
@@ -215,7 +213,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     override fun onPause() {
         super.onPause()
         if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs) {
-            saveSongToPref()
+            mMediaPlayerInterface.onBackupSong()
             with(mMediaPlayerHolder) {
                 onPauseSeekBarCallback()
                 if (!isPlaying) {
@@ -234,7 +232,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         when (requestCode) {
             GoConstants.PERMISSION_REQUEST_READ_EXTERNAL_STORAGE -> {
                 // If request is cancelled, the result arrays are empty.
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                if ((grantResults.isNotEmpty() && grantResults.first() == PackageManager.PERMISSION_GRANTED)) {
                     // Permission was granted, yay! Do bind service
                     doBindService()
                 } else {
@@ -594,9 +592,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             npSaveTime.setOnClickListener { saveSongPosition() }
             npEqualizer.setOnClickListener { openEqualizer() }
             npLove.setOnClickListener {
-                ListsHelper.addOrRemoveFromFavorites(
+                ListsHelper.addToFavorites(
                     this@MainActivity,
                     mMediaPlayerHolder.currentSong,
+                    canRemove = true,
                     0,
                     mMediaPlayerHolder.launchedBy)
                 onFavoritesUpdated(clear = false)
@@ -627,7 +626,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         val iterator = imageButtons.iterator()
         while (iterator.hasNext()) {
             iterator.next().setOnLongClickListener { btn ->
-                Toast.makeText(this@MainActivity, btn.contentDescription, Toast.LENGTH_SHORT).show()
+                btn.contentDescription.toString().toToast(this)
                 return@setOnLongClickListener true
             }
         }
@@ -765,8 +764,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             val song = mMediaPlayerHolder.currentSong
             when (val position = mMediaPlayerHolder.playerPosition) {
                 0 -> mNpCoverBinding.npLove.callOnClick()
-                else -> if (!isInFavorites(song, position)) {
-                    ListsHelper.addToFavorites(this, song, mMediaPlayerHolder.playerPosition, mMediaPlayerHolder.launchedBy)
+                else -> {
+                    ListsHelper.addToFavorites(this, song, canRemove = false, position, mMediaPlayerHolder.launchedBy)
                     onFavoriteAddedOrRemoved()
                 }
             }
@@ -776,7 +775,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private fun updateNpFavoritesIcon(context: Context) {
         if (isMediaPlayerHolder && ::mNpCoverBinding.isInitialized) {
             mMediaPlayerHolder.currentSong?.let { song ->
-                val isFavorite = isInFavorites(song, 0)
+                val favorites = goPreferences.favorites
+                val isFavorite = favorites != null && favorites.contains(song.toSavedMusic(0, mMediaPlayerHolder.launchedBy))
                 val favoritesButtonColor = if (isFavorite) {
                     mNpCoverBinding.npLove.setImageResource(R.drawable.ic_favorite)
                     ThemeHelper.resolveThemeAccent(context)
@@ -795,25 +795,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
-    private fun isInFavorites(song: Music?, playerPosition: Int): Boolean {
-        val favorites = goPreferences.favorites
-        if (favorites != null && song != null) {
-            val convertedSong =
-                song.toSavedMusic(playerPosition, mMediaPlayerHolder.launchedBy)
-            return favorites.contains(convertedSong)
-        }
-        return false
-    }
-
-    private fun saveSongToPref() {
-        if (::mMediaPlayerHolder.isInitialized && !mMediaPlayerHolder.isPlaying || mMediaPlayerHolder.state == GoConstants.PAUSED) {
-            MusicOrgHelper.saveLatestSong(mMediaPlayerHolder.currentSong, mMediaPlayerHolder, mMediaPlayerHolder.launchedBy)
-        }
-    }
-
     override fun onAppearanceChanged(isThemeChanged: Boolean) {
         sAppearanceChanged = true
-        synchronized(saveSongToPref()) {
+        synchronized(mMediaPlayerInterface.onBackupSong()) {
             if (isThemeChanged) {
                 AppCompatDelegate.setDefaultNightMode(
                     ThemeHelper.getDefaultNightMode(
@@ -873,7 +857,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         if (clear) {
             favorites?.clear()
-            goPreferences.favorites = favorites
+            goPreferences.favorites = null
         }
 
         val favoritesButtonColor = if (favorites.isNullOrEmpty()) {
@@ -1323,14 +1307,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                         restoreQueueSong = songToQueue
                     }
 
-                    Toast.makeText(
-                        this@MainActivity,
-                        getString(
-                            R.string.queue_song_add,
-                            songToQueue.title
-                        ),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    getString(
+                        R.string.queue_song_add,
+                        songToQueue.title
+                    ).toToast(this@MainActivity)
 
                     if (!isPlaying || state == GoConstants.PAUSED) {
                         startSongFromQueue(songToQueue)
@@ -1361,15 +1341,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     }
 
                     if (canRestoreQueue && restoreQueueSong == null) {
-                        restoreQueueSong = if (forcePlay.second != null) {
-                            forcePlay.second
-                        } else {
-                            songsToQueue.first()
-                        }
+                        restoreQueueSong = forcePlay.second ?: songsToQueue.first()
                     }
 
                     if (!isPlaying || forcePlay.first) {
-                        startSongFromQueue(restoreQueueSong)
+                        startSongFromQueue(forcePlay.second ?: songsToQueue.first())
                     }
                 }
             }
@@ -1391,7 +1367,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                         forcePlay = Pair(first = true, second = null)
                     )
                 } else {
-                    onSongSelected(shuffledSongs[0], shuffledSongs, songLaunchedBy)
+                    onSongSelected(shuffledSongs.first(), shuffledSongs, songLaunchedBy)
                 }
             }
         }
@@ -1416,17 +1392,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun onAddToFilter(stringToFilter: String?) {
         if (mMusicViewModel.deviceMusicFiltered?.size == 1) {
-            Toast.makeText(
-                this,
-                R.string.error_eq,
-                Toast.LENGTH_LONG
-            ).show()
+            R.string.error_eq.toToast(this)
         } else {
             stringToFilter?.let { string ->
 
                 ListsHelper.addToHiddenItems(string)
 
-                if (!mMusicContainersFragments.isNullOrEmpty() && !mMusicContainersFragments[0].onListFiltered(string)) {
+                if (!mMusicContainersFragments.isNullOrEmpty() && !mMusicContainersFragments.first().onListFiltered(string)) {
                     ThemeHelper.applyChanges(this)
                 } else {
                     if (!mMusicContainersFragments.isNullOrEmpty() && mMusicContainersFragments.size >= 1) {
@@ -1471,8 +1443,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             mQueueDialog = DialogHelper.showQueueSongsDialog(this, mMediaPlayerHolder)
             mQueueAdapter = mQueueDialog.getListAdapter() as QueueAdapter
         } else {
-            Toast.makeText(this, R.string.error_no_queue, Toast.LENGTH_LONG)
-                .show()
+            R.string.error_no_queue.toToast(this)
         }
     }
 
@@ -1482,11 +1453,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 this
             )
         } else {
-            Toast.makeText(
-                this,
-                R.string.error_no_favorites,
-                Toast.LENGTH_LONG
-            ).show()
+            R.string.error_no_favorites.toToast(this)
         }
     }
 
@@ -1579,17 +1546,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             )
         }
 
-        override fun onFocusLoss() {
-            saveSongToPref()
-        }
-
-        override fun onSaveSong() {
-            saveSongToPref()
-        }
-
-        override fun onPlaylistEnded() {
-            Toast.makeText(this@MainActivity, R.string.error_list_ended, Toast.LENGTH_LONG)
-                .show()
+        override fun onBackupSong() {
+            if (::mMediaPlayerHolder.isInitialized && !mMediaPlayerHolder.isPlaying || mMediaPlayerHolder.state == GoConstants.PAUSED) {
+                goPreferences.latestPlayedSong = mMediaPlayerHolder.currentSong?.toSavedMusic(mMediaPlayerHolder.playerPosition, mMediaPlayerHolder.launchedBy)
+            }
         }
     }
 

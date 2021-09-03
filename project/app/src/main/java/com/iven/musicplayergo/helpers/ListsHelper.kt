@@ -4,11 +4,11 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.extensions.toSavedMusic
+import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
 import java.util.*
@@ -210,64 +210,30 @@ object ListsHelper {
     fun addToFavorites(
         activity: Activity,
         song: Music?,
+        canRemove: Boolean,
         playerPosition: Int,
         launchedBy: String
     ) {
-        val favorites = if (goPreferences.favorites != null) {
-            goPreferences.favorites?.toMutableList()
-        } else {
-            mutableListOf()
-        }
-
-        val songToSave = song?.toSavedMusic(playerPosition, launchedBy)
-
-        songToSave?.let { savedSong ->
-            if (!favorites?.contains(songToSave)!!) {
+        val favorites = goPreferences.favorites?.toMutableList() ?: mutableListOf()
+        song?.toSavedMusic(playerPosition, launchedBy)?.let { savedSong ->
+            if (!favorites.contains(savedSong)) {
                 favorites.add(savedSong)
                 notifyFavoriteAdded(activity, savedSong, playerPosition)
-            }
-            goPreferences.favorites = favorites
-        }
-    }
-
-    @JvmStatic
-    fun addOrRemoveFromFavorites(
-        activity: Activity,
-        song: Music?,
-        playerPosition: Int,
-        launchedBy: String
-    ) {
-        val favorites =
-            if (goPreferences.favorites != null) {
-                goPreferences.favorites?.toMutableList()
-            } else {
-                mutableListOf()
-            }
-        val songToSave = song?.toSavedMusic(playerPosition, launchedBy)
-
-        songToSave?.let { savedSong ->
-            if (favorites?.contains(songToSave)!!) {
-                favorites.remove(songToSave)
-            } else {
-                favorites.add(savedSong)
-                notifyFavoriteAdded(activity, savedSong, playerPosition)
+            } else if (canRemove) {
+                favorites.remove(savedSong)
             }
             goPreferences.favorites = favorites
         }
     }
 
     private fun notifyFavoriteAdded(activity: Activity, song: Music, playerPosition: Int) {
-        Toast.makeText(
-            activity,
-            activity.getString(
-                R.string.favorite_added,
-                song.title,
-                playerPosition.toLong().toFormattedDuration(
-                    isAlbum = false,
-                    isSeekBar = false
-                )
-            ),
-            Toast.LENGTH_LONG
-        ).show()
+        activity.getString(
+            R.string.favorite_added,
+            song.title,
+            playerPosition.toLong().toFormattedDuration(
+                isAlbum = false,
+                isSeekBar = false
+            )
+        ).toToast(activity)
     }
 }

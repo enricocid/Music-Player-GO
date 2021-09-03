@@ -22,7 +22,6 @@ import android.support.v4.media.MediaMetadataCompat.*
 import android.support.v4.media.session.PlaybackStateCompat
 import android.support.v4.media.session.PlaybackStateCompat.*
 import android.util.Log
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.graphics.drawable.toBitmap
@@ -33,6 +32,7 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.savedSongIsAvailable
 import com.iven.musicplayergo.extensions.toContentUri
+import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.extensions.waitForCover
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ListsHelper
@@ -153,7 +153,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     var queueSongs = mutableListOf<Music>()
     var canRestoreQueue = false
     var restoreQueueSong: Music? = null
-    //var restoreQueuePosition = RecyclerView.NO_POSITION
 
     var isSongRestoredFromPrefs = false
 
@@ -308,7 +307,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     } else {
                         synchronized(pauseMediaPlayer()) {
                             mMusicNotificationManager.cancelNotification()
-                            mediaPlayerInterface.onPlaylistEnded()
+                            R.string.error_list_ended.toToast(playerService)
                         }
                     }
                 } else {
@@ -427,7 +426,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             updatePlayPauseAction()
             updateNotification()
         }
-        mediaPlayerInterface.onFocusLoss()
+        mediaPlayerInterface.onBackupSong()
     }
 
     fun repeatSong(startFrom: Int) {
@@ -449,7 +448,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             isQueueStarted -> currentSong = getSkipSong(isNext = isNext)
             else -> {
                 isQueueStarted = true
-                currentSong = queueSongs[0]
+                currentSong = queueSongs.first()
             }
         }
         initMediaPlayer(currentSong)
@@ -582,7 +581,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
         val errorMessage = "MediaPlayer error: $what"
-        Toast.makeText(playerService, errorMessage, Toast.LENGTH_SHORT).show()
+        errorMessage.toToast(playerService)
         Log.d(errorMessage, errorMessage)
         mediaPlayer.reset()
         return true
@@ -724,12 +723,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private fun releaseCustomEqualizer() {
         if (mEqualizer != null) {
-            mEqualizer = null
             mEqualizer?.release()
-            mBassBoost = null
             mBassBoost?.release()
-            mVirtualizer = null
             mVirtualizer?.release()
+            mEqualizer = null
+            mBassBoost = null
+            mVirtualizer = null
         }
     }
 
@@ -755,8 +754,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             }
             else -> isRepeat1X = true
         }
-        Toast.makeText(playerService, toastMessage, Toast.LENGTH_LONG)
-                .show()
+        toastMessage.toToast(playerService)
     }
 
     fun repeat(updatePlaybackStatus: Boolean) {

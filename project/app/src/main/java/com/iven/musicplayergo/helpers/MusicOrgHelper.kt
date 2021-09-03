@@ -3,7 +3,6 @@ package com.iven.musicplayergo.helpers
 import android.content.res.Resources
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.extensions.toFormattedYear
-import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
@@ -63,22 +62,7 @@ object MusicOrgHelper {
             Pair(first = albums[position], second = position)
         } catch (e: Exception) {
             e.printStackTrace()
-            Pair(first = albums?.get(0)!!, second = 0)
-        }
-    }
-
-    @JvmStatic
-    fun saveLatestSong(
-        latestSong: Music?,
-        mediaPlayerHolder: MediaPlayerHolder,
-        launchedBy: String
-    ) {
-        val playerPosition = mediaPlayerHolder.playerPosition
-        latestSong?.let { musicToSave ->
-            val toSave = musicToSave.toSavedMusic(playerPosition, launchedBy)
-            if (goPreferences.latestPlayedSong != toSave) {
-                goPreferences.latestPlayedSong = toSave
-            }
+            Pair(first = albums?.first()!!, second = 0)
         }
     }
 
@@ -104,7 +88,7 @@ object MusicOrgHelper {
                     sortedAlbums.add(
                         Album(
                             album,
-                            albumSongs[0].year.toFormattedYear(resources),
+                            albumSongs.first().year.toFormattedYear(resources),
                             albumSongs,
                             albumSongs.map { song -> song.duration }.sum()
                         )

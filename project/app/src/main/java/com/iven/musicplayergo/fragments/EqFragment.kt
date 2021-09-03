@@ -24,6 +24,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentEqualizerBinding
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.createCircularReveal
+import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.ui.MediaControlInterface
@@ -167,7 +168,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
         mEqualizer.first?.run {
             val bandLevelRange = bandLevelRange
-            val minBandLevel = bandLevelRange[0]
+            val minBandLevel = bandLevelRange.first()
             val maxBandLevel = bandLevelRange[1]
 
             val iterator = mSliders.iterator().withIndex()
@@ -281,8 +282,7 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
 
         } catch (e: UnsupportedOperationException) {
             e.printStackTrace()
-            Toast.makeText(requireActivity(), R.string.error_eq, Toast.LENGTH_LONG)
-                .show()
+            R.string.error_eq.toToast(requireActivity())
         }
     }
 

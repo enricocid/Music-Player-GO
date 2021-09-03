@@ -186,7 +186,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                                 mSelectedAlbumPosition != RecyclerView.NO_POSITION -> mSelectedArtistAlbums?.get(mSelectedAlbumPosition)
                                 else -> {
                                     mSelectedAlbumPosition = 0
-                                    mSelectedArtistAlbums?.get(0)
+                                    mSelectedArtistAlbums?.first()
                                 }
                             }
                         }
@@ -291,7 +291,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         mSongsList?.size
                     )
                 } else {
-                    val firstSong = mSongsList?.get(0)
+                    val firstSong = mSongsList?.first()
                     selectedAlbumViewTitle.text = mSelectedArtistOrFolder
                     selectedAlbumViewTitle.isSelected = true
                     selectedAlbumViewArtist.text = firstSong?.artist
@@ -431,6 +431,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     ListsHelper.addToFavorites(
                         requireActivity(),
                         song,
+                        canRemove = false,
                         0,
                         mLaunchedBy
                     )
@@ -705,7 +706,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                             0
                         }
 
-                        loadCoverIntoTarget(itemAlbum.music?.get(0), albumCover)
+                        loadCoverIntoTarget(itemAlbum.music?.first(), albumCover)
                     }
 
                     onClick { index ->
