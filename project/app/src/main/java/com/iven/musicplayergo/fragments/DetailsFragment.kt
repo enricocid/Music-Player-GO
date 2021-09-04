@@ -617,18 +617,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     R.id.action_shuffle_am -> {
                         mMediaControlInterface.onSongsShuffled(
                             mSongsList?.toMutableList(),
-                            toBeQueued = true,
                             mLaunchedBy
                         )
                     }
-                    R.id.action_shuffle_sa -> {
-                        val music = mMediaControlInterface.onSongsShuffled(
-                            mSelectedAlbum?.music,
-                            toBeQueued = true,
-                            mLaunchedBy
-                        )
-                        setSongsDataSource(music, updateSongs = false)
-                    }
+                    R.id.action_shuffle_sa -> mMediaControlInterface.onSongsShuffled(
+                        mSelectedAlbum?.music,
+                        mLaunchedBy
+                    )
                     R.id.default_sorting -> applySortingToMusic(GoConstants.DEFAULT_SORTING)
                     R.id.ascending_sorting -> applySortingToMusic(GoConstants.ASCENDING_SORTING)
                     R.id.descending_sorting -> applySortingToMusic(GoConstants.DESCENDING_SORTING)

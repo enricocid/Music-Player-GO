@@ -150,7 +150,6 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
             _binding.shuffleFab.setOnClickListener {
                 mMediaControlInterface.onSongsShuffled(
                     mAllMusic,
-                    toBeQueued = mAllMusic?.size!! <= 1000,
                     GoConstants.ARTIST_VIEW
                 )
             }

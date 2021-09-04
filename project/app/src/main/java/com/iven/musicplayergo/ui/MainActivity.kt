@@ -53,6 +53,8 @@ import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.coroutines.*
 
 
+private const val SHUFFLE_CUT_OFF = 250
+
 class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterface {
 
     // View binding classes
@@ -1354,22 +1356,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun onSongsShuffled(
         songs: List<Music>?,
-        toBeQueued: Boolean,
         songLaunchedBy: String
-    ): List<Music>? {
-        return songs?.apply {
-            if (checkIsPlayer(showError = true)) {
-                val shuffledSongs = toMutableList()
-                shuffledSongs.shuffle()
-                if (toBeQueued) {
-                    onAddAlbumToQueue(
-                        shuffledSongs,
-                        forcePlay = Pair(first = true, second = null)
-                    )
+    ) {
+        songs?.run {
+            onAddAlbumToQueue(
+                if (size >= SHUFFLE_CUT_OFF) {
+                    this.shuffled().take(SHUFFLE_CUT_OFF)
                 } else {
-                    onSongSelected(shuffledSongs.first(), shuffledSongs, songLaunchedBy)
-                }
-            }
+                    this.shuffled()
+                },
+                forcePlay = Pair(first = true, second = null)
+            )
         }
     }
 
