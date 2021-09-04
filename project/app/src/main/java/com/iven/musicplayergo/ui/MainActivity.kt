@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import coil.load
 import com.afollestad.materialdialogs.LayoutMode
@@ -34,7 +35,6 @@ import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
-import com.afollestad.materialdialogs.list.getListAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.iven.musicplayergo.GoConstants
@@ -1441,7 +1441,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private fun openQueueDialog() {
         if (checkIsPlayer(showError = false) && mMediaPlayerHolder.queueSongs.isNotEmpty()) {
             mQueueDialog = DialogHelper.showQueueSongsDialog(this, mMediaPlayerHolder)
-            mQueueAdapter = mQueueDialog.getListAdapter() as QueueAdapter
+            mQueueAdapter = mQueueDialog.getCustomView().findViewById<RecyclerView>(R.id.dialogs_rv).adapter as QueueAdapter
         } else {
             R.string.error_no_queue.toToast(this)
         }

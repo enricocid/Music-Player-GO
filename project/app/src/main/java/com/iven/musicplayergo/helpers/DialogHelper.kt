@@ -17,8 +17,8 @@ import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.bottomsheets.expandBottomSheet
 import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.callbacks.onShow
-import com.afollestad.materialdialogs.list.customListAdapter
-import com.afollestad.materialdialogs.list.getRecyclerView
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.ui.ItemSwipeCallback
 import com.iven.musicplayergo.adapters.FavoritesAdapter
@@ -45,9 +45,10 @@ object DialogHelper {
         title(R.string.queue)
         val queueAdapter = QueueAdapter(context, this, mediaPlayerHolder)
 
-        customListAdapter(queueAdapter)
+        customView(R.layout.dialogs_music_container)
+        val recyclerView = getCustomView().findViewById<RecyclerView>(R.id.dialogs_rv)
+        recyclerView.adapter = queueAdapter
 
-        val recyclerView = getRecyclerView()
         ItemTouchHelper(ItemTouchCallback(queueAdapter.queueSongs, isActiveTabs = false))
             .attachToRecyclerView(recyclerView)
 
@@ -151,9 +152,9 @@ object DialogHelper {
             this
         )
 
-        customListAdapter(favoritesAdapter)
-
-        val recyclerView = getRecyclerView()
+        customView(R.layout.dialogs_music_container)
+        val recyclerView = getCustomView().findViewById<RecyclerView>(R.id.dialogs_rv)
+        recyclerView.adapter = favoritesAdapter
 
         if (ThemeHelper.isDeviceLand(context.resources)) {
             recyclerView.layoutManager = GridLayoutManager(context, 3)

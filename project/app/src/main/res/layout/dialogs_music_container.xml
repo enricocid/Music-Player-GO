@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?><!-- MUSIC LIST -->
+<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialogs_rv"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:overScrollMode="never"
+    android:scrollbars="none"
+    app:fastScrollEnabled="true"
+    app:fastScrollHorizontalThumbDrawable="@drawable/dialogs_rv_thumb_drawable"
+    app:fastScrollHorizontalTrackDrawable="@drawable/dialogs_rv_track_drawable"
+    app:fastScrollVerticalThumbDrawable="@drawable/dialogs_rv_thumb_drawable"
+    app:fastScrollVerticalTrackDrawable="@drawable/dialogs_rv_track_drawable"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
