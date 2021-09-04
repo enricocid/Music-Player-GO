@@ -123,7 +123,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private var mSeekBarPositionUpdateTask: Runnable? = null
 
     var currentSong: Music? = null
-    private var mPlayingAlbumSongs: List<Music>? = null
+    private var mPlayingSongs: List<Music>? = null
     var launchedBy = GoConstants.ARTIST_VIEW
 
     var currentVolumeInPercent = goPreferences.latestVolume
@@ -235,12 +235,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun updateCurrentSong(song: Music?, albumSongs: List<Music>?, songLaunchedBy: String) {
         currentSong = song
-        mPlayingAlbumSongs = albumSongs
+        mPlayingSongs = albumSongs
         launchedBy = songLaunchedBy
     }
 
     fun updateCurrentSongs(sortedMusic: List<Music>?) {
-        mPlayingAlbumSongs = if (sortedMusic != null) {
+        mPlayingSongs = if (sortedMusic != null) {
             sortedMusic
         } else {
             val sorting = if (goPreferences.songsVisualization != GoConstants.TITLE) {
@@ -248,11 +248,11 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             } else {
                 GoConstants.TRACK_SORTING
             }
-            ListsHelper.getSortedMusicList(sorting, mPlayingAlbumSongs?.toMutableList())
+            ListsHelper.getSortedMusicList(sorting, mPlayingSongs?.toMutableList())
         }
     }
 
-    fun getCurrentAlbumSize() = mPlayingAlbumSongs?.size ?: 0
+    fun getCurrentAlbumSize() = mPlayingSongs?.size ?: 0
 
     fun updateMediaSessionMetaData() {
         with(MediaMetadataCompat.Builder()) {
@@ -270,7 +270,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     METADATA_KEY_DISPLAY_ICON,
                     ContextCompat.getDrawable(playerService, R.drawable.ic_music_note)?.toBitmap()
                 )
-                mPlayingAlbumSongs?.let { songs ->
+                mPlayingSongs?.let { songs ->
                     putLong(METADATA_KEY_NUM_TRACKS, songs.size.toLong())
                     putLong(METADATA_KEY_TRACK_NUMBER, songs.indexOf(this).toLong())
                 }
@@ -298,7 +298,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             }
             isQueue != null -> manageQueue(isNext = true)
             else -> {
-                if (mPlayingAlbumSongs?.indexOf(currentSong) == mPlayingAlbumSongs?.size?.minus(
+                if (mPlayingSongs?.indexOf(currentSong) == mPlayingSongs?.size?.minus(
                         1
                     )
                 ) {
@@ -459,7 +459,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         val listToSeek = if (isQueue != null) {
             queueSongs
         } else {
-            mPlayingAlbumSongs
+            mPlayingSongs
         }
 
         // to correctly get skip song when song is restored
