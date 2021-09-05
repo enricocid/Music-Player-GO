@@ -130,7 +130,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             sBound = true
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder
             mMediaPlayerHolder.mediaPlayerInterface = mMediaPlayerInterface
-            mPlayerService.initMediaSession()
 
             // load music and setup UI
             mMusicViewModel.deviceMusic.observe(this@MainActivity, { returnedMusic ->

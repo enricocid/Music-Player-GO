@@ -86,14 +86,18 @@ fun Long.toAlbumArtURI(): Uri {
     return ContentUris.withAppendedId("content://media/external/audio/albumart".toUri(), this)
 }
 
-fun Long.waitForCover(context: Context, onDone: (Bitmap?) -> Unit) {
+fun Long.waitForCover(context: Context, canLoadDefault: Boolean, onDone: (Bitmap?) -> Unit) {
     val defaultAlbumArt = ContextCompat.getDrawable(context, R.drawable.album_art)?.toBitmap()
     Coil.imageLoader(context).enqueue(
         ImageRequest.Builder(context)
             .data(toAlbumArtURI())
             .target(
                 onSuccess = { onDone(it.toBitmap()) },
-                onError = { onDone(defaultAlbumArt) }
+                onError = { onDone(if (canLoadDefault) {
+                    defaultAlbumArt
+                } else {
+                    null
+                }) }
             )
             .build()
     )

@@ -74,27 +74,21 @@ class PlayerService : Service() {
         override fun onMediaButtonEvent(mediaButtonEvent: Intent?) = handleMediaIntent(mediaButtonEvent)
     }
 
-    fun initMediaSession() {
-        if (!::mWakeLock.isInitialized) {
-            val powerManager = getSystemService<PowerManager>()!!
-            mWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, javaClass.name)
-            mWakeLock.setReferenceCounted(false)
-        }
-        if (!::mMediaSessionCompat.isInitialized) {
-            val mediaButtonIntent = Intent(Intent.ACTION_MEDIA_BUTTON)
-            val mediaButtonReceiverComponentName = ComponentName(applicationContext, MediaBtnReceiver::class.java)
+    private fun configureMediaSession() {
 
-            val mediaButtonReceiverPendingIntent = PendingIntent.getBroadcast(applicationContext, 0, mediaButtonIntent, if (VersioningHelper.isMarshmallow()) {
-                PendingIntent.FLAG_IMMUTABLE or 0
-            } else {
-                0
-            })
+        val mediaButtonIntent = Intent(Intent.ACTION_MEDIA_BUTTON)
+        val mediaButtonReceiverComponentName = ComponentName(applicationContext, MediaBtnReceiver::class.java)
 
-            mMediaSessionCompat = MediaSessionCompat(this, packageName, mediaButtonReceiverComponentName, mediaButtonReceiverPendingIntent).apply {
-                isActive = true
-                setCallback(mMediaSessionCallback)
-                setMediaButtonReceiver(mediaButtonReceiverPendingIntent)
-            }
+        val mediaButtonReceiverPendingIntent = PendingIntent.getBroadcast(applicationContext, 0, mediaButtonIntent, if (VersioningHelper.isMarshmallow()) {
+            PendingIntent.FLAG_IMMUTABLE or 0
+        } else {
+            0
+        })
+
+        mMediaSessionCompat = MediaSessionCompat(this, packageName, mediaButtonReceiverComponentName, mediaButtonReceiverPendingIntent).apply {
+            isActive = true
+            setCallback(mMediaSessionCallback)
+            setMediaButtonReceiver(mediaButtonReceiverPendingIntent)
         }
     }
 
@@ -132,6 +126,17 @@ class PlayerService : Service() {
             releaseWakeLock()
             isRunning = false
         }
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        if (!::mWakeLock.isInitialized) {
+            getSystemService<PowerManager>()?.let { pm ->
+                mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, javaClass.name)
+                mWakeLock.setReferenceCounted(false)
+            }
+        }
+        configureMediaSession()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
