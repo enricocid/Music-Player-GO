@@ -81,6 +81,8 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 
 - **Matt Medeiros** for having reported shuffle issues
 
+- [**Themightyhook**](https://github.com/Themightyhook) for having reported MediaButton [issue](https://github.com/enricocid/Music-Player-GO/issues/311)
+
 
 ### Big thanks to translators:
 

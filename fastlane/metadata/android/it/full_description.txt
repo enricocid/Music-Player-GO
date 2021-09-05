@@ -6,11 +6,9 @@
 - Equalizzatore
 - Musica organizzata per artista, album, canzoni e cartelle; le tabs sono organizzabili
 - Personalizzazione: temi chiaro, scuro, automatico e accenti
-- Now playing...
-- Supporto per le cover integrate
-- Avanzamento veloce (tap lungo sui pulsanti precedente/prossima canzone)
+- Coda
 - Gestione del focus audio, volume preciso e delle cuffie
-- Ricerca, velocità di riproduzione, ordinamento, shuffle...
+- Now playing, cover integrate, ricerca, velocità di riproduzione, ordinamento, shuffle, avanzamento veloce...
 
 
 <b>Vuoi contribuire alle traduzioni?</b>

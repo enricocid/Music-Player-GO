@@ -4,13 +4,11 @@
 
 - Minimal interface
 - Equalizer
-- Music organised by artist, albums, songs and foldersâ€”tabs are organisable
+- Music organised by artist, albums, songs and folders; tabs are organisable
 - Light, dark, automatic themes and accents
-- Now playing...
-- Embedded covers
-- Fast-seeking (by long-clicking the "Skip" buttons)
+- Queue
 - Audio focus, precise volume and headset management
-- Search, playback speed, sorting, shuffle...
+- Now playing, embedded covers, search, playback speed, sorting, shuffle, fast-seeking...
 
 
 <b>Want to contribute to translations?</b>

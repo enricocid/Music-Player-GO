@@ -68,11 +68,9 @@ Source code for the Android music player **Music Player GO**
 - Equalizer
 - Music organised by artist, albums, songs and folders; tabs are organisable
 - Light, dark, automatic themes and accents
-- Now playing...
-- Embedded covers
-- Fast-seeking (by long-clicking the "Skip" buttons)
+- Queue
 - Audio focus, precise volume and headset management
-- Search, playback speed, sorting, shuffle...
+- Now playing, embedded covers, search, playback speed, sorting, shuffle, fast-seeking...
  
 
 # Translations
