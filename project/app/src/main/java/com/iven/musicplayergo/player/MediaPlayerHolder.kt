@@ -279,9 +279,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                     if (goPreferences.isCovers) {
                         albumId?.waitForCover(playerService, canLoadDefault = false) { bmp ->
                             putBitmap(METADATA_KEY_ALBUM_ART, bmp)
-                            playerService.getMediaSession().setMetadata(build())
                         }
                     }
+                    playerService.getMediaSession().setMetadata(build())
                 }
             } else {
                 playerService.getMediaSession().setMetadata(build())
@@ -740,7 +740,6 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (isPlaying) {
             pauseMediaPlayer()
         } else {
-            updateMediaSessionMetaData()
             resumeMediaPlayer()
         }
     }
