@@ -30,10 +30,7 @@ import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.extensions.savedSongIsAvailable
-import com.iven.musicplayergo.extensions.toContentUri
-import com.iven.musicplayergo.extensions.toToast
-import com.iven.musicplayergo.extensions.waitForCover
+import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
@@ -154,7 +151,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     var canRestoreQueue = false
     var restoreQueueSong: Music? = null
 
-    var isSongRestoredFromPrefs = false
+    var isSongFromPrefs = false
 
     var state = GoConstants.PAUSED
     var isPlay = false
@@ -256,36 +253,32 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun updateMediaSessionMetaData() {
         with(MediaMetadataCompat.Builder()) {
-            if (currentSong != null) {
-                currentSong?.run {
-                    putLong(METADATA_KEY_DURATION, duration)
-                    putString(METADATA_KEY_ARTIST, artist)
-                    putString(METADATA_KEY_AUTHOR, artist)
-                    putString(METADATA_KEY_COMPOSER, artist)
-                    putString(METADATA_KEY_TITLE, title)
-                    putString(METADATA_KEY_DISPLAY_TITLE, title)
-                    putString(METADATA_KEY_ALBUM_ARTIST, album)
-                    putString(METADATA_KEY_DISPLAY_SUBTITLE, album)
-                    putString(METADATA_KEY_ALBUM, album)
-                    putBitmap(
-                        METADATA_KEY_DISPLAY_ICON,
-                        ContextCompat.getDrawable(playerService, R.drawable.ic_music_note)?.toBitmap()
-                    )
-                    mPlayingSongs?.let { songs ->
-                        putLong(METADATA_KEY_NUM_TRACKS, songs.size.toLong())
-                        putLong(METADATA_KEY_TRACK_NUMBER, songs.indexOf(this).toLong())
-                    }
-
-                    if (goPreferences.isCovers) {
-                        albumId?.waitForCover(playerService, canLoadDefault = false) { bmp ->
-                            putBitmap(METADATA_KEY_ALBUM_ART, bmp)
-                        }
-                    }
-                    playerService.getMediaSession().setMetadata(build())
+            currentSong?.run {
+                putLong(METADATA_KEY_DURATION, duration)
+                putString(METADATA_KEY_ARTIST, artist)
+                putString(METADATA_KEY_AUTHOR, artist)
+                putString(METADATA_KEY_COMPOSER, artist)
+                putString(METADATA_KEY_TITLE, title)
+                putString(METADATA_KEY_DISPLAY_TITLE, title)
+                putString(METADATA_KEY_ALBUM_ARTIST, album)
+                putString(METADATA_KEY_DISPLAY_SUBTITLE, album)
+                putString(METADATA_KEY_ALBUM, album)
+                putBitmap(
+                    METADATA_KEY_DISPLAY_ICON,
+                    ContextCompat.getDrawable(playerService, R.drawable.ic_music_note)?.toBitmap()
+                )
+                mPlayingSongs?.let { songs ->
+                    putLong(METADATA_KEY_NUM_TRACKS, songs.size.toLong())
+                    putLong(METADATA_KEY_TRACK_NUMBER, songs.indexOf(this).toLong())
                 }
-            } else {
-                playerService.getMediaSession().setMetadata(build())
+
+                if (goPreferences.isCovers) {
+                    albumId?.waitForCover(playerService, canLoadDefault = false) { bmp ->
+                        putBitmap(METADATA_KEY_ALBUM_ART, bmp)
+                    }
+                }
             }
+            playerService.getMediaSession().setMetadata(build())
         }
     }
 
@@ -405,8 +398,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             }
             startOrChangePlaybackSpeed()
 
-            state = if (isSongRestoredFromPrefs) {
-                isSongRestoredFromPrefs = false
+            state = if (isSongFromPrefs) {
+                isSongFromPrefs = false
                 GoConstants.PLAYING
             } else {
                 GoConstants.RESUMED
@@ -444,8 +437,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private fun manageQueue(isNext: Boolean) {
 
-        if (isSongRestoredFromPrefs) {
-            isSongRestoredFromPrefs = false
+        if (isSongFromPrefs) {
+            isSongFromPrefs = false
         }
 
         when {
@@ -466,32 +459,33 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             mPlayingSongs
         }
 
-        // to correctly get skip song when song is restored
-        if (isSongRestoredFromPrefs) {
-            listToSeek?.savedSongIsAvailable(currentSong)?.let { song ->
-                currentSong = song
-            }
+        val songToSkip = if (isQueue != null && queueSongs.isNotEmpty() && isQueueStarted) {
+            currentSong
+        } else {
+            currentSong?.toSavedMusic(0, GoConstants.ARTIST_VIEW)
         }
 
         try {
             return listToSeek?.get(
                 if (isNext) {
-                    listToSeek.indexOf(currentSong).plus(1)
+                    listToSeek.indexOf(songToSkip).plus(1)
                 } else {
-                    listToSeek.indexOf(currentSong).minus(1)
+                    listToSeek.indexOf(songToSkip).minus(1)
                 }
             )
         } catch (e: IndexOutOfBoundsException) {
             e.printStackTrace()
             return when {
-                isQueue != null -> if (isNext) {
-                    setQueueEnabled(enabled = false, canSkip = false)
-                    getSkipSong(isNext = true)
-                } else {
-                    isQueueStarted = false
-                    isQueue
+                isQueue != null -> {
+                    val returnedSong = isQueue
+                    if (isNext) {
+                        setQueueEnabled(enabled = false, canSkip = false)
+                    } else {
+                        isQueueStarted = false
+                    }
+                    returnedSong
                 }
-                else -> if (listToSeek?.indexOf(currentSong) != 0) {
+                else -> if (listToSeek?.indexOf(songToSkip) != 0) {
                     listToSeek?.first()
                 } else {
                     listToSeek.last()
@@ -501,7 +495,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     /**
-     * Syncs the mMediaPlayer position with mPlaybackProgressCallback via recurring task.
+     * Syncs the mMediaPlayer position with mSeekBarPositionUpdateTask via recurring task.
      */
     private fun startUpdatingCallbackWithPosition() {
 
@@ -534,7 +528,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun instantReset() {
-        if (isMediaPlayer && !isSongRestoredFromPrefs) {
+        if (isMediaPlayer && !isSongFromPrefs) {
             when {
                 mediaPlayer.currentPosition < 5000 -> skip(isNext = false)
                 else -> repeatSong(0)
@@ -606,7 +600,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             isLooping = false
         }
 
-        if (isSongRestoredFromPrefs) {
+        if (isSongFromPrefs) {
             if (goPreferences.isPreciseVolumeEnabled) {
                 setPreciseVolume(currentVolumeInPercent)
             }
@@ -740,6 +734,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (isPlaying) {
             pauseMediaPlayer()
         } else {
+            if (isSongFromPrefs) {
+                updateMediaSessionMetaData()
+            }
             resumeMediaPlayer()
         }
     }

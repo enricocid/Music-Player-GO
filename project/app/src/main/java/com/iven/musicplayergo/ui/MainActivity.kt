@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private lateinit var mBindingIntent: Intent
 
     private fun checkIsPlayer(showError: Boolean): Boolean {
-        if (!isMediaPlayerHolder && !mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs && showError) {
+        if (!isMediaPlayerHolder && !mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongFromPrefs && showError) {
             R.string.error_bad_id.toToast(this)
             return false
         }
@@ -194,7 +194,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     override fun onDestroy() {
         super.onDestroy()
         mMusicViewModel.cancel()
-        if (isMediaPlayerHolder && !mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning && !mMediaPlayerHolder.isSongRestoredFromPrefs) {
+        if (isMediaPlayerHolder && !mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning && !mMediaPlayerHolder.isSongFromPrefs) {
             mPlayerService.stopForeground(true)
             stopService(mBindingIntent)
         }
@@ -205,7 +205,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun onResume() {
         super.onResume()
-        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs) {
+        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongFromPrefs) {
             mMediaPlayerHolder.onRestartSeekBarCallback()
         }
     }
@@ -213,7 +213,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     // Pause SeekBar callback
     override fun onPause() {
         super.onPause()
-        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongRestoredFromPrefs) {
+        if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongFromPrefs) {
             mMediaPlayerInterface.onBackupSong()
             with(mMediaPlayerHolder) {
                 onPauseSeekBarCallback()
@@ -890,10 +890,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
                 } else {
 
-                    isSongRestoredFromPrefs = goPreferences.latestPlayedSong != null
+                    isSongFromPrefs = goPreferences.latestPlayedSong != null
 
                     val song =
-                        if (isSongRestoredFromPrefs) {
+                        if (isSongFromPrefs) {
                             checkIfSongIsAvailable(goPreferences.latestPlayedSong)
                         } else {
                             mMusicViewModel.randomMusic
@@ -910,11 +910,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                         if (!songs.isNullOrEmpty()) {
                             isPlay = false
 
-                            startPlayback(
-                                restoredSong,
-                                songs,
-                                restoredSong.launchedBy
-                            )
+                            updateCurrentSong(restoredSong, songs, restoredSong.launchedBy)
+
+                            preparePlayback()
 
                             if (!goPreferences.queue.isNullOrEmpty()) {
                                 queueSongs = goPreferences.queue?.toMutableList()!!
@@ -1160,25 +1158,22 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         )
     }
 
-    private fun startPlayback(song: Music?, songs: List<Music>?, songLaunchedBy: String) {
+    private fun preparePlayback() {
         if (isMediaPlayerHolder) {
             if (::mPlayerService.isInitialized && !mPlayerService.isRunning) {
                 startService(
                     mBindingIntent
                 )
             }
-            with(mMediaPlayerHolder) {
-                updateCurrentSong(song, songs, songLaunchedBy)
-                initMediaPlayer(song)
-            }
+            mMediaPlayerHolder.initMediaPlayer(mMediaPlayerHolder.currentSong)
         }
     }
 
     override fun onSongSelected(song: Music?, songs: List<Music>?, songLaunchedBy: String) {
         if (isMediaPlayerHolder) {
             mMediaPlayerHolder.run {
-                if (isSongRestoredFromPrefs) {
-                    isSongRestoredFromPrefs = false
+                if (isSongFromPrefs) {
+                    isSongFromPrefs = false
                 }
                 if (!isPlay) {
                     isPlay = true
@@ -1191,7 +1186,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     song?.album,
                     mMusicViewModel.deviceAlbumsByArtist
                 )
-                startPlayback(song, albumSongs, songLaunchedBy)
+                updateCurrentSong(song, albumSongs, songLaunchedBy)
+                preparePlayback()
             }
         }
     }
@@ -1213,8 +1209,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             if (!mMediaPlayerHolder.isPlay) {
                 mMediaPlayerHolder.isPlay = true
             }
-            if (mMediaPlayerHolder.isSongRestoredFromPrefs) {
-                mMediaPlayerHolder.isSongRestoredFromPrefs =
+            if (mMediaPlayerHolder.isSongFromPrefs) {
+                mMediaPlayerHolder.isSongFromPrefs =
                     false
             }
             if (isNext) {

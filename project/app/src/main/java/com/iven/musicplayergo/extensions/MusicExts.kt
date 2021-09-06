@@ -26,8 +26,8 @@ fun MediaPlayerHolder.startSongFromQueue(song: Music?) {
     if (canRestoreQueue) {
         canRestoreQueue = false
     }
-    if (isSongRestoredFromPrefs) {
-        isSongRestoredFromPrefs = false
+    if (isSongFromPrefs) {
+        isSongFromPrefs = false
     }
     if (!isPlay) {
         isPlay = true
