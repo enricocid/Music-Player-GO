@@ -779,6 +779,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             restoreQueueSong = null
             canRestoreQueue = false
             isQueueStarted = false
+            goPreferences.isQueue = null
             mediaPlayerInterface.onQueueStartedOrEnded(started = false)
             if (canSkip) {
                 skip(isNext = true)

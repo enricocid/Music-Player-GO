@@ -892,9 +892,27 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
                     isSongFromPrefs = goPreferences.latestPlayedSong != null
 
+                    var isQueueRestored = goPreferences.isQueue
+                    if (!goPreferences.queue.isNullOrEmpty()) {
+                        queueSongs = goPreferences.queue?.toMutableList()!!
+                        setQueueEnabled(enabled = true, canSkip = false)
+                    }
+
                     val song =
                         if (isSongFromPrefs) {
-                            checkIfSongIsAvailable(goPreferences.latestPlayedSong)
+                            val songIsAvailable = songIsAvailable(goPreferences.latestPlayedSong)
+                            if (!songIsAvailable.first && isQueueRestored != null) {
+                               goPreferences.isQueue = null
+                               isQueueRestored = null
+                               isQueue = null
+                            } else {
+                                if (isQueueRestored != null) {
+                                    isQueue = isQueueRestored
+                                    isQueueStarted = true
+                                    mediaPlayerInterface.onQueueStartedOrEnded(started = true)
+                                }
+                            }
+                            songIsAvailable.second
                         } else {
                             mMusicViewModel.randomMusic
                         }
@@ -902,26 +920,23 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     song?.let { restoredSong ->
 
                         val songs = MusicOrgHelper.getAlbumSongs(
-                            restoredSong.artist,
-                            restoredSong.album,
+                            (isQueueRestored ?: restoredSong).artist,
+                            (isQueueRestored ?: restoredSong).album,
                             mMusicViewModel.deviceAlbumsByArtist
                         )
 
                         if (!songs.isNullOrEmpty()) {
+
                             isPlay = false
 
                             updateCurrentSong(restoredSong, songs, restoredSong.launchedBy)
 
                             preparePlayback()
 
-                            if (!goPreferences.queue.isNullOrEmpty()) {
-                                queueSongs = goPreferences.queue?.toMutableList()!!
-                                setQueueEnabled(enabled = true, canSkip = false)
-                            }
-
                             updatePlayingInfo(restore = false)
 
                             mPlayerControlsPanelBinding.songProgress.setProgressCompat(restoredSong.startFrom, true)
+
                         } else {
                             notifyError(GoConstants.TAG_SD_NOT_READY)
                         }
@@ -1011,15 +1026,16 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
-    private fun checkIfSongIsAvailable(song: Music?) : Music? = try {
+    // first: song is available, second: returned song
+    private fun songIsAvailable(song: Music?) : Pair<Boolean, Music?> = try {
         if (mMusicViewModel.deviceMusicFiltered?.savedSongIsAvailable(song) == null) {
-            saveRandomSongToPrefs()
+            Pair(first = false, second = saveRandomSongToPrefs())
         } else {
-            song
+            Pair(first = true, second = song)
         }
     } catch (e: Exception) {
         e.printStackTrace()
-        saveRandomSongToPrefs()
+        Pair(first = false, second = saveRandomSongToPrefs())
     }
 
     private fun saveRandomSongToPrefs() : Music? {

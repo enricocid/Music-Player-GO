@@ -101,11 +101,15 @@ class PlayerService : Service() {
 
             // Saves last played song and its position
             mediaPlayerHolder.run {
-                goPreferences.latestPlayedSong = currentSong?.toSavedMusic(playerPosition, if (isQueue != null && isQueueStarted) {
-                    GoConstants.ARTIST_VIEW
+                goPreferences.latestPlayedSong = if (isQueue != null && isQueueStarted) {
+                    goPreferences.isQueue = isQueue
+                    currentSong
                 } else {
-                    launchedBy
-                })
+                    if (goPreferences.isQueue != null) {
+                        goPreferences.isQueue = null
+                    }
+                    currentSong?.toSavedMusic(playerPosition, launchedBy)
+                }
                 if (queueSongs.isNotEmpty()) {
                     goPreferences.queue = queueSongs
                 }
