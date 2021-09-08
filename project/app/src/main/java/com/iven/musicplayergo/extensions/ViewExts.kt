@@ -242,9 +242,9 @@ fun View.handleViewVisibility(show: Boolean) {
 }
 
 fun String.toToast(context: Context) {
-    Toast.makeText(context, this, Toast.LENGTH_LONG).show()
+    Toast.makeText(context, this, Toast.LENGTH_SHORT).show()
 }
 
 fun Int.toToast(context: Context) {
-    Toast.makeText(context, this, Toast.LENGTH_LONG).show()
+    Toast.makeText(context, this, Toast.LENGTH_SHORT).show()
 }
