@@ -15,7 +15,6 @@ import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.bottomsheets.expandBottomSheet
-import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
@@ -53,7 +52,9 @@ object DialogHelper {
             .attachToRecyclerView(recyclerView)
 
         ItemTouchHelper(ItemSwipeCallback(context, isQueueDialog = true, isFavoritesDialog = false) { viewHolder: RecyclerView.ViewHolder, _: Int ->
-            queueAdapter.performQueueSongDeletion(viewHolder.absoluteAdapterPosition)
+            if (!queueAdapter.performQueueSongDeletion(viewHolder.absoluteAdapterPosition)) {
+                queueAdapter.notifyItemChanged(viewHolder.absoluteAdapterPosition)
+            }
         }).attachToRecyclerView(recyclerView)
 
         if (ThemeHelper.isDeviceLand(context.resources)) {
@@ -81,42 +82,6 @@ object DialogHelper {
     }
 
     @JvmStatic
-    fun showDeleteQueueSongDialog(
-        context: Context,
-        song: Music,
-        queueSongsDialog: MaterialDialog,
-        queueAdapter: QueueAdapter,
-        mediaPlayerHolder: MediaPlayerHolder
-    ) {
-
-        MaterialDialog(context).show {
-
-            title(R.string.queue)
-
-            message(
-                text = context.getString(
-                    R.string.queue_song_remove,
-                    song.title
-                )
-            )
-            positiveButton(R.string.yes) {
-
-                mediaPlayerHolder.run {
-                    queueSongs.remove(song)
-                    queueAdapter.swapQueueSongs(queueSongs)
-
-                    if (queueSongs.isEmpty()) {
-                        isQueue = null
-                        mediaPlayerInterface.onQueueStartedOrEnded(started = false)
-                        queueSongsDialog.dismiss()
-                    }
-                }
-            }
-            negativeButton(R.string.no)
-        }
-    }
-
-    @JvmStatic
     fun showClearQueueDialog(
         context: Context,
         mediaPlayerHolder: MediaPlayerHolder
@@ -129,6 +94,7 @@ object DialogHelper {
             message(R.string.queue_songs_clear)
 
             positiveButton(R.string.yes) {
+                goPreferences.isQueue = null
                 goPreferences.queue = null
                 with(mediaPlayerHolder) {
                     queueSongs.clear()
@@ -181,50 +147,6 @@ object DialogHelper {
             }
             favoritesAdapter.notifyDataSetChanged()
         }).attachToRecyclerView(recyclerView)
-    }
-
-    @JvmStatic
-    fun showDeleteFavoriteDialog(
-        activity: Activity,
-        songToDelete: Music?,
-        favoritesAdapter: FavoritesAdapter,
-        isSwipe: Pair<Boolean, Int>
-    ) {
-
-        val favorites = goPreferences.favorites?.toMutableList()
-
-        MaterialDialog(activity).show {
-
-            title(R.string.favorites)
-
-            message(
-                text = context.getString(
-                    R.string.favorite_remove,
-                    songToDelete?.title,
-                    songToDelete?.startFrom?.toLong()?.toFormattedDuration(
-                        isAlbum = false,
-                        isSeekBar = false
-                    )
-                )
-            )
-            positiveButton(R.string.yes) {
-                favorites?.remove(songToDelete)
-                goPreferences.favorites = favorites
-                favoritesAdapter.swapSongs(favorites)
-                (activity as MediaControlInterface).onFavoriteAddedOrRemoved()
-            }
-
-            negativeButton(R.string.no) {
-                if (isSwipe.first) {
-                    favoritesAdapter.notifyItemChanged(isSwipe.second)
-                }
-            }
-            onCancel {
-                if (isSwipe.first) {
-                    favoritesAdapter.notifyItemChanged(isSwipe.second)
-                }
-            }
-        }
     }
 
     @JvmStatic

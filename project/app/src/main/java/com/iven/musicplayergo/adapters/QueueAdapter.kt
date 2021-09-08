@@ -17,7 +17,7 @@ import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
-import java.util.*
+
 
 class QueueAdapter(
     private val ctx: Context,
@@ -77,11 +77,11 @@ class QueueAdapter(
 
                 title.text = displayedTitle
 
-                if (mediaPlayerHolder.isQueue != null && mediaPlayerHolder.isQueueStarted && queueSongs.indexOf(mSelectedSong) == absoluteAdapterPosition) {
-                    title.setTextColor(ThemeHelper.resolveThemeAccent(ctx))
-                } else{
-                    title.setTextColor(mDefaultTextColor)
-                }
+                title.setTextColor(if (mediaPlayerHolder.isQueue != null && mediaPlayerHolder.isQueueStarted && queueSongs.indexOf(mSelectedSong) == absoluteAdapterPosition) {
+                    ThemeHelper.resolveThemeAccent(ctx)
+                } else {
+                    mDefaultTextColor
+                })
 
                 duration.text = DialogHelper.computeDurationText(ctx, song)
 
@@ -100,15 +100,38 @@ class QueueAdapter(
         }
     }
 
-    fun performQueueSongDeletion(adapterPosition: Int) {
+    fun performQueueSongDeletion(adapterPosition: Int): Boolean {
         val song = queueSongs[adapterPosition]
         notifyItemChanged(adapterPosition)
-        DialogHelper.showDeleteQueueSongDialog(
-            ctx,
-            song,
-            queueSongsDialog,
-            this@QueueAdapter,
-            mediaPlayerHolder
-        )
+        return if (mediaPlayerHolder.isQueue != null && mediaPlayerHolder.isQueueStarted && song != mSelectedSong) {
+            MaterialDialog(ctx).show {
+
+                title(R.string.queue)
+
+                message(
+                    text = ctx.getString(
+                        R.string.queue_song_remove,
+                        song.title
+                    )
+                )
+                positiveButton(R.string.yes) {
+
+                    mediaPlayerHolder.run {
+                        queueSongs.remove(song)
+                        swapQueueSongs(queueSongs)
+
+                        if (queueSongs.isEmpty()) {
+                            isQueue = null
+                            mediaPlayerInterface.onQueueStartedOrEnded(started = false)
+                            queueSongsDialog.dismiss()
+                        }
+                    }
+                }
+                negativeButton(R.string.no)
+            }
+            true
+        } else {
+            false
+        }
     }
 }

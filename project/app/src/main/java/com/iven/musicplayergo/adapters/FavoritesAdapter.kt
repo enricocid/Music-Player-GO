@@ -10,11 +10,13 @@ import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.callbacks.onCancel
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.enablePopupIcons
 import com.iven.musicplayergo.extensions.setTitle
 import com.iven.musicplayergo.extensions.toFilenameWithoutExtension
+import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.models.Music
@@ -127,13 +129,42 @@ class FavoritesAdapter(
     }
 
     fun performFavoriteDeletion(position: Int, isSwipe: Boolean) {
-        mFavorites?.get(position).let { song ->
-            DialogHelper.showDeleteFavoriteDialog(
-                activity,
-                song,
-                this@FavoritesAdapter,
-                Pair(first = isSwipe, second = position)
-            )
+        mFavorites?.get(position)?.let { song ->
+
+            val favorites = goPreferences.favorites?.toMutableList()
+
+            MaterialDialog(activity).show {
+
+                title(R.string.favorites)
+
+                message(
+                    text = activity.getString(
+                        R.string.favorite_remove,
+                        song.title,
+                        song.startFrom.toLong().toFormattedDuration(
+                            isAlbum = false,
+                            isSeekBar = false
+                        )
+                    )
+                )
+                positiveButton(R.string.yes) {
+                    favorites?.remove(song)
+                    goPreferences.favorites = favorites
+                    swapSongs(favorites)
+                    mMediaControlInterface.onFavoriteAddedOrRemoved()
+                }
+
+                negativeButton(R.string.no) {
+                    if (isSwipe) {
+                        notifyItemChanged(position)
+                    }
+                }
+                onCancel {
+                    if (isSwipe) {
+                        notifyItemChanged(position)
+                    }
+                }
+            }
         }
     }
 }
