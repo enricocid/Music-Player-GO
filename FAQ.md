@@ -90,9 +90,14 @@ Each album consists of tracks of the same album.
 Filter them once the app has loaded.
 
 
-### Why is shuffled music not added to my queue?
+### How does MPGO handle shuffled lists?
 
-To avoid performance issues queue built from shuffled songs is actually limited to 1000 items.
+To avoid performance issues queue built from shuffled lists are limited to 250 items.
+
+
+### Sometimes MediaButton does not work
+
+Sometimes it seems to not register properly. Try to reconnect the headphones.
 
 
 ### What about features requests/crash reports?
