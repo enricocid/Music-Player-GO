@@ -293,7 +293,8 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             isRepeat1X or isLooping -> if (isMediaPlayer) {
                 repeatSong(0)
             }
-            isQueue != null -> manageQueue(isNext = true)
+            isQueue != null && !canRestoreQueue -> manageQueue(isNext = true)
+            canRestoreQueue -> manageRestoredQueue()
             else -> {
                 if (mPlayingSongs?.indexOf(currentSong) == mPlayingSongs?.size?.minus(
                         1
@@ -449,6 +450,15 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             }
         }
         initMediaPlayer(currentSong)
+    }
+
+    private fun manageRestoredQueue() {
+        currentSong = restoreQueueSong
+        initMediaPlayer(currentSong)
+
+        isQueueStarted = true
+        restoreQueueSong = null
+        canRestoreQueue = false
     }
 
     private fun getSkipSong(isNext: Boolean): Music? {
@@ -790,15 +800,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun skip(isNext: Boolean) {
         when {
             isQueue != null && !canRestoreQueue -> manageQueue(isNext = isNext)
-            canRestoreQueue -> {
-
-                currentSong = restoreQueueSong
-                initMediaPlayer(currentSong)
-
-                isQueueStarted = true
-                restoreQueueSong = null
-                canRestoreQueue = false
-            }
+            canRestoreQueue -> manageRestoredQueue()
             else -> {
                 currentSong = getSkipSong(isNext = isNext)
                 initMediaPlayer(currentSong)

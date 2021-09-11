@@ -1,0 +1,8 @@
+- Queue restoring
+- Queue and favorites review/improvements
+- Shuffle: to avoid performance issues big lists are limited to 250 songs
+- Enable queue/favorites fast scroller
+- Improved MediaPlayer errors handling
+- Code fixes and optimizations
+- Add swedish and update Italian translation
+- Update libs

@@ -1,0 +1,8 @@
+- Ripristino coda
+- Miglioramenti/revisione coda e favoriti
+- Shuffle: per evitare problemi di performance le liste grandi sono limitate a 250 canzoni
+- Queue/favorites: attivato fast scroller
+- Migliorata gestione errori del MediaPlayer
+- Correzioni e ottimizzazioni codice
+- Aggiunto traduzione svedese e aggiornato Italiano
+- Aggiornate librerie
