@@ -12,6 +12,7 @@ import android.media.audiofx.Virtualizer
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.SeekBar
@@ -26,6 +27,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import coil.load
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
@@ -333,10 +335,30 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     private fun initViewPager() {
-
         val pagerAdapter = ScreenSlidePagerAdapter(this)
         mMainActivityBinding.viewPager2.offscreenPageLimit = mActiveFragments.size.minus(1)
         mMainActivityBinding.viewPager2.adapter = pagerAdapter
+
+        // By default, ViewPager2's sensitivity is high enough to result in vertical
+        // scroll events being registered as horizontal scroll events. Reflect into the
+        // internal recyclerview and change the touch slope so that touch actions will
+        // act more as a scroll than as a swipe.
+        try {
+            val recycler = ViewPager2::class.java.getDeclaredField("mRecyclerView").run {
+                isAccessible = true
+                get(mMainActivityBinding.viewPager2)
+            }
+
+            RecyclerView::class.java.getDeclaredField("mTouchSlop").apply {
+                isAccessible = true
+
+                val slop = get(recycler) as Int
+                set(recycler, slop * 3) // 3x seems to be the best fit here
+            }
+        } catch (e: Exception) {
+            Log.e("MainActivity", "Unable to reduce ViewPager sensitivity")
+            Log.e("MainActivity", e.stackTraceToString())
+        }
 
         initTabLayout()
     }
