@@ -103,7 +103,6 @@ object ListsHelper {
     @JvmStatic
     fun getSelectedSorting(sorting: Int, menu: Menu): MenuItem {
         return when (sorting) {
-            GoConstants.DEFAULT_SORTING -> menu.findItem(R.id.default_sorting)
             GoConstants.ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
             GoConstants.DESCENDING_SORTING -> menu.findItem(R.id.descending_sorting)
             else -> menu.findItem(R.id.default_sorting)
@@ -113,7 +112,6 @@ object ListsHelper {
     @JvmStatic
     fun getSelectedSortingForAllMusic(sorting: Int, menu: Menu) : MenuItem {
         return when (sorting) {
-            GoConstants.DEFAULT_SORTING -> menu.findItem(R.id.default_sorting)
             GoConstants.ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
             GoConstants.DESCENDING_SORTING -> menu.findItem(R.id.descending_sorting)
             GoConstants.DATE_ADDED_SORTING -> menu.findItem(R.id.date_added_sorting)
