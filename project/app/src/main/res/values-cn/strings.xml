@@ -14,8 +14,8 @@
     <string name="folder_info">%1d 歌曲</string>
     <string name="sorting_pref">排序</string>
     <string name="sorting_pref_default">默认</string>
-    <string name="sorting_pref_track">按轨道号 ↓</string>
-    <string name="sorting_pref_track_inv">按轨道号 ↑</string>
+    <string name="sorting_pref_track">按歌曲编号 ↓</string>
+    <string name="sorting_pref_track_inv">按歌曲编号 ↑</string>
     <string name="shuffle_am">随机播放所有歌曲</string>
     <string name="shuffle_sa">随机播放所选专辑</string>
     <string name="queue_add">添加到队列</string>
@@ -95,8 +95,8 @@
     <string name="delete">删除</string>
     <string name="playback_pref_summary_off">保持选择播放速度</string>
     <string name="playback_pref_summary_on">不要保持选择播放速度</string>
-    <string name="content_skip_next">跳到下一条音轨</string>
-    <string name="content_skip_prev">跳到上一条音轨</string>
+    <string name="content_skip_next">跳到下一首歌曲</string>
+    <string name="content_skip_prev">跳到上一首歌曲</string>
     <string name="sorting_pref_date_added_inv">最旧日期优先</string>
     <string name="sorting_pref_date_added">最新日期优先</string>
 </resources>
