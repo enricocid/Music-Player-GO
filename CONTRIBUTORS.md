@@ -22,7 +22,7 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes (https://github.com/enricocid/Music-Player-GO/pull/121) and its equalizer implementation: I learned so much about how an equalizer works
 
-- [**OxygenCobalti**](https://github.com/OxygenCobalt) for [image loading optimizations](https://github.com/enricocid/Music-Player-GO/pull/287)
+- [**OxygenCobalti**](https://github.com/OxygenCobalt) for [image loading optimizations](https://github.com/enricocid/Music-Player-GO/pull/287) and [ViewPager2 improvements](https://github.com/enricocid/Music-Player-GO/pull/314)
 
 - [**Allan Nordhøy**](https://github.com/comradekingu) 
 for [strings](https://github.com/enricocid/Music-Player-GO/pull/227), [readme](https://github.com/enricocid/Music-Player-GO/pull/277) and [FAQ] (https://github.com/enricocid/Music-Player-GO/pull/278/) improvements
@@ -40,6 +40,8 @@ for [strings](https://github.com/enricocid/Music-Player-GO/pull/227), [readme](h
 - [**Ramón**](https://github.com/proideo) for [bug](https://github.com/enricocid/Music-Player-GO/issues/309) reporting
 
 - **Simon Gould** for having reported this [bug](https://github.com/enricocid/Music-Player-GO/commit/f95b81ce49b9f58418de4a416990ede732d9f715)
+
+- [**DECIM**](https://codeberg.org/quindecim) for this [bug](https://github.com/enricocid/Music-Player-GO/commit/c7dab08d86bf84c2ddb7c058bacdfc5dddb307db) report
 
 - [**svgrepo.com**](https://www.svgrepo.com/) for the [compact disc](https://www.svgrepo.com/svg/181020/compact-disc-music) icon, opportunely modified (background color).
 This work is licensed under a [CC 0](https://creativecommons.org/share-your-work/public-domain/cc0/) license

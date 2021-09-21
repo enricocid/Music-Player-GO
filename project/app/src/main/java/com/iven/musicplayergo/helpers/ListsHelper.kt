@@ -152,18 +152,20 @@ object ListsHelper {
             GoConstants.TRACK_SORTING_INVERTED -> list?.sortedBy { it.track }?.asReversed()
             GoConstants.DATE_ADDED_SORTING -> list?.sortedBy { it.dateAdded }?.asReversed()
             GoConstants.DATE_ADDED_SORTING_INV -> list?.sortedBy { it.dateAdded }
-            GoConstants.ARTIST_SORTING -> list?.sortedBy { it.artist }?.asReversed()
-            GoConstants.ARTIST_SORTING_INV -> list?.sortedBy { it.artist }
-            GoConstants.ALBUM_SORTING -> list?.sortedBy { it.album }?.asReversed()
-            GoConstants.ALBUM_SORTING_INV -> list?.sortedBy { it.album }
+            GoConstants.ARTIST_SORTING -> list?.sortedBy { it.artist }
+            GoConstants.ARTIST_SORTING_INV -> list?.sortedBy { it.artist }?.asReversed()
+            GoConstants.ALBUM_SORTING -> list?.sortedBy { it.album }
+            GoConstants.ALBUM_SORTING_INV -> list?.sortedBy { it.album }?.asReversed()
             else -> list
         }
     }
 
-    private fun getSortedListBySelectedVisualization(list: List<Music>?) = if (goPreferences.songsVisualization != GoConstants.TITLE) {
-        list?.sortedBy { it.displayName }
-    } else {
-        list?.sortedBy { it.title }
+    private fun getSortedListBySelectedVisualization(list: List<Music>?) = list?.sortedBy {
+        if (goPreferences.songsVisualization != GoConstants.TITLE) {
+            it.displayName
+        } else {
+            it.title
+        }
     }
 
     @JvmStatic

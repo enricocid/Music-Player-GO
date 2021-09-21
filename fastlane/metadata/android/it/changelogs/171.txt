@@ -1,0 +1,6 @@
+- Migliorata sensibilità sfogliamento/slide tra le tab
+- Corretto ordinamento tab musica
+- Aggiornate librerie/plugins
+- Aggiornate traduzioni Cinese Semplificato
+
+Credits: OxygenCobalt, DECIM, 360Tencent

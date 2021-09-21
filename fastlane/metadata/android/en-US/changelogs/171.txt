@@ -1,0 +1,6 @@
+- Better slide between tabs sensitity
+- Fix all music tab sorting
+- Update libs/plugins
+- Update Simplified Chinese translations
+
+Credits: OxygenCobalt, DECIM, 360Tencent
