@@ -49,6 +49,15 @@ fun MediaPlayerHolder.setCanRestoreQueue() {
     }
 }
 
+fun MediaPlayerHolder.addSongsToNextQueuePosition(songsToQueue: List<Music>) {
+    if (isQueue != null && !canRestoreQueue && isQueueStarted) {
+        val currentPosition = queueSongs.indexOf(currentSong)
+        queueSongs.addAll(currentPosition+1, songsToQueue)
+    } else {
+        queueSongs.addAll(songsToQueue)
+    }
+}
+
 //https://codereview.stackexchange.com/a/97819
 fun String?.toFilenameWithoutExtension() = try {
     Pattern.compile("(?<=.)\\.[^.]+$").matcher(this!!).replaceAll("")

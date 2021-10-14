@@ -1335,7 +1335,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     // don't add duplicates
                     if (restoreQueueSong != songToQueue) {
                         queueSongs.remove(songToQueue)
-                        queueSongs.add(songToQueue)
+                        if (isQueue != null && !canRestoreQueue && isQueueStarted) {
+                            val currentPosition = mMediaPlayerHolder.queueSongs.indexOf(currentSong)
+                            queueSongs.add(currentPosition+1, songToQueue)
+                        } else {
+                            queueSongs.add(songToQueue)
+                        }
                     }
 
                     if (canRestoreQueue && restoreQueueSong == null) {
@@ -1368,12 +1373,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 songs?.let { songsToQueue ->
 
                     // don't add duplicates
-                    if (restoreQueueSong != songsToQueue.first()) {
+                    addSongsToNextQueuePosition(if (restoreQueueSong != songsToQueue.first()) {
                         queueSongs.removeAll(songsToQueue)
-                        queueSongs.addAll(songsToQueue)
+                        songsToQueue
                     } else {
-                        queueSongs.addAll(songsToQueue.minus(songsToQueue.first()))
-                    }
+                        songsToQueue.minus(songsToQueue.first())
+                    })
 
                     if (canRestoreQueue && restoreQueueSong == null) {
                         restoreQueueSong = forcePlay.second ?: songsToQueue.first()
