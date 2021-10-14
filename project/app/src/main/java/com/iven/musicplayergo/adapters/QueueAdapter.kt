@@ -103,7 +103,7 @@ class QueueAdapter(
     fun performQueueSongDeletion(adapterPosition: Int): Boolean {
         val song = queueSongs[adapterPosition]
         notifyItemChanged(adapterPosition)
-        return if (mediaPlayerHolder.isQueue != null && mediaPlayerHolder.isQueueStarted && song != mSelectedSong) {
+        return if (song != mSelectedSong || mediaPlayerHolder.isQueue == null) {
             MaterialDialog(ctx).show {
 
                 title(R.string.queue)
