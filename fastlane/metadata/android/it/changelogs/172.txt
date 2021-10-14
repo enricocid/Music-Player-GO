@@ -1,0 +1,4 @@
+- Queue: corretto errore che impediva cancellazione canzoni (grazie Decim)
+- Queue: altri piccoli miglioramenti
+- Aggiunto Vietnamita e aggiornate traduzione (grazie a tutti! :D)
+- Aggiornate librerie/plugins

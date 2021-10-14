@@ -1,0 +1,4 @@
+- Queue: fix songs not being deletable (thanks Decim)
+- Queue: other minor improvements
+- Add Vietnamese/update translations (thanks everyone! :D)
+- Update libs/plugins
