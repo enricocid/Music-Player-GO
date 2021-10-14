@@ -2,7 +2,7 @@
 <resources>
     <string name="yes">はい</string>
     <string name="no">いいえ</string>
-    <string name="on_close_activity">再生を停止しますか？</string>
+    <string name="on_close_activity">再生を中断しますか？</string>
     <string name="queue_songs_clear">キューが削除されます。よろしいですか？</string>
     <string name="favorites_clear">お気に入りを消去します。よろしいですか？</string>
     <string name="favorite_remove">%1s (%2s) はお気に入りから削除されます。よろしいですか？</string>
@@ -72,10 +72,31 @@
     <string name="error_eq">エラーが発生しました!</string>
     <string name="song_visual_pref_tl_title">曲名</string>
     <string name="song_visual_pref_fn_title">ファイル名</string>
-    <string name="on_list_ended_pref_stop_title">停止する</string>
+    <string name="on_list_ended_pref_stop_title">中断する</string>
     <string name="on_list_ended_pref_continue_title">再生を続ける</string>
     <string name="equalizer_v">サラウンドオーディオ</string>
     <string name="equalizer_bb">低音ブースト</string>
     <string name="equalizer">イコライザー</string>
     <string name="albums">アルバム</string>
+    <string name="sorting_pref_date_added">新しい順</string>
+    <string name="sorting_pref_album_inv">アルバム 降順</string>
+    <string name="sorting_pref_album">アルバム 昇順</string>
+    <string name="sorting_pref_artist_inv">アーティスト 降順</string>
+    <string name="sorting_pref_artist">アーティスト 昇順</string>
+    <string name="playback_pref_summary_off">倍速設定を常に維持</string>
+    <string name="playback_pref_summary_on">倍速設定を常に初期化</string>
+    <string name="anim_pref_summary_on">アニメーションを無効にする</string>
+    <string name="playback_pref_title">倍速</string>
+    <string name="anim_pref_summary_off">アニメーションを有効にする</string>
+    <string name="anim_pref_title">アニメーション</string>
+    <string name="open_details_fragment">アーティスト/フォルダの詳細を見る</string>
+    <string name="content_repeat">リピート再生有効/無効</string>
+    <string name="content_skip_next">次のトラックに進む</string>
+    <string name="content_play">再生/一時停止</string>
+    <string name="content_skip_prev">前のトラックに戻る</string>
+    <string name="speed_3">元通り</string>
+    <string name="content_playback_speed">倍速</string>
+    <string name="sorting_pref_date_added_inv">古い順</string>
+    <string name="favorites_save_time">再生位置保存</string>
+    <string name="delete">削除</string>
 </resources>
