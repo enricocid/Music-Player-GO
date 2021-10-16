@@ -5,10 +5,10 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="delete">Delete</string>
-    <string name="on_close_activity">Do you want to stop playback?</string>
-    <string name="queue_songs_clear">Queue will be cleared. Continue?</string>
-    <string name="favorites_clear">Favorite songs will be cleared. Continue?</string>
-    <string name="favorite_remove">%1s (%2s) will be deleted from favorite songs. Continue?</string>
+    <string name="on_close_activity">Stop playback?</string>
+    <string name="queue_songs_clear">Clear queue?</string>
+    <string name="favorites_clear">Clear all favorites?</string>
+    <string name="favorite_remove">Delete %1s (%2s) from favorites?</string>
     <string name="favorites_save_time">Save song position</string>
 
     <!-- Main - Fragments titles -->
@@ -20,7 +20,7 @@
     <!-- Equalizer -->
     <string name="equalizer">Equalizer</string>
     <string name="equalizer_bb">Bass boost</string>
-    <string name="equalizer_v">Surround audio</string>
+    <string name="equalizer_v">Surround sound</string>
 
     <!-- Main - Artists/Folder RecyclerViews items  -->
     <string name="artist_info">%1d&#160;Albums,&#160;%2d&#160;Songs</string>
@@ -31,58 +31,58 @@
     <string name="sorting_pref_default">Default</string>
     <string name="sorting_pref_track">By track no. ↓</string>
     <string name="sorting_pref_track_inv">By track no. ↑</string>
-    <string name="sorting_pref_date_added">Newest date first</string>
-    <string name="sorting_pref_date_added_inv">Oldest date first</string>
+    <string name="sorting_pref_date_added">Added last</string>
+    <string name="sorting_pref_date_added_inv">Added first</string>
     <string name="sorting_pref_artist">By artist A-Z</string>
     <string name="sorting_pref_artist_inv">By artist Z-A</string>
     <string name="sorting_pref_album">By album A-Z</string>
     <string name="sorting_pref_album_inv">By album Z-A</string>
     <string name="shuffle_am">Shuffle all songs</string>
     <string name="shuffle_sa">Shuffle selected album</string>
-    <string name="queue_add">Add to queue</string>
-    <string name="favorite_add">Add to favorite songs</string>
+    <string name="queue_add">Enqueue</string>
+    <string name="favorite_add">Favorite</string>
     <string name="filter_popup_title">Hide</string>
 
     <!-- Queue -->
     <string name="queue">Queue</string>
     <string name="queue_song_add">%1s enqueued!</string>
-    <string name="queue_song_remove">%1s will be removed from the queue. Continue?</string>
+    <string name="queue_song_remove">Remove %1s from queue?</string>
 
     <!-- Loved songs -->
-    <string name="favorites">Favorite songs</string>
-    <string name="favorite_added">%1s (%2s) added to favorite songs</string>
+    <string name="favorites">Favorites</string>
+    <string name="favorite_added">%1s (%2s) favorited</string>
 
     <!-- Playback speed -->
     <string name="content_playback_speed">Playback speed</string>
     <string name="speed_3">Normal</string>
 
     <!-- other content descriptions -->
-    <string name="content_skip_prev">Skip to previous track</string>
+    <string name="content_skip_prev">Skip to previous</string>
     <string name="content_play">Play/pause</string>
-    <string name="content_skip_next">Skip to next track</string>
-    <string name="content_repeat">Enable/disable repeat options</string>
+    <string name="content_skip_next">Skip to next</string>
+    <string name="content_repeat">Turn on/off selected repetition</string>
 
     <!-- Messages - Errors -->
-    <string name="open_git_pref_summary">Open the project\'s webpage for more info :)</string>
+    <string name="open_git_pref_summary">Open the project webpage for more info :)</string>
     <string name="open_details_fragment">Open artist/folder\'s details</string>
-    <string name="error_no_favorites">No favorite songs found!</string>
-    <string name="error_no_music">No music found :(</string>
-    <string name="error_not_ready">Could not load the music library! :( This could be due to the SD card getting unmounted, forcing the Android\'s MediaStore to rebuild its database records. Try again later.</string>
-    <string name="error_unknown_unsupported">Something went wrong! :( Perhaps the chosen format is not supported, or the folder is not accessible (not the app\'s fault!).</string>
+    <string name="error_no_favorites">Add some favorites first.</string>
+    <string name="error_no_music">Add some music first.</string>
+    <string name="error_not_ready">Could not load the music library! :( Unmounting the SD card rebuilds the Android MediaStore database. Try again later.</string>
+    <string name="error_unknown_unsupported">Something went wrong! :( Perhaps the format is unsupported, or the folder is inaccessible (not the app\'s fault!).</string>
     <string name="error_media_buttons">Something went wrong! :( Please restart playback from the app.</string>
-    <string name="error_no_browser">No web browser found.</string>
+    <string name="error_no_browser">Install a web browser first.</string>
     <string name="error_bad_id">Play a song first.</string>
     <string name="error_no_queue">No songs in queue.</string>
     <string name="error_list_ended">List ended.</string>
-    <string name="error_eq">Ooops, an error occurred!</string>
+    <string name="error_eq">Error</string>
 
     <!-- Messages - Permission rationale -->
-    <string name="perm_rationale">Music Player GO needs access to your files to play music.</string>
+    <string name="perm_rationale">Grant Music Player GO access to your files to play music.</string>
 
     <!-- Messages - Repeat -->
     <string name="repeat_enabled">Single repetition on.</string>
-    <string name="repeat_loop_enabled">Repeat &#8734; on.</string>
-    <string name="repeat_disabled">Repeat &#8734; off.</string>
+    <string name="repeat_loop_enabled">&#8734; repeat.</string>
+    <string name="repeat_disabled">&#8734; repeat off.</string>
 
     <!-- Preferences - Categories -->
     <string name="settings">Settings</string>
@@ -92,65 +92,67 @@
     <string name="theme_pref_title">Theme</string>
     <string name="theme_pref_light_title">Light</string>
     <string name="theme_pref_dark_title">Dark</string>
-    <string name="theme_pref_auto_title">Automatic</string>
+    <string name="theme_pref_auto_title">System</string>
 
     <!-- Preferences - Accent -->
     <string name="accent_pref_title">Accent</string>
-
-    <!-- Preferences - covers -->
-    <string name="covers_pref_title">Embedded album covers</string>
-    <string name="covers_pref_summary_on">Hide album covers</string>
-    <string name="covers_pref_summary_off">Show album covers</string>
-
-    <!-- Preferences - choose what to do when a playlist ends -->
-    <string name="on_list_ended_pref_title">When a list ends &#8230;</string>
-    <string name="on_list_ended_pref_stop_title">Stop</string>
-    <string name="on_list_ended_pref_continue_title">Continue</string>
-
-    <!-- Preferences - Song visualization options (tl = title, fn = full name) -->
-    <string name="song_visual_pref_title">Song visualization</string>
-    <string name="song_visual_pref_tl_title">Title</string>
-    <string name="song_visual_pref_fn_title">Filename</string>
 
     <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">Active tabs</string>
     <string name="active_fragments_pref_warning">You can\'t just remove all the tabs! :P</string>
 
     <!-- Preferences - Custom Equalizer note -->
-    <string name="eq_pref_note_summary">Note: The system equalizer will be preferred unless you turn off the app \"system equalizer\" from the system settings. :)</string>
+    <string name="eq_pref_note_summary">Note: The system equalizer is used unless turned off from the system settings. :)</string>
+                    
+    <!-- Preferences - Fine volume control -->
+    <string name="precise_volume_pref_title">Precise volume control</string>
+    <string name="precise_volume_pref_summary_on">Turn off</string>
+    <string name="precise_volume_pref_summary_off">Turn on</string>
 
+    <!-- Preferences - Focus -->
+    <string name="focus_pref_title">Audio focus management</string>
+    <string name="focus_pref_summary_on">Turn off</string>
+    <string name="focus_pref_summary_off">Turn on</string>
+
+    <!-- Preferences - Headsets -->
+    <string name="headset_pref_title">Headset plug management</string>
+    <string name="headset_pref_summary_on">Turn off</string>
+    <string name="headset_pref_summary_off">Turn on</string>
+
+    <!-- Preferences - Playback speed -->
+    <string name="playback_pref_title">Selected playback speed</string>
+    <string name="playback_pref_summary_on">One song only</string>
+    <string name="playback_pref_summary_off">Keep</string>
+
+    <!-- Preferences - choose what to do when a playlist ends -->
+    <string name="on_list_ended_pref_title">When a list ends&#8230;</string>
+    <string name="on_list_ended_pref_stop_title">Stop</string>
+    <string name="on_list_ended_pref_continue_title">Continue</string>
+        
+    <!-- Preferences - covers -->
+    <string name="covers_pref_title">Embedded album covers</string>
+    <string name="covers_pref_summary_on">Hide</string>
+    <string name="covers_pref_summary_off">Show</string>
+        
     <!-- Preferences - Fast seeking -->
     <string name="fast_seeking_pref_title">Fast seeking</string>
     <string name="fast_seeking_pref_summary">Fast forward/rewind step (seconds)</string>
+        
+    <!-- Preferences - Additional notification actions -->
     <string name="fast_seeking_actions_pref_title">Additional notification actions</string>
-    <string name="fast_seeking_actions_pref_summary_off">Prefer close/repeat actions</string>
-    <string name="fast_seeking_actions_pref_summary_on">Prefer fast seeking actions</string>
-
-    <!-- Preferences - Fine volume control -->
-    <string name="precise_volume_pref_title">Precise volume control</string>
-    <string name="precise_volume_pref_summary_on">Turn off precise volume control</string>
-    <string name="precise_volume_pref_summary_off">Turn on precise volume control</string>
-
-    <!-- Preferences - Focus -->
-    <string name="focus_pref_title">Audio focus</string>
-    <string name="focus_pref_summary_on">Turn off audio focus management</string>
-    <string name="focus_pref_summary_off">Turn on audio focus management</string>
-
-    <!-- Preferences - Headsets -->
-    <string name="headset_pref_title">Headset plug</string>
-    <string name="headset_pref_summary_on">Turn off headset plug management</string>
-    <string name="headset_pref_summary_off">Turn on headset plug management</string>
-
+    <string name="fast_seeking_actions_pref_summary_off">Close/repeat</string>
+    <string name="fast_seeking_actions_pref_summary_on">Fast seeking</string>
+        
+    <!-- Preferences - Song visualization options (tl = title, fn = full name) -->
+    <string name="song_visual_pref_title">Song visualization</string>
+    <string name="song_visual_pref_tl_title">Title</string>
+    <string name="song_visual_pref_fn_title">Filename</string>    
+    
     <!-- Preferences - Animations/Circular reveal fragments -->
     <string name="anim_pref_title">Animations</string>
-    <string name="anim_pref_summary_on">Turn off animations</string>
-    <string name="anim_pref_summary_off">Turn on animations</string>
+    <string name="anim_pref_summary_on">Turn off</string>
+    <string name="anim_pref_summary_off">Turn on</string>
 
     <!-- Preferences - Filters -->
     <string name="filter_pref_title">Filters</string>
-
-    <!-- Preferences - Playback speed -->
-    <string name="playback_pref_title">Playback speed</string>
-    <string name="playback_pref_summary_on">Don\'t persist selected playback speed</string>
-    <string name="playback_pref_summary_off">Persist selected playback speed</string>
 </resources>
