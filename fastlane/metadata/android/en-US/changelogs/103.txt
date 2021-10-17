@@ -1,1 +1,0 @@
-- Add Turkish translations (credits: Adem Furkan ÖZCAN)
