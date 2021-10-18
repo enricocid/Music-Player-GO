@@ -22,7 +22,7 @@
     <string name="headset_pref_summary_off">Включить управление гарнитурой</string>
     <string name="headset_pref_summary_on">Выключить управление гарнитурой</string>
     <string name="headset_pref_title">Гарнитура</string>
-    <string name="favorite_add">Добавить в избранное</string>
+    <string name="favorite_add">Избранное</string>
     <string name="favorite_added">%1s (%2s) добавлено в избранное</string>
     <string name="favorite_remove">%1s (%2s) будет удалена из избранного. Продолжить?</string>
     <string name="favorites">Избранное</string>
@@ -70,10 +70,10 @@
     <string name="on_list_ended_pref_continue_title">Продолжить</string>
     <string name="on_list_ended_pref_stop_title">Стоп</string>
     <string name="on_list_ended_pref_title">Когда список заканчивается…</string>
-    <string name="covers_pref_summary_off">Показать обложки альбомов</string>
-    <string name="covers_pref_summary_on">Скрыть обложки альбомов</string>
+    <string name="covers_pref_summary_off">Показать</string>
+    <string name="covers_pref_summary_on">Скрыть</string>
     <string name="covers_pref_title">Встроенные обложки альбомов</string>
-    <string name="error_eq">Упс, произошла ошибка!</string>
+    <string name="error_eq">Ошибка</string>
     <string name="error_list_ended">Список закончился.</string>
     <string name="equalizer_v">Объемный звук</string>
     <string name="equalizer_bb">Усиление басов</string>
