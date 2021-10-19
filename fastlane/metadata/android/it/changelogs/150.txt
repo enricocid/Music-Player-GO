@@ -4,4 +4,4 @@
 - Migliorie progetto (grazie TacoTheDank)
 - Corretto e migliorato traduzioni Inglese (grazie TacoTheDank)
 - Aggiunte traduzioni Polacco (grazie SpacingBat3)
-- Aggiornate traduzioni Turco (grazie Adem Furkan ÖZCAN)
+- Aggiornate traduzioni Turco (grazie https://github.com/ozcanfurkan)

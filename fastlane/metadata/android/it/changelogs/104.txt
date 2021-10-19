@@ -1,2 +1,2 @@
 - Rivisitato/migliorato meccanismo caricamento musica
-- Corretta traduzione Turco (credits: Adem Furkan ÖZCAN)
+- Corretta traduzione Turco (credits: https://github.com/ozcanfurkan)

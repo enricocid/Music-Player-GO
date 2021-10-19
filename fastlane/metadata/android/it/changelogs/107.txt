@@ -1,3 +1,3 @@
-- Corretto un crash che avveniva su Android M grazie a @sagorahmed ed Alex Lockwood (@alexjlockwood)
-- Aggiunto supporto Hindi grazie a Somesh Kumar (@TheSomeshKumar)
+- Corretto un crash che avveniva su Android M grazie a @sagorahmed ed Alex Lockwood
+- Aggiunto supporto Hindi grazie a Somesh Kumar
 - Aggiornati i mattoncini dell'app (librerie, etc)

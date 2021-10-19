@@ -1,6 +1,6 @@
 - Added precise volume control dialog (thanks Arianna Masciolini, https://github.com/harisont)
 - Added colorful notification toasts!
 - Added Indonesian translations (thanks zmni, https://github.com/zmni)
-- Upgraded Turkish strings (thanks Adem Furkan ÖZCAN, https://github.com/ozcanfurkan)
+- Upgraded Turkish strings (thanks https://github.com/ozcanfurkan)
 - Fix progress bar not being enabled when shuffling
 - Upgrade dependencies (libs, etc.)

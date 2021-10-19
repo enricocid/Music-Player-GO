@@ -1,1 +1,1 @@
-- Add Turkish translations (credits: Adem Furkan ÖZCAN)
+- Add Turkish translations (credits: https://github.com/ozcanfurkan)

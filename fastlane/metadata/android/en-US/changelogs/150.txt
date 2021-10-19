@@ -4,4 +4,4 @@
 - Project improvements (thanks TacoTheDank)
 - Fix and improve English translations (thanks TacoTheDank)
 - Add Polish translations (thanks SpacingBat3)
-- Update Turkish translations (thanks Adem Furkan ÖZCAN)
+- Update Turkish translations (thanks https://github.com/ozcanfurkan)
