@@ -84,7 +84,7 @@
     <string name="category_general">Загальні</string>
     <string name="settings">Налаштування</string>
     <string name="open_details_fragment">Відкрити деталі виконавця/каталога</string>
-    <string name="open_git_pref_summary">Відкрийте веб-сторінку проекту для отримання додаткової інформації :)</string>
+    <string name="open_git_pref_summary">Відкрийте веб-сторінку проєкту для отримання додаткової інформації :)</string>
     <string name="content_repeat">Увікнути/викнути параметри повторення</string>
     <string name="content_skip_next">Перейти до наступної доріжки</string>
     <string name="content_play">Грати/Пауза</string>
