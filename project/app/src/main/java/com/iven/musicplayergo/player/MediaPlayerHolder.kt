@@ -969,13 +969,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
          * comunicate with our app
          */
         private fun handleMediaButton(intent: Intent) {
-             val event: KeyEvent =
-                    intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT) as KeyEvent? ?: return
+            val event: KeyEvent =
+                intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT) as KeyEvent? ?: return
             val action: Int = event.action
             var handled = false
 
             if (action == KeyEvent.ACTION_DOWN) {
-                when(event.keyCode) {
+                when (event.keyCode) {
                     KeyEvent.KEYCODE_MEDIA_STOP, KeyEvent.KEYCODE_MEDIA_PAUSE -> {
                         if (isPlaying) {
                             pauseMediaPlayer()
