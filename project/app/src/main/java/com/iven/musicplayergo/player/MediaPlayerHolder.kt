@@ -977,13 +977,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             if (action == KeyEvent.ACTION_DOWN) {
                 when(event.keyCode) {
                     KeyEvent.KEYCODE_MEDIA_STOP, KeyEvent.KEYCODE_MEDIA_PAUSE -> {
-                        if (state == GoConstants.PLAYING) {
+                        if (isPlaying) {
                             pauseMediaPlayer()
                             handled = true
                         }
                     }
                     KeyEvent.KEYCODE_MEDIA_PLAY -> {
-                        if (state == GoConstants.PAUSED) {
+                        if (!isPlaying) {
                             resumeMediaPlayer()
                             handled = true
                         }
@@ -993,13 +993,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                         handled = true
                     }
                     KeyEvent.KEYCODE_MEDIA_NEXT -> {
-                        if (state == GoConstants.PLAYING) {
+                        if (isPlaying) {
                             skip(true)
                             handled = true
                         }
                     }
                     KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {
-                        if (state == GoConstants.PLAYING) {
+                        if (isPlaying) {
                             // Because this comes from an AI, we may want to
                             // not have the immediate reset because the user
                             // specifically requested the previous song
