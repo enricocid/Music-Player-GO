@@ -1011,6 +1011,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 }
             }
             if (handled && isOrderedBroadcast) {
+                resultCode = Activity.RESULT_OK
                 abortBroadcast()
             }
         }
