@@ -67,14 +67,8 @@
     <string name="fast_seeking_actions_pref_summary_off">बंद/पुनराव्रत्ति एक्शन चुने</string>
     <string name="fast_seeking_actions_pref_summary_on">फ़ास्ट सीकिंग एक्शन चुने</string>
     <string name="precise_volume_pref_title">सटीक वॉल्यूम नियंत्रण</string>
-    <string name="precise_volume_pref_summary_on">सटीक वॉल्यूम नियंत्रण अक्षम करें</string>
-    <string name="precise_volume_pref_summary_off">सटीक वॉल्यूम नियंत्रण सक्षम करें</string>
     <string name="focus_pref_title">ऑडियो फोकस</string>
-    <string name="focus_pref_summary_on">ऑडियो फ़ोकस मैनेजरों को अक्षम करें</string>
-    <string name="focus_pref_summary_off">ऑडियो फ़ोकस प्रबंधन सक्षम करें</string>
     <string name="headset_pref_title">हेडसेट प्लग</string>
-    <string name="headset_pref_summary_on">हेडसेट प्लग प्रबंधन अक्षम करें</string>
-    <string name="headset_pref_summary_off">हेडसेट प्लग प्रबंधन सक्षम करें</string>
     <string name="filter_pref_title">फिल्टर</string>
     <string name="error_eq">कोई त्रुटि हुई है!</string>
     <string name="eq_pref_note_summary">ध्यान दें : system equalizer इस्तेमाल होगा जब तक एप्प \"system equalizer\" सेटिंग से बंद नही कीया जाता. :)</string>
@@ -82,8 +76,6 @@
     <string name="playback_pref_summary_off">चयनित प्लेबैक गति जारी रखें</string>
     <string name="playback_pref_summary_on">चयनित प्लेबैक गति को जारी न रखें</string>
     <string name="playback_pref_title">प्लेबैक की गति</string>
-    <string name="anim_pref_summary_off">एनिमेशन चालू करें</string>
-    <string name="anim_pref_summary_on">एनिमेशन बंद करें</string>
     <string name="anim_pref_title">एनिमेशन</string>
     <string name="open_details_fragment">कलाकार / फ़ोल्डर का विवरण खोलें</string>
     <string name="content_repeat">दोहराने के विकल्प को सक्षम / अक्षम करें</string>

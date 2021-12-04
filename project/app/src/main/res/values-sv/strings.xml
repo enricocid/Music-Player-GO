@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="headset_pref_summary_on">Inaktivera</string>
-    <string name="focus_pref_summary_on">Inaktivera</string>
-    <string name="precise_volume_pref_summary_on">Inaktivera</string>
+    <string name="pref_summary_on">Inaktivera</string>
+    <string name="pref_summary_off">Aktivera</string>
     <string name="playback_pref_summary_off">Behåll</string>
     <string name="playback_pref_summary_on">Endast en låt</string>
     <string name="playback_pref_title">Vald uppspelningshastighet</string>
     <string name="filter_pref_title">Filter</string>
-    <string name="anim_pref_summary_off">Aktivera</string>
-    <string name="anim_pref_summary_on">Inaktivera</string>
     <string name="anim_pref_title">Animationer</string>
-    <string name="headset_pref_summary_off">Aktivera</string>
     <string name="headset_pref_title">Headsetkontakt-behandling</string>
-    <string name="precise_volume_pref_summary_off">Aktivera</string>
-    <string name="focus_pref_summary_off">Aktivera</string>
     <string name="focus_pref_title">Ljudfokus-behandling</string>
     <string name="precise_volume_pref_title">Exakt volymkontroll</string>
     <string name="fast_seeking_actions_pref_summary_on">Snabbsökning</string>

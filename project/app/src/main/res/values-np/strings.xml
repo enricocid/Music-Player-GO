@@ -47,13 +47,7 @@
     <string name="active_fragments_pref_title">सक्रिय ट्याबहरू</string>
     <string name="active_fragments_pref_warning">तपाईं केवल सबै ट्याबहरू हटाउन सक्नुहुन्न! :P</string>
     <string name="precise_volume_pref_title">सटीक भोल्युम नियन्त्रण</string>
-    <string name="precise_volume_pref_summary_on">असक्षम सटीक भोल्युम नियन्त्रण</string>
-    <string name="precise_volume_pref_summary_off">सक्षम सटीक भोल्युम नियन्त्रण</string>
     <string name="focus_pref_title">अडियो फोकस</string>
-    <string name="focus_pref_summary_on">अडियो फोकस व्यवस्थापन असक्षम गर्नुहोस्</string>
-    <string name="focus_pref_summary_off">अडियो फोकस व्यवस्थापन सक्षम गर्नुहोस्</string>
     <string name="headset_pref_title">हेडसेट प्लग</string>
-    <string name="headset_pref_summary_on">हेडसेट प्लग व्यवस्थापन अक्षम गर्नुहोस्</string>
-    <string name="headset_pref_summary_off">हेडसेट प्लग प्रबन्ध सक्षम गर्नुहोस्</string>
     <string name="filter_pref_title">फिल्टरहरू</string>
 </resources>

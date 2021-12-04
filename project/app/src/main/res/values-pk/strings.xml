@@ -47,13 +47,7 @@
     <string name="active_fragments_pref_title">فعال ٹیبز</string>
     <string name="active_fragments_pref_warning">آپ صرف تمام ٹیبز کو نہیں ہٹا سکتے ہیں! :P</string>
     <string name="precise_volume_pref_title">عین مطابق حجم کنٹرول</string>
-    <string name="precise_volume_pref_summary_on">عین مطابق حجم کنٹرول کو غیر فعال کریں</string>
-    <string name="precise_volume_pref_summary_off">عین مطابق حجم کنٹرول کو فعال کریں</string>
     <string name="focus_pref_title">آڈیو فوکس</string>
-    <string name="focus_pref_summary_on">آڈیو فوکس مینجمنٹ کو غیر فعال کریں</string>
-    <string name="focus_pref_summary_off">آڈیو فوکس مینجمنٹ کو قابل بنائیں</string>
     <string name="headset_pref_title">ہیڈسیٹ پلگ</string>
-    <string name="headset_pref_summary_on">ہیڈسیٹ پلگ مینجمنٹ کو غیر فعال کریں</string>
-    <string name="headset_pref_summary_off">ہیڈسیٹ پلگ مینجمنٹ کو فعال کریں</string>
     <string name="filter_pref_title">فلٹرز</string>
 </resources>

@@ -4,17 +4,9 @@
     <string name="playback_pref_summary_on">Не захоўваць выбраную хуткасць прайгравання</string>
     <string name="playback_pref_title">Хуткасць прайгравання</string>
     <string name="filter_pref_title">Фільтры</string>
-    <string name="anim_pref_summary_off">Уключыць анімацыі</string>
-    <string name="anim_pref_summary_on">Выключыць анімацыі</string>
     <string name="anim_pref_title">Анімацыі</string>
-    <string name="headset_pref_summary_off">Уключыць кіраванне гарнітурай</string>
-    <string name="headset_pref_summary_on">Выключыць кіраванне гарнітурай</string>
     <string name="headset_pref_title">Гарнітура</string>
-    <string name="focus_pref_summary_off">Уключыць кіраванне факусіроўкай аўдыё</string>
-    <string name="focus_pref_summary_on">Выключыць кіраванне факусіроўкай аўдыё</string>
     <string name="focus_pref_title">Факусіроўка аўдыё</string>
-    <string name="precise_volume_pref_summary_off">Уключыць дакладны кантроль гучнасці</string>
-    <string name="precise_volume_pref_summary_on">Выключыць дакладны кантроль гучнасці</string>
     <string name="precise_volume_pref_title">Дакладны кантроль гучнасці</string>
     <string name="fast_seeking_actions_pref_summary_on">Прыярытэт дзеянняў хуткага пошуку</string>
     <string name="fast_seeking_actions_pref_summary_off">Прыярытэтныя дзеянні закрыцця/паўтору</string>

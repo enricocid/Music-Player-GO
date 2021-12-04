@@ -48,14 +48,8 @@
     <string name="active_fragments_pref_title">Aktive faner</string>
     <string name="active_fragments_pref_warning">Du kan ikke bare fjerne alle fanene! :P</string>
     <string name="precise_volume_pref_title">Presis lydstyrkekontroll</string>
-    <string name="precise_volume_pref_summary_on">Skru av presis lydstyrkekontroll</string>
-    <string name="precise_volume_pref_summary_off">Skru på presis lydstyrkekontroll</string>
     <string name="focus_pref_title">Lydfokus</string>
-    <string name="focus_pref_summary_on">Skru av styring av lydfokus</string>
-    <string name="focus_pref_summary_off">Skru på styring av lydfokus</string>
     <string name="headset_pref_title">Hodetelefonkontakt</string>
-    <string name="headset_pref_summary_on">Skru av styring av hodetelefonkontakt</string>
-    <string name="headset_pref_summary_off">Skru på styring av hodetelefonkontakt</string>
     <string name="filter_pref_title">Filter</string>
     <string name="error_list_ended">Spillelisten er slutt.</string>
     <string name="fast_seeking_actions_pref_summary_on">Foretrekk rask blafring</string>
@@ -90,8 +84,6 @@
     <string name="speed_3">Normal</string>
     <string name="content_playback_speed">Avspillingshastighet</string>
     <string name="delete">Slett</string>
-    <string name="anim_pref_summary_off">Skru på animasjoner</string>
-    <string name="anim_pref_summary_on">Skru av animasjoner</string>
     <string name="anim_pref_title">Animasjoner</string>
     <string name="sorting_pref_album_inv">Etter album Å-A</string>
     <string name="sorting_pref_album">Etter album A-Å</string>

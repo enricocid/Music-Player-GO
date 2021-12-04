@@ -47,17 +47,9 @@
     <string name="playback_pref_summary_on">Не зберігати вибрану швидкість відтворення</string>
     <string name="playback_pref_title">Швидкість відтворення</string>
     <string name="filter_pref_title">Фільтри</string>
-    <string name="anim_pref_summary_off">Увімкнути анімації</string>
-    <string name="anim_pref_summary_on">Вимкнути анімації</string>
     <string name="anim_pref_title">Анімація</string>
-    <string name="headset_pref_summary_off">Увікнути управління гарнітурою</string>
-    <string name="headset_pref_summary_on">Вимкнути управління гарнітурою</string>
     <string name="headset_pref_title">Гарнітура</string>
-    <string name="focus_pref_summary_off">Увімкнути управління фокусом звуку</string>
-    <string name="focus_pref_summary_on">Вимкнути управління фокусом звуку</string>
     <string name="focus_pref_title">Фокус звуку</string>
-    <string name="precise_volume_pref_summary_off">Увімкнути тонкий контроль гучності</string>
-    <string name="precise_volume_pref_summary_on">Вимкнути тонкий контроль гучності</string>
     <string name="precise_volume_pref_title">Тонкий контроль гучності</string>
     <string name="fast_seeking_actions_pref_summary_on">Перевага дії швидкого пошуку</string>
     <string name="fast_seeking_actions_pref_summary_off">Перевага дії закрити/повтор</string>

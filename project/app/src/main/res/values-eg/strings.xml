@@ -48,14 +48,8 @@
     <string name="active_fragments_pref_title">علامات التبويب النشطة</string>
     <string name="active_fragments_pref_warning">لا يمكنك فقط إزالة جميع علامات التبويب! :P</string>
     <string name="precise_volume_pref_title">تحكم دقيق في مستوى الصوت</string>
-    <string name="precise_volume_pref_summary_on">تعطيل التحكم الدقيق في مستوى الصوت</string>
-    <string name="precise_volume_pref_summary_off">تمكين التحكم الدقيق في مستوى الصوت</string>
     <string name="focus_pref_title">التركيز الصوتي</string>
-    <string name="focus_pref_summary_on">تعطيل إدارة التركيز الصوتي</string>
-    <string name="focus_pref_summary_off">تمكين إدارة التركيز الصوتي</string>
     <string name="headset_pref_title">قابس سماعة الرأس</string>
-    <string name="headset_pref_summary_on">إيقاف إدارة قابس سماعة الرأس</string>
-    <string name="headset_pref_summary_off">تفعيل إدارة قابس سماعة الرأس</string>
     <string name="filter_pref_title">مرشحات</string>
     <string name="albums">ألبومات</string>
 </resources>

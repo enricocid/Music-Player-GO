@@ -4,17 +4,9 @@
     <string name="playback_pref_summary_on">Hautatutako erreprodukzio-abiaduran ez jarraitu</string>
     <string name="playback_pref_title">Erreprodukzio-abiadura</string>
     <string name="filter_pref_title">Iragazkiak</string>
-    <string name="anim_pref_summary_off">Animazioak aktibatu</string>
-    <string name="anim_pref_summary_on">Animazioak desaktibatu</string>
     <string name="anim_pref_title">Animazioak</string>
-    <string name="headset_pref_summary_off">Entzungailuetako entxufearen kudeaketa aktibatu</string>
-    <string name="headset_pref_summary_on">Entzungailuetako entxufearen kudeaketa desaktibatu</string>
     <string name="headset_pref_title">Entzungailuetarako entxufea</string>
-    <string name="focus_pref_summary_off">Audio-ikuspegiaren kudeaketa aktibatu</string>
-    <string name="focus_pref_summary_on">Audio-ikuspegiaren kudeaketa desaktibatu</string>
     <string name="focus_pref_title">Audio-ikuspegia</string>
-    <string name="precise_volume_pref_summary_off">Bolumenaren kontrol zehatza aktibatu</string>
-    <string name="precise_volume_pref_summary_on">Bolumenaren kontrol zehatza desaktibatu</string>
     <string name="precise_volume_pref_title">Bolumenaren kontrol zehatza</string>
     <string name="fast_seeking_actions_pref_summary_on">Bilaketa azkarreko ekintzak hobetsi</string>
     <string name="fast_seeking_actions_pref_summary_off">Itxiera/errepikapen ekintzak hobestea</string>

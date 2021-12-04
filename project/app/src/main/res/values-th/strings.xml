@@ -47,13 +47,7 @@
     <string name="active_fragments_pref_title">แท็บที่ใช้งานอยู่</string>
     <string name="active_fragments_pref_warning">คุณไม่สามารถลบแท็บทั้งหมดออกได้! :P</string>
     <string name="precise_volume_pref_title">การควบคุมระดับเสียงที่แม่นยำ</string>
-    <string name="precise_volume_pref_summary_on">ปิดใช้งานการควบคุมระดับเสียงที่แม่นยำ</string>
-    <string name="precise_volume_pref_summary_off">เปิดใช้งานการควบคุมระดับเสียงที่แม่นยำ</string>
     <string name="focus_pref_title">เน้นเสียง</string>
-    <string name="focus_pref_summary_on">ปิดใช้งานการจัดการโฟกัสเสียง</string>
-    <string name="focus_pref_summary_off">เปิดใช้งานการจัดการโฟกัสเสียง</string>
     <string name="headset_pref_title">ปลั๊กชุดหูฟัง</string>
-    <string name="headset_pref_summary_on">ปิดใช้งานการจัดการปลั๊กชุดหูฟัง</string>
-    <string name="headset_pref_summary_off">เปิดใช้งานการจัดการปลั๊กชุดหูฟัง</string>
     <string name="filter_pref_title">ฟิลเตอร์</string>
 </resources>

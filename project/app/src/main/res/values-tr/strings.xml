@@ -40,14 +40,10 @@
     <string name="active_fragments_pref_warning">Bütün sekmeleri kaldıramazsınız! : P</string>
     <string name="sorting_pref_default">Varsayılan</string>
     <string name="precise_volume_pref_title">Hassas ses denetimi</string>
-    <string name="precise_volume_pref_summary_on">Kapat</string>
-    <string name="precise_volume_pref_summary_off">Aç</string>
+    <string name="pref_summary_on">Kapat</string>
+    <string name="pref_summary_off">Aç</string>
     <string name="focus_pref_title">Ses odak yönetimi</string>
-    <string name="focus_pref_summary_on">Kapat</string>
-    <string name="focus_pref_summary_off">Aç</string>
     <string name="headset_pref_title">Kulaklık girişi yönetimi</string>
-    <string name="headset_pref_summary_on">Kapat</string>
-    <string name="headset_pref_summary_off">Aç</string>
     <string name="filter_pref_title">Filtreler</string>
     <string name="filter_popup_title">Gizle</string>
     <string name="repeat_loop_enabled">∞ tekrarla.</string>
@@ -89,8 +85,6 @@
     <string name="playback_pref_title">Seçilen oynatma hızı</string>
     <string name="speed_3">Normal</string>
     <string name="content_playback_speed">Oynatma hızı</string>
-    <string name="anim_pref_summary_off">Aç</string>
-    <string name="anim_pref_summary_on">Kapat</string>
     <string name="anim_pref_title">Animasyonlar</string>
     <string name="sorting_pref_artist_inv">Sanatçıya göre Z-A\'ya sırala</string>
     <string name="sorting_pref_artist">Sanatçıya göre A-Z\'ye sırala</string>

@@ -48,14 +48,8 @@
     <string name="active_fragments_pref_title">Aktywuj zakładki</string>
     <string name="active_fragments_pref_warning">Po prostu nie możesz usunąć wszystkich zakładek! :P</string>
     <string name="precise_volume_pref_title">Dokładna kontrola głośności</string>
-    <string name="precise_volume_pref_summary_on">Wyłącz kontrolę głośności aplikacji</string>
-    <string name="precise_volume_pref_summary_off">Włącz kontrolę głośności aplikacji</string>
     <string name="focus_pref_title">Wyciszanie otoczenia</string>
-    <string name="focus_pref_summary_on">Wyłącz opcję wyciszenia</string>
-    <string name="focus_pref_summary_off">Wyciszaj inne źródła dźwięku</string>
     <string name="headset_pref_title">Podłączanie słuchawek</string>
-    <string name="headset_pref_summary_on">Wyłącz zarządzanie podłączeniem słuchawek</string>
-    <string name="headset_pref_summary_off">Zarządzaj zachowaniem przy podłączeniu słuchawek</string>
     <string name="filter_pref_title">Filtry</string>
     <string name="fast_seeking_actions_pref_summary_on">Preferuj czynności szybkiego wyszukiwania</string>
     <string name="fast_seeking_actions_pref_summary_off">Preferuj akcje „zamknij/powtórz”</string>
@@ -96,7 +90,5 @@
     <string name="sorting_pref_artist_inv">Artyści Z-A</string>
     <string name="eq_pref_note_summary">Notka: Systemowa korekta będzie używana dopóki nie wyłączysz aplikacjy \"system equalizer (systemowa korekta)\" w ustawieniach systemowych</string>
     <string name="anim_pref_title">Animacje</string>
-    <string name="anim_pref_summary_on">Wyłącz animacje</string>
-    <string name="anim_pref_summary_off">Włącz animacje</string>
     <string name="playback_pref_title">Prędkość odtwarzania</string>
 </resources>

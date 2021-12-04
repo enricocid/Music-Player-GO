@@ -48,14 +48,8 @@
     <string name="sorting_pref_track">Par nº de titre ↓</string>
     <string name="sorting_pref_track_inv">Par nº de titre ↑</string>
     <string name="precise_volume_pref_title">Contrôle précis du volume</string>
-    <string name="precise_volume_pref_summary_on">Désactiver le contrôle précis du volume</string>
-    <string name="precise_volume_pref_summary_off">Activer le contrôle précis du volume</string>
     <string name="focus_pref_title">Concentration audio</string>
-    <string name="focus_pref_summary_on">Désactiver la gestion de la concentration du volume</string>
-    <string name="focus_pref_summary_off">Activer la gestion de la concentration du volume</string>
     <string name="headset_pref_title">Branchement du casque</string>
-    <string name="headset_pref_summary_on">Désactiver la gestion du branchement du casque</string>
-    <string name="headset_pref_summary_off">Activer la gestion du branchement du casque</string>
     <string name="filter_pref_title">Filtres</string>
     <string name="filter_popup_title">Masquer</string>
     <string name="fast_seeking_actions_pref_summary_on">Avance rapide</string>
@@ -89,8 +83,6 @@
     <string name="playback_pref_title">Vitesse de lecture</string>
     <string name="speed_3">Normale</string>
     <string name="content_playback_speed">Vitesse de lecture</string>
-    <string name="anim_pref_summary_off">Activer les animations</string>
-    <string name="anim_pref_summary_on">Désactiver les animations</string>
     <string name="anim_pref_title">Animations</string>
     <string name="sorting_pref_artist_inv">Par artiste Z-A</string>
     <string name="sorting_pref_artist">Par artiste A-Z</string>

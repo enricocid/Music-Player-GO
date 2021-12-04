@@ -55,14 +55,8 @@
     <string name="active_fragments_pref_title">Lapelas activas</string>
     <string name="active_fragments_pref_warning">Non podes eliminar todas as lapelas! :P</string>
     <string name="precise_volume_pref_title">Control preciso do volume</string>
-    <string name="precise_volume_pref_summary_on">Desactivar control preciso do volume</string>
-    <string name="precise_volume_pref_summary_off">Activar control preciso do volume</string>
     <string name="focus_pref_title">Foco do Audio</string>
-    <string name="focus_pref_summary_on">Desactivar xestión do foco sobre o audio</string>
-    <string name="focus_pref_summary_off">Activar xestión do foco sobre o audio</string>
     <string name="headset_pref_title">Conexión de auriculares</string>
-    <string name="headset_pref_summary_on">Desactivar xestión da conexión de auriculares</string>
-    <string name="headset_pref_summary_off">Activar xestión da conexión de auriculares</string>
     <string name="filter_pref_title">Filtros</string>
     <string name="fast_seeking_actions_pref_summary_on">Preferir accións de busca rápida</string>
     <string name="fast_seeking_actions_pref_summary_off">Preferir accións pechar/repetir</string>
@@ -96,8 +90,6 @@
     <string name="playback_pref_title">Velocidade de reprodución</string>
     <string name="speed_3">Normal</string>
     <string name="content_playback_speed">Velocidade de reprodución</string>
-    <string name="anim_pref_summary_off">Activar animacións</string>
-    <string name="anim_pref_summary_on">Desactivar animacións</string>
     <string name="anim_pref_title">Animacións</string>
     <string name="sorting_pref_artist_inv">Por artista Z-A</string>
     <string name="sorting_pref_artist">Por artista A-Z</string>

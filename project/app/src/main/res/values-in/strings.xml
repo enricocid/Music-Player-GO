@@ -48,14 +48,10 @@
     <string name="active_fragments_pref_title">Tab aktif</string>
     <string name="active_fragments_pref_warning">Anda tidak bisa menyembunyikan semua tab! :P</string>
     <string name="precise_volume_pref_title">Kontrol presisi volume</string>
-    <string name="precise_volume_pref_summary_on">Matikan</string>
-    <string name="precise_volume_pref_summary_off">Nyalakan</string>
+    <string name="pref_summary_on">Matikan</string>
+    <string name="pref_summary_off">Nyalakan</string>
     <string name="focus_pref_title">Manajemen fokus audio</string>
-    <string name="focus_pref_summary_on">Matikan</string>
-    <string name="focus_pref_summary_off">Nyalakan</string>
     <string name="headset_pref_title">Manajemen colokan headset</string>
-    <string name="headset_pref_summary_on">Matikan</string>
-    <string name="headset_pref_summary_off">Nyalakan</string>
     <string name="filter_pref_title">Filter</string>
     <string name="fast_seeking_actions_pref_title">Tindakan notifikasi tambahan</string>
     <string name="fast_seeking_pref_summary">Langkah pencarian maju/mundur cepat (detik)</string>
@@ -89,8 +85,6 @@
     <string name="playback_pref_title">Kecepatan pemutaran</string>
     <string name="speed_3">Normal</string>
     <string name="content_playback_speed">Kecepatan pemutaran</string>
-    <string name="anim_pref_summary_off">Nyalakan</string>
-    <string name="anim_pref_summary_on">Matikan</string>
     <string name="anim_pref_title">Animasi</string>
     <string name="sorting_pref_artist_inv">Artis Z-A</string>
     <string name="sorting_pref_artist">Artis A-Z</string>

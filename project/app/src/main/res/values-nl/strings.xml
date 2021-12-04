@@ -46,14 +46,8 @@
     <string name="active_fragments_pref_warning">Je kunt niet álle tabbladen verwijderen! :P</string>
     <string name="sorting_pref_default">Standaard</string>
     <string name="precise_volume_pref_title">Nauwkeurige volumebediening</string>
-    <string name="precise_volume_pref_summary_on">Nauwkeurige volumebediening uitschakelen</string>
-    <string name="precise_volume_pref_summary_off">Nauwkeurige volumebediening inschakelen</string>
     <string name="focus_pref_title">Audiofocus</string>
-    <string name="focus_pref_summary_on">Audiofocusbeheer uitschakelen</string>
-    <string name="focus_pref_summary_off">Audiofocusbeheer inschakelen</string>
     <string name="headset_pref_title">Headset-pluggen</string>
-    <string name="headset_pref_summary_on">Headset-plugbeheer uitschakelen</string>
-    <string name="headset_pref_summary_off">Headset-plugbeheer inschakelen</string>
     <string name="filter_pref_title">Filters</string>
     <string name="filter_popup_title">Verbergen</string>
     <string name="eq_pref_note_summary">Let op: de systeemequalizer krijgt de voorkeur, tenzij je in de systeeminstellingen de systeemequalizer uitschakelt voor deze app. :)</string>
@@ -89,8 +83,6 @@
     <string name="playback_pref_title">Afspeelsnelheid</string>
     <string name="speed_3">Normaal</string>
     <string name="content_playback_speed">Afspeelsnelheid</string>
-    <string name="anim_pref_summary_off">Animaties inschakelen</string>
-    <string name="anim_pref_summary_on">Animaties uitschakelen</string>
     <string name="anim_pref_title">Animaties</string>
     <string name="sorting_pref_artist_inv">Op artiest (Z-A)</string>
     <string name="sorting_pref_artist">Op artiest (A-Z)</string>

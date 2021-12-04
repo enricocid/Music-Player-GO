@@ -48,14 +48,8 @@
     <string name="active_fragments_pref_title">সক্রিয় ট্যাবগুলি</string>
     <string name="active_fragments_pref_warning">আপনি সব ট্যাব সরাতে পারবেন না! :P</string>
     <string name="precise_volume_pref_title">সঠিক ভলিউম নিয়ন্ত্রণ</string>
-    <string name="precise_volume_pref_summary_on">সুনির্দিষ্ট ভলিউম নিয়ন্ত্রণ অক্ষম করুন</string>
-    <string name="precise_volume_pref_summary_off">সুনির্দিষ্ট ভলিউম নিয়ন্ত্রণ সক্ষম করুন</string>
     <string name="focus_pref_title">অডিও ফোকাস</string>
-    <string name="focus_pref_summary_on">অডিও ফোকাস পরিচালনা অক্ষম করুন</string>
-    <string name="focus_pref_summary_off">অডিও ফোকাস পরিচালনা সক্ষম করুন</string>
     <string name="headset_pref_title">হেডসেট প্লাগ</string>
-    <string name="headset_pref_summary_on">হেডসেট প্লাগ পরিচালনা অক্ষম করুন</string>
-    <string name="headset_pref_summary_off">হেডসেট প্লাগ পরিচালনা সক্ষম করুন</string>
     <string name="filter_pref_title">ফিল্টার</string>
     <string name="error_eq">দুঃখিত, একটি ক্রুটি ঘটেছে!</string>
     <string name="fast_seeking_actions_pref_summary_on">দ্রুতির কার্যক্রমকে অগ্রাধিকার দিন</string>

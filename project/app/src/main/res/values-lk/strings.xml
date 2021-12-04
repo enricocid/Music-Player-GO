@@ -48,13 +48,7 @@
     <string name="active_fragments_pref_title">සක්රිය ටැබ්</string>
     <string name="active_fragments_pref_warning">ඔබට සියලු ටැබ් ඉවත් කළ නොහැක! :P</string>
     <string name="precise_volume_pref_title">නිවැරදි පරිමාව පාලනය කිරීම</string>
-    <string name="precise_volume_pref_summary_on">නිවැරදි පරිමාව පාලනය අක්රීය කරන්න</string>
-    <string name="precise_volume_pref_summary_off">නිවැරදි පරිමාව පාලනය කරන්න</string>
     <string name="focus_pref_title">ශ්රව්ය නාභිගත කිරීම</string>
-    <string name="focus_pref_summary_on">ශ්රව්ය නාභිගත කළමනාකරණය අක්රීය කරන්න</string>
-    <string name="focus_pref_summary_off">ශ්රව්ය නාභිගත කළමනාකරණය සක්රීය කරන්න</string>
     <string name="headset_pref_title">හෙඩ්සෙට් ප්ලග්</string>
-    <string name="headset_pref_summary_on">හෙඩ්සෙට් ප්ලග් කළමනාකරණය අක්රීය කරන්න</string>
-    <string name="headset_pref_summary_off">හෙඩ්සෙට් ප්ලග් කළමනාකරණය සක්රීය කරන්න</string>
     <string name="filter_pref_title">පෙරහන්</string>
 </resources>

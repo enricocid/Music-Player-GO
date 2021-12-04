@@ -94,6 +94,10 @@
     <string name="theme_pref_dark_title">Dark</string>
     <string name="theme_pref_auto_title">System</string>
 
+    <!-- Preferences - shared strings -->
+    <string name="pref_summary_on">Turn off</string>
+    <string name="pref_summary_off">Turn on</string>
+
     <!-- Preferences - Accent -->
     <string name="accent_pref_title">Accent</string>
 
@@ -103,21 +107,15 @@
 
     <!-- Preferences - Custom Equalizer note -->
     <string name="eq_pref_note_summary">Note: The system equalizer is used unless turned off from the system settings. :)</string>
-                    
+
     <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">Precise volume control</string>
-    <string name="precise_volume_pref_summary_on">Turn off</string>
-    <string name="precise_volume_pref_summary_off">Turn on</string>
 
     <!-- Preferences - Focus -->
     <string name="focus_pref_title">Audio focus management</string>
-    <string name="focus_pref_summary_on">Turn off</string>
-    <string name="focus_pref_summary_off">Turn on</string>
 
     <!-- Preferences - Headsets -->
     <string name="headset_pref_title">Headset plug management</string>
-    <string name="headset_pref_summary_on">Turn off</string>
-    <string name="headset_pref_summary_off">Turn on</string>
 
     <!-- Preferences - Playback speed -->
     <string name="playback_pref_title">Selected playback speed</string>
@@ -128,30 +126,28 @@
     <string name="on_list_ended_pref_title">When a list ends&#8230;</string>
     <string name="on_list_ended_pref_stop_title">Stop</string>
     <string name="on_list_ended_pref_continue_title">Continue</string>
-        
+
     <!-- Preferences - covers -->
     <string name="covers_pref_title">Embedded album covers</string>
     <string name="covers_pref_summary_on">Hide</string>
     <string name="covers_pref_summary_off">Show</string>
-        
+
     <!-- Preferences - Fast seeking -->
     <string name="fast_seeking_pref_title">Fast seeking</string>
     <string name="fast_seeking_pref_summary">Fast forward/rewind step (seconds)</string>
-        
+
     <!-- Preferences - Additional notification actions -->
     <string name="fast_seeking_actions_pref_title">Additional notification actions</string>
     <string name="fast_seeking_actions_pref_summary_off">Close/repeat</string>
     <string name="fast_seeking_actions_pref_summary_on">Fast seeking</string>
-        
+
     <!-- Preferences - Song visualization options (tl = title, fn = full name) -->
     <string name="song_visual_pref_title">Song visualization</string>
     <string name="song_visual_pref_tl_title">Title</string>
-    <string name="song_visual_pref_fn_title">Filename</string>    
-    
+    <string name="song_visual_pref_fn_title">Filename</string>
+
     <!-- Preferences - Animations/Circular reveal fragments -->
     <string name="anim_pref_title">Animations</string>
-    <string name="anim_pref_summary_on">Turn off</string>
-    <string name="anim_pref_summary_off">Turn on</string>
 
     <!-- Preferences - Filters -->
     <string name="filter_pref_title">Filters</string>

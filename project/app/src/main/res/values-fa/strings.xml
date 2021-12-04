@@ -51,12 +51,8 @@
     <string name="error_eq">خطا</string>
     <string name="active_fragments_pref_title">زبانه‌های فعّال</string>
     <string name="active_fragments_pref_warning">شما نمی‌توانید همهٔ زبانه‌ها را بردارید!</string>
-    <string name="precise_volume_pref_summary_on">خاموش کردن</string>
-    <string name="precise_volume_pref_summary_off">روشن کردن</string>
-    <string name="focus_pref_summary_on">خاموش کردن</string>
-    <string name="focus_pref_summary_off">روشن کردن</string>
-    <string name="headset_pref_summary_on">خاموش کردن</string>
-    <string name="headset_pref_summary_off">روشن کردن</string>
+    <string name="pref_summary_on">خاموش کردن</string>
+    <string name="pref_summary_off">روشن کردن</string>
     <string name="playback_pref_summary_on">فقط یک آهنگ</string>
     <string name="playback_pref_summary_off">نگه‌دار</string>
     <string name="on_list_ended_pref_title">هنگامی که یک فهرست پایان یابد…</string>
@@ -67,6 +63,4 @@
     <string name="song_visual_pref_tl_title">عنوان</string>
     <string name="song_visual_pref_fn_title">نام پرونده</string>
     <string name="anim_pref_title">پویانمایی‌ها</string>
-    <string name="anim_pref_summary_on">خاموش کردن</string>
-    <string name="anim_pref_summary_off">روشن کردن</string>
 </resources>

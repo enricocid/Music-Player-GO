@@ -47,14 +47,8 @@
     <string name="active_fragments_pref_warning">¡No puedes remover todas las pestañas! :P</string>
     <string name="sorting_pref_default">Predeterminado</string>
     <string name="precise_volume_pref_title">Control preciso del volumen</string>
-    <string name="precise_volume_pref_summary_on">Desactivar control preciso del volumen</string>
-    <string name="precise_volume_pref_summary_off">Activar control preciso del volumen</string>
     <string name="focus_pref_title">Enfoque de audio</string>
-    <string name="focus_pref_summary_on">Desactivar control del enfoque de audio</string>
-    <string name="focus_pref_summary_off">Activar control del enfoque de audio</string>
     <string name="headset_pref_title">Conexión de auriculares</string>
-    <string name="headset_pref_summary_on">Desactivar control de la conexión de auriculares</string>
-    <string name="headset_pref_summary_off">Activar control de la conexión de auriculares</string>
     <string name="filter_pref_title">Filtros</string>
     <string name="error_not_ready">No se pudo cargar la librería de música :( Esto pudo deberse a un error con la tarjeta SD, forzando a la librería multimedia de Android a reconstruir su registro de base de datos. Vuelve a intentarlo más tarde.</string>
     <string name="equalizer_bb">Mejora de graves</string>
@@ -81,8 +75,6 @@
     <string name="playback_pref_summary_off">Conservar la velocidad de reproducción seleccionada</string>
     <string name="playback_pref_summary_on">No conservar la velocidad de reproducción seleccionada</string>
     <string name="playback_pref_title">Velocidad de reproducción</string>
-    <string name="anim_pref_summary_off">Activar animaciones</string>
-    <string name="anim_pref_summary_on">Desactivar animaciones</string>
     <string name="anim_pref_title">Animaciones</string>
     <string name="open_details_fragment">Abrir datos del artista/carpeta</string>
     <string name="content_repeat">Activar/desactivar opciones de repetición</string>

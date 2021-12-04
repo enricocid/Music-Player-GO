@@ -25,17 +25,9 @@
     <string name="playback_pref_summary_on">Neišlaikyti pasirinkto atkūrimo greičio</string>
     <string name="playback_pref_title">Atkūrimo greitis</string>
     <string name="filter_pref_title">Filtrai</string>
-    <string name="anim_pref_summary_off">Įjungti animacijas</string>
-    <string name="anim_pref_summary_on">Išjungti animacijas</string>
     <string name="anim_pref_title">Animacijos</string>
-    <string name="headset_pref_summary_off">Įjungti ausinių kištuko valdymą</string>
-    <string name="headset_pref_summary_on">Išjungti ausinių kištuko valdymą</string>
     <string name="headset_pref_title">Ausinių kištukas</string>
-    <string name="focus_pref_summary_off">Įjungti garso fokusavimo valdymą</string>
-    <string name="focus_pref_summary_on">Išjungti garso fokusavimo valdymą</string>
     <string name="focus_pref_title">Garso fokusavimas</string>
-    <string name="precise_volume_pref_summary_off">Įjungti tikslų garsumo valdymą</string>
-    <string name="precise_volume_pref_summary_on">Išjungti tikslų garsumo valdymą</string>
     <string name="precise_volume_pref_title">Tikslus garsumo valdymas</string>
     <string name="fast_seeking_actions_pref_title">Papildomi pranešimo veiksmai</string>
     <string name="fast_seeking_pref_summary">Greito persukimo pirmyn/atgal žingsnis (sekundėmis)</string>

@@ -43,14 +43,8 @@
     <string name="active_fragments_pref_warning">Nem tudja eltávolítani az összes oldalt! :P</string>
     <string name="sorting_pref_default">Alapértelmezett</string>
     <string name="precise_volume_pref_title">Pontos hangerő-szabályozás</string>
-    <string name="precise_volume_pref_summary_on">Pontos hangerő-szabályozás kikapcsolása</string>
-    <string name="precise_volume_pref_summary_off">Pontos hangerő-szabályozás bekapcsolása</string>
     <string name="focus_pref_title">Hangfókusz</string>
-    <string name="focus_pref_summary_on">Hangfókusz-kezelés kikapcsolása</string>
-    <string name="focus_pref_summary_off">A hangfókusz-kezelés bekapcsolása</string>
     <string name="headset_pref_title">Fejhallgató csatlakozó</string>
-    <string name="headset_pref_summary_on">A fejhallgató-csatlakozókezelés kikapcsolása</string>
-    <string name="headset_pref_summary_off">A fejhallgató-csatlakozókezelés bekapcsolása</string>
     <string name="song_visual_pref_title">Dal megjelenítés</string>
     <string name="equalizer">Hangerőszabályzó</string>
     <string name="filter_pref_title">Szűrők</string>
@@ -79,8 +73,6 @@
     <string name="playback_pref_summary_off">A kijelölt lejátszási sebesség fenntartása</string>
     <string name="playback_pref_summary_on">A kijelölt lejátszási sebesség nem marad meg</string>
     <string name="playback_pref_title">Lejátszás sebessége</string>
-    <string name="anim_pref_summary_off">Animációk bekapcsolása</string>
-    <string name="anim_pref_summary_on">Animációk kikapcsolása</string>
     <string name="anim_pref_title">Animációk</string>
     <string name="error_not_ready">Nem sikerült betölteni a zenei könyvtárat! :( Ennek oka lehet az SD-kártya leválasztása, ami arra kényszeríti az Android Médiakönyvtárat, hogy újratöltse az adatbázis rekordjait. Próbálja újra később.</string>
     <string name="open_details_fragment">Előadó/mappa részletek megnyitása</string>

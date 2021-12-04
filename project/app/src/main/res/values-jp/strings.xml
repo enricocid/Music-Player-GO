@@ -48,14 +48,10 @@
     <string name="active_fragments_pref_title">有効なタブ</string>
     <string name="active_fragments_pref_warning">すべてのタブを削除することはできません</string>
     <string name="precise_volume_pref_title">無段階の音量調節</string>
-    <string name="precise_volume_pref_summary_on">無効</string>
-    <string name="precise_volume_pref_summary_off">有効</string>
+    <string name="pref_summary_on">無効</string>
+    <string name="pref_summary_off">有効</string>
     <string name="focus_pref_title">オーディオフォーカス制御</string>
-    <string name="focus_pref_summary_on">無効</string>
-    <string name="focus_pref_summary_off">有効</string>
     <string name="headset_pref_title">ヘッドホン端子制御</string>
-    <string name="headset_pref_summary_on">無効</string>
-    <string name="headset_pref_summary_off">有効</string>
     <string name="filter_pref_title">フィルター</string>
     <string name="error_list_ended">キューにある曲を再生し終えました。</string>
     <string name="eq_pref_note_summary">端末の設定からシステムのイコライザーを無効にしないと使用できません</string>
@@ -85,9 +81,7 @@
     <string name="sorting_pref_artist">アーティスト 昇順</string>
     <string name="playback_pref_summary_off">倍速設定を常に維持</string>
     <string name="playback_pref_summary_on">倍速設定を常に初期化</string>
-    <string name="anim_pref_summary_on">アニメーションを無効にする</string>
     <string name="playback_pref_title">倍速</string>
-    <string name="anim_pref_summary_off">アニメーションを有効にする</string>
     <string name="anim_pref_title">アニメーション</string>
     <string name="open_details_fragment">アーティスト/フォルダの詳細を見る</string>
     <string name="content_repeat">リピート再生有効/無効</string>

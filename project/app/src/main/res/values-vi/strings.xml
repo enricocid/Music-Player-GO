@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="headset_pref_summary_off">Bật quản lý cắm tai nghe</string>
-    <string name="headset_pref_summary_on">Tắt quản lý cắm tai nghe</string>
     <string name="headset_pref_title">Cắm tai nghe</string>
-    <string name="focus_pref_summary_off">Bật quản lý tập trung âm thanh</string>
-    <string name="focus_pref_summary_on">Tắt quản lý tập trung âm thanh</string>
     <string name="focus_pref_title">Tập trung âm thanh</string>
-    <string name="precise_volume_pref_summary_off">Bật điều khiển âm lượng chính xác</string>
-    <string name="precise_volume_pref_summary_on">Tắt điều khiển âm lượng chính xác</string>
     <string name="precise_volume_pref_title">Điều khiển âm lượng chính xác</string>
     <string name="fast_seeking_actions_pref_summary_on">Ưu tiên hành động tua nhanh</string>
     <string name="fast_seeking_actions_pref_summary_off">Ưu tiên hành động đóng/lặp lại</string>
@@ -49,8 +43,6 @@
     <string name="playback_pref_summary_on">Không giữ tốc độ phát đã chọn</string>
     <string name="playback_pref_title">Tốc độ phát</string>
     <string name="filter_pref_title">Bộ lọc</string>
-    <string name="anim_pref_summary_off">Bật hoạt ảnh</string>
-    <string name="anim_pref_summary_on">Tắt hoạt ảnh</string>
     <string name="anim_pref_title">Hoạt ảnh</string>
     <string name="error_no_music">Không tìm thấy nhạc :(</string>
     <string name="error_no_favorites">Không tìm thấy bài hát yêu thích nào!</string>

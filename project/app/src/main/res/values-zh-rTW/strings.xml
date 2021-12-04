@@ -49,13 +49,7 @@
     <string name="active_fragments_pref_title">標籤管理</string>
     <string name="active_fragments_pref_warning">您不能刪除所有標籤！ :P</string>
     <string name="precise_volume_pref_title">精確的音量控制</string>
-    <string name="precise_volume_pref_summary_on">禁用精確的音量控制</string>
-    <string name="precise_volume_pref_summary_off">實現精確的音量控制</string>
     <string name="focus_pref_title">音頻焦點</string>
-    <string name="focus_pref_summary_on">禁用音頻焦點管理</string>
-    <string name="focus_pref_summary_off">啟用音頻焦點管理</string>
     <string name="headset_pref_title">耳機插頭</string>
-    <string name="headset_pref_summary_on">禁用耳機插頭管理</string>
-    <string name="headset_pref_summary_off">啟用耳機插頭管理</string>
     <string name="filter_pref_title">過濾器</string>
 </resources>

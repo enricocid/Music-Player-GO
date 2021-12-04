@@ -49,14 +49,8 @@
     <string name="active_fragments_pref_title">标签管理</string>
     <string name="active_fragments_pref_warning">您不能删除所有标签！ :P</string>
     <string name="precise_volume_pref_title">精确的音量控制</string>
-    <string name="precise_volume_pref_summary_on">禁用精确的音量控制</string>
-    <string name="precise_volume_pref_summary_off">实现精确的音量控制</string>
     <string name="focus_pref_title">音频焦点</string>
-    <string name="focus_pref_summary_on">禁用音频焦点管理</string>
-    <string name="focus_pref_summary_off">启用音频焦点管理</string>
     <string name="headset_pref_title">耳机插头</string>
-    <string name="headset_pref_summary_on">禁用耳机插头管理</string>
-    <string name="headset_pref_summary_off">启用耳机插头管理</string>
     <string name="filter_pref_title">过滤器</string>
     <string name="fast_seeking_actions_pref_title">额外通知操作</string>
     <string name="fast_seeking_pref_title">快速查找</string>
@@ -80,8 +74,6 @@
     <string name="equalizer_bb">低音增强</string>
     <string name="favorites_save_time">保存歌曲位置</string>
     <string name="playback_pref_title">播放速度</string>
-    <string name="anim_pref_summary_off">打开动画效果</string>
-    <string name="anim_pref_summary_on">关闭动画效果</string>
     <string name="anim_pref_title">动画效果</string>
     <string name="open_details_fragment">打开艺术家/文件夹的详细信息</string>
     <string name="content_repeat">启用/禁用重复选项</string>

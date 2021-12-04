@@ -7,14 +7,8 @@
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
     <string name="filter_pref_title">Filter</string>
-    <string name="headset_pref_summary_off">Management des Kopfhöreranschlusses einschalten</string>
-    <string name="headset_pref_summary_on">Management des Kopfhöreranschlusses ausschalten</string>
     <string name="headset_pref_title">Kopfhöreranschluss</string>
-    <string name="focus_pref_summary_off">Audiofokusmanagement einschalten</string>
-    <string name="focus_pref_summary_on">Audiofokusmanagement ausschalten</string>
     <string name="focus_pref_title">Audiofokus</string>
-    <string name="precise_volume_pref_summary_off">Präzise Lautstärkeregelung aktivieren</string>
-    <string name="precise_volume_pref_summary_on">Präzise Lautstärkeregelung deaktivieren</string>
     <string name="precise_volume_pref_title">Präzise Lautstärkenregelung</string>
     <string name="fast_seeking_actions_pref_summary_on">Schnelle-Suche-Aktionen bevorzugen</string>
     <string name="fast_seeking_actions_pref_summary_off">Schließen/Wiederholungsaktionen bevorzugen</string>
@@ -79,8 +73,6 @@
     <string name="error_eq">Ups, ein Fehler ist aufgetreten!</string>
     <string name="error_list_ended">Liste am Ende.</string>
     <string name="playback_pref_title">Abspielgeschwindigkeit</string>
-    <string name="anim_pref_summary_off">Animationen anschalten</string>
-    <string name="anim_pref_summary_on">Animationen ausschalten</string>
     <string name="anim_pref_title">Animationen</string>
     <string name="speed_3">Normal</string>
     <string name="content_playback_speed">Abspielgeschwindigkeit</string>

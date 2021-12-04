@@ -4,17 +4,9 @@
     <string name="playback_pref_summary_on">Ne vztrajaj pri izbrani hitrosti predvajanja</string>
     <string name="playback_pref_title">Hitrost predvajanja</string>
     <string name="filter_pref_title">Filtri</string>
-    <string name="anim_pref_summary_off">Vključi animacije</string>
-    <string name="anim_pref_summary_on">Izključi animacije</string>
     <string name="anim_pref_title">Animacije</string>
-    <string name="headset_pref_summary_off">Vključi upravljanje vhoda za slušalke</string>
-    <string name="headset_pref_summary_on">Izključi upravljanje vhoda za slušalke</string>
     <string name="headset_pref_title">Vhod za slušalke</string>
-    <string name="focus_pref_summary_off">Vključi urejanje zvočnega fokusa</string>
-    <string name="focus_pref_summary_on">Izključi urejanje zvočnega fokusa</string>
     <string name="focus_pref_title">Zvočni fokus</string>
-    <string name="precise_volume_pref_summary_off">Vključi natančen nadzor glasnosti</string>
-    <string name="precise_volume_pref_summary_on">Izključi natančen nadzor glasnosti</string>
     <string name="precise_volume_pref_title">Natančen nadzor glasnosti</string>
     <string name="fast_seeking_actions_pref_summary_on">Raje dejanja prevrti naprej</string>
     <string name="fast_seeking_actions_pref_summary_off">Raje dejanja zapri/ponovi</string>

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="eq_pref_note_summary">Merk: System-tonekontrollen føretrekkast med mindre den skruast av i system-innstillingane. :)</string>
-    <string name="focus_pref_summary_off">Skru på</string>
-    <string name="focus_pref_summary_on">Skru av</string>
     <string name="precise_volume_pref_title">Presis kontroll av ljodstyrke</string>
     <string name="fast_seeking_actions_pref_summary_on">Rask blafring</string>
     <string name="fast_seeking_actions_pref_summary_off">Lukk/repeter</string>
@@ -30,15 +28,11 @@
     <string name="content_playback_speed">Tempo for avspeling</string>
     <string name="playback_pref_title">Vald tempo for avspeling</string>
     <string name="filter_pref_title">Filter</string>
-    <string name="anim_pref_summary_off">Skru på</string>
-    <string name="anim_pref_summary_on">Skru av</string>
+    <string name="pref_summary_off">Skru på</string>
+    <string name="pref_summary_on">Skru av</string>
     <string name="anim_pref_title">Animasjonar</string>
-    <string name="headset_pref_summary_off">Skru på</string>
-    <string name="headset_pref_summary_on">Skru av</string>
     <string name="headset_pref_title">Hodesettplugg-håndtering</string>
     <string name="focus_pref_title">Ljodfokus-håndtering</string>
-    <string name="precise_volume_pref_summary_off">Skru på</string>
-    <string name="precise_volume_pref_summary_on">Skru av</string>
     <string name="category_general">Generelt</string>
     <string name="active_fragments_pref_title">Aktive fanar</string>
     <string name="song_visual_pref_fn_title">Filnamn</string>
