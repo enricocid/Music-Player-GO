@@ -20,11 +20,13 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**TacoTheDank**](https://github.com/TacoTheDank) for upgrades to gradle, java 1.8, translations and improvements [247](https://github.com/enricocid/Music-Player-GO/issues/247), [248](https://github.com/enricocid/Music-Player-GO/pull/248), [250](https://github.com/enricocid/Music-Player-GO/pull/250)
 
+- [**gaycodegal**](https://github.com/gaycodegal) for the [fixes/improvements](https://github.com/enricocid/Music-Player-GO/pull/332) to media button intent app's response
+
 - [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes (https://github.com/enricocid/Music-Player-GO/pull/121) and its equalizer implementation: I learned so much about how an equalizer works
 
-- [**OxygenCobalti**](https://github.com/OxygenCobalt) for [image loading optimizations](https://github.com/enricocid/Music-Player-GO/pull/287) and [ViewPager2 improvements](https://github.com/enricocid/Music-Player-GO/pull/314)
+- [**OxygenCobalt**](https://github.com/OxygenCobalt) for [image loading optimizations](https://github.com/enricocid/Music-Player-GO/pull/287) and [ViewPager2 improvements](https://github.com/enricocid/Music-Player-GO/pull/314)
 
-- [**Allan Nordh�y**](https://github.com/comradekingu) 
+- [**Allan Nordhøy**](https://github.com/comradekingu) 
 for [strings](https://github.com/enricocid/Music-Player-GO/pull/227), [readme](https://github.com/enricocid/Music-Player-GO/pull/277) and [FAQ] (https://github.com/enricocid/Music-Player-GO/pull/278/) improvements
 
 - [**vtkhatri**](https://github.com/vtkhatri) for the original [date added sorting](https://github.com/enricocid/Music-Player-GO/commit/fe8077b1c067a7722f2605a0b89afe7e6805311d) implementation
@@ -37,7 +39,7 @@ for [strings](https://github.com/enricocid/Music-Player-GO/pull/227), [readme](h
 
 - [**SCOTT-HAMILTON**](https://github.com/SCOTT-HAMILTON) for the original [media notification dark implementation](https://github.com/enricocid/Music-Player-GO/pull/308/)
 
-- [**Ram�n**](https://github.com/proideo) for [bug](https://github.com/enricocid/Music-Player-GO/issues/309) reporting
+- [**Ramón**](https://github.com/proideo) for [bug](https://github.com/enricocid/Music-Player-GO/issues/309) reporting
 
 - **Simon Gould** for having reported this [bug](https://github.com/enricocid/Music-Player-GO/commit/f95b81ce49b9f58418de4a416990ede732d9f715)
 
@@ -94,7 +96,7 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 
 - [**Nathan Bonnemains**](https://github.com/NathanBnm) and [**KowalskiOmniROM**](https://devhub.io/developer/KowalskiOmniROM) for **French** translations
 
-- [**Adem Furkan Ã–ZCAN**](https://github.com/Adem68) for **Turkish** translations
+- [**Adem Furkan Ãƒâ€“ZCAN**](https://github.com/Adem68) for **Turkish** translations
 
 - [**Heimen Stoffels**](https://github.com/Vistaus) for **Dutch** translations
 
