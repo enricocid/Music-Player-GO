@@ -22,6 +22,7 @@ import android.support.v4.media.MediaMetadataCompat.*
 import android.support.v4.media.session.PlaybackStateCompat
 import android.support.v4.media.session.PlaybackStateCompat.*
 import android.util.Log
+import android.view.KeyEvent
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.graphics.drawable.toBitmap
@@ -184,6 +185,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             addAction(BluetoothDevice.ACTION_ACL_CONNECTED)
             addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED)
             addAction(Intent.ACTION_HEADSET_PLUG)
+            addAction(Intent.ACTION_MEDIA_BUTTON)
             addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
         }
         playerService.registerReceiver(mPlayerBroadcastReceiver, intentFilter)
@@ -921,6 +923,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                             resumeMediaPlayer()
                         }
 
+                        Intent.ACTION_MEDIA_BUTTON -> {
+                            handleMediaButton(intent)
+                        }
+
                         AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED ->
                             when (intent.getIntExtra(AudioManager.EXTRA_SCO_AUDIO_STATE, -1)) {
                                 AudioManager.SCO_AUDIO_STATE_CONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
@@ -957,5 +963,60 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 e.printStackTrace()
             }
         }
+
+        /**
+         * Handles "media button" which is how external applications
+         * comunicate with our app
+         */
+        private fun handleMediaButton(intent: Intent) {
+            val event: KeyEvent =
+                intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT) as KeyEvent? ?: return
+            val action: Int = event.action
+            var handled = false
+
+            if (action == KeyEvent.ACTION_DOWN) {
+                when (event.keyCode) {
+                    KeyEvent.KEYCODE_MEDIA_STOP, KeyEvent.KEYCODE_MEDIA_PAUSE -> {
+                        if (isPlaying) {
+                            pauseMediaPlayer()
+                            handled = true
+                        }
+                    }
+                    KeyEvent.KEYCODE_MEDIA_PLAY -> {
+                        if (!isPlaying) {
+                            resumeMediaPlayer()
+                            handled = true
+                        }
+                    }
+                    KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> {
+                        resumeOrPause()
+                        handled = true
+                    }
+                    KeyEvent.KEYCODE_MEDIA_NEXT -> {
+                        if (isPlaying) {
+                            skip(true)
+                            handled = true
+                        }
+                    }
+                    KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {
+                        if (isPlaying) {
+                            // Because this comes from an AI, we may want to
+                            // not have the immediate reset because the user
+                            // specifically requested the previous song
+                            // for example by saying "previous song"
+                            skip(false)
+                            handled = true
+                        }
+                    }
+                }
+            }
+            if (handled) {
+                resultCode = Activity.RESULT_OK
+                if (isOrderedBroadcast) {
+                    abortBroadcast()
+                }
+            }
+        }
+
     }
 }
