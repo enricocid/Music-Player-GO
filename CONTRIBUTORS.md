@@ -22,12 +22,12 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**gaycodegal**](https://github.com/gaycodegal) for the [fixes/improvements](https://github.com/enricocid/Music-Player-GO/pull/332) to media button intent app's response
 
-- [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes (https://github.com/enricocid/Music-Player-GO/pull/121) and its equalizer implementation: I learned so much about how an equalizer works
+- [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes](https://github.com/enricocid/Music-Player-GO/pull/121) and its equalizer implementation: I learned so much about how an equalizer works
 
 - [**OxygenCobalt**](https://github.com/OxygenCobalt) for [image loading optimizations](https://github.com/enricocid/Music-Player-GO/pull/287) and [ViewPager2 improvements](https://github.com/enricocid/Music-Player-GO/pull/314)
 
 - [**Allan Nordhøy**](https://github.com/comradekingu) 
-for [strings](https://github.com/enricocid/Music-Player-GO/pull/227), [readme](https://github.com/enricocid/Music-Player-GO/pull/277) and [FAQ] (https://github.com/enricocid/Music-Player-GO/pull/278/) improvements
+for [strings](https://github.com/enricocid/Music-Player-GO/pull/227), [readme](https://github.com/enricocid/Music-Player-GO/pull/277) and [FAQ](https://github.com/enricocid/Music-Player-GO/pull/278/) improvements
 
 - [**vtkhatri**](https://github.com/vtkhatri) for the original [date added sorting](https://github.com/enricocid/Music-Player-GO/commit/fe8077b1c067a7722f2605a0b89afe7e6805311d) implementation
 
@@ -96,7 +96,7 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 
 - [**Nathan Bonnemains**](https://github.com/NathanBnm) and [**KowalskiOmniROM**](https://devhub.io/developer/KowalskiOmniROM) for **French** translations
 
-- [**Adem Furkan Ãƒâ€“ZCAN**](https://github.com/Adem68) for **Turkish** translations
+- [**Adem Ozcan**](https://github.com/Adem68) for **Turkish** translations
 
 - [**Heimen Stoffels**](https://github.com/Vistaus) for **Dutch** translations
 
