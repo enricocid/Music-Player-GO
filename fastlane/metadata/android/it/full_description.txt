@@ -13,4 +13,4 @@
 
 <b>Vuoi contribuire alle traduzioni?</b>
 
-Unisciti a noi su <a href="https://hosted.weblate.org/engage/music-player-go/">Weblate</a>/
+Unisciti a noi su <a href="https://hosted.weblate.org/engage/music-player-go/">Weblate</a>
