@@ -48,7 +48,7 @@
     <string name="sorting_pref_track">Par nº de titre ↓</string>
     <string name="sorting_pref_track_inv">Par nº de titre ↑</string>
     <string name="precise_volume_pref_title">Contrôle précis du volume</string>
-    <string name="focus_pref_title">Gestion du focus audio</string>
+    <string name="focus_pref_title">Concentration audio</string>
     <string name="headset_pref_title">Branchement du casque</string>
     <string name="filter_pref_title">Filtres</string>
     <string name="filter_popup_title">Masquer</string>
@@ -91,6 +91,4 @@
     <string name="sorting_pref_album_inv">Par album Z-A</string>
     <string name="sorting_pref_album">Par album A-Z</string>
     <string name="delete">Supprimer</string>
-    <string name="pref_summary_on">Désactiver</string>
-    <string name="pref_summary_off">Activer</string>
 </resources>
