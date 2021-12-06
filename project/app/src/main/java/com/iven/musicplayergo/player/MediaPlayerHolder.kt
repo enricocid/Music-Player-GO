@@ -144,6 +144,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private val sPlaybackSpeedPersisted get() = goPreferences.isPlaybackSpeedPersisted
     var isRepeat1X = false
     var isLooping = false
+    var isPauseOnEnd = false
 
     // isQueue saves the current song when queue starts
     var isQueue: Music? = null
@@ -286,12 +287,11 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     override fun onCompletion(mediaPlayer: MediaPlayer) {
 
-        playerService.acquireWakeLock()
-
-        mediaPlayerInterface.onStateChanged()
-        mediaPlayerInterface.onPlaybackCompleted()
-
         when {
+            isPauseOnEnd -> {
+                pauseMediaPlayer()
+                repeat(updatePlaybackStatus = true)
+            }
             isRepeat1X or isLooping -> if (isMediaPlayer) {
                 repeatSong(0)
             }
@@ -315,6 +315,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 }
             }
         }
+
+        playerService.acquireWakeLock()
+        mediaPlayerInterface.onStateChanged()
+        mediaPlayerInterface.onPlaybackCompleted()
     }
 
     fun onRestartSeekBarCallback() {
@@ -607,9 +611,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             currentPlaybackSpeed = 1.0F
         }
 
-        if (isRepeat1X or isLooping) {
+        if (isRepeat1X or isLooping or isPauseOnEnd) {
             isRepeat1X = false
             isLooping = false
+            isPauseOnEnd = false
         }
 
         if (isSongFromPrefs) {
@@ -763,7 +768,14 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             }
             isLooping -> {
                 isLooping = false
+                isPauseOnEnd = true
                 toastMessage = R.string.repeat_disabled
+                toastMessage.toToast(playerService)
+                toastMessage = R.string.pause_on_end
+            }
+            isPauseOnEnd -> {
+                isPauseOnEnd = false
+                toastMessage = R.string.pause_on_end_disabled
             }
             else -> isRepeat1X = true
         }
@@ -775,9 +787,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (updatePlaybackStatus) {
             updatePlaybackStatus(updateUI = true)
         }
-        if (isPlaying) {
-            mMusicNotificationManager.updateRepeatIcon()
-        }
+        mMusicNotificationManager.updateRepeatIcon()
     }
 
     fun setQueueEnabled(enabled: Boolean, canSkip: Boolean) {

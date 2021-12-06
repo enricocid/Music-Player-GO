@@ -41,10 +41,13 @@
     <string name="error_unknown_unsupported">Qualcosa è andato storto! :( Forse il formato non è supportato, o la cartella è inaccessibile (non dipende dall\'app!).</string>
     <string name="error_media_buttons">Qualcosa è andato storto! :( Per favore riavvia la riproduzione dall\'applicazione.</string>
     <string name="error_eq">Errore</string>
-    <string name="on_close_activity">Interrompere la riproduzione\?</string>
+    <string name="on_close_activity">Interrompere la riproduzione?</string>
     <string name="repeat_enabled">Ripeti 1x on.</string>
-    <string name="repeat_loop_enabled">Ripetizione ∞.</string>
+    <string name="repeat_loop_enabled">Ripetizione ∞ on.</string>
     <string name="repeat_disabled">Ripetizione ∞ off.</string>
+    <string name="pause_on_end">Pausa al termine on.</string>
+    <string name="pause_on_end_disabled">Pausa al termine off.</string>
+
     <string name="settings">Opzioni</string>
     <string name="category_general">Generali</string>
     <string name="open_git_pref_summary">Apri la pagina del progetto per maggiori info :)</string>

@@ -81,22 +81,24 @@
 
     <!-- Messages - Repeat -->
     <string name="repeat_enabled">Single repetition on.</string>
-    <string name="repeat_loop_enabled">&#8734; repeat.</string>
+    <string name="repeat_loop_enabled">&#8734; repeat on.</string>
     <string name="repeat_disabled">&#8734; repeat off.</string>
+    <string name="pause_on_end">Pause on completion on.</string>
+    <string name="pause_on_end_disabled">Pause on completion off.</string>
 
     <!-- Preferences - Categories -->
     <string name="settings">Settings</string>
     <string name="category_general">General</string>
+
+    <!-- Preferences - shared strings -->
+    <string name="pref_summary_on">Turn off</string>
+    <string name="pref_summary_off">Turn on</string>
 
     <!-- Preferences - Themes -->
     <string name="theme_pref_title">Theme</string>
     <string name="theme_pref_light_title">Light</string>
     <string name="theme_pref_dark_title">Dark</string>
     <string name="theme_pref_auto_title">System</string>
-
-    <!-- Preferences - shared strings -->
-    <string name="pref_summary_on">Turn off</string>
-    <string name="pref_summary_off">Turn on</string>
 
     <!-- Preferences - Accent -->
     <string name="accent_pref_title">Accent</string>

@@ -230,6 +230,7 @@ object ThemeHelper {
     fun getRepeatIcon(mediaPlayerHolder: MediaPlayerHolder) = when {
         mediaPlayerHolder.isRepeat1X -> R.drawable.ic_repeat_one
         mediaPlayerHolder.isLooping -> R.drawable.ic_repeat
+        mediaPlayerHolder.isPauseOnEnd -> R.drawable.ic_pause
         else -> R.drawable.ic_repeat_one_notif_disabled
     }
 }
