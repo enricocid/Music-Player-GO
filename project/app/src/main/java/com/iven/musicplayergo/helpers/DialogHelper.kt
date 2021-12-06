@@ -10,6 +10,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.core.text.parseAsHtml
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
@@ -75,7 +76,7 @@ object DialogHelper {
                 expandBottomSheet()
                 view.afterMeasured {
                     val indexOfCurrentSong = mediaPlayerHolder.queueSongs.indexOf(mediaPlayerHolder.currentSong)
-                    recyclerView.scrollToPosition(indexOfCurrentSong)
+                    (recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(indexOfCurrentSong, 0)
                 }
             }
         }
