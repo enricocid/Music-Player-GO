@@ -78,7 +78,7 @@ object ThemeHelper {
     fun isDeviceLand(resources: Resources) =
         resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
-    // Fixed array of pairs (first: accent, second: theme, third: color primary dark)
+    // Fixed array of pairs (first: accent, second: theme)
     @JvmStatic
     val accents = arrayOf(
         Pair(first = R.color.red, second = R.style.BaseTheme_Red),

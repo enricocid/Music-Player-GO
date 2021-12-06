@@ -11,7 +11,7 @@
     android:paddingTop="6dp"
     android:paddingBottom="12dp"
     app:cardCornerRadius="8dp"
-    app:cardElevation="2dp"
+    app:cardElevation="4dp"
     app:strokeColor="?attr/colorControlHighlight"
     tools:viewBindingIgnore="true">
 
@@ -29,22 +29,17 @@
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/album_art" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:alpha="0.25"
-            android:background="?attr/colorControlHighlight" />
-
         <TextView
             android:id="@+id/album"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_weight="0.50"
+            android:background="@color/dialogsBackground"
             android:ellipsize="marquee"
             android:gravity="center"
             android:maxLines="2"
-            android:padding="4dp"
+            android:padding="2dp"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             android:textColor="?android:attr/textColorPrimary" />
@@ -53,6 +48,7 @@
             android:id="@+id/info_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/dialogsBackground"
             android:orientation="horizontal"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
