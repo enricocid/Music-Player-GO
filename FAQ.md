@@ -30,11 +30,6 @@ Join us on [Hosted Weblate](https://hosted.weblate.org/engage/music-player-go/).
 
 2. 36 accent colours.
 
-### Where is the deep black dark theme?
-
-Deep black dark theme is not available. To express elevation and depth, it is highly recommended to "darken with grey rather than black".
-Moreover, accessibility has to be taken into account.
-That said, feature requests for it doesn't change matters. The guidelines can be found [here](https://material.io/design/color/dark-theme.html).
 
 ### Why are accents 'lighter' in the dark theme?
 
@@ -105,10 +100,10 @@ Sometimes it seems to not register properly. Try to reconnect the headphones.
 1. Unfortunately, not all requests can be taken into consideration, for a variety of reasons:
 
    - The feature is too complex, clashing with the philosophy behind the app: KISS. Keep it snimple snupid :)
-   - The rather poor developer is rocking a dying Nexus 5 as the only test device for now. A good computer could ensure emulator usage. This is the case of issues [#29](https://github.com/enricocid/Music-Player-GO/issues/29) and [#51](https://github.com/enricocid/Music-Player-GO/issues/51).
+   - The rather poor developer is rocking a dying Nexus 5 as the only test device for now. A good computer could ensure emulator usage. This is the case of [#51](https://github.com/enricocid/Music-Player-GO/issues/51).
    - The feature just does not match the developer's needs. Keep in mind that this app is built around the developer's usage needs and is shared for the love of libre software.
-   - The developer is a chemist with an unstable work condition in real life, sometimes time is just short…
-   - Lack of motivation/interest/you didn't do it yourself
+   - Sometimes time is just short…
+   - Lack of motivation
 
 2. A crash report is useful only when a logcat and detailed explanation on how to reproduce the bug is provided. If you don't know how to proceed, send an e-mail to the developer to receive guidance.
 
