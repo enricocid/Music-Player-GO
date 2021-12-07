@@ -633,10 +633,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 )
                 ThemeHelper.updateIconTint(
                     this,
-                    if (mMediaPlayerHolder.isRepeat1X || mMediaPlayerHolder.isLooping) {
+                    if (mMediaPlayerHolder.isRepeat1X || mMediaPlayerHolder.isLooping || mMediaPlayerHolder.isPauseOnEnd) {
                         ThemeHelper.resolveThemeAccent(this@MainActivity)
-                    } else if (mMediaPlayerHolder.isPauseOnEnd) {
-                        ContextCompat.getColor(this@MainActivity, R.color.red)
                     } else {
                         ContextCompat.getColor(this@MainActivity, R.color.widgetsColor)
                     }
@@ -1038,12 +1036,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 )
                 mMediaPlayerHolder.isRepeat1X or mMediaPlayerHolder.isLooping or mMediaPlayerHolder.isPauseOnEnd -> {
                     ThemeHelper.updateIconTint(
-                        mNpCoverBinding.npRepeat,
-                        if (mMediaPlayerHolder.isPauseOnEnd) {
-                            ContextCompat.getColor(this@MainActivity, R.color.red)
-                        } else {
-                            ThemeHelper.resolveThemeAccent(this)
-                        }
+                        mNpCoverBinding.npRepeat, ThemeHelper.resolveThemeAccent(this)
                     )
                 }
                 else -> ThemeHelper.updateIconTint(
