@@ -16,7 +16,6 @@ import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.bottomsheets.expandBottomSheet
-import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.iven.musicplayergo.R
@@ -58,6 +57,7 @@ object DialogHelper {
             }
         }).attachToRecyclerView(recyclerView)
 
+
         if (ThemeHelper.isDeviceLand(context.resources)) {
             recyclerView.layoutManager = GridLayoutManager(context, 3)
         } else {
@@ -71,14 +71,13 @@ object DialogHelper {
             }
         }
 
-        onShow {
-            if (mediaPlayerHolder.isQueue != null && mediaPlayerHolder.isQueueStarted) {
-                expandBottomSheet()
-                view.afterMeasured {
-                    val indexOfCurrentSong = mediaPlayerHolder.queueSongs.indexOf(mediaPlayerHolder.currentSong)
-                    (recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(indexOfCurrentSong, 0)
-                }
+        recyclerView.post {
+            if (mediaPlayerHolder.isQueueStarted) {
+                val indexOfCurrentSong = mediaPlayerHolder.queueSongs.indexOf(mediaPlayerHolder.currentSong)
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                layoutManager.scrollToPositionWithOffset(indexOfCurrentSong, 0)
             }
+            expandBottomSheet()
         }
     }
 

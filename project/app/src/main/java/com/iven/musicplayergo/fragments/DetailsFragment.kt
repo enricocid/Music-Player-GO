@@ -468,7 +468,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         if (selectedPos > -1) {
             var songView: View? = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(selectedPos)
             if (songView == null) {
-                //Wait for song to appear on screen
                 _detailsFragmentBinding?.songsRv?.addOnScrollListener(object :
                     RecyclerView.OnScrollListener() {
                     override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {

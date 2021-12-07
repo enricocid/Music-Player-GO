@@ -87,6 +87,7 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 
 - [**Themightyhook**](https://github.com/Themightyhook) for having reported MediaButton [issue](https://github.com/enricocid/Music-Player-GO/issues/311)
 
+- [**repparw**](https://github.com/repparw) for having helped me to solve [task #8 on issue 220](https://github.com/enricocid/Music-Player-GO/issues/220)
 
 ### Big thanks to translators:
 
