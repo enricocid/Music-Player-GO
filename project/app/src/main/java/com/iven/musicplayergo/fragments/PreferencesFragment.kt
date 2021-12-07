@@ -150,7 +150,8 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
             val rv = getRecyclerView()
             rv.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-            rv.post { rv.scrollToPosition(ThemeHelper.getAccentedTheme().second) }
+            val layoutManager = rv.layoutManager as LinearLayoutManager
+            rv.post { layoutManager.scrollToPositionWithOffset(ThemeHelper.getAccentedTheme().second, 0) }
 
             positiveButton(android.R.string.ok) {
                 dismiss()
