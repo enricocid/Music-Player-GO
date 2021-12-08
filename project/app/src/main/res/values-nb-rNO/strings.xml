@@ -35,7 +35,7 @@
     <string name="error_no_queue">Ingen spor i kø.</string>
     <string name="perm_rationale">Music Player GO trenger tilgang til filene dine for å spille musikk.</string>
     <string name="repeat_enabled">Enkel gjentagelse på.</string>
-    <string name="repeat_loop_enabled">Gjenta ∞ på.</string>
+    <string name="repeat_loop_enabled">∞ gjentagelse på.</string>
     <string name="repeat_disabled">Gjenta ∞ av.</string>
     <string name="settings">innstillinger</string>
     <string name="category_general">Generelt</string>
@@ -91,4 +91,8 @@
     <string name="sorting_pref_artist">Etter artist A-Å</string>
     <string name="sorting_pref_date_added_inv">Eldste dato først</string>
     <string name="sorting_pref_date_added">Nyeste dato først</string>
+    <string name="pref_summary_on">Skru av</string>
+    <string name="pref_summary_off">Skru på</string>
+    <string name="pause_on_end">Pause ved fullførelse på.</string>
+    <string name="pause_on_end_disabled">Pause ved fullførelse av.</string>
 </resources>
