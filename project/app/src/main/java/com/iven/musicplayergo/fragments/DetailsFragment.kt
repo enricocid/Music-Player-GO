@@ -83,7 +83,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private val sLaunchedByFolderView get() = mLaunchedBy == GoConstants.FOLDER_VIEW
     private val sLaunchedByAlbumView get() = mLaunchedBy == GoConstants.ALBUM_VIEW
 
-    private val sShowDisplayName get() = goPreferences.songsVisualization != GoConstants.TITLE
+    private val sShowDisplayName get() = goPreferences.songsVisualization == GoConstants.FN
 
     private var sPlayFirstSong = true
     private var sCanUpdateSongs = true

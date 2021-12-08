@@ -243,7 +243,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         mPlayingSongs = if (sortedMusic != null) {
             sortedMusic
         } else {
-            val sorting = if (goPreferences.songsVisualization != GoConstants.TITLE) {
+            val sorting = if (goPreferences.songsVisualization == GoConstants.FN) {
                 GoConstants.ASCENDING_SORTING
             } else {
                 GoConstants.TRACK_SORTING

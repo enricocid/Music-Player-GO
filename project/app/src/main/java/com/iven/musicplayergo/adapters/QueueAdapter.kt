@@ -8,11 +8,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
-import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.startSongFromQueue
-import com.iven.musicplayergo.extensions.toFilenameWithoutExtension
-import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.extensions.toName
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.Music
@@ -68,12 +66,7 @@ class QueueAdapter(
                 val duration = findViewById<TextView>(R.id.duration)
                 val subtitle = findViewById<TextView>(R.id.subtitle)
 
-                val displayedTitle =
-                    if (goPreferences.songsVisualization != GoConstants.TITLE) {
-                        song.displayName?.toFilenameWithoutExtension()
-                    } else {
-                        song.title
-                    }
+                val displayedTitle = song.toName()
 
                 title.text = displayedTitle
 

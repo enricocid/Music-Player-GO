@@ -112,11 +112,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
                         duration.text = getString(R.string.duration_date_added, formattedDuration, song.dateAdded.toFormattedDate())
 
-                        title.text = if (goPreferences.songsVisualization != GoConstants.TITLE) {
-                            song.displayName.toFilenameWithoutExtension()
-                        } else {
-                            song.title
-                        }
+                        title.text = song.toName()
 
                         subtitle.text =
                             getString(R.string.artist_and_album, song.artist, song.album)
@@ -208,11 +204,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                         { position ->
                             // Return a text tab_indicator
                             val song = mAllMusic?.get(position)
-                            val stringToProcess = if (goPreferences.songsVisualization != GoConstants.TITLE) {
-                                song?.displayName
-                            } else {
-                                song?.title
-                            }
+                            val stringToProcess = song.toName()
                             stringToProcess?.getFastScrollerItem(requireActivity())
                         }, showIndicator = { _, indicatorPosition, totalIndicators ->
                             if (ThemeHelper.isDeviceLand(resources)) {

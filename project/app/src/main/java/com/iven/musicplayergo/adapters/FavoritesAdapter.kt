@@ -11,12 +11,8 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onCancel
-import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.extensions.enablePopupIcons
-import com.iven.musicplayergo.extensions.setTitle
-import com.iven.musicplayergo.extensions.toFilenameWithoutExtension
-import com.iven.musicplayergo.extensions.toFormattedDuration
+import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.models.Music
@@ -68,12 +64,8 @@ class FavoritesAdapter(
             val duration = itemView.findViewById<TextView>(R.id.duration)
             val subtitle = itemView.findViewById<TextView>(R.id.subtitle)
 
-            val displayedTitle =
-                if (goPreferences.songsVisualization != GoConstants.TITLE) {
-                    favorite?.displayName?.toFilenameWithoutExtension()
-                } else {
-                    favorite?.title
-                }
+            val displayedTitle = favorite?.toName()
+
             title.text = displayedTitle
             duration.text =
                 DialogHelper.computeDurationText(activity, favorite)

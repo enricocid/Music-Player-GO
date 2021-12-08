@@ -13,7 +13,9 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import coil.Coil
 import coil.request.ImageRequest
+import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import java.text.SimpleDateFormat
@@ -201,3 +203,8 @@ fun Music.toSavedMusic(playerPosition: Int, savedLaunchedBy: String) =
 fun List<Music>.savedSongIsAvailable(currentSong: Music?) : Music? =
     find { currentSong?.title == it.title && currentSong?.displayName == it.displayName && currentSong?.track == it.track && currentSong.albumId == it.albumId && currentSong.album == it.album }
 
+fun Music?.toName(): String? = if (goPreferences.songsVisualization == GoConstants.FN) {
+    this?.displayName?.toFilenameWithoutExtension()
+} else {
+    this?.title
+}

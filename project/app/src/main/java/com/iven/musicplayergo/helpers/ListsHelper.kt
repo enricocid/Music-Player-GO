@@ -161,7 +161,7 @@ object ListsHelper {
     }
 
     private fun getSortedListBySelectedVisualization(list: List<Music>?) = list?.sortedBy {
-        if (goPreferences.songsVisualization != GoConstants.TITLE) {
+        if (goPreferences.songsVisualization == GoConstants.FN) {
             it.displayName
         } else {
             it.title

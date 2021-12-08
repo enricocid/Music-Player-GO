@@ -27,7 +27,7 @@ object GoConstants {
     const val CONTINUE = "0"
 
     // song visualization options
-    const val TITLE = "0"
+    const val FN = "1"
 
     // sorting
     const val DEFAULT_SORTING = 0

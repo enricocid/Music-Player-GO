@@ -117,7 +117,7 @@
             app:title="@string/fast_seeking_actions_pref_title" />
 
         <ListPreference
-            android:defaultValue="0"
+            android:defaultValue="1"
             app:dialogTitle="@string/song_visual_pref_title"
             app:entries="@array/songVisualizationArray"
             app:entryValues="@array/songVisualizationEntryArray"
