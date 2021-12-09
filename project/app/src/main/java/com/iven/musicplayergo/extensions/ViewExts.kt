@@ -5,6 +5,7 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.drawable.InsetDrawable
 import android.text.Spannable
 import android.text.SpannableString
@@ -231,6 +232,16 @@ fun RecyclerView.smoothSnapToPosition(position: Int) {
     }
     smoothScroller.targetPosition = position
     layoutManager?.startSmoothScroll(smoothScroller)
+}
+
+fun RecyclerView.setupFastScrollerPadding(forceNoPadding: Boolean, resources: Resources) {
+    val rvPaddingEnd =
+        if (!forceNoPadding) {
+            resources.getDimensionPixelSize(R.dimen.fast_scroller_view_dim)
+        } else {
+            0
+        }
+    setPadding(0, 0, rvPaddingEnd, 0)
 }
 
 fun View.handleViewVisibility(show: Boolean) {

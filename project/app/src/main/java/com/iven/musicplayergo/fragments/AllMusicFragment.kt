@@ -46,7 +46,6 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
     private var mSorting = goPreferences.allMusicSorting
 
     private var sIsFastScroller = false
-    private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != GoConstants.DEFAULT_SORTING && mSorting != GoConstants.DATE_ADDED_SORTING && mSorting != GoConstants.DATE_ADDED_SORTING_INV && mSorting != GoConstants.ARTIST_SORTING && mSorting != GoConstants.ARTIST_SORTING_INV && mSorting != GoConstants.ALBUM_SORTING && mSorting != GoConstants.ALBUM_SORTING_INV
 
     private lateinit var mUIControlInterface: UIControlInterface
     private lateinit var mMediaControlInterface: MediaControlInterface
@@ -167,11 +166,10 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                     with (findItem(R.id.action_search).actionView as SearchView) {
                         setOnQueryTextListener(this@AllMusicFragment)
                         setOnQueryTextFocusChangeListener { _, hasFocus ->
-                            if (sIsFastScrollerVisible) {
-                                _binding.fastscroller.handleViewVisibility(show = !hasFocus)
-                                _binding.fastscrollerThumb.handleViewVisibility(show = !hasFocus)
-                                setupMusicRecyclerViewPadding(forceNoPadding = hasFocus)
-                            }
+                            _binding.fastscroller.handleViewVisibility(show = !hasFocus)
+                            _binding.fastscrollerThumb.handleViewVisibility(show = !hasFocus)
+                            _binding.allMusicRv.setupFastScrollerPadding(forceNoPadding = hasFocus,
+                                resources)
                             stb.menu.setGroupVisible(R.id.sorting, !hasFocus)
                         }
                     }
@@ -235,26 +233,9 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                         }
                     }
                 }
-
-                handleIndicatorFastScrollerViewVisibility()
-                setupMusicRecyclerViewPadding(forceNoPadding = false)
+                _binding.allMusicRv.setupFastScrollerPadding(forceNoPadding = false, resources)
             }
         }
-    }
-
-    private fun setupMusicRecyclerViewPadding(forceNoPadding: Boolean) {
-        val rvPaddingEnd =
-            if (sIsFastScrollerVisible && !forceNoPadding) {
-                resources.getDimensionPixelSize(R.dimen.fast_scroller_view_dim)
-            } else {
-                0
-            }
-        _allMusicFragmentBinding?.allMusicRv?.setPadding(0, 0, rvPaddingEnd, 0)
-    }
-
-    private fun handleIndicatorFastScrollerViewVisibility() {
-        _allMusicFragmentBinding?.fastscroller?.handleViewVisibility(show = sIsFastScrollerVisible)
-        _allMusicFragmentBinding?.fastscrollerThumb?.handleViewVisibility(show = sIsFastScrollerVisible)
     }
 
     private fun setMenuOnItemClickListener(menu: Menu) {
@@ -275,10 +256,6 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
                 mAllMusic =
                     ListsHelper.getSortedMusicListForAllMusic(mSorting, mAllMusic)
-
-                handleIndicatorFastScrollerViewVisibility()
-
-                setupMusicRecyclerViewPadding(forceNoPadding = false)
 
                 setMusicDataSource(mAllMusic)
 

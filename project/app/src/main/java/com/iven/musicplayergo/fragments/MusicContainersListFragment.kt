@@ -57,7 +57,6 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     private val sLaunchedByAlbumView get() = mLaunchedBy == GoConstants.ALBUM_VIEW
 
     private var sIsFastScroller = false
-    private val sIsFastScrollerVisible get() = sIsFastScroller && mSorting != GoConstants.DEFAULT_SORTING
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -177,13 +176,12 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                 with(findItem(R.id.action_search).actionView as SearchView) {
                     setOnQueryTextListener(this@MusicContainersListFragment)
                     setOnQueryTextFocusChangeListener { _, hasFocus ->
-                        if (sIsFastScrollerVisible) {
-                            _musicContainerListBinding?.fastscroller?.handleViewVisibility(show = !hasFocus)
-                            _musicContainerListBinding?.fastscrollerThumb?.handleViewVisibility(
-                                show = !hasFocus
-                            )
-                            setupArtistsRecyclerViewPadding(forceNoPadding = hasFocus)
-                        }
+                        _musicContainerListBinding?.fastscroller?.handleViewVisibility(show = !hasFocus)
+                        _musicContainerListBinding?.fastscrollerThumb?.handleViewVisibility(
+                            show = !hasFocus
+                        )
+                        _musicContainerListBinding?.artistsFoldersRv?.setupFastScrollerPadding(forceNoPadding = hasFocus,
+                            resources)
                         stb.menu.setGroupVisible(R.id.sorting, !hasFocus)
                     }
                 }
@@ -347,25 +345,9 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                         }
                     }
                 }
-                handleIndicatorFastScrollerViewVisibility()
-                setupArtistsRecyclerViewPadding(forceNoPadding = false)
+                _binding.artistsFoldersRv.setupFastScrollerPadding(forceNoPadding = false, resources)
             }
         }
-    }
-
-    private fun setupArtistsRecyclerViewPadding(forceNoPadding: Boolean) {
-        val rvPaddingEnd =
-            if (sIsFastScrollerVisible && !forceNoPadding) {
-                resources.getDimensionPixelSize(R.dimen.fast_scroller_view_dim)
-            } else {
-                0
-            }
-        _musicContainerListBinding?.artistsFoldersRv?.setPadding(0, 0, rvPaddingEnd, 0)
-    }
-
-    private fun handleIndicatorFastScrollerViewVisibility() {
-        _musicContainerListBinding?.fastscroller?.handleViewVisibility(show = sIsFastScrollerVisible)
-        _musicContainerListBinding?.fastscrollerThumb?.handleViewVisibility(show = sIsFastScrollerVisible)
     }
 
     private fun setMenuOnItemClickListener(menu: Menu) {
@@ -376,10 +358,6 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                 mSorting = it.order
 
                 mList = getSortedItemKeys()
-
-                handleIndicatorFastScrollerViewVisibility()
-
-                setupArtistsRecyclerViewPadding(forceNoPadding = false)
 
                 setListDataSource(mList)
 
