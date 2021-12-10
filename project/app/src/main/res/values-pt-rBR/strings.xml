@@ -93,4 +93,6 @@
     <string name="sorting_pref_album_inv">Pelo álbum Z-A</string>
     <string name="sorting_pref_album">Pelo álbum A-Z</string>
     <string name="delete">Excluir</string>
+    <string name="pause_on_end">Pausar ao terminar ligado.</string>
+    <string name="pause_on_end_disabled">Pausar ao terminar desligado.</string>
 </resources>
