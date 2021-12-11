@@ -13,5 +13,6 @@
         <item name="android:navigationBarColor">@color/windowBackground</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
+        <item name="popupMenuStyle">@style/PopupMenu</item>
     </style>
 </resources>
