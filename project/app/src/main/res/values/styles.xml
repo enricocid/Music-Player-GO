@@ -56,7 +56,7 @@
     <!-- Style for search bar -->
     <style name="ToolbarStyle" parent="ThemeOverlay.MaterialComponents.ActionBar">
         <item name="searchViewStyle">@style/SearchViewStyle</item>
-        <item name="popupMenuBackground">@color/dialogsBackground</item>
+        <item name="popupMenuBackground">@drawable/popupmenu_background</item>
     </style>
 
     <!-- Style for search view -->
