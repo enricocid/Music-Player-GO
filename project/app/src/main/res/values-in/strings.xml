@@ -93,4 +93,6 @@
     <string name="sorting_pref_album_inv">Album Z-A</string>
     <string name="sorting_pref_album">Album A-Z</string>
     <string name="delete">Hapus</string>
+    <string name="pause_on_end">Jeda saat selesai aktif.</string>
+    <string name="pause_on_end_disabled">Jeda saat selesai nonaktif.</string>
 </resources>
