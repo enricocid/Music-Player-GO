@@ -21,7 +21,7 @@
     <string name="favorites_clear">Se limpiará la lista de canciones favoritas. ¿Continuar?</string>
     <string name="favorite_add">Agregar a canciones favoritas</string>
     <string name="filter_popup_title">Ocultar</string>
-    <string name="error_no_favorites">!No canciones favoritas!</string>
+    <string name="error_no_favorites">Agrega canciones favoritas para empezar</string>
     <string name="perm_rationale">Music Player GO necesita acceso a tus archivos para reproducir música.</string>
     <string name="error_no_browser">No se encontró un navegador.</string>
     <string name="error_bad_id">Primero reproduzca una canción.</string>
@@ -41,7 +41,7 @@
     <string name="theme_pref_title">Tema</string>
     <string name="theme_pref_light_title">Claro</string>
     <string name="theme_pref_dark_title">Oscuro</string>
-    <string name="theme_pref_auto_title">Automático</string>
+    <string name="theme_pref_auto_title">Sistema</string>
     <string name="accent_pref_title">Acento</string>
     <string name="active_fragments_pref_title">Pestañas activas</string>
     <string name="active_fragments_pref_warning">¡No puedes remover todas las pestañas! :P</string>
@@ -91,4 +91,8 @@
     <string name="sorting_pref_album_inv">Por álbum Z-A</string>
     <string name="sorting_pref_album">Por álbum A-Z</string>
     <string name="delete">Borrar</string>
+    <string name="pref_summary_off">Encender</string>
+    <string name="pref_summary_on">Apagar</string>
+    <string name="pause_on_end_disabled">Pausar al finalizar apagado</string>
+    <string name="pause_on_end">Pausar al finalizar encendido</string>
 </resources>
