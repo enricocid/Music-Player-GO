@@ -108,7 +108,8 @@ Consider supporting the Weblate guys by sending a [donation](https://weblate.org
 | Name                                                        | Author                  |
 | ----------------------------------------------------------- | ------------------------- |
 | [GIF optimisation-script](https://github.com/mathieu-aubin/tempgif)                  | [Mathieu Aubin](https://github.com/mathieu-aubin)                       |
-| [Screener - Better screenshots](https://play.google.com/store/apps/details?id=de.toastcode.screener) | [Toastcode](https://toastco.de/)                       |
+| [Snapmod](https://play.google.com/store/apps/details?id=cn.gavinliu.snapmod) | [Gavin Liu](https://play.google.com/store/apps/developer?id=Gavin+Liu)                       |
+| [Screener](https://play.google.com/store/apps/details?id=de.toastcode.screener) | [Toastcode](https://toastco.de/)                       |
 | [Round icons](https://material.io/tools/icons/?style=round) | Google                       |
 | [sort-alphabetical-descending-variant icon](https://materialdesignicons.com/icon/sort-alphabetical-descending-variant) | Austin Andrews [templatarian](https://twitter.com/templarian)                       |
 | [sort-alphabetical-ascending-variant icon](https://materialdesignicons.com/icon/sort-alphabetical-ascending-variant) | Michael Irigoyen [mririgo](https://twitter.com/mririgo)                       |
