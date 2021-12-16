@@ -1,0 +1,4 @@
+- Migliorata risposta dell'app alle media button actions (grazie Sarah)
+- Now playing: aggiunta modalità per mettere in pausa quando la canzone termina
+- Miglioramenti/correzioni UI & temi/tema scuro
+- Miglioramento/aggiornamento traduzioni (grazie Allan Nordhøy/tutti)

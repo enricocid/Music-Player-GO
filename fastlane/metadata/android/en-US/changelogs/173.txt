@@ -1,0 +1,4 @@
+- Improve the app responsiveness to media button actions (thanks Sarah)
+- Now playing: added a mode to pause when track is finished
+- UI & themes/dark mode improvements/fixes
+- Improve/update translations (thanks Allan Nordhøy/everyone)

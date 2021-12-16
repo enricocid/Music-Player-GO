@@ -1,14 +1,14 @@
 <h1 align="center">Music Player GO</h1>
 
 <p align="center">
-<img height="500" src="art4.gif">
+<img height="500" src="art5.gif">
 </p>
 
 <p align="center">
   <!-- Latest Release -->
     <a href="https://github.com/enricocid/Music-Player-GO/releases">
       <img alt="GitHub release"
-      src="https://img.shields.io/static/v1?label=Tag&message=v4.4.9&color=58F5D1">
+      src="https://img.shields.io/static/v1?label=Tag&message=v4.4.10&color=58F5D1">
     </a>
    <!-- Minimum SDK -->
     <img alt="Minimum SDK" src="https://img.shields.io/static/v1?label=API&message=21&color=32B5ED">
@@ -87,7 +87,7 @@ Consider supporting the Weblate guys by sending a [donation](https://weblate.org
 
 ## Authors / Copyleft Copyright
 
-2021 © Enrico D'Ortenzio.
+2021 &copy; Enrico D'Ortenzio.
 
 
 ## Third-party components
