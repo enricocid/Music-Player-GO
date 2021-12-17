@@ -1,7 +1,7 @@
 <h1 align="center">Music Player GO</h1>
 
 <p align="center">
-<img height="500" src="art6.gif">
+<img width="450" src="art6.gif">
 </p>
 
 <p align="center">
