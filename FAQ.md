@@ -33,7 +33,7 @@ Join us on [Hosted Weblate](https://hosted.weblate.org/engage/music-player-go/).
 
 ### Why are accents 'lighter' in the dark theme?
 
-As per [guidelines](https://material.io/design/color/dark-theme.html), primary colors are desaturated for accessibility: saturated colors also produce optical vibrations against a dark background, which can induce eye strain.
+As per [guidelines](https://material.io/design/color/dark-theme.html), primary colors are desaturated for accessibility: saturated colors visually vibrate against dark surfaces, which can induce eye strain.
 Instead, desaturated colors can be used as a more legible alternative.
 
 
