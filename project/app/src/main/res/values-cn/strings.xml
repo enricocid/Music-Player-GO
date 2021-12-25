@@ -36,8 +36,8 @@
     <string name="error_no_queue">播放列表中无歌曲。</string>
     <string name="perm_rationale">请赋予 Music Player GO 访问您的文件的权限，以便播放音乐。</string>
     <string name="repeat_enabled">循环一次模式启动。</string>
-    <string name="repeat_loop_enabled">循环模式启动。</string>
-    <string name="repeat_disabled">循环已禁用。</string>
+    <string name="repeat_loop_enabled">已启用循环。</string>
+    <string name="repeat_disabled">已禁用循环。</string>
     <string name="settings">设置</string>
     <string name="category_general">常规</string>
     <string name="open_git_pref_summary">打开项目页面，获取更多信息 :)</string>
@@ -50,7 +50,7 @@
     <string name="active_fragments_pref_warning">您不能删除所有标签！ :P</string>
     <string name="precise_volume_pref_title">精确的音量控制</string>
     <string name="focus_pref_title">音频焦点管理</string>
-    <string name="headset_pref_title">耳机插头管理</string>
+    <string name="headset_pref_title">耳机插拔管理</string>
     <string name="filter_pref_title">过滤器</string>
     <string name="fast_seeking_actions_pref_title">额外通知操作</string>
     <string name="fast_seeking_pref_title">快速查找</string>
@@ -60,7 +60,7 @@
     <string name="equalizer">均衡器</string>
     <string name="covers_pref_title">专辑封面设置</string>
     <string name="on_list_ended_pref_title">歌单播放完毕后要做什么捏 …</string>
-    <string name="eq_pref_note_summary">请注意：您需要关闭系统内置的均衡器才可以使用此均衡器：）</string>
+    <string name="eq_pref_note_summary">注意：除非从系统设置中关闭，否则将使用系统均衡器。:)</string>
     <string name="song_visual_pref_fn_title">文件名</string>
     <string name="on_list_ended_pref_continue_title">继续</string>
     <string name="on_list_ended_pref_stop_title">停止</string>
@@ -69,10 +69,10 @@
     <string name="error_list_ended">到底了。</string>
     <string name="error_eq">出错</string>
     <string name="fast_seeking_actions_pref_summary_on">快速搜寻</string>
-    <string name="fast_seeking_actions_pref_summary_off">关闭/重复</string>
+    <string name="fast_seeking_actions_pref_summary_off">关闭/循环</string>
     <string name="fast_seeking_pref_summary">快进/快退步长（秒）</string>
     <string name="equalizer_bb">低音增强</string>
-    <string name="favorites_save_time">保存歌曲位置</string>
+    <string name="favorites_save_time">保存歌曲播放位置</string>
     <string name="playback_pref_title">选择的播放速度</string>
     <string name="anim_pref_title">动画效果</string>
     <string name="open_details_fragment">打开歌手/文件夹的详细信息</string>
@@ -86,11 +86,11 @@
     <string name="sorting_pref_artist">按歌手名从 A 到 Z 排列</string>
     <string name="delete">移除</string>
     <string name="playback_pref_summary_off">保持</string>
-    <string name="playback_pref_summary_on">仅限一首歌曲</string>
+    <string name="playback_pref_summary_on">仅一首歌曲</string>
     <string name="content_skip_next">跳到下一首</string>
     <string name="content_skip_prev">跳到上一首</string>
-    <string name="sorting_pref_date_added_inv">新添加的在上</string>
-    <string name="sorting_pref_date_added">新添加的在下</string>
+    <string name="sorting_pref_date_added_inv">新添加的在前</string>
+    <string name="sorting_pref_date_added">新添加的在后</string>
     <string name="pause_on_end_disabled">已关闭完成时暂停。</string>
     <string name="pause_on_end">已启用完成时暂停。</string>
     <string name="pref_summary_off">开启</string>
