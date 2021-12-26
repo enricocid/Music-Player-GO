@@ -9,9 +9,7 @@ assignees: enricocid
 
 1) **Describe the solution you'd like**
 A clear and concise description of what you want to happen.
-Notes:
-- only ONE feature
-- don't ask black theme or a different colors scheme as we have to follow guidelines for accessibility.
+p.s. only **ONE** feature
 
 2) **Describe alternatives you've considered**
 A clear and concise description of any alternative solutions or features you've considered.
