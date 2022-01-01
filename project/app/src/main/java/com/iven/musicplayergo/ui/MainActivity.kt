@@ -509,7 +509,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         mPlayerControlsPanelBinding.playPauseButton.setOnClickListener { resumeOrPause() }
 
         with(mPlayerControlsPanelBinding.queueButton) {
-            setOnClickListener { openQueueDialog() }
+            safeClickListener { openQueueDialog() }
             setOnLongClickListener {
                 if (checkIsPlayer(showError = true) && mMediaPlayerHolder.queueSongs.isNotEmpty()) {
                     DialogHelper.showClearQueueDialog(
@@ -522,7 +522,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
 
         with(mPlayerControlsPanelBinding.favoritesButton) {
-            setOnClickListener { openFavoritesDialog() }
+            safeClickListener { openFavoritesDialog() }
             setOnLongClickListener {
                 if (!goPreferences.favorites.isNullOrEmpty()) {
                     DialogHelper.showClearFavoritesDialog(
@@ -536,7 +536,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         onFavoritesUpdated(clear = false)
 
         with(mPlayerControlsPanelBinding.playingSongContainer) {
-            setOnClickListener { openNowPlaying() }
+            safeClickListener { openNowPlaying() }
             setOnLongClickListener {
                 if (!sDetailsFragmentExpanded || sDetailsFragmentExpanded and !sEqFragmentExpanded) {
                     openPlayingArtistAlbum()
