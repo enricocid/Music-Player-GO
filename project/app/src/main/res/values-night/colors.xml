@@ -26,5 +26,5 @@
     <color name="widgetsColor">#fafafa</color>
     <color name="systemBarsColor">@color/windowBackground</color>
 
-    <color name="shuffleFabTint">@color/dialogsBackground</color>
+    <color name="shuffleFabTint">#0f0f0f</color>
 </resources>
