@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.animation.ArgbEvaluatorCompat
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.helpers.SingleClickHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import kotlin.math.max
@@ -258,4 +259,12 @@ fun String.toToast(context: Context) {
 
 fun Int.toToast(context: Context) {
     Toast.makeText(context, this, Toast.LENGTH_SHORT).show()
+}
+
+fun View.safeClickListener(safeClickListener: (view: View) -> Unit) {
+    this.setOnClickListener {
+        if (!SingleClickHelper.isBlockingClick()) {
+            safeClickListener(it)
+        }
+    }
 }
