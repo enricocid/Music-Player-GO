@@ -8,6 +8,7 @@ object SingleClickHelper {
 
 	fun isBlockingClick(): Boolean = isBlockingClick(MIN_CLICK_INTERVAL.toLong())
 
+    @Suppress("SameParameterValue")
 	private fun isBlockingClick(minClickInterval: Long): Boolean {
 		val isBlocking: Boolean
 		val currentTime = System.currentTimeMillis()
