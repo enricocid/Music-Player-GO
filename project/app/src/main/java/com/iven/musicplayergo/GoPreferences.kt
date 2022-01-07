@@ -46,10 +46,9 @@ class GoPreferences(context: Context) {
     private val prefsHeadsetPlug = context.getString(R.string.headset_pref)
 
     private val prefsAnim = context.getString(R.string.anim_pref)
-
     private val prefsFilter = context.getString(R.string.filter_pref)
-
     private val prefsPlaybackSpeed = context.getString(R.string.playback_speed_pref)
+    private val prefsIsPauseOnEnd = context.getString(R.string.pause_on_end_pref)
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
 
@@ -185,6 +184,10 @@ class GoPreferences(context: Context) {
     var isAnimations
         get() = mPrefs.getBoolean(prefsAnim, true)
         set(value) = mPrefs.edit { putBoolean(prefsAnim, value) }
+
+    var isPauseOnEnd
+        get() = mPrefs.getBoolean(prefsIsPauseOnEnd, false)
+        set(value) = mPrefs.edit { putBoolean(prefsIsPauseOnEnd, value) }
 
     // Retrieve object from the Preferences using Moshi
     private fun <T : Any> putObjectForType(key: String, value: T?, type: Type) {

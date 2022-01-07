@@ -288,10 +288,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     override fun onCompletion(mediaPlayer: MediaPlayer) {
 
         when {
-            isPauseOnEnd -> {
-                pauseMediaPlayer()
-                repeat(updatePlaybackStatus = true)
-            }
+            isPauseOnEnd -> pauseMediaPlayer()
             isRepeat1X or isLooping -> if (isMediaPlayer) {
                 repeatSong(0)
             }
@@ -611,13 +608,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             currentPlaybackSpeed = 1.0F
         }
 
-        if (isRepeat1X or isLooping or isPauseOnEnd) {
+        if (isRepeat1X or isLooping) {
             isRepeat1X = false
             isLooping = false
-            isPauseOnEnd = false
         }
 
         if (isSongFromPrefs) {
+            isPauseOnEnd = goPreferences.isPauseOnEnd
             if (goPreferences.isPreciseVolumeEnabled) {
                 setPreciseVolume(currentVolumeInPercent)
             }
@@ -769,12 +766,14 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
             isLooping -> {
                 isLooping = false
                 isPauseOnEnd = true
+                goPreferences.isPauseOnEnd = true
                 toastMessage = R.string.repeat_disabled
                 toastMessage.toToast(playerService)
                 toastMessage = R.string.pause_on_end
             }
             isPauseOnEnd -> {
                 isPauseOnEnd = false
+                goPreferences.isPauseOnEnd = false
                 toastMessage = R.string.pause_on_end_disabled
             }
             else -> isRepeat1X = true

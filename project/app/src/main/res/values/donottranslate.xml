@@ -89,4 +89,5 @@
     <string name="latest_playback_speed_pref">latest_playback_speed_pref</string>
     <string name="song_visual_pref">song_visual_pref</string>
     <string name="playback_speed_pref">playback_speed_pref</string>
+    <string name="pause_on_end_pref">pause_on_end_pref</string>
 </resources>
