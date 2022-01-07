@@ -24,6 +24,8 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes](https://github.com/enricocid/Music-Player-GO/pull/121) and its equalizer implementation: I learned so much about how an equalizer works
 
+- [**hoangchung**](https://github.com/hoangchungk53qx1) for [fixing double click](https://github.com/enricocid/Music-Player-GO/pull/356) in controls panel
+
 - [**OxygenCobalt**](https://github.com/OxygenCobalt) for [image loading optimizations](https://github.com/enricocid/Music-Player-GO/pull/287) and [ViewPager2 improvements](https://github.com/enricocid/Music-Player-GO/pull/314)
 
 - [**Allan Nordhøy**](https://github.com/comradekingu) 
