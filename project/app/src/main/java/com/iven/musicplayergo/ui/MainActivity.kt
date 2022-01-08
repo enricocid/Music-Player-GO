@@ -1515,7 +1515,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private val mMediaPlayerInterface = object : MediaPlayerInterface {
 
         override fun onPlaybackCompleted() {
-            updateRepeatStatus(onPlaybackCompletion = true)
+            if (!mMediaPlayerHolder.isPauseOnEnd) {
+                updateRepeatStatus(onPlaybackCompletion = true)
+            }
         }
 
         override fun onUpdateRepeatStatus() {
