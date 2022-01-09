@@ -22,9 +22,10 @@
     <color name="blue_grey">@color/blue_grey_200</color>
 
     <color name="windowBackground">@android:color/black</color>
-    <color name="dialogsBackground">#0d0d0d</color>
+    <color name="dialogsBackground">#141414</color>
     <color name="widgetsColor">#fafafa</color>
     <color name="systemBarsColor">@color/windowBackground</color>
+    <color name="albumTitleBackground">#111111</color>
 
-    <color name="shuffleFabTint">#0f0f0f</color>
+    <color name="shuffleFabTint">@color/dialogsBackground</color>
 </resources>

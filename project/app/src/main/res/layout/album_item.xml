@@ -18,6 +18,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/albumTitleBackground"
         android:orientation="vertical">
 
         <ImageView
@@ -35,7 +36,6 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_weight="0.50"
-            android:background="@color/dialogsBackground"
             android:ellipsize="marquee"
             android:gravity="center"
             android:maxLines="2"
@@ -48,7 +48,6 @@
             android:id="@+id/info_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/dialogsBackground"
             android:orientation="horizontal"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
