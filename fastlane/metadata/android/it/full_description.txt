@@ -8,7 +8,7 @@
 - Personalizzazione: temi chiaro, scuro, automatico e accenti
 - Coda
 - Gestione del focus audio, volume preciso e delle cuffie
-- Now playing, cover integrate, ricerca, velocità di riproduzione, ordinamento, shuffle, avanzamento veloce...
+- Now playing, cover integrate, ricerca, velocità di riproduzione, pausa al termine, ordinamento, shuffle, avanzamento veloce...
 
 
 <b>Vuoi contribuire alle traduzioni?</b>

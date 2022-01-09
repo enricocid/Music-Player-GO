@@ -70,7 +70,7 @@ Source code for the Android music player **Music Player GO**
 - Light, dark, automatic themes and accents
 - Queue
 - Audio focus, precise volume and headset management
-- Now playing, embedded covers, search, playback speed, sorting, shuffle, fast-seeking...
+- Now playing, embedded covers, search, playback speed, pause on completion, sorting, shuffle, fast-seeking...
  
 
 # Translations
@@ -87,7 +87,7 @@ Consider supporting the Weblate guys by sending a [donation](https://weblate.org
 
 ## Authors / Copyleft Copyright
 
-2021 &copy; Enrico D'Ortenzio.
+2022 &copy; Enrico D'Ortenzio.
 
 
 ## Third-party components
