@@ -25,7 +25,6 @@
     <color name="dialogsBackground">#141414</color>
     <color name="widgetsColor">#fafafa</color>
     <color name="systemBarsColor">@color/windowBackground</color>
-    <color name="albumTitleBackground">#111111</color>
 
     <color name="shuffleFabTint">@color/dialogsBackground</color>
 </resources>
