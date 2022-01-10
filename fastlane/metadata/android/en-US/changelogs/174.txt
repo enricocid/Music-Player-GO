@@ -1,0 +1,7 @@
+- Fix double click favorite,queue in player control panel (thanks hoangchung)
+- Now playing: stick pause option until it is manually changed (thanks Glitchy-Tozier)
+- Fix/improve night theme (thanks repparw)
+- Update translations (thanks yzqzss, sr093906, calcitem, S3aBreeze)
+
+- Android 12 support. For any issue please contact me (don't have
+devices running S).
