@@ -1,0 +1,6 @@
+- Corretto problema doppio click nel pannello inferiore (grazie hoangchung)
+- Now playing: mantieni l'opzione pausa finchè non viene cambiata manualmente (grazie Glitchy-Tozier)
+- Corretto/migliorato tema scuro (grazie repparw)
+- Aggiornate traduzioni (thanks yzqzss, sr093906, calcitem, S3aBreeze)
+
+- Supporto Android 12. Per qualsiasi problema non esitare a contattarmi (non ho dispositivi con S, solo l'emulatore).
