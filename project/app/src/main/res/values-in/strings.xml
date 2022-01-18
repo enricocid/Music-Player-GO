@@ -48,8 +48,6 @@
     <string name="active_fragments_pref_title">Tab aktif</string>
     <string name="active_fragments_pref_warning">Anda tidak bisa menyembunyikan semua tab! :P</string>
     <string name="precise_volume_pref_title">Kontrol presisi volume</string>
-    <string name="pref_summary_on">Matikan</string>
-    <string name="pref_summary_off">Nyalakan</string>
     <string name="focus_pref_title">Manajemen fokus audio</string>
     <string name="headset_pref_title">Manajemen colokan headset</string>
     <string name="filter_pref_title">Filter</string>
@@ -61,8 +59,6 @@
     <string name="song_visual_pref_title">Visualisasi lagu</string>
     <string name="on_list_ended_pref_continue_title">Lanjutkan</string>
     <string name="on_list_ended_pref_stop_title">Setop</string>
-    <string name="covers_pref_summary_off">Tampilkan</string>
-    <string name="covers_pref_summary_on">Sembunyikan</string>
     <string name="covers_pref_title">Kover album tersemat</string>
     <string name="equalizer_v">Suara surround</string>
     <string name="equalizer_bb">Penguat bas</string>
@@ -80,8 +76,8 @@
     <string name="content_skip_next">Lewati ke berikutnya</string>
     <string name="content_play">Putar/jeda</string>
     <string name="content_skip_prev">Lewati ke sebelumnya</string>
-    <string name="playback_pref_summary_off">Simpan</string>
-    <string name="playback_pref_summary_on">Hanya satu lagu</string>
+    <string name="playback_pref_summary_on">Simpan</string>
+    <string name="playback_pref_summary_off">Hanya satu lagu</string>
     <string name="playback_pref_title">Kecepatan pemutaran</string>
     <string name="speed_3">Normal</string>
     <string name="content_playback_speed">Kecepatan pemutaran</string>

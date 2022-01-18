@@ -30,7 +30,7 @@
     <string name="sorting_pref_artist">Κατά καλλιτέχνη A-Ω</string>
     <string name="sorting_pref_date_added_inv">Παλαιότερη ημερομηνία πρώτα</string>
     <string name="sorting_pref_date_added">Νεότερη ημερομηνία πρώτα</string>
-    <string name="playback_pref_summary_off">Διατήρηση της επιλεγμένης ταχύτητας αναπαραγωγής</string>
+    <string name="playback_pref_summary_on">Διατήρηση της επιλεγμένης ταχύτητας αναπαραγωγής</string>
     <string name="speed_3">Συνήθης</string>
     <string name="content_playback_speed">Ταχύτητα αναπαραγωγής</string>
     <string name="favorite_added">%1s (%2s) προστίθενται στα αγαπημένα τραγούδια</string>

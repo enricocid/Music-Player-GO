@@ -51,8 +51,6 @@
     <string name="theme_pref_auto_title">स्वचलित</string>
     <string name="accent_pref_title">एक्सेंट</string>
     <string name="covers_pref_title">एल्बम के कवर सन्निहित करें</string>
-    <string name="covers_pref_summary_on">एल्बम के कवर दिखाए</string>
-    <string name="covers_pref_summary_off">एल्बम के कवर हटाए</string>
     <string name="on_list_ended_pref_title">जब एक प्लेलिस्ट ख़त्म हो …</string>
     <string name="on_list_ended_pref_stop_title">बंद</string>
     <string name="on_list_ended_pref_continue_title">जारी</string>
@@ -73,8 +71,8 @@
     <string name="error_eq">कोई त्रुटि हुई है!</string>
     <string name="eq_pref_note_summary">ध्यान दें : system equalizer इस्तेमाल होगा जब तक एप्प \"system equalizer\" सेटिंग से बंद नही कीया जाता. :)</string>
     <string name="favorites_save_time">गीत की जगह याद रखें</string>
-    <string name="playback_pref_summary_off">चयनित प्लेबैक गति जारी रखें</string>
-    <string name="playback_pref_summary_on">चयनित प्लेबैक गति को जारी न रखें</string>
+    <string name="playback_pref_summary_on">चयनित प्लेबैक गति जारी रखें</string>
+    <string name="playback_pref_summary_off">चयनित प्लेबैक गति को जारी न रखें</string>
     <string name="playback_pref_title">प्लेबैक की गति</string>
     <string name="anim_pref_title">एनिमेशन</string>
     <string name="open_details_fragment">कलाकार / फ़ोल्डर का विवरण खोलें</string>

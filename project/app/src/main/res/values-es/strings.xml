@@ -66,14 +66,12 @@
     <string name="on_list_ended_pref_continue_title">Continuar</string>
     <string name="on_list_ended_pref_stop_title">Parar</string>
     <string name="on_list_ended_pref_title">Cuando termine una lista…</string>
-    <string name="covers_pref_summary_off">Mostrar las carátulas</string>
-    <string name="covers_pref_summary_on">Esconder las carátulas</string>
     <string name="error_eq">Ups, ¡ocurrió un error!</string>
     <string name="error_list_ended">Lista terminada.</string>
     <string name="equalizer">Ecualizador</string>
     <string name="albums">Albumes</string>
-    <string name="playback_pref_summary_off">Conservar la velocidad de reproducción seleccionada</string>
-    <string name="playback_pref_summary_on">No conservar la velocidad de reproducción seleccionada</string>
+    <string name="playback_pref_summary_on">Conservar la velocidad de reproducción seleccionada</string>
+    <string name="playback_pref_summary_off">No conservar la velocidad de reproducción seleccionada</string>
     <string name="playback_pref_title">Velocidad de reproducción</string>
     <string name="anim_pref_title">Animaciones</string>
     <string name="open_details_fragment">Abrir datos del artista/carpeta</string>
@@ -91,8 +89,6 @@
     <string name="sorting_pref_album_inv">Por álbum Z-A</string>
     <string name="sorting_pref_album">Por álbum A-Z</string>
     <string name="delete">Borrar</string>
-    <string name="pref_summary_off">Encender</string>
-    <string name="pref_summary_on">Apagar</string>
     <string name="pause_on_end_disabled">Pausar al finalizar apagado</string>
     <string name="pause_on_end">Pausar al finalizar encendido</string>
 </resources>

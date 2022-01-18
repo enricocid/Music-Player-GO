@@ -40,8 +40,6 @@
     <string name="active_fragments_pref_warning">Bütün sekmeleri kaldıramazsınız! : P</string>
     <string name="sorting_pref_default">Varsayılan</string>
     <string name="precise_volume_pref_title">Hassas ses denetimi</string>
-    <string name="pref_summary_on">Kapat</string>
-    <string name="pref_summary_off">Aç</string>
     <string name="focus_pref_title">Ses odak yönetimi</string>
     <string name="headset_pref_title">Kulaklık girişi yönetimi</string>
     <string name="filter_pref_title">Filtreler</string>
@@ -66,8 +64,6 @@
     <string name="song_visual_pref_title">Şarkı görselleştirme</string>
     <string name="on_list_ended_pref_continue_title">Devam et</string>
     <string name="on_list_ended_pref_stop_title">Dur</string>
-    <string name="covers_pref_summary_off">Göster</string>
-    <string name="covers_pref_summary_on">Gizle</string>
     <string name="covers_pref_title">Gömülü albüm kapakları</string>
     <string name="error_list_ended">Liste sona erdi.</string>
     <string name="equalizer_v">Surround ses</string>
@@ -80,8 +76,8 @@
     <string name="content_skip_next">Sonrakine atla</string>
     <string name="content_skip_prev">Öncekine atla</string>
     <string name="content_play">Oynat/duraklat</string>
-    <string name="playback_pref_summary_off">Koru</string>
-    <string name="playback_pref_summary_on">Yalnızca bir şarkı</string>
+    <string name="playback_pref_summary_on">Koru</string>
+    <string name="playback_pref_summary_off">Yalnızca bir şarkı</string>
     <string name="playback_pref_title">Seçilen oynatma hızı</string>
     <string name="speed_3">Normal</string>
     <string name="content_playback_speed">Oynatma hızı</string>

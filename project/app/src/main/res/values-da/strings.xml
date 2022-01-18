@@ -57,15 +57,11 @@
     <string name="error_not_ready">Kunde ikke laste ind musikbiblioteket! :( Afmontering af SD-kort genopbygger Androids MediaStore-database. Prøv igen senere.</string>
     <string name="error_media_buttons">Bøs og nøgler! :( Start afspilning igen fra programmet.</string>
     <string name="error_no_browser">Installer en web-browser først.</string>
-    <string name="pref_summary_on">Skru af</string>
-    <string name="pref_summary_off">Skru på</string>
     <string name="playback_pref_title">Valgt afspilningshastighed</string>
-    <string name="playback_pref_summary_on">Kun et spor</string>
-    <string name="playback_pref_summary_off">Behold</string>
+    <string name="playback_pref_summary_off">Kun et spor</string>
+    <string name="playback_pref_summary_on">Behold</string>
     <string name="on_list_ended_pref_title">Når en liste slutter …</string>
     <string name="on_list_ended_pref_continue_title">Fortsæt</string>
-    <string name="covers_pref_summary_on">Skjul</string>
-    <string name="covers_pref_summary_off">Vis</string>
     <string name="fast_seeking_pref_title">Rask bladring</string>
     <string name="fast_seeking_actions_pref_summary_on">Rask bladring</string>
     <string name="song_visual_pref_fn_title">Filnavn</string>

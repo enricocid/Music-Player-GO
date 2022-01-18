@@ -50,8 +50,6 @@
     <string name="on_list_ended_pref_continue_title">계속</string>
     <string name="on_list_ended_pref_stop_title">중단</string>
     <string name="on_list_ended_pref_title">리스트가 끝났을 때…</string>
-    <string name="covers_pref_summary_off">앨범 커버 보이기</string>
-    <string name="covers_pref_summary_on">앨범 커버 숨기기</string>
     <string name="covers_pref_title">앨범 커버 표시</string>
     <string name="accent_pref_title">강조</string>
     <string name="theme_pref_auto_title">자동</string>
@@ -80,8 +78,8 @@
     <string name="yes">예</string>
     <string name="sorting_pref_date_added">최근 날짜순</string>
     <string name="delete">삭제</string>
-    <string name="playback_pref_summary_on">배속 설정을 원래대로 변경</string>
-    <string name="playback_pref_summary_off">배속 설정 유지</string>
+    <string name="playback_pref_summary_off">배속 설정을 원래대로 변경</string>
+    <string name="playback_pref_summary_on">배속 설정 유지</string>
     <string name="playback_pref_title">배속 재생</string>
     <string name="anim_pref_title">애니메이션</string>
     <string name="speed_3">원래대로</string>

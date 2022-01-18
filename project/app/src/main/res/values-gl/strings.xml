@@ -69,8 +69,6 @@
     <string name="on_list_ended_pref_continue_title">Continuar</string>
     <string name="on_list_ended_pref_stop_title">Deter</string>
     <string name="on_list_ended_pref_title">Ao rematar a lista…</string>
-    <string name="covers_pref_summary_off">Mostrar</string>
-    <string name="covers_pref_summary_on">Ocultar</string>
     <string name="covers_pref_title">Capa do álbume incrustadas</string>
     <string name="error_list_ended">A lista rematou.</string>
     <string name="equalizer_v">Audio Surround</string>
@@ -85,8 +83,8 @@
     <string name="content_skip_next">Ir á seguinte</string>
     <string name="content_play">Reprd./Pausa</string>
     <string name="content_skip_prev">Ir á anterior</string>
-    <string name="playback_pref_summary_off">Manter</string>
-    <string name="playback_pref_summary_on">Só unha canción</string>
+    <string name="playback_pref_summary_on">Manter</string>
+    <string name="playback_pref_summary_off">Só unha canción</string>
     <string name="playback_pref_title">Velocidade de reprodución</string>
     <string name="speed_3">Normal</string>
     <string name="content_playback_speed">Velocidade de reprodución</string>
@@ -98,8 +96,6 @@
     <string name="sorting_pref_album_inv">Por álbume Z-A</string>
     <string name="sorting_pref_album">Por álbume A-Z</string>
     <string name="delete">Eliminar</string>
-    <string name="pref_summary_off">Acender</string>
-    <string name="pref_summary_on">Apagar</string>
     <string name="pause_on_end">Pausa ao rematar activada.</string>
     <string name="pause_on_end_disabled">Pausa ao rematar desactivada.</string>
 </resources>

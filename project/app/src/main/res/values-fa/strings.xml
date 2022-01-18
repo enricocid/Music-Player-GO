@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="covers_pref_summary_off">نمایش</string>
-    <string name="covers_pref_summary_on">نهفتن</string>
     <string name="repeat_disabled">∞ تکرار خاموش.</string>
     <string name="repeat_loop_enabled">∞ تکرار روشن.</string>
     <string name="open_git_pref_summary">برای اطّلاعات بیشتر، صفحهٔ پروژه را باز کنید :)</string>
@@ -51,10 +49,8 @@
     <string name="error_eq">خطا</string>
     <string name="active_fragments_pref_title">زبانه‌های فعّال</string>
     <string name="active_fragments_pref_warning">شما نمی‌توانید همهٔ زبانه‌ها را بردارید!</string>
-    <string name="pref_summary_on">خاموش کردن</string>
-    <string name="pref_summary_off">روشن کردن</string>
-    <string name="playback_pref_summary_on">فقط یک آهنگ</string>
-    <string name="playback_pref_summary_off">نگه‌دار</string>
+    <string name="playback_pref_summary_off">فقط یک آهنگ</string>
+    <string name="playback_pref_summary_on">نگه‌دار</string>
     <string name="on_list_ended_pref_title">هنگامی که یک فهرست پایان یابد…</string>
     <string name="on_list_ended_pref_continue_title">ادامه</string>
     <string name="covers_pref_title">جلدهای آلبوم جاسازی شده</string>

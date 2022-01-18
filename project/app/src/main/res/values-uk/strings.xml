@@ -43,8 +43,8 @@
     <string name="favorites_clear">Обрані будуть очищені. Продовжити\?</string>
     <string name="queue_songs_clear">Очередь будет очищена. Продолжить\?</string>
     <string name="on_close_activity">Ви бажаєте зупинити відтворення\?</string>
-    <string name="playback_pref_summary_off">Зберегати вибрану швидкість відтворення</string>
-    <string name="playback_pref_summary_on">Не зберігати вибрану швидкість відтворення</string>
+    <string name="playback_pref_summary_on">Зберегати вибрану швидкість відтворення</string>
+    <string name="playback_pref_summary_off">Не зберігати вибрану швидкість відтворення</string>
     <string name="playback_pref_title">Швидкість відтворення</string>
     <string name="filter_pref_title">Фільтри</string>
     <string name="anim_pref_title">Анімація</string>
@@ -66,8 +66,6 @@
     <string name="on_list_ended_pref_stop_title">Стоп</string>
     <string name="on_list_ended_pref_title">Коли список закінчується …</string>
     <string name="covers_pref_title">Вбудовані обкладинки альбомів</string>
-    <string name="covers_pref_summary_on">Приховати обкладинки</string>
-    <string name="covers_pref_summary_off">Показувати обкладинки</string>
     <string name="accent_pref_title">Акцент кольору</string>
     <string name="theme_pref_auto_title">Автоматично</string>
     <string name="theme_pref_dark_title">Темна</string>

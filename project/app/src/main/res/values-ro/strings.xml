@@ -51,8 +51,8 @@
     <string name="headset_pref_title">Conexiune cu cască</string>
     <string name="filter_pref_title">Filtruri</string>
     <string name="filter_popup_title">Mascați</string>
-    <string name="playback_pref_summary_off">Persistă viteza de redare selectată</string>
-    <string name="playback_pref_summary_on">Nu mențineți viteza de redare selectată</string>
+    <string name="playback_pref_summary_on">Persistă viteza de redare selectată</string>
+    <string name="playback_pref_summary_off">Nu mențineți viteza de redare selectată</string>
     <string name="playback_pref_title">Viteza de redare</string>
     <string name="anim_pref_title">Animații</string>
     <string name="fast_seeking_actions_pref_summary_on">Preferă acțiunile de căutare rapidă</string>
@@ -67,8 +67,6 @@
     <string name="on_list_ended_pref_continue_title">Continuă</string>
     <string name="on_list_ended_pref_stop_title">Stop</string>
     <string name="on_list_ended_pref_title">Când o listă se încheie …</string>
-    <string name="covers_pref_summary_off">Afișați coperțile albumelor</string>
-    <string name="covers_pref_summary_on">Ascundeți coperțile albumelor</string>
     <string name="covers_pref_title">Coperte de album încorporate</string>
     <string name="error_eq">Ooops, a apărut o eroare!</string>
     <string name="error_list_ended">Lista s-a încheiat.</string>

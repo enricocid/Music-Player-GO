@@ -21,8 +21,8 @@
     <string name="sorting_pref_track">Pagal kūrinio Nr. ↓</string>
     <string name="equalizer_bb">Žemų dažnių sustiprinimas</string>
     <string name="favorites_save_time">Išsaugoti esamą dainos padėtį</string>
-    <string name="playback_pref_summary_off">Išlaikyti pasirinktą atkūrimo greitį</string>
-    <string name="playback_pref_summary_on">Neišlaikyti pasirinkto atkūrimo greičio</string>
+    <string name="playback_pref_summary_on">Išlaikyti pasirinktą atkūrimo greitį</string>
+    <string name="playback_pref_summary_off">Neišlaikyti pasirinkto atkūrimo greičio</string>
     <string name="playback_pref_title">Atkūrimo greitis</string>
     <string name="filter_pref_title">Filtrai</string>
     <string name="anim_pref_title">Animacijos</string>
@@ -40,8 +40,6 @@
     <string name="on_list_ended_pref_continue_title">Tęsti</string>
     <string name="on_list_ended_pref_stop_title">Sustabdyti</string>
     <string name="on_list_ended_pref_title">Kai sąrašas baigiasi …</string>
-    <string name="covers_pref_summary_off">Rodyti albumų viršelius</string>
-    <string name="covers_pref_summary_on">Slėpti albumų viršelius</string>
     <string name="theme_pref_auto_title">Automatinė</string>
     <string name="theme_pref_dark_title">Tamsi</string>
     <string name="theme_pref_light_title">Šviesi</string>

@@ -56,8 +56,6 @@
     <string name="fast_seeking_actions_pref_summary_off">Foretrekk lukk/gjenta -handlinger</string>
     <string name="fast_seeking_pref_summary">Hurtigspolingshopp fram og tilbake (sekunder)</string>
     <string name="on_list_ended_pref_title">Når en spilleliste slutter …</string>
-    <string name="covers_pref_summary_on">Skjul albumsomslag</string>
-    <string name="covers_pref_summary_off">Vis albumsomslag</string>
     <string name="covers_pref_title">Innebygde albumsomslag</string>
     <string name="on_list_ended_pref_stop_title">Stopp</string>
     <string name="on_list_ended_pref_continue_title">Fortsett</string>
@@ -73,8 +71,8 @@
     <string name="equalizer">Tonekontroll</string>
     <string name="albums">Album</string>
     <string name="favorites_save_time">Lagre sporposisjon</string>
-    <string name="playback_pref_summary_off">Vedvarende valgt avspillingshastighet</string>
-    <string name="playback_pref_summary_on">Valgt avspillingshastighet ikke vedvarende</string>
+    <string name="playback_pref_summary_on">Vedvarende valgt avspillingshastighet</string>
+    <string name="playback_pref_summary_off">Valgt avspillingshastighet ikke vedvarende</string>
     <string name="playback_pref_title">Avspillingshastighet</string>
     <string name="open_details_fragment">Åpne artist/mappedetaljer</string>
     <string name="content_repeat">Skru på/av gjentagelsesinnstillinger</string>
@@ -91,8 +89,6 @@
     <string name="sorting_pref_artist">Etter artist A-Å</string>
     <string name="sorting_pref_date_added_inv">Eldste dato først</string>
     <string name="sorting_pref_date_added">Nyeste dato først</string>
-    <string name="pref_summary_on">Skru av</string>
-    <string name="pref_summary_off">Skru på</string>
     <string name="pause_on_end">Pause ved fullførelse på.</string>
     <string name="pause_on_end_disabled">Pause ved fullførelse av.</string>
 </resources>

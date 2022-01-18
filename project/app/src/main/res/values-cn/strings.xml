@@ -64,8 +64,6 @@
     <string name="song_visual_pref_fn_title">文件名</string>
     <string name="on_list_ended_pref_continue_title">继续</string>
     <string name="on_list_ended_pref_stop_title">停止</string>
-    <string name="covers_pref_summary_off">显示</string>
-    <string name="covers_pref_summary_on">隐藏</string>
     <string name="error_list_ended">到底了。</string>
     <string name="error_eq">出错</string>
     <string name="fast_seeking_actions_pref_summary_on">快速搜寻</string>
@@ -85,14 +83,12 @@
     <string name="sorting_pref_artist_inv">按歌手名以 Z 到 A 排列</string>
     <string name="sorting_pref_artist">按歌手名从 A 到 Z 排列</string>
     <string name="delete">移除</string>
-    <string name="playback_pref_summary_off">保持</string>
-    <string name="playback_pref_summary_on">仅一首歌曲</string>
+    <string name="playback_pref_summary_on">保持</string>
+    <string name="playback_pref_summary_off">仅一首歌曲</string>
     <string name="content_skip_next">跳到下一首</string>
     <string name="content_skip_prev">跳到上一首</string>
     <string name="sorting_pref_date_added_inv">新添加的在前</string>
     <string name="sorting_pref_date_added">新添加的在后</string>
     <string name="pause_on_end_disabled">已关闭完成时暂停。</string>
     <string name="pause_on_end">已启用完成时暂停。</string>
-    <string name="pref_summary_off">开启</string>
-    <string name="pref_summary_on">关闭</string>
 </resources>

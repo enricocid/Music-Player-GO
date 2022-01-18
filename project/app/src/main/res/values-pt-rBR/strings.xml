@@ -43,8 +43,6 @@
     <string name="active_fragments_pref_warning">Você não pode simplesmente remover todas as abas! :P</string>
     <string name="sorting_pref_default">Padrão</string>
     <string name="precise_volume_pref_title">Controle preciso do volume</string>
-    <string name="pref_summary_on">Desligar</string>
-    <string name="pref_summary_off">Ligar</string>
     <string name="focus_pref_title">Gerenciamento de foco de áudio</string>
     <string name="headset_pref_title">Gerenciamento de entrada do fone de ouvido</string>
     <string name="filter_pref_title">Filtros</string>
@@ -71,8 +69,6 @@
     <string name="on_list_ended_pref_continue_title">Continuar</string>
     <string name="on_list_ended_pref_stop_title">Parar</string>
     <string name="on_list_ended_pref_title">Quando uma lista terminar…</string>
-    <string name="covers_pref_summary_off">Mostrar</string>
-    <string name="covers_pref_summary_on">Ocultar</string>
     <string name="covers_pref_title">Capas de álbuns integradas</string>
     <string name="favorites_save_time">Salvar a posição da música</string>
     <string name="open_details_fragment">Abrir detalhes do artista/pasta</string>
@@ -80,8 +76,8 @@
     <string name="content_skip_next">Pular para a próxima</string>
     <string name="content_play">Tocar/pausar</string>
     <string name="content_skip_prev">Pular para a anterior</string>
-    <string name="playback_pref_summary_off">Manter</string>
-    <string name="playback_pref_summary_on">Apenas uma música</string>
+    <string name="playback_pref_summary_on">Manter</string>
+    <string name="playback_pref_summary_off">Apenas uma música</string>
     <string name="playback_pref_title">Velocidade de reprodução selecionada</string>
     <string name="speed_3">Normal</string>
     <string name="content_playback_speed">Velocidade de reprodução</string>

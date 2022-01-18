@@ -57,8 +57,6 @@
     <string name="theme_pref_auto_title">Sistema</string>
     <string name="accent_pref_title">Accento</string>
     <string name="covers_pref_title">Cover album incorporate</string>
-    <string name="covers_pref_summary_on">Nascondi</string>
-    <string name="covers_pref_summary_off">Mostra</string>
     <string name="song_visual_pref_title">Visualizzazione canzoni</string>
     <string name="song_visual_pref_tl_title">Titolo</string>
     <string name="song_visual_pref_fn_title">Nome del file</string>
@@ -85,15 +83,13 @@
     <string name="sorting_pref_album">Per album A-Z</string>
     <string name="sorting_pref_album_inv">Per album Z-A</string>
     <string name="precise_volume_pref_title">Controllo preciso del volume</string>
-    <string name="pref_summary_on">Disattiva</string>
-    <string name="pref_summary_off">Attiva</string>
     <string name="focus_pref_title">Gestione focus audio</string>
     <string name="headset_pref_title">Gestione inserimento cuffie</string>
     <string name="anim_pref_title">Animazioni</string>
     <string name="filter_pref_title">Filtri</string>
     <string name="filter_popup_title">Nascondi</string>
     <string name="playback_pref_title">Velocità riproduzione selezionata</string>
-    <string name="playback_pref_summary_on">Solo una canzone</string>
-    <string name="playback_pref_summary_off">Mantieni</string>
+    <string name="playback_pref_summary_off">Solo una canzone</string>
+    <string name="playback_pref_summary_on">Mantieni</string>
     <string name="delete">Elimina</string>
 </resources>

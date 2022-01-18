@@ -23,13 +23,11 @@
     <string name="error_not_ready">Kunne ikkje lasta inn musikkbiblioteket! :( Avmontering av SD-kort tvingar Android sitt medie-bibliotek til gjenoppbygging . Prøv igjen seinare.</string>
     <string name="error_media_buttons">Noko gikk gale! :( Start avspeling igjen frå programmet.</string>
     <string name="error_unknown_unsupported">Noko gikk gale! :( Kanskje vald format ikkje er støtta, eller mappa ikkje tilgjengeleg (ikkje programmet fel!).</string>
-    <string name="playback_pref_summary_off">Behald</string>
-    <string name="playback_pref_summary_on">Kun ein song</string>
+    <string name="playback_pref_summary_on">Behald</string>
+    <string name="playback_pref_summary_off">Kun ein song</string>
     <string name="content_playback_speed">Tempo for avspeling</string>
     <string name="playback_pref_title">Vald tempo for avspeling</string>
     <string name="filter_pref_title">Filter</string>
-    <string name="pref_summary_off">Skru på</string>
-    <string name="pref_summary_on">Skru av</string>
     <string name="anim_pref_title">Animasjonar</string>
     <string name="headset_pref_title">Hodesettplugg-håndtering</string>
     <string name="focus_pref_title">Ljodfokus-håndtering</string>
@@ -39,8 +37,6 @@
     <string name="song_visual_pref_tl_title">Tittel</string>
     <string name="on_list_ended_pref_continue_title">Fortsett</string>
     <string name="on_list_ended_pref_stop_title">Stopp</string>
-    <string name="covers_pref_summary_off">Vis</string>
-    <string name="covers_pref_summary_on">Døl</string>
     <string name="covers_pref_title">Innebygde album-omslag</string>
     <string name="accent_pref_title">Aksentfarge</string>
     <string name="theme_pref_auto_title">System</string>

@@ -22,8 +22,6 @@
     <string name="song_visual_pref_title">Audiovisualisierung</string>
     <string name="on_list_ended_pref_continue_title">Fortfahren</string>
     <string name="on_list_ended_pref_stop_title">Stoppen</string>
-    <string name="covers_pref_summary_off">Albencover anzeigen</string>
-    <string name="covers_pref_summary_on">Albencover ausblenden</string>
     <string name="covers_pref_title">Eingebettete Albencover</string>
     <string name="accent_pref_title">Akzentfarbe</string>
     <string name="theme_pref_auto_title">Automatisch</string>
@@ -80,8 +78,8 @@
     <string name="sorting_pref_artist">Nach Künstler A-Z</string>
     <string name="sorting_pref_date_added_inv">Ältestes Datum zuerst</string>
     <string name="sorting_pref_date_added">Neuestes Datum zuerst</string>
-    <string name="playback_pref_summary_off">Gewählte Wiedergabegeschwindigkeit beibehalten</string>
-    <string name="playback_pref_summary_on">Ausgewählte Wiedergabegeschwindigkeit nicht beibehalten</string>
+    <string name="playback_pref_summary_on">Gewählte Wiedergabegeschwindigkeit beibehalten</string>
+    <string name="playback_pref_summary_off">Ausgewählte Wiedergabegeschwindigkeit nicht beibehalten</string>
     <string name="open_details_fragment">Details des Künstlers/Ordners öffnen</string>
     <string name="content_repeat">Wiederholungsoptionen aktivieren/deaktivieren</string>
     <string name="content_skip_next">Zum nächsten Titel springen</string>

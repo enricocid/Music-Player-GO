@@ -59,12 +59,10 @@
     <string name="fast_seeking_actions_pref_summary_off">বন্ধ / পুনরাবৃত্তি ক্রিয়া</string>
     <string name="equalizer_v">পরিবেষ্টিত শব্দ</string>
     <string name="error_list_ended">তালিকা শেষ।</string>
-    <string name="covers_pref_summary_on">অ্যালবাম কভার আড়াল করুন</string>
     <string name="covers_pref_title">অ্যালবাম কভার যোগ করুন</string>
     <string name="on_list_ended_pref_continue_title">চালিয়ে যান</string>
     <string name="on_list_ended_pref_stop_title">বন্ধ করুন</string>
     <string name="on_list_ended_pref_title">যখন একটি তালিকা শেষ হবে …</string>
-    <string name="covers_pref_summary_off">অ্যালবাম কভারগুলো দেখুন</string>
     <string name="albums">অ্যালবাম</string>
     <string name="equalizer_bb">ব্যাস জোরদার করুন</string>
     <string name="eq_pref_note_summary">দ্রষ্টব্য: আপনি সিস্টেম সেটিংস থেকে অ্যাপ্লিকেশন \"সিস্টেম ইকুয়ালাইজার\" টি বন্ধ না করা পর্যন্ত সিস্টেম ইকুয়ালাইজারটিকে অগ্রাধিকার দেওয়া হবে</string>

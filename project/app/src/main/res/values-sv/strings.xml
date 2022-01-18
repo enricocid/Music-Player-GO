@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="pref_summary_on">Inaktivera</string>
-    <string name="pref_summary_off">Aktivera</string>
-    <string name="playback_pref_summary_off">Behåll</string>
-    <string name="playback_pref_summary_on">Endast en låt</string>
+    <string name="playback_pref_summary_on">Behåll</string>
+    <string name="playback_pref_summary_off">Endast en låt</string>
     <string name="playback_pref_title">Vald uppspelningshastighet</string>
     <string name="filter_pref_title">Filter</string>
     <string name="anim_pref_title">Animationer</string>
@@ -24,8 +22,6 @@
     <string name="on_list_ended_pref_continue_title">Fortsätt</string>
     <string name="on_list_ended_pref_stop_title">Stoppa</string>
     <string name="on_list_ended_pref_title">När en lista slutar …</string>
-    <string name="covers_pref_summary_off">Visa</string>
-    <string name="covers_pref_summary_on">Dölj</string>
     <string name="covers_pref_title">Inbäddade albumomslag</string>
     <string name="accent_pref_title">Accent</string>
     <string name="theme_pref_auto_title">System</string>

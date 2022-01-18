@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="playback_pref_summary_off">Vztrajaj pri izbrani hitrosti predvajanja</string>
-    <string name="playback_pref_summary_on">Ne vztrajaj pri izbrani hitrosti predvajanja</string>
+    <string name="playback_pref_summary_on">Vztrajaj pri izbrani hitrosti predvajanja</string>
+    <string name="playback_pref_summary_off">Ne vztrajaj pri izbrani hitrosti predvajanja</string>
     <string name="playback_pref_title">Hitrost predvajanja</string>
     <string name="filter_pref_title">Filtri</string>
     <string name="anim_pref_title">Animacije</string>
@@ -22,8 +22,6 @@
     <string name="on_list_ended_pref_continue_title">Nadaljuj</string>
     <string name="on_list_ended_pref_stop_title">Ustavi</string>
     <string name="on_list_ended_pref_title">Ko se vrsta konča …</string>
-    <string name="covers_pref_summary_off">Prikaži naslovnice</string>
-    <string name="covers_pref_summary_on">Skrij naslovnice</string>
     <string name="covers_pref_title">Vdelane albumske naslovnice</string>
     <string name="theme_pref_auto_title">Samodejno</string>
     <string name="theme_pref_dark_title">Temna</string>

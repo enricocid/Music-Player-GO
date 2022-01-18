@@ -48,8 +48,6 @@
     <string name="active_fragments_pref_title">有効なタブ</string>
     <string name="active_fragments_pref_warning">すべてのタブを削除することはできません</string>
     <string name="precise_volume_pref_title">無段階の音量調節</string>
-    <string name="pref_summary_on">無効</string>
-    <string name="pref_summary_off">有効</string>
     <string name="focus_pref_title">オーディオフォーカス制御</string>
     <string name="headset_pref_title">ヘッドホン端子制御</string>
     <string name="filter_pref_title">フィルター</string>
@@ -60,8 +58,6 @@
     <string name="fast_seeking_actions_pref_title">通知領域に表示するボタン</string>
     <string name="fast_seeking_pref_title">早送り・早戻し</string>
     <string name="fast_seeking_pref_summary">早送り・早戻しの間隔（秒）</string>
-    <string name="covers_pref_summary_off">表示する</string>
-    <string name="covers_pref_summary_on">表示しない</string>
     <string name="covers_pref_title">アルバムカバーの表示</string>
     <string name="on_list_ended_pref_title">キューにある曲を再生し終えた場合 …</string>
     <string name="song_visual_pref_title">曲の表示方法</string>
@@ -79,8 +75,8 @@
     <string name="sorting_pref_album">アルバム 昇順</string>
     <string name="sorting_pref_artist_inv">アーティスト 降順</string>
     <string name="sorting_pref_artist">アーティスト 昇順</string>
-    <string name="playback_pref_summary_off">倍速設定を常に維持</string>
-    <string name="playback_pref_summary_on">倍速設定を常に初期化</string>
+    <string name="playback_pref_summary_on">倍速設定を常に維持</string>
+    <string name="playback_pref_summary_off">倍速設定を常に初期化</string>
     <string name="playback_pref_title">倍速</string>
     <string name="anim_pref_title">アニメーション</string>
     <string name="open_details_fragment">アーティスト/フォルダの詳細を見る</string>

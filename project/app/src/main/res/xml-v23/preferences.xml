@@ -51,31 +51,25 @@
             app:title="@string/equalizer" />
 
         <SwitchPreferenceCompat
-            android:summaryOff="@string/pref_summary_off"
             app:defaultValue="false"
             app:key="@string/precise_volume_pref"
-            app:summaryOn="@string/pref_summary_on"
             app:title="@string/precise_volume_pref_title" />
 
         <SwitchPreferenceCompat
-            android:summaryOff="@string/pref_summary_off"
             app:defaultValue="true"
             app:key="@string/focus_pref"
-            app:summaryOn="@string/pref_summary_on"
             app:title="@string/focus_pref_title" />
 
         <SwitchPreferenceCompat
-            android:summaryOff="@string/pref_summary_off"
             app:defaultValue="true"
             app:key="@string/headset_pref"
-            app:summaryOn="@string/pref_summary_on"
             app:title="@string/headset_pref_title" />
 
         <SwitchPreferenceCompat
-            android:summaryOff="@string/playback_pref_summary_off"
+            android:summaryOff="@string/playback_pref_summary_on"
             app:defaultValue="false"
             app:key="@string/playback_speed_pref"
-            app:summaryOn="@string/playback_pref_summary_on"
+            app:summaryOn="@string/playback_pref_summary_off"
             app:title="@string/playback_pref_title" />
 
         <ListPreference
@@ -93,10 +87,8 @@
         app:title="@string/category_general">
 
         <SwitchPreferenceCompat
-            android:summaryOff="@string/covers_pref_summary_off"
             app:defaultValue="false"
             app:key="@string/covers_pref"
-            app:summaryOn="@string/covers_pref_summary_on"
             app:title="@string/covers_pref_title" />
 
         <SeekBarPreference
@@ -126,10 +118,8 @@
             app:useSimpleSummaryProvider="true" />
 
         <SwitchPreferenceCompat
-            android:summaryOff="@string/pref_summary_off"
             app:defaultValue="true"
             app:key="@string/anim_pref"
-            app:summaryOn="@string/pref_summary_on"
             app:title="@string/anim_pref_title" />
 
         <Preference

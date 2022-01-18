@@ -62,9 +62,7 @@
     <string name="on_list_ended_pref_continue_title">Doorgaan</string>
     <string name="on_list_ended_pref_stop_title">Stoppen</string>
     <string name="on_list_ended_pref_title">Aan het einde van de lijst…</string>
-    <string name="covers_pref_summary_off">Albumhoezen tonen</string>
     <string name="covers_pref_title">Meegeleverde albumhoezen</string>
-    <string name="covers_pref_summary_on">Albumhoezen verbergen</string>
     <string name="error_eq">Oeps, er is een fout opgetreden.</string>
     <string name="error_list_ended">Het einde is bereikt.</string>
     <string name="error_not_ready">Je muziekverzameling kan niet worden geladen! :( Wellicht is je sd-kaart ontkoppeld waardoor Android de databank opnieuw aan het opbouwen is. Probeer het later opnieuw.</string>
@@ -78,8 +76,8 @@
     <string name="content_skip_next">Doorspoelen naar volgende nummer</string>
     <string name="content_play">Afspelen/Pauzeren</string>
     <string name="content_skip_prev">Terugspoelen naar vorige nummer</string>
-    <string name="playback_pref_summary_off">Afspeelsnelheid instellen als standaard</string>
-    <string name="playback_pref_summary_on">Afspeelsnelheid niet instellen als standaard</string>
+    <string name="playback_pref_summary_on">Afspeelsnelheid instellen als standaard</string>
+    <string name="playback_pref_summary_off">Afspeelsnelheid niet instellen als standaard</string>
     <string name="playback_pref_title">Afspeelsnelheid</string>
     <string name="speed_3">Normaal</string>
     <string name="content_playback_speed">Afspeelsnelheid</string>

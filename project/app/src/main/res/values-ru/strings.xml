@@ -64,8 +64,6 @@
     <string name="on_list_ended_pref_continue_title">Продолжить</string>
     <string name="on_list_ended_pref_stop_title">Остановить</string>
     <string name="on_list_ended_pref_title">Когда список заканчивается…</string>
-    <string name="covers_pref_summary_off">Показать</string>
-    <string name="covers_pref_summary_on">Скрыть</string>
     <string name="covers_pref_title">Встроенные обложки альбомов</string>
     <string name="error_eq">Ошибка</string>
     <string name="error_list_ended">Список закончился.</string>
@@ -73,8 +71,8 @@
     <string name="equalizer_bb">Усиление басов</string>
     <string name="equalizer">Эквалайзер</string>
     <string name="favorites_save_time">Сохранить позицию трека</string>
-    <string name="playback_pref_summary_off">Удержание</string>
-    <string name="playback_pref_summary_on">Только один трек</string>
+    <string name="playback_pref_summary_on">Удержание</string>
+    <string name="playback_pref_summary_off">Только один трек</string>
     <string name="playback_pref_title">Выбранная скорость воспроизведения</string>
     <string name="anim_pref_title">Анимации</string>
     <string name="sorting_pref_artist_inv">По исполнителю Z-A</string>
@@ -91,8 +89,6 @@
     <string name="sorting_pref_album_inv">По альбому Z-A</string>
     <string name="sorting_pref_album">По альбому A-Z</string>
     <string name="delete">Удалить</string>
-    <string name="pref_summary_off">Включить</string>
     <string name="pause_on_end">Пауза при завершении включена.</string>
     <string name="pause_on_end_disabled">Пауза при завершении выключена.</string>
-    <string name="pref_summary_on">Выключить</string>
 </resources>

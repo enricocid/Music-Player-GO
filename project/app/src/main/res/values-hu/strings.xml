@@ -56,8 +56,6 @@
     <string name="on_list_ended_pref_continue_title">Folytatás</string>
     <string name="on_list_ended_pref_stop_title">Megállítás</string>
     <string name="on_list_ended_pref_title">Amikor egy lista véget ér…</string>
-    <string name="covers_pref_summary_off">Albumborítók megjelenítése</string>
-    <string name="covers_pref_summary_on">Albumborítók elrejtése</string>
     <string name="covers_pref_title">Beágyazott albumborítók</string>
     <string name="error_eq">Hoppá, hiba történt!</string>
     <string name="error_list_ended">A lista befejeződött.</string>
@@ -70,8 +68,8 @@
     <string name="albums">Albumok</string>
     <string name="fast_seeking_actions_pref_summary_on">Gyors keresés műveletek előnyben részesítése</string>
     <string name="fast_seeking_actions_pref_summary_off">Bezárás/ismétlés műveletek előnyben részesítése</string>
-    <string name="playback_pref_summary_off">A kijelölt lejátszási sebesség fenntartása</string>
-    <string name="playback_pref_summary_on">A kijelölt lejátszási sebesség nem marad meg</string>
+    <string name="playback_pref_summary_on">A kijelölt lejátszási sebesség fenntartása</string>
+    <string name="playback_pref_summary_off">A kijelölt lejátszási sebesség nem marad meg</string>
     <string name="playback_pref_title">Lejátszás sebessége</string>
     <string name="anim_pref_title">Animációk</string>
     <string name="error_not_ready">Nem sikerült betölteni a zenei könyvtárat! :( Ennek oka lehet az SD-kártya leválasztása, ami arra kényszeríti az Android Médiakönyvtárat, hogy újratöltse az adatbázis rekordjait. Próbálja újra később.</string>
