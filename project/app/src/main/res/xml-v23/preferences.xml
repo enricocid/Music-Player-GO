@@ -66,10 +66,10 @@
             app:title="@string/headset_pref_title" />
 
         <SwitchPreferenceCompat
-            android:summaryOff="@string/playback_pref_summary_on"
+            android:summaryOff="@string/playback_pref_summary_off"
             app:defaultValue="false"
             app:key="@string/playback_speed_pref"
-            app:summaryOn="@string/playback_pref_summary_off"
+            app:summaryOn="@string/playback_pref_summary_on"
             app:title="@string/playback_pref_title" />
 
         <ListPreference
