@@ -9,4 +9,5 @@ interface MediaPlayerInterface {
     fun onQueueEnabled()
     fun onQueueStartedOrEnded(started: Boolean)
     fun onBackupSong()
+    fun onForegroundServiceStopped()
 }

@@ -300,6 +300,18 @@ object DialogHelper {
     }
 
     @JvmStatic
+    fun notifyForegroundServiceStopped(
+        context: Context
+    ) {
+        MaterialDialog(context).show {
+            cancelOnTouchOutside(false)
+            title(R.string.app_name)
+            message(R.string.error_fs_not_allowed)
+            positiveButton(android.R.string.ok)
+        }
+    }
+
+    @JvmStatic
     fun computeDurationText(ctx: Context, favorite: Music?): Spanned? {
         if (favorite?.startFrom != null && favorite.startFrom > 0L) {
             return ctx.getString(

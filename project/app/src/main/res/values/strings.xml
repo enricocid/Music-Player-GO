@@ -75,6 +75,8 @@
     <string name="error_no_queue">No songs in queue.</string>
     <string name="error_list_ended">List ended.</string>
     <string name="error_eq">Error</string>
+    <string name="error_fs_not_allowed_sum">Error! Turn off battery optimization for MPGO</string>
+    <string name="error_fs_not_allowed">Something went wrong! :( Perhaps battery optimization is enabled causing the media player service to stop. Consider disabling it in system settings: Apps > All apps > Music Player GO > Battery > Unrestricted</string>
 
     <!-- Messages - Permission rationale -->
     <string name="perm_rationale">Grant Music Player GO access to your files to play music.</string>

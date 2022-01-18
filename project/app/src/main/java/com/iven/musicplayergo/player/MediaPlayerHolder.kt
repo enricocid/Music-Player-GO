@@ -2,11 +2,14 @@ package com.iven.musicplayergo.player
 
 import android.annotation.TargetApi
 import android.app.Activity
+import android.app.ForegroundServiceStartNotAllowedException
+import android.app.Notification
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.ServiceInfo
 import android.graphics.Bitmap
 import android.media.AudioAttributes
 import android.media.AudioManager
@@ -23,6 +26,7 @@ import android.support.v4.media.session.PlaybackStateCompat
 import android.support.v4.media.session.PlaybackStateCompat.*
 import android.util.Log
 import android.view.KeyEvent
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.graphics.drawable.toBitmap
@@ -164,11 +168,26 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private fun startForeground() {
         if (!sNotificationForeground) {
-            mMusicNotificationManager.createNotification {
-                playerService.startForeground(GoConstants.NOTIFICATION_ID, it)
-                sNotificationForeground = true
+            mMusicNotificationManager.createNotification { notification ->
+                if (VersioningHelper.isQ()) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        try {
+                            startForegroundQ(notification)
+                        } catch (fsNotAllowed: ForegroundServiceStartNotAllowedException) {
+                            synchronized(Toast.makeText(playerService, R.string.error_fs_not_allowed_sum, Toast.LENGTH_LONG).show()) {
+                                pauseMediaPlayer()
+                                mediaPlayerInterface.onForegroundServiceStopped()
+                            }
+                            fsNotAllowed.printStackTrace()
+                        }
+                    } else {
+                        startForegroundQ(notification)
+                    }
+                } else {
+                    playerService.startForeground(GoConstants.NOTIFICATION_ID, notification)
+                    sNotificationForeground = true
+                }
             }
-
         } else {
             with(mMusicNotificationManager) {
                 updatePlayPauseAction()
@@ -178,6 +197,15 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 }
             }
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.Q)
+    private fun startForegroundQ(notification: Notification) {
+        playerService.startForeground(
+            GoConstants.NOTIFICATION_ID,
+            notification,
+            ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
+        sNotificationForeground = true
     }
 
     fun registerActionsReceiver() {

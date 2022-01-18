@@ -1587,6 +1587,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 goPreferences.latestPlayedSong = mMediaPlayerHolder.currentSong?.toSavedMusic(mMediaPlayerHolder.playerPosition, mMediaPlayerHolder.launchedBy)
             }
         }
+
+        override fun onForegroundServiceStopped() {
+            DialogHelper.notifyForegroundServiceStopped(this@MainActivity)
+        }
     }
 
     // ViewPager2 adapter class

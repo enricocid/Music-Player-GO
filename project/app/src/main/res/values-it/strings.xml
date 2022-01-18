@@ -41,6 +41,8 @@
     <string name="error_unknown_unsupported">Qualcosa è andato storto! :( Forse il formato non è supportato, o la cartella è inaccessibile (non dipende dall\'app!).</string>
     <string name="error_media_buttons">Qualcosa è andato storto! :( Per favore riavvia la riproduzione dall\'applicazione.</string>
     <string name="error_eq">Errore</string>
+    <string name="error_fs_not_allowed_sum">Errore! Disattiva l\'ottimizzazione della batteria per MPGO</string>
+    <string name="error_fs_not_allowed">Qualcosa è andato storto! :( La modalità ottimizzazione batteria potrebbe essere abilitata causando l\'arresto del servizio. Prova a disattivarla nelle impostazioni di sistema: App > Tutte le app > Music Player GO > Batteria > Senza limitazioni</string>
     <string name="on_close_activity">Interrompere la riproduzione?</string>
     <string name="repeat_enabled">Ripeti 1x on.</string>
     <string name="repeat_loop_enabled">Ripetizione ∞ on.</string>
