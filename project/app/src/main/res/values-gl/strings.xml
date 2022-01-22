@@ -98,4 +98,6 @@
     <string name="delete">Eliminar</string>
     <string name="pause_on_end">Pausa ao rematar activada.</string>
     <string name="pause_on_end_disabled">Pausa ao rematar desactivada.</string>
+    <string name="error_fs_not_allowed_sum">Erro! Desactiva a optimización da batería para MPGO</string>
+    <string name="error_fs_not_allowed">Algo fallou! :( Pode que teñas activada a optimización da batería e causa que o reprodutor se deseña. Considera desactivala nos axustes do sistema: Apps &gt; Tódalas apps &gt; Music Player GO &gt; Batería &gt; Sen restricións</string>
 </resources>

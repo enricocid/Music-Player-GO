@@ -91,4 +91,6 @@
     <string name="delete">Hapus</string>
     <string name="pause_on_end">Jeda saat selesai aktif.</string>
     <string name="pause_on_end_disabled">Jeda saat selesai nonaktif.</string>
+    <string name="error_fs_not_allowed">Telah terjadi kesalahan! :( Mungkin pengoptimalan baterai menyebabkan pemutar media berhenti. Nonaktifkan di pengaturan sistem: Aplikasi &gt; Semua aplikasi &gt; Music Player GO &gt; Baterai &gt; Tidak terbatas</string>
+    <string name="error_fs_not_allowed_sum">Galat! Matikan pengoptimalan baterai untuk MPGO</string>
 </resources>
