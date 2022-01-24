@@ -32,24 +32,23 @@
     <string name="favorites_save_time">Salva la posizione canzone</string>
     <string name="favorite_add">Preferito</string>
     <string name="favorites_clear">Cancellare le canzoni preferite\?</string>
-    <string name="error_no_favorites">Aggiungi qualche preferito prima!</string>
+    <string name="error_no_favorites">Aggiungi qualche preferito prima.</string>
     <string name="perm_rationale">Concedi a Music Player GO accesso ai tuoi file per eseguire la musica.</string>
     <string name="error_no_browser">Installa un web browser prima.</string>
     <string name="error_bad_id">Magari esegui una canzone.</string>
-    <string name="error_no_music">Aggiungi qualche canzone prima :(</string>
+    <string name="error_no_music">Aggiungi qualche canzone prima.</string>
     <string name="error_not_ready">Impossibile caricare la libreria musicale! :( Lo smontaggio della scheda SD ricostruisce il database di Android MediaStore. Riprova più tardi.</string>
     <string name="error_unknown_unsupported">Qualcosa è andato storto! :( Forse il formato non è supportato, o la cartella è inaccessibile (non dipende dall\'app!).</string>
     <string name="error_media_buttons">Qualcosa è andato storto! :( Per favore riavvia la riproduzione dall\'applicazione.</string>
     <string name="error_eq">Errore</string>
     <string name="error_fs_not_allowed_sum">Errore! Disattiva l\'ottimizzazione della batteria per MPGO</string>
-    <string name="error_fs_not_allowed">Qualcosa è andato storto! :( La modalità ottimizzazione batteria potrebbe essere abilitata causando l\'arresto del servizio. Prova a disattivarla nelle impostazioni di sistema: App > Tutte le app > Music Player GO > Batteria > Senza limitazioni</string>
+    <string name="error_fs_not_allowed">Qualcosa è andato storto! :( La modalità ottimizzazione batteria potrebbe essere abilitata causando l\'arresto del servizio. Prova a disattivarla nelle impostazioni di sistema: App &gt; Tutte le app &gt; Music Player GO &gt; Batteria &gt; Senza limitazioni</string>
     <string name="on_close_activity">Interrompere la riproduzione?</string>
     <string name="repeat_enabled">Ripeti 1x on.</string>
     <string name="repeat_loop_enabled">Ripetizione ∞ on.</string>
     <string name="repeat_disabled">Ripetizione ∞ off.</string>
     <string name="pause_on_end">Pausa al termine on.</string>
     <string name="pause_on_end_disabled">Pausa al termine off.</string>
-
     <string name="settings">Opzioni</string>
     <string name="category_general">Generali</string>
     <string name="open_git_pref_summary">Apri la pagina del progetto per maggiori info :)</string>
