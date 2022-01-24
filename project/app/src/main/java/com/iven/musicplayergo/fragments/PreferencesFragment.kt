@@ -117,7 +117,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
             getString(R.string.precise_volume_pref) -> mMediaControlInterface.onPreciseVolumeToggled()
-            getString(R.string.playback_speed_pref) -> mMediaControlInterface.onPlaybackSpeedToggled()
+            getString(R.string.playback_vel_pref) -> mMediaControlInterface.onPlaybackSpeedToggled()
             getString(R.string.theme_pref) -> {
                 mThemePreference?.icon = ContextCompat.getDrawable(requireActivity(), ThemeHelper.resolveThemeIcon(requireActivity()))
                 mUIControlInterface.onAppearanceChanged(isThemeChanged = true)
@@ -131,7 +131,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 mMediaControlInterface.onHandleCoverOptionsUpdate()
                 mMediaControlInterface.onHandleNotificationUpdate(isAdditionalActionsChanged = false)
             }
-            getString(R.string.fast_seeking_actions_pref) -> mMediaControlInterface.onHandleNotificationUpdate(
+            getString(R.string.notif_actions_pref) -> mMediaControlInterface.onHandleNotificationUpdate(
                 true
             )
             getString(R.string.song_visual_pref) -> mMediaControlInterface.onUpdatePlayingAlbumSongs(null)

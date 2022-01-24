@@ -36,7 +36,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         @SuppressLint("RestrictedApi")
         get() = mNotificationBuilder.mActions
 
-    private val sFastSeekingActions get() = goPreferences.isFastSeekingActions
+    private val sFastSeekingActions get() = goPreferences.notificationActions != GoConstants.NOTIF_REPEAT_CLOSE
 
     private var mAlbumArt = ContextCompat.getDrawable(playerService, R.drawable.album_art)?.toBitmap()
 

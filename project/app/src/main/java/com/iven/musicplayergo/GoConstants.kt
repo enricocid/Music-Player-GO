@@ -23,11 +23,17 @@ object GoConstants {
     const val ALBUM_VIEW = "1"
     const val FOLDER_VIEW = "2"
 
+    // playback speed options
+    const val PLAYBACK_SPEED_ONE_ONLY = "0"
+
     // on list ended option
     const val CONTINUE = "0"
 
     // song visualization options
     const val FN = "1"
+
+    // notification options
+    const val NOTIF_REPEAT_CLOSE = "0"
 
     // sorting
     const val DEFAULT_SORTING = 0

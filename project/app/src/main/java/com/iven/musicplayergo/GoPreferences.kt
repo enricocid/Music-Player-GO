@@ -15,7 +15,7 @@ class GoPreferences(context: Context) {
 
     private val prefsSavedEqualizerSettings = context.getString(R.string.saved_eq_settings)
     private val prefsLatestVolume = context.getString(R.string.latest_volume_pref)
-    private val prefsLatestPlaybackSpeed = context.getString(R.string.latest_playback_speed_pref)
+    private val prefsLatestPlaybackVel = context.getString(R.string.latest_playback_vel_pref)
     private val prefsLatestPlayedSong = context.getString(R.string.latest_played_song_pref)
     private val prefsFavorites = context.getString(R.string.favorites_pref)
     private val prefsQueue = context.getString(R.string.queue_pref)
@@ -40,14 +40,14 @@ class GoPreferences(context: Context) {
     private val prefsAllMusicSorting = context.getString(R.string.all_music_sorting_pref)
 
     private val prefsFastSeek = context.getString(R.string.fast_seeking_pref)
-    private val prefsFastSeekActions = context.getString(R.string.fast_seeking_actions_pref)
+    private val prefsNotificationActions = context.getString(R.string.notif_actions_pref)
     private val prefsPreciseVolume = context.getString(R.string.precise_volume_pref)
     private val prefsFocus = context.getString(R.string.focus_pref)
     private val prefsHeadsetPlug = context.getString(R.string.headset_pref)
 
     private val prefsAnim = context.getString(R.string.anim_pref)
     private val prefsFilter = context.getString(R.string.filter_pref)
-    private val prefsPlaybackSpeed = context.getString(R.string.playback_speed_pref)
+    private val prefsPlaybackVel = context.getString(R.string.playback_vel_pref)
     private val prefsIsPauseOnEnd = context.getString(R.string.pause_on_end_pref)
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -65,8 +65,8 @@ class GoPreferences(context: Context) {
         set(value) = mPrefs.edit { putInt(prefsLatestVolume, value) }
 
     var latestPlaybackSpeed: Float
-        get() = mPrefs.getFloat(prefsLatestPlaybackSpeed, 1.0F)
-        set(value) = mPrefs.edit { putFloat(prefsLatestPlaybackSpeed, value) }
+        get() = mPrefs.getFloat(prefsLatestPlaybackVel, 1.0F)
+        set(value) = mPrefs.edit { putFloat(prefsLatestPlaybackVel, value) }
 
     var latestPlayedSong: Music?
         get() = getObjectForClass(
@@ -161,9 +161,9 @@ class GoPreferences(context: Context) {
         get() = mPrefs.getInt(prefsFastSeek, 5)
         set(value) = mPrefs.edit { putInt(prefsFastSeek, value) }
 
-    var isFastSeekingActions: Boolean
-        get() = mPrefs.getBoolean(prefsFastSeekActions, false)
-        set(value) = mPrefs.edit { putBoolean(prefsFastSeekActions, value) }
+    var notificationActions
+        get() = mPrefs.getString(prefsNotificationActions, GoConstants.NOTIF_REPEAT_CLOSE)
+        set(value) = mPrefs.edit { putString(prefsNotificationActions, value) }
 
     var isPreciseVolumeEnabled
         get() = mPrefs.getBoolean(prefsPreciseVolume, false)
@@ -177,9 +177,9 @@ class GoPreferences(context: Context) {
         get() = mPrefs.getBoolean(prefsHeadsetPlug, true)
         set(value) = mPrefs.edit { putBoolean(prefsHeadsetPlug, value) }
 
-    var isPlaybackSpeedPersisted
-        get() = mPrefs.getBoolean(prefsPlaybackSpeed, false)
-        set(value) = mPrefs.edit { putBoolean(prefsPlaybackSpeed, value) }
+    var playbackSpeedMode
+        get() = mPrefs.getString(prefsPlaybackVel, GoConstants.PLAYBACK_SPEED_ONE_ONLY)
+        set(value) = mPrefs.edit { putString(prefsPlaybackVel, value) }
 
     var isAnimations
         get() = mPrefs.getBoolean(prefsAnim, true)

@@ -14,6 +14,16 @@
         <item>@string/theme_pref_auto</item>
     </string-array>
 
+    <string-array name="onListEndedArray">
+        <item>@string/on_list_ended_pref_continue_title</item>
+        <item>@string/on_list_ended_pref_stop_title</item>
+    </string-array>
+
+    <string-array name="onListEndedEntryArray">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
     <string-array name="songVisualizationArray">
         <item>@string/song_visual_pref_tl_title</item>
         <item>@string/song_visual_pref_fn_title</item>
@@ -24,12 +34,22 @@
         <item>1</item>
     </string-array>
 
-    <string-array name="onListEndedArray">
-        <item>@string/on_list_ended_pref_continue_title</item>
-        <item>@string/on_list_ended_pref_stop_title</item>
+    <string-array name="notificationActionsArray">
+        <item>@string/fast_seeking_actions_pref_summary_off</item>
+        <item>@string/fast_seeking_actions_pref_summary_on</item>
     </string-array>
 
-    <string-array name="onListEndedEntryArray">
+    <string-array name="notificationActionsEntryArray">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="playbackSpeedModeArray">
+        <item>@string/playback_pref_summary_off</item>
+        <item>@string/playback_pref_summary_on</item>
+    </string-array>
+
+    <string-array name="playbackSpeedModeEntryArray">
         <item>0</item>
         <item>1</item>
     </string-array>

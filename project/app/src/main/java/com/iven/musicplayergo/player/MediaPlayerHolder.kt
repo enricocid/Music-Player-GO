@@ -145,7 +145,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private var sNotificationForeground = false
 
     val isCurrentSong get() = currentSong != null
-    private val sPlaybackSpeedPersisted get() = goPreferences.isPlaybackSpeedPersisted
+    private val sPlaybackSpeedPersisted get() = goPreferences.playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY
     var isRepeat1X = false
     var isLooping = false
     var isPauseOnEnd = false

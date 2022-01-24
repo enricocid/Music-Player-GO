@@ -348,7 +348,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 isAccessible = true
                 get(mMainActivityBinding.viewPager2)
             }
-
             RecyclerView::class.java.getDeclaredField("mTouchSlop").apply {
                 isAccessible = true
 
@@ -835,7 +834,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun onPlaybackSpeedToggled() {
         //avoid having user stuck at selected playback speed
-        mMediaPlayerHolder.setPlaybackSpeed(if (goPreferences.isPlaybackSpeedPersisted) {
+        val isPlaybackPersisted = goPreferences.playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY
+        mMediaPlayerHolder.setPlaybackSpeed(if (isPlaybackPersisted) {
             goPreferences.latestPlaybackSpeed
         } else {
             1.0F

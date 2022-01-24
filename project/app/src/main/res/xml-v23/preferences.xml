@@ -65,12 +65,14 @@
             app:key="@string/headset_pref"
             app:title="@string/headset_pref_title" />
 
-        <SwitchPreferenceCompat
-            android:summaryOff="@string/playback_pref_summary_off"
-            app:defaultValue="false"
-            app:key="@string/playback_speed_pref"
-            app:summaryOn="@string/playback_pref_summary_on"
-            app:title="@string/playback_pref_title" />
+        <ListPreference
+            android:defaultValue="0"
+            app:dialogTitle="@string/playback_pref_title"
+            app:entries="@array/playbackSpeedModeArray"
+            app:entryValues="@array/playbackSpeedModeEntryArray"
+            app:key="@string/playback_vel_pref"
+            app:title="@string/playback_pref_title"
+            app:useSimpleSummaryProvider="true" />
 
         <ListPreference
             android:defaultValue="0"
@@ -101,12 +103,14 @@
             app:seekBarIncrement="5"
             app:showSeekBarValue="true" />
 
-        <SwitchPreferenceCompat
-            android:summaryOff="@string/fast_seeking_actions_pref_summary_off"
-            app:defaultValue="false"
-            app:key="@string/fast_seeking_actions_pref"
-            app:summaryOn="@string/fast_seeking_actions_pref_summary_on"
-            app:title="@string/fast_seeking_actions_pref_title" />
+        <ListPreference
+            android:defaultValue="0"
+            app:dialogTitle="@string/fast_seeking_actions_pref_title"
+            app:entries="@array/notificationActionsArray"
+            app:entryValues="@array/notificationActionsEntryArray"
+            app:key="@string/notif_actions_pref"
+            app:title="@string/fast_seeking_actions_pref_title"
+            app:useSimpleSummaryProvider="true" />
 
         <ListPreference
             android:defaultValue="1"

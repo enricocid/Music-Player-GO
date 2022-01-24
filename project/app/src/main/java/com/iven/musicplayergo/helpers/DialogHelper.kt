@@ -18,6 +18,7 @@ import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.bottomsheets.expandBottomSheet
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
+import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.ui.ItemSwipeCallback
 import com.iven.musicplayergo.adapters.FavoritesAdapter
@@ -239,7 +240,7 @@ object DialogHelper {
             inflate(R.menu.popup_speed)
             gravity = Gravity.END
 
-            if (goPreferences.isPlaybackSpeedPersisted) {
+            if (goPreferences.playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY) {
                 menu.findItem(getSelectedPlaybackItem(goPreferences.latestPlaybackSpeed)).setTitleColor(ThemeHelper.resolveThemeAccent(activity))
             }
 
@@ -256,7 +257,7 @@ object DialogHelper {
                     R.id.speed_8 -> 2.5F
                     else -> 2.5F
                 }
-                if (goPreferences.isPlaybackSpeedPersisted) {
+                if (goPreferences.playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY) {
                     menu.findItem(getSelectedPlaybackItem(playbackSpeed)).setTitleColor(ThemeHelper.resolveThemeAccent(activity))
                 }
                 (activity as MediaControlInterface).onChangePlaybackSpeed(playbackSpeed)

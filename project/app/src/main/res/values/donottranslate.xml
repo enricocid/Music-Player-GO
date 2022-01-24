@@ -65,7 +65,7 @@
     <string name="active_tabs_def_pref">active_tabs_def_pref</string>
     <string name="active_tabs_pref">active_tabs_pref</string>
     <string name="on_list_ended_pref">on_list_ended_pref</string>
-    <string name="fast_seeking_actions_pref">fast_seeking_actions_pref</string>
+    <string name="notif_actions_pref">notif_actions_pref</string>
     <string name="fast_seeking_pref">fast_seeking_pref</string>
     <string name="precise_volume_pref">precise_volume_pref</string>
     <string name="focus_pref">focus_pref</string>
@@ -86,8 +86,8 @@
     <string name="favorites_pref">favorite_songs_pref</string>
     <string name="queue_pref">queue_songs_pref</string>
     <string name="latest_volume_pref">latest_volume_pref</string>
-    <string name="latest_playback_speed_pref">latest_playback_speed_pref</string>
+    <string name="latest_playback_vel_pref">latest_playback_vel_pref</string>
     <string name="song_visual_pref">song_visual_pref</string>
-    <string name="playback_speed_pref">playback_speed_pref</string>
+    <string name="playback_vel_pref">playback_vel_pref</string>
     <string name="pause_on_end_pref">pause_on_end_pref</string>
 </resources>
