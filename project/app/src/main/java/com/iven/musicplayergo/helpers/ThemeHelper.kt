@@ -28,9 +28,9 @@ import com.iven.musicplayergo.ui.MainActivity
 object ThemeHelper {
 
     @JvmStatic
-    fun applyChanges(activity: Activity) {
+    fun applyChanges(activity: Activity, restoreSettings: Boolean) {
         val intent = Intent(activity, MainActivity::class.java)
-        val bundle = bundleOf(GoConstants.RESTORE_SETTINGS_FRAGMENT to true)
+        val bundle = bundleOf(GoConstants.RESTORE_SETTINGS_FRAGMENT to restoreSettings)
         intent.putExtras(bundle)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         with(activity) {

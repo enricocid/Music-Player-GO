@@ -827,7 +827,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     )
                 )
             } else {
-                ThemeHelper.applyChanges(this)
+                ThemeHelper.applyChanges(this, restoreSettings = true)
             }
         }
     }
@@ -1418,7 +1418,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     mMediaPlayerHolder.updateCurrentSongs(null)
                 }
                 if (mAllMusicFragment != null && !mAllMusicFragment?.onSongVisualizationChanged()!!) {
-                    ThemeHelper.applyChanges(this)
+                    ThemeHelper.applyChanges(this, restoreSettings = true)
                 }
             }
         }
@@ -1432,8 +1432,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
                 ListsHelper.addToHiddenItems(string)
 
-                if (!mMusicContainersFragments.isNullOrEmpty() && !mMusicContainersFragments.first().onListFiltered(string)) {
-                    ThemeHelper.applyChanges(this)
+                if (mMusicContainersFragments.isNullOrEmpty() || !mMusicContainersFragments.isNullOrEmpty() && !mMusicContainersFragments.first().onListFiltered(string)) {
+                    ThemeHelper.applyChanges(this, restoreSettings = false)
                 } else {
                     if (!mMusicContainersFragments.isNullOrEmpty() && mMusicContainersFragments.size >= 1) {
                         val musicContainersIterator = mMusicContainersFragments.iterator().withIndex()
