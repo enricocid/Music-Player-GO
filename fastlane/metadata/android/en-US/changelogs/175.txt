@@ -1,0 +1,6 @@
+- Android 12: added a message to inform use of playback issues
+PS: consider disabling battery optimization in system settings: 
+Apps > All apps > Music Player GO > Battery > Unrestricted
+- Fix filtering option
+- Settings review
+- Update translations

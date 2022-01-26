@@ -14,5 +14,6 @@
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar">false</item>
         <item name="popupMenuStyle">@style/PopupMenu</item>
+        <item name="android:spinnerStyle">@style/SpinnerMenu</item>
     </style>
 </resources>

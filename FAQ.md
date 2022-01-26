@@ -95,6 +95,13 @@ To avoid performance issues queue built from shuffled lists are limited to 250 i
 Sometimes it seems to not register properly. Try to reconnect the headphones.
 
 
+### Android 12 and battery optimization: media player stops working
+
+"Apps that target Android 12 (API level 31) or higher can't start foreground services while running in the background, except for a few special cases. If an app tries to start a foreground service while the app is running in the background, and the foreground service doesn't satisfy one of the exceptional cases, the system throws a [ForegroundServiceStartNotAllowedException](https://developer.android.com/guide/components/foreground-services#background-start-restrictions)."
+
+As mentioned in the [Android documentation](https://developer.android.com/guide/components/foreground-services#background-start-restriction-exemptions) please consider disabling battery optimization for MPGO in system settings to solve the issue:
+Apps > All apps > Music Player GO > Battery > Unrestricted
+
 ### What about features requests/crash reports?
 
 1. Unfortunately, not all requests can be taken into consideration, for a variety of reasons:

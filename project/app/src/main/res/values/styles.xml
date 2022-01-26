@@ -12,6 +12,11 @@
         <item name="android:statusBarColor">@color/systemBarsColor</item>
         <item name="android:navigationBarColor">@color/systemBarsColor</item>
         <item name="popupMenuStyle">@style/PopupMenu</item>
+        <item name="android:spinnerStyle">@style/SpinnerMenu</item>
+    </style>
+
+    <style name="SpinnerMenu" parent="Widget.AppCompat.Spinner">
+        <item name="android:popupBackground">@drawable/popupmenu_background</item>
     </style>
 
     <style name="PopupMenu" parent="ThemeOverlay.MaterialComponents">

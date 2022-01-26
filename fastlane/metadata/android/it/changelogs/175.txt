@@ -1,0 +1,6 @@
+- Android 12: aggiunto messaggio per informare dei problemi di riproduzione
+PS: prova a disattivare l'ottimizzazione della batteria nelle impostazioni di sistema:
+App > Tutte le app > Music Player GO > Batteria > Senza limitazioni 
+- Corretta opzione filtro
+- Revisione impostazioni
+- Aggiornamento traduzioni

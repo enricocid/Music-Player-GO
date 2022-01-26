@@ -1,14 +1,14 @@
 <h1 align="center">Music Player GO</h1>
 
 <p align="center">
-<img width="450" src="art7.gif">
+<img width="450" src="art8.gif">
 </p>
 
 <p align="center">
   <!-- Latest Release -->
     <a href="https://github.com/enricocid/Music-Player-GO/releases">
       <img alt="GitHub release"
-      src="https://img.shields.io/static/v1?label=Tag&message=v4.4.11&color=58F5D1">
+      src="https://img.shields.io/static/v1?label=Tag&message=v4.4.12&color=58F5D1">
     </a>
    <!-- Minimum SDK -->
     <img alt="Minimum SDK" src="https://img.shields.io/static/v1?label=API&message=21&color=32B5ED">

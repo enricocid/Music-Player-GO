@@ -29,7 +29,7 @@
     <string name="favorites">Preferiti</string>
     <string name="favorite_added">%1s (%2s) preferita</string>
     <string name="favorite_remove">Cancellare %1s (%2s) dalle canzoni preferite\?</string>
-    <string name="favorites_save_time">Salva la posizione canzone</string>
+    <string name="favorites_save_time">Salva posizione canzone</string>
     <string name="favorite_add">Preferito</string>
     <string name="favorites_clear">Cancellare le canzoni preferite\?</string>
     <string name="error_no_favorites">Aggiungi qualche preferito prima.</string>
