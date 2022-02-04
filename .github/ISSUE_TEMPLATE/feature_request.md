@@ -15,4 +15,6 @@ p.s. only **ONE** feature
 A clear and concise description of any alternative solutions or features you've considered.
 
 3) **Additional context**
-Add any other context or screenshots about the feature request here.
+Add any other context or screenshots about the feature request here. To add screenshots please use markdown formatting, like the following:
+
+`<img height="450" src="[link_to_the_screenshot here].file_extension">`
