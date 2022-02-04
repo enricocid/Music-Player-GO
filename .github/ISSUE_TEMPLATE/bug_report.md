@@ -40,8 +40,9 @@ Note: no log no party. All issues not providing a log will be deleted.
  - ROM or mods: [please specify any ROM or mods applied that could affect the normal functioning of the app]
 
 6) **Screenshots**
-If applicable, add screenshots to help explain your problem.
+If applicable, add screenshots to help explain your problem. Please use markdown formatting, like the following:
 
+`<img height="450" src="[link_to_the_screenshot here].file_extension">`
 
 **Additional context**
 Add any other context about the problem here.
