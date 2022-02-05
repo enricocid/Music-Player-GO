@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="BaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="BaseTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <item name="indicatorFastScrollerStyle">@style/FastScrollerColorFull</item>
         <item name="md_background_color">@color/dialogsBackground</item>
@@ -19,7 +19,7 @@
         <item name="android:popupBackground">@drawable/popupmenu_background</item>
     </style>
 
-    <style name="PopupMenu" parent="ThemeOverlay.MaterialComponents">
+    <style name="PopupMenu" parent="ThemeOverlay.Material3">
         <item name="android:popupBackground">@drawable/popupmenu_background</item>
         <item name="android:popupElevation">2dp</item>
     </style>
@@ -28,7 +28,7 @@
         <item name="android:scrollbars">none</item>
     </style>
 
-    <style name="DialogsStyle" parent="Theme.MaterialComponents.DayNight.Dialog">
+    <style name="DialogsStyle" parent="Theme.Material3.DayNight.Dialog">
         <item name="colorBackgroundFloating">@color/dialogsBackground</item>
         <item name="dialogCornerRadius">@dimen/md_corner_radius</item>
         <item name="colorPrimary">@color/widgetsColor</item>
@@ -59,7 +59,7 @@
     </style>
 
     <!-- Style for search bar -->
-    <style name="ToolbarStyle" parent="ThemeOverlay.MaterialComponents.ActionBar">
+    <style name="ToolbarStyle" parent="ThemeOverlay.Material3.ActionBar">
         <item name="searchViewStyle">@style/SearchViewStyle</item>
         <item name="popupMenuBackground">@drawable/popupmenu_background</item>
     </style>
