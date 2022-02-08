@@ -53,7 +53,7 @@
     <string name="headset_pref_title">耳机插拔管理</string>
     <string name="filter_pref_title">过滤器</string>
     <string name="fast_seeking_actions_pref_title">额外通知操作</string>
-    <string name="fast_seeking_pref_title">快速查找</string>
+    <string name="fast_seeking_pref_title">快进/快退</string>
     <string name="song_visual_pref_tl_title">标题</string>
     <string name="song_visual_pref_title">歌曲视图</string>
     <string name="equalizer_v">环绕声</string>
@@ -66,7 +66,7 @@
     <string name="on_list_ended_pref_stop_title">停止</string>
     <string name="error_list_ended">到底了。</string>
     <string name="error_eq">出错</string>
-    <string name="fast_seeking_actions_pref_summary_on">快速搜寻</string>
+    <string name="fast_seeking_actions_pref_summary_on">快进/快退</string>
     <string name="fast_seeking_actions_pref_summary_off">关闭/循环</string>
     <string name="fast_seeking_pref_summary">快进/快退步长（秒）</string>
     <string name="equalizer_bb">低音增强</string>
