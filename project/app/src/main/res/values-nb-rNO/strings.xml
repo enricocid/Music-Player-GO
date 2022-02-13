@@ -91,4 +91,6 @@
     <string name="sorting_pref_date_added">Nyeste dato først</string>
     <string name="pause_on_end">Pause ved fullførelse på.</string>
     <string name="pause_on_end_disabled">Pause ved fullførelse av.</string>
+    <string name="error_fs_not_allowed_sum">Feil. Skru av batterioptimisering for MPGO</string>
+    <string name="error_fs_not_allowed">Noe gikk galt. :( Kanskje batterioptimisering er på og det forårsaker stopp i mediaspillertjenesten\? Overvei å skru det av i systeminnstillinger: Programmer &gt; Alle programmer &gt; Music Player Go &gt; Batteri &gt; Ubegrenset</string>
 </resources>
