@@ -7,7 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.afollestad.materialdialogs.MaterialDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -32,22 +32,17 @@ object PermissionsHelper {
             )
         ) {
 
-            MaterialDialog(activity).show {
-
-                cancelOnTouchOutside(false)
-
-                title(R.string.app_name)
-
-                message(R.string.perm_rationale)
-                positiveButton(android.R.string.ok) {
-                    askForReadStoragePermission(
-                        activity
-                    )
+            MaterialAlertDialogBuilder(activity)
+                .setCancelable(false)
+                .setTitle(R.string.app_name)
+                .setMessage(R.string.perm_rationale)
+                .setPositiveButton(android.R.string.ok) { _, _ ->
+                    askForReadStoragePermission(activity)
                 }
-                negativeButton {
+                .setNegativeButton(R.string.no) { _, _ ->
                     (activity as UIControlInterface).onDenyPermission()
                 }
-            }
+                .show()
         } else {
             askForReadStoragePermission(
                 activity

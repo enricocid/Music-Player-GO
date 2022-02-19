@@ -35,7 +35,10 @@ import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.extensions.*
+import com.iven.musicplayergo.extensions.toContentUri
+import com.iven.musicplayergo.extensions.toSavedMusic
+import com.iven.musicplayergo.extensions.toToast
+import com.iven.musicplayergo.extensions.waitForCover
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.VersioningHelper
@@ -72,13 +75,14 @@ private const val AUDIO_FOCUSED = 2
 private const val HEADSET_DISCONNECTED = 0
 private const val HEADSET_CONNECTED = 1
 
-class MediaPlayerHolder(private val playerService: PlayerService) :
+class MediaPlayerHolder:
     MediaPlayer.OnErrorListener,
     MediaPlayer.OnCompletionListener,
     MediaPlayer.OnPreparedListener {
 
-    private val mMediaSessionActions = ACTION_PLAY or ACTION_PAUSE or ACTION_PLAY_PAUSE or ACTION_SKIP_TO_NEXT or ACTION_SKIP_TO_PREVIOUS or ACTION_STOP or ACTION_SEEK_TO
+    lateinit var playerService: PlayerService
 
+    private val mMediaSessionActions = ACTION_PLAY or ACTION_PAUSE or ACTION_PLAY_PAUSE or ACTION_SKIP_TO_NEXT or ACTION_SKIP_TO_PREVIOUS or ACTION_STOP or ACTION_SEEK_TO
     lateinit var mediaPlayerInterface: MediaPlayerInterface
 
     // Equalizer
@@ -88,7 +92,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private var sHasOpenedAudioEffects = false
 
     // Audio focus
-    private var mAudioManager = playerService.getSystemService<AudioManager>()!!
+    private var mAudioManager: AudioManager? = null
     private lateinit var mAudioFocusRequestCompat: AudioFocusRequestCompat
 
     private val sFocusEnabled get() = goPreferences.isFocusEnabled
@@ -131,15 +135,14 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     var currentVolumeInPercent = goPreferences.latestVolume
     private var currentPlaybackSpeed = goPreferences.latestPlaybackSpeed
 
-    val playerPosition
-        get() = if (!isMediaPlayer) {
+    val playerPosition get() = if (isSongFromPrefs) {
             goPreferences.latestPlayedSong?.startFrom!!
         } else {
             mediaPlayer.currentPosition
         }
 
     // Media player state/booleans
-    val isPlaying get() = isMediaPlayer && mediaPlayer.isPlaying
+    val isPlaying get() = ::mediaPlayer.isInitialized && mediaPlayer.isPlaying
     val isMediaPlayer get() = ::mediaPlayer.isInitialized
 
     private var sNotificationForeground = false
@@ -164,7 +167,16 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     // Notifications
     private lateinit var mPlayerBroadcastReceiver: PlayerBroadcastReceiver
-    private val mMusicNotificationManager: MusicNotificationManager get() = playerService.musicNotificationManager
+    private lateinit var mMusicNotificationManager: MusicNotificationManager
+
+    fun setMusicService(playerService: PlayerService) {
+        mediaPlayer = MediaPlayer()
+        this.playerService = playerService
+        mAudioManager = playerService.getSystemService()
+        mMusicNotificationManager = playerService.musicNotificationManager
+        registerActionsReceiver()
+        playerService.configureMediaSession()
+    }
 
     private fun startForeground() {
         if (!sNotificationForeground) {
@@ -208,7 +220,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         sNotificationForeground = true
     }
 
-    fun registerActionsReceiver() {
+    private fun registerActionsReceiver() {
         mPlayerBroadcastReceiver = PlayerBroadcastReceiver()
         val intentFilter = IntentFilter().apply {
             addAction(BluetoothDevice.ACTION_ACL_CONNECTED)
@@ -231,9 +243,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     private fun createCustomEqualizer() {
         if (mEqualizer == null) {
             try {
-                mBassBoost = BassBoost(0, mediaPlayer.audioSessionId)
-                mVirtualizer = Virtualizer(0, mediaPlayer.audioSessionId)
-                mEqualizer = Equalizer(0, mediaPlayer.audioSessionId)
+                val sessionId = mediaPlayer.audioSessionId
+                mBassBoost = BassBoost(0, sessionId)
+                mVirtualizer = Virtualizer(0, sessionId)
+                mEqualizer = Equalizer(0, sessionId)
                 restoreCustomEqSettings()
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -368,11 +381,13 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
         if (!::mAudioFocusRequestCompat.isInitialized) {
             initializeAudioFocusRequestCompat()
         }
-        val requestFocus =
-            AudioManagerCompat.requestAudioFocus(mAudioManager, mAudioFocusRequestCompat)
-        mCurrentAudioFocusState = when (requestFocus) {
-            AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> AUDIO_FOCUSED
-            else -> AUDIO_NO_FOCUS_NO_DUCK
+        mAudioManager?.let { am ->
+            val requestFocus =
+                AudioManagerCompat.requestAudioFocus(am, mAudioFocusRequestCompat)
+            mCurrentAudioFocusState = when (requestFocus) {
+                AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> AUDIO_FOCUSED
+                else -> AUDIO_NO_FOCUS_NO_DUCK
+            }
         }
     }
 
@@ -391,8 +406,10 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     fun giveUpAudioFocus() {
         if (::mAudioFocusRequestCompat.isInitialized) {
-            AudioManagerCompat.abandonAudioFocusRequest(mAudioManager, mAudioFocusRequestCompat)
-            mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
+            mAudioManager?.let { am ->
+                AudioManagerCompat.abandonAudioFocusRequest(am, mAudioFocusRequestCompat)
+                mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
+            }
         }
     }
 
@@ -416,10 +433,12 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     private fun startOrChangePlaybackSpeed() {
-        if (sPlaybackSpeedPersisted && VersioningHelper.isMarshmallow()) {
-            mediaPlayer.playbackParams = mediaPlayer.playbackParams.setSpeed(currentPlaybackSpeed)
-        } else {
-            mediaPlayer.start()
+        mediaPlayer.run {
+            if (sPlaybackSpeedPersisted && VersioningHelper.isMarshmallow()) {
+                playbackParams = playbackParams.setSpeed(currentPlaybackSpeed)
+            } else {
+                start()
+            }
         }
     }
 
@@ -563,8 +582,7 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
 
     private fun updateProgressCallbackTask() {
         if (isPlaying) {
-            val currentPosition = mediaPlayer.currentPosition
-            mediaPlayerInterface.onPositionChanged(currentPosition)
+            mediaPlayerInterface.onPositionChanged(mediaPlayer.currentPosition)
         }
     }
 
@@ -589,22 +607,24 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     fun initMediaPlayer(song: Music?) {
 
         try {
+
             if (isMediaPlayer) {
                 mediaPlayer.reset()
             } else {
-                mediaPlayer = MediaPlayer().apply {
+                mediaPlayer = MediaPlayer()
+            }
 
-                    setOnPreparedListener(this@MediaPlayerHolder)
-                    setOnCompletionListener(this@MediaPlayerHolder)
-                    setOnErrorListener(this@MediaPlayerHolder)
-                    setWakeMode(playerService, PowerManager.PARTIAL_WAKE_LOCK)
-                    setAudioAttributes(
-                        AudioAttributes.Builder()
-                            .setUsage(AudioAttributes.USAGE_MEDIA)
-                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                            .build()
-                    )
-                }
+            mediaPlayer.run {
+                setOnPreparedListener(this@MediaPlayerHolder)
+                setOnCompletionListener(this@MediaPlayerHolder)
+                setOnErrorListener(this@MediaPlayerHolder)
+                setWakeMode(playerService, PowerManager.PARTIAL_WAKE_LOCK)
+                setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .build()
+                )
             }
 
             song?.id?.toContentUri()?.let { uri ->
@@ -721,15 +741,17 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
     }
 
     fun openEqualizer(activity: Activity) {
-        if (mEqualizer != null) {
-            releaseCustomEqualizer()
-            sHasOpenedAudioEffects = true
-            EqualizerUtils.openAudioEffectSession(
-                playerService.applicationContext,
-                mediaPlayer.audioSessionId
-            )
+        mediaPlayer.run {
+            if (mEqualizer != null) {
+                releaseCustomEqualizer()
+                sHasOpenedAudioEffects = true
+                EqualizerUtils.openAudioEffectSession(
+                    playerService.applicationContext,
+                    audioSessionId
+                )
+            }
+            EqualizerUtils.openEqualizer(activity, this)
         }
-        EqualizerUtils.openEqualizer(activity, mediaPlayer)
     }
 
     fun onOpenEqualizerCustom() {
@@ -898,9 +920,9 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 if (sPlayOnFocusGain) {
                     resumeMediaPlayer()
                     sPlayOnFocusGain = false
-                    }
                 }
             }
+        }
     }
 
     /* Sets the playback speed of the media player */
@@ -1054,6 +1076,22 @@ class MediaPlayerHolder(private val playerService: PlayerService) :
                 }
             }
         }
+    }
+    companion object {
+        // Singleton prevents multiple instances of database opening at the
+        // same time.
+        @Volatile
+        private var INSTANCE: MediaPlayerHolder? = null
 
+        fun getInstance(): MediaPlayerHolder {
+            // if the INSTANCE is not null, then return it,
+            // if it is, then create the database
+            return INSTANCE ?: synchronized(this) {
+                    val instance = MediaPlayerHolder()
+                    INSTANCE = instance
+                    // return instance
+                    instance
+                }
+        }
     }
 }

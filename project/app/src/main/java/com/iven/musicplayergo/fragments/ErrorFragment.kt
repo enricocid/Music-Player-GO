@@ -23,7 +23,7 @@ import com.iven.musicplayergo.ui.UIControlInterface
  * Use the [ErrorFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ErrorFragment : Fragment(R.layout.fragment_error) {
+class ErrorFragment : Fragment() {
 
     private var _errorFragmentBinding: FragmentErrorBinding? = null
 

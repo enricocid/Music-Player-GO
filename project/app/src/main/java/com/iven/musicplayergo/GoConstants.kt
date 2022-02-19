@@ -2,6 +2,7 @@ package com.iven.musicplayergo
 
 import android.support.v4.media.session.PlaybackStateCompat
 
+
 object GoConstants {
 
     const val PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 2588
@@ -75,4 +76,11 @@ object GoConstants {
     const val REWIND_ACTION = "REWIND_GO"
     const val REPEAT_ACTION = "REPEAT_GO"
     const val CLOSE_ACTION = "CLOSE_GO"
+
+    // Modal rv type
+    const val ACCENT_TYPE = "MODAL_ACCENT"
+    const val TABS_TYPE = "MODAL_TABS"
+    const val FILTERS_TYPE = "MODAL_FILTERS"
+    const val QUEUE_TYPE = "MODAL_QUEUE"
+    const val FAV_TYPE = "MODAL_FAVORITES"
 }

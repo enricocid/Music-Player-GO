@@ -1,6 +1,6 @@
-package com.iven.musicplayergo.adapters
+package com.iven.musicplayergo.dialogs
 
-import android.annotation.SuppressLint
+
 import android.app.Activity
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -9,10 +9,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.callbacks.onCancel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.extensions.*
+import com.iven.musicplayergo.extensions.enablePopupIcons
+import com.iven.musicplayergo.extensions.setTitle
+import com.iven.musicplayergo.extensions.toFormattedDuration
+import com.iven.musicplayergo.extensions.toName
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.models.Music
@@ -20,25 +22,17 @@ import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 
 
-class FavoritesAdapter(
-    private val activity: Activity,
-    private val FavoritesDialog: MaterialDialog
-) :
+class FavoritesAdapter(private val activity: Activity) :
     RecyclerView.Adapter<FavoritesAdapter.FavoritesHolder>() {
 
-    private var mFavorites = goPreferences.favorites?.toMutableList()
-    private val mUiControlInterface = activity as UIControlInterface
+    // interfaces
     private val mMediaControlInterface = activity as MediaControlInterface
+    private val mUiControlInterface = activity as UIControlInterface
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun swapSongs(favorites: MutableList<Music>?) {
-        mFavorites = favorites
-        notifyDataSetChanged()
-        mUiControlInterface.onFavoritesUpdated(clear = false)
-        if (mFavorites?.isNullOrEmpty()!!) {
-            FavoritesDialog.dismiss()
-        }
-    }
+    var onFavoritesCleared: (() -> Unit)? = null
+
+    // favorites
+    private var mFavorites = goPreferences.favorites?.toMutableList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = FavoritesHolder(
         LayoutInflater.from(parent.context).inflate(
@@ -67,9 +61,7 @@ class FavoritesAdapter(
             val displayedTitle = favorite?.toName()
 
             title.text = displayedTitle
-            duration.text =
-                DialogHelper.computeDurationText(activity, favorite)
-
+            duration.text = DialogHelper.computeDurationText(activity, favorite)
             subtitle.text =
                 activity.getString(R.string.artist_and_album, favorite?.artist, favorite?.album)
 
@@ -92,21 +84,21 @@ class FavoritesAdapter(
         adapterPosition: Int,
         itemView: View?
     ) {
-        mFavorites?.get(adapterPosition)?.let { song ->
+        mFavorites?.get(adapterPosition)?.run {
             itemView?.let { view ->
 
                 PopupMenu(activity, view).apply {
 
                     inflate(R.menu.popup_favorites_songs)
 
-                    menu.findItem(R.id.song_title).setTitle(activity, song.title)
+                    menu.findItem(R.id.song_title).setTitle(activity, title)
                     menu.enablePopupIcons(activity)
                     gravity = Gravity.END
 
                     setOnMenuItemClickListener { menuItem ->
                         when (menuItem.itemId) {
-                            R.id.favorite_delete -> performFavoriteDeletion(adapterPosition, isSwipe = false)
-                            else -> mMediaControlInterface.onAddToQueue(song)
+                            R.id.favorite_delete -> performFavoriteDeletion(adapterPosition)
+                            else -> mMediaControlInterface.onAddToQueue(this@run)
                         }
                         return@setOnMenuItemClickListener true
                     }
@@ -116,47 +108,33 @@ class FavoritesAdapter(
         }
     }
 
-    fun addFavoriteToQueue(adapterPosition: Int) {
-        mMediaControlInterface.onAddToQueue(mFavorites?.get(adapterPosition))
-    }
-
-    fun performFavoriteDeletion(position: Int, isSwipe: Boolean) {
+    fun performFavoriteDeletion(position: Int) {
         mFavorites?.get(position)?.let { song ->
 
-            val favorites = goPreferences.favorites?.toMutableList()
-
-            MaterialDialog(activity).show {
-
-                title(R.string.favorites)
-
-                message(
-                    text = activity.getString(
-                        R.string.favorite_remove,
-                        song.title,
-                        song.startFrom.toLong().toFormattedDuration(
-                            isAlbum = false,
-                            isSeekBar = false
-                        )
-                    )
-                )
-                positiveButton(R.string.yes) {
-                    favorites?.remove(song)
-                    goPreferences.favorites = favorites
-                    swapSongs(favorites)
-                    mMediaControlInterface.onFavoriteAddedOrRemoved()
-                }
-
-                negativeButton(R.string.no) {
-                    if (isSwipe) {
-                        notifyItemChanged(position)
+            MaterialAlertDialogBuilder(activity)
+                .setTitle(R.string.favorites)
+                .setMessage(activity.getString(
+                    R.string.favorite_remove,
+                    song.title,
+                    song.startFrom.toLong().toFormattedDuration(
+                        isAlbum = false,
+                        isSeekBar = false)))
+                .setPositiveButton(R.string.yes) { _, _ ->
+                    mFavorites?.run {
+                        // remove item
+                        remove(song)
+                        notifyItemRemoved(position)
+                        // update
+                        goPreferences.favorites = mFavorites
+                        if (mFavorites.isNullOrEmpty()) {
+                            onFavoritesCleared?.invoke()
+                        }
+                        mUiControlInterface.onFavoritesUpdated(clear = false)
+                        mMediaControlInterface.onFavoriteAddedOrRemoved()
                     }
                 }
-                onCancel {
-                    if (isSwipe) {
-                        notifyItemChanged(position)
-                    }
-                }
-            }
+                .setNegativeButton(R.string.no, null)
+                .show()
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.fragments
+package com.iven.musicplayergo.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -8,31 +8,17 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.afollestad.materialdialogs.LayoutMode
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.bottomsheets.BottomSheet
-import com.afollestad.materialdialogs.callbacks.onDismiss
-import com.afollestad.materialdialogs.list.customListAdapter
-import com.afollestad.materialdialogs.list.getRecyclerView
+import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.adapters.AccentsAdapter
-import com.iven.musicplayergo.adapters.ActiveTabsAdapter
-import com.iven.musicplayergo.adapters.FiltersAdapter
+import com.iven.musicplayergo.dialogs.RecyclerSheet
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
-import com.iven.musicplayergo.ui.ItemTouchCallback
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 
 
 class PreferencesFragment : PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener {
-
-    private lateinit var mAccentsDialog: MaterialDialog
-    private lateinit var mActiveFragmentsDialog: MaterialDialog
-    private lateinit var mFiltersDialog: MaterialDialog
 
     private var mThemePreference: Preference? = null
 
@@ -45,21 +31,12 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     override fun onResume() {
         super.onResume()
-        preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        preferenceScreen.sharedPreferences?.registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onPause() {
         super.onPause()
-        preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
-        if (::mAccentsDialog.isInitialized && mAccentsDialog.isShowing) {
-            mAccentsDialog.dismiss()
-        }
-        if (::mActiveFragmentsDialog.isInitialized && mActiveFragmentsDialog.isShowing) {
-            mActiveFragmentsDialog.dismiss()
-        }
-        if (::mFiltersDialog.isInitialized && mFiltersDialog.isShowing) {
-            mFiltersDialog.dismiss()
-        }
+        preferenceScreen.sharedPreferences?.unregisterOnSharedPreferenceChangeListener(this)
     }
 
     override fun onAttach(context: Context) {
@@ -103,13 +80,16 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         setPreferencesFromResource(R.xml.preferences, rootKey)
     }
 
-    override fun onPreferenceClick(preference: Preference?): Boolean {
-        when (preference?.key) {
-            getString(R.string.accent_pref) -> showAccentsDialog()
+    override fun onPreferenceClick(preference: Preference): Boolean {
+        when (preference.key) {
+            getString(R.string.accent_pref) -> RecyclerSheet.newInstance(GoConstants.ACCENT_TYPE)
+                .show(requireActivity().supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
             getString(R.string.filter_pref) -> if (!goPreferences.filters.isNullOrEmpty()) {
-                showFiltersDialog()
+                RecyclerSheet.newInstance(GoConstants.FILTERS_TYPE)
+                    .show(requireActivity().supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
             }
-            getString(R.string.active_tabs_pref) -> showActiveFragmentsDialog()
+            getString(R.string.active_tabs_pref) -> RecyclerSheet.newInstance(GoConstants.TABS_TYPE)
+                .show(requireActivity().supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
         }
         return false
     }
@@ -122,10 +102,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 mThemePreference?.icon = ContextCompat.getDrawable(requireActivity(), ThemeHelper.resolveThemeIcon(requireActivity()))
                 mUIControlInterface.onAppearanceChanged(isThemeChanged = true)
             }
-            getString(R.string.accent_pref) -> {
-                mAccentsDialog.dismiss()
-                mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
-            }
             getString(R.string.focus_pref) -> mMediaControlInterface.onHandleFocusPref()
             getString(R.string.covers_pref) -> {
                 mMediaControlInterface.onHandleCoverOptionsUpdate()
@@ -135,70 +111,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 true
             )
             getString(R.string.song_visual_pref) -> mMediaControlInterface.onUpdatePlayingAlbumSongs(null)
-            getString(R.string.filter_pref) -> mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
-        }
-    }
-
-    private fun showAccentsDialog() {
-
-        mAccentsDialog = MaterialDialog(requireActivity(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
-
-            title(R.string.accent_pref_title)
-
-            val accentsAdapter = AccentsAdapter(requireActivity())
-            customListAdapter(accentsAdapter)
-
-            val rv = getRecyclerView()
-            rv.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-            val layoutManager = rv.layoutManager as LinearLayoutManager
-            rv.post { layoutManager.scrollToPositionWithOffset(ThemeHelper.getAccentedTheme().second, 0) }
-
-            positiveButton(android.R.string.ok) {
-                dismiss()
-                onDismiss {
-                    goPreferences.accent = accentsAdapter.selectedAccent
-                }
-            }
-            negativeButton(android.R.string.cancel)
-        }
-    }
-
-    private fun showActiveFragmentsDialog() {
-
-        mActiveFragmentsDialog = MaterialDialog(requireActivity(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
-
-            title(R.string.active_fragments_pref_title)
-
-            val activeTabsAdapter = ActiveTabsAdapter(requireActivity())
-
-            customListAdapter(activeTabsAdapter)
-
-            val touchHelper = ItemTouchHelper(ItemTouchCallback(activeTabsAdapter.availableItems, isActiveTabs = true))
-            touchHelper.attachToRecyclerView(getRecyclerView())
-
-            positiveButton(android.R.string.ok) {
-                goPreferences.activeTabs = activeTabsAdapter.getUpdatedItems().toMutableList()
-                mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
-            }
-            negativeButton(android.R.string.cancel)
-        }
-    }
-
-    private fun showFiltersDialog() {
-
-        MaterialDialog(requireActivity(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
-
-            title(R.string.filter_pref_title)
-
-            val filtersAdapter = FiltersAdapter(requireActivity())
-            customListAdapter(filtersAdapter)
-
-            positiveButton(android.R.string.ok) {
-                if (goPreferences.filters != filtersAdapter.getUpdatedItems()) {
-                    goPreferences.filters = filtersAdapter.getUpdatedItems()
-                }
-            }
-            negativeButton(android.R.string.cancel)
         }
     }
 

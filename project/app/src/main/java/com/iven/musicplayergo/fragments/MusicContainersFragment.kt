@@ -4,41 +4,38 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.afollestad.recyclical.datasource.emptyDataSource
-import com.afollestad.recyclical.setup
-import com.afollestad.recyclical.withItem
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.databinding.FragmentMusicContainerListBinding
+import com.iven.musicplayergo.databinding.FragmentMusicContainersBinding
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
-import com.iven.musicplayergo.ui.ContainersAlbumViewHolder
-import com.iven.musicplayergo.ui.GenericViewHolder
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerView
-import kotlinx.coroutines.*
 
 /**
  * A simple [Fragment] subclass.
- * Use the [MusicContainersListFragment.newInstance] factory method to
+ * Use the [MusicContainersFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_list),
+class MusicContainersFragment : Fragment(),
     SearchView.OnQueryTextListener {
 
-    private var _musicContainerListBinding: FragmentMusicContainerListBinding? = null
+    private var _musicContainerListBinding: FragmentMusicContainersBinding? = null
 
     // View model
     private lateinit var mMusicViewModel: MusicViewModel
@@ -47,16 +44,15 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
     private var mList: MutableList<String>? = null
 
-    private val mDataSource = emptyDataSource()
+    private lateinit var mListAdapter: MusicContainersAdapter
 
-    private lateinit var mUIControlInterface: UIControlInterface
+    private lateinit var mUiControlInterface: UIControlInterface
 
     private lateinit var mSortMenuItem: MenuItem
     private var mSorting = GoConstants.DESCENDING_SORTING
 
-    private val sLaunchedByAlbumView get() = mLaunchedBy == GoConstants.ALBUM_VIEW
-
     private var sIsFastScroller = false
+    private val sLaunchedByAlbumView get() = mLaunchedBy == GoConstants.ALBUM_VIEW
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -68,7 +64,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            mUIControlInterface = activity as UIControlInterface
+            mUiControlInterface = activity as UIControlInterface
         } catch (e: ClassCastException) {
             e.printStackTrace()
         }
@@ -80,7 +76,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _musicContainerListBinding = FragmentMusicContainerListBinding.inflate(inflater, container, false)
+        _musicContainerListBinding = FragmentMusicContainersBinding.inflate(inflater, container, false)
         return _musicContainerListBinding?.root
     }
 
@@ -89,68 +85,22 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
         mMusicViewModel =
             ViewModelProvider(requireActivity()).get(MusicViewModel::class.java).apply {
-                deviceMusic.observe(viewLifecycleOwner, { returnedMusic ->
+                deviceMusic.observe(viewLifecycleOwner) { returnedMusic ->
                     if (!returnedMusic.isNullOrEmpty()) {
                         mSorting = getSortingMethodFromPrefs()
                         mList = getSortedItemKeys()
-                        setListDataSource(mList)
                         finishSetup()
                     }
-                })
+                }
             }
     }
 
     private fun finishSetup() {
-        _musicContainerListBinding?.artistsFoldersRv?.let { rv ->
 
-            // setup{} is an extension method on RecyclerView
-            rv.setup {
-
-                // item is a `val` in `this` here
-                withDataSource(mDataSource)
-
-                if (sLaunchedByAlbumView) {
-                    withItem<String, ContainersAlbumViewHolder>(R.layout.containers_album_item) {
-                        onBind(::ContainersAlbumViewHolder) { _, album ->
-                            // ContainersAlbumViewHolder is `this` here
-                            if (goPreferences.isCovers) {
-                                albumCover.load(mMusicViewModel.deviceMusicByAlbum?.get(album)?.first()?.albumId?.toAlbumArtURI()) {
-                                    error(ContextCompat.getDrawable(requireActivity(), R.drawable.album_art))
-                                }
-                            } else {
-                                albumCover.load(ContextCompat.getDrawable(requireActivity(), R.drawable.album_art))
-                            }
-
-                            title.text = album
-                            subtitle.text = getItemsSubtitle(album)
-                        }
-
-                        onClick {
-                            respondToTouch(isLongClick = false, item, null)
-                        }
-
-                        onLongClick { index ->
-                            respondToTouch(isLongClick = true, item, rv.findViewHolderForAdapterPosition(index)?.itemView)
-                        }
-                    }
-                } else {
-                    withItem<String, GenericViewHolder>(R.layout.generic_item) {
-                        onBind(::GenericViewHolder) { _, artistOrFolder ->
-                            // GenericViewHolder is `this` here
-                            title.text = artistOrFolder
-                            subtitle.text = getItemsSubtitle(artistOrFolder)
-                        }
-
-                        onClick {
-                            respondToTouch(isLongClick = false, item, null)
-                        }
-
-                        onLongClick { index ->
-                            respondToTouch(isLongClick = true, item, rv.findViewHolderForAdapterPosition(index)?.itemView)
-                        }
-                    }
-                }
-            }
+        _musicContainerListBinding?.artistsFoldersRv?.run {
+            itemAnimator = null
+            mListAdapter = MusicContainersAdapter()
+            adapter = mListAdapter
         }
 
         setupIndicatorFastScrollerView()
@@ -164,7 +114,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
             stb.title = getFragmentTitle()
 
             stb.setNavigationOnClickListener {
-                mUIControlInterface.onCloseActivity()
+                mUiControlInterface.onCloseActivity()
             }
 
             with (stb.menu) {
@@ -174,7 +124,7 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                 }
 
                 with(findItem(R.id.action_search).actionView as SearchView) {
-                    setOnQueryTextListener(this@MusicContainersListFragment)
+                    setOnQueryTextListener(this@MusicContainersFragment)
                     setOnQueryTextFocusChangeListener { _, hasFocus ->
                         _musicContainerListBinding?.fastscroller?.handleViewVisibility(show = !hasFocus)
                         _musicContainerListBinding?.fastscrollerThumb?.handleViewVisibility(
@@ -187,40 +137,6 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
                 }
                 setMenuOnItemClickListener(this)
             }
-        }
-    }
-
-    private fun respondToTouch(isLongClick: Boolean, item: String, itemView: View?) {
-        if (isLongClick) {
-            if (::mUIControlInterface.isInitialized) {
-                DialogHelper.showPopupForHide(
-                    requireActivity(),
-                    itemView,
-                    item
-                )
-            }
-        } else {
-            if (::mUIControlInterface.isInitialized) {
-                mUIControlInterface.onArtistOrFolderSelected(
-                    item,
-                    mLaunchedBy
-                )
-            }
-        }
-    }
-
-    private fun getItemsSubtitle(item: String): String? {
-        return when (mLaunchedBy) {
-            GoConstants.ARTIST_VIEW ->
-                getArtistSubtitle(item)
-            GoConstants.FOLDER_VIEW ->
-                getString(
-                    R.string.folder_info,
-                    mMusicViewModel.deviceMusicByFolder?.getValue(item)?.size
-                )
-            else ->
-                mMusicViewModel.deviceMusicByAlbum?.get(item)?.first()?.artist
-
         }
     }
 
@@ -270,7 +186,8 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
 
     private fun setListDataSource(selectedList: List<String>?) {
         if (!selectedList.isNullOrEmpty()) {
-            mDataSource.set(selectedList)
+            mListAdapter.swapList(selectedList)
+            //mDataSource.set(selectedList)
         }
     }
 
@@ -282,8 +199,11 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     fun onListFiltered(stringToFilter: String) = if (mList == null) {
         false
     } else {
-        mList?.remove(stringToFilter)
-        setListDataSource(mList)
+        mList?.run {
+            val index = indexOf(stringToFilter)
+            remove(stringToFilter)
+            _musicContainerListBinding?.artistsFoldersRv?.adapter?.notifyItemRemoved(index)
+        }
         true
     }
 
@@ -293,12 +213,6 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
     }
 
     override fun onQueryTextSubmit(query: String?) = false
-
-    private fun getArtistSubtitle(item: String) = getString(
-        R.string.artist_info,
-        mMusicViewModel.deviceAlbumsByArtist?.getValue(item)?.size,
-        mMusicViewModel.deviceSongsByArtist?.getValue(item)?.size
-    )
 
     private fun setupIndicatorFastScrollerView() {
 
@@ -401,8 +315,106 @@ class MusicContainersListFragment : Fragment(R.layout.fragment_music_container_l
          * @return A new instance of fragment MusicContainersListFragment.
          */
         @JvmStatic
-        fun newInstance(launchedBy: String) = MusicContainersListFragment().apply {
+        fun newInstance(launchedBy: String) = MusicContainersFragment().apply {
             arguments = bundleOf(TAG_LAUNCHED_BY to launchedBy)
+        }
+    }
+
+    private inner class MusicContainersAdapter : RecyclerView.Adapter<MusicContainersAdapter.ArtistHolder>() {
+
+        @SuppressLint("NotifyDataSetChanged")
+        fun swapList(newItems: List<String>?) {
+            mList = newItems?.toMutableList()
+            notifyDataSetChanged()
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ArtistHolder(
+            LayoutInflater.from(parent.context).inflate(
+                if (sLaunchedByAlbumView) {
+                    R.layout.containers_album_item
+                } else {
+                    R.layout.generic_item
+                },
+                parent,
+                false
+            )
+        )
+
+        override fun getItemCount(): Int {
+            return mList?.size!!
+        }
+
+        override fun onBindViewHolder(holder: ArtistHolder, position: Int) {
+            holder.bindItems(mList?.get(holder.absoluteAdapterPosition)!!)
+        }
+
+        inner class ArtistHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+            fun bindItems(item: String) {
+
+                itemView.run {
+
+                    val title = itemView.findViewById<TextView>(R.id.title)
+                    val subtitle = itemView.findViewById<TextView>(R.id.subtitle)
+
+                    if (sLaunchedByAlbumView) {
+                        val albumCover = itemView.findViewById<ImageView>(R.id.album_cover)
+                        if (goPreferences.isCovers) {
+                            albumCover.load(mMusicViewModel.deviceMusicByAlbum?.get(item)?.first()?.albumId?.toAlbumArtURI()) {
+                                error(ContextCompat.getDrawable(requireActivity(), R.drawable.album_art))
+                            }
+                        } else {
+                            albumCover.load(ContextCompat.getDrawable(requireActivity(), R.drawable.album_art))
+                        }
+                    }
+
+                    title.text = item
+                    subtitle.text = getItemsSubtitle(item)
+
+                    setOnClickListener {
+                        respondToTouch(isLongClick = false, item, null)
+                    }
+                    setOnLongClickListener {
+                        val vh = _musicContainerListBinding?.artistsFoldersRv?.findViewHolderForAdapterPosition(absoluteAdapterPosition)?.itemView
+                        respondToTouch(isLongClick = true, item, vh)
+                        return@setOnLongClickListener true
+                    }
+                }
+            }
+        }
+
+        private fun getItemsSubtitle(item: String): String? {
+            return when (mLaunchedBy) {
+                GoConstants.ARTIST_VIEW ->
+                    getArtistSubtitle(item)
+                GoConstants.FOLDER_VIEW ->
+                    getString(
+                        R.string.folder_info,
+                        mMusicViewModel.deviceMusicByFolder?.getValue(item)?.size
+                    )
+                else -> mMusicViewModel.deviceMusicByAlbum?.get(item)?.first()?.artist
+            }
+        }
+
+        private fun getArtistSubtitle(item: String) = getString(
+            R.string.artist_info,
+            mMusicViewModel.deviceAlbumsByArtist?.getValue(item)?.size,
+            mMusicViewModel.deviceSongsByArtist?.getValue(item)?.size
+        )
+
+        private fun respondToTouch(isLongClick: Boolean, item: String, itemView: View?) {
+            if (isLongClick) {
+                DialogHelper.showPopupForHide(
+                    requireActivity(),
+                    itemView,
+                    item
+                )
+            } else {
+                mUiControlInterface.onArtistOrFolderSelected(
+                    item,
+                    mLaunchedBy
+                )
+            }
         }
     }
 }

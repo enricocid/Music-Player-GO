@@ -12,15 +12,12 @@ import com.iven.musicplayergo.goPreferences
 private const val HEADSET_DISCONNECTED = 0
 private const val HEADSET_CONNECTED = 1
 
-class NotificationReceiver(
-    private val playerService: PlayerService,
-    private val mediaPlayerHolder: MediaPlayerHolder
-) : BroadcastReceiver() {
+class NotificationReceiver: BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         try {
             intent?.action?.let { act ->
-                with(mediaPlayerHolder) {
+                with(MediaPlayerHolder.getInstance()) {
                     when (act) {
                         GoConstants.PREV_ACTION -> instantReset()
                         GoConstants.PLAY_PAUSE_ACTION -> resumeOrPause()

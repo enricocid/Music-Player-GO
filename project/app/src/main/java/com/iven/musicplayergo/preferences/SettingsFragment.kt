@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.fragments
+package com.iven.musicplayergo.preferences
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -21,7 +21,7 @@ import com.iven.musicplayergo.ui.UIControlInterface
  * Use the [SettingsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SettingsFragment : Fragment(R.layout.fragment_settings) {
+class SettingsFragment : Fragment() {
 
     private var _fragmentSettingsBinding: FragmentSettingsBinding? = null
 

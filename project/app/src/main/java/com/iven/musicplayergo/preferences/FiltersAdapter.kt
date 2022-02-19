@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.adapters
+package com.iven.musicplayergo.preferences
 
 import android.app.Activity
 import android.view.LayoutInflater
@@ -21,7 +21,7 @@ class FiltersAdapter(val activity: Activity) :
 
     private val mDisabledColor = ThemeHelper.resolveColorAttr(
         activity,
-        android.R.attr.colorButtonNormal
+        android.R.attr.textColorTertiary
     )
 
     private val mDefaultTextColor = ThemeHelper.resolveColorAttr(activity, android.R.attr.textColorPrimary)

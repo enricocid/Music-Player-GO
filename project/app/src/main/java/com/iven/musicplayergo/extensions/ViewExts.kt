@@ -77,9 +77,7 @@ fun MenuItem.setTitleColor(color: Int) {
 
 // Extension to set span to menu title
 fun MenuItem.setTitle(activity: Activity, title: String?) {
-
     val accent = ThemeHelper.resolveThemeAccent(activity)
-
     val spanString = SpannableString(if (title?.length!! > 20) {
         activity.getString(R.string.popup_menu_title, title.substring(0,20))
     } else {

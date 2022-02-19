@@ -19,12 +19,11 @@ object MusicOrgHelper {
     @JvmStatic
     fun getPlayingAlbumPosition(
         selectedArtist: String?,
-        mediaPlayerHolder: MediaPlayerHolder,
         deviceAlbumsByArtist: MutableMap<String, List<Album>>?
     ) = try {
         val album = getAlbumFromList(
             selectedArtist,
-            mediaPlayerHolder.currentSong?.album,
+            MediaPlayerHolder.getInstance().currentSong?.album,
             deviceAlbumsByArtist
         )
         album.second
@@ -90,7 +89,7 @@ object MusicOrgHelper {
                             album,
                             albumSongs.first().year.toFormattedYear(resources),
                             albumSongs,
-                            albumSongs.map { song -> song.duration }.sum()
+                            albumSongs.sumOf { song -> song.duration }
                         )
                     )
                 }
@@ -105,8 +104,9 @@ object MusicOrgHelper {
     }
 
     @JvmStatic
-    fun updateMediaPlayerHolderLists(mediaPlayerHolder: MediaPlayerHolder, uiControlInterface: UIControlInterface, randomMusic: Music?): Music? {
+    fun updateMediaPlayerHolderLists(uiControlInterface: UIControlInterface, randomMusic: Music?): Music? {
 
+        val mediaPlayerHolder = MediaPlayerHolder.getInstance()
         val currentSong = mediaPlayerHolder.currentSong
 
         fun selectNewSong(filter: Set<String>): Music? {

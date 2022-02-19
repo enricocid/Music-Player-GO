@@ -3,16 +3,41 @@
     <style name="BaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <item name="indicatorFastScrollerStyle">@style/FastScrollerColorFull</item>
-        <item name="md_background_color">@color/dialogsBackground</item>
-        <item name="md_corner_radius">@dimen/md_corner_radius</item>
-        <item name="md_color_button_text">@color/widgetsColor</item>
-        <item name="preferenceTheme">@style/PrefTheme</item>
         <item name="alertDialogTheme">@style/DialogsStyle</item>
         <item name="android:windowBackground">@color/windowBackground</item>
         <item name="android:statusBarColor">@color/systemBarsColor</item>
         <item name="android:navigationBarColor">@color/systemBarsColor</item>
         <item name="popupMenuStyle">@style/PopupMenu</item>
         <item name="android:spinnerStyle">@style/SpinnerMenu</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Demo.BottomSheetDialog</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+    </style>
+
+    <!-- Bottom sheets theming -->
+    <!-- https://bryanherbst.com/2020/05/04/bottom-sheet-corners/ -->
+    <style name="ThemeOverlay.Demo.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.Demo.BottomSheet</item>
+        <item name="colorOnSurface">@color/dialogsBackground</item>
+    </style>
+
+    <style name="Widget.Demo.BottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.Demo</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.Demo" parent="">
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
+    <!-- Dialogs title theming -->
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
+        <item name="android:background">@color/dialogsBackground</item>
+    </style>
+
+    <style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6</item>
     </style>
 
     <style name="SpinnerMenu" parent="Widget.AppCompat.Spinner">
@@ -24,13 +49,8 @@
         <item name="android:popupElevation">2dp</item>
     </style>
 
-    <style name="PrefTheme" parent="PreferenceThemeOverlay">
-        <item name="android:scrollbars">none</item>
-    </style>
-
     <style name="DialogsStyle" parent="Theme.MaterialComponents.DayNight.Dialog">
         <item name="colorBackgroundFloating">@color/dialogsBackground</item>
-        <item name="dialogCornerRadius">@dimen/md_corner_radius</item>
         <item name="colorPrimary">@color/widgetsColor</item>
         <item name="colorSecondary">@color/widgetsColor</item>
     </style>
@@ -80,4 +100,8 @@
         <item name="cornerSize">8dp</item>
     </style>
 
+    <!-- Style for CheckBox -->
+    <style name="Widget.App.CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/checkbox_tint</item>
+    </style>
 </resources>

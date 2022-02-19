@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
@@ -21,14 +22,10 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.afollestad.recyclical.datasource.dataSourceTypedOf
-import com.afollestad.recyclical.setup
-import com.afollestad.recyclical.withItem
 import com.google.android.material.card.MaterialCardView
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.ui.ItemSwipeCallback
 import com.iven.musicplayergo.databinding.FragmentDetailsBinding
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.goPreferences
@@ -37,11 +34,10 @@ import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.ui.ItemSwipeCallback
 import com.iven.musicplayergo.ui.MediaControlInterface
-import com.iven.musicplayergo.ui.DetailsAlbumsViewHolder
-import com.iven.musicplayergo.ui.GenericViewHolder
 import com.iven.musicplayergo.ui.UIControlInterface
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Runnable
 
 
 /**
@@ -50,45 +46,38 @@ import kotlinx.coroutines.*
  * create an instance of this fragment.
  */
 
-class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryTextListener {
+class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private var _detailsFragmentBinding: FragmentDetailsBinding? = null
 
-    // View model
     private lateinit var mMusicViewModel: MusicViewModel
+    private lateinit var mUIControlInterface: UIControlInterface
+    private lateinit var mMediaControlInterface: MediaControlInterface
+
+    private var mLaunchedBy = GoConstants.ARTIST_VIEW
+    private val sLaunchedByArtistView get() = mLaunchedBy == GoConstants.ARTIST_VIEW
+    private val sLaunchedByFolderView get() = mLaunchedBy == GoConstants.FOLDER_VIEW
+    private val sLaunchedByAlbumView get() = mLaunchedBy == GoConstants.ALBUM_VIEW
 
     private lateinit var mArtistDetailsAnimator: Animator
     private lateinit var mAlbumsRecyclerViewLayoutManager: LinearLayoutManager
 
-    private val mSelectedAlbumsDataSource = dataSourceTypedOf<Album>()
-    private val mSongsDataSource = dataSourceTypedOf<Music>()
-
-    private var mLaunchedBy = GoConstants.ARTIST_VIEW
-
+    private var mSelectedArtistOrFolder: String? = null
     private var mSelectedArtistAlbums: List<Album>? = null
     private var mSongsList: List<Music>? = null
 
-    private var mSelectedArtistOrFolder: String? = null
     private var mSelectedAlbum: Album? = null
     private var mSelectedAlbumPosition = RecyclerView.NO_POSITION
     private var mSelectedSongId: Long? = null
     private var mSelectedSongPosition = RecyclerView.NO_POSITION
 
-    private lateinit var mUIControlInterface: UIControlInterface
-    private lateinit var mMediaControlInterface: MediaControlInterface
-
     private var mSongsSorting = getDefSortingModeForArtistView()
-
-    private val sLaunchedByArtistView get() = mLaunchedBy == GoConstants.ARTIST_VIEW
-    private val sLaunchedByFolderView get() = mLaunchedBy == GoConstants.FOLDER_VIEW
-    private val sLaunchedByAlbumView get() = mLaunchedBy == GoConstants.ALBUM_VIEW
 
     private val sShowDisplayName get() = goPreferences.songsVisualization == GoConstants.FN
 
     private var sPlayFirstSong = true
     private var sCanUpdateSongs = true
     private var sAlbumSwapped = false
-
     private var sOpenNewDetailsFragment = false
 
     @SuppressLint("NotifyDataSetChanged")
@@ -100,26 +89,18 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        arguments?.getString(TAG_ARTIST_FOLDER)?.let { selectedArtistOrFolder ->
-            mSelectedArtistOrFolder = selectedArtistOrFolder
-        }
-
-        arguments?.getString(TAG_IS_FOLDER)?.let { launchedBy ->
-            mLaunchedBy = launchedBy
-        }
-
-        if (sLaunchedByArtistView) {
-            arguments?.getInt(TAG_SELECTED_ALBUM_POSITION)?.let { selectedAlbumPosition ->
-                mSelectedAlbumPosition = selectedAlbumPosition
+        arguments?.run {
+            getString(TAG_ARTIST_FOLDER)?.let { selectedArtistOrFolder ->
+                mSelectedArtistOrFolder = selectedArtistOrFolder
             }
-        }
-
-        arguments?.getLong(TAG_HIGHLIGHTED_SONG_ID)?.let { selectedSongId ->
-            mSelectedSongId = selectedSongId
-        }
-
-        arguments?.getBoolean(TAG_CAN_UPDATE_SONGS)?.let { canUpdateSongs ->
-            sCanUpdateSongs = canUpdateSongs
+            getString(TAG_IS_FOLDER)?.let { launchedBy ->
+                mLaunchedBy = launchedBy
+            }
+            if (sLaunchedByArtistView) {
+                mSelectedAlbumPosition = getInt(TAG_SELECTED_ALBUM_POSITION)
+            }
+            mSelectedSongId = getLong(TAG_HIGHLIGHTED_SONG_ID)
+            sCanUpdateSongs = getBoolean(TAG_CAN_UPDATE_SONGS)
         }
 
         // This makes sure that the container activity has implemented
@@ -147,16 +128,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     private fun getSongSource(): List<Music>? {
         return when (mLaunchedBy) {
             GoConstants.ARTIST_VIEW -> {
-                mMusicViewModel.deviceAlbumsByArtist?.get(mSelectedArtistOrFolder)
-                    ?.let { selectedArtistAlbums ->
-                        mSelectedArtistAlbums = selectedArtistAlbums
-                    }
+                mSelectedArtistAlbums = mMusicViewModel.deviceAlbumsByArtist?.get(mSelectedArtistOrFolder)
                 mMusicViewModel.deviceSongsByArtist?.get(mSelectedArtistOrFolder)
             }
-
             GoConstants.FOLDER_VIEW ->
                 mMusicViewModel.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
-
             else ->
                 mMusicViewModel.deviceMusicByAlbum?.get(mSelectedArtistOrFolder)
         }
@@ -177,13 +153,16 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
         mMusicViewModel =
             ViewModelProvider(requireActivity()).get(MusicViewModel::class.java).apply {
-                deviceMusic.observe(viewLifecycleOwner, { returnedMusic ->
+                deviceMusic.observe(viewLifecycleOwner) { returnedMusic ->
                     if (!returnedMusic.isNullOrEmpty()) {
+
                         mSongsList = getSongSource()
 
                         if (sLaunchedByArtistView) {
                             mSelectedAlbum = when {
-                                mSelectedAlbumPosition != RecyclerView.NO_POSITION -> mSelectedArtistAlbums?.get(mSelectedAlbumPosition)
+                                mSelectedAlbumPosition != RecyclerView.NO_POSITION -> mSelectedArtistAlbums?.get(
+                                    mSelectedAlbumPosition
+                                )
                                 else -> {
                                     mSelectedAlbumPosition = 0
                                     mSelectedArtistAlbums?.first()
@@ -194,7 +173,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         setupToolbar()
                         setupViews(view)
                     }
-                })
+                }
             }
     }
 
@@ -213,11 +192,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             if (sLaunchedByArtistView || sLaunchedByFolderView) {
                 title = mSelectedArtistOrFolder
                 // Make toolbar's title scrollable
-                getTitleTextView()?.let { tV ->
-                    tV.isSelected = true
-                    tV.setHorizontallyScrolling(true)
-                    tV.ellipsize = TextUtils.TruncateAt.MARQUEE
-                    tV.marqueeRepeatLimit = -1
+                getTitleTextView()?.run {
+                    isSelected = true
+                    setHorizontallyScrolling(true)
+                    ellipsize = TextUtils.TruncateAt.MARQUEE
+                    marqueeRepeatLimit = -1
                 }
             }
 
@@ -266,14 +245,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     } else {
                         ListsHelper.getSongsSorting(mSongsSorting)
                     }
-                    setSongsDataSource(mSelectedAlbum?.music, updateSongs = !sAlbumSwapped && sCanUpdateSongs)
+                    setSongsDataSource(mSelectedAlbum?.music, updateSongs = !sAlbumSwapped && sCanUpdateSongs, updateAdapter = true)
                 }
             }
 
             _detailsFragmentBinding?.queueAddButton?.setOnClickListener {
                 mMediaControlInterface.onAddAlbumToQueue(
-                    mSongsDataSource.toList(),
-                    forcePlay = Pair(first = false, second = null)
+                    mSongsList, forcePlay = Pair(first = false, second = null)
                 )
             }
 
@@ -339,94 +317,19 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
             } else {
                 mSongsList
             },
-            updateSongs = false
+            updateSongs = false,
+            updateAdapter = false
         )
 
-        _detailsFragmentBinding?.songsRv?.let { rv ->
+        _detailsFragmentBinding?.songsRv?.run {
 
-            val defaultTextColor = ThemeHelper.resolveColorAttr(requireActivity(), android.R.attr.textColorPrimary)
-            val accentTextColor = ThemeHelper.resolveThemeAccent(requireActivity())
-
-            // setup{} is an extension method on RecyclerView
-            rv.setup {
-                // item is a `val` in `this` here
-                withDataSource(mSongsDataSource)
-
-                withItem<Music, GenericViewHolder>(R.layout.generic_item) {
-                    onBind(::GenericViewHolder) { _, song ->
-
-                        val displayedTitle =
-                            if (sShowDisplayName || sLaunchedByFolderView) {
-                                song.displayName?.toFilenameWithoutExtension()
-                            } else {
-                                getString(
-                                    R.string.track_song,
-                                    song.track.toFormattedTrack(),
-                                    song.title
-                                ).parseAsHtml()
-                            }
-
-                        // GenericViewHolder is `this` here
-                        title.text = displayedTitle
-
-                        val titleColor = if (mSelectedSongId == song.id) {
-                            mSelectedSongPosition = absoluteAdapterPosition
-                            accentTextColor
-                        } else {
-                            defaultTextColor
-                        }
-                        title.setTextColor(titleColor)
-
-                        val duration = song.duration.toFormattedDuration(
-                            isAlbum = false,
-                            isSeekBar = false
-                        )
-
-                        subtitle.text = if (sLaunchedByFolderView) {
-                            getString(R.string.duration_artist_date_added, duration, song.artist, song.dateAdded.toFormattedDate())
-                        } else {
-                            duration
-                        }
-                    }
-
-                    onClick { index ->
-                        mMediaControlInterface.onSongSelected(
-                            item,
-                            mSongsDataSource.toList(),
-                            mLaunchedBy
-                        )
-
-                        if (mSelectedSongId != item.id) {
-                            rv.adapter?.notifyItemChanged(mSelectedSongPosition)
-                            mSelectedSongId = item.id
-                            rv.adapter?.notifyItemChanged(index)
-                        }
-                        if (!sCanUpdateSongs) {
-                            sCanUpdateSongs = true
-                        }
-                        if (sAlbumSwapped) {
-                            sAlbumSwapped = false
-                        }
-                    }
-
-                    onLongClick { index ->
-                        DialogHelper.showPopupForSongs(
-                            requireActivity(),
-                            rv.findViewHolderForAdapterPosition(index)?.itemView,
-                            item,
-                            mLaunchedBy
-                        )
-                    }
-                }
-            }
+            adapter = SongsAdapter()
 
             ItemTouchHelper(ItemSwipeCallback(requireActivity(), isQueueDialog = false, isFavoritesDialog = false) { viewHolder: RecyclerView.ViewHolder,
                                                                           direction: Int ->
-                val song = mSongsDataSource[viewHolder.absoluteAdapterPosition]
+                val song = mSongsList?.get(viewHolder.absoluteAdapterPosition)
                 if (direction == ItemTouchHelper.RIGHT) {
-                    mMediaControlInterface.onAddToQueue(
-                        song
-                    )
+                    mMediaControlInterface.onAddToQueue(song)
                 } else {
                     ListsHelper.addToFavorites(
                         requireActivity(),
@@ -437,8 +340,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                     )
                     mMediaControlInterface.onFavoriteAddedOrRemoved()
                 }
-                rv.adapter?.notifyDataSetChanged()
-            }).attachToRecyclerView(rv)
+                adapter?.notifyDataSetChanged()
+            }).attachToRecyclerView(this)
         }
 
         view.afterMeasured {
@@ -457,31 +360,30 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
     }
 
     fun highlightSong(songId: Long?) {
+
         if(songId == null) {
             return
         }
 
-        val selectedPos = mSongsDataSource.indexOfFirst { song ->
-            song.id == songId
-        }
-
-        if (selectedPos > -1) {
-            var songView: View? = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(selectedPos)
-            if (songView == null) {
-                _detailsFragmentBinding?.songsRv?.addOnScrollListener(object :
-                    RecyclerView.OnScrollListener() {
-                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                        super.onScrollStateChanged(recyclerView, newState)
-                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                            songView = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(selectedPos)
-                            animateHighlightedSong(songView)
-                            _detailsFragmentBinding?.songsRv?.clearOnScrollListeners()
+        mSongsList?.indexOfFirst { song -> song.id == songId }?.let { pos ->
+            if (pos > -1) {
+                var songView: View? = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(pos)
+                if (songView == null) {
+                    _detailsFragmentBinding?.songsRv?.addOnScrollListener(object :
+                        RecyclerView.OnScrollListener() {
+                        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                            super.onScrollStateChanged(recyclerView, newState)
+                            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                                songView = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(pos)
+                                animateHighlightedSong(songView)
+                                _detailsFragmentBinding?.songsRv?.clearOnScrollListeners()
+                            }
                         }
-                    }
-                })
-                _detailsFragmentBinding?.songsRv?.smoothScrollToPosition(selectedPos)
-            } else {
-                animateHighlightedSong(songView)
+                    })
+                    _detailsFragmentBinding?.songsRv?.smoothScrollToPosition(pos)
+                } else {
+                    animateHighlightedSong(songView)
+                }
             }
         }
     }
@@ -500,13 +402,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
     }
 
-    private fun setAlbumsDataSource(albumsList: List<Album>?) {
-        albumsList?.let { albums ->
-            mSelectedAlbumsDataSource.set(albums)
-        }
-    }
-
-    private fun setSongsDataSource(musicList: List<Music>?, updateSongs: Boolean) {
+    @SuppressLint("NotifyDataSetChanged")
+    private fun setSongsDataSource(musicList: List<Music>?, updateSongs: Boolean, updateAdapter: Boolean) {
 
         val songs = if (sLaunchedByFolderView) {
             ListsHelper.getSortedMusicListForFolder(mSongsSorting, musicList?.toMutableList())
@@ -526,7 +423,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
                         } else {
                             ThemeHelper.resolveColorAttr(
                                 requireActivity(),
-                                android.R.attr.colorButtonNormal
+                                android.R.attr.textColorTertiary
                             )
                         }
                     )
@@ -537,7 +434,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         }
 
         songs?.let { newSongsList ->
-            mSongsDataSource.set(newSongsList)
+            mSongsList = newSongsList
+            if (updateAdapter) {
+                _detailsFragmentBinding?.songsRv?.adapter?.notifyDataSetChanged()
+            }
             if (updateSongs) {
                 mMediaControlInterface.onUpdatePlayingAlbumSongs(songs)
             }
@@ -564,7 +464,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         setSongsDataSource(
             ListsHelper.processQueryForMusic(newText, mSongsList)
                 ?: mSongsList,
-            updateSongs = false
+            updateSongs = false,
+            updateAdapter = true
         )
         return false
     }
@@ -645,7 +546,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
         } else {
             mMusicViewModel.deviceMusicByAlbum?.get(mSelectedArtistOrFolder)
         }
-        setSongsDataSource(selectedList, updateSongs = sCanUpdateSongs)
+        setSongsDataSource(selectedList, updateSongs = sCanUpdateSongs, updateAdapter = true)
     }
 
     private fun setupAlbumsContainer() {
@@ -661,8 +562,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
         updateSelectedAlbumTitle()
 
-        setAlbumsDataSource(mSelectedArtistAlbums)
-
         _detailsFragmentBinding?.detailsToolbar?.subtitle = getString(
             R.string.artist_info,
             mSelectedArtistAlbums?.size,
@@ -671,71 +570,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
         _detailsFragmentBinding?.albumsRv?.run {
 
-            setHasFixedSize(true)
+            mAlbumsRecyclerViewLayoutManager = layoutManager as LinearLayoutManager
+            adapter = AlbumsAdapter()
 
-            setup {
-
-                withDataSource(mSelectedAlbumsDataSource)
-
-                mAlbumsRecyclerViewLayoutManager = layoutManager as LinearLayoutManager
-
-                withItem<Album, DetailsAlbumsViewHolder>(R.layout.album_item) {
-
-                    onBind(::DetailsAlbumsViewHolder) { _, itemAlbum ->
-                        // AlbumsViewHolder is `this` here
-
-                        val cardView = itemView as MaterialCardView
-
-                        album.text = itemAlbum.title
-
-                        year.text = itemAlbum.year
-                        totalDuration.text = itemAlbum.totalDuration.toFormattedDuration(
-                            isAlbum = true,
-                            isSeekBar = false
-                        )
-
-                        cardView.strokeWidth = if (mSelectedAlbum?.title == itemAlbum.title) {
-                            resources.getDimensionPixelSize(R.dimen.album_stroke)
-                        } else {
-                            0
-                        }
-
-                        loadCoverIntoTarget(itemAlbum.music?.first(), albumCover)
-                    }
-
-                    onClick { index ->
-
-                        if (index != mSelectedAlbumPosition) {
-
-                            adapter?.let { albumsAdapter ->
-
-                                albumsAdapter.notifyItemChanged(
-                                    mSelectedAlbumPosition
-                                )
-
-                                albumsAdapter.notifyItemChanged(index)
-
-                                mSelectedAlbum = item
-                                mSelectedAlbumPosition = index
-
-                                updateSelectedAlbumTitle()
-
-                                swapAlbum(item.music)
-                            }
-                        } else {
-                            if (sPlayFirstSong) {
-                                mMediaControlInterface.onSongSelected(
-                                    mSongsDataSource[0],
-                                    item.music,
-                                    mLaunchedBy
-                                )
-                            } else {
-                                sPlayFirstSong = true
-                            }
-                        }
-                    }
-                }
-            }
             if (mSelectedAlbumPosition != RecyclerView.NO_POSITION || mSelectedAlbumPosition != 0) {
                 mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
                     mSelectedAlbumPosition,
@@ -790,10 +627,180 @@ class DetailsFragment : Fragment(R.layout.fragment_details), SearchView.OnQueryT
 
     private fun swapAlbum(songs: MutableList<Music>?) {
         sAlbumSwapped = true
-        setSongsDataSource(songs, updateSongs = false)
+        setSongsDataSource(songs, updateSongs = false, updateAdapter = true)
         _detailsFragmentBinding?.songsRv?.afterMeasured {
             scrollToPosition(0)
             highlightSong(mSelectedSongId)
+        }
+    }
+
+    private inner class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumsHolder>() {
+
+        private val mMediaControlInterface = activity as MediaControlInterface
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = AlbumsHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.album_item,
+                parent,
+                false
+            )
+        )
+
+        override fun getItemCount(): Int {
+            return mSelectedArtistAlbums?.size!!
+        }
+
+        override fun onBindViewHolder(holder: AlbumsHolder, position: Int) {
+            holder.bindItems(mSelectedArtistAlbums?.get(holder.absoluteAdapterPosition))
+        }
+
+        inner class AlbumsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+            fun bindItems(itemAlbum: Album?) {
+
+                itemView.run {
+                    val cardView = this as MaterialCardView
+
+                    val albumCover = itemView.findViewById<ImageView>(R.id.image)
+                    val album = itemView.findViewById<TextView>(R.id.album)
+                    val year = itemView.findViewById<TextView>(R.id.year)
+                    val totalDuration = itemView.findViewById<TextView>(R.id.total_duration)
+
+                    album.text = itemAlbum?.title
+
+                    year.text = itemAlbum?.year
+                    totalDuration.text = itemAlbum?.totalDuration?.toFormattedDuration(
+                        isAlbum = true,
+                        isSeekBar = false
+                    )
+
+                    cardView.strokeWidth = if (mSelectedAlbum?.title == itemAlbum?.title) {
+                        resources.getDimensionPixelSize(R.dimen.album_stroke)
+                    } else {
+                        0
+                    }
+
+                    loadCoverIntoTarget(itemAlbum?.music?.first(), albumCover)
+
+                    setOnClickListener {
+                        if (absoluteAdapterPosition != mSelectedAlbumPosition) {
+                            notifyItemChanged(mSelectedAlbumPosition)
+                            notifyItemChanged(absoluteAdapterPosition)
+                            mSelectedAlbum = itemAlbum
+                            mSelectedAlbumPosition = absoluteAdapterPosition
+                            updateSelectedAlbumTitle()
+                            swapAlbum(itemAlbum?.music)
+                        } else {
+                            if (sPlayFirstSong) {
+                                mMediaControlInterface.onSongSelected(
+                                    mSongsList?.get(0),
+                                    itemAlbum?.music,
+                                    mLaunchedBy
+                                )
+                            } else {
+                                sPlayFirstSong = true
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private inner class SongsAdapter: RecyclerView.Adapter<SongsAdapter.SongsHolder>() {
+
+        val defaultTextColor = ThemeHelper.resolveColorAttr(requireActivity(), android.R.attr.textColorPrimary)
+        val accentTextColor = ThemeHelper.resolveThemeAccent(requireActivity())
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SongsHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.generic_item,
+                parent,
+                false
+            )
+        )
+
+        override fun getItemCount(): Int {
+            return mSongsList?.size!!
+        }
+
+        override fun onBindViewHolder(holder: SongsHolder, position: Int) {
+            holder.bindItems(mSongsList?.get(holder.absoluteAdapterPosition))
+        }
+
+        inner class SongsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+            fun bindItems(itemSong: Music?) {
+
+                itemView.run {
+
+                    val title = itemView.findViewById<TextView>(R.id.title)
+                    val subtitle = itemView.findViewById<TextView>(R.id.subtitle)
+
+                    val displayedTitle =
+                        if (sShowDisplayName || sLaunchedByFolderView) {
+                            itemSong?.displayName?.toFilenameWithoutExtension()
+                        } else {
+                            getString(
+                                R.string.track_song,
+                                itemSong?.track?.toFormattedTrack(),
+                                itemSong?.title
+                            ).parseAsHtml()
+                        }
+
+                    title.text = displayedTitle
+
+                    val titleColor = if (mSelectedSongId == itemSong?.id) {
+                        mSelectedSongPosition = absoluteAdapterPosition
+                        accentTextColor
+                    } else {
+                        defaultTextColor
+                    }
+                    title.setTextColor(titleColor)
+
+                    val duration = itemSong?.duration?.toFormattedDuration(
+                        isAlbum = false,
+                        isSeekBar = false
+                    )
+
+                    subtitle.text = if (sLaunchedByFolderView) {
+                        getString(R.string.duration_artist_date_added, duration,
+                            itemSong?.artist, itemSong?.dateAdded?.toFormattedDate())
+                    } else {
+                        duration
+                    }
+
+                    setOnClickListener {
+                        mMediaControlInterface.onSongSelected(
+                            itemSong,
+                            mSongsList,
+                            mLaunchedBy
+                        )
+
+                        if (mSelectedSongId != itemSong?.id) {
+                            notifyItemChanged(mSelectedSongPosition)
+                            mSelectedSongId = itemSong?.id
+                            notifyItemChanged(absoluteAdapterPosition)
+                        }
+                        if (!sCanUpdateSongs) {
+                            sCanUpdateSongs = true
+                        }
+                        if (sAlbumSwapped) {
+                            sAlbumSwapped = false
+                        }
+                    }
+
+                    setOnLongClickListener {
+                        DialogHelper.showPopupForSongs(
+                            requireActivity(),
+                            _detailsFragmentBinding?.songsRv?.findViewHolderForAdapterPosition(absoluteAdapterPosition)?.itemView,
+                            itemSong,
+                            mLaunchedBy
+                        )
+                        return@setOnLongClickListener true
+                    }
+                }
+            }
         }
     }
 

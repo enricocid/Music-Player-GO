@@ -10,11 +10,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.afollestad.recyclical.datasource.emptyDataSource
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
@@ -38,7 +40,7 @@ import kotlin.concurrent.schedule
  * Use the [EqFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class EqFragment : Fragment(R.layout.fragment_equalizer) {
+class EqFragment : Fragment() {
 
     private var _eqFragmentBinding: FragmentEqualizerBinding? = null
 
@@ -47,8 +49,6 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
     private lateinit var mEqAnimator: Animator
 
     private val mPresetsList = mutableListOf<String>()
-
-    private val mDataSource = emptyDataSource()
 
     private var mSelectedPreset = 0
 
@@ -120,8 +120,6 @@ class EqFragment : Fragment(R.layout.fragment_equalizer) {
                 equalizer.getPresetName(preset.toShort())
             }
         }
-
-        mDataSource.set(mPresetsList)
 
         finishSetupEqualizer(view)
     }

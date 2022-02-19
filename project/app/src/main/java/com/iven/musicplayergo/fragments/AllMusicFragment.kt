@@ -1,16 +1,16 @@
 package com.iven.musicplayergo.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.afollestad.recyclical.datasource.emptyDataSource
-import com.afollestad.recyclical.setup
-import com.afollestad.recyclical.withItem
+import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
@@ -22,7 +22,6 @@ import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.MediaControlInterface
-import com.iven.musicplayergo.ui.SongsViewHolder
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerView
@@ -32,23 +31,22 @@ import com.reddit.indicatorfastscroll.FastScrollerView
  * Use the [AllMusicFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQueryTextListener {
+class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private var _allMusicFragmentBinding: FragmentAllMusicBinding? = null
+    private lateinit var mUIControlInterface: UIControlInterface
+    private lateinit var mMediaControlInterface: MediaControlInterface
 
-    // View model
+    // view model
     private lateinit var mMusicViewModel: MusicViewModel
 
-    private var mAllMusic: List<Music>? = null
-    private val mDataSource = emptyDataSource()
-
+    // sorting
     private lateinit var mSortMenuItem: MenuItem
     private var mSorting = goPreferences.allMusicSorting
 
     private var sIsFastScroller = false
 
-    private lateinit var mUIControlInterface: UIControlInterface
-    private lateinit var mMediaControlInterface: MediaControlInterface
+    private var mAllMusic: List<Music>? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -77,79 +75,44 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
 
         mMusicViewModel =
             ViewModelProvider(requireActivity()).get(MusicViewModel::class.java).apply {
-                deviceMusic.observe(viewLifecycleOwner, { returnedMusic ->
+                deviceMusic.observe(viewLifecycleOwner) { returnedMusic ->
                     if (!returnedMusic.isNullOrEmpty()) {
                         mAllMusic =
                             ListsHelper.getSortedMusicListForAllMusic(
                                 mSorting,
                                 mMusicViewModel.deviceMusicFiltered
                             )
-                        setMusicDataSource(mAllMusic)
                         finishSetup()
-                    }
-                })
-            }
-    }
-
-    private fun finishSetup() {
-        _allMusicFragmentBinding?.allMusicRv?.let { rv ->
-
-            // setup{} is an extension method on RecyclerView
-            rv.setup {
-
-                // item is a `val` in `this` here
-                withDataSource(mDataSource)
-
-                withItem<Music, SongsViewHolder>(R.layout.music_item) {
-                    onBind(::SongsViewHolder) { _, song ->
-                        // GenericViewHolder is `this` here
-
-                        val formattedDuration = song.duration.toFormattedDuration(
-                            isAlbum = false,
-                            isSeekBar = false
-                        )
-
-                        duration.text = getString(R.string.duration_date_added, formattedDuration, song.dateAdded.toFormattedDate())
-
-                        title.text = song.toName()
-
-                        subtitle.text =
-                            getString(R.string.artist_and_album, song.artist, song.album)
-                    }
-
-                    onClick {
-                        mMediaControlInterface.onSongSelected(
-                            item,
-                            mAllMusic,
-                            GoConstants.ARTIST_VIEW
-                        )
-                    }
-
-                    onLongClick { index ->
-                        DialogHelper.showPopupForSongs(
-                            requireActivity(),
-                            rv.findViewHolderForAdapterPosition(index)?.itemView,
-                            item,
-                            GoConstants.ARTIST_VIEW
-                        )
                     }
                 }
             }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun setMusicDataSource(musicList: List<Music>?) {
+        musicList?.run {
+            mAllMusic = this
+            _allMusicFragmentBinding?.allMusicRv?.adapter?.notifyDataSetChanged()
         }
+    }
+
+    private fun finishSetup() {
 
         setupIndicatorFastScrollerView()
 
-        _allMusicFragmentBinding?.let { _binding ->
-            _binding.shuffleFab.text = mAllMusic?.size.toString()
+        _allMusicFragmentBinding?.run {
 
-            _binding.shuffleFab.setOnClickListener {
+            allMusicRv.adapter = AllMusicAdapter()
+
+            shuffleFab.text = mAllMusic?.size.toString()
+            shuffleFab.setOnClickListener {
                 mMediaControlInterface.onSongsShuffled(
                     mAllMusic,
                     GoConstants.ARTIST_VIEW
                 )
             }
 
-            _binding.searchToolbar.let { stb ->
+            searchToolbar.let { stb ->
 
                 stb.inflateMenu(R.menu.menu_music_search)
                 stb.overflowIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_sort)
@@ -166,10 +129,9 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                     with (findItem(R.id.action_search).actionView as SearchView) {
                         setOnQueryTextListener(this@AllMusicFragment)
                         setOnQueryTextFocusChangeListener { _, hasFocus ->
-                            _binding.fastscroller.handleViewVisibility(show = !hasFocus)
-                            _binding.fastscrollerThumb.handleViewVisibility(show = !hasFocus)
-                            _binding.allMusicRv.setupFastScrollerPadding(forceNoPadding = hasFocus,
-                                resources)
+                            fastscroller.handleViewVisibility(show = !hasFocus)
+                            fastscrollerThumb.handleViewVisibility(show = !hasFocus)
+                            allMusicRv.setupFastScrollerPadding(forceNoPadding = hasFocus, resources)
                             stb.menu.setGroupVisible(R.id.sorting, !hasFocus)
                         }
                     }
@@ -180,25 +142,18 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
         }
     }
 
-    private fun setMusicDataSource(musicList: List<Music>?) {
-        musicList?.let { songs ->
-            mDataSource.set(songs)
-        }
-    }
-
     private fun setupIndicatorFastScrollerView() {
 
         // Set indexes if artists rv is scrollable
-        _allMusicFragmentBinding?.let { _binding ->
+        _allMusicFragmentBinding?.run {
 
-            _binding.allMusicRv.afterMeasured {
+            allMusicRv.afterMeasured {
 
                 sIsFastScroller = computeVerticalScrollRange() > height
 
                 if (sIsFastScroller) {
 
-                    _binding.fastscroller.setupWithRecyclerView(
-                        this,
+                    fastscroller.setupWithRecyclerView(this,
                         { position ->
                             // Return a text tab_indicator
                             val song = mAllMusic?.get(position)
@@ -216,12 +171,9 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                             }
                         })
 
-                    _binding.fastscrollerThumb.setupWithFastScroller(
-                        _binding.fastscroller
-                    )
-
-                    _binding.fastscroller.useDefaultScroller = false
-                    _binding.fastscroller.itemIndicatorSelectedCallbacks += object :
+                    fastscrollerThumb.setupWithFastScroller(fastscroller)
+                    fastscroller.useDefaultScroller = false
+                    fastscroller.itemIndicatorSelectedCallbacks += object :
                         FastScrollerView.ItemIndicatorSelectedCallback {
                         override fun onItemIndicatorSelected(
                             indicator: FastScrollItemIndicator,
@@ -233,7 +185,7 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
                         }
                     }
                 }
-                _binding.allMusicRv.setupFastScrollerPadding(forceNoPadding = false, resources)
+                allMusicRv.setupFastScrollerPadding(forceNoPadding = false, resources)
             }
         }
     }
@@ -297,6 +249,68 @@ class AllMusicFragment : Fragment(R.layout.fragment_all_music), SearchView.OnQue
     }
 
     override fun onQueryTextSubmit(query: String?) = false
+
+    private inner class AllMusicAdapter : RecyclerView.Adapter<AllMusicAdapter.SongsHolder>() {
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SongsHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.music_item,
+                parent,
+                false
+            )
+        )
+
+        override fun getItemCount(): Int {
+            return mAllMusic?.size!!
+        }
+
+        override fun onBindViewHolder(holder: SongsHolder, position: Int) {
+            holder.bindItems(mAllMusic?.get(holder.absoluteAdapterPosition))
+        }
+
+        inner class SongsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+            fun bindItems(itemSong: Music?) {
+
+                itemView.run {
+
+                    val title = itemView.findViewById<TextView>(R.id.title)
+                    val duration = itemView.findViewById<TextView>(R.id.duration)
+                    val subtitle = itemView.findViewById<TextView>(R.id.subtitle)
+
+                    val formattedDuration = itemSong?.duration?.toFormattedDuration(
+                        isAlbum = false,
+                        isSeekBar = false
+                    )
+
+                    duration.text = getString(R.string.duration_date_added, formattedDuration,
+                        itemSong?.dateAdded?.toFormattedDate())
+                    title.text = itemSong.toName()
+                    subtitle.text =
+                        getString(R.string.artist_and_album, itemSong?.artist, itemSong?.album)
+
+                    setOnClickListener {
+                        mMediaControlInterface.onSongSelected(
+                            itemSong,
+                            mAllMusic,
+                            GoConstants.ARTIST_VIEW
+                        )
+                    }
+
+                    setOnLongClickListener {
+                        val vh = _allMusicFragmentBinding?.allMusicRv?.findViewHolderForAdapterPosition(absoluteAdapterPosition)
+                        DialogHelper.showPopupForSongs(
+                            requireActivity(),
+                            vh?.itemView,
+                            itemSong,
+                            GoConstants.ARTIST_VIEW
+                        )
+                        return@setOnLongClickListener true
+                    }
+                }
+            }
+        }
+    }
 
     companion object {
         /**

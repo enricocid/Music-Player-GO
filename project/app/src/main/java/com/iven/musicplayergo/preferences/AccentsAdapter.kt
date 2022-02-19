@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.adapters
+package com.iven.musicplayergo.preferences
 
 import android.app.Activity
 import android.view.LayoutInflater
@@ -59,7 +59,7 @@ class AccentsAdapter(private val activity: Activity) :
                     cardView.strokeWidth = 0
                     colorText.setTextColor(ThemeHelper.resolveColorAttr(
                         activity,
-                        android.R.attr.colorButtonNormal
+                        android.R.attr.textColorTertiary
                     ))
                 }
 

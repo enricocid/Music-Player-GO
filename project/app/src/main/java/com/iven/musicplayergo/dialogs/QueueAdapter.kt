@@ -1,13 +1,12 @@
-package com.iven.musicplayergo.adapters
+package com.iven.musicplayergo.dialogs
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.materialdialogs.MaterialDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.startSongFromQueue
 import com.iven.musicplayergo.extensions.toName
@@ -19,7 +18,6 @@ import com.iven.musicplayergo.player.MediaPlayerHolder
 
 class QueueAdapter(
     private val ctx: Context,
-    private val queueSongsDialog: MaterialDialog,
     private val mediaPlayerHolder: MediaPlayerHolder
 ) :
     RecyclerView.Adapter<QueueAdapter.QueueHolder>() {
@@ -27,19 +25,12 @@ class QueueAdapter(
     var queueSongs = mediaPlayerHolder.queueSongs
     private var mSelectedSong = mediaPlayerHolder.currentSong
 
-    private val mDefaultTextColor =
-        ThemeHelper.resolveColorAttr(ctx, android.R.attr.textColorPrimary)
+    var onQueueCleared: (() -> Unit)? = null
 
     fun swapSelectedSong(song: Music?) {
         notifyItemChanged(queueSongs.indexOf(mSelectedSong))
         mSelectedSong = song
         notifyItemChanged(queueSongs.indexOf(mSelectedSong))
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun swapQueueSongs(updatedQueueSongs: MutableList<Music>) {
-        queueSongs = updatedQueueSongs
-        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = QueueHolder(
@@ -69,17 +60,16 @@ class QueueAdapter(
                 val displayedTitle = song.toName()
 
                 title.text = displayedTitle
+                duration.text = DialogHelper.computeDurationText(ctx, song)
+                subtitle.text =
+                    context.getString(R.string.artist_and_album, song.artist, song.album)
 
+                val defaultTextColor = title.currentTextColor
                 title.setTextColor(if (mediaPlayerHolder.isQueue != null && mediaPlayerHolder.isQueueStarted && queueSongs.indexOf(mSelectedSong) == absoluteAdapterPosition) {
                     ThemeHelper.resolveThemeAccent(ctx)
                 } else {
-                    mDefaultTextColor
+                    defaultTextColor
                 })
-
-                duration.text = DialogHelper.computeDurationText(ctx, song)
-
-                subtitle.text =
-                    context.getString(R.string.artist_and_album, song.artist, song.album)
 
                 setOnClickListener {
                     with(mediaPlayerHolder) {
@@ -97,31 +87,29 @@ class QueueAdapter(
         val song = queueSongs[adapterPosition]
         notifyItemChanged(adapterPosition)
         return if (song != mSelectedSong || mediaPlayerHolder.isQueue == null) {
-            MaterialDialog(ctx).show {
 
-                title(R.string.queue)
-
-                message(
-                    text = ctx.getString(
-                        R.string.queue_song_remove,
-                        song.title
-                    )
-                )
-                positiveButton(R.string.yes) {
-
+            MaterialAlertDialogBuilder(ctx)
+                .setTitle(R.string.queue)
+                .setMessage(ctx.getString(
+                    R.string.queue_song_remove,
+                    song.title
+                ))
+                .setPositiveButton(R.string.yes) { _, _ ->
                     mediaPlayerHolder.run {
+                        // remove and update adapter
                         queueSongs.remove(song)
-                        swapQueueSongs(queueSongs)
+                        notifyItemRemoved(adapterPosition)
 
+                        // dismiss sheet if empty
                         if (queueSongs.isEmpty()) {
                             isQueue = null
                             mediaPlayerInterface.onQueueStartedOrEnded(started = false)
-                            queueSongsDialog.dismiss()
+                            onQueueCleared?.invoke()
                         }
                     }
                 }
-                negativeButton(R.string.no)
-            }
+                .setNegativeButton(R.string.no, null)
+                .show()
             true
         } else {
             false

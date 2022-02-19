@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.adapters
+package com.iven.musicplayergo.preferences
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -20,7 +20,7 @@ class ActiveTabsAdapter(private val ctx: Context) :
     var availableItems = goPreferences.activeTabsDef.toMutableList()
     private val mActiveItems = goPreferences.activeTabs.toMutableList()
 
-    private val mDisabledColor = ThemeHelper.resolveColorAttr(ctx, android.R.attr.colorButtonNormal)
+    private val mDisabledColor = ThemeHelper.resolveColorAttr(ctx, android.R.attr.textColorTertiary)
     private val mDefaultTextColor = ThemeHelper.resolveColorAttr(ctx, android.R.attr.textColorPrimary)
 
     fun getUpdatedItems() = availableItems.apply {

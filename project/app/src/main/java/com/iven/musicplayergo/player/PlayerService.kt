@@ -74,7 +74,7 @@ class PlayerService : Service() {
         override fun onMediaButtonEvent(mediaButtonEvent: Intent?) = handleMediaIntent(mediaButtonEvent)
     }
 
-    private fun configureMediaSession() {
+    fun configureMediaSession() {
 
         val mediaButtonIntent = Intent(Intent.ACTION_MEDIA_BUTTON)
         val mediaButtonReceiverComponentName = ComponentName(applicationContext, MediaBtnReceiver::class.java)
@@ -114,7 +114,6 @@ class PlayerService : Service() {
                     goPreferences.queue = queueSongs
                 }
             }
-
             goPreferences.latestVolume = mediaPlayerHolder.currentVolumeInPercent
 
             if (::mMediaSessionCompat.isInitialized && mMediaSessionCompat.isActive) {
@@ -125,7 +124,6 @@ class PlayerService : Service() {
                     release()
                 }
             }
-
             mediaPlayerHolder.release()
             releaseWakeLock()
             isRunning = false
@@ -140,7 +138,6 @@ class PlayerService : Service() {
                 mWakeLock.setReferenceCounted(false)
             }
         }
-        configureMediaSession()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -177,14 +174,19 @@ class PlayerService : Service() {
 
     override fun onBind(intent: Intent): IBinder {
         if (!::mediaPlayerHolder.isInitialized) {
-            mediaPlayerHolder = MediaPlayerHolder(this).apply {
-                registerActionsReceiver()
+            mediaPlayerHolder = MediaPlayerHolder.getInstance().apply {
+                synchronized(initializeNotificationManager()) {
+                    setMusicService(this@PlayerService)
+                }
             }
         }
+        return binder
+    }
+
+    private fun initializeNotificationManager() {
         if (!::musicNotificationManager.isInitialized) {
             musicNotificationManager = MusicNotificationManager(this)
         }
-        return binder
     }
 
     fun acquireWakeLock() {

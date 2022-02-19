@@ -1,6 +1,5 @@
 package com.iven.musicplayergo.helpers
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.text.Spanned
@@ -8,162 +7,49 @@ import android.view.Gravity
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.text.parseAsHtml
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.materialdialogs.LayoutMode
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.bottomsheets.BottomSheet
-import com.afollestad.materialdialogs.bottomsheets.expandBottomSheet
-import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.customview.getCustomView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.ui.ItemSwipeCallback
-import com.iven.musicplayergo.adapters.FavoritesAdapter
-import com.iven.musicplayergo.adapters.QueueAdapter
-import com.iven.musicplayergo.extensions.*
+import com.iven.musicplayergo.extensions.enablePopupIcons
+import com.iven.musicplayergo.extensions.setTitle
+import com.iven.musicplayergo.extensions.setTitleColor
+import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
-import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.player.MediaPlayerHolder
-import com.iven.musicplayergo.ui.ItemTouchCallback
+import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
-import de.halfbit.edgetoedge.Edge
-import de.halfbit.edgetoedge.edgeToEdge
 
 
 object DialogHelper {
 
     @JvmStatic
-    fun showQueueSongsDialog(
-        context: Context,
-        mediaPlayerHolder: MediaPlayerHolder
-    ) = MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
-
-        title(R.string.queue)
-        val queueAdapter = QueueAdapter(context, this, mediaPlayerHolder)
-
-        customView(R.layout.dialogs_music_container)
-        val recyclerView = getCustomView().findViewById<RecyclerView>(R.id.dialogs_rv)
-        recyclerView.adapter = queueAdapter
-
-        ItemTouchHelper(ItemTouchCallback(queueAdapter.queueSongs, isActiveTabs = false))
-            .attachToRecyclerView(recyclerView)
-
-        ItemTouchHelper(ItemSwipeCallback(context, isQueueDialog = true, isFavoritesDialog = false) { viewHolder: RecyclerView.ViewHolder, _: Int ->
-            if (!queueAdapter.performQueueSongDeletion(viewHolder.absoluteAdapterPosition)) {
-                queueAdapter.notifyItemChanged(viewHolder.absoluteAdapterPosition)
-            }
-        }).attachToRecyclerView(recyclerView)
-
-
-        if (ThemeHelper.isDeviceLand(context.resources)) {
-            recyclerView.layoutManager = GridLayoutManager(context, 3)
-        } else {
-            if (VersioningHelper.isOreoMR1()) {
-                window?.let { win ->
-                    edgeToEdge {
-                        recyclerView.fit { Edge.Bottom }
-                        win.decorView.fit { Edge.Top }
-                    }
-                }
-            }
-        }
-
-        recyclerView.post {
-            if (mediaPlayerHolder.isQueueStarted) {
-                val indexOfCurrentSong = mediaPlayerHolder.queueSongs.indexOf(mediaPlayerHolder.currentSong)
-                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                layoutManager.scrollToPositionWithOffset(indexOfCurrentSong, 0)
-            }
-            expandBottomSheet()
-        }
-    }
-
-    @JvmStatic
-    fun showClearQueueDialog(
-        context: Context,
-        mediaPlayerHolder: MediaPlayerHolder
-    ) {
-
-        MaterialDialog(context).show {
-
-            title(R.string.queue)
-
-            message(R.string.queue_songs_clear)
-
-            positiveButton(R.string.yes) {
+    fun showClearQueueDialog(context: Context) {
+        MaterialAlertDialogBuilder(context)
+            .setTitle(R.string.queue)
+            .setMessage(R.string.queue_songs_clear)
+            .setPositiveButton(R.string.yes) { _, _ ->
                 goPreferences.isQueue = null
                 goPreferences.queue = null
-                with(mediaPlayerHolder) {
+                with(MediaPlayerHolder.getInstance()) {
                     queueSongs.clear()
                     setQueueEnabled(enabled = false, canSkip = isQueueStarted)
                 }
             }
-            negativeButton(R.string.no)
-        }
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    @JvmStatic
-    fun showFavoritesDialog(
-        activity: Activity
-    ): MaterialDialog = MaterialDialog(activity, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
-
-        title(R.string.favorites)
-
-        val favoritesAdapter = FavoritesAdapter(
-            activity,
-            this
-        )
-
-        customView(R.layout.dialogs_music_container)
-        val recyclerView = getCustomView().findViewById<RecyclerView>(R.id.dialogs_rv)
-        recyclerView.adapter = favoritesAdapter
-
-        if (ThemeHelper.isDeviceLand(context.resources)) {
-            recyclerView.layoutManager = GridLayoutManager(context, 3)
-        } else {
-            if (VersioningHelper.isOreoMR1()) {
-                window?.let { win ->
-                    edgeToEdge {
-                        recyclerView.fit { Edge.Bottom }
-                        win.decorView.fit { Edge.Top }
-                    }
-                }
-            }
-        }
-
-        ItemTouchHelper(ItemSwipeCallback(context, isQueueDialog = false, isFavoritesDialog = true) { viewHolder: RecyclerView.ViewHolder,
-                                                            direction: Int ->
-            if (direction == ItemTouchHelper.RIGHT) {
-                favoritesAdapter.addFavoriteToQueue(viewHolder.absoluteAdapterPosition)
-            } else {
-                favoritesAdapter.performFavoriteDeletion(
-                    viewHolder.absoluteAdapterPosition,
-                    isSwipe = true
-                )
-            }
-            favoritesAdapter.notifyDataSetChanged()
-        }).attachToRecyclerView(recyclerView)
+            .setNegativeButton(R.string.no, null)
+            .show()
     }
 
     @JvmStatic
-    fun showClearFavoritesDialog(
-        activity: Activity
-    ) {
-        MaterialDialog(activity).show {
-
-            title(R.string.favorites)
-
-            message(R.string.favorites_clear)
-            positiveButton(R.string.yes) {
+    fun showClearFavoritesDialog(activity: Activity) {
+        MaterialAlertDialogBuilder(activity)
+            .setTitle(R.string.favorites)
+            .setMessage(R.string.favorites_clear)
+            .setPositiveButton(R.string.yes) { _, _ ->
                 (activity as UIControlInterface).onFavoritesUpdated(clear = true)
             }
-            negativeButton(R.string.no)
-        }
+            .setNegativeButton(R.string.no, null)
+            .show()
     }
 
     @JvmStatic
@@ -281,35 +167,29 @@ object DialogHelper {
     }
 
     @JvmStatic
-    fun stopPlaybackDialog(
-        context: Context,
-        mediaPlayerHolder: MediaPlayerHolder
-    ) {
-
-        MaterialDialog(context).show {
-
-            title(R.string.app_name)
-
-            message(R.string.on_close_activity)
-            positiveButton(R.string.yes) {
+    fun stopPlaybackDialog(context: Context) {
+        val mediaPlayerHolder = MediaPlayerHolder.getInstance()
+        MaterialAlertDialogBuilder(context)
+            .setCancelable(false)
+            .setTitle(R.string.app_name)
+            .setMessage(R.string.on_close_activity)
+            .setPositiveButton(R.string.yes) { _, _ ->
                 mediaPlayerHolder.stopPlaybackService(stopPlayback = true)
             }
-            negativeButton(R.string.no) {
+            .setNegativeButton(R.string.no) { _, _ ->
                 mediaPlayerHolder.stopPlaybackService(stopPlayback = false)
             }
-        }
+            .show()
     }
 
     @JvmStatic
-    fun notifyForegroundServiceStopped(
-        context: Context
-    ) {
-        MaterialDialog(context).show {
-            cancelOnTouchOutside(false)
-            title(R.string.app_name)
-            message(R.string.error_fs_not_allowed)
-            positiveButton(android.R.string.ok)
-        }
+    fun notifyForegroundServiceStopped(context: Context) {
+        MaterialAlertDialogBuilder(context)
+            .setCancelable(false)
+            .setTitle(R.string.app_name)
+            .setMessage(R.string.error_fs_not_allowed)
+            .setPositiveButton(android.R.string.ok, null)
+            .show()
     }
 
     @JvmStatic

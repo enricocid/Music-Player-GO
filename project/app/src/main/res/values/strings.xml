@@ -48,7 +48,7 @@
     <string name="queue_song_add">%1s enqueued!</string>
     <string name="queue_song_remove">Remove %1s from queue?</string>
 
-    <!-- Loved songs -->
+    <!-- Favorites -->
     <string name="favorites">Favorites</string>
     <string name="favorite_added">%1s (%2s) favorited</string>
 

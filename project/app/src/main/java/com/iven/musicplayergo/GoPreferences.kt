@@ -7,7 +7,6 @@ import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedEqualizerSettings
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
-import java.lang.Exception
 import java.lang.reflect.Type
 
 

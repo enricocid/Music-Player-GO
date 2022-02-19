@@ -173,6 +173,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:overScrollMode="never"
-        android:scrollbars="none" />
+        android:scrollbars="none"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </LinearLayout>
