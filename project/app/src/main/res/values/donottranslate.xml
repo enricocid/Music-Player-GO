@@ -53,7 +53,7 @@
     <!-- Other preferences titles/subtitles -->
     <string name="category_ui">UI</string>
     <string name="category_audio">Audio</string>
-    <string name="accent_and_hex">&lt;b>%1s&lt;/b>:&#160;%2s</string>
+    <string name="accent_and_hex">&lt;b>%1s&lt;/b>&#160;/&#160;%2s</string>
 
     <!-- Preferences keys used in settings-->
     <string name="theme_pref">theme_pref</string>
