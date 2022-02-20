@@ -423,7 +423,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         } else {
                             ThemeHelper.resolveColorAttr(
                                 requireActivity(),
-                                android.R.attr.textColorTertiary
+                                android.R.attr.colorButtonNormal
                             )
                         }
                     )
