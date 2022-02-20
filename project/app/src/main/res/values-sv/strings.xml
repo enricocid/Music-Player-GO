@@ -5,8 +5,8 @@
     <string name="playback_pref_title">Vald uppspelningshastighet</string>
     <string name="filter_pref_title">Filter</string>
     <string name="anim_pref_title">Animationer</string>
-    <string name="headset_pref_title">Headsetkontakt-behandling</string>
-    <string name="focus_pref_title">Ljudfokus-behandling</string>
+    <string name="headset_pref_title">Hantering av headsetkontakt</string>
+    <string name="focus_pref_title">Ljudfokushantering</string>
     <string name="precise_volume_pref_title">Exakt volymkontroll</string>
     <string name="fast_seeking_actions_pref_summary_on">Snabbsökning</string>
     <string name="fast_seeking_actions_pref_summary_off">Stäng/upprepa</string>
@@ -42,8 +42,8 @@
     <string name="error_media_buttons">Något gick fel! :( Vänligen starta om uppspelningen från appen.</string>
     <string name="error_unknown_unsupported">Något gick fel! :( Det valda formatet stöds kanske inte, eller så är mappen inte tillgänglig (inte appens fel!).</string>
     <string name="error_not_ready">Det gick inte att läsa in musikbiblioteket! :( Detta kan bero på att SD-kortet har avmonterats och tvingat Android MediaStore att bygga om sina databasposter. Försök igen senare.</string>
-    <string name="error_no_music">Legg till musik först.</string>
-    <string name="error_no_favorites">Legg till några favoriter först.</string>
+    <string name="error_no_music">Lägg till musik först.</string>
+    <string name="error_no_favorites">Lägg till några favoriter först.</string>
     <string name="open_details_fragment">Öppna detaljer om artist/mapp</string>
     <string name="open_git_pref_summary">Öppna projektets webbplats för mer info :)</string>
     <string name="content_repeat">Aktivera/inaktivera upprepningsalternativ</string>
@@ -52,7 +52,7 @@
     <string name="content_skip_prev">Hoppa till föregående</string>
     <string name="speed_3">Normal</string>
     <string name="content_playback_speed">Uppspelningshastighet</string>
-    <string name="favorite_added">%1s (%2s) favoritmärktes</string>
+    <string name="favorite_added">%1s (%2s) favoritmarkerade</string>
     <string name="favorites">Favoriter</string>
     <string name="queue_song_remove">Ta bort %1s från kön\?</string>
     <string name="queue_song_add">%1s köad!</string>
@@ -85,8 +85,9 @@
     <string name="favorite_remove">Ta bort %1s (%2s) från favoriter\?</string>
     <string name="favorites_clear">Rens alla favoriter\?</string>
     <string name="queue_songs_clear">Rens kön\?</string>
-    <string name="on_close_activity">Stopp uppspelningen\?</string>
+    <string name="on_close_activity">Stoppa uppspelningen\?</string>
     <string name="delete">Ta bort</string>
     <string name="no">Nej</string>
     <string name="yes">Ja</string>
+    <string name="error_fs_not_allowed_sum">Fel! Stäng av batterioptimering för MPGO</string>
 </resources>
