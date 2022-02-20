@@ -19,7 +19,7 @@
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
             android:contentDescription="@string/fast_seeking_pref_title"
-            android:padding="8dp"
+            android:padding="16dp"
             app:srcCompat="@drawable/ic_fast_rewind" />
 
         <ImageButton
@@ -30,7 +30,7 @@
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
             android:contentDescription="@string/content_skip_prev"
-            android:padding="8dp"
+            android:padding="16dp"
             app:srcCompat="@drawable/ic_skip_previous" />
 
         <ImageButton
@@ -40,7 +40,7 @@
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
             android:contentDescription="@string/content_play"
-            android:padding="20dp"
+            android:padding="16dp"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/ic_play" />
 
@@ -52,7 +52,7 @@
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
             android:contentDescription="@string/content_skip_next"
-            android:padding="8dp"
+            android:padding="16dp"
             app:srcCompat="@drawable/ic_skip_next" />
 
         <ImageButton
@@ -63,7 +63,7 @@
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
             android:contentDescription="@string/fast_seeking_pref_title"
-            android:padding="8dp"
+            android:padding="16dp"
             app:srcCompat="@drawable/ic_fast_forward" />
 
     </LinearLayout>
