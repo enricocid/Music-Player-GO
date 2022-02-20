@@ -23,6 +23,10 @@ import com.iven.musicplayergo.helpers.VersioningHelper
 
 private const val WAKELOCK_MILLI: Long = 25000
 
+private const val DOUBLE_CLICK = 400
+private var mHeadsetClicks = 0
+private var mLastTimeClick = 0L
+
 class PlayerService : Service() {
 
     // Binder given to clients
@@ -114,6 +118,7 @@ class PlayerService : Service() {
                     goPreferences.queue = queueSongs
                 }
             }
+
             goPreferences.latestVolume = mediaPlayerHolder.currentVolumeInPercent
 
             if (::mMediaSessionCompat.isInitialized && mMediaSessionCompat.isActive) {
@@ -173,8 +178,9 @@ class PlayerService : Service() {
     }
 
     override fun onBind(intent: Intent): IBinder {
+
         if (!::mediaPlayerHolder.isInitialized) {
-            mediaPlayerHolder = MediaPlayerHolder.getInstance().apply {
+            mediaPlayerHolder = MediaPlayerHolder().apply {
                 synchronized(initializeNotificationManager()) {
                     setMusicService(this@PlayerService)
                 }
@@ -213,10 +219,25 @@ class PlayerService : Service() {
                 val event =
                     intent.getParcelableExtra<Parcelable>(Intent.EXTRA_KEY_EVENT) as KeyEvent
 
+                val eventTime =
+                    if (event.eventTime != 0L) event.eventTime else System.currentTimeMillis()
+
                 if (event.action == KeyEvent.ACTION_DOWN) {
                     when (event.keyCode) {
                         KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, KeyEvent.KEYCODE_MEDIA_PLAY, KeyEvent.KEYCODE_MEDIA_PAUSE, KeyEvent.KEYCODE_HEADSETHOOK -> {
-                            mediaPlayerHolder.resumeOrPause()
+                            // respond to double click
+                            if (eventTime - mLastTimeClick <= DOUBLE_CLICK) {
+                                mHeadsetClicks = 2
+                            }
+                            if (mHeadsetClicks == 2) {
+                                mHeadsetClicks = 0
+                                mediaPlayerHolder.skip(isNext = true)
+                            } else {
+                                mediaPlayerHolder.resumeOrPause()
+                            }
+
+                            mLastTimeClick = eventTime
+
                             return true
                         }
                         KeyEvent.KEYCODE_MEDIA_CLOSE, KeyEvent.KEYCODE_MEDIA_STOP -> {

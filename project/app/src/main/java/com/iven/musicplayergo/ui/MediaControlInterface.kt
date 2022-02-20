@@ -4,6 +4,7 @@ import android.media.audiofx.BassBoost
 import android.media.audiofx.Equalizer
 import android.media.audiofx.Virtualizer
 import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.player.MediaPlayerHolder
 
 interface MediaControlInterface {
     fun onSongSelected(song: Music?, songs: List<Music>?, songLaunchedBy: String)
@@ -28,4 +29,5 @@ interface MediaControlInterface {
     fun onEnableEqualizer(isEnabled: Boolean)
     fun onSaveEqualizerSettings(selectedPreset: Int, bassBoost: Short, virtualizer: Short)
     fun onChangePlaybackSpeed(speed: Float)
+    fun onGetMediaPlayerHolder(): MediaPlayerHolder?
 }

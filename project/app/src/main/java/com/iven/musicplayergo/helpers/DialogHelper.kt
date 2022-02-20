@@ -24,14 +24,14 @@ import com.iven.musicplayergo.ui.UIControlInterface
 object DialogHelper {
 
     @JvmStatic
-    fun showClearQueueDialog(context: Context) {
+    fun showClearQueueDialog(context: Context, mediaPlayerHolder: MediaPlayerHolder) {
         MaterialAlertDialogBuilder(context)
             .setTitle(R.string.queue)
             .setMessage(R.string.queue_songs_clear)
             .setPositiveButton(R.string.yes) { _, _ ->
                 goPreferences.isQueue = null
                 goPreferences.queue = null
-                with(MediaPlayerHolder.getInstance()) {
+                with(mediaPlayerHolder) {
                     queueSongs.clear()
                     setQueueEnabled(enabled = false, canSkip = isQueueStarted)
                 }
@@ -167,8 +167,7 @@ object DialogHelper {
     }
 
     @JvmStatic
-    fun stopPlaybackDialog(context: Context) {
-        val mediaPlayerHolder = MediaPlayerHolder.getInstance()
+    fun stopPlaybackDialog(context: Context, mediaPlayerHolder: MediaPlayerHolder) {
         MaterialAlertDialogBuilder(context)
             .setCancelable(false)
             .setTitle(R.string.app_name)

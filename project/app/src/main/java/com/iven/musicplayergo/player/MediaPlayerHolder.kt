@@ -71,6 +71,9 @@ private const val AUDIO_NO_FOCUS_CAN_DUCK = 1
 // We have full audio focus
 private const val AUDIO_FOCUSED = 2
 
+// We don't have focus, but we can resume
+private const val AUDIO_FOCUS_LOSS_TRANSIENT = 3
+
 // The headset connection states (0,1)
 private const val HEADSET_DISCONNECTED = 0
 private const val HEADSET_CONNECTED = 1
@@ -80,7 +83,7 @@ class MediaPlayerHolder:
     MediaPlayer.OnCompletionListener,
     MediaPlayer.OnPreparedListener {
 
-    lateinit var playerService: PlayerService
+    private lateinit var mPlayerService: PlayerService
 
     private val mMediaSessionActions = ACTION_PLAY or ACTION_PAUSE or ACTION_PLAY_PAUSE or ACTION_SKIP_TO_NEXT or ACTION_SKIP_TO_PREVIOUS or ACTION_STOP or ACTION_SEEK_TO
     lateinit var mediaPlayerInterface: MediaPlayerInterface
@@ -97,19 +100,24 @@ class MediaPlayerHolder:
 
     private val sFocusEnabled get() = goPreferences.isFocusEnabled
     private var mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
+    private var sRestoreVolume = false
     private var sPlayOnFocusGain = false
 
     private val mOnAudioFocusChangeListener =
         AudioManager.OnAudioFocusChangeListener { focusChange ->
             when (focusChange) {
                 AudioManager.AUDIOFOCUS_GAIN -> mCurrentAudioFocusState = AUDIO_FOCUSED
-                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK ->
+                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> {
                     // Audio focus was lost, but it's possible to duck (i.e.: play quietly)
                     mCurrentAudioFocusState = AUDIO_NO_FOCUS_CAN_DUCK
+                    sPlayOnFocusGain = false
+                    sRestoreVolume = isMediaPlayer && state == GoConstants.PLAYING || state == GoConstants.RESUMED
+                }
                 AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
                     // Lost audio focus, but will gain it back (shortly), so note whether
                     // playback should resume
-                    mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
+                    mCurrentAudioFocusState = AUDIO_FOCUS_LOSS_TRANSIENT
+                    sRestoreVolume = false
                     sPlayOnFocusGain =
                         isMediaPlayer && state == GoConstants.PLAYING || state == GoConstants.RESUMED
                 }
@@ -118,7 +126,7 @@ class MediaPlayerHolder:
                     mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
             }
             // Update the player state based on the change
-            if (isPlaying) {
+            if (isPlaying || state == GoConstants.PAUSED && sRestoreVolume || state == GoConstants.PAUSED && sPlayOnFocusGain) {
                 configurePlayerState()
             }
         }
@@ -169,13 +177,13 @@ class MediaPlayerHolder:
     private lateinit var mPlayerBroadcastReceiver: PlayerBroadcastReceiver
     private lateinit var mMusicNotificationManager: MusicNotificationManager
 
-    fun setMusicService(playerService: PlayerService) {
+    fun setMusicService(mPlayerService: PlayerService) {
         mediaPlayer = MediaPlayer()
-        this.playerService = playerService
-        mAudioManager = playerService.getSystemService()
-        mMusicNotificationManager = playerService.musicNotificationManager
+        this.mPlayerService = mPlayerService
+        mAudioManager = mPlayerService.getSystemService()
+        mMusicNotificationManager = mPlayerService.musicNotificationManager
         registerActionsReceiver()
-        playerService.configureMediaSession()
+        mPlayerService.configureMediaSession()
     }
 
     private fun startForeground() {
@@ -186,7 +194,7 @@ class MediaPlayerHolder:
                         try {
                             startForegroundQ(notification)
                         } catch (fsNotAllowed: ForegroundServiceStartNotAllowedException) {
-                            synchronized(Toast.makeText(playerService, R.string.error_fs_not_allowed_sum, Toast.LENGTH_LONG).show()) {
+                            synchronized(Toast.makeText(mPlayerService, R.string.error_fs_not_allowed_sum, Toast.LENGTH_LONG).show()) {
                                 pauseMediaPlayer()
                                 mediaPlayerInterface.onForegroundServiceStopped()
                             }
@@ -196,7 +204,7 @@ class MediaPlayerHolder:
                         startForegroundQ(notification)
                     }
                 } else {
-                    playerService.startForeground(GoConstants.NOTIFICATION_ID, notification)
+                    mPlayerService.startForeground(GoConstants.NOTIFICATION_ID, notification)
                     sNotificationForeground = true
                 }
             }
@@ -213,7 +221,7 @@ class MediaPlayerHolder:
 
     @TargetApi(Build.VERSION_CODES.Q)
     private fun startForegroundQ(notification: Notification) {
-        playerService.startForeground(
+        mPlayerService.startForeground(
             GoConstants.NOTIFICATION_ID,
             notification,
             ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
@@ -229,12 +237,12 @@ class MediaPlayerHolder:
             addAction(Intent.ACTION_MEDIA_BUTTON)
             addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
         }
-        playerService.registerReceiver(mPlayerBroadcastReceiver, intentFilter)
+        mPlayerService.registerReceiver(mPlayerBroadcastReceiver, intentFilter)
     }
 
     private fun unregisterActionsReceiver() {
         try {
-            playerService.unregisterReceiver(mPlayerBroadcastReceiver)
+            mPlayerService.unregisterReceiver(mPlayerBroadcastReceiver)
         } catch (e: IllegalArgumentException) {
             e.printStackTrace()
         }
@@ -309,7 +317,7 @@ class MediaPlayerHolder:
                 putString(METADATA_KEY_ALBUM, album)
                 putBitmap(
                     METADATA_KEY_DISPLAY_ICON,
-                    ContextCompat.getDrawable(playerService, R.drawable.ic_music_note)?.toBitmap()
+                    ContextCompat.getDrawable(mPlayerService, R.drawable.ic_music_note)?.toBitmap()
                 )
                 mPlayingSongs?.let { songs ->
                     putLong(METADATA_KEY_NUM_TRACKS, songs.size.toLong())
@@ -317,12 +325,12 @@ class MediaPlayerHolder:
                 }
 
                 if (goPreferences.isCovers) {
-                    albumId?.waitForCover(playerService, canLoadDefault = false) { bmp ->
+                    albumId?.waitForCover(mPlayerService, canLoadDefault = false) { bmp ->
                         putBitmap(METADATA_KEY_ALBUM_ART, bmp)
                     }
                 }
             }
-            playerService.getMediaSession().setMetadata(build())
+            mPlayerService.getMediaSession().setMetadata(build())
         }
     }
 
@@ -345,7 +353,7 @@ class MediaPlayerHolder:
                     } else {
                         synchronized(pauseMediaPlayer()) {
                             mMusicNotificationManager.cancelNotification()
-                            R.string.error_list_ended.toToast(playerService)
+                            R.string.error_list_ended.toToast(mPlayerService)
                         }
                     }
                 } else {
@@ -354,7 +362,7 @@ class MediaPlayerHolder:
             }
         }
 
-        playerService.acquireWakeLock()
+        mPlayerService.acquireWakeLock()
         mediaPlayerInterface.onStateChanged()
         mediaPlayerInterface.onPlaybackCompleted()
     }
@@ -414,7 +422,7 @@ class MediaPlayerHolder:
     }
 
     private fun updatePlaybackStatus(updateUI: Boolean) {
-        playerService.getMediaSession().setPlaybackState(
+        mPlayerService.getMediaSession().setPlaybackState(
             PlaybackStateCompat.Builder()
                 .setActions(mMediaSessionActions)
                 .setState(
@@ -466,7 +474,7 @@ class MediaPlayerHolder:
 
     fun pauseMediaPlayer() {
         mediaPlayer.pause()
-        playerService.stopForeground(false)
+        mPlayerService.stopForeground(false)
         sNotificationForeground = false
         state = GoConstants.PAUSED
         updatePlaybackStatus(updateUI = true)
@@ -618,7 +626,7 @@ class MediaPlayerHolder:
                 setOnPreparedListener(this@MediaPlayerHolder)
                 setOnCompletionListener(this@MediaPlayerHolder)
                 setOnErrorListener(this@MediaPlayerHolder)
-                setWakeMode(playerService, PowerManager.PARTIAL_WAKE_LOCK)
+                setWakeMode(mPlayerService, PowerManager.PARTIAL_WAKE_LOCK)
                 setAudioAttributes(
                     AudioAttributes.Builder()
                         .setUsage(AudioAttributes.USAGE_MEDIA)
@@ -628,7 +636,7 @@ class MediaPlayerHolder:
             }
 
             song?.id?.toContentUri()?.let { uri ->
-                mediaPlayer.setDataSource(playerService, uri)
+                mediaPlayer.setDataSource(mPlayerService, uri)
             }
 
             mediaPlayer.prepare()
@@ -640,7 +648,7 @@ class MediaPlayerHolder:
 
     override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
         val errorMessage = "MediaPlayer error: $what"
-        errorMessage.toToast(playerService)
+        errorMessage.toToast(mPlayerService)
         Log.d(errorMessage, errorMessage)
         mediaPlayer.reset()
         return true
@@ -689,15 +697,15 @@ class MediaPlayerHolder:
             play()
         }
 
-        playerService.releaseWakeLock()
+        mPlayerService.releaseWakeLock()
 
         // instantiate equalizer
         if (mediaPlayer.audioSessionId != AudioEffect.ERROR_BAD_VALUE) {
-            if (EqualizerUtils.hasEqualizer(playerService.applicationContext)) {
+            if (EqualizerUtils.hasEqualizer(mPlayerService.applicationContext)) {
                 if (!sHasOpenedAudioEffects) {
                     sHasOpenedAudioEffects = true
                     EqualizerUtils.openAudioEffectSession(
-                        playerService.applicationContext,
+                        mPlayerService.applicationContext,
                         mediaPlayer.audioSessionId
                     )
                 }
@@ -746,7 +754,7 @@ class MediaPlayerHolder:
                 releaseCustomEqualizer()
                 sHasOpenedAudioEffects = true
                 EqualizerUtils.openAudioEffectSession(
-                    playerService.applicationContext,
+                    mPlayerService.applicationContext,
                     audioSessionId
                 )
             }
@@ -757,7 +765,7 @@ class MediaPlayerHolder:
     fun onOpenEqualizerCustom() {
         if (sHasOpenedAudioEffects) {
             EqualizerUtils.closeAudioEffectSession(
-                playerService.applicationContext,
+                mPlayerService.applicationContext,
                 mediaPlayer.audioSessionId
             )
             sHasOpenedAudioEffects = false
@@ -766,9 +774,9 @@ class MediaPlayerHolder:
 
     fun release() {
         if (isMediaPlayer) {
-            if (EqualizerUtils.hasEqualizer(playerService.applicationContext)) {
+            if (EqualizerUtils.hasEqualizer(mPlayerService.applicationContext)) {
                 EqualizerUtils.closeAudioEffectSession(
-                    playerService.applicationContext,
+                    mPlayerService.applicationContext,
                     mediaPlayer.audioSessionId
                 )
             } else {
@@ -818,7 +826,7 @@ class MediaPlayerHolder:
                 isPauseOnEnd = true
                 goPreferences.isPauseOnEnd = true
                 toastMessage = R.string.repeat_disabled
-                toastMessage.toToast(playerService)
+                toastMessage.toToast(mPlayerService)
                 toastMessage = R.string.pause_on_end
             }
             isPauseOnEnd -> {
@@ -828,7 +836,7 @@ class MediaPlayerHolder:
             }
             else -> isRepeat1X = true
         }
-        toastMessage.toToast(playerService)
+        toastMessage.toToast(mPlayerService)
     }
 
     fun repeat(updatePlaybackStatus: Boolean) {
@@ -872,7 +880,6 @@ class MediaPlayerHolder:
     fun fastSeek(isForward: Boolean) {
 
         val step = goPreferences.fastSeekingStep * 1000
-
         if (isMediaPlayer) {
             mediaPlayer.run {
                 var newPosition = currentPosition
@@ -881,7 +888,7 @@ class MediaPlayerHolder:
                 } else {
                     newPosition -= step
                 }
-                seekTo(newPosition, updatePlaybackStatus = false, restoreProgressCallBack = false)
+                seekTo(newPosition, updatePlaybackStatus = true, restoreProgressCallBack = false)
             }
         }
     }
@@ -911,10 +918,12 @@ class MediaPlayerHolder:
     private fun configurePlayerState() {
         when (mCurrentAudioFocusState) {
             AUDIO_NO_FOCUS_NO_DUCK -> pauseMediaPlayer()
+            AUDIO_FOCUS_LOSS_TRANSIENT -> pauseMediaPlayer()
+            AUDIO_NO_FOCUS_CAN_DUCK -> mediaPlayer.setVolume(VOLUME_DUCK, VOLUME_DUCK)
             else -> {
-                when (mCurrentAudioFocusState) {
-                    AUDIO_NO_FOCUS_CAN_DUCK -> mediaPlayer.setVolume(VOLUME_DUCK, VOLUME_DUCK)
-                    else -> mediaPlayer.setVolume(VOLUME_NORMAL, VOLUME_NORMAL)
+                if (sRestoreVolume) {
+                    sRestoreVolume = false
+                    mediaPlayer.setVolume(VOLUME_NORMAL, VOLUME_NORMAL)
                 }
                 // If we were playing when we lost focus, we need to resume playing.
                 if (sPlayOnFocusGain) {
@@ -959,9 +968,9 @@ class MediaPlayerHolder:
     }
 
     fun stopPlaybackService(stopPlayback: Boolean) {
-        if (playerService.isRunning && isMediaPlayer && stopPlayback) {
-            playerService.stopForeground(true)
-            playerService.stopSelf()
+        if (mPlayerService.isRunning && isMediaPlayer && stopPlayback) {
+            mPlayerService.stopForeground(true)
+            mPlayerService.stopSelf()
         }
         mediaPlayerInterface.onClose()
     }
@@ -1075,23 +1084,6 @@ class MediaPlayerHolder:
                     abortBroadcast()
                 }
             }
-        }
-    }
-    companion object {
-        // Singleton prevents multiple instances of database opening at the
-        // same time.
-        @Volatile
-        private var INSTANCE: MediaPlayerHolder? = null
-
-        fun getInstance(): MediaPlayerHolder {
-            // if the INSTANCE is not null, then return it,
-            // if it is, then create the database
-            return INSTANCE ?: synchronized(this) {
-                    val instance = MediaPlayerHolder()
-                    INSTANCE = instance
-                    // return instance
-                    instance
-                }
         }
     }
 }

@@ -23,7 +23,6 @@ import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.Music
-import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.preferences.AccentsAdapter
 import com.iven.musicplayergo.preferences.ActiveTabsAdapter
 import com.iven.musicplayergo.preferences.FiltersAdapter
@@ -169,7 +168,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     modalRvAlt.visibility = View.GONE
                     _modalRvBinding?.btnContainer?.visibility = View.GONE
 
-                    MediaPlayerHolder.getInstance().run {
+                    mMediaControlInterface.onGetMediaPlayerHolder()?.run {
 
                         mQueueAdapter = QueueAdapter(requireActivity(), this)
                         modalRv.adapter = mQueueAdapter
