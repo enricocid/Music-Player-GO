@@ -133,14 +133,6 @@ object ThemeHelper {
         ).parseAsHtml()
     }
 
-    @JvmStatic
-    @SuppressLint("DefaultLocale")
-    fun getAccentNameForPref(context: Context, accent: Int) =
-        context.resources.getResourceEntryName(accent).replace(
-            context.getString(R.string.underscore_delimiter),
-            context.getString(R.string.space_delimiter)
-        ).replaceFirstChar(Char::uppercase)
-
     // Search theme from accents array of Pair, returns a Pair(theme, position)
     @JvmStatic
     fun getAccentedTheme() = try {
