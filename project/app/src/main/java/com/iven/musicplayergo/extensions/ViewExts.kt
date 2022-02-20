@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Color
 import android.graphics.drawable.InsetDrawable
 import android.text.Spannable
 import android.text.SpannableString
@@ -18,6 +19,7 @@ import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.Toolbar
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -266,3 +268,5 @@ fun View.safeClickListener(safeClickListener: (view: View) -> Unit) {
         }
     }
 }
+
+fun Int.toContrastColor() = if (ColorUtils.calculateLuminance(this) < 0.35) Color.WHITE else Color.DKGRAY

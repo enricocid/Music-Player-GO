@@ -94,7 +94,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     modalRv.visibility = View.GONE
 
                     val accentsAdapter = AccentsAdapter(requireActivity())
-                    val layoutManager =  LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+                    val layoutManager =  GridLayoutManager(requireActivity(), 6)
                     modalRvAlt.layoutManager = layoutManager
                     modalRvAlt.adapter = accentsAdapter
 

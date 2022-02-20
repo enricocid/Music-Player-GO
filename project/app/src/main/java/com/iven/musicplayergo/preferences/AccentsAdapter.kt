@@ -4,12 +4,12 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.extensions.toContrastColor
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
@@ -40,30 +40,19 @@ class AccentsAdapter(private val activity: Activity) :
 
             itemView.run {
 
-                val circle = findViewById<ImageButton>(R.id.circle)
                 val accent = ContextCompat.getColor(activity, color)
                 val accentFullName = ThemeHelper.getAccentName(activity, mAccents[absoluteAdapterPosition].first)
-                ThemeHelper.updateIconTint(circle, accent)
-
                 contentDescription = accentFullName
 
                 val cardView = this as MaterialCardView
-                val colorText = findViewById<TextView>(R.id.color)
+                cardView.setCardBackgroundColor(accent)
+                cardView.strokeColor = ColorUtils.setAlphaComponent(accent.toContrastColor(), 90)
 
-                cardView.strokeColor = accent
-
-                if (color == selectedAccent) {
-                    cardView.strokeWidth = resources.getDimensionPixelSize(R.dimen.album_stroke)
-                    colorText.setTextColor(accent)
+                cardView.strokeWidth = if (color == selectedAccent) {
+                    resources.getDimensionPixelSize(R.dimen.accent_dim_stroke)
                 } else {
-                    cardView.strokeWidth = 0
-                    colorText.setTextColor(ThemeHelper.resolveColorAttr(
-                        activity,
-                        android.R.attr.textColorTertiary
-                    ))
+                    0
                 }
-
-                colorText.text = ThemeHelper.getAccentNameForPref(activity, mAccents[absoluteAdapterPosition].first)
 
                 setOnClickListener {
                     if (mAccents[absoluteAdapterPosition].first != selectedAccent) {
