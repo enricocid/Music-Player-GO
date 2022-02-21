@@ -27,7 +27,7 @@
   <h3 align="center">
   <a href="PRIVACY_POLICY.md">Privacy policy</a> |
   <a href="FAQ.md">FAQ</a> |
-  <a href="LIBS.md">3rd party components</a>
+  <a href="LIBS.md">3rd party components</a> |
   <a href="CONTRIBUTORS.md">Contributors</a> |
   <a href="FORMATS.md">Formats</a>
   </h3>
