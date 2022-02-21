@@ -24,8 +24,6 @@ import com.iven.musicplayergo.helpers.VersioningHelper
 private const val WAKELOCK_MILLI: Long = 25000
 
 private const val DOUBLE_CLICK = 400
-private var mHeadsetClicks = 0
-private var mLastTimeClick = 0L
 
 class PlayerService : Service() {
 
@@ -42,6 +40,9 @@ class PlayerService : Service() {
     lateinit var mediaPlayerHolder: MediaPlayerHolder
     lateinit var musicNotificationManager: MusicNotificationManager
     var isRestoredFromPause = false
+
+    var headsetClicks = 0
+    private var mLastTimeClick = 0L
 
     private lateinit var mMediaSessionCompat: MediaSessionCompat
 
@@ -227,10 +228,9 @@ class PlayerService : Service() {
                         KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, KeyEvent.KEYCODE_MEDIA_PLAY, KeyEvent.KEYCODE_MEDIA_PAUSE, KeyEvent.KEYCODE_HEADSETHOOK -> {
                             // respond to double click
                             if (eventTime - mLastTimeClick <= DOUBLE_CLICK) {
-                                mHeadsetClicks = 2
+                                headsetClicks = 2
                             }
-                            if (mHeadsetClicks == 2) {
-                                mHeadsetClicks = 0
+                            if (headsetClicks == 2) {
                                 mediaPlayerHolder.skip(isNext = true)
                             } else {
                                 mediaPlayerHolder.resumeOrPause()

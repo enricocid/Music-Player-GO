@@ -690,6 +690,10 @@ class MediaPlayerHolder:
             initializeAudioFocusRequestCompat()
         }
 
+        if (mPlayerService.headsetClicks != 0) {
+            mPlayerService.headsetClicks = 0
+        }
+
         if (isPlay) {
             if (sFocusEnabled && mCurrentAudioFocusState != AUDIO_FOCUSED) {
                 tryToGetAudioFocus()
