@@ -188,7 +188,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     override fun onDestroy() {
         super.onDestroy()
         mMusicViewModel.cancel()
-        if (!isMediaPlayerHolder && !mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning && !mMediaPlayerHolder.isSongFromPrefs) {
+        if (isMediaPlayerHolder && !mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning && !mMediaPlayerHolder.isSongFromPrefs) {
             mPlayerService.stopForeground(true)
             stopService(mBindingIntent)
         }
