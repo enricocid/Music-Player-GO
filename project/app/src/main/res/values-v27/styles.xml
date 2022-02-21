@@ -1,4 +1,5 @@
 <resources>
+
     <style name="BaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <item name="indicatorFastScrollerStyle">@style/FastScrollerColorFull</item>

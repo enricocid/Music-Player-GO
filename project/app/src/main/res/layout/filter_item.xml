@@ -24,9 +24,9 @@
 
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/checkbox"
+        style="@style/Widget.App.CheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/Widget.App.CheckBox"
         android:checked="true"
         android:clickable="false" />
 </LinearLayout>

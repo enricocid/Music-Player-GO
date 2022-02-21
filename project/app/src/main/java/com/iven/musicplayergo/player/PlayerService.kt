@@ -235,9 +235,7 @@ class PlayerService : Service() {
                             } else {
                                 mediaPlayerHolder.resumeOrPause()
                             }
-
                             mLastTimeClick = eventTime
-
                             return true
                         }
                         KeyEvent.KEYCODE_MEDIA_CLOSE, KeyEvent.KEYCODE_MEDIA_STOP -> {

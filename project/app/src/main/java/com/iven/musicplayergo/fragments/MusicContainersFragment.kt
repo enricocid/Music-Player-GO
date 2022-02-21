@@ -272,7 +272,6 @@ class MusicContainersFragment : Fragment(),
                 mSorting = it.order
 
                 mList = getSortedItemKeys()
-
                 setListDataSource(mList)
 
                 mSortMenuItem.setTitleColor(

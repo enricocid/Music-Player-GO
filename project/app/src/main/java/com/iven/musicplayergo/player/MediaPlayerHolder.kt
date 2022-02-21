@@ -271,11 +271,11 @@ class MediaPlayerHolder:
     }
 
     fun onSaveEqualizerSettings(selectedPreset: Int, bassBoost: Short, virtualizer: Short) {
-        mEqualizer?.let { equalizer ->
+        mEqualizer?.run {
             goPreferences.savedEqualizerSettings = SavedEqualizerSettings(
-                equalizer.enabled,
+                enabled,
                 selectedPreset,
-                equalizer.properties.bandLevels.toList(),
+                properties.bandLevels.toList(),
                 bassBoost,
                 virtualizer
             )
@@ -344,10 +344,7 @@ class MediaPlayerHolder:
             isQueue != null && !canRestoreQueue -> manageQueue(isNext = true)
             canRestoreQueue -> manageRestoredQueue()
             else -> {
-                if (mPlayingSongs?.indexOf(currentSong) == mPlayingSongs?.size?.minus(
-                        1
-                    )
-                ) {
+                if (mPlayingSongs?.indexOf(currentSong) == mPlayingSongs?.size?.minus(1)) {
                     if (goPreferences.onListEnded == GoConstants.CONTINUE) {
                         skip(isNext = true)
                     } else {
@@ -465,9 +462,7 @@ class MediaPlayerHolder:
             }
 
             updatePlaybackStatus(updateUI = true)
-
             startForeground()
-
             isPlay = true
         }
     }
@@ -745,7 +740,6 @@ class MediaPlayerHolder:
                         )
                     }
                 }
-
                 mBassBoost?.setStrength(bassBoost)
                 mVirtualizer?.setStrength(virtualizer)
             }
@@ -1038,7 +1032,7 @@ class MediaPlayerHolder:
 
         /**
          * Handles "media button" which is how external applications
-         * comunicate with our app
+         * communicate with our app
          */
         private fun handleMediaButton(intent: Intent) {
             val event: KeyEvent =
