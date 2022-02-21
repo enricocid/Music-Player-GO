@@ -4,7 +4,6 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.iven.musicplayergo.R
@@ -48,20 +47,14 @@ class FiltersAdapter(val activity: Activity) :
 
         fun bindItems(itemFilter: String?) {
 
-            itemView.run {
-
-                val checkBox = findViewById<MaterialCheckBox>(R.id.checkbox)
-                val filter = findViewById<TextView>(R.id.filter).apply {
-                    text = itemFilter
-                }
-
-                setOnClickListener {
-                    checkBox.isChecked = !checkBox.isChecked
-                    if (checkBox.isChecked) {
-                        filter.setTextColor(mDefaultTextColor)
+            (itemView as MaterialCheckBox).run {
+                text = itemFilter
+                setOnCheckedChangeListener { _, b ->
+                    if (b) {
+                        setTextColor(mDefaultTextColor)
                         mItemsToRemove.remove(itemFilter)
                     } else {
-                        filter.setTextColor(mDisabledColor)
+                        setTextColor(mDisabledColor)
                         mItemsToRemove.add(itemFilter!!)
                     }
                 }

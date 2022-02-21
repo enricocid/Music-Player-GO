@@ -1,32 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.checkbox.MaterialCheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/filter"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
-    android:background="?android:attr/selectableItemBackground"
-    android:gravity="center"
-    android:orientation="horizontal"
-    tools:viewBindingIgnore="true">
-
-    <TextView
-        android:id="@+id/filter"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ellipsize="marquee"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:padding="16dp"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        android:textColor="?android:attr/textColorPrimary" />
-
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/checkbox"
-        style="@style/Widget.App.CheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="true"
-        android:clickable="false" />
-</LinearLayout>
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:checked="true"
+    android:ellipsize="marquee"
+    android:marqueeRepeatLimit="marquee_forever"
+    android:padding="16dp"
+    android:singleLine="true"
+    android:textColor="?android:attr/textColorPrimary"
+    app:buttonTint="@color/checkbox_tint"
+    tools:viewBindingIgnore="true" />
