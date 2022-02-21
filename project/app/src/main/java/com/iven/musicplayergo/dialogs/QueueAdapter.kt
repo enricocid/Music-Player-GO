@@ -27,6 +27,9 @@ class QueueAdapter(
 
     var onQueueCleared: (() -> Unit)? = null
 
+    private val mDefaultTextColor =
+        ThemeHelper.resolveColorAttr(ctx, android.R.attr.textColorPrimary)
+
     fun swapSelectedSong(song: Music?) {
         notifyItemChanged(queueSongs.indexOf(mSelectedSong))
         mSelectedSong = song
@@ -64,11 +67,10 @@ class QueueAdapter(
                 subtitle.text =
                     context.getString(R.string.artist_and_album, song.artist, song.album)
 
-                val defaultTextColor = title.currentTextColor
                 title.setTextColor(if (mediaPlayerHolder.isQueue != null && mediaPlayerHolder.isQueueStarted && queueSongs.indexOf(mSelectedSong) == absoluteAdapterPosition) {
                     ThemeHelper.resolveThemeAccent(ctx)
                 } else {
-                    defaultTextColor
+                    mDefaultTextColor
                 })
 
                 setOnClickListener {

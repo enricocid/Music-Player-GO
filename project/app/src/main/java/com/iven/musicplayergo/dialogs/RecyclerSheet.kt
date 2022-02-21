@@ -193,7 +193,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                                 // to ensure full dialog's height
                                 _modalRvBinding?.root?.afterMeasured {
                                     dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)?.let { bs ->
-                                        BottomSheetBehavior.from(bs).peekHeight = height
+                                        BottomSheetBehavior.from(bs).state = BottomSheetBehavior.STATE_EXPANDED
                                         val indexOfCurrentSong = queueSongs.indexOf(currentSong)
                                         val layoutManager = modalRv.layoutManager as LinearLayoutManager
                                         layoutManager.scrollToPositionWithOffset(indexOfCurrentSong, 0)
