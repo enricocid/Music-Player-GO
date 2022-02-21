@@ -72,7 +72,6 @@ dependencies {
 
 // Support
     //https://developer.android.com/jetpack/androidx/versions
-    implementation 'androidx.annotation:annotation:1.3.0'
     implementation 'androidx.browser:browser:1.4.0'
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.media:media:1.5.0'
