@@ -111,9 +111,4 @@
     <style name="ImageView.Cover" parent="">
         <item name="cornerSize">8dp</item>
     </style>
-
-    <!-- Style for CheckBox -->
-    <style name="Widget.App.CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
-        <item name="buttonTint">@color/checkbox_tint</item>
-    </style>
 </resources>
