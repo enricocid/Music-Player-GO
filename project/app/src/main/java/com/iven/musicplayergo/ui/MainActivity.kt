@@ -1,6 +1,9 @@
 package com.iven.musicplayergo.ui
 
-import android.content.*
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.media.audiofx.BassBoost
@@ -52,7 +55,7 @@ import dev.chrisbanes.insetter.windowInsetTypesOf
 
 private const val SHUFFLE_CUT_OFF = 250
 
-class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterface, DialogInterface.OnDismissListener {
+class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterface {
 
     // View binding classes
     private lateinit var mMainActivityBinding: MainActivityBinding
@@ -216,10 +219,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 }
             }
         }
-    }
-
-    override fun onDismiss(p0: DialogInterface?) {
-        TODO("Not yet implemented")
     }
 
     // Manage request permission result
