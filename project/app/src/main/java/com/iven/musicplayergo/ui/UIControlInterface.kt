@@ -5,6 +5,7 @@ interface UIControlInterface {
     fun onOpenNewDetailsFragment()
     fun onArtistOrFolderSelected(artistOrFolder: String, launchedBy: String)
     fun onFavoritesUpdated(clear: Boolean)
+    fun onFavoriteAddedOrRemoved()
     fun onCloseActivity()
     fun onAddToFilter(stringToFilter: String?)
     fun onDenyPermission()

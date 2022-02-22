@@ -31,8 +31,6 @@ import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
-import java.util.*
-import kotlin.concurrent.schedule
 
 
 /**
@@ -43,16 +41,12 @@ import kotlin.concurrent.schedule
 class EqFragment : Fragment() {
 
     private var _eqFragmentBinding: FragmentEqualizerBinding? = null
-
-    private lateinit var mEqualizer: Triple<Equalizer?, BassBoost?, Virtualizer?>
-
+    private val mSliders = mutableMapOf<Slider?, TextView?>()
     private lateinit var mEqAnimator: Animator
 
+    private var mEqualizer: Triple<Equalizer?, BassBoost?, Virtualizer?>? = null
     private val mPresetsList = mutableListOf<String>()
-
     private var mSelectedPreset = 0
-
-    private val mSliders = mutableMapOf<Slider?, TextView?>()
 
     private lateinit var mUIControlInterface: UIControlInterface
     private lateinit var mMediaControlInterface: MediaControlInterface
@@ -96,26 +90,24 @@ class EqFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (!::mEqualizer.isInitialized) {
-            mEqualizer = mMediaControlInterface.onGetEqualizer()
-        }
+        mEqualizer = mMediaControlInterface.onGetMediaPlayerHolder()?.getEqualizer()
 
         _eqFragmentBinding?.run {
             sliderBass.addOnChangeListener { _, value, fromUser ->
                 // Responds to when slider's value is changed
                 if (fromUser) {
-                    mEqualizer.second?.setStrength(value.toInt().toShort())
+                    mEqualizer?.second?.setStrength(value.toInt().toShort())
                 }
             }
             sliderVirt.addOnChangeListener { _, value, fromUser ->
                 // Responds to when slider's value is changed
                 if (fromUser) {
-                    mEqualizer.third?.setStrength(value.toInt().toShort())
+                    mEqualizer?.third?.setStrength(value.toInt().toShort())
                 }
             }
         }
 
-        mEqualizer.first?.let { equalizer ->
+        mEqualizer?.first?.let { equalizer ->
             (0 until equalizer.numberOfPresets).mapTo(mPresetsList) { preset ->
                 equalizer.getPresetName(preset.toShort())
             }
@@ -126,7 +118,7 @@ class EqFragment : Fragment() {
 
     private fun saveEqSettings() {
         _eqFragmentBinding?.run {
-            mMediaControlInterface.onSaveEqualizerSettings(
+            mMediaControlInterface.onGetMediaPlayerHolder()?.onSaveEqualizerSettings(
                 mSelectedPreset,
                 sliderBass.value.toInt().toShort(),
                 sliderVirt.value.toInt().toShort()
@@ -164,7 +156,7 @@ class EqFragment : Fragment() {
                 )
         }
 
-        mEqualizer.first?.run {
+        mEqualizer?.first?.run {
             val bandLevelRange = bandLevelRange
             val minBandLevel = bandLevelRange.first()
             val maxBandLevel = bandLevelRange[1]
@@ -224,13 +216,12 @@ class EqFragment : Fragment() {
             val equalizerSwitchMaterial =
                 menu.findItem(R.id.equalizerSwitch).actionView as SwitchMaterial
 
-            mEqualizer.first?.let { equalizer ->
+            mEqualizer?.first?.let { equalizer ->
                 equalizerSwitchMaterial.isChecked = equalizer.enabled
             }
+
             equalizerSwitchMaterial.setOnCheckedChangeListener { _, isChecked ->
-                Timer().schedule(1000) {
-                    mMediaControlInterface.onEnableEqualizer(isEnabled = isChecked)
-                }
+                mMediaControlInterface.onGetMediaPlayerHolder()?.setEqualizerEnabled(isEnabled = isChecked)
             }
 
             with(menu.findItem(R.id.miSpinner).actionView as Spinner) {
@@ -244,9 +235,11 @@ class EqFragment : Fragment() {
 
                 onItemSelectedListener = object : OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                        mSelectedPreset = position
-                        mEqualizer.first?.usePreset(mSelectedPreset.toShort())
-                        updateBandLevels(isPresetChanged = true)
+                        if (mSelectedPreset != position) {
+                            mSelectedPreset = position
+                            mEqualizer?.first?.usePreset(mSelectedPreset.toShort())
+                            updateBandLevels(isPresetChanged = true)
+                        }
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                     }
@@ -256,11 +249,12 @@ class EqFragment : Fragment() {
     }
 
     private fun updateBandLevels(isPresetChanged: Boolean) {
+
         try {
             val iterator = mSliders.iterator().withIndex()
             while (iterator.hasNext()) {
                 val item = iterator.next()
-                mEqualizer.first?.let { equalizer ->
+                mEqualizer?.first?.let { equalizer ->
                     item.value.key?.let { slider ->
                         slider.value = equalizer.getBandLevel(item.index.toShort()).toFloat()
                     }
@@ -272,7 +266,7 @@ class EqFragment : Fragment() {
                     goPreferences.savedEqualizerSettings?.let { eqSettings ->
                         sliderBass.value = eqSettings.bassBoost.toFloat()
                     }
-                    mEqualizer.third?.let { virtualizer ->
+                    mEqualizer?.third?.let { virtualizer ->
                         sliderVirt.value = virtualizer.roundedStrength.toFloat()
                     }
                 }

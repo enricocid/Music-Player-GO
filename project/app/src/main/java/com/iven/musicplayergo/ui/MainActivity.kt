@@ -6,9 +6,6 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.media.audiofx.BassBoost
-import android.media.audiofx.Equalizer
-import android.media.audiofx.Virtualizer
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
@@ -788,10 +785,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
-    override fun onChangePlaybackSpeed(speed: Float) {
-        mMediaPlayerHolder.setPlaybackSpeed(speed)
-    }
-
     private fun saveSongPosition() {
         if (isMediaPlayerHolder) {
             val song = mMediaPlayerHolder.currentSong
@@ -849,16 +842,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             goPreferences.latestPlaybackSpeed
         } else {
             1.0F
-        })
-    }
-
-    override fun onPreciseVolumeToggled() {
-        //avoid having user stuck at lowered volume without knowing why
-        mMediaPlayerHolder.setPreciseVolume(if (!goPreferences.isPreciseVolumeEnabled) {
-            goPreferences.latestVolume = mMediaPlayerHolder.currentVolumeInPercent
-            100
-        } else {
-            goPreferences.latestVolume
         })
     }
 
@@ -1145,27 +1128,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
-    override fun onHandleFocusPref() {
-        if (isMediaPlayerHolder) {
-            if (goPreferences.isFocusEnabled) {
-                mMediaPlayerHolder.tryToGetAudioFocus()
-            } else {
-                mMediaPlayerHolder.giveUpAudioFocus()
-            }
-        }
-    }
-
     override fun onHandleCoverOptionsUpdate() {
         if (isMediaPlayerHolder) {
             mMediaPlayerHolder.updateMediaSessionMetaData()
         }
         mAlbumsFragment?.onUpdateCoverOption()
-    }
-
-    override fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean) {
-        if (isMediaPlayerHolder) {
-            mMediaPlayerHolder.onHandleNotificationUpdate(isAdditionalActionsChanged = isAdditionalActionsChanged)
-        }
     }
 
     override fun onOpenNewDetailsFragment() {
@@ -1251,21 +1218,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         mMediaPlayerHolder
     } else {
         null
-    }
-
-    override fun onGetEqualizer(): Triple<Equalizer?, BassBoost?, Virtualizer?> =
-        mMediaPlayerHolder.getEqualizer()
-
-    override fun onEnableEqualizer(isEnabled: Boolean) {
-        mMediaPlayerHolder.setEqualizerEnabled(isEnabled = isEnabled)
-    }
-
-    override fun onSaveEqualizerSettings(
-        selectedPreset: Int,
-        bassBoost: Short,
-        virtualizer: Short
-    ) {
-        mMediaPlayerHolder.onSaveEqualizerSettings(selectedPreset, bassBoost, virtualizer)
     }
 
     private fun openEqualizer() {

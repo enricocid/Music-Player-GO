@@ -27,7 +27,7 @@ class FavoritesAdapter(private val activity: Activity) :
 
     // interfaces
     private val mMediaControlInterface = activity as MediaControlInterface
-    private val mUiControlInterface = activity as UIControlInterface
+    private val mUIControlInterface = activity as UIControlInterface
 
     var onFavoritesCleared: (() -> Unit)? = null
 
@@ -129,8 +129,8 @@ class FavoritesAdapter(private val activity: Activity) :
                         if (mFavorites.isNullOrEmpty()) {
                             onFavoritesCleared?.invoke()
                         }
-                        mUiControlInterface.onFavoritesUpdated(clear = false)
-                        mMediaControlInterface.onFavoriteAddedOrRemoved()
+                        mUIControlInterface.onFavoritesUpdated(clear = false)
+                        mUIControlInterface.onFavoriteAddedOrRemoved()
                     }
                 }
                 .setNegativeButton(R.string.no, null)

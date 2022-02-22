@@ -722,27 +722,25 @@ class MediaPlayerHolder:
     }
 
     private fun restoreCustomEqSettings() {
-        mediaPlayer.run {
-            val savedEqualizerSettings = goPreferences.savedEqualizerSettings
 
-            savedEqualizerSettings?.let { (enabled, preset, bandSettings, bassBoost, virtualizer) ->
+        goPreferences.savedEqualizerSettings?.let {
+                (enabled, preset, bandSettings, bassBoost, virtualizer) ->
 
-                setEqualizerEnabled(isEnabled = enabled)
+            setEqualizerEnabled(isEnabled = enabled)
 
-                mEqualizer?.usePreset(preset.toShort())
+            mEqualizer?.usePreset(preset.toShort())
 
-                bandSettings?.iterator()?.withIndex()?.let { iterate ->
-                    while (iterate.hasNext()) {
-                        val item = iterate.next()
-                        mEqualizer?.setBandLevel(
-                            item.index.toShort(),
-                            item.value.toInt().toShort()
-                        )
-                    }
+            bandSettings?.iterator()?.withIndex()?.let { iterate ->
+                while (iterate.hasNext()) {
+                    val item = iterate.next()
+                    mEqualizer?.setBandLevel(
+                        item.index.toShort(),
+                        item.value.toInt().toShort()
+                    )
                 }
-                mBassBoost?.setStrength(bassBoost)
-                mVirtualizer?.setStrength(virtualizer)
             }
+            mBassBoost?.setStrength(bassBoost)
+            mVirtualizer?.setStrength(virtualizer)
         }
     }
 

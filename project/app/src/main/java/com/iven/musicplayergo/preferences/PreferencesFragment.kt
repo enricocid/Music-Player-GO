@@ -96,18 +96,31 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            getString(R.string.precise_volume_pref) -> mMediaControlInterface.onPreciseVolumeToggled()
+            getString(R.string.precise_volume_pref) -> mMediaControlInterface.onGetMediaPlayerHolder()?.run {
+                setPreciseVolume(if (!goPreferences.isPreciseVolumeEnabled) {
+                    goPreferences.latestVolume = currentVolumeInPercent
+                    100
+                } else {
+                    goPreferences.latestVolume
+                })
+            }
             getString(R.string.playback_vel_pref) -> mMediaControlInterface.onPlaybackSpeedToggled()
             getString(R.string.theme_pref) -> {
                 mThemePreference?.icon = ContextCompat.getDrawable(requireActivity(), ThemeHelper.resolveThemeIcon(requireActivity()))
                 mUIControlInterface.onAppearanceChanged(isThemeChanged = true)
             }
-            getString(R.string.focus_pref) -> mMediaControlInterface.onHandleFocusPref()
-            getString(R.string.covers_pref) -> {
-                mMediaControlInterface.onHandleCoverOptionsUpdate()
-                mMediaControlInterface.onHandleNotificationUpdate(isAdditionalActionsChanged = false)
+            getString(R.string.focus_pref) -> mMediaControlInterface.onGetMediaPlayerHolder()?.run {
+                if (goPreferences.isFocusEnabled) {
+                    tryToGetAudioFocus()
+                } else {
+                    giveUpAudioFocus()
+                }
             }
-            getString(R.string.notif_actions_pref) -> mMediaControlInterface.onHandleNotificationUpdate(true)
+            getString(R.string.covers_pref) -> {
+                mMediaControlInterface.onGetMediaPlayerHolder()?.onHandleNotificationUpdate(isAdditionalActionsChanged = false)
+                mMediaControlInterface.onHandleCoverOptionsUpdate()
+            }
+            getString(R.string.notif_actions_pref) -> mMediaControlInterface.onGetMediaPlayerHolder()?.onHandleNotificationUpdate(true)
             getString(R.string.song_visual_pref) -> mMediaControlInterface.onUpdatePlayingAlbumSongs(null)
         }
     }

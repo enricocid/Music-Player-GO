@@ -105,7 +105,7 @@ object DialogHelper {
                                 0,
                                 launchedBy
                             )
-                            mediaControlInterface.onFavoriteAddedOrRemoved()
+                            (activity as UIControlInterface).onFavoriteAddedOrRemoved()
                         }
                         else -> mediaControlInterface.onAddToQueue(song)
                     }
@@ -146,7 +146,7 @@ object DialogHelper {
                 if (goPreferences.playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY) {
                     menu.findItem(getSelectedPlaybackItem(playbackSpeed)).setTitleColor(ThemeHelper.resolveThemeAccent(activity))
                 }
-                (activity as MediaControlInterface).onChangePlaybackSpeed(playbackSpeed)
+                (activity as MediaControlInterface).onGetMediaPlayerHolder()?.setPlaybackSpeed(playbackSpeed)
                 return@setOnMenuItemClickListener true
             }
             show()

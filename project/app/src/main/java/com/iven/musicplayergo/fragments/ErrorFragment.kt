@@ -75,17 +75,17 @@ class ErrorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _errorFragmentBinding?.let { _binding ->
-            _binding.errorMessage.text = getString(mErrorString)
-            _binding.errorIcon.setImageResource(mErrorIcon)
-            _binding.root.setOnClickListener { mUIControlInterface.onCloseActivity() }
+        _errorFragmentBinding?.run {
+            errorMessage.text = getString(mErrorString)
+            errorIcon.setImageResource(mErrorIcon)
+            root.setOnClickListener { mUIControlInterface.onCloseActivity() }
 
-            _binding.errorToolbar.setNavigationOnClickListener {
+            errorToolbar.setNavigationOnClickListener {
                 mUIControlInterface.onCloseActivity()
             }
 
             if (goPreferences.isAnimations) {
-                _binding.root.afterMeasured {
+                root.afterMeasured {
                     createCircularReveal(isErrorFragment = true, show = true).doOnEnd {
                         if (!VersioningHelper.isOreoMR1()) {
                             val red = ContextCompat.getColor(requireActivity(), R.color.red)
