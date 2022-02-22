@@ -20,7 +20,7 @@ class ActiveTabsAdapter(private val ctx: Context) :
     var availableItems = goPreferences.activeTabsDef.toMutableList()
     private val mActiveItems = goPreferences.activeTabs.toMutableList()
 
-    private val mDisabledColor = ThemeHelper.resolveColorAttr(ctx, android.R.attr.textColorTertiary)
+    private val mDisabledColor = ThemeHelper.resolveColorAttr(ctx, android.R.attr.colorButtonNormal)
     private val mDefaultTextColor = ThemeHelper.resolveColorAttr(ctx, android.R.attr.textColorPrimary)
 
     fun getUpdatedItems() = availableItems.apply {

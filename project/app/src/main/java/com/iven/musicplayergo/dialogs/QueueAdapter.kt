@@ -10,6 +10,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.startSongFromQueue
 import com.iven.musicplayergo.extensions.toName
+import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.Music
@@ -108,6 +109,9 @@ class QueueAdapter(
                             mediaPlayerInterface.onQueueStartedOrEnded(started = false)
                             onQueueCleared?.invoke()
                         }
+
+                        // update queue songs
+                        goPreferences.queue = queueSongs
                     }
                 }
                 .setNegativeButton(R.string.no, null)

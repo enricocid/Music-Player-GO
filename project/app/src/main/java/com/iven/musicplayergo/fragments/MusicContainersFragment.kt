@@ -88,7 +88,7 @@ class MusicContainersFragment : Fragment(),
                 deviceMusic.observe(viewLifecycleOwner) { returnedMusic ->
                     if (!returnedMusic.isNullOrEmpty()) {
                         mSorting = getSortingMethodFromPrefs()
-                        mList = getSortedItemKeys()
+                        mList = getSortedList()
                         finishSetup()
                     }
                 }
@@ -140,7 +140,7 @@ class MusicContainersFragment : Fragment(),
         }
     }
 
-    private fun getSortedItemKeys(): MutableList<String>? {
+    private fun getSortedList(): MutableList<String>? {
         return when (mLaunchedBy) {
             GoConstants.ARTIST_VIEW ->
                 ListsHelper.getSortedList(
@@ -187,7 +187,6 @@ class MusicContainersFragment : Fragment(),
     private fun setListDataSource(selectedList: List<String>?) {
         if (!selectedList.isNullOrEmpty()) {
             mListAdapter.swapList(selectedList)
-            //mDataSource.set(selectedList)
         }
     }
 
@@ -208,7 +207,7 @@ class MusicContainersFragment : Fragment(),
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        setListDataSource(ListsHelper.processQueryForStringsLists(newText, mList) ?: mList)
+        setListDataSource(ListsHelper.processQueryForStringsLists(newText, getSortedList()) ?: mList)
         return false
     }
 
@@ -271,7 +270,7 @@ class MusicContainersFragment : Fragment(),
 
                 mSorting = it.order
 
-                mList = getSortedItemKeys()
+                mList = getSortedList()
                 setListDataSource(mList)
 
                 mSortMenuItem.setTitleColor(

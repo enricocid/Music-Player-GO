@@ -20,7 +20,7 @@ class FiltersAdapter(val activity: Activity) :
 
     private val mDisabledColor = ThemeHelper.resolveColorAttr(
         activity,
-        android.R.attr.textColorTertiary
+        android.R.attr.colorButtonNormal
     )
 
     private val mDefaultTextColor = ThemeHelper.resolveColorAttr(activity, android.R.attr.textColorPrimary)

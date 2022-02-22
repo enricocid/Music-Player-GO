@@ -244,7 +244,13 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        setMusicDataSource(ListsHelper.processQueryForMusic(newText, mAllMusic) ?: mAllMusic)
+        setMusicDataSource(
+            ListsHelper.processQueryForMusic(newText,
+                ListsHelper.getSortedMusicListForAllMusic(
+                    mSorting,
+                    mMusicViewModel.deviceMusicFiltered
+                )
+            ) ?: mAllMusic)
         return false
     }
 

@@ -462,7 +462,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onQueryTextChange(newText: String?): Boolean {
         setSongsDataSource(
-            ListsHelper.processQueryForMusic(newText, mSongsList)
+            ListsHelper.processQueryForMusic(newText, getSongSource())
                 ?: mSongsList,
             updateSongs = false,
             updateAdapter = true
