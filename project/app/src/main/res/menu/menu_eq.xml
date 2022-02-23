@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:id="@+id/miSpinner"
-        android:title="@string/equalizer"
-        app:actionViewClass="androidx.appcompat.widget.AppCompatSpinner"
+        android:id="@+id/presets"
+        android:icon="@drawable/ic_round_tune"
+        android:title="@string/equalizer_presets"
         app:showAsAction="always" />
 
     <item

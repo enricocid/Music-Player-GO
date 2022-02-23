@@ -11,6 +11,7 @@
     <string name="folders">Cartelle</string>
     <string name="albums">Album</string>
     <string name="equalizer">Equalizzatore</string>
+    <string name="equalizer_presets">Preimpostazioni</string>
     <string name="equalizer_bb">Potenziamento bassi</string>
     <string name="equalizer_v">Suono surround</string>
     <string name="queue">Coda</string>

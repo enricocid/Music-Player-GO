@@ -15,7 +15,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/windowBackground"
         android:elevation="2dp"
-        android:theme="@style/ToolbarStyle"
+        android:theme="@style/ToolbarStyle.Eq"
         app:collapseIcon="@drawable/ic_navigate_before"
         app:navigationIcon="@drawable/ic_navigate_before"
         app:title="@string/eq"

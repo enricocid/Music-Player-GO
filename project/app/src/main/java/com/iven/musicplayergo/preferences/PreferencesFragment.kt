@@ -120,7 +120,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 mMediaControlInterface.onGetMediaPlayerHolder()?.onHandleNotificationUpdate(isAdditionalActionsChanged = false)
                 mMediaControlInterface.onHandleCoverOptionsUpdate()
             }
-            getString(R.string.notif_actions_pref) -> mMediaControlInterface.onGetMediaPlayerHolder()?.onHandleNotificationUpdate(true)
+            getString(R.string.notif_actions_pref) -> mMediaControlInterface.onGetMediaPlayerHolder()?.onHandleNotificationUpdate(isAdditionalActionsChanged = true)
             getString(R.string.song_visual_pref) -> mMediaControlInterface.onUpdatePlayingAlbumSongs(null)
         }
     }

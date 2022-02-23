@@ -96,6 +96,13 @@
         <item name="popupMenuBackground">@drawable/popupmenu_background</item>
     </style>
 
+    <!-- Style for equalizer toolbar -->
+    <style name="ToolbarStyle.Eq" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="popupMenuBackground">@drawable/popupmenu_background</item>
+        <item name="android:paddingRight">4dp</item>
+        <item name="android:paddingLeft">4dp</item>
+    </style>
+
     <!-- Style for search view -->
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView.ActionBar">
         <item name="searchIcon">@drawable/ic_search</item>

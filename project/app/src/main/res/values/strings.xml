@@ -19,6 +19,7 @@
 
     <!-- Equalizer -->
     <string name="equalizer">Equalizer</string>
+    <string name="equalizer_presets">Presets</string>
     <string name="equalizer_bb">Bass boost</string>
     <string name="equalizer_v">Surround sound</string>
 

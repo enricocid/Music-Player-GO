@@ -10,13 +10,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
@@ -224,28 +221,26 @@ class EqFragment : Fragment() {
                 mMediaControlInterface.onGetMediaPlayerHolder()?.setEqualizerEnabled(isEnabled = isChecked)
             }
 
-            with(menu.findItem(R.id.miSpinner).actionView as Spinner) {
-
-                // set Spinner Adapter
-                val spinnerAdapter = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_dropdown_item, mPresetsList)
-                spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                adapter = spinnerAdapter
-
-                setSelection(mSelectedPreset)
-
-                onItemSelectedListener = object : OnItemSelectedListener {
-                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                        if (mSelectedPreset != position) {
-                            mSelectedPreset = position
-                            mEqualizer?.first?.usePreset(mSelectedPreset.toShort())
-                            updateBandLevels(isPresetChanged = true)
-                        }
-                    }
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                    }
+            setOnMenuItemClickListener {
+                if (it.itemId == R.id.presets) {
+                    startPresetChooser()
                 }
+                return@setOnMenuItemClickListener true
             }
         }
+    }
+
+    private fun startPresetChooser() {
+        val items = mPresetsList.toTypedArray()
+        MaterialAlertDialogBuilder(requireActivity())
+            .setTitle(R.string.equalizer_presets)
+            .setItems(items) { _, which ->
+                // Respond to item chosen
+                mSelectedPreset = which
+                mEqualizer?.first?.usePreset(mSelectedPreset.toShort())
+                updateBandLevels(isPresetChanged = true)
+            }
+            .show()
     }
 
     private fun updateBandLevels(isPresetChanged: Boolean) {
