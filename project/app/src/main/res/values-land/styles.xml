@@ -13,8 +13,7 @@
     </style>
 
     <style name="ToolbarStyle.Title" parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title">
-        <item name="android:textSize">20sp
-        </item> <!-- Default for portrait is 20sp and for landscape 14sp-->
+        <item name="android:textSize">20sp</item> <!-- Default for portrait is 20sp and for landscape 14sp-->
         <item name="android:textStyle">bold</item>
     </style>
 </resources>
