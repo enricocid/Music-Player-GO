@@ -93,4 +93,5 @@
     <string name="pause_on_end">播放完成后暂停。</string>
     <string name="error_fs_not_allowed_sum">错误！关闭针对本应用的电池优化</string>
     <string name="error_fs_not_allowed">出错了！可能是电池优化导致媒体播放服务停止。请考虑在系统设置中禁用它：应用 &gt; 所有应用 &gt; Music Player GO &gt; 电池 &gt; 无限制</string>
+    <string name="equalizer_presets">预设</string>
 </resources>
