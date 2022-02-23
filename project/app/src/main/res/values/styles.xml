@@ -32,12 +32,9 @@
 
     <!-- Custom dialogs -->
     <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text
-        </item>
-        <item name="android:background">@color/dialogsBackground</item>
-        <item name="shapeAppearanceOverlay">
-            @style/ShapeAppearanceOverlay.MaterialAlertDialog.Rounded
-        </item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
+        <item name="android:backgroundTint">@color/dialogsBackground</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialAlertDialog.Rounded</item>
     </style>
 
     <style name="ShapeAppearanceOverlay.MaterialAlertDialog.Rounded" parent="">
@@ -46,16 +43,14 @@
 
     <!-- Custom dialogs title theming -->
     <style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6
-        </item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6</item>
     </style>
 
     <!-- Settings - alert dialogs -->
-    <style name="Options.DialogsStyle" parent="ThemeOverlay.App.MaterialAlertDialog">
+    <style name="Options.DialogsStyle" parent="ThemeOverlay.AppCompat.Dialog">
         <item name="colorBackgroundFloating">@color/dialogsBackground</item>
         <item name="dialogCornerRadius">@dimen/md_corner_radius</item>
-        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text
-        </item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
     </style>
 
     <style name="SpinnerMenu" parent="Widget.AppCompat.Spinner">

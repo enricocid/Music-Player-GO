@@ -227,6 +227,7 @@ class EqFragment : Fragment() {
                 }
                 return@setOnMenuItemClickListener true
             }
+            subtitle = mPresetsList[mSelectedPreset]
         }
     }
 
@@ -239,6 +240,8 @@ class EqFragment : Fragment() {
                 mSelectedPreset = which
                 mEqualizer?.first?.usePreset(mSelectedPreset.toShort())
                 updateBandLevels(isPresetChanged = true)
+
+                _eqFragmentBinding?.eqToolbar?.subtitle = mPresetsList[mSelectedPreset]
             }
             .show()
     }
