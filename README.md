@@ -1,7 +1,7 @@
 <h1 align="center">Music Player GO</h1>
 
 <p align="center">
-<img width="400" src="art8.gif">
+<img width="400" src="art9.gif">
 </p>
 
 <p align="center">
@@ -75,7 +75,7 @@ Help us to translate the project on [Hosted Weblate](https://hosted.weblate.org/
 Consider sending some [love](https://weblate.org/donate/new/) to the Weblate guys who made easy translations possible. :)
 
 <a href="https://hosted.weblate.org/engage/music-player-go/">
-  <img src="https://hosted.weblate.org/widgets/music-player-go/-/88x31-white.png" />
+<img src="https://hosted.weblate.org/widgets/music-player-go/-/horizontal-auto.svg" alt="Stato traduzione" />
 </a>
 
 

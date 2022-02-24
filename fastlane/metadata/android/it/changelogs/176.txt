@@ -1,0 +1,9 @@
+- Sostituite/rimosse vecchie librerie
+- Corretto audio focus quando si usano i messaggi vocali (e.g. Telegram)
+  Grazie Decim
+- Corretto ripristino impostazioni equalizzatore
+- Controlli cuffie: doppio click pulsante pausa/riprendi per avanzare a traccia successiva
+- Corretto salvataggio canzoni quando l'app viene rimossa dai recenti
+- Aggiornate dipendenze
+- Miglioramento/pulizia codice
+- Aggiornamento traduzioni (grazie a tutti)

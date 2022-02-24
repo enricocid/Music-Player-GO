@@ -45,7 +45,7 @@ for [strings](https://github.com/enricocid/Music-Player-GO/pull/227), [readme](h
 
 - **Simon Gould** for having reported this [bug](https://github.com/enricocid/Music-Player-GO/commit/f95b81ce49b9f58418de4a416990ede732d9f715)
 
-- [**DECIM**](https://codeberg.org/quindecim) for this [bug](https://github.com/enricocid/Music-Player-GO/commit/c7dab08d86bf84c2ddb7c058bacdfc5dddb307db) report
+- [**DECIM**](https://codeberg.org/quindecim) for these bug reports: [0](https://github.com/enricocid/Music-Player-GO/commit/c7dab08d86bf84c2ddb7c058bacdfc5dddb307db), [1](https://github.com/enricocid/Music-Player-GO/commit/2a7f7a7270f43134d62baa24be78dffaac850749)
 
 - [**svgrepo.com**](https://www.svgrepo.com/) for the [compact disc](https://www.svgrepo.com/svg/181020/compact-disc-music) icon, opportunely modified (background color).
 This work is licensed under a [CC 0](https://creativecommons.org/share-your-work/public-domain/cc0/) license

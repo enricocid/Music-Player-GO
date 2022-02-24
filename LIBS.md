@@ -5,6 +5,7 @@
 
 | Name                                                        | Author                  |
 | ----------------------------------------------------------- | ------------------------- |
+| [Material components](https://github.com/material-components/material-components-android)                  | Google                       |
 | [Moshi](https://github.com/square/moshi)                  | [Square](https://square.github.io/)                       |
 | [Indicator Fast Scroll](https://github.com/reddit/IndicatorFastScroll)                  | [Reddit](https://github.com/reddit) - [Steven Schoen](https://github.com/DSteve595)                      |
 | [Insetter](https://github.com/chrisbanes/insetter)                  | [Chris Banes](https://github.com/chrisbanes)                       |
@@ -15,9 +16,8 @@
 
 | Name                                                        | Author                  |
 | ----------------------------------------------------------- | ------------------------- |
-| [GIF optimisation-script](https://github.com/mathieu-aubin/tempgif)                  | [Mathieu Aubin](https://github.com/mathieu-aubin)                       |
-| Snapmod <sup>[link 0](https://play.google.com/store/apps/details?id=cn.gavinliu.snapmod) - [link 1](https://apkpure.com/snapmod-better-screenshots-mockup-generator/cn.gavinliu.snapmod)</sup> | [Gavin Liu](https://play.google.com/store/apps/developer?id=Gavin+Liu)                       |
-[Toastcode](https://toastco.de/)                       |
+| [GIF optimisation script](https://github.com/mathieu-aubin/tempgif)                  | [Mathieu Aubin](https://github.com/mathieu-aubin)                       |
+| Snapmod <sup>[0](https://play.google.com/store/apps/details?id=cn.gavinliu.snapmod), [1](https://apkpure.com/snapmod-better-screenshots-mockup-generator/cn.gavinliu.snapmod)</sup> | [Gavin Liu](https://play.google.com/store/apps/developer?id=Gavin+Liu)                       |
 | [Round icons](https://material.io/tools/icons/?style=round) | Google                      |
 | [sort-alphabetical-descending-variant icon](https://materialdesignicons.com/icon/sort-alphabetical-descending-variant) | Austin Andrews [templatarian](https://twitter.com/templarian)                       |
 | [sort-alphabetical-ascending-variant icon](https://materialdesignicons.com/icon/sort-alphabetical-ascending-variant) | Michael Irigoyen [mririgo](https://twitter.com/mririgo)                       |

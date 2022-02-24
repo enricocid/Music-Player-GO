@@ -1,0 +1,9 @@
+- Replaced/remove outdated libraries
+- Fix audio focus when recording voice messages (e.g. Telegram)
+  Thanks Decim
+- Fix equalizer not being restored properly
+- Headset control buttons: double tap pause/resume to skip
+- Fix songs saving when removing the app from recents
+- Update dependencies
+- Code improvements/cleaning
+- Update translations (thanks everyone)
