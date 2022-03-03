@@ -93,4 +93,5 @@
     <string name="content_skip_next">Přeskočit na další</string>
     <string name="theme_pref_auto_title">Systémový</string>
     <string name="accent_pref_title">Barva</string>
+    <string name="equalizer_presets">Předvolby</string>
 </resources>
