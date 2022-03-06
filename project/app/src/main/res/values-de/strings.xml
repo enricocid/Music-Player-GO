@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="error_bad_id">Spiele zuerst ein Lied.</string>
-    <string name="error_no_browser">Installiere zuerst einen Webbrowser.</string>
+    <string name="error_bad_id">Zuerst ein Lied abspielen.</string>
+    <string name="error_no_browser">Ein Webbrowser muss installiert sein.</string>
     <string name="perm_rationale">Music Player GO Dateizugriff gewähren, um Musik abzuspielen.</string>
     <string name="artist_info">%1d Alben, %2d Lieder</string>
     <string name="yes">Ja</string>
@@ -9,7 +9,7 @@
     <string name="filter_pref_title">Filter</string>
     <string name="headset_pref_title">Kopfhöreranschluss-Verwaltung</string>
     <string name="focus_pref_title">Audiofokus-Verwaltung</string>
-    <string name="precise_volume_pref_title">Präzise Lautstärkenregelung</string>
+    <string name="precise_volume_pref_title">Präzise Lautstärkeregelung</string>
     <string name="fast_seeking_actions_pref_summary_on">Spulen</string>
     <string name="fast_seeking_actions_pref_summary_off">Schließen/Wiederholung</string>
     <string name="fast_seeking_actions_pref_title">Zusätzliche Benachrichtigungsaktionen</string>
@@ -33,14 +33,14 @@
     <string name="settings">Einstellungen</string>
     <string name="repeat_disabled">∞ Wiederholung aus.</string>
     <string name="repeat_loop_enabled">∞ Wiederholung an.</string>
-    <string name="repeat_enabled">Einmal Wiederholen an.</string>
+    <string name="repeat_enabled">Einmalige Wiederholen aktiv.</string>
     <string name="error_no_queue">Keine Lieder in der Wiedergabeliste.</string>
-    <string name="error_media_buttons">Etwas ist schief gelaufen :( Bitte starte die Wiedergabe in der App neu.</string>
+    <string name="error_media_buttons">Etwas ist schief gelaufen :( Bitte die Wiedergabe in der App neu starten.</string>
     <string name="error_unknown_unsupported">Etwas ging schief. :( Vielleicht wird das Format nicht unterstützt oder der Zugriff auf den Ordner ist nicht möglich (Nicht die Schuld der Anwendung!).</string>
-    <string name="error_not_ready">Es gab ein Problem beim Laden der Musikbibliothek. :( Nach dem Auswerfen der SD-Karte wird die Android MediaStore-Datenbank neu aufgebaut. Versuchen Sie es später erneut.</string>
-    <string name="error_no_music">Füge erst etwas Musik hinzu.</string>
-    <string name="error_no_favorites">Füge erst ein paar Favoriten hinzu.</string>
-    <string name="favorite_added">%1s (2%2s) den Lieblingsliedern zugefügt</string>
+    <string name="error_not_ready">Es gab ein Problem beim Laden der Musikbibliothek. :( Nach dem Auswerfen der SD-Karte wird die Android MediaStore-Datenbank neu aufgebaut. Später erneut versuchen.</string>
+    <string name="error_no_music">Es muss erst Musik hinzugefügt werden.</string>
+    <string name="error_no_favorites">Es müssen erst Favoriten hinzugefügt werden.</string>
+    <string name="favorite_added">%1s (2%2s) zu den Lieblingsliedern zugefügt</string>
     <string name="favorites">Favoriten</string>
     <string name="queue_song_remove">%1s aus Warteschlange entfernen\?</string>
     <string name="queue_song_add">%1s zur Warteschlange hinzugefügt!</string>
@@ -66,7 +66,7 @@
     <string name="favorites_clear">Lieblingslieder löschen\?</string>
     <string name="queue_songs_clear">Warteschlange leeren\?</string>
     <string name="on_close_activity">Wiedergabe beenden\?</string>
-    <string name="eq_pref_note_summary">Hinweis: Der System-Equalizer wird verwendet, außer du deaktivierst ihn in den Systemeinstellungen. :)</string>
+    <string name="eq_pref_note_summary">Hinweis: Der System-Equalizer wird verwendet, außer er ist in den Systemeinstellungen deaktiviert. :)</string>
     <string name="on_list_ended_pref_title">Wenn die Liste zu Ende ist…</string>
     <string name="error_eq">Fehler</string>
     <string name="error_list_ended">Liste zuende.</string>
@@ -89,8 +89,9 @@
     <string name="sorting_pref_album">Nach Album A-Z</string>
     <string name="favorites_save_time">Liedposition speichern</string>
     <string name="delete">Löschen</string>
-    <string name="error_fs_not_allowed_sum">Fehler! Schalte die Batterieoptimierung für MPGO aus</string>
+    <string name="error_fs_not_allowed_sum">Fehler! Batterieoptimierung für MPGO deaktivieren</string>
     <string name="error_fs_not_allowed">Etwas ist schiefgelaufen! :( Möglicherweise ist die Batterioptimierung aktiv, welche den Media Player Service stoppt. Versuche sie in den Systemeinstellungen zu deaktivieren: Apps &gt; Alle Apps &gt; Music Player GO &gt; Akku &gt; Akkunutzung im Hintergrund zulassen</string>
     <string name="pause_on_end">Am Ende pausieren an.</string>
     <string name="pause_on_end_disabled">Am Ende pausieren aus.</string>
+    <string name="equalizer_presets">Presets</string>
 </resources>
