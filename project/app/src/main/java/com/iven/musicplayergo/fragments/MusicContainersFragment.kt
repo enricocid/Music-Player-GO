@@ -1,7 +1,9 @@
 package com.iven.musicplayergo.fragments
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
@@ -270,7 +272,19 @@ class MusicContainersFragment : Fragment(),
 
             if (it.itemId == R.id.sleeptimer) {
 
-                Toast.makeText(context, "sleeptimer", Toast.LENGTH_SHORT).show()
+                AlertDialog.Builder(context)
+                    .setTitle("Sleep Timer\n When the music stops?")
+                    .setSingleChoiceItems(
+                        arrayOf("1 hour after", "2 hours after", "3 hours after", "4 hours after"),
+                        -1){ dialog, which -> }
+                    .setPositiveButton("Yes") { dialog, which ->
+                        Toast.makeText(context,
+                            String.format("stops %d hours after.",(dialog as AlertDialog).listView.checkedItemPosition + 1),
+                            Toast.LENGTH_SHORT).show()
+                    }
+                    .setNegativeButton("Cancel", { dialog, which -> })
+                    .create()
+                    .show()
 
             }
             else {
