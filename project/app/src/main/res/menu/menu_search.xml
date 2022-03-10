@@ -10,7 +10,12 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="collapseActionView|always"
         tools:ignore="AlwaysShowAction" />
-
+    <item
+        android:id="@+id/sleeptimer"
+        android:icon="@drawable/ic_auto"
+        android:title=""
+        app:showAsAction="collapseActionView|always"
+        tools:ignore="AlwaysShowAction" />
     <group android:id="@+id/sorting">
 
         <item
@@ -31,4 +36,5 @@
             android:title="@string/sorting_pref_descending"
             app:showAsAction="never" />
     </group>
+
 </menu>

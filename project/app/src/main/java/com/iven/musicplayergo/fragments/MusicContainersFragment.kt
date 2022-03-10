@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -109,9 +110,9 @@ class MusicContainersFragment : Fragment(),
 
             stb.inflateMenu(R.menu.menu_search)
 
-            stb.overflowIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_sort)
-
             stb.title = getFragmentTitle()
+
+            stb.overflowIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_sort)
 
             stb.setNavigationOnClickListener {
                 mUiControlInterface.onCloseActivity()
@@ -133,6 +134,7 @@ class MusicContainersFragment : Fragment(),
                         _musicContainerListBinding?.artistsFoldersRv?.setupFastScrollerPadding(forceNoPadding = hasFocus,
                             resources)
                         stb.menu.setGroupVisible(R.id.sorting, !hasFocus)
+                        stb.menu.findItem(R.id.sleeptimer).isVisible = !hasFocus
                     }
                 }
                 setMenuOnItemClickListener(this)
@@ -266,7 +268,12 @@ class MusicContainersFragment : Fragment(),
     private fun setMenuOnItemClickListener(menu: Menu) {
         _musicContainerListBinding?.searchToolbar?.setOnMenuItemClickListener {
 
-            if (it.itemId != R.id.action_search) {
+            if (it.itemId == R.id.sleeptimer) {
+
+                Toast.makeText(context, "sleeptimer", Toast.LENGTH_SHORT).show()
+
+            }
+            else {
 
                 mSorting = it.order
 
