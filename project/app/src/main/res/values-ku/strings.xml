@@ -32,10 +32,10 @@
     <string name="error_unknown_unsupported">Tiştek çewt pêk hat! :( Belkî format nayê piştgirîkirin, an jî gihiştîn bo peldankê ne pêkan e (ne sucê sepanê ye!).</string>
     <string name="error_media_buttons">Li cîna șașî çêbu! :( Please restart playback from the app.</string>
     <string name="error_no_browser">Pêşî geroke tevnê saz bike.</string>
-    <string name="error_bad_id">Ewilî stranekî lêxe!</string>
-    <string name="error_no_queue">Li rêze stran tune ye</string>
+    <string name="error_bad_id">Pêşî stranekê lêde.</string>
+    <string name="error_no_queue">Stran di rêzê de tune.</string>
     <string name="perm_rationale">Mafê gihiştînê bide Music Player GO bo pelên muzîkê te.</string>
-    <string name="repeat_enabled">Carekî tenê dubare bike!</string>
+    <string name="repeat_enabled">Carekî tenê dubare bike.</string>
     <string name="repeat_disabled">∞ dubarekirin neçalak e.</string>
     <string name="settings">Eyar</string>
     <string name="category_general">Giștî</string>
@@ -93,4 +93,5 @@
     <string name="filter_pref_title">Parzûn</string>
     <string name="fast_seeking_actions_pref_summary_on">Lêgerîna bilez</string>
     <string name="song_visual_pref_title">Dîtbariya stranê</string>
+    <string name="equalizer_presets">Pêşsazkirî</string>
 </resources>
