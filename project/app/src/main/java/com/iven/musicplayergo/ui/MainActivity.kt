@@ -1427,6 +1427,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
+    public fun PauseBySleeptimer(){
+        if (mMediaPlayerHolder.isPlaying) {
+            mMediaPlayerHolder.pauseMediaPlayer()
+        }
+    }
+
     // interface to let MediaPlayerHolder update the UI media player controls.
     private val mMediaPlayerInterface = object : MediaPlayerInterface {
 
