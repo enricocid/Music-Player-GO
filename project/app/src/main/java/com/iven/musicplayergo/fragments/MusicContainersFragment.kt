@@ -3,8 +3,8 @@ package com.iven.musicplayergo.fragments
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
+import android.os.Handler
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -26,6 +26,7 @@ import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.ui.MainActivity
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerView
@@ -281,6 +282,9 @@ class MusicContainersFragment : Fragment(),
                         Toast.makeText(context,
                             String.format("stops %d hours after.",(dialog as AlertDialog).listView.checkedItemPosition + 1),
                             Toast.LENGTH_SHORT).show()
+                        Handler().postDelayed(Runnable {
+                            (activity as MainActivity).PauseBySleeptimer()
+                        }, 2000)
                     }
                     .setNegativeButton("Cancel", { dialog, which -> })
                     .create()
