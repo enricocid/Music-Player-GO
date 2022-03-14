@@ -53,4 +53,88 @@
         <item>0</item>
         <item>1</item>
     </string-array>
+
+    <string-array name="supported_locales">
+        <item>bd</item> <!-- Bengali -->
+        <item>be</item> <!-- Belarusian -->
+        <item>cn</item> <!-- Chinese (Simplified) -->
+        <item>cs</item> <!-- Czech -->
+        <item>da</item> <!-- Danish -->
+        <item>de</item> <!-- German -->
+        <item>eg</item> <!-- Arabic (Egypt) -->
+        <item>el</item> <!-- Greek -->
+        <item>en</item> <!-- English -->
+        <item>es</item> <!-- Spanish -->
+        <item>eu</item> <!-- Basque -->
+        <item>fa</item> <!-- Persian -->
+        <item>fr</item> <!-- French -->
+        <item>gl</item> <!-- Galician -->
+        <item>hi</item> <!-- Hindi -->
+        <item>hu</item> <!-- Hungarian -->
+        <item>in</item> <!-- Indonesian -->
+        <item>it</item> <!-- Italian -->
+        <item>jp</item> <!-- Japanese -->
+        <item>ko</item> <!-- Korean -->
+        <item>ku</item> <!-- Kurdish -->
+        <item>lk</item> <!-- Sinhalese -->
+        <item>lt</item> <!-- Lithuanian -->
+        <item>nb-rNO</item> <!-- Norwegian (Bokmål) -->
+        <item>nl</item> <!-- Dutch -->
+        <item>nn</item> <!-- Norwegian (Nynorsk) -->
+        <item>np</item> <!-- Nepali -->
+        <item>pk</item> <!-- Urdu (Pakistan) -->
+        <item>pl</item> <!-- Polish -->
+        <item>pt-rBR</item> <!-- Portuguese (Brazil) -->
+        <item>ro</item> <!-- Romanian -->
+        <item>ru</item> <!-- Russian -->
+        <item>sl</item> <!-- Slovenian -->
+        <item>sv</item> <!-- Swedish -->
+        <item>th</item> <!-- Thai -->
+        <item>tr</item> <!-- Turkish -->
+        <item>uk</item> <!-- Ukrainian -->
+        <item>vi</item> <!-- Vietnamese -->
+        <item>zh-rTW</item> <!-- Chinese (Traditional) -->
+    </string-array>
+
+    <string-array name="supported_locales_names">
+        <item>@string/locale_bengali</item>
+        <item>@string/locale_belarusian</item>
+        <item>@string/locale_chinese_s</item>
+        <item>@string/locale_czech</item>
+        <item>@string/locale_danish</item>
+        <item>@string/locale_german</item>
+        <item>@string/locale_arabic_egypt</item>
+        <item>@string/locale_greek</item>
+        <item>@string/locale_english</item>
+        <item>@string/locale_spanish</item>
+        <item>@string/locale_basque</item>
+        <item>@string/locale_persian</item>
+        <item>@string/locale_french</item>
+        <item>@string/locale_galician</item>
+        <item>@string/locale_hindi</item>
+        <item>@string/locale_hungarian</item>
+        <item>@string/locale_indonesian</item>
+        <item>@string/locale_italian</item>
+        <item>@string/locale_japanese</item>
+        <item>@string/locale_korean</item>
+        <item>@string/locale_kurdish</item>
+        <item>@string/locale_sinhalese</item>
+        <item>@string/locale_lituanian</item>
+        <item>@string/locale_norwegian_b</item>
+        <item>@string/locale_dutch</item>
+        <item>@string/locale_norwegian_n</item>
+        <item>@string/locale_nepali</item>
+        <item>@string/locale_urdu</item>
+        <item>@string/locale_polish</item>
+        <item>@string/locale_portuguese</item>
+        <item>@string/locale_romanian</item>
+        <item>@string/locale_russian</item>
+        <item>@string/locale_slovenian</item>
+        <item>@string/locale_swedish</item>
+        <item>@string/locale_thai</item>
+        <item>@string/locale_turkish</item>
+        <item>@string/locale_ukrainian</item>
+        <item>@string/locale_vietnamese</item>
+        <item>@string/locale_chinese_t</item>
+    </string-array>
 </resources>

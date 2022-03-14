@@ -1,9 +1,6 @@
 package com.iven.musicplayergo.ui
 
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
-import android.content.ServiceConnection
+import android.content.*
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -48,6 +45,7 @@ import com.iven.musicplayergo.player.PlayerService
 import com.iven.musicplayergo.preferences.SettingsFragment
 import dev.chrisbanes.insetter.Insetter
 import dev.chrisbanes.insetter.windowInsetTypesOf
+import java.util.*
 
 
 private const val SHUFFLE_CUT_OFF = 250
@@ -241,6 +239,26 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     override fun onDenyPermission() {
         notifyError(GoConstants.TAG_NO_PERMISSION)
     }
+
+    override fun attachBaseContext(newBase: Context?) {
+        if (goPreferences.locale == null) {
+            super.attachBaseContext(newBase)
+        } else {
+            val locale = Locale.forLanguageTag(goPreferences.locale!!)
+            val localeUpdatedContext = ContextUtils.updateLocale(newBase!!, locale)
+            super.attachBaseContext(localeUpdatedContext)
+        }
+
+    }
+    /*override fun attachBaseContext(newBase: Context?) {
+        newBase?.run {
+            goPreferences.locale?.let { newLocale ->
+                val locale = Locale.forLanguageTag(newLocale)
+                val localeUpdatedContext: ContextWrapper = ContextUtils.updateLocale(this, locale)
+                super.attachBaseContext(localeUpdatedContext)
+            }
+        }
+    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

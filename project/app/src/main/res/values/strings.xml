@@ -106,6 +106,48 @@
     <string name="active_fragments_pref_title">Active tabs</string>
     <string name="active_fragments_pref_warning">You can\'t just remove all the tabs! :P</string>
 
+    <!-- Preferences - Locale -->
+    <string name="locale_pref_title">Language</string>
+    <string name="locale_arabic_egypt">Arabic (Egypt)</string>
+    <string name="locale_basque">Basque</string>
+    <string name="locale_bengali">Bengali</string>
+    <string name="locale_belarusian">Belarusian</string>
+    <string name="locale_czech">Czech</string>
+    <string name="locale_chinese_s">Chinese (Simplified)</string>
+    <string name="locale_chinese_t">Chinese (Traditional)</string>
+    <string name="locale_danish">Danish</string>
+    <string name="locale_dutch">Dutch</string>
+    <string name="locale_english">English</string>
+    <string name="locale_french">French</string>
+    <string name="locale_galician">Galician</string>
+    <string name="locale_german">German</string>
+    <string name="locale_greek">Greek</string>
+    <string name="locale_hindi">Hindi</string>
+    <string name="locale_hungarian">Hungarian</string>
+    <string name="locale_indonesian">Indonesian</string>
+    <string name="locale_italian">Italian</string>
+    <string name="locale_japanese">Japanese</string>
+    <string name="locale_korean">Korean</string>
+    <string name="locale_kurdish">Kurdish</string>
+    <string name="locale_lituanian">Lithuanian</string>
+    <string name="locale_nepali">Nepali</string>
+    <string name="locale_norwegian_b">Norwegian (Bokmål)</string>
+    <string name="locale_norwegian_n">Norwegian (Nynorsk)</string>
+    <string name="locale_persian">Persian</string>
+    <string name="locale_polish">Polish</string>
+    <string name="locale_portuguese">Portuguese (Brazil)</string>
+    <string name="locale_romanian">Romanian</string>
+    <string name="locale_russian">Russian</string>
+    <string name="locale_sinhalese">Sinhalese</string>
+    <string name="locale_slovenian">Slovenian</string>
+    <string name="locale_spanish">Spanish</string>
+    <string name="locale_swedish">Swedish</string>
+    <string name="locale_thai">Thai</string>
+    <string name="locale_turkish">Turkish</string>
+    <string name="locale_ukrainian">Ukrainian</string>
+    <string name="locale_urdu">Urdu (Pakistan)</string>
+    <string name="locale_vietnamese">Vietnamese</string>
+
     <!-- Preferences - Custom Equalizer note -->
     <string name="eq_pref_note_summary">Note: The system equalizer is used unless turned off from the system settings. :)</string>
 

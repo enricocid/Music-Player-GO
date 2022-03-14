@@ -90,4 +90,5 @@
     <string name="song_visual_pref">song_visual_pref</string>
     <string name="playback_vel_pref">playback_vel_pref</string>
     <string name="pause_on_end_pref">pause_on_end_pref</string>
+    <string name="locale_pref">locale_pref</string>
 </resources>

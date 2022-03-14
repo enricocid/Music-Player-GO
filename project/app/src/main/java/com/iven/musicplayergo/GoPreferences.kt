@@ -49,6 +49,8 @@ class GoPreferences(context: Context) {
     private val prefsPlaybackVel = context.getString(R.string.playback_vel_pref)
     private val prefsIsPauseOnEnd = context.getString(R.string.pause_on_end_pref)
 
+    private val prefsLocale = context.getString(R.string.locale_pref)
+
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
 
     private val mMoshi = Moshi.Builder().build()
@@ -187,6 +189,10 @@ class GoPreferences(context: Context) {
     var isPauseOnEnd
         get() = mPrefs.getBoolean(prefsIsPauseOnEnd, false)
         set(value) = mPrefs.edit { putBoolean(prefsIsPauseOnEnd, value) }
+
+    var locale
+        get() = mPrefs.getString(prefsLocale, null)
+        set(value) = mPrefs.edit { putString(prefsLocale, value) }
 
     // Retrieve object from the Preferences using Moshi
     private fun <T : Any> putObjectForType(key: String, value: T?, type: Type) {
