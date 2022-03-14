@@ -250,15 +250,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
 
     }
-    /*override fun attachBaseContext(newBase: Context?) {
-        newBase?.run {
-            goPreferences.locale?.let { newLocale ->
-                val locale = Locale.forLanguageTag(newLocale)
-                val localeUpdatedContext: ContextWrapper = ContextUtils.updateLocale(this, locale)
-                super.attachBaseContext(localeUpdatedContext)
-            }
-        }
-    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
