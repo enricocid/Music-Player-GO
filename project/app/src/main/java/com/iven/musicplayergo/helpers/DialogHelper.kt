@@ -1,10 +1,13 @@
 package com.iven.musicplayergo.helpers
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
+import android.os.Handler
 import android.text.Spanned
 import android.view.Gravity
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.text.parseAsHtml
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -17,6 +20,7 @@ import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
+import com.iven.musicplayergo.ui.MainActivity
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 
@@ -49,6 +53,27 @@ object DialogHelper {
                 (activity as UIControlInterface).onFavoritesUpdated(clear = true)
             }
             .setNegativeButton(R.string.no, null)
+            .show()
+    }
+
+    @JvmStatic
+    fun showSleeptimerDialog(activity: Activity, context: Context) {
+        AlertDialog.Builder(context)
+            .setTitle("Sleep Timer\n When the music stops?")
+            .setSingleChoiceItems(
+                arrayOf("1 hour after", "2 hours after", "3 hours after", "4 hours after"),
+                -1){ dialog, which -> }
+            .setPositiveButton("Yes") { dialog, which ->
+                val hours = (dialog as AlertDialog).listView.checkedItemPosition.toLong() + 1
+                Toast.makeText(context,
+                    String.format("stops %d hours after.", hours),
+                    Toast.LENGTH_SHORT).show()
+                Handler().postDelayed(Runnable {
+                    (activity as MainActivity).PauseBySleeptimer()
+                }, hours * 3600000)
+            }
+            .setNegativeButton("Cancel", { dialog, which -> })
+            .create()
             .show()
     }
 

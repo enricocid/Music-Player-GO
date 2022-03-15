@@ -273,23 +273,7 @@ class MusicContainersFragment : Fragment(),
 
             if (it.itemId == R.id.sleeptimer) {
 
-                AlertDialog.Builder(context)
-                    .setTitle("Sleep Timer\n When the music stops?")
-                    .setSingleChoiceItems(
-                        arrayOf("1 hour after", "2 hours after", "3 hours after", "4 hours after"),
-                        -1){ dialog, which -> }
-                    .setPositiveButton("Yes") { dialog, which ->
-                        val hours = (dialog as AlertDialog).listView.checkedItemPosition.toLong() + 1
-                        Toast.makeText(context,
-                            String.format("stops %d hours after.", hours),
-                            Toast.LENGTH_SHORT).show()
-                        Handler().postDelayed(Runnable {
-                            (activity as MainActivity).PauseBySleeptimer()
-                        }, hours * 3600000)
-                    }
-                    .setNegativeButton("Cancel", { dialog, which -> })
-                    .create()
-                    .show()
+                DialogHelper.showSleeptimerDialog(requireActivity(), requireContext())
 
             }
             else {
