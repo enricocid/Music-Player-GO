@@ -60,19 +60,23 @@ object DialogHelper {
     @JvmStatic
     fun showSleeptimerDialog(activity: Activity, context: Context) {
         AlertDialog.Builder(context)
-            .setTitle("Sleep Timer\n When the music stops?")
-            .setSingleChoiceItems(
-                arrayOf("1 hour after", "2 hours after", "3 hours after", "4 hours after"),
-                -1){ _, _ -> }
-            .setPositiveButton("Yes") { dialog, _ ->
-                val hours = (dialog as AlertDialog).listView.checkedItemPosition.toLong() + 1
+            .setTitle(R.string.sleeptimer)
+            .setSingleChoiceItems(arrayOf(
+                activity.resources.getQuantityString(R.plurals.sleeptimer_option, 1, 1),
+                activity.resources.getQuantityString(R.plurals.sleeptimer_option, 2, 2),
+                activity.resources.getQuantityString(R.plurals.sleeptimer_option, 3, 3),
+                activity.resources.getQuantityString(R.plurals.sleeptimer_option, 4, 4),
+            ),-1){ _, _ -> }
+            .setPositiveButton(R.string.yes) { dialog, _ ->
+                val hours = (dialog as AlertDialog).listView.checkedItemPosition + 1
                 Toast.makeText(context,
-                    String.format("stops %d hours after.", hours),
+                    activity.resources.getQuantityString(R.plurals.sleeptimer_option, hours, hours),
                     Toast.LENGTH_SHORT).show()
                 Handler(Looper.getMainLooper()).postDelayed({
                     (activity as MainActivity).PauseBySleeptimer()
-                }, hours * 3600000)
+                }, hours.toLong() * 3600000)
             }
+            .setNegativeButton(R.string.no) { _, _ -> }
             .create()
             .show()
     }
