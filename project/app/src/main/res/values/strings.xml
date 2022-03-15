@@ -57,6 +57,13 @@
     <string name="content_playback_speed">Playback speed</string>
     <string name="speed_3">Normal</string>
 
+    <!-- Sleep timer-->
+    <string name="sleeptimer">Sleep Timer</string>
+    <plurals name="sleeptimer_option">
+        <item quantity="one">stop %d hour after.</item>
+        <item quantity="other">stop %d hours after.</item>
+    </plurals>
+
     <!-- other content descriptions -->
     <string name="content_skip_prev">Skip to previous</string>
     <string name="content_play">Play/pause</string>
