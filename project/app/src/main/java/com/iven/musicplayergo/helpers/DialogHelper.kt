@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Handler
+import android.os.Looper
 import android.text.Spanned
 import android.view.Gravity
 import android.view.View
@@ -62,17 +63,16 @@ object DialogHelper {
             .setTitle("Sleep Timer\n When the music stops?")
             .setSingleChoiceItems(
                 arrayOf("1 hour after", "2 hours after", "3 hours after", "4 hours after"),
-                -1){ dialog, which -> }
-            .setPositiveButton("Yes") { dialog, which ->
+                -1){ _, _ -> }
+            .setPositiveButton("Yes") { dialog, _ ->
                 val hours = (dialog as AlertDialog).listView.checkedItemPosition.toLong() + 1
                 Toast.makeText(context,
                     String.format("stops %d hours after.", hours),
                     Toast.LENGTH_SHORT).show()
-                Handler().postDelayed(Runnable {
+                Handler(Looper.getMainLooper()).postDelayed({
                     (activity as MainActivity).PauseBySleeptimer()
                 }, hours * 3600000)
             }
-            .setNegativeButton("Cancel", { dialog, which -> })
             .create()
             .show()
     }
