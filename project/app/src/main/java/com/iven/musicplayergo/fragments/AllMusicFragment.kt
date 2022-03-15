@@ -224,6 +224,11 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
                 goPreferences.allMusicSorting = mSorting
             }
+            else{
+
+                DialogHelper.showSleeptimerDialog(requireActivity(), requireContext())
+
+            }
 
             return@setOnMenuItemClickListener true
         }

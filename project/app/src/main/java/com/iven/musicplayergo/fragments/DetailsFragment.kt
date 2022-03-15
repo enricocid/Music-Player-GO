@@ -533,6 +533,8 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     R.id.date_added_sorting_inv -> applySortingToMusic(GoConstants.DATE_ADDED_SORTING_INV)
                     R.id.artist_sorting -> applySortingToMusic(GoConstants.ARTIST_SORTING)
                     R.id.artist_sorting_inv-> applySortingToMusic(GoConstants.ARTIST_SORTING_INV)
+
+                    R.id.sleeptimer -> DialogHelper.showSleeptimerDialog(requireActivity(), requireContext())
                 }
                 return@setOnMenuItemClickListener true
             }
