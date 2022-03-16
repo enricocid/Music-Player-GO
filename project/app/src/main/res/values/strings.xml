@@ -91,6 +91,7 @@
     <string name="active_fragments_pref_warning">You can\'t just remove all the tabs! :P</string>
     <!-- Preferences - Locale -->
     <string name="locale_pref_title">Language</string>
+    <string name="locale_arabic">Arabic</string>
     <string name="locale_arabic_egypt">Arabic (Egypt)</string>
     <string name="locale_basque">Basque</string>
     <string name="locale_bengali">Bengali</string>

@@ -55,6 +55,7 @@
     </string-array>
 
     <string-array name="supported_locales">
+        <item>ar</item> <!-- Arabic -->
         <item>bd</item> <!-- Bengali -->
         <item>be</item> <!-- Belarusian -->
         <item>cn</item> <!-- Chinese (Simplified) -->
@@ -97,6 +98,7 @@
     </string-array>
 
     <string-array name="supported_locales_names">
+        <item>@string/locale_arabic</item>
         <item>@string/locale_bengali</item>
         <item>@string/locale_belarusian</item>
         <item>@string/locale_chinese_s</item>

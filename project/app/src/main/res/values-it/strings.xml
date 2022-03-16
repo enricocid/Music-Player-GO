@@ -95,6 +95,7 @@
     <string name="playback_pref_summary_on">Mantieni</string>
     <string name="delete">Elimina</string>
     <string name="locale_pref_title">Lingua</string>
+    <string name="locale_arabic">Arabo</string>
     <string name="locale_arabic_egypt">Arabo (Egitto)</string>
     <string name="locale_basque">Basco</string>
     <string name="locale_bengali">Bengalese</string>
