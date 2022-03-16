@@ -135,4 +135,6 @@
     <string name="locale_slovenian">斯洛文尼亚语</string>
     <string name="locale_spanish">西班牙语</string>
     <string name="locale_arabic">阿拉伯语</string>
+    <string name="direct_remove_pref_title">删除前确认</string>
+    <string name="direct_remove_pref_sum">在删除队列/收藏曲目之前请求确认</string>
 </resources>
