@@ -221,16 +221,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         requestCode: Int,
         permissions: Array<String>, grantResults: IntArray
     ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            GoConstants.PERMISSION_REQUEST_READ_EXTERNAL_STORAGE -> {
-                // If request is cancelled, the result arrays are empty.
-                if ((grantResults.isNotEmpty() && grantResults.first() == PackageManager.PERMISSION_GRANTED)) {
-                    // Permission was granted, yay! Do bind service
-                    doBindService()
-                } else {
-                    // Permission denied, boo! Error!
-                    notifyError(GoConstants.TAG_NO_PERMISSION)
+        if (VersioningHelper.isMarshmallow()) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+            when (requestCode) {
+                GoConstants.PERMISSION_REQUEST_READ_EXTERNAL_STORAGE -> {
+                    // If request is cancelled, the result arrays are empty.
+                    if ((grantResults.isNotEmpty() && grantResults.first() == PackageManager.PERMISSION_GRANTED)) {
+                        // Permission was granted, yay! Do bind service
+                        doBindService()
+                    } else {
+                        // Permission denied, boo! Error!
+                        notifyError(GoConstants.TAG_NO_PERMISSION)
+                    }
                 }
             }
         }
