@@ -51,6 +51,8 @@ class GoPreferences(context: Context) {
 
     private val prefsLocale = context.getString(R.string.locale_pref)
 
+    private val prefsDirectRemove = context.getString(R.string.direct_remove_pref)
+
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
 
     private val mMoshi = Moshi.Builder().build()
@@ -193,6 +195,10 @@ class GoPreferences(context: Context) {
     var locale
         get() = mPrefs.getString(prefsLocale, null)
         set(value) = mPrefs.edit { putString(prefsLocale, value) }
+
+    var askForRemoval: Boolean
+        get() = mPrefs.getBoolean(prefsDirectRemove, true)
+        set(value) = mPrefs.edit { putBoolean(prefsDirectRemove, value) }
 
     // Retrieve object from the Preferences using Moshi
     private fun <T : Any> putObjectForType(key: String, value: T?, type: Type) {

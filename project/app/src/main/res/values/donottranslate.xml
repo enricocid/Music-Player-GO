@@ -91,4 +91,5 @@
     <string name="playback_vel_pref">playback_vel_pref</string>
     <string name="pause_on_end_pref">pause_on_end_pref</string>
     <string name="locale_pref">locale_pref</string>
+    <string name="direct_remove_pref">direct_remove_pref</string>
 </resources>

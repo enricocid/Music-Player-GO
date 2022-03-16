@@ -135,4 +135,6 @@
     <string name="locale_ukrainian">Ucraino</string>
     <string name="locale_urdu">Urdu (Pakistano)</string>
     <string name="locale_vietnamese">Vietnamita</string>
+    <string name="direct_remove_pref_title">Chiedi prima di cancellare</string>
+    <string name="direct_remove_pref_sum">Chiedi conferma prima di rimuovere canzoni dalla coda/favoriti</string>
 </resources>

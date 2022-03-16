@@ -164,4 +164,7 @@
     <string name="anim_pref_title">Animations</string>
     <!-- Preferences - Filters -->
     <string name="filter_pref_title">Filters</string>
+    <!-- Preferences - Directly remove items from (queue, favorites) -->
+    <string name="direct_remove_pref_title">Confirm before removing</string>
+    <string name="direct_remove_pref_sum">Ask for confirm before removing queue/favorites songs</string>
 </resources>
