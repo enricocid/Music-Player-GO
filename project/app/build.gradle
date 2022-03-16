@@ -38,6 +38,16 @@ android {
         }
     }
 
+    bundle {
+        language {
+            // Specifies that the app bundle should not support
+            // configuration APKs for language resources. These
+            // resources are instead packaged with each base and
+            // dynamic feature APK.
+            enableSplit = false
+        }
+    }
+
     // Configure only for each module that uses Java 8
     // language features (either in its source code or
     // through dependencies).

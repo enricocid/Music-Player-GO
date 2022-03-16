@@ -139,4 +139,5 @@
         <item>@string/locale_vietnamese</item>
         <item>@string/locale_chinese_t</item>
     </string-array>
+
 </resources>
