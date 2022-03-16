@@ -92,7 +92,7 @@
     <string name="pause_on_end_disabled">禁用播放完成后暂停。</string>
     <string name="pause_on_end">播放完成后暂停。</string>
     <string name="error_fs_not_allowed_sum">错误！关闭针对本应用的电池优化</string>
-    <string name="error_fs_not_allowed">出错了！可能是电池优化导致媒体播放服务停止。请考虑在系统设置中禁用它：应用 &gt; 所有应用 &gt; Music Player GO &gt; 电池 &gt; 无限制</string>
+    <string name="error_fs_not_allowed">出错了！:( 考虑在系统设置中关闭电池优化:应用程序&gt;所有应用程序&gt; Music Player GO &gt;电池&gt;无限制，因为它可能会导致媒体播放器服务停止。</string>
     <string name="equalizer_presets">预设</string>
     <string name="locale_basque">巴斯克语</string>
     <string name="locale_bengali">孟加拉语</string>
@@ -134,4 +134,5 @@
     <string name="locale_korean">韩语</string>
     <string name="locale_slovenian">斯洛文尼亚语</string>
     <string name="locale_spanish">西班牙语</string>
+    <string name="locale_arabic">阿拉伯语</string>
 </resources>
