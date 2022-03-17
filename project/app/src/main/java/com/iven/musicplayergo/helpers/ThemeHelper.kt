@@ -1,6 +1,6 @@
 package com.iven.musicplayergo.helpers
 
-import android.annotation.SuppressLint
+
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
+import androidx.core.text.toSpanned
 import androidx.core.widget.ImageViewCompat
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
@@ -119,27 +120,71 @@ object ThemeHelper {
         Pair(first = R.color.blue_grey_200, second = R.style.BaseTheme_BlueGrey200)
     )
 
+    // Fixed array of pairs (first: accent, second: accent name)
     @JvmStatic
-    @SuppressLint("DefaultLocale")
+    val accentsNames = arrayOf(
+        Pair(first = R.color.red, second = R.string.red),
+        Pair(first = R.color.pink, second = R.string.pink),
+        Pair(first = R.color.purple, second = R.string.purple),
+        Pair(first = R.color.deep_purple, second = R.string.deep_purple),
+        Pair(first = R.color.indigo, second = R.string.indigo),
+        Pair(first = R.color.blue, second = R.string.blue),
+        Pair(first = R.color.light_blue, second = R.string.light_blue),
+        Pair(first = R.color.cyan, second = R.string.cyan),
+        Pair(first = R.color.teal, second = R.string.teal),
+        Pair(first = R.color.green, second = R.string.green),
+        Pair(first = R.color.light_green, second = R.string.light_green),
+        Pair(first = R.color.lime, second = R.string.lime),
+        Pair(first = R.color.yellow, second = R.string.yellow),
+        Pair(first = R.color.amber, second = R.string.amber),
+        Pair(first = R.color.orange, second = R.string.orange),
+        Pair(first = R.color.deep_orange, second = R.string.deep_orange),
+        Pair(first = R.color.brown, second = R.string.brown),
+        Pair(first = R.color.grey, second = R.string.grey),
+        Pair(first = R.color.blue_grey, second = R.string.blue_grey),
+        Pair(first = R.color.red_200, second = R.string.red_200),
+        Pair(first = R.color.pink_200, second = R.string.pink_200),
+        Pair(first = R.color.purple_200, second = R.string.purple_200),
+        Pair(first = R.color.deep_purple_200, second = R.string.deep_purple_200),
+        Pair(first = R.color.indigo_200, second = R.string.indigo_200),
+        Pair(first = R.color.blue_200, second = R.string.blue_200),
+        Pair(first = R.color.light_blue_200, second = R.string.light_blue_200),
+        Pair(first = R.color.cyan_200, second = R.string.cyan_200),
+        Pair(first = R.color.teal_200, second = R.string.teal_200),
+        Pair(first = R.color.green_200, second = R.string.green_200),
+        Pair(first = R.color.light_green_200, second = R.string.light_green_200),
+        Pair(first = R.color.lime_200, second = R.string.lime_200),
+        Pair(first = R.color.amber_200, second = R.string.amber_200),
+        Pair(first = R.color.orange_200, second = R.string.orange_200),
+        Pair(first = R.color.deep_orange_200, second = R.string.deep_orange_200),
+        Pair(first = R.color.brown_200, second = R.string.brown_200),
+        Pair(first = R.color.blue_grey_200, second = R.string.blue_grey_200)
+    )
+
+    @JvmStatic
     fun getAccentName(context: Context, accent: Int): Spanned {
-        val accentName = context.resources.getResourceEntryName(accent).replace(
-            context.getString(R.string.underscore_delimiter),
-            context.getString(R.string.space_delimiter)
-        ).replaceFirstChar(Char::uppercase)
-        return context.getString(
-            R.string.accent_and_hex,
-            accentName,
-            context.getString(accent).uppercase()
-        ).parseAsHtml()
+        val accents = accentsNames.toMap()
+        return try {
+            context.getString(
+                R.string.accent_and_hex,
+                context.getString(accents[accent]!!),
+                context.getString(accent).uppercase()
+            ).parseAsHtml()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            context.getString(R.string.error_eq).toSpanned()
+        }
     }
 
     // Search theme from accents array of Pair, returns a Pair(theme, position)
     @JvmStatic
     fun getAccentedTheme() = try {
-        val pair = accents.find { (first) -> first == goPreferences.accent }
-        val theme = pair!!.second
-        val position = accents.indexOf(pair)
-        Pair(first = theme, second = position)
+        val selAccent = goPreferences.accent
+        val stylesMap = accents.toMap()
+        stylesMap[selAccent]?.let { style ->
+            val position = stylesMap.keys.indexOf(selAccent)
+            return@let Pair(first = style, second = position)
+        }
     } catch (e: Exception) {
         Pair(first = R.style.BaseTheme_DeepPurple, second = 3)
     }

@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/locale_switcher"
+        android:title="@string/locale_pref_title"
+        android:icon="@drawable/ic_translate"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/github_page"
         android:title="@string/open_git_pref_summary"
         android:icon="@drawable/ic_code"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 </menu>

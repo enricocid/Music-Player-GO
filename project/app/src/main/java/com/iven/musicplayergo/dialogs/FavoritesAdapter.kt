@@ -109,32 +109,40 @@ class FavoritesAdapter(private val activity: Activity) :
     }
 
     fun performFavoriteDeletion(position: Int) {
-        mFavorites?.get(position)?.let { song ->
 
-            MaterialAlertDialogBuilder(activity)
-                .setTitle(R.string.favorites)
-                .setMessage(activity.getString(
-                    R.string.favorite_remove,
-                    song.title,
-                    song.startFrom.toLong().toFormattedDuration(
-                        isAlbum = false,
-                        isSeekBar = false)))
-                .setPositiveButton(R.string.yes) { _, _ ->
-                    mFavorites?.run {
-                        // remove item
-                        remove(song)
-                        notifyItemRemoved(position)
-                        // update
-                        goPreferences.favorites = mFavorites
-                        if (mFavorites.isNullOrEmpty()) {
-                            onFavoritesCleared?.invoke()
-                        }
-                        mUIControlInterface.onFavoritesUpdated(clear = false)
-                        mUIControlInterface.onFavoriteAddedOrRemoved()
-                    }
+        fun deleteSong(song: Music) {
+            mFavorites?.run {
+                // remove item
+                remove(song)
+                notifyItemRemoved(position)
+                // update
+                goPreferences.favorites = mFavorites
+                if (mFavorites.isNullOrEmpty()) {
+                    onFavoritesCleared?.invoke()
                 }
-                .setNegativeButton(R.string.no, null)
-                .show()
+                mUIControlInterface.onFavoritesUpdated(clear = false)
+                mUIControlInterface.onFavoriteAddedOrRemoved()
+            }
+        }
+
+        mFavorites?.get(position)?.let { song ->
+            if (goPreferences.askForRemoval) {
+                MaterialAlertDialogBuilder(activity)
+                    .setTitle(R.string.favorites)
+                    .setMessage(activity.getString(
+                        R.string.favorite_remove,
+                        song.title,
+                        song.startFrom.toLong().toFormattedDuration(
+                            isAlbum = false,
+                            isSeekBar = false)))
+                    .setPositiveButton(R.string.yes) { _, _ ->
+                        deleteSong(song)
+                    }
+                    .setNegativeButton(R.string.no, null)
+                    .show()
+            } else {
+                deleteSong(song)
+            }
         }
     }
 }

@@ -88,37 +88,46 @@ class QueueAdapter(
 
     fun performQueueSongDeletion(adapterPosition: Int): Boolean {
         val song = queueSongs[adapterPosition]
-        notifyItemChanged(adapterPosition)
-        return if (song != mSelectedSong || mediaPlayerHolder.isQueue == null) {
+        if (goPreferences.askForRemoval) {
+            notifyItemChanged(adapterPosition)
+            return if (song != mSelectedSong || mediaPlayerHolder.isQueue == null) {
+                MaterialAlertDialogBuilder(ctx)
+                    .setTitle(R.string.queue)
+                    .setMessage(ctx.getString(
+                        R.string.queue_song_remove,
+                        song.title
+                    ))
+                    .setPositiveButton(R.string.yes) { _, _ ->
+                        mediaPlayerHolder.run {
+                            // remove and update adapter
+                            queueSongs.remove(song)
+                            notifyItemRemoved(adapterPosition)
 
-            MaterialAlertDialogBuilder(ctx)
-                .setTitle(R.string.queue)
-                .setMessage(ctx.getString(
-                    R.string.queue_song_remove,
-                    song.title
-                ))
-                .setPositiveButton(R.string.yes) { _, _ ->
-                    mediaPlayerHolder.run {
-                        // remove and update adapter
-                        queueSongs.remove(song)
-                        notifyItemRemoved(adapterPosition)
+                            // dismiss sheet if empty
+                            if (queueSongs.isEmpty()) {
+                                isQueue = null
+                                mediaPlayerInterface.onQueueStartedOrEnded(started = false)
+                                onQueueCleared?.invoke()
+                            }
 
-                        // dismiss sheet if empty
-                        if (queueSongs.isEmpty()) {
-                            isQueue = null
-                            mediaPlayerInterface.onQueueStartedOrEnded(started = false)
-                            onQueueCleared?.invoke()
+                            // update queue songs
+                            goPreferences.queue = queueSongs
                         }
-
-                        // update queue songs
-                        goPreferences.queue = queueSongs
                     }
-                }
-                .setNegativeButton(R.string.no, null)
-                .show()
-            true
+                    .setNegativeButton(R.string.no, null)
+                    .show()
+                true
+            } else {
+                false
+            }
         } else {
-            false
+            return if (song != mSelectedSong || mediaPlayerHolder.isQueue == null) {
+                queueSongs.remove(song)
+                notifyItemRemoved(adapterPosition)
+                true
+            } else {
+                false
+            }
         }
     }
 }

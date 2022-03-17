@@ -20,8 +20,6 @@
 
     <!-- Formatting symbols -->
     <string name="fastscroller_dummy_item">&#8230;</string>
-    <string name="space_delimiter">&#160;</string>
-    <string name="underscore_delimiter">&#95;</string>
     <string name="slash">/</string>
     <string name="unknown_year">N&#x2F;A</string>
     <string name="freq_k">%1dk</string>
@@ -90,4 +88,6 @@
     <string name="song_visual_pref">song_visual_pref</string>
     <string name="playback_vel_pref">playback_vel_pref</string>
     <string name="pause_on_end_pref">pause_on_end_pref</string>
+    <string name="locale_pref">locale_pref</string>
+    <string name="direct_remove_pref">direct_remove_pref</string>
 </resources>

@@ -93,9 +93,13 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     modalRv.visibility = View.GONE
 
                     val accentsAdapter = AccentsAdapter(requireActivity())
-                    val layoutManager =  GridLayoutManager(requireActivity(), 6)
+                    val layoutManager =  LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
                     modalRvAlt.layoutManager = layoutManager
                     modalRvAlt.adapter = accentsAdapter
+
+                    ThemeHelper.getAccentedTheme()?.run {
+                        modalRvAlt.post { layoutManager.scrollToPositionWithOffset(second, 0) }
+                    }
 
                     // set listeners for buttons
                     btnNegative.setOnClickListener {

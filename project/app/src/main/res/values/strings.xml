@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- Dialogs / Buttons -->
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -10,23 +9,19 @@
     <string name="favorites_clear">Clear all favorites?</string>
     <string name="favorite_remove">Delete %1s (%2s) from favorites?</string>
     <string name="favorites_save_time">Save song position</string>
-
     <!-- Main - Fragments titles -->
     <string name="artists">Artists</string>
     <string name="albums">Albums</string>
     <string name="songs">Songs</string>
     <string name="folders">Folders</string>
-
     <!-- Equalizer -->
     <string name="equalizer">Equalizer</string>
     <string name="equalizer_presets">Presets</string>
     <string name="equalizer_bb">Bass boost</string>
     <string name="equalizer_v">Surround sound</string>
-
     <!-- Main - Artists/Folder RecyclerViews items  -->
-    <string name="artist_info">%1d&#160;Albums,&#160;%2d&#160;Songs</string>
-    <string name="folder_info">%1d&#160;Songs</string>
-
+    <string name="artist_info">%1d Albums, %2d Songs</string>
+    <string name="folder_info">%1d Songs</string>
     <!-- Popup/Menu titles -->
     <string name="sorting_pref">Sorting</string>
     <string name="sorting_pref_default">Default</string>
@@ -43,16 +38,13 @@
     <string name="queue_add">Enqueue</string>
     <string name="favorite_add">Favorite</string>
     <string name="filter_popup_title">Hide</string>
-
     <!-- Queue -->
     <string name="queue">Queue</string>
     <string name="queue_song_add">%1s enqueued!</string>
     <string name="queue_song_remove">Remove %1s from queue?</string>
-
     <!-- Favorites -->
     <string name="favorites">Favorites</string>
     <string name="favorite_added">%1s (%2s) favorited</string>
-
     <!-- Playback speed -->
     <string name="content_playback_speed">Playback speed</string>
     <string name="speed_3">Normal</string>
@@ -69,7 +61,6 @@
     <string name="content_play">Play/pause</string>
     <string name="content_skip_next">Skip to next</string>
     <string name="content_repeat">Turn on/off selected repetition</string>
-
     <!-- Messages - Errors -->
     <string name="open_git_pref_summary">Open the project webpage for more info :)</string>
     <string name="open_details_fragment">Open artist/folder\'s details</string>
@@ -84,77 +75,146 @@
     <string name="error_list_ended">List ended.</string>
     <string name="error_eq">Error</string>
     <string name="error_fs_not_allowed_sum">Error! Turn off battery optimization for MPGO</string>
-    <string name="error_fs_not_allowed">Something went wrong! :( Perhaps battery optimization is enabled causing the media player service to stop. Consider disabling it in system settings: Apps &gt; All apps &gt; Music Player GO &gt; Battery &gt; Unrestricted</string>
-
+    <string name="error_fs_not_allowed">Something went wrong! :( Consider turning off battery optimization in the system settings: Apps &gt; All apps &gt; Music Player GO &gt; Battery &gt; Unrestricted, as it could cause the media player service to stop.</string>
     <!-- Messages - Permission rationale -->
     <string name="perm_rationale">Grant Music Player GO access to your files to play music.</string>
-
     <!-- Messages - Repeat -->
     <string name="repeat_enabled">Single repetition on.</string>
-    <string name="repeat_loop_enabled">&#8734; repeat on.</string>
-    <string name="repeat_disabled">&#8734; repeat off.</string>
+    <string name="repeat_loop_enabled">∞ repeat on.</string>
+    <string name="repeat_disabled">∞ repeat off.</string>
     <string name="pause_on_end">Pause on completion on.</string>
     <string name="pause_on_end_disabled">Pause on completion off.</string>
-
     <!-- Preferences - Categories -->
     <string name="settings">Settings</string>
     <string name="category_general">General</string>
-
     <!-- Preferences - Themes -->
     <string name="theme_pref_title">Theme</string>
     <string name="theme_pref_light_title">Light</string>
     <string name="theme_pref_dark_title">Dark</string>
     <string name="theme_pref_auto_title">System</string>
-
     <!-- Preferences - Accent -->
     <string name="accent_pref_title">Accent</string>
-
     <!-- Preferences - Active tabs -->
     <string name="active_fragments_pref_title">Active tabs</string>
     <string name="active_fragments_pref_warning">You can\'t just remove all the tabs! :P</string>
-
+    <!-- Preferences - Locale -->
+    <string name="locale_pref_title">Language</string>
+    <string name="locale_arabic">Arabic</string>
+    <string name="locale_arabic_egypt">Arabic (Egypt)</string>
+    <string name="locale_basque">Basque</string>
+    <string name="locale_bengali">Bengali</string>
+    <string name="locale_belarusian">Belarusian</string>
+    <string name="locale_czech">Czech</string>
+    <string name="locale_chinese_s">Chinese (Simplified)</string>
+    <string name="locale_chinese_t">Chinese (Traditional)</string>
+    <string name="locale_danish">Danish</string>
+    <string name="locale_dutch">Dutch</string>
+    <string name="locale_english">English</string>
+    <string name="locale_french">French</string>
+    <string name="locale_galician">Galician</string>
+    <string name="locale_german">German</string>
+    <string name="locale_greek">Greek</string>
+    <string name="locale_hindi">Hindi</string>
+    <string name="locale_hungarian">Hungarian</string>
+    <string name="locale_indonesian">Indonesian</string>
+    <string name="locale_italian">Italian</string>
+    <string name="locale_japanese">Japanese</string>
+    <string name="locale_korean">Korean</string>
+    <string name="locale_kurdish">Kurdish</string>
+    <string name="locale_lituanian">Lithuanian</string>
+    <string name="locale_nepali">Nepali</string>
+    <string name="locale_norwegian_b">Norwegian (Bokmål)</string>
+    <string name="locale_norwegian_n">Norwegian (Nynorsk)</string>
+    <string name="locale_persian">Persian</string>
+    <string name="locale_polish">Polish</string>
+    <string name="locale_portuguese">Portuguese (Brazil)</string>
+    <string name="locale_romanian">Romanian</string>
+    <string name="locale_russian">Russian</string>
+    <string name="locale_sinhalese">Sinhalese</string>
+    <string name="locale_slovenian">Slovenian</string>
+    <string name="locale_spanish">Spanish</string>
+    <string name="locale_swedish">Swedish</string>
+    <string name="locale_thai">Thai</string>
+    <string name="locale_turkish">Turkish</string>
+    <string name="locale_ukrainian">Ukrainian</string>
+    <string name="locale_urdu">Urdu (Pakistan)</string>
+    <string name="locale_vietnamese">Vietnamese</string>
     <!-- Preferences - Custom Equalizer note -->
     <string name="eq_pref_note_summary">Note: The system equalizer is used unless turned off from the system settings. :)</string>
-
     <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">Precise volume control</string>
-
     <!-- Preferences - Focus -->
     <string name="focus_pref_title">Audio focus management</string>
-
     <!-- Preferences - Headsets -->
     <string name="headset_pref_title">Headset plug management</string>
-
     <!-- Preferences - Playback speed -->
     <string name="playback_pref_title">Selected playback speed</string>
     <string name="playback_pref_summary_off">One song only</string>
     <string name="playback_pref_summary_on">Keep</string>
-
     <!-- Preferences - choose what to do when a playlist ends -->
-    <string name="on_list_ended_pref_title">When a list ends&#8230;</string>
+    <string name="on_list_ended_pref_title">When a list ends…</string>
     <string name="on_list_ended_pref_stop_title">Stop</string>
     <string name="on_list_ended_pref_continue_title">Continue</string>
-
     <!-- Preferences - covers -->
     <string name="covers_pref_title">Embedded album covers</string>
-
     <!-- Preferences - Fast seeking -->
     <string name="fast_seeking_pref_title">Fast seeking</string>
     <string name="fast_seeking_pref_summary">Fast forward/rewind step (seconds)</string>
-
     <!-- Preferences - Additional notification actions -->
     <string name="fast_seeking_actions_pref_title">Additional notification actions</string>
     <string name="fast_seeking_actions_pref_summary_off">Close/repeat</string>
     <string name="fast_seeking_actions_pref_summary_on">Fast seeking</string>
-
     <!-- Preferences - Song visualization options (tl = title, fn = full name) -->
     <string name="song_visual_pref_title">Song visualization</string>
     <string name="song_visual_pref_tl_title">Title</string>
     <string name="song_visual_pref_fn_title">Filename</string>
-
     <!-- Preferences - Animations/Circular reveal fragments -->
     <string name="anim_pref_title">Animations</string>
-
     <!-- Preferences - Filters -->
     <string name="filter_pref_title">Filters</string>
+    <!-- Preferences - Directly remove items from (queue, favorites) -->
+    <string name="direct_remove_pref_title">Confirm before removing</string>
+    <string name="direct_remove_pref_sum">Ask for confirm before removing queue/favorites songs</string>
+
+    <!-- Preferences - Accents names -->
+
+    <string name="red">Red</string>
+    <string name="pink">Pink</string>
+    <string name="purple">Purple</string>
+    <string name="deep_purple">Deep purple</string>
+    <string name="indigo">Indigo</string>
+    <string name="blue">Blue</string>
+    <string name="light_blue">Light blue</string>
+    <string name="cyan">Cyan</string>
+    <string name="teal">Teal</string>
+    <string name="green">Green</string>
+    <string name="light_green">Light green</string>
+    <string name="lime">Lime</string>
+    <string name="yellow">Yellow</string>
+    <string name="amber">Amber</string>
+    <string name="orange">Orange</string>
+    <string name="deep_orange">Deep orange</string>
+    <string name="brown">Brown</string>
+    <string name="grey">Grey</string>
+    <string name="blue_grey">Blue grey</string>
+
+    <string name="red_200">Red 200</string>
+    <string name="pink_200">Pink 200</string>
+    <string name="purple_200">Purple 200</string>
+    <string name="deep_purple_200">Deep purple 200</string>
+    <string name="indigo_200">Indigo 200</string>
+    <string name="blue_200">Blue 200</string>
+    <string name="light_blue_200">Light blue 200</string>
+    <string name="cyan_200">Cyan 200</string>
+    <string name="teal_200">Teal 200</string>
+    <string name="green_200">Green 200</string>
+    <string name="light_green_200">Light green 200</string>
+    <string name="lime_200">Lime 200</string>
+    <string name="yellow_200">Yellow 200</string>
+    <string name="amber_200">Amber 200</string>
+    <string name="orange_200">Orange 200</string>
+    <string name="deep_orange_200">Deep orange 200</string>
+    <string name="brown_200">Brown 200</string>
+    <string name="grey_200">Grey 200</string>
+    <string name="blue_grey_200">Blue grey 200</string>
 </resources>

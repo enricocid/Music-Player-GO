@@ -11,9 +11,13 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentSettingsBinding
 import com.iven.musicplayergo.extensions.toToast
+import com.iven.musicplayergo.goPreferences
+import com.iven.musicplayergo.helpers.ContextUtils
+import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 
 /**
@@ -59,8 +63,9 @@ class SettingsFragment : Fragment() {
                 mUIControlInterface.onCloseActivity()
             }
             setOnMenuItemClickListener {
-                if (it.itemId == R.id.github_page) {
-                    openGitHubPage()
+                when (it.itemId) {
+                    R.id.github_page -> openGitHubPage()
+                    R.id.locale_switcher -> openLocaleSwitcher()
                 }
                 return@setOnMenuItemClickListener true
             }
@@ -72,6 +77,22 @@ class SettingsFragment : Fragment() {
                 replace(R.id.fragment_layout, fm)
             }
         }
+    }
+
+    private fun openLocaleSwitcher() {
+        val locales = ContextUtils.getLocalesList(resources)
+
+        MaterialAlertDialogBuilder(requireActivity())
+            .setTitle(R.string.locale_pref_title)
+            .setItems(locales.values.toTypedArray()) { _, which ->
+                // Respond to item chosen
+                val newLocale = locales.keys.elementAt(which)
+                if (goPreferences.locale != newLocale) {
+                    goPreferences.locale = locales.keys.elementAt(which)
+                    ThemeHelper.applyChanges(requireActivity(), restoreSettings = true)
+                }
+            }
+            .show()
     }
 
     @SuppressLint("QueryPermissionsNeeded")

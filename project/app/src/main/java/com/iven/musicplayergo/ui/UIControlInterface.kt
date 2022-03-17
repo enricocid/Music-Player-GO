@@ -9,4 +9,6 @@ interface UIControlInterface {
     fun onCloseActivity()
     fun onAddToFilter(stringToFilter: String?)
     fun onDenyPermission()
+    fun onOpenPlayingArtistAlbum()
+    fun onOpenEqualizer()
 }
