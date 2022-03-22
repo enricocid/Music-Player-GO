@@ -61,12 +61,7 @@ object DialogHelper {
     fun showSleeptimerDialog(activity: Activity, context: Context) {
         AlertDialog.Builder(context)
             .setTitle(R.string.sleeptimer)
-            .setSingleChoiceItems(arrayOf(
-                activity.resources.getQuantityString(R.plurals.sleeptimer_option, 1, 1),
-                activity.resources.getQuantityString(R.plurals.sleeptimer_option, 2, 2),
-                activity.resources.getQuantityString(R.plurals.sleeptimer_option, 3, 3),
-                activity.resources.getQuantityString(R.plurals.sleeptimer_option, 4, 4),
-            ),-1){ _, _ -> }
+            .setView(activity.layoutInflater.inflate(R.layout.sleeptimer_dialog, null))
             .setPositiveButton(R.string.yes) { dialog, _ ->
                 val hours = (dialog as AlertDialog).listView.checkedItemPosition + 1
                 Toast.makeText(context,
