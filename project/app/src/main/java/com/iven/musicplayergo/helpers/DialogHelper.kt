@@ -9,8 +9,10 @@ import android.text.Spanned
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.text.parseAsHtml
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
@@ -21,6 +23,7 @@ import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
+import com.iven.musicplayergo.player.SleeptimerDialog
 import com.iven.musicplayergo.ui.MainActivity
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -59,21 +62,9 @@ object DialogHelper {
 
     @JvmStatic
     fun showSleeptimerDialog(activity: Activity, context: Context) {
-        AlertDialog.Builder(context)
-            .setTitle(R.string.sleeptimer)
-            .setView(activity.layoutInflater.inflate(R.layout.sleeptimer_dialog, null))
-            .setPositiveButton(R.string.yes) { dialog, _ ->
-                val hours = (dialog as AlertDialog).listView.checkedItemPosition + 1
-                Toast.makeText(context,
-                    activity.resources.getQuantityString(R.plurals.sleeptimer_option, hours, hours),
-                    Toast.LENGTH_SHORT).show()
-                Handler(Looper.getMainLooper()).postDelayed({
-                    (activity as MainActivity).PauseBySleeptimer()
-                }, hours.toLong() * 3600000)
-            }
-            .setNegativeButton(R.string.no) { _, _ -> }
-            .create()
-            .show()
+        val fm = (activity as AppCompatActivity).supportFragmentManager
+        val sleeptimerDialog = SleeptimerDialog()
+        sleeptimerDialog.show(fm, "sleeptimerDialogTag")
     }
 
     @JvmStatic
