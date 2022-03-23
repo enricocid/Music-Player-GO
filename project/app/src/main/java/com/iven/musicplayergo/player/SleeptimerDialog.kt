@@ -3,6 +3,8 @@ package com.iven.musicplayergo.player
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.RelativeSizeSpan
@@ -12,8 +14,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.ui.MainActivity
 
 
 class SleeptimerDialog : DialogFragment() {
@@ -54,7 +58,22 @@ class SleeptimerDialog : DialogFragment() {
         (rootView.findViewById(R.id.buttonBack) as Button).setOnClickListener({ deleteNumber() })
         (rootView.findViewById(R.id.buttonCancel) as Button).setOnClickListener({ dismiss() })
         (rootView.findViewById(R.id.buttonEnter) as Button).setOnClickListener({
-
+            val (hours, minutes, seconds) = splitToHMS(numberString.replace('-', '0'))
+            val totalSeconds = hours.toLong()*3600 + minutes.toLong()*60 + seconds.toLong()
+            if (totalSeconds != 0L) {
+                Toast.makeText(context,
+                    requireActivity().resources.getString(R.string.sleeptimer_stop_after, hours, minutes, seconds),
+                    Toast.LENGTH_SHORT).show()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    (requireActivity() as MainActivity).PauseBySleeptimer()
+                }, totalSeconds * 1000)
+                dismiss()
+            }
+            else{
+                Toast.makeText(context,
+                    requireActivity().resources.getString(R.string.sleeptimer_0_after),
+                    Toast.LENGTH_SHORT).show()
+            }
         })
     }
     private fun appendNumber(number: Char){
@@ -76,11 +95,9 @@ class SleeptimerDialog : DialogFragment() {
 
     private fun numberString2timeString(numberString: String): SpannableString{
 
-        val hoursNumber = numberString.slice(0..1)
+        val (hoursNumber, minutesNumber, secondsNumber) = splitToHMS(numberString)
         val hoursString = getText(R.string.sleeptimer_hours)
-        val minutesNumber = numberString.slice(2..3)
         val minutesString = getText(R.string.sleeptimer_minutes)
-        val secondsNumber = numberString.slice(4..5)
         val secondsString = getText(R.string.sleeptimer_seconds)
         val timeString = SpannableString(
             hoursNumber   + hoursString +
@@ -109,4 +126,9 @@ class SleeptimerDialog : DialogFragment() {
 
         setTimeTextView!!.setText(numberString2timeString(numberString), TextView.BufferType.SPANNABLE)
     }
+
+    private fun splitToHMS(numberString: String) = Triple(
+        numberString.slice(0..1),
+        numberString.slice(2..3),
+        numberString.slice(4..5))
 }
