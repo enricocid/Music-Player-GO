@@ -54,6 +54,8 @@
     <string name="sleeptimer_hours">hours</string>
     <string name="sleeptimer_minutes">minutes</string>
     <string name="sleeptimer_seconds">seconds</string>
+    <string name="sleeptimer_stop_after">stop %1s:%2s:%3s after</string>
+    <string name="sleeptimer_0_after">can\'t set sleep timer to 0</string>
 
     <!-- other content descriptions -->
     <string name="content_skip_prev">Skip to previous</string>
