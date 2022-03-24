@@ -8,9 +8,6 @@ import android.os.Looper
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.RelativeSizeSpan
-import android.text.style.TextAppearanceSpan
-import android.text.style.UnderlineSpan
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -60,18 +57,20 @@ class SleeptimerDialog : DialogFragment() {
         (rootView.findViewById(R.id.buttonEnter) as Button).setOnClickListener({
             val (hours, minutes, seconds) = splitToHMS(numberString.replace('-', '0'))
             val totalSeconds = hours.toLong()*3600 + minutes.toLong()*60 + seconds.toLong()
+            val activity = requireActivity()
+            val context = requireContext()
             if (totalSeconds != 0L) {
                 Toast.makeText(context,
-                    requireActivity().resources.getString(R.string.sleeptimer_stop_after, hours, minutes, seconds),
+                    activity.getString(R.string.sleeptimer_stop_after, hours, minutes, seconds),
                     Toast.LENGTH_SHORT).show()
                 Handler(Looper.getMainLooper()).postDelayed({
-                    (requireActivity() as MainActivity).PauseBySleeptimer()
+                    (activity as MainActivity).PauseBySleeptimer()
                 }, totalSeconds * 1000)
                 dismiss()
             }
             else{
                 Toast.makeText(context,
-                    requireActivity().resources.getString(R.string.sleeptimer_0_after),
+                    activity.getString(R.string.sleeptimer_set_0),
                     Toast.LENGTH_SHORT).show()
             }
         })
