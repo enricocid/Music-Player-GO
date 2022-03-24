@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.player
+package com.iven.musicplayergo.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
