@@ -273,7 +273,7 @@ class MusicContainersFragment : Fragment(),
 
             if (it.itemId == R.id.sleeptimer) {
 
-                DialogHelper.showSleeptimerDialog(requireActivity(), requireContext())
+                DialogHelper.showSleeptimerDialog(requireActivity())
 
             }
             else {

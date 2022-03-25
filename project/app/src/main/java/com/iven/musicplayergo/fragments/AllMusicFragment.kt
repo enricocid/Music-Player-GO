@@ -226,7 +226,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
             }
             else{
 
-                DialogHelper.showSleeptimerDialog(requireActivity(), requireContext())
+                DialogHelper.showSleeptimerDialog(requireActivity())
 
             }
 
