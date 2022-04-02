@@ -165,11 +165,9 @@
     <!-- Preferences - Filters -->
     <string name="filter_pref_title">Filters</string>
     <!-- Preferences - Directly remove items from (queue, favorites) -->
-    <string name="direct_remove_pref_title">Confirm before removing</string>
-    <string name="direct_remove_pref_sum">Ask for confirm before removing queue/favorites songs</string>
-
+    <string name="direct_remove_pref_title">Confirm removal</string>
+    <string name="direct_remove_pref_sum">Ask for confirmation before removing queue/favorite songs</string>
     <!-- Preferences - Accents names -->
-
     <string name="red">Red</string>
     <string name="pink">Pink</string>
     <string name="purple">Purple</string>
@@ -189,7 +187,6 @@
     <string name="brown">Brown</string>
     <string name="grey">Grey</string>
     <string name="blue_grey">Blue grey</string>
-
     <string name="red_200">Red 200</string>
     <string name="pink_200">Pink 200</string>
     <string name="purple_200">Purple 200</string>
