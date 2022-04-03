@@ -51,11 +51,10 @@
 
     <!-- Sleep timer-->
     <string name="sleeptimer">Sleep Timer</string>
-    <string name="sleeptimer_hours">hours</string>
-    <string name="sleeptimer_minutes">minutes</string>
-    <string name="sleeptimer_seconds">seconds</string>
-    <string name="sleeptimer_stop_after">stop %s:%s:%s after</string>
-    <string name="sleeptimer_set_0">can\'t set sleep timer to 0</string>
+    <plurals name="sleeptimer_option">
+        <item quantity="one">stop %d hour after</item>
+        <item quantity="other">stop %d hours after</item>
+    </plurals>
 
     <!-- other content descriptions -->
     <string name="content_skip_prev">Skip to previous</string>

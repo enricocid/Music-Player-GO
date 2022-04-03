@@ -1,10 +1,14 @@
 package com.iven.musicplayergo.helpers
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.text.Spanned
 import android.view.Gravity
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.text.parseAsHtml
@@ -18,7 +22,7 @@ import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
-import com.iven.musicplayergo.dialogs.SleeptimerDialog
+import com.iven.musicplayergo.ui.MainActivity
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 
@@ -55,10 +59,27 @@ object DialogHelper {
     }
 
     @JvmStatic
-    fun showSleeptimerDialog(activity: Activity) {
-        val fm = (activity as AppCompatActivity).supportFragmentManager
-        val sleeptimerDialog = SleeptimerDialog()
-        sleeptimerDialog.show(fm, "sleeptimerDialogTag")
+    fun showSleeptimerDialog(activity: Activity, context: Context) {
+        AlertDialog.Builder(context)
+            .setTitle(R.string.sleeptimer)
+            .setSingleChoiceItems(arrayOf(
+                activity.resources.getQuantityString(R.plurals.sleeptimer_option, 1, 1),
+                activity.resources.getQuantityString(R.plurals.sleeptimer_option, 2, 2),
+                activity.resources.getQuantityString(R.plurals.sleeptimer_option, 3, 3),
+                activity.resources.getQuantityString(R.plurals.sleeptimer_option, 4, 4),
+            ),-1){ _, _ -> }
+            .setPositiveButton(R.string.yes) { dialog, _ ->
+                val hours = (dialog as AlertDialog).listView.checkedItemPosition + 1
+                Toast.makeText(context,
+                    activity.resources.getQuantityString(R.plurals.sleeptimer_option, hours, hours),
+                    Toast.LENGTH_SHORT).show()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    (activity as MainActivity).PauseBySleeptimer()
+                }, hours.toLong() * 3600000)
+            }
+            .setNegativeButton(R.string.no) { _, _ -> }
+            .create()
+            .show()
     }
 
     @JvmStatic
