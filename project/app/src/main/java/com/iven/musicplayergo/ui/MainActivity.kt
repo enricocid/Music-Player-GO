@@ -1100,7 +1100,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             override fun onFinish() {
                 isSleeptimerRunning = false
                 sleeptimerRemainingTime.setText("0:00:00")
-                (sleeptimerRemainingTime.getParent() as ViewGroup).removeView(sleeptimerRemainingTime);
             }
         }
         sleeptimer.start()
