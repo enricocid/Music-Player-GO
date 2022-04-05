@@ -8,6 +8,8 @@ import android.os.Looper
 import android.text.Spanned
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
@@ -60,26 +62,44 @@ object DialogHelper {
 
     @JvmStatic
     fun showSleeptimerDialog(activity: Activity, context: Context) {
-        AlertDialog.Builder(context)
-            .setTitle(R.string.sleeptimer)
-            .setSingleChoiceItems(arrayOf(
-                activity.resources.getQuantityString(R.plurals.sleeptimer_option, 1, 1),
-                activity.resources.getQuantityString(R.plurals.sleeptimer_option, 2, 2),
-                activity.resources.getQuantityString(R.plurals.sleeptimer_option, 3, 3),
-                activity.resources.getQuantityString(R.plurals.sleeptimer_option, 4, 4),
-            ),-1){ _, _ -> }
-            .setPositiveButton(R.string.yes) { dialog, _ ->
-                val hours = (dialog as AlertDialog).listView.checkedItemPosition + 1
-                Toast.makeText(context,
-                    activity.resources.getQuantityString(R.plurals.sleeptimer_option, hours, hours),
-                    Toast.LENGTH_SHORT).show()
-                Handler(Looper.getMainLooper()).postDelayed({
-                    (activity as MainActivity).PauseBySleeptimer()
-                }, hours.toLong() * 3600000)
-            }
-            .setNegativeButton(R.string.no) { _, _ -> }
-            .create()
-            .show()
+        if ((activity as MainActivity).isSleeptimerRunning) {
+            AlertDialog.Builder(context)
+                .setTitle(R.string.sleeptimer_remaining_time)
+                .setView(activity.sleeptimerRemainingTime)
+                .setPositiveButton(R.string.yes) { _, _ -> }
+                .setNegativeButton(R.string.no) { _, _ -> }
+                .create()
+                .show()
+        }
+        else{
+            AlertDialog.Builder(context)
+                .setTitle(R.string.sleeptimer)
+                .setSingleChoiceItems(
+                    arrayOf(
+                        activity.resources.getQuantityString(R.plurals.sleeptimer_option, 1, 1),
+                        activity.resources.getQuantityString(R.plurals.sleeptimer_option, 2, 2),
+                        activity.resources.getQuantityString(R.plurals.sleeptimer_option, 3, 3),
+                        activity.resources.getQuantityString(R.plurals.sleeptimer_option, 4, 4),
+                    ), -1
+                ) { _, _ -> }
+                .setPositiveButton(R.string.yes) { dialog, _ ->
+                    val choice = (dialog as AlertDialog).listView.checkedItemPosition + 1
+                    activity.runSleeptimer(choice * 3600)
+                    val hours = choice
+                    Toast.makeText(
+                        context,
+                        activity.resources.getQuantityString(
+                            R.plurals.sleeptimer_option,
+                            hours,
+                            hours
+                        ),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                .setNegativeButton(R.string.no) { _, _ -> }
+                .create()
+                .show()
+        }
     }
 
     @JvmStatic

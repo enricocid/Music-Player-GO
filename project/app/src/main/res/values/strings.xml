@@ -55,6 +55,7 @@
         <item quantity="one">stop %d hour after</item>
         <item quantity="other">stop %d hours after</item>
     </plurals>
+    <string name="sleeptimer_remaining_time">Sleep Timer: Remaining time</string>
 
     <!-- other content descriptions -->
     <string name="content_skip_prev">Skip to previous</string>

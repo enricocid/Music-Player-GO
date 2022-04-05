@@ -4,13 +4,18 @@ import android.content.*
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.IBinder
 import android.provider.OpenableColumns
 import android.util.Log
+import android.view.Gravity
+import android.view.ViewGroup
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
@@ -38,6 +43,7 @@ import com.iven.musicplayergo.player.PlayerService
 import com.iven.musicplayergo.preferences.SettingsFragment
 import dev.chrisbanes.insetter.Insetter
 import dev.chrisbanes.insetter.windowInsetTypesOf
+import java.security.AccessController.getContext
 import java.util.*
 
 
@@ -91,6 +97,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private lateinit var mPlayerService: PlayerService
     private var sBound = false
     private lateinit var mBindingIntent: Intent
+
+    // sleep timer
+    private lateinit var sleeptimer: CountDownTimer
+    var isSleeptimerRunning = false
+    lateinit var sleeptimerRemainingTime: TextView
 
     private fun checkIsPlayer(showError: Boolean): Boolean {
         if (!isMediaPlayerHolder && !mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongFromPrefs && showError) {
@@ -273,6 +284,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         } else {
             doBindService()
         }
+
+        sleeptimerRemainingTime = TextView(this)
+        sleeptimerRemainingTime.setText("00:00:00")
+        sleeptimerRemainingTime.setTextSize(50f)
+        sleeptimerRemainingTime.gravity = Gravity.CENTER
     }
 
     private fun notifyError(errorType: String) {
@@ -1070,7 +1086,28 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
-    public fun PauseBySleeptimer(){
+    // sleep timer
+    fun runSleeptimer(setTimeSeconds: Int){
+        isSleeptimerRunning = true
+        sleeptimer = object : CountDownTimer(setTimeSeconds.toLong() * 1000, 1000){
+            override fun onTick(millisUntilFinished: Long) {
+                val secondUntilFinished = millisUntilFinished.toInt() / 1000
+                val hours   = secondUntilFinished / 3600
+                val minutes = secondUntilFinished / 60 % 60
+                val seconds = secondUntilFinished % 60
+                sleeptimerRemainingTime.setText(String.format("%1d:%02d:%02d", hours, minutes, seconds))
+            }
+            override fun onFinish() {
+                isSleeptimerRunning = false
+                sleeptimerRemainingTime.setText("0:00:00")
+                (sleeptimerRemainingTime.getParent() as ViewGroup).removeView(sleeptimerRemainingTime);
+            }
+        }
+        sleeptimer.start()
+    }
+
+    fun pauseBySleeptimer(){
+        isSleeptimerRunning = false
         if (mMediaPlayerHolder.isPlaying) {
             mMediaPlayerHolder.pauseMediaPlayer()
         }
