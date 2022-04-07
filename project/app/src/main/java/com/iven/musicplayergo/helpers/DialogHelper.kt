@@ -66,12 +66,12 @@ object DialogHelper {
             AlertDialog.Builder(context)
                 .setTitle(R.string.sleeptimer_remaining_time)
                 .setView(activity.sleeptimerRemainingTime)
-                .setPositiveButton(R.string.yes) { _, _ ->
-                    (activity.sleeptimerRemainingTime.getParent() as ViewGroup).removeView(activity.sleeptimerRemainingTime);
-                }
+                .setPositiveButton(R.string.yes) { _, _ -> }
                 .setNegativeButton(R.string.cancel) { dialog, _ ->
                     Toast.makeText(context, R.string.cancel, Toast.LENGTH_SHORT).show()
-                    (activity.sleeptimerRemainingTime.getParent() as ViewGroup).removeView(activity.sleeptimerRemainingTime);
+                }
+                .setOnDismissListener{
+                    (activity.sleeptimerRemainingTime.getParent() as ViewGroup).removeView(activity.sleeptimerRemainingTime)
                 }
                 .create()
                 .show()
