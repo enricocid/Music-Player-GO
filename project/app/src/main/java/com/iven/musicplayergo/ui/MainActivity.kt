@@ -1112,6 +1112,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
+    fun cancelSleeptimer(){
+        isSleeptimerRunning = false
+        sleeptimer.cancel()
+    }
+
     // interface to let MediaPlayerHolder update the UI media player controls.
     private val mMediaPlayerInterface = object : MediaPlayerInterface {
 

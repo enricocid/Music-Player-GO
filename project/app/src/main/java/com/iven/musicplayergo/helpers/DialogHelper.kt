@@ -3,15 +3,11 @@ package com.iven.musicplayergo.helpers
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.text.Spanned
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.text.parseAsHtml
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -67,8 +63,9 @@ object DialogHelper {
                 .setTitle(R.string.sleeptimer_remaining_time)
                 .setView(activity.sleeptimerRemainingTime)
                 .setPositiveButton(R.string.yes) { _, _ -> }
-                .setNegativeButton(R.string.cancel) { dialog, _ ->
-                    Toast.makeText(context, R.string.cancel, Toast.LENGTH_SHORT).show()
+                .setNegativeButton(R.string.cancel) { _, _ ->
+                    activity.cancelSleeptimer()
+                    Toast.makeText(context, R.string.sleeptimer_canceled, Toast.LENGTH_SHORT).show()
                 }
                 .setOnDismissListener{
                     (activity.sleeptimerRemainingTime.getParent() as ViewGroup).removeView(activity.sleeptimerRemainingTime)
@@ -85,7 +82,7 @@ object DialogHelper {
                         activity.resources.getQuantityString(R.plurals.sleeptimer_option, 2, 2),
                         activity.resources.getQuantityString(R.plurals.sleeptimer_option, 3, 3),
                         activity.resources.getQuantityString(R.plurals.sleeptimer_option, 4, 4),
-                    ), -1
+                    ), 1
                 ) { _, _ -> }
                 .setPositiveButton(R.string.yes) { dialog, _ ->
                     val choice = (dialog as AlertDialog).listView.checkedItemPosition + 1
