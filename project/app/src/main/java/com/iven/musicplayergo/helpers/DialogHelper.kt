@@ -82,7 +82,7 @@ object DialogHelper {
                         activity.resources.getQuantityString(R.plurals.sleeptimer_option, 2, 2),
                         activity.resources.getQuantityString(R.plurals.sleeptimer_option, 3, 3),
                         activity.resources.getQuantityString(R.plurals.sleeptimer_option, 4, 4),
-                    ), 1
+                    ), 0
                 ) { _, _ -> }
                 .setPositiveButton(R.string.yes) { dialog, _ ->
                     val choice = (dialog as AlertDialog).listView.checkedItemPosition + 1
