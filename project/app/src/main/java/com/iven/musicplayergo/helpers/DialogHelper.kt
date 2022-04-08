@@ -68,7 +68,7 @@ object DialogHelper {
                     Toast.makeText(context, R.string.sleeptimer_canceled, Toast.LENGTH_SHORT).show()
                 }
                 .setOnDismissListener{
-                    (activity.sleeptimerRemainingTime.getParent() as ViewGroup).removeView(activity.sleeptimerRemainingTime)
+                    (activity.sleeptimerRemainingTime.parent as ViewGroup).removeView(activity.sleeptimerRemainingTime)
                 }
                 .create()
                 .show()
@@ -87,13 +87,12 @@ object DialogHelper {
                 .setPositiveButton(R.string.yes) { dialog, _ ->
                     val choice = (dialog as AlertDialog).listView.checkedItemPosition + 1
                     activity.runSleeptimer(choice * 3600)
-                    val hours = choice
                     Toast.makeText(
                         context,
                         activity.resources.getQuantityString(
                             R.plurals.sleeptimer_option,
-                            hours,
-                            hours
+                            choice,
+                            choice
                         ),
                         Toast.LENGTH_SHORT
                     ).show()

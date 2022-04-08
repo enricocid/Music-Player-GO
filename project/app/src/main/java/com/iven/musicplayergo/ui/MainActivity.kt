@@ -9,13 +9,11 @@ import android.os.IBinder
 import android.provider.OpenableColumns
 import android.util.Log
 import android.view.Gravity
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
@@ -43,7 +41,6 @@ import com.iven.musicplayergo.player.PlayerService
 import com.iven.musicplayergo.preferences.SettingsFragment
 import dev.chrisbanes.insetter.Insetter
 import dev.chrisbanes.insetter.windowInsetTypesOf
-import java.security.AccessController.getContext
 import java.util.*
 
 
@@ -286,8 +283,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
 
         sleeptimerRemainingTime = TextView(this)
-        sleeptimerRemainingTime.setText("00:00:00")
-        sleeptimerRemainingTime.setTextSize(50f)
+        sleeptimerRemainingTime.text = "00:00:00"
+        sleeptimerRemainingTime.textSize = 50f
         sleeptimerRemainingTime.gravity = Gravity.CENTER
     }
 
@@ -1095,11 +1092,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 val hours   = secondUntilFinished / 3600
                 val minutes = secondUntilFinished / 60 % 60
                 val seconds = secondUntilFinished % 60
-                sleeptimerRemainingTime.setText(String.format("%1d:%02d:%02d", hours, minutes, seconds))
+                sleeptimerRemainingTime.text =
+                    String.format("%1d:%02d:%02d", hours, minutes, seconds)
             }
             override fun onFinish() {
                 isSleeptimerRunning = false
-                sleeptimerRemainingTime.setText("0:00:00")
+                sleeptimerRemainingTime.text = "0:00:00"
                 pauseBySleeptimer()
             }
         }
