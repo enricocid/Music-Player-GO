@@ -8,12 +8,12 @@
     <string name="artists">कलाकार</string>
     <string name="songs">गीत</string>
     <string name="folders">फोल्डर</string>
-    <string name="artist_info">%1d&#160;एल्बम,&#160;%2d&#160;गीत</string>
-    <string name="folder_info">%1d&#160;गीत</string>
+    <string name="artist_info">%1d एल्बम, %2d गीत</string>
+    <string name="folder_info">%1d गीत</string>
     <string name="sorting_pref">क्रमबद्ध गर्दै</string>
     <string name="sorting_pref_default">पूर्वनिर्धारित</string>
-    <string name="sorting_pref_track">ट्र्याक क्र। &#8595;</string>
-    <string name="sorting_pref_track_inv">ट्र्याक क्र। &#8593;</string>
+    <string name="sorting_pref_track">ट्र्याक क्र। ↓</string>
+    <string name="sorting_pref_track_inv">ट्र्याक क्र। ↑</string>
     <string name="shuffle_am">सबै गीतहरू बदल्नुहोस्</string>
     <string name="shuffle_sa">चयनित एल्बम सफ्फल गर्नुहोस्</string>
     <string name="queue_add">लाममा थप्नुहोस्</string>
@@ -34,8 +34,8 @@
     <string name="error_no_queue">कुनै गीत लाममा छैन!</string>
     <string name="perm_rationale">Music Player GO लाई संगीत बजाउनको लागि तपाईंको फाईलहरूमा पहुँच आवश्यक छ!</string>
     <string name="repeat_enabled">दोहोर्याउनुहोस् 1x सक्षम गरियो!</string>
-    <string name="repeat_loop_enabled">दोहोर्याउनुहोस् &#8734; सक्षम!</string>
-    <string name="repeat_disabled">दोहोर्याउनुहोस् &#8734; अक्षम!</string>
+    <string name="repeat_loop_enabled">दोहोर्याउनुहोस् ∞ सक्षम!</string>
+    <string name="repeat_disabled">दोहोर्याउनुहोस् ∞ अक्षम!</string>
     <string name="settings">सेटिंग्स</string>
     <string name="category_general">सामान्य</string>
     <string name="open_git_pref_summary">अधिक जानकारी को लागी परियोजनाको पृष्ठ खोल्नुहोस्:)</string>
@@ -50,4 +50,11 @@
     <string name="focus_pref_title">अडियो फोकस</string>
     <string name="headset_pref_title">हेडसेट प्लग</string>
     <string name="filter_pref_title">फिल्टरहरू</string>
+    <string name="delete">मेटाउन</string>
+    <string name="albums">एल्बम</string>
+    <string name="favorites_save_time">गीत स्थिति बचत गर्नुहोस्</string>
+    <string name="equalizer">तुल्यकारक</string>
+    <string name="equalizer_presets">तुल्यकारक प्रिसेटहरू</string>
+    <string name="equalizer_bb">बास वृद्धि</string>
+    <string name="equalizer_v">वरपरको आवाज</string>
 </resources>
