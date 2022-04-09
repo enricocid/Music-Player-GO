@@ -58,6 +58,7 @@
         <item>ar</item> <!-- Arabic -->
         <item>bd</item> <!-- Bengali -->
         <item>be</item> <!-- Belarusian -->
+        <item>bg</item> <!-- Bulgarian -->
         <item>cn</item> <!-- Chinese (Simplified) -->
         <item>cs</item> <!-- Czech -->
         <item>da</item> <!-- Danish -->
@@ -101,6 +102,7 @@
         <item>@string/locale_arabic</item>
         <item>@string/locale_bengali</item>
         <item>@string/locale_belarusian</item>
+        <item>@string/locale_bulgarian</item>
         <item>@string/locale_chinese_s</item>
         <item>@string/locale_czech</item>
         <item>@string/locale_danish</item>
