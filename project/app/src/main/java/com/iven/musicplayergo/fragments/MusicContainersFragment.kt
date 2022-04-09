@@ -109,9 +109,9 @@ class MusicContainersFragment : Fragment(),
 
             stb.inflateMenu(R.menu.menu_search)
 
-            stb.overflowIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_sort)
-
             stb.title = getFragmentTitle()
+
+            stb.overflowIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_sort)
 
             stb.setNavigationOnClickListener {
                 mUiControlInterface.onCloseActivity()
@@ -133,6 +133,7 @@ class MusicContainersFragment : Fragment(),
                         _musicContainerListBinding?.artistsFoldersRv?.setupFastScrollerPadding(forceNoPadding = hasFocus,
                             resources)
                         stb.menu.setGroupVisible(R.id.sorting, !hasFocus)
+                        stb.menu.findItem(R.id.sleeptimer).isVisible = !hasFocus
                     }
                 }
                 setMenuOnItemClickListener(this)
@@ -266,7 +267,12 @@ class MusicContainersFragment : Fragment(),
     private fun setMenuOnItemClickListener(menu: Menu) {
         _musicContainerListBinding?.searchToolbar?.setOnMenuItemClickListener {
 
-            if (it.itemId != R.id.action_search) {
+            if (it.itemId == R.id.sleeptimer) {
+
+                DialogHelper.showSleeptimerDialog(requireActivity(), requireContext())
+
+            }
+            else {
 
                 mSorting = it.order
 

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+    android:id="@+id/sleeptimer"
+    android:icon="@drawable/ic_sleeptimer"
+    android:title=""
+    app:showAsAction="collapseActionView|always"
+    tools:ignore="AlwaysShowAction" />
 
     <group>
 

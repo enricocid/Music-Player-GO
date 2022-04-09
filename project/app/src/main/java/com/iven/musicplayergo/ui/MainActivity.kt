@@ -4,9 +4,12 @@ import android.content.*
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.IBinder
 import android.provider.OpenableColumns
 import android.util.Log
+import android.view.Gravity
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -91,6 +94,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private lateinit var mPlayerService: PlayerService
     private var sBound = false
     private lateinit var mBindingIntent: Intent
+
+    // sleep timer
+    private lateinit var sleeptimer: CountDownTimer
+    var isSleeptimerRunning = false
+    lateinit var sleeptimerRemainingTime: TextView
 
     private fun checkIsPlayer(showError: Boolean): Boolean {
         if (!isMediaPlayerHolder && !mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongFromPrefs && showError) {
@@ -273,6 +281,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         } else {
             doBindService()
         }
+
+        sleeptimerRemainingTime = TextView(this)
+        sleeptimerRemainingTime.text = "00:00:00"
+        sleeptimerRemainingTime.textSize = 50f
+        sleeptimerRemainingTime.gravity = Gravity.CENTER
     }
 
     private fun notifyError(errorType: String) {
@@ -1068,6 +1081,39 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 notifyError(GoConstants.TAG_NO_MUSIC_INTENT)
             }
         }
+    }
+
+    // sleep timer
+    fun runSleeptimer(setTimeSeconds: Int){
+        isSleeptimerRunning = true
+        sleeptimer = object : CountDownTimer(setTimeSeconds.toLong() * 1000, 1000){
+            override fun onTick(millisUntilFinished: Long) {
+                val secondUntilFinished = millisUntilFinished.toInt() / 1000
+                val hours   = secondUntilFinished / 3600
+                val minutes = secondUntilFinished / 60 % 60
+                val seconds = secondUntilFinished % 60
+                sleeptimerRemainingTime.text =
+                    String.format("%1d:%02d:%02d", hours, minutes, seconds)
+            }
+            override fun onFinish() {
+                isSleeptimerRunning = false
+                sleeptimerRemainingTime.text = "0:00:00"
+                pauseBySleeptimer()
+            }
+        }
+        sleeptimer.start()
+    }
+
+    fun pauseBySleeptimer(){
+        isSleeptimerRunning = false
+        if (mMediaPlayerHolder.isPlaying) {
+            mMediaPlayerHolder.pauseMediaPlayer()
+        }
+    }
+
+    fun cancelSleeptimer(){
+        isSleeptimerRunning = false
+        sleeptimer.cancel()
     }
 
     // interface to let MediaPlayerHolder update the UI media player controls.
