@@ -808,7 +808,7 @@ class MediaPlayerHolder:
         }
     }
 
-    fun pauseBySleepTimer(minutes: Long){
+    fun pauseBySleepTimer(minutes: Long, label: String){
         if (isPlaying) {
             synchronized(cancelSleepTimer()) {
                 mSleepTimer = object : CountDownTimer(TimeUnit.MINUTES.toMillis(minutes), 1000) {
@@ -820,7 +820,10 @@ class MediaPlayerHolder:
                         pauseMediaPlayer()
                     }
                 }.start()
+                mPlayerService.getString(R.string.sleeptimer_enabled, label).toToast(mPlayerService)
             }
+        } else {
+            R.string.error_bad_id.toToast(mPlayerService)
         }
     }
 

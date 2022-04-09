@@ -22,7 +22,6 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.ModalRvBinding
 import com.iven.musicplayergo.extensions.afterMeasured
-import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.Music
@@ -230,8 +229,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                         dismiss()
                     }
                     btnPositive.setOnClickListener {
-                        getString(R.string.sleeptimer_enabled, sleepTimerAdapter.getSelectedSleepTimer()).toToast(requireActivity())
-                        mMediaControlInterface.onGetMediaPlayerHolder()?.pauseBySleepTimer(sleepTimerAdapter.getSelectedSleepTimerValue())
+                        mMediaControlInterface.onGetMediaPlayerHolder()?.pauseBySleepTimer(sleepTimerAdapter.getSelectedSleepTimerValue(), sleepTimerAdapter.getSelectedSleepTimer())
                         dismiss()
                     }
                 }
@@ -318,7 +316,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
         private val sleepOptions = resources.getStringArray(R.array.sleepOptions)
         private val sleepOptionValues = resources.getIntArray(R.array.sleepOptionsValues)
 
-        private var mSelectedPosition = RecyclerView.NO_POSITION
+        private var mSelectedPosition = 0
 
         private val mDefaultTextColor =
             ThemeHelper.resolveColorAttr(requireActivity(), android.R.attr.textColorPrimary)
