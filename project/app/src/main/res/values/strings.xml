@@ -3,7 +3,6 @@
     <!-- Dialogs / Buttons -->
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
     <string name="on_close_activity">Stop playback?</string>
     <string name="queue_songs_clear">Clear queue?</string>
