@@ -49,16 +49,12 @@
     <!-- Playback speed -->
     <string name="content_playback_speed">Playback speed</string>
     <string name="speed_3">Normal</string>
-
     <!-- Sleep timer-->
-    <string name="sleeptimer">Sleep Timer</string>
-    <plurals name="sleeptimer_option">
-        <item quantity="one">stop %d hour after</item>
-        <item quantity="other">stop %d hours after</item>
-    </plurals>
-    <string name="sleeptimer_remaining_time">Sleep Timer: Remaining time</string>
-    <string name="sleeptimer_canceled">Sleep timer was canceled.</string>
-
+    <string name="sleeptimer">Sleep timer</string>
+    <string name="sleeptimer_remaining_time">Sleep timer: remaining time</string>
+    <string name="sleeptimer_enabled">Stop playback %1s after</string>
+    <string name="sleeptimer_stop">Stop</string>
+    <string name="sleeptimer_cancel_desc">Stop sleep timer</string>
     <!-- other content descriptions -->
     <string name="content_skip_prev">Skip to previous</string>
     <string name="content_play">Play/pause</string>

@@ -23,6 +23,20 @@
         android:paddingTop="16dp"
         android:paddingBottom="16dp" />
 
+    <TextView
+        android:id="@+id/sleep_timer_elapsed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingStart="16dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="14dp"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
+        android:textColor="?android:attr/textColorTertiary" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/modal_rv"
         android:layout_width="match_parent"

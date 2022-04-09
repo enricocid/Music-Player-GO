@@ -23,6 +23,11 @@
     <string name="content_repeat">Attiva/disattiva ripetizione selezionata</string>
     <string name="content_playback_speed">Velocità riproduzione</string>
     <string name="speed_3">Normale</string>
+    <string name="sleeptimer">Timer spegnimento</string>
+    <string name="sleeptimer_remaining_time">Timer spegnimento: tempo rimanente</string>
+    <string name="sleeptimer_enabled">Interrompi riproduzione dopo %1s</string>
+    <string name="sleeptimer_stop">Interrompi</string>
+    <string name="sleeptimer_cancel_desc">Interrompi timer spegnimento</string>
     <string name="open_details_fragment">Apri dettagli artista/cartella</string>
     <string name="queue_song_remove">Rimuovere %1s dalla coda\?</string>
     <string name="queue_songs_clear">Cancellare la coda\?</string>

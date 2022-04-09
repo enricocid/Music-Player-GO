@@ -15,6 +15,7 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentAllMusicBinding
+import com.iven.musicplayergo.dialogs.RecyclerSheet
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
@@ -205,9 +206,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                 || it.itemId == R.id.album_sorting_inv) {
 
                 mSorting = it.order
-
-                mAllMusic =
-                    ListsHelper.getSortedMusicListForAllMusic(mSorting, mAllMusic)
+                mAllMusic = ListsHelper.getSortedMusicListForAllMusic(mSorting, mAllMusic)
 
                 setMusicDataSource(mAllMusic)
 
@@ -223,11 +222,9 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                 }
 
                 goPreferences.allMusicSorting = mSorting
-            }
-            else{
 
-                DialogHelper.showSleeptimerDialog(requireActivity(), requireContext())
-
+            } else {
+                mUIControlInterface.onOpenSleepTimerDialog()
             }
 
             return@setOnMenuItemClickListener true

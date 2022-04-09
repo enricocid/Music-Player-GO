@@ -11,12 +11,12 @@
         app:showAsAction="collapseActionView|always"
         tools:ignore="AlwaysShowAction" />
 
-	<item
-	android:id="@+id/sleeptimer"
-	android:icon="@drawable/ic_sleeptimer"
-	android:title=""
-	app:showAsAction="collapseActionView|always"
-	tools:ignore="AlwaysShowAction" />
+    <item
+        android:id="@+id/sleeptimer"
+        android:icon="@drawable/ic_sleeptimer"
+        android:title="@string/sleeptimer"
+        app:showAsAction="collapseActionView|always"
+        tools:ignore="AlwaysShowAction" />
 
     <group android:id="@+id/more_options_folder">
 

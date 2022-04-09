@@ -10,4 +10,5 @@ interface MediaPlayerInterface {
     fun onQueueStartedOrEnded(started: Boolean)
     fun onBackupSong()
     fun onForegroundServiceStopped()
+    fun onUpdateSleepTimerCountdown(value: Long)
 }

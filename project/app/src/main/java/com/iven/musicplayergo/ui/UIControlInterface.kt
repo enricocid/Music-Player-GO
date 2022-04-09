@@ -1,5 +1,7 @@
 package com.iven.musicplayergo.ui
 
+import com.iven.musicplayergo.dialogs.RecyclerSheet
+
 interface UIControlInterface {
     fun onAppearanceChanged(isThemeChanged: Boolean)
     fun onOpenNewDetailsFragment()
@@ -11,4 +13,5 @@ interface UIControlInterface {
     fun onDenyPermission()
     fun onOpenPlayingArtistAlbum()
     fun onOpenEqualizer()
+    fun onOpenSleepTimerDialog()
 }

@@ -140,4 +140,63 @@
         <item>@string/locale_chinese_t</item>
     </string-array>
 
+    <string-array name="sleepOptions">
+        <item>5min</item>
+        <item>15min</item>
+        <item>30min</item>
+        <item>45min</item>
+        <item>1.0h</item>
+        <item>1.5h</item>
+        <item>2.0h</item>
+        <item>2.5h</item>
+        <item>3.0h</item>
+        <item>3.5h</item>
+        <item>4.0h</item>
+        <item>4.5h</item>
+        <item>5.0h</item>
+        <item>5.5h</item>
+        <item>6.0h</item>
+        <item>6.5h</item>
+        <item>7.0h</item>
+        <item>7.5h</item>
+        <item>8.0h</item>
+        <item>8.5h</item>
+        <item>9.0h</item>
+        <item>9.5h</item>
+        <item>10.0h</item>
+        <item>10.5h</item>
+        <item>11.0h</item>
+        <item>11.5h</item>
+        <item>12.0h</item>
+    </string-array>
+
+    <integer-array name="sleepOptionsValues">
+        <item>5</item>
+        <item>15</item>
+        <item>30</item>
+        <item>45</item>
+        <item>60</item>
+        <item>90</item>
+        <item>120</item>
+        <item>150</item>
+        <item>180</item>
+        <item>210</item>
+        <item>240</item>
+        <item>270</item>
+        <item>300</item>
+        <item>330</item>
+        <item>360</item>
+        <item>390</item>
+        <item>420</item>
+        <item>450</item>
+        <item>480</item>
+        <item>510</item>
+        <item>540</item>
+        <item>570</item>
+        <item>600</item>
+        <item>630</item>
+        <item>660</item>
+        <item>690</item>
+        <item>720</item>
+    </integer-array>
 </resources>

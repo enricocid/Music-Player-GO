@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
-    android:id="@+id/sleeptimer"
-    android:icon="@drawable/ic_sleeptimer"
-    android:title=""
-    app:showAsAction="collapseActionView|always"
-    tools:ignore="AlwaysShowAction" />
+        android:id="@+id/sleeptimer"
+        android:icon="@drawable/ic_sleeptimer"
+        android:title="@string/sleeptimer"
+        app:showAsAction="collapseActionView|always"
+        tools:ignore="AlwaysShowAction" />
 
     <group>
-
         <!-- am = all artist music, sa = selected album -->
         <item
             android:id="@+id/action_shuffle_am"

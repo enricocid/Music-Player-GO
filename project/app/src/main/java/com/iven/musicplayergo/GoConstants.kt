@@ -83,4 +83,6 @@ object GoConstants {
     const val FILTERS_TYPE = "MODAL_FILTERS"
     const val QUEUE_TYPE = "MODAL_QUEUE"
     const val FAV_TYPE = "MODAL_FAVORITES"
+    const val SLEEPTIMER_TYPE = "MODAL_SLEEPTIMER"
+    const val SLEEPTIMER_ELAPSED_TYPE = "MODAL_SLEEPTIMER_ELAPSED"
 }

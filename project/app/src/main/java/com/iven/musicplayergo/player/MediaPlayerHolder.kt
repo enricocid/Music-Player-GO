@@ -18,8 +18,7 @@ import android.media.audiofx.AudioEffect
 import android.media.audiofx.BassBoost
 import android.media.audiofx.Equalizer
 import android.media.audiofx.Virtualizer
-import android.os.Build
-import android.os.PowerManager
+import android.os.*
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.MediaMetadataCompat.*
 import android.support.v4.media.session.PlaybackStateCompat
@@ -148,6 +147,10 @@ class MediaPlayerHolder:
         } else {
             mediaPlayer.currentPosition
         }
+
+    // Sleep Timer
+    private var mSleepTimer: CountDownTimer? = null
+    val isSleepTimer get() = mSleepTimer != null
 
     // Media player state/booleans
     val isPlaying get() = ::mediaPlayer.isInitialized && mediaPlayer.isPlaying
@@ -795,6 +798,29 @@ class MediaPlayerHolder:
             mEqualizer = null
             mBassBoost = null
             mVirtualizer = null
+        }
+    }
+
+    fun cancelSleepTimer() {
+        mSleepTimer?.run {
+            cancel()
+            mSleepTimer = null
+        }
+    }
+
+    fun pauseBySleepTimer(minutes: Long){
+        if (isPlaying) {
+            synchronized(cancelSleepTimer()) {
+                mSleepTimer = object : CountDownTimer(TimeUnit.MINUTES.toMillis(minutes), 1000) {
+                    override fun onTick(p0: Long) {
+                        mediaPlayerInterface.onUpdateSleepTimerCountdown(p0)
+                    }
+                    override fun onFinish() {
+                        mSleepTimer = null
+                        pauseMediaPlayer()
+                    }
+                }.start()
+            }
         }
     }
 

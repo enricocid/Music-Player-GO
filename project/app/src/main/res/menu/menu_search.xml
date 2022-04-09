@@ -14,7 +14,7 @@
     <item
         android:id="@+id/sleeptimer"
         android:icon="@drawable/ic_sleeptimer"
-        android:title=""
+        android:title="@string/sleeptimer"
         app:showAsAction="collapseActionView|always"
         tools:ignore="AlwaysShowAction" />
 
@@ -38,5 +38,4 @@
             android:title="@string/sorting_pref_descending"
             app:showAsAction="never" />
     </group>
-
 </menu>

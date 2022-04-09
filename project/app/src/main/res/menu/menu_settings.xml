@@ -4,13 +4,13 @@
 
     <item
         android:id="@+id/locale_switcher"
-        android:title="@string/locale_pref_title"
         android:icon="@drawable/ic_translate"
+        android:title="@string/locale_pref_title"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/github_page"
-        android:title="@string/open_git_pref_summary"
         android:icon="@drawable/ic_code"
+        android:title="@string/open_git_pref_summary"
         app:showAsAction="ifRoom" />
 </menu>

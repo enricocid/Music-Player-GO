@@ -4,12 +4,9 @@ import android.content.*
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.os.IBinder
 import android.provider.OpenableColumns
 import android.util.Log
-import android.view.Gravity
-import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -86,6 +83,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     // Now playing
     private var mNpDialog: NowPlaying? = null
 
+    // Sleep timer dialog
+    private var mSleepTimerDialog: RecyclerSheet? = null
+
     // Music player things
     private lateinit var mMediaPlayerHolder: MediaPlayerHolder
     private val isMediaPlayerHolder get() = ::mMediaPlayerHolder.isInitialized
@@ -94,11 +94,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private lateinit var mPlayerService: PlayerService
     private var sBound = false
     private lateinit var mBindingIntent: Intent
-
-    // sleep timer
-    private lateinit var sleeptimer: CountDownTimer
-    var isSleeptimerRunning = false
-    lateinit var sleeptimerRemainingTime: TextView
 
     private fun checkIsPlayer(showError: Boolean): Boolean {
         if (!isMediaPlayerHolder && !mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongFromPrefs && showError) {
@@ -281,11 +276,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         } else {
             doBindService()
         }
-
-        sleeptimerRemainingTime = TextView(this)
-        sleeptimerRemainingTime.text = "00:00:00"
-        sleeptimerRemainingTime.textSize = 50f
-        sleeptimerRemainingTime.gravity = Gravity.CENTER
     }
 
     private fun notifyError(errorType: String) {
@@ -898,6 +888,19 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
+    override fun onOpenSleepTimerDialog() {
+        mSleepTimerDialog = RecyclerSheet.newInstance(if (mMediaPlayerHolder.isSleepTimer) {
+            GoConstants.SLEEPTIMER_ELAPSED_TYPE
+        } else {
+            GoConstants.SLEEPTIMER_TYPE
+        }).apply {
+            show(supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
+            onSleepTimerDialogCancelled = {
+                mSleepTimerDialog = null
+            }
+        }
+    }
+
     private fun closeEqualizerFragment(isAnimation: Boolean) {
         if (isAnimation) {
             if (!sRevealAnimationRunning) {
@@ -1083,39 +1086,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
-    // sleep timer
-    fun runSleeptimer(setTimeSeconds: Int){
-        isSleeptimerRunning = true
-        sleeptimer = object : CountDownTimer(setTimeSeconds.toLong() * 1000, 1000){
-            override fun onTick(millisUntilFinished: Long) {
-                val secondUntilFinished = millisUntilFinished.toInt() / 1000
-                val hours   = secondUntilFinished / 3600
-                val minutes = secondUntilFinished / 60 % 60
-                val seconds = secondUntilFinished % 60
-                sleeptimerRemainingTime.text =
-                    String.format("%1d:%02d:%02d", hours, minutes, seconds)
-            }
-            override fun onFinish() {
-                isSleeptimerRunning = false
-                sleeptimerRemainingTime.text = "0:00:00"
-                pauseBySleeptimer()
-            }
-        }
-        sleeptimer.start()
-    }
-
-    fun pauseBySleeptimer(){
-        isSleeptimerRunning = false
-        if (mMediaPlayerHolder.isPlaying) {
-            mMediaPlayerHolder.pauseMediaPlayer()
-        }
-    }
-
-    fun cancelSleeptimer(){
-        isSleeptimerRunning = false
-        sleeptimer.cancel()
-    }
-
     // interface to let MediaPlayerHolder update the UI media player controls.
     private val mMediaPlayerInterface = object : MediaPlayerInterface {
 
@@ -1189,6 +1159,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         override fun onForegroundServiceStopped() {
             DialogHelper.notifyForegroundServiceStopped(this@MainActivity)
+        }
+
+        override fun onUpdateSleepTimerCountdown(value: Long) {
+            mSleepTimerDialog?.run {
+                if (sheetType == GoConstants.SLEEPTIMER_ELAPSED_TYPE) {
+                    val newValue = value.toFormattedDuration(isAlbum = false, isSeekBar = true)
+                    updateCountdown(newValue)
+                }
+            }
         }
     }
 

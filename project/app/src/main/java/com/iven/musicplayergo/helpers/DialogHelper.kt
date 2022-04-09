@@ -3,24 +3,20 @@ package com.iven.musicplayergo.helpers
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.text.Spanned
 import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.text.parseAsHtml
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.extensions.enablePopupIcons
-import com.iven.musicplayergo.extensions.setTitle
-import com.iven.musicplayergo.extensions.setTitleColor
-import com.iven.musicplayergo.extensions.toFormattedDuration
+import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
-import com.iven.musicplayergo.ui.MainActivity
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 
@@ -54,53 +50,6 @@ object DialogHelper {
             }
             .setNegativeButton(R.string.no, null)
             .show()
-    }
-
-    @JvmStatic
-    fun showSleeptimerDialog(activity: Activity, context: Context) {
-        if ((activity as MainActivity).isSleeptimerRunning) {
-            AlertDialog.Builder(context)
-                .setTitle(R.string.sleeptimer_remaining_time)
-                .setView(activity.sleeptimerRemainingTime)
-                .setPositiveButton(R.string.yes) { _, _ -> }
-                .setNegativeButton(R.string.cancel) { _, _ ->
-                    activity.cancelSleeptimer()
-                    Toast.makeText(context, R.string.sleeptimer_canceled, Toast.LENGTH_SHORT).show()
-                }
-                .setOnDismissListener{
-                    (activity.sleeptimerRemainingTime.parent as ViewGroup).removeView(activity.sleeptimerRemainingTime)
-                }
-                .create()
-                .show()
-        }
-        else{
-            AlertDialog.Builder(context)
-                .setTitle(R.string.sleeptimer)
-                .setSingleChoiceItems(
-                    arrayOf(
-                        activity.resources.getQuantityString(R.plurals.sleeptimer_option, 1, 1),
-                        activity.resources.getQuantityString(R.plurals.sleeptimer_option, 2, 2),
-                        activity.resources.getQuantityString(R.plurals.sleeptimer_option, 3, 3),
-                        activity.resources.getQuantityString(R.plurals.sleeptimer_option, 4, 4),
-                    ), 0
-                ) { _, _ -> }
-                .setPositiveButton(R.string.yes) { dialog, _ ->
-                    val choice = (dialog as AlertDialog).listView.checkedItemPosition + 1
-                    activity.runSleeptimer(choice * 3600)
-                    Toast.makeText(
-                        context,
-                        activity.resources.getQuantityString(
-                            R.plurals.sleeptimer_option,
-                            choice,
-                            choice
-                        ),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                .setNegativeButton(R.string.no) { _, _ -> }
-                .create()
-                .show()
-        }
     }
 
     @JvmStatic
