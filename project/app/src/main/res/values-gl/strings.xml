@@ -182,4 +182,10 @@
     <string name="indigo_200">Índigo 200</string>
     <string name="locale_pref_title">Idioma</string>
     <string name="locale_sinhalese">Sinhalés</string>
+    <string name="sleeptimer">Temporizador</string>
+    <string name="sleeptimer_remaining_time">Temporizador: tempo restante</string>
+    <string name="sleeptimer_enabled">Deter reprodución após %1s</string>
+    <string name="sleeptimer_stop">Deter</string>
+    <string name="sleeptimer_cancel_desc">Deter temporizador</string>
+    <string name="locale_bulgarian">Búlgaro</string>
 </resources>
