@@ -16,6 +16,8 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**Arianna Masciolini**](https://github.com/harisont) for the [original precise volume control](https://github.com/enricocid/Music-Player-GO/commits?author=harisont) implementation
 
+- [**watauoa**](https://github.com/watauoa) for the [original sleep timer](https://github.com/enricocid/Music-Player-GO/pull/388) implementation
+
 - [**Steven Schoen**](https://github.com/DSteve595) for the search function [fixes](https://github.com/enricocid/Music-Player-GO/commit/1c27ff3421dbf7820608237dc60a974955efb022) and quick [support](https://github.com/reddit/IndicatorFastScroll/issues/30)
 
 - [**TacoTheDank**](https://github.com/TacoTheDank) for upgrades to gradle, java 1.8, translations and improvements [247](https://github.com/enricocid/Music-Player-GO/issues/247), [248](https://github.com/enricocid/Music-Player-GO/pull/248), [250](https://github.com/enricocid/Music-Player-GO/pull/250)
