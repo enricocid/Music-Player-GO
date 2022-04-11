@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -113,6 +112,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder.apply {
                 mediaPlayerInterface = mMediaPlayerInterface
+                onHandleNotificationColorUpdate(ContextCompat.getColor(this@MainActivity, R.color.mainBackground))
             }
 
             // load music and setup UI
@@ -255,7 +255,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         setContentView(mMainActivityBinding.root)
 
         if (VersioningHelper.isOreoMR1()) {
-            window?.navigationBarColor = ContextCompat.getColor(this, R.color.windowBackground)
+            window?.navigationBarColor = ContextCompat.getColor(this, R.color.mainBackground)
             Insetter.builder()
                 .padding(windowInsetTypesOf(navigationBars = true))
                 .margin(windowInsetTypesOf(statusBars = true))
@@ -638,9 +638,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         if (isMediaPlayerHolder) {
             mMediaPlayerHolder.run {
                 if (isMediaPlayer && isPlaying) {
+
                     onRestartSeekBarCallback()
                     updatePlayingInfo(restore = true)
+
                 } else {
+
                     isSongFromPrefs = goPreferences.latestPlayedSong != null
 
                     var isQueueRestored = goPreferences.isQueue
@@ -689,9 +692,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                         mMediaPlayerHolder.resumeMediaPlayer()
                     }
                 }
-                onUpdateDefaultAlbumArt(
-                    ContextCompat.getDrawable(this@MainActivity, R.drawable.album_art)?.toBitmap()
-                )
             }
         }
     }

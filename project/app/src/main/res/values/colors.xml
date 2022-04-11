@@ -39,12 +39,9 @@
     <color name="brown_200">#bcaaa4</color>
     <color name="blue_grey_200">#b0bec5</color>
 
-    <color name="windowBackground">#fafafa</color>
-    <color name="dialogsBackground">@color/windowBackground</color>
+    <color name="mainBackground">#fafafa</color>
     <color name="widgetsColor">#212121</color>
     <color name="systemBarsColor">#bfbfbf</color>
-
-    <color name="shuffleFabTint">@color/windowBackground</color>
 
     <color name="swipeActionDeleteColor">#ffebee</color>
     <color name="swipeActionAddColor">#e8f5e9</color>

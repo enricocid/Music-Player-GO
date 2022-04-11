@@ -18,7 +18,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/dialogsBackground"
+        android:background="@color/mainBackground"
         android:orientation="vertical">
 
         <ImageView
@@ -26,9 +26,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:background="?attr/colorPrimary"
             android:contentDescription="@string/covers_pref_title"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/album_art" />
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_music_note_cover_alt" />
 
         <TextView
             android:id="@+id/album"

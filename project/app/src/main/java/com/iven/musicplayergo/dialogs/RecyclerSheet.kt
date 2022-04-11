@@ -293,7 +293,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             dialog?.window?.navigationBarColor = ContextCompat.getColor(requireActivity(),
-                R.color.windowBackground)
+                R.color.mainBackground)
             Insetter.builder()
                 .padding(windowInsetTypesOf(navigationBars = true))
                 .margin(windowInsetTypesOf(statusBars = true))

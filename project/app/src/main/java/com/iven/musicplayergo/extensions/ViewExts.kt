@@ -184,10 +184,10 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
             start()
         }
 
-    val windowBackground = ContextCompat.getColor(context, R.color.windowBackground)
+    val mainBackground = ContextCompat.getColor(context, R.color.mainBackground)
     val closeColor = ThemeHelper.resolveColorAttr(context, R.attr.colorControlHighlight)
     val accent = if (!show) {
-        windowBackground
+        mainBackground
     } else {
         ThemeHelper.resolveThemeAccent(context)
     }
@@ -198,7 +198,7 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
         accent
     }
     val endColor = if (show) {
-        windowBackground
+        mainBackground
     } else {
         closeColor
     }

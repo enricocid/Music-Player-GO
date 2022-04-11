@@ -363,13 +363,11 @@ class MusicContainersFragment : Fragment(),
                     val subtitle = itemView.findViewById<TextView>(R.id.subtitle)
 
                     if (sLaunchedByAlbumView) {
-                        val albumCover = itemView.findViewById<ImageView>(R.id.album_cover)
+                        val albumCover = itemView.findViewById<ImageView>(R.id.album_cover).apply {
+                            background.alpha = 10
+                        }
                         if (goPreferences.isCovers) {
-                            albumCover.load(mMusicViewModel.deviceMusicByAlbum?.get(item)?.first()?.albumId?.toAlbumArtURI()) {
-                                error(ContextCompat.getDrawable(requireActivity(), R.drawable.album_art))
-                            }
-                        } else {
-                            albumCover.load(ContextCompat.getDrawable(requireActivity(), R.drawable.album_art))
+                            mMusicViewModel.deviceMusicByAlbum?.get(item)?.first()?.albumId?.waitForCoverImageView(albumCover, R.drawable.ic_music_note_cover_alt)
                         }
                     }
 

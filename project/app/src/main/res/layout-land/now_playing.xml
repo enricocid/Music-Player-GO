@@ -14,6 +14,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="vertical">
 
         <!-- the album's title -->
@@ -58,6 +59,18 @@
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 android:textColor="?android:attr/textColorSecondary" />
+
+            <TextView
+                android:id="@+id/np_rates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"
+                android:alpha="0.5"
+                android:text="@string/unknown_year"
+                android:textAlignment="center"
+                android:textAppearance="@android:style/TextAppearance.Material.Caption"
+                android:textColor="?android:attr/textColorTertiary" />
         </LinearLayout>
 
         <!-- the SeekBar -->
@@ -105,16 +118,5 @@
 
         <include layout="@layout/now_playing_extended_controls" />
 
-        <TextView
-            android:id="@+id/np_rates"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="6dp"
-            android:alpha="0.5"
-            android:text="@string/unknown_year"
-            android:textAlignment="center"
-            android:textAppearance="@android:style/TextAppearance.Material.Caption"
-            android:textColor="?android:attr/textColorTertiary" />
     </LinearLayout>
 </LinearLayout>

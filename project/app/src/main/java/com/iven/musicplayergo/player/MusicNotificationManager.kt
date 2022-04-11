@@ -10,12 +10,10 @@ import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.text.parseAsHtml
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.GoConstants
@@ -32,13 +30,13 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     //notification manager/builder
     private lateinit var mNotificationBuilder: NotificationCompat.Builder
 
+    private var mNotificationColor = Color.BLACK
+
     private val mNotificationActions
         @SuppressLint("RestrictedApi")
         get() = mNotificationBuilder.mActions
 
     private val sFastSeekingActions get() = goPreferences.notificationActions != GoConstants.NOTIF_REPEAT_CLOSE
-
-    private var mAlbumArt = ContextCompat.getDrawable(playerService, R.drawable.album_art)?.toBitmap()
 
     private fun getPlayerAction(playerAction: String): PendingIntent {
         val intent = Intent().apply {
@@ -127,13 +125,6 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         }
     }
 
-    fun onUpdateDefaultAlbumArt(bitmapRes: Bitmap?, updateNotification: Boolean) {
-        mAlbumArt = bitmapRes
-        if (updateNotification) {
-            onHandleNotificationUpdate(isAdditionalActionsChanged = false)
-        }
-    }
-
     fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean) {
         if (::mNotificationBuilder.isInitialized) {
             if (!isAdditionalActionsChanged) {
@@ -150,6 +141,11 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         }
     }
 
+    fun onSetNotificationColor(color: Int) {
+        mNotificationColor = color
+        onHandleNotificationUpdate(isAdditionalActionsChanged = false)
+    }
+
     fun updateNotificationContent(onDone: (() -> Unit)? = null) {
         val mediaPlayerHolder = playerService.mediaPlayerHolder
 
@@ -163,18 +159,18 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                             ).parseAsHtml()
                 )
                 .setSubText(song.album)
+                .setColor(mNotificationColor)
                 .setColorized(true)
                 .setSmallIcon(getNotificationSmallIcon(mediaPlayerHolder))
 
             if (goPreferences.isCovers) {
-                song.albumId?.waitForCover(playerService, canLoadDefault = true) { bitmap ->
+                song.albumId?.waitForCover(playerService) { bitmap ->
                     mNotificationBuilder.setLargeIcon(bitmap)
-                    onDone?.invoke()
                 }
             } else {
-                mNotificationBuilder.setLargeIcon(mAlbumArt)
-                onDone?.invoke()
+                mNotificationBuilder.setLargeIcon(null)
             }
+            onDone?.invoke()
         }
     }
 

@@ -95,22 +95,22 @@
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
             android:textColor="?android:attr/textColorSecondary" />
+
+        <TextView
+            android:id="@+id/np_rates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="6dp"
+            android:alpha="0.5"
+            android:text="@string/unknown_year"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:textColor="?android:attr/textColorTertiary" />
     </LinearLayout>
 
     <include layout="@layout/now_playing_controls" />
 
     <include layout="@layout/now_playing_extended_controls" />
 
-    <TextView
-        android:id="@+id/np_rates"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="24dp"
-        android:alpha="0.5"
-        android:text="@string/unknown_year"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-        android:textColor="?android:attr/textColorTertiary" />
 </LinearLayout>

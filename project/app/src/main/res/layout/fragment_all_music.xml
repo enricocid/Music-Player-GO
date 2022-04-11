@@ -13,7 +13,7 @@
             android:id="@+id/search_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/windowBackground"
+            android:background="@color/mainBackground"
             android:elevation="@dimen/search_bar_elevation"
             android:theme="@style/ToolbarStyle"
             app:collapseIcon="@drawable/ic_navigate_before"
@@ -40,7 +40,7 @@
                 android:layout_width="@dimen/fast_scroller_view_dim"
                 android:layout_height="match_parent"
                 android:layout_gravity="end|center"
-                android:background="@color/windowBackground" />
+                android:background="@color/mainBackground" />
 
             <com.reddit.indicatorfastscroll.FastScrollerThumbView
                 android:id="@+id/fastscroller_thumb"
@@ -62,7 +62,7 @@
         android:contentDescription="@string/shuffle_am"
         android:text="@string/extended_fab_placeholder"
         android:textColor="@color/widgetsColor"
-        app:backgroundTint="@color/shuffleFabTint"
+        app:backgroundTint="@color/mainBackground"
         app:elevation="4dp"
         app:icon="@drawable/ic_shuffle"
         app:iconTint="@color/widgetsColor"

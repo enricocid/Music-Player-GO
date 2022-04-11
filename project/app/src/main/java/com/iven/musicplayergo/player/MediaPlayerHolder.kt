@@ -10,7 +10,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ServiceInfo
-import android.graphics.Bitmap
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -180,10 +179,10 @@ class MediaPlayerHolder:
     private lateinit var mPlayerBroadcastReceiver: PlayerBroadcastReceiver
     private lateinit var mMusicNotificationManager: MusicNotificationManager
 
-    fun setMusicService(mPlayerService: PlayerService) {
+    fun setMusicService(playerService: PlayerService) {
         mediaPlayer = MediaPlayer()
-        this.mPlayerService = mPlayerService
-        mAudioManager = mPlayerService.getSystemService()
+        mPlayerService = playerService
+        mAudioManager = playerService.getSystemService()
         mMusicNotificationManager = mPlayerService.musicNotificationManager
         registerActionsReceiver()
         mPlayerService.configureMediaSession()
@@ -328,7 +327,7 @@ class MediaPlayerHolder:
                 }
 
                 if (goPreferences.isCovers) {
-                    albumId?.waitForCover(mPlayerService, canLoadDefault = false) { bmp ->
+                    albumId?.waitForCover(mPlayerService) { bmp ->
                         putBitmap(METADATA_KEY_ALBUM_ART, bmp)
                     }
                 }
@@ -377,8 +376,9 @@ class MediaPlayerHolder:
         stopUpdatingCallbackWithPosition()
     }
 
-    fun onUpdateDefaultAlbumArt(bitmapRes: Bitmap?) {
-        mMusicNotificationManager.onUpdateDefaultAlbumArt(bitmapRes, updateNotification = isPlaying)
+    fun onHandleNotificationColorUpdate(color: Int) {
+        mMusicNotificationManager.onSetNotificationColor(color)
+        mMusicNotificationManager.onHandleNotificationUpdate(isAdditionalActionsChanged = false)
     }
 
     fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean) {

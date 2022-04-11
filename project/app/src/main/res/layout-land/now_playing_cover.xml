@@ -2,33 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/np_cover"
-        android:layout_width="@android:dimen/thumbnail_height"
-        android:layout_height="@android:dimen/thumbnail_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
+        android:background="?attr/colorPrimary"
         android:contentDescription="@string/covers_pref_title"
-        android:scaleType="centerCrop"
+        android:scaleType="centerInside"
         app:shapeAppearanceOverlay="@style/ImageView.Cover"
-        app:srcCompat="@drawable/album_art" />
+        app:srcCompat="@drawable/ic_music_note_cover" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginEnd="8dp"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/np_playback_speed"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
@@ -38,8 +37,8 @@
 
         <ImageButton
             android:id="@+id/np_save_time"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
@@ -49,19 +48,19 @@
 
         <ImageButton
             android:id="@+id/np_equalizer"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
-            android:contentDescription="@string/open_details_fragment"
+            android:contentDescription="@string/equalizer"
             android:padding="8dp"
-            app:srcCompat="@drawable/ic_launch_details" />
+            app:srcCompat="@drawable/ic_equalizer" />
 
         <ImageButton
             android:id="@+id/np_love"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
@@ -71,8 +70,8 @@
 
         <ImageButton
             android:id="@+id/np_repeat"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
