@@ -175,4 +175,10 @@
     <string name="brown">棕</string>
     <string name="light_blue_200">Light blue 200</string>
     <string name="grey_200">Grey 200</string>
+    <string name="locale_bulgarian">保加利亚文</string>
+    <string name="sleeptimer_enabled">%1s 后停止播放</string>
+    <string name="sleeptimer_stop">停止</string>
+    <string name="sleeptimer_cancel_desc">停止睡眠定时器</string>
+    <string name="sleeptimer">睡眠定时器</string>
+    <string name="sleeptimer_remaining_time">睡眠定时器：剩余时间</string>
 </resources>
