@@ -129,12 +129,10 @@ class NowPlaying: BottomSheetDialogFragment() {
             _nowPlayingBinding?.npSeekBar?.progress = mediaPlayerHolder.playerPosition
 
             // to ensure full dialog's height
-            _nowPlayingBinding?.root?.afterMeasured {
-                dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
-                    ?.let { bs ->
-                        BottomSheetBehavior.from(bs).state = BottomSheetBehavior.STATE_EXPANDED
-                    }
-            }
+            dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
+                ?.let { bs ->
+                    BottomSheetBehavior.from(bs).state = BottomSheetBehavior.STATE_EXPANDED
+                }
         }
     }
 
