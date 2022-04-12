@@ -142,12 +142,12 @@ class EqFragment : Fragment() {
             .setAllCorners(CornerFamily.ROUNDED, resources.getDimension(R.dimen.md_corner_radius))
             .build()
         val roundedTextBackground = MaterialShapeDrawable(shapeAppearanceModel).apply {
-            strokeColor = ColorStateList.valueOf(ThemeHelper.resolveThemeAccent(requireActivity()))
+            strokeColor = ColorStateList.valueOf(ThemeHelper.resolveThemeAccent(requireContext()))
             strokeWidth = 0.50F
             fillColor =
                 ColorStateList.valueOf(
                     ContextCompat.getColor(
-                        requireActivity(),
+                        requireContext(),
                         R.color.mainBg
                     )
                 )
@@ -233,7 +233,7 @@ class EqFragment : Fragment() {
 
     private fun startPresetChooser() {
         val items = mPresetsList.toTypedArray()
-        MaterialAlertDialogBuilder(requireActivity())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.equalizer_presets)
             .setItems(items) { _, which ->
                 // Respond to item chosen
@@ -272,7 +272,7 @@ class EqFragment : Fragment() {
 
         } catch (e: UnsupportedOperationException) {
             e.printStackTrace()
-            R.string.error_eq.toToast(requireActivity())
+            R.string.error_eq.toToast(requireContext())
         }
     }
 

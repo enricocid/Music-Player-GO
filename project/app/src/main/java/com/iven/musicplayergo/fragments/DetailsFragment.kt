@@ -180,7 +180,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         _detailsFragmentBinding?.detailsToolbar?.run {
 
             overflowIcon = ContextCompat.getDrawable(
-                requireActivity(),
+                requireContext(),
                 if (sLaunchedByArtistView) {
                     R.drawable.ic_shuffle
                 } else {
@@ -279,7 +279,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     )
                     selectedAlbumViewSize.isSelected = true
                     if (goPreferences.isCovers) {
-                        albumViewArt.background.alpha = ThemeHelper.getAlbumCoverAlpha(requireActivity())
+                        albumViewArt.background.alpha = ThemeHelper.getAlbumCoverAlpha(requireContext())
                         firstSong?.albumId?.waitForCoverImageView(albumViewArt, R.drawable.ic_music_note_cover_alt)
                     }
 
@@ -332,7 +332,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
             adapter = SongsAdapter()
 
-            ItemTouchHelper(ItemSwipeCallback(requireActivity(), isQueueDialog = false, isFavoritesDialog = false) { viewHolder: RecyclerView.ViewHolder,
+            ItemTouchHelper(ItemSwipeCallback(requireContext(), isQueueDialog = false, isFavoritesDialog = false) { viewHolder: RecyclerView.ViewHolder,
                                                                           direction: Int ->
                 val song = mSongsList?.get(viewHolder.absoluteAdapterPosition)
                 if (direction == ItemTouchHelper.RIGHT) {
@@ -426,10 +426,10 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     ThemeHelper.updateIconTint(
                         this,
                         if (isEnabled) {
-                            ContextCompat.getColor(requireActivity(), R.color.widgetsColor)
+                            ContextCompat.getColor(requireContext(), R.color.widgetsColor)
                         } else {
                             ThemeHelper.resolveColorAttr(
-                                requireActivity(),
+                                requireContext(),
                                 android.R.attr.colorButtonNormal
                             )
                         }
@@ -678,7 +678,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         0
                     }
 
-                    albumCover.background.alpha = ThemeHelper.getAlbumCoverAlpha(requireActivity())
+                    albumCover.background.alpha = ThemeHelper.getAlbumCoverAlpha(requireContext())
 
                     if (goPreferences.isCovers) {
                         itemAlbum?.music?.first()?.albumId?.waitForCoverImageView(albumCover, R.drawable.ic_music_note_cover_alt)
@@ -711,8 +711,8 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private inner class SongsAdapter: RecyclerView.Adapter<SongsAdapter.SongsHolder>() {
 
-        val defaultTextColor = ThemeHelper.resolveColorAttr(requireActivity(), android.R.attr.textColorPrimary)
-        val accentTextColor = ThemeHelper.resolveThemeAccent(requireActivity())
+        val defaultTextColor = ThemeHelper.resolveColorAttr(requireContext(), android.R.attr.textColorPrimary)
+        val accentTextColor = ThemeHelper.resolveThemeAccent(requireContext())
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SongsHolder(
             LayoutInflater.from(parent.context).inflate(

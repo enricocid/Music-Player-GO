@@ -56,11 +56,11 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         super.onViewCreated(view, savedInstanceState)
 
         mThemePreference = findPreference<Preference>(getString(R.string.theme_pref))?.apply {
-            icon = ContextCompat.getDrawable(requireActivity(), ThemeHelper.resolveThemeIcon(requireActivity()))
+            icon = ContextCompat.getDrawable(requireContext(), ThemeHelper.resolveThemeIcon(requireContext()))
         }
 
         findPreference<Preference>(getString(R.string.accent_pref))?.let { preference ->
-            preference.summary = ThemeHelper.getAccentName(requireActivity(), goPreferences.accent)
+            preference.summary = ThemeHelper.getAccentName(requireContext(), goPreferences.accent)
             preference.onPreferenceClickListener = this@PreferencesFragment
         }
 
@@ -106,7 +106,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             }
             getString(R.string.playback_vel_pref) -> mMediaControlInterface.onPlaybackSpeedToggled()
             getString(R.string.theme_pref) -> {
-                mThemePreference?.icon = ContextCompat.getDrawable(requireActivity(), ThemeHelper.resolveThemeIcon(requireActivity()))
+                mThemePreference?.icon = ContextCompat.getDrawable(requireContext(), ThemeHelper.resolveThemeIcon(requireContext()))
                 mUIControlInterface.onAppearanceChanged(isThemeChanged = true)
             }
             getString(R.string.focus_pref) -> mMediaControlInterface.onGetMediaPlayerHolder()?.run {

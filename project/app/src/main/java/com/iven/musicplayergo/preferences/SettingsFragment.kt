@@ -82,7 +82,7 @@ class SettingsFragment : Fragment() {
     private fun openLocaleSwitcher() {
         val locales = ContextUtils.getLocalesList(resources)
 
-        MaterialAlertDialogBuilder(requireActivity())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.locale_pref_title)
             .setItems(locales.values.toTypedArray()) { _, which ->
                 // Respond to item chosen
@@ -103,10 +103,10 @@ class SettingsFragment : Fragment() {
            .build()
 
         val parsedUri = getString(R.string.app_git).toUri()
-        val manager = requireActivity().packageManager
+        val manager = requireContext().packageManager
         val info = manager.queryIntentActivities(customTabsIntent.intent, 0)
         if (info.size > 0) {
-            customTabsIntent.launchUrl(requireActivity(), parsedUri)
+            customTabsIntent.launchUrl(requireContext(), parsedUri)
         } else {
             //from: https://github.com/immuni-app/immuni-app-android/blob/development/extensions/src/main/java/it/ministerodellasalute/immuni/extensions/utils/ExternalLinksHelper.kt
             val browserIntent = Intent(Intent.ACTION_VIEW, parsedUri)
@@ -114,9 +114,9 @@ class SettingsFragment : Fragment() {
 
             val fallbackInfo = manager.queryIntentActivities(browserIntent, 0)
             if (fallbackInfo.size > 0) {
-                requireActivity().startActivity(browserIntent)
+                requireContext().startActivity(browserIntent)
             } else {
-                R.string.error_no_browser.toToast(requireActivity())
+                R.string.error_no_browser.toToast(requireContext())
             }
         }
     }

@@ -116,7 +116,7 @@ class MusicContainersFragment : Fragment(),
 
             stb.title = getFragmentTitle()
 
-            stb.overflowIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_sort)
+            stb.overflowIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_sort)
 
             stb.setNavigationOnClickListener {
                 mUiControlInterface.onCloseActivity()
@@ -125,7 +125,7 @@ class MusicContainersFragment : Fragment(),
             with (stb.menu) {
 
                 mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, this).apply {
-                    setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
+                    setTitleColor(ThemeHelper.resolveThemeAccent(requireContext()))
                 }
 
                 with(findItem(R.id.action_search).actionView as SearchView) {
@@ -235,7 +235,7 @@ class MusicContainersFragment : Fragment(),
                         { position ->
                             // Return a text tab_indicator
                             mList?.get(position)?.run {
-                                getFastScrollerItem(requireActivity())
+                                getFastScrollerItem(requireContext())
                             }
                         }, showIndicator = { _, indicatorPosition, totalIndicators ->
                             // Hide every other indicator
@@ -282,13 +282,13 @@ class MusicContainersFragment : Fragment(),
 
                     mSortMenuItem.setTitleColor(
                         ThemeHelper.resolveColorAttr(
-                            requireActivity(),
+                            requireContext(),
                             android.R.attr.textColorPrimary
                         )
                     )
 
                     mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, menu).apply {
-                        setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
+                        setTitleColor(ThemeHelper.resolveThemeAccent(requireContext()))
                     }
 
                     saveSortingMethodToPrefs(mSorting)
@@ -364,7 +364,7 @@ class MusicContainersFragment : Fragment(),
 
                     if (sLaunchedByAlbumView) {
                         val albumCover = itemView.findViewById<ImageView>(R.id.album_cover).apply {
-                            background.alpha = ThemeHelper.getAlbumCoverAlpha(requireActivity())
+                            background.alpha = ThemeHelper.getAlbumCoverAlpha(requireContext())
                         }
                         if (goPreferences.isCovers) {
                             mMusicViewModel.deviceMusicByAlbum?.get(item)?.first()?.albumId?.waitForCoverImageView(albumCover, R.drawable.ic_music_note_cover_alt)

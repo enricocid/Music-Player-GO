@@ -88,7 +88,7 @@ class ErrorFragment : Fragment() {
                 root.afterMeasured {
                     createCircularReveal(isErrorFragment = true, show = true).doOnEnd {
                         if (!VersioningHelper.isOreoMR1()) {
-                            val red = ContextCompat.getColor(requireActivity(), R.color.red)
+                            val red = ContextCompat.getColor(requireContext(), R.color.red)
                             requireActivity().window.statusBarColor = red
                             requireActivity().window.navigationBarColor = red
                         }

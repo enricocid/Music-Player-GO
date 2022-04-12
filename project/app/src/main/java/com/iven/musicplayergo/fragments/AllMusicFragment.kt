@@ -108,8 +108,8 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
             shuffleFab.text = mAllMusic?.size.toString()
             val fabColor = ColorUtils.blendARGB(
-                ContextCompat.getColor(requireActivity(), R.color.toolbarBg),
-                ThemeHelper.resolveThemeAccent(requireActivity()),
+                ContextCompat.getColor(requireContext(), R.color.toolbarBg),
+                ThemeHelper.resolveThemeAccent(requireContext()),
                 0.050f
             )
             shuffleFab.backgroundTintList = ColorStateList.valueOf(fabColor)
@@ -123,7 +123,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
             searchToolbar.let { stb ->
 
                 stb.inflateMenu(R.menu.menu_music_search)
-                stb.overflowIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_sort)
+                stb.overflowIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_sort)
                 stb.setNavigationOnClickListener {
                     mUIControlInterface.onCloseActivity()
                 }
@@ -131,7 +131,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                 with(stb.menu) {
 
                     mSortMenuItem = ListsHelper.getSelectedSortingForAllMusic(mSorting, this).apply {
-                        setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
+                        setTitleColor(ThemeHelper.resolveThemeAccent(requireContext()))
                     }
 
                     with (findItem(R.id.action_search).actionView as SearchView) {
@@ -166,7 +166,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                             // Return a text tab_indicator
                             val song = mAllMusic?.get(position)
                             val stringToProcess = song.toName()
-                            stringToProcess?.getFastScrollerItem(requireActivity())
+                            stringToProcess?.getFastScrollerItem(requireContext())
                         }, showIndicator = { _, indicatorPosition, totalIndicators ->
                             if (ThemeHelper.isDeviceLand(resources)) {
                                 indicatorPosition % 2 == 0
@@ -219,13 +219,13 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
                 mSortMenuItem.setTitleColor(
                     ThemeHelper.resolveColorAttr(
-                        requireActivity(),
+                        requireContext(),
                         android.R.attr.textColorPrimary
                     )
                 )
 
                 mSortMenuItem = ListsHelper.getSelectedSortingForAllMusic(mSorting, menu).apply {
-                    setTitleColor(ThemeHelper.resolveThemeAccent(requireActivity()))
+                    setTitleColor(ThemeHelper.resolveThemeAccent(requireContext()))
                 }
 
                 goPreferences.allMusicSorting = mSorting
