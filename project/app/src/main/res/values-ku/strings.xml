@@ -175,4 +175,10 @@
     <string name="red_200">Sor 200</string>
     <string name="light_green_200">Kesk ron 200</string>
     <string name="amber_200">Zer tarî 200</string>
+    <string name="sleeptimer_enabled">Lêdanê piştî %1s rawestîne</string>
+    <string name="sleeptimer_stop">Rawestîne</string>
+    <string name="sleeptimer">Demjimêrkê xewê</string>
+    <string name="sleeptimer_remaining_time">Demjimêrkê xewê: dema mayî</string>
+    <string name="sleeptimer_cancel_desc">Demjimêrkê xewê rawestîne</string>
+    <string name="locale_bulgarian">Bûlgarî</string>
 </resources>
