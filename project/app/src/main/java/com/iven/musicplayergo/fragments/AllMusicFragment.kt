@@ -2,11 +2,13 @@ package com.iven.musicplayergo.fragments
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -105,6 +107,12 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
             allMusicRv.adapter = AllMusicAdapter()
 
             shuffleFab.text = mAllMusic?.size.toString()
+            val fabColor = ColorUtils.blendARGB(
+                ContextCompat.getColor(requireActivity(), R.color.toolbarBg),
+                ThemeHelper.resolveThemeAccent(requireActivity()),
+                0.050f
+            )
+            shuffleFab.backgroundTintList = ColorStateList.valueOf(fabColor)
             shuffleFab.setOnClickListener {
                 mMediaControlInterface.onSongsShuffled(
                     mAllMusic,

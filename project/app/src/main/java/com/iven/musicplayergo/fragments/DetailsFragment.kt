@@ -279,7 +279,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     )
                     selectedAlbumViewSize.isSelected = true
                     if (goPreferences.isCovers) {
-                        albumViewArt.background.alpha = 20
+                        albumViewArt.background.alpha = 15
                         firstSong?.albumId?.waitForCoverImageView(albumViewArt, R.drawable.ic_music_note_cover_alt)
                     }
 
@@ -678,7 +678,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         0
                     }
 
-                    albumCover.background.alpha = 20
+                    albumCover.background.alpha = 15
 
                     if (goPreferences.isCovers) {
                         itemAlbum?.music?.first()?.albumId?.waitForCoverImageView(albumCover, R.drawable.ic_music_note_cover_alt)
