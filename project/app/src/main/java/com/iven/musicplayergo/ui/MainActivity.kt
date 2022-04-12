@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder.apply {
                 mediaPlayerInterface = mMediaPlayerInterface
-                onHandleNotificationColorUpdate(ContextCompat.getColor(this@MainActivity, R.color.mainBackground))
+                onHandleNotificationColorUpdate(ContextCompat.getColor(this@MainActivity, R.color.mainBg))
             }
 
             // load music and setup UI
@@ -255,7 +255,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         setContentView(mMainActivityBinding.root)
 
         if (VersioningHelper.isOreoMR1()) {
-            window?.navigationBarColor = ContextCompat.getColor(this, R.color.mainBackground)
+            window?.navigationBarColor = ContextCompat.getColor(this, R.color.mainBg)
             Insetter.builder()
                 .padding(windowInsetTypesOf(navigationBars = true))
                 .margin(windowInsetTypesOf(statusBars = true))

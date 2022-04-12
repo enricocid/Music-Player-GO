@@ -148,7 +148,7 @@ class EqFragment : Fragment() {
                 ColorStateList.valueOf(
                     ContextCompat.getColor(
                         requireActivity(),
-                        R.color.mainBackground
+                        R.color.mainBg
                     )
                 )
         }

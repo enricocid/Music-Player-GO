@@ -76,7 +76,7 @@ class NowPlaying: BottomSheetDialogFragment() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             dialog?.window?.navigationBarColor = ContextCompat.getColor(requireActivity(),
-                R.color.mainBackground)
+                R.color.mainBg)
             Insetter.builder()
                 .padding(windowInsetTypesOf(navigationBars = true))
                 .margin(windowInsetTypesOf(statusBars = true))
@@ -156,7 +156,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                     npPlaybackSpeed.visibility = View.GONE
                 }
 
-                npCover.background.alpha = 10
+                npCover.background.alpha = 20
                 npSaveTime.setOnClickListener { saveSongPosition() }
                 npEqualizer.setOnClickListener { mUIControlInterface.onOpenEqualizer() }
                 npLove.setOnClickListener {

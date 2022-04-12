@@ -10,7 +10,7 @@
         android:id="@+id/player_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/mainBackground"
+        android:background="@color/mainBg"
         android:baselineAligned="false"
         android:elevation="@dimen/search_bar_elevation"
         android:orientation="horizontal">
@@ -20,7 +20,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/mainBackground"
+            android:background="@color/mainBg"
+            app:tabBackground="?attr/selectableItemBackground"
             app:tabGravity="fill"
             app:tabIndicator="@drawable/tab_indicator"
             app:tabMode="fixed"
@@ -115,6 +116,8 @@
                 android:layout_height="wrap_content"
                 android:clickable="false"
                 app:indicatorColor="?attr/colorPrimary"
+                app:tabBackground="@color/mainBg"
+                app:tabRippleColor="?attr/colorPrimary"
                 app:trackCornerRadius="2dp"
                 app:trackThickness="2dp" />
         </LinearLayout>
