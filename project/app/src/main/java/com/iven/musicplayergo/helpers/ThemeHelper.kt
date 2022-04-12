@@ -247,6 +247,16 @@ object ThemeHelper {
     }
 
     @JvmStatic
+    fun getAlbumCoverAlpha(context: Context): Int {
+        val uiMode = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        return if (uiMode == Configuration.UI_MODE_NIGHT_YES) {
+            15
+        } else {
+            20
+        }
+    }
+
+    @JvmStatic
     fun getTabIcon(tab: String) = when (tab) {
         GoConstants.ARTISTS_TAB -> R.drawable.ic_artist
         GoConstants.ALBUM_TAB -> R.drawable.ic_library_music

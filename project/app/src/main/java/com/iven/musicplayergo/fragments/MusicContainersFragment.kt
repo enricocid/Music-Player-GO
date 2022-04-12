@@ -364,7 +364,7 @@ class MusicContainersFragment : Fragment(),
 
                     if (sLaunchedByAlbumView) {
                         val albumCover = itemView.findViewById<ImageView>(R.id.album_cover).apply {
-                            background.alpha = 15
+                            background.alpha = ThemeHelper.getAlbumCoverAlpha(requireActivity())
                         }
                         if (goPreferences.isCovers) {
                             mMusicViewModel.deviceMusicByAlbum?.get(item)?.first()?.albumId?.waitForCoverImageView(albumCover, R.drawable.ic_music_note_cover_alt)

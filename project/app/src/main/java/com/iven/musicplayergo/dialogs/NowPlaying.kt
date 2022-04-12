@@ -154,7 +154,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                     npPlaybackSpeed.visibility = View.GONE
                 }
 
-                npCover.background.alpha = 15
+                npCover.background.alpha = ThemeHelper.getAlbumCoverAlpha(requireActivity())
                 npSaveTime.setOnClickListener { saveSongPosition() }
                 npEqualizer.setOnClickListener { mUIControlInterface.onOpenEqualizer() }
                 npLove.setOnClickListener {
