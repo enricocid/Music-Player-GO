@@ -2,7 +2,6 @@ package com.iven.musicplayergo.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
@@ -59,8 +58,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         }
 
         findPreference<Preference>(getString(R.string.theme_pref_black))?.let { preference ->
-            val uiMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-            preference.isVisible = uiMode == Configuration.UI_MODE_NIGHT_YES
+            preference.isVisible = ThemeHelper.isThemeNight(resources)
         }
 
         findPreference<Preference>(getString(R.string.accent_pref))?.let { preference ->
