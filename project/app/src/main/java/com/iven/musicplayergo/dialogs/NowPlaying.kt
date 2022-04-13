@@ -100,9 +100,16 @@ class NowPlaying: BottomSheetDialogFragment() {
             npSong.isSelected = true
             npArtistAlbum.isSelected = true
             setupNPCoverLayout()
-            npPlayingSongContainer.setOnClickListener {
-                mUIControlInterface.onOpenPlayingArtistAlbum()
-                dismiss()
+            npPlayingSongContainer.run {
+                contentDescription = getString(R.string.open_details_fragment)
+                setOnClickListener {
+                    mUIControlInterface.onOpenPlayingArtistAlbum()
+                    dismiss()
+                }
+                setOnLongClickListener {
+                    R.string.open_details_fragment.toToast(requireContext())
+                    return@setOnLongClickListener false
+                }
             }
         }
 
