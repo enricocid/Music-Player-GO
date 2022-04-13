@@ -181,4 +181,5 @@
     <string name="sleeptimer_cancel_desc">停止睡眠定时器</string>
     <string name="sleeptimer">睡眠定时器</string>
     <string name="sleeptimer_remaining_time">睡眠定时器：剩余时间</string>
+    <string name="theme_pref_black_title">黑色主题</string>
 </resources>
