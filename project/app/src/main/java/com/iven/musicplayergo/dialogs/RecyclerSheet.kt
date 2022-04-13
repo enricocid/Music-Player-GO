@@ -346,6 +346,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
                 (itemView as TextView).run {
                     text = itemSleepOption
+                    contentDescription = itemSleepOption
                     setTextColor(if (mSelectedPosition == absoluteAdapterPosition) {
                         ThemeHelper.resolveThemeAccent(requireActivity())
                     } else {
