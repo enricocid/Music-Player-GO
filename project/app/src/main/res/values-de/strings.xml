@@ -69,7 +69,7 @@
     <string name="eq_pref_note_summary">Hinweis: Der System-Equalizer wird verwendet, außer er ist in den Systemeinstellungen deaktiviert. :)</string>
     <string name="on_list_ended_pref_title">Wenn die Liste zu Ende ist…</string>
     <string name="error_eq">Fehler</string>
-    <string name="error_list_ended">Liste zuende.</string>
+    <string name="error_list_ended">Liste zu ende.</string>
     <string name="playback_pref_title">Ausgewählte Abspielgeschwindigkeit</string>
     <string name="anim_pref_title">Animationen</string>
     <string name="speed_3">Normal</string>
