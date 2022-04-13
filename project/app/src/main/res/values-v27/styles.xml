@@ -6,6 +6,7 @@
         <item name="alertDialogTheme">@style/Options.DialogsStyle</item>
         <item name="android:statusBarColor">@color/mainBg</item>
         <item name="android:navigationBarColor">@color/mainBg</item>
+        <item name="android:windowBackground">@color/mainBg</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
         <item name="popupMenuStyle">@style/PopupMenu</item>
