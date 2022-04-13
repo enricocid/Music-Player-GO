@@ -108,9 +108,9 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
             shuffleFab.text = mAllMusic?.size.toString()
             val fabColor = ColorUtils.blendARGB(
-                ContextCompat.getColor(requireContext(), R.color.toolbarBg),
+                ThemeHelper.resolveColorAttr(requireContext(), R.attr.toolbar_bg),
                 ThemeHelper.resolveThemeAccent(requireContext()),
-                0.050f
+                0.10f
             )
             shuffleFab.backgroundTintList = ColorStateList.valueOf(fabColor)
             shuffleFab.setOnClickListener {

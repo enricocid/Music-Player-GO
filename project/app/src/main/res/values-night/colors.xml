@@ -23,7 +23,7 @@
 
     <color name="widgetsColor">#fafafa</color>
 
-    <color name="mainBg">#141414</color>
-    <color name="systemBarBg">#0f0f0f</color>
+    <color name="mainBg">#151515</color>
+    <color name="systemBarBg">#131313</color>
     <color name="toolbarBg">@color/systemBarBg</color>
 </resources>
