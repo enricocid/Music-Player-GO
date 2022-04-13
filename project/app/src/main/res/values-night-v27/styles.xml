@@ -9,6 +9,8 @@
         <item name="android:navigationBarColor">@color/systemBarBg</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar">false</item>
+        <item name="main_bg">@color/mainBg</item>
+        <item name="toolbar_bg">@color/toolbarBg</item>
         <item name="popupMenuStyle">@style/PopupMenu</item>
         <item name="android:spinnerStyle">@style/SpinnerMenu</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Demo.BottomSheetDialog</item>

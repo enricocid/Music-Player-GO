@@ -106,7 +106,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     modalRvAlt.layoutManager = layoutManager
                     modalRvAlt.adapter = accentsAdapter
 
-                    ThemeHelper.getAccentedTheme()?.run {
+                    ThemeHelper.getAccentedTheme(resources)?.run {
                         modalRvAlt.post { layoutManager.scrollToPositionWithOffset(second, 0) }
                     }
 

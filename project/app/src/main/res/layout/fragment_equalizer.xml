@@ -4,7 +4,7 @@
     android:id="@+id/visualLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mainBg"
+    android:background="?attr/main_bg"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical">
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:elevation="2dp"
-        android:background="@color/toolbarBg"
+        android:background="?attr/toolbar_bg"
         android:theme="@style/ToolbarStyle.Eq"
         app:collapseIcon="@drawable/ic_navigate_before"
         app:navigationIcon="@drawable/ic_navigate_before"

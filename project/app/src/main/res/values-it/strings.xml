@@ -62,6 +62,7 @@
     <string name="theme_pref_light_title">Chiaro</string>
     <string name="theme_pref_dark_title">Scuro</string>
     <string name="theme_pref_auto_title">Sistema</string>
+    <string name="theme_pref_black_title">Nero puro</string>
     <string name="accent_pref_title">Accento</string>
     <string name="covers_pref_title">Cover album incorporate</string>
     <string name="song_visual_pref_title">Visualizzazione canzoni</string>

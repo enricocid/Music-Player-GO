@@ -185,4 +185,185 @@
         <item name="colorPrimary">@android:color/background_dark</item>
         <item name="colorSecondary">@android:color/background_dark</item>
     </style>
+
+    <!-- Black themes -->
+    <style name="BaseTheme.Black.Red" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorSecondary">@color/red</item>
+    </style>
+
+    <style name="BaseTheme.Black.Pink" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/pink</item>
+        <item name="colorSecondary">@color/pink</item>
+    </style>
+
+    <style name="BaseTheme.Black.Purple" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/purple</item>
+        <item name="colorSecondary">@color/purple</item>
+    </style>
+
+    <style name="BaseTheme.Black.DeepPurple" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/deep_purple</item>
+        <item name="colorSecondary">@color/deep_purple</item>
+    </style>
+
+    <style name="BaseTheme.Black.Indigo" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/indigo</item>
+        <item name="colorSecondary">@color/indigo</item>
+    </style>
+
+    <style name="BaseTheme.Black.Blue" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorSecondary">@color/blue</item>
+    </style>
+
+    <style name="BaseTheme.Black.LightBlue" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/light_blue</item>
+        <item name="colorSecondary">@color/light_blue</item>
+    </style>
+
+    <style name="BaseTheme.Black.Cyan" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/cyan</item>
+        <item name="colorSecondary">@color/cyan</item>
+    </style>
+
+    <style name="BaseTheme.Black.Teal" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/teal</item>
+        <item name="colorSecondary">@color/teal</item>
+    </style>
+
+    <style name="BaseTheme.Black.Green" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorSecondary">@color/green</item>
+    </style>
+
+    <style name="BaseTheme.Black.LightGreen" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/light_green</item>
+        <item name="colorSecondary">@color/light_green</item>
+    </style>
+
+    <style name="BaseTheme.Black.Lime" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/lime</item>
+        <item name="colorSecondary">@color/lime</item>
+    </style>
+
+    <style name="BaseTheme.Black.Yellow" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/yellow</item>
+        <item name="colorSecondary">@color/yellow</item>
+    </style>
+
+    <style name="BaseTheme.Black.Amber" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/amber</item>
+        <item name="colorSecondary">@color/amber</item>
+    </style>
+
+    <style name="BaseTheme.Black.Orange" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorSecondary">@color/orange</item>
+    </style>
+
+    <style name="BaseTheme.Black.DeepOrange" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/deep_orange</item>
+        <item name="colorSecondary">@color/deep_orange</item>
+    </style>
+
+    <style name="BaseTheme.Black.Brown" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/brown</item>
+        <item name="colorSecondary">@color/brown</item>
+    </style>
+
+    <style name="BaseTheme.Black.Grey" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/grey</item>
+        <item name="colorSecondary">@color/grey</item>
+    </style>
+
+    <style name="BaseTheme.Black.BlueGrey" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/blue_grey</item>
+        <item name="colorSecondary">@color/blue_grey</item>
+    </style>
+
+    <style name="BaseTheme.Black.Red200" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/red_200</item>
+        <item name="colorSecondary">@color/red_200</item>
+    </style>
+
+    <style name="BaseTheme.Black.Pink200" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/pink_200</item>
+        <item name="colorSecondary">@color/pink_200</item>
+    </style>
+
+    <style name="BaseTheme.Black.Purple200" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorSecondary">@color/purple_200</item>
+    </style>
+
+    <style name="BaseTheme.Black.DeepPurple200" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/deep_purple_200</item>
+        <item name="colorSecondary">@color/deep_purple_200</item>
+    </style>
+
+    <style name="BaseTheme.Black.Indigo200" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/indigo_200</item>
+        <item name="colorSecondary">@color/indigo_200</item>
+    </style>
+
+    <style name="BaseTheme.Black.Blue200" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/blue_200</item>
+        <item name="colorSecondary">@color/blue_200</item>
+    </style>
+
+    <style name="BaseTheme.Black.LightBlue200" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/light_blue_200</item>
+        <item name="colorSecondary">@color/light_blue_200</item>
+    </style>
+
+    <style name="BaseTheme.Black.Cyan200" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/cyan_200</item>
+        <item name="colorSecondary">@color/cyan_200</item>
+    </style>
+
+    <style name="BaseTheme.Black.Teal200" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/teal_200</item>
+        <item name="colorSecondary">@color/teal_200</item>
+    </style>
+
+    <style name="BaseTheme.Black.Green200" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/green_200</item>
+        <item name="colorSecondary">@color/green_200</item>
+    </style>
+
+    <style name="BaseTheme.Black.LightGreen200" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/light_green_200</item>
+        <item name="colorSecondary">@color/light_green_200</item>
+    </style>
+
+    <style name="BaseTheme.Black.Lime200" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/lime_200</item>
+        <item name="colorSecondary">@color/lime_200</item>
+    </style>
+
+    <style name="BaseTheme.Black.Amber200" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/amber_200</item>
+        <item name="colorSecondary">@color/amber_200</item>
+    </style>
+
+    <style name="BaseTheme.Black.Orange200" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/orange_200</item>
+        <item name="colorSecondary">@color/orange_200</item>
+    </style>
+
+    <style name="BaseTheme.Black.DeepOrange200" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/deep_orange_200</item>
+        <item name="colorSecondary">@color/deep_orange_200</item>
+    </style>
+
+    <style name="BaseTheme.Black.Brown200" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/brown_200</item>
+        <item name="colorSecondary">@color/brown_200</item>
+    </style>
+
+    <style name="BaseTheme.Black.BlueGrey200" parent="BaseTheme.Black">
+        <item name="colorPrimary">@color/blue_grey_200</item>
+        <item name="colorSecondary">@color/blue_grey_200</item>
+    </style>
 </resources>

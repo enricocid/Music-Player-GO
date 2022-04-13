@@ -245,7 +245,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        ThemeHelper.getAccentedTheme()?.run {
+        ThemeHelper.getAccentedTheme(resources)?.run {
             setTheme(first)
         }
 

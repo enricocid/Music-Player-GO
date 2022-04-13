@@ -22,6 +22,7 @@ class GoPreferences(context: Context) {
 
     private val prefsTheme = context.getString(R.string.theme_pref)
     private val prefsThemeDef = context.getString(R.string.theme_pref_auto)
+    private val prefsThemeBlack = context.getString(R.string.theme_pref_black)
     private val prefsAccent = context.getString(R.string.accent_pref)
 
     private val prefsActiveTabsDef = context.getString(R.string.active_tabs_def_pref)
@@ -113,6 +114,10 @@ class GoPreferences(context: Context) {
     var theme
         get() = mPrefs.getString(prefsTheme, prefsThemeDef)
         set(value) = mPrefs.edit { putString(prefsTheme, value) }
+
+    var isBlackTheme: Boolean
+        get() = mPrefs.getBoolean(prefsThemeBlack, false)
+        set(value) = mPrefs.edit { putBoolean(prefsThemeBlack, value) }
 
     var accent
         get() = mPrefs.getInt(prefsAccent, R.color.deep_purple)

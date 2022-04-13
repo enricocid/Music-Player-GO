@@ -90,7 +90,7 @@
     <string name="theme_pref_light_title">Light</string>
     <string name="theme_pref_dark_title">Dark</string>
     <string name="theme_pref_auto_title">System</string>
-    <string name="theme_pref_black_title">Black theme</string>
+    <string name="theme_pref_black_title">Pure black</string>
     <!-- Preferences - Accent -->
     <string name="accent_pref_title">Accent</string>
     <!-- Preferences - Active tabs -->

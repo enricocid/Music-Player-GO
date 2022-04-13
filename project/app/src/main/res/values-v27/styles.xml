@@ -8,7 +8,26 @@
         <item name="android:navigationBarColor">@color/mainBg</item>
         <item name="android:windowBackground">@color/mainBg</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="main_bg">@color/mainBg</item>
+        <item name="toolbar_bg">@color/toolbarBg</item>
         <item name="android:windowLightNavigationBar">true</item>
+        <item name="popupMenuStyle">@style/PopupMenu</item>
+        <item name="android:spinnerStyle">@style/SpinnerMenu</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Demo.BottomSheetDialog</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+    </style>
+
+    <style name="BaseTheme.Black" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="indicatorFastScrollerStyle">@style/FastScrollerColorFull</item>
+        <item name="alertDialogTheme">@style/Options.DialogsStyle</item>
+        <item name="android:statusBarColor">@android:color/black</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="main_bg">@android:color/black</item>
+        <item name="toolbar_bg">@android:color/black</item>
+        <item name="android:windowLightNavigationBar">false</item>
         <item name="popupMenuStyle">@style/PopupMenu</item>
         <item name="android:spinnerStyle">@style/SpinnerMenu</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Demo.BottomSheetDialog</item>

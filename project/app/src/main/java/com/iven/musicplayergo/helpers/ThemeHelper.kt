@@ -53,6 +53,12 @@ object ThemeHelper {
     }
 
     @JvmStatic
+    fun isThemeNight(resources: Resources) : Boolean {
+        val uiMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        return uiMode == Configuration.UI_MODE_NIGHT_YES
+    }
+
+    @JvmStatic
     fun resolveThemeIcon(context: Context) = when (goPreferences.theme) {
         context.getString(R.string.theme_pref_light) -> R.drawable.ic_day
         context.getString(R.string.theme_pref_auto) -> R.drawable.ic_auto
@@ -120,6 +126,47 @@ object ThemeHelper {
         Pair(first = R.color.blue_grey_200, second = R.style.BaseTheme_BlueGrey200)
     )
 
+    // Fixed array of pairs (first: accent, second: theme)
+    @JvmStatic
+    private val accentsBlack = arrayOf(
+        Pair(first = R.color.red, second = R.style.BaseTheme_Black_Red),
+        Pair(first = R.color.pink, second = R.style.BaseTheme_Black_Pink),
+        Pair(first = R.color.purple, second = R.style.BaseTheme_Black_Purple),
+        Pair(first = R.color.deep_purple, second = R.style.BaseTheme_Black_DeepPurple),
+        Pair(first = R.color.indigo, second = R.style.BaseTheme_Black_Indigo),
+        Pair(first = R.color.blue, second = R.style.BaseTheme_Black_Blue),
+        Pair(first = R.color.light_blue, second = R.style.BaseTheme_Black_LightBlue),
+        Pair(first = R.color.cyan, second = R.style.BaseTheme_Black_Cyan),
+        Pair(first = R.color.teal, second = R.style.BaseTheme_Black_Teal),
+        Pair(first = R.color.green, second = R.style.BaseTheme_Black_Green),
+        Pair(first = R.color.light_green, second = R.style.BaseTheme_Black_LightGreen),
+        Pair(first = R.color.lime, second = R.style.BaseTheme_Black_Lime),
+        Pair(first = R.color.yellow, second = R.style.BaseTheme_Black_Yellow),
+        Pair(first = R.color.amber, second = R.style.BaseTheme_Black_Amber),
+        Pair(first = R.color.orange, second = R.style.BaseTheme_Black_Orange),
+        Pair(first = R.color.deep_orange, second = R.style.BaseTheme_Black_DeepOrange),
+        Pair(first = R.color.brown, second = R.style.BaseTheme_Black_Brown),
+        Pair(first = R.color.grey, second = R.style.BaseTheme_Black_Grey),
+        Pair(first = R.color.blue_grey, second = R.style.BaseTheme_Black_BlueGrey),
+        Pair(first = R.color.red_200, second = R.style.BaseTheme_Black_Red200),
+        Pair(first = R.color.pink_200, second = R.style.BaseTheme_Black_Pink200),
+        Pair(first = R.color.purple_200, second = R.style.BaseTheme_Black_Purple200),
+        Pair(first = R.color.deep_purple_200, second = R.style.BaseTheme_Black_DeepPurple200),
+        Pair(first = R.color.indigo_200, second = R.style.BaseTheme_Black_Indigo200),
+        Pair(first = R.color.blue_200, second = R.style.BaseTheme_Black_Blue200),
+        Pair(first = R.color.light_blue_200, second = R.style.BaseTheme_Black_LightBlue200),
+        Pair(first = R.color.cyan_200, second = R.style.BaseTheme_Black_Cyan200),
+        Pair(first = R.color.teal_200, second = R.style.BaseTheme_Black_Teal200),
+        Pair(first = R.color.green_200, second = R.style.BaseTheme_Black_Green200),
+        Pair(first = R.color.light_green_200, second = R.style.BaseTheme_Black_LightGreen200),
+        Pair(first = R.color.lime_200, second = R.style.BaseTheme_Black_Lime200),
+        Pair(first = R.color.amber_200, second = R.style.BaseTheme_Black_Amber200),
+        Pair(first = R.color.orange_200, second = R.style.BaseTheme_Black_Orange200),
+        Pair(first = R.color.deep_orange_200, second = R.style.BaseTheme_Black_DeepOrange200),
+        Pair(first = R.color.brown_200, second = R.style.BaseTheme_Black_Brown200),
+        Pair(first = R.color.blue_grey_200, second = R.style.BaseTheme_Black_BlueGrey200)
+    )
+
     // Fixed array of pairs (first: accent, second: accent name)
     @JvmStatic
     val accentsNames = arrayOf(
@@ -178,9 +225,13 @@ object ThemeHelper {
 
     // Search theme from accents array of Pair, returns a Pair(theme, position)
     @JvmStatic
-    fun getAccentedTheme() = try {
+    fun getAccentedTheme(resources: Resources) = try {
         val selAccent = goPreferences.accent
-        val stylesMap = accents.toMap()
+        val stylesMap = if (goPreferences.isBlackTheme && isThemeNight(resources)) {
+            accentsBlack
+        } else {
+            accents
+        }.toMap()
         stylesMap[selAccent]?.let { style ->
             val position = stylesMap.keys.indexOf(selAccent)
             return@let Pair(first = style, second = position)
@@ -239,8 +290,7 @@ object ThemeHelper {
         } else {
             150
         }
-        val uiMode = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        if (uiMode == Configuration.UI_MODE_NIGHT_YES) {
+        if (isThemeNight(context.resources)) {
             alpha = 150
         }
         return ColorUtils.setAlphaComponent(resolveThemeAccent(context), alpha)
@@ -248,8 +298,7 @@ object ThemeHelper {
 
     @JvmStatic
     fun getAlbumCoverAlpha(context: Context): Int {
-        val uiMode = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        return if (uiMode == Configuration.UI_MODE_NIGHT_YES) {
+        return if (isThemeNight(context.resources)) {
             15
         } else {
             20

@@ -75,7 +75,7 @@ class NowPlaying: BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            dialog?.window?.navigationBarColor = ContextCompat.getColor(requireActivity(),
+            dialog?.window?.navigationBarColor = ContextCompat.getColor(requireContext(),
                 R.color.mainBg)
             Insetter.builder()
                 .padding(windowInsetTypesOf(navigationBars = true))
@@ -154,7 +154,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                     npPlaybackSpeed.visibility = View.GONE
                 }
 
-                npCover.background.alpha = ThemeHelper.getAlbumCoverAlpha(requireActivity())
+                npCover.background.alpha = ThemeHelper.getAlbumCoverAlpha(requireContext())
                 npSaveTime.setOnClickListener { saveSongPosition() }
                 npEqualizer.setOnClickListener { mUIControlInterface.onOpenEqualizer() }
                 npLove.setOnClickListener {
@@ -165,7 +165,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                         0,
                         mph.launchedBy)
                     mUIControlInterface.onFavoritesUpdated(clear = false)
-                    updateNpFavoritesIcon(requireActivity())
+                    updateNpFavoritesIcon(requireContext())
                 }
 
                 with(npRepeat) {
@@ -175,9 +175,9 @@ class NowPlaying: BottomSheetDialogFragment() {
                     ThemeHelper.updateIconTint(
                         this,
                         if (mph.isRepeat1X || mph.isLooping || mph.isPauseOnEnd) {
-                            ThemeHelper.resolveThemeAccent(requireActivity())
+                            ThemeHelper.resolveThemeAccent(requireContext())
                         } else {
-                            ContextCompat.getColor(requireActivity(), R.color.widgetsColor)
+                            ContextCompat.getColor(requireContext(), R.color.widgetsColor)
                         }
                     )
                     setOnClickListener { setRepeat() }
@@ -191,7 +191,7 @@ class NowPlaying: BottomSheetDialogFragment() {
         val iterator = imageButtons.iterator()
         while (iterator.hasNext()) {
             iterator.next().setOnLongClickListener { btn ->
-                btn.contentDescription.toString().toToast(requireActivity())
+                btn.contentDescription.toString().toToast(requireContext())
                 return@setOnLongClickListener true
             }
         }
@@ -219,7 +219,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                 npVolumeSeek.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
                     val defaultValueColor = _npExtControlsBinding?.npVolumeValue?.currentTextColor
-                    val selectedColor = ThemeHelper.resolveThemeAccent(requireActivity())
+                    val selectedColor = ThemeHelper.resolveThemeAccent(requireContext())
 
                     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                         if (fromUser) {
@@ -257,7 +257,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                     object : SeekBar.OnSeekBarChangeListener {
 
                         val defaultPositionColor = npSeek.currentTextColor
-                        val selectedColor = ThemeHelper.resolveThemeAccent(requireActivity())
+                        val selectedColor = ThemeHelper.resolveThemeAccent(requireContext())
                         var userSelectedPosition = 0
                         var isUserSeeking = false
 
@@ -303,7 +303,7 @@ class NowPlaying: BottomSheetDialogFragment() {
 
     fun updateRepeatStatus(onPlaybackCompletion: Boolean) {
         mMediaControlInterface.onGetMediaPlayerHolder()?.run {
-            val resolvedIconsColor = ContextCompat.getColor(requireActivity(), R.color.widgetsColor)
+            val resolvedIconsColor = ContextCompat.getColor(requireContext(), R.color.widgetsColor)
             _npCoverBinding?.npRepeat?.setImageResource(
                 ThemeHelper.getRepeatIcon(this)
             )
@@ -314,7 +314,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                 )
                 isRepeat1X or isLooping or isPauseOnEnd -> {
                     ThemeHelper.updateIconTint(
-                        _npCoverBinding?.npRepeat!!, ThemeHelper.resolveThemeAccent(requireActivity())
+                        _npCoverBinding?.npRepeat!!, ThemeHelper.resolveThemeAccent(requireContext())
                     )
                 }
                 else -> ThemeHelper.updateIconTint(
@@ -404,12 +404,12 @@ class NowPlaying: BottomSheetDialogFragment() {
                 selectedSongDuration.toFormattedDuration(isAlbum = false, isSeekBar = true)
             _nowPlayingBinding?.npSeekBar?.max = song.duration.toInt()
 
-            song.id?.toContentUri()?.toBitrate(requireActivity())?.let { (first, second) ->
+            song.id?.toContentUri()?.toBitrate(requireContext())?.let { (first, second) ->
                 _nowPlayingBinding?.npRates?.text =
                     getString(R.string.rates, first, second)
             }
         }
-        updateNpFavoritesIcon(requireActivity())
+        updateNpFavoritesIcon(requireContext())
         updatePlayingStatus()
     }
 

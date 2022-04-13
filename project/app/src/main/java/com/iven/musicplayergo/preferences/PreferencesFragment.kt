@@ -2,6 +2,7 @@ package com.iven.musicplayergo.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
@@ -19,8 +20,6 @@ import com.iven.musicplayergo.ui.UIControlInterface
 
 class PreferencesFragment : PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener {
-
-    private var mThemePreference: Preference? = null
 
     private lateinit var mUIControlInterface: UIControlInterface
     private lateinit var mMediaControlInterface: MediaControlInterface
@@ -55,8 +54,13 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mThemePreference = findPreference<Preference>(getString(R.string.theme_pref))?.apply {
+        findPreference<Preference>(getString(R.string.theme_pref))?.apply {
             icon = ContextCompat.getDrawable(requireContext(), ThemeHelper.resolveThemeIcon(requireContext()))
+        }
+
+        findPreference<Preference>(getString(R.string.theme_pref_black))?.let { preference ->
+            val uiMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+            preference.isVisible = uiMode == Configuration.UI_MODE_NIGHT_YES
         }
 
         findPreference<Preference>(getString(R.string.accent_pref))?.let { preference ->
@@ -105,10 +109,8 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 })
             }
             getString(R.string.playback_vel_pref) -> mMediaControlInterface.onPlaybackSpeedToggled()
-            getString(R.string.theme_pref) -> {
-                mThemePreference?.icon = ContextCompat.getDrawable(requireContext(), ThemeHelper.resolveThemeIcon(requireContext()))
-                mUIControlInterface.onAppearanceChanged(isThemeChanged = true)
-            }
+            getString(R.string.theme_pref) -> mUIControlInterface.onAppearanceChanged(isThemeChanged = true)
+            getString(R.string.theme_pref_black) -> mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
             getString(R.string.focus_pref) -> mMediaControlInterface.onGetMediaPlayerHolder()?.run {
                 if (goPreferences.isFocusEnabled) {
                     tryToGetAudioFocus()

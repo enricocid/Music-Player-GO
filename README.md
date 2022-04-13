@@ -64,7 +64,9 @@ Home of **Music Player GO**, a minimal yet fully-featured local Android music pl
 - Equalizer
 - Music organised by artist, albums, songs and folders; tabs are organisable
 - Light, dark, automatic themes and accents
+- Pure black theme
 - Queue
+- Sleep timer
 - Audio focus, precise volume and headset management
 - Now playing, embedded covers, search, playback speed, pause on completion, sorting, shuffle, fast-seeking...
  
