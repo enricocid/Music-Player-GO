@@ -1,7 +1,5 @@
 package com.iven.musicplayergo.ui
 
-import com.iven.musicplayergo.dialogs.RecyclerSheet
-
 interface UIControlInterface {
     fun onAppearanceChanged(isThemeChanged: Boolean)
     fun onOpenNewDetailsFragment()

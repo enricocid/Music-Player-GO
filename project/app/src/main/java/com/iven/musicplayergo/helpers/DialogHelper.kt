@@ -1,10 +1,7 @@
 package com.iven.musicplayergo.helpers
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.text.Spanned
 import android.view.Gravity
 import android.view.View
