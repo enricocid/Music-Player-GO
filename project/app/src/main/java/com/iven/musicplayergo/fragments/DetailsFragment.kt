@@ -224,6 +224,10 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             } else {
                 resources.getDimensionPixelSize(R.dimen.player_controls_padding_normal)
             }
+
+            if (sLaunchedByFolderView) {
+                setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.toolbarBg))
+            }
         }
     }
 
