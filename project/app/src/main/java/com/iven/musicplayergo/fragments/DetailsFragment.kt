@@ -550,6 +550,16 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 return@setOnMenuItemClickListener true
             }
         }
+
+        mMediaControlInterface.onGetMediaPlayerHolder()?.let { mp ->
+            tintSleepTimerIcon(mp.isSleepTimer)
+        }
+    }
+
+    fun tintSleepTimerIcon(isEnabled: Boolean) {
+        _detailsFragmentBinding?.detailsToolbar?.run {
+            ThemeHelper.tintSleepTimerMenuItem(this, isEnabled)
+        }
     }
 
     private fun applySortingToMusic(order: Int) {

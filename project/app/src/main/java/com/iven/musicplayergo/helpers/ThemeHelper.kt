@@ -9,7 +9,9 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.text.Spanned
 import android.util.TypedValue
+import android.view.MenuItem
 import android.widget.ImageView
+import android.widget.Toolbar
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
@@ -19,8 +21,10 @@ import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.core.text.toSpanned
 import androidx.core.widget.ImageViewCompat
+import com.google.android.material.appbar.MaterialToolbar
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.extensions.setIconTint
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.MainActivity
@@ -328,5 +332,14 @@ object ThemeHelper {
         mediaPlayerHolder.isLooping -> R.drawable.ic_repeat
         mediaPlayerHolder.isPauseOnEnd -> R.drawable.ic_pause
         else -> R.drawable.ic_repeat_one_notif_disabled
+    }
+
+    @JvmStatic
+    fun tintSleepTimerMenuItem(tb: MaterialToolbar, isEnabled: Boolean) {
+        tb.menu.findItem(R.id.sleeptimer).setIconTint(if (isEnabled) {
+            resolveThemeAccent(tb.context)
+        } else {
+            ContextCompat.getColor(tb.context, R.color.widgetsColor)
+        })
     }
 }

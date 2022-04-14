@@ -20,6 +20,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -75,6 +76,13 @@ fun MenuItem.setTitleColor(color: Int) {
         setSpan(ForegroundColorSpan(color), 0, length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
         title = this
     }
+}
+
+// Extension to set menu items icon color
+fun MenuItem.setIconTint(color: Int) {
+    val wrapped = DrawableCompat.wrap(icon)
+    DrawableCompat.setTint(wrapped, color)
+    icon = wrapped
 }
 
 // Extension to set span to menu title

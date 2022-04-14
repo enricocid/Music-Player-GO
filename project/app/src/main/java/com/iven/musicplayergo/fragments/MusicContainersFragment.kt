@@ -22,9 +22,11 @@ import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.reddit.indicatorfastscroll.FastScrollerView
+
 
 /**
  * A simple [Fragment] subclass.
@@ -137,6 +139,16 @@ class MusicContainersFragment : Fragment(),
                 }
                 setMenuOnItemClickListener(this)
             }
+        }
+
+        (requireActivity() as MediaControlInterface).onGetMediaPlayerHolder()?.let { mp ->
+            tintSleepTimerIcon(mp.isSleepTimer)
+        }
+    }
+
+    fun tintSleepTimerIcon(isEnabled: Boolean) {
+        _musicContainerListBinding?.searchToolbar?.run {
+            ThemeHelper.tintSleepTimerMenuItem(this, isEnabled)
         }
     }
 

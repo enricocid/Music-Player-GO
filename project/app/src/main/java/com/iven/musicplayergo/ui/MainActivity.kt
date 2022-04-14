@@ -895,6 +895,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             GoConstants.SLEEPTIMER_TYPE
         }).apply {
             show(supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
+            onSleepTimerEnabled = { isEnabled ->
+                mDetailsFragment?.tintSleepTimerIcon(isEnabled)
+                mArtistsFragment?.tintSleepTimerIcon(isEnabled)
+                mAlbumsFragment?.tintSleepTimerIcon(isEnabled)
+                mAllMusicFragment?.tintSleepTimerIcon(isEnabled)
+                mFoldersFragment?.tintSleepTimerIcon(isEnabled)
+            }
             onSleepTimerDialogCancelled = {
                 mSleepTimerDialog = null
             }

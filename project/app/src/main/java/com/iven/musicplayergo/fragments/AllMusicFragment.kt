@@ -149,6 +149,16 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                 }
             }
         }
+
+        mMediaControlInterface.onGetMediaPlayerHolder()?.let { mp ->
+            tintSleepTimerIcon(mp.isSleepTimer)
+        }
+    }
+
+    fun tintSleepTimerIcon(isEnabled: Boolean) {
+        _allMusicFragmentBinding?.searchToolbar?.run {
+            ThemeHelper.tintSleepTimerMenuItem(this, isEnabled)
+        }
     }
 
     private fun setupIndicatorFastScrollerView() {
