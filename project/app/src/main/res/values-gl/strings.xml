@@ -186,4 +186,5 @@
     <string name="sleeptimer_stop">Deter</string>
     <string name="sleeptimer_cancel_desc">Deter temporizador</string>
     <string name="locale_bulgarian">Búlgaro</string>
+    <string name="theme_pref_black_title">Negro puro</string>
 </resources>
