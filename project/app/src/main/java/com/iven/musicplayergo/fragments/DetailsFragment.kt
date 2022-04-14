@@ -226,7 +226,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             }
 
             if (sLaunchedByFolderView) {
-                setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.toolbarBg))
+                setBackgroundColor(ThemeHelper.resolveColorAttr(requireContext(), R.attr.toolbar_bg))
             }
         }
     }
