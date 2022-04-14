@@ -9,9 +9,7 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.text.Spanned
 import android.util.TypedValue
-import android.view.MenuItem
 import android.widget.ImageView
-import android.widget.Toolbar
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate

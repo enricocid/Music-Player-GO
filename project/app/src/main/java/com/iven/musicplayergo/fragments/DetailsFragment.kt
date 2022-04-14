@@ -143,7 +143,12 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _detailsFragmentBinding = FragmentDetailsBinding.inflate(inflater, container, false)
+        _detailsFragmentBinding = if (sLaunchedByAlbumView && ThemeHelper.isDeviceLand(resources)) {
+            val view = LayoutInflater.from(requireContext()).inflate(R.layout.fragment_details_alt_land, container, false)
+            FragmentDetailsBinding.bind(view)
+        } else {
+            FragmentDetailsBinding.inflate(inflater, container, false)
+        }
         return _detailsFragmentBinding?.root
     }
 

@@ -75,8 +75,8 @@ class NowPlaying: BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            dialog?.window?.navigationBarColor = ContextCompat.getColor(requireContext(),
-                R.color.mainBg)
+            dialog?.window?.navigationBarColor =
+                ThemeHelper.resolveColorAttr(requireContext(), R.attr.main_bg)
             Insetter.builder()
                 .padding(windowInsetTypesOf(navigationBars = true))
                 .margin(windowInsetTypesOf(statusBars = true))

@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -49,6 +48,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
     private lateinit var mMediaControlInterface: MediaControlInterface
     var onQueueCancelled: (() -> Unit)? = null
     var onSleepTimerDialogCancelled: (() -> Unit)? = null
+    var onSleepTimerEnabled: ((Boolean) -> Unit)? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -229,7 +229,10 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                         dismiss()
                     }
                     btnPositive.setOnClickListener {
-                        mMediaControlInterface.onGetMediaPlayerHolder()?.pauseBySleepTimer(sleepTimerAdapter.getSelectedSleepTimerValue(), sleepTimerAdapter.getSelectedSleepTimer())
+                        mMediaControlInterface.onGetMediaPlayerHolder()?.run {
+                            val isEnabled =pauseBySleepTimer(sleepTimerAdapter.getSelectedSleepTimerValue(), sleepTimerAdapter.getSelectedSleepTimer())
+                            onSleepTimerEnabled?.invoke(isEnabled)
+                        }
                         dismiss()
                     }
                 }
@@ -250,6 +253,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                         contentDescription = getString(R.string.sleeptimer_cancel_desc)
                         setOnClickListener {
                             mMediaControlInterface.onGetMediaPlayerHolder()?.cancelSleepTimer()
+                            onSleepTimerEnabled?.invoke(false)
                             dismiss()
                         }
                     }
@@ -292,8 +296,8 @@ class RecyclerSheet: BottomSheetDialogFragment() {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            dialog?.window?.navigationBarColor = ContextCompat.getColor(requireActivity(),
-                R.color.mainBg)
+            dialog?.window?.navigationBarColor =
+                ThemeHelper.resolveColorAttr(requireContext(), R.attr.main_bg)
             Insetter.builder()
                 .padding(windowInsetTypesOf(navigationBars = true))
                 .margin(windowInsetTypesOf(statusBars = true))

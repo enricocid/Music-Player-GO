@@ -24,6 +24,6 @@
     <color name="widgetsColor">#fafafa</color>
 
     <color name="mainBg">#151515</color>
-    <color name="systemBarBg">#131313</color>
+    <color name="systemBarBg">#111111</color>
     <color name="toolbarBg">@color/systemBarBg</color>
 </resources>
