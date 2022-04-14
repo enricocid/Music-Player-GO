@@ -552,13 +552,13 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         }
 
         mMediaControlInterface.onGetMediaPlayerHolder()?.let { mp ->
-            tintSleepTimerIcon(mp.isSleepTimer)
+            tintSleepTimerIcon(enabled = mp.isSleepTimer)
         }
     }
 
-    fun tintSleepTimerIcon(isEnabled: Boolean) {
+    fun tintSleepTimerIcon(enabled: Boolean) {
         _detailsFragmentBinding?.detailsToolbar?.run {
-            ThemeHelper.tintSleepTimerMenuItem(this, isEnabled)
+            ThemeHelper.tintSleepTimerMenuItem(this, enabled)
         }
     }
 

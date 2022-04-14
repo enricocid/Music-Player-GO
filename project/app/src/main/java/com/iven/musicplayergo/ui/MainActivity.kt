@@ -895,17 +895,21 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             GoConstants.SLEEPTIMER_TYPE
         }).apply {
             show(supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
-            onSleepTimerEnabled = { isEnabled ->
-                mDetailsFragment?.tintSleepTimerIcon(isEnabled)
-                mArtistsFragment?.tintSleepTimerIcon(isEnabled)
-                mAlbumsFragment?.tintSleepTimerIcon(isEnabled)
-                mAllMusicFragment?.tintSleepTimerIcon(isEnabled)
-                mFoldersFragment?.tintSleepTimerIcon(isEnabled)
+            onSleepTimerEnabled = { enabled ->
+                updateSleepTimerIcon(isEnabled = enabled)
             }
             onSleepTimerDialogCancelled = {
                 mSleepTimerDialog = null
             }
         }
+    }
+
+    private fun updateSleepTimerIcon(isEnabled: Boolean) {
+        mDetailsFragment?.tintSleepTimerIcon(enabled = isEnabled)
+        mArtistsFragment?.tintSleepTimerIcon(enabled = isEnabled)
+        mAlbumsFragment?.tintSleepTimerIcon(enabled = isEnabled)
+        mAllMusicFragment?.tintSleepTimerIcon(enabled = isEnabled)
+        mFoldersFragment?.tintSleepTimerIcon(enabled = isEnabled)
     }
 
     private fun closeEqualizerFragment(isAnimation: Boolean) {
@@ -1175,6 +1179,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     updateCountdown(newValue)
                 }
             }
+        }
+
+        override fun onStopSleepTimer() {
+            mSleepTimerDialog?.dismiss()
+            updateSleepTimerIcon(isEnabled = false)
         }
     }
 

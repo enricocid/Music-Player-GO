@@ -142,13 +142,13 @@ class MusicContainersFragment : Fragment(),
         }
 
         (requireActivity() as MediaControlInterface).onGetMediaPlayerHolder()?.let { mp ->
-            tintSleepTimerIcon(mp.isSleepTimer)
+            tintSleepTimerIcon(enabled = mp.isSleepTimer)
         }
     }
 
-    fun tintSleepTimerIcon(isEnabled: Boolean) {
+    fun tintSleepTimerIcon(enabled: Boolean) {
         _musicContainerListBinding?.searchToolbar?.run {
-            ThemeHelper.tintSleepTimerMenuItem(this, isEnabled)
+            ThemeHelper.tintSleepTimerMenuItem(this, enabled)
         }
     }
 

@@ -808,8 +808,8 @@ class MediaPlayerHolder:
         }
     }
 
-    fun pauseBySleepTimer(minutes: Long, label: String){
-        if (isPlaying) {
+    fun pauseBySleepTimer(minutes: Long, label: String) : Boolean {
+        return if (isPlaying) {
             synchronized(cancelSleepTimer()) {
                 mSleepTimer = object : CountDownTimer(TimeUnit.MINUTES.toMillis(minutes), 1000) {
                     override fun onTick(p0: Long) {
@@ -818,12 +818,15 @@ class MediaPlayerHolder:
                     override fun onFinish() {
                         mSleepTimer = null
                         pauseMediaPlayer()
+                        mediaPlayerInterface.onStopSleepTimer()
                     }
                 }.start()
                 mPlayerService.getString(R.string.sleeptimer_enabled, label).toToast(mPlayerService)
             }
+            true
         } else {
             R.string.error_bad_id.toToast(mPlayerService)
+            false
         }
     }
 
