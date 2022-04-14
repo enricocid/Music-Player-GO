@@ -302,6 +302,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                             R.id.more_options_folder,
                             !hasFocus
                         )
+                        detailsToolbar.menu.findItem(R.id.sleeptimer).isVisible = !hasFocus
                         if (sLaunchedByAlbumView) {
                             albumViewCoverContainer.afterMeasured {
                                 animate()?.let { anim ->

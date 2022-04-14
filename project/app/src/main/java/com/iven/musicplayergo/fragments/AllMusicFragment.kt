@@ -141,6 +141,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                             fastscrollerThumb.handleViewVisibility(show = !hasFocus)
                             allMusicRv.setupFastScrollerPadding(forceNoPadding = hasFocus, resources)
                             stb.menu.setGroupVisible(R.id.sorting, !hasFocus)
+                            stb.menu.findItem(R.id.sleeptimer).isVisible = !hasFocus
                         }
                     }
 
@@ -230,7 +231,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
                 goPreferences.allMusicSorting = mSorting
 
-            } else {
+            } else if (it.itemId != R.id.action_search) {
                 mUIControlInterface.onOpenSleepTimerDialog()
             }
 
