@@ -180,4 +180,6 @@
     <string name="indigo">Indigo</string>
     <string name="deep_orange">Dunkles Orange</string>
     <string name="locale_pref_title">Sprache</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="ok">OK</string>
 </resources>

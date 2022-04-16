@@ -180,4 +180,6 @@
     <string name="cyan_200">Türkizkék 200</string>
     <string name="direct_remove_pref_sum">Megerősítő kérdés lejátszási sor/kedvencek törlésekor</string>
     <string name="locale_pref_title">Nyelv</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Mégsem</string>
 </resources>
