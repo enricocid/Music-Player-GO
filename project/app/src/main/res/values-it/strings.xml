@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">OK</string>
+    <string name="cancel">Annulla</string>
     <string name="yes">Sì</string>
     <string name="no">No</string>
     <string name="artists">Artisti</string>

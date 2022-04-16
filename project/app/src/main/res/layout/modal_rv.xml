@@ -74,7 +74,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
-            android:text="@android:string/cancel" />
+            android:text="@string/cancel" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnPositive"
@@ -85,6 +85,6 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="4dp"
-            android:text="@android:string/ok" />
+            android:text="@string/ok" />
     </LinearLayout>
 </LinearLayout>

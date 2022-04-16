@@ -233,7 +233,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun attachBaseContext(newBase: Context?) {
         if (goPreferences.locale == null) {
-            super.attachBaseContext(newBase)
+            val localeUpdatedContext = ContextUtils.updateLocale(newBase!!, Locale.getDefault())
+            super.attachBaseContext(localeUpdatedContext)
         } else {
             val locale = Locale.forLanguageTag(goPreferences.locale!!)
             val localeUpdatedContext = ContextUtils.updateLocale(newBase!!, locale)

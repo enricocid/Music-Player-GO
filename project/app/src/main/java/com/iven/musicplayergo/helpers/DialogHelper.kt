@@ -184,7 +184,7 @@ object DialogHelper {
             .setCancelable(false)
             .setTitle(R.string.app_name)
             .setMessage(R.string.error_fs_not_allowed)
-            .setPositiveButton(android.R.string.ok, null)
+            .setPositiveButton(R.string.ok, null)
             .show()
     }
 

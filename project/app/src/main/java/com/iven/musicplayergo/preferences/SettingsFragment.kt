@@ -82,7 +82,7 @@ class SettingsFragment : Fragment() {
     private fun openLocaleSwitcher() {
         val locales = ContextUtils.getLocalesList(resources)
 
-        MaterialAlertDialogBuilder(requireContext())
+        val dialog = MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.locale_pref_title)
             .setItems(locales.values.toTypedArray()) { _, which ->
                 // Respond to item chosen
@@ -92,7 +92,15 @@ class SettingsFragment : Fragment() {
                     ThemeHelper.applyChanges(requireActivity(), restoreSettings = true)
                 }
             }
-            .show()
+            .setNegativeButton(R.string.cancel, null)
+
+            if (goPreferences.locale != null) {
+                dialog.setNeutralButton(R.string.sorting_pref_default) { _, _ ->
+                    goPreferences.locale = null
+                    ThemeHelper.applyChanges(requireActivity(), restoreSettings = false)
+                }
+            }
+        dialog.show()
     }
 
     @SuppressLint("QueryPermissionsNeeded")

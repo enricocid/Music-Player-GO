@@ -36,7 +36,7 @@ object PermissionsHelper {
                 .setCancelable(false)
                 .setTitle(R.string.app_name)
                 .setMessage(R.string.perm_rationale)
-                .setPositiveButton(android.R.string.ok) { _, _ ->
+                .setPositiveButton(R.string.ok) { _, _ ->
                     askForReadStoragePermission(activity)
                 }
                 .setNegativeButton(R.string.no) { _, _ ->
