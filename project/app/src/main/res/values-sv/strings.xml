@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">OK</string>
+    <string name="cancel">Avbryt</string>
     <string name="playback_pref_summary_on">Behåll</string>
     <string name="playback_pref_summary_off">Endast en låt</string>
     <string name="playback_pref_title">Vald uppspelningshastighet</string>

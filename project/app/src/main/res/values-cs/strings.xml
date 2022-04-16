@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">OK</string>
+    <string name="cancel">Zrušit</string>
     <string name="yes">Ano</string>
     <string name="sorting_pref">Řazení</string>
     <string name="content_skip_prev">Přeskočit na předchozí</string>

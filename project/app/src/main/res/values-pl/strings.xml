@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">OK</string>
+    <string name="cancel">Anuluj</string>
     <string name="yes">Tak</string>
     <string name="no">Nie</string>
     <string name="on_close_activity">Czy chcesz zatrzymać odtwarzanie muzyki?</string>

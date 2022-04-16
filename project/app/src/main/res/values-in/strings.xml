@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">Oke</string>
+    <string name="cancel">Batal</string>
     <string name="yes">Iya</string>
     <string name="no">Tidak</string>
     <string name="on_close_activity">Hentikan pemutaran\?</string>

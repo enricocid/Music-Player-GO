@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">확인</string>
+    <string name="cancel">취소</string>
     <string name="fast_seeking_pref_summary">빠르게 넘기기/되감기 (초)</string>
     <string name="fast_seeking_pref_title">빠르게 넘기기</string>
     <string name="category_general">일반</string>

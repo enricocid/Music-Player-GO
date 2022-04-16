@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">ठीक है</string>
+    <string name="cancel">रद्द करें</string>
     <string name="yes">हाँ</string>
     <string name="no">नहीं</string>
     <string name="on_close_activity">क्या आप प्लेबैक को रोकना चाहते हैं?</string>

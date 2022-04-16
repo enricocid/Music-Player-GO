@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">Tamam</string>
+    <string name="cancel">İptal</string>
     <string name="yes">Evet</string>
     <string name="no">Hayır</string>
     <string name="artists">Sanatçılar</string>

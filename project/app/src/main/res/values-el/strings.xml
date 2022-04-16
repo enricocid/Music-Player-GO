@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">OK</string>
+    <string name="cancel">Ακύρωση</string>
     <string name="sorting_pref_default">Προκαθορισμένο</string>
     <string name="sorting_pref">Ταξινόμηση</string>
     <string name="folder_info">%1d Τραγούδια</string>

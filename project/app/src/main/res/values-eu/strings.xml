@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">Ados</string>
+    <string name="cancel">Utzi</string>
     <string name="playback_pref_summary_on">Hautatutako erreprodukzio-abiadura mantendu</string>
     <string name="playback_pref_summary_off">Hautatutako erreprodukzio-abiaduran ez jarraitu</string>
     <string name="playback_pref_title">Erreprodukzio-abiadura</string>

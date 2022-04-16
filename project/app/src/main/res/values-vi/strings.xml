@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">OK</string>
+    <string name="cancel">Hủy</string>
     <string name="headset_pref_title">Cắm tai nghe</string>
     <string name="focus_pref_title">Tập trung âm thanh</string>
     <string name="precise_volume_pref_title">Điều khiển âm lượng chính xác</string>

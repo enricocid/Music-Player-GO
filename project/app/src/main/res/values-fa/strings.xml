@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok" msgid="2646370155170753815">تأیید</string>
+    <string name="cancel" msgid="6908697720451760115">لغو</string>
     <string name="repeat_disabled">∞ تکرار خاموش.</string>
     <string name="repeat_loop_enabled">∞ تکرار روشن.</string>
     <string name="open_git_pref_summary">برای اطّلاعات بیشتر، صفحهٔ پروژه را باز کنید :)</string>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">Gerai</string>
+    <string name="cancel">Atšaukti</string>
     <string name="fast_seeking_actions_pref_summary_on">Pirmenybė teikiama greito ieškojimo veiksmams</string>
     <string name="fast_seeking_actions_pref_summary_off">Pirmenybė teikiama uždarymo/pakartojimo veiksmams</string>
     <string name="fast_seeking_pref_title">Greitas ieškojimas</string>

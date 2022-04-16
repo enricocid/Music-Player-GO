@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">OK</string>
+    <string name="cancel">Отказ</string>
     <string name="on_close_activity">Спри възпроизвеждането\?</string>
     <string name="favorites_clear">Изчисти всички любими\?</string>
     <string name="favorite_remove">Изтрий %1s (%2s) от любими\?</string>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Dialogs / Buttons -->
+    <string name="ok">Aceptar</string>
+    <string name="cancel">Cancelar</string>
     <string name="yes">Si</string>
     <string name="no">Non</string>
     <string name="on_close_activity">Deter a reprodución\?</string>

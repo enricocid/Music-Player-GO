@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">OK</string>
+    <string name="cancel">Annuller</string>
     <string name="on_list_ended_pref_stop_title">Stop</string>
     <string name="precise_volume_pref_title">Præcis lydstyrkeniveaukontrol</string>
     <string name="on_close_activity">Stop afspilning\?</string>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">حسنًا</string>
+    <string name="cancel">إلغاء</string>
     <string name="yes">نعم</string>
     <string name="no">لا</string>
     <string name="favorites">الأغاني المفضلة</string>

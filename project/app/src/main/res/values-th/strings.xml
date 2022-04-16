@@ -1,4 +1,6 @@
 <resources>
+    <string name="ok">ตกลง</string>
+    <string name="cancel">ยกเลิก</string>
     <string name="yes">ใช่</string>
     <string name="no">ไม่</string>
     <string name="on_close_activity">คุณต้องการหยุดเล่นหรือไม่?</string>

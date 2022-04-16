@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">ОК</string>
+    <string name="cancel">Скасаваць</string>
     <string name="playback_pref_summary_on">Захоўваць выбраную хуткасць прайгравання</string>
     <string name="playback_pref_summary_off">Не захоўваць выбраную хуткасць прайгравання</string>
     <string name="playback_pref_title">Хуткасць прайгравання</string>

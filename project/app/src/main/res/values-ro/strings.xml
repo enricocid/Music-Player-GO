@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">OK</string>
+    <string name="cancel">Anulați</string>
     <string name="yes">Da</string>
     <string name="no">Nu</string>
     <string name="artists">Artiști</string>

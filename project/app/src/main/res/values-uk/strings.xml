@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!----><resources>
+<resources>
+    <string name="ok">OK</string>
+    <string name="cancel">Скасувати</string>
     <string name="error_bad_id">З початку оберіть пісню!</string>
     <string name="error_no_browser">Браузер не знайдено!</string>
     <string name="perm_rationale">Для відтворення музики потрібен доступ Music Player-GO до Ваших файлів</string>

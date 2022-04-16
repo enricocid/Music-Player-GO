@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">V redu</string>
+    <string name="cancel">Prekliči</string>
     <string name="playback_pref_summary_on">Vztrajaj pri izbrani hitrosti predvajanja</string>
     <string name="playback_pref_summary_off">Ne vztrajaj pri izbrani hitrosti predvajanja</string>
     <string name="playback_pref_title">Hitrost predvajanja</string>

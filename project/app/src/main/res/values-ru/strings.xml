@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">ОК</string>
+    <string name="cancel">Отмена</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <string name="error_bad_id">Сначала выберите трек.</string>
