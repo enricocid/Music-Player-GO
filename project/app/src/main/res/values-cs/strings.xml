@@ -173,4 +173,11 @@
     <string name="blue_200">Modrá 200</string>
     <string name="indigo_200">Indigová 200</string>
     <string name="brown_200">Hnědá 200</string>
+    <string name="sleeptimer_cancel_desc">Zastavit časovač spánku</string>
+    <string name="sleeptimer">Časovač spánku</string>
+    <string name="sleeptimer_remaining_time">Časovač spánku: zbývající čas</string>
+    <string name="sleeptimer_enabled">Zastavit přehrávání po %1s</string>
+    <string name="sleeptimer_stop">Zastavit</string>
+    <string name="locale_bulgarian">Bulharština</string>
+    <string name="theme_pref_black_title">Plně černá</string>
 </resources>
