@@ -239,6 +239,7 @@ class EqFragment : Fragment() {
 
                 _eqFragmentBinding?.eqToolbar?.subtitle = mPresetsList[mSelectedPreset]
             }
+            .setNegativeButton(R.string.cancel, null)
             .show()
     }
 
