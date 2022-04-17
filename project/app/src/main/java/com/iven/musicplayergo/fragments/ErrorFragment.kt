@@ -5,17 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.animation.doOnEnd
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentErrorBinding
-import com.iven.musicplayergo.extensions.afterMeasured
-import com.iven.musicplayergo.extensions.createCircularReveal
-import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.helpers.VersioningHelper
 import com.iven.musicplayergo.ui.UIControlInterface
 
 /**
@@ -82,18 +76,6 @@ class ErrorFragment : Fragment() {
 
             errorToolbar.setNavigationOnClickListener {
                 mUIControlInterface.onCloseActivity()
-            }
-
-            if (goPreferences.isAnimations) {
-                root.afterMeasured {
-                    createCircularReveal(isErrorFragment = true, show = true).doOnEnd {
-                        if (!VersioningHelper.isOreoMR1()) {
-                            val red = ContextCompat.getColor(requireContext(), R.color.red)
-                            requireActivity().window.statusBarColor = red
-                            requireActivity().window.navigationBarColor = red
-                        }
-                    }
-                }
             }
         }
     }

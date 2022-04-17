@@ -18,7 +18,6 @@ import android.widget.Toast
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.Toolbar
 import androidx.core.animation.doOnEnd
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
@@ -144,13 +143,9 @@ fun FragmentManager.isFragment(fragmentTag: String): Boolean {
     return df != null && df.isVisible && df.isAdded
 }
 
-fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator {
+fun View.createCircularReveal(show: Boolean): Animator {
 
-    val revealDuration: Long = if (isErrorFragment) {
-        1500
-    } else {
-        500
-    }
+    val revealDuration = 500L
     val radius = max(width, height).toFloat()
 
     val startRadius = if (show) {
@@ -164,21 +159,11 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
         0f
     }
 
-    val cx = if (isErrorFragment) {
-        width / 2
-    } else {
-        0
-    }
-    val cy = if (isErrorFragment) {
-        height / 2
-    } else {
-        0
-    }
     val animator =
         ViewAnimationUtils.createCircularReveal(
             this,
-            cx,
-            cy,
+            0,
+            0,
             startRadius,
             finalRadius
         ).apply {
@@ -193,32 +178,14 @@ fun View.createCircularReveal(isErrorFragment: Boolean, show: Boolean): Animator
         }
 
     val mainBackground = ThemeHelper.resolveColorAttr(context, R.attr.main_bg)
-    val closeColor = ThemeHelper.resolveColorAttr(context, R.attr.colorControlHighlight)
-    val accent = if (!show) {
-        mainBackground
-    } else {
-        ThemeHelper.resolveThemeAccent(context)
-    }
-
-    val startColor = if (isErrorFragment) {
-        ContextCompat.getColor(context, R.color.red)
-    } else {
-        accent
-    }
-    val endColor = if (show) {
-        mainBackground
-    } else {
-        closeColor
-    }
 
     with(ValueAnimator()) {
-        setIntValues(startColor, endColor)
+        setIntValues(mainBackground, mainBackground)
         setEvaluator(ArgbEvaluatorCompat())
         addUpdateListener { valueAnimator -> setBackgroundColor((valueAnimator.animatedValue as Int)) }
         duration = revealDuration
         start()
     }
-
     return animator
 }
 

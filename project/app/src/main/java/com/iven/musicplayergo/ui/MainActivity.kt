@@ -302,8 +302,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     private fun finishSetup(music: MutableList<Music>?) {
-
-        if (!music.isNullOrEmpty()) {
+        if (music.isNullOrEmpty()) {
             mMainActivityBinding.loadingProgressBar.handleViewVisibility(show = false)
             initMediaButtons()
             initViewPager()

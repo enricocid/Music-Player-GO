@@ -63,10 +63,7 @@ class EqFragment : Fragment() {
     fun onHandleBackPressed(): Animator {
         if (!mEqAnimator.isRunning) {
             _eqFragmentBinding?.root?.run {
-                mEqAnimator = createCircularReveal(
-                    isErrorFragment = false,
-                    show = false
-                )
+                mEqAnimator = createCircularReveal(show = false)
             }
         }
         return mEqAnimator
@@ -188,10 +185,7 @@ class EqFragment : Fragment() {
         if (goPreferences.isAnimations) {
             view.afterMeasured {
                 _eqFragmentBinding?.root?.run {
-                    mEqAnimator = createCircularReveal(
-                        isErrorFragment = false,
-                        show = true
-                    )
+                    mEqAnimator = createCircularReveal(show = true)
                 }
             }
         }

@@ -115,10 +115,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
     fun onHandleBackPressed(): Animator {
         if (!mArtistDetailsAnimator.isRunning) {
             _detailsFragmentBinding?.root?.run {
-                mArtistDetailsAnimator = createCircularReveal(
-                    isErrorFragment = false,
-                    show = false
-                )
+                mArtistDetailsAnimator = createCircularReveal(show = false)
             }
         }
         return mArtistDetailsAnimator
@@ -364,10 +361,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         view.afterMeasured {
             if (goPreferences.isAnimations) {
                 _detailsFragmentBinding?.root?.run {
-                    mArtistDetailsAnimator = createCircularReveal(
-                        isErrorFragment = false,
-                        show = true
-                    )
+                    mArtistDetailsAnimator = createCircularReveal(show = true)
                     mArtistDetailsAnimator.doOnEnd {
                         highlightSong(mSelectedSongId)
                     }
