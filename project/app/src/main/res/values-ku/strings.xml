@@ -180,4 +180,6 @@
     <string name="sleeptimer_cancel_desc">Demjimêrkê xewê rawestîne</string>
     <string name="locale_bulgarian">Bûlgarî</string>
     <string name="theme_pref_black_title">Reş zelal</string>
+    <string name="cancel">Têk bibe</string>
+    <string name="ok">BAŞ E</string>
 </resources>
