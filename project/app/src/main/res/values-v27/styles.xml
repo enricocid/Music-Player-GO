@@ -22,10 +22,11 @@
         <item name="alertDialogTheme">@style/Options.DialogsStyle</item>
         <item name="android:statusBarColor">@android:color/black</item>
         <item name="android:navigationBarColor">@android:color/black</item>
+        <item name="android:windowBackground">?attr/main_bg</item>
+        <item name="android:windowLightNavigationBar">false</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="main_bg">@android:color/black</item>
         <item name="toolbar_bg">@android:color/black</item>
-        <item name="android:windowLightNavigationBar">false</item>
         <item name="popupMenuStyle">@style/PopupMenu</item>
         <item name="android:spinnerStyle">@style/SpinnerMenu</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Demo.BottomSheetDialog</item>

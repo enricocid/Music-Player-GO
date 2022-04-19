@@ -6,6 +6,7 @@
         <item name="alertDialogTheme">@style/Options.DialogsStyle</item>
         <item name="android:statusBarColor">@color/systemBarBg</item>
         <item name="android:navigationBarColor">@color/systemBarBg</item>
+        <item name="android:windowBackground">?attr/main_bg</item>
         <item name="main_bg">@color/mainBg</item>
         <item name="toolbar_bg">@color/toolbarBg</item>
         <item name="popupMenuStyle">@style/PopupMenu</item>
@@ -20,6 +21,7 @@
         <item name="alertDialogTheme">@style/Options.DialogsStyle</item>
         <item name="android:statusBarColor">@android:color/black</item>
         <item name="android:navigationBarColor">@android:color/black</item>
+        <item name="android:windowBackground">?attr/main_bg</item>
         <item name="main_bg">@android:color/black</item>
         <item name="toolbar_bg">@android:color/black</item>
         <item name="popupMenuStyle">@style/PopupMenu</item>
