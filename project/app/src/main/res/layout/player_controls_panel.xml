@@ -9,7 +9,7 @@
         android:id="@+id/player_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="?attr/main_bg"
+        android:background="?attr/main_bg"
         android:elevation="@dimen/search_bar_elevation"
         android:orientation="vertical">
 
@@ -102,9 +102,9 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="?attr/main_bg"
             app:tabBackground="?attr/selectableItemBackground"
             app:tabGravity="fill"
-            android:backgroundTint="?attr/main_bg"
             app:tabIndicator="@drawable/tab_indicator"
             app:tabMode="fixed"
             app:tabRippleColor="?attr/colorPrimary"

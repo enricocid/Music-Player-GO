@@ -10,8 +10,7 @@
         android:id="@+id/player_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/mainBg"
-        android:backgroundTint="@color/mainBg"
+        android:background="?attr/main_bg"
         android:baselineAligned="false"
         android:elevation="@dimen/search_bar_elevation"
         android:orientation="horizontal">
