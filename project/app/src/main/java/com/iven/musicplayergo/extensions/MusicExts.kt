@@ -100,7 +100,11 @@ fun Long.toAlbumArtURI(): Uri {
 fun Long.waitForCover(context: Context, onDone: (Bitmap?) -> Unit) {
     Coil.imageLoader(context).enqueue(
         ImageRequest.Builder(context)
-            .data(toAlbumArtURI())
+            .data(if (goPreferences.isCovers) {
+                toAlbumArtURI()
+            } else {
+                null
+            })
             .target(
                 onSuccess = { onDone(it.toBitmap()) },
                 onError = { onDone(null) }
@@ -112,7 +116,11 @@ fun Long.waitForCover(context: Context, onDone: (Bitmap?) -> Unit) {
 fun Long.waitForCoverImageView(imageView: ImageView, albumArt: Int) {
     Coil.imageLoader(imageView.context).enqueue(
         ImageRequest.Builder(imageView.context)
-            .data(toAlbumArtURI())
+            .data(if (goPreferences.isCovers) {
+                toAlbumArtURI()
+            } else {
+                null
+            })
             .target(
                 onSuccess = {
                     imageView.scaleType = ImageView.ScaleType.CENTER_CROP

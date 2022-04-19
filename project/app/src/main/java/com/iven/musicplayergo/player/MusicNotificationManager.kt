@@ -154,23 +154,19 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                 .setContentText(song.artist)
                 .setContentTitle(
                     playerService.getString(
-                                    R.string.song_title_notification,
-                                    song.title
-                            ).parseAsHtml()
+                        R.string.song_title_notification,
+                        song.title
+                    ).parseAsHtml()
                 )
                 .setSubText(song.album)
                 .setColor(mNotificationColor)
                 .setColorized(true)
                 .setSmallIcon(getNotificationSmallIcon(mediaPlayerHolder))
 
-            if (goPreferences.isCovers) {
-                song.albumId?.waitForCover(playerService) { bitmap ->
-                    mNotificationBuilder.setLargeIcon(bitmap)
-                }
-            } else {
-                mNotificationBuilder.setLargeIcon(null)
+            song.albumId?.waitForCover(playerService) { bitmap ->
+                mNotificationBuilder.setLargeIcon(bitmap)
+                onDone?.invoke()
             }
-            onDone?.invoke()
         }
     }
 

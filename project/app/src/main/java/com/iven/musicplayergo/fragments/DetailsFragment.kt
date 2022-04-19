@@ -284,15 +284,13 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         mSongsList?.size
                     )
                     selectedAlbumViewSize.isSelected = true
-                    if (goPreferences.isCovers) {
-                        albumViewArt.background.alpha = ThemeHelper.getAlbumCoverAlpha(requireContext())
-                        firstSong?.albumId?.waitForCoverImageView(albumViewArt, R.drawable.ic_music_note_cover_alt)
-                    }
 
+                    albumViewArt.background.alpha = ThemeHelper.getAlbumCoverAlpha(requireContext())
                     albumViewArt.afterMeasured {
                         val dim = width * 2
                         albumViewArt.layoutParams = LinearLayout.LayoutParams(dim, dim)
                     }
+                    firstSong?.albumId?.waitForCoverImageView(albumViewArt, R.drawable.ic_music_note_cover_alt)
                 }
 
                 val searchView =
@@ -337,6 +335,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
         _detailsFragmentBinding?.songsRv?.run {
 
+            setHasFixedSize(true)
             adapter = SongsAdapter()
 
             ItemTouchHelper(ItemSwipeCallback(requireContext(), isQueueDialog = false, isFavoritesDialog = false) { viewHolder: RecyclerView.ViewHolder,
@@ -593,6 +592,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         _detailsFragmentBinding?.albumsRv?.run {
 
             mAlbumsRecyclerViewLayoutManager = layoutManager as LinearLayoutManager
+            setHasFixedSize(true)
             adapter = AlbumsAdapter()
 
             if (mSelectedAlbumPosition != RecyclerView.NO_POSITION || mSelectedAlbumPosition != 0) {
@@ -694,9 +694,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                     albumCover.background.alpha = ThemeHelper.getAlbumCoverAlpha(requireContext())
 
-                    if (goPreferences.isCovers) {
-                        itemAlbum?.music?.first()?.albumId?.waitForCoverImageView(albumCover, R.drawable.ic_music_note_cover_alt)
-                    }
+                    itemAlbum?.music?.first()?.albumId?.waitForCoverImageView(albumCover, R.drawable.ic_music_note_cover_alt)
 
                     setOnClickListener {
                         if (absoluteAdapterPosition != mSelectedAlbumPosition) {

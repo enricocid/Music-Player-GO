@@ -325,11 +325,8 @@ class MediaPlayerHolder:
                     putLong(METADATA_KEY_NUM_TRACKS, songs.size.toLong())
                     putLong(METADATA_KEY_TRACK_NUMBER, songs.indexOf(this).toLong())
                 }
-
-                if (goPreferences.isCovers) {
-                    albumId?.waitForCover(mPlayerService) { bmp ->
-                        putBitmap(METADATA_KEY_ALBUM_ART, bmp)
-                    }
+                albumId?.waitForCover(mPlayerService) { bmp ->
+                    putBitmap(METADATA_KEY_ALBUM_ART, bmp)
                 }
             }
             mPlayerService.getMediaSession().setMetadata(build())

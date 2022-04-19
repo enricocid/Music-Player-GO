@@ -300,10 +300,10 @@ object ThemeHelper {
 
     @JvmStatic
     fun getAlbumCoverAlpha(context: Context): Int {
-        return if (isThemeNight(context.resources)) {
-            15
-        } else {
-            20
+        return when {
+            isThemeNight(context.resources) && goPreferences.isBlackTheme -> 25
+            isThemeNight(context.resources) -> 15
+            else -> 20
         }
     }
 

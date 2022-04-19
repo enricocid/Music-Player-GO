@@ -90,9 +90,6 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
         _modalRvBinding?.run {
 
-            modalRv.isVerticalScrollBarEnabled = false
-            modalRv.isHorizontalScrollBarEnabled = false
-
             when (sheetType) {
 
                 GoConstants.ACCENT_TYPE -> {
@@ -101,6 +98,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     modalRv.visibility = View.GONE
                     sleepTimerElapsed.visibility = View.GONE
 
+                    modalRvAlt.setHasFixedSize(true)
                     val accentsAdapter = AccentsAdapter(requireActivity())
                     val layoutManager =  LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
                     modalRvAlt.layoutManager = layoutManager
@@ -127,6 +125,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     modalRv.visibility = View.GONE
                     sleepTimerElapsed.visibility = View.GONE
 
+                    modalRvAlt.setHasFixedSize(true)
                     val activeTabsAdapter = ActiveTabsAdapter(requireActivity())
                     modalRvAlt.adapter = activeTabsAdapter
 
@@ -154,6 +153,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
                     dialogTitle = getString(R.string.filter_pref_title)
 
+                    modalRvAlt.setHasFixedSize(true)
                     val filtersAdapter = FiltersAdapter(requireActivity())
                     modalRvAlt.adapter = filtersAdapter
 
@@ -178,6 +178,8 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     modalRvAlt.visibility = View.GONE
                     _modalRvBinding?.btnContainer?.visibility = View.GONE
                     sleepTimerElapsed.visibility = View.GONE
+
+                    setRecyclerViewProps(modalRv)
 
                     mMediaControlInterface.onGetMediaPlayerHolder()?.run {
 
@@ -221,6 +223,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
                     val sleepTimerAdapter = SleepTimerAdapter()
                     modalRv.visibility = View.GONE
+                    modalRvAlt.setHasFixedSize(true)
                     modalRvAlt.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
                     modalRvAlt.adapter = sleepTimerAdapter
                     sleepTimerElapsed.visibility = View.GONE
@@ -268,6 +271,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
                     _modalRvBinding?.btnContainer?.visibility = View.GONE
 
+                    setRecyclerViewProps(modalRv)
                     val favoritesAdapter = FavoritesAdapter(requireActivity())
                     modalRv.adapter = favoritesAdapter
                     if (ThemeHelper.isDeviceLand(resources)) {
@@ -303,6 +307,12 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                 .margin(windowInsetTypesOf(statusBars = true))
                 .applyToView(view)
         }
+    }
+
+    private fun setRecyclerViewProps(rv: RecyclerView) {
+        rv.isVerticalScrollBarEnabled = false
+        rv.isHorizontalScrollBarEnabled = false
+        rv.setHasFixedSize(true)
     }
 
     fun swapQueueSong(song: Music?) {

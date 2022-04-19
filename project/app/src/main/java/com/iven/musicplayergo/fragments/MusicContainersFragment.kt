@@ -99,6 +99,7 @@ class MusicContainersFragment : Fragment(),
     private fun finishSetup() {
 
         _musicContainerListBinding?.artistsFoldersRv?.run {
+            setHasFixedSize(true)
             itemAnimator = null
             mListAdapter = MusicContainersAdapter()
             adapter = mListAdapter
@@ -109,9 +110,7 @@ class MusicContainersFragment : Fragment(),
         _musicContainerListBinding?.searchToolbar?.let { stb ->
 
             stb.inflateMenu(R.menu.menu_search)
-
             stb.title = getFragmentTitle()
-
             stb.overflowIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_sort)
 
             stb.setNavigationOnClickListener {
@@ -372,9 +371,7 @@ class MusicContainersFragment : Fragment(),
                         val albumCover = itemView.findViewById<ImageView>(R.id.album_cover).apply {
                             background.alpha = ThemeHelper.getAlbumCoverAlpha(requireContext())
                         }
-                        if (goPreferences.isCovers) {
-                            mMusicViewModel.deviceMusicByAlbum?.get(item)?.first()?.albumId?.waitForCoverImageView(albumCover, R.drawable.ic_music_note_cover_alt)
-                        }
+                        mMusicViewModel.deviceMusicByAlbum?.get(item)?.first()?.albumId?.waitForCoverImageView(albumCover, R.drawable.ic_music_note_cover_alt)
                     }
 
                     title.text = item
