@@ -1,5 +1,0 @@
-<lint>
-  <issue id="UnusedResources">
-    <ignore path="res\xml\keep.xml" />
-  </issue>
-</lint>
