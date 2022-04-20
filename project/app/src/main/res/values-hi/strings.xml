@@ -4,7 +4,7 @@
     <string name="cancel">रद्द करें</string>
     <string name="yes">हाँ</string>
     <string name="no">नहीं</string>
-    <string name="on_close_activity">क्या आप प्लेबैक को रोकना चाहते हैं?</string>
+    <string name="on_close_activity">क्या आप प्लेबैक को रोकना चाहते हैं\?</string>
     <string name="queue_songs_clear">कतार साफ हो जाएगी। जारी रखें?</string>
     <string name="favorites_clear">प्रिय गीत साफ हो जाएंगे। जारी रखें?</string>
     <string name="favorite_remove">%1s (%2s) प्रिय गीतों से हटा दिया जाएगा। जारी रखें?</string>
@@ -91,4 +91,17 @@
     <string name="sorting_pref_date_added_inv">सबसे पुरानी तारीख पहले</string>
     <string name="sorting_pref_date_added">सबसे नई तारीख पहले</string>
     <string name="delete">इसे हटाए</string>
+    <string name="sleeptimer">स्लीप टाइमर</string>
+    <string name="sleeptimer_remaining_time">स्लीप टाइमर: शेष समय</string>
+    <string name="sleeptimer_stop">रोके</string>
+    <string name="light_blue">हल्का नीला</string>
+    <string name="green">हरा</string>
+    <string name="blue">नीला</string>
+    <string name="light_green">हल्का हरा</string>
+    <string name="lime">नींबू</string>
+    <string name="sleeptimer_cancel_desc">सोने के टाइमर को रोके</string>
+    <string name="indigo">नील</string>
+    <string name="pink">गुलाबी</string>
+    <string name="purple">बैंगनी</string>
+    <string name="deep_purple">गहरा बैंगनी</string>
 </resources>
