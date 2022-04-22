@@ -8,7 +8,6 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -71,7 +70,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel()
         } else {
-            mNotificationBuilder.priority = NotificationCompat.PRIORITY_LOW
+            mNotificationBuilder.priority = NotificationCompat.PRIORITY_DEFAULT
         }
 
         val openPlayerIntent = Intent(playerService, MainActivity::class.java)
@@ -91,6 +90,8 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
         mNotificationBuilder
             .setContentIntent(contentIntent)
+            .setCategory(NotificationCompat.CATEGORY_SERVICE)
+            .setSilent(true)
             .setShowWhen(false)
             .setOngoing(playerService.mediaPlayerHolder.isPlaying)
             .addAction(getNotificationAction(getFirstAdditionalAction()))
@@ -216,20 +217,13 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
     @TargetApi(26)
     private fun createNotificationChannel() {
-        with(playerService.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager) {
-            if (getNotificationChannel(GoConstants.NOTIFICATION_CHANNEL_ID) == null) {
-                NotificationChannel(
-                    GoConstants.NOTIFICATION_CHANNEL_ID,
-                    playerService.getString(R.string.app_name),
-                    NotificationManager.IMPORTANCE_LOW
-                ).apply {
-                    description = playerService.getString(R.string.app_name)
-                    enableLights(false)
-                    enableVibration(false)
-                    setShowBadge(false)
-                    createNotificationChannel(this)
-                }
-            }
+        with(NotificationManagerCompat.from(playerService)) {
+            val channel = NotificationChannel(
+                GoConstants.NOTIFICATION_CHANNEL_ID,
+                playerService.getString(R.string.app_name),
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            createNotificationChannel(channel)
         }
     }
 }
