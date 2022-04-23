@@ -1,0 +1,10 @@
+- Sleep timer (thanks watauoa)
+- Locale switcher
+- Add back true dark theme...
+- ...and an option to force pure black theme! :trollface:
+- Songs can now be directly removed from lists
+- UI review
+- Attempt to fix notification not showing on certain Android 12 devices
+- Updated/new translations (thanks everyone)
+- Code improvements/cleaning
+- Updated dependencies

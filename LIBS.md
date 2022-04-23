@@ -23,6 +23,5 @@
 | [sort-alphabetical-ascending-variant icon](https://materialdesignicons.com/icon/sort-alphabetical-ascending-variant) | Michael Irigoyen [mririgo](https://twitter.com/mririgo)                       |
 | [sort-numeric-ascending-variant icon](https://materialdesignicons.com/icon/sort-numeric-ascending-variant) | Michael Irigoyen [mririgo](https://twitter.com/mririgo)                       |
 | [sort-numeric-descending-variant icon](https://materialdesignicons.com/icon/sort-numeric-descending-variant) | Michael Irigoyen [mririgo](https://twitter.com/mririgo) 
-| [Compact disc icon](https://www.svgrepo.com/svg/181020/compact-disc-music) | [svgrepo.com](https://www.svgrepo.com)                       |
 | Badges | [shields.io](https://shields.io/) 
 | gifmaker.me | [gifmaker.me](https://gifmaker.me/)

@@ -1,0 +1,10 @@
+- Timer spegnimento (grazie watauoa)
+- Selettore lingua
+- Ritorna il vero tema scuro...
+- ...e una opzione per forzare il tema nero puro! :trollface:
+- Le canzoni possono essere cancellate dalle liste direttamente
+- Revisione interfaccia
+- Tentativo di fix per le notifiche non mostrate su alcuni dispotivi Android 12
+- Aggiornamento/nuove traduzioni (grazie a tutti)
+- Miglioramento/pulizia codice
+- Aggiornamento dipendenze

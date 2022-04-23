@@ -9,8 +9,8 @@ android {
         applicationId "com.iven.musicplayergo"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 176
-        versionName "4.4.13"
+        versionCode 177
+        versionName "4.4.14"
 
         vectorDrawables.useSupportLibrary true
     }
@@ -77,14 +77,14 @@ dependencies {
     //https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     //https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
 
 // Support
     //https://developer.android.com/jetpack/androidx/versions
     implementation 'androidx.browser:browser:1.4.0'
     implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.media:media:1.5.0'
+    implementation 'androidx.media:media:1.6.0'
     implementation 'androidx.preference:preference-ktx:1.2.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
@@ -92,7 +92,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.5.0'
 
 // Third-party
-    //https://github.com/square/moshi/releases
+    //https://mvnrepository.com/artifact/com.squareup.moshi/moshi-kotlin
     implementation 'com.squareup.moshi:moshi:1.13.0'
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.13.0'
 
