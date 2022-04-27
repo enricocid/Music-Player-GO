@@ -19,7 +19,6 @@
     <string name="favorite_subtitle">&lt;b>%1s&lt;/b>&#160;-&#160;%2s</string>
 
     <!-- Formatting symbols -->
-    <string name="fastscroller_dummy_item">&#8230;</string>
     <string name="slash">/</string>
     <string name="unknown_year">N&#x2F;A</string>
     <string name="freq_k">%1dk</string>
