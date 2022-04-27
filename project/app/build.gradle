@@ -77,8 +77,8 @@ dependencies {
     //https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     //https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
 
 // Support
     //https://developer.android.com/jetpack/androidx/versions
