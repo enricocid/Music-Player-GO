@@ -29,6 +29,8 @@
 
 ### Libraries / resources used in previous MPGO versions
 
+| Name                                                        | Author                  |
+| ----------------------------------------------------------- | ------------------------- |
 | [Indicator Fast Scroll](https://github.com/reddit/IndicatorFastScroll)                  | [Reddit](https://github.com/reddit) - [Steven Schoen](https://github.com/DSteve595)                      |
 | [material-dialogs](https://github.com/afollestad/material-dialogs)                  | [Aidan Follestad](https://github.com/afollestad)                       |
 | [recyclical](https://github.com/afollestad/recyclical)                  | [Aidan Follestad](https://github.com/afollestad)                       |
