@@ -164,7 +164,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                 .setColorized(true)
                 .setSmallIcon(getNotificationSmallIcon(mediaPlayerHolder))
 
-            song.albumId?.waitForCover(playerService) { bitmap ->
+            song.albumId?.waitForCover(playerService) { bitmap, _ ->
                 mNotificationBuilder.setLargeIcon(bitmap)
                 onDone?.invoke()
             }

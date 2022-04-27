@@ -17,7 +17,9 @@ import android.media.audiofx.AudioEffect
 import android.media.audiofx.BassBoost
 import android.media.audiofx.Equalizer
 import android.media.audiofx.Virtualizer
-import android.os.*
+import android.os.Build
+import android.os.CountDownTimer
+import android.os.PowerManager
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.MediaMetadataCompat.*
 import android.support.v4.media.session.PlaybackStateCompat
@@ -325,7 +327,7 @@ class MediaPlayerHolder:
                     putLong(METADATA_KEY_NUM_TRACKS, songs.size.toLong())
                     putLong(METADATA_KEY_TRACK_NUMBER, songs.indexOf(this).toLong())
                 }
-                albumId?.waitForCover(mPlayerService) { bmp ->
+                albumId?.waitForCover(mPlayerService) { bmp, _ ->
                     putBitmap(METADATA_KEY_ALBUM_ART, bmp)
                 }
             }

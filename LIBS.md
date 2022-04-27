@@ -25,3 +25,12 @@
 | [sort-numeric-descending-variant icon](https://materialdesignicons.com/icon/sort-numeric-descending-variant) | Michael Irigoyen [mririgo](https://twitter.com/mririgo) 
 | Badges | [shields.io](https://shields.io/) 
 | gifmaker.me | [gifmaker.me](https://gifmaker.me/)
+
+
+### Libraries / resources used in previous MPGO versions
+
+| [Indicator Fast Scroll](https://github.com/reddit/IndicatorFastScroll)                  | [Reddit](https://github.com/reddit) - [Steven Schoen](https://github.com/DSteve595)                      |
+| [material-dialogs](https://github.com/afollestad/material-dialogs)                  | [Aidan Follestad](https://github.com/afollestad)                       |
+| [recyclical](https://github.com/afollestad/recyclical)                  | [Aidan Follestad](https://github.com/afollestad)                       |
+| [Edge-to-Edge](https://github.com/beworker/edge-to-edge)                  | [Sergej Shafarenka](https://github.com/beworker)                       |
+| [Compact disc icon](https://www.svgrepo.com/svg/181020/compact-disc-music) | [svgrepo.com](https://www.svgrepo.com)                       |

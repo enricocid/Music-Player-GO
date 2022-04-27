@@ -43,19 +43,6 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:overScrollMode="never"
-        app:fastScrollEnabled="true"
-        app:fastScrollHorizontalThumbDrawable="@drawable/dialogs_rv_thumb_drawable"
-        app:fastScrollHorizontalTrackDrawable="@drawable/dialogs_rv_track_drawable"
-        app:fastScrollVerticalThumbDrawable="@drawable/dialogs_rv_thumb_drawable"
-        app:fastScrollVerticalTrackDrawable="@drawable/dialogs_rv_track_drawable"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/modal_rv_alt"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <LinearLayout

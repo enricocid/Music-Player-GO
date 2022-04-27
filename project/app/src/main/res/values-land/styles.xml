@@ -1,17 +1,4 @@
 <resources>
-
-    <style name="FastScrollerColorFull" parent="Widget.IndicatorFastScroll.FastScroller">
-        <item name="android:textColor">@color/pressed_selector</item>
-        <item name="android:textAppearance">@style/FastScrollerTextStyle</item>
-        <item name="android:scaleX">0.90</item>
-        <item name="android:scaleY">0.90</item>
-    </style>
-
-    <!-- Indicator thumb text style -->
-    <style name="IndicatorThumbTextAppearance" parent="@android:style/TextAppearance.Material.Small">
-        <item name="android:textStyle">bold</item>
-    </style>
-
     <style name="ToolbarStyle.Title" parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title">
         <item name="android:textSize">20sp</item> <!-- Default for portrait is 20sp and for landscape 14sp-->
         <item name="android:textStyle">bold</item>

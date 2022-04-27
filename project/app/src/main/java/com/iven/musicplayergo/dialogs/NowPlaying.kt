@@ -334,7 +334,9 @@ class NowPlaying: BottomSheetDialogFragment() {
 
     private fun loadNpCover(selectedSong: Music) {
         mAlbumIdNp = selectedSong.albumId
-        mAlbumIdNp?.waitForCoverImageView(_npCoverBinding?.npCover!!, R.drawable.ic_music_note_cover)
+        mAlbumIdNp?.waitForCover(requireContext()) { bmp, error ->
+            _npCoverBinding?.npCover?.loadWithError(bmp, error, R.drawable.ic_music_note_cover)
+        }
     }
 
     private fun setRepeat() {

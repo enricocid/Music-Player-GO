@@ -8,12 +8,9 @@ import android.media.MediaExtractor
 import android.media.MediaFormat
 import android.net.Uri
 import android.provider.MediaStore
-import android.widget.ImageView
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import coil.Coil
-import coil.load
 import coil.request.ImageRequest
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
@@ -97,7 +94,7 @@ fun Long.toAlbumArtURI(): Uri {
     return ContentUris.withAppendedId("content://media/external/audio/albumart".toUri(), this)
 }
 
-fun Long.waitForCover(context: Context, onDone: (Bitmap?) -> Unit) {
+fun Long.waitForCover(context: Context, onDone: (Bitmap?, Boolean) -> Unit) {
     Coil.imageLoader(context).enqueue(
         ImageRequest.Builder(context)
             .data(if (goPreferences.isCovers) {
@@ -106,30 +103,8 @@ fun Long.waitForCover(context: Context, onDone: (Bitmap?) -> Unit) {
                 null
             })
             .target(
-                onSuccess = { onDone(it.toBitmap()) },
-                onError = { onDone(null) }
-            )
-            .build()
-    )
-}
-
-fun Long.waitForCoverImageView(imageView: ImageView, albumArt: Int) {
-    Coil.imageLoader(imageView.context).enqueue(
-        ImageRequest.Builder(imageView.context)
-            .data(if (goPreferences.isCovers) {
-                toAlbumArtURI()
-            } else {
-                null
-            })
-            .target(
-                onSuccess = {
-                    imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-                    imageView.load(it)
-                            },
-                onError = {
-                    imageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
-                    imageView.load(ContextCompat.getDrawable(imageView.context, albumArt)?.toBitmap())
-                }
+                onSuccess = { onDone(it.toBitmap(), false) },
+                onError = { onDone(null, true) }
             )
             .build()
     )
@@ -137,11 +112,7 @@ fun Long.waitForCoverImageView(imageView: ImageView, albumArt: Int) {
 
 fun Long.toFormattedDuration(isAlbum: Boolean, isSeekBar: Boolean) = try {
 
-    val defaultFormat = if (isAlbum) {
-        "%02dm:%02ds"
-    } else {
-        "%02d:%02d"
-    }
+    val defaultFormat = if (isAlbum) { "%02dm:%02ds" } else { "%02d:%02d" }
 
     val hours = TimeUnit.MILLISECONDS.toHours(this)
     val minutes = TimeUnit.MILLISECONDS.toMinutes(this)

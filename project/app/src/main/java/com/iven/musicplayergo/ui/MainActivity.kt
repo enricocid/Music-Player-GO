@@ -1,6 +1,9 @@
 package com.iven.musicplayergo.ui
 
-import android.content.*
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -22,7 +25,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.databinding.*
+import com.iven.musicplayergo.databinding.MainActivityBinding
+import com.iven.musicplayergo.databinding.PlayerControlsPanelBinding
 import com.iven.musicplayergo.dialogs.NowPlaying
 import com.iven.musicplayergo.dialogs.RecyclerSheet
 import com.iven.musicplayergo.extensions.*
@@ -39,8 +43,6 @@ import dev.chrisbanes.insetter.Insetter
 import dev.chrisbanes.insetter.windowInsetTypesOf
 import java.util.*
 
-
-private const val SHUFFLE_CUT_OFF = 250
 
 class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterface {
 
@@ -1004,11 +1006,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     ) {
         songs?.run {
             onAddAlbumToQueue(
-                if (size >= SHUFFLE_CUT_OFF) {
-                    this.shuffled().take(SHUFFLE_CUT_OFF)
-                } else {
-                    this.shuffled()
-                },
+                this.shuffled(),
                 forcePlay = Pair(first = true, second = null)
             )
         }

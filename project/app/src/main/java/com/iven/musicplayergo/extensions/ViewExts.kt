@@ -5,7 +5,7 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.content.res.Resources
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.InsetDrawable
 import android.text.Spannable
@@ -13,24 +13,27 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.view.*
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.Toolbar
 import androidx.core.animation.doOnEnd
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.google.android.material.animation.ArgbEvaluatorCompat
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.helpers.SingleClickHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
-import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import kotlin.math.max
 
 
@@ -47,6 +50,16 @@ inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
     })
 }
 
+fun ImageView.loadWithError(bitmap: Bitmap?, error: Boolean, albumArt: Int) {
+    if (error) {
+        scaleType = ImageView.ScaleType.CENTER_INSIDE
+        load(ContextCompat.getDrawable(context, albumArt)?.toBitmap())
+    } else {
+        scaleType = ImageView.ScaleType.CENTER_CROP
+        load(bitmap)
+    }
+}
+
 // https://stackoverflow.com/a/38241603
 fun Toolbar.getTitleTextView() = try {
     val toolbarClass = Toolbar::class.java
@@ -56,17 +69,6 @@ fun Toolbar.getTitleTextView() = try {
 } catch (e: Exception) {
     e.printStackTrace()
     null
-}
-
-@SuppressLint("DefaultLocale")
-fun String.getFastScrollerItem(context: Context): FastScrollItemIndicator {
-    var charAtZero = context.getString(R.string.fastscroller_dummy_item)
-    if (isNotEmpty()) {
-        charAtZero = "${first()}"
-    }
-    return FastScrollItemIndicator.Text(
-        charAtZero.uppercase() // Grab the first letter and capitalize it
-    )
 }
 
 // Extension to set menu items text color
@@ -208,16 +210,6 @@ fun RecyclerView.smoothSnapToPosition(position: Int) {
     }
     smoothScroller.targetPosition = position
     layoutManager?.startSmoothScroll(smoothScroller)
-}
-
-fun RecyclerView.setupFastScrollerPadding(forceNoPadding: Boolean, resources: Resources) {
-    val rvPaddingEnd =
-        if (!forceNoPadding) {
-            resources.getDimensionPixelSize(R.dimen.fast_scroller_view_dim)
-        } else {
-            0
-        }
-    setPadding(0, 0, rvPaddingEnd, 0)
 }
 
 fun View.handleViewVisibility(show: Boolean) {

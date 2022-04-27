@@ -96,8 +96,8 @@ dependencies {
     implementation 'com.squareup.moshi:moshi:1.13.0'
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.13.0'
 
-    //https://github.com/reddit/IndicatorFastScroll/releases
-    implementation 'com.reddit:indicator-fast-scroll:1.4.0'
+    //https://github.com/zhanghai/AndroidFastScroll/releases
+    implementation 'me.zhanghai.android.fastscroll:library:1.1.7'
 
     //https://github.com/coil-kt/coil/releases
     implementation 'io.coil-kt:coil:1.4.0'

@@ -290,7 +290,9 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         val dim = width * 2
                         albumViewArt.layoutParams = LinearLayout.LayoutParams(dim, dim)
                     }
-                    firstSong?.albumId?.waitForCoverImageView(albumViewArt, R.drawable.ic_music_note_cover_alt)
+                    firstSong?.albumId?.waitForCover(requireContext()) { bmp, error ->
+                        albumViewArt.loadWithError(bmp, error, R.drawable.ic_music_note_cover)
+                    }
                 }
 
                 val searchView =
@@ -694,7 +696,9 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                     albumCover.background.alpha = ThemeHelper.getAlbumCoverAlpha(requireContext())
 
-                    itemAlbum?.music?.first()?.albumId?.waitForCoverImageView(albumCover, R.drawable.ic_music_note_cover_alt)
+                    itemAlbum?.music?.first()?.albumId?.waitForCover(requireContext()) { bmp, error ->
+                        albumCover.loadWithError(bmp, error, R.drawable.ic_music_note_cover_alt)
+                    }
 
                     setOnClickListener {
                         if (absoluteAdapterPosition != mSelectedAlbumPosition) {

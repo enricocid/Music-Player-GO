@@ -24,33 +24,14 @@
             app:titleTextColor="?android:attr/textColorPrimary" />
 
         <!-- MUSIC LIST -->
-        <FrameLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/all_music_rv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/all_music_rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:overScrollMode="never"
-                android:scrollbars="none"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="3" />
-
-            <com.reddit.indicatorfastscroll.FastScrollerView
-                android:id="@+id/fastscroller"
-                android:layout_width="@dimen/fast_scroller_view_dim"
-                android:layout_height="match_parent"
-                android:layout_gravity="end|center" />
-
-            <com.reddit.indicatorfastscroll.FastScrollerThumbView
-                android:id="@+id/fastscroller_thumb"
-                android:layout_width="56dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/fast_scroller_view_dim"
-                android:textAppearance="@style/IndicatorThumbTextAppearance" />
-        </FrameLayout>
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="3" />
 
     </LinearLayout>
 

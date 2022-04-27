@@ -11,21 +11,22 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentMusicContainersBinding
-import com.iven.musicplayergo.extensions.*
+import com.iven.musicplayergo.extensions.loadWithError
+import com.iven.musicplayergo.extensions.setTitleColor
+import com.iven.musicplayergo.extensions.waitForCover
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
 import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
-import com.reddit.indicatorfastscroll.FastScrollItemIndicator
-import com.reddit.indicatorfastscroll.FastScrollerView
+import me.zhanghai.android.fastscroll.FastScrollerBuilder
+import me.zhanghai.android.fastscroll.PopupTextProvider
 
 
 /**
@@ -52,8 +53,9 @@ class MusicContainersFragment : Fragment(),
     private lateinit var mSortMenuItem: MenuItem
     private var mSorting = GoConstants.DESCENDING_SORTING
 
-    private var sIsFastScroller = false
     private val sLaunchedByAlbumView get() = mLaunchedBy == GoConstants.ALBUM_VIEW
+
+    private val sIsFastScrollerPopup get() = mSorting == GoConstants.ASCENDING_SORTING || mSorting == GoConstants.DESCENDING_SORTING
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -103,9 +105,8 @@ class MusicContainersFragment : Fragment(),
             itemAnimator = null
             mListAdapter = MusicContainersAdapter()
             adapter = mListAdapter
+            FastScrollerBuilder(this).useMd2Style().build()
         }
-
-        setupIndicatorFastScrollerView()
 
         _musicContainerListBinding?.searchToolbar?.let { stb ->
 
@@ -126,12 +127,6 @@ class MusicContainersFragment : Fragment(),
                 with(findItem(R.id.action_search).actionView as SearchView) {
                     setOnQueryTextListener(this@MusicContainersFragment)
                     setOnQueryTextFocusChangeListener { _, hasFocus ->
-                        _musicContainerListBinding?.fastscroller?.handleViewVisibility(show = !hasFocus)
-                        _musicContainerListBinding?.fastscrollerThumb?.handleViewVisibility(
-                            show = !hasFocus
-                        )
-                        _musicContainerListBinding?.artistsFoldersRv?.setupFastScrollerPadding(forceNoPadding = hasFocus,
-                            resources)
                         stb.menu.setGroupVisible(R.id.sorting, !hasFocus)
                         stb.menu.findItem(R.id.sleeptimer).isVisible = !hasFocus
                     }
@@ -224,56 +219,6 @@ class MusicContainersFragment : Fragment(),
 
     override fun onQueryTextSubmit(query: String?) = false
 
-    private fun setupIndicatorFastScrollerView() {
-
-        _musicContainerListBinding?.let { _binding ->
-
-            // Set indexes if artists rv is scrollable
-            _binding.artistsFoldersRv.afterMeasured {
-
-                sIsFastScroller = computeVerticalScrollRange() > height
-
-                if (sIsFastScroller) {
-
-                    _binding.fastscroller.setupWithRecyclerView(
-                        this,
-                        { position ->
-                            // Return a text tab_indicator
-                            mList?.get(position)?.run {
-                                getFastScrollerItem(requireContext())
-                            }
-                        }, showIndicator = { _, indicatorPosition, totalIndicators ->
-                            // Hide every other indicator
-                            if (ThemeHelper.isDeviceLand(resources)) {
-                                indicatorPosition % 2 == 0
-                            } else {
-                                if (totalIndicators >= 30) {
-                                    indicatorPosition % 2 == 0
-                                } else {
-                                    true
-                                }
-                            }
-                        })
-
-                    _binding.fastscrollerThumb.setupWithFastScroller(_binding.fastscroller)
-                    _binding.fastscroller.useDefaultScroller = false
-                    _binding.fastscroller.itemIndicatorSelectedCallbacks += object :
-                        FastScrollerView.ItemIndicatorSelectedCallback {
-                        override fun onItemIndicatorSelected(
-                            indicator: FastScrollItemIndicator,
-                            indicatorCenterY: Int,
-                            itemPosition: Int
-                        ) {
-                            val artistsLayoutManager = layoutManager as LinearLayoutManager
-                            artistsLayoutManager.scrollToPositionWithOffset(itemPosition, 0)
-                        }
-                    }
-                }
-                _binding.artistsFoldersRv.setupFastScrollerPadding(forceNoPadding = false, resources)
-            }
-        }
-    }
-
     private fun setMenuOnItemClickListener(menu: Menu) {
         _musicContainerListBinding?.searchToolbar?.setOnMenuItemClickListener {
 
@@ -330,12 +275,20 @@ class MusicContainersFragment : Fragment(),
         }
     }
 
-    private inner class MusicContainersAdapter : RecyclerView.Adapter<MusicContainersAdapter.ArtistHolder>() {
+    private inner class MusicContainersAdapter : RecyclerView.Adapter<MusicContainersAdapter.ArtistHolder>(), PopupTextProvider {
 
         @SuppressLint("NotifyDataSetChanged")
         fun swapList(newItems: List<String>?) {
             mList = newItems?.toMutableList()
             notifyDataSetChanged()
+        }
+
+        override fun getPopupText(position: Int): String {
+            return if (sIsFastScrollerPopup) {
+                mList?.get(position)?.substring(0, 1)?.uppercase()!!
+            } else {
+                ""
+            }
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ArtistHolder(
@@ -371,7 +324,9 @@ class MusicContainersFragment : Fragment(),
                         val albumCover = itemView.findViewById<ImageView>(R.id.album_cover).apply {
                             background.alpha = ThemeHelper.getAlbumCoverAlpha(requireContext())
                         }
-                        mMusicViewModel.deviceMusicByAlbum?.get(item)?.first()?.albumId?.waitForCoverImageView(albumCover, R.drawable.ic_music_note_cover_alt)
+                        mMusicViewModel.deviceMusicByAlbum?.get(item)?.first()?.albumId?.waitForCover(requireContext()) { bmp, error ->
+                            albumCover.loadWithError(bmp, error, R.drawable.ic_music_note_cover_alt)
+                        }
                     }
 
                     title.text = item

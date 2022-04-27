@@ -11,13 +11,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentAllMusicBinding
-import com.iven.musicplayergo.extensions.*
+import com.iven.musicplayergo.extensions.setTitleColor
+import com.iven.musicplayergo.extensions.toFormattedDate
+import com.iven.musicplayergo.extensions.toFormattedDuration
+import com.iven.musicplayergo.extensions.toName
 import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.helpers.ListsHelper
@@ -25,8 +27,8 @@ import com.iven.musicplayergo.helpers.ThemeHelper
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
-import com.reddit.indicatorfastscroll.FastScrollItemIndicator
-import com.reddit.indicatorfastscroll.FastScrollerView
+import me.zhanghai.android.fastscroll.FastScrollerBuilder
+import me.zhanghai.android.fastscroll.PopupTextProvider
 
 /**
  * A simple [Fragment] subclass.
@@ -46,9 +48,9 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var mSortMenuItem: MenuItem
     private var mSorting = goPreferences.allMusicSorting
 
-    private var sIsFastScroller = false
-
     private var mAllMusic: List<Music>? = null
+
+    private val sIsFastScrollerPopup get() = (mSorting == GoConstants.ASCENDING_SORTING || mSorting == GoConstants.DESCENDING_SORTING) && goPreferences.songsVisualization != GoConstants.FN
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -100,11 +102,11 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private fun finishSetup() {
 
-        setupIndicatorFastScrollerView()
-
         _allMusicFragmentBinding?.run {
 
             allMusicRv.adapter = AllMusicAdapter()
+
+            FastScrollerBuilder(allMusicRv).useMd2Style().build()
 
             shuffleFab.text = mAllMusic?.size.toString()
             val fabColor = ColorUtils.blendARGB(
@@ -137,9 +139,6 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                     with (findItem(R.id.action_search).actionView as SearchView) {
                         setOnQueryTextListener(this@AllMusicFragment)
                         setOnQueryTextFocusChangeListener { _, hasFocus ->
-                            fastscroller.handleViewVisibility(show = !hasFocus)
-                            fastscrollerThumb.handleViewVisibility(show = !hasFocus)
-                            allMusicRv.setupFastScrollerPadding(forceNoPadding = hasFocus, resources)
                             stb.menu.setGroupVisible(R.id.sorting, !hasFocus)
                             stb.menu.findItem(R.id.sleeptimer).isVisible = !hasFocus
                         }
@@ -158,54 +157,6 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
     fun tintSleepTimerIcon(enabled: Boolean) {
         _allMusicFragmentBinding?.searchToolbar?.run {
             ThemeHelper.tintSleepTimerMenuItem(this, enabled)
-        }
-    }
-
-    private fun setupIndicatorFastScrollerView() {
-
-        // Set indexes if artists rv is scrollable
-        _allMusicFragmentBinding?.run {
-
-            allMusicRv.afterMeasured {
-
-                sIsFastScroller = computeVerticalScrollRange() > height
-
-                if (sIsFastScroller) {
-
-                    fastscroller.setupWithRecyclerView(this,
-                        { position ->
-                            // Return a text tab_indicator
-                            val song = mAllMusic?.get(position)
-                            val stringToProcess = song.toName()
-                            stringToProcess?.getFastScrollerItem(requireContext())
-                        }, showIndicator = { _, indicatorPosition, totalIndicators ->
-                            if (ThemeHelper.isDeviceLand(resources)) {
-                                indicatorPosition % 2 == 0
-                            } else {
-                                if (totalIndicators >= 30) {
-                                    indicatorPosition % 2 == 0
-                                } else {
-                                    true
-                                }
-                            }
-                        })
-
-                    fastscrollerThumb.setupWithFastScroller(fastscroller)
-                    fastscroller.useDefaultScroller = false
-                    fastscroller.itemIndicatorSelectedCallbacks += object :
-                        FastScrollerView.ItemIndicatorSelectedCallback {
-                        override fun onItemIndicatorSelected(
-                            indicator: FastScrollItemIndicator,
-                            indicatorCenterY: Int,
-                            itemPosition: Int
-                        ) {
-                            val artistsLayoutManager = layoutManager as LinearLayoutManager
-                            artistsLayoutManager.scrollToPositionWithOffset(itemPosition, 0)
-                        }
-                    }
-                }
-                allMusicRv.setupFastScrollerPadding(forceNoPadding = false, resources)
-            }
         }
     }
 
@@ -276,7 +227,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onQueryTextSubmit(query: String?) = false
 
-    private inner class AllMusicAdapter : RecyclerView.Adapter<AllMusicAdapter.SongsHolder>() {
+    private inner class AllMusicAdapter : RecyclerView.Adapter<AllMusicAdapter.SongsHolder>(), PopupTextProvider {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SongsHolder(
             LayoutInflater.from(parent.context).inflate(
@@ -285,6 +236,14 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                 false
             )
         )
+
+        override fun getPopupText(position: Int): String {
+            return if (sIsFastScrollerPopup) {
+                mAllMusic?.get(position)?.title?.substring(0, 1)?.uppercase()!!
+            } else {
+                ""
+            }
+        }
 
         override fun getItemCount(): Int {
             return mAllMusic?.size!!
