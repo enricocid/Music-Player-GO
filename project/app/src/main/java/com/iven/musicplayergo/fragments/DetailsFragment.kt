@@ -273,7 +273,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         R.string.folder_info,
                         mSongsList?.size
                     )
-                } else {
+                } else if (sLaunchedByAlbumView) {
                     val firstSong = mSongsList?.first()
                     selectedAlbumViewTitle.text = mSelectedArtistOrFolder
                     selectedAlbumViewTitle.isSelected = true

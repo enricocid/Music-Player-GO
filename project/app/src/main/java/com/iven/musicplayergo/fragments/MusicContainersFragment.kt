@@ -106,6 +106,9 @@ class MusicContainersFragment : Fragment(),
             mListAdapter = MusicContainersAdapter()
             adapter = mListAdapter
             FastScrollerBuilder(this).useMd2Style().build()
+            if (sLaunchedByAlbumView) {
+                recycledViewPool.setMaxRecycledViews(0, 0)
+            }
         }
 
         _musicContainerListBinding?.searchToolbar?.let { stb ->
