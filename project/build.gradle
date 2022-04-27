@@ -19,11 +19,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        jcenter {
-            content {
-                includeGroup "com.reddit" // https://github.com/reddit/IndicatorFastScroll/issues/45
-            }
-        }
     }
 }
 
