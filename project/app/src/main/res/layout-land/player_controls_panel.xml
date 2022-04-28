@@ -21,7 +21,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="?attr/main_bg"
-            app:tabBackground="?attr/selectableItemBackground"
             app:tabGravity="fill"
             app:tabIndicator="@drawable/tab_indicator"
             app:tabMode="fixed"
