@@ -105,7 +105,7 @@ class PlayerService : Service() {
         if (::mediaPlayerHolder.isInitialized && mediaPlayerHolder.isCurrentSong) {
 
             // Saves last played song and its position
-            mediaPlayerHolder.run {
+            with(mediaPlayerHolder) {
                 goPreferences.latestPlayedSong = if (isQueue != null && isQueueStarted) {
                     goPreferences.isQueue = isQueue
                     currentSong

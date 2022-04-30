@@ -129,7 +129,7 @@ object MusicOrgHelper {
                 }
             }
             if (mediaPlayerHolder.isQueue != null && musicListContains(currentSong, ft)) {
-                mediaPlayerHolder.queueSongs.run {
+                with(mediaPlayerHolder.queueSongs) {
                     val songs = filter { queueSong ->
                         musicListContains(queueSong, ft)
                     }

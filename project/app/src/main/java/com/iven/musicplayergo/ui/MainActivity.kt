@@ -362,7 +362,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         val resolvedAlphaAccentColor = ThemeHelper.getAlphaAccent(this)
 
-        mPlayerControlsPanelBinding.tabLayout.run {
+        with(mPlayerControlsPanelBinding.tabLayout) {
 
             tabIconTint = ColorStateList.valueOf(resolvedAlphaAccentColor)
 
@@ -385,13 +385,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 }
             })
 
-            getTabAt(
-                if (sRestoreSettingsFragment) {
-                    mMainActivityBinding.viewPager2.offscreenPageLimit
-                } else {
-                    0
-                }
-            )?.icon?.setTint(
+            getTabAt(if (sRestoreSettingsFragment) {
+                mMainActivityBinding.viewPager2.offscreenPageLimit
+            } else {
+                0
+            })?.icon?.setTint(
                 ThemeHelper.resolveThemeAccent(this@MainActivity)
             )
         }
@@ -639,14 +637,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         // If we are playing and the activity was restarted
         // update the controls panel
         if (isMediaPlayerHolder) {
-            mMediaPlayerHolder.run {
+            with(mMediaPlayerHolder) {
                 if (isMediaPlayer && isPlaying) {
-
                     onRestartSeekBarCallback()
                     updatePlayingInfo(restore = true)
-
                 } else {
-
                     isSongFromPrefs = goPreferences.latestPlayedSong != null
 
                     var isQueueRestored = goPreferences.isQueue
@@ -734,7 +729,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
             if (::mPlayerService.isInitialized) {
                 //stop foreground if coming from pause state
-                mPlayerService.run {
+                with(mPlayerService) {
                     if (isRestoredFromPause) {
                         stopForeground(false)
                         musicNotificationManager.updateNotification()
@@ -842,7 +837,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun onSongSelected(song: Music?, songs: List<Music>?, songLaunchedBy: String) {
         if (isMediaPlayerHolder) {
-            mMediaPlayerHolder.run {
+            with(mMediaPlayerHolder) {
                 if (isSongFromPrefs) {
                     isSongFromPrefs = false
                 }
@@ -1004,9 +999,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         songs: List<Music>?,
         songLaunchedBy: String
     ) {
+        val cutoff = 250
         songs?.run {
             onAddAlbumToQueue(
-                this.shuffled(),
+                if (size >= cutoff) {
+                    this.shuffled().take(cutoff)
+                } else {
+                    this.shuffled()
+                },
                 forcePlay = Pair(first = true, second = null)
             )
         }
@@ -1063,7 +1063,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                                 song.album,
                                 mMusicViewModel.deviceAlbumsByArtist
                             )
-                            mMediaPlayerHolder.run {
+                            with(mMediaPlayerHolder) {
                                 isPlay = isPlaying
                                 updateCurrentSong(song, songs, GoConstants.ARTIST_VIEW)
                                 initMediaPlayer(song)

@@ -440,7 +440,7 @@ class MediaPlayerHolder:
     }
 
     private fun startOrChangePlaybackSpeed() {
-        mediaPlayer.run {
+        with(mediaPlayer) {
             if (sPlaybackSpeedPersisted && VersioningHelper.isMarshmallow()) {
                 playbackParams = playbackParams.setSpeed(currentPlaybackSpeed)
             } else {
@@ -619,7 +619,7 @@ class MediaPlayerHolder:
                 mediaPlayer = MediaPlayer()
             }
 
-            mediaPlayer.run {
+            with(mediaPlayer) {
                 setOnPreparedListener(this@MediaPlayerHolder)
                 setOnCompletionListener(this@MediaPlayerHolder)
                 setOnErrorListener(this@MediaPlayerHolder)
@@ -747,7 +747,7 @@ class MediaPlayerHolder:
     }
 
     fun openEqualizer(activity: Activity) {
-        mediaPlayer.run {
+        with(mediaPlayer) {
             if (mEqualizer != null) {
                 releaseCustomEqualizer()
                 sHasOpenedAudioEffects = true
@@ -908,7 +908,7 @@ class MediaPlayerHolder:
 
         val step = goPreferences.fastSeekingStep * 1000
         if (isMediaPlayer) {
-            mediaPlayer.run {
+            with(mediaPlayer) {
                 var newPosition = currentPosition
                 if (isForward) {
                     newPosition += step

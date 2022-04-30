@@ -45,7 +45,7 @@ class ActiveTabsAdapter(private val ctx: Context) :
 
         fun bindItems() {
 
-            itemView.run {
+            with(itemView) {
 
                 val tabDragHandle = findViewById<ImageView>(R.id.tab_drag_handle)
 

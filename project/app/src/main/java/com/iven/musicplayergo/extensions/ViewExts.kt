@@ -107,7 +107,7 @@ fun Menu.enablePopupIcons(activity: Activity) {
         setOptionalIconsVisible(true)
         val visibleItemsIterator = visibleItems.iterator()
         while (visibleItemsIterator.hasNext()) {
-            visibleItemsIterator.next().run {
+            with(visibleItemsIterator.next()) {
                 icon?.let { ic ->
                     icon = InsetDrawable(ic, iconMarginPx, 0, iconMarginPx, 0)
                 }

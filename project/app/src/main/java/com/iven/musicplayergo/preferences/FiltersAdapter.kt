@@ -47,7 +47,7 @@ class FiltersAdapter(val activity: Activity) :
 
         fun bindItems(itemFilter: String?) {
 
-            (itemView as MaterialCheckBox).run {
+            with(itemView as MaterialCheckBox) {
                 text = itemFilter
                 setOnCheckedChangeListener { _, b ->
                     if (b) {

@@ -257,11 +257,11 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
             fun bindItems(itemSong: Music?) {
 
-                itemView.run {
+                with(itemView) {
 
-                    val title = itemView.findViewById<TextView>(R.id.title)
-                    val duration = itemView.findViewById<TextView>(R.id.duration)
-                    val subtitle = itemView.findViewById<TextView>(R.id.subtitle)
+                    val title = findViewById<TextView>(R.id.title)
+                    val duration = findViewById<TextView>(R.id.duration)
+                    val subtitle = findViewById<TextView>(R.id.subtitle)
 
                     val formattedDuration = itemSong?.duration?.toFormattedDuration(
                         isAlbum = false,

@@ -39,7 +39,7 @@ class AccentsAdapter(private val activity: Activity) :
 
         fun bindItems(color: Int) {
 
-            itemView.run {
+            with(itemView) {
 
                 val accent = ContextCompat.getColor(activity, color)
                 val accentFullName = ThemeHelper.getAccentName(activity, mAccents[absoluteAdapterPosition].first)

@@ -318,13 +318,13 @@ class MusicContainersFragment : Fragment(),
 
             fun bindItems(item: String) {
 
-                itemView.run {
+                with(itemView) {
 
-                    val title = itemView.findViewById<TextView>(R.id.title)
-                    val subtitle = itemView.findViewById<TextView>(R.id.subtitle)
+                    val title = findViewById<TextView>(R.id.title)
+                    val subtitle = findViewById<TextView>(R.id.subtitle)
 
                     if (sLaunchedByAlbumView) {
-                        val albumCover = itemView.findViewById<ImageView>(R.id.album_cover).apply {
+                        val albumCover = findViewById<ImageView>(R.id.album_cover).apply {
                             background.alpha = ThemeHelper.getAlbumCoverAlpha(requireContext())
                         }
                         mMusicViewModel.deviceMusicByAlbum?.get(item)?.first()?.albumId?.waitForCover(requireContext()) { bmp, error ->

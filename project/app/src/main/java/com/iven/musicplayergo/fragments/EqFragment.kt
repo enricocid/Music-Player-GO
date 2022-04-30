@@ -169,7 +169,7 @@ class EqFragment : Fragment() {
                         }
                     }
                     mSliders[slider]?.let { textView ->
-                        textView.run {
+                        with(textView) {
                             text = formatMilliHzToK(getCenterFreq(item.index.toShort()))
                             background = roundedTextBackground
                         }

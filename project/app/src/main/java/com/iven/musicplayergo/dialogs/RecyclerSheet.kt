@@ -248,7 +248,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                         dismiss()
                     }
 
-                    btnPositive.run {
+                    with(btnPositive) {
                         text = getString(R.string.sleeptimer_stop)
                         contentDescription = getString(R.string.sleeptimer_cancel_desc)
                         setOnClickListener {
@@ -356,7 +356,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
             fun bindItems(itemSleepOption: String) {
 
-                (itemView as TextView).run {
+                with(itemView as TextView) {
                     text = itemSleepOption
                     contentDescription = itemSleepOption
                     setTextColor(if (mSelectedPosition == absoluteAdapterPosition) {

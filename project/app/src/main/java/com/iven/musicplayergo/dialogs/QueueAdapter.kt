@@ -55,7 +55,7 @@ class QueueAdapter(
 
         fun bindItems(song: Music) {
 
-            itemView.run {
+            with(itemView) {
 
                 val title = findViewById<TextView>(R.id.title)
                 val duration = findViewById<TextView>(R.id.duration)
@@ -98,7 +98,7 @@ class QueueAdapter(
                         song.title
                     ))
                     .setPositiveButton(R.string.yes) { _, _ ->
-                        mediaPlayerHolder.run {
+                        with(mediaPlayerHolder) {
                             // remove and update adapter
                             queueSongs.remove(song)
                             notifyItemRemoved(adapterPosition)
