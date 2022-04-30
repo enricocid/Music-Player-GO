@@ -37,6 +37,7 @@ import com.iven.musicplayergo.ui.ItemSwipeCallback
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 import kotlinx.coroutines.Runnable
+import me.zhanghai.android.fastscroll.FastScrollerBuilder
 
 
 /**
@@ -297,7 +298,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                 val searchView =
                     detailsToolbar.menu.findItem(R.id.action_search).actionView as SearchView
-                searchView.run {
+                with(searchView) {
                     setOnQueryTextListener(this@DetailsFragment)
                     setOnQueryTextFocusChangeListener { _, hasFocus ->
                         detailsToolbar.menu.setGroupVisible(
@@ -339,6 +340,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
             setHasFixedSize(true)
             adapter = SongsAdapter()
+            FastScrollerBuilder(this).useMd2Style().build()
 
             ItemTouchHelper(ItemSwipeCallback(requireContext(), isQueueDialog = false, isFavoritesDialog = false) { viewHolder: RecyclerView.ViewHolder,
                                                                           direction: Int ->
@@ -425,7 +427,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
         if (sLaunchedByArtistView) {
             _detailsFragmentBinding?.let { _binding ->
-                _binding.sortButton.run {
+                with(_binding.sortButton) {
                     setImageResource(getDefSortingIconForArtistView())
                     isEnabled = mSelectedAlbum?.music?.size!! >= 2
                     ThemeHelper.updateIconTint(
@@ -672,13 +674,13 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
             fun bindItems(itemAlbum: Album?) {
 
-                itemView.run {
+                with(itemView) {
                     val cardView = this as MaterialCardView
 
-                    val albumCover = itemView.findViewById<ImageView>(R.id.image)
-                    val album = itemView.findViewById<TextView>(R.id.album)
-                    val year = itemView.findViewById<TextView>(R.id.year)
-                    val totalDuration = itemView.findViewById<TextView>(R.id.total_duration)
+                    val albumCover = findViewById<ImageView>(R.id.image)
+                    val album = findViewById<TextView>(R.id.album)
+                    val year = findViewById<TextView>(R.id.year)
+                    val totalDuration = findViewById<TextView>(R.id.total_duration)
 
                     album.text = itemAlbum?.title
 
@@ -750,10 +752,10 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
             fun bindItems(itemSong: Music?) {
 
-                itemView.run {
+                with(itemView) {
 
-                    val title = itemView.findViewById<TextView>(R.id.title)
-                    val subtitle = itemView.findViewById<TextView>(R.id.subtitle)
+                    val title = findViewById<TextView>(R.id.title)
+                    val subtitle = findViewById<TextView>(R.id.subtitle)
 
                     val displayedTitle =
                         if (sShowDisplayName || sLaunchedByFolderView) {
