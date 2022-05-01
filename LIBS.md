@@ -17,14 +17,14 @@
 | Name                                                        | Author                  |
 | ----------------------------------------------------------- | ------------------------- |
 | [GIF optimisation script](https://github.com/mathieu-aubin/tempgif)                  | [Mathieu Aubin](https://github.com/mathieu-aubin)                       |
-| Snapmod <sup>[0](https://play.google.com/store/apps/details?id=cn.gavinliu.snapmod), [1](https://apkpure.com/snapmod-better-screenshots-mockup-generator/cn.gavinliu.snapmod)</sup> | [Gavin Liu](https://play.google.com/store/apps/developer?id=Gavin+Liu)                       |
+| [Snapmod](https://play.google.com/store/apps/details?id=cn.gavinliu.snapmod) | [Gavin Liu](https://play.google.com/store/apps/developer?id=Gavin+Liu)                       |
 | [Round icons](https://material.io/tools/icons/?style=round) | Google                      |
 | [sort-alphabetical-descending-variant icon](https://materialdesignicons.com/icon/sort-alphabetical-descending-variant) | Austin Andrews [templatarian](https://twitter.com/templarian)                       |
 | [sort-alphabetical-ascending-variant icon](https://materialdesignicons.com/icon/sort-alphabetical-ascending-variant) | Michael Irigoyen [mririgo](https://twitter.com/mririgo)                       |
 | [sort-numeric-ascending-variant icon](https://materialdesignicons.com/icon/sort-numeric-ascending-variant) | Michael Irigoyen [mririgo](https://twitter.com/mririgo)                       |
 | [sort-numeric-descending-variant icon](https://materialdesignicons.com/icon/sort-numeric-descending-variant) | Michael Irigoyen [mririgo](https://twitter.com/mririgo) 
-| Badges | [shields.io](https://shields.io/) 
-| gifmaker.me | [gifmaker.me](https://gifmaker.me/)
+| gifmaker.me | [gifmaker.me](https://gifmaker.me/) 
+| Badges | [shields.io](https://shields.io/)
 
 
 ### Libraries / resources used in previous MPGO versions
@@ -35,4 +35,5 @@
 | [material-dialogs](https://github.com/afollestad/material-dialogs)                  | [Aidan Follestad](https://github.com/afollestad)                       |
 | [recyclical](https://github.com/afollestad/recyclical)                  | [Aidan Follestad](https://github.com/afollestad)                       |
 | [Edge-to-Edge](https://github.com/beworker/edge-to-edge)                  | [Sergej Shafarenka](https://github.com/beworker)                       |
+| [Screener](https://forum.xda-developers.com/t/app-4-0-screener.3605029/) | toastcode                       |
 | [Compact disc icon](https://www.svgrepo.com/svg/181020/compact-disc-music) | [svgrepo.com](https://www.svgrepo.com)                       |

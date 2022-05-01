@@ -1,14 +1,14 @@
 <h1 align="center">Music Player GO</h1>
 
 <p align="center">
-<img width="400" src="art10.gif">
+<img width="400" src="art11.gif">
 </p>
 
 <p align="center">
   <!-- Latest Release -->
     <a href="https://github.com/enricocid/Music-Player-GO/releases">
       <img alt="GitHub release"
-      src="https://img.shields.io/static/v1?label=Tag&message=v4.4.14&color=58F5D1">
+      src="https://img.shields.io/static/v1?label=Tag&message=v4.4.15&color=58F5D1">
     </a>
    <!-- Minimum SDK -->
     <img alt="Minimum SDK" src="https://img.shields.io/static/v1?label=API&message=21&color=32B5ED">
@@ -16,6 +16,10 @@
     <a href="https://github.com/enricocid/Music-Player-GO/actions">
     <img alt="CI" src="https://github.com/enricocid/Music-Player-GO/workflows/Android%20CI/badge.svg">
     </a>
+    <!-- Support Ukraine -->
+    <a href="https://war.ukraine.ua/support-ukraine/">
+    <img alt="Support Ukraine" src="https://img.shields.io/static/v1?label=Support Ukraine&message=now!&color=005BBB">
+</a>
 </p>
 
   <h3 align="center">

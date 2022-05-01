@@ -1,0 +1,5 @@
+- Ora viene usato un fast scroller stile aosp
+- Aggiunto fast scroller a vista cartella
+- Corretto tema tabs
+- Semplificazioni/miglioramenti codice
+- Aggiornamento traduzioni: Portoghese (Brasile)

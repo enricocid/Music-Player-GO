@@ -9,8 +9,8 @@ android {
         applicationId "com.iven.musicplayergo"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 177
-        versionName "4.4.14"
+        versionCode 178
+        versionName "4.4.15"
 
         vectorDrawables.useSupportLibrary true
     }

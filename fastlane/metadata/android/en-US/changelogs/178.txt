@@ -1,0 +1,5 @@
+- Use aosp style fast scroller
+- Add fast scroller to folder details
+- Fix tabs theming issues
+- Code simplifications/improvements
+- Update translations: Portuguese (Brazil)
