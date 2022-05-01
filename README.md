@@ -19,7 +19,7 @@
     <!-- Support Ukraine -->
     <a href="https://war.ukraine.ua/support-ukraine/">
     <img alt="Support Ukraine" src="https://img.shields.io/static/v1?label=Support Ukraine&message=now!&color=005BBB">
-</a>
+    </a>
 </p>
 
   <h3 align="center">
