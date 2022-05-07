@@ -782,7 +782,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                         )
                     )
                 }
-                mDetailsFragment?.highlightSong(mMediaPlayerHolder.currentSong?.id)
+                mDetailsFragment?.highlightSong(mMediaPlayerHolder.currentSong?.id, force = true)
             } else {
                 openDetailsFragment(
                     selectedArtistOrFolder,

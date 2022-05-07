@@ -93,6 +93,9 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 
 - [**repparw**](https://github.com/repparw) for having helped me to solve [task #8 on issue 220](https://github.com/enricocid/Music-Player-GO/issues/220)
 
+- **Carmine Nives** for having reported this [issue](https://github.com/enricocid/Music-Player-GO/issues/410)
+
+
 ### Big thanks to translators:
 
 - [**z1q7p3m9**](https://github.com/z1q7p3m9) for **Kurdish** translations

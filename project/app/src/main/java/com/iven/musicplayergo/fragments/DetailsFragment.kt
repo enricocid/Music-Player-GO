@@ -79,6 +79,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
     private var sCanUpdateSongs = true
     private var sAlbumSwapped = false
     private var sOpenNewDetailsFragment = false
+    private var sSongHighlighted = false
 
     @SuppressLint("NotifyDataSetChanged")
     fun swapSelectedSong(songId: Long?) {
@@ -366,37 +367,43 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 _detailsFragmentBinding?.root?.run {
                     mArtistDetailsAnimator = createCircularReveal(show = true)
                     mArtistDetailsAnimator.doOnEnd {
-                        highlightSong(mSelectedSongId)
+                        highlightSong(mSelectedSongId, force = false)
                     }
                 }
             }
         }
     }
 
-    fun highlightSong(songId: Long?) {
+    fun highlightSong(songId: Long?, force: Boolean) {
 
-        if(songId == null) {
-            return
+        if (force) {
+            sSongHighlighted = false
         }
 
-        mSongsList?.indexOfFirst { song -> song.id == songId }?.let { pos ->
-            if (pos > -1) {
-                var songView: View? = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(pos)
-                if (songView == null) {
-                    _detailsFragmentBinding?.songsRv?.addOnScrollListener(object :
-                        RecyclerView.OnScrollListener() {
-                        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                            super.onScrollStateChanged(recyclerView, newState)
-                            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                                songView = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(pos)
-                                animateHighlightedSong(songView)
-                                _detailsFragmentBinding?.songsRv?.clearOnScrollListeners()
+        if (!sSongHighlighted) {
+
+            if(songId == null) {
+                return
+            }
+
+            mSongsList?.indexOfFirst { song -> song.id == songId }?.let { pos ->
+                if (pos > -1) {
+                    var songView: View? = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(pos)
+                    if (songView == null) {
+                        _detailsFragmentBinding?.songsRv?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                                super.onScrollStateChanged(recyclerView, newState)
+                                if (newState == RecyclerView.SCROLL_STATE_IDLE && !sSongHighlighted) {
+                                    songView = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(pos)
+                                    animateHighlightedSong(songView)
+                                    sSongHighlighted = true
+                                }
                             }
-                        }
-                    })
-                    _detailsFragmentBinding?.songsRv?.smoothScrollToPosition(pos)
-                } else {
-                    animateHighlightedSong(songView)
+                        })
+                        _detailsFragmentBinding?.songsRv?.smoothScrollToPosition(pos)
+                    } else {
+                        animateHighlightedSong(songView)
+                    }
                 }
             }
         }
@@ -646,7 +653,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         setSongsDataSource(songs, updateSongs = false, updateAdapter = true)
         _detailsFragmentBinding?.songsRv?.afterMeasured {
             scrollToPosition(0)
-            highlightSong(mSelectedSongId)
+            highlightSong(mSelectedSongId, force = false)
         }
     }
 
