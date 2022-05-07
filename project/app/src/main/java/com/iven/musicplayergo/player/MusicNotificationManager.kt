@@ -68,9 +68,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             NotificationCompat.Builder(playerService, GoConstants.NOTIFICATION_CHANNEL_ID)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannel()
-        } else {
-            mNotificationBuilder.priority = NotificationCompat.PRIORITY_DEFAULT
+            createNotificationChannel(GoConstants.NOTIFICATION_CHANNEL_ID)
         }
 
         val openPlayerIntent = Intent(playerService, MainActivity::class.java)
@@ -86,7 +84,6 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             playerService, GoConstants.NOTIFICATION_INTENT_REQUEST_CODE,
             openPlayerIntent, flags
         )
-
 
         mNotificationBuilder
             .setContentIntent(contentIntent)
@@ -105,6 +102,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                     .setShowActionsInCompactView(1, 2, 3)
             )
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .priority = NotificationCompat.PRIORITY_DEFAULT
 
         updateNotificationContent {
             onCreated(mNotificationBuilder.build())
@@ -215,11 +213,32 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         return NotificationCompat.Action.Builder(icon, action, getPlayerAction(action)).build()
     }
 
+    fun createNotificationForError() {
+
+        val notificationBuilder =
+            NotificationCompat.Builder(playerService, GoConstants.NOTIFICATION_CHANNEL_ERROR_ID)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel(GoConstants.NOTIFICATION_CHANNEL_ERROR_ID)
+        }
+
+        notificationBuilder.setSmallIcon(R.drawable.ic_report)
+            .setSilent(true)
+            .setContentTitle(playerService.getString(R.string.error_fs_not_allowed_sum))
+            .setContentText(playerService.getString(R.string.error_fs_not_allowed))
+            .setStyle(NotificationCompat.BigTextStyle()
+                .bigText(playerService.getString(R.string.error_fs_not_allowed)))
+            .priority = NotificationCompat.PRIORITY_DEFAULT
+        with(NotificationManagerCompat.from(playerService)) {
+            notify(GoConstants.NOTIFICATION_ERROR_ID, notificationBuilder.build())
+        }
+    }
+
     @TargetApi(26)
-    private fun createNotificationChannel() {
+    private fun createNotificationChannel(channelId: String) {
         with(NotificationManagerCompat.from(playerService)) {
             val channel = NotificationChannel(
-                GoConstants.NOTIFICATION_CHANNEL_ID,
+                channelId,
                 playerService.getString(R.string.app_name),
                 NotificationManager.IMPORTANCE_DEFAULT
             )

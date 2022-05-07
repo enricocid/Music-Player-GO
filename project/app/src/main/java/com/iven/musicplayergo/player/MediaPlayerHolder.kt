@@ -26,7 +26,6 @@ import android.support.v4.media.session.PlaybackStateCompat
 import android.support.v4.media.session.PlaybackStateCompat.*
 import android.util.Log
 import android.view.KeyEvent
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.graphics.drawable.toBitmap
@@ -198,9 +197,8 @@ class MediaPlayerHolder:
                         try {
                             startForegroundQ(notification)
                         } catch (fsNotAllowed: ForegroundServiceStartNotAllowedException) {
-                            synchronized(Toast.makeText(mPlayerService, R.string.error_fs_not_allowed_sum, Toast.LENGTH_LONG).show()) {
-                                pauseMediaPlayer()
-                                mediaPlayerInterface.onForegroundServiceStopped()
+                            synchronized(pauseMediaPlayer()) {
+                                mMusicNotificationManager.createNotificationForError()
                             }
                             fsNotAllowed.printStackTrace()
                         }

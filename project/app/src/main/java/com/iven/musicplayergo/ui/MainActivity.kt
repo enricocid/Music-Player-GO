@@ -1167,10 +1167,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             }
         }
 
-        override fun onForegroundServiceStopped() {
-            DialogHelper.notifyForegroundServiceStopped(this@MainActivity)
-        }
-
         override fun onUpdateSleepTimerCountdown(value: Long) {
             mSleepTimerDialog?.run {
                 if (sheetType == GoConstants.SLEEPTIMER_ELAPSED_TYPE) {

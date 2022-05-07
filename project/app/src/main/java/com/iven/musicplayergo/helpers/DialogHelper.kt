@@ -179,16 +179,6 @@ object DialogHelper {
     }
 
     @JvmStatic
-    fun notifyForegroundServiceStopped(context: Context) {
-        MaterialAlertDialogBuilder(context)
-            .setCancelable(false)
-            .setTitle(R.string.app_name)
-            .setMessage(R.string.error_fs_not_allowed)
-            .setPositiveButton(R.string.ok, null)
-            .show()
-    }
-
-    @JvmStatic
     fun computeDurationText(ctx: Context, favorite: Music?): Spanned? {
         if (favorite?.startFrom != null && favorite.startFrom > 0L) {
             return ctx.getString(
