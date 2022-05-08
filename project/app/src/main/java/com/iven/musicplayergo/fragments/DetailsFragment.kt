@@ -388,12 +388,12 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
             mSongsList?.indexOfFirst { song -> song.id == songId }?.let { pos ->
                 if (pos > -1) {
-                    var songView: View? = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(pos)
+                    var songView = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(pos)
                     if (songView == null) {
                         _detailsFragmentBinding?.songsRv?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                                super.onScrollStateChanged(recyclerView, newState)
-                                if (newState == RecyclerView.SCROLL_STATE_IDLE && !sSongHighlighted) {
+                            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                                super.onScrolled(recyclerView, dx, dy)
+                                if (!sSongHighlighted) {
                                     songView = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(pos)
                                     animateHighlightedSong(songView)
                                     sSongHighlighted = true
@@ -409,7 +409,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private fun animateHighlightedSong(songView: View?){
+    private fun animateHighlightedSong(songView: View?) {
         songView?.let {
             val unpressedRunnable = Runnable {
                 songView.isPressed = false
@@ -652,8 +652,8 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         sAlbumSwapped = true
         setSongsDataSource(songs, updateSongs = false, updateAdapter = true)
         _detailsFragmentBinding?.songsRv?.afterMeasured {
-            scrollToPosition(0)
-            highlightSong(mSelectedSongId, force = false)
+            smoothScrollToPosition(0)
+            highlightSong(mSelectedSongId, force = true)
         }
     }
 
