@@ -1,0 +1,3 @@
+- Fixed a few crashes (thanks Carmine Nives)
+- Update translations (Chinese - Traditional) - Thanks EarthlyEric
+- Dependency update

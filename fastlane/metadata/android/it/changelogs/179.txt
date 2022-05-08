@@ -1,0 +1,3 @@
+- Corretti un paio di crash (grazie Carmine Nives)
+- Aggiornate traduzioni (Chinese - Tradizionale) - Grazie EarthlyEric
+- Aggiornata dipendenza
