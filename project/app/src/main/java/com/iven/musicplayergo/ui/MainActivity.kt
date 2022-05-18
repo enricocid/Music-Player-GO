@@ -1130,16 +1130,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
 
         override fun onStateChanged() {
-            updatePlayingStatus()
-            mNpDialog?.updatePlayingStatus()
-            if (isMediaPlayerHolder && mMediaPlayerHolder.state != GoConstants.RESUMED && mMediaPlayerHolder.state != GoConstants.PAUSED) {
-                updatePlayingInfo(restore = false)
-                if (mQueueDialog != null && mMediaPlayerHolder.isQueue != null) {
-                    mQueueDialog?.swapQueueSong(mMediaPlayerHolder.currentSong)
-                } else if (sDetailsFragmentExpanded) {
-                    mDetailsFragment?.swapSelectedSong(
-                        mMediaPlayerHolder.currentSong?.id
-                    )
+            if (isMediaPlayerHolder) {
+                updatePlayingStatus()
+                mNpDialog?.updatePlayingStatus()
+                if (mMediaPlayerHolder.state != GoConstants.RESUMED && mMediaPlayerHolder.state != GoConstants.PAUSED) {
+                    updatePlayingInfo(restore = false)
+                    if (mMediaPlayerHolder.isQueue != null) {
+                        mQueueDialog?.swapQueueSong(mMediaPlayerHolder.currentSong)
+                    } else if (sDetailsFragmentExpanded) {
+                        mDetailsFragment?.swapSelectedSong(
+                            mMediaPlayerHolder.currentSong?.id
+                        )
+                    }
                 }
             }
         }

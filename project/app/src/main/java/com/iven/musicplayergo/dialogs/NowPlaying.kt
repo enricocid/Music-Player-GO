@@ -309,25 +309,27 @@ class NowPlaying: BottomSheetDialogFragment() {
     }
 
     fun updateRepeatStatus(onPlaybackCompletion: Boolean) {
-        mMediaControlInterface.onGetMediaPlayerHolder()?.run {
-            val resolvedIconsColor = ContextCompat.getColor(requireContext(), R.color.widgetsColor)
-            _npCoverBinding?.npRepeat?.setImageResource(
-                ThemeHelper.getRepeatIcon(this)
-            )
-            when {
-                onPlaybackCompletion -> ThemeHelper.updateIconTint(
-                    _npCoverBinding?.npRepeat!!,
-                    resolvedIconsColor
+        if (::mMediaControlInterface.isInitialized) {
+            mMediaControlInterface.onGetMediaPlayerHolder()?.run {
+                val resolvedIconsColor = ContextCompat.getColor(requireContext(), R.color.widgetsColor)
+                _npCoverBinding?.npRepeat?.setImageResource(
+                    ThemeHelper.getRepeatIcon(this)
                 )
-                isRepeat1X or isLooping or isPauseOnEnd -> {
-                    ThemeHelper.updateIconTint(
-                        _npCoverBinding?.npRepeat!!, ThemeHelper.resolveThemeAccent(requireContext())
+                when {
+                    onPlaybackCompletion -> ThemeHelper.updateIconTint(
+                        _npCoverBinding?.npRepeat!!,
+                        resolvedIconsColor
+                    )
+                    isRepeat1X or isLooping or isPauseOnEnd -> {
+                        ThemeHelper.updateIconTint(
+                            _npCoverBinding?.npRepeat!!, ThemeHelper.resolveThemeAccent(requireContext())
+                        )
+                    }
+                    else -> ThemeHelper.updateIconTint(
+                        _npCoverBinding?.npRepeat!!,
+                        resolvedIconsColor
                     )
                 }
-                else -> ThemeHelper.updateIconTint(
-                    _npCoverBinding?.npRepeat!!,
-                    resolvedIconsColor
-                )
             }
         }
     }
@@ -363,17 +365,14 @@ class NowPlaying: BottomSheetDialogFragment() {
         mMediaControlInterface.onGetMediaPlayerHolder()?.run {
             if (!isPlay) { isPlay = true }
             if (isSongFromPrefs) { isSongFromPrefs = false }
-            if (isNext) {
-                skip(isNext = true)
-            } else {
-                instantReset()
-            }
+            if (isNext) { skip(isNext = true) } else { instantReset() }
         }
     }
 
     fun updateNpFavoritesIcon(context: Context) {
-        val mediaPlayerHolder = mMediaControlInterface.onGetMediaPlayerHolder()
-        _npCoverBinding?.run {
+        if (::mMediaControlInterface.isInitialized) {
+            val mediaPlayerHolder = mMediaControlInterface.onGetMediaPlayerHolder()
+            _npCoverBinding?.run {
                 mediaPlayerHolder?.currentSong?.let { song ->
                     val favorites = goPreferences.favorites
                     val isFavorite = favorites != null && favorites.contains(song.toSavedMusic(0, mediaPlayerHolder.launchedBy))
@@ -389,35 +388,37 @@ class NowPlaying: BottomSheetDialogFragment() {
                     }
                     ThemeHelper.updateIconTint(npLove, favoritesButtonColor)
                 }
+            }
         }
     }
 
     fun updateNpInfo() {
-        mMediaControlInterface.onGetMediaPlayerHolder()?.currentSong?.let { song ->
-            val selectedSongDuration = song.duration
-            if (mAlbumIdNp != song.albumId && goPreferences.isCovers) {
-                loadNpCover(song)
+        if (::mMediaControlInterface.isInitialized) {
+            mMediaControlInterface.onGetMediaPlayerHolder()?.currentSong?.let { song ->
+                val selectedSongDuration = song.duration
+                if (mAlbumIdNp != song.albumId && goPreferences.isCovers) {
+                    loadNpCover(song)
+                }
+                _nowPlayingBinding?.npSong?.text = song.title
+                _nowPlayingBinding?.npArtistAlbum?.text =
+                    getString(
+                        R.string.artist_and_album,
+                        song.artist,
+                        song.album
+                    )
+
+                _nowPlayingBinding?.npDuration?.text =
+                    selectedSongDuration.toFormattedDuration(isAlbum = false, isSeekBar = true)
+                _nowPlayingBinding?.npSeekBar?.max = song.duration.toInt()
+
+                song.id?.toContentUri()?.toBitrate(requireContext())?.let { (first, second) ->
+                    _nowPlayingBinding?.npRates?.text =
+                        getString(R.string.rates, first, second)
+                }
             }
-
-            _nowPlayingBinding?.npSong?.text = song.title
-            _nowPlayingBinding?.npArtistAlbum?.text =
-                getString(
-                    R.string.artist_and_album,
-                    song.artist,
-                    song.album
-                )
-
-            _nowPlayingBinding?.npDuration?.text =
-                selectedSongDuration.toFormattedDuration(isAlbum = false, isSeekBar = true)
-            _nowPlayingBinding?.npSeekBar?.max = song.duration.toInt()
-
-            song.id?.toContentUri()?.toBitrate(requireContext())?.let { (first, second) ->
-                _nowPlayingBinding?.npRates?.text =
-                    getString(R.string.rates, first, second)
-            }
+            updateNpFavoritesIcon(requireContext())
+            updatePlayingStatus()
         }
-        updateNpFavoritesIcon(requireContext())
-        updatePlayingStatus()
     }
 
     fun updateProgress(position: Int) {
@@ -425,15 +426,17 @@ class NowPlaying: BottomSheetDialogFragment() {
     }
 
     fun updatePlayingStatus() {
-        mMediaControlInterface.onGetMediaPlayerHolder()?.run {
-            val isPlaying = state != GoConstants.PAUSED
-            val drawable =
-                if (isPlaying) {
-                    R.drawable.ic_pause
-                } else {
-                    R.drawable.ic_play
-                }
-            _npControlsBinding?.npPlay?.setImageResource(drawable)
+        if (::mMediaControlInterface.isInitialized) {
+            mMediaControlInterface.onGetMediaPlayerHolder()?.run {
+                val isPlaying = state != GoConstants.PAUSED
+                val drawable =
+                    if (isPlaying) {
+                        R.drawable.ic_pause
+                    } else {
+                        R.drawable.ic_play
+                    }
+                _npControlsBinding?.npPlay?.setImageResource(drawable)
+            }
         }
     }
 

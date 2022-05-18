@@ -460,7 +460,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 _detailsFragmentBinding?.songsRv?.adapter?.notifyDataSetChanged()
             }
             if (updateSongs) {
-                mMediaControlInterface.onUpdatePlayingAlbumSongs(songs)
+                mMediaControlInterface.onUpdatePlayingAlbumSongs(mSongsList)
             }
         }
     }
