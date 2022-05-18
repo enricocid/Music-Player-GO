@@ -303,7 +303,11 @@ class MediaPlayerHolder:
         }
     }
 
-    fun getCurrentAlbumSize() = mPlayingSongs?.size ?: 0
+    fun getCurrentAlbumSize() = if (mPlayingSongs != null) {
+        mPlayingSongs?.size!!
+    } else {
+        0
+    }
 
     fun updateMediaSessionMetaData() {
         with(MediaMetadataCompat.Builder()) {
