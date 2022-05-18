@@ -30,6 +30,7 @@ import com.iven.musicplayergo.ui.UIControlInterface
 import me.zhanghai.android.fastscroll.FastScrollerBuilder
 import me.zhanghai.android.fastscroll.PopupTextProvider
 
+
 /**
  * A simple [Fragment] subclass.
  * Use the [AllMusicFragment.newInstance] factory method to
@@ -238,11 +239,14 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
         )
 
         override fun getPopupText(position: Int): String {
-            return if (sIsFastScrollerPopup) {
-                mAllMusic?.get(position)?.title?.substring(0, 1)?.uppercase()!!
-            } else {
-                ""
+            if (sIsFastScrollerPopup) {
+                mAllMusic?.get(position)?.title?.run {
+                    if (length > 0) {
+                        return first().toString()
+                    }
+                }
             }
+            return ""
         }
 
         override fun getItemCount(): Int {

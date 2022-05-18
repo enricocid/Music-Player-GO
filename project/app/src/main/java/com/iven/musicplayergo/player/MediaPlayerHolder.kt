@@ -442,7 +442,7 @@ class MediaPlayerHolder:
             if (sPlaybackSpeedPersisted && VersioningHelper.isMarshmallow()) {
                 playbackParams = playbackParams.setSpeed(currentPlaybackSpeed)
             } else {
-                start()
+                MediaPlayerUtils.safePlay(this)
             }
         }
     }
@@ -468,7 +468,7 @@ class MediaPlayerHolder:
     }
 
     fun pauseMediaPlayer() {
-        mediaPlayer.pause()
+        MediaPlayerUtils.safePause(mediaPlayer)
         mPlayerService.stopForeground(false)
         sNotificationForeground = false
         state = GoConstants.PAUSED

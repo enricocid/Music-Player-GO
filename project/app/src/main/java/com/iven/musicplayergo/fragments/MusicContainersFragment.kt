@@ -287,11 +287,14 @@ class MusicContainersFragment : Fragment(),
         }
 
         override fun getPopupText(position: Int): String {
-            return if (sIsFastScrollerPopup) {
-                mList?.get(position)?.substring(0, 1)?.uppercase()!!
-            } else {
-                ""
+            if (sIsFastScrollerPopup) {
+                mList?.get(position)?.run {
+                    if (length > 0) {
+                        return first().toString()
+                    }
+                }
             }
+            return ""
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ArtistHolder(
