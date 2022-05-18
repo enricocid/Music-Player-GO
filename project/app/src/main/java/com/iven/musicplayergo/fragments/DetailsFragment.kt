@@ -36,7 +36,6 @@ import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.ItemSwipeCallback
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
-import kotlinx.coroutines.Runnable
 import me.zhanghai.android.fastscroll.FastScrollerBuilder
 
 
@@ -79,7 +78,6 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
     private var sCanUpdateSongs = true
     private var sAlbumSwapped = false
     private var sOpenNewDetailsFragment = false
-    private var sSongHighlighted = false
 
     @SuppressLint("NotifyDataSetChanged")
     fun swapSelectedSong(songId: Long?) {
@@ -367,59 +365,22 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 _detailsFragmentBinding?.root?.run {
                     mArtistDetailsAnimator = createCircularReveal(show = true)
                     mArtistDetailsAnimator.doOnEnd {
-                        highlightSong(mSelectedSongId, force = false)
+                        scrollToPlayingSong(mSelectedSongId)
                     }
                 }
             }
         }
     }
 
-    fun highlightSong(songId: Long?, force: Boolean) {
-
-        if (force) {
-            sSongHighlighted = false
-        }
-
-        if (!sSongHighlighted) {
-
-            if(songId == null) {
-                return
-            }
-
-            mSongsList?.indexOfFirst { song -> song.id == songId }?.let { pos ->
-                if (pos > -1) {
-                    var songView = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(pos)
-                    if (songView == null) {
-                        _detailsFragmentBinding?.songsRv?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                                super.onScrolled(recyclerView, dx, dy)
-                                if (!sSongHighlighted) {
-                                    songView = _detailsFragmentBinding?.songsRv?.layoutManager?.findViewByPosition(pos)
-                                    animateHighlightedSong(songView)
-                                    sSongHighlighted = true
-                                }
-                            }
-                        })
-                        _detailsFragmentBinding?.songsRv?.smoothScrollToPosition(pos)
-                    } else {
-                        animateHighlightedSong(songView)
-                    }
-                }
-            }
-        }
-    }
-
-    private fun animateHighlightedSong(songView: View?) {
-        songView?.let {
-            val unpressedRunnable = Runnable {
-                songView.isPressed = false
-            }
-
-            val pressRunnable = Runnable {
-                songView.isPressed = true
-                songView.postOnAnimationDelayed(unpressedRunnable, 1000)
-            }
-            pressRunnable.run()
+    fun scrollToPlayingSong(songId: Long?) {
+        mSongsList?.indexOfFirst { song -> song.id == songId }?.let { pos ->
+            (_detailsFragmentBinding?.songsRv?.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
+                when {
+                    pos > -1 -> pos
+                    else -> 0
+                },
+                0
+            )
         }
     }
 
@@ -652,8 +613,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         sAlbumSwapped = true
         setSongsDataSource(songs, updateSongs = false, updateAdapter = true)
         _detailsFragmentBinding?.songsRv?.afterMeasured {
-            smoothScrollToPosition(0)
-            highlightSong(mSelectedSongId, force = true)
+            scrollToPlayingSong(mSelectedSongId)
         }
     }
 
@@ -783,6 +743,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     } else {
                         defaultTextColor
                     }
+
                     title.setTextColor(titleColor)
 
                     val duration = itemSong?.duration?.toFormattedDuration(

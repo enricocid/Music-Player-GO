@@ -193,7 +193,7 @@ fun View.createCircularReveal(show: Boolean): Animator {
 
 // https://stackoverflow.com/a/53986874
 fun RecyclerView.smoothSnapToPosition(position: Int) {
-    val smoothScroller = object : LinearSmoothScroller(this.context) {
+    val smoothScroller = object : LinearSmoothScroller(context) {
         override fun getVerticalSnapPreference(): Int {
             return SNAP_TO_START
         }

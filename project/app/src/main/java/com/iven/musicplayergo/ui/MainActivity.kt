@@ -788,7 +788,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                         )
                     )
                 }
-                mDetailsFragment?.highlightSong(mMediaPlayerHolder.currentSong?.id, force = true)
+                mDetailsFragment?.scrollToPlayingSong(mMediaPlayerHolder.currentSong?.id)
             } else {
                 openDetailsFragment(
                     selectedArtistOrFolder,
@@ -987,7 +987,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
                     // don't add duplicates
                     addSongsToNextQueuePosition(if (restoreQueueSong != songsToQueue.first()) {
-                        queueSongs.removeAll(songsToQueue)
+                        queueSongs.removeAll(songsToQueue.toSet())
                         songsToQueue
                     } else {
                         songsToQueue.minus(songsToQueue.first())
