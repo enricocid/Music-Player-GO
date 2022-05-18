@@ -100,7 +100,7 @@ dependencies {
     implementation 'me.zhanghai.android.fastscroll:library:1.1.8'
 
     //https://github.com/coil-kt/coil/releases
-    implementation 'io.coil-kt:coil:1.4.0'
+    implementation 'io.coil-kt:coil:2.0.0'
 
     //https://github.com/chrisbanes/insetter/releases
     implementation 'dev.chrisbanes.insetter:insetter:0.6.1'
