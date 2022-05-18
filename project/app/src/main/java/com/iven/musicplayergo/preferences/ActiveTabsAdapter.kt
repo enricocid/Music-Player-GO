@@ -25,7 +25,7 @@ class ActiveTabsAdapter(private val ctx: Context) :
 
     fun getUpdatedItems() = availableItems.apply {
         goPreferences.activeTabsDef = this
-    }.minus(availableItems.minus(mActiveItems)) /*make sure to respect tabs order*/
+    }.minus(availableItems.minus(mActiveItems.toSet()).toSet()) /*make sure to respect tabs order*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = CheckableItemsHolder(
         LayoutInflater.from(parent.context).inflate(

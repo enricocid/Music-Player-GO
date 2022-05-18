@@ -122,7 +122,7 @@ object MusicOrgHelper {
                 val songs = fav.filter { favFt ->
                     musicListContains(favFt, ft)
                 }
-                fav.removeAll(songs)
+                fav.removeAll(songs.toSet())
                 goPreferences.favorites = fav
                 if (fav.isEmpty()) {
                     uiControlInterface.onFavoritesUpdated(clear = true)
@@ -133,7 +133,7 @@ object MusicOrgHelper {
                     val songs = filter { queueSong ->
                         musicListContains(queueSong, ft)
                     }
-                    removeAll(songs)
+                    removeAll(songs.toSet())
                     mediaPlayerHolder.skip(isNext = true)
                 }
             } else {
