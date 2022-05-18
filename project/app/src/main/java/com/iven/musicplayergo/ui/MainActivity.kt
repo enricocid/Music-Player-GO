@@ -503,7 +503,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         with(mPlayerControlsPanelBinding.queueButton) {
             safeClickListener {
-                if (checkIsPlayer(showError = false) && mMediaPlayerHolder.queueSongs.isNotEmpty()) {
+                if (checkIsPlayer(showError = false) && mMediaPlayerHolder.queueSongs.isNotEmpty() && sAllowCommit) {
                     mQueueDialog = RecyclerSheet.newInstance(GoConstants.QUEUE_TYPE)
                     mQueueDialog?.show(supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
                     mQueueDialog?.onQueueCancelled = {
@@ -543,7 +543,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         with(mPlayerControlsPanelBinding.playingSongContainer) {
             safeClickListener {
-                if (checkIsPlayer(showError = true) && mMediaPlayerHolder.isCurrentSong) {
+                if (checkIsPlayer(showError = true) && mMediaPlayerHolder.isCurrentSong && sAllowCommit) {
                     mNpDialog = NowPlaying.newInstance().apply {
                         show(supportFragmentManager, NowPlaying.TAG_MODAL)
                         onNowPlayingCancelled = {
@@ -877,7 +877,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                                 GoConstants.EQ_FRAGMENT_TAG
                             )
                         }
-                        mNpDialog?.dismiss()
+                        mNpDialog?.dismissAllowingStateLoss()
                     }
                 }
             } else {
@@ -1037,10 +1037,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
                 ListsHelper.addToHiddenItems(string)
 
-                if (mMusicContainersFragments.isNullOrEmpty() || !mMusicContainersFragments.isNullOrEmpty() && !mMusicContainersFragments.first().onListFiltered(string)) {
+                if (mMusicContainersFragments.isEmpty() || mMusicContainersFragments.isNotEmpty() && !mMusicContainersFragments.first().onListFiltered(string)) {
                     ThemeHelper.applyChanges(this, restoreSettings = false)
                 } else {
-                    if (!mMusicContainersFragments.isNullOrEmpty() && mMusicContainersFragments.size >= 1) {
+                    if (mMusicContainersFragments.isNotEmpty() && mMusicContainersFragments.size >= 1) {
                         val musicContainersIterator = mMusicContainersFragments.iterator().withIndex()
                         while (musicContainersIterator.hasNext()) {
                             val item = musicContainersIterator.next()
@@ -1151,7 +1151,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                         android.R.attr.colorButtonNormal
                     )
                     else -> {
-                        mQueueDialog?.dismiss()
+                        mQueueDialog?.dismissAllowingStateLoss()
                         ContextCompat.getColor(
                             this@MainActivity,
                             R.color.widgetsColor
@@ -1177,7 +1177,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
 
         override fun onStopSleepTimer() {
-            mSleepTimerDialog?.dismiss()
+            mSleepTimerDialog?.dismissAllowingStateLoss()
             updateSleepTimerIcon(isEnabled = false)
         }
     }
