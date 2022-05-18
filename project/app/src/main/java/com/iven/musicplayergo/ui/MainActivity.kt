@@ -443,12 +443,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     private fun closeFragments() {
-        with(supportFragmentManager) {
-            if (sEqFragmentExpanded) {
-                goBackFromFragmentNow(mEqualizerFragment)
-            }
-            if (sDetailsFragmentExpanded) {
-                goBackFromFragmentNow(mDetailsFragment)
+        if (sAllowCommit) {
+            with(supportFragmentManager) {
+                if (sEqFragmentExpanded) {
+                    goBackFromFragmentNow(mEqualizerFragment)
+                }
+                if (sDetailsFragmentExpanded) {
+                    goBackFromFragmentNow(mDetailsFragment)
+                }
             }
         }
     }
@@ -487,13 +489,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 mDetailsFragment?.onHandleBackPressed()?.run {
                     sRevealAnimationRunning = true
                     doOnEnd {
-                        supportFragmentManager.goBackFromFragmentNow(mDetailsFragment)
+                        if (sAllowCommit) {
+                            supportFragmentManager.goBackFromFragmentNow(mDetailsFragment)
+                        }
                         sRevealAnimationRunning = false
                     }
                 }
             }
         } else {
-            supportFragmentManager.goBackFromFragmentNow(mDetailsFragment)
+            if (sAllowCommit) {
+                supportFragmentManager.goBackFromFragmentNow(mDetailsFragment)
+            }
         }
     }
 
@@ -503,7 +509,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         with(mPlayerControlsPanelBinding.queueButton) {
             safeClickListener {
-                if (checkIsPlayer(showError = false) && mMediaPlayerHolder.queueSongs.isNotEmpty() && sAllowCommit) {
+                if (checkIsPlayer(showError = false) && mMediaPlayerHolder.queueSongs.isNotEmpty()) {
                     mQueueDialog = RecyclerSheet.newInstance(GoConstants.QUEUE_TYPE)
                     mQueueDialog?.show(supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
                     mQueueDialog?.onQueueCancelled = {
@@ -543,7 +549,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         with(mPlayerControlsPanelBinding.playingSongContainer) {
             safeClickListener {
-                if (checkIsPlayer(showError = true) && mMediaPlayerHolder.isCurrentSong && sAllowCommit) {
+                if (checkIsPlayer(showError = true) && mMediaPlayerHolder.isCurrentSong) {
                     mNpDialog = NowPlaying.newInstance().apply {
                         show(supportFragmentManager, NowPlaying.TAG_MODAL)
                         onNowPlayingCancelled = {
@@ -916,13 +922,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 mEqualizerFragment?.onHandleBackPressed()?.run {
                     sRevealAnimationRunning = true
                     doOnEnd {
-                        supportFragmentManager.goBackFromFragmentNow(mEqualizerFragment)
+                        if (sAllowCommit) {
+                            supportFragmentManager.goBackFromFragmentNow(mEqualizerFragment)
+                        }
                         sRevealAnimationRunning = false
                     }
                 }
             }
         } else {
-            supportFragmentManager.goBackFromFragmentNow(mEqualizerFragment)
+            if (sAllowCommit) {
+                supportFragmentManager.goBackFromFragmentNow(mEqualizerFragment)
+            }
         }
     }
 
