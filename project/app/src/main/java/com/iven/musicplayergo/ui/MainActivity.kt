@@ -63,8 +63,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private var mDetailsFragment: DetailsFragment? = null
     private var mEqualizerFragment: EqFragment? = null
 
-    private val mMusicContainersFragments = mutableListOf<MusicContainersFragment>()
-
     // Booleans
     private val sDetailsFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.DETAILS_FRAGMENT_TAG)
     private val sErrorFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.ERROR_FRAGMENT_TAG)
@@ -406,18 +404,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         when (mActiveFragments[position]) {
             GoConstants.ARTISTS_TAB -> if (mArtistsFragment == null) {
                 mArtistsFragment = MusicContainersFragment.newInstance(GoConstants.ARTIST_VIEW)
-                mMusicContainersFragments.add(mArtistsFragment!!)
             }
             GoConstants.ALBUM_TAB -> if (mAlbumsFragment == null) {
                 mAlbumsFragment = MusicContainersFragment.newInstance(GoConstants.ALBUM_VIEW)
-                mMusicContainersFragments.add(mAlbumsFragment!!)
             }
             GoConstants.SONGS_TAB -> if (mAllMusicFragment == null) {
                 mAllMusicFragment = AllMusicFragment.newInstance()
             }
             GoConstants.FOLDERS_TAB -> if (mFoldersFragment == null) {
                 mFoldersFragment = MusicContainersFragment.newInstance(GoConstants.FOLDER_VIEW)
-                mMusicContainersFragments.add(mFoldersFragment!!)
             }
             else -> if (mSettingsFragment == null) {
                 mSettingsFragment = SettingsFragment.newInstance()
