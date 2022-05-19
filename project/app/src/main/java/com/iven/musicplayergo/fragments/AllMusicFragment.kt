@@ -209,12 +209,6 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
         false
     }
 
-    fun onListFiltered(newMusic: MutableList<Music>?) {
-        mAllMusic = newMusic
-        setMusicDataSource(mAllMusic)
-        _allMusicFragmentBinding?.shuffleFab?.text = newMusic?.size.toString()
-    }
-
     override fun onQueryTextChange(newText: String?): Boolean {
         setMusicDataSource(
             ListsHelper.processQueryForMusic(newText,

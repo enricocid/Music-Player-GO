@@ -1040,49 +1040,28 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     override fun onAddToFilter(stringToFilter: String?) {
-        if (mMusicViewModel.deviceMusicFiltered?.size == 1) {
-            R.string.error_eq.toToast(this)
-        } else {
-            stringToFilter?.let { string ->
 
-                ListsHelper.addToHiddenItems(string)
+        stringToFilter?.let { string ->
 
-                if (mMusicContainersFragments.isEmpty() || mMusicContainersFragments.isNotEmpty() && !mMusicContainersFragments.first().onListFiltered(string)) {
-                    ThemeHelper.applyChanges(this, restoreSettings = false)
-                } else {
-                    if (mMusicContainersFragments.isNotEmpty() && mMusicContainersFragments.size >= 1) {
-                        val musicContainersIterator = mMusicContainersFragments.iterator().withIndex()
-                        while (musicContainersIterator.hasNext()) {
-                            val item = musicContainersIterator.next()
-                            if (item.index != 0) {
-                                item.value.onListFiltered(string)
-                            }
-                        }
+            ListsHelper.addToHiddenItems(string)
+
+            if (isMediaPlayerHolder) {
+                // be sure to update queue, favorites and the controls panel
+                MusicOrgHelper.updateMediaPlayerHolderLists(mMediaPlayerHolder, this, mMusicViewModel.randomMusic)?.let { song ->
+                    val songs = MusicOrgHelper.getAlbumSongs(
+                        song.artist,
+                        song.album,
+                        mMusicViewModel.deviceAlbumsByArtist
+                    )
+                    with(mMediaPlayerHolder) {
+                        isPlay = isPlaying
+                        updateCurrentSong(song, songs, GoConstants.ARTIST_VIEW)
+                        initMediaPlayer(song)
                     }
-
-                    mMusicViewModel.deviceMusicFiltered = mMusicViewModel.deviceMusicFiltered?.filter { !it.artist.equals(string) and !it.album.equals(string) and !it.relativePath.equals(string) }?.toMutableList()
-
-                    mAllMusicFragment?.onListFiltered(mMusicViewModel.deviceMusicFiltered)
-                    mSettingsFragment?.onFiltersChanged()
-
-                    if (isMediaPlayerHolder) {
-                        // be sure to update queue, favorites and the controls panel
-                        MusicOrgHelper.updateMediaPlayerHolderLists(mMediaPlayerHolder, this, mMusicViewModel.randomMusic)?.let { song ->
-                            val songs = MusicOrgHelper.getAlbumSongs(
-                                song.artist,
-                                song.album,
-                                mMusicViewModel.deviceAlbumsByArtist
-                            )
-                            with(mMediaPlayerHolder) {
-                                isPlay = isPlaying
-                                updateCurrentSong(song, songs, GoConstants.ARTIST_VIEW)
-                                initMediaPlayer(song)
-                            }
-                            updatePlayingInfo(restore = false)
-                        }
-                    }
+                    updatePlayingInfo(restore = false)
                 }
             }
+            ThemeHelper.applyChanges(this, restoreSettings = false)
         }
     }
 

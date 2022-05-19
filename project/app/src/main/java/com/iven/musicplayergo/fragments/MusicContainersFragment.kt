@@ -204,17 +204,6 @@ class MusicContainersFragment : Fragment(),
         _musicContainerListBinding?.artistsFoldersRv?.adapter?.notifyDataSetChanged()
     }
 
-    fun onListFiltered(stringToFilter: String) = if (mList == null) {
-        false
-    } else {
-        mList?.run {
-            val index = indexOf(stringToFilter)
-            remove(stringToFilter)
-            _musicContainerListBinding?.artistsFoldersRv?.adapter?.notifyItemRemoved(index)
-        }
-        true
-    }
-
     override fun onQueryTextChange(newText: String?): Boolean {
         setListDataSource(ListsHelper.processQueryForStringsLists(newText, getSortedList()) ?: mList)
         return false
@@ -371,11 +360,13 @@ class MusicContainersFragment : Fragment(),
 
         private fun respondToTouch(isLongClick: Boolean, item: String, itemView: View?) {
             if (isLongClick) {
-                DialogHelper.showPopupForHide(
-                    requireActivity(),
-                    itemView,
-                    item
-                )
+                if (mList?.size!! >= 2) {
+                    DialogHelper.showPopupForHide(
+                        requireActivity(),
+                        itemView,
+                        item
+                    )
+                }
             } else {
                 mUiControlInterface.onArtistOrFolderSelected(
                     item,
