@@ -129,10 +129,6 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    fun onFiltersChanged() {
-        mPreferencesFragment?.updateFiltersPreferences()
-    }
-
     companion object {
         /**
          * Use this factory method to create a new instance of
