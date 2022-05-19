@@ -75,7 +75,12 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             preference.onPreferenceClickListener = this@PreferencesFragment
         }
 
-        updateFiltersPreferences()
+        findPreference<Preference>(getString(R.string.filter_pref))?.let { preference ->
+            goPreferences.filters?.let { ft ->
+                preference.summary = ft.size.toString()
+                preference.isEnabled = ft.isNotEmpty()
+            }
+        }
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -122,15 +127,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             }
             getString(R.string.notif_actions_pref) -> mMediaControlInterface.onGetMediaPlayerHolder()?.onHandleNotificationUpdate(isAdditionalActionsChanged = true)
             getString(R.string.song_visual_pref) -> mMediaControlInterface.onUpdatePlayingAlbumSongs(null)
-        }
-    }
-
-    fun updateFiltersPreferences() {
-        findPreference<Preference>(getString(R.string.filter_pref))?.let { preference ->
-            goPreferences.filters?.let { ft ->
-                preference.summary = ft.size.toString()
-                preference.isEnabled = ft.isNotEmpty()
-            }
         }
     }
 
