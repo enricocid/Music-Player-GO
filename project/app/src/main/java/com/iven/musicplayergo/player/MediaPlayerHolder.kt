@@ -638,7 +638,7 @@ class MediaPlayerHolder:
                 mediaPlayer.setDataSource(mPlayerService, uri)
             }
 
-            MediaPlayerUtils.safePreparePlayback(mediaPlayer)
+            MediaPlayerUtils.safePrepare(mediaPlayer)
 
         } catch (e: Exception) {
             e.printStackTrace()

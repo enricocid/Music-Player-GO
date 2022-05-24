@@ -31,7 +31,7 @@ object MediaPlayerUtils {
     }
 
     @JvmStatic
-    fun safePreparePlayback(mediaPlayer: MediaPlayer?) {
+    fun safePrepare(mediaPlayer: MediaPlayer?) {
         mediaPlayer?.run {
             try {
                 prepare()
