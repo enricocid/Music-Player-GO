@@ -254,7 +254,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                         setOnClickListener {
                             mMediaControlInterface.onGetMediaPlayerHolder()?.cancelSleepTimer()
                             onSleepTimerEnabled?.invoke(false)
-                            dismissAllowingStateLoss()
+                            dismiss()
                         }
                     }
                 }
