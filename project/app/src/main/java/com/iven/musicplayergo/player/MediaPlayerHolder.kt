@@ -993,8 +993,8 @@ class MediaPlayerHolder:
     fun stopPlaybackService(stopPlayback: Boolean) {
         if (mPlayerService.isRunning && isMediaPlayer && stopPlayback) {
             pauseMediaPlayer()
-            mediaPlayerInterface.onClose()
         }
+        mediaPlayerInterface.onClose()
     }
 
     private inner class PlayerBroadcastReceiver : BroadcastReceiver() {

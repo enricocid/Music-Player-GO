@@ -796,12 +796,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) {
             DialogHelper.stopPlaybackDialog(this, mMediaPlayerHolder)
         } else {
-            onDispatchBackPressed()
+            finishAndRemoveTask()
         }
-    }
-
-    override fun onDispatchBackPressed() {
-        super.onBackPressed()
     }
 
     override fun onHandleCoverOptionsUpdate() {
@@ -1106,7 +1102,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         override fun onClose() {
             //finish activity if visible
-            onDispatchBackPressed()
+            finishAndRemoveTask()
         }
 
         override fun onPositionChanged(position: Int) {

@@ -174,8 +174,7 @@ object DialogHelper {
             }
             .setNegativeButton(R.string.no) { _, _ ->
                 mediaPlayerHolder.stopPlaybackService(stopPlayback = false)
-            }
-            .show()
+            }.show()
     }
 
     @JvmStatic
