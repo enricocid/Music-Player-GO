@@ -7,6 +7,7 @@ interface UIControlInterface {
     fun onFavoritesUpdated(clear: Boolean)
     fun onFavoriteAddedOrRemoved()
     fun onCloseActivity()
+    fun onDispatchBackPressed()
     fun onAddToFilter(stringToFilter: String?)
     fun onDenyPermission()
     fun onOpenPlayingArtistAlbum()

@@ -231,7 +231,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     }
                     btnPositive.setOnClickListener {
                         mMediaControlInterface.onGetMediaPlayerHolder()?.run {
-                            val isEnabled =pauseBySleepTimer(sleepTimerAdapter.getSelectedSleepTimerValue(), sleepTimerAdapter.getSelectedSleepTimer())
+                            val isEnabled = pauseBySleepTimer(sleepTimerAdapter.getSelectedSleepTimerValue(), sleepTimerAdapter.getSelectedSleepTimer())
                             onSleepTimerEnabled?.invoke(isEnabled)
                         }
                         dismiss()
@@ -254,7 +254,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                         setOnClickListener {
                             mMediaControlInterface.onGetMediaPlayerHolder()?.cancelSleepTimer()
                             onSleepTimerEnabled?.invoke(false)
-                            dismiss()
+                            dismissAllowingStateLoss()
                         }
                     }
                 }

@@ -24,11 +24,11 @@ import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.MediaMetadataCompat.*
 import android.support.v4.media.session.PlaybackStateCompat
 import android.support.v4.media.session.PlaybackStateCompat.*
-import android.util.Log
 import android.view.KeyEvent
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.graphics.drawable.toBitmap
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.media.AudioAttributesCompat
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
@@ -239,12 +239,12 @@ class MediaPlayerHolder:
             addAction(Intent.ACTION_MEDIA_BUTTON)
             addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
         }
-        mPlayerService.registerReceiver(mPlayerBroadcastReceiver, intentFilter)
+        LocalBroadcastManager.getInstance(mPlayerService).registerReceiver(mPlayerBroadcastReceiver, intentFilter)
     }
 
     private fun unregisterActionsReceiver() {
         try {
-            mPlayerService.unregisterReceiver(mPlayerBroadcastReceiver)
+            LocalBroadcastManager.getInstance(mPlayerService).unregisterReceiver(mPlayerBroadcastReceiver)
         } catch (e: IllegalArgumentException) {
             e.printStackTrace()
         }
@@ -638,7 +638,7 @@ class MediaPlayerHolder:
                 mediaPlayer.setDataSource(mPlayerService, uri)
             }
 
-            mediaPlayer.prepare()
+            MediaPlayerUtils.safePreparePlayback(mediaPlayer)
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -648,7 +648,7 @@ class MediaPlayerHolder:
     override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
         val errorMessage = "MediaPlayer error: $what"
         errorMessage.toToast(mPlayerService)
-        Log.d(errorMessage, errorMessage)
+        println(errorMessage)
         mediaPlayer.reset()
         return true
     }
@@ -803,27 +803,22 @@ class MediaPlayerHolder:
     }
 
     fun cancelSleepTimer() {
-        mSleepTimer?.run {
-            cancel()
-            mSleepTimer = null
-        }
+        mSleepTimer?.cancel()
     }
 
     fun pauseBySleepTimer(minutes: Long, label: String) : Boolean {
         return if (isPlaying) {
-            synchronized(cancelSleepTimer()) {
-                mSleepTimer = object : CountDownTimer(TimeUnit.MINUTES.toMillis(minutes), 1000) {
-                    override fun onTick(p0: Long) {
-                        mediaPlayerInterface.onUpdateSleepTimerCountdown(p0)
-                    }
-                    override fun onFinish() {
-                        mSleepTimer = null
-                        pauseMediaPlayer()
-                        mediaPlayerInterface.onStopSleepTimer()
-                    }
-                }.start()
-                mPlayerService.getString(R.string.sleeptimer_enabled, label).toToast(mPlayerService)
-            }
+            mSleepTimer = object : CountDownTimer(TimeUnit.MINUTES.toMillis(minutes), 1000) {
+                override fun onTick(p0: Long) {
+                    mediaPlayerInterface.onUpdateSleepTimerCountdown(p0)
+                }
+                override fun onFinish() {
+                    mediaPlayerInterface.onStopSleepTimer()
+                    pauseMediaPlayer()
+                    cancelSleepTimer()
+                }
+            }.start()
+            mPlayerService.getString(R.string.sleeptimer_enabled, label).toToast(mPlayerService)
             true
         } else {
             R.string.error_bad_id.toToast(mPlayerService)
@@ -990,7 +985,6 @@ class MediaPlayerHolder:
                 }
                 return (1 - (ln((101 - percent).toFloat()) / ln(101f)))
             }
-
             val new = volFromPercent(percent)
             mediaPlayer.setVolume(new, new)
         }
@@ -998,10 +992,9 @@ class MediaPlayerHolder:
 
     fun stopPlaybackService(stopPlayback: Boolean) {
         if (mPlayerService.isRunning && isMediaPlayer && stopPlayback) {
-            mPlayerService.stopForeground(true)
-            mPlayerService.stopSelf()
+            pauseMediaPlayer()
+            mediaPlayerInterface.onClose()
         }
-        mediaPlayerInterface.onClose()
     }
 
     private inner class PlayerBroadcastReceiver : BroadcastReceiver() {

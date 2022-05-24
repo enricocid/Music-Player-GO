@@ -150,8 +150,8 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
             }
         }
 
-        mMediaControlInterface.onGetMediaPlayerHolder()?.let { mp ->
-            tintSleepTimerIcon(enabled = mp.isSleepTimer)
+        mMediaControlInterface.onGetMediaPlayerHolder()?.run {
+            tintSleepTimerIcon(enabled = isSleepTimer)
         }
     }
 

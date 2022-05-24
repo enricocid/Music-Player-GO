@@ -12,7 +12,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
-import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
@@ -37,6 +36,7 @@ import com.iven.musicplayergo.ui.ItemSwipeCallback
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 import me.zhanghai.android.fastscroll.FastScrollerBuilder
+import java.lang.Exception
 
 
 /**
@@ -364,23 +364,25 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             if (goPreferences.isAnimations) {
                 _detailsFragmentBinding?.root?.run {
                     mArtistDetailsAnimator = createCircularReveal(show = true)
-                    mArtistDetailsAnimator.doOnEnd {
-                        scrollToPlayingSong(mSelectedSongId)
-                    }
                 }
             }
+            scrollToPlayingSong(mSelectedSongId)
         }
     }
 
     fun scrollToPlayingSong(songId: Long?) {
-        mSongsList?.indexOfFirst { song -> song.id == songId }?.let { pos ->
-            (_detailsFragmentBinding?.songsRv?.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
-                when {
-                    pos > -1 -> pos
-                    else -> 0
-                },
-                0
-            )
+        try {
+            mSongsList?.indexOfFirst { song -> song.id == songId }?.let { pos ->
+                (_detailsFragmentBinding?.songsRv?.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
+                    when {
+                        pos > -1 -> pos
+                        else -> 0
+                    },
+                    0
+                )
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -680,7 +682,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         } else {
                             if (sPlayFirstSong) {
                                 mMediaControlInterface.onSongSelected(
-                                    mSongsList?.get(0),
+                                    mSongsList?.first(),
                                     itemAlbum?.music,
                                     mLaunchedBy
                                 )

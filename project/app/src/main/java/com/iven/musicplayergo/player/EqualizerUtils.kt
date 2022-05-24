@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.media.audiofx.AudioEffect
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toToast
 
@@ -26,7 +27,7 @@ object EqualizerUtils {
             putExtra(AudioEffect.EXTRA_AUDIO_SESSION, sessionId)
             putExtra(AudioEffect.EXTRA_PACKAGE_NAME, context.packageName)
             putExtra(AudioEffect.EXTRA_CONTENT_TYPE, AudioEffect.CONTENT_TYPE_MUSIC)
-            context.sendBroadcast(this)
+            LocalBroadcastManager.getInstance(context).sendBroadcast(this)
         }
     }
 
@@ -36,7 +37,7 @@ object EqualizerUtils {
             putExtra(AudioEffect.EXTRA_PACKAGE_NAME, context.packageName)
             putExtra(AudioEffect.EXTRA_AUDIO_SESSION, sessionId)
             putExtra(AudioEffect.EXTRA_CONTENT_TYPE, AudioEffect.CONTENT_TYPE_MUSIC)
-            context.sendBroadcast(this)
+            LocalBroadcastManager.getInstance(context).sendBroadcast(this)
         }
     }
 
