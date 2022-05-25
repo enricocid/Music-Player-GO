@@ -24,6 +24,7 @@ import com.iven.musicplayergo.utils.Versioning
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.utils.Popups
 import dev.chrisbanes.insetter.Insetter
 import dev.chrisbanes.insetter.windowInsetTypesOf
 
@@ -154,7 +155,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                 if (Versioning.isMarshmallow()) {
                     setupNPCoverButtonsToasts(npPlaybackSpeed)
                     npPlaybackSpeed.setOnClickListener { view ->
-                        Dialogs.showPopupForPlaybackSpeed(requireActivity(), view)
+                        Popups.showPopupForPlaybackSpeed(requireActivity(), view)
                     }
                 } else {
                     npPlaybackSpeed.visibility = View.GONE

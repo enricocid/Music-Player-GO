@@ -21,12 +21,12 @@ import com.iven.musicplayergo.extensions.toFormattedDate
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.extensions.toName
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.dialogs.Dialogs
 import com.iven.musicplayergo.utils.Lists
 import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.utils.Popups
 import me.zhanghai.android.fastscroll.FastScrollerBuilder
 import me.zhanghai.android.fastscroll.PopupTextProvider
 
@@ -282,7 +282,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
                     setOnLongClickListener {
                         val vh = _allMusicFragmentBinding?.allMusicRv?.findViewHolderForAdapterPosition(absoluteAdapterPosition)
-                        Dialogs.showPopupForSongs(
+                        Popups.showPopupForSongs(
                             requireActivity(),
                             vh?.itemView,
                             itemSong,

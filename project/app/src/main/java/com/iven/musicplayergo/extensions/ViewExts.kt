@@ -88,15 +88,16 @@ fun MenuItem.setIconTint(color: Int) {
 
 // Extension to set span to menu title
 fun MenuItem.setTitle(activity: Activity, title: String?) {
-    val accent = Theming.resolveThemeAccent(activity)
-    val spanString = SpannableString(if (title?.length!! > 20) {
-        activity.getString(R.string.popup_menu_title, title.substring(0,20))
-    } else {
-        title
-    })
-    spanString.setSpan(RelativeSizeSpan(0.75f), 0, spanString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-    spanString.setSpan(ForegroundColorSpan(accent), 0, spanString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-    setTitle(spanString)
+    SpannableString(title).apply {
+        setSpan(RelativeSizeSpan(0.75f), 0, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        setSpan(
+            ForegroundColorSpan(Theming.resolveThemeAccent(activity)),
+            0,
+            length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        setTitle(this)
+    }
 }
 
 @SuppressLint("RestrictedApi")

@@ -27,7 +27,6 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentDetailsBinding
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.dialogs.Dialogs
 import com.iven.musicplayergo.utils.Lists
 import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.models.Album
@@ -35,6 +34,7 @@ import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.ItemSwipeCallback
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.utils.Popups
 import me.zhanghai.android.fastscroll.FastScrollerBuilder
 import java.lang.Exception
 
@@ -781,7 +781,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     }
 
                     setOnLongClickListener {
-                        Dialogs.showPopupForSongs(
+                        Popups.showPopupForSongs(
                             requireActivity(),
                             _detailsFragmentBinding?.songsRv?.findViewHolderForAdapterPosition(absoluteAdapterPosition)?.itemView,
                             itemSong,
