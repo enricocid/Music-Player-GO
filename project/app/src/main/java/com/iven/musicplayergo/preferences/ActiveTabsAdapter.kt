@@ -11,7 +11,7 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.utils.Theming
 
 
 class ActiveTabsAdapter(private val ctx: Context) :
@@ -20,8 +20,8 @@ class ActiveTabsAdapter(private val ctx: Context) :
     var availableItems = goPreferences.activeTabsDef.toMutableList()
     private val mActiveItems = goPreferences.activeTabs.toMutableList()
 
-    private val mDisabledColor = ThemeHelper.resolveColorAttr(ctx, android.R.attr.colorButtonNormal)
-    private val mDefaultTextColor = ThemeHelper.resolveColorAttr(ctx, android.R.attr.textColorPrimary)
+    private val mDisabledColor = Theming.resolveColorAttr(ctx, android.R.attr.colorButtonNormal)
+    private val mDefaultTextColor = Theming.resolveColorAttr(ctx, android.R.attr.textColorPrimary)
 
     fun getUpdatedItems() = availableItems.apply {
         goPreferences.activeTabsDef = this
@@ -53,7 +53,7 @@ class ActiveTabsAdapter(private val ctx: Context) :
                 tabText.text = ctx.getString(getTabText(availableItems[absoluteAdapterPosition]))
 
                 val tabImageButton = findViewById<ImageView>(R.id.tab_image)
-                tabImageButton.setImageResource(ThemeHelper.getTabIcon(availableItems[absoluteAdapterPosition]))
+                tabImageButton.setImageResource(Theming.getTabIcon(availableItems[absoluteAdapterPosition]))
 
                 isEnabled = availableItems[absoluteAdapterPosition] != GoConstants.SETTINGS_TAB
                 isClickable = isEnabled
@@ -66,9 +66,9 @@ class ActiveTabsAdapter(private val ctx: Context) :
                         tabImageButton
                     )
                 } else {
-                    ThemeHelper.updateIconTint(tabDragHandle, mDisabledColor)
+                    Theming.updateIconTint(tabDragHandle, mDisabledColor)
                     tabText.setTextColor(mDisabledColor)
-                    ThemeHelper.updateIconTint(
+                    Theming.updateIconTint(
                         tabImageButton,
                         mDisabledColor
                     )
@@ -107,7 +107,7 @@ class ActiveTabsAdapter(private val ctx: Context) :
     ) {
         icon.isSelected = selected
         val iconColor = if (selected) {
-            ThemeHelper.resolveThemeAccent(ctx)
+            Theming.resolveThemeAccent(ctx)
         } else {
             mDisabledColor
         }
@@ -116,9 +116,9 @@ class ActiveTabsAdapter(private val ctx: Context) :
         } else {
             mDisabledColor
         }
-        ThemeHelper.updateIconTint(dragHandle, textColor)
+        Theming.updateIconTint(dragHandle, textColor)
         textView.setTextColor(textColor)
-        ThemeHelper.updateIconTint(icon, iconColor)
+        Theming.updateIconTint(icon, iconColor)
     }
 
     private fun getTabText(tab: String) = when (tab) {

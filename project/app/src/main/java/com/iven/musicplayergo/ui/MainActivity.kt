@@ -27,17 +27,19 @@ import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.MainActivityBinding
 import com.iven.musicplayergo.databinding.PlayerControlsPanelBinding
+import com.iven.musicplayergo.dialogs.Dialogs
 import com.iven.musicplayergo.dialogs.NowPlaying
 import com.iven.musicplayergo.dialogs.RecyclerSheet
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.fragments.*
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.helpers.*
+import com.iven.musicplayergo.utils.*
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.EqualizerUtils
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.player.MediaPlayerInterface
 import com.iven.musicplayergo.player.PlayerService
+import com.iven.musicplayergo.preferences.ContextUtils
 import com.iven.musicplayergo.preferences.SettingsFragment
 import dev.chrisbanes.insetter.Insetter
 import dev.chrisbanes.insetter.windowInsetTypesOf
@@ -114,7 +116,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
             mMediaPlayerHolder = mPlayerService.mediaPlayerHolder.apply {
                 mediaPlayerInterface = mMediaPlayerInterface
-                onHandleNotificationColorUpdate(ThemeHelper.resolveColorAttr(this@MainActivity, R.attr.main_bg))
+                onHandleNotificationColorUpdate(Theming.resolveColorAttr(this@MainActivity, R.attr.main_bg))
             }
 
             // load music and setup UI
@@ -207,7 +209,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         requestCode: Int,
         permissions: Array<String>, grantResults: IntArray
     ) {
-        if (VersioningHelper.isMarshmallow()) {
+        if (Versioning.isMarshmallow()) {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
             when (requestCode) {
                 GoConstants.PERMISSION_REQUEST_READ_EXTERNAL_STORAGE -> {
@@ -243,7 +245,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        ThemeHelper.getAccentedTheme(resources)?.run {
+        Theming.getAccentedTheme(resources)?.run {
             setTheme(first)
         }
 
@@ -252,9 +254,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         setContentView(mMainActivityBinding.root)
 
-        if (VersioningHelper.isOreoMR1()) {
+        if (Versioning.isOreoMR1()) {
             window?.navigationBarColor =
-                ThemeHelper.resolveColorAttr(this, R.attr.main_bg)
+                Theming.resolveColorAttr(this, R.attr.main_bg)
             Insetter.builder()
                 .padding(windowInsetTypesOf(navigationBars = true))
                 .margin(windowInsetTypesOf(statusBars = true))
@@ -270,8 +272,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     false
                 )
 
-        if (PermissionsHelper.hasToAskForReadStoragePermission(this)) {
-            PermissionsHelper.manageAskForReadStoragePermission(this)
+        if (Permissions.hasToAskForReadStoragePermission(this)) {
+            Permissions.manageAskForReadStoragePermission(this)
         } else {
             doBindService()
         }
@@ -355,19 +357,19 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun initTabLayout() {
 
-        val resolvedAlphaAccentColor = ThemeHelper.getAlphaAccent(this)
+        val resolvedAlphaAccentColor = Theming.getAlphaAccent(this)
 
         with(mPlayerControlsPanelBinding.tabLayout) {
 
             tabIconTint = ColorStateList.valueOf(resolvedAlphaAccentColor)
 
             TabLayoutMediator(this, mMainActivityBinding.viewPager2) { tab, position ->
-                tab.setIcon(ThemeHelper.getTabIcon(mActiveFragments[position]))
+                tab.setIcon(Theming.getTabIcon(mActiveFragments[position]))
             }.attach()
 
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
-                    tab.icon?.setTint(ThemeHelper.resolveThemeAccent(this@MainActivity))
+                    tab.icon?.setTint(Theming.resolveThemeAccent(this@MainActivity))
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -385,7 +387,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             } else {
                 0
             })?.icon?.setTint(
-                ThemeHelper.resolveThemeAccent(this@MainActivity)
+                Theming.resolveThemeAccent(this@MainActivity)
             )
         }
 
@@ -457,7 +459,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 DetailsFragment.newInstance(
                     selectedArtistOrFolder,
                     launchedBy,
-                    MusicOrgHelper.getPlayingAlbumPosition(
+                    MusicUtils.getPlayingAlbumPosition(
                         mMediaPlayerHolder,
                         selectedArtistOrFolder,
                         mMusicViewModel.deviceAlbumsByArtist
@@ -513,7 +515,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             }
             setOnLongClickListener {
                 if (checkIsPlayer(showError = true) && mMediaPlayerHolder.queueSongs.isNotEmpty()) {
-                    DialogHelper.showClearQueueDialog(this@MainActivity, mMediaPlayerHolder)
+                    Dialogs.showClearQueueDialog(this@MainActivity, mMediaPlayerHolder)
                 }
                 return@setOnLongClickListener true
             }
@@ -529,7 +531,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             }
             setOnLongClickListener {
                 if (!goPreferences.favorites.isNullOrEmpty()) {
-                    DialogHelper.showClearFavoritesDialog(
+                    Dialogs.showClearFavoritesDialog(
                         this@MainActivity
                     )
                 }
@@ -564,12 +566,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         synchronized(mMediaPlayerInterface.onBackupSong()) {
             if (isThemeChanged) {
                 AppCompatDelegate.setDefaultNightMode(
-                    ThemeHelper.getDefaultNightMode(
+                    Theming.getDefaultNightMode(
                         this
                     )
                 )
             } else {
-                ThemeHelper.applyChanges(this, restoreSettings = true)
+                Theming.applyChanges(this, restoreSettings = true)
             }
         }
     }
@@ -619,15 +621,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         val favoritesButtonColor = if (favorites.isNullOrEmpty()) {
             mPlayerControlsPanelBinding.favoritesButton.setImageResource(R.drawable.ic_favorite_empty)
-            ThemeHelper.resolveColorAttr(
+            Theming.resolveColorAttr(
                 this,
                 android.R.attr.colorButtonNormal
             )
         } else {
             mPlayerControlsPanelBinding.favoritesButton.setImageResource(R.drawable.ic_favorite)
-            ThemeHelper.resolveThemeAccent(this)
+            Theming.resolveThemeAccent(this)
         }
-        ThemeHelper.updateIconTint(
+        Theming.updateIconTint(
             mPlayerControlsPanelBinding.favoritesButton,
             favoritesButtonColor
         )
@@ -670,7 +672,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
                     song?.let { restoredSong ->
 
-                        val songs = MusicOrgHelper.getAlbumSongs(
+                        val songs = MusicUtils.getAlbumSongs(
                             (isQueueRestored ?: restoredSong).artist,
                             (isQueueRestored ?: restoredSong).album,
                             mMusicViewModel.deviceAlbumsByArtist
@@ -774,7 +776,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     closeDetailsFragment(isAnimation = false)
                 } else {
                     mDetailsFragment?.tryToSnapToAlbumPosition(
-                        MusicOrgHelper.getPlayingAlbumPosition(
+                        MusicUtils.getPlayingAlbumPosition(
                             mMediaPlayerHolder,
                             selectedArtistOrFolder,
                             mMusicViewModel.deviceAlbumsByArtist,
@@ -794,7 +796,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun onCloseActivity() {
         if (isMediaPlayerHolder && mMediaPlayerHolder.isPlaying) {
-            DialogHelper.stopPlaybackDialog(this, mMediaPlayerHolder)
+            Dialogs.stopPlaybackDialog(this, mMediaPlayerHolder)
         } else {
             finishAndRemoveTask()
         }
@@ -855,7 +857,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 if (isQueue != null) {
                     setQueueEnabled(enabled = false, canSkip = false)
                 }
-                val albumSongs = songs ?: MusicOrgHelper.getAlbumSongs(
+                val albumSongs = songs ?: MusicUtils.getAlbumSongs(
                     song?.artist,
                     song?.album,
                     mMusicViewModel.deviceAlbumsByArtist
@@ -1035,7 +1037,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     mMediaPlayerHolder.updateCurrentSongs(null)
                 }
                 if (mAllMusicFragment != null && !mAllMusicFragment?.onSongVisualizationChanged()!!) {
-                    ThemeHelper.applyChanges(this, restoreSettings = true)
+                    Theming.applyChanges(this, restoreSettings = true)
                 }
             }
         }
@@ -1045,12 +1047,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         stringToFilter?.let { string ->
 
-            ListsHelper.addToHiddenItems(string)
+            Lists.addToHiddenItems(string)
 
             if (isMediaPlayerHolder) {
                 // be sure to update queue, favorites and the controls panel
-                MusicOrgHelper.updateMediaPlayerHolderLists(mMediaPlayerHolder, this, mMusicViewModel.randomMusic)?.let { song ->
-                    val songs = MusicOrgHelper.getAlbumSongs(
+                MusicUtils.updateMediaPlayerHolderLists(mMediaPlayerHolder, this, mMusicViewModel.randomMusic)?.let { song ->
+                    val songs = MusicUtils.getAlbumSongs(
                         song.artist,
                         song.album,
                         mMusicViewModel.deviceAlbumsByArtist
@@ -1063,7 +1065,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     updatePlayingInfo(restore = false)
                 }
             }
-            ThemeHelper.applyChanges(this, restoreSettings = false)
+            Theming.applyChanges(this, restoreSettings = false)
         }
     }
 
@@ -1128,18 +1130,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
 
         override fun onQueueEnabled() {
-            ThemeHelper.updateIconTint(
+            Theming.updateIconTint(
                 mPlayerControlsPanelBinding.queueButton,
                 ContextCompat.getColor(this@MainActivity, R.color.widgetsColor)
             )
         }
 
         override fun onQueueStartedOrEnded(started: Boolean) {
-            ThemeHelper.updateIconTint(
+            Theming.updateIconTint(
                 mPlayerControlsPanelBinding.queueButton,
                 when {
-                    started -> ThemeHelper.resolveThemeAccent(this@MainActivity)
-                    mMediaPlayerHolder.queueSongs.isEmpty() -> ThemeHelper.resolveColorAttr(
+                    started -> Theming.resolveThemeAccent(this@MainActivity)
+                    mMediaPlayerHolder.queueSongs.isEmpty() -> Theming.resolveColorAttr(
                         this@MainActivity,
                         android.R.attr.colorButtonNormal
                     )

@@ -20,9 +20,9 @@ import com.iven.musicplayergo.extensions.loadWithError
 import com.iven.musicplayergo.extensions.setTitleColor
 import com.iven.musicplayergo.extensions.waitForCover
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.helpers.DialogHelper
-import com.iven.musicplayergo.helpers.ListsHelper
-import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.dialogs.Dialogs
+import com.iven.musicplayergo.utils.Lists
+import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 import me.zhanghai.android.fastscroll.FastScrollerBuilder
@@ -123,8 +123,8 @@ class MusicContainersFragment : Fragment(),
 
             with (stb.menu) {
 
-                mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, this).apply {
-                    setTitleColor(ThemeHelper.resolveThemeAccent(requireContext()))
+                mSortMenuItem = Lists.getSelectedSorting(mSorting, this).apply {
+                    setTitleColor(Theming.resolveThemeAccent(requireContext()))
                 }
 
                 with(findItem(R.id.action_search).actionView as SearchView) {
@@ -145,25 +145,25 @@ class MusicContainersFragment : Fragment(),
 
     fun tintSleepTimerIcon(enabled: Boolean) {
         _musicContainerListBinding?.searchToolbar?.run {
-            ThemeHelper.tintSleepTimerMenuItem(this, enabled)
+            Theming.tintSleepTimerMenuItem(this, enabled)
         }
     }
 
     private fun getSortedList(): MutableList<String>? {
         return when (mLaunchedBy) {
             GoConstants.ARTIST_VIEW ->
-                ListsHelper.getSortedList(
+                Lists.getSortedList(
                     mSorting,
                     mMusicViewModel.deviceAlbumsByArtist?.keys?.toMutableList()
                 )
             GoConstants.FOLDER_VIEW ->
-                ListsHelper.getSortedList(
+                Lists.getSortedList(
                     mSorting,
                     mMusicViewModel.deviceMusicByFolder?.keys?.toMutableList()
                 )
 
             else ->
-                ListsHelper.getSortedListWithNull(
+                Lists.getSortedListWithNull(
                     mSorting,
                     mMusicViewModel.deviceMusicByAlbum?.keys?.toMutableList()
                 )
@@ -205,7 +205,7 @@ class MusicContainersFragment : Fragment(),
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        setListDataSource(ListsHelper.processQueryForStringsLists(newText, getSortedList()) ?: mList)
+        setListDataSource(Lists.processQueryForStringsLists(newText, getSortedList()) ?: mList)
         return false
     }
 
@@ -223,14 +223,14 @@ class MusicContainersFragment : Fragment(),
                     setListDataSource(mList)
 
                     mSortMenuItem.setTitleColor(
-                        ThemeHelper.resolveColorAttr(
+                        Theming.resolveColorAttr(
                             requireContext(),
                             android.R.attr.textColorPrimary
                         )
                     )
 
-                    mSortMenuItem = ListsHelper.getSelectedSorting(mSorting, menu).apply {
-                        setTitleColor(ThemeHelper.resolveThemeAccent(requireContext()))
+                    mSortMenuItem = Lists.getSelectedSorting(mSorting, menu).apply {
+                        setTitleColor(Theming.resolveThemeAccent(requireContext()))
                     }
 
                     saveSortingMethodToPrefs(mSorting)
@@ -317,7 +317,7 @@ class MusicContainersFragment : Fragment(),
 
                     if (sLaunchedByAlbumView) {
                         val albumCover = findViewById<ImageView>(R.id.album_cover).apply {
-                            background.alpha = ThemeHelper.getAlbumCoverAlpha(requireContext())
+                            background.alpha = Theming.getAlbumCoverAlpha(requireContext())
                         }
                         mMusicViewModel.deviceMusicByAlbum?.get(item)?.first()?.albumId?.waitForCover(requireContext()) { bmp, error ->
                             albumCover.loadWithError(bmp, error, R.drawable.ic_music_note_cover_alt)
@@ -361,7 +361,7 @@ class MusicContainersFragment : Fragment(),
         private fun respondToTouch(isLongClick: Boolean, item: String, itemView: View?) {
             if (isLongClick) {
                 if (mList?.size!! >= 2) {
-                    DialogHelper.showPopupForHide(
+                    Dialogs.showPopupForHide(
                         requireActivity(),
                         itemView,
                         item

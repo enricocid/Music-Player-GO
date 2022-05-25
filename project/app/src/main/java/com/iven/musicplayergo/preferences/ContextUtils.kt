@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.helpers
+package com.iven.musicplayergo.preferences
 
 import android.content.Context
 import android.content.ContextWrapper

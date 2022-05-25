@@ -24,7 +24,7 @@ import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.createCircularReveal
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 
@@ -138,11 +138,11 @@ class EqFragment : Fragment() {
             .setAllCorners(CornerFamily.ROUNDED, resources.getDimension(R.dimen.md_corner_radius))
             .build()
         val roundedTextBackground = MaterialShapeDrawable(shapeAppearanceModel).apply {
-            strokeColor = ColorStateList.valueOf(ThemeHelper.resolveThemeAccent(requireContext()))
+            strokeColor = ColorStateList.valueOf(Theming.resolveThemeAccent(requireContext()))
             strokeWidth = 0.50F
             fillColor =
                 ColorStateList.valueOf(
-                    ThemeHelper.resolveColorAttr(requireContext(), R.attr.main_bg)
+                    Theming.resolveColorAttr(requireContext(), R.attr.main_bg)
                 )
         }
 

@@ -32,8 +32,8 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.google.android.material.animation.ArgbEvaluatorCompat
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.helpers.SingleClickHelper
-import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.ui.SingleClickHelper
+import com.iven.musicplayergo.utils.Theming
 import kotlin.math.max
 
 
@@ -88,7 +88,7 @@ fun MenuItem.setIconTint(color: Int) {
 
 // Extension to set span to menu title
 fun MenuItem.setTitle(activity: Activity, title: String?) {
-    val accent = ThemeHelper.resolveThemeAccent(activity)
+    val accent = Theming.resolveThemeAccent(activity)
     val spanString = SpannableString(if (title?.length!! > 20) {
         activity.getString(R.string.popup_menu_title, title.substring(0,20))
     } else {
@@ -179,7 +179,7 @@ fun View.createCircularReveal(show: Boolean): Animator {
             start()
         }
 
-    val mainBackground = ThemeHelper.resolveColorAttr(context, R.attr.main_bg)
+    val mainBackground = Theming.resolveColorAttr(context, R.attr.main_bg)
 
     with(ValueAnimator()) {
         setIntValues(mainBackground, mainBackground)

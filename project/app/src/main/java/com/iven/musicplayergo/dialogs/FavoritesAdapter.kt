@@ -16,7 +16,6 @@ import com.iven.musicplayergo.extensions.setTitle
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.extensions.toName
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.helpers.DialogHelper
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -61,7 +60,7 @@ class FavoritesAdapter(private val activity: Activity) :
             val displayedTitle = favorite?.toName()
 
             title.text = displayedTitle
-            duration.text = DialogHelper.computeDurationText(activity, favorite)
+            duration.text = Dialogs.computeDurationText(activity, favorite)
             subtitle.text =
                 activity.getString(R.string.artist_and_album, favorite?.artist, favorite?.album)
 

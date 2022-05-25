@@ -16,8 +16,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentSettingsBinding
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.helpers.ContextUtils
-import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.ui.UIControlInterface
 
 /**
@@ -89,7 +88,7 @@ class SettingsFragment : Fragment() {
                 val newLocale = locales.keys.elementAt(which)
                 if (goPreferences.locale != newLocale) {
                     goPreferences.locale = locales.keys.elementAt(which)
-                    ThemeHelper.applyChanges(requireActivity(), restoreSettings = true)
+                    Theming.applyChanges(requireActivity(), restoreSettings = true)
                 }
             }
             .setNegativeButton(R.string.cancel, null)
@@ -97,7 +96,7 @@ class SettingsFragment : Fragment() {
             if (goPreferences.locale != null) {
                 dialog.setNeutralButton(R.string.sorting_pref_default) { _, _ ->
                     goPreferences.locale = null
-                    ThemeHelper.applyChanges(requireActivity(), restoreSettings = false)
+                    Theming.applyChanges(requireActivity(), restoreSettings = false)
                 }
             }
         dialog.show()

@@ -39,8 +39,8 @@ import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.extensions.waitForCover
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.helpers.ListsHelper
-import com.iven.musicplayergo.helpers.VersioningHelper
+import com.iven.musicplayergo.utils.Lists
+import com.iven.musicplayergo.utils.Versioning
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedEqualizerSettings
 import com.iven.musicplayergo.ui.MainActivity
@@ -192,7 +192,7 @@ class MediaPlayerHolder:
     private fun startForeground() {
         if (!sNotificationForeground) {
             mMusicNotificationManager.createNotification { notification ->
-                if (VersioningHelper.isQ()) {
+                if (Versioning.isQ()) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                         try {
                             startForegroundQ(notification)
@@ -299,7 +299,7 @@ class MediaPlayerHolder:
             } else {
                 GoConstants.TRACK_SORTING
             }
-            ListsHelper.getSortedMusicList(sorting, mPlayingSongs?.toMutableList())
+            Lists.getSortedMusicList(sorting, mPlayingSongs?.toMutableList())
         }
     }
 
@@ -443,7 +443,7 @@ class MediaPlayerHolder:
 
     private fun startOrChangePlaybackSpeed() {
         with(mediaPlayer) {
-            if (sPlaybackSpeedPersisted && VersioningHelper.isMarshmallow()) {
+            if (sPlaybackSpeedPersisted && Versioning.isMarshmallow()) {
                 playbackParams = playbackParams.setSpeed(currentPlaybackSpeed)
             } else {
                 MediaPlayerUtils.safePlay(this)

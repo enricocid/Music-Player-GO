@@ -1,8 +1,9 @@
-package com.iven.musicplayergo.helpers
+package com.iven.musicplayergo.ui
 
 import kotlin.math.abs
 
 object SingleClickHelper {
+
 	private const val MIN_CLICK_INTERVAL = 500
 	private var sLastClickTime: Long = 0
 

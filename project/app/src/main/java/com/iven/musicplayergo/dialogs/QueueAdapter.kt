@@ -11,8 +11,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.startSongFromQueue
 import com.iven.musicplayergo.extensions.toName
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.helpers.DialogHelper
-import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
 
@@ -29,7 +28,7 @@ class QueueAdapter(
     var onQueueCleared: (() -> Unit)? = null
 
     private val mDefaultTextColor =
-        ThemeHelper.resolveColorAttr(ctx, android.R.attr.textColorPrimary)
+        Theming.resolveColorAttr(ctx, android.R.attr.textColorPrimary)
 
     fun swapSelectedSong(song: Music?) {
         notifyItemChanged(queueSongs.indexOf(mSelectedSong))
@@ -64,12 +63,12 @@ class QueueAdapter(
                 val displayedTitle = song.toName()
 
                 title.text = displayedTitle
-                duration.text = DialogHelper.computeDurationText(ctx, song)
+                duration.text = Dialogs.computeDurationText(ctx, song)
                 subtitle.text =
                     context.getString(R.string.artist_and_album, song.artist, song.album)
 
                 title.setTextColor(if (mediaPlayerHolder.isQueue != null && mediaPlayerHolder.isQueueStarted && queueSongs.indexOf(mSelectedSong) == absoluteAdapterPosition) {
-                    ThemeHelper.resolveThemeAccent(ctx)
+                    Theming.resolveThemeAccent(ctx)
                 } else {
                     mDefaultTextColor
                 })

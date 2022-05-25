@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.helpers
+package com.iven.musicplayergo.utils
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -14,7 +14,7 @@ import com.iven.musicplayergo.models.Music
 import java.util.*
 
 @SuppressLint("DefaultLocale")
-object ListsHelper {
+object Lists {
 
     @JvmStatic
     fun processQueryForStringsLists(

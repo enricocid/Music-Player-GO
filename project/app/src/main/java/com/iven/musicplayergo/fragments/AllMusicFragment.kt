@@ -21,9 +21,9 @@ import com.iven.musicplayergo.extensions.toFormattedDate
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.extensions.toName
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.helpers.DialogHelper
-import com.iven.musicplayergo.helpers.ListsHelper
-import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.dialogs.Dialogs
+import com.iven.musicplayergo.utils.Lists
+import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -83,7 +83,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                 deviceMusic.observe(viewLifecycleOwner) { returnedMusic ->
                     if (!returnedMusic.isNullOrEmpty()) {
                         mAllMusic =
-                            ListsHelper.getSortedMusicListForAllMusic(
+                            Lists.getSortedMusicListForAllMusic(
                                 mSorting,
                                 mMusicViewModel.deviceMusicFiltered
                             )
@@ -111,8 +111,8 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
             shuffleFab.text = mAllMusic?.size.toString()
             val fabColor = ColorUtils.blendARGB(
-                ThemeHelper.resolveColorAttr(requireContext(), R.attr.toolbar_bg),
-                ThemeHelper.resolveThemeAccent(requireContext()),
+                Theming.resolveColorAttr(requireContext(), R.attr.toolbar_bg),
+                Theming.resolveThemeAccent(requireContext()),
                 0.10f
             )
             shuffleFab.backgroundTintList = ColorStateList.valueOf(fabColor)
@@ -133,8 +133,8 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
                 with(stb.menu) {
 
-                    mSortMenuItem = ListsHelper.getSelectedSortingForAllMusic(mSorting, this).apply {
-                        setTitleColor(ThemeHelper.resolveThemeAccent(requireContext()))
+                    mSortMenuItem = Lists.getSelectedSortingForAllMusic(mSorting, this).apply {
+                        setTitleColor(Theming.resolveThemeAccent(requireContext()))
                     }
 
                     with (findItem(R.id.action_search).actionView as SearchView) {
@@ -157,7 +157,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
     fun tintSleepTimerIcon(enabled: Boolean) {
         _allMusicFragmentBinding?.searchToolbar?.run {
-            ThemeHelper.tintSleepTimerMenuItem(this, enabled)
+            Theming.tintSleepTimerMenuItem(this, enabled)
         }
     }
 
@@ -176,19 +176,19 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                 || it.itemId == R.id.album_sorting_inv) {
 
                 mSorting = it.order
-                mAllMusic = ListsHelper.getSortedMusicListForAllMusic(mSorting, mAllMusic)
+                mAllMusic = Lists.getSortedMusicListForAllMusic(mSorting, mAllMusic)
 
                 setMusicDataSource(mAllMusic)
 
                 mSortMenuItem.setTitleColor(
-                    ThemeHelper.resolveColorAttr(
+                    Theming.resolveColorAttr(
                         requireContext(),
                         android.R.attr.textColorPrimary
                     )
                 )
 
-                mSortMenuItem = ListsHelper.getSelectedSortingForAllMusic(mSorting, menu).apply {
-                    setTitleColor(ThemeHelper.resolveThemeAccent(requireContext()))
+                mSortMenuItem = Lists.getSelectedSortingForAllMusic(mSorting, menu).apply {
+                    setTitleColor(Theming.resolveThemeAccent(requireContext()))
                 }
 
                 goPreferences.allMusicSorting = mSorting
@@ -202,7 +202,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     fun onSongVisualizationChanged() = if (_allMusicFragmentBinding != null) {
-        mAllMusic = ListsHelper.getSortedMusicListForAllMusic(mSorting, mAllMusic)
+        mAllMusic = Lists.getSortedMusicListForAllMusic(mSorting, mAllMusic)
         setMusicDataSource(mAllMusic)
         true
     } else {
@@ -211,8 +211,8 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onQueryTextChange(newText: String?): Boolean {
         setMusicDataSource(
-            ListsHelper.processQueryForMusic(newText,
-                ListsHelper.getSortedMusicListForAllMusic(
+            Lists.processQueryForMusic(newText,
+                Lists.getSortedMusicListForAllMusic(
                     mSorting,
                     mMusicViewModel.deviceMusicFiltered
                 )
@@ -282,7 +282,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
                     setOnLongClickListener {
                         val vh = _allMusicFragmentBinding?.allMusicRv?.findViewHolderForAdapterPosition(absoluteAdapterPosition)
-                        DialogHelper.showPopupForSongs(
+                        Dialogs.showPopupForSongs(
                             requireActivity(),
                             vh?.itemView,
                             itemSong,

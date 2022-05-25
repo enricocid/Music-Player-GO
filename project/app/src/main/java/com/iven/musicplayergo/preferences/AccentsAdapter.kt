@@ -12,13 +12,13 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toContrastColor
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.utils.Theming
 
 
 class AccentsAdapter(private val activity: Activity) :
     RecyclerView.Adapter<AccentsAdapter.AccentsHolder>() {
 
-    private val mAccents = ThemeHelper.accents
+    private val mAccents = Theming.accents
     var selectedAccent = goPreferences.accent
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = AccentsHolder(
@@ -42,7 +42,7 @@ class AccentsAdapter(private val activity: Activity) :
             with(itemView) {
 
                 val accent = ContextCompat.getColor(activity, color)
-                val accentFullName = ThemeHelper.getAccentName(activity, mAccents[absoluteAdapterPosition].first)
+                val accentFullName = Theming.getAccentName(activity, mAccents[absoluteAdapterPosition].first)
                 contentDescription = accentFullName
 
                 val cardView = this as MaterialCardView

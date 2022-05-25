@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.helpers
+package com.iven.musicplayergo.utils
 
 import android.content.res.Resources
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +10,7 @@ import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.UIControlInterface
 
 
-object MusicOrgHelper {
+object MusicUtils {
 
     // Returns the position in list of the current played album
     // pass selected artist from artists adapter and not from current song

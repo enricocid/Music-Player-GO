@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.helpers
+package com.iven.musicplayergo.utils
 
 
 import android.app.Activity
@@ -28,7 +28,7 @@ import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.MainActivity
 
 
-object ThemeHelper {
+object Theming {
 
     @JvmStatic
     fun applyChanges(activity: Activity, restoreSettings: Boolean) {
@@ -47,7 +47,7 @@ object ThemeHelper {
     fun getDefaultNightMode(context: Context) = when (goPreferences.theme) {
         context.getString(R.string.theme_pref_light) -> AppCompatDelegate.MODE_NIGHT_NO
         context.getString(R.string.theme_pref_dark) -> AppCompatDelegate.MODE_NIGHT_YES
-        else -> if (VersioningHelper.isQ()) {
+        else -> if (Versioning.isQ()) {
             AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
         } else {
             AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY

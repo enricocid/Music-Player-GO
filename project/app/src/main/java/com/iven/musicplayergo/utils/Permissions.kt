@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.helpers
+package com.iven.musicplayergo.utils
 
 import android.Manifest
 import android.annotation.TargetApi
@@ -12,11 +12,11 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.ui.UIControlInterface
 
-object PermissionsHelper {
+object Permissions {
 
     @JvmStatic
     fun hasToAskForReadStoragePermission(activity: Activity) =
-        VersioningHelper.isMarshmallow() && ContextCompat.checkSelfPermission(
+        Versioning.isMarshmallow() && ContextCompat.checkSelfPermission(
             activity,
             Manifest.permission.READ_EXTERNAL_STORAGE
         ) != PackageManager.PERMISSION_GRANTED

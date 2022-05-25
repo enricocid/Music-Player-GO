@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.request.CachePolicy
-import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.utils.Theming
 
 val goPreferences: GoPreferences by lazy {
     GoApp.prefs
@@ -20,7 +20,7 @@ class GoApp : Application(), ImageLoaderFactory {
     override fun onCreate() {
         super.onCreate()
         prefs = GoPreferences(applicationContext)
-        AppCompatDelegate.setDefaultNightMode(ThemeHelper.getDefaultNightMode(applicationContext))
+        AppCompatDelegate.setDefaultNightMode(Theming.getDefaultNightMode(applicationContext))
     }
 
     override fun newImageLoader() = ImageLoader.Builder(this)

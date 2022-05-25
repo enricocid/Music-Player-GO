@@ -1,4 +1,4 @@
-package com.iven.musicplayergo.helpers
+package com.iven.musicplayergo.dialogs
 
 import android.app.Activity
 import android.content.Context
@@ -16,9 +16,11 @@ import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.utils.Lists
+import com.iven.musicplayergo.utils.Theming
 
 
-object DialogHelper {
+object Dialogs {
 
     @JvmStatic
     fun showClearQueueDialog(context: Context, mediaPlayerHolder: MediaPlayerHolder) {
@@ -95,7 +97,7 @@ object DialogHelper {
                 setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
                         R.id.favorites_add -> {
-                            ListsHelper.addToFavorites(
+                            Lists.addToFavorites(
                                 activity,
                                 song,
                                 canRemove = false,
@@ -124,7 +126,9 @@ object DialogHelper {
             gravity = Gravity.END
 
             if (goPreferences.playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY) {
-                menu.findItem(getSelectedPlaybackItem(goPreferences.latestPlaybackSpeed)).setTitleColor(ThemeHelper.resolveThemeAccent(activity))
+                menu.findItem(getSelectedPlaybackItem(goPreferences.latestPlaybackSpeed)).setTitleColor(
+                    Theming.resolveThemeAccent(activity)
+                )
             }
 
             setOnMenuItemClickListener { menuItem ->
@@ -141,7 +145,11 @@ object DialogHelper {
                     else -> 2.5F
                 }
                 if (goPreferences.playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY) {
-                    menu.findItem(getSelectedPlaybackItem(playbackSpeed)).setTitleColor(ThemeHelper.resolveThemeAccent(activity))
+                    menu.findItem(getSelectedPlaybackItem(playbackSpeed)).setTitleColor(
+                        Theming.resolveThemeAccent(
+                            activity
+                        )
+                    )
                 }
                 (activity as MediaControlInterface).onGetMediaPlayerHolder()?.setPlaybackSpeed(playbackSpeed)
                 return@setOnMenuItemClickListener true

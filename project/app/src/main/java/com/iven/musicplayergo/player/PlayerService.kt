@@ -18,7 +18,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.helpers.VersioningHelper
+import com.iven.musicplayergo.utils.Versioning
 
 
 private const val WAKELOCK_MILLI: Long = 25000
@@ -84,7 +84,7 @@ class PlayerService : Service() {
         val mediaButtonIntent = Intent(Intent.ACTION_MEDIA_BUTTON)
         val mediaButtonReceiverComponentName = ComponentName(applicationContext, MediaBtnReceiver::class.java)
 
-        val mediaButtonReceiverPendingIntent = PendingIntent.getBroadcast(applicationContext, 0, mediaButtonIntent, if (VersioningHelper.isMarshmallow()) {
+        val mediaButtonReceiverPendingIntent = PendingIntent.getBroadcast(applicationContext, 0, mediaButtonIntent, if (Versioning.isMarshmallow()) {
             PendingIntent.FLAG_IMMUTABLE or 0
         } else {
             0

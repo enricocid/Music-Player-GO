@@ -22,7 +22,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.ModalRvBinding
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.preferences.AccentsAdapter
 import com.iven.musicplayergo.preferences.ActiveTabsAdapter
@@ -104,7 +104,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     modalRv.layoutManager = layoutManager
                     modalRv.adapter = accentsAdapter
 
-                    ThemeHelper.getAccentedTheme(resources)?.run {
+                    Theming.getAccentedTheme(resources)?.run {
                         modalRv.post { layoutManager.scrollToPositionWithOffset(second, 0) }
                     }
 
@@ -184,7 +184,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
                         mQueueAdapter = QueueAdapter(requireActivity(), this)
                         modalRv.adapter = mQueueAdapter
-                        if (ThemeHelper.isDeviceLand(resources)) {
+                        if (Theming.isDeviceLand(resources)) {
                             modalRv.layoutManager = GridLayoutManager(context, 3)
                         }
 
@@ -272,7 +272,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     modalRv.adapter = favoritesAdapter
                     FastScrollerBuilder(modalRv).useMd2Style().build()
 
-                    if (ThemeHelper.isDeviceLand(resources)) {
+                    if (Theming.isDeviceLand(resources)) {
                         modalRv.layoutManager = GridLayoutManager(context, 3)
                     }
                     favoritesAdapter.onFavoritesCleared = {
@@ -299,7 +299,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             dialog?.window?.navigationBarColor =
-                ThemeHelper.resolveColorAttr(requireContext(), R.attr.main_bg)
+                Theming.resolveColorAttr(requireContext(), R.attr.main_bg)
             Insetter.builder()
                 .padding(windowInsetTypesOf(navigationBars = true))
                 .margin(windowInsetTypesOf(statusBars = true))
@@ -331,7 +331,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
         private var mSelectedPosition = 0
 
         private val mDefaultTextColor =
-            ThemeHelper.resolveColorAttr(requireActivity(), android.R.attr.textColorPrimary)
+            Theming.resolveColorAttr(requireActivity(), android.R.attr.textColorPrimary)
 
         fun getSelectedSleepTimer(): String = sleepOptions[mSelectedPosition]
         fun getSelectedSleepTimerValue() = sleepOptionValues[mSelectedPosition].toLong()
@@ -360,7 +360,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     text = itemSleepOption
                     contentDescription = itemSleepOption
                     setTextColor(if (mSelectedPosition == absoluteAdapterPosition) {
-                        ThemeHelper.resolveThemeAccent(requireActivity())
+                        Theming.resolveThemeAccent(requireActivity())
                     } else {
                         mDefaultTextColor
                     })

@@ -12,7 +12,7 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.dialogs.RecyclerSheet
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 
@@ -54,15 +54,15 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         super.onViewCreated(view, savedInstanceState)
 
         findPreference<Preference>(getString(R.string.theme_pref))?.apply {
-            icon = ContextCompat.getDrawable(requireContext(), ThemeHelper.resolveThemeIcon(requireContext()))
+            icon = ContextCompat.getDrawable(requireContext(), Theming.resolveThemeIcon(requireContext()))
         }
 
         findPreference<Preference>(getString(R.string.theme_pref_black))?.let { preference ->
-            preference.isVisible = ThemeHelper.isThemeNight(resources)
+            preference.isVisible = Theming.isThemeNight(resources)
         }
 
         findPreference<Preference>(getString(R.string.accent_pref))?.let { preference ->
-            preference.summary = ThemeHelper.getAccentName(requireContext(), goPreferences.accent)
+            preference.summary = Theming.getAccentName(requireContext(), goPreferences.accent)
             preference.onPreferenceClickListener = this@PreferencesFragment
         }
 

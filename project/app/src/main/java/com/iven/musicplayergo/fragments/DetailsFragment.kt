@@ -27,9 +27,9 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentDetailsBinding
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.helpers.DialogHelper
-import com.iven.musicplayergo.helpers.ListsHelper
-import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.dialogs.Dialogs
+import com.iven.musicplayergo.utils.Lists
+import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.ItemSwipeCallback
@@ -140,7 +140,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _detailsFragmentBinding = if (sLaunchedByAlbumView && ThemeHelper.isDeviceLand(resources)) {
+        _detailsFragmentBinding = if (sLaunchedByAlbumView && Theming.isDeviceLand(resources)) {
             val view = LayoutInflater.from(requireContext()).inflate(R.layout.fragment_details_alt_land, container, false)
             FragmentDetailsBinding.bind(view)
         } else {
@@ -228,7 +228,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             }
 
             if (sLaunchedByFolderView) {
-                setBackgroundColor(ThemeHelper.resolveColorAttr(requireContext(), R.attr.toolbar_bg))
+                setBackgroundColor(Theming.resolveColorAttr(requireContext(), R.attr.toolbar_bg))
             }
         }
     }
@@ -246,9 +246,9 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 setImageResource(getDefSortingIconForArtistView())
                 setOnClickListener {
                     mSongsSorting = if (sShowDisplayName) {
-                        ListsHelper.getSongsDisplayNameSorting(mSongsSorting)
+                        Lists.getSongsDisplayNameSorting(mSongsSorting)
                     } else {
-                        ListsHelper.getSongsSorting(mSongsSorting)
+                        Lists.getSongsSorting(mSongsSorting)
                     }
                     setSongsDataSource(mSelectedAlbum?.music, updateSongs = !sAlbumSwapped && sCanUpdateSongs, updateAdapter = true)
                 }
@@ -285,7 +285,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     )
                     selectedAlbumViewSize.isSelected = true
 
-                    albumViewArt.background.alpha = ThemeHelper.getAlbumCoverAlpha(requireContext())
+                    albumViewArt.background.alpha = Theming.getAlbumCoverAlpha(requireContext())
                     albumViewArt.afterMeasured {
                         val dim = width * 2
                         albumViewArt.layoutParams = LinearLayout.LayoutParams(dim, dim)
@@ -347,7 +347,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 if (direction == ItemTouchHelper.RIGHT) {
                     mMediaControlInterface.onAddToQueue(song)
                 } else {
-                    ListsHelper.addToFavorites(
+                    Lists.addToFavorites(
                         requireActivity(),
                         song,
                         canRemove = false,
@@ -390,9 +390,9 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
     private fun setSongsDataSource(musicList: List<Music>?, updateSongs: Boolean, updateAdapter: Boolean) {
 
         val songs = if (sLaunchedByFolderView) {
-            ListsHelper.getSortedMusicListForFolder(mSongsSorting, musicList?.toMutableList())
+            Lists.getSortedMusicListForFolder(mSongsSorting, musicList?.toMutableList())
         } else {
-            ListsHelper.getSortedMusicList(mSongsSorting, musicList?.toMutableList())
+            Lists.getSortedMusicList(mSongsSorting, musicList?.toMutableList())
         }
 
         if (sLaunchedByArtistView) {
@@ -400,12 +400,12 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 with(_binding.sortButton) {
                     setImageResource(getDefSortingIconForArtistView())
                     isEnabled = mSelectedAlbum?.music?.size!! >= 2
-                    ThemeHelper.updateIconTint(
+                    Theming.updateIconTint(
                         this,
                         if (isEnabled) {
                             ContextCompat.getColor(requireContext(), R.color.widgetsColor)
                         } else {
-                            ThemeHelper.resolveColorAttr(
+                            Theming.resolveColorAttr(
                                 requireContext(),
                                 android.R.attr.colorButtonNormal
                             )
@@ -429,11 +429,11 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     private fun getDefSortingIconForArtistView() = if (sShowDisplayName) {
-        ThemeHelper.getSortIconForSongsDisplayName(
+        Theming.getSortIconForSongsDisplayName(
             mSongsSorting
         )
     } else {
-        ThemeHelper.getSortIconForSongs(
+        Theming.getSortIconForSongs(
             mSongsSorting
         )
     }
@@ -446,7 +446,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onQueryTextChange(newText: String?): Boolean {
         setSongsDataSource(
-            ListsHelper.processQueryForMusic(newText, getSongSource())
+            Lists.processQueryForMusic(newText, getSongSource())
                 ?: mSongsList,
             updateSongs = false,
             updateAdapter = true
@@ -530,7 +530,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     fun tintSleepTimerIcon(enabled: Boolean) {
         _detailsFragmentBinding?.detailsToolbar?.run {
-            ThemeHelper.tintSleepTimerMenuItem(this, enabled)
+            Theming.tintSleepTimerMenuItem(this, enabled)
         }
     }
 
@@ -665,7 +665,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         0
                     }
 
-                    albumCover.background.alpha = ThemeHelper.getAlbumCoverAlpha(requireContext())
+                    albumCover.background.alpha = Theming.getAlbumCoverAlpha(requireContext())
 
                     itemAlbum?.music?.first()?.albumId?.waitForCover(requireContext()) { bmp, error ->
                         albumCover.loadWithError(bmp, error, R.drawable.ic_music_note_cover_alt)
@@ -698,8 +698,8 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private inner class SongsAdapter: RecyclerView.Adapter<SongsAdapter.SongsHolder>() {
 
-        val defaultTextColor = ThemeHelper.resolveColorAttr(requireContext(), android.R.attr.textColorPrimary)
-        val accentTextColor = ThemeHelper.resolveThemeAccent(requireContext())
+        val defaultTextColor = Theming.resolveColorAttr(requireContext(), android.R.attr.textColorPrimary)
+        val accentTextColor = Theming.resolveThemeAccent(requireContext())
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SongsHolder(
             LayoutInflater.from(parent.context).inflate(
@@ -781,7 +781,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     }
 
                     setOnLongClickListener {
-                        DialogHelper.showPopupForSongs(
+                        Dialogs.showPopupForSongs(
                             requireActivity(),
                             _detailsFragmentBinding?.songsRv?.findViewHolderForAdapterPosition(absoluteAdapterPosition)?.itemView,
                             itemSong,

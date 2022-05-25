@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.helpers.ThemeHelper
+import com.iven.musicplayergo.utils.Theming
 
 
 class FiltersAdapter(val activity: Activity) :
@@ -18,12 +18,12 @@ class FiltersAdapter(val activity: Activity) :
 
     private val mAvailableItems = goPreferences.filters?.sorted()?.toMutableList()
 
-    private val mDisabledColor = ThemeHelper.resolveColorAttr(
+    private val mDisabledColor = Theming.resolveColorAttr(
         activity,
         android.R.attr.colorButtonNormal
     )
 
-    private val mDefaultTextColor = ThemeHelper.resolveColorAttr(activity, android.R.attr.textColorPrimary)
+    private val mDefaultTextColor = Theming.resolveColorAttr(activity, android.R.attr.textColorPrimary)
 
     fun getUpdatedItems() = mAvailableItems?.apply {
         removeAll(mItemsToRemove.toSet())

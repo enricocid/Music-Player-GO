@@ -19,8 +19,8 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.waitForCover
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.helpers.ThemeHelper
-import com.iven.musicplayergo.helpers.VersioningHelper
+import com.iven.musicplayergo.utils.Theming
+import com.iven.musicplayergo.utils.Versioning
 import com.iven.musicplayergo.ui.MainActivity
 
 
@@ -42,7 +42,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             action = playerAction
             component = ComponentName(playerService, PlayerService::class.java)
         }
-        val flags = if (VersioningHelper.isMarshmallow()) {
+        val flags = if (Versioning.isMarshmallow()) {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         } else {
             PendingIntent.FLAG_UPDATE_CURRENT
@@ -75,7 +75,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         openPlayerIntent.flags =
             Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
 
-        val flags = if (VersioningHelper.isMarshmallow()) {
+        val flags = if (Versioning.isMarshmallow()) {
             PendingIntent.FLAG_IMMUTABLE or 0
         } else {
             0
@@ -203,7 +203,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             }
         when (action) {
             GoConstants.REPEAT_ACTION -> icon =
-                ThemeHelper.getRepeatIcon(playerService.mediaPlayerHolder)
+                Theming.getRepeatIcon(playerService.mediaPlayerHolder)
             GoConstants.PREV_ACTION -> icon = R.drawable.ic_skip_previous
             GoConstants.NEXT_ACTION -> icon = R.drawable.ic_skip_next
             GoConstants.CLOSE_ACTION -> icon = R.drawable.ic_close

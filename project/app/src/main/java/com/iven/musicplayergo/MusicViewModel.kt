@@ -6,8 +6,8 @@ import android.content.res.Resources
 import android.provider.MediaStore
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.iven.musicplayergo.helpers.MusicOrgHelper
-import com.iven.musicplayergo.helpers.VersioningHelper
+import com.iven.musicplayergo.utils.MusicUtils
+import com.iven.musicplayergo.utils.Versioning
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
 import kotlinx.coroutines.*
@@ -82,7 +82,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
     fun queryForMusic(application: Application) =
 
          try {
-             val pathColumn = if (VersioningHelper.isQ()) {
+             val pathColumn = if (Versioning.isQ()) {
                  MediaStore.Audio.AudioColumns.BUCKET_DISPLAY_NAME
              } else {
                  MediaStore.Audio.AudioColumns.DATA
@@ -148,7 +148,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                      val audioDateAdded = cursor.getInt(dateAddedIndex)
 
                      val audioFolderName =
-                         if (VersioningHelper.isQ()) {
+                         if (Versioning.isQ()) {
                              audioRelativePath ?: application.getString(R.string.slash)
                          } else {
                              val returnedPath = File(audioRelativePath).parentFile?.name
@@ -228,7 +228,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                 iterate.next()?.let { artistKey ->
                     val album = deviceSongsByArtist?.getValue(artistKey)
                     deviceAlbumsByArtist?.set(
-                        artistKey, MusicOrgHelper.buildSortedArtistAlbums(
+                        artistKey, MusicUtils.buildSortedArtistAlbums(
                             resources,
                             album
                         )

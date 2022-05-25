@@ -18,10 +18,9 @@ import com.iven.musicplayergo.databinding.NowPlayingCoverBinding
 import com.iven.musicplayergo.databinding.NowPlayingExtendedControlsBinding
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.goPreferences
-import com.iven.musicplayergo.helpers.DialogHelper
-import com.iven.musicplayergo.helpers.ListsHelper
-import com.iven.musicplayergo.helpers.ThemeHelper
-import com.iven.musicplayergo.helpers.VersioningHelper
+import com.iven.musicplayergo.utils.Lists
+import com.iven.musicplayergo.utils.Theming
+import com.iven.musicplayergo.utils.Versioning
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -76,7 +75,7 @@ class NowPlaying: BottomSheetDialogFragment() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             dialog?.window?.navigationBarColor =
-                ThemeHelper.resolveColorAttr(requireContext(), R.attr.main_bg)
+                Theming.resolveColorAttr(requireContext(), R.attr.main_bg)
             Insetter.builder()
                 .padding(windowInsetTypesOf(navigationBars = true))
                 .margin(windowInsetTypesOf(statusBars = true))
@@ -84,7 +83,7 @@ class NowPlaying: BottomSheetDialogFragment() {
         }
 
         view.afterMeasured {
-            val ratio = if (ThemeHelper.isDeviceLand(resources)) {
+            val ratio = if (Theming.isDeviceLand(resources)) {
                 0.30f
             } else {
                 0.65f
@@ -145,27 +144,27 @@ class NowPlaying: BottomSheetDialogFragment() {
 
     private fun setupNPCoverLayout() {
 
-        if (!ThemeHelper.isDeviceLand(resources)) {
+        if (!Theming.isDeviceLand(resources)) {
             _nowPlayingBinding?.npArtistAlbum?.textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
             _nowPlayingBinding?.npSong?.textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
         }
 
         mMediaControlInterface.onGetMediaPlayerHolder()?.let { mph ->
             _npCoverBinding?.run {
-                if (VersioningHelper.isMarshmallow()) {
+                if (Versioning.isMarshmallow()) {
                     setupNPCoverButtonsToasts(npPlaybackSpeed)
                     npPlaybackSpeed.setOnClickListener { view ->
-                        DialogHelper.showPopupForPlaybackSpeed(requireActivity(), view)
+                        Dialogs.showPopupForPlaybackSpeed(requireActivity(), view)
                     }
                 } else {
                     npPlaybackSpeed.visibility = View.GONE
                 }
 
-                npCover.background.alpha = ThemeHelper.getAlbumCoverAlpha(requireContext())
+                npCover.background.alpha = Theming.getAlbumCoverAlpha(requireContext())
                 npSaveTime.setOnClickListener { saveSongPosition() }
                 npEqualizer.setOnClickListener { mUIControlInterface.onOpenEqualizer() }
                 npLove.setOnClickListener {
-                    ListsHelper.addToFavorites(
+                    Lists.addToFavorites(
                         requireActivity(),
                         mph.currentSong,
                         canRemove = true,
@@ -177,12 +176,12 @@ class NowPlaying: BottomSheetDialogFragment() {
 
                 with(npRepeat) {
                     setImageResource(
-                        ThemeHelper.getRepeatIcon(mph)
+                        Theming.getRepeatIcon(mph)
                     )
-                    ThemeHelper.updateIconTint(
+                    Theming.updateIconTint(
                         this,
                         if (mph.isRepeat1X || mph.isLooping || mph.isPauseOnEnd) {
-                            ThemeHelper.resolveThemeAccent(requireContext())
+                            Theming.resolveThemeAccent(requireContext())
                         } else {
                             ContextCompat.getColor(requireContext(), R.color.widgetsColor)
                         }
@@ -217,7 +216,7 @@ class NowPlaying: BottomSheetDialogFragment() {
 
                 mMediaControlInterface.onGetMediaPlayerHolder()?.currentVolumeInPercent?.run {
                     npVolume.setImageResource(
-                        ThemeHelper.getPreciseVolumeIcon(this)
+                        Theming.getPreciseVolumeIcon(this)
                     )
                     npVolumeSeek.progress = this
                     npVolumeValue.text = this.toString()
@@ -226,27 +225,27 @@ class NowPlaying: BottomSheetDialogFragment() {
                 npVolumeSeek.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
                     val defaultValueColor = _npExtControlsBinding?.npVolumeValue?.currentTextColor
-                    val selectedColor = ThemeHelper.resolveThemeAccent(requireContext())
+                    val selectedColor = Theming.resolveThemeAccent(requireContext())
 
                     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                         if (fromUser) {
                             mMediaControlInterface.onGetMediaPlayerHolder()?.setPreciseVolume(progress)
                             npVolumeValue.text = progress.toString()
                             npVolume.setImageResource(
-                                ThemeHelper.getPreciseVolumeIcon(progress)
+                                Theming.getPreciseVolumeIcon(progress)
                             )
                         }
                     }
                     override fun onStartTrackingTouch(seekBar: SeekBar) {
                         npVolumeValue.setTextColor(selectedColor)
-                        ThemeHelper.updateIconTint(
+                        Theming.updateIconTint(
                             npVolume,
                             selectedColor
                         )
                     }
                     override fun onStopTrackingTouch(seekBar: SeekBar) {
                         npVolumeValue.setTextColor(defaultValueColor!!)
-                        ThemeHelper.updateIconTint(
+                        Theming.updateIconTint(
                             npVolume,
                             defaultValueColor
                         )
@@ -264,7 +263,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                     object : SeekBar.OnSeekBarChangeListener {
 
                         val defaultPositionColor = npSeek.currentTextColor
-                        val selectedColor = ThemeHelper.resolveThemeAccent(requireContext())
+                        val selectedColor = Theming.resolveThemeAccent(requireContext())
                         var userSelectedPosition = 0
                         var isUserSeeking = false
 
@@ -313,19 +312,19 @@ class NowPlaying: BottomSheetDialogFragment() {
             mMediaControlInterface.onGetMediaPlayerHolder()?.run {
                 val resolvedIconsColor = ContextCompat.getColor(requireContext(), R.color.widgetsColor)
                 _npCoverBinding?.npRepeat?.setImageResource(
-                    ThemeHelper.getRepeatIcon(this)
+                    Theming.getRepeatIcon(this)
                 )
                 when {
-                    onPlaybackCompletion -> ThemeHelper.updateIconTint(
+                    onPlaybackCompletion -> Theming.updateIconTint(
                         _npCoverBinding?.npRepeat!!,
                         resolvedIconsColor
                     )
                     isRepeat1X or isLooping or isPauseOnEnd -> {
-                        ThemeHelper.updateIconTint(
-                            _npCoverBinding?.npRepeat!!, ThemeHelper.resolveThemeAccent(requireContext())
+                        Theming.updateIconTint(
+                            _npCoverBinding?.npRepeat!!, Theming.resolveThemeAccent(requireContext())
                         )
                     }
-                    else -> ThemeHelper.updateIconTint(
+                    else -> Theming.updateIconTint(
                         _npCoverBinding?.npRepeat!!,
                         resolvedIconsColor
                     )
@@ -354,7 +353,7 @@ class NowPlaying: BottomSheetDialogFragment() {
             when (val position = playerPosition) {
                 0 -> _npCoverBinding?.npLove?.callOnClick()
                 else -> {
-                    ListsHelper.addToFavorites(requireActivity(), song, canRemove = false, position, launchedBy)
+                    Lists.addToFavorites(requireActivity(), song, canRemove = false, position, launchedBy)
                     mUIControlInterface.onFavoriteAddedOrRemoved()
                 }
             }
@@ -378,15 +377,15 @@ class NowPlaying: BottomSheetDialogFragment() {
                     val isFavorite = favorites != null && favorites.contains(song.toSavedMusic(0, mediaPlayerHolder.launchedBy))
                     val favoritesButtonColor = if (isFavorite) {
                         npLove.setImageResource(R.drawable.ic_favorite)
-                        ThemeHelper.resolveThemeAccent(context)
+                        Theming.resolveThemeAccent(context)
                     } else {
                         npLove.setImageResource(R.drawable.ic_favorite_empty)
-                        ThemeHelper.resolveColorAttr(
+                        Theming.resolveColorAttr(
                             context,
                             android.R.attr.colorButtonNormal
                         )
                     }
-                    ThemeHelper.updateIconTint(npLove, favoritesButtonColor)
+                    Theming.updateIconTint(npLove, favoritesButtonColor)
                 }
             }
         }
