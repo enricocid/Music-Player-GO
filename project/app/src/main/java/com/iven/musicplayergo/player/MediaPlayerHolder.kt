@@ -1019,10 +1019,10 @@ class MediaPlayerHolder:
 
                     when (act) {
 
-                        BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (currentSong != null && goPreferences.isHeadsetPlugEnabled) {
+                        BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
                             pauseMediaPlayer()
                         }
-                        BluetoothDevice.ACTION_ACL_CONNECTED -> if (currentSong != null && goPreferences.isHeadsetPlugEnabled) {
+                        BluetoothDevice.ACTION_ACL_CONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
                             resumeMediaPlayer()
                         }
 
@@ -1030,26 +1030,19 @@ class MediaPlayerHolder:
                             handleMediaButton(intent)
                         }
 
-                        AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED ->
+                        AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
                             when (intent.getIntExtra(AudioManager.EXTRA_SCO_AUDIO_STATE, -1)) {
-                                AudioManager.SCO_AUDIO_STATE_CONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
-                                    resumeMediaPlayer()
-                                }
-                                AudioManager.SCO_AUDIO_STATE_DISCONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
-                                    pauseMediaPlayer()
-                                }
+                                AudioManager.SCO_AUDIO_STATE_CONNECTED -> resumeMediaPlayer()
+                                AudioManager.SCO_AUDIO_STATE_DISCONNECTED -> pauseMediaPlayer()
                             }
+                        }
 
                         Intent.ACTION_HEADSET_PLUG -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
                             when (intent.getIntExtra("state", -1)) {
                                 // 0 means disconnected
-                                HEADSET_DISCONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
-                                    pauseMediaPlayer()
-                                }
+                                HEADSET_DISCONNECTED -> pauseMediaPlayer()
                                 // 1 means connected
-                                HEADSET_CONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
-                                    resumeMediaPlayer()
-                                }
+                                HEADSET_CONNECTED -> resumeMediaPlayer()
                             }
                         }
 
@@ -1062,6 +1055,7 @@ class MediaPlayerHolder:
                 if (isOrderedBroadcast) {
                     abortBroadcast()
                 }
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }
