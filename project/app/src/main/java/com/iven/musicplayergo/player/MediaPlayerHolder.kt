@@ -24,6 +24,7 @@ import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.MediaMetadataCompat.*
 import android.support.v4.media.session.PlaybackStateCompat
 import android.support.v4.media.session.PlaybackStateCompat.*
+import android.util.AndroidRuntimeException
 import android.view.KeyEvent
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
@@ -44,6 +45,8 @@ import com.iven.musicplayergo.utils.Versioning
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedEqualizerSettings
 import com.iven.musicplayergo.ui.MainActivity
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -185,8 +188,12 @@ class MediaPlayerHolder:
         mPlayerService = playerService
         mAudioManager = playerService.getSystemService()
         mMusicNotificationManager = mPlayerService.musicNotificationManager
-        registerActionsReceiver()
-        mPlayerService.configureMediaSession()
+        runBlocking {
+            launch {
+                registerActionsReceiver()
+                mPlayerService.configureMediaSession()
+            }
+        }
     }
 
     private fun startForeground() {
@@ -239,14 +246,20 @@ class MediaPlayerHolder:
             addAction(Intent.ACTION_MEDIA_BUTTON)
             addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
         }
-        LocalBroadcastManager.getInstance(mPlayerService).registerReceiver(mPlayerBroadcastReceiver, intentFilter)
+        try {
+            mPlayerService.applicationContext.registerReceiver(mPlayerBroadcastReceiver, intentFilter)
+        } catch (e: AndroidRuntimeException) {
+            e.printStackTrace()
+            LocalBroadcastManager.getInstance(mPlayerService.applicationContext).registerReceiver(mPlayerBroadcastReceiver, intentFilter)
+        }
     }
 
     private fun unregisterActionsReceiver() {
         try {
-            LocalBroadcastManager.getInstance(mPlayerService).unregisterReceiver(mPlayerBroadcastReceiver)
+            mPlayerService.applicationContext.unregisterReceiver(mPlayerBroadcastReceiver)
         } catch (e: IllegalArgumentException) {
             e.printStackTrace()
+            LocalBroadcastManager.getInstance(mPlayerService).unregisterReceiver(mPlayerBroadcastReceiver)
         }
     }
 
