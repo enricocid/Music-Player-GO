@@ -61,4 +61,6 @@
     <string name="song_visual_pref_tl_title">عنوان</string>
     <string name="song_visual_pref_fn_title">نام پرونده</string>
     <string name="anim_pref_title">پویانمایی‌ها</string>
+    <string name="equalizer_presets">از پیش تنظیم شده ها</string>
+    <string name="on_close_activity">توقف پخش؟</string>
 </resources>
