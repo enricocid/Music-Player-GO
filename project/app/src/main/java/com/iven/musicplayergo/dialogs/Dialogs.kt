@@ -55,7 +55,9 @@ object Dialogs {
             }
             .setNegativeButton(R.string.no) { _, _ ->
                 mediaPlayerHolder.stopPlaybackService(stopPlayback = false)
-            }.show()
+            }
+            .setNeutralButton(R.string.cancel, null)
+            .show()
     }
 
     @JvmStatic
