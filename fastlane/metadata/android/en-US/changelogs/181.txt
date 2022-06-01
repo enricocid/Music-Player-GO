@@ -1,0 +1,4 @@
+- Fix close btn behaviour
+- Code fixes/improvements
+- Update dependencies
+- Update Ukrainian translations (thanks Ihor Hordiichuk)

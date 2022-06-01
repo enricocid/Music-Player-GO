@@ -1,0 +1,4 @@
+- Corretto comportamento pulsante chiusura
+- Correzioni/miglioramenti codice
+- Aggiornate dipendenze
+- Aggiornate traduzioni Ucraino (grazie Ihor Hordiichuk)

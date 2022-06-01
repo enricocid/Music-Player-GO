@@ -4,13 +4,14 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 32
+    //noinspection GradleDependency
     buildToolsVersion "32.0.0"
     defaultConfig {
         applicationId "com.iven.musicplayergo"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 180
-        versionName "4.4.17"
+        versionCode 181
+        versionName "4.4.18"
 
         vectorDrawables.useSupportLibrary true
     }
@@ -100,7 +101,7 @@ dependencies {
     implementation 'me.zhanghai.android.fastscroll:library:1.1.8'
 
     //https://github.com/coil-kt/coil/releases
-    implementation 'io.coil-kt:coil:2.0.0'
+    implementation 'io.coil-kt:coil:2.1.0'
 
     //https://github.com/chrisbanes/insetter/releases
     implementation 'dev.chrisbanes.insetter:insetter:0.6.1'
