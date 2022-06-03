@@ -37,11 +37,11 @@ As per [guidelines](https://material.io/design/color/dark-theme.html), primary c
 Instead, desaturated colors can be used as a more legible alternative.
 
 
-### Does Music Player GO have or use an equaliser?
+### Does Music Player GO have or use an equalizer?
 
 Music Player GO uses the system (default) equalizer (if it exists) found on the device.
 The equalizer can be found in the "Now Playing" dialog.
-There is also a built-in equalizer. You can use by turning off the one in your system.
+There is also a built-in equalizer. You can enable it by turning off the one in your system.
 
 If the Android system is missing (as found in some Samsung, HTC, Pixel, etc. devices) the android.media.audiofx.Equalizer class then there is nothing for MPGO's EQ to link to.
 All you can do is to use an equalizer that relies on an internal audio engine and interacts with Android media session, like [Wavelet](https://pittvandewitt.github.io/Wavelet/) does.
