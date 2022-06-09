@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -245,6 +246,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         Theming.getAccentedTheme(resources)?.run {
             setTheme(first)
         }
@@ -254,14 +257,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         setContentView(mMainActivityBinding.root)
 
-        if (Versioning.isOreoMR1()) {
+        /*if (Versioning.isOreoMR1()) {
             window?.navigationBarColor =
                 Theming.resolveColorAttr(this, R.attr.main_bg)
             Insetter.builder()
                 .padding(windowInsetTypesOf(navigationBars = true))
                 .margin(windowInsetTypesOf(statusBars = true))
                 .applyToView(mMainActivityBinding.root)
-        }
+        }*/
 
         sAllowCommit = true
 
