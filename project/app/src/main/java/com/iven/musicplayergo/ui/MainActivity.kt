@@ -933,6 +933,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                             supportFragmentManager.goBackFromFragmentNow(mEqualizerFragment)
                         }
                         sRevealAnimationRunning = false
+                        mEqualizerFragment = null
                     }
                 }
             }
