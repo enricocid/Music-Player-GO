@@ -75,19 +75,13 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mMusicViewModel =
-            ViewModelProvider(requireActivity()).get(MusicViewModel::class.java).apply {
-                deviceMusic.observe(viewLifecycleOwner) { returnedMusic ->
-                    if (!returnedMusic.isNullOrEmpty()) {
-                        mAllMusic =
-                            Lists.getSortedMusicListForAllMusic(
-                                mSorting,
-                                mMusicViewModel.deviceMusicFiltered
-                            )
-                        finishSetup()
-                    }
-                }
-            }
+        mMusicViewModel = ViewModelProvider(requireActivity()).get(MusicViewModel::class.java)
+
+        mAllMusic = Lists.getSortedMusicListForAllMusic(
+            mSorting,
+            mMusicViewModel.deviceMusicFiltered
+        )
+        finishSetup()
     }
 
     @SuppressLint("NotifyDataSetChanged")
