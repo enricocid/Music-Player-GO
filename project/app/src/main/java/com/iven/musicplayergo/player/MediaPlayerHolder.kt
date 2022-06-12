@@ -156,7 +156,7 @@ class MediaPlayerHolder:
     val isSleepTimer get() = mSleepTimer != null
 
     // Media player state/booleans
-    val isPlaying get() = ::mediaPlayer.isInitialized && mediaPlayer.isPlaying
+    val isPlaying get() = ::mediaPlayer.isInitialized && MediaPlayerUtils.safeCheckIsPlaying(mediaPlayer)
     val isMediaPlayer get() = ::mediaPlayer.isInitialized
 
     private var sNotificationForeground = false
@@ -440,7 +440,7 @@ class MediaPlayerHolder:
             PlaybackStateCompat.Builder()
                 .setActions(mMediaSessionActions)
                 .setState(
-                    if (mediaPlayer.isPlaying) {
+                    if (MediaPlayerUtils.safeCheckIsPlaying(mediaPlayer)) {
                         GoConstants.PLAYING
                     } else {
                         GoConstants.PAUSED
@@ -629,7 +629,7 @@ class MediaPlayerHolder:
         try {
 
             if (isMediaPlayer) {
-                mediaPlayer.reset()
+                MediaPlayerUtils.safeReset(mediaPlayer)
             } else {
                 mediaPlayer = MediaPlayer()
             }
@@ -662,7 +662,7 @@ class MediaPlayerHolder:
         val errorMessage = "MediaPlayer error: $what"
         errorMessage.toToast(mPlayerService)
         println(errorMessage)
-        mediaPlayer.reset()
+        MediaPlayerUtils.safeReset(mediaPlayer)
         return true
     }
 

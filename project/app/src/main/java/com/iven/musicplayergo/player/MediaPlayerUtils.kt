@@ -40,4 +40,28 @@ object MediaPlayerUtils {
             }
         }
     }
+
+    @JvmStatic
+    fun safeReset(mediaPlayer: MediaPlayer?) {
+        mediaPlayer?.run {
+            try {
+                reset()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    @JvmStatic
+    fun safeCheckIsPlaying(mediaPlayer: MediaPlayer?): Boolean {
+        mediaPlayer?.run {
+            return try {
+                isPlaying
+            } catch (e: Exception) {
+                e.printStackTrace()
+                false
+            }
+        }
+        return false
+    }
 }
