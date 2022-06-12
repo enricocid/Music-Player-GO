@@ -376,8 +376,10 @@ class MediaPlayerHolder:
         }
 
         mPlayerService.acquireWakeLock()
-        mediaPlayerInterface.onStateChanged()
-        mediaPlayerInterface.onPlaybackCompleted()
+        if (::mediaPlayerInterface.isInitialized) {
+            mediaPlayerInterface.onStateChanged()
+            mediaPlayerInterface.onPlaybackCompleted()
+        }
     }
 
     fun onRestartSeekBarCallback() {
@@ -494,7 +496,9 @@ class MediaPlayerHolder:
             updatePlayPauseAction()
             updateNotification()
         }
-        mediaPlayerInterface.onBackupSong()
+        if (::mediaPlayerInterface.isInitialized) {
+            mediaPlayerInterface.onBackupSong()
+        }
     }
 
     fun repeatSong(startFrom: Int) {
@@ -601,7 +605,7 @@ class MediaPlayerHolder:
     }
 
     private fun updateProgressCallbackTask() {
-        if (isPlaying) {
+        if (isPlaying && ::mediaPlayerInterface.isInitialized) {
             mediaPlayerInterface.onPositionChanged(mediaPlayer.currentPosition)
         }
     }
@@ -688,7 +692,7 @@ class MediaPlayerHolder:
             }
         }
 
-        if (isQueue != null) {
+        if (isQueue != null && ::mediaPlayerInterface.isInitialized) {
             mediaPlayerInterface.onQueueStartedOrEnded(started = isQueueStarted)
         }
 
@@ -823,10 +827,14 @@ class MediaPlayerHolder:
         return if (isPlaying) {
             mSleepTimer = object : CountDownTimer(TimeUnit.MINUTES.toMillis(minutes), 1000) {
                 override fun onTick(p0: Long) {
-                    mediaPlayerInterface.onUpdateSleepTimerCountdown(p0)
+                    if (::mediaPlayerInterface.isInitialized) {
+                        mediaPlayerInterface.onUpdateSleepTimerCountdown(p0)
+                    }
                 }
                 override fun onFinish() {
-                    mediaPlayerInterface.onStopSleepTimer()
+                    if (::mediaPlayerInterface.isInitialized) {
+                        mediaPlayerInterface.onStopSleepTimer()
+                    }
                     pauseMediaPlayer()
                     cancelSleepTimer()
                 }
@@ -886,7 +894,9 @@ class MediaPlayerHolder:
 
     fun setQueueEnabled(enabled: Boolean, canSkip: Boolean) {
         if (enabled) {
-            mediaPlayerInterface.onQueueEnabled()
+            if (::mediaPlayerInterface.isInitialized) {
+                mediaPlayerInterface.onQueueEnabled()
+            }
         } else {
             if (isQueue != null) {
                 currentSong = isQueue
@@ -896,7 +906,9 @@ class MediaPlayerHolder:
             canRestoreQueue = false
             isQueueStarted = false
             GoPreferences.getPrefsInstance().isQueue = null
-            mediaPlayerInterface.onQueueStartedOrEnded(started = false)
+            if (::mediaPlayerInterface.isInitialized) {
+                mediaPlayerInterface.onQueueStartedOrEnded(started = false)
+            }
             if (canSkip) {
                 skip(isNext = true)
             }
@@ -1007,7 +1019,9 @@ class MediaPlayerHolder:
         if (mPlayerService.isRunning && isMediaPlayer && stopPlayback) {
             pauseMediaPlayer()
         }
-        mediaPlayerInterface.onClose()
+        if (::mediaPlayerInterface.isInitialized) {
+            mediaPlayerInterface.onClose()
+        }
     }
 
     private inner class PlayerBroadcastReceiver : BroadcastReceiver() {
