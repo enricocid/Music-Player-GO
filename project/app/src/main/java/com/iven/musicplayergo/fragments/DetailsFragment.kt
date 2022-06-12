@@ -21,12 +21,9 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
-import com.iven.musicplayergo.GoConstants
-import com.iven.musicplayergo.MusicViewModel
-import com.iven.musicplayergo.R
+import com.iven.musicplayergo.*
 import com.iven.musicplayergo.databinding.FragmentDetailsBinding
 import com.iven.musicplayergo.extensions.*
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.utils.Lists
 import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.models.Album
@@ -72,7 +69,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private var mSongsSorting = getDefSortingModeForArtistView()
 
-    private val sShowDisplayName get() = goPreferences.songsVisualization == GoConstants.FN
+    private val sShowDisplayName get() = GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN
 
     private var sPlayFirstSong = true
     private var sCanUpdateSongs = true
@@ -361,7 +358,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         }
 
         view.afterMeasured {
-            if (goPreferences.isAnimations) {
+            if (GoPreferences.getPrefsInstance().isAnimations) {
                 _detailsFragmentBinding?.root?.run {
                     mArtistDetailsAnimator = createCircularReveal(show = true)
                 }

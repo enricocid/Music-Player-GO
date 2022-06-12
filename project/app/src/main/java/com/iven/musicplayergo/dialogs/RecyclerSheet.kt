@@ -18,10 +18,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.iven.musicplayergo.GoConstants
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.ModalRvBinding
 import com.iven.musicplayergo.extensions.afterMeasured
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.preferences.AccentsAdapter
@@ -113,7 +113,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                         dismiss()
                     }
                     btnPositive.setOnClickListener {
-                        goPreferences.accent = accentsAdapter.selectedAccent
+                        GoPreferences.getPrefsInstance().accent = accentsAdapter.selectedAccent
                         mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
                     }
                 }
@@ -136,8 +136,8 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     }
                     btnPositive.setOnClickListener {
                         val updatedItems = activeTabsAdapter.getUpdatedItems()
-                        if (goPreferences.activeTabs != updatedItems) {
-                            goPreferences.activeTabs = updatedItems
+                        if (GoPreferences.getPrefsInstance().activeTabs != updatedItems) {
+                            GoPreferences.getPrefsInstance().activeTabs = updatedItems
                             mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
                         } else {
                             dismiss()
@@ -160,8 +160,8 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     }
                     btnPositive.setOnClickListener {
                         val updatedItems = filtersAdapter.getUpdatedItems()
-                        if (goPreferences.filters != updatedItems) {
-                            goPreferences.filters = updatedItems
+                        if (GoPreferences.getPrefsInstance().filters != updatedItems) {
+                            GoPreferences.getPrefsInstance().filters = updatedItems
                             mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
                         } else {
                             dismiss()
@@ -285,7 +285,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                             direction: Int ->
                         val index = viewHolder.absoluteAdapterPosition
                         if (direction == ItemTouchHelper.RIGHT) {
-                            mMediaControlInterface.onAddToQueue(goPreferences.favorites?.get(index))
+                            mMediaControlInterface.onAddToQueue(GoPreferences.getPrefsInstance().favorites?.get(index))
                         } else {
                             favoritesAdapter.performFavoriteDeletion(index)
                         }

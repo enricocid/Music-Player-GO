@@ -16,9 +16,9 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.text.parseAsHtml
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.GoConstants
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.waitForCover
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.utils.Versioning
 import com.iven.musicplayergo.ui.MainActivity
@@ -35,7 +35,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         @SuppressLint("RestrictedApi")
         get() = mNotificationBuilder.mActions
 
-    private val sFastSeekingActions get() = goPreferences.notificationActions != GoConstants.NOTIF_REPEAT_CLOSE
+    private val sFastSeekingActions get() = GoPreferences.getPrefsInstance().notificationActions != GoConstants.NOTIF_REPEAT_CLOSE
 
     private fun getPlayerAction(playerAction: String): PendingIntent {
         val intent = Intent().apply {

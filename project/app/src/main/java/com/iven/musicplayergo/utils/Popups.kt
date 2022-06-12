@@ -5,11 +5,11 @@ import android.view.Gravity
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import com.iven.musicplayergo.GoConstants
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.enablePopupIcons
 import com.iven.musicplayergo.extensions.setTitle
 import com.iven.musicplayergo.extensions.setTitleColor
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -90,8 +90,8 @@ object Popups {
             inflate(R.menu.popup_speed)
             gravity = Gravity.END
 
-            if (goPreferences.playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY) {
-                menu.findItem(getSelectedPlaybackItem(goPreferences.latestPlaybackSpeed)).setTitleColor(
+            if (GoPreferences.getPrefsInstance().playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY) {
+                menu.findItem(getSelectedPlaybackItem(GoPreferences.getPrefsInstance().latestPlaybackSpeed)).setTitleColor(
                     Theming.resolveThemeAccent(activity)
                 )
             }
@@ -109,7 +109,7 @@ object Popups {
                     R.id.speed_8 -> 2.5F
                     else -> 2.5F
                 }
-                if (goPreferences.playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY) {
+                if (GoPreferences.getPrefsInstance().playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY) {
                     menu.findItem(getSelectedPlaybackItem(playbackSpeed)).setTitleColor(
                         Theming.resolveThemeAccent(
                             activity

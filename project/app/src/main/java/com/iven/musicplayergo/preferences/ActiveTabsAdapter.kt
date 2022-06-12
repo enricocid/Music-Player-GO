@@ -8,23 +8,23 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.GoConstants
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toToast
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.utils.Theming
 
 
 class ActiveTabsAdapter(private val ctx: Context) :
     RecyclerView.Adapter<ActiveTabsAdapter.CheckableItemsHolder>() {
 
-    var availableItems = goPreferences.activeTabsDef.toMutableList()
-    private val mActiveItems = goPreferences.activeTabs.toMutableList()
+    var availableItems = GoPreferences.getPrefsInstance().activeTabsDef.toMutableList()
+    private val mActiveItems = GoPreferences.getPrefsInstance().activeTabs.toMutableList()
 
     private val mDisabledColor = Theming.resolveColorAttr(ctx, android.R.attr.colorButtonNormal)
     private val mDefaultTextColor = Theming.resolveColorAttr(ctx, android.R.attr.textColorPrimary)
 
     fun getUpdatedItems() = availableItems.apply {
-        goPreferences.activeTabsDef = this
+        GoPreferences.getPrefsInstance().activeTabsDef = this
     }.minus(availableItems.minus(mActiveItems.toSet()).toSet()) /*make sure to respect tabs order*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = CheckableItemsHolder(

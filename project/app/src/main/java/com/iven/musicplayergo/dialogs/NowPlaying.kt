@@ -11,13 +11,13 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.iven.musicplayergo.GoConstants
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.NowPlayingBinding
 import com.iven.musicplayergo.databinding.NowPlayingControlsBinding
 import com.iven.musicplayergo.databinding.NowPlayingCoverBinding
 import com.iven.musicplayergo.databinding.NowPlayingExtendedControlsBinding
 import com.iven.musicplayergo.extensions.*
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.utils.Lists
 import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.utils.Versioning
@@ -208,7 +208,7 @@ class NowPlaying: BottomSheetDialogFragment() {
 
         _npExtControlsBinding?.run {
 
-            val isVolumeEnabled = goPreferences.isPreciseVolumeEnabled
+            val isVolumeEnabled = GoPreferences.getPrefsInstance().isPreciseVolumeEnabled
             npVolumeValue.handleViewVisibility(show = isVolumeEnabled)
             npVolume.handleViewVisibility(show = isVolumeEnabled)
             npVolumeSeek.handleViewVisibility(show = isVolumeEnabled)
@@ -374,7 +374,7 @@ class NowPlaying: BottomSheetDialogFragment() {
             val mediaPlayerHolder = mMediaControlInterface.onGetMediaPlayerHolder()
             _npCoverBinding?.run {
                 mediaPlayerHolder?.currentSong?.let { song ->
-                    val favorites = goPreferences.favorites
+                    val favorites = GoPreferences.getPrefsInstance().favorites
                     val isFavorite = favorites != null && favorites.contains(song.toSavedMusic(0, mediaPlayerHolder.launchedBy))
                     val favoritesButtonColor = if (isFavorite) {
                         npLove.setImageResource(R.drawable.ic_favorite)
@@ -396,7 +396,7 @@ class NowPlaying: BottomSheetDialogFragment() {
         if (::mMediaControlInterface.isInitialized) {
             mMediaControlInterface.onGetMediaPlayerHolder()?.currentSong?.let { song ->
                 val selectedSongDuration = song.duration
-                if (mAlbumIdNp != song.albumId && goPreferences.isCovers) {
+                if (mAlbumIdNp != song.albumId && GoPreferences.getPrefsInstance().isCovers) {
                     loadNpCover(song)
                 }
                 _nowPlayingBinding?.npSong?.text = song.title

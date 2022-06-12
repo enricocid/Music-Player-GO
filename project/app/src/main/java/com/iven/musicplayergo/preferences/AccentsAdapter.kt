@@ -8,10 +8,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toContrastColor
 import com.iven.musicplayergo.extensions.toToast
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.utils.Theming
 
 
@@ -19,7 +19,7 @@ class AccentsAdapter(private val activity: Activity) :
     RecyclerView.Adapter<AccentsAdapter.AccentsHolder>() {
 
     private val mAccents = Theming.accents
-    var selectedAccent = goPreferences.accent
+    var selectedAccent = GoPreferences.getPrefsInstance().accent
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = AccentsHolder(
         LayoutInflater.from(parent.context).inflate(

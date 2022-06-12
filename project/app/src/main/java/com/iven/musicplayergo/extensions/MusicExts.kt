@@ -13,8 +13,8 @@ import androidx.core.net.toUri
 import coil.Coil
 import coil.request.ImageRequest
 import com.iven.musicplayergo.GoConstants
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import java.text.SimpleDateFormat
@@ -97,7 +97,7 @@ fun Long.toAlbumArtURI(): Uri {
 fun Long.waitForCover(context: Context, onDone: (Bitmap?, Boolean) -> Unit) {
     Coil.imageLoader(context).enqueue(
         ImageRequest.Builder(context)
-            .data(if (goPreferences.isCovers) {
+            .data(if (GoPreferences.getPrefsInstance().isCovers) {
                 toAlbumArtURI()
             } else {
                 null
@@ -195,7 +195,7 @@ fun Music.toSavedMusic(playerPosition: Int, savedLaunchedBy: String) =
 fun List<Music>.savedSongIsAvailable(currentSong: Music?) : Music? =
     find { currentSong?.title == it.title && currentSong?.displayName == it.displayName && currentSong?.track == it.track && currentSong.albumId == it.albumId && currentSong.album == it.album }
 
-fun Music?.toName(): String? = if (goPreferences.songsVisualization == GoConstants.FN) {
+fun Music?.toName(): String? = if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
     this?.displayName?.toFilenameWithoutExtension()
 } else {
     this?.title

@@ -244,5 +244,29 @@ class GoPreferences(context: Context) {
             }
         }
     }
+
+    companion object {
+        // Singleton prevents multiple instances of database opening at the
+        // same time.
+        @Volatile
+        private var INSTANCE: GoPreferences? = null
+
+        fun initPrefs(context: Context): GoPreferences {
+            // if the INSTANCE is not null, then return it,
+            // if it is, then create the preferences
+            return INSTANCE ?: synchronized(this) {
+                val instance = GoPreferences(context)
+                INSTANCE = instance
+                // return instance
+                instance
+            }
+        }
+
+        fun getPrefsInstance(): GoPreferences {
+            return INSTANCE ?: synchronized(this) {
+                error("GoPreferences not initialized!")
+            }
+        }
+    }
 }
 

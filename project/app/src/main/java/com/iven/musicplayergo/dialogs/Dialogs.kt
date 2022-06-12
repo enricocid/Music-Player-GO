@@ -5,9 +5,9 @@ import android.content.Context
 import android.text.Spanned
 import androidx.core.text.parseAsHtml
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toFormattedDuration
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -21,8 +21,8 @@ object Dialogs {
             .setTitle(R.string.queue)
             .setMessage(R.string.queue_songs_clear)
             .setPositiveButton(R.string.yes) { _, _ ->
-                goPreferences.isQueue = null
-                goPreferences.queue = null
+                GoPreferences.getPrefsInstance().isQueue = null
+                GoPreferences.getPrefsInstance().queue = null
                 with(mediaPlayerHolder) {
                     queueSongs.clear()
                     setQueueEnabled(enabled = false, canSkip = isQueueStarted)

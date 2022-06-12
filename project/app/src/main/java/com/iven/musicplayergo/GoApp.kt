@@ -7,19 +7,12 @@ import coil.ImageLoaderFactory
 import coil.request.CachePolicy
 import com.iven.musicplayergo.utils.Theming
 
-val goPreferences: GoPreferences by lazy {
-    GoApp.prefs
-}
 
 class GoApp : Application(), ImageLoaderFactory {
 
-    companion object {
-        lateinit var prefs: GoPreferences
-    }
-
     override fun onCreate() {
         super.onCreate()
-        prefs = GoPreferences(applicationContext)
+        GoPreferences.initPrefs(applicationContext)
         AppCompatDelegate.setDefaultNightMode(Theming.getDefaultNightMode(applicationContext))
     }
 

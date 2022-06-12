@@ -18,12 +18,12 @@ import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.google.android.material.slider.Slider
 import com.google.android.material.switchmaterial.SwitchMaterial
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentEqualizerBinding
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.createCircularReveal
 import com.iven.musicplayergo.extensions.toToast
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -129,7 +129,7 @@ class EqFragment : Fragment() {
             mSliders[slider4] = freq4
         }
 
-        goPreferences.savedEqualizerSettings?.let { savedEqualizerSettings ->
+        GoPreferences.getPrefsInstance().savedEqualizerSettings?.let { savedEqualizerSettings ->
             mSelectedPreset = savedEqualizerSettings.preset
         }
 
@@ -182,7 +182,7 @@ class EqFragment : Fragment() {
 
         setupToolbar()
 
-        if (goPreferences.isAnimations) {
+        if (GoPreferences.getPrefsInstance().isAnimations) {
             view.afterMeasured {
                 _eqFragmentBinding?.root?.run {
                     mEqAnimator = createCircularReveal(show = true)
@@ -252,7 +252,7 @@ class EqFragment : Fragment() {
 
             if (!isPresetChanged) {
                 _eqFragmentBinding?.run {
-                    goPreferences.savedEqualizerSettings?.let { eqSettings ->
+                    GoPreferences.getPrefsInstance().savedEqualizerSettings?.let { eqSettings ->
                         sliderBass.value = eqSettings.bassBoost.toFloat()
                     }
                     mEqualizer?.third?.let { virtualizer ->

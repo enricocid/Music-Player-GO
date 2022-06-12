@@ -5,11 +5,11 @@ import android.app.Activity
 import android.view.Menu
 import android.view.MenuItem
 import com.iven.musicplayergo.GoConstants
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.extensions.toToast
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
 import java.util.*
 
@@ -161,7 +161,7 @@ object Lists {
     }
 
     private fun getSortedListBySelectedVisualization(list: List<Music>?) = list?.sortedBy {
-        if (goPreferences.songsVisualization == GoConstants.FN) {
+        if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
             it.displayName
         } else {
             it.title
@@ -201,9 +201,9 @@ object Lists {
 
     @JvmStatic
     fun addToHiddenItems(item: String) {
-        val hiddenArtistsFolders = goPreferences.filters?.toMutableList()
+        val hiddenArtistsFolders = GoPreferences.getPrefsInstance().filters?.toMutableList()
         hiddenArtistsFolders?.add(item)
-        goPreferences.filters = hiddenArtistsFolders?.toSet()
+        GoPreferences.getPrefsInstance().filters = hiddenArtistsFolders?.toSet()
     }
 
     @JvmStatic
@@ -214,7 +214,7 @@ object Lists {
         playerPosition: Int,
         launchedBy: String
     ) {
-        val favorites = goPreferences.favorites?.toMutableList() ?: mutableListOf()
+        val favorites = GoPreferences.getPrefsInstance().favorites?.toMutableList() ?: mutableListOf()
         song?.toSavedMusic(playerPosition, launchedBy)?.let { savedSong ->
             if (!favorites.contains(savedSong)) {
                 favorites.add(savedSong)
@@ -222,7 +222,7 @@ object Lists {
             } else if (canRemove) {
                 favorites.remove(savedSong)
             }
-            goPreferences.favorites = favorites
+            GoPreferences.getPrefsInstance().favorites = favorites
         }
     }
 

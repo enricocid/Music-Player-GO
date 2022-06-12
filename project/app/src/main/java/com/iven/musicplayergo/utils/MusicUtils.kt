@@ -2,8 +2,8 @@ package com.iven.musicplayergo.utils
 
 import android.content.res.Resources
 import androidx.recyclerview.widget.RecyclerView
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.extensions.toFormattedYear
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
@@ -111,19 +111,19 @@ object MusicUtils {
 
         fun selectNewSong(filter: Set<String>): Music? {
             if (musicListContains(currentSong, filter)) {
-                goPreferences.latestPlayedSong = randomMusic
+                GoPreferences.getPrefsInstance().latestPlayedSong = randomMusic
                 return randomMusic
             }
             return null
         }
 
-        goPreferences.filters?.let { ft ->
-            goPreferences.favorites?.toMutableList()?.let { fav ->
+        GoPreferences.getPrefsInstance().filters?.let { ft ->
+            GoPreferences.getPrefsInstance().favorites?.toMutableList()?.let { fav ->
                 val songs = fav.filter { favFt ->
                     musicListContains(favFt, ft)
                 }
                 fav.removeAll(songs.toSet())
-                goPreferences.favorites = fav
+                GoPreferences.getPrefsInstance().favorites = fav
                 if (fav.isEmpty()) {
                     uiControlInterface.onFavoritesUpdated(clear = true)
                 }

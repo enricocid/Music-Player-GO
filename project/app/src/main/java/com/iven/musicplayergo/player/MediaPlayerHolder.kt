@@ -34,12 +34,12 @@ import androidx.media.AudioAttributesCompat
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
 import com.iven.musicplayergo.GoConstants
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toContentUri
 import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.extensions.waitForCover
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.utils.Lists
 import com.iven.musicplayergo.utils.Versioning
 import com.iven.musicplayergo.models.Music
@@ -100,7 +100,7 @@ class MediaPlayerHolder:
     private var mAudioManager: AudioManager? = null
     private lateinit var mAudioFocusRequestCompat: AudioFocusRequestCompat
 
-    private val sFocusEnabled get() = goPreferences.isFocusEnabled
+    private val sFocusEnabled get() = GoPreferences.getPrefsInstance().isFocusEnabled
     private var mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
     private var sRestoreVolume = false
     private var sPlayOnFocusGain = false
@@ -142,11 +142,11 @@ class MediaPlayerHolder:
     private var mPlayingSongs: List<Music>? = null
     var launchedBy = GoConstants.ARTIST_VIEW
 
-    var currentVolumeInPercent = goPreferences.latestVolume
-    private var currentPlaybackSpeed = goPreferences.latestPlaybackSpeed
+    var currentVolumeInPercent = GoPreferences.getPrefsInstance().latestVolume
+    private var currentPlaybackSpeed = GoPreferences.getPrefsInstance().latestPlaybackSpeed
 
     val playerPosition get() = if (isSongFromPrefs) {
-            goPreferences.latestPlayedSong?.startFrom!!
+            GoPreferences.getPrefsInstance().latestPlayedSong?.startFrom!!
         } else {
             mediaPlayer.currentPosition
         }
@@ -162,7 +162,7 @@ class MediaPlayerHolder:
     private var sNotificationForeground = false
 
     val isCurrentSong get() = currentSong != null
-    private val sPlaybackSpeedPersisted get() = goPreferences.playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY
+    private val sPlaybackSpeedPersisted get() = GoPreferences.getPrefsInstance().playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY
     var isRepeat1X = false
     var isLooping = false
     var isPauseOnEnd = false
@@ -287,7 +287,7 @@ class MediaPlayerHolder:
 
     fun onSaveEqualizerSettings(selectedPreset: Int, bassBoost: Short, virtualizer: Short) {
         mEqualizer?.run {
-            goPreferences.savedEqualizerSettings = SavedEqualizerSettings(
+            GoPreferences.getPrefsInstance().savedEqualizerSettings = SavedEqualizerSettings(
                 enabled,
                 selectedPreset,
                 properties.bandLevels.toList(),
@@ -307,7 +307,7 @@ class MediaPlayerHolder:
         mPlayingSongs = if (sortedMusic != null) {
             sortedMusic
         } else {
-            val sorting = if (goPreferences.songsVisualization == GoConstants.FN) {
+            val sorting = if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
                 GoConstants.ASCENDING_SORTING
             } else {
                 GoConstants.TRACK_SORTING
@@ -361,7 +361,7 @@ class MediaPlayerHolder:
             canRestoreQueue -> manageRestoredQueue()
             else -> {
                 if (mPlayingSongs?.indexOf(currentSong) == mPlayingSongs?.size?.minus(1)) {
-                    if (goPreferences.onListEnded == GoConstants.CONTINUE) {
+                    if (GoPreferences.getPrefsInstance().onListEnded == GoConstants.CONTINUE) {
                         skip(isNext = true)
                     } else {
                         synchronized(pauseMediaPlayer()) {
@@ -682,8 +682,8 @@ class MediaPlayerHolder:
         }
 
         if (isSongFromPrefs) {
-            isPauseOnEnd = goPreferences.isPauseOnEnd
-            if (goPreferences.isPreciseVolumeEnabled) {
+            isPauseOnEnd = GoPreferences.getPrefsInstance().isPauseOnEnd
+            if (GoPreferences.getPrefsInstance().isPreciseVolumeEnabled) {
                 setPreciseVolume(currentVolumeInPercent)
             }
         }
@@ -740,7 +740,7 @@ class MediaPlayerHolder:
 
     private fun restoreCustomEqSettings() {
 
-        goPreferences.savedEqualizerSettings?.let {
+        GoPreferences.getPrefsInstance().savedEqualizerSettings?.let {
                 (enabled, preset, bandSettings, bassBoost, virtualizer) ->
 
             setEqualizerEnabled(isEnabled = enabled)
@@ -861,14 +861,14 @@ class MediaPlayerHolder:
             isLooping -> {
                 isLooping = false
                 isPauseOnEnd = true
-                goPreferences.isPauseOnEnd = true
+                GoPreferences.getPrefsInstance().isPauseOnEnd = true
                 toastMessage = R.string.repeat_disabled
                 toastMessage.toToast(mPlayerService)
                 toastMessage = R.string.pause_on_end
             }
             isPauseOnEnd -> {
                 isPauseOnEnd = false
-                goPreferences.isPauseOnEnd = false
+                GoPreferences.getPrefsInstance().isPauseOnEnd = false
                 toastMessage = R.string.pause_on_end_disabled
             }
             else -> isRepeat1X = true
@@ -895,7 +895,7 @@ class MediaPlayerHolder:
             restoreQueueSong = null
             canRestoreQueue = false
             isQueueStarted = false
-            goPreferences.isQueue = null
+            GoPreferences.getPrefsInstance().isQueue = null
             mediaPlayerInterface.onQueueStartedOrEnded(started = false)
             if (canSkip) {
                 skip(isNext = true)
@@ -916,7 +916,7 @@ class MediaPlayerHolder:
 
     fun fastSeek(isForward: Boolean) {
 
-        val step = goPreferences.fastSeekingStep * 1000
+        val step = GoPreferences.getPrefsInstance().fastSeekingStep * 1000
         if (isMediaPlayer) {
             with(mediaPlayer) {
                 var newPosition = currentPosition
@@ -977,7 +977,7 @@ class MediaPlayerHolder:
         if (isMediaPlayer) {
             currentPlaybackSpeed = speed
             if (sPlaybackSpeedPersisted) {
-                goPreferences.latestPlaybackSpeed = currentPlaybackSpeed
+                GoPreferences.getPrefsInstance().latestPlaybackSpeed = currentPlaybackSpeed
             }
             if (state != GoConstants.PAUSED) {
                 updatePlaybackStatus(updateUI = false)
@@ -1019,10 +1019,10 @@ class MediaPlayerHolder:
 
                     when (act) {
 
-                        BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
+                        BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (isCurrentSong && GoPreferences.getPrefsInstance().isHeadsetPlugEnabled) {
                             pauseMediaPlayer()
                         }
-                        BluetoothDevice.ACTION_ACL_CONNECTED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
+                        BluetoothDevice.ACTION_ACL_CONNECTED -> if (isCurrentSong && GoPreferences.getPrefsInstance().isHeadsetPlugEnabled) {
                             resumeMediaPlayer()
                         }
 
@@ -1030,14 +1030,14 @@ class MediaPlayerHolder:
                             handleMediaButton(intent)
                         }
 
-                        AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
+                        AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED -> if (isCurrentSong && GoPreferences.getPrefsInstance().isHeadsetPlugEnabled) {
                             when (intent.getIntExtra(AudioManager.EXTRA_SCO_AUDIO_STATE, -1)) {
                                 AudioManager.SCO_AUDIO_STATE_CONNECTED -> resumeMediaPlayer()
                                 AudioManager.SCO_AUDIO_STATE_DISCONNECTED -> pauseMediaPlayer()
                             }
                         }
 
-                        Intent.ACTION_HEADSET_PLUG -> if (isCurrentSong && goPreferences.isHeadsetPlugEnabled) {
+                        Intent.ACTION_HEADSET_PLUG -> if (isCurrentSong && GoPreferences.getPrefsInstance().isHeadsetPlugEnabled) {
                             when (intent.getIntExtra("state", -1)) {
                                 // 0 means disconnected
                                 HEADSET_DISCONNECTED -> pauseMediaPlayer()
@@ -1046,7 +1046,7 @@ class MediaPlayerHolder:
                             }
                         }
 
-                        AudioManager.ACTION_AUDIO_BECOMING_NOISY -> if (isPlaying && goPreferences.isHeadsetPlugEnabled) {
+                        AudioManager.ACTION_AUDIO_BECOMING_NOISY -> if (isPlaying && GoPreferences.getPrefsInstance().isHeadsetPlugEnabled) {
                             pauseMediaPlayer()
                         }
                     }

@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.checkbox.MaterialCheckBox
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.utils.Theming
 
 
@@ -16,7 +16,7 @@ class FiltersAdapter(val activity: Activity) :
 
     private val mItemsToRemove = mutableListOf<String>()
 
-    private val mAvailableItems = goPreferences.filters?.sorted()?.toMutableList()
+    private val mAvailableItems = GoPreferences.getPrefsInstance().filters?.sorted()?.toMutableList()
 
     private val mDisabledColor = Theming.resolveColorAttr(
         activity,

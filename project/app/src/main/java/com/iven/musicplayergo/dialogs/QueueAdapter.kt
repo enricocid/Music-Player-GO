@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.startSongFromQueue
 import com.iven.musicplayergo.extensions.toName
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
@@ -87,7 +87,7 @@ class QueueAdapter(
 
     fun performQueueSongDeletion(adapterPosition: Int): Boolean {
         val song = queueSongs[adapterPosition]
-        if (goPreferences.askForRemoval) {
+        if (GoPreferences.getPrefsInstance().askForRemoval) {
             notifyItemChanged(adapterPosition)
             return if (song != mSelectedSong || mediaPlayerHolder.isQueue == null) {
                 MaterialAlertDialogBuilder(ctx)
@@ -110,7 +110,7 @@ class QueueAdapter(
                             }
 
                             // update queue songs
-                            goPreferences.queue = queueSongs
+                            GoPreferences.getPrefsInstance().queue = queueSongs
                         }
                     }
                     .setNegativeButton(R.string.no, null)

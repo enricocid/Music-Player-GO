@@ -12,10 +12,10 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentSettingsBinding
 import com.iven.musicplayergo.extensions.toToast
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.ui.UIControlInterface
 
@@ -86,16 +86,16 @@ class SettingsFragment : Fragment() {
             .setItems(locales.values.toTypedArray()) { _, which ->
                 // Respond to item chosen
                 val newLocale = locales.keys.elementAt(which)
-                if (goPreferences.locale != newLocale) {
-                    goPreferences.locale = locales.keys.elementAt(which)
+                if (GoPreferences.getPrefsInstance().locale != newLocale) {
+                    GoPreferences.getPrefsInstance().locale = locales.keys.elementAt(which)
                     Theming.applyChanges(requireActivity(), restoreSettings = true)
                 }
             }
             .setNegativeButton(R.string.cancel, null)
 
-            if (goPreferences.locale != null) {
+            if (GoPreferences.getPrefsInstance().locale != null) {
                 dialog.setNeutralButton(R.string.sorting_pref_default) { _, _ ->
-                    goPreferences.locale = null
+                    GoPreferences.getPrefsInstance().locale = null
                     Theming.applyChanges(requireActivity(), restoreSettings = false)
                 }
             }

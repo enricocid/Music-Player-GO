@@ -23,6 +23,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.iven.musicplayergo.GoConstants
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.MainActivityBinding
@@ -32,7 +33,6 @@ import com.iven.musicplayergo.dialogs.NowPlaying
 import com.iven.musicplayergo.dialogs.RecyclerSheet
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.fragments.*
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.utils.*
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.EqualizerUtils
@@ -57,8 +57,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     // View model
     private val mMusicViewModel: MusicViewModel by viewModels()
 
+    // Preferences
+    private val mGoPreference get() = GoPreferences.getPrefsInstance()
+
     // Fragments
-    private val mActiveFragments: List<String> = goPreferences.activeTabs.toList()
     private var mArtistsFragment: MusicContainersFragment? = null
     private var mAllMusicFragment: AllMusicFragment? = null
     private var mFoldersFragment: MusicContainersFragment? = null
@@ -139,12 +141,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun onBackPressed() {
         when {
-            sDetailsFragmentExpanded and !sEqFragmentExpanded -> closeDetailsFragment(isAnimation = goPreferences.isAnimations)
-            !sDetailsFragmentExpanded and sEqFragmentExpanded -> closeEqualizerFragment(isAnimation = goPreferences.isAnimations)
+            sDetailsFragmentExpanded and !sEqFragmentExpanded -> closeDetailsFragment(isAnimation = mGoPreference.isAnimations)
+            !sDetailsFragmentExpanded and sEqFragmentExpanded -> closeEqualizerFragment(isAnimation = mGoPreference.isAnimations)
             sEqFragmentExpanded and sDetailsFragmentExpanded -> if (sCloseDetailsFragment) {
-                closeDetailsFragment(isAnimation = goPreferences.isAnimations)
+                closeDetailsFragment(isAnimation = mGoPreference.isAnimations)
             } else {
-                closeEqualizerFragment(isAnimation = goPreferences.isAnimations)
+                closeEqualizerFragment(isAnimation = mGoPreference.isAnimations)
             }
             sErrorFragmentExpanded -> super.onBackPressed()
             else -> if (mMainActivityBinding.viewPager2.currentItem != 0) {
@@ -231,15 +233,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     override fun attachBaseContext(newBase: Context?) {
-        if (goPreferences.locale == null) {
-            val localeUpdatedContext = ContextUtils.updateLocale(newBase!!, Locale.getDefault())
-            super.attachBaseContext(localeUpdatedContext)
-        } else {
-            val locale = Locale.forLanguageTag(goPreferences.locale!!)
-            val localeUpdatedContext = ContextUtils.updateLocale(newBase!!, locale)
-            super.attachBaseContext(localeUpdatedContext)
+        newBase?.let { ctx ->
+            // Be sure that prefs are initialized
+            GoPreferences.initPrefs(newBase)
+            if (mGoPreference.locale == null) {
+                val localeUpdatedContext = ContextUtils.updateLocale(ctx, Locale.getDefault())
+                super.attachBaseContext(localeUpdatedContext)
+            } else {
+                val locale = Locale.forLanguageTag(mGoPreference.locale!!)
+                val localeUpdatedContext = ContextUtils.updateLocale(ctx, locale)
+                super.attachBaseContext(localeUpdatedContext)
+            }
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -303,6 +308,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private fun finishSetup(music: MutableList<Music>?) {
         if (!music.isNullOrEmpty()) {
             mMainActivityBinding.loadingProgressBar.handleViewVisibility(show = false)
+
+            // Be sure that prefs are initialized
+            GoPreferences.initPrefs(this)
+
             initMediaButtons()
             initViewPager()
             synchronized(handleRestore()) {
@@ -329,7 +338,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun initViewPager() {
         val pagerAdapter = ScreenSlidePagerAdapter(this)
-        mMainActivityBinding.viewPager2.offscreenPageLimit = mActiveFragments.size.minus(1)
+        mMainActivityBinding.viewPager2.offscreenPageLimit =
+            mGoPreference.activeTabs.toList().size.minus(1)
         mMainActivityBinding.viewPager2.adapter = pagerAdapter
 
         // By default, ViewPager2's sensitivity is high enough to result in vertical
@@ -364,7 +374,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             tabIconTint = ColorStateList.valueOf(resolvedAlphaAccentColor)
 
             TabLayoutMediator(this, mMainActivityBinding.viewPager2) { tab, position ->
-                tab.setIcon(Theming.getTabIcon(mActiveFragments[position]))
+                tab.setIcon(Theming.getTabIcon(mGoPreference.activeTabs.toList()[position]))
             }.attach()
 
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -400,7 +410,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     private fun initFragmentAt(position: Int) : Fragment {
-        when (mActiveFragments[position]) {
+        when (mGoPreference.activeTabs.toList()[position]) {
             GoConstants.ARTISTS_TAB -> if (mArtistsFragment == null) {
                 mArtistsFragment = MusicContainersFragment.newInstance(GoConstants.ARTIST_VIEW)
             }
@@ -428,7 +438,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         else -> getFragmentForIndex(4)
     }
 
-    private fun getFragmentForIndex(index: Int) = when (mActiveFragments[index]) {
+    private fun getFragmentForIndex(index: Int) = when (mGoPreference.activeTabs.toList()[index]) {
         GoConstants.ARTISTS_TAB -> mArtistsFragment ?: initFragmentAt(index)
         GoConstants.ALBUM_TAB -> mAlbumsFragment ?: initFragmentAt(index)
         GoConstants.SONGS_TAB -> mAllMusicFragment ?: initFragmentAt(index)
@@ -523,14 +533,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         with(mPlayerControlsPanelBinding.favoritesButton) {
             safeClickListener {
-                if (!goPreferences.favorites.isNullOrEmpty()) {
+                if (!mGoPreference.favorites.isNullOrEmpty()) {
                     RecyclerSheet.newInstance(GoConstants.FAV_TYPE).show(supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
                 } else {
                     R.string.error_no_favorites.toToast(this@MainActivity)
                 }
             }
             setOnLongClickListener {
-                if (!goPreferences.favorites.isNullOrEmpty()) {
+                if (!mGoPreference.favorites.isNullOrEmpty()) {
                     Dialogs.showClearFavoritesDialog(
                         this@MainActivity
                     )
@@ -578,9 +588,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun onPlaybackSpeedToggled() {
         //avoid having user stuck at selected playback speed
-        val isPlaybackPersisted = goPreferences.playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY
+        val isPlaybackPersisted = mGoPreference.playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY
         mMediaPlayerHolder.setPlaybackSpeed(if (isPlaybackPersisted) {
-            goPreferences.latestPlaybackSpeed
+            mGoPreference.latestPlaybackSpeed
         } else {
             1.0F
         })
@@ -612,11 +622,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun onFavoritesUpdated(clear: Boolean) {
 
-        val favorites = goPreferences.favorites?.toMutableList()
+        val favorites = mGoPreference.favorites?.toMutableList()
 
         if (clear) {
             favorites?.clear()
-            goPreferences.favorites = null
+            mGoPreference.favorites = null
         }
 
         val favoritesButtonColor = if (favorites.isNullOrEmpty()) {
@@ -644,18 +654,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     onRestartSeekBarCallback()
                     updatePlayingInfo(restore = true)
                 } else {
-                    isSongFromPrefs = goPreferences.latestPlayedSong != null
+                    isSongFromPrefs = mGoPreference.latestPlayedSong != null
 
-                    var isQueueRestored = goPreferences.isQueue
-                    if (!goPreferences.queue.isNullOrEmpty()) {
-                        queueSongs = goPreferences.queue?.toMutableList()!!
+                    var isQueueRestored = mGoPreference.isQueue
+                    if (!mGoPreference.queue.isNullOrEmpty()) {
+                        queueSongs = mGoPreference.queue?.toMutableList()!!
                         setQueueEnabled(enabled = true, canSkip = false)
                     }
 
                     val song = if (isSongFromPrefs) {
-                        val songIsAvailable = songIsAvailable(goPreferences.latestPlayedSong)
+                        val songIsAvailable = songIsAvailable(mGoPreference.latestPlayedSong)
                         if (!songIsAvailable.first && isQueueRestored != null) {
-                            goPreferences.isQueue = null
+                            mGoPreference.isQueue = null
                             isQueueRestored = null
                             isQueue = null
                         } else {
@@ -755,7 +765,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun saveRandomSongToPrefs() : Music? {
         val randomMusic = mMusicViewModel.randomMusic
-        goPreferences.latestPlayedSong = randomMusic
+        mGoPreference.latestPlayedSong = randomMusic
         return randomMusic
     }
 
@@ -1159,7 +1169,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         override fun onBackupSong() {
             if (checkIsPlayer(showError = false) && !mMediaPlayerHolder.isPlaying) {
-                goPreferences.latestPlayedSong = mMediaPlayerHolder.currentSong?.toSavedMusic(mMediaPlayerHolder.playerPosition, mMediaPlayerHolder.launchedBy)
+                mGoPreference.latestPlayedSong = mMediaPlayerHolder.currentSong?.toSavedMusic(mMediaPlayerHolder.playerPosition, mMediaPlayerHolder.launchedBy)
             }
         }
 
@@ -1180,7 +1190,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     // ViewPager2 adapter class
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-        override fun getItemCount(): Int = mActiveFragments.size
+        override fun getItemCount() = mGoPreference.activeTabs.toList().size
         override fun createFragment(position: Int): Fragment = handleOnNavigationItemSelected(position)
     }
 }

@@ -9,9 +9,9 @@ import androidx.core.content.ContextCompat
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.iven.musicplayergo.GoConstants
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.dialogs.RecyclerSheet
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -62,7 +62,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         }
 
         findPreference<Preference>(getString(R.string.accent_pref))?.let { preference ->
-            preference.summary = Theming.getAccentName(requireContext(), goPreferences.accent)
+            preference.summary = Theming.getAccentName(requireContext(), GoPreferences.getPrefsInstance().accent)
             preference.onPreferenceClickListener = this@PreferencesFragment
         }
 
@@ -71,12 +71,12 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         }
 
         findPreference<Preference>(getString(R.string.active_tabs_pref))?.let { preference ->
-            preference.summary = goPreferences.activeTabs.size.toString()
+            preference.summary = GoPreferences.getPrefsInstance().activeTabs.size.toString()
             preference.onPreferenceClickListener = this@PreferencesFragment
         }
 
         findPreference<Preference>(getString(R.string.filter_pref))?.let { preference ->
-            goPreferences.filters?.let { ft ->
+            GoPreferences.getPrefsInstance().filters?.let { ft ->
                 preference.summary = ft.size.toString()
                 preference.isEnabled = ft.isNotEmpty()
             }
@@ -91,7 +91,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         when (preference.key) {
             getString(R.string.accent_pref) -> RecyclerSheet.newInstance(GoConstants.ACCENT_TYPE)
                 .show(requireActivity().supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
-            getString(R.string.filter_pref) -> if (!goPreferences.filters.isNullOrEmpty()) {
+            getString(R.string.filter_pref) -> if (!GoPreferences.getPrefsInstance().filters.isNullOrEmpty()) {
                 RecyclerSheet.newInstance(GoConstants.FILTERS_TYPE)
                     .show(requireActivity().supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
             }
@@ -104,18 +104,18 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
             getString(R.string.precise_volume_pref) -> mMediaControlInterface.onGetMediaPlayerHolder()?.run {
-                setPreciseVolume(if (!goPreferences.isPreciseVolumeEnabled) {
-                    goPreferences.latestVolume = currentVolumeInPercent
+                setPreciseVolume(if (!GoPreferences.getPrefsInstance().isPreciseVolumeEnabled) {
+                    GoPreferences.getPrefsInstance().latestVolume = currentVolumeInPercent
                     100
                 } else {
-                    goPreferences.latestVolume
+                    GoPreferences.getPrefsInstance().latestVolume
                 })
             }
             getString(R.string.playback_vel_pref) -> mMediaControlInterface.onPlaybackSpeedToggled()
             getString(R.string.theme_pref) -> mUIControlInterface.onAppearanceChanged(isThemeChanged = true)
             getString(R.string.theme_pref_black) -> mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
             getString(R.string.focus_pref) -> mMediaControlInterface.onGetMediaPlayerHolder()?.run {
-                if (goPreferences.isFocusEnabled) {
+                if (GoPreferences.getPrefsInstance().isFocusEnabled) {
                     tryToGetAudioFocus()
                 } else {
                     giveUpAudioFocus()

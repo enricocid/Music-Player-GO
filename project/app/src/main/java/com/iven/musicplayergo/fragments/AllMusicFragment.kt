@@ -12,15 +12,12 @@ import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.iven.musicplayergo.GoConstants
-import com.iven.musicplayergo.MusicViewModel
-import com.iven.musicplayergo.R
+import com.iven.musicplayergo.*
 import com.iven.musicplayergo.databinding.FragmentAllMusicBinding
 import com.iven.musicplayergo.extensions.setTitleColor
 import com.iven.musicplayergo.extensions.toFormattedDate
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.extensions.toName
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.utils.Lists
 import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.models.Music
@@ -47,11 +44,11 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
     // sorting
     private lateinit var mSortMenuItem: MenuItem
-    private var mSorting = goPreferences.allMusicSorting
+    private var mSorting = GoPreferences.getPrefsInstance().allMusicSorting
 
     private var mAllMusic: List<Music>? = null
 
-    private val sIsFastScrollerPopup get() = (mSorting == GoConstants.ASCENDING_SORTING || mSorting == GoConstants.DESCENDING_SORTING) && goPreferences.songsVisualization != GoConstants.FN
+    private val sIsFastScrollerPopup get() = (mSorting == GoConstants.ASCENDING_SORTING || mSorting == GoConstants.DESCENDING_SORTING) && GoPreferences.getPrefsInstance().songsVisualization != GoConstants.FN
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -191,7 +188,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                     setTitleColor(Theming.resolveThemeAccent(requireContext()))
                 }
 
-                goPreferences.allMusicSorting = mSorting
+                GoPreferences.getPrefsInstance().allMusicSorting = mSorting
 
             } else if (it.itemId != R.id.action_search) {
                 mUIControlInterface.onOpenSleepTimerDialog()

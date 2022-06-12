@@ -14,10 +14,10 @@ import android.support.v4.media.session.MediaSessionCompat
 import android.view.KeyEvent
 import androidx.core.content.getSystemService
 import com.iven.musicplayergo.GoConstants
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.extensions.toToast
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.utils.Versioning
 
 
@@ -106,21 +106,21 @@ class PlayerService : Service() {
 
             // Saves last played song and its position
             with(mediaPlayerHolder) {
-                goPreferences.latestPlayedSong = if (isQueue != null && isQueueStarted) {
-                    goPreferences.isQueue = isQueue
+                GoPreferences.getPrefsInstance().latestPlayedSong = if (isQueue != null && isQueueStarted) {
+                    GoPreferences.getPrefsInstance().isQueue = isQueue
                     currentSong
                 } else {
-                    if (goPreferences.isQueue != null) {
-                        goPreferences.isQueue = null
+                    if (GoPreferences.getPrefsInstance().isQueue != null) {
+                        GoPreferences.getPrefsInstance().isQueue = null
                     }
                     currentSong?.toSavedMusic(playerPosition, launchedBy)
                 }
                 if (queueSongs.isNotEmpty()) {
-                    goPreferences.queue = queueSongs
+                    GoPreferences.getPrefsInstance().queue = queueSongs
                 }
             }
 
-            goPreferences.latestVolume = mediaPlayerHolder.currentVolumeInPercent
+            GoPreferences.getPrefsInstance().latestVolume = mediaPlayerHolder.currentVolumeInPercent
 
             if (::mMediaSessionCompat.isInitialized && mMediaSessionCompat.isActive) {
                 with(mMediaSessionCompat) {

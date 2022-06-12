@@ -13,13 +13,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.GoConstants
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentMusicContainersBinding
 import com.iven.musicplayergo.extensions.loadWithError
 import com.iven.musicplayergo.extensions.setTitleColor
 import com.iven.musicplayergo.extensions.waitForCover
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.utils.Lists
 import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.ui.MediaControlInterface
@@ -173,11 +173,11 @@ class MusicContainersFragment : Fragment(),
     private fun getSortingMethodFromPrefs(): Int {
         return when (mLaunchedBy) {
             GoConstants.ARTIST_VIEW ->
-                goPreferences.artistsSorting
+                GoPreferences.getPrefsInstance().artistsSorting
             GoConstants.FOLDER_VIEW ->
-                goPreferences.foldersSorting
+                GoPreferences.getPrefsInstance().foldersSorting
             else ->
-                goPreferences.albumsSorting
+                GoPreferences.getPrefsInstance().albumsSorting
         }
     }
 
@@ -243,11 +243,11 @@ class MusicContainersFragment : Fragment(),
     private fun saveSortingMethodToPrefs(sortingMethod: Int) {
         when (mLaunchedBy) {
             GoConstants.ARTIST_VIEW ->
-                goPreferences.artistsSorting = sortingMethod
+                GoPreferences.getPrefsInstance().artistsSorting = sortingMethod
             GoConstants.FOLDER_VIEW ->
-                goPreferences.foldersSorting = sortingMethod
+                GoPreferences.getPrefsInstance().foldersSorting = sortingMethod
             else ->
-                goPreferences.albumsSorting = sortingMethod
+                GoPreferences.getPrefsInstance().albumsSorting = sortingMethod
         }
     }
 

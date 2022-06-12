@@ -10,12 +10,12 @@ import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.enablePopupIcons
 import com.iven.musicplayergo.extensions.setTitle
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.extensions.toName
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -31,7 +31,7 @@ class FavoritesAdapter(private val activity: Activity) :
     var onFavoritesCleared: (() -> Unit)? = null
 
     // favorites
-    private var mFavorites = goPreferences.favorites?.toMutableList()
+    private var mFavorites = GoPreferences.getPrefsInstance().favorites?.toMutableList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = FavoritesHolder(
         LayoutInflater.from(parent.context).inflate(
@@ -115,7 +115,7 @@ class FavoritesAdapter(private val activity: Activity) :
                 remove(song)
                 notifyItemRemoved(position)
                 // update
-                goPreferences.favorites = mFavorites
+                GoPreferences.getPrefsInstance().favorites = mFavorites
                 if (mFavorites.isNullOrEmpty()) {
                     onFavoritesCleared?.invoke()
                 }
@@ -125,7 +125,7 @@ class FavoritesAdapter(private val activity: Activity) :
         }
 
         mFavorites?.get(position)?.let { song ->
-            if (goPreferences.askForRemoval) {
+            if (GoPreferences.getPrefsInstance().askForRemoval) {
                 MaterialAlertDialogBuilder(activity)
                     .setTitle(R.string.favorites)
                     .setMessage(activity.getString(

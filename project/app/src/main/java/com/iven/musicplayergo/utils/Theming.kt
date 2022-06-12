@@ -21,9 +21,9 @@ import androidx.core.text.toSpanned
 import androidx.core.widget.ImageViewCompat
 import com.google.android.material.appbar.MaterialToolbar
 import com.iven.musicplayergo.GoConstants
+import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.setIconTint
-import com.iven.musicplayergo.goPreferences
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.MainActivity
 
@@ -44,7 +44,7 @@ object Theming {
     }
 
     @JvmStatic
-    fun getDefaultNightMode(context: Context) = when (goPreferences.theme) {
+    fun getDefaultNightMode(context: Context) = when (GoPreferences.getPrefsInstance().theme) {
         context.getString(R.string.theme_pref_light) -> AppCompatDelegate.MODE_NIGHT_NO
         context.getString(R.string.theme_pref_dark) -> AppCompatDelegate.MODE_NIGHT_YES
         else -> if (Versioning.isQ()) {
@@ -61,7 +61,7 @@ object Theming {
     }
 
     @JvmStatic
-    fun resolveThemeIcon(context: Context) = when (goPreferences.theme) {
+    fun resolveThemeIcon(context: Context) = when (GoPreferences.getPrefsInstance().theme) {
         context.getString(R.string.theme_pref_light) -> R.drawable.ic_day
         context.getString(R.string.theme_pref_auto) -> R.drawable.ic_auto
         else -> R.drawable.ic_night
@@ -228,8 +228,8 @@ object Theming {
     // Search theme from accents array of Pair, returns a Pair(theme, position)
     @JvmStatic
     fun getAccentedTheme(resources: Resources) = try {
-        val selAccent = goPreferences.accent
-        val stylesMap = if (goPreferences.isBlackTheme && isThemeNight(resources)) {
+        val selAccent = GoPreferences.getPrefsInstance().accent
+        val stylesMap = if (GoPreferences.getPrefsInstance().isBlackTheme && isThemeNight(resources)) {
             accentsBlack
         } else {
             accents
@@ -252,12 +252,12 @@ object Theming {
     @ColorInt
     @JvmStatic
     fun resolveThemeAccent(context: Context): Int {
-        var accent = goPreferences.accent
+        var accent = GoPreferences.getPrefsInstance().accent
 
         // Fallback to default color when the pref is f@#$ed (when resources change)
         if (!accents.map { accentId -> accentId.first }.contains(accent)) {
             accent = R.color.deep_purple
-            goPreferences.accent = accent
+            GoPreferences.getPrefsInstance().accent = accent
         }
         return ContextCompat.getColor(context, accent)
     }
@@ -286,7 +286,7 @@ object Theming {
 
     @JvmStatic
     fun getAlphaAccent(context: Context) : Int {
-        val accent = goPreferences.accent
+        val accent = GoPreferences.getPrefsInstance().accent
         var alpha = if (accent == R.color.yellow) {
             200
         } else {
@@ -301,7 +301,7 @@ object Theming {
     @JvmStatic
     fun getAlbumCoverAlpha(context: Context): Int {
         return when {
-            isThemeNight(context.resources) && goPreferences.isBlackTheme -> 25
+            isThemeNight(context.resources) && GoPreferences.getPrefsInstance().isBlackTheme -> 25
             isThemeNight(context.resources) -> 15
             else -> 20
         }

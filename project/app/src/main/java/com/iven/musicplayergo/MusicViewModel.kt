@@ -208,14 +208,14 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
             mDeviceMusicList.distinctBy { it.artist to it.year to it.track to it.title to it.duration to it.album }
                 .toMutableList()
 
-        goPreferences.filters?.let { filter ->
+        GoPreferences.getPrefsInstance().filters?.let { filter ->
             deviceMusicFiltered =  deviceMusicFiltered?.filter { music ->
                !filter.contains(music.artist) and !filter.contains(music.album) and !filter.contains(music.relativePath)
            }?.toMutableList()
         }
 
         deviceMusicFiltered?.let { dsf ->
-            dsf.filterNot { goPreferences.filters?.contains(it.artist)!!}
+            dsf.filterNot { GoPreferences.getPrefsInstance().filters?.contains(it.artist)!!}
             // group music by artist
             deviceSongsByArtist = dsf.groupBy { it.artist }
             deviceMusicByAlbum = dsf.groupBy { it.album }
