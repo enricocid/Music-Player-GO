@@ -449,7 +449,7 @@ class MediaPlayerHolder:
                     currentPlaybackSpeed
                 ).build()
         )
-        if (updateUI) {
+        if (updateUI && ::mediaPlayerInterface.isInitialized) {
             mediaPlayerInterface.onStateChanged()
         }
     }
