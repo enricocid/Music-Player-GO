@@ -2,66 +2,64 @@ package com.iven.musicplayergo.player
 
 
 import android.media.MediaPlayer
-import java.lang.Exception
 
 object MediaPlayerUtils {
 
     @JvmStatic
-    fun safePause(mediaPlayer: MediaPlayer?) {
-        mediaPlayer?.run {
+    fun safePause(mediaPlayer: MediaPlayer) {
+        with(mediaPlayer) {
             try {
                 if (isPlaying) {
                     pause()
                 }
-            } catch (e: Exception) {
+            } catch (e: IllegalStateException) {
                 e.printStackTrace()
             }
         }
     }
 
     @JvmStatic
-    fun safePlay(mediaPlayer: MediaPlayer?) {
-        mediaPlayer?.run {
+    fun safePlay(mediaPlayer: MediaPlayer) {
+        with (mediaPlayer) {
             try {
                 start()
-            } catch (e: Exception) {
+            } catch (e: IllegalStateException) {
                 e.printStackTrace()
             }
         }
     }
 
     @JvmStatic
-    fun safePrepare(mediaPlayer: MediaPlayer?) {
-        mediaPlayer?.run {
+    fun safePrepare(mediaPlayer: MediaPlayer) {
+        with (mediaPlayer) {
             try {
                 prepare()
-            } catch (e: Exception) {
+            } catch (e: IllegalStateException) {
                 e.printStackTrace()
             }
         }
     }
 
     @JvmStatic
-    fun safeReset(mediaPlayer: MediaPlayer?) {
-        mediaPlayer?.run {
+    fun safeReset(mediaPlayer: MediaPlayer) {
+        with (mediaPlayer) {
             try {
                 reset()
-            } catch (e: Exception) {
+            } catch (e: IllegalStateException) {
                 e.printStackTrace()
             }
         }
     }
 
     @JvmStatic
-    fun safeCheckIsPlaying(mediaPlayer: MediaPlayer?): Boolean {
-        mediaPlayer?.run {
+    fun safeCheckIsPlaying(mediaPlayer: MediaPlayer): Boolean {
+        with (mediaPlayer) {
             return try {
                 isPlaying
-            } catch (e: Exception) {
+            } catch (e: IllegalStateException) {
                 e.printStackTrace()
                 false
             }
         }
-        return false
     }
 }
