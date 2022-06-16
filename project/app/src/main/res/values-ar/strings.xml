@@ -176,4 +176,9 @@
     <string name="deep_orange_200">برتقالي غامق ٢٠٠</string>
     <string name="blue_grey_200">رمادي مزرق ٢٠٠</string>
     <string name="sleeptimer">مؤقت النوم</string>
+    <string name="sleeptimer_cancel_desc">إيقاف مؤقت النوم</string>
+    <string name="sleeptimer_stop">إيقاف</string>
+    <string name="sleeptimer_enabled">أوقف التشغيل بعد %1s</string>
+    <string name="sleeptimer_remaining_time">مؤقت النوم: الوقت المتبقي</string>
+    <string name="locale_bulgarian">البلغارية</string>
 </resources>
