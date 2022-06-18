@@ -180,4 +180,5 @@
     <string name="brown_200">Kahverengi 200</string>
     <string name="locale_pref_title">Dil</string>
     <string name="locale_spanish">İspanyolca</string>
+    <string name="sleeptimer_enabled">Oynatmayı %1s sonra durdur</string>
 </resources>
