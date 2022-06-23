@@ -8,7 +8,6 @@
     android:paddingTop="8dp"
     android:paddingEnd="?attr/listPreferredItemPaddingEnd"
     android:paddingBottom="8dp"
-    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
     android:textColor="?attr/colorPrimary"
-    android:textStyle="bold"
     tools:viewBindingIgnore="true" />

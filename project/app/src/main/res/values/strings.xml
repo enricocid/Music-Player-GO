@@ -52,7 +52,6 @@
     <string name="speed_3">Normal</string>
     <!-- Sleep timer-->
     <string name="sleeptimer">Sleep timer</string>
-    <string name="sleeptimer_remaining_time">Sleep timer: remaining time</string>
     <string name="sleeptimer_enabled">Stop playback %1s after</string>
     <string name="sleeptimer_stop">Stop</string>
     <string name="sleeptimer_cancel_desc">Stop sleep timer</string>

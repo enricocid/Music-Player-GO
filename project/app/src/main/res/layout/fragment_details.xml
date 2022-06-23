@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="?attr/main_bg"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
     tools:ignore="Overdraw">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/details_toolbar"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:theme="@style/ToolbarStyle"
-        app:collapseIcon="@drawable/ic_navigate_before"
-        app:navigationIcon="@drawable/ic_navigate_before"
-        app:subtitleTextAppearance="@style/ToolbarStyle.Subtitle"
-        app:titleTextAppearance="@style/ToolbarStyle.Title"
-        app:titleTextColor="?android:attr/textColorPrimary" />
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/details_toolbar"
+            style="@style/ToolbarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/main_bg"
+            app:collapseIcon="@drawable/ic_navigate_before"
+            app:navigationIcon="@drawable/ic_navigate_before"
+            app:subtitleTextAppearance="@style/ToolbarStyle.Subtitle"
+            app:titleTextAppearance="@style/ToolbarStyle.Title" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <!-- ALBUM COVER FOR ALBUM VIEW -->
     <LinearLayout
@@ -59,8 +66,7 @@
                 android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                android:textColor="?android:attr/textColorPrimary"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                 android:textStyle="bold" />
 
             <TextView
@@ -73,8 +79,7 @@
                 android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                android:textColor="?android:attr/textColorSecondary"
+                android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
                 android:textStyle="bold" />
 
             <TextView
@@ -87,8 +92,7 @@
                 android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                android:textColor="?android:attr/textColorTertiary" />
+                android:textAppearance="@style/TextAppearance.Material3.LabelMedium" />
         </LinearLayout>
     </LinearLayout>
 
@@ -127,9 +131,7 @@
                 android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:textAlignment="textEnd"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textStyle="bold" />
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
             <TextView
                 android:id="@+id/album_year_duration"
@@ -140,8 +142,7 @@
                 android:paddingEnd="12dp"
                 android:paddingBottom="8dp"
                 android:singleLine="true"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                android:textColor="?android:attr/textColorSecondary" />
+                android:textAppearance="@style/TextAppearance.Material3.LabelMedium" />
         </LinearLayout>
 
         <ImageButton

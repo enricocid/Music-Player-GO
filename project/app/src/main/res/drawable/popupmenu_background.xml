@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- https://stackoverflow.com/a/65557044 -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/toolbarBg" />
-    <corners android:radius="8dp" />
-    <padding
-        android:bottom="8dp"
-        android:top="8dp" />
-</shape>

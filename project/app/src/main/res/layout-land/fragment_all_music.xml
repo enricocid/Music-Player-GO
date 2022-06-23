@@ -10,18 +10,25 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/search_toolbar"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/toolbar_bg"
-            android:elevation="@dimen/search_bar_elevation"
-            android:theme="@style/ToolbarStyle"
-            app:collapseIcon="@drawable/ic_navigate_before"
-            app:navigationIcon="@drawable/ic_close"
-            app:title="@string/songs"
-            app:titleTextAppearance="@style/ToolbarStyle.Title"
-            app:titleTextColor="?android:attr/textColorPrimary" />
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:liftOnScroll="true"
+            app:liftOnScrollTargetViewId="@+id/all_music_rv">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/search_toolbar"
+                style="@style/ToolbarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:collapseIcon="@drawable/ic_navigate_before"
+                app:navigationIcon="@drawable/ic_close"
+                app:subtitleTextAppearance="@style/ToolbarStyle.Subtitle"
+                app:title="@string/songs"
+                app:titleTextAppearance="@style/ToolbarStyle.Title" />
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <!-- MUSIC LIST -->
         <androidx.recyclerview.widget.RecyclerView
@@ -31,6 +38,7 @@
             android:overScrollMode="never"
             android:scrollbars="none"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:spanCount="3" />
 
     </LinearLayout>

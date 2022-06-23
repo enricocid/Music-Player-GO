@@ -1,15 +1,18 @@
 package com.iven.musicplayergo.dialogs
 
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.FrameLayout
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.slider.Slider
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
@@ -18,15 +21,14 @@ import com.iven.musicplayergo.databinding.NowPlayingControlsBinding
 import com.iven.musicplayergo.databinding.NowPlayingCoverBinding
 import com.iven.musicplayergo.databinding.NowPlayingExtendedControlsBinding
 import com.iven.musicplayergo.extensions.*
-import com.iven.musicplayergo.utils.Lists
-import com.iven.musicplayergo.utils.Theming
-import com.iven.musicplayergo.utils.Versioning
 import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.utils.Lists
 import com.iven.musicplayergo.utils.Popups
-import dev.chrisbanes.insetter.Insetter
-import dev.chrisbanes.insetter.windowInsetTypesOf
+import com.iven.musicplayergo.utils.Theming
+import com.iven.musicplayergo.utils.Versioning
 
 
 class NowPlaying: BottomSheetDialogFragment() {
@@ -74,15 +76,6 @@ class NowPlaying: BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            dialog?.window?.navigationBarColor =
-                Theming.resolveColorAttr(requireContext(), R.attr.main_bg)
-            Insetter.builder()
-                .padding(windowInsetTypesOf(navigationBars = true))
-                .margin(windowInsetTypesOf(statusBars = true))
-                .applyToView(view)
-        }
-
         view.afterMeasured {
             val ratio = if (Theming.isDeviceLand(resources)) {
                 0.30f
@@ -122,25 +115,8 @@ class NowPlaying: BottomSheetDialogFragment() {
         }
 
         setupPreciseVolumeHandler()
-        setupSeekBarProgressListener()
+        setupSliderProgressListener()
         updateNpInfo()
-
-        val mediaPlayerHolder = mMediaControlInterface.onGetMediaPlayerHolder()
-
-        mediaPlayerHolder?.currentSong?.let { song ->
-            loadNpCover(song)
-            _nowPlayingBinding?.npSeek?.text =
-                mediaPlayerHolder.playerPosition.toLong()
-                    .toFormattedDuration(isAlbum = false, isSeekBar = true)
-
-            _nowPlayingBinding?.npSeekBar?.progress = mediaPlayerHolder.playerPosition
-
-            // to ensure full dialog's height
-            dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
-                ?.let { bs ->
-                    BottomSheetBehavior.from(bs).state = BottomSheetBehavior.STATE_EXPANDED
-                }
-        }
     }
 
     private fun setupNPCoverLayout() {
@@ -172,7 +148,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                         0,
                         mph.launchedBy)
                     mUIControlInterface.onFavoritesUpdated(clear = false)
-                    updateNpFavoritesIcon(requireContext())
+                    updateNpFavoritesIcon(requireContext(), mph)
                 }
 
                 with(npRepeat) {
@@ -209,7 +185,6 @@ class NowPlaying: BottomSheetDialogFragment() {
         _npExtControlsBinding?.run {
 
             val isVolumeEnabled = GoPreferences.getPrefsInstance().isPreciseVolumeEnabled
-            npVolumeValue.handleViewVisibility(show = isVolumeEnabled)
             npVolume.handleViewVisibility(show = isVolumeEnabled)
             npVolumeSeek.handleViewVisibility(show = isVolumeEnabled)
 
@@ -219,91 +194,77 @@ class NowPlaying: BottomSheetDialogFragment() {
                     npVolume.setImageResource(
                         Theming.getPreciseVolumeIcon(this)
                     )
-                    npVolumeSeek.progress = this
-                    npVolumeValue.text = this.toString()
+                    npVolumeSeek.value = this.toFloat()
                 }
 
-                npVolumeSeek.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                npVolumeSeek.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
 
-                    val defaultValueColor = _npExtControlsBinding?.npVolumeValue?.currentTextColor
-                    val selectedColor = Theming.resolveThemeAccent(requireContext())
-
-                    override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                        if (fromUser) {
-                            mMediaControlInterface.onGetMediaPlayerHolder()?.setPreciseVolume(progress)
-                            npVolumeValue.text = progress.toString()
-                            npVolume.setImageResource(
-                                Theming.getPreciseVolumeIcon(progress)
-                            )
-                        }
-                    }
-                    override fun onStartTrackingTouch(seekBar: SeekBar) {
-                        npVolumeValue.setTextColor(selectedColor)
+                    override fun onStartTrackingTouch(slider: Slider) {
                         Theming.updateIconTint(
                             npVolume,
-                            selectedColor
+                            Theming.resolveThemeAccent(requireContext())
                         )
                     }
-                    override fun onStopTrackingTouch(seekBar: SeekBar) {
-                        npVolumeValue.setTextColor(defaultValueColor!!)
+
+                    override fun onStopTrackingTouch(slider: Slider) {
                         Theming.updateIconTint(
                             npVolume,
-                            defaultValueColor
+                            ContextCompat.getColor(requireContext(), R.color.widgetsColor)
                         )
                     }
                 })
+
+                npVolumeSeek.addOnChangeListener { _, value, fromUser ->
+                    if (fromUser) {
+                        mMediaControlInterface.onGetMediaPlayerHolder()?.setPreciseVolume(value.toInt())
+                        npVolume.setImageResource(
+                            Theming.getPreciseVolumeIcon(value.toInt())
+                        )
+                    }
+                }
             }
         }
     }
 
-    private fun setupSeekBarProgressListener() {
+    private fun setupSliderProgressListener() {
 
         mMediaControlInterface.onGetMediaPlayerHolder()?.let { mph ->
             _nowPlayingBinding?.run {
-                npSeekBar.setOnSeekBarChangeListener(
-                    object : SeekBar.OnSeekBarChangeListener {
 
-                        val defaultPositionColor = npSeek.currentTextColor
-                        val selectedColor = Theming.resolveThemeAccent(requireContext())
-                        var userSelectedPosition = 0
-                        var isUserSeeking = false
+                var isUserSeeking = false
 
-                        override fun onProgressChanged(
-                            seekBar: SeekBar?,
-                            progress: Int,
-                            fromUser: Boolean
-                        ) {
-                            if (fromUser) {
-                                userSelectedPosition = progress
-                            }
-                            npSeek.text =
-                                progress.toLong().toFormattedDuration(isAlbum = false, isSeekBar = true)
+                npSeekBar.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
+
+                    val defaultPositionColor = npSeek.currentTextColor
+
+                    override fun onStartTrackingTouch(slider: Slider) {
+                        npSeek.setTextColor(Theming.resolveThemeAccent(requireContext()))
+                        isUserSeeking = true
+                    }
+
+                    override fun onStopTrackingTouch(slider: Slider) {
+                        if (isUserSeeking) {
+                            npSeek.setTextColor(defaultPositionColor)
+                            mph.onPauseSeekBarCallback()
+                            isUserSeeking = false
                         }
-
-                        override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                            isUserSeeking = true
-                            npSeek.setTextColor(
-                                selectedColor
-                            )
+                        if (mph.state != GoConstants.PLAYING) {
+                            mMediaControlInterface.onUpdatePositionFromNP(slider.value.toInt())
                         }
+                        mph.seekTo(
+                            slider.value.toInt(),
+                            updatePlaybackStatus = mph.isPlaying,
+                            restoreProgressCallBack = !isUserSeeking
+                        )
+                    }
+                })
 
-                        override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                            if (isUserSeeking) {
-                                npSeek.setTextColor(defaultPositionColor)
-                                mph.onPauseSeekBarCallback()
-                                isUserSeeking = false
-                            }
-                            if (mph.state != GoConstants.PLAYING) {
-                                mMediaControlInterface.onUpdatePositionFromNP(userSelectedPosition)
-                                npSeekBar.progress = userSelectedPosition
-                            }
-                            mph.seekTo(
-                                userSelectedPosition,
-                                updatePlaybackStatus = mph.isPlaying,
-                                restoreProgressCallBack = !isUserSeeking
-                            )
-                        }
-                    })
+                npSeekBar.addOnChangeListener { _, value, fromUser ->
+                    if (fromUser) {
+                        npSeek.text =
+                            value.toLong().toFormattedDuration(isAlbum = false, isSeekBar = true)
+                    }
+                }
             }
         }
     }
@@ -369,36 +330,37 @@ class NowPlaying: BottomSheetDialogFragment() {
         }
     }
 
-    fun updateNpFavoritesIcon(context: Context) {
-        if (::mMediaControlInterface.isInitialized) {
-            val mediaPlayerHolder = mMediaControlInterface.onGetMediaPlayerHolder()
-            _npCoverBinding?.run {
-                mediaPlayerHolder?.currentSong?.let { song ->
-                    val favorites = GoPreferences.getPrefsInstance().favorites
-                    val isFavorite = favorites != null && favorites.contains(song.toSavedMusic(0, mediaPlayerHolder.launchedBy))
-                    val favoritesButtonColor = if (isFavorite) {
-                        npLove.setImageResource(R.drawable.ic_favorite)
-                        Theming.resolveThemeAccent(context)
-                    } else {
-                        npLove.setImageResource(R.drawable.ic_favorite_empty)
-                        Theming.resolveColorAttr(
-                            context,
-                            android.R.attr.colorButtonNormal
-                        )
-                    }
-                    Theming.updateIconTint(npLove, favoritesButtonColor)
+    fun updateNpFavoritesIcon(context: Context, mediaPlayerHolder: MediaPlayerHolder) {
+        _npCoverBinding?.run {
+            mediaPlayerHolder.currentSong?.let { song ->
+                val favorites = GoPreferences.getPrefsInstance().favorites
+                val isFavorite = favorites != null && favorites.contains(song.toSavedMusic(0, mediaPlayerHolder.launchedBy))
+                val favoritesButtonColor = if (isFavorite) {
+                    npLove.setImageResource(R.drawable.ic_favorite)
+                    Theming.resolveThemeAccent(context)
+                } else {
+                    npLove.setImageResource(R.drawable.ic_favorite_empty)
+                    Theming.resolveColorAttr(
+                        context,
+                        android.R.attr.colorButtonNormal
+                    )
                 }
+                Theming.updateIconTint(npLove, favoritesButtonColor)
             }
         }
     }
 
     fun updateNpInfo() {
         if (::mMediaControlInterface.isInitialized) {
-            mMediaControlInterface.onGetMediaPlayerHolder()?.currentSong?.let { song ->
-                val selectedSongDuration = song.duration
+            val mediaPlayerHolder = mMediaControlInterface.onGetMediaPlayerHolder()
+            mediaPlayerHolder?.currentSong?.let { song ->
+
+                // load album cover
                 if (mAlbumIdNp != song.albumId && GoPreferences.getPrefsInstance().isCovers) {
                     loadNpCover(song)
                 }
+
+                // load album/song info
                 _nowPlayingBinding?.npSong?.text = song.title
                 _nowPlayingBinding?.npArtistAlbum?.text =
                     getString(
@@ -406,37 +368,54 @@ class NowPlaying: BottomSheetDialogFragment() {
                         song.artist,
                         song.album
                     )
-
-                _nowPlayingBinding?.npDuration?.text =
-                    selectedSongDuration.toFormattedDuration(isAlbum = false, isSeekBar = true)
-                _nowPlayingBinding?.npSeekBar?.max = song.duration.toInt()
-
                 song.id?.toContentUri()?.toBitrate(requireContext())?.let { (first, second) ->
                     _nowPlayingBinding?.npRates?.text =
                         getString(R.string.rates, first, second)
                 }
+
+                // load song's duration
+                val selectedSongDuration = song.duration
+                _nowPlayingBinding?.npDuration?.text =
+                    selectedSongDuration.toFormattedDuration(isAlbum = false, isSeekBar = true)
+
+                _nowPlayingBinding?.npSeekBar?.valueTo = song.duration.toFloat()
+                _nowPlayingBinding?.npSeek?.text =
+                    mediaPlayerHolder.playerPosition.toLong()
+                        .toFormattedDuration(isAlbum = false, isSeekBar = true)
+
+                // set seekbar progress
+                _nowPlayingBinding?.npSeekBar?.value = mediaPlayerHolder.playerPosition.toFloat()
+
+                // update playing status
+                updateNpFavoritesIcon(requireContext(), mediaPlayerHolder)
+                updatePlayingStatus(mediaPlayerHolder)
             }
-            updateNpFavoritesIcon(requireContext())
-            updatePlayingStatus()
+
+            // to ensure full dialog's height
+            dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
+                ?.let { bs ->
+                    BottomSheetBehavior.from(bs).state = BottomSheetBehavior.STATE_EXPANDED
+                }
         }
     }
 
     fun updateProgress(position: Int) {
-        _nowPlayingBinding?.npSeekBar?.progress = position
+        _nowPlayingBinding?.run {
+            npSeekBar.value = position.toFloat()
+            npSeek.text =
+                position.toLong().toFormattedDuration(isAlbum = false, isSeekBar = true)
+        }
     }
 
-    fun updatePlayingStatus() {
-        if (::mMediaControlInterface.isInitialized) {
-            mMediaControlInterface.onGetMediaPlayerHolder()?.run {
-                val isPlaying = state != GoConstants.PAUSED
-                val drawable =
-                    if (isPlaying) {
-                        R.drawable.ic_pause
-                    } else {
-                        R.drawable.ic_play
-                    }
-                _npControlsBinding?.npPlay?.setImageResource(drawable)
+    fun updatePlayingStatus(mediaPlayerHolder: MediaPlayerHolder) {
+        mediaPlayerHolder.run {
+            val isPlaying = state != GoConstants.PAUSED
+            val drawable = if (isPlaying) {
+                R.drawable.ic_pause
+            } else {
+                R.drawable.ic_play
             }
+            _npControlsBinding?.npPlay?.setImageResource(drawable)
         }
     }
 

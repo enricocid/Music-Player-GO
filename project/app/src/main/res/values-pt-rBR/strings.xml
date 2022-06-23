@@ -140,7 +140,6 @@
     <string name="locale_arabic">Árabe</string>
     <string name="direct_remove_pref_title">Confirmar remoção</string>
     <string name="sleeptimer">Temporizador</string>
-    <string name="sleeptimer_remaining_time">Temporizador: tempo restante</string>
     <string name="sleeptimer_enabled">Parar a reprodução %1s depois</string>
     <string name="sleeptimer_stop">Parar</string>
     <string name="sleeptimer_cancel_desc">Parar temporizador</string>

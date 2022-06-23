@@ -20,11 +20,11 @@ import com.iven.musicplayergo.databinding.FragmentMusicContainersBinding
 import com.iven.musicplayergo.extensions.loadWithError
 import com.iven.musicplayergo.extensions.setTitleColor
 import com.iven.musicplayergo.extensions.waitForCover
-import com.iven.musicplayergo.utils.Lists
-import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.utils.Lists
 import com.iven.musicplayergo.utils.Popups
+import com.iven.musicplayergo.utils.Theming
 import me.zhanghai.android.fastscroll.FastScrollerBuilder
 import me.zhanghai.android.fastscroll.PopupTextProvider
 

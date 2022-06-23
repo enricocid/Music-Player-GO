@@ -4,19 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/main_bg"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/error_toolbar"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/toolbar_bg"
-        android:elevation="2dp"
-        android:theme="@style/ToolbarStyle"
-        app:navigationIcon="@drawable/ic_close_error"
-        app:title="@string/app_name"
-        app:titleTextAppearance="@style/ToolbarStyle.Title"
-        app:titleTextColor="@color/red" />
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:liftOnScroll="true"
+        app:liftOnScrollTargetViewId="@+id/all_music_rv">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/error_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/ToolbarStyle"
+            app:navigationIcon="@drawable/ic_close"
+            app:navigationIconTint="@color/red"
+            app:title="@string/app_name"
+            app:titleCentered="true"
+            app:titleTextAppearance="@style/ToolbarStyle.Title"
+            app:titleTextColor="@color/red" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

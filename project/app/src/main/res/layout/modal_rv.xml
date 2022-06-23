@@ -7,13 +7,14 @@
 
     <TextView
         android:id="@+id/title"
-        style="@style/TextAppearance.MaterialComponents.Headline6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="16dp"
         android:paddingTop="14dp"
         android:paddingEnd="16dp"
-        android:paddingBottom="14dp" />
+        android:paddingBottom="14dp"
+        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+        android:textStyle="bold" />
 
     <View
         android:layout_width="match_parent"
@@ -34,7 +35,7 @@
         android:paddingBottom="14dp"
         android:singleLine="true"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
         android:textColor="?android:attr/textColorTertiary" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -54,7 +55,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnNegative"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -65,7 +66,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnPositive"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            style="@style/Widget.Material3.Button.UnelevatedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

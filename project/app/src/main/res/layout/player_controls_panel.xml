@@ -9,8 +9,7 @@
         android:id="@+id/player_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/main_bg"
-        android:elevation="@dimen/search_bar_elevation"
+        android:elevation="2dp"
         android:orientation="vertical">
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -20,7 +19,7 @@
             android:clickable="false"
             app:indicatorColor="?attr/colorPrimary"
             app:trackCornerRadius="2dp"
-            app:trackThickness="2dp" />
+            app:trackThickness="3dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,9 +50,7 @@
                     android:singleLine="true"
                     android:text="@string/app_name"
                     android:textAlignment="textStart"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:textStyle="bold" />
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
                 <TextView
                     android:id="@+id/playing_artist"
@@ -64,8 +61,7 @@
                     android:singleLine="true"
                     android:text="@string/versionName"
                     android:textAlignment="textStart"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                    android:textColor="?android:attr/textColorPrimary" />
+                    android:textAppearance="@style/TextAppearance.Material3.LabelMedium" />
             </LinearLayout>
 
             <ImageButton
@@ -102,9 +98,8 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="?attr/main_bg"
+            android:background="@android:color/transparent"
             app:tabGravity="fill"
-            app:tabIndicator="@drawable/tab_indicator"
             app:tabMode="scrollable"
             app:tabRippleColor="?attr/colorPrimary" />
     </LinearLayout>

@@ -23,6 +23,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -238,3 +240,12 @@ fun View.safeClickListener(safeClickListener: (view: View) -> Unit) {
 }
 
 fun Int.toContrastColor() = if (ColorUtils.calculateLuminance(this) < 0.35) Color.WHITE else Color.DKGRAY
+
+fun View.applyEdgeToEdge() {
+    setOnApplyWindowInsetsListener { view, insets ->
+        val bars = WindowInsetsCompat.toWindowInsetsCompat(insets)
+            .getInsets(WindowInsetsCompat.Type.systemBars())
+        view.updatePadding(bottom = bars.bottom, left = bars.left, right = bars.right)
+        insets
+    }
+}

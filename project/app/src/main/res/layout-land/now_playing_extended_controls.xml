@@ -12,44 +12,32 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <!-- VOLUME SEEKBAR -->
-        <SeekBar
+        <!-- VOLUME SLIDER -->
+        <com.google.android.material.slider.Slider
             android:id="@+id/np_volume_seek"
+            style="@style/Widget.App.Slider"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
             android:clickable="true"
             android:focusable="true"
-            android:max="100"
-            android:progressTint="@color/widgetsColor"
-            android:splitTrack="false"
-            android:thumbTint="@color/widgetsColor" />
+            android:minHeight="0dp"
+            android:valueTo="100"
+            app:haloRadius="12dp"
+            app:thumbRadius="6dp" />
 
-        <LinearLayout
+        <ImageButton
+            android:id="@+id/np_volume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            android:background="@android:color/transparent"
+            android:clickable="false"
+            android:contentDescription="@string/precise_volume_pref_title"
+            android:focusable="false"
             android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageButton
-                android:id="@+id/np_volume"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:clickable="false"
-                android:contentDescription="@string/precise_volume_pref_title"
-                android:focusable="false"
-                android:splitTrack="false"
-                app:srcCompat="@drawable/ic_volume_up" />
-
-            <TextView
-                android:id="@+id/np_volume_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                android:textColor="@color/widgetsColor" />
-        </LinearLayout>
+            android:splitTrack="false"
+            app:srcCompat="@drawable/ic_volume_up" />
     </LinearLayout>
 </merge>

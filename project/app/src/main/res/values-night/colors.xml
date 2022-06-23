@@ -23,7 +23,9 @@
 
     <color name="widgetsColor">#fafafa</color>
 
-    <color name="mainBg">#151515</color>
-    <color name="systemBarBg">#111111</color>
-    <color name="toolbarBg">@color/systemBarBg</color>
+    <color name="main_bg">#151515</color>
+    <color name="album_bg">#111111</color>
+
+    <color name="switch_thumb_tint_mdc">@color/switch_thumb_tint_dark_mdc</color>
+    <color name="switch_track_tint_mdc">@color/switch_track_tint_dark_mdc</color>
 </resources>

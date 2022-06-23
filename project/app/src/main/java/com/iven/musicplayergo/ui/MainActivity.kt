@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -33,7 +35,6 @@ import com.iven.musicplayergo.dialogs.NowPlaying
 import com.iven.musicplayergo.dialogs.RecyclerSheet
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.fragments.*
-import com.iven.musicplayergo.utils.*
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.EqualizerUtils
 import com.iven.musicplayergo.player.MediaPlayerHolder
@@ -41,8 +42,7 @@ import com.iven.musicplayergo.player.MediaPlayerInterface
 import com.iven.musicplayergo.player.PlayerService
 import com.iven.musicplayergo.preferences.ContextUtils
 import com.iven.musicplayergo.preferences.SettingsFragment
-import dev.chrisbanes.insetter.Insetter
-import dev.chrisbanes.insetter.windowInsetTypesOf
+import com.iven.musicplayergo.utils.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
@@ -259,14 +259,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         setContentView(mMainActivityBinding.root)
 
-        if (Versioning.isOreoMR1()) {
-            window?.navigationBarColor =
-                Theming.resolveColorAttr(this, R.attr.main_bg)
-            Insetter.builder()
-                .padding(windowInsetTypesOf(navigationBars = true))
-                .margin(windowInsetTypesOf(statusBars = true))
-                .applyToView(mMainActivityBinding.root)
-        }
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        mMainActivityBinding.root.applyEdgeToEdge()
 
         sAllowCommit = true
 
@@ -289,7 +283,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         mMainActivityBinding.mainView.animate().apply {
             withStartAction {
                 mPlayerControlsPanelBinding.playerView.handleViewVisibility(show = false)
-                mMainActivityBinding.loadingProgressBar.handleViewVisibility(show = false)
+                mMainActivityBinding.loadingProgressBar.hide()
                 mMainActivityBinding.viewPager2.handleViewVisibility(show = false)
             }
             duration = 250
@@ -307,17 +301,20 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun finishSetup(music: MutableList<Music>?) {
         if (!music.isNullOrEmpty()) {
-            mMainActivityBinding.loadingProgressBar.handleViewVisibility(show = false)
-
-            // Be sure that prefs are initialized
-            GoPreferences.initPrefs(this)
-
-            initMediaButtons()
-            initViewPager()
-            synchronized(handleRestore()) {
-                mMainActivityBinding.mainView.animate().apply {
-                    duration = 750
-                    alpha(1.0F)
+            mMainActivityBinding.loadingProgressBar.animate().run {
+                duration = 750
+                alpha(0.0F)
+                withStartAction {
+                    initViewPager()
+                }
+                withEndAction {
+                    synchronized(handleRestore()) {
+                        mMainActivityBinding.mainView.animate().run {
+                            duration = 500
+                            alpha(1.0F)
+                        }
+                    }
+                    initMediaButtons()
                 }
             }
         } else {
@@ -328,9 +325,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     // Handle restoring: handle intent data, if any, or restore playback
     private fun handleRestore() {
         if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null) {
-            handleIntent(
-                intent
-            )
+            handleIntent(intent)
         } else {
             restorePlayerStatus()
         }
@@ -353,7 +348,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             }
             RecyclerView::class.java.getDeclaredField("mTouchSlop").apply {
                 isAccessible = true
-
                 val slop = get(recycler) as Int
                 set(recycler, slop * 3) // 3x seems to be the best fit here
             }
@@ -411,21 +405,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun initFragmentAt(position: Int) : Fragment {
         when (mGoPreference.activeTabs.toList()[position]) {
-            GoConstants.ARTISTS_TAB -> if (mArtistsFragment == null) {
-                mArtistsFragment = MusicContainersFragment.newInstance(GoConstants.ARTIST_VIEW)
-            }
-            GoConstants.ALBUM_TAB -> if (mAlbumsFragment == null) {
-                mAlbumsFragment = MusicContainersFragment.newInstance(GoConstants.ALBUM_VIEW)
-            }
-            GoConstants.SONGS_TAB -> if (mAllMusicFragment == null) {
-                mAllMusicFragment = AllMusicFragment.newInstance()
-            }
-            GoConstants.FOLDERS_TAB -> if (mFoldersFragment == null) {
-                mFoldersFragment = MusicContainersFragment.newInstance(GoConstants.FOLDER_VIEW)
-            }
-            else -> if (mSettingsFragment == null) {
-                mSettingsFragment = SettingsFragment.newInstance()
-            }
+            GoConstants.ARTISTS_TAB -> mArtistsFragment = MusicContainersFragment.newInstance(GoConstants.ARTIST_VIEW)
+            GoConstants.ALBUM_TAB -> mAlbumsFragment = MusicContainersFragment.newInstance(GoConstants.ALBUM_VIEW)
+            GoConstants.SONGS_TAB -> mAllMusicFragment = AllMusicFragment.newInstance()
+            GoConstants.FOLDERS_TAB -> mFoldersFragment = MusicContainersFragment.newInstance(GoConstants.FOLDER_VIEW)
+            else -> mSettingsFragment = SettingsFragment.newInstance()
         }
         return handleOnNavigationItemSelected(position)
     }
@@ -451,9 +435,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             with(supportFragmentManager) {
                 if (sEqFragmentExpanded) {
                     goBackFromFragmentNow(mEqualizerFragment)
+                    mEqualizerFragment = null
                 }
                 if (sDetailsFragmentExpanded) {
                     goBackFromFragmentNow(mDetailsFragment)
+                    mDetailsFragment = null
                 }
             }
         }
@@ -612,8 +598,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     override fun onFavoriteAddedOrRemoved() {
-        onFavoritesUpdated(clear = false)
-        mNpDialog?.updateNpFavoritesIcon(this@MainActivity)
+        if (isMediaPlayerHolder) {
+            onFavoritesUpdated(clear = false)
+            mNpDialog?.updateNpFavoritesIcon(this@MainActivity, mMediaPlayerHolder)
+        }
     }
 
     override fun onUpdatePositionFromNP(position: Int) {
@@ -1126,7 +1114,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         override fun onStateChanged() {
             if (isMediaPlayerHolder) {
                 updatePlayingStatus()
-                mNpDialog?.updatePlayingStatus()
+                mNpDialog?.updatePlayingStatus(mMediaPlayerHolder)
                 if (mMediaPlayerHolder.state != GoConstants.RESUMED && mMediaPlayerHolder.state != GoConstants.PAUSED) {
                     updatePlayingInfo(restore = false)
                     if (mMediaPlayerHolder.isQueue != null) {

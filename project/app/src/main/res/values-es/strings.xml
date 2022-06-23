@@ -112,7 +112,6 @@
     <string name="locale_lituanian">Lituano</string>
     <string name="equalizer_presets">Preconfiguraciones de ecualizador</string>
     <string name="locale_pref_title">Idioma</string>
-    <string name="sleeptimer_remaining_time">Temporizador de sueño: tiempo restante</string>
     <string name="error_fs_not_allowed">¡Algo salió mal! :( Considera desactivar la optimización de batería en la configuración de sistema: Aplicaciones &gt; Todas las aplicaciones &gt; Music Player GO &gt; Batería &gt; Sin restricciones</string>
     <string name="theme_pref_black_title">Negro Puro</string>
     <string name="locale_greek">Griego</string>

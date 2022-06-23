@@ -12,9 +12,9 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.dialogs.RecyclerSheet
-import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.utils.Theming
 
 
 class PreferencesFragment : PreferenceFragmentCompat(),

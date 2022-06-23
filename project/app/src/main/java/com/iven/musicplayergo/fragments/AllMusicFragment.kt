@@ -12,18 +12,21 @@ import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.iven.musicplayergo.*
+import com.iven.musicplayergo.GoConstants
+import com.iven.musicplayergo.GoPreferences
+import com.iven.musicplayergo.MusicViewModel
+import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentAllMusicBinding
 import com.iven.musicplayergo.extensions.setTitleColor
 import com.iven.musicplayergo.extensions.toFormattedDate
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.extensions.toName
-import com.iven.musicplayergo.utils.Lists
-import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.utils.Lists
 import com.iven.musicplayergo.utils.Popups
+import com.iven.musicplayergo.utils.Theming
 import me.zhanghai.android.fastscroll.FastScrollerBuilder
 import me.zhanghai.android.fastscroll.PopupTextProvider
 
@@ -102,7 +105,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
             shuffleFab.text = mAllMusic?.size.toString()
             val fabColor = ColorUtils.blendARGB(
-                Theming.resolveColorAttr(requireContext(), R.attr.toolbar_bg),
+                Theming.resolveColorAttr(requireContext(), R.attr.main_bg),
                 Theming.resolveThemeAccent(requireContext()),
                 0.10f
             )

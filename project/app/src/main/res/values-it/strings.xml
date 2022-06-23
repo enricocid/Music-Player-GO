@@ -9,7 +9,7 @@
     <string name="folder_info">%1d canzoni</string>
     <string name="songs">Canzoni</string>
     <string name="shuffle_am">Mescola tutte le canzoni</string>
-    <string name="shuffle_sa">Mescola l\'abum selezionato</string>
+    <string name="shuffle_sa">Mescola l\'album selezionato</string>
     <string name="folders">Cartelle</string>
     <string name="albums">Album</string>
     <string name="equalizer">Equalizzatore</string>
@@ -26,7 +26,6 @@
     <string name="content_playback_speed">Velocità riproduzione</string>
     <string name="speed_3">Normale</string>
     <string name="sleeptimer">Timer spegnimento</string>
-    <string name="sleeptimer_remaining_time">Timer spegnimento: tempo rimanente</string>
     <string name="sleeptimer_enabled">Interrompi riproduzione dopo %1s</string>
     <string name="sleeptimer_stop">Interrompi</string>
     <string name="sleeptimer_cancel_desc">Interrompi timer spegnimento</string>

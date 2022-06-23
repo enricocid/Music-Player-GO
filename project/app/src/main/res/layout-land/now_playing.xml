@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -42,9 +43,7 @@
                 android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textStyle="bold" />
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
             <TextView
                 android:id="@+id/np_artist_album"
@@ -57,8 +56,7 @@
                 android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                android:textColor="?android:attr/textColorSecondary" />
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
             <TextView
                 android:id="@+id/np_rates"
@@ -69,22 +67,22 @@
                 android:alpha="0.5"
                 android:text="@string/unknown_year"
                 android:textAlignment="center"
-                android:textAppearance="@android:style/TextAppearance.Material.Caption"
-                android:textColor="?android:attr/textColorTertiary" />
+                android:textAppearance="@style/TextAppearance.Material3.TitleSmall" />
         </LinearLayout>
 
-        <!-- the SeekBar -->
-        <SeekBar
+        <!-- the Slider + seek value -->
+        <com.google.android.material.slider.Slider
             android:id="@+id/np_seek_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
-            android:progressBackgroundTint="?attr/colorPrimary"
-            android:progressBackgroundTintMode="src_in"
-            android:splitTrack="false" />
+            android:minHeight="0dp"
+            app:haloRadius="12dp"
+            app:labelBehavior="gone"
+            app:thumbRadius="6dp" />
 
-        <!-- the SeekBar value -->
+        <!-- the seek value -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -99,8 +97,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:textAppearance="@android:style/TextAppearance.Material.Caption"
-                android:textColor="?android:attr/textColorSecondary" />
+                android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
 
             <TextView
                 android:id="@+id/np_duration"
@@ -109,8 +106,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:textAppearance="@android:style/TextAppearance.Material.Caption"
-                android:textColor="?android:attr/textColorSecondary" />
+                android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
 
         </LinearLayout>
 

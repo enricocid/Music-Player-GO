@@ -3,7 +3,6 @@ package com.iven.musicplayergo.dialogs
 
 import android.content.Context
 import android.content.DialogInterface
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +21,6 @@ import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.ModalRvBinding
 import com.iven.musicplayergo.extensions.afterMeasured
-import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.preferences.AccentsAdapter
 import com.iven.musicplayergo.preferences.ActiveTabsAdapter
@@ -31,8 +29,7 @@ import com.iven.musicplayergo.ui.ItemSwipeCallback
 import com.iven.musicplayergo.ui.ItemTouchCallback
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
-import dev.chrisbanes.insetter.Insetter
-import dev.chrisbanes.insetter.windowInsetTypesOf
+import com.iven.musicplayergo.utils.Theming
 import me.zhanghai.android.fastscroll.FastScrollerBuilder
 
 
@@ -240,7 +237,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
                 GoConstants.SLEEPTIMER_ELAPSED_TYPE -> {
 
-                    dialogTitle = getString(R.string.sleeptimer_remaining_time)
+                    dialogTitle = getString(R.string.sleeptimer)
 
                     modalRv.visibility = View.GONE
 
@@ -295,15 +292,6 @@ class RecyclerSheet: BottomSheetDialogFragment() {
             }
             // finally, set the sheet's title
             title.text = dialogTitle
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            dialog?.window?.navigationBarColor =
-                Theming.resolveColorAttr(requireContext(), R.attr.main_bg)
-            Insetter.builder()
-                .padding(windowInsetTypesOf(navigationBars = true))
-                .margin(windowInsetTypesOf(statusBars = true))
-                .applyToView(view)
         }
     }
 

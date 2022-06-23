@@ -10,9 +10,8 @@
         android:id="@+id/player_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/main_bg"
         android:baselineAligned="false"
-        android:elevation="@dimen/search_bar_elevation"
+        android:elevation="2dp"
         android:orientation="horizontal">
 
         <com.google.android.material.tabs.TabLayout
@@ -20,9 +19,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:backgroundTint="?attr/main_bg"
+            android:background="@android:color/transparent"
             app:tabGravity="fill"
-            app:tabIndicator="@drawable/tab_indicator"
             app:tabMode="scrollable"
             app:tabRippleColor="?attr/colorPrimary" />
 
@@ -62,8 +60,7 @@
                         android:singleLine="true"
                         android:text="@string/app_name"
                         android:textAlignment="textStart"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                        android:textColor="?android:attr/textColorPrimary"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                         android:textStyle="bold" />
 
                     <TextView
@@ -75,8 +72,7 @@
                         android:singleLine="true"
                         android:text="@string/versionName"
                         android:textAlignment="textStart"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                        android:textColor="?android:attr/textColorPrimary" />
+                        android:textAppearance="@style/TextAppearance.Material3.LabelMedium" />
                 </LinearLayout>
 
                 <ImageButton
@@ -118,7 +114,7 @@
                 app:tabBackground="?attr/main_bg"
                 app:tabRippleColor="?attr/colorPrimary"
                 app:trackCornerRadius="2dp"
-                app:trackThickness="2dp" />
+                app:trackThickness="3dp" />
         </LinearLayout>
     </LinearLayout>
 </merge>

@@ -135,10 +135,10 @@
             app:key="@string/filter_pref"
             app:title="@string/filter_pref_title" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
+            android:summary="@string/direct_remove_pref_sum"
             app:defaultValue="true"
             app:key="@string/direct_remove_pref"
-            app:title="@string/direct_remove_pref_title"
-            android:summary="@string/direct_remove_pref_sum" />
+            app:title="@string/direct_remove_pref_title" />
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>

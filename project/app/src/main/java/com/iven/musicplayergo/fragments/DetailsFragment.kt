@@ -21,19 +21,21 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
-import com.iven.musicplayergo.*
+import com.iven.musicplayergo.GoConstants
+import com.iven.musicplayergo.GoPreferences
+import com.iven.musicplayergo.MusicViewModel
+import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentDetailsBinding
 import com.iven.musicplayergo.extensions.*
-import com.iven.musicplayergo.utils.Lists
-import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.ui.ItemSwipeCallback
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.utils.Lists
 import com.iven.musicplayergo.utils.Popups
+import com.iven.musicplayergo.utils.Theming
 import me.zhanghai.android.fastscroll.FastScrollerBuilder
-import java.lang.Exception
 
 
 /**
@@ -192,35 +194,11 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 }
             }
 
-            setupToolbarSpecs()
-
             setNavigationOnClickListener {
                 requireActivity().onBackPressed()
             }
 
             setupMenu()
-        }
-    }
-
-    private fun setupToolbarSpecs() {
-        _detailsFragmentBinding?.detailsToolbar?.run {
-
-            elevation = if (sLaunchedByFolderView) {
-                resources.getDimensionPixelSize(R.dimen.search_bar_elevation).toFloat()
-            } else {
-                0F
-            }
-
-            val params = layoutParams as LinearLayout.LayoutParams
-            params.bottomMargin = if (!sLaunchedByArtistView) {
-                0
-            } else {
-                resources.getDimensionPixelSize(R.dimen.player_controls_padding_normal)
-            }
-
-            if (sLaunchedByFolderView) {
-                setBackgroundColor(Theming.resolveColorAttr(requireContext(), R.attr.toolbar_bg))
-            }
         }
     }
 
@@ -299,7 +277,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         if (sLaunchedByAlbumView) {
                             albumViewCoverContainer.afterMeasured {
                                 animate()?.let { anim ->
-                                    anim.duration = 500
+                                    anim.duration = 250
                                     var newY = 0F
                                     if (hasFocus) {
                                         newY = -(height.toFloat() + detailsToolbar.height)
