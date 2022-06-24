@@ -8,6 +8,8 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
@@ -22,6 +24,8 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     private lateinit var mUIControlInterface: UIControlInterface
     private lateinit var mMediaControlInterface: MediaControlInterface
+
+    var onLiftOnScroll: ((Boolean) -> Unit)? = null
 
     override fun setDivider(divider: Drawable?) {
         super.setDivider(null)
@@ -81,6 +85,17 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 preference.isEnabled = ft.isNotEmpty()
             }
         }
+
+        // fix liftOnScroll glitches
+        listView.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val lm = listView.layoutManager as LinearLayoutManager
+                val isAtTop = lm.findFirstVisibleItemPosition() == 0
+                        || listView.getChildAt(0).top == 0
+                onLiftOnScroll?.invoke(isAtTop)
+            }
+        })
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

@@ -70,7 +70,11 @@ class SettingsFragment : Fragment() {
             }
         }
 
-        mPreferencesFragment = PreferencesFragment.newInstance()
+        mPreferencesFragment = PreferencesFragment.newInstance().apply {
+            onLiftOnScroll = { isAtTop ->
+                _fragmentSettingsBinding?.appbar?.setLiftable(isAtTop)
+            }
+        }
         mPreferencesFragment?.let { fm ->
             childFragmentManager.commit {
                 replace(R.id.fragment_layout, fm)
