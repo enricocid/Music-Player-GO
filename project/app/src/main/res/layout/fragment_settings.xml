@@ -16,7 +16,6 @@
             android:id="@+id/settings_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:theme="@style/ToolbarStyle"
             app:collapseIcon="@drawable/ic_navigate_before"
             app:navigationIcon="@drawable/ic_close"
             app:subtitle="@string/versionName"

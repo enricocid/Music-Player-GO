@@ -1,6 +1,43 @@
 <resources>
 
-    <style name="Widget.MaterialFiles.Material3.CompoundButton.Switch" parent="Widget.Material3.CompoundButton.Switch">
+    <!-- SHEETS/DIALOGS -->
+    <!-- https://bryanherbst.com/2020/05/04/bottom-sheet-corners/ -->
+    <style name="ThemeOverlay.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.BottomSheet</item>
+    </style>
+
+    <style name="Widget.BottomSheet" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.BottomSheet</item>
+        <item name="backgroundTint">@color/main_bg</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.BottomSheet" parent="">
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
+    <style name="ThemeOverlay.MaterialDialog" parent="ThemeOverlay.Material3.Dialog">
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialDialog</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.MaterialDialog" parent="">
+        <item name="cornerSize">@dimen/md_corner_radius</item>
+    </style>
+
+    <style name="ThemeOverlay.Settings.MaterialDialog" parent="ThemeOverlay.Material3.Dialog.Alert">
+        <item name="dialogCornerRadius">@dimen/md_corner_radius</item>
+        <item name="colorBackgroundFloating">@color/main_bg</item>
+    </style>
+
+    <!-- Title -->
+    <style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.Material3.Title.Text">
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6</item>
+    </style>
+
+    <!-- BUTTONS -->
+    <style name="Widget.App.CompoundButton.Switch" parent="Widget.Material3.CompoundButton.Switch">
         <item name="android:thumb">@drawable/switch_thumb_mdc</item>
         <item name="thumbTint">@color/switch_thumb_tint_mdc</item>
         <item name="thumbTintMode">src_in</item>
@@ -8,6 +45,7 @@
         <item name="trackTint">@color/switch_track_tint_mdc</item>
     </style>
 
+    <!-- SLIDER TIP -->
     <style name="Widget.App.Slider" parent="Widget.Material3.Slider">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.Slider</item>
         <item name="labelStyle">@style/Widget.App.Tooltip</item>
@@ -24,51 +62,11 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <!-- Bottom sheets theming -->
-    <!-- https://bryanherbst.com/2020/05/04/bottom-sheet-corners/ -->
-    <style name="ThemeOverlay.Demo.BottomSheetDialog" parent="@style/ThemeOverlay.Material3.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/Widget.Demo.BottomSheet</item>
-        <item name="colorSurface">@color/main_bg</item>
-    </style>
-
-    <style name="Widget.Demo.BottomSheet" parent="Widget.Material3.BottomSheet">
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.Demo</item>
-    </style>
-
-    <style name="ShapeAppearanceOverlay.Demo" parent="">
-        <item name="cornerSizeTopLeft">16dp</item>
-        <item name="cornerSizeTopRight">16dp</item>
-        <item name="cornerFamily">rounded</item>
-    </style>
-
-    <!-- Custom dialogs -->
-    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
-        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialAlertDialog.Rounded</item>
-        <item name="android:backgroundTint">@color/main_bg</item>
-    </style>
-
-    <style name="ShapeAppearanceOverlay.MaterialAlertDialog.Rounded" parent="">
-        <item name="cornerSize">@dimen/md_corner_radius</item>
-    </style>
-
-    <!-- Custom dialogs title theming -->
-    <style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.Material3.Title.Text">
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6</item>
-    </style>
-
-    <!-- Settings - alert dialogs -->
-    <style name="Options.DialogsStyle" parent="ThemeOverlay.Material3.Dialog.Alert">
-        <item name="dialogCornerRadius">@dimen/md_corner_radius</item>
-        <item name="colorBackgroundFloating">@color/main_bg</item>
-
-    </style>
-
-    <!-- Style for search bar -->
-    <style name="ToolbarStyle" parent="ThemeOverlay.Material3.Toolbar.Surface">
-        <item name="android:paddingEnd">16dp</item>
-        <item name="android:paddingStart">16dp</item>
-        <item name="android:searchViewStyle">@style/SearchViewStyle</item>
+    <!-- TOOLBARS -->
+    <!-- Equalizer toolbar -->
+    <style name="ToolbarStyle.Eq" parent="ThemeOverlay.Material3.Toolbar.Surface">
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingLeft">16dp</item>
     </style>
 
     <style name="ToolbarStyle.Title" parent="TextAppearance.Material3.HeadlineSmall">
@@ -77,12 +75,12 @@
 
     <style name="ToolbarStyle.Subtitle" parent="TextAppearance.Material3.BodySmall" />
 
-    <!-- Style for search view -->
+    <!-- SearchView -->
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView.ActionBar">
         <item name="closeIcon">@drawable/ic_close</item>
     </style>
 
-    <!-- Style for rounded cover ImageViews -->
+    <!-- ALBUM COVER -->
     <style name="ImageView.Cover" parent="">
         <item name="cornerSize">8dp</item>
     </style>

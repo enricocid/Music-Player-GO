@@ -11,8 +11,7 @@
     android:paddingTop="8dp"
     android:paddingBottom="14dp"
     app:cardCornerRadius="8dp"
-    app:cardElevation="4dp"
-    app:strokeColor="?attr/colorControlHighlight"
+    app:strokeColor="?attr/colorSurfaceVariant"
     tools:viewBindingIgnore="true">
 
     <LinearLayout
@@ -52,9 +51,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:paddingBottom="2dp">
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="4dp">
 
             <TextView
                 android:id="@+id/total_duration"

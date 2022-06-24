@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="BaseTheme.Red" parent="BaseTheme">
         <item name="colorPrimary">@color/red</item>
         <item name="colorSecondary">@color/red</item>

@@ -45,7 +45,7 @@
     <color name="swipeActionAddColor">#e8f5e9</color>
 
     <color name="main_bg">#fcfcfc</color>
-    <color name="album_bg">#fafafa</color>
+    <color name="album_bg">#f7f7f7</color>
 
     <color name="switch_thumb_tint_mdc">@color/switch_thumb_tint_light_mdc</color>
     <color name="switch_track_tint_mdc">@color/switch_track_tint_light_mdc</color>

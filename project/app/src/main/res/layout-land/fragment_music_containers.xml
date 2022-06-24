@@ -15,7 +15,6 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/search_toolbar"
-            style="@style/ToolbarStyle"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:collapseIcon="@drawable/ic_navigate_before"

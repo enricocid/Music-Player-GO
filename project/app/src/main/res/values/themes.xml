@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="BaseTheme" parent="Theme.Material3.DynamicColors.DayNight">
-        <item name="alertDialogTheme">@style/Options.DialogsStyle</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.Settings.MaterialDialog</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
@@ -12,14 +12,15 @@
         <item name="windowActionBar">false</item>
         <item name="android:scrollbars">none</item>
         <item name="windowNoTitle">true</item>
-        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Demo.BottomSheetDialog</item>
-        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.BottomSheetDialog</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialDialog</item>
         <item name="searchViewStyle">@style/SearchViewStyle</item>
-        <item name="switchStyle">@style/Widget.MaterialFiles.Material3.CompoundButton.Switch</item>
+        <item name="switchStyle">@style/Widget.App.CompoundButton.Switch</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
 
     <style name="BaseTheme.Black" parent="Theme.Material3.DynamicColors.DayNight">
-        <item name="alertDialogTheme">@style/Options.DialogsStyle</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.Settings.MaterialDialog</item>
         <item name="windowActionBar">false</item>
         <item name="android:scrollbars">none</item>
         <item name="windowNoTitle">true</item>
@@ -28,9 +29,9 @@
         <item name="android:windowBackground">?attr/main_bg</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
-        <item name="main_bg">@android:color/black</item>
-        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Demo.BottomSheetDialog</item>
-        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
-        <item name="switchStyle">@style/Widget.MaterialFiles.Material3.CompoundButton.Switch</item>
+        <item name="main_bg">@color/main_bg</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.BottomSheetDialog</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialDialog</item>
+        <item name="switchStyle">@style/Widget.App.CompoundButton.Switch</item>
     </style>
 </resources>

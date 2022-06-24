@@ -17,11 +17,10 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/details_toolbar"
-            style="@style/ToolbarStyle"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/main_bg"
             app:collapseIcon="@drawable/ic_navigate_before"
+            android:background="?attr/main_bg"
             app:navigationIcon="@drawable/ic_navigate_before"
             app:subtitleTextAppearance="@style/ToolbarStyle.Subtitle"
             app:titleTextAppearance="@style/ToolbarStyle.Title" />

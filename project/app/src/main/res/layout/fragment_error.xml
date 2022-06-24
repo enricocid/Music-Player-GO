@@ -18,7 +18,6 @@
             android:id="@+id/error_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:theme="@style/ToolbarStyle"
             app:navigationIcon="@drawable/ic_close"
             app:navigationIconTint="@color/red"
             app:title="@string/app_name"
