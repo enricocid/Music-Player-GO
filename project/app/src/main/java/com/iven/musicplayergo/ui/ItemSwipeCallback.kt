@@ -11,36 +11,9 @@ import com.iven.musicplayergo.R
 
 class ItemSwipeCallback(private val ctx: Context, private val isQueueDialog: Boolean, private val isFavoritesDialog: Boolean, private val onSwipedAction: (viewHolder: RecyclerView.ViewHolder, direction: Int) -> Unit) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
 
-    private val red = ContextCompat.getColor(ctx, R.color.red)
-
-    private val firstIcon = ContextCompat.getDrawable(ctx, R.drawable.ic_queue_add).apply {
-        this?.mutate()?.setTint(ContextCompat.getColor(ctx, R.color.green))
-    }
-
-    private val firstIconAlt = ContextCompat.getDrawable(ctx, R.drawable.ic_delete).apply {
-        this?.mutate()?.setTint(red)
-    }
-
-    private val secondIcon = ContextCompat.getDrawable(
-        ctx,
-        if (isQueueDialog || isFavoritesDialog) {
-            R.drawable.ic_delete
-        } else {
-            R.drawable.ic_favorite
-        }
-    ).apply {
-        this?.mutate()?.setTint(red)
-    }
-
-    private val firstColor = ColorDrawable(ContextCompat.getColor(ctx, R.color.swipeActionDeleteColor))
-
-    private val secondColor = if (isQueueDialog) {
-        firstColor
-    } else {
-        ColorDrawable(ContextCompat.getColor(ctx, R.color.swipeActionAddColor))
-    }
-
-    private var background = secondColor
+    private var colorDrawableBackground = ColorDrawable(ContextCompat.getColor(ctx, R.color.album_bg))
+    private var icon = ContextCompat.getDrawable(ctx, R.drawable.ic_queue_add)
+    private var iconMarginVertical = 0
 
     override fun onMove(
         recyclerView: RecyclerView,
@@ -62,57 +35,63 @@ class ItemSwipeCallback(private val ctx: Context, private val isQueueDialog: Boo
 
         val itemView = viewHolder.itemView
 
-        when {
-            dX > 0 -> {
-                if (isQueueDialog && !isFavoritesDialog) {
-                    firstIconAlt
-                } else {
-                    background = secondColor
-                    firstIcon
-                }?.let { icon ->
-                    val iconMargin = (itemView.height - icon.intrinsicHeight) / 2
-                    val iconTop = itemView.top + (itemView.height - icon.intrinsicHeight) / 2
-                    val iconBottom = iconTop + icon.intrinsicHeight
-                    val iconLeft = itemView.left + iconMargin
-                    val iconRight = iconLeft + icon.intrinsicWidth
+        if (dX > 0) {
 
-                    icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
-                    background.setBounds(
-                        itemView.left,
-                        itemView.top,
-                        itemView.left + dX.toInt(),
-                        itemView.bottom
-                    )
-                    background.draw(c)
-                    icon.draw(c)
-                }
+            icon = ContextCompat.getDrawable(ctx, if (isQueueDialog && !isFavoritesDialog) {
+                R.drawable.ic_delete
+            } else {
+                R.drawable.ic_queue_add
+            })
+
+            icon?.run {
+                iconMarginVertical = (viewHolder.itemView.height - intrinsicHeight) / 2
+                colorDrawableBackground.setBounds(itemView.left, itemView.top, dX.toInt(), itemView.bottom)
+                setBounds(
+                    itemView.left + iconMarginVertical,
+                    itemView.top + iconMarginVertical,
+                    itemView.left + iconMarginVertical + intrinsicWidth,
+                    itemView.bottom - iconMarginVertical
+                )
             }
-            dX < 0 -> {
-                background = firstColor
 
-                secondIcon?.let { icon ->
+        } else {
 
-                    val iconMargin = (itemView.height - icon.intrinsicHeight) / 2
-                    val iconTop = itemView.top + (itemView.height - icon.intrinsicHeight) / 2
-                    val iconBottom = iconTop + icon.intrinsicHeight
-                    val iconRight = itemView.right - iconMargin
-                    val iconLeft = iconRight - icon.intrinsicWidth
+            colorDrawableBackground.setBounds(
+                itemView.right + dX.toInt(),
+                itemView.top,
+                itemView.right,
+                itemView.bottom
+            )
 
-                    icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+            icon = ContextCompat.getDrawable(ctx, if (isQueueDialog || isFavoritesDialog) {
+                R.drawable.ic_delete
+            } else {
+                R.drawable.ic_favorite
+            })
 
-                    background.setBounds(
-                        itemView.right + dX.toInt(),
-                        itemView.top,
-                        itemView.right,
-                        itemView.bottom
-                    )
-                    background.draw(c)
-                    icon.draw(c)
-                }
+            icon?.run {
+                iconMarginVertical = (viewHolder.itemView.height - intrinsicHeight) / 2
+                setBounds(
+                    itemView.right - iconMarginVertical - intrinsicWidth,
+                    itemView.top + iconMarginVertical,
+                    itemView.right - iconMarginVertical,
+                    itemView.bottom - iconMarginVertical
+                )
+                level = 0
             }
-            else -> {
-                background.setBounds(0, 0, 0, 0)
+        }
+
+        with(c) {
+            colorDrawableBackground.draw(this)
+            save()
+            if (dX > 0) {
+                clipRect(itemView.left, itemView.top, dX.toInt(), itemView.bottom)
+            } else {
+                clipRect(itemView.right + dX.toInt(), itemView.top, itemView.right, itemView.bottom)
             }
+            icon?.draw(this)
+            restore()
+            super.onChildDraw(this, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
         }
     }
 }
