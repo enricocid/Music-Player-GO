@@ -17,12 +17,17 @@
         <item name="cornerFamily">rounded</item>
     </style>
 
-    <style name="ThemeOverlay.MaterialDialog" parent="ThemeOverlay.Material3.Dialog">
+    <style name="ThemeOverlay.MaterialDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialDialog</item>
+        <item name="alertDialogStyle">@style/MaterialAlertDialog.App</item>
     </style>
 
-    <style name="ShapeAppearanceOverlay.MaterialDialog" parent="">
+    <style name="MaterialAlertDialog.App" parent="MaterialAlertDialog.Material3">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="shapeAppearanceOverlay">@null</item>
+    </style>
+
+    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
         <item name="cornerSize">@dimen/md_corner_radius</item>
     </style>
 
