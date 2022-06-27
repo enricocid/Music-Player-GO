@@ -21,6 +21,7 @@ import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.ModalRvBinding
 import com.iven.musicplayergo.extensions.afterMeasured
+import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.preferences.AccentsAdapter
 import com.iven.musicplayergo.preferences.ActiveTabsAdapter
@@ -93,7 +94,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                 GoConstants.ACCENT_TYPE -> {
 
                     // use alt RecyclerView
-                    sleepTimerElapsed.visibility = View.GONE
+                    sleepTimerElapsed.handleViewVisibility(show = false)
 
                     modalRv.setHasFixedSize(true)
                     val accentsAdapter = AccentsAdapter(requireActivity())
@@ -119,7 +120,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
                     dialogTitle = getString(R.string.active_fragments_pref_title)
 
-                    sleepTimerElapsed.visibility = View.GONE
+                    sleepTimerElapsed.handleViewVisibility(show = false)
 
                     modalRv.setHasFixedSize(true)
                     val activeTabsAdapter = ActiveTabsAdapter(requireActivity())
@@ -144,7 +145,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
                 GoConstants.FILTERS_TYPE -> {
 
-                    sleepTimerElapsed.visibility = View.GONE
+                    sleepTimerElapsed.handleViewVisibility(show = false)
 
                     dialogTitle = getString(R.string.filter_pref_title)
 
@@ -152,6 +153,10 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     val filtersAdapter = FiltersAdapter(requireActivity())
                     modalRv.adapter = filtersAdapter
 
+                    btnDelete.handleViewVisibility(show = true)
+                    btnDelete.setOnClickListener {
+                        Dialogs.showClearFiltersDialog(requireActivity())
+                    }
                     btnNegative.setOnClickListener {
                         dismiss()
                     }
@@ -170,8 +175,8 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
                     dialogTitle = getString(R.string.queue)
 
-                    _modalRvBinding?.btnContainer?.visibility = View.GONE
-                    sleepTimerElapsed.visibility = View.GONE
+                    _modalRvBinding?.btnContainer?.handleViewVisibility(show = false)
+                    sleepTimerElapsed.handleViewVisibility(show = false)
 
                     setRecyclerViewProps(modalRv)
 
@@ -221,7 +226,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     modalRv.setHasFixedSize(true)
                     modalRv.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
                     modalRv.adapter = sleepTimerAdapter
-                    sleepTimerElapsed.visibility = View.GONE
+                    sleepTimerElapsed.handleViewVisibility(show = false)
 
                     btnNegative.setOnClickListener {
                         dismiss()
@@ -239,7 +244,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
                     dialogTitle = getString(R.string.sleeptimer)
 
-                    modalRv.visibility = View.GONE
+                    modalRv.handleViewVisibility(show = false)
 
                     btnNegative.setOnClickListener {
                         dismiss()
@@ -260,9 +265,9 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
                     dialogTitle = getString(R.string.favorites)
 
-                    sleepTimerElapsed.visibility = View.GONE
+                    sleepTimerElapsed.handleViewVisibility(show = false)
 
-                    _modalRvBinding?.btnContainer?.visibility = View.GONE
+                    _modalRvBinding?.btnContainer?.handleViewVisibility(show = false)
 
                     setRecyclerViewProps(modalRv)
                     val favoritesAdapter = FavoritesAdapter(requireActivity())

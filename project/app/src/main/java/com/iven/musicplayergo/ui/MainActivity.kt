@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
-import android.content.res.ColorStateList
-
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
@@ -336,6 +334,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         mMainActivityBinding.viewPager2.offscreenPageLimit =
             mGoPreference.activeTabs.toList().size.minus(1)
         mMainActivityBinding.viewPager2.adapter = pagerAdapter
+        mMainActivityBinding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                mArtistsFragment?.stopActionMode()
+                mFoldersFragment?.stopActionMode()
+            }
+        })
 
         // By default, ViewPager2's sensitivity is high enough to result in vertical
         // scroll events being registered as horizontal scroll events. Reflect into the
@@ -361,24 +366,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun initTabLayout() {
 
-        val resolvedAlphaAccentColor = Theming.getAlphaAccent(this)
-
         with(mPlayerControlsPanelBinding.tabLayout) {
-
-            tabIconTint = ColorStateList.valueOf(resolvedAlphaAccentColor)
 
             TabLayoutMediator(this, mMainActivityBinding.viewPager2) { tab, position ->
                 tab.setIcon(Theming.getTabIcon(mGoPreference.activeTabs.toList()[position]))
             }.attach()
 
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-                override fun onTabSelected(tab: TabLayout.Tab) {
-                    tab.icon?.setTint(Theming.resolveThemeAccent(this@MainActivity))
-                }
+                override fun onTabSelected(tab: TabLayout.Tab) {}
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {
                     closeFragments()
-                    tab.icon?.setTint(resolvedAlphaAccentColor)
                 }
 
                 override fun onTabReselected(tab: TabLayout.Tab) {
@@ -386,13 +384,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 }
             })
 
-            getTabAt(if (sRestoreSettingsFragment) {
+            if (sRestoreSettingsFragment) {
                 mMainActivityBinding.viewPager2.offscreenPageLimit
-            } else {
-                0
-            })?.icon?.setTint(
-                Theming.resolveThemeAccent(this@MainActivity)
-            )
+            }
         }
 
         if (sRestoreSettingsFragment) {
@@ -1042,30 +1036,34 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
-    override fun onAddToFilter(stringToFilter: String?) {
+    override fun onAddToFilter(stringsToFilter: List<String>?) {
 
-        stringToFilter?.let { string ->
-
-            Lists.addToHiddenItems(string)
-
-            if (isMediaPlayerHolder) {
-                // be sure to update queue, favorites and the controls panel
-                MusicUtils.updateMediaPlayerHolderLists(mMediaPlayerHolder, this, mMusicViewModel.randomMusic)?.let { song ->
-                    val songs = MusicUtils.getAlbumSongs(
-                        song.artist,
-                        song.album,
-                        mMusicViewModel.deviceAlbumsByArtist
-                    )
-                    with(mMediaPlayerHolder) {
-                        isPlay = isPlaying
-                        updateCurrentSong(song, songs, GoConstants.ARTIST_VIEW)
-                        initMediaPlayer(song)
-                    }
-                    updatePlayingInfo(restore = false)
-                }
-            }
-            Theming.applyChanges(this, restoreSettings = false)
+        stringsToFilter?.run {
+            Lists.hideItems(this)
         }
+
+        if (isMediaPlayerHolder) {
+            // be sure to update queue, favorites and the controls panel
+            MusicUtils.updateMediaPlayerHolderLists(mMediaPlayerHolder, this, mMusicViewModel.randomMusic)?.let { song ->
+                val songs = MusicUtils.getAlbumSongs(
+                    song.artist,
+                    song.album,
+                    mMusicViewModel.deviceAlbumsByArtist
+                )
+                with(mMediaPlayerHolder) {
+                    isPlay = isPlaying
+                    updateCurrentSong(song, songs, GoConstants.ARTIST_VIEW)
+                    initMediaPlayer(song)
+                }
+                updatePlayingInfo(restore = false)
+            }
+        }
+        Theming.applyChanges(this, restoreSettings = false)
+    }
+
+    override fun onFiltersCleared() {
+        GoPreferences.getPrefsInstance().filters = null
+        Theming.applyChanges(this, restoreSettings = false)
     }
 
     //method to handle intent to play audio file from external app

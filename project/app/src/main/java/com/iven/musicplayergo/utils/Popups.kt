@@ -17,31 +17,6 @@ import com.iven.musicplayergo.ui.UIControlInterface
 object Popups {
 
     @JvmStatic
-    fun showPopupForHide(
-        activity: Activity,
-        itemView: View?,
-        stringToFilter: String?
-    ) {
-        itemView?.let { view ->
-
-            PopupMenu(activity, view).apply {
-
-                inflate(R.menu.popup_filter)
-
-                menu.findItem(R.id.music_container_title).setTitle(activity, stringToFilter)
-                menu.enablePopupIcons(activity)
-                gravity = Gravity.END
-
-                setOnMenuItemClickListener {
-                    (activity as UIControlInterface).onAddToFilter(stringToFilter)
-                    return@setOnMenuItemClickListener true
-                }
-                show()
-            }
-        }
-    }
-
-    @JvmStatic
     fun showPopupForSongs(
         activity: Activity,
         itemView: View?,

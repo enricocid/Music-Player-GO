@@ -14,7 +14,6 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.ColorUtils
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.core.text.toSpanned
@@ -283,20 +282,6 @@ object Theming {
     @JvmStatic
     private fun resolveThemeAttr(context: Context, @AttrRes attrRes: Int) =
         TypedValue().apply { context.theme.resolveAttribute(attrRes, this, true) }
-
-    @JvmStatic
-    fun getAlphaAccent(context: Context) : Int {
-        val accent = GoPreferences.getPrefsInstance().accent
-        var alpha = if (accent == R.color.yellow) {
-            200
-        } else {
-            150
-        }
-        if (isThemeNight(context.resources)) {
-            alpha = 150
-        }
-        return ColorUtils.setAlphaComponent(resolveThemeAccent(context), alpha)
-    }
 
     @JvmStatic
     fun getAlbumCoverAlpha(context: Context): Int {

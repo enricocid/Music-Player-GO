@@ -199,10 +199,9 @@ object Lists {
         GoConstants.ASCENDING_SORTING
     }
 
-    @JvmStatic
-    fun addToHiddenItems(item: String) {
+    fun hideItems(items: List<String>) {
         val hiddenArtistsFolders = GoPreferences.getPrefsInstance().filters?.toMutableList()
-        hiddenArtistsFolders?.add(item)
+        hiddenArtistsFolders?.addAll(items)
         GoPreferences.getPrefsInstance().filters = hiddenArtistsFolders?.toSet()
     }
 

@@ -21,6 +21,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             app:tabGravity="fill"
+            app:tabIndicatorHeight="3dp"
             app:tabMode="scrollable"
             app:tabRippleColor="?attr/colorPrimary" />
 

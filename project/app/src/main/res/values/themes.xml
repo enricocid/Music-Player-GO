@@ -16,7 +16,8 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialDialog</item>
         <item name="searchViewStyle">@style/SearchViewStyle</item>
         <item name="switchStyle">@style/Widget.App.CompoundButton.Switch</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_close</item>
     </style>
 
     <style name="BaseTheme.Black" parent="Theme.Material3.DynamicColors.DayNight">
@@ -33,5 +34,7 @@
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.BottomSheetDialog</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialDialog</item>
         <item name="switchStyle">@style/Widget.App.CompoundButton.Switch</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_close</item>
     </style>
 </resources>

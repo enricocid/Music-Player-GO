@@ -17,13 +17,13 @@ import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentMusicContainersBinding
+import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.extensions.loadWithError
 import com.iven.musicplayergo.extensions.setTitleColor
 import com.iven.musicplayergo.extensions.waitForCover
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.utils.Lists
-import com.iven.musicplayergo.utils.Popups
 import com.iven.musicplayergo.utils.Theming
 import me.zhanghai.android.fastscroll.FastScrollerBuilder
 import me.zhanghai.android.fastscroll.PopupTextProvider
@@ -56,6 +56,9 @@ class MusicContainersFragment : Fragment(),
     private val sLaunchedByAlbumView get() = mLaunchedBy == GoConstants.ALBUM_VIEW
 
     private val sIsFastScrollerPopup get() = mSorting == GoConstants.ASCENDING_SORTING || mSorting == GoConstants.DESCENDING_SORTING
+
+    private var actionMode: ActionMode? = null
+    private val isActionMode get() = actionMode != null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -262,7 +265,43 @@ class MusicContainersFragment : Fragment(),
         }
     }
 
+    fun stopActionMode() {
+        actionMode?.finish()
+        actionMode = null
+    }
+
     private inner class MusicContainersAdapter : RecyclerView.Adapter<MusicContainersAdapter.ArtistHolder>(), PopupTextProvider {
+
+        private val itemsToHide = mutableListOf<String>()
+
+        val actionModeCallback = object : ActionMode.Callback {
+
+            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                requireActivity().menuInflater.inflate(R.menu.menu_action_mode_hide, menu)
+                return true
+            }
+
+            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                return false
+            }
+
+            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+                return when (item?.itemId) {
+                    R.id.action_hide -> {
+                        mUiControlInterface.onAddToFilter(itemsToHide)
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onDestroyActionMode(mode: ActionMode?) {
+                actionMode = null
+                itemsToHide.clear()
+                notifyDataSetChanged()
+            }
+        }
 
         @SuppressLint("NotifyDataSetChanged")
         fun swapList(newItems: List<String>?) {
@@ -283,11 +322,7 @@ class MusicContainersFragment : Fragment(),
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ArtistHolder(
             LayoutInflater.from(parent.context).inflate(
-                if (sLaunchedByAlbumView) {
-                    R.layout.containers_album_item
-                } else {
-                    R.layout.generic_item
-                },
+                R.layout.generic_item,
                 parent,
                 false
             )
@@ -309,25 +344,36 @@ class MusicContainersFragment : Fragment(),
 
                     val title = findViewById<TextView>(R.id.title)
                     val subtitle = findViewById<TextView>(R.id.subtitle)
+                    val selector = findViewById<ImageView>(R.id.selector)
+                    val albumCover = findViewById<ImageView>(R.id.album_cover)
 
                     if (sLaunchedByAlbumView) {
-                        val albumCover = findViewById<ImageView>(R.id.album_cover).apply {
-                            background.alpha = Theming.getAlbumCoverAlpha(requireContext())
-                        }
+                        albumCover.background.alpha = Theming.getAlbumCoverAlpha(requireContext())
                         mMusicViewModel.deviceMusicByAlbum?.get(item)?.first()?.albumId?.waitForCover(requireContext()) { bmp, error ->
                             albumCover.loadWithError(bmp, error, R.drawable.ic_music_note_cover_alt)
                         }
+                    } else {
+                        albumCover.handleViewVisibility(show = false)
                     }
 
                     title.text = item
                     subtitle.text = getItemsSubtitle(item)
 
+                    selector.handleViewVisibility(show = itemsToHide.contains(item))
+
                     setOnClickListener {
-                        respondToTouch(isLongClick = false, item, null)
+                        if (isActionMode) {
+                            setItemViewSelected(item, absoluteAdapterPosition)
+                        } else {
+                            mUiControlInterface.onArtistOrFolderSelected(
+                                item,
+                                mLaunchedBy
+                            )
+                        }
                     }
                     setOnLongClickListener {
-                        val vh = _musicContainerListBinding?.artistsFoldersRv?.findViewHolderForAdapterPosition(absoluteAdapterPosition)?.itemView
-                        respondToTouch(isLongClick = true, item, vh)
+                        startActionMode()
+                        setItemViewSelected(item, absoluteAdapterPosition)
                         return@setOnLongClickListener true
                     }
                 }
@@ -353,20 +399,22 @@ class MusicContainersFragment : Fragment(),
             mMusicViewModel.deviceSongsByArtist?.getValue(item)?.size
         )
 
-        private fun respondToTouch(isLongClick: Boolean, item: String, itemView: View?) {
-            if (isLongClick) {
-                if (mList?.size!! >= 2) {
-                    Popups.showPopupForHide(
-                        requireActivity(),
-                        itemView,
-                        item
-                    )
-                }
+        private fun startActionMode() {
+            if (!isActionMode) {
+                actionMode = _musicContainerListBinding?.searchToolbar?.startActionMode(actionModeCallback)
+            }
+        }
+
+        private fun setItemViewSelected(itemTitle: String, position: Int) {
+            if (itemsToHide.contains(itemTitle)) {
+                itemsToHide.remove(itemTitle)
             } else {
-                mUiControlInterface.onArtistOrFolderSelected(
-                    item,
-                    mLaunchedBy
-                )
+                itemsToHide.add(itemTitle)
+            }
+            actionMode?.title = itemsToHide.size.toString()
+            notifyItemChanged(position)
+            if (itemsToHide.isEmpty()) {
+                stopActionMode()
             }
         }
     }
