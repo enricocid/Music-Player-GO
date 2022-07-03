@@ -84,13 +84,13 @@ dependencies {
 // Support
     //https://developer.android.com/jetpack/androidx/versions
     implementation 'androidx.browser:browser:1.4.0'
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.media:media:1.6.0'
     implementation 'androidx.preference:preference-ktx:1.2.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     //https://github.com/material-components/material-components-android/releases
-    implementation 'com.google.android.material:material:1.6.0'
+    implementation 'com.google.android.material:material:1.6.1'
 
 // Third-party
     //https://mvnrepository.com/artifact/com.squareup.moshi/moshi-kotlin
