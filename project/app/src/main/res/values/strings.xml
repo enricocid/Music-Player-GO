@@ -198,21 +198,4 @@
     <string name="brown">Brown</string>
     <string name="grey">Grey</string>
     <string name="blue_grey">Blue grey</string>
-    <string name="red_200">Red 200</string>
-    <string name="pink_200">Pink 200</string>
-    <string name="purple_200">Purple 200</string>
-    <string name="deep_purple_200">Deep purple 200</string>
-    <string name="indigo_200">Indigo 200</string>
-    <string name="blue_200">Blue 200</string>
-    <string name="light_blue_200">Light blue 200</string>
-    <string name="cyan_200">Cyan 200</string>
-    <string name="teal_200">Teal 200</string>
-    <string name="green_200">Green 200</string>
-    <string name="light_green_200">Light green 200</string>
-    <string name="lime_200">Lime 200</string>
-    <string name="amber_200">Amber 200</string>
-    <string name="orange_200">Orange 200</string>
-    <string name="deep_orange_200">Deep orange 200</string>
-    <string name="brown_200">Brown 200</string>
-    <string name="blue_grey_200">Blue grey 200</string>
 </resources>

@@ -141,11 +141,6 @@
     <string name="yellow">أصفر</string>
     <string name="brown">بني</string>
     <string name="grey">رمادي</string>
-    <string name="purple_200">أرجوان ٢٠٠</string>
-    <string name="deep_purple_200">أرجوان غامق ٢٠٠</string>
-    <string name="light_green_200">أخضر فاتح ٢٠٠</string>
-    <string name="lime_200">ليمي (درجة من الأخضر) ٢٠٠</string>
-    <string name="deep_orange_200">برتقالي غامق ٢٠٠</string>
     <string name="direct_remove_pref_title">تأكيد الحذف</string>
     <string name="pink">زهري</string>
     <string name="purple">بنفسجي</string>
@@ -161,16 +156,4 @@
     <string name="orange">برتقالي</string>
     <string name="deep_orange">برتقالي غامق</string>
     <string name="blue_grey">رمادي مزرق</string>
-    <string name="red_200">أحمر ٢٠٠</string>
-    <string name="pink_200">زهري ٢٠٠</string>
-    <string name="indigo_200">نيلي ٢٠٠</string>
-    <string name="blue_200">أزرق ٢٠٠</string>
-    <string name="light_blue_200">أزرق فاتح ٢٠٠</string>
-    <string name="cyan_200">أزرق مخضر ٢٠٠</string>
-    <string name="teal_200">شرشيري (تركواز) ٢٠٠</string>
-    <string name="green_200">أخضر ٢٠٠</string>
-    <string name="amber_200">كهرماني ٢٠٠</string>
-    <string name="orange_200">برتقالي ٢٠٠</string>
-    <string name="brown_200">بني ٢٠٠</string>
-    <string name="blue_grey_200">رمادي مزرق ٢٠٠</string>
 </resources>

@@ -111,9 +111,6 @@
     <string name="brown">Brun</string>
     <string name="grey">Grå</string>
     <string name="blue_grey">Blågrå</string>
-    <string name="red_200">Röd 200</string>
-    <string name="purple_200">Lila 200</string>
-    <string name="light_green_200">Ljusgrön 200</string>
     <string name="sleeptimer_enabled">Stoppa uppspelningen %1s efter</string>
     <string name="sleeptimer_stop">Stoppa</string>
     <string name="sleeptimer_cancel_desc">Stoppa insomningstimer</string>
@@ -144,16 +141,6 @@
     <string name="light_blue">Ljusblå</string>
     <string name="yellow">Gul</string>
     <string name="orange">Orange</string>
-    <string name="indigo_200">Indigo 200</string>
-    <string name="light_blue_200">Ljusblå 200</string>
-    <string name="cyan_200">Cyan 200</string>
-    <string name="teal_200">Blågrön 200</string>
-    <string name="green_200">Grön 200</string>
-    <string name="deep_purple_200">Djup lila 200</string>
-    <string name="blue_200">Blå 200</string>
-    <string name="lime_200">Lime 200</string>
-    <string name="orange_200">Orange 200</string>
-    <string name="deep_orange_200">Djup orange 200</string>
     <string name="locale_arabic">Arabiska</string>
     <string name="locale_czech">Tjeckiska</string>
     <string name="locale_danish">Danska</string>
@@ -172,11 +159,7 @@
     <string name="locale_kurdish">Kurdiska</string>
     <string name="light_green">Ljusgrön</string>
     <string name="theme_pref_black_title">Rent svart</string>
-    <string name="brown_200">Brun 200</string>
-    <string name="blue_grey_200">Blågrå 200</string>
     <string name="locale_pref_title">Språk</string>
     <string name="sleeptimer">Insomningstimer</string>
-    <string name="sleeptimer_remaining_time">Insomningstimer: återstående tid</string>
     <string name="locale_russian">Ryska</string>
-    <string name="pink_200">Rosa 200</string>
 </resources>

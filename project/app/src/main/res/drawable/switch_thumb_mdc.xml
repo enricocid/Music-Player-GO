@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--
-  ~ Copyright (c) 2022 Enrico D'Ortenzio
+  ~ Copyright (c) 2022 Hai Zhang <dreaming.in.code.zh@gmail.com>
   ~ All Rights Reserved.
   -->
 
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:bottom="2dp"
-        android:left="2dp"
-        android:right="2dp"
-        android:top="2dp">
-        <selector>
-            <item
-                android:drawable="@drawable/switch_thumb_checked_mdc"
-                android:state_checked="true" />
-            <item android:drawable="@drawable/switch_thumb_unchecked_mdc" />
-        </selector>
+        android:left="4dp"
+        android:right="4dp"
+        android:top="4dp"
+        android:bottom="4dp">
+        <shape android:shape="oval">
+            <size android:width="20dp" android:height="20dp" />
+            <solid android:color="@android:color/white" />
+        </shape>
     </item>
 </layer-list>

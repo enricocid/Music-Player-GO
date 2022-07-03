@@ -42,6 +42,7 @@
             app:title="@string/accent_pref_title" />
 
         <Preference
+            app:iconSpaceReserved="false"
             app:key="@string/active_tabs_pref"
             app:title="@string/active_fragments_pref_title" />
     </PreferenceCategory>
@@ -51,26 +52,31 @@
         app:title="@string/category_audio">
 
         <Preference
+            app:iconSpaceReserved="false"
             android:enabled="false"
             android:summary="@string/eq_pref_note_summary"
             app:title="@string/equalizer" />
 
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:defaultValue="false"
             app:key="@string/precise_volume_pref"
             app:title="@string/precise_volume_pref_title" />
 
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:defaultValue="true"
             app:key="@string/focus_pref"
             app:title="@string/focus_pref_title" />
 
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:defaultValue="true"
             app:key="@string/headset_pref"
             app:title="@string/headset_pref_title" />
 
         <ListPreference
+            app:iconSpaceReserved="false"
             android:defaultValue="0"
             app:dialogTitle="@string/on_list_ended_pref_title"
             app:entries="@array/onListEndedArray"
@@ -85,11 +91,13 @@
         app:title="@string/category_general">
 
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:defaultValue="false"
             app:key="@string/covers_pref"
             app:title="@string/covers_pref_title" />
 
         <SeekBarPreference
+            app:iconSpaceReserved="false"
             android:defaultValue="10"
             android:key="@string/fast_seeking_pref"
             android:max="60"
@@ -100,6 +108,7 @@
             app:showSeekBarValue="true" />
 
         <ListPreference
+            app:iconSpaceReserved="false"
             android:defaultValue="0"
             app:dialogTitle="@string/fast_seeking_actions_pref_title"
             app:entries="@array/notificationActionsArray"
@@ -109,6 +118,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
+            app:iconSpaceReserved="false"
             android:defaultValue="1"
             app:dialogTitle="@string/song_visual_pref_title"
             app:entries="@array/songVisualizationArray"
@@ -118,15 +128,18 @@
             app:useSimpleSummaryProvider="true" />
 
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             app:defaultValue="true"
             app:key="@string/anim_pref"
             app:title="@string/anim_pref_title" />
 
         <Preference
+            app:iconSpaceReserved="false"
             app:key="@string/filter_pref"
             app:title="@string/filter_pref_title" />
 
         <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
             android:summary="@string/direct_remove_pref_sum"
             app:defaultValue="true"
             app:key="@string/direct_remove_pref"

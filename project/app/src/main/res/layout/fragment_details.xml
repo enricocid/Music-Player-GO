@@ -109,6 +109,7 @@
         android:id="@+id/selected_album_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="8dp"
         android:background="?android:attr/selectableItemBackground"
         android:orientation="horizontal">
 
@@ -140,6 +141,7 @@
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:paddingBottom="8dp"
+                android:layout_marginTop="4dp"
                 android:singleLine="true"
                 android:textAppearance="@style/TextAppearance.Material3.LabelMedium" />
         </LinearLayout>

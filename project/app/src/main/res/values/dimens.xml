@@ -5,10 +5,10 @@
     <dimen name="accent_dim">48dp</dimen>
     <dimen name="accent_dim_radius">24dp</dimen>
     <dimen name="accent_dim_stroke">4dp</dimen>
-    <dimen name="album_height">156dp</dimen>
-    <dimen name="album_width">132dp</dimen>
+    <dimen name="album_height">148dp</dimen>
+    <dimen name="album_width">124dp</dimen>
     <dimen name="md_corner_radius">12dp</dimen>
-    <dimen name="player_controls_padding_normal">6dp</dimen>
-    <dimen name="player_controls_padding_start">10dp</dimen>
-    <dimen name="player_controls_padding_end">4dp</dimen>
+    <dimen name="player_controls_padding_normal">4dp</dimen>
+    <dimen name="player_controls_padding_start">8dp</dimen>
+    <dimen name="player_controls_padding_end">2dp</dimen>
 </resources>

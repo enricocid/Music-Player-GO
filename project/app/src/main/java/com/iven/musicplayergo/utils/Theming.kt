@@ -59,13 +59,6 @@ object Theming {
         return uiMode == Configuration.UI_MODE_NIGHT_YES
     }
 
-    @JvmStatic
-    fun resolveThemeIcon(context: Context) = when (GoPreferences.getPrefsInstance().theme) {
-        context.getString(R.string.theme_pref_light) -> R.drawable.ic_day
-        context.getString(R.string.theme_pref_auto) -> R.drawable.ic_auto
-        else -> R.drawable.ic_night
-    }
-
     fun getSortIconForSongs(sort: Int): Int {
         return when (sort) {
             GoConstants.ASCENDING_SORTING -> R.drawable.ic_sort_alphabetical_descending
@@ -107,24 +100,7 @@ object Theming {
         Pair(first = R.color.deep_orange, second = R.style.BaseTheme_DeepOrange),
         Pair(first = R.color.brown, second = R.style.BaseTheme_Brown),
         Pair(first = R.color.grey, second = R.style.BaseTheme_Grey),
-        Pair(first = R.color.blue_grey, second = R.style.BaseTheme_BlueGrey),
-        Pair(first = R.color.red_200, second = R.style.BaseTheme_Red200),
-        Pair(first = R.color.pink_200, second = R.style.BaseTheme_Pink200),
-        Pair(first = R.color.purple_200, second = R.style.BaseTheme_Purple200),
-        Pair(first = R.color.deep_purple_200, second = R.style.BaseTheme_DeepPurple200),
-        Pair(first = R.color.indigo_200, second = R.style.BaseTheme_Indigo200),
-        Pair(first = R.color.blue_200, second = R.style.BaseTheme_Blue200),
-        Pair(first = R.color.light_blue_200, second = R.style.BaseTheme_LightBlue200),
-        Pair(first = R.color.cyan_200, second = R.style.BaseTheme_Cyan200),
-        Pair(first = R.color.teal_200, second = R.style.BaseTheme_Teal200),
-        Pair(first = R.color.green_200, second = R.style.BaseTheme_Green200),
-        Pair(first = R.color.light_green_200, second = R.style.BaseTheme_LightGreen200),
-        Pair(first = R.color.lime_200, second = R.style.BaseTheme_Lime200),
-        Pair(first = R.color.amber_200, second = R.style.BaseTheme_Amber200),
-        Pair(first = R.color.orange_200, second = R.style.BaseTheme_Orange200),
-        Pair(first = R.color.deep_orange_200, second = R.style.BaseTheme_DeepOrange200),
-        Pair(first = R.color.brown_200, second = R.style.BaseTheme_Brown200),
-        Pair(first = R.color.blue_grey_200, second = R.style.BaseTheme_BlueGrey200)
+        Pair(first = R.color.blue_grey, second = R.style.BaseTheme_BlueGrey)
     )
 
     // Fixed array of pairs (first: accent, second: theme)
@@ -148,24 +124,7 @@ object Theming {
         Pair(first = R.color.deep_orange, second = R.style.BaseTheme_Black_DeepOrange),
         Pair(first = R.color.brown, second = R.style.BaseTheme_Black_Brown),
         Pair(first = R.color.grey, second = R.style.BaseTheme_Black_Grey),
-        Pair(first = R.color.blue_grey, second = R.style.BaseTheme_Black_BlueGrey),
-        Pair(first = R.color.red_200, second = R.style.BaseTheme_Black_Red200),
-        Pair(first = R.color.pink_200, second = R.style.BaseTheme_Black_Pink200),
-        Pair(first = R.color.purple_200, second = R.style.BaseTheme_Black_Purple200),
-        Pair(first = R.color.deep_purple_200, second = R.style.BaseTheme_Black_DeepPurple200),
-        Pair(first = R.color.indigo_200, second = R.style.BaseTheme_Black_Indigo200),
-        Pair(first = R.color.blue_200, second = R.style.BaseTheme_Black_Blue200),
-        Pair(first = R.color.light_blue_200, second = R.style.BaseTheme_Black_LightBlue200),
-        Pair(first = R.color.cyan_200, second = R.style.BaseTheme_Black_Cyan200),
-        Pair(first = R.color.teal_200, second = R.style.BaseTheme_Black_Teal200),
-        Pair(first = R.color.green_200, second = R.style.BaseTheme_Black_Green200),
-        Pair(first = R.color.light_green_200, second = R.style.BaseTheme_Black_LightGreen200),
-        Pair(first = R.color.lime_200, second = R.style.BaseTheme_Black_Lime200),
-        Pair(first = R.color.amber_200, second = R.style.BaseTheme_Black_Amber200),
-        Pair(first = R.color.orange_200, second = R.style.BaseTheme_Black_Orange200),
-        Pair(first = R.color.deep_orange_200, second = R.style.BaseTheme_Black_DeepOrange200),
-        Pair(first = R.color.brown_200, second = R.style.BaseTheme_Black_Brown200),
-        Pair(first = R.color.blue_grey_200, second = R.style.BaseTheme_Black_BlueGrey200)
+        Pair(first = R.color.blue_grey, second = R.style.BaseTheme_Black_BlueGrey)
     )
 
     // Fixed array of pairs (first: accent, second: accent name)
@@ -189,24 +148,7 @@ object Theming {
         Pair(first = R.color.deep_orange, second = R.string.deep_orange),
         Pair(first = R.color.brown, second = R.string.brown),
         Pair(first = R.color.grey, second = R.string.grey),
-        Pair(first = R.color.blue_grey, second = R.string.blue_grey),
-        Pair(first = R.color.red_200, second = R.string.red_200),
-        Pair(first = R.color.pink_200, second = R.string.pink_200),
-        Pair(first = R.color.purple_200, second = R.string.purple_200),
-        Pair(first = R.color.deep_purple_200, second = R.string.deep_purple_200),
-        Pair(first = R.color.indigo_200, second = R.string.indigo_200),
-        Pair(first = R.color.blue_200, second = R.string.blue_200),
-        Pair(first = R.color.light_blue_200, second = R.string.light_blue_200),
-        Pair(first = R.color.cyan_200, second = R.string.cyan_200),
-        Pair(first = R.color.teal_200, second = R.string.teal_200),
-        Pair(first = R.color.green_200, second = R.string.green_200),
-        Pair(first = R.color.light_green_200, second = R.string.light_green_200),
-        Pair(first = R.color.lime_200, second = R.string.lime_200),
-        Pair(first = R.color.amber_200, second = R.string.amber_200),
-        Pair(first = R.color.orange_200, second = R.string.orange_200),
-        Pair(first = R.color.deep_orange_200, second = R.string.deep_orange_200),
-        Pair(first = R.color.brown_200, second = R.string.brown_200),
-        Pair(first = R.color.blue_grey_200, second = R.string.blue_grey_200)
+        Pair(first = R.color.blue_grey, second = R.string.blue_grey)
     )
 
     @JvmStatic

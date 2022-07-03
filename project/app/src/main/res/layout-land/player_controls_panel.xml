@@ -21,9 +21,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             app:tabGravity="fill"
-            app:tabIndicatorHeight="3dp"
-            app:tabMode="scrollable"
-            app:tabRippleColor="?attr/colorPrimary" />
+            app:tabMode="scrollable" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -114,8 +112,8 @@
                 app:indicatorColor="?attr/colorPrimary"
                 app:tabBackground="?attr/main_bg"
                 app:tabRippleColor="?attr/colorPrimary"
-                app:trackCornerRadius="2dp"
-                app:trackThickness="3dp" />
+                app:trackCornerRadius="3dp"
+                app:trackThickness="2dp" />
         </LinearLayout>
     </LinearLayout>
 </merge>

@@ -12,6 +12,7 @@
         <item name="windowActionBar">false</item>
         <item name="android:scrollbars">none</item>
         <item name="windowNoTitle">true</item>
+        <item name="colorAccent">?colorPrimary</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.BottomSheetDialog</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialDialog</item>
         <item name="searchViewStyle">@style/SearchViewStyle</item>
@@ -30,7 +31,7 @@
         <item name="android:windowBackground">?attr/main_bg</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
-        <item name="main_bg">@color/main_bg</item>
+        <item name="main_bg">@android:color/black</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.BottomSheetDialog</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialDialog</item>
         <item name="switchStyle">@style/Widget.App.CompoundButton.Switch</item>

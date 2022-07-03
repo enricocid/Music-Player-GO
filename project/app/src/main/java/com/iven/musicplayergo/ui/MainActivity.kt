@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -338,6 +340,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 mArtistsFragment?.stopActionMode()
+                mAlbumsFragment?.stopActionMode()
                 mFoldersFragment?.stopActionMode()
             }
         })
@@ -366,17 +369,25 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun initTabLayout() {
 
+        val accent = Theming.resolveThemeAccent(this)
+        val alphaAccentColor = ColorUtils.setAlphaComponent(accent, 175)
+
         with(mPlayerControlsPanelBinding.tabLayout) {
+
+            tabIconTint = ColorStateList.valueOf(alphaAccentColor)
 
             TabLayoutMediator(this, mMainActivityBinding.viewPager2) { tab, position ->
                 tab.setIcon(Theming.getTabIcon(mGoPreference.activeTabs.toList()[position]))
             }.attach()
 
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-                override fun onTabSelected(tab: TabLayout.Tab) {}
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    tab.icon?.setTint(accent)
+                }
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {
                     closeFragments()
+                    tab.icon?.setTint(alphaAccentColor)
                 }
 
                 override fun onTabReselected(tab: TabLayout.Tab) {
@@ -384,9 +395,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 }
             })
 
-            if (sRestoreSettingsFragment) {
+            getTabAt(if (sRestoreSettingsFragment) {
                 mMainActivityBinding.viewPager2.offscreenPageLimit
-            }
+            } else {
+                0
+            })?.icon?.setTint(accent)
         }
 
         if (sRestoreSettingsFragment) {

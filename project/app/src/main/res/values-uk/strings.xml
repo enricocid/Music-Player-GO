@@ -110,9 +110,6 @@
     <string name="direct_remove_pref_title">Підтвердження вилучення</string>
     <string name="grey">Сірий</string>
     <string name="blue_grey">Сіро-блакитний</string>
-    <string name="red_200">Червоний 200</string>
-    <string name="deep_purple_200">Насичений фіолетовий 200</string>
-    <string name="lime_200">Лайм 200</string>
     <string name="error_fs_not_allowed_sum">Помилка! Вимкніть оптимізацію акумулятора для MPGO</string>
     <string name="error_fs_not_allowed">Щось пішло не так! :( Розгляньте можливість вимкнення оптимізації акумулятора в налаштуваннях системи: Програми &gt; Усі програми &gt; Music Player GO &gt; Акумулятор &gt; Не обмежено, оскільки це може призвести до зупинки служби медіапрогравача.</string>
     <string name="locale_basque">Баскська</string>
@@ -124,7 +121,6 @@
     <string name="locale_sinhalese">Сингальська</string>
     <string name="purple">Фіолетовий</string>
     <string name="deep_purple">Насичений фіолетовий</string>
-    <string name="amber_200">Бурштиновий 200</string>
     <string name="locale_bulgarian">Болгарська</string>
     <string name="locale_czech">Чеська</string>
     <string name="locale_galician">Галісійська</string>
@@ -145,12 +141,6 @@
     <string name="indigo">Індиго</string>
     <string name="lime">Лайм</string>
     <string name="yellow">Жовтий</string>
-    <string name="cyan_200">Бірюзовий 200</string>
-    <string name="teal_200">Зелений водний 200</string>
-    <string name="light_blue_200">Блакитний 200</string>
-    <string name="deep_orange_200">Насичений жовтогарячий 200</string>
-    <string name="brown_200">Коричневий 200</string>
-    <string name="blue_grey_200">Сіро-блакитний 200</string>
     <string name="pause_on_end">Пауза після завершення.</string>
     <string name="pause_on_end_disabled">Паузу після завершення вимкнено.</string>
     <string name="locale_danish">Данська</string>
@@ -164,15 +154,8 @@
     <string name="teal">Зелений водний</string>
     <string name="green">Зелений</string>
     <string name="light_green">Світло-зелений</string>
-    <string name="blue_200">Синій 200</string>
-    <string name="green_200">Зелений 200</string>
-    <string name="light_green_200">Світло-зелений 200</string>
     <string name="theme_pref_black_title">Чистий чорний</string>
-    <string name="orange_200">Жовтогарячий 200</string>
     <string name="locale_pref_title">Мова</string>
-    <string name="purple_200">Фіолетовий 200</string>
-    <string name="pink_200">Рожевий 200</string>
-    <string name="indigo_200">Індиго 200</string>
     <string name="sleeptimer_enabled">Зупинити відтворення після %1s</string>
     <string name="sleeptimer_stop">Зупинити</string>
     <string name="sleeptimer_cancel_desc">Зупинити таймер сну</string>

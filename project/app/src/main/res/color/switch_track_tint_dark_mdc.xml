@@ -6,8 +6,8 @@
   -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="?attr/colorButtonNormal" android:state_checked="false" android:state_enabled="false" />
-    <item android:color="?attr/colorButtonNormal" android:state_enabled="false" />
-    <item android:color="?attr/colorSurfaceVariant" android:state_checked="false" />
-    <item android:color="?attr/colorPrimary" />
+    <item android:alpha="?android:disabledAlpha" android:color="?colorSurfaceVariant" android:state_checked="false" android:state_enabled="false" />
+    <item android:alpha="?android:disabledAlpha" android:color="?colorPrimaryContainer" android:state_enabled="false" />
+    <item android:color="?colorSurfaceVariant" android:state_checked="false" />
+    <item android:color="?colorPrimaryContainer" />
 </selector>

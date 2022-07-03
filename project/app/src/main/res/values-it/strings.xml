@@ -165,21 +165,4 @@
     <string name="brown">Marrone</string>
     <string name="grey">Grigio</string>
     <string name="blue_grey">Blu grigio</string>
-    <string name="red_200">Rosso 200</string>
-    <string name="pink_200">Rosa 200</string>
-    <string name="purple_200">Viola 200</string>
-    <string name="deep_purple_200">Viola scuro 200</string>
-    <string name="indigo_200">Indaco 200</string>
-    <string name="blue_200">Blu 200</string>
-    <string name="light_blue_200">Blu chiaro 200</string>
-    <string name="cyan_200">Ciano 200</string>
-    <string name="teal_200">Alzavola 200</string>
-    <string name="green_200">Verde 200</string>
-    <string name="light_green_200">Verde chiaro 200</string>
-    <string name="lime_200">Lime 200</string>
-    <string name="amber_200">Ambra 200</string>
-    <string name="orange_200">Arancione 200</string>
-    <string name="deep_orange_200">Arancione scuro 200</string>
-    <string name="brown_200">Marrone 200</string>
-    <string name="blue_grey_200">Blu grigio 200</string>
 </resources>

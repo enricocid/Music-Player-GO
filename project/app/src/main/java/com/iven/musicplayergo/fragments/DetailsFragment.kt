@@ -233,6 +233,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
             _detailsFragmentBinding?.run {
 
+                this.
                 albumsRv.handleViewVisibility(show = false)
                 selectedAlbumContainer.handleViewVisibility(show = false)
 
