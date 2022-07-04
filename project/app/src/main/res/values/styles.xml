@@ -9,7 +9,6 @@
 
     <style name="Widget.Demo.BottomSheet" parent="Widget.MaterialComponents.BottomSheet">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.Demo</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
     <style name="ShapeAppearanceOverlay.Demo" parent="">
