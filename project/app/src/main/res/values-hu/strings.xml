@@ -134,7 +134,6 @@
     <string name="locale_russian">Orosz</string>
     <string name="locale_sinhalese">Szingález</string>
     <string name="locale_slovenian">Szlovén</string>
-    <string name="direct_remove_pref_title">Törlés megerősítés</string>
     <string name="teal">Pávakék</string>
     <string name="green">Zöld</string>
     <string name="light_green">Világos zöld</string>
@@ -177,7 +176,6 @@
     <string name="deep_orange">Sötét narancs</string>
     <string name="grey">Szürke</string>
     <string name="cyan_200">Türkizkék 200</string>
-    <string name="direct_remove_pref_sum">Megerősítő kérdés lejátszási sor/kedvencek törlésekor</string>
     <string name="locale_pref_title">Nyelv</string>
     <string name="ok">OK</string>
     <string name="cancel">Mégsem</string>

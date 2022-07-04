@@ -127,9 +127,9 @@
             app:title="@string/filter_pref_title" />
 
         <SwitchPreferenceCompat
-            android:summary="@string/direct_remove_pref_sum"
+            android:summary="@string/confirm_ask_pref_sum"
             app:defaultValue="true"
-            app:key="@string/direct_remove_pref"
-            app:title="@string/direct_remove_pref_title" />
+            app:key="@string/ask_confirmation_pref"
+            app:title="@string/confirm_ask_pref_title" />
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>

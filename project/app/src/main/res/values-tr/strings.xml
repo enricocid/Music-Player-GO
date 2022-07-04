@@ -155,7 +155,6 @@
     <string name="locale_basque">Bask</string>
     <string name="pause_on_end">Tamamlandığında duraklat.</string>
     <string name="locale_slovenian">Slovence</string>
-    <string name="direct_remove_pref_sum">Sıradaki/favori şarkıları kaldırmadan önce onay iste</string>
     <string name="lime">Limon rengi</string>
     <string name="red_200">Kırmızı 200</string>
     <string name="blue_200">Mavi 200</string>
@@ -170,7 +169,6 @@
     <string name="locale_chinese_t">Çince (Geleneksel)</string>
     <string name="locale_french">Fransızca</string>
     <string name="locale_galician">Galiçyaca</string>
-    <string name="direct_remove_pref_title">Kaldırma işlemini onaylama</string>
     <string name="green_200">Yeşil 200</string>
     <string name="amber_200">Kehribar 200</string>
     <string name="theme_pref_black_title">Saf siyah</string>

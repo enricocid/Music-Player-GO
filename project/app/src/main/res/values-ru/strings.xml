@@ -121,8 +121,6 @@
     <string name="locale_slovenian">Словенский</string>
     <string name="locale_turkish">Турецкий</string>
     <string name="locale_urdu">Урду (Пакистан)</string>
-    <string name="direct_remove_pref_sum">Запрашивать подтверждение, прежде чем удалить очередь/избранные треки</string>
-    <string name="direct_remove_pref_title">Подтверждение удаления</string>
     <string name="pink">Розовый</string>
     <string name="purple">Фиолетовый</string>
     <string name="deep_purple">Тёмно-фиолетовый</string>

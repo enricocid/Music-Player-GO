@@ -110,7 +110,6 @@
     <string name="blue_grey">Синьо сиво</string>
     <string name="purple_200">Лилаво 200</string>
     <string name="blue_200">Синьо 200</string>
-    <string name="direct_remove_pref_sum">Питай за потвърждение преди махане на опашка/любими песни</string>
     <string name="locale_sinhalese">Сингалски</string>
     <string name="locale_slovenian">Словенски</string>
     <string name="locale_turkish">Турски</string>
@@ -122,7 +121,6 @@
     <string name="on_list_ended_pref_continue_title">Продължи</string>
     <string name="red">Червено</string>
     <string name="filter_pref_title">Филтъри</string>
-    <string name="direct_remove_pref_title">Потвърди махането</string>
     <string name="locale_portuguese">Португалски (Бразилия)</string>
     <string name="locale_romanian">Ромънски</string>
     <string name="locale_ukrainian">Украински</string>

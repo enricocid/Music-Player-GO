@@ -88,6 +88,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     // Now playing
     private var mNpDialog: NowPlaying? = null
 
+    // Favorites dialog
+    private var mFavoritesDialog: RecyclerSheet? = null
+
     // Sleep timer dialog
     private var mSleepTimerDialog: RecyclerSheet? = null
 
@@ -529,8 +532,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         with(mPlayerControlsPanelBinding.favoritesButton) {
             safeClickListener {
-                if (!mGoPreference.favorites.isNullOrEmpty()) {
-                    RecyclerSheet.newInstance(GoConstants.FAV_TYPE).show(supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
+                if (!mGoPreference.favorites.isNullOrEmpty() && mFavoritesDialog == null) {
+                    mFavoritesDialog = RecyclerSheet.newInstance(GoConstants.FAV_TYPE).apply {
+                        show(supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
+                        onFavoritesDialogCancelled = {
+                            mFavoritesDialog = null
+                        }
+                    }
                 } else {
                     R.string.error_no_favorites.toToast(this@MainActivity)
                 }
@@ -625,6 +633,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         if (clear) {
             favorites?.clear()
             mGoPreference.favorites = null
+            mFavoritesDialog?.dismissAllowingStateLoss()
         }
 
         val favoritesButtonColor = if (favorites.isNullOrEmpty()) {
@@ -1154,10 +1163,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 mPlayerControlsPanelBinding.queueButton,
                 when {
                     started -> Theming.resolveThemeAccent(this@MainActivity)
-                    mMediaPlayerHolder.queueSongs.isEmpty() -> Theming.resolveColorAttr(
-                        this@MainActivity,
-                        android.R.attr.colorButtonNormal
-                    )
+                    mMediaPlayerHolder.queueSongs.isEmpty() -> {
+                        mQueueDialog?.dismissAllowingStateLoss()
+                        Theming.resolveColorAttr(
+                            this@MainActivity,
+                            android.R.attr.colorButtonNormal
+                        )
+                    }
                     else -> {
                         mQueueDialog?.dismissAllowingStateLoss()
                         ContextCompat.getColor(

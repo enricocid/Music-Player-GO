@@ -142,7 +142,6 @@
     <string name="locale_polish">Polnisch</string>
     <string name="locale_swedish">Schwedisch</string>
     <string name="locale_thai">Thailändisch</string>
-    <string name="direct_remove_pref_sum">Nach Bestätigung beim Löschen von Warteschleife/Lieblingslieder fragen</string>
     <string name="pink">Rosa</string>
     <string name="purple">Lila</string>
     <string name="deep_purple">Dunkles Lila</string>
@@ -173,7 +172,6 @@
     <string name="locale_ukrainian">Ukrainisch</string>
     <string name="locale_urdu">Urdu (Pakistan)</string>
     <string name="locale_vietnamese">Vietnamesisch</string>
-    <string name="direct_remove_pref_title">Löschen bestätigen</string>
     <string name="amber">Bernstein</string>
     <string name="red">Rot</string>
     <string name="indigo">Indigo</string>

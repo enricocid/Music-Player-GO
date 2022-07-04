@@ -118,7 +118,6 @@
     <string name="locale_slovenian">Esloveno</string>
     <string name="locale_spanish">Castelán</string>
     <string name="locale_vietnamese">Viatnimita</string>
-    <string name="direct_remove_pref_sum">Pedir confirmación antes de retirar cancións da cola ou favoritas</string>
     <string name="blue">Azul</string>
     <string name="light_blue">Azul claro</string>
     <string name="cyan">Ciano</string>
@@ -162,7 +161,6 @@
     <string name="locale_hindi">Hindi</string>
     <string name="locale_lituanian">Lituano</string>
     <string name="locale_thai">Thai</string>
-    <string name="direct_remove_pref_title">Confirma a retirada</string>
     <string name="locale_romanian">Rumanés</string>
     <string name="locale_russian">Ruso</string>
     <string name="locale_ukrainian">Ucraíno</string>

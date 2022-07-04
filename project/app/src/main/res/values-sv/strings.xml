@@ -133,8 +133,6 @@
     <string name="locale_ukrainian">Ukrainska</string>
     <string name="purple">Lila</string>
     <string name="deep_purple">Djup lila</string>
-    <string name="direct_remove_pref_title">Bekräfta borttagning</string>
-    <string name="direct_remove_pref_sum">Be om bekräftelse innan du tar bort kö/favoritlåtar</string>
     <string name="red">Röd</string>
     <string name="indigo">Indigo</string>
     <string name="cyan">Cyan</string>

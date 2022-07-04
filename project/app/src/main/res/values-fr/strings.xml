@@ -127,7 +127,6 @@
     <string name="error_fs_not_allowed">Quelque chose a mal tourné :( Pensez à désactiver l\'optimisateur de la batterie dans les paramètres système : Apps &gt; All apps &gt; Music Player GO &gt; Battery &gt; Unrestricted, car cela pourrait provoquer l\'arrêt du service du lecteur multimédia.</string>
     <string name="locale_german">Allemand</string>
     <string name="locale_greek">Grec</string>
-    <string name="direct_remove_pref_title">Confirmer le retrait</string>
     <string name="locale_arabic_egypt">Arabe (Égypte)</string>
     <string name="cyan">Cyan</string>
     <string name="teal">Cyan-Vert</string>
@@ -144,7 +143,6 @@
     <string name="locale_russian">Russe</string>
     <string name="blue">Bleu</string>
     <string name="light_blue">Bleu clair</string>
-    <string name="direct_remove_pref_sum">Demande de confirmation avant de supprimer la file d\'attente/les chansons préférées</string>
     <string name="purple">Violet</string>
     <string name="red">Rouge</string>
     <string name="green">Vert</string>

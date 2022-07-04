@@ -137,8 +137,6 @@
     <string name="filter_pref_title">مرشحات</string>
     <string name="error_fs_not_allowed">حدث خطأ ما! يقترح تعطيل خاصية تحسين البطارية من إعدادات الهاتف: التطبيقات&gt;كل التطبيقات&gt;Music Player GO&gt;البطارية&gt;غير مقيد، حيث قد تتسبب في إيقاف البرنامج.</string>
     <string name="locale_arabic">العربية</string>
-    <string name="direct_remove_pref_title">تأكيد الحذف</string>
-    <string name="direct_remove_pref_sum">التأكيد قبل حذف أغاني المفضلة/التشغيل</string>
     <string name="red">أحمر</string>
     <string name="pink">زهري</string>
     <string name="purple">بنفسجي</string>

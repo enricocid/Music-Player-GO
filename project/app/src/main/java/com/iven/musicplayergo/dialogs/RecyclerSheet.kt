@@ -46,6 +46,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
     private lateinit var mUIControlInterface: UIControlInterface
     private lateinit var mMediaControlInterface: MediaControlInterface
     var onQueueCancelled: (() -> Unit)? = null
+    var onFavoritesDialogCancelled: (() -> Unit)? = null
     var onSleepTimerDialogCancelled: (() -> Unit)? = null
     var onSleepTimerEnabled: ((Boolean) -> Unit)? = null
 

@@ -136,9 +136,7 @@
     <string name="locale_portuguese">Português (Brasil)</string>
     <string name="locale_arabic_egypt">Árabe (Egito)</string>
     <string name="locale_japanese">Japonês</string>
-    <string name="direct_remove_pref_sum">Peça confirmação antes de remover a fila/músicas favoritas</string>
     <string name="locale_arabic">Árabe</string>
-    <string name="direct_remove_pref_title">Confirmar remoção</string>
     <string name="sleeptimer">Temporizador</string>
     <string name="sleeptimer_enabled">Parar a reprodução %1s depois</string>
     <string name="sleeptimer_stop">Parar</string>

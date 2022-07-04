@@ -121,10 +121,8 @@
     <string name="locale_vietnamese">Vietnam</string>
     <string name="yellow">Kuning</string>
     <string name="blue">Biru</string>
-    <string name="direct_remove_pref_title">Konfirmasi penghapusan</string>
     <string name="locale_italian">Itali</string>
     <string name="red">Merah</string>
-    <string name="direct_remove_pref_sum">Konfirmasi sebelum menghapus lagu antrean/favorit</string>
     <string name="locale_pref_title">Bahasa</string>
     <string name="locale_bengali">Bengali</string>
     <string name="locale_belarusian">Belarusia</string>

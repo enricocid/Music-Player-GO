@@ -107,7 +107,6 @@
     <string name="locale_ukrainian">Українська</string>
     <string name="locale_urdu">Урду (Пакистан)</string>
     <string name="locale_vietnamese">В’єтнамська</string>
-    <string name="direct_remove_pref_title">Підтвердження вилучення</string>
     <string name="grey">Сірий</string>
     <string name="blue_grey">Сіро-блакитний</string>
     <string name="red_200">Червоний 200</string>
@@ -139,7 +138,6 @@
     <string name="locale_persian">Перська</string>
     <string name="locale_thai">Тайська</string>
     <string name="locale_swedish">Шведська</string>
-    <string name="direct_remove_pref_sum">Запит підтвердження перед вилученням черги/обраних пісень</string>
     <string name="red">Червоний</string>
     <string name="pink">Рожевий</string>
     <string name="indigo">Індиго</string>

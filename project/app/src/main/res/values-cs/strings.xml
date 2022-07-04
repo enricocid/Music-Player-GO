@@ -137,7 +137,6 @@
     <string name="locale_turkish">Turečtina</string>
     <string name="locale_urdu">Urdština (Pákistán)</string>
     <string name="locale_arabic">Arabština</string>
-    <string name="direct_remove_pref_sum">Zeptat se na potvrzení před odebráním skladeb z fronty nebo z oblíbených</string>
     <string name="red">Červená</string>
     <string name="indigo">Indigo</string>
     <string name="blue">Modrá</string>
@@ -151,7 +150,6 @@
     <string name="teal_200">Modrozelená 200</string>
     <string name="light_green_200">Světle zelená 200</string>
     <string name="blue_grey_200">Šedomodrá 200</string>
-    <string name="direct_remove_pref_title">Potvrdit odebrání</string>
     <string name="deep_orange_200">Tmavě oranžová 200</string>
     <string name="green_200">Zelená 200</string>
     <string name="lime_200">Limetková 200</string>

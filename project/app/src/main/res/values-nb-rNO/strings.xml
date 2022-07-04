@@ -130,8 +130,6 @@
     <string name="blue_200">200-blå</string>
     <string name="brown_200">200-brun</string>
     <string name="blue_grey_200">200-blågrå</string>
-    <string name="direct_remove_pref_title">Bekreft sletting</string>
-    <string name="direct_remove_pref_sum">Spør om bekreftelse før fjerning av kø/favorittspor</string>
     <string name="locale_pref_title">Språk</string>
     <string name="locale_polish">Polsk</string>
     <string name="locale_basque">Baskisk</string>

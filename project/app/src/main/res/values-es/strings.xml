@@ -124,8 +124,6 @@
     <string name="locale_portuguese">Portugués (Brazil)</string>
     <string name="locale_romanian">Rumano</string>
     <string name="locale_swedish">Sueco</string>
-    <string name="direct_remove_pref_title">Confirmar Borrado</string>
-    <string name="direct_remove_pref_sum">Preguntar por confirmación antes de borrar cola / canciones favoritas</string>
     <string name="purple">Morado</string>
     <string name="deep_purple">Púrpura</string>
     <string name="indigo">Indigo</string>

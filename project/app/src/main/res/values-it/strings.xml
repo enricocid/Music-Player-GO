@@ -144,8 +144,8 @@
     <string name="locale_ukrainian">Ucraino</string>
     <string name="locale_urdu">Urdu (Pakistano)</string>
     <string name="locale_vietnamese">Vietnamita</string>
-    <string name="direct_remove_pref_title">Chiedi prima di cancellare</string>
-    <string name="direct_remove_pref_sum">Chiedi conferma prima di rimuovere canzoni dalla coda/favoriti</string>
+    <string name="confirm_ask_pref_title">Messaggi di conferma</string>
+    <string name="confirm_ask_pref_sum">Chiedi conferma prima di fare qualcosa</string>
     <string name="red">Rosso</string>
     <string name="pink">Rosa</string>
     <string name="purple">Viola</string>
