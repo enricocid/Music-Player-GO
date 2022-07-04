@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_play"
+        android:icon="@drawable/ic_play_circle"
+        android:title="@string/action_mode_play">
+    </item>
     <item android:id="@+id/action_hide"
         android:icon="@drawable/ic_visibility_off"
         android:title="@string/filter_popup_title">

@@ -49,10 +49,12 @@ class MusicContainersFragment : Fragment(),
     private lateinit var mListAdapter: MusicContainersAdapter
 
     private lateinit var mUiControlInterface: UIControlInterface
+    private lateinit var mMediaControlInterface: MediaControlInterface
 
     private lateinit var mSortMenuItem: MenuItem
     private var mSorting = GoConstants.DESCENDING_SORTING
 
+    private val sLaunchedByArtistView get() = mLaunchedBy == GoConstants.ARTIST_VIEW
     private val sLaunchedByAlbumView get() = mLaunchedBy == GoConstants.ALBUM_VIEW
 
     private val sIsFastScrollerPopup get() = mSorting == GoConstants.ASCENDING_SORTING || mSorting == GoConstants.DESCENDING_SORTING
@@ -71,6 +73,7 @@ class MusicContainersFragment : Fragment(),
         // the callback interface. If not, it throws an exception
         try {
             mUiControlInterface = activity as UIControlInterface
+            mMediaControlInterface = activity as MediaControlInterface
         } catch (e: ClassCastException) {
             e.printStackTrace()
         }
@@ -136,7 +139,7 @@ class MusicContainersFragment : Fragment(),
             }
         }
 
-        (requireActivity() as MediaControlInterface).onGetMediaPlayerHolder()?.let { mp ->
+        mMediaControlInterface.onGetMediaPlayerHolder()?.let { mp ->
             tintSleepTimerIcon(enabled = mp.isSleepTimer)
         }
     }
@@ -277,7 +280,7 @@ class MusicContainersFragment : Fragment(),
         val actionModeCallback = object : ActionMode.Callback {
 
             override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-                requireActivity().menuInflater.inflate(R.menu.menu_action_mode_hide, menu)
+                requireActivity().menuInflater.inflate(R.menu.menu_action_mode, menu)
                 return true
             }
 
@@ -289,6 +292,18 @@ class MusicContainersFragment : Fragment(),
                 return when (item?.itemId) {
                     R.id.action_hide -> {
                         mUiControlInterface.onAddToFilter(itemsToHide)
+                        true
+                    }
+                    R.id.action_play -> {
+                        mMediaControlInterface.onGetMediaPlayerHolder()?.run {
+                            val itemToFind = itemsToHide.first()
+                            val songs = when {
+                                sLaunchedByArtistView -> mMusicViewModel.deviceSongsByArtist?.get(itemToFind)
+                                sLaunchedByAlbumView -> mMusicViewModel.deviceMusicByAlbum?.get(itemToFind)
+                                else -> mMusicViewModel.deviceMusicByFolder?.get(itemToFind)
+                            }
+                            mMediaControlInterface.onAddAlbumToQueue(songs, forcePlay = Pair(first = true, second = null))
+                        }
                         true
                     }
                     else -> false
@@ -415,6 +430,8 @@ class MusicContainersFragment : Fragment(),
             notifyItemChanged(position)
             if (itemsToHide.isEmpty()) {
                 stopActionMode()
+            } else {
+                actionMode?.menu?.findItem(R.id.action_play)?.isVisible = itemsToHide.size < 2
             }
         }
     }
