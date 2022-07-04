@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -369,11 +370,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun initTabLayout() {
 
-        val resolvedAlphaAccentColor = Theming.getAlphaAccent(this)
+        val accent = Theming.resolveThemeAccent(this)
+        val alphaAccentColor = ColorUtils.setAlphaComponent(accent, 200)
 
         with(mPlayerControlsPanelBinding.tabLayout) {
 
-            tabIconTint = ColorStateList.valueOf(resolvedAlphaAccentColor)
+            tabIconTint = ColorStateList.valueOf(alphaAccentColor)
 
             TabLayoutMediator(this, mMainActivityBinding.viewPager2) { tab, position ->
                 tab.setIcon(Theming.getTabIcon(mGoPreference.activeTabs.toList()[position]))
@@ -381,12 +383,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
-                    tab.icon?.setTint(Theming.resolveThemeAccent(this@MainActivity))
+                    tab.icon?.setTint(accent)
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {
                     closeFragments()
-                    tab.icon?.setTint(resolvedAlphaAccentColor)
+                    tab.icon?.setTint(alphaAccentColor)
                 }
 
                 override fun onTabReselected(tab: TabLayout.Tab) {
