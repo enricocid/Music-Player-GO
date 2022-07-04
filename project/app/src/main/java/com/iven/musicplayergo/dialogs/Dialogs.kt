@@ -16,6 +16,18 @@ import com.iven.musicplayergo.ui.UIControlInterface
 object Dialogs {
 
     @JvmStatic
+    fun showClearFiltersDialog(activity: Activity) {
+        MaterialAlertDialogBuilder(activity)
+            .setTitle(R.string.filter_pref_title)
+            .setMessage(R.string.filters_clear)
+            .setPositiveButton(R.string.yes) { _, _ ->
+                (activity as UIControlInterface).onFiltersCleared()
+            }
+            .setNegativeButton(R.string.no, null)
+            .show()
+    }
+
+    @JvmStatic
     fun showClearQueueDialog(context: Context, mediaPlayerHolder: MediaPlayerHolder) {
         MaterialAlertDialogBuilder(context)
             .setTitle(R.string.queue)

@@ -153,6 +153,11 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     val filtersAdapter = FiltersAdapter(requireActivity())
                     modalRv.adapter = filtersAdapter
 
+                    btnDelete.handleViewVisibility(show = true)
+                    btnDelete.setOnClickListener {
+                        Dialogs.showClearFiltersDialog(requireActivity())
+                    }
+
                     btnNegative.setOnClickListener {
                         dismiss()
                     }

@@ -337,7 +337,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         mMainActivityBinding.viewPager2.offscreenPageLimit =
             mGoPreference.activeTabs.toList().size.minus(1)
         mMainActivityBinding.viewPager2.adapter = pagerAdapter
-
+        mMainActivityBinding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                mArtistsFragment?.stopActionMode()
+                mFoldersFragment?.stopActionMode()
+            }
+        })
         // By default, ViewPager2's sensitivity is high enough to result in vertical
         // scroll events being registered as horizontal scroll events. Reflect into the
         // internal recyclerview and change the touch slope so that touch actions will
@@ -1044,30 +1050,34 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
-    override fun onAddToFilter(stringToFilter: String?) {
+    override fun onAddToFilter(stringsToFilter: List<String>?) {
 
-        stringToFilter?.let { string ->
-
-            Lists.addToHiddenItems(string)
-
-            if (isMediaPlayerHolder) {
-                // be sure to update queue, favorites and the controls panel
-                MusicUtils.updateMediaPlayerHolderLists(mMediaPlayerHolder, this, mMusicViewModel.randomMusic)?.let { song ->
-                    val songs = MusicUtils.getAlbumSongs(
-                        song.artist,
-                        song.album,
-                        mMusicViewModel.deviceAlbumsByArtist
-                    )
-                    with(mMediaPlayerHolder) {
-                        isPlay = isPlaying
-                        updateCurrentSong(song, songs, GoConstants.ARTIST_VIEW)
-                        initMediaPlayer(song)
-                    }
-                    updatePlayingInfo(restore = false)
-                }
-            }
-            Theming.applyChanges(this, restoreSettings = false)
+        stringsToFilter?.run {
+            Lists.hideItems(this)
         }
+
+        if (isMediaPlayerHolder) {
+            // be sure to update queue, favorites and the controls panel
+            MusicUtils.updateMediaPlayerHolderLists(mMediaPlayerHolder, this, mMusicViewModel.randomMusic)?.let { song ->
+                val songs = MusicUtils.getAlbumSongs(
+                    song.artist,
+                    song.album,
+                    mMusicViewModel.deviceAlbumsByArtist
+                )
+                with(mMediaPlayerHolder) {
+                    isPlay = isPlaying
+                    updateCurrentSong(song, songs, GoConstants.ARTIST_VIEW)
+                    initMediaPlayer(song)
+                }
+                updatePlayingInfo(restore = false)
+            }
+        }
+        Theming.applyChanges(this, restoreSettings = false)
+    }
+
+    override fun onFiltersCleared() {
+        GoPreferences.getPrefsInstance().filters = null
+        Theming.applyChanges(this, restoreSettings = false)
     }
 
     //method to handle intent to play audio file from external app

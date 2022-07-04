@@ -718,6 +718,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                     val title = findViewById<TextView>(R.id.title)
                     val subtitle = findViewById<TextView>(R.id.subtitle)
+                    findViewById<ImageView>(R.id.album_cover).handleViewVisibility(show = false)
 
                     val displayedTitle =
                         if (sShowDisplayName || sLaunchedByFolderView) {

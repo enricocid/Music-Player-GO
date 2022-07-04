@@ -15,6 +15,9 @@
         <item name="android:spinnerStyle">@style/SpinnerMenu</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Demo.BottomSheetDialog</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_close</item>
+        <item name="actionModeBackground">@color/mainBg</item>
     </style>
 
     <style name="BaseTheme.Black" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -31,5 +34,8 @@
         <item name="android:spinnerStyle">@style/SpinnerMenu</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Demo.BottomSheetDialog</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_close</item>
+        <item name="actionModeBackground">@color/mainBg</item>
     </style>
 </resources>
