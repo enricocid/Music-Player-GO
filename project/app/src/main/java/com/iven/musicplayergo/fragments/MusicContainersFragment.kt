@@ -295,16 +295,14 @@ class MusicContainersFragment : Fragment(),
                         true
                     }
                     R.id.action_play -> {
-                        mMediaControlInterface.onGetMediaPlayerHolder()?.run {
-                            val itemToFind = itemsToHide.first()
-                            val songs = when {
-                                sLaunchedByArtistView -> mMusicViewModel.deviceSongsByArtist?.get(itemToFind)
-                                sLaunchedByAlbumView -> mMusicViewModel.deviceMusicByAlbum?.get(itemToFind)
-                                else -> mMusicViewModel.deviceMusicByFolder?.get(itemToFind)
-                            }
-                            mMediaControlInterface.onAddAlbumToQueue(songs, forcePlay = Pair(first = true, second = null))
+                        val itemToFind = itemsToHide.first()
+                        val songs = when {
+                            sLaunchedByArtistView -> mMusicViewModel.deviceSongsByArtist?.get(itemToFind)
+                            sLaunchedByAlbumView -> mMusicViewModel.deviceMusicByAlbum?.get(itemToFind)
+                            else -> mMusicViewModel.deviceMusicByFolder?.get(itemToFind)
                         }
-                        true
+                        mMediaControlInterface.onAddAlbumToQueue(songs, forcePlay = Pair(first = true, second = null))
+                    true
                     }
                     else -> false
                 }
