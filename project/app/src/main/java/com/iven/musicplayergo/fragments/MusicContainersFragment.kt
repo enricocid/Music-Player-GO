@@ -302,6 +302,7 @@ class MusicContainersFragment : Fragment(),
                             else -> mMusicViewModel.deviceMusicByFolder?.get(itemToFind)
                         }
                         mMediaControlInterface.onAddAlbumToQueue(songs, forcePlay = Pair(first = true, second = null))
+                        stopActionMode()
                     true
                     }
                     else -> false

@@ -31,12 +31,12 @@ object Theming {
 
     @JvmStatic
     fun applyChanges(activity: Activity, restoreSettings: Boolean) {
-        val intent = Intent(activity, MainActivity::class.java)
-        val bundle = bundleOf(GoConstants.RESTORE_SETTINGS_FRAGMENT to restoreSettings)
-        intent.putExtras(bundle)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         with(activity) {
             finishAfterTransition()
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtras(bundleOf(
+                GoConstants.RESTORE_SETTINGS_FRAGMENT to restoreSettings
+            ))
             startActivity(intent)
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }

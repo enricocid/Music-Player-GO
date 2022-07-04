@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
@@ -262,7 +263,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         setContentView(mMainActivityBinding.root)
 
-        if (Versioning.isOreoMR1()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             window?.navigationBarColor = Theming.resolveColorAttr(this, R.attr.main_bg)
             WindowCompat.setDecorFitsSystemWindows(window, true)
             mMainActivityBinding.root.applyEdgeToEdge()
