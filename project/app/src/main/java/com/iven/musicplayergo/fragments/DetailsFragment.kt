@@ -3,6 +3,7 @@ package com.iven.musicplayergo.fragments
 import android.animation.Animator
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater

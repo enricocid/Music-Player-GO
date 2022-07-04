@@ -153,6 +153,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     val filtersAdapter = FiltersAdapter(requireActivity())
                     modalRv.adapter = filtersAdapter
 
+                    bottomDivider.handleViewVisibility(show = true)
                     btnDelete.handleViewVisibility(show = true)
                     btnDelete.setOnClickListener {
                         Dialogs.showClearFiltersDialog(requireActivity())
@@ -178,6 +179,14 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
                     _modalRvBinding?.btnContainer?.handleViewVisibility(show = false)
                     sleepTimerElapsed.handleViewVisibility(show = false)
+
+                    bottomDivider.handleViewVisibility(show = true)
+                    btnDelete.handleViewVisibility(show = true)
+                    btnDelete.setOnClickListener {
+                        mMediaControlInterface.onGetMediaPlayerHolder()?.let { mph ->
+                            Dialogs.showClearQueueDialog(requireContext(), mph)
+                        }
+                    }
 
                     setRecyclerViewProps(modalRv)
 
@@ -269,6 +278,12 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     sleepTimerElapsed.handleViewVisibility(show = false)
 
                     _modalRvBinding?.btnContainer?.handleViewVisibility(show = false)
+
+                    bottomDivider.handleViewVisibility(show = true)
+                    btnDelete.handleViewVisibility(show = true)
+                    btnDelete.setOnClickListener {
+                        Dialogs.showClearFavoritesDialog(requireActivity())
+                    }
 
                     setRecyclerViewProps(modalRv)
                     val favoritesAdapter = FavoritesAdapter(requireActivity())

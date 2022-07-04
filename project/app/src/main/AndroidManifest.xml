@@ -19,6 +19,7 @@
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
+            android:screenOrientation="user"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
