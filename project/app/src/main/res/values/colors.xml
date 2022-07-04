@@ -41,9 +41,6 @@
 
     <color name="widgetsColor">#212121</color>
 
-    <color name="swipeActionDeleteColor">#ffebee</color>
-    <color name="swipeActionAddColor">#e8f5e9</color>
-
     <color name="mainBg">#fcfcfc</color>
     <color name="systemBarBg">#ededed</color>
     <color name="toolbarBg">@color/mainBg</color>
