@@ -98,7 +98,6 @@
     <string name="sleeptimer">Elalvási időzítő</string>
     <string name="sleeptimer_enabled">Lejátszás megállítása %1s után</string>
     <string name="sleeptimer_stop">Stop</string>
-    <string name="sleeptimer_remaining_time">Elalvási időzítő: hátralévő idő</string>
     <string name="sleeptimer_cancel_desc">Elalvási időzítő megállítása</string>
     <string name="locale_bengali">Bengáli</string>
     <string name="locale_ukrainian">Ukrán</string>

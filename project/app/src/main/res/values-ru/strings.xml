@@ -178,7 +178,6 @@
     <string name="sleeptimer">Таймер сна</string>
     <string name="sleeptimer_stop">Остановить</string>
     <string name="sleeptimer_cancel_desc">Остановить таймер сна</string>
-    <string name="sleeptimer_remaining_time">Таймер сна: оставшееся время</string>
     <string name="sleeptimer_enabled">Остановить проигрывание после %1s</string>
     <string name="theme_pref_black_title">Абсолютно чёрный</string>
     <string name="locale_bulgarian">Болгарский</string>

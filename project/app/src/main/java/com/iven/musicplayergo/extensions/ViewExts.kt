@@ -23,6 +23,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -48,6 +50,15 @@ inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
             }
         }
     })
+}
+
+fun View.applyEdgeToEdge() {
+    setOnApplyWindowInsetsListener { view, insets ->
+        val bars = WindowInsetsCompat.toWindowInsetsCompat(insets)
+            .getInsets(WindowInsetsCompat.Type.systemBars())
+        view.updatePadding(left = bars.left, right = bars.right)
+        insets
+    }
 }
 
 fun ImageView.loadWithError(bitmap: Bitmap?, error: Boolean, albumArt: Int) {

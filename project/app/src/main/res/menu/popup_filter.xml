@@ -5,7 +5,6 @@
         android:enabled="false"
         android:title="" />
     <item
-        android:id="@+id/filter_add"
         android:icon="@drawable/ic_visibility_off"
         android:title="@string/filter_popup_title" />
 </menu>

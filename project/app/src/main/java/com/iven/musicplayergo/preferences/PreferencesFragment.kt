@@ -12,9 +12,9 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.dialogs.RecyclerSheet
-import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.utils.Theming
 
 
 class PreferencesFragment : PreferenceFragmentCompat(),
@@ -53,32 +53,26 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        findPreference<Preference>(getString(R.string.theme_pref))?.apply {
-            icon = ContextCompat.getDrawable(requireContext(), Theming.resolveThemeIcon(requireContext()))
+        findPreference<Preference>(getString(R.string.theme_pref))?.icon = ContextCompat.getDrawable(requireContext(), Theming.resolveThemeIcon(requireContext()))
+
+        findPreference<Preference>(getString(R.string.theme_pref_black))?.isVisible = Theming.isThemeNight(resources)
+
+        findPreference<Preference>(getString(R.string.accent_pref))?.run {
+            summary = Theming.getAccentName(requireContext(), GoPreferences.getPrefsInstance().accent)
+            onPreferenceClickListener = this@PreferencesFragment
         }
 
-        findPreference<Preference>(getString(R.string.theme_pref_black))?.let { preference ->
-            preference.isVisible = Theming.isThemeNight(resources)
+        findPreference<Preference>(getString(R.string.filter_pref))?.onPreferenceClickListener = this@PreferencesFragment
+
+        findPreference<Preference>(getString(R.string.active_tabs_pref))?.run {
+            summary = GoPreferences.getPrefsInstance().activeTabs.size.toString()
+            onPreferenceClickListener = this@PreferencesFragment
         }
 
-        findPreference<Preference>(getString(R.string.accent_pref))?.let { preference ->
-            preference.summary = Theming.getAccentName(requireContext(), GoPreferences.getPrefsInstance().accent)
-            preference.onPreferenceClickListener = this@PreferencesFragment
-        }
-
-        findPreference<Preference>(getString(R.string.filter_pref))?.let { preference ->
-            preference.onPreferenceClickListener = this@PreferencesFragment
-        }
-
-        findPreference<Preference>(getString(R.string.active_tabs_pref))?.let { preference ->
-            preference.summary = GoPreferences.getPrefsInstance().activeTabs.size.toString()
-            preference.onPreferenceClickListener = this@PreferencesFragment
-        }
-
-        findPreference<Preference>(getString(R.string.filter_pref))?.let { preference ->
+        findPreference<Preference>(getString(R.string.filter_pref))?.run {
             GoPreferences.getPrefsInstance().filters?.let { ft ->
-                preference.summary = ft.size.toString()
-                preference.isEnabled = ft.isNotEmpty()
+                summary = ft.size.toString()
+                isEnabled = ft.isNotEmpty()
             }
         }
     }

@@ -176,7 +176,6 @@
     <string name="blue_grey_200">Blågrå 200</string>
     <string name="locale_pref_title">Språk</string>
     <string name="sleeptimer">Insomningstimer</string>
-    <string name="sleeptimer_remaining_time">Insomningstimer: återstående tid</string>
     <string name="locale_russian">Ryska</string>
     <string name="pink_200">Rosa 200</string>
 </resources>

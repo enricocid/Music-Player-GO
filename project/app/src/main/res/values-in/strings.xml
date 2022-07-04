@@ -176,7 +176,6 @@
     <string name="purple_200">Ungu 200</string>
     <string name="light_blue_200">Biru muda 200</string>
     <string name="sleeptimer">Waktu tidur</string>
-    <string name="sleeptimer_remaining_time">Waktu tidur: waktu tersisa</string>
     <string name="sleeptimer_enabled">Setop pemutaran %1s setelah</string>
     <string name="locale_bulgarian">Bulgaria</string>
     <string name="sleeptimer_stop">Setop</string>

@@ -246,7 +246,7 @@ class GoPreferences(context: Context) {
     }
 
     companion object {
-        // Singleton prevents multiple instances of database opening at the
+        // Singleton prevents multiple instances of GoPreferences opening at the
         // same time.
         @Volatile
         private var INSTANCE: GoPreferences? = null

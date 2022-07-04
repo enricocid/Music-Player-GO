@@ -92,7 +92,6 @@
     <string name="sorting_pref_album">Albüme göre A-Z\'ye sırala</string>
     <string name="delete">Sil</string>
     <string name="sleeptimer">Uyku Sayacı</string>
-    <string name="sleeptimer_remaining_time">Uyku sayacı: kalan süre</string>
     <string name="sleeptimer_cancel_desc">Uyku sayacını durdur</string>
     <string name="sleeptimer_stop">Durdur</string>
     <string name="equalizer_presets">Ön Ayarlar</string>

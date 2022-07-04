@@ -16,8 +16,8 @@ import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentSettingsBinding
 import com.iven.musicplayergo.extensions.toToast
-import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.utils.Theming
 
 /**
  * A simple [Fragment] subclass.

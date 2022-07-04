@@ -42,6 +42,7 @@
             app:title="@string/accent_pref_title" />
 
         <Preference
+            app:iconSpaceReserved="false"
             app:key="@string/active_tabs_pref"
             app:title="@string/active_fragments_pref_title" />
     </PreferenceCategory>
@@ -53,20 +54,24 @@
         <Preference
             android:enabled="false"
             android:summary="@string/eq_pref_note_summary"
+            app:iconSpaceReserved="false"
             app:title="@string/equalizer" />
 
         <SwitchPreferenceCompat
             app:defaultValue="false"
+            app:iconSpaceReserved="false"
             app:key="@string/precise_volume_pref"
             app:title="@string/precise_volume_pref_title" />
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
+            app:iconSpaceReserved="false"
             app:key="@string/focus_pref"
             app:title="@string/focus_pref_title" />
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
+            app:iconSpaceReserved="false"
             app:key="@string/headset_pref"
             app:title="@string/headset_pref_title" />
 
@@ -75,6 +80,7 @@
             app:dialogTitle="@string/playback_pref_title"
             app:entries="@array/playbackSpeedModeArray"
             app:entryValues="@array/playbackSpeedModeEntryArray"
+            app:iconSpaceReserved="false"
             app:key="@string/playback_vel_pref"
             app:title="@string/playback_pref_title"
             app:useSimpleSummaryProvider="true" />
@@ -84,6 +90,7 @@
             app:dialogTitle="@string/on_list_ended_pref_title"
             app:entries="@array/onListEndedArray"
             app:entryValues="@array/onListEndedEntryArray"
+            app:iconSpaceReserved="false"
             app:key="@string/on_list_ended_pref"
             app:title="@string/on_list_ended_pref_title"
             app:useSimpleSummaryProvider="true" />
@@ -95,6 +102,7 @@
 
         <SwitchPreferenceCompat
             app:defaultValue="false"
+            app:iconSpaceReserved="false"
             app:key="@string/covers_pref"
             app:title="@string/covers_pref_title" />
 
@@ -104,6 +112,7 @@
             android:max="60"
             android:summary="@string/fast_seeking_pref_summary"
             android:title="@string/fast_seeking_pref_title"
+            app:iconSpaceReserved="false"
             app:min="5"
             app:seekBarIncrement="5"
             app:showSeekBarValue="true" />
@@ -113,6 +122,7 @@
             app:dialogTitle="@string/fast_seeking_actions_pref_title"
             app:entries="@array/notificationActionsArray"
             app:entryValues="@array/notificationActionsEntryArray"
+            app:iconSpaceReserved="false"
             app:key="@string/notif_actions_pref"
             app:title="@string/fast_seeking_actions_pref_title"
             app:useSimpleSummaryProvider="true" />
@@ -122,23 +132,27 @@
             app:dialogTitle="@string/song_visual_pref_title"
             app:entries="@array/songVisualizationArray"
             app:entryValues="@array/songVisualizationEntryArray"
+            app:iconSpaceReserved="false"
             app:key="@string/song_visual_pref"
             app:title="@string/song_visual_pref_title"
             app:useSimpleSummaryProvider="true" />
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
+            app:iconSpaceReserved="false"
             app:key="@string/anim_pref"
             app:title="@string/anim_pref_title" />
 
         <Preference
+            app:iconSpaceReserved="false"
             app:key="@string/filter_pref"
             app:title="@string/filter_pref_title" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
+            android:summary="@string/direct_remove_pref_sum"
             app:defaultValue="true"
+            app:iconSpaceReserved="false"
             app:key="@string/direct_remove_pref"
-            app:title="@string/direct_remove_pref_title"
-            android:summary="@string/direct_remove_pref_sum" />
+            app:title="@string/direct_remove_pref_title" />
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>

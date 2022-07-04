@@ -93,7 +93,6 @@
     <string name="delete">Видалити</string>
     <string name="equalizer_presets">Поєднання</string>
     <string name="sleeptimer">Таймер сну</string>
-    <string name="sleeptimer_remaining_time">Таймер сну: залишилося часу</string>
     <string name="locale_dutch">Нідерландська</string>
     <string name="locale_english">Англійська</string>
     <string name="locale_hungarian">Угорська</string>

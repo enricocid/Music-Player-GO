@@ -8,7 +8,6 @@
 | [Material components](https://github.com/material-components/material-components-android)                  | Google                       |
 | [Moshi](https://github.com/square/moshi)                  | [Square](https://square.github.io/)                       |
 | [AndroidFastScroll](https://github.com/zhanghai/AndroidFastScroll)                  | [Hai Zhang](https://github.com/zhanghai)                      |
-| [Insetter](https://github.com/chrisbanes/insetter)                  | [Chris Banes](https://github.com/chrisbanes)                       |
 | [coil](https://github.com/coil-kt/coil)                  | [coil-kt](https://github.com/coil-kt)                       |
 
 
@@ -31,6 +30,7 @@
 
 | Name                                                        | Author                  |
 | ----------------------------------------------------------- | ------------------------- |
+| [Insetter](https://github.com/chrisbanes/insetter)                  | [Chris Banes](https://github.com/chrisbanes)                       |
 | [Indicator Fast Scroll](https://github.com/reddit/IndicatorFastScroll)                  | [Reddit](https://github.com/reddit) - [Steven Schoen](https://github.com/DSteve595)                      |
 | [material-dialogs](https://github.com/afollestad/material-dialogs)                  | [Aidan Follestad](https://github.com/afollestad)                       |
 | [recyclical](https://github.com/afollestad/recyclical)                  | [Aidan Follestad](https://github.com/afollestad)                       |

@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -33,7 +34,6 @@ import com.iven.musicplayergo.dialogs.NowPlaying
 import com.iven.musicplayergo.dialogs.RecyclerSheet
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.fragments.*
-import com.iven.musicplayergo.utils.*
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.EqualizerUtils
 import com.iven.musicplayergo.player.MediaPlayerHolder
@@ -41,8 +41,7 @@ import com.iven.musicplayergo.player.MediaPlayerInterface
 import com.iven.musicplayergo.player.PlayerService
 import com.iven.musicplayergo.preferences.ContextUtils
 import com.iven.musicplayergo.preferences.SettingsFragment
-import dev.chrisbanes.insetter.Insetter
-import dev.chrisbanes.insetter.windowInsetTypesOf
+import com.iven.musicplayergo.utils.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
@@ -260,12 +259,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         setContentView(mMainActivityBinding.root)
 
         if (Versioning.isOreoMR1()) {
-            window?.navigationBarColor =
-                Theming.resolveColorAttr(this, R.attr.main_bg)
-            Insetter.builder()
-                .padding(windowInsetTypesOf(navigationBars = true))
-                .margin(windowInsetTypesOf(statusBars = true))
-                .applyToView(mMainActivityBinding.root)
+            window?.navigationBarColor = Theming.resolveColorAttr(this, R.attr.main_bg)
+            WindowCompat.setDecorFitsSystemWindows(window, true)
+            mMainActivityBinding.root.applyEdgeToEdge()
         }
 
         sAllowCommit = true
@@ -411,21 +407,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun initFragmentAt(position: Int) : Fragment {
         when (mGoPreference.activeTabs.toList()[position]) {
-            GoConstants.ARTISTS_TAB -> if (mArtistsFragment == null) {
-                mArtistsFragment = MusicContainersFragment.newInstance(GoConstants.ARTIST_VIEW)
-            }
-            GoConstants.ALBUM_TAB -> if (mAlbumsFragment == null) {
-                mAlbumsFragment = MusicContainersFragment.newInstance(GoConstants.ALBUM_VIEW)
-            }
-            GoConstants.SONGS_TAB -> if (mAllMusicFragment == null) {
-                mAllMusicFragment = AllMusicFragment.newInstance()
-            }
-            GoConstants.FOLDERS_TAB -> if (mFoldersFragment == null) {
-                mFoldersFragment = MusicContainersFragment.newInstance(GoConstants.FOLDER_VIEW)
-            }
-            else -> if (mSettingsFragment == null) {
-                mSettingsFragment = SettingsFragment.newInstance()
-            }
+            GoConstants.ARTISTS_TAB -> mArtistsFragment = MusicContainersFragment.newInstance(GoConstants.ARTIST_VIEW)
+            GoConstants.ALBUM_TAB -> mAlbumsFragment = MusicContainersFragment.newInstance(GoConstants.ALBUM_VIEW)
+            GoConstants.SONGS_TAB -> mAllMusicFragment = AllMusicFragment.newInstance()
+            GoConstants.FOLDERS_TAB -> mFoldersFragment = MusicContainersFragment.newInstance(GoConstants.FOLDER_VIEW)
+            else -> mSettingsFragment = SettingsFragment.newInstance()
         }
         return handleOnNavigationItemSelected(position)
     }
@@ -451,9 +437,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             with(supportFragmentManager) {
                 if (sEqFragmentExpanded) {
                     goBackFromFragmentNow(mEqualizerFragment)
+                    mEqualizerFragment = null
                 }
                 if (sDetailsFragmentExpanded) {
                     goBackFromFragmentNow(mDetailsFragment)
+                    mDetailsFragment = null
                 }
             }
         }
@@ -612,8 +600,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     override fun onFavoriteAddedOrRemoved() {
-        onFavoritesUpdated(clear = false)
-        mNpDialog?.updateNpFavoritesIcon(this@MainActivity)
+        if (isMediaPlayerHolder) {
+            onFavoritesUpdated(clear = false)
+            mNpDialog?.updateNpFavoritesIcon(this@MainActivity, mMediaPlayerHolder)
+        }
     }
 
     override fun onUpdatePositionFromNP(position: Int) {
@@ -1126,7 +1116,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         override fun onStateChanged() {
             if (isMediaPlayerHolder) {
                 updatePlayingStatus()
-                mNpDialog?.updatePlayingStatus()
+                mNpDialog?.updatePlayingStatus(mMediaPlayerHolder)
                 if (mMediaPlayerHolder.state != GoConstants.RESUMED && mMediaPlayerHolder.state != GoConstants.PAUSED) {
                     updatePlayingInfo(restore = false)
                     if (mMediaPlayerHolder.isQueue != null) {

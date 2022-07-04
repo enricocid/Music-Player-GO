@@ -19,9 +19,9 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.waitForCover
+import com.iven.musicplayergo.ui.MainActivity
 import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.utils.Versioning
-import com.iven.musicplayergo.ui.MainActivity
 
 
 class MusicNotificationManager(private val playerService: PlayerService) {

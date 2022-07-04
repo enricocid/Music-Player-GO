@@ -9,7 +9,6 @@
         android:icon="@drawable/ic_favorite"
         android:title="@string/favorite_add" />
     <item
-        android:id="@+id/queue_add"
         android:icon="@drawable/ic_queue_add"
         android:title="@string/queue_add" />
 </menu>

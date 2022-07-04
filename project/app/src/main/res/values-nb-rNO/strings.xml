@@ -176,7 +176,6 @@
     <string name="sleeptimer_stop">Stopp</string>
     <string name="sleeptimer_cancel_desc">Stopp søvntidsur</string>
     <string name="sleeptimer">Søvntidsur</string>
-    <string name="sleeptimer_remaining_time">Søvntidsur: gjenstående tid</string>
     <string name="sleeptimer_enabled">Stopp avspilling %1s etterpå</string>
     <string name="locale_bulgarian">Bulgarsk</string>
     <string name="theme_pref_black_title">Helsvart</string>

@@ -5,7 +5,6 @@
         android:enabled="false"
         android:title="" />
     <item
-        android:id="@+id/queue_add"
         android:icon="@drawable/ic_queue_add"
         android:title="@string/queue_add" />
     <item
