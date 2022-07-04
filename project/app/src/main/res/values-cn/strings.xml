@@ -164,4 +164,5 @@
     <string name="ok">好</string>
     <string name="cancel">取消</string>
     <string name="filters_clear">将清除筛选器。要继续吗？</string>
+    <string name="action_mode_play">从所选处播放</string>
 </resources>
