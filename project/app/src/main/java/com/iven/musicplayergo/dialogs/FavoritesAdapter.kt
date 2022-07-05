@@ -90,7 +90,7 @@ class FavoritesAdapter(private val activity: Activity) :
 
                     inflate(R.menu.popup_favorites_songs)
 
-                    menu.findItem(R.id.song_title).setTitle(activity, title)
+                    menu.findItem(R.id.song_title).setTitle(activity.resources, title)
                     menu.enablePopupIcons(activity)
                     gravity = Gravity.END
 
