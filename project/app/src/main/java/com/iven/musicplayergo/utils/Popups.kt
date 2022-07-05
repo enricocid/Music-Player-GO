@@ -67,7 +67,7 @@ object Popups {
 
             if (GoPreferences.getPrefsInstance().playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY) {
                 menu.findItem(getSelectedPlaybackItem(GoPreferences.getPrefsInstance().latestPlaybackSpeed)).setTitleColor(
-                    Theming.resolveThemeAccent(activity)
+                    Theming.resolveThemeColor(activity)
                 )
             }
 
@@ -86,7 +86,7 @@ object Popups {
                 }
                 if (GoPreferences.getPrefsInstance().playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY) {
                     menu.findItem(getSelectedPlaybackItem(playbackSpeed)).setTitleColor(
-                        Theming.resolveThemeAccent(
+                        Theming.resolveThemeColor(
                             activity
                         )
                     )

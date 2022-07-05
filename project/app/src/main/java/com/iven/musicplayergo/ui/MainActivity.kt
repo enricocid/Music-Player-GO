@@ -254,9 +254,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Theming.getAccentedTheme(resources)?.run {
-            setTheme(first)
-        }
+        setTheme(Theming.resolveTheme(this))
 
         mMainActivityBinding = MainActivityBinding.inflate(layoutInflater)
         mPlayerControlsPanelBinding = PlayerControlsPanelBinding.bind(mMainActivityBinding.root)
@@ -374,7 +372,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun initTabLayout() {
 
-        val accent = Theming.resolveThemeAccent(this)
+        val accent = Theming.resolveThemeColor(this)
         val alphaAccentColor = ColorUtils.setAlphaComponent(accent, 200)
 
         with(mPlayerControlsPanelBinding.tabLayout) {
@@ -405,7 +403,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             } else {
                 0
             })?.icon?.setTint(
-                Theming.resolveThemeAccent(this@MainActivity)
+                Theming.resolveThemeColor(this@MainActivity)
             )
         }
 
@@ -645,7 +643,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             )
         } else {
             mPlayerControlsPanelBinding.favoritesButton.setImageResource(R.drawable.ic_favorite)
-            Theming.resolveThemeAccent(this)
+            Theming.resolveThemeColor(this)
         }
         Theming.updateIconTint(
             mPlayerControlsPanelBinding.favoritesButton,
@@ -1163,7 +1161,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             Theming.updateIconTint(
                 mPlayerControlsPanelBinding.queueButton,
                 when {
-                    started -> Theming.resolveThemeAccent(this@MainActivity)
+                    started -> Theming.resolveThemeColor(this@MainActivity)
                     mMediaPlayerHolder.queueSongs.isEmpty() -> {
                         mQueueDialog?.dismissAllowingStateLoss()
                         Theming.resolveColorAttr(

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
@@ -18,7 +17,7 @@ import com.iven.musicplayergo.utils.Theming
 class AccentsAdapter(private val activity: Activity) :
     RecyclerView.Adapter<AccentsAdapter.AccentsHolder>() {
 
-    private val mAccents = Theming.accents
+    private val mAccents = activity.resources.getIntArray(R.array.colors)
     var selectedAccent = GoPreferences.getPrefsInstance().accent
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = AccentsHolder(
@@ -32,7 +31,7 @@ class AccentsAdapter(private val activity: Activity) :
     override fun getItemCount() = mAccents.size
 
     override fun onBindViewHolder(holder: AccentsHolder, position: Int) {
-        holder.bindItems(mAccents[holder.absoluteAdapterPosition].first)
+        holder.bindItems(mAccents[holder.absoluteAdapterPosition])
     }
 
     inner class AccentsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -41,32 +40,29 @@ class AccentsAdapter(private val activity: Activity) :
 
             with(itemView) {
 
-                val accent = ContextCompat.getColor(activity, color)
-                val accentFullName = Theming.getAccentName(activity, mAccents[absoluteAdapterPosition].first)
+                val accentFullName = Theming.getAccentName(activity, absoluteAdapterPosition)
                 contentDescription = accentFullName
 
                 val cardView = this as MaterialCardView
-                cardView.setCardBackgroundColor(accent)
-                cardView.strokeColor = ColorUtils.setAlphaComponent(accent.toContrastColor(), 90)
+                cardView.setCardBackgroundColor(color)
+                cardView.strokeColor = ColorUtils.setAlphaComponent(color.toContrastColor(), 90)
 
-                cardView.strokeWidth = if (color == selectedAccent) {
+                cardView.strokeWidth = if (absoluteAdapterPosition == selectedAccent) {
                     resources.getDimensionPixelSize(R.dimen.accent_dim_stroke)
                 } else {
                     0
                 }
 
                 setOnClickListener {
-                    if (mAccents[absoluteAdapterPosition].first != selectedAccent) {
-                        notifyItemChanged(mAccents.indexOfFirst {
-                            it.first == selectedAccent
-                        })
-                        selectedAccent = mAccents[absoluteAdapterPosition].first
+                    if (absoluteAdapterPosition != selectedAccent) {
+                        notifyItemChanged(selectedAccent)
+                        selectedAccent = absoluteAdapterPosition
                         notifyItemChanged(absoluteAdapterPosition)
                     }
                 }
 
                 setOnLongClickListener {
-                    accentFullName.toString().toToast(activity)
+                    accentFullName.toToast(activity)
                     return@setOnLongClickListener true
                 }
             }

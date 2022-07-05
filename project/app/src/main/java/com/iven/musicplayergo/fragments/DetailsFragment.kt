@@ -692,7 +692,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
     private inner class SongsAdapter: RecyclerView.Adapter<SongsAdapter.SongsHolder>() {
 
         val defaultTextColor = Theming.resolveColorAttr(requireContext(), android.R.attr.textColorPrimary)
-        val accentTextColor = Theming.resolveThemeAccent(requireContext())
+        val accentTextColor = Theming.resolveThemeColor(requireContext())
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SongsHolder(
             LayoutInflater.from(parent.context).inflate(

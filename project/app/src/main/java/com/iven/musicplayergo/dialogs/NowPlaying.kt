@@ -171,7 +171,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                     Theming.updateIconTint(
                         this,
                         if (mph.isRepeat1X || mph.isLooping || mph.isPauseOnEnd) {
-                            Theming.resolveThemeAccent(requireContext())
+                            Theming.resolveThemeColor(requireContext())
                         } else {
                             ContextCompat.getColor(requireContext(), R.color.widgetsColor)
                         }
@@ -215,7 +215,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                 npVolumeSeek.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
                     val defaultValueColor = _npExtControlsBinding?.npVolumeValue?.currentTextColor
-                    val selectedColor = Theming.resolveThemeAccent(requireContext())
+                    val selectedColor = Theming.resolveThemeColor(requireContext())
 
                     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                         if (fromUser) {
@@ -253,7 +253,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                     object : SeekBar.OnSeekBarChangeListener {
 
                         val defaultPositionColor = npSeek.currentTextColor
-                        val selectedColor = Theming.resolveThemeAccent(requireContext())
+                        val selectedColor = Theming.resolveThemeColor(requireContext())
                         var userSelectedPosition = 0
                         var isUserSeeking = false
 
@@ -311,7 +311,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                     )
                     isRepeat1X or isLooping or isPauseOnEnd -> {
                         Theming.updateIconTint(
-                            _npCoverBinding?.npRepeat!!, Theming.resolveThemeAccent(requireContext())
+                            _npCoverBinding?.npRepeat!!, Theming.resolveThemeColor(requireContext())
                         )
                     }
                     else -> Theming.updateIconTint(
@@ -365,7 +365,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                 val isFavorite = favorites != null && favorites.contains(song.toSavedMusic(0, mediaPlayerHolder.launchedBy))
                 val favoritesButtonColor = if (isFavorite) {
                     npLove.setImageResource(R.drawable.ic_favorite)
-                    Theming.resolveThemeAccent(context)
+                    Theming.resolveThemeColor(context)
                 } else {
                     npLove.setImageResource(R.drawable.ic_favorite_empty)
                     Theming.resolveColorAttr(

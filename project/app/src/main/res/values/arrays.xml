@@ -14,6 +14,67 @@
         <item>@string/theme_pref_auto</item>
     </string-array>
 
+    <integer-array name="colors">
+        <item>@color/red</item>
+        <item>@color/pink</item>
+        <item>@color/purple</item>
+        <item>@color/deep_purple</item>
+        <item>@color/indigo</item>
+        <item>@color/blue</item>
+        <item>@color/light_blue</item>
+        <item>@color/cyan</item>
+        <item>@color/teal</item>
+        <item>@color/green</item>
+        <item>@color/light_green</item>
+        <item>@color/lime</item>
+        <item>@color/yellow</item>
+        <item>@color/amber</item>
+        <item>@color/orange</item>
+        <item>@color/deep_orange</item>
+        <item>@color/brown</item>
+        <item>@color/grey</item>
+        <item>@color/blue_grey</item>
+        <item>@color/red_200</item>
+        <item>@color/pink_200</item>
+        <item>@color/purple_200</item>
+        <item>@color/deep_purple_200</item>
+        <item>@color/indigo_200</item>
+        <item>@color/blue_200</item>
+        <item>@color/light_blue_200</item>
+        <item>@color/cyan_200</item>
+        <item>@color/teal_200</item>
+        <item>@color/green_200</item>
+        <item>@color/light_green_200</item>
+        <item>@color/lime_200</item>
+        <item>@color/amber_200</item>
+        <item>@color/orange_200</item>
+        <item>@color/deep_orange_200</item>
+        <item>@color/brown_200</item>
+        <item>@color/blue_grey_200</item>
+    </integer-array>
+
+    <string-array name="accent_names">
+        <item>@string/red</item>
+        <item>@string/pink</item>
+        <item>@string/purple</item>
+        <item>@string/deep_purple</item>
+        <item>@string/indigo</item>
+        <item>@string/blue</item>
+        <item>@string/light_blue</item>
+        <item>@string/blue</item>
+        <item>@string/teal</item>
+        <item>@string/green</item>
+        <item>@string/light_green</item>
+        <item>@string/lime</item>
+        <item>@string/yellow</item>
+        <item>@string/amber</item>
+        <item>@string/orange</item>
+        <item>@string/deep_orange</item>
+        <item>@string/brown</item>
+        <item>@string/grey</item>
+        <item>@string/blue_grey</item>
+    </string-array>
+
     <string-array name="onListEndedArray">
         <item>@string/on_list_ended_pref_continue_title</item>
         <item>@string/on_list_ended_pref_stop_title</item>

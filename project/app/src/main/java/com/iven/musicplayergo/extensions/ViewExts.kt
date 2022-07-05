@@ -102,7 +102,7 @@ fun MenuItem.setTitle(activity: Activity, title: String?) {
     SpannableString(title).apply {
         setSpan(RelativeSizeSpan(0.75f), 0, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         setSpan(
-            ForegroundColorSpan(Theming.resolveThemeAccent(activity)),
+            ForegroundColorSpan(Theming.resolveThemeColor(activity)),
             0,
             length,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE

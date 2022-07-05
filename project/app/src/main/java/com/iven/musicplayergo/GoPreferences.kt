@@ -120,7 +120,7 @@ class GoPreferences(context: Context) {
         set(value) = mPrefs.edit { putBoolean(prefsThemeBlack, value) }
 
     var accent
-        get() = mPrefs.getInt(prefsAccent, R.color.deep_purple)
+        get() = mPrefs.getInt(prefsAccent, 3)
         set(value) = mPrefs.edit { putInt(prefsAccent, value) }
 
     var activeTabsDef: List<String>

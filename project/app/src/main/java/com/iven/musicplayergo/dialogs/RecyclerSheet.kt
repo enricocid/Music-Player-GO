@@ -103,8 +103,11 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     modalRv.layoutManager = layoutManager
                     modalRv.adapter = accentsAdapter
 
-                    Theming.getAccentedTheme(resources)?.run {
-                        modalRv.post { layoutManager.scrollToPositionWithOffset(second, 0) }
+                    modalRv.post {
+                        layoutManager.scrollToPositionWithOffset(
+                            GoPreferences.getPrefsInstance().accent,
+                            0
+                        )
                     }
 
                     // set listeners for buttons
@@ -370,7 +373,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     text = itemSleepOption
                     contentDescription = itemSleepOption
                     setTextColor(if (mSelectedPosition == absoluteAdapterPosition) {
-                        Theming.resolveThemeAccent(requireActivity())
+                        Theming.resolveThemeColor(requireActivity())
                     } else {
                         mDefaultTextColor
                     })

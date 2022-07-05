@@ -125,7 +125,6 @@
     <string name="purple">Фиолетовый</string>
     <string name="deep_purple">Тёмно-фиолетовый</string>
     <string name="light_blue">Голубой</string>
-    <string name="cyan">Бирюзовый</string>
     <string name="teal">Зеленовато-голубой</string>
     <string name="green">Зелёный</string>
     <string name="light_green">Светло-зелёный</string>
@@ -135,18 +134,6 @@
     <string name="deep_orange">Тёмно-оранжевый</string>
     <string name="grey">Серый</string>
     <string name="blue_grey">Голубо-серый</string>
-    <string name="pink_200">Розовый 200</string>
-    <string name="purple_200">Фиолетовый 200</string>
-    <string name="indigo_200">Индиго 200</string>
-    <string name="blue_200">Синий 200</string>
-    <string name="light_blue_200">Голубой 200</string>
-    <string name="cyan_200">Бирюзовый 200</string>
-    <string name="teal_200">Зеленовато-голубой 200</string>
-    <string name="green_200">Зелёный 200</string>
-    <string name="lime_200">Лаймовый 200</string>
-    <string name="amber_200">Янтарный 200</string>
-    <string name="deep_orange_200">Тёмно-оранжевый 200</string>
-    <string name="blue_grey_200">Голубо-серый 200</string>
     <string name="locale_pref_title">Язык</string>
     <string name="locale_thai">Тайский</string>
     <string name="locale_spanish">Испанский</string>
@@ -155,7 +142,6 @@
     <string name="locale_chinese_s">Китайский (Упрощённый)</string>
     <string name="locale_basque">Баскский</string>
     <string name="locale_swedish">Шведский</string>
-    <string name="deep_purple_200">Тёмно-фиолетовый 200</string>
     <string name="locale_french">Французский</string>
     <string name="locale_russian">Русский</string>
     <string name="locale_german">Немецкий</string>
@@ -169,10 +155,6 @@
     <string name="locale_ukrainian">Украинский</string>
     <string name="red">Красный</string>
     <string name="blue">Синий</string>
-    <string name="light_green_200">Светло-зелёный 200</string>
-    <string name="red_200">Красный 200</string>
-    <string name="orange_200">Оранжевый 200</string>
-    <string name="brown_200">Коричневый 200</string>
     <string name="sleeptimer">Таймер сна</string>
     <string name="sleeptimer_stop">Остановить</string>
     <string name="sleeptimer_cancel_desc">Остановить таймер сна</string>
