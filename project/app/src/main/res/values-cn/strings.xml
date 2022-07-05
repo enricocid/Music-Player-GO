@@ -164,4 +164,5 @@
     <string name="theme_pref_black_title">黑色主题</string>
     <string name="ok">好</string>
     <string name="cancel">取消</string>
+    <string name="filters_clear">将清除筛选器。要继续吗？</string>
 </resources>
