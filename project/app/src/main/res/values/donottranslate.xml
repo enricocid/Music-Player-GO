@@ -57,7 +57,7 @@
     <string name="theme_pref_dark">theme_pref_dark</string>
     <string name="theme_pref_auto">theme_pref_auto</string>
     <string name="theme_pref_black">theme_pref_black</string>
-    <string name="accent_pref">accent_pref</string>
+    <string name="accent_pref">style_pref</string>
     <string name="covers_pref">covers_pref</string>
     <string name="active_tabs_def_pref">active_tabs_def_pref</string>
     <string name="active_tabs_pref">active_tabs_pref</string>

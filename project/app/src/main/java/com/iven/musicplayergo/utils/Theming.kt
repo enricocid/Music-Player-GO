@@ -108,7 +108,7 @@ object Theming {
     }
 
     @JvmStatic
-    val themes = arrayOf(
+    private val styles = arrayOf(
         R.style.BaseTheme_Red,
         R.style.BaseTheme_Pink,
         R.style.BaseTheme_Purple,
@@ -148,7 +148,7 @@ object Theming {
     )
 
     @JvmStatic
-    val themesBlack = arrayOf(
+    private val stylesBlack = arrayOf(
         R.style.BaseTheme_Black_Red,
         R.style.BaseTheme_Black_Pink,
         R.style.BaseTheme_Black_Purple,
@@ -190,12 +190,12 @@ object Theming {
     @JvmStatic
     fun resolveTheme(context: Context): Int {
         val position = GoPreferences.getPrefsInstance().accent
-        val styles = if (isThemeNight(context.resources) && GoPreferences.getPrefsInstance().isBlackTheme) {
-            themesBlack
+        val stylesRes = if (isThemeNight(context.resources) && GoPreferences.getPrefsInstance().isBlackTheme) {
+            stylesBlack
         } else {
-            themes
+            styles
         }
-        return styles[position]
+        return stylesRes[position]
     }
 
     @ColorInt
