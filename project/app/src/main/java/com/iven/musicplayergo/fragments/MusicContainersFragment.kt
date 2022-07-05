@@ -125,7 +125,7 @@ class MusicContainersFragment : Fragment(),
             with (stb.menu) {
 
                 mSortMenuItem = Lists.getSelectedSorting(mSorting, this).apply {
-                    setTitleColor(Theming.resolveThemeColor(requireContext()))
+                    setTitleColor(Theming.resolveThemeColor(resources))
                 }
 
                 with(findItem(R.id.action_search).actionView as SearchView) {
@@ -231,7 +231,7 @@ class MusicContainersFragment : Fragment(),
                     )
 
                     mSortMenuItem = Lists.getSelectedSorting(mSorting, menu).apply {
-                        setTitleColor(Theming.resolveThemeColor(requireContext()))
+                        setTitleColor(Theming.resolveThemeColor(resources))
                     }
 
                     saveSortingMethodToPrefs(mSorting)

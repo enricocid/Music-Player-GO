@@ -77,8 +77,8 @@ object Theming {
         resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
     @JvmStatic
-    fun getAccentName(context: Context, position: Int): String {
-        val accent = context.resources.getStringArray(R.array.accent_names)
+    fun getAccentName(resources: Resources, position: Int): String {
+        val accent = resources.getStringArray(R.array.accent_names)
         return try {
             when {
                 position <= 18 -> accent[position]
@@ -87,16 +87,16 @@ object Theming {
                         addAll(accent)
                     }
                     val result = when {
-                        position == context.resources.getIntArray(R.array.colors).size - 1 -> accent.last()
+                        position == resources.getIntArray(R.array.colors).size - 1 -> accent.last()
                         position >= 31 -> expandedList[position +1]
                         else -> expandedList[position]
                     }
-                    context.getString(R.string.accent_200, result)
+                    resources.getString(R.string.accent_200, result)
                 }
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            return context.getString(R.string.error_eq)
+            return resources.getString(R.string.error_eq)
         }
     }
 
@@ -200,9 +200,9 @@ object Theming {
 
     @ColorInt
     @JvmStatic
-    fun resolveThemeColor(context: Context): Int {
+    fun resolveThemeColor(resources: Resources): Int {
         val position = GoPreferences.getPrefsInstance().accent
-        val colors = context.resources.getIntArray(R.array.colors)
+        val colors = resources.getIntArray(R.array.colors)
         return colors[position]
     }
 
@@ -265,7 +265,7 @@ object Theming {
     @JvmStatic
     fun tintSleepTimerMenuItem(tb: MaterialToolbar, isEnabled: Boolean) {
         tb.menu.findItem(R.id.sleeptimer).setIconTint(if (isEnabled) {
-            resolveThemeColor(tb.context)
+            resolveThemeColor(tb.resources)
         } else {
             ContextCompat.getColor(tb.context, R.color.widgetsColor)
         })

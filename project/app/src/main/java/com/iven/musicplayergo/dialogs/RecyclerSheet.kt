@@ -373,7 +373,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     text = itemSleepOption
                     contentDescription = itemSleepOption
                     setTextColor(if (mSelectedPosition == absoluteAdapterPosition) {
-                        Theming.resolveThemeColor(requireActivity())
+                        Theming.resolveThemeColor(resources)
                     } else {
                         mDefaultTextColor
                     })

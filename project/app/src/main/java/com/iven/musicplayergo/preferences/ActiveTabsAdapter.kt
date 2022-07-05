@@ -107,7 +107,7 @@ class ActiveTabsAdapter(private val ctx: Context) :
     ) {
         icon.isSelected = selected
         val iconColor = if (selected) {
-            Theming.resolveThemeColor(ctx)
+            Theming.resolveThemeColor(icon.resources)
         } else {
             mDisabledColor
         }

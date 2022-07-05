@@ -5,6 +5,7 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.InsetDrawable
@@ -98,11 +99,11 @@ fun MenuItem.setIconTint(color: Int) {
 }
 
 // Extension to set span to menu title
-fun MenuItem.setTitle(activity: Activity, title: String?) {
+fun MenuItem.setTitle(resources: Resources, title: String?) {
     SpannableString(title).apply {
         setSpan(RelativeSizeSpan(0.75f), 0, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         setSpan(
-            ForegroundColorSpan(Theming.resolveThemeColor(activity)),
+            ForegroundColorSpan(Theming.resolveThemeColor(resources)),
             0,
             length,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE

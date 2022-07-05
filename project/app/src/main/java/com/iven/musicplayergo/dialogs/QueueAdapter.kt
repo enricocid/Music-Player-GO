@@ -68,7 +68,7 @@ class QueueAdapter(
                     context.getString(R.string.artist_and_album, song.artist, song.album)
 
                 title.setTextColor(if (mediaPlayerHolder.isQueue != null && mediaPlayerHolder.isQueueStarted && queueSongs.indexOf(mSelectedSong) == absoluteAdapterPosition) {
-                    Theming.resolveThemeColor(ctx)
+                    Theming.resolveThemeColor(resources)
                 } else {
                     mDefaultTextColor
                 })

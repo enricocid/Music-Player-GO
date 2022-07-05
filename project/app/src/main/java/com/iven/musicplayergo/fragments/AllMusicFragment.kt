@@ -106,7 +106,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
             shuffleFab.text = mAllMusic?.size.toString()
             val fabColor = ColorUtils.blendARGB(
                 Theming.resolveColorAttr(requireContext(), R.attr.toolbar_bg),
-                Theming.resolveThemeColor(requireContext()),
+                Theming.resolveThemeColor(resources),
                 0.10f
             )
             shuffleFab.backgroundTintList = ColorStateList.valueOf(fabColor)
@@ -128,7 +128,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                 with(stb.menu) {
 
                     mSortMenuItem = Lists.getSelectedSortingForAllMusic(mSorting, this).apply {
-                        setTitleColor(Theming.resolveThemeColor(requireContext()))
+                        setTitleColor(Theming.resolveThemeColor(resources))
                     }
 
                     with (findItem(R.id.action_search).actionView as SearchView) {
@@ -182,7 +182,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                 )
 
                 mSortMenuItem = Lists.getSelectedSortingForAllMusic(mSorting, menu).apply {
-                    setTitleColor(Theming.resolveThemeColor(requireContext()))
+                    setTitleColor(Theming.resolveThemeColor(resources))
                 }
 
                 GoPreferences.getPrefsInstance().allMusicSorting = mSorting

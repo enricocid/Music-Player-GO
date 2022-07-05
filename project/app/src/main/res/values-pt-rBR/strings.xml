@@ -158,6 +158,7 @@
     <string name="grey">Cinza</string>
     <string name="blue_grey">Azul acinzentado</string>
     <string name="red">Vermelho</string>
+    <string name="cyan">Ciano</string>
     <string name="indigo">Índigo</string>
     <string name="locale_bulgarian">Búlgaro</string>
     <string name="theme_pref_black_title">Preto puro</string>

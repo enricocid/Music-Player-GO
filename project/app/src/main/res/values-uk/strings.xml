@@ -148,6 +148,7 @@
     <string name="locale_chinese_t">Китайська (традиційна)</string>
     <string name="locale_french">Французька</string>
     <string name="blue">Синій</string>
+    <string name="cyan">Бірюзовий</string>
     <string name="teal">Зелений водний</string>
     <string name="green">Зелений</string>
     <string name="light_green">Світло-зелений</string>
@@ -161,7 +162,4 @@
     <string name="orange">Жовтогарячий</string>
     <string name="deep_orange">Насичений жовтогарячий</string>
     <string name="brown">Коричневий</string>
-    <string name="filters_clear">Фільтри будуть очищені. Продовжити\?</string>
-    <string name="confirm_ask_pref_title">Повідомлення підтвердження</string>
-    <string name="confirm_ask_pref_sum">Запитувати підтвердження, перш ніж щось робити</string>
 </resources>

@@ -372,7 +372,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun initTabLayout() {
 
-        val accent = Theming.resolveThemeColor(this)
+        val accent = Theming.resolveThemeColor(resources)
         val alphaAccentColor = ColorUtils.setAlphaComponent(accent, 200)
 
         with(mPlayerControlsPanelBinding.tabLayout) {
@@ -403,7 +403,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             } else {
                 0
             })?.icon?.setTint(
-                Theming.resolveThemeColor(this@MainActivity)
+                Theming.resolveThemeColor(resources)
             )
         }
 
@@ -643,7 +643,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             )
         } else {
             mPlayerControlsPanelBinding.favoritesButton.setImageResource(R.drawable.ic_favorite)
-            Theming.resolveThemeColor(this)
+            Theming.resolveThemeColor(resources)
         }
         Theming.updateIconTint(
             mPlayerControlsPanelBinding.favoritesButton,
@@ -1161,7 +1161,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             Theming.updateIconTint(
                 mPlayerControlsPanelBinding.queueButton,
                 when {
-                    started -> Theming.resolveThemeColor(this@MainActivity)
+                    started -> Theming.resolveThemeColor(resources)
                     mMediaPlayerHolder.queueSongs.isEmpty() -> {
                         mQueueDialog?.dismissAllowingStateLoss()
                         Theming.resolveColorAttr(

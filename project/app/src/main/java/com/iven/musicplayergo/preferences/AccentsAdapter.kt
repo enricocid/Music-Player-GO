@@ -40,7 +40,7 @@ class AccentsAdapter(private val activity: Activity) :
 
             with(itemView) {
 
-                val accentFullName = Theming.getAccentName(activity, absoluteAdapterPosition)
+                val accentFullName = Theming.getAccentName(resources, absoluteAdapterPosition)
                 contentDescription = accentFullName
 
                 val cardView = this as MaterialCardView

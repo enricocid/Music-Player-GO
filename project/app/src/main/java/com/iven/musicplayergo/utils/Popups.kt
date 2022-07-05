@@ -30,7 +30,7 @@ object Popups {
 
                 inflate(R.menu.popup_songs)
 
-                menu.findItem(R.id.song_title).setTitle(activity, song?.title)
+                menu.findItem(R.id.song_title).setTitle(activity.resources, song?.title)
                 menu.enablePopupIcons(activity)
                 gravity = Gravity.END
 
@@ -67,7 +67,7 @@ object Popups {
 
             if (GoPreferences.getPrefsInstance().playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY) {
                 menu.findItem(getSelectedPlaybackItem(GoPreferences.getPrefsInstance().latestPlaybackSpeed)).setTitleColor(
-                    Theming.resolveThemeColor(activity)
+                    Theming.resolveThemeColor(activity.resources)
                 )
             }
 
@@ -87,7 +87,7 @@ object Popups {
                 if (GoPreferences.getPrefsInstance().playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY) {
                     menu.findItem(getSelectedPlaybackItem(playbackSpeed)).setTitleColor(
                         Theming.resolveThemeColor(
-                            activity
+                            activity.resources
                         )
                     )
                 }

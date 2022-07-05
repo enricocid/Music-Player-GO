@@ -62,7 +62,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         findPreference<Preference>(getString(R.string.theme_pref_black))?.isVisible = Theming.isThemeNight(resources)
 
         findPreference<Preference>(getString(R.string.accent_pref))?.run {
-            summary = Theming.getAccentName(requireContext(), GoPreferences.getPrefsInstance().accent)
+            summary = Theming.getAccentName(resources, GoPreferences.getPrefsInstance().accent)
             onPreferenceClickListener = this@PreferencesFragment
         }
 

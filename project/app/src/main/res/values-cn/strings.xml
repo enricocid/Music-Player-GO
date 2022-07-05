@@ -150,6 +150,7 @@
     <string name="blue">蓝</string>
     <string name="light_blue">浅蓝</string>
     <string name="pink">粉</string>
+    <string name="cyan">蓝绿</string>
     <string name="yellow">黄</string>
     <string name="orange">橙色</string>
     <string name="deep_orange">深桔黄</string>
@@ -163,5 +164,4 @@
     <string name="theme_pref_black_title">黑色主题</string>
     <string name="ok">好</string>
     <string name="cancel">取消</string>
-    <string name="filters_clear">将清除筛选器。要继续吗？</string>
 </resources>

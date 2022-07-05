@@ -138,7 +138,7 @@ class EqFragment : Fragment() {
             .setAllCorners(CornerFamily.ROUNDED, resources.getDimension(R.dimen.md_corner_radius))
             .build()
         val roundedTextBackground = MaterialShapeDrawable(shapeAppearanceModel).apply {
-            strokeColor = ColorStateList.valueOf(Theming.resolveThemeColor(requireContext()))
+            strokeColor = ColorStateList.valueOf(Theming.resolveThemeColor(resources))
             strokeWidth = 0.50F
             fillColor =
                 ColorStateList.valueOf(
