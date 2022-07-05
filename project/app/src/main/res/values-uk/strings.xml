@@ -162,4 +162,7 @@
     <string name="orange">Жовтогарячий</string>
     <string name="deep_orange">Насичений жовтогарячий</string>
     <string name="brown">Коричневий</string>
+    <string name="filters_clear">Фільтри будуть очищені. Продовжити\?</string>
+    <string name="confirm_ask_pref_title">Повідомлення підтвердження</string>
+    <string name="confirm_ask_pref_sum">Запитувати підтвердження, перш ніж щось робити</string>
 </resources>
