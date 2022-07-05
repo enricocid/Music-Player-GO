@@ -98,7 +98,6 @@
     <string name="filter_pref_title">Filtri</string>
     <string name="filter_popup_title">Nascondi</string>
     <string name="filters_clear">I filtri saranno cancellati. Continuare?</string>
-    <string name="action_mode_play">Riproduci da selezione</string>
     <string name="playback_pref_title">Velocità riproduzione selezionata</string>
     <string name="playback_pref_summary_off">Solo una canzone</string>
     <string name="playback_pref_summary_on">Mantieni</string>

@@ -41,7 +41,6 @@
     <string name="favorite_add">Favorite</string>
     <string name="filter_popup_title">Hide</string>
     <string name="filters_clear">Filters will be cleared. Continue?</string>
-    <string name="action_mode_play">Play from selection</string>
     <!-- Queue -->
     <string name="queue">Queue</string>
     <string name="queue_song_add">%1s enqueued!</string>
