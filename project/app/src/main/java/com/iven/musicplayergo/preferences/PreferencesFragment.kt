@@ -11,7 +11,6 @@ import androidx.preference.PreferenceFragmentCompat
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.dialogs.Dialogs
 import com.iven.musicplayergo.dialogs.RecyclerSheet
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
