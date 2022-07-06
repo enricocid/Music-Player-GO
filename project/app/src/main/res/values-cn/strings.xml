@@ -165,4 +165,6 @@
     <string name="ok">好</string>
     <string name="cancel">取消</string>
     <string name="filters_clear">将清除筛选器。要继续吗？</string>
+    <string name="save_state_pref_title">播放状态</string>
+    <string name="save_state_pref_sum">保存和恢复播放状态。 注意：禁用该选项将导致状态被擦除。</string>
 </resources>
