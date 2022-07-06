@@ -18,7 +18,7 @@ object Dialogs {
     @JvmStatic
     fun showClearFiltersDialog(activity: Activity) {
         val uiControlInterface = (activity as UIControlInterface)
-        if (GoPreferences.getPrefsInstance().askForRemoval) {
+        if (GoPreferences.getPrefsInstance().isAskForRemoval) {
             MaterialAlertDialogBuilder(activity)
                 .setTitle(R.string.filter_pref_title)
                 .setMessage(R.string.filters_clear)
@@ -44,7 +44,7 @@ object Dialogs {
             }
         }
 
-        if (GoPreferences.getPrefsInstance().askForRemoval) {
+        if (GoPreferences.getPrefsInstance().isAskForRemoval) {
             MaterialAlertDialogBuilder(context)
                 .setTitle(R.string.queue)
                 .setMessage(R.string.queue_songs_clear)
@@ -61,7 +61,7 @@ object Dialogs {
     @JvmStatic
     fun showClearFavoritesDialog(activity: Activity) {
         val uiControlInterface = activity as UIControlInterface
-        if (GoPreferences.getPrefsInstance().askForRemoval) {
+        if (GoPreferences.getPrefsInstance().isAskForRemoval) {
             MaterialAlertDialogBuilder(activity)
                 .setTitle(R.string.favorites)
                 .setMessage(R.string.favorites_clear)
@@ -77,7 +77,7 @@ object Dialogs {
 
     @JvmStatic
     fun stopPlaybackDialog(context: Context, mediaPlayerHolder: MediaPlayerHolder) {
-        if (GoPreferences.getPrefsInstance().askForRemoval) {
+        if (GoPreferences.getPrefsInstance().isAskForRemoval) {
             MaterialAlertDialogBuilder(context)
                 .setCancelable(false)
                 .setTitle(R.string.app_name)

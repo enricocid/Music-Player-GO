@@ -177,6 +177,10 @@
     <!-- Preferences - Confirmation dialogs -->
     <string name="confirm_ask_pref_title">Confirmation messages</string>
     <string name="confirm_ask_pref_sum">Ask for confirmation before doing anything</string>
+    <!-- Preferences - Save playback state -->
+    <string name="save_state_pref_title">Playback state</string>
+    <string name="save_state_pref_sum">Save and restore playback state. Note: disabling the option will result in state to be wiped.</string>
+
     <!-- Preferences - Accents names -->
     <string name="red">Red</string>
     <string name="pink">Pink</string>

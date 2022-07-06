@@ -87,7 +87,7 @@ class QueueAdapter(
 
     fun performQueueSongDeletion(adapterPosition: Int): Boolean {
         val song = queueSongs[adapterPosition]
-        if (GoPreferences.getPrefsInstance().askForRemoval) {
+        if (GoPreferences.getPrefsInstance().isAskForRemoval) {
             notifyItemChanged(adapterPosition)
             return if (song != mSelectedSong || mediaPlayerHolder.isQueue == null) {
                 MaterialAlertDialogBuilder(ctx)

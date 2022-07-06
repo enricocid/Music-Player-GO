@@ -12,6 +12,7 @@ import com.iven.musicplayergo.utils.MusicUtils
 import com.iven.musicplayergo.utils.Versioning
 import kotlinx.coroutines.*
 import java.io.File
+import kotlin.random.Random
 
 
 class MusicViewModel(application: Application) : AndroidViewModel(application) {
@@ -52,7 +53,12 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
     //keys: artist || value: songs contained in the folder
     var deviceMusicByFolder: Map<String, List<Music>>? = null
 
-    val randomMusic get() = deviceMusicFiltered?.random()
+    fun getRandomMusic() : Music? {
+        deviceMusicFiltered?.shuffled()?.run {
+           return get(Random.nextInt(size))
+        }
+        return deviceMusicFiltered?.random()
+    }
 
     /**
      * Cancel all coroutines when the ViewModel is cleared

@@ -89,4 +89,5 @@
     <string name="pause_on_end_pref">pause_on_end_pref</string>
     <string name="locale_pref">locale_pref</string>
     <string name="ask_confirmation_pref">ask_confirmation_pref</string>
+    <string name="save_state_pref">save_state_pref</string>
 </resources>

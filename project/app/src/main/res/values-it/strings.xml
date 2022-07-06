@@ -146,6 +146,8 @@
     <string name="locale_vietnamese">Vietnamita</string>
     <string name="confirm_ask_pref_title">Messaggi di conferma</string>
     <string name="confirm_ask_pref_sum">Chiedi conferma prima di fare qualcosa</string>
+    <string name="save_state_pref_title">Stato riproduzione</string>
+    <string name="save_state_pref_sum">Salva e ripristina stato riproduzione. Nota: disattivando l\'opzione l\'ultimo stato sarà cancellato.</string>
     <string name="red">Rosso</string>
     <string name="pink">Rosa</string>
     <string name="purple">Viola</string>

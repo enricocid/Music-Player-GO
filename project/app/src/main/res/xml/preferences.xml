@@ -85,6 +85,12 @@
         app:title="@string/category_general">
 
         <SwitchPreferenceCompat
+            android:summary="@string/save_state_pref_sum"
+            app:defaultValue="true"
+            app:key="@string/save_state_pref"
+            app:title="@string/save_state_pref_title" />
+
+        <SwitchPreferenceCompat
             app:defaultValue="false"
             app:key="@string/covers_pref"
             app:title="@string/covers_pref_title" />

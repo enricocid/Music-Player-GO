@@ -125,7 +125,7 @@ class FavoritesAdapter(private val activity: Activity) :
         }
 
         mFavorites?.get(position)?.let { song ->
-            if (GoPreferences.getPrefsInstance().askForRemoval) {
+            if (GoPreferences.getPrefsInstance().isAskForRemoval) {
                 MaterialAlertDialogBuilder(activity)
                     .setTitle(R.string.favorites)
                     .setMessage(activity.getString(

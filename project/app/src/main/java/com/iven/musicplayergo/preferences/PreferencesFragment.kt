@@ -11,6 +11,7 @@ import androidx.preference.PreferenceFragmentCompat
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.dialogs.Dialogs
 import com.iven.musicplayergo.dialogs.RecyclerSheet
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -125,6 +126,15 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             }
             getString(R.string.notif_actions_pref) -> mMediaControlInterface.onGetMediaPlayerHolder()?.onHandleNotificationUpdate(isAdditionalActionsChanged = true)
             getString(R.string.song_visual_pref) -> mMediaControlInterface.onUpdatePlayingAlbumSongs(null)
+            getString(R.string.save_state_pref) -> GoPreferences.getPrefsInstance().run {
+                if (!isStateSavedRestored) {
+                    latestPlayedSong = null
+                    isQueue = null
+                    queue = null
+                    latestVolume = 100
+                    mMediaControlInterface.onGetMediaPlayerHolder()?.setPreciseVolume(100)
+                }
+            }
         }
     }
 

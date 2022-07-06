@@ -104,23 +104,24 @@ class PlayerService : Service() {
 
         if (::mediaPlayerHolder.isInitialized && mediaPlayerHolder.isCurrentSong) {
 
-            // Saves last played song and its position
-            with(mediaPlayerHolder) {
-                GoPreferences.getPrefsInstance().latestPlayedSong = if (isQueue != null && isQueueStarted) {
-                    GoPreferences.getPrefsInstance().isQueue = isQueue
-                    currentSong
-                } else {
-                    if (GoPreferences.getPrefsInstance().isQueue != null) {
-                        GoPreferences.getPrefsInstance().isQueue = null
+            // Saves last played song and its position if user is ok :)
+            if (GoPreferences.getPrefsInstance().isStateSavedRestored) {
+                with(mediaPlayerHolder) {
+                    GoPreferences.getPrefsInstance().latestPlayedSong = if (isQueue != null && isQueueStarted) {
+                        GoPreferences.getPrefsInstance().isQueue = isQueue
+                        currentSong
+                    } else {
+                        if (GoPreferences.getPrefsInstance().isQueue != null) {
+                            GoPreferences.getPrefsInstance().isQueue = null
+                        }
+                        currentSong?.toSavedMusic(playerPosition, launchedBy)
                     }
-                    currentSong?.toSavedMusic(playerPosition, launchedBy)
+                    if (queueSongs.isNotEmpty()) {
+                        GoPreferences.getPrefsInstance().queue = queueSongs
+                    }
                 }
-                if (queueSongs.isNotEmpty()) {
-                    GoPreferences.getPrefsInstance().queue = queueSongs
-                }
+                GoPreferences.getPrefsInstance().latestVolume = mediaPlayerHolder.currentVolumeInPercent
             }
-
-            GoPreferences.getPrefsInstance().latestVolume = mediaPlayerHolder.currentVolumeInPercent
 
             if (::mMediaSessionCompat.isInitialized && mMediaSessionCompat.isActive) {
                 with(mMediaSessionCompat) {

@@ -660,7 +660,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     onRestartSeekBarCallback()
                     updatePlayingInfo(restore = true)
                 } else {
-                    isSongFromPrefs = mGoPreference.latestPlayedSong != null
+                    isSongFromPrefs = mGoPreference.latestPlayedSong != null && isSaveRestoreState
 
                     var isQueueRestored = mGoPreference.isQueue
                     if (!mGoPreference.queue.isNullOrEmpty()) {
@@ -675,7 +675,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                             isQueueRestored = null
                             isQueue = null
                         } else {
-                            if (isQueueRestored != null) {
+                            if (isQueueRestored != null && isSaveRestoreState) {
                                 isQueue = isQueueRestored
                                 isQueueStarted = true
                                 mediaPlayerInterface.onQueueStartedOrEnded(started = true)
@@ -683,7 +683,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                         }
                         songIsAvailable.second
                     } else {
-                        mMusicViewModel.randomMusic
+                        mMusicViewModel.getRandomMusic()
                     }
 
                     song?.let { restoredSong ->
@@ -770,7 +770,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     private fun saveRandomSongToPrefs() : Music? {
-        val randomMusic = mMusicViewModel.randomMusic
+        val randomMusic = mMusicViewModel.getRandomMusic()
         mGoPreference.latestPlayedSong = randomMusic
         return randomMusic
     }
@@ -864,7 +864,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     override fun onSongSelected(song: Music?, songs: List<Music>?, songLaunchedBy: String) {
         if (isMediaPlayerHolder) {
             with(mMediaPlayerHolder) {
-                if (isSongFromPrefs) {
+                if (isSongFromPrefs && isSaveRestoreState) {
                     isSongFromPrefs = false
                 }
                 if (!isPlay) {
@@ -1068,7 +1068,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         if (isMediaPlayerHolder) {
             // be sure to update queue, favorites and the controls panel
-            MusicUtils.updateMediaPlayerHolderLists(mMediaPlayerHolder, this, mMusicViewModel.randomMusic)?.let { song ->
+            MusicUtils.updateMediaPlayerHolderLists(mMediaPlayerHolder, this, mMusicViewModel.getRandomMusic())?.let { song ->
                 val songs = MusicUtils.getAlbumSongs(
                     song.artist,
                     song.album,
@@ -1181,7 +1181,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
 
         override fun onBackupSong() {
-            if (checkIsPlayer(showError = false) && !mMediaPlayerHolder.isPlaying) {
+            if (checkIsPlayer(showError = false) && !mMediaPlayerHolder.isPlaying && GoPreferences.getPrefsInstance().isStateSavedRestored) {
                 mGoPreference.latestPlayedSong = mMediaPlayerHolder.currentSong?.toSavedMusic(mMediaPlayerHolder.playerPosition, mMediaPlayerHolder.launchedBy)
             }
         }
