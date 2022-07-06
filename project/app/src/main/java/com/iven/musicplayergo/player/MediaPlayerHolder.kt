@@ -166,6 +166,7 @@ class MediaPlayerHolder:
     var isRepeat1X = false
     var isLooping = false
     var isPauseOnEnd = false
+    private var hasCompletedPlayback = false
 
     // isQueue saves the current song when queue starts
     var isQueue: Music? = null
@@ -353,7 +354,10 @@ class MediaPlayerHolder:
     override fun onCompletion(mediaPlayer: MediaPlayer) {
 
         when {
-            isPauseOnEnd -> pauseMediaPlayer()
+            isPauseOnEnd -> {
+                hasCompletedPlayback = true
+                pauseMediaPlayer()
+            }
             isRepeat1X or isLooping -> if (isMediaPlayer) {
                 repeatSong(0)
             }
@@ -471,7 +475,11 @@ class MediaPlayerHolder:
             if (sFocusEnabled) {
                 tryToGetAudioFocus()
             }
-            startOrChangePlaybackSpeed()
+            if (isPauseOnEnd && hasCompletedPlayback) {
+                skip(isNext = true)
+            } else {
+                startOrChangePlaybackSpeed()
+            }
 
             state = if (isSongFromPrefs) {
                 isSongFromPrefs = false
@@ -685,11 +693,9 @@ class MediaPlayerHolder:
             isLooping = false
         }
 
-        if (isSongFromPrefs) {
-            isPauseOnEnd = GoPreferences.getPrefsInstance().isPauseOnEnd
-            if (GoPreferences.getPrefsInstance().isPreciseVolumeEnabled) {
-                setPreciseVolume(currentVolumeInPercent)
-            }
+        isPauseOnEnd = GoPreferences.getPrefsInstance().isPauseOnEnd
+        if (GoPreferences.getPrefsInstance().isPreciseVolumeEnabled) {
+            setPreciseVolume(currentVolumeInPercent)
         }
 
         if (isQueue != null && ::mediaPlayerInterface.isInitialized) {
@@ -715,6 +721,7 @@ class MediaPlayerHolder:
                 tryToGetAudioFocus()
             }
             play()
+            hasCompletedPlayback = false
         }
 
         mPlayerService.releaseWakeLock()
@@ -1091,17 +1098,13 @@ class MediaPlayerHolder:
 
             if (action == KeyEvent.ACTION_DOWN) {
                 when (event.keyCode) {
-                    KeyEvent.KEYCODE_MEDIA_STOP, KeyEvent.KEYCODE_MEDIA_PAUSE -> {
-                        if (isPlaying) {
-                            pauseMediaPlayer()
-                            handled = true
-                        }
+                    KeyEvent.KEYCODE_MEDIA_STOP, KeyEvent.KEYCODE_MEDIA_PAUSE -> if (isPlaying) {
+                        pauseMediaPlayer()
+                        handled = true
                     }
-                    KeyEvent.KEYCODE_MEDIA_PLAY -> {
-                        if (!isPlaying) {
-                            resumeMediaPlayer()
-                            handled = true
-                        }
+                    KeyEvent.KEYCODE_MEDIA_PLAY -> if (!isPlaying) {
+                        resumeMediaPlayer()
+                        handled = true
                     }
                     KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> {
                         resumeOrPause()
@@ -1113,15 +1116,13 @@ class MediaPlayerHolder:
                             handled = true
                         }
                     }
-                    KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {
-                        if (isPlaying) {
-                            // Because this comes from an AI, we may want to
-                            // not have the immediate reset because the user
-                            // specifically requested the previous song
-                            // for example by saying "previous song"
-                            skip(false)
-                            handled = true
-                        }
+                    KeyEvent.KEYCODE_MEDIA_PREVIOUS -> if (isPlaying) {
+                        // Because this comes from an AI, we may want to
+                        // not have the immediate reset because the user
+                        // specifically requested the previous song
+                        // for example by saying "previous song"
+                        skip(false)
+                        handled = true
                     }
                 }
             }

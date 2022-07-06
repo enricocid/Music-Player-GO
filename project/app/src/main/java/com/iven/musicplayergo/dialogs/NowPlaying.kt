@@ -301,23 +301,13 @@ class NowPlaying: BottomSheetDialogFragment() {
         if (::mMediaControlInterface.isInitialized) {
             mMediaControlInterface.onGetMediaPlayerHolder()?.run {
                 val resolvedIconsColor = ContextCompat.getColor(requireContext(), R.color.widgetsColor)
-                _npCoverBinding?.npRepeat?.setImageResource(
-                    Theming.getRepeatIcon(this)
-                )
-                when {
-                    onPlaybackCompletion -> Theming.updateIconTint(
-                        _npCoverBinding?.npRepeat!!,
-                        resolvedIconsColor
-                    )
-                    isRepeat1X or isLooping or isPauseOnEnd -> {
-                        Theming.updateIconTint(
-                            _npCoverBinding?.npRepeat!!, Theming.resolveThemeColor(resources)
-                        )
+                _npCoverBinding?.npRepeat?.let { rpBtn ->
+                    rpBtn.setImageResource(Theming.getRepeatIcon(this))
+                    when {
+                        onPlaybackCompletion -> Theming.updateIconTint(rpBtn, resolvedIconsColor)
+                        isRepeat1X or isLooping or isPauseOnEnd -> Theming.updateIconTint(rpBtn, Theming.resolveThemeColor(resources))
+                        else -> Theming.updateIconTint(rpBtn, resolvedIconsColor)
                     }
-                    else -> Theming.updateIconTint(
-                        _npCoverBinding?.npRepeat!!,
-                        resolvedIconsColor
-                    )
                 }
             }
         }

@@ -267,4 +267,3 @@ class GoPreferences(context: Context) {
         }
     }
 }
-
