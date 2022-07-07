@@ -162,4 +162,9 @@
     <string name="sleeptimer_stop">Zastavit</string>
     <string name="locale_bulgarian">Bulharština</string>
     <string name="theme_pref_black_title">Plně černá</string>
+    <string name="save_state_pref_title">Stav přehrávání</string>
+    <string name="filters_clear">Filtry budou vymazány. Pokračovat\?</string>
+    <string name="save_state_pref_sum">Uložit a obnoviz stav přehrávání. Pozor: zakázání této možnosti bude mít za následek vymazání stavu.</string>
+    <string name="confirm_ask_pref_title">Potvrzovací zprávy</string>
+    <string name="confirm_ask_pref_sum">Zeptat se na potvrzení před vykonáním akce</string>
 </resources>
