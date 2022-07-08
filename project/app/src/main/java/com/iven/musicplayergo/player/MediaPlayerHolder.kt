@@ -359,7 +359,7 @@ class MediaPlayerHolder:
                 hasCompletedPlayback = true
                 pauseMediaPlayer()
             }
-            isRepeat1X or isLooping -> if (isMediaPlayer) {
+            (isRepeat1X or isLooping) && !isPauseOnEnd -> if (isMediaPlayer) {
                 repeatSong(0)
             }
             isQueue != null && !canRestoreQueue -> manageQueue(isNext = true)
@@ -880,16 +880,8 @@ class MediaPlayerHolder:
             }
             isLooping -> {
                 isLooping = false
-                isPauseOnEnd = true
-                GoPreferences.getPrefsInstance().isPauseOnEnd = true
                 toastMessage = R.string.repeat_disabled
                 toastMessage.toToast(mPlayerService)
-                toastMessage = R.string.pause_on_end
-            }
-            isPauseOnEnd -> {
-                isPauseOnEnd = false
-                GoPreferences.getPrefsInstance().isPauseOnEnd = false
-                toastMessage = R.string.pause_on_end_disabled
             }
             else -> isRepeat1X = true
         }

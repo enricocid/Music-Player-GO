@@ -78,5 +78,13 @@
             android:contentDescription="@string/content_repeat"
             android:padding="8dp"
             app:srcCompat="@drawable/ic_repeat_one" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/np_pause_on_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/pause_on_end_desc"
+            android:thumb="@drawable/switch_np_thumb" />
     </LinearLayout>
 </LinearLayout>

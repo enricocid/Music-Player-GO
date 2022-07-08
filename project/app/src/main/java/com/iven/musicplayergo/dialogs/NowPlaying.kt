@@ -15,7 +15,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.NowPlayingBinding
 import com.iven.musicplayergo.databinding.NowPlayingControlsBinding
 import com.iven.musicplayergo.databinding.NowPlayingCoverBinding
-import com.iven.musicplayergo.databinding.NowPlayingExtendedControlsBinding
+import com.iven.musicplayergo.databinding.NowPlayingVolControlBinding
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
@@ -32,7 +32,7 @@ class NowPlaying: BottomSheetDialogFragment() {
     private var _nowPlayingBinding: NowPlayingBinding? = null
     private var _npCoverBinding: NowPlayingCoverBinding? = null
     private var _npControlsBinding: NowPlayingControlsBinding? = null
-    private var _npExtControlsBinding: NowPlayingExtendedControlsBinding? = null
+    private var _npExtControlsBinding: NowPlayingVolControlBinding? = null
 
     var onNowPlayingCancelled: (() -> Unit)? = null
 
@@ -57,8 +57,7 @@ class NowPlaying: BottomSheetDialogFragment() {
         _nowPlayingBinding = NowPlayingBinding.inflate(inflater, container, false).apply {
             _npCoverBinding = NowPlayingCoverBinding.bind(root)
             _npControlsBinding = NowPlayingControlsBinding.bind(root)
-            _npExtControlsBinding =
-                NowPlayingExtendedControlsBinding.bind(root)
+            _npExtControlsBinding = NowPlayingVolControlBinding.bind(root)
         }
         return _nowPlayingBinding?.root
     }
@@ -76,7 +75,7 @@ class NowPlaying: BottomSheetDialogFragment() {
             val ratio = if (Theming.isDeviceLand(resources)) {
                 0.30f
             } else {
-                0.65f
+                0.75f
             }
             val dim = (width * ratio).toInt()
             _npCoverBinding?.npCover?.layoutParams = LinearLayout.LayoutParams(dim, dim)
@@ -170,7 +169,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                     )
                     Theming.updateIconTint(
                         this,
-                        if (mph.isRepeat1X || mph.isLooping || mph.isPauseOnEnd) {
+                        if (mph.isRepeat1X || mph.isLooping) {
                             Theming.resolveThemeColor(resources)
                         } else {
                             ContextCompat.getColor(requireContext(), R.color.widgetsColor)
@@ -178,6 +177,22 @@ class NowPlaying: BottomSheetDialogFragment() {
                     )
                     setOnClickListener { setRepeat() }
                     setupNPCoverButtonsToasts(npSaveTime, npLove, npEqualizer, this)
+                }
+
+                with (npPauseOnEnd) {
+                    isChecked = GoPreferences.getPrefsInstance().isPauseOnEnd
+                    setOnCheckedChangeListener { _, isChecked ->
+                        mMediaControlInterface.onGetMediaPlayerHolder()?.isPauseOnEnd = !isChecked
+                        getString(if (isChecked) {
+                            R.string.pause_on_end_disabled
+                        } else {
+                            R.string.pause_on_end
+                        }).toToast(requireContext())
+                    }
+                    setOnLongClickListener { switch ->
+                        switch.contentDescription.toString().toToast(requireContext())
+                        return@setOnLongClickListener true
+                    }
                 }
             }
         }

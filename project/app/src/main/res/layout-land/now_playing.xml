@@ -116,7 +116,7 @@
 
         <include layout="@layout/now_playing_controls" />
 
-        <include layout="@layout/now_playing_extended_controls" />
+        <include layout="@layout/now_playing_vol_control" />
 
     </LinearLayout>
 </LinearLayout>

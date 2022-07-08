@@ -54,6 +54,7 @@
     <string name="repeat_enabled">Ripeti 1x on.</string>
     <string name="repeat_loop_enabled">Ripetizione ∞ on.</string>
     <string name="repeat_disabled">Ripetizione ∞ off.</string>
+    <string name="pause_on_end_desc">Scegli se continuare la riproduzione o mettere in pausa al termine</string>
     <string name="pause_on_end">Pausa al termine on.</string>
     <string name="pause_on_end_disabled">Pausa al termine off.</string>
     <string name="settings">Opzioni</string>

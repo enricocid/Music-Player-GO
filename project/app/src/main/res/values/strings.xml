@@ -82,6 +82,7 @@
     <string name="repeat_enabled">Single repetition on.</string>
     <string name="repeat_loop_enabled">∞ repeat on.</string>
     <string name="repeat_disabled">∞ repeat off.</string>
+    <string name="pause_on_end_desc">Choose whether to continue playback or pause on completion</string>
     <string name="pause_on_end">Pause on completion on.</string>
     <string name="pause_on_end_disabled">Pause on completion off.</string>
     <!-- Preferences - Categories -->
