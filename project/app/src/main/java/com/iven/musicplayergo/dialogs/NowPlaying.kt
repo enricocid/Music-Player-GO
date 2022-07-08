@@ -188,6 +188,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                         } else {
                             R.string.pause_on_end
                         }).toToast(requireContext())
+                        GoPreferences.getPrefsInstance().isPauseOnEnd = this.isChecked
                     }
                     setOnLongClickListener { switch ->
                         switch.contentDescription.toString().toToast(requireContext())
