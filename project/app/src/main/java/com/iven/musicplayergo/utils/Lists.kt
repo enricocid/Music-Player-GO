@@ -217,22 +217,18 @@ object Lists {
         song?.toSavedMusic(playerPosition, launchedBy)?.let { savedSong ->
             if (!favorites.contains(savedSong)) {
                 favorites.add(savedSong)
-                notifyFavoriteAdded(context, savedSong, playerPosition)
+                context.getString(
+                    R.string.favorite_added,
+                    savedSong.title,
+                    playerPosition.toLong().toFormattedDuration(
+                        isAlbum = false,
+                        isSeekBar = false
+                    )
+                ).toToast(context)
             } else if (canRemove) {
                 favorites.remove(savedSong)
             }
             GoPreferences.getPrefsInstance().favorites = favorites
         }
-    }
-
-    private fun notifyFavoriteAdded(context: Context, song: Music, playerPosition: Int) {
-        context.getString(
-            R.string.favorite_added,
-            song.title,
-            playerPosition.toLong().toFormattedDuration(
-                isAlbum = false,
-                isSeekBar = false
-            )
-        ).toToast(context)
     }
 }

@@ -20,6 +20,7 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.setIconTint
+import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.MainActivity
 
@@ -282,7 +283,11 @@ object Theming {
             GoConstants.CLOSE_ACTION -> R.drawable.ic_close
             GoConstants.FAST_FORWARD_ACTION -> R.drawable.ic_fast_forward
             GoConstants.REWIND_ACTION -> R.drawable.ic_fast_rewind
-            GoConstants.FAVORITE_ACTION -> R.drawable.ic_favorite
+            GoConstants.FAVORITE_ACTION -> if (isNotification) {
+                getFavoriteIcon(mediaPlayerHolder)
+            } else {
+                R.drawable.ic_favorite
+            }
             else -> R.drawable.ic_save_time
         }
 
@@ -290,7 +295,20 @@ object Theming {
     fun getRepeatIcon(mediaPlayerHolder: MediaPlayerHolder) = when {
         mediaPlayerHolder.isRepeat1X -> R.drawable.ic_repeat_one
         mediaPlayerHolder.isLooping -> R.drawable.ic_repeat
-        else -> R.drawable.ic_repeat_one_notif_disabled
+        else -> R.drawable.ic_repeat_one_disabled
+    }
+
+    @JvmStatic
+    fun getFavoriteIcon(mediaPlayerHolder: MediaPlayerHolder): Int {
+        val favorites = GoPreferences.getPrefsInstance().favorites
+        val isFavorite = favorites != null && favorites.contains(
+            mediaPlayerHolder.currentSong?.toSavedMusic(0, mediaPlayerHolder.launchedBy)
+        )
+        return if (isFavorite) {
+            R.drawable.ic_favorite
+        } else {
+            R.drawable.ic_favorite_empty
+        }
     }
 
     @JvmStatic

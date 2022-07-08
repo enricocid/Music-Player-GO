@@ -222,7 +222,11 @@ class MediaPlayerHolder:
         } else {
             with(mMusicNotificationManager) {
                 updatePlayPauseAction()
-                updateRepeatIcon()
+                if (GoPreferences.getPrefsInstance().notificationActions.first == GoConstants.REPEAT_ACTION) {
+                    updateRepeatIcon()
+                } else if (GoPreferences.getPrefsInstance().notificationActions.first == GoConstants.FAVORITE_ACTION) {
+                    updateFavoriteIcon()
+                }
                 updateNotificationContent {
                     updateNotification()
                 }
@@ -894,6 +898,11 @@ class MediaPlayerHolder:
             updatePlaybackStatus(updateUI = true)
         }
         mMusicNotificationManager.updateRepeatIcon()
+    }
+
+    fun onUpdateFavorites() {
+        mPlayerService.musicNotificationManager.updateFavoriteIcon()
+        mediaPlayerInterface.onUpdateFavorites()
     }
 
     fun setQueueEnabled(enabled: Boolean, canSkip: Boolean) {

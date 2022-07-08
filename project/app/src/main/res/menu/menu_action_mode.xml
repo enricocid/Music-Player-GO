@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/action_play"
+    <item
+        android:id="@+id/action_play"
         android:icon="@drawable/ic_queue_add"
-        android:title="@string/queue_add">
-    </item>
-    <item android:id="@+id/action_hide"
+        android:title="@string/queue_add"></item>
+    <item
+        android:id="@+id/action_hide"
         android:icon="@drawable/ic_visibility_off"
-        android:title="@string/filter_popup_title">
-    </item>
+        android:title="@string/filter_popup_title"></item>
 </menu>

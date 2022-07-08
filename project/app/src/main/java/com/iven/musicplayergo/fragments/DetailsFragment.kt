@@ -348,6 +348,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         mLaunchedBy
                     )
                     mUIControlInterface.onFavoriteAddedOrRemoved()
+                    mMediaControlInterface.onGetMediaPlayerHolder()?.onUpdateFavorites()
                 }
                 adapter?.notifyDataSetChanged()
             }).attachToRecyclerView(this)

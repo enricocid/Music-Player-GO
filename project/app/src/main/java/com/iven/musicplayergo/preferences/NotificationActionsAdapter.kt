@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.radiobutton.MaterialRadioButton
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
@@ -48,6 +48,7 @@ class NotificationActionsAdapter(private val ctx: Context, private val mediaPlay
 
             with(itemView) {
 
+                val radioButton = findViewById<MaterialRadioButton>(R.id.radio)
                 mediaPlayerHolder?.let { mph ->
                     findViewById<ImageView>(R.id.notif_action_0).setImageResource(
                         Theming.getNotificationActionIcon(mActions[absoluteAdapterPosition].first, mph, isNotification = false)
@@ -55,17 +56,7 @@ class NotificationActionsAdapter(private val ctx: Context, private val mediaPlay
                     findViewById<ImageView>(R.id.notif_action_1).setImageResource(
                         Theming.getNotificationActionIcon(mActions[absoluteAdapterPosition].second, mph, isNotification = false)
                     )
-
-                    val itemViewColor = itemView.solidColor
-                    if (selectedActions == mActions[absoluteAdapterPosition]) {
-                        itemView.setBackgroundColor(
-                           ColorUtils.setAlphaComponent(Theming.resolveThemeColor(ctx.resources), 25)
-                        )
-                    } else {
-                        itemView.setBackgroundColor(
-                            itemViewColor
-                        )
-                    }
+                    radioButton.isChecked = selectedActions == mActions[absoluteAdapterPosition]
 
                     contentDescription = ctx.getString(Theming.getNotificationActionTitle(mActions[absoluteAdapterPosition].first))
                 }

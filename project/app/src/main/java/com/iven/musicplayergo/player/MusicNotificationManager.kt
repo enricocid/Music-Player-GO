@@ -183,6 +183,14 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         }
     }
 
+    fun updateFavoriteIcon() {
+        if (::mNotificationBuilder.isInitialized) {
+            mNotificationActions[0] =
+                getNotificationAction(GoConstants.FAVORITE_ACTION)
+            updateNotification()
+        }
+    }
+
     private fun getNotificationAction(action: String): NotificationCompat.Action {
         val icon = Theming.getNotificationActionIcon(action, playerService.mediaPlayerHolder, isNotification = true)
             return NotificationCompat.Action.Builder(icon, action, getPendingIntent(action)).build()

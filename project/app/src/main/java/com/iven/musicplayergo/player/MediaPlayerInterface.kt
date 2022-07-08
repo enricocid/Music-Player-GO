@@ -11,4 +11,5 @@ interface MediaPlayerInterface {
     fun onBackupSong()
     fun onUpdateSleepTimerCountdown(value: Long)
     fun onStopSleepTimer()
+    fun onUpdateFavorites()
 }

@@ -617,7 +617,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     override fun onFavoriteAddedOrRemoved() {
         if (isMediaPlayerHolder) {
             onFavoritesUpdated(clear = false)
-            mNpDialog?.updateNpFavoritesIcon(this@MainActivity, mMediaPlayerHolder)
+            mNpDialog?.updateNpFavoritesIcon(mMediaPlayerHolder)
         }
     }
 
@@ -1198,6 +1198,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         override fun onStopSleepTimer() {
             mSleepTimerDialog?.dismissAllowingStateLoss()
             updateSleepTimerIcon(isEnabled = false)
+        }
+
+        override fun onUpdateFavorites() {
+            onFavoriteAddedOrRemoved()
         }
     }
 

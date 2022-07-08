@@ -163,10 +163,12 @@ class PlayerService : Service() {
                             Lists.addToFavorites(
                                 this@PlayerService,
                                 currentSong,
-                                canRemove = false,
+                                canRemove = true,
                                 0,
                                 launchedBy
                             )
+                            musicNotificationManager.updateFavoriteIcon()
+                            mediaPlayerHolder.mediaPlayerInterface.onUpdateFavorites()
                         }
                         GoConstants.FAVORITE_POSITION_ACTION -> {
                             Lists.addToFavorites(

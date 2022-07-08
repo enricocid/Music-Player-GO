@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:layout_gravity="center"
     android:background="?android:selectableItemBackground"
     android:gravity="center"
-    android:paddingEnd="24dp"
-    android:paddingStart="24dp"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp">
+    android:orientation="horizontal"
+    android:padding="16dp"
+    tools:viewBindingIgnore="true">
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/radio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:checked="true"
+        android:clickable="false"
+        android:focusable="false"
+        android:padding="16dp"
+        app:buttonTint="@color/checkbox_tint" />
 
     <ImageView
         android:id="@+id/notif_action_0"
@@ -20,7 +30,7 @@
         android:layout_weight="1"
         android:contentDescription="@string/content_playback_speed"
         android:padding="8dp"
-        app:srcCompat="@drawable/ic_repeat_one_notif_disabled" />
+        app:srcCompat="@drawable/ic_repeat_one_disabled" />
 
     <ImageView
         android:layout_width="0dp"
@@ -29,8 +39,8 @@
         android:layout_weight="1"
         android:contentDescription="@string/favorites_save_time"
         android:padding="8dp"
-        app:tint="?android:colorButtonNormal"
-        app:srcCompat="@drawable/ic_skip_previous" />
+        app:srcCompat="@drawable/ic_skip_previous"
+        app:tint="?android:attr/colorButtonNormal" />
 
     <ImageView
         android:layout_width="0dp"
@@ -39,8 +49,8 @@
         android:layout_weight="1"
         android:contentDescription="@string/equalizer"
         android:padding="8dp"
-        app:tint="?android:colorButtonNormal"
-        app:srcCompat="@drawable/ic_play" />
+        app:srcCompat="@drawable/ic_play"
+        app:tint="?android:attr/colorButtonNormal" />
 
     <ImageView
         android:layout_width="0dp"
@@ -49,8 +59,8 @@
         android:layout_weight="1"
         android:contentDescription="@string/favorite_add"
         android:padding="8dp"
-        app:tint="?android:colorButtonNormal"
-        app:srcCompat="@drawable/ic_skip_next" />
+        app:srcCompat="@drawable/ic_skip_next"
+        app:tint="?android:attr/colorButtonNormal" />
 
     <ImageView
         android:id="@+id/notif_action_1"

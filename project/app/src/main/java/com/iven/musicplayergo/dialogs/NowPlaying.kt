@@ -154,13 +154,14 @@ class NowPlaying: BottomSheetDialogFragment() {
                 npEqualizer.setOnClickListener { mUIControlInterface.onOpenEqualizer() }
                 npLove.setOnClickListener {
                     Lists.addToFavorites(
-                        requireActivity(),
+                        requireContext(),
                         mph.currentSong,
                         canRemove = true,
                         0,
                         mph.launchedBy)
                     mUIControlInterface.onFavoritesUpdated(clear = false)
-                    updateNpFavoritesIcon(requireContext(), mph)
+                    mMediaControlInterface.onGetMediaPlayerHolder()?.onUpdateFavorites()
+                    updateNpFavoritesIcon(mph)
                 }
 
                 with(npRepeat) {
@@ -364,22 +365,12 @@ class NowPlaying: BottomSheetDialogFragment() {
         }
     }
 
-    fun updateNpFavoritesIcon(context: Context, mediaPlayerHolder: MediaPlayerHolder) {
+    fun updateNpFavoritesIcon(mediaPlayerHolder: MediaPlayerHolder) {
         _npCoverBinding?.run {
-            mediaPlayerHolder.currentSong?.let { song ->
-                val favorites = GoPreferences.getPrefsInstance().favorites
-                val isFavorite = favorites != null && favorites.contains(song.toSavedMusic(0, mediaPlayerHolder.launchedBy))
-                val favoritesButtonColor = if (isFavorite) {
-                    npLove.setImageResource(R.drawable.ic_favorite)
-                    Theming.resolveThemeColor(resources)
-                } else {
-                    npLove.setImageResource(R.drawable.ic_favorite_empty)
-                    Theming.resolveColorAttr(
-                        context,
-                        android.R.attr.colorButtonNormal
-                    )
-                }
-                Theming.updateIconTint(npLove, favoritesButtonColor)
+            val favoriteIcon = Theming.getFavoriteIcon(mediaPlayerHolder)
+            npLove.setImageResource(favoriteIcon)
+            if (favoriteIcon == R.drawable.ic_favorite) {
+                Theming.updateIconTint(npLove, Theming.resolveThemeColor(resources))
             }
         }
     }
@@ -411,7 +402,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                     _nowPlayingBinding?.npRates?.text =
                         getString(R.string.rates, first, second)
                 }
-                updateNpFavoritesIcon(requireContext(), mediaPlayerHolder)
+                updateNpFavoritesIcon(mediaPlayerHolder)
                 updatePlayingStatus(mediaPlayerHolder)
             }
         }
