@@ -162,4 +162,9 @@
     <string name="sleeptimer_stop">Setop</string>
     <string name="sleeptimer_cancel_desc">Setop waktu tidur</string>
     <string name="theme_pref_black_title">Hitam pekat</string>
+    <string name="save_state_pref_title">Status pemutaran</string>
+    <string name="save_state_pref_sum">Simpan dan pulihkan status pemutaran. Catatan: menonaktifkan opsi ini akan menghapus status yang tersimpan.</string>
+    <string name="filters_clear">Filter akan dihapus. Lanjutkan\?</string>
+    <string name="confirm_ask_pref_title">Pesan konfirmasi</string>
+    <string name="confirm_ask_pref_sum">Minta konfirmasi sebelum melakukan sesuatu</string>
 </resources>
