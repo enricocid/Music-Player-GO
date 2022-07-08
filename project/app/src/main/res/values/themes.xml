@@ -36,6 +36,6 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="actionModeCloseDrawable">@drawable/ic_close</item>
-        <item name="actionModeBackground">@color/mainBg</item>
+        <item name="actionModeBackground">@android:color/black</item>
     </style>
 </resources>
