@@ -2,9 +2,7 @@
 <resources>
     <string name="eq_pref_note_summary">Merk: System-tonekontrollen føretrekkast med mindre den skruast av i system-innstillingane. :)</string>
     <string name="precise_volume_pref_title">Presis kontroll av ljodstyrke</string>
-    <string name="fast_seeking_actions_pref_summary_on">Rask blafring</string>
-    <string name="fast_seeking_actions_pref_summary_off">Lukk/repeter</string>
-    <string name="fast_seeking_actions_pref_title">Ytterlegare handlingar for merknadar</string>
+    <string name="notification_actions_repeat">Ytterlegare handlingar for merknadar</string>
     <string name="fast_seeking_pref_summary">Rask spoling tilbake/framåt i steg (sekunder)</string>
     <string name="fast_seeking_pref_title">Rask blafring</string>
     <string name="active_fragments_pref_warning">Du kan ikkje bare fjerna alle fanane! :P</string>

@@ -56,9 +56,7 @@
     <string name="eq_pref_note_summary">Not: Sistem ayarlarından kapatılmadığı sürece sistem dengeleyicisi kullanılır. :)</string>
     <string name="on_list_ended_pref_title">Bir liste sona erdiğinde…</string>
     <string name="error_eq">Hata</string>
-    <string name="fast_seeking_actions_pref_summary_on">Hızlı arama</string>
-    <string name="fast_seeking_actions_pref_summary_off">Kapat/tekrarla</string>
-    <string name="fast_seeking_actions_pref_title">Ek bildirim eylemleri</string>
+    <string name="notification_actions_repeat">Ek bildirim eylemleri</string>
     <string name="fast_seeking_pref_summary">Hızlı ileri/geri sarma adımı (saniye)</string>
     <string name="fast_seeking_pref_title">Hızlı arama</string>
     <string name="song_visual_pref_fn_title">Dosya adı</string>

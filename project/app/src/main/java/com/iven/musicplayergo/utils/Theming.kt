@@ -255,6 +255,38 @@ object Theming {
     }
 
     @JvmStatic
+    fun getNotificationActionTitle(action: String) = when (action) {
+        GoConstants.REPEAT_ACTION -> R.string.notification_actions_repeat
+        GoConstants.REWIND_ACTION -> R.string.notification_actions_fast_seeking
+        GoConstants.FAVORITE_ACTION -> R.string.notification_actions_favorite
+        else -> R.string.notification_actions_favorite_position
+    }
+
+    @JvmStatic
+    fun getNotificationActionIcon(action: String,
+                                  mediaPlayerHolder: MediaPlayerHolder,
+                                  isNotification: Boolean) =
+        when (action) {
+            GoConstants.PLAY_PAUSE_ACTION -> if (mediaPlayerHolder.state != GoConstants.PAUSED) {
+                R.drawable.ic_pause
+            } else {
+                R.drawable.ic_play
+            }
+            GoConstants.REPEAT_ACTION -> if (isNotification) {
+                getRepeatIcon(mediaPlayerHolder)
+            } else {
+                R.drawable.ic_repeat
+            }
+            GoConstants.PREV_ACTION -> R.drawable.ic_skip_previous
+            GoConstants.NEXT_ACTION -> R.drawable.ic_skip_next
+            GoConstants.CLOSE_ACTION -> R.drawable.ic_close
+            GoConstants.FAST_FORWARD_ACTION -> R.drawable.ic_fast_forward
+            GoConstants.REWIND_ACTION -> R.drawable.ic_fast_rewind
+            GoConstants.FAVORITE_ACTION -> R.drawable.ic_favorite
+            else -> R.drawable.ic_save_time
+        }
+
+    @JvmStatic
     fun getRepeatIcon(mediaPlayerHolder: MediaPlayerHolder) = when {
         mediaPlayerHolder.isRepeat1X -> R.drawable.ic_repeat_one
         mediaPlayerHolder.isLooping -> R.drawable.ic_repeat

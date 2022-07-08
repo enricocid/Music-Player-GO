@@ -26,6 +26,7 @@ import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.preferences.AccentsAdapter
 import com.iven.musicplayergo.preferences.ActiveTabsAdapter
 import com.iven.musicplayergo.preferences.FiltersAdapter
+import com.iven.musicplayergo.preferences.NotificationActionsAdapter
 import com.iven.musicplayergo.ui.ItemSwipeCallback
 import com.iven.musicplayergo.ui.ItemTouchCallback
 import com.iven.musicplayergo.ui.MediaControlInterface
@@ -94,7 +95,6 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
                 GoConstants.ACCENT_TYPE -> {
 
-                    // use alt RecyclerView
                     sleepTimerElapsed.handleViewVisibility(show = false)
 
                     modalRv.setHasFixedSize(true)
@@ -272,6 +272,30 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                             onSleepTimerEnabled?.invoke(false)
                             dismiss()
                         }
+                    }
+                }
+
+                GoConstants.NOTIFICATION_ACTIONS_TYPE -> {
+
+                    dialogTitle = getString(R.string.notification_actions_pref_title)
+
+                    sleepTimerElapsed.handleViewVisibility(show = false)
+
+                    modalRv.setHasFixedSize(true)
+                    val notificationActionsAdapter = NotificationActionsAdapter(requireContext(), mMediaControlInterface.onGetMediaPlayerHolder())
+                    val layoutManager =  LinearLayoutManager(requireActivity())
+                    modalRv.layoutManager = layoutManager
+                    modalRv.adapter = notificationActionsAdapter
+
+                    // set listeners for buttons
+                    btnNegative.setOnClickListener {
+                        dismiss()
+                    }
+                    btnPositive.setOnClickListener {
+                        mMediaControlInterface.onGetMediaPlayerHolder()?.onHandleNotificationUpdate(
+                            isAdditionalActionsChanged = true
+                        )
+                        dismiss()
                     }
                 }
 

@@ -56,7 +56,6 @@
     <string name="on_list_ended_pref_title">هنگامی که یک فهرست پایان یابد…</string>
     <string name="on_list_ended_pref_continue_title">ادامه</string>
     <string name="covers_pref_title">جلدهای آلبوم جاسازی شده</string>
-    <string name="fast_seeking_actions_pref_summary_off">بستن/تکرار</string>
     <string name="song_visual_pref_title">تجسم آهنگ</string>
     <string name="song_visual_pref_tl_title">عنوان</string>
     <string name="song_visual_pref_fn_title">نام پرونده</string>

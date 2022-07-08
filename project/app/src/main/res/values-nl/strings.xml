@@ -54,9 +54,7 @@
     <string name="filter_popup_title">Verbergen</string>
     <string name="eq_pref_note_summary">Let op: de systeemequalizer krijgt de voorkeur, tenzij je in de systeeminstellingen de systeemequalizer uitschakelt voor deze app. :)</string>
     <string name="fast_seeking_pref_title">Doorspoelen</string>
-    <string name="fast_seeking_actions_pref_summary_on">Voorkeur voor doorspoelacties</string>
-    <string name="fast_seeking_actions_pref_summary_off">Voorkeur voor sluit-/herhaalacties</string>
-    <string name="fast_seeking_actions_pref_title">Aanvullende meldingsacties</string>
+    <string name="notification_actions_repeat">Aanvullende meldingsacties</string>
     <string name="fast_seeking_pref_summary">Vooruitspoel-/Terugspoelstap (in seconden)</string>
     <string name="song_visual_pref_fn_title">Bestandsnaam</string>
     <string name="song_visual_pref_tl_title">Naam</string>

@@ -57,9 +57,7 @@
     <string name="playback_pref_summary_off">Nu mențineți viteza de redare selectată</string>
     <string name="playback_pref_title">Viteza de redare</string>
     <string name="anim_pref_title">Animații</string>
-    <string name="fast_seeking_actions_pref_summary_on">Preferă acțiunile de căutare rapidă</string>
-    <string name="fast_seeking_actions_pref_summary_off">Preferați acțiunile de închidere/repetare</string>
-    <string name="fast_seeking_actions_pref_title">Acțiuni suplimentare de notificare</string>
+    <string name="notification_actions_repeat">Acțiuni suplimentare de notificare</string>
     <string name="fast_seeking_pref_summary">Pasul înainte/înapoi rapid (secunde)</string>
     <string name="fast_seeking_pref_title">Căutare rapidă</string>
     <string name="eq_pref_note_summary">Notă: Egalizatorul de sistem va fi preferat dacă nu dezactivați aplicația \"system equalizer\" din setările sistemului. :)</string>

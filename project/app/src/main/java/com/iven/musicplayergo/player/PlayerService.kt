@@ -18,6 +18,7 @@ import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.extensions.toToast
+import com.iven.musicplayergo.utils.Lists
 import com.iven.musicplayergo.utils.Versioning
 
 
@@ -158,6 +159,24 @@ class PlayerService : Service() {
 
                 with(mediaPlayerHolder) {
                     when (act) {
+                        GoConstants.FAVORITE_ACTION -> {
+                            Lists.addToFavorites(
+                                this@PlayerService,
+                                currentSong,
+                                canRemove = false,
+                                0,
+                                launchedBy
+                            )
+                        }
+                        GoConstants.FAVORITE_POSITION_ACTION -> {
+                            Lists.addToFavorites(
+                                this@PlayerService,
+                                currentSong,
+                                canRemove = false,
+                                playerPosition,
+                                launchedBy
+                            )
+                        }
                         GoConstants.REWIND_ACTION -> fastSeek(isForward = false)
                         GoConstants.PREV_ACTION -> instantReset()
                         GoConstants.PLAY_PAUSE_ACTION -> resumeOrPause()

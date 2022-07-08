@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.models.NotificationAction
 import com.iven.musicplayergo.models.SavedEqualizerSettings
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -162,6 +163,11 @@ class GoPreferences(context: Context) {
         get() = mPrefs.getInt(prefsAllMusicSorting, GoConstants.DEFAULT_SORTING)
         set(value) = mPrefs.edit { putInt(prefsAllMusicSorting, value) }
 
+    var notificationActions: NotificationAction
+        get() = getObjectForType(prefsNotificationActions, NotificationAction::class.java)
+            ?: NotificationAction(GoConstants.REPEAT_ACTION, GoConstants.CLOSE_ACTION)
+        set(value) = putObjectForType(prefsNotificationActions, value, NotificationAction::class.java)
+
     var filters: Set<String>?
         get() = mPrefs.getStringSet(prefsFilter, setOf())
         set(value) = mPrefs.edit { putStringSet(prefsFilter, value) }
@@ -169,10 +175,6 @@ class GoPreferences(context: Context) {
     var fastSeekingStep
         get() = mPrefs.getInt(prefsFastSeek, 5)
         set(value) = mPrefs.edit { putInt(prefsFastSeek, value) }
-
-    var notificationActions
-        get() = mPrefs.getString(prefsNotificationActions, GoConstants.NOTIF_REPEAT_CLOSE)
-        set(value) = mPrefs.edit { putString(prefsNotificationActions, value) }
 
     var isPreciseVolumeEnabled
         get() = mPrefs.getBoolean(prefsPreciseVolume, false)

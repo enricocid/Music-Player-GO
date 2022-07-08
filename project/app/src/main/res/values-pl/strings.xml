@@ -53,9 +53,7 @@
     <string name="focus_pref_title">Wyciszanie otoczenia</string>
     <string name="headset_pref_title">Podłączanie słuchawek</string>
     <string name="filter_pref_title">Filtry</string>
-    <string name="fast_seeking_actions_pref_summary_on">Preferuj czynności szybkiego wyszukiwania</string>
-    <string name="fast_seeking_actions_pref_summary_off">Preferuj akcje „zamknij/powtórz”</string>
-    <string name="fast_seeking_actions_pref_title">Dodatkowe czynności powiadomień</string>
+    <string name="notification_actions_repeat">Dodatkowe czynności powiadomień</string>
     <string name="fast_seeking_pref_summary">„Kroki” (odstępy w sekundach) przy przewijaniu do przodu / do tyłu</string>
     <string name="fast_seeking_pref_title">Szybkie wyszukiwanie</string>
     <string name="song_visual_pref_fn_title">Nazwa pliku</string>

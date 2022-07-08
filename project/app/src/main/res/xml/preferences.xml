@@ -105,14 +105,9 @@
             app:seekBarIncrement="5"
             app:showSeekBarValue="true" />
 
-        <ListPreference
-            android:defaultValue="0"
-            app:dialogTitle="@string/fast_seeking_actions_pref_title"
-            app:entries="@array/notificationActionsArray"
-            app:entryValues="@array/notificationActionsEntryArray"
+        <Preference
             app:key="@string/notif_actions_pref"
-            app:title="@string/fast_seeking_actions_pref_title"
-            app:useSimpleSummaryProvider="true" />
+            app:title="@string/notification_actions_pref_title" />
 
         <ListPreference
             android:defaultValue="1"

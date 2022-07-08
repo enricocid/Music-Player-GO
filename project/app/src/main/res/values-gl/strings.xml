@@ -60,9 +60,7 @@
     <string name="focus_pref_title">Xestión do foco do audio</string>
     <string name="headset_pref_title">Conexión de auriculares</string>
     <string name="filter_pref_title">Filtros</string>
-    <string name="fast_seeking_actions_pref_summary_on">Busca rápida</string>
-    <string name="fast_seeking_actions_pref_summary_off">Pechar/repetir</string>
-    <string name="fast_seeking_actions_pref_title">Accións de notificación adicionais</string>
+    <string name="notification_actions_repeat">Accións de notificación adicionais</string>
     <string name="fast_seeking_pref_summary">Avanzar/Retroceder en pasos (segundos)</string>
     <string name="fast_seeking_pref_title">Busca rápida</string>
     <string name="song_visual_pref_fn_title">Nome do ficheiro</string>

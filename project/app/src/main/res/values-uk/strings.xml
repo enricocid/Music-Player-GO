@@ -53,9 +53,7 @@
     <string name="headset_pref_title">Керування гарнітурою</string>
     <string name="focus_pref_title">Керування фокусом звуку</string>
     <string name="precise_volume_pref_title">Тонкий контроль гучності</string>
-    <string name="fast_seeking_actions_pref_summary_on">Швидкий пошук</string>
-    <string name="fast_seeking_actions_pref_summary_off">Закрити/повторити</string>
-    <string name="fast_seeking_actions_pref_title">Додаткові дії зі сповіщення</string>
+    <string name="notification_actions_repeat">Додаткові дії зі сповіщення</string>
     <string name="fast_seeking_pref_summary">Крок вперед/назад (секунд)</string>
     <string name="fast_seeking_pref_title">Швидкий пошук</string>
     <string name="eq_pref_note_summary">Примітка: Системний еквалайзер використовується, якщо не вимкнено в системних налаштуваннях. :)</string>

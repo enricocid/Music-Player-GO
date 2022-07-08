@@ -48,7 +48,7 @@
     <string name="song_visual_pref_title">Dal megjelenítés</string>
     <string name="equalizer">Hangerőszabályzó</string>
     <string name="filter_pref_title">Szűrők</string>
-    <string name="fast_seeking_actions_pref_title">További értesítési műveletek</string>
+    <string name="notification_actions_repeat">További értesítési műveletek</string>
     <string name="fast_seeking_pref_summary">Gyors előre- és visszatekerés (másodperc)</string>
     <string name="fast_seeking_pref_title">Gyors keresés</string>
     <string name="song_visual_pref_fn_title">Fájlnév</string>
@@ -66,8 +66,6 @@
     <string name="equalizer_v">Térhatású hang</string>
     <string name="equalizer_bb">Basszuserősítés</string>
     <string name="albums">Albumok</string>
-    <string name="fast_seeking_actions_pref_summary_on">Gyors keresés</string>
-    <string name="fast_seeking_actions_pref_summary_off">Bezárás/ismétlés</string>
     <string name="playback_pref_summary_on">A kijelölt lejátszási sebesség fenntartása</string>
     <string name="playback_pref_summary_off">A kijelölt lejátszási sebesség nem marad meg</string>
     <string name="playback_pref_title">Lejátszás sebessége</string>

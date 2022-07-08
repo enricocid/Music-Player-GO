@@ -53,9 +53,7 @@
     <string name="filter_pref_title">フィルター</string>
     <string name="error_list_ended">キューにある曲を再生し終えました。</string>
     <string name="eq_pref_note_summary">端末の設定からシステムのイコライザーを無効にしないと使用できません</string>
-    <string name="fast_seeking_actions_pref_summary_on">早送り・早戻し</string>
-    <string name="fast_seeking_actions_pref_summary_off">終了・リピート</string>
-    <string name="fast_seeking_actions_pref_title">通知領域に表示するボタン</string>
+    <string name="notification_actions_repeat">通知領域に表示するボタン</string>
     <string name="fast_seeking_pref_title">早送り・早戻し</string>
     <string name="fast_seeking_pref_summary">早送り・早戻しの間隔（秒）</string>
     <string name="covers_pref_title">アルバムカバーの表示</string>

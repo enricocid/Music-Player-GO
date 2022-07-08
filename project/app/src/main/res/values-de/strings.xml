@@ -10,9 +10,7 @@
     <string name="headset_pref_title">Kopfhöreranschluss-Verwaltung</string>
     <string name="focus_pref_title">Audiofokus-Verwaltung</string>
     <string name="precise_volume_pref_title">Präzise Lautstärkeregelung</string>
-    <string name="fast_seeking_actions_pref_summary_on">Spulen</string>
-    <string name="fast_seeking_actions_pref_summary_off">Schließen/Wiederholung</string>
-    <string name="fast_seeking_actions_pref_title">Zusätzliche Benachrichtigungsaktionen</string>
+    <string name="notification_actions_repeat">Zusätzliche Benachrichtigungsaktionen</string>
     <string name="fast_seeking_pref_summary">Schneller Vor- / Rücklauf (Sekunden)</string>
     <string name="fast_seeking_pref_title">Schnelle Suche</string>
     <string name="active_fragments_pref_warning">Du kannst nicht einfach alle Registerkarten schließen! :P</string>

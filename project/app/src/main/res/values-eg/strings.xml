@@ -67,7 +67,6 @@
     <string name="song_visual_pref_tl_title">العنوان</string>
     <string name="sorting_pref_album_inv">بالألبوم تنازلي</string>
     <string name="equalizer">معادل الصوت</string>
-    <string name="fast_seeking_actions_pref_summary_off">غلق/تكرار</string>
     <string name="content_skip_prev">القفز للسابق</string>
     <string name="content_skip_next">القفز للتالي</string>
     <string name="content_repeat">غلق/فتح التكرار المحدد</string>
@@ -120,7 +119,6 @@
     <string name="on_list_ended_pref_continue_title">استمرار</string>
     <string name="covers_pref_title">أغلفة الألبوم المضمنة</string>
     <string name="fast_seeking_pref_title">القفز السريع</string>
-    <string name="fast_seeking_actions_pref_summary_on">القفز السريع</string>
     <string name="playback_pref_summary_on">الاحتفاظ</string>
     <string name="equalizer_bb">تضخيمُ التردُّدات المنخفضة</string>
     <string name="sorting_pref_album">بالألبوم تصاعدي</string>
@@ -130,7 +128,7 @@
     <string name="locale_english">الإنجليزية</string>
     <string name="locale_italian">الإيطالية</string>
     <string name="locale_korean">الكورية</string>
-    <string name="fast_seeking_actions_pref_title">خيارات إشعارات إضافية</string>
+    <string name="notification_actions_repeat">خيارات إشعارات إضافية</string>
     <string name="locale_polish">البولندية</string>
     <string name="locale_persian">الفارسية</string>
     <string name="on_list_ended_pref_title">عند انتهاء قائمة…</string>

@@ -10,9 +10,7 @@
     <string name="headset_pref_title">Vhod za slušalke</string>
     <string name="focus_pref_title">Zvočni fokus</string>
     <string name="precise_volume_pref_title">Natančen nadzor glasnosti</string>
-    <string name="fast_seeking_actions_pref_summary_on">Raje dejanja prevrti naprej</string>
-    <string name="fast_seeking_actions_pref_summary_off">Raje dejanja zapri/ponovi</string>
-    <string name="fast_seeking_actions_pref_title">Akcije dodatnih obvestil</string>
+    <string name="notification_actions_repeat">Akcije dodatnih obvestil</string>
     <string name="fast_seeking_pref_summary">Prevrti naprej/nazaj (sekunde)</string>
     <string name="fast_seeking_pref_title">Hitro iskanje</string>
     <string name="eq_pref_note_summary">Opomba: Prednost ima sistemski izenačevalec, razen če ga izkopite v sistemskih nastavitvah. :)</string>

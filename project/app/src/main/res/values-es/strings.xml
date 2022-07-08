@@ -54,13 +54,11 @@
     <string name="filter_pref_title">Filtros</string>
     <string name="error_not_ready">No se pudo cargar la librería de música :( Esto pudo deberse a un error con la tarjeta SD, forzando a la librería multimedia de Android a reconstruir su registro de base de datos. Vuelve a intentarlo más tarde.</string>
     <string name="equalizer_bb">Aumentar bajo</string>
-    <string name="fast_seeking_actions_pref_summary_off">Acciones de cerrar/repetir preferidas</string>
     <string name="fast_seeking_pref_summary">Velocidad de rebobinado/avance (segundos)</string>
     <string name="song_visual_pref_title">Visualización de canciones</string>
     <string name="covers_pref_title">Carátulas de los álbumes</string>
     <string name="equalizer_v">Sonido envolvente</string>
-    <string name="fast_seeking_actions_pref_summary_on">Acciones de búsqueda rápida preferidas</string>
-    <string name="fast_seeking_actions_pref_title">Funciones adicionales de notificaciones</string>
+    <string name="notification_actions_repeat">Funciones adicionales de notificaciones</string>
     <string name="fast_seeking_pref_title">Búsqueda rápida</string>
     <string name="eq_pref_note_summary">Nota: El ecualizador del sistema será utilizado a menos que desactives la opción \"Ecualizador del sistema\" en la configuración de tu dispositivo :)</string>
     <string name="song_visual_pref_fn_title">Nombre del archivo</string>

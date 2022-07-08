@@ -13,7 +13,8 @@
         android:background="?attr/toolbar_bg"
         android:elevation="2dp"
         android:theme="@style/ToolbarStyle"
-        app:navigationIcon="@drawable/ic_close_error"
+        app:navigationIcon="@drawable/ic_close"
+        app:navigationIconTint="@color/red"
         app:title="@string/app_name"
         app:titleTextAppearance="@style/ToolbarStyle.Title"
         app:titleTextColor="@color/red" />

@@ -73,6 +73,11 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             onPreferenceClickListener = this@PreferencesFragment
         }
 
+        findPreference<Preference>(getString(R.string.notif_actions_pref))?.run {
+            summary = getString(Theming.getNotificationActionTitle(GoPreferences.getPrefsInstance().notificationActions.first))
+            onPreferenceClickListener = this@PreferencesFragment
+        }
+
         findPreference<Preference>(getString(R.string.filter_pref))?.run {
             GoPreferences.getPrefsInstance().filters?.let { ft ->
                 summary = ft.size.toString()
@@ -89,11 +94,13 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         when (preference.key) {
             getString(R.string.accent_pref) -> RecyclerSheet.newInstance(GoConstants.ACCENT_TYPE)
                 .show(requireActivity().supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
+            getString(R.string.active_tabs_pref) -> RecyclerSheet.newInstance(GoConstants.TABS_TYPE)
+                .show(requireActivity().supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
             getString(R.string.filter_pref) -> if (!GoPreferences.getPrefsInstance().filters.isNullOrEmpty()) {
                 RecyclerSheet.newInstance(GoConstants.FILTERS_TYPE)
                     .show(requireActivity().supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
             }
-            getString(R.string.active_tabs_pref) -> RecyclerSheet.newInstance(GoConstants.TABS_TYPE)
+            getString(R.string.notif_actions_pref) -> RecyclerSheet.newInstance(GoConstants.NOTIFICATION_ACTIONS_TYPE)
                 .show(requireActivity().supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
         }
         return false
@@ -123,7 +130,9 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 mMediaControlInterface.onGetMediaPlayerHolder()?.onHandleNotificationUpdate(isAdditionalActionsChanged = false)
                 mMediaControlInterface.onHandleCoverOptionsUpdate()
             }
-            getString(R.string.notif_actions_pref) -> mMediaControlInterface.onGetMediaPlayerHolder()?.onHandleNotificationUpdate(isAdditionalActionsChanged = true)
+            getString(R.string.notif_actions_pref) ->
+                findPreference<Preference>(getString(R.string.notif_actions_pref))?.summary =
+                    getString(Theming.getNotificationActionTitle(GoPreferences.getPrefsInstance().notificationActions.first))
             getString(R.string.song_visual_pref) -> mMediaControlInterface.onUpdatePlayingAlbumSongs(null)
             getString(R.string.save_state_pref) -> GoPreferences.getPrefsInstance().run {
                 if (!isStateSavedRestored) {

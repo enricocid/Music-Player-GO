@@ -1,7 +1,7 @@
 package com.iven.musicplayergo.utils
 
 import android.annotation.SuppressLint
-import android.app.Activity
+import android.content.Context
 import android.view.Menu
 import android.view.MenuItem
 import com.iven.musicplayergo.GoConstants
@@ -207,7 +207,7 @@ object Lists {
 
     @JvmStatic
     fun addToFavorites(
-        activity: Activity,
+        context: Context,
         song: Music?,
         canRemove: Boolean,
         playerPosition: Int,
@@ -217,7 +217,7 @@ object Lists {
         song?.toSavedMusic(playerPosition, launchedBy)?.let { savedSong ->
             if (!favorites.contains(savedSong)) {
                 favorites.add(savedSong)
-                notifyFavoriteAdded(activity, savedSong, playerPosition)
+                notifyFavoriteAdded(context, savedSong, playerPosition)
             } else if (canRemove) {
                 favorites.remove(savedSong)
             }
@@ -225,14 +225,14 @@ object Lists {
         }
     }
 
-    private fun notifyFavoriteAdded(activity: Activity, song: Music, playerPosition: Int) {
-        activity.getString(
+    private fun notifyFavoriteAdded(context: Context, song: Music, playerPosition: Int) {
+        context.getString(
             R.string.favorite_added,
             song.title,
             playerPosition.toLong().toFormattedDuration(
                 isAlbum = false,
                 isSeekBar = false
             )
-        ).toToast(activity)
+        ).toToast(context)
     }
 }

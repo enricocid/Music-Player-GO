@@ -19,6 +19,7 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.waitForCover
+import com.iven.musicplayergo.models.NotificationAction
 import com.iven.musicplayergo.ui.MainActivity
 import com.iven.musicplayergo.utils.Theming
 import com.iven.musicplayergo.utils.Versioning
@@ -35,9 +36,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         @SuppressLint("RestrictedApi")
         get() = mNotificationBuilder.mActions
 
-    private val sFastSeekingActions get() = GoPreferences.getPrefsInstance().notificationActions != GoConstants.NOTIF_REPEAT_CLOSE
-
-    private fun getPlayerAction(playerAction: String): PendingIntent {
+    private fun getPendingIntent(playerAction: String): PendingIntent {
         val intent = Intent().apply {
             action = playerAction
             component = ComponentName(playerService, PlayerService::class.java)
@@ -50,17 +49,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         return PendingIntent.getService(playerService, GoConstants.NOTIFICATION_INTENT_REQUEST_CODE, intent, flags)
     }
 
-    private fun getFirstAdditionalAction() = if (sFastSeekingActions) {
-        GoConstants.REWIND_ACTION
-    } else {
-        GoConstants.REPEAT_ACTION
-    }
-
-    private fun getSecondAdditionalAction() = if (sFastSeekingActions) {
-        GoConstants.FAST_FORWARD_ACTION
-    } else {
-        GoConstants.CLOSE_ACTION
-    }
+    private val notificationActions: NotificationAction get() = GoPreferences.getPrefsInstance().notificationActions
 
     fun createNotification(onCreated: (Notification) -> Unit) {
 
@@ -91,11 +80,11 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             .setSilent(true)
             .setShowWhen(false)
             .setOngoing(playerService.mediaPlayerHolder.isPlaying)
-            .addAction(getNotificationAction(getFirstAdditionalAction()))
+            .addAction(getNotificationAction(notificationActions.first))
             .addAction(getNotificationAction(GoConstants.PREV_ACTION))
             .addAction(getNotificationAction(GoConstants.PLAY_PAUSE_ACTION))
             .addAction(getNotificationAction(GoConstants.NEXT_ACTION))
-            .addAction(getNotificationAction(getSecondAdditionalAction()))
+            .addAction(getNotificationAction(notificationActions.second))
             .setStyle(
                 MediaStyle()
                     .setMediaSession(playerService.getMediaSession().sessionToken)
@@ -132,9 +121,9 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                 }
             } else {
                 mNotificationActions[0] =
-                    getNotificationAction(getFirstAdditionalAction())
+                    getNotificationAction(notificationActions.first)
                 mNotificationActions[4] =
-                    getNotificationAction(getSecondAdditionalAction())
+                    getNotificationAction(notificationActions.second)
                 updateNotification()
             }
         }
@@ -187,7 +176,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     }
 
     fun updateRepeatIcon() {
-        if (::mNotificationBuilder.isInitialized && !sFastSeekingActions) {
+        if (::mNotificationBuilder.isInitialized) {
             mNotificationActions[0] =
                 getNotificationAction(GoConstants.REPEAT_ACTION)
             updateNotification()
@@ -195,22 +184,8 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     }
 
     private fun getNotificationAction(action: String): NotificationCompat.Action {
-        var icon =
-            if (playerService.mediaPlayerHolder.state != GoConstants.PAUSED) {
-                R.drawable.ic_pause
-            } else {
-                R.drawable.ic_play
-            }
-        when (action) {
-            GoConstants.REPEAT_ACTION -> icon =
-                Theming.getRepeatIcon(playerService.mediaPlayerHolder)
-            GoConstants.PREV_ACTION -> icon = R.drawable.ic_skip_previous
-            GoConstants.NEXT_ACTION -> icon = R.drawable.ic_skip_next
-            GoConstants.CLOSE_ACTION -> icon = R.drawable.ic_close
-            GoConstants.FAST_FORWARD_ACTION -> icon = R.drawable.ic_fast_forward
-            GoConstants.REWIND_ACTION -> icon = R.drawable.ic_fast_rewind
-        }
-        return NotificationCompat.Action.Builder(icon, action, getPlayerAction(action)).build()
+        val icon = Theming.getNotificationActionIcon(action, playerService.mediaPlayerHolder, isNotification = true)
+            return NotificationCompat.Action.Builder(icon, action, getPendingIntent(action)).build()
     }
 
     fun createNotificationForError() {

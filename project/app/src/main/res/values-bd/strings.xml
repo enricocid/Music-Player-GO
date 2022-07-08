@@ -52,11 +52,9 @@
     <string name="headset_pref_title">হেডসেট প্লাগ</string>
     <string name="filter_pref_title">ফিল্টার</string>
     <string name="error_eq">দুঃখিত, একটি ক্রুটি ঘটেছে!</string>
-    <string name="fast_seeking_actions_pref_summary_on">দ্রুতির কার্যক্রমকে অগ্রাধিকার দিন</string>
-    <string name="fast_seeking_actions_pref_title">অতিরিক্ত বিজ্ঞপ্তি কার্যক্রম</string>
+    <string name="notification_actions_repeat">অতিরিক্ত বিজ্ঞপ্তি কার্যক্রম</string>
     <string name="fast_seeking_pref_summary">দ্রুত অগ্রগামি/রিওয়াইন্ড(সেকেন্ড)</string>
     <string name="fast_seeking_pref_title">দ্রুতি</string>
-    <string name="fast_seeking_actions_pref_summary_off">বন্ধ / পুনরাবৃত্তি ক্রিয়া</string>
     <string name="equalizer_v">পরিবেষ্টিত শব্দ</string>
     <string name="error_list_ended">তালিকা শেষ।</string>
     <string name="covers_pref_title">অ্যালবাম কভার যোগ করুন</string>

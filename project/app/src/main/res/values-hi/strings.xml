@@ -63,9 +63,7 @@
     <string name="active_fragments_pref_warning">आप सभी टैब नहीं निकाल सकते हैं! :P</string>
     <string name="fast_seeking_pref_title">फ़ास्ट सीकिंग</string>
     <string name="fast_seeking_pref_summary">फ़ास्ट फॉरवर्ड/रिवाइंड स्टैप (सेकण्ड)</string>
-    <string name="fast_seeking_actions_pref_title">अन्य  नोटिफिकेशन एक्शन</string>
-    <string name="fast_seeking_actions_pref_summary_off">बंद/पुनराव्रत्ति एक्शन चुने</string>
-    <string name="fast_seeking_actions_pref_summary_on">फ़ास्ट सीकिंग एक्शन चुने</string>
+    <string name="notification_actions_repeat">अन्य  नोटिफिकेशन एक्शन</string>
     <string name="precise_volume_pref_title">सटीक वॉल्यूम नियंत्रण</string>
     <string name="focus_pref_title">ऑडियो फोकस</string>
     <string name="headset_pref_title">हेडसेट प्लग</string>

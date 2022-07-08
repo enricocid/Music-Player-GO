@@ -164,9 +164,12 @@
     <string name="fast_seeking_pref_title">Fast seeking</string>
     <string name="fast_seeking_pref_summary">Fast forward/rewind step (seconds)</string>
     <!-- Preferences - Additional notification actions -->
-    <string name="fast_seeking_actions_pref_title">Additional notification actions</string>
-    <string name="fast_seeking_actions_pref_summary_off">Close/repeat</string>
-    <string name="fast_seeking_actions_pref_summary_on">Fast seeking</string>
+    <string name="notification_actions_pref_title">Additional notification actions</string>
+    <string name="notification_actions_repeat">Repeat/close</string>
+    <string name="notification_actions_favorite">Add to favorites/close</string>
+    <string name="notification_actions_favorite_position">Add to favorites (with position)/close</string>
+    <string name="notification_actions_fast_seeking">Fast seeking</string>
+
     <!-- Preferences - Song visualization options (tl = title, fn = full name) -->
     <string name="song_visual_pref_title">Song visualization</string>
     <string name="song_visual_pref_tl_title">Title</string>

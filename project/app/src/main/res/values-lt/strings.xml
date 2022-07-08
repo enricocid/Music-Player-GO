@@ -2,8 +2,6 @@
 <resources>
     <string name="ok">Gerai</string>
     <string name="cancel">Atšaukti</string>
-    <string name="fast_seeking_actions_pref_summary_on">Pirmenybė teikiama greito ieškojimo veiksmams</string>
-    <string name="fast_seeking_actions_pref_summary_off">Pirmenybė teikiama uždarymo/pakartojimo veiksmams</string>
     <string name="fast_seeking_pref_title">Greitas ieškojimas</string>
     <string name="covers_pref_title">Įterpti albumų viršeliai</string>
     <string name="accent_pref_title">Akcentas</string>
@@ -31,7 +29,7 @@
     <string name="headset_pref_title">Ausinių kištukas</string>
     <string name="focus_pref_title">Garso fokusavimas</string>
     <string name="precise_volume_pref_title">Tikslus garsumo valdymas</string>
-    <string name="fast_seeking_actions_pref_title">Papildomi pranešimo veiksmai</string>
+    <string name="notification_actions_repeat">Papildomi pranešimo veiksmai</string>
     <string name="fast_seeking_pref_summary">Greito persukimo pirmyn/atgal žingsnis (sekundėmis)</string>
     <string name="eq_pref_note_summary">Pastaba: pirmenybė bus teikiama sistemos ekvalaizeriui, nebent sistemos nustatymuose išjungsite programėlę „sistemos ekvalaizerį“ :)</string>
     <string name="active_fragments_pref_warning">Jūs negalite tiesiog pašalinti visus skirtukus! :P</string>

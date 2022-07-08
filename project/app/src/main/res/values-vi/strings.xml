@@ -5,9 +5,7 @@
     <string name="headset_pref_title">Cắm tai nghe</string>
     <string name="focus_pref_title">Tập trung âm thanh</string>
     <string name="precise_volume_pref_title">Điều khiển âm lượng chính xác</string>
-    <string name="fast_seeking_actions_pref_summary_on">Ưu tiên hành động tua nhanh</string>
-    <string name="fast_seeking_actions_pref_summary_off">Ưu tiên hành động đóng/lặp lại</string>
-    <string name="fast_seeking_actions_pref_title">Hành động thông báo bổ sung</string>
+    <string name="notification_actions_repeat">Hành động thông báo bổ sung</string>
     <string name="fast_seeking_pref_summary">Bước nhảy nhanh về phía trước/sau (giây)</string>
     <string name="fast_seeking_pref_title">Tua nhanh</string>
     <string name="eq_pref_note_summary">Lưu ý: Bộ cân bằng của hệ thống sẽ được ưu tiên trừ khi bạn tắt ứng dụng \"bộ cân bằng hệ thống\" từ cài đặt hệ thống. :)</string>

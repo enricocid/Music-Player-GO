@@ -60,9 +60,7 @@
     <string name="equalizer_bb">Aumento dos graves</string>
     <string name="equalizer">Equalizador</string>
     <string name="albums">Álbuns</string>
-    <string name="fast_seeking_actions_pref_summary_on">Avanço rápido</string>
-    <string name="fast_seeking_actions_pref_summary_off">Fechar/repetir</string>
-    <string name="fast_seeking_actions_pref_title">Opções adicionais nas notificações</string>
+    <string name="notification_actions_repeat">Opções adicionais nas notificações</string>
     <string name="fast_seeking_pref_summary">Tamanho do avanço/retrocesso rápido (segundos)</string>
     <string name="fast_seeking_pref_title">Avanço rápido</string>
     <string name="song_visual_pref_fn_title">Nome do arquivo</string>

@@ -80,9 +80,7 @@
     <string name="covers_pref_title">Vložené obaly alb</string>
     <string name="fast_seeking_pref_title">Rychlé hledání</string>
     <string name="fast_seeking_pref_summary">Rychlé skákání dopředu/dozadu (vteřiny)</string>
-    <string name="fast_seeking_actions_pref_title">Dodatečné akce oznámení</string>
-    <string name="fast_seeking_actions_pref_summary_off">Zavřít/opakovat</string>
-    <string name="fast_seeking_actions_pref_summary_on">Rychlé hledání</string>
+    <string name="notification_actions_repeat">Dodatečné akce oznámení</string>
     <string name="song_visual_pref_title">Vizualizace skladeb</string>
     <string name="song_visual_pref_tl_title">Název</string>
     <string name="song_visual_pref_fn_title">Název souboru</string>

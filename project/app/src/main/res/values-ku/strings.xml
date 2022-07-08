@@ -56,7 +56,6 @@
     <string name="on_list_ended_pref_continue_title">Bidomîne</string>
     <string name="covers_pref_title">Bergên albumê yên bicîbûyî</string>
     <string name="fast_seeking_pref_summary">Gavê pêşketina/paşketina bilez (çirke)</string>
-    <string name="fast_seeking_actions_pref_summary_off">Bigire/dubare bike</string>
     <string name="song_visual_pref_tl_title">Sernav</string>
     <string name="anim_pref_title">Anîmasyon</string>
     <string name="speed_3">Normal</string>
@@ -75,7 +74,7 @@
     <string name="error_list_ended">Rêze qediya.</string>
     <string name="sorting_pref_date_added_inv">Herî pêşî hatine tevlîkirin</string>
     <string name="sorting_pref_artist_inv">Bi ya hunermend Z-A</string>
-    <string name="fast_seeking_actions_pref_title">Çalakiyên agahdarikinê yên din</string>
+    <string name="notification_actions_repeat">Çalakiyên agahdarikinê yên din</string>
     <string name="content_skip_next">Derbasî ya pêş bibe</string>
     <string name="accent_pref_title">Rengê devokê</string>
     <string name="equalizer_bb">Bass bilind bike</string>
@@ -91,7 +90,6 @@
     <string name="pause_on_end_disabled">Li ser qedandinê ranawestê.</string>
     <string name="song_visual_pref_fn_title">Navê pelê</string>
     <string name="filter_pref_title">Parzûn</string>
-    <string name="fast_seeking_actions_pref_summary_on">Lêgerîna bilez</string>
     <string name="song_visual_pref_title">Dîtbariya stranê</string>
     <string name="equalizer_presets">Pêşsazkirî</string>
     <string name="locale_basque">Baskî</string>

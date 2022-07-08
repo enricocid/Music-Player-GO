@@ -127,9 +127,7 @@
     <string name="covers_pref_title">أغلفة الألبوم المضمنة</string>
     <string name="fast_seeking_pref_title">القفز السريع</string>
     <string name="fast_seeking_pref_summary">مدة القفز للأمام/للخلف (بالثانية)</string>
-    <string name="fast_seeking_actions_pref_title">خيارات إشعارات إضافية</string>
-    <string name="fast_seeking_actions_pref_summary_off">غلق/تكرار</string>
-    <string name="fast_seeking_actions_pref_summary_on">القفز السريع</string>
+    <string name="notification_actions_repeat">خيارات إشعارات إضافية</string>
     <string name="song_visual_pref_title">المؤثرات البصرية أثناء التشغيل</string>
     <string name="song_visual_pref_tl_title">العنوان</string>
     <string name="song_visual_pref_fn_title">اسم الملف</string>

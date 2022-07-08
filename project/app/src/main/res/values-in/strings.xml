@@ -53,7 +53,7 @@
     <string name="focus_pref_title">Manajemen fokus audio</string>
     <string name="headset_pref_title">Manajemen colokan headset</string>
     <string name="filter_pref_title">Filter</string>
-    <string name="fast_seeking_actions_pref_title">Tindakan notifikasi tambahan</string>
+    <string name="notification_actions_repeat">Tindakan notifikasi tambahan</string>
     <string name="fast_seeking_pref_summary">Langkah pencarian maju/mundur cepat (detik)</string>
     <string name="fast_seeking_pref_title">Laju lagu</string>
     <string name="song_visual_pref_fn_title">Nama berkas</string>
@@ -70,8 +70,6 @@
     <string name="on_list_ended_pref_title">Ketika daftar berakhir…</string>
     <string name="error_eq">Ups, telah terjadi kesalahan</string>
     <string name="error_list_ended">Daftar telah berakhir.</string>
-    <string name="fast_seeking_actions_pref_summary_off">Tutup/ulangi</string>
-    <string name="fast_seeking_actions_pref_summary_on">Pencarian cepat</string>
     <string name="favorites_save_time">Simpan posisi lagu</string>
     <string name="open_details_fragment">Buka detail artis/folder</string>
     <string name="content_repeat">Aktifkan/nonaktifkan opsi pengulangan</string>

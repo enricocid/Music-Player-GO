@@ -341,7 +341,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     mMediaControlInterface.onAddToQueue(song)
                 } else {
                     Lists.addToFavorites(
-                        requireActivity(),
+                        requireContext(),
                         song,
                         canRemove = false,
                         0,
@@ -739,7 +739,6 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     } else {
                         defaultTextColor
                     }
-
                     title.setTextColor(titleColor)
 
                     val duration = itemSong?.duration?.toFormattedDuration(

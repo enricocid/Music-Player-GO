@@ -54,9 +54,7 @@
     <string name="headset_pref_title">Branchement du casque</string>
     <string name="filter_pref_title">Filtres</string>
     <string name="filter_popup_title">Masquer</string>
-    <string name="fast_seeking_actions_pref_summary_on">Avance rapide</string>
-    <string name="fast_seeking_actions_pref_summary_off">Fermer/Répéter</string>
-    <string name="fast_seeking_actions_pref_title">Actions de notification supplémentaires</string>
+    <string name="notification_actions_repeat">Actions de notification supplémentaires</string>
     <string name="fast_seeking_pref_summary">Pas d\'avance rapide (en secondes)</string>
     <string name="fast_seeking_pref_title">Avance rapide</string>
     <string name="song_visual_pref_fn_title">Nom du fichier</string>

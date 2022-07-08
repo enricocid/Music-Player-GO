@@ -52,8 +52,6 @@
     <string name="headset_pref_title">Hodetelefonkontakt</string>
     <string name="filter_pref_title">Filter</string>
     <string name="error_list_ended">Spillelisten er slutt.</string>
-    <string name="fast_seeking_actions_pref_summary_on">Foretrekk rask blafring</string>
-    <string name="fast_seeking_actions_pref_summary_off">Foretrekk lukk/gjenta -handlinger</string>
     <string name="fast_seeking_pref_summary">Hurtigspolingshopp fram og tilbake (sekunder)</string>
     <string name="on_list_ended_pref_title">Når en spilleliste slutter …</string>
     <string name="covers_pref_title">Innebygde albumsomslag</string>
@@ -62,7 +60,7 @@
     <string name="song_visual_pref_title">Sporvirtualisering</string>
     <string name="eq_pref_note_summary">Merk: Systemtonekontroll foretrekkes. Hvis du ønsker å bruke den innebygde, skru av programmet systemtonekontroll fra innstillingene. :)</string>
     <string name="fast_seeking_pref_title">Rask blafring</string>
-    <string name="fast_seeking_actions_pref_title">Ytterligere merknadshandlinger</string>
+    <string name="notification_actions_repeat">Ytterligere merknadshandlinger</string>
     <string name="song_visual_pref_fn_title">Filnavn</string>
     <string name="song_visual_pref_tl_title">Tittel</string>
     <string name="error_eq">Oida, en feil inntraff.</string>

@@ -10,9 +10,7 @@
     <string name="headset_pref_title">Entzungailuetarako entxufea</string>
     <string name="focus_pref_title">Audio-ikuspegia</string>
     <string name="precise_volume_pref_title">Bolumenaren kontrol zehatza</string>
-    <string name="fast_seeking_actions_pref_summary_on">Bilaketa azkarreko ekintzak hobetsi</string>
-    <string name="fast_seeking_actions_pref_summary_off">Itxiera/errepikapen ekintzak hobestea</string>
-    <string name="fast_seeking_actions_pref_title">Jakinarazpen-ekintza gehigarriak</string>
+    <string name="notification_actions_repeat">Jakinarazpen-ekintza gehigarriak</string>
     <string name="fast_seeking_pref_summary">Azkar aurreratu/birbobinatzeko urrats (segundoak)</string>
     <string name="fast_seeking_pref_title">Bilaketa azkarra</string>
     <string name="eq_pref_note_summary">Oharra: sistemaren ekualizatzailea lehenetsiko da, sistemaren konfiguraziotik \"sistemaren ekualizatzailea\" aplikazioa desaktibatu ezean. :)</string>

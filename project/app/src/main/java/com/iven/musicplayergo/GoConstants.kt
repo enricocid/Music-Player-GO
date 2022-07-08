@@ -78,6 +78,8 @@ object GoConstants {
     const val REWIND_ACTION = "REWIND_GO"
     const val REPEAT_ACTION = "REPEAT_GO"
     const val CLOSE_ACTION = "CLOSE_GO"
+    const val FAVORITE_ACTION = "FAVORITE_GO"
+    const val FAVORITE_POSITION_ACTION = "FAVORITE_POSITION_GO"
 
     // Modal rv type
     const val ACCENT_TYPE = "MODAL_ACCENT"
@@ -87,4 +89,5 @@ object GoConstants {
     const val FAV_TYPE = "MODAL_FAVORITES"
     const val SLEEPTIMER_TYPE = "MODAL_SLEEPTIMER"
     const val SLEEPTIMER_ELAPSED_TYPE = "MODAL_SLEEPTIMER_ELAPSED"
+    const val NOTIFICATION_ACTIONS_TYPE = "MODAL_NOTIFICATION_ACTIONS"
 }

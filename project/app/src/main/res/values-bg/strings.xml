@@ -19,7 +19,6 @@
     <string name="equalizer_v">Съраунд звук</string>
     <string name="yes">Да</string>
     <string name="playback_pref_summary_on">Задръж</string>
-    <string name="fast_seeking_actions_pref_summary_on">Бързо търсене</string>
     <string name="no">Не</string>
     <string name="delete">Изтрий</string>
     <string name="sorting_pref_track_inv">По номер на песните ↑</string>
@@ -67,7 +66,6 @@
     <string name="focus_pref_title">Управление на аудио фокуса</string>
     <string name="playback_pref_title">Избрана скорост на възпроизвеждане</string>
     <string name="headset_pref_title">Управление на щепсела за слушалки</string>
-    <string name="fast_seeking_actions_pref_summary_off">Затвори/повтори</string>
     <string name="song_visual_pref_title">Визуализация на песен</string>
     <string name="song_visual_pref_tl_title">Заглавие</string>
     <string name="song_visual_pref_fn_title">Име на файл</string>
@@ -119,7 +117,7 @@
     <string name="locale_chinese_s">Китайски (Опростен)</string>
     <string name="locale_greek">Гръцки</string>
     <string name="fast_seeking_pref_title">Бързо търсене</string>
-    <string name="fast_seeking_actions_pref_title">Допълнители действия на известията</string>
+    <string name="notification_actions_repeat">Допълнители действия на известията</string>
     <string name="theme_pref_light_title">Светло</string>
     <string name="theme_pref_auto_title">Система</string>
     <string name="theme_pref_dark_title">Тъмно</string>

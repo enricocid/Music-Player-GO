@@ -40,9 +40,7 @@
     <string name="headset_pref_title">헤드셋 연결</string>
     <string name="focus_pref_title">오디오 포커스</string>
     <string name="precise_volume_pref_title">세밀한 볼륨 조절</string>
-    <string name="fast_seeking_actions_pref_summary_on">빠르게 넘기기</string>
-    <string name="fast_seeking_actions_pref_summary_off">닫기/반복 알림</string>
-    <string name="fast_seeking_actions_pref_title">추가적인 알림 활동</string>
+    <string name="notification_actions_repeat">추가적인 알림 활동</string>
     <string name="eq_pref_note_summary">알아두세요: 시스템 설정에서 \"시스템 이퀄라이저\" 앱을 끄기 전까지는 시스템 이퀄라이저가 앱 이퀄라이저 대신 활성화될거에요. :)</string>
     <string name="active_fragments_pref_warning">모든 탭을 제거할 수는 없어요! :P</string>
     <string name="active_fragments_pref_title">활성화된 탭</string>
