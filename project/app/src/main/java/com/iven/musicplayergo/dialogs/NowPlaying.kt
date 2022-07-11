@@ -168,8 +168,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                     setImageResource(
                         Theming.getRepeatIcon(mph)
                     )
-                    Theming.updateIconTint(
-                        this,
+                    updateIconTint(
                         if (mph.isRepeat1X || mph.isLooping) {
                             Theming.resolveThemeColor(resources)
                         } else {
@@ -181,15 +180,14 @@ class NowPlaying: BottomSheetDialogFragment() {
                 }
 
                 with (npPauseOnEnd) {
-                    isChecked = GoPreferences.getPrefsInstance().isPauseOnEnd
+                    isChecked = GoPreferences.getPrefsInstance().continueOnEnd
                     setOnCheckedChangeListener { _, isChecked ->
-                        mMediaControlInterface.onGetMediaPlayerHolder()?.isPauseOnEnd = !isChecked
+                        GoPreferences.getPrefsInstance().continueOnEnd = isChecked
                         getString(if (isChecked) {
                             R.string.pause_on_end_disabled
                         } else {
                             R.string.pause_on_end
                         }).toToast(requireContext())
-                        GoPreferences.getPrefsInstance().isPauseOnEnd = this.isChecked
                     }
                     setOnLongClickListener { switch ->
                         switch.contentDescription.toString().toToast(requireContext())
@@ -245,17 +243,11 @@ class NowPlaying: BottomSheetDialogFragment() {
                     }
                     override fun onStartTrackingTouch(seekBar: SeekBar) {
                         npVolumeValue.setTextColor(selectedColor)
-                        Theming.updateIconTint(
-                            npVolume,
-                            selectedColor
-                        )
+                        npVolume.updateIconTint(selectedColor)
                     }
                     override fun onStopTrackingTouch(seekBar: SeekBar) {
                         npVolumeValue.setTextColor(defaultValueColor!!)
-                        Theming.updateIconTint(
-                            npVolume,
-                            defaultValueColor
-                        )
+                        npVolume.updateIconTint(defaultValueColor)
                     }
                 })
             }
@@ -321,9 +313,10 @@ class NowPlaying: BottomSheetDialogFragment() {
                 _npCoverBinding?.npRepeat?.let { rpBtn ->
                     rpBtn.setImageResource(Theming.getRepeatIcon(this))
                     when {
-                        onPlaybackCompletion -> Theming.updateIconTint(rpBtn, resolvedIconsColor)
-                        isRepeat1X or isLooping or isPauseOnEnd -> Theming.updateIconTint(rpBtn, Theming.resolveThemeColor(resources))
-                        else -> Theming.updateIconTint(rpBtn, resolvedIconsColor)
+                        onPlaybackCompletion -> rpBtn.updateIconTint(resolvedIconsColor)
+                        isRepeat1X or isLooping or !continueOnEnd ->
+                            rpBtn.updateIconTint(Theming.resolveThemeColor(resources))
+                        else -> rpBtn.updateIconTint(resolvedIconsColor)
                     }
                 }
             }
@@ -369,9 +362,11 @@ class NowPlaying: BottomSheetDialogFragment() {
         _npCoverBinding?.run {
             val favoriteIcon = Theming.getFavoriteIcon(mediaPlayerHolder)
             npLove.setImageResource(favoriteIcon)
-            if (favoriteIcon == R.drawable.ic_favorite) {
-                Theming.updateIconTint(npLove, Theming.resolveThemeColor(resources))
-            }
+            npLove.updateIconTint(if (favoriteIcon == R.drawable.ic_favorite) {
+                Theming.resolveThemeColor(resources)
+            } else {
+                Theming.resolveColorAttr(requireContext(), android.R.attr.colorButtonNormal)
+            })
         }
     }
 

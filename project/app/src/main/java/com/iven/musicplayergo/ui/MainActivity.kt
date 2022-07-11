@@ -645,8 +645,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             mPlayerControlsPanelBinding.favoritesButton.setImageResource(R.drawable.ic_favorite)
             Theming.resolveThemeColor(resources)
         }
-        Theming.updateIconTint(
-            mPlayerControlsPanelBinding.favoritesButton,
+        mPlayerControlsPanelBinding.favoritesButton.updateIconTint(
             favoritesButtonColor
         )
     }
@@ -1114,7 +1113,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private val mMediaPlayerInterface = object : MediaPlayerInterface {
 
         override fun onPlaybackCompleted() {
-            if (!mMediaPlayerHolder.isPauseOnEnd) {
+            if (mMediaPlayerHolder.continueOnEnd) {
                 mNpDialog?.updateRepeatStatus(onPlaybackCompletion = true)
             }
         }
@@ -1151,15 +1150,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
 
         override fun onQueueEnabled() {
-            Theming.updateIconTint(
-                mPlayerControlsPanelBinding.queueButton,
+            mPlayerControlsPanelBinding.queueButton.updateIconTint(
                 ContextCompat.getColor(this@MainActivity, R.color.widgetsColor)
             )
         }
 
         override fun onQueueStartedOrEnded(started: Boolean) {
-            Theming.updateIconTint(
-                mPlayerControlsPanelBinding.queueButton,
+            mPlayerControlsPanelBinding.queueButton.updateIconTint(
                 when {
                     started -> Theming.resolveThemeColor(resources)
                     mMediaPlayerHolder.queueSongs.isEmpty() -> {

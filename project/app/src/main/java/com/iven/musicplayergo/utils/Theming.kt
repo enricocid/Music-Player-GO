@@ -4,17 +4,14 @@ package com.iven.musicplayergo.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.util.TypedValue
-import android.widget.ImageView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.core.widget.ImageViewCompat
 import com.google.android.material.appbar.MaterialToolbar
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
@@ -99,13 +96,6 @@ object Theming {
             e.printStackTrace()
             return resources.getString(R.string.error_eq)
         }
-    }
-
-    @JvmStatic
-    fun updateIconTint(imageView: ImageView, tint: Int) {
-        ImageViewCompat.setImageTintList(
-            imageView, ColorStateList.valueOf(tint)
-        )
     }
 
     @JvmStatic

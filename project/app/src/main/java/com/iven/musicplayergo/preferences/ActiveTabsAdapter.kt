@@ -11,6 +11,7 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toToast
+import com.iven.musicplayergo.extensions.updateIconTint
 import com.iven.musicplayergo.utils.Theming
 
 
@@ -66,12 +67,9 @@ class ActiveTabsAdapter(private val ctx: Context) :
                         tabImageButton
                     )
                 } else {
-                    Theming.updateIconTint(tabDragHandle, mDisabledColor)
+                    tabDragHandle.updateIconTint(mDisabledColor)
                     tabText.setTextColor(mDisabledColor)
-                    Theming.updateIconTint(
-                        tabImageButton,
-                        mDisabledColor
-                    )
+                    tabImageButton.updateIconTint(mDisabledColor)
                 }
 
                 setOnClickListener {
@@ -116,9 +114,9 @@ class ActiveTabsAdapter(private val ctx: Context) :
         } else {
             mDisabledColor
         }
-        Theming.updateIconTint(dragHandle, textColor)
+        dragHandle.updateIconTint(textColor)
         textView.setTextColor(textColor)
-        Theming.updateIconTint(icon, iconColor)
+        icon.updateIconTint(iconColor)
     }
 
     private fun getTabText(tab: String) = when (tab) {

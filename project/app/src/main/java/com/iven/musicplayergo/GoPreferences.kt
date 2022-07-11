@@ -49,7 +49,8 @@ class GoPreferences(context: Context) {
     private val prefsAnim = context.getString(R.string.anim_pref)
     private val prefsFilter = context.getString(R.string.filter_pref)
     private val prefsPlaybackVel = context.getString(R.string.playback_vel_pref)
-    private val prefsIsPauseOnEnd = context.getString(R.string.pause_on_end_pref)
+    private val prefsIsContinueOnEnd = context.getString(R.string.continue_on_end_pref)
+    private val prefsHasCompletedPlayback = context.getString(R.string.has_completed_playback_pref)
 
     private val prefsLocale = context.getString(R.string.locale_pref)
 
@@ -196,9 +197,13 @@ class GoPreferences(context: Context) {
         get() = mPrefs.getBoolean(prefsAnim, true)
         set(value) = mPrefs.edit { putBoolean(prefsAnim, value) }
 
-    var isPauseOnEnd
-        get() = mPrefs.getBoolean(prefsIsPauseOnEnd, false)
-        set(value) = mPrefs.edit { putBoolean(prefsIsPauseOnEnd, value) }
+    var continueOnEnd
+        get() = mPrefs.getBoolean(prefsIsContinueOnEnd, true)
+        set(value) = mPrefs.edit { putBoolean(prefsIsContinueOnEnd, value) }
+
+    var hasCompletedPlayback
+        get() = mPrefs.getBoolean(prefsHasCompletedPlayback, false)
+        set(value) = mPrefs.edit { putBoolean(prefsHasCompletedPlayback, value) }
 
     var locale
         get() = mPrefs.getString(prefsLocale, null)

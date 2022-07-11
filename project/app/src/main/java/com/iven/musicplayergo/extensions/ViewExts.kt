@@ -5,6 +5,7 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -26,6 +27,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
+import androidx.core.widget.ImageViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -250,3 +252,9 @@ fun View.safeClickListener(safeClickListener: (view: View) -> Unit) {
 }
 
 fun Int.toContrastColor() = if (ColorUtils.calculateLuminance(this) < 0.35) Color.WHITE else Color.DKGRAY
+
+fun ImageView.updateIconTint(tint: Int) {
+    ImageViewCompat.setImageTintList(
+        this, ColorStateList.valueOf(tint)
+    )
+}

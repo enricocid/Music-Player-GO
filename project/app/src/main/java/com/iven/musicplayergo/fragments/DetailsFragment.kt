@@ -394,8 +394,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 with(_binding.sortButton) {
                     setImageResource(getDefSortingIconForArtistView())
                     isEnabled = mSelectedAlbum?.music?.size!! >= 2
-                    Theming.updateIconTint(
-                        this,
+                    updateIconTint(
                         if (isEnabled) {
                             ContextCompat.getColor(requireContext(), R.color.widgetsColor)
                         } else {

@@ -165,8 +165,8 @@ class MediaPlayerHolder:
     private val sPlaybackSpeedPersisted get() = GoPreferences.getPrefsInstance().playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY
     var isRepeat1X = false
     var isLooping = false
-    var isPauseOnEnd = false
-    private var hasCompletedPlayback = false
+    val continueOnEnd get() = GoPreferences.getPrefsInstance().continueOnEnd
+    var hasCompletedPlayback = false
 
     // isQueue saves the current song when queue starts
     var isQueue: Music? = null
@@ -359,11 +359,11 @@ class MediaPlayerHolder:
     override fun onCompletion(mediaPlayer: MediaPlayer) {
 
         when {
-            isPauseOnEnd -> {
+            !continueOnEnd -> {
                 hasCompletedPlayback = true
                 pauseMediaPlayer()
             }
-            (isRepeat1X or isLooping) && !isPauseOnEnd -> if (isMediaPlayer) {
+            (isRepeat1X or isLooping) && !continueOnEnd -> if (isMediaPlayer) {
                 repeatSong(0)
             }
             isQueue != null && !canRestoreQueue -> manageQueue(isNext = true)
@@ -480,7 +480,7 @@ class MediaPlayerHolder:
             if (sFocusEnabled) {
                 tryToGetAudioFocus()
             }
-            if (isPauseOnEnd && hasCompletedPlayback) {
+            if (!continueOnEnd && hasCompletedPlayback || isSongFromPrefs && !continueOnEnd && GoPreferences.getPrefsInstance().hasCompletedPlayback) {
                 skip(isNext = true)
             } else {
                 startOrChangePlaybackSpeed()
@@ -698,7 +698,6 @@ class MediaPlayerHolder:
             isLooping = false
         }
 
-        isPauseOnEnd = GoPreferences.getPrefsInstance().isPauseOnEnd
         if (GoPreferences.getPrefsInstance().isPreciseVolumeEnabled) {
             setPreciseVolume(currentVolumeInPercent)
         }
@@ -901,15 +900,15 @@ class MediaPlayerHolder:
     }
 
     fun onUpdateFavorites() {
-        mPlayerService.musicNotificationManager.updateFavoriteIcon()
+        if (GoPreferences.getPrefsInstance().notificationActions.first == GoConstants.FAVORITE_ACTION) {
+            mPlayerService.musicNotificationManager.updateFavoriteIcon()
+        }
         mediaPlayerInterface.onUpdateFavorites()
     }
 
     fun setQueueEnabled(enabled: Boolean, canSkip: Boolean) {
         if (enabled) {
-            if (::mediaPlayerInterface.isInitialized) {
-                mediaPlayerInterface.onQueueEnabled()
-            }
+            if (::mediaPlayerInterface.isInitialized) { mediaPlayerInterface.onQueueEnabled() }
         } else {
             if (isQueue != null) {
                 currentSong = isQueue
@@ -922,9 +921,7 @@ class MediaPlayerHolder:
             if (::mediaPlayerInterface.isInitialized) {
                 mediaPlayerInterface.onQueueStartedOrEnded(started = false)
             }
-            if (canSkip) {
-                skip(isNext = true)
-            }
+            if (canSkip) { skip(isNext = true) }
         }
     }
 
