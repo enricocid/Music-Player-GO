@@ -42,6 +42,6 @@
     <color name="widgetsColor">#212121</color>
 
     <color name="mainBg">#fcfcfc</color>
-    <color name="systemBarBg">#ededed</color>
+    <color name="systemBarBg">@android:color/transparent</color>
     <color name="toolbarBg">@color/mainBg</color>
 </resources>
