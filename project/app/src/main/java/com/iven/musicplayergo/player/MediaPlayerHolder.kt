@@ -156,7 +156,8 @@ class MediaPlayerHolder:
     val isSleepTimer get() = mSleepTimer != null
 
     // Media player state/booleans
-    val isPlaying get() = ::mediaPlayer.isInitialized && MediaPlayerUtils.safeCheckIsPlaying(mediaPlayer)
+    val isPlaying get() = ::mediaPlayer.isInitialized && state == GoConstants.PLAYING ||
+            ::mediaPlayer.isInitialized && state == GoConstants.RESUMED
     val isMediaPlayer get() = ::mediaPlayer.isInitialized
 
     private var sNotificationForeground = false

@@ -50,16 +50,4 @@ object MediaPlayerUtils {
             }
         }
     }
-
-    @JvmStatic
-    fun safeCheckIsPlaying(mediaPlayer: MediaPlayer): Boolean {
-        with (mediaPlayer) {
-            return try {
-                isPlaying
-            } catch (e: IllegalStateException) {
-                e.printStackTrace()
-                false
-            }
-        }
-    }
 }

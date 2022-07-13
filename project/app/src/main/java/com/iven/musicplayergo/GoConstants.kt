@@ -34,9 +34,6 @@ object GoConstants {
     // song visualization options
     const val FN = "1"
 
-    // notification options
-    const val NOTIF_REPEAT_CLOSE = "0"
-
     // sorting
     const val DEFAULT_SORTING = 0
     const val ASCENDING_SORTING = 1
