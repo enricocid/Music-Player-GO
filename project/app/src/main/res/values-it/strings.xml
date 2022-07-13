@@ -54,7 +54,7 @@
     <string name="repeat_enabled">Ripeti 1x on.</string>
     <string name="repeat_loop_enabled">Ripetizione ∞ on.</string>
     <string name="repeat_disabled">Ripetizione ∞ off.</string>
-    <string name="pause_on_end_desc">Scegli se continuare la riproduzione o mettere in pausa al termine</string>
+    <string name="continue_on_end_desc">Scegli se continuare la riproduzione o mettere in pausa al termine</string>
     <string name="pause_on_end">Pausa al termine on.</string>
     <string name="pause_on_end_disabled">Pausa al termine off.</string>
     <string name="settings">Opzioni</string>
@@ -149,8 +149,6 @@
     <string name="locale_vietnamese">Vietnamita</string>
     <string name="confirm_ask_pref_title">Messaggi di conferma</string>
     <string name="confirm_ask_pref_sum">Chiedi conferma prima di fare qualcosa</string>
-    <string name="save_state_pref_title">Stato riproduzione</string>
-    <string name="save_state_pref_sum">Salva e ripristina stato riproduzione. Nota: disattivando l\'opzione l\'ultimo stato sarà cancellato.</string>
     <string name="red">Rosso</string>
     <string name="pink">Rosa</string>
     <string name="purple">Viola</string>

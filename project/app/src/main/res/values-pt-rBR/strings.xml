@@ -160,9 +160,7 @@
     <string name="indigo">Índigo</string>
     <string name="locale_bulgarian">Búlgaro</string>
     <string name="theme_pref_black_title">Preto puro</string>
-    <string name="save_state_pref_title">Estado de reprodução</string>
-    <string name="save_state_pref_sum">Salve e restaure o estado de reprodução. Nota: desativar a opção resultará no estado sendo apagado.</string>
-    <string name="pause_on_end_desc">Escolha se deseja continuar a reprodução ou pausar após a conclusão</string>
+    <string name="continue_on_end_desc">Escolha se deseja continuar a reprodução ou pausar após a conclusão</string>
     <string name="notification_actions_favorite">Adicionar aos favoritos/fechar</string>
     <string name="notification_actions_favorite_position">Adicionar aos favoritos (com posição)/fechar</string>
     <string name="notification_actions_fast_seeking">Busca rápida</string>

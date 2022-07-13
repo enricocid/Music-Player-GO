@@ -160,8 +160,6 @@
     <string name="sleeptimer_enabled">Остановить проигрывание после %1s</string>
     <string name="theme_pref_black_title">Абсолютно чёрный</string>
     <string name="locale_bulgarian">Болгарский</string>
-    <string name="save_state_pref_title">Состояние воспроизведения</string>
-    <string name="save_state_pref_sum">Сохранять и восстанавливать состояние воспроизведения. Заметка: отключение настройки приведёт к сбросу состояния.</string>
     <string name="filters_clear">Фильтры будут очищены. Продолжить\?</string>
     <string name="confirm_ask_pref_title">Запросы о подтверждении</string>
     <string name="confirm_ask_pref_sum">Запрашивать подтверждение перед совершением любых действий</string>

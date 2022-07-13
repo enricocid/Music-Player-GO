@@ -167,13 +167,11 @@
     <string name="sleeptimer_cancel_desc">Deter temporizador</string>
     <string name="locale_bulgarian">Búlgaro</string>
     <string name="theme_pref_black_title">Negro puro</string>
-    <string name="pause_on_end_desc">Elixe se continúa a reprodución ou deter ao completarse</string>
+    <string name="continue_on_end_desc">Elixe se continúa a reprodución ou deter ao completarse</string>
     <string name="notification_actions_favorite">Engadir a favoritos/pechar</string>
-    <string name="save_state_pref_title">Estado da reprodución</string>
     <string name="notification_actions_fast_seeking">Avance rápido</string>
     <string name="notification_actions_pref_title">Accións de notificación adicionais</string>
     <string name="notification_actions_favorite_position">Engadir a favoritos (con posición)/pechar</string>
-    <string name="save_state_pref_sum">Gardar e restablecer estado de reprodución. Nota: desactivando a opción fará que elimine o estado.</string>
     <string name="filters_clear">Vanse limpar os filtros, continuar\?</string>
     <string name="confirm_ask_pref_title">Mensaxes de confirmación</string>
     <string name="confirm_ask_pref_sum">Pedir confirmación antes de facer calquera cousa</string>

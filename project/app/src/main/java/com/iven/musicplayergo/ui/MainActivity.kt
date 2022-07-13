@@ -659,7 +659,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     onRestartSeekBarCallback()
                     updatePlayingInfo(restore = true)
                 } else {
-                    isSongFromPrefs = mGoPreference.latestPlayedSong != null && isSaveRestoreState
+                    isSongFromPrefs = mGoPreference.latestPlayedSong != null
 
                     var isQueueRestored = mGoPreference.isQueue
                     if (!mGoPreference.queue.isNullOrEmpty()) {
@@ -674,7 +674,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                             isQueueRestored = null
                             isQueue = null
                         } else {
-                            if (isQueueRestored != null && isSaveRestoreState) {
+                            if (isQueueRestored != null) {
                                 isQueue = isQueueRestored
                                 isQueueStarted = true
                                 mediaPlayerInterface.onQueueStartedOrEnded(started = true)
@@ -863,7 +863,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     override fun onSongSelected(song: Music?, songs: List<Music>?, songLaunchedBy: String) {
         if (isMediaPlayerHolder) {
             with(mMediaPlayerHolder) {
-                if (isSongFromPrefs && isSaveRestoreState) {
+                if (isSongFromPrefs) {
                     isSongFromPrefs = false
                 }
                 if (!isPlay) {
@@ -1178,7 +1178,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
 
         override fun onBackupSong() {
-            if (checkIsPlayer(showError = false) && !mMediaPlayerHolder.isPlaying && GoPreferences.getPrefsInstance().isStateSavedRestored) {
+            if (checkIsPlayer(showError = false) && !mMediaPlayerHolder.isPlaying) {
                 mGoPreference.latestPlayedSong = mMediaPlayerHolder.currentSong?.toSavedMusic(mMediaPlayerHolder.playerPosition, mMediaPlayerHolder.launchedBy)
             }
         }

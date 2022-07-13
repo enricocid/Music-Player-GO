@@ -176,7 +176,6 @@ class MediaPlayerHolder:
     var restoreQueueSong: Music? = null
 
     var isSongFromPrefs = false
-    val isSaveRestoreState = GoPreferences.getPrefsInstance().isStateSavedRestored
 
     var state = GoConstants.PAUSED
     var isPlay = false
@@ -486,7 +485,7 @@ class MediaPlayerHolder:
                 startOrChangePlaybackSpeed()
             }
 
-            state = if (isSongFromPrefs || !isSaveRestoreState) {
+            state = if (isSongFromPrefs) {
                 isSongFromPrefs = false
                 GoConstants.PLAYING
             } else {
@@ -624,7 +623,7 @@ class MediaPlayerHolder:
     }
 
     fun instantReset() {
-        if (isMediaPlayer && !isSongFromPrefs || isMediaPlayer && !isSaveRestoreState) {
+        if (isMediaPlayer && !isSongFromPrefs || isMediaPlayer) {
             when {
                 mediaPlayer.currentPosition < 5000 -> skip(isNext = false)
                 else -> repeatSong(0)
@@ -863,7 +862,7 @@ class MediaPlayerHolder:
             if (isPlaying) {
                 pauseMediaPlayer()
             } else {
-                if (isSongFromPrefs || !isSaveRestoreState) {
+                if (isSongFromPrefs) {
                     updateMediaSessionMetaData()
                 }
                 resumeMediaPlayer()

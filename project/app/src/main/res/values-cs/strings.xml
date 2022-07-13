@@ -160,12 +160,10 @@
     <string name="sleeptimer_stop">Zastavit</string>
     <string name="locale_bulgarian">Bulharština</string>
     <string name="theme_pref_black_title">Plně černá</string>
-    <string name="save_state_pref_title">Stav přehrávání</string>
     <string name="filters_clear">Filtry budou vymazány. Pokračovat\?</string>
-    <string name="save_state_pref_sum">Uložit a obnoviz stav přehrávání. Pozor: zakázání této možnosti bude mít za následek vymazání stavu.</string>
     <string name="confirm_ask_pref_title">Potvrzovací zprávy</string>
     <string name="confirm_ask_pref_sum">Zeptat se na potvrzení před vykonáním akce</string>
-    <string name="pause_on_end_desc">Vyberte, zda pokračovat v přehrávání nebo pozastavit při dokončení</string>
+    <string name="continue_on_end_desc">Vyberte, zda pokračovat v přehrávání nebo pozastavit při dokončení</string>
     <string name="notification_actions_pref_title">Další akce oznámení</string>
     <string name="notification_actions_favorite_position">Přidat do oblíbených (s pozicí)/zavřít</string>
     <string name="notification_actions_fast_seeking">Rychlé hledání</string>

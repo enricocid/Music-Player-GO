@@ -107,28 +107,26 @@ class PlayerService : Service() {
 
             // Saves last played song and its position if user is ok :)
             val preferences = GoPreferences.getPrefsInstance()
-            if (preferences.isStateSavedRestored) {
-                with(mediaPlayerHolder) {
-                    preferences.latestPlayedSong = if (isQueue != null && isQueueStarted) {
-                        preferences.isQueue = isQueue
-                        currentSong
-                    } else {
-                        if (preferences.isQueue != null) { preferences.isQueue = null }
-                        currentSong?.toSavedMusic(playerPosition, launchedBy)
-                    }
-                    if (queueSongs.isNotEmpty()) { preferences.queue = queueSongs }
+            with(mediaPlayerHolder) {
+                preferences.latestPlayedSong = if (isQueue != null && isQueueStarted) {
+                    preferences.isQueue = isQueue
+                    currentSong
+                } else {
+                    if (preferences.isQueue != null) { preferences.isQueue = null }
+                    currentSong?.toSavedMusic(playerPosition, launchedBy)
                 }
-                preferences.latestVolume = mediaPlayerHolder.currentVolumeInPercent
-                preferences.hasCompletedPlayback = mediaPlayerHolder.hasCompletedPlayback
+                if (queueSongs.isNotEmpty()) { preferences.queue = queueSongs }
             }
+            preferences.latestVolume = mediaPlayerHolder.currentVolumeInPercent
+            preferences.hasCompletedPlayback = mediaPlayerHolder.hasCompletedPlayback
+        }
 
-            if (::mMediaSessionCompat.isInitialized && mMediaSessionCompat.isActive) {
-                with(mMediaSessionCompat) {
-                    isActive = false
-                    setCallback(null)
-                    setMediaButtonReceiver(null)
-                    release()
-                }
+        if (::mMediaSessionCompat.isInitialized && mMediaSessionCompat.isActive) {
+            with(mMediaSessionCompat) {
+                isActive = false
+                setCallback(null)
+                setMediaButtonReceiver(null)
+                release()
             }
             mediaPlayerHolder.release()
             releaseWakeLock()

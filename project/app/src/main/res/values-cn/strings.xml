@@ -163,9 +163,7 @@
     <string name="ok">好</string>
     <string name="cancel">取消</string>
     <string name="filters_clear">将清除筛选器。要继续吗？</string>
-    <string name="save_state_pref_title">播放状态</string>
-    <string name="save_state_pref_sum">保存和恢复播放状态。 注意：禁用该选项将导致状态被擦除。</string>
-    <string name="pause_on_end_desc">选择完成后是继续播放还是暂停</string>
+    <string name="continue_on_end_desc">选择完成后是继续播放还是暂停</string>
     <string name="notification_actions_fast_seeking">快速寻找</string>
     <string name="notification_actions_pref_title">附加通知操作</string>
     <string name="notification_actions_favorite_position">添加到收藏（带位置）/关闭</string>

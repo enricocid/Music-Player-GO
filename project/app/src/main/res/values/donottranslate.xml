@@ -90,5 +90,4 @@
     <string name="has_completed_playback_pref">has_completed_playback_pref</string>
     <string name="locale_pref">locale_pref</string>
     <string name="ask_confirmation_pref">ask_confirmation_pref</string>
-    <string name="save_state_pref">save_state_pref</string>
 </resources>

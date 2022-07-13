@@ -163,9 +163,7 @@
     <string name="filters_clear">Фільтри будуть очищені. Продовжити\?</string>
     <string name="confirm_ask_pref_title">Повідомлення підтвердження</string>
     <string name="confirm_ask_pref_sum">Запитувати підтвердження, перш ніж щось робити</string>
-    <string name="save_state_pref_title">Стан відтворення</string>
-    <string name="save_state_pref_sum">Збережіть і відновіть стан відтворення. Примітка: вимкнення опції призведе до того, що стан буде стерто.</string>
-    <string name="pause_on_end_desc">Вкажіть продовжувати чи призупиняти відтворення після завершення</string>
+    <string name="continue_on_end_desc">Вкажіть продовжувати чи призупиняти відтворення після завершення</string>
     <string name="notification_actions_favorite_position">Додати в обране (з позицією)/закрити</string>
     <string name="notification_actions_pref_title">Додаткові дії зі сповіщення</string>
     <string name="notification_actions_fast_seeking">Швидкий пошук</string>

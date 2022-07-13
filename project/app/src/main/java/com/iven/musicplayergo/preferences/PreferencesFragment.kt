@@ -134,15 +134,6 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 findPreference<Preference>(getString(R.string.notif_actions_pref))?.summary =
                     getString(Theming.getNotificationActionTitle(GoPreferences.getPrefsInstance().notificationActions.first))
             getString(R.string.song_visual_pref) -> mMediaControlInterface.onUpdatePlayingAlbumSongs(null)
-            getString(R.string.save_state_pref) -> GoPreferences.getPrefsInstance().run {
-                if (!isStateSavedRestored) {
-                    latestPlayedSong = null
-                    isQueue = null
-                    queue = null
-                    latestVolume = 100
-                    mMediaControlInterface.onGetMediaPlayerHolder()?.setPreciseVolume(100)
-                }
-            }
         }
     }
 

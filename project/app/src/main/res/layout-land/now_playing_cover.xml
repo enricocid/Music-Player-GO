@@ -84,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:contentDescription="@string/pause_on_end_desc"
+            android:contentDescription="@string/continue_on_end_desc"
             android:thumb="@drawable/switch_np_thumb" />
     </LinearLayout>
 </LinearLayout>

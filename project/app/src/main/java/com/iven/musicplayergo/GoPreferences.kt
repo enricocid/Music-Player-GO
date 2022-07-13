@@ -55,7 +55,6 @@ class GoPreferences(context: Context) {
     private val prefsLocale = context.getString(R.string.locale_pref)
 
     private val prefsIsAskConfirmation = context.getString(R.string.ask_confirmation_pref)
-    private val prefsIsSaveState = context.getString(R.string.save_state_pref)
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
 
@@ -212,10 +211,6 @@ class GoPreferences(context: Context) {
     var isAskForRemoval: Boolean
         get() = mPrefs.getBoolean(prefsIsAskConfirmation, true)
         set(value) = mPrefs.edit { putBoolean(prefsIsAskConfirmation, value) }
-
-    var isStateSavedRestored: Boolean
-        get() = mPrefs.getBoolean(prefsIsSaveState, true)
-        set(value) = mPrefs.edit { putBoolean(prefsIsSaveState, value) }
 
     // Retrieve object from the Preferences using Moshi
     private fun <T : Any> putObjectForType(key: String, value: T?, type: Type) {

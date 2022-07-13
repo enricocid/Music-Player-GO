@@ -82,7 +82,7 @@
     <string name="repeat_enabled">Single repetition on.</string>
     <string name="repeat_loop_enabled">∞ repeat on.</string>
     <string name="repeat_disabled">∞ repeat off.</string>
-    <string name="pause_on_end_desc">Choose whether to continue playback or pause on completion</string>
+    <string name="continue_on_end_desc">Choose whether to continue playback or pause on completion</string>
     <string name="pause_on_end">Pause on completion on.</string>
     <string name="pause_on_end_disabled">Pause on completion off.</string>
     <!-- Preferences - Categories -->
@@ -181,9 +181,6 @@
     <!-- Preferences - Confirmation dialogs -->
     <string name="confirm_ask_pref_title">Confirmation messages</string>
     <string name="confirm_ask_pref_sum">Ask for confirmation before doing anything</string>
-    <!-- Preferences - Save playback state -->
-    <string name="save_state_pref_title">Playback state</string>
-    <string name="save_state_pref_sum">Save and restore playback state. Note: disabling the option will result in state to be wiped.</string>
 
     <!-- Preferences - Accents names -->
     <string name="red">Red</string>
