@@ -4,13 +4,16 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.extensions.toContrastColor
 import com.iven.musicplayergo.extensions.toToast
+import com.iven.musicplayergo.extensions.updateIconTint
 import com.iven.musicplayergo.utils.Theming
 
 
@@ -45,12 +48,12 @@ class AccentsAdapter(private val activity: Activity) :
 
                 val cardView = this as MaterialCardView
                 cardView.setCardBackgroundColor(color)
-                cardView.strokeColor = ColorUtils.setAlphaComponent(color.toContrastColor(), 90)
 
-                cardView.strokeWidth = if (absoluteAdapterPosition == selectedAccent) {
-                    resources.getDimensionPixelSize(R.dimen.accent_dim_stroke)
-                } else {
-                    0
+                findViewById<ImageView>(R.id.check).run {
+                    handleViewVisibility(
+                        show = absoluteAdapterPosition == selectedAccent
+                    )
+                    updateIconTint(ColorUtils.setAlphaComponent(color.toContrastColor(), 75))
                 }
 
                 setOnClickListener {
