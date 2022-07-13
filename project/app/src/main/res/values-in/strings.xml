@@ -163,7 +163,6 @@
     <string name="filters_clear">Filter akan dihapus. Lanjutkan\?</string>
     <string name="confirm_ask_pref_title">Pesan konfirmasi</string>
     <string name="confirm_ask_pref_sum">Minta konfirmasi sebelum melakukan sesuatu</string>
-    <string name="pause_on_end_desc">Pilih apakah Anda ingin melanjutkan pemutaran atau jeda saat selesai</string>
     <string name="notification_actions_favorite_position">Tambahkan ke favorit (dengan posisi)/tutup</string>
     <string name="notification_actions_pref_title">Tindakan notifikasi tambahan</string>
     <string name="notification_actions_favorite">Tambahkan ke favorit/tutup</string>
