@@ -398,7 +398,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         if (isEnabled) {
                             ContextCompat.getColor(requireContext(), R.color.widgetsColor)
                         } else {
-                            Theming.getWidgetsColorDisabled(requireContext())
+                            Theming.resolveWidgetsColorNormal(requireContext())
                         }
                     )
                 }

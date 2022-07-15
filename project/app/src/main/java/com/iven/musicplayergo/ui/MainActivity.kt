@@ -674,7 +674,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         val favoritesButtonColor = if (favorites.isNullOrEmpty()) {
             mPlayerControlsPanelBinding.favoritesButton.setImageResource(R.drawable.ic_favorite_empty)
-            Theming.getWidgetsColorDisabled(this)
+            Theming.resolveWidgetsColorNormal(this)
         } else {
             mPlayerControlsPanelBinding.favoritesButton.setImageResource(R.drawable.ic_favorite)
             Theming.resolveThemeColor(resources)
@@ -1189,7 +1189,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     started -> Theming.resolveThemeColor(resources)
                     mMediaPlayerHolder.queueSongs.isEmpty() -> {
                         mQueueDialog?.dismissAllowingStateLoss()
-                        Theming.getWidgetsColorDisabled(this@MainActivity)
+                        Theming.resolveWidgetsColorNormal(this@MainActivity)
                     }
                     else -> {
                         mQueueDialog?.dismissAllowingStateLoss()

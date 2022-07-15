@@ -21,7 +21,7 @@ class ActiveTabsAdapter(private val ctx: Context) :
     var availableItems = GoPreferences.getPrefsInstance().activeTabsDef.toMutableList()
     private val mActiveItems = GoPreferences.getPrefsInstance().activeTabs.toMutableList()
 
-    private val mDisabledColor = Theming.getWidgetsColorDisabled(ctx)
+    private val mDisabledColor = Theming.resolveWidgetsColorNormal(ctx)
     private val mDefaultTextColor = Theming.resolveColorAttr(ctx, android.R.attr.textColorPrimary)
 
     fun getUpdatedItems() = availableItems.apply {

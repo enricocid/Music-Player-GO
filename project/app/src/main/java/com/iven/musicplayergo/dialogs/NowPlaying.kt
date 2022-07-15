@@ -171,7 +171,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                         if (mph.isRepeat1X || mph.isLooping) {
                             Theming.resolveThemeColor(resources)
                         } else {
-                            Theming.getWidgetsColorDisabled(requireContext())
+                            Theming.resolveWidgetsColorNormal(requireContext())
                         }
                     )
                     setOnClickListener { setRepeat() }
@@ -308,7 +308,7 @@ class NowPlaying: BottomSheetDialogFragment() {
     fun updateRepeatStatus(onPlaybackCompletion: Boolean) {
         if (::mMediaControlInterface.isInitialized) {
             mMediaControlInterface.onGetMediaPlayerHolder()?.run {
-                val widgetsColorDisabled = Theming.getWidgetsColorDisabled(requireContext())
+                val widgetsColorDisabled = Theming.resolveWidgetsColorNormal(requireContext())
                 _npCoverBinding?.npRepeat?.let { rpBtn ->
                     rpBtn.setImageResource(Theming.getRepeatIcon(this, isNotification = false))
                     when {
@@ -364,7 +364,7 @@ class NowPlaying: BottomSheetDialogFragment() {
             npLove.updateIconTint(if (favoriteIcon == R.drawable.ic_favorite) {
                 Theming.resolveThemeColor(resources)
             } else {
-                Theming.getWidgetsColorDisabled(requireContext())
+                Theming.resolveWidgetsColorNormal(requireContext())
             })
         }
     }

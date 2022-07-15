@@ -199,6 +199,11 @@ object Theming {
 
     @ColorInt
     @JvmStatic
+    fun resolveWidgetsColorNormal(context: Context) = resolveColorAttr(context,
+        android.R.attr.colorButtonNormal)
+
+    @ColorInt
+    @JvmStatic
     fun resolveColorAttr(context: Context, @AttrRes colorAttr: Int): Int {
         val resolvedAttr: TypedValue =
             resolveThemeAttr(
@@ -317,8 +322,4 @@ object Theming {
             ContextCompat.getColor(tb.context, R.color.widgetsColor)
         })
     }
-
-    @JvmStatic
-    @ColorInt
-    fun getWidgetsColorDisabled(context: Context) = resolveColorAttr(context, android.R.attr.colorButtonNormal)
 }

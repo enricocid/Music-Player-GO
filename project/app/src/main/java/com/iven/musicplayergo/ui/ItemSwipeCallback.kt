@@ -12,7 +12,7 @@ import com.iven.musicplayergo.utils.Theming
 
 class ItemSwipeCallback(private val ctx: Context, private val isQueueDialog: Boolean, private val isFavoritesDialog: Boolean, private val onSwipedAction: (viewHolder: RecyclerView.ViewHolder, direction: Int) -> Unit) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
 
-    private var colorDrawableBackground = ColorDrawable(Theming.getWidgetsColorDisabled(ctx))
+    private var colorDrawableBackground = ColorDrawable(Theming.resolveWidgetsColorNormal(ctx))
     private var icon = ContextCompat.getDrawable(ctx, R.drawable.ic_queue_add)
     private var iconMarginVertical = 0
 
