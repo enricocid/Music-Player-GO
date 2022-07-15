@@ -163,4 +163,9 @@
     <string name="filters_clear">Filter akan dihapus. Lanjutkan\?</string>
     <string name="confirm_ask_pref_title">Pesan konfirmasi</string>
     <string name="confirm_ask_pref_sum">Minta konfirmasi sebelum melakukan sesuatu</string>
+    <string name="notification_actions_pref_title">Tindakan notifikasi tambahan</string>
+    <string name="notification_actions_favorite">Tambahkan ke favorit/tutup</string>
+    <string name="notification_actions_fast_seeking">Maju cepat</string>
+    <string name="notification_actions_favorite_position">Tambahkan ke favorit (dengan posisi)/tutup</string>
+    <string name="continue_on_end_desc">Pilih apakah ingin melanjutkan atau jeda pada saat selesai</string>
 </resources>
