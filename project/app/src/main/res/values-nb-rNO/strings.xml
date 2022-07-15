@@ -93,7 +93,7 @@
     <string name="error_fs_not_allowed">Noe gikk galt. :( Overvei å skru av batterioptimalisering i systeminnstillinger: Programmer &gt; Alle programmer &gt; Music Player Go &gt; Batteri &gt; Ubegrenset siden det kan forårsake at avspillertjenesten stopper.</string>
     <string name="pink">Rosa</string>
     <string name="cyan">Cyanblå</string>
-    <string name="teal">Turkis</string>
+    <string name="teal">Mørk grønnblå</string>
     <string name="amber">Ravgul</string>
     <string name="brown">Brun</string>
     <string name="grey">Grå</string>
@@ -160,4 +160,12 @@
     <string name="theme_pref_black_title">Helsvart</string>
     <string name="ok">OK</string>
     <string name="cancel">Avbryt</string>
+    <string name="notification_actions_pref_title">Ytterligere merknadshandlinger</string>
+    <string name="notification_actions_favorite">Legg til i favoritter/lukk</string>
+    <string name="notification_actions_favorite_position">Legg til i favoritter (med posisjon)/lukk</string>
+    <string name="notification_actions_fast_seeking">Rask blafring</string>
+    <string name="confirm_ask_pref_title">Bekreftelsesmeldinger</string>
+    <string name="continue_on_end_desc">Velg hvorvidt du vil forsette avspilling eller sette på pause ved fullføring</string>
+    <string name="filters_clear">Tøm filtre og fortsett\?</string>
+    <string name="confirm_ask_pref_sum">Spør om bekreftelse før noe gjøres</string>
 </resources>
