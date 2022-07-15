@@ -166,8 +166,7 @@ class MediaPlayerHolder:
     private val sPlaybackSpeedPersisted get() = GoPreferences.getPrefsInstance().playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY
     var isRepeat1X = false
     var isLooping = false
-    val continueOnEnd get() = GoPreferences.getPrefsInstance().continueOnEnd
-    var hasCompletedPlayback = false
+    private val continueOnEnd get() = GoPreferences.getPrefsInstance().continueOnEnd
 
     // isQueue saves the current song when queue starts
     var isQueue: Music? = null
@@ -360,10 +359,10 @@ class MediaPlayerHolder:
 
         when {
             !continueOnEnd -> {
-                hasCompletedPlayback = true
+                GoPreferences.getPrefsInstance().hasCompletedPlayback = true
                 pauseMediaPlayer()
             }
-            (isRepeat1X or isLooping) && !continueOnEnd -> if (isMediaPlayer) {
+            isRepeat1X or isLooping -> if (isMediaPlayer) {
                 repeatSong(0)
             }
             isQueue != null && !canRestoreQueue -> manageQueue(isNext = true)
@@ -387,7 +386,6 @@ class MediaPlayerHolder:
         mPlayerService.acquireWakeLock()
         if (::mediaPlayerInterface.isInitialized) {
             mediaPlayerInterface.onStateChanged()
-            mediaPlayerInterface.onPlaybackCompleted()
         }
     }
 
@@ -480,7 +478,9 @@ class MediaPlayerHolder:
             if (sFocusEnabled) {
                 tryToGetAudioFocus()
             }
-            if (!continueOnEnd && hasCompletedPlayback || isSongFromPrefs && !continueOnEnd && GoPreferences.getPrefsInstance().hasCompletedPlayback) {
+            val hasCompletedPlayback = GoPreferences.getPrefsInstance().hasCompletedPlayback
+            if (!continueOnEnd && isSongFromPrefs && hasCompletedPlayback || !continueOnEnd && hasCompletedPlayback) {
+                GoPreferences.getPrefsInstance().hasCompletedPlayback = false
                 skip(isNext = true)
             } else {
                 startOrChangePlaybackSpeed()
@@ -725,7 +725,6 @@ class MediaPlayerHolder:
                 tryToGetAudioFocus()
             }
             play()
-            hasCompletedPlayback = false
         }
 
         mPlayerService.releaseWakeLock()

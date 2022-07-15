@@ -18,10 +18,7 @@ class FiltersAdapter(val activity: Activity) :
 
     private val mAvailableItems = GoPreferences.getPrefsInstance().filters?.sorted()?.toMutableList()
 
-    private val mDisabledColor = Theming.resolveColorAttr(
-        activity,
-        android.R.attr.colorButtonNormal
-    )
+    private val mDisabledColor = Theming.getWidgetsColorDisabled(activity)
 
     private val mDefaultTextColor = Theming.resolveColorAttr(activity, android.R.attr.textColorPrimary)
 

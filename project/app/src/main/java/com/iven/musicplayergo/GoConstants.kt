@@ -24,6 +24,8 @@ object GoConstants {
     const val FOLDER_VIEW = "2"
 
     const val RESTORE_SETTINGS_FRAGMENT = "RESTORE_SETTINGS_FRAGMENT"
+    const val RESTORE_FRAGMENT = "RESTORE_FRAGMENT"
+    const val RESTORE_DIALOG_TYPE = "RESTORE_DIALOG_TYPE"
 
     // playback speed options
     const val PLAYBACK_SPEED_ONE_ONLY = "0"
@@ -78,14 +80,4 @@ object GoConstants {
     const val CLOSE_ACTION = "CLOSE_GO"
     const val FAVORITE_ACTION = "FAVORITE_GO"
     const val FAVORITE_POSITION_ACTION = "FAVORITE_POSITION_GO"
-
-    // Modal rv type
-    const val ACCENT_TYPE = "MODAL_ACCENT"
-    const val TABS_TYPE = "MODAL_TABS"
-    const val FILTERS_TYPE = "MODAL_FILTERS"
-    const val QUEUE_TYPE = "MODAL_QUEUE"
-    const val FAV_TYPE = "MODAL_FAVORITES"
-    const val SLEEPTIMER_TYPE = "MODAL_SLEEPTIMER"
-    const val SLEEPTIMER_ELAPSED_TYPE = "MODAL_SLEEPTIMER_ELAPSED"
-    const val NOTIFICATION_ACTIONS_TYPE = "MODAL_NOTIFICATION_ACTIONS"
 }

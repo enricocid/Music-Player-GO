@@ -38,6 +38,5 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="24dp"
         android:clickable="false"
-        android:contentDescription="@string/active_fragments_pref_title"
-        android:src="@drawable/ic_launch_details" />
+        android:contentDescription="@string/active_fragments_pref_title" />
 </LinearLayout>

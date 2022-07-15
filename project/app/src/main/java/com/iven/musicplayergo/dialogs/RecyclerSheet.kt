@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.ModalRvBinding
@@ -41,7 +40,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
     private lateinit var mQueueAdapter: QueueAdapter
 
     // sheet type
-    var sheetType = GoConstants.ACCENT_TYPE
+    var sheetType = ACCENT_TYPE
 
     // interfaces
     private lateinit var mUIControlInterface: UIControlInterface
@@ -81,6 +80,8 @@ class RecyclerSheet: BottomSheetDialogFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         onQueueCancelled?.invoke()
+        onFavoritesDialogCancelled?.invoke()
+        onSleepTimerDialogCancelled?.invoke()
         _modalRvBinding = null
     }
 
@@ -93,7 +94,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
             when (sheetType) {
 
-                GoConstants.ACCENT_TYPE -> {
+                ACCENT_TYPE -> {
 
                     sleepTimerElapsed.handleViewVisibility(show = false)
 
@@ -120,7 +121,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     }
                 }
 
-                GoConstants.TABS_TYPE -> {
+                TABS_TYPE -> {
 
                     dialogTitle = getString(R.string.active_fragments_pref_title)
 
@@ -147,7 +148,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     }
                 }
 
-                GoConstants.FILTERS_TYPE -> {
+                FILTERS_TYPE -> {
 
                     sleepTimerElapsed.handleViewVisibility(show = false)
 
@@ -177,7 +178,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     }
                 }
 
-                GoConstants.QUEUE_TYPE -> {
+                QUEUE_TYPE -> {
 
                     dialogTitle = getString(R.string.queue)
 
@@ -217,7 +218,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                         }).attachToRecyclerView(modalRv)
 
                         modalRv.post {
-                            if (isQueueStarted) {
+                            if (isQueueStarted || Theming.isDeviceLand(resources)) {
                                 // to ensure full dialog's height
                                 _modalRvBinding?.root?.afterMeasured {
                                     dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)?.let { bs ->
@@ -232,7 +233,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     }
                 }
 
-                GoConstants.SLEEPTIMER_TYPE -> {
+                SLEEPTIMER_TYPE -> {
 
                     dialogTitle = getString(R.string.sleeptimer)
 
@@ -254,7 +255,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     }
                 }
 
-                GoConstants.SLEEPTIMER_ELAPSED_TYPE -> {
+                SLEEPTIMER_ELAPSED_TYPE -> {
 
                     dialogTitle = getString(R.string.sleeptimer)
 
@@ -275,7 +276,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     }
                 }
 
-                GoConstants.NOTIFICATION_ACTIONS_TYPE -> {
+                NOTIFICATION_ACTIONS_TYPE -> {
 
                     dialogTitle = getString(R.string.notification_actions_pref_title)
 
@@ -341,6 +342,15 @@ class RecyclerSheet: BottomSheetDialogFragment() {
             }
             // finally, set the sheet's title
             title.text = dialogTitle
+
+            if (sheetType != QUEUE_TYPE && Theming.isDeviceLand(resources)) {
+                // to ensure full dialog's height
+                _modalRvBinding?.root?.afterMeasured {
+                    dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)?.let { bs ->
+                        BottomSheetBehavior.from(bs).state = BottomSheetBehavior.STATE_EXPANDED
+                    }
+                }
+            }
         }
     }
 
@@ -415,6 +425,16 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
         const val TAG_MODAL_RV = "MODAL_RV"
         private const val TAG_TYPE = "MODAL_RV_TYPE"
+
+        // Modal rv type
+        const val ACCENT_TYPE = "MODAL_ACCENT"
+        const val TABS_TYPE = "MODAL_TABS"
+        const val FILTERS_TYPE = "MODAL_FILTERS"
+        const val QUEUE_TYPE = "MODAL_QUEUE"
+        const val FAV_TYPE = "MODAL_FAVORITES"
+        const val SLEEPTIMER_TYPE = "MODAL_SLEEPTIMER"
+        const val SLEEPTIMER_ELAPSED_TYPE = "MODAL_SLEEPTIMER_ELAPSED"
+        const val NOTIFICATION_ACTIONS_TYPE = "MODAL_NOTIFICATION_ACTIONS"
 
         /**
          * Use this factory method to create a new instance of

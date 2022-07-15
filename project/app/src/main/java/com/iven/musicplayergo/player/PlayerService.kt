@@ -118,7 +118,6 @@ class PlayerService : Service() {
                 if (queueSongs.isNotEmpty()) { preferences.queue = queueSongs }
             }
             preferences.latestVolume = mediaPlayerHolder.currentVolumeInPercent
-            preferences.hasCompletedPlayback = mediaPlayerHolder.hasCompletedPlayback
         }
 
         if (::mMediaSessionCompat.isInitialized && mMediaSessionCompat.isActive) {

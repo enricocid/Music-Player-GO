@@ -79,7 +79,7 @@
             android:background="?android:attr/actionBarItemBackground"
             android:contentDescription="@string/content_repeat"
             android:padding="8dp"
-            app:srcCompat="@drawable/ic_repeat_one" />
+            app:srcCompat="@drawable/ic_repeat_one_disabled" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/np_pause_on_end"

@@ -264,7 +264,7 @@ object Theming {
                 R.drawable.ic_play
             }
             GoConstants.REPEAT_ACTION -> if (isNotification) {
-                getRepeatIcon(mediaPlayerHolder)
+                getRepeatIcon(mediaPlayerHolder, isNotification = true)
             } else {
                 R.drawable.ic_repeat
             }
@@ -274,7 +274,7 @@ object Theming {
             GoConstants.FAST_FORWARD_ACTION -> R.drawable.ic_fast_forward
             GoConstants.REWIND_ACTION -> R.drawable.ic_fast_rewind
             GoConstants.FAVORITE_ACTION -> if (isNotification) {
-                getFavoriteIcon(mediaPlayerHolder)
+                getFavoriteIcon(mediaPlayerHolder, isNotification = true)
             } else {
                 R.drawable.ic_favorite
             }
@@ -282,14 +282,18 @@ object Theming {
         }
 
     @JvmStatic
-    fun getRepeatIcon(mediaPlayerHolder: MediaPlayerHolder) = when {
+    fun getRepeatIcon(mediaPlayerHolder: MediaPlayerHolder, isNotification: Boolean) = when {
         mediaPlayerHolder.isRepeat1X -> R.drawable.ic_repeat_one
         mediaPlayerHolder.isLooping -> R.drawable.ic_repeat
-        else -> R.drawable.ic_repeat_one_disabled
+        else -> if (isNotification) {
+            R.drawable.ic_repeat_one_disabled_alt
+        } else {
+            R.drawable.ic_repeat_one_disabled
+        }
     }
 
     @JvmStatic
-    fun getFavoriteIcon(mediaPlayerHolder: MediaPlayerHolder): Int {
+    fun getFavoriteIcon(mediaPlayerHolder: MediaPlayerHolder, isNotification: Boolean): Int {
         val favorites = GoPreferences.getPrefsInstance().favorites
         val isFavorite = favorites != null && favorites.contains(
             mediaPlayerHolder.currentSong?.toSavedMusic(0, mediaPlayerHolder.launchedBy)
@@ -297,7 +301,11 @@ object Theming {
         return if (isFavorite) {
             R.drawable.ic_favorite
         } else {
-            R.drawable.ic_favorite_empty
+            if (isNotification) {
+                R.drawable.ic_favorite_empty_alt
+            } else {
+                R.drawable.ic_favorite_empty
+            }
         }
     }
 
@@ -309,4 +317,8 @@ object Theming {
             ContextCompat.getColor(tb.context, R.color.widgetsColor)
         })
     }
+
+    @JvmStatic
+    @ColorInt
+    fun getWidgetsColorDisabled(context: Context) = resolveColorAttr(context, android.R.attr.colorButtonNormal)
 }

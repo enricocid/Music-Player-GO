@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.iven.musicplayergo.GoConstants
@@ -166,13 +165,13 @@ class NowPlaying: BottomSheetDialogFragment() {
 
                 with(npRepeat) {
                     setImageResource(
-                        Theming.getRepeatIcon(mph)
+                        Theming.getRepeatIcon(mph, isNotification = false)
                     )
                     updateIconTint(
                         if (mph.isRepeat1X || mph.isLooping) {
                             Theming.resolveThemeColor(resources)
                         } else {
-                            ContextCompat.getColor(requireContext(), R.color.widgetsColor)
+                            Theming.getWidgetsColorDisabled(requireContext())
                         }
                     )
                     setOnClickListener { setRepeat() }
@@ -309,14 +308,14 @@ class NowPlaying: BottomSheetDialogFragment() {
     fun updateRepeatStatus(onPlaybackCompletion: Boolean) {
         if (::mMediaControlInterface.isInitialized) {
             mMediaControlInterface.onGetMediaPlayerHolder()?.run {
-                val resolvedIconsColor = ContextCompat.getColor(requireContext(), R.color.widgetsColor)
+                val widgetsColorDisabled = Theming.getWidgetsColorDisabled(requireContext())
                 _npCoverBinding?.npRepeat?.let { rpBtn ->
-                    rpBtn.setImageResource(Theming.getRepeatIcon(this))
+                    rpBtn.setImageResource(Theming.getRepeatIcon(this, isNotification = false))
                     when {
-                        onPlaybackCompletion -> rpBtn.updateIconTint(resolvedIconsColor)
-                        isRepeat1X or isLooping or !continueOnEnd ->
+                        onPlaybackCompletion -> rpBtn.updateIconTint(widgetsColorDisabled)
+                        isRepeat1X or isLooping ->
                             rpBtn.updateIconTint(Theming.resolveThemeColor(resources))
-                        else -> rpBtn.updateIconTint(resolvedIconsColor)
+                        else -> rpBtn.updateIconTint(widgetsColorDisabled)
                     }
                 }
             }
@@ -360,12 +359,12 @@ class NowPlaying: BottomSheetDialogFragment() {
 
     fun updateNpFavoritesIcon(mediaPlayerHolder: MediaPlayerHolder) {
         _npCoverBinding?.run {
-            val favoriteIcon = Theming.getFavoriteIcon(mediaPlayerHolder)
+            val favoriteIcon = Theming.getFavoriteIcon(mediaPlayerHolder, isNotification = false)
             npLove.setImageResource(favoriteIcon)
             npLove.updateIconTint(if (favoriteIcon == R.drawable.ic_favorite) {
                 Theming.resolveThemeColor(resources)
             } else {
-                Theming.resolveColorAttr(requireContext(), android.R.attr.colorButtonNormal)
+                Theming.getWidgetsColorDisabled(requireContext())
             })
         }
     }

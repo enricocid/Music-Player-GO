@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -81,7 +82,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private var sRevealAnimationRunning = false
 
     private var sRestoreSettingsFragment = false
-    private var sAppearanceChanged = false
+    private var sTabToRestore = -1
+    private var sDialogToRestore: String? = null
 
     // Queue dialog
     private var mQueueDialog: RecyclerSheet? = null
@@ -162,14 +164,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
         sAllowCommit = false
-        if (sAppearanceChanged) {
-            super.onSaveInstanceState(outState)
-            outState.putBoolean(
-                GoConstants.RESTORE_SETTINGS_FRAGMENT,
-                true
-            )
-        }
+        val bundle = bundleOf(
+            GoConstants.RESTORE_FRAGMENT to mMainActivityBinding.viewPager2.currentItem,
+            GoConstants.RESTORE_DIALOG_TYPE to sDialogToRestore
+        )
+        outState.putAll(bundle)
     }
 
     override fun onResumeFragments() {
@@ -199,6 +200,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     // Pause SeekBar callback
     override fun onPause() {
         super.onPause()
+        sDialogToRestore = when {
+            mNpDialog != null -> NowPlaying.TAG_MODAL
+            mQueueDialog != null -> RecyclerSheet.QUEUE_TYPE
+            else -> null
+        }
+
+        mNpDialog?.dismiss()
+        mQueueDialog?.dismiss()
+        mFavoritesDialog?.dismiss()
+        mSleepTimerDialog?.dismiss()
+
         if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongFromPrefs) {
             mMediaPlayerInterface.onBackupSong()
             with(mMediaPlayerHolder) {
@@ -269,12 +281,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         sAllowCommit = true
 
-        sRestoreSettingsFragment =
-            savedInstanceState?.getBoolean(GoConstants.RESTORE_SETTINGS_FRAGMENT)
-                ?: intent.getBooleanExtra(
-                    GoConstants.RESTORE_SETTINGS_FRAGMENT,
-                    false
-                )
+        sRestoreSettingsFragment = intent.getBooleanExtra(
+            GoConstants.RESTORE_SETTINGS_FRAGMENT,
+            false
+        )
+
+        savedInstanceState?.run {
+            sTabToRestore = getInt(GoConstants.RESTORE_FRAGMENT, -1)
+            sDialogToRestore = getString(GoConstants.RESTORE_DIALOG_TYPE, null)
+        }
 
         if (Permissions.hasToAskForReadStoragePermission(this)) {
             Permissions.manageAskForReadStoragePermission(this)
@@ -389,29 +404,30 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {
-                    closeFragments()
+                    closeRestoreFragments()
                     tab.icon?.setTint(alphaAccentColor)
                 }
 
                 override fun onTabReselected(tab: TabLayout.Tab) {
-                    closeFragments()
+                    closeRestoreFragments()
                 }
             })
-
-            getTabAt(if (sRestoreSettingsFragment) {
-                mMainActivityBinding.viewPager2.offscreenPageLimit
-            } else {
-                0
-            })?.icon?.setTint(
-                Theming.resolveThemeColor(resources)
-            )
         }
 
-        if (sRestoreSettingsFragment) {
-            mMainActivityBinding.viewPager2.setCurrentItem(
-                mMainActivityBinding.viewPager2.offscreenPageLimit,
-                false
-            )
+        Log.d("stab", sRestoreSettingsFragment.toString())
+        mMainActivityBinding.viewPager2.setCurrentItem(
+            when {
+                sTabToRestore != -1 && !sRestoreSettingsFragment -> sTabToRestore
+                sRestoreSettingsFragment -> mMainActivityBinding.viewPager2.offscreenPageLimit
+                else -> 0
+            },
+            false
+        )
+        mPlayerControlsPanelBinding.tabLayout.getTabAt(
+            mMainActivityBinding.viewPager2.currentItem
+        )?.run {
+            select()
+            icon?.setTint(Theming.resolveThemeColor(resources))
         }
     }
 
@@ -442,18 +458,55 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         else -> mSettingsFragment ?: initFragmentAt(index)
     }
 
-    private fun closeFragments() {
+    private fun closeRestoreFragments() {
         if (sAllowCommit) {
             with(supportFragmentManager) {
                 if (sEqFragmentExpanded) {
                     goBackFromFragmentNow(mEqualizerFragment)
                     mEqualizerFragment = null
+                    if (sTabToRestore != -1) {
+                        onOpenEqualizer()
+                    }
                 }
                 if (sDetailsFragmentExpanded) {
                     goBackFromFragmentNow(mDetailsFragment)
                     mDetailsFragment = null
+                    if (sTabToRestore != -1) {
+                        onOpenPlayingArtistAlbum()
+                    }
                 }
             }
+            sDialogToRestore?.let { dialogType ->
+               when (dialogType) {
+                   NowPlaying.TAG_MODAL -> openNowPlayingFragment()
+                   else -> openQueueFragment()
+               }
+                sDialogToRestore = null
+            }
+        }
+    }
+
+    private fun openNowPlayingFragment() {
+        if (checkIsPlayer(showError = true) && mMediaPlayerHolder.isCurrentSong && mNpDialog == null) {
+            mNpDialog = NowPlaying.newInstance().apply {
+                show(supportFragmentManager, NowPlaying.TAG_MODAL)
+                onNowPlayingCancelled = {
+                    mNpDialog = null
+                }
+            }
+        }
+    }
+
+    private fun openQueueFragment() {
+        if (checkIsPlayer(showError = false) && mMediaPlayerHolder.queueSongs.isNotEmpty() && mQueueDialog == null) {
+            mQueueDialog = RecyclerSheet.newInstance(RecyclerSheet.QUEUE_TYPE).apply {
+                show(supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
+                onQueueCancelled = {
+                    mQueueDialog = null
+                }
+            }
+        } else {
+            R.string.error_no_queue.toToast(this@MainActivity)
         }
     }
 
@@ -511,15 +564,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         with(mPlayerControlsPanelBinding.queueButton) {
             safeClickListener {
-                if (checkIsPlayer(showError = false) && mMediaPlayerHolder.queueSongs.isNotEmpty()) {
-                    mQueueDialog = RecyclerSheet.newInstance(GoConstants.QUEUE_TYPE)
-                    mQueueDialog?.show(supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
-                    mQueueDialog?.onQueueCancelled = {
-                        mQueueDialog = null
-                    }
-                } else {
-                    R.string.error_no_queue.toToast(this@MainActivity)
-                }
+                openQueueFragment()
             }
             setOnLongClickListener {
                 if (checkIsPlayer(showError = true) && mMediaPlayerHolder.queueSongs.isNotEmpty()) {
@@ -532,7 +577,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         with(mPlayerControlsPanelBinding.favoritesButton) {
             safeClickListener {
                 if (!mGoPreference.favorites.isNullOrEmpty() && mFavoritesDialog == null) {
-                    mFavoritesDialog = RecyclerSheet.newInstance(GoConstants.FAV_TYPE).apply {
+                    mFavoritesDialog = RecyclerSheet.newInstance(RecyclerSheet.FAV_TYPE).apply {
                         show(supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
                         onFavoritesDialogCancelled = {
                             mFavoritesDialog = null
@@ -556,14 +601,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         with(mPlayerControlsPanelBinding.playingSongContainer) {
             safeClickListener {
-                if (checkIsPlayer(showError = true) && mMediaPlayerHolder.isCurrentSong && mNpDialog == null) {
-                    mNpDialog = NowPlaying.newInstance().apply {
-                        show(supportFragmentManager, NowPlaying.TAG_MODAL)
-                        onNowPlayingCancelled = {
-                            mNpDialog = null
-                        }
-                    }
-                }
+                openNowPlayingFragment()
             }
             setOnLongClickListener {
                 if (!sDetailsFragmentExpanded || sDetailsFragmentExpanded and !sEqFragmentExpanded) {
@@ -575,7 +613,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     override fun onAppearanceChanged(isThemeChanged: Boolean) {
-        sAppearanceChanged = true
         synchronized(mMediaPlayerInterface.onBackupSong()) {
             if (isThemeChanged) {
                 AppCompatDelegate.setDefaultNightMode(
@@ -637,10 +674,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         val favoritesButtonColor = if (favorites.isNullOrEmpty()) {
             mPlayerControlsPanelBinding.favoritesButton.setImageResource(R.drawable.ic_favorite_empty)
-            Theming.resolveColorAttr(
-                this,
-                android.R.attr.colorButtonNormal
-            )
+            Theming.getWidgetsColorDisabled(this)
         } else {
             mPlayerControlsPanelBinding.favoritesButton.setImageResource(R.drawable.ic_favorite)
             Theming.resolveThemeColor(resources)
@@ -914,9 +948,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         if (isMediaPlayerHolder) {
             if (mSleepTimerDialog == null) {
                 mSleepTimerDialog = RecyclerSheet.newInstance(if (mMediaPlayerHolder.isSleepTimer) {
-                    GoConstants.SLEEPTIMER_ELAPSED_TYPE
+                    RecyclerSheet.SLEEPTIMER_ELAPSED_TYPE
                 } else {
-                    GoConstants.SLEEPTIMER_TYPE
+                    RecyclerSheet.SLEEPTIMER_TYPE
                 }).apply {
                     show(supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
                     onSleepTimerEnabled = { enabled ->
@@ -1112,12 +1146,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     // interface to let MediaPlayerHolder update the UI media player controls.
     private val mMediaPlayerInterface = object : MediaPlayerInterface {
 
-        override fun onPlaybackCompleted() {
-            if (mMediaPlayerHolder.continueOnEnd) {
-                mNpDialog?.updateRepeatStatus(onPlaybackCompletion = true)
-            }
-        }
-
         override fun onUpdateRepeatStatus() {
             mNpDialog?.updateRepeatStatus(onPlaybackCompletion = false)
         }
@@ -1161,10 +1189,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     started -> Theming.resolveThemeColor(resources)
                     mMediaPlayerHolder.queueSongs.isEmpty() -> {
                         mQueueDialog?.dismissAllowingStateLoss()
-                        Theming.resolveColorAttr(
-                            this@MainActivity,
-                            android.R.attr.colorButtonNormal
-                        )
+                        Theming.getWidgetsColorDisabled(this@MainActivity)
                     }
                     else -> {
                         mQueueDialog?.dismissAllowingStateLoss()
@@ -1185,7 +1210,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         override fun onUpdateSleepTimerCountdown(value: Long) {
             mSleepTimerDialog?.run {
-                if (sheetType == GoConstants.SLEEPTIMER_ELAPSED_TYPE) {
+                if (sheetType == RecyclerSheet.SLEEPTIMER_ELAPSED_TYPE) {
                     val newValue = value.toFormattedDuration(isAlbum = false, isSeekBar = true)
                     updateCountdown(newValue)
                 }

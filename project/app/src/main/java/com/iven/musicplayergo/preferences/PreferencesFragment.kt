@@ -8,7 +8,6 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.dialogs.RecyclerSheet
@@ -92,15 +91,15 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     override fun onPreferenceClick(preference: Preference): Boolean {
         when (preference.key) {
-            getString(R.string.accent_pref) -> RecyclerSheet.newInstance(GoConstants.ACCENT_TYPE)
+            getString(R.string.accent_pref) -> RecyclerSheet.newInstance(RecyclerSheet.ACCENT_TYPE)
                 .show(requireActivity().supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
-            getString(R.string.active_tabs_pref) -> RecyclerSheet.newInstance(GoConstants.TABS_TYPE)
+            getString(R.string.active_tabs_pref) -> RecyclerSheet.newInstance(RecyclerSheet.TABS_TYPE)
                 .show(requireActivity().supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
             getString(R.string.filter_pref) -> if (!GoPreferences.getPrefsInstance().filters.isNullOrEmpty()) {
-                RecyclerSheet.newInstance(GoConstants.FILTERS_TYPE)
+                RecyclerSheet.newInstance(RecyclerSheet.FILTERS_TYPE)
                     .show(requireActivity().supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
             }
-            getString(R.string.notif_actions_pref) -> RecyclerSheet.newInstance(GoConstants.NOTIFICATION_ACTIONS_TYPE)
+            getString(R.string.notif_actions_pref) -> RecyclerSheet.newInstance(RecyclerSheet.NOTIFICATION_ACTIONS_TYPE)
                 .show(requireActivity().supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
         }
         return false
