@@ -218,7 +218,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                         }).attachToRecyclerView(modalRv)
 
                         modalRv.post {
-                            if (isQueueStarted || Theming.isDeviceLand(resources)) {
+                            if (isQueueStarted) {
                                 val indexOfCurrentSong = queueSongs.indexOf(currentSong)
                                 val layoutManager = modalRv.layoutManager as LinearLayoutManager
                                 layoutManager.scrollToPositionWithOffset(indexOfCurrentSong, 0)
