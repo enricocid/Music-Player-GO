@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import com.google.android.material.bottomsheet.BottomSheetBehavior
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.SeekBar
+import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
@@ -122,11 +124,7 @@ class NowPlaying: BottomSheetDialogFragment() {
 
             _nowPlayingBinding?.npSeekBar?.progress = mediaPlayerHolder.playerPosition
 
-            // to ensure full dialog's height
-            dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
-                ?.let { bs ->
-                    BottomSheetBehavior.from(bs).state = BottomSheetBehavior.STATE_EXPANDED
-                }
+            requireActivity().applyFullScreenBottomSheetBehaviour(dialog)
         }
     }
 

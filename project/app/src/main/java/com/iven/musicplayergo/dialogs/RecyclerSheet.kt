@@ -7,19 +7,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.ModalRvBinding
-import com.iven.musicplayergo.extensions.afterMeasured
+import com.iven.musicplayergo.extensions.applyFullScreenBottomSheetBehaviour
 import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.preferences.AccentsAdapter
@@ -87,6 +85,8 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().applyFullScreenBottomSheetBehaviour(dialog)
 
         var dialogTitle = getString(R.string.accent_pref_title)
 
@@ -219,15 +219,9 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
                         modalRv.post {
                             if (isQueueStarted || Theming.isDeviceLand(resources)) {
-                                // to ensure full dialog's height
-                                _modalRvBinding?.root?.afterMeasured {
-                                    dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)?.let { bs ->
-                                        BottomSheetBehavior.from(bs).state = BottomSheetBehavior.STATE_EXPANDED
-                                        val indexOfCurrentSong = queueSongs.indexOf(currentSong)
-                                        val layoutManager = modalRv.layoutManager as LinearLayoutManager
-                                        layoutManager.scrollToPositionWithOffset(indexOfCurrentSong, 0)
-                                    }
-                                }
+                                val indexOfCurrentSong = queueSongs.indexOf(currentSong)
+                                val layoutManager = modalRv.layoutManager as LinearLayoutManager
+                                layoutManager.scrollToPositionWithOffset(indexOfCurrentSong, 0)
                             }
                         }
                     }
@@ -342,15 +336,6 @@ class RecyclerSheet: BottomSheetDialogFragment() {
             }
             // finally, set the sheet's title
             title.text = dialogTitle
-
-            if (sheetType != QUEUE_TYPE && Theming.isDeviceLand(resources)) {
-                // to ensure full dialog's height
-                _modalRvBinding?.root?.afterMeasured {
-                    dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)?.let { bs ->
-                        BottomSheetBehavior.from(bs).state = BottomSheetBehavior.STATE_EXPANDED
-                    }
-                }
-            }
         }
     }
 

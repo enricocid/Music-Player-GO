@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Resources
@@ -15,6 +16,7 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.view.*
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -34,8 +36,10 @@ import androidx.fragment.app.commit
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
+import androidx.window.layout.WindowMetricsCalculator
 import coil.load
 import com.google.android.material.animation.ArgbEvaluatorCompat
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.ui.SingleClickHelper
 import com.iven.musicplayergo.utils.Theming
@@ -257,4 +261,17 @@ fun ImageView.updateIconTint(tint: Int) {
     ImageViewCompat.setImageTintList(
         this, ColorStateList.valueOf(tint)
     )
+}
+
+
+fun Activity.applyFullScreenBottomSheetBehaviour(dialog: Dialog?) {
+    // to ensure full dialog's height
+
+    val windowMetrics = WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(this)
+    val height = windowMetrics.bounds.height()
+
+    dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
+        ?.let { bs ->
+            BottomSheetBehavior.from(bs).peekHeight = height
+        }
 }
