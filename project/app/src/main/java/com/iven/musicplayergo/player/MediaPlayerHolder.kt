@@ -536,12 +536,12 @@ class MediaPlayerHolder:
                 currentSong = queueSongs.first()
             }
         }
-        initMediaPlayer(currentSong)
+        initMediaPlayer(currentSong, forceReset = false)
     }
 
     private fun manageRestoredQueue() {
         currentSong = restoreQueueSong
-        initMediaPlayer(currentSong)
+        initMediaPlayer(currentSong, forceReset = false)
 
         isQueueStarted = true
         restoreQueueSong = null
@@ -641,11 +641,11 @@ class MediaPlayerHolder:
      * object has to be created. That's why this method is private, and called by load(int) and
      * not the constructor.
      */
-    fun initMediaPlayer(song: Music?) {
+    fun initMediaPlayer(song: Music?, forceReset: Boolean) {
 
         try {
 
-            if (isMediaPlayer) {
+            if (isMediaPlayer && !forceReset) {
                 MediaPlayerUtils.safeReset(mediaPlayer)
             } else {
                 mediaPlayer = MediaPlayer()
@@ -676,10 +676,10 @@ class MediaPlayerHolder:
     }
 
     override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
-        val errorMessage = "MediaPlayer error: $what"
-        errorMessage.toToast(mPlayerService)
-        println(errorMessage)
-        MediaPlayerUtils.safeReset(mediaPlayer)
+        println("MediaPlayer error: $what")
+        synchronized(mediaPlayer.release()) {
+            initMediaPlayer(currentSong, forceReset = true)
+        }
         return true
     }
 
@@ -930,7 +930,7 @@ class MediaPlayerHolder:
             canRestoreQueue -> manageRestoredQueue()
             else -> {
                 currentSong = getSkipSong(isNext = isNext)
-                initMediaPlayer(currentSong)
+                initMediaPlayer(currentSong, forceReset = false)
             }
         }
     }

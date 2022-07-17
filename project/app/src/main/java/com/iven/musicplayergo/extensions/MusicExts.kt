@@ -38,7 +38,7 @@ fun MediaPlayerHolder.startSongFromQueue(song: Music?) {
         isQueueStarted = true
     }
     currentSong = song
-    initMediaPlayer(currentSong)
+    initMediaPlayer(currentSong, forceReset = false)
 }
 
 fun MediaPlayerHolder.setCanRestoreQueue() {

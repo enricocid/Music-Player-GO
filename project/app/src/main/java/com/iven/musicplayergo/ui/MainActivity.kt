@@ -890,7 +890,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     }
                 }
             }
-            mMediaPlayerHolder.initMediaPlayer(mMediaPlayerHolder.currentSong)
+            mMediaPlayerHolder.initMediaPlayer(mMediaPlayerHolder.currentSong, forceReset = false)
         }
     }
 
@@ -1110,7 +1110,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 with(mMediaPlayerHolder) {
                     isPlay = isPlaying
                     updateCurrentSong(song, songs, GoConstants.ARTIST_VIEW)
-                    initMediaPlayer(song)
+                    initMediaPlayer(song, forceReset = false)
                 }
                 updatePlayingInfo(restore = false)
             }
