@@ -17,7 +17,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.ModalRvBinding
-import com.iven.musicplayergo.extensions.applyFullScreenBottomSheetBehaviour
+import com.iven.musicplayergo.extensions.applyFullHeightDialog
 import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.preferences.AccentsAdapter
@@ -86,7 +86,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().applyFullScreenBottomSheetBehaviour(dialog)
+        dialog.applyFullHeightDialog(requireActivity())
 
         var dialogTitle = getString(R.string.accent_pref_title)
 

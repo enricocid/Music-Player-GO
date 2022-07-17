@@ -264,14 +264,13 @@ fun ImageView.updateIconTint(tint: Int) {
 }
 
 
-fun Activity.applyFullScreenBottomSheetBehaviour(dialog: Dialog?) {
+fun Dialog?.applyFullHeightDialog(activity: Activity) {
     // to ensure full dialog's height
 
-    val windowMetrics = WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(this)
+    val windowMetrics = WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(activity)
     val height = windowMetrics.bounds.height()
 
-    dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
-        ?.let { bs ->
-            BottomSheetBehavior.from(bs).peekHeight = height
-        }
+    this?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)?.let { bs ->
+        BottomSheetBehavior.from(bs).peekHeight = height
+    }
 }

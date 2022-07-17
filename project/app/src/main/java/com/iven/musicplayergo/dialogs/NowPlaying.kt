@@ -124,7 +124,7 @@ class NowPlaying: BottomSheetDialogFragment() {
 
             _nowPlayingBinding?.npSeekBar?.progress = mediaPlayerHolder.playerPosition
 
-            requireActivity().applyFullScreenBottomSheetBehaviour(dialog)
+            dialog.applyFullHeightDialog(requireActivity())
         }
     }
 
