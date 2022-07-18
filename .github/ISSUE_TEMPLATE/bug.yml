@@ -44,7 +44,7 @@ body:
     attributes:
       label: More info
       description: Add more information to the bug report
-      placeholder: For example, attach a screenshot or a screen record
+      placeholder: For example, attach a screenshot or a screen recording
   - type: checkboxes
     id: terms
     attributes:
