@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -165,6 +166,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        sDialogToRestore = when {
+            mNpDialog != null -> NowPlaying.TAG_MODAL
+            mQueueDialog != null -> RecyclerSheet.QUEUE_TYPE
+            else -> null
+        }
         sAllowCommit = false
         val bundle = bundleOf(
             GoConstants.RESTORE_FRAGMENT to mMainActivityBinding.viewPager2.currentItem,
@@ -200,16 +206,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     // Pause SeekBar callback
     override fun onPause() {
         super.onPause()
-        sDialogToRestore = when {
-            mNpDialog != null -> NowPlaying.TAG_MODAL
-            mQueueDialog != null -> RecyclerSheet.QUEUE_TYPE
-            else -> null
-        }
-
-        mNpDialog?.dismiss()
-        mQueueDialog?.dismiss()
-        mFavoritesDialog?.dismiss()
-        mSleepTimerDialog?.dismiss()
 
         if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongFromPrefs) {
             mMediaPlayerInterface.onBackupSong()
@@ -476,11 +472,20 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     }
                 }
             }
+
             sDialogToRestore?.let { dialogType ->
-               when (dialogType) {
-                   NowPlaying.TAG_MODAL -> openNowPlayingFragment()
-                   else -> openQueueFragment()
-               }
+
+                val fragmentsIterator = supportFragmentManager.fragments.filterIsInstance(
+                    DialogFragment::class.java
+                ).iterator()
+                while (fragmentsIterator.hasNext()) {
+                    fragmentsIterator.next().dismiss()
+                }
+
+                when (dialogType) {
+                    NowPlaying.TAG_MODAL -> openNowPlayingFragment()
+                    else -> openQueueFragment()
+                }
                 sDialogToRestore = null
             }
         }
