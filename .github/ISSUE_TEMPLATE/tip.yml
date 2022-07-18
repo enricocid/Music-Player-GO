@@ -1,0 +1,44 @@
+name: Feature request
+description: File a feature request
+title: "[FR]: "
+labels: ["feature request", "improvement"]
+assignees:
+  - enricocid
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this feature request!
+  - type: textarea
+    id: what
+    attributes:
+      label: What feature would you like to see?
+      description: Also tell me, what did you expect to happen?
+      placeholder: Tell me what you want!
+    validations:
+      required: true
+  - type: dropdown
+    id: Level
+    attributes:
+      label: What kind of level is this feature request?
+      description: What level of complexity/work do you think it is expected to add this feature?
+      options:
+        - Yo, it's simple!
+        - Hmm, probably intermediate, can't know!
+        - Advanced, a nightmare!
+    validations:
+      required: true
+  - type: textarea
+    id: more-info
+    attributes:
+      label: More info
+      description: Add more information to the feature request
+      placeholder: For example, attach a little drawing, a diagram or a link to an app already shipping the desired feature.
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to not spam the issue asking for ETA, etc.
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
