@@ -160,4 +160,12 @@
     <string name="locale_pref_title">Sprache</string>
     <string name="cancel">Abbrechen</string>
     <string name="ok">OK</string>
+    <string name="notification_actions_pref_title">Zusätzliche Benachrichtigungsaktionen</string>
+    <string name="notification_actions_favorite">Zu Favoriten hinzufügen/schließen</string>
+    <string name="notification_actions_favorite_position">Zu Favoriten hinzufügen (mit Positionen)/schließen</string>
+    <string name="notification_actions_fast_seeking">Schnellsuche</string>
+    <string name="filters_clear">Filter werden gelöscht. Fortsetzen\?</string>
+    <string name="continue_on_end_desc">Auswählen, ob die Wiedergabe fortgesetzt oder nach Abschluss angehalten werden soll</string>
+    <string name="confirm_ask_pref_title">Bestätigungsmeldungen</string>
+    <string name="confirm_ask_pref_sum">Bitten um Bestätigung, bevor etwas getan wird</string>
 </resources>

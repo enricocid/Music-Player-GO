@@ -160,4 +160,12 @@
     <string name="locale_pref_title">Nyelv</string>
     <string name="ok">OK</string>
     <string name="cancel">Mégsem</string>
+    <string name="notification_actions_pref_title">További értesítési műveletek</string>
+    <string name="notification_actions_favorite">Hozzáadás kedvencekhez/bezár</string>
+    <string name="notification_actions_favorite_position">Hozzáadás kedvenzekhez (pozícióval)/bezár</string>
+    <string name="continue_on_end_desc">Válassza ki, hogy folytassa-e a vagy szünetelteti-e a lejátszást befejezéskor</string>
+    <string name="notification_actions_fast_seeking">Gyors keresés</string>
+    <string name="filters_clear">A filterek ürítve lesznek. Folytassa\?</string>
+    <string name="confirm_ask_pref_title">Megerősítő üzenetek</string>
+    <string name="confirm_ask_pref_sum">Kérjen megerősítést, mielőtt bármit is tenne</string>
 </resources>
