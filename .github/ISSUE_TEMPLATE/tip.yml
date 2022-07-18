@@ -14,7 +14,7 @@ body:
     attributes:
       label: What feature would you like to see?
       description: Also tell me, what did you expect to happen?
-      placeholder: Tell me what you want!
+      placeholder: So tell me what you want, what you really really want! 🎶
     validations:
       required: true
   - type: dropdown
