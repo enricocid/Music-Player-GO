@@ -76,26 +76,8 @@ object Theming {
 
     @JvmStatic
     fun getAccentName(resources: Resources, position: Int): String {
-        val accent = resources.getStringArray(R.array.accent_names)
-        return try {
-            when {
-                position <= 18 -> accent[position]
-                else -> {
-                    val expandedList = accent.toMutableList().apply {
-                        addAll(accent)
-                    }
-                    val result = when {
-                        position == resources.getIntArray(R.array.colors).size - 1 -> accent.last()
-                        position >= 31 -> expandedList[position +1]
-                        else -> expandedList[position]
-                    }
-                    resources.getString(R.string.accent_200, result)
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return resources.getString(R.string.error_eq)
-        }
+        val accentNames = resources.getStringArray(R.array.accent_names)
+        return accentNames[position]
     }
 
     @JvmStatic
@@ -118,24 +100,7 @@ object Theming {
         R.style.BaseTheme_DeepOrange,
         R.style.BaseTheme_Brown,
         R.style.BaseTheme_Grey,
-        R.style.BaseTheme_BlueGrey,
-        R.style.BaseTheme_Red200,
-        R.style.BaseTheme_Pink200,
-        R.style.BaseTheme_Purple200,
-        R.style.BaseTheme_DeepPurple200,
-        R.style.BaseTheme_Indigo200,
-        R.style.BaseTheme_Blue200,
-        R.style.BaseTheme_LightBlue200,
-        R.style.BaseTheme_Cyan200,
-        R.style.BaseTheme_Teal200,
-        R.style.BaseTheme_Green200,
-        R.style.BaseTheme_LightGreen200,
-        R.style.BaseTheme_Lime200,
-        R.style.BaseTheme_Amber200,
-        R.style.BaseTheme_Orange200,
-        R.style.BaseTheme_DeepOrange200,
-        R.style.BaseTheme_Brown200,
-        R.style.BaseTheme_BlueGrey200
+        R.style.BaseTheme_BlueGrey
     )
 
     @JvmStatic
@@ -158,24 +123,7 @@ object Theming {
         R.style.BaseTheme_Black_DeepOrange,
         R.style.BaseTheme_Black_Brown,
         R.style.BaseTheme_Black_Grey,
-        R.style.BaseTheme_Black_BlueGrey,
-        R.style.BaseTheme_Black_Red200,
-        R.style.BaseTheme_Black_Pink200,
-        R.style.BaseTheme_Black_Purple200,
-        R.style.BaseTheme_Black_DeepPurple200,
-        R.style.BaseTheme_Black_Indigo200,
-        R.style.BaseTheme_Black_Blue200,
-        R.style.BaseTheme_Black_LightBlue200,
-        R.style.BaseTheme_Black_Cyan200,
-        R.style.BaseTheme_Black_Teal200,
-        R.style.BaseTheme_Black_Green200,
-        R.style.BaseTheme_Black_LightGreen200,
-        R.style.BaseTheme_Black_Lime200,
-        R.style.BaseTheme_Black_Amber200,
-        R.style.BaseTheme_Black_Orange200,
-        R.style.BaseTheme_Black_DeepOrange200,
-        R.style.BaseTheme_Black_Brown200,
-        R.style.BaseTheme_Black_BlueGrey200
+        R.style.BaseTheme_Black_BlueGrey
     )
 
     @JvmStatic

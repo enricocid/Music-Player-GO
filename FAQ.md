@@ -7,72 +7,57 @@ This FAQ will be continually updated to accommodate new information with respect
 
 ### What is Music Player GO?
 
-A lightweight, original, privacy-friendly, **ad-free** music player playing music from your local music library, in acolorful and simple UI.
+A lightweight, original, privacy-friendly, **ad-free** music player playing music from your local music library, in a colorful and simple UI.
 
 
 ### Where can I download Music Player GO?
 
-[Here](https://f-droid.org/packages/com.iven.musicplayergo/) on F-Droid.
-[Here](https://play.google.com/store/apps/details?id=com.iven.musicplayergo) on the Google Play Store.
+- [F-Droid](https://f-droid.org/packages/com.iven.musicplayergo/).
+- [Google Play Store](https://play.google.com/store/apps/details?id=com.iven.musicplayergo).
 
 ### How can I contribute to translations?
 
-Join us on [Hosted Weblate](https://hosted.weblate.org/engage/music-player-go/). :)
+Join us on [Hosted Weblate](https://hosted.weblate.org/engage/music-player-go/). 
+PS: pull requests will be also taken into consideration :)
 
 
 ### Can I customise the app's theme to my taste?
 
-1. Yes, choose between 3 themes:
+1. Yes, 3 themes are available:
 
  - Light
- - Dark
+ - Dark/Pure Black
  - Automatic: still follows system settings in Android Q and battery levels in pre-Q as suggested in the [guidelines](https://developer.android.com/guide/topics/ui/look-and-feel/darktheme).
 
-2. 36 accent colours.
+2. 19 accent colours.
 
+Note: MPGO will strictly follow [material design color guidelines](https://material.io/design/color/the-color-system.html). No requests to modify the color system will be taken into consideration.
 
-### Why are accents 'lighter' in the dark theme?
-
-As per [guidelines](https://material.io/design/color/dark-theme.html), primary colors are desaturated for accessibility: saturated colors visually vibrate against dark surfaces, which can induce eye strain.
-Instead, desaturated colors can be used as a more legible alternative.
+As per [guidelines](https://material.io/design/color/dark-theme.html) **desaturated primary colors** are to be used in night themes as a more **accessible**/legible alternative to saturared colors used in light theme: saturated colors visually vibrate against dark surfaces, which can induce eye strain.
 
 
 ### Does Music Player GO have or use an equalizer?
 
-Music Player GO uses the system (default) equalizer (if it exists) found on the device.
+Music Player GO uses the system (default) equalizer (**if it exists**) found on the device.
 The equalizer can be found in the "Now Playing" dialog.
 There is also a built-in equalizer. You can enable it by turning off the one in your system.
-
-If the Android system is missing (as found in some Samsung, HTC, Pixel, etc. devices) the android.media.audiofx.Equalizer class then there is nothing for MPGO's EQ to link to.
-All you can do is to use an equalizer that relies on an internal audio engine and interacts with Android media session, like [Wavelet](https://pittvandewitt.github.io/Wavelet/) does.
-
-
-### The built-in equalizer is not being turned on
-
-Just toggle the switch button again.
 
 
 ### What is audio focus?
 
 It is an Android feature to moderate playback in media apps and prevents multiple media apps from playing at the same time.
 Every media app should request and receive the audio focus. This option is on by default so that MPGO can:
-1. **pause** if another app requests audio focus.
-2. **lower** its volume when a new message is received.
+1. **Pause** if another app requests audio focus.
+2. **Lower** its volume when a new message is received.
 
-
-### How to clear queued and favorited songs?
-
-Long-click on the buttons from the bottom panel.
-To clear the queue You can also start playback from "Artist" details.
 
 ### Does Music Player GO play music tracks from online sources?
 
-No, it only plays from the local library.
+No, local library only.
 
 ### Does Music Player GO access the Internet?
 
-No.
-Internet permission is not requested.
+No. Internet permission is not requested.
 
 
 ### How does Music Player GO categorized music tracks?
@@ -95,7 +80,7 @@ To avoid performance issues queue built from shuffled lists are limited to 250 i
 
 ### Sometimes MediaButton does not work
 
-Sometimes it seems to not register properly. Try to reconnect the headphones.
+Make sure headphones are properly connected.
 
 
 ### Android 12 and battery optimization: media player stops working
@@ -109,13 +94,15 @@ Apps > All apps > Music Player GO > Battery > Unrestricted
 
 1. Unfortunately, not all requests can be taken into consideration, for a variety of reasons:
 
-   - The feature is too complex, clashing with the philosophy behind the app: KISS. Keep it snimple snupid :)
-   - The rather poor developer is rocking a dying Nexus 5 as the only test device for now. A good computer could ensure emulator usage. This is the case of [#51](https://github.com/enricocid/Music-Player-GO/issues/51).
-   - The feature just does not match the developer's needs. Keep in mind that this app is built around the developer's usage needs and is shared for the love of libre software.
+   - Job/real life.
+   - Complex feature clashing with the KISS philosophy behind the app: Keep it snimple snupid :)
+   - The rather poor developer is rocking a Xiaomi Mi A1 as the only test device. A good computer could ensure emulator usage.
+   - Keep in mind that the app is built around the **developer's usage needs** and is shared for the love of libre software.
    - Sometimes time is just short…
-   - Lack of motivation
+   - Cyclic lack of motivation/interest in Android development.
 
-2. A crash report is useful only when a logcat and detailed explanation on how to reproduce the bug is provided. If you don't know how to proceed, send an e-mail to the developer to receive guidance.
+
+2. A crash report is useful only when a logcat and/or a detailed explanation on how to reproduce the bug are attached. If you don't know how to proceed, contact the developer to receive guidance.
 
 
 ### Does this app keep any info or data about me or my device?

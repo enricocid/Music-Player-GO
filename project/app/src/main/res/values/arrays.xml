@@ -34,23 +34,6 @@
         <item>@color/brown</item>
         <item>@color/grey</item>
         <item>@color/blue_grey</item>
-        <item>@color/red_200</item>
-        <item>@color/pink_200</item>
-        <item>@color/purple_200</item>
-        <item>@color/deep_purple_200</item>
-        <item>@color/indigo_200</item>
-        <item>@color/blue_200</item>
-        <item>@color/light_blue_200</item>
-        <item>@color/cyan_200</item>
-        <item>@color/teal_200</item>
-        <item>@color/green_200</item>
-        <item>@color/light_green_200</item>
-        <item>@color/lime_200</item>
-        <item>@color/amber_200</item>
-        <item>@color/orange_200</item>
-        <item>@color/deep_orange_200</item>
-        <item>@color/brown_200</item>
-        <item>@color/blue_grey_200</item>
     </integer-array>
 
     <string-array name="accent_names">
