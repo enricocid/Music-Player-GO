@@ -18,7 +18,7 @@ A lightweight, original, privacy-friendly, **ad-free** music player playing musi
 ### How can I contribute to translations?
 
 Join us on [Hosted Weblate](https://hosted.weblate.org/engage/music-player-go/). 
-PS: pull requests will be also taken into consideration :)
+PS: pull requests are welcome too :)
 
 
 ### Can I customise the app's theme to my taste?
