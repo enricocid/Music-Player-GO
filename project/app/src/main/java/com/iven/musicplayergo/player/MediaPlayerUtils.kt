@@ -28,26 +28,4 @@ object MediaPlayerUtils {
             }
         }
     }
-
-    @JvmStatic
-    fun safePrepare(mediaPlayer: MediaPlayer) {
-        with (mediaPlayer) {
-            try {
-                prepare()
-            } catch (e: IllegalStateException) {
-                e.printStackTrace()
-            }
-        }
-    }
-
-    @JvmStatic
-    fun safeReset(mediaPlayer: MediaPlayer) {
-        with (mediaPlayer) {
-            try {
-                reset()
-            } catch (e: IllegalStateException) {
-                e.printStackTrace()
-            }
-        }
-    }
 }

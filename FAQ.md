@@ -7,7 +7,7 @@ This FAQ will be continually updated to accommodate new information with respect
 
 ### What is Music Player GO?
 
-A lightweight, original, privacy-friendly, **ad-free** music player playing music from your local music library, in a colorful and simple UI.
+A lightweight, original, privacy-friendly, **ad-free** player to play music from your local library, in a colorful and simple UI.
 
 
 ### Where can I download Music Player GO?
@@ -17,7 +17,8 @@ A lightweight, original, privacy-friendly, **ad-free** music player playing musi
 
 ### How can I contribute to translations?
 
-Join us on [Hosted Weblate](https://hosted.weblate.org/engage/music-player-go/). 
+Join us on [Hosted Weblate](https://hosted.weblate.org/engage/music-player-go/).
+
 PS: pull requests are welcome too :)
 
 
@@ -29,11 +30,11 @@ PS: pull requests are welcome too :)
  - Dark/Pure Black
  - Automatic: still follows system settings in Android Q and battery levels in pre-Q as suggested in the [guidelines](https://developer.android.com/guide/topics/ui/look-and-feel/darktheme).
 
-2. 19 accent colours.
+2. 19 accents.
 
-Note: MPGO will strictly follow [material design color guidelines](https://material.io/design/color/the-color-system.html). No requests to modify the color system will be taken into consideration.
+Note: MPGO will strictly follow [material design color guidelines](https://material.io/design/color/the-color-system.html). No requests to modify the color system will be taken into account.
 
-As per [guidelines](https://material.io/design/color/dark-theme.html) **desaturated primary colors** are to be used in night themes as a more **accessible**/legible alternative to saturared colors used in light theme: saturated colors visually vibrate against dark surfaces, which can induce eye strain.
+As per [guidelines](https://material.io/design/color/dark-theme.html) **desaturated primary colors** are to be used in night themes as a more **accessible**/legible alternative to saturared colors used in light theme. In fact, the latter visually vibrate against dark surfaces, which can induce eye strain.
 
 
 ### Does Music Player GO have or use an equalizer?
@@ -45,8 +46,8 @@ There is also a built-in equalizer. You can enable it by turning off the one in 
 
 ### What is audio focus?
 
-It is an Android feature to moderate playback in media apps and prevents multiple media apps from playing at the same time.
-Every media app should request and receive the audio focus. This option is on by default so that MPGO can:
+It is an Android feature to moderate playback in media apps that prevents multiple media apps from playing at the same time.
+Every media app should deal with audio focus. This option is ON by default so that MPGO can:
 1. **Pause** if another app requests audio focus.
 2. **Lower** its volume when a new message is received.
 
@@ -57,12 +58,12 @@ No, local library only.
 
 ### Does Music Player GO access the Internet?
 
-No. Internet permission is not requested.
+No. Internet permission is not required.
 
 
 ### How does Music Player GO categorized music tracks?
 
-By artists, folders, and albums.
+By artists, folders and albums.
 Artists' music are in turn categorized by albums.
 Folders can be considered albums.
 Each album consists of tracks of the same album.
@@ -75,7 +76,7 @@ Filter them once the app has loaded.
 
 ### How does MPGO handle shuffled lists?
 
-To avoid performance issues queue built from shuffled lists are limited to 250 items.
+To avoid performance issues queue built from shuffled lists is limited to 250 items.
 
 
 ### Sometimes MediaButton does not work
@@ -92,7 +93,7 @@ Apps > All apps > Music Player GO > Battery > Unrestricted
 
 ### What about features requests/crash reports?
 
-1. Unfortunately, not all requests can be taken into consideration, for a variety of reasons:
+1. Unfortunately, not all requests can be taken into consideration for a variety of reasons:
 
    - Job/real life.
    - Complex feature clashing with the KISS philosophy behind the app: Keep it snimple snupid :)

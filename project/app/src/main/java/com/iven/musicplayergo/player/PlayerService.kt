@@ -165,15 +165,13 @@ class PlayerService : Service() {
                             musicNotificationManager.updateFavoriteIcon()
                             mediaPlayerHolder.mediaPlayerInterface.onUpdateFavorites()
                         }
-                        GoConstants.FAVORITE_POSITION_ACTION -> {
-                            Lists.addToFavorites(
-                                this@PlayerService,
-                                currentSong,
-                                canRemove = false,
-                                playerPosition,
-                                launchedBy
-                            )
-                        }
+                        GoConstants.FAVORITE_POSITION_ACTION -> Lists.addToFavorites(
+                            this@PlayerService,
+                            currentSong,
+                            canRemove = false,
+                            playerPosition,
+                            launchedBy
+                        )
                         GoConstants.REWIND_ACTION -> fastSeek(isForward = false)
                         GoConstants.PREV_ACTION -> instantReset()
                         GoConstants.PLAY_PAUSE_ACTION -> resumeOrPause()

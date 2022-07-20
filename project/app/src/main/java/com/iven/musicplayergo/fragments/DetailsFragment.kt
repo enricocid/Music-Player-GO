@@ -488,12 +488,10 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         mSongsList?.toMutableList(),
                         Pair(first = false, second = null)
                     )
-                    R.id.action_shuffle_am -> {
-                        mMediaControlInterface.onSongsShuffled(
-                            mSongsList?.toMutableList(),
-                            mLaunchedBy
-                        )
-                    }
+                    R.id.action_shuffle_am -> mMediaControlInterface.onSongsShuffled(
+                        mSongsList?.toMutableList(),
+                        mLaunchedBy
+                    )
                     R.id.action_shuffle_sa -> mMediaControlInterface.onSongsShuffled(
                         mSelectedAlbum?.music,
                         mLaunchedBy

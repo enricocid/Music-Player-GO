@@ -74,17 +74,13 @@ object Lists {
         id: Int,
         list: MutableList<String>?
     ) = when (id) {
-        GoConstants.ASCENDING_SORTING -> {
-            list?.apply {
-                Collections.sort(this, String.CASE_INSENSITIVE_ORDER)
-            }
+        GoConstants.ASCENDING_SORTING -> list?.apply {
+            Collections.sort(this, String.CASE_INSENSITIVE_ORDER)
         }
 
-        GoConstants.DESCENDING_SORTING -> {
-            list?.apply {
-                Collections.sort(this, String.CASE_INSENSITIVE_ORDER)
-            }?.asReversed()
-        }
+        GoConstants.DESCENDING_SORTING -> list?.apply {
+            Collections.sort(this, String.CASE_INSENSITIVE_ORDER)
+        }?.asReversed()
         else -> list
     }
 
