@@ -84,6 +84,8 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         _detailsFragmentBinding?.songsRv?.adapter?.notifyDataSetChanged()
     }
 
+    fun getCurrentArtistFolder() = Pair(mSelectedArtistOrFolder, mLaunchedBy)
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -97,7 +99,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             if (sLaunchedByArtistView) {
                 mSelectedAlbumPosition = getInt(TAG_SELECTED_ALBUM_POSITION)
             }
-            mSelectedSongId = getLong(TAG_HIGHLIGHTED_SONG_ID)
+            mSelectedSongId = getLong(TAG_SELECTED_SONG_ID)
             sCanUpdateSongs = getBoolean(TAG_CAN_UPDATE_SONGS)
         }
 
@@ -787,7 +789,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         private const val TAG_ARTIST_FOLDER = "SELECTED_ARTIST_FOLDER"
         private const val TAG_IS_FOLDER = "IS_FOLDER"
         private const val TAG_SELECTED_ALBUM_POSITION = "SELECTED_ALBUM_POSITION"
-        private const val TAG_HIGHLIGHTED_SONG_ID = "HIGHLIGHTED_SONG_ID"
+        private const val TAG_SELECTED_SONG_ID = "HIGHLIGHTED_SONG_ID"
         private const val TAG_CAN_UPDATE_SONGS = "CAN_UPDATE_SONGS"
 
         /**
@@ -801,7 +803,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             selectedArtistOrFolder: String?,
             launchedBy: String,
             playedAlbumPosition: Int,
-            highlightedSongId: Long?,
+            selectedSongId: Long?,
             canUpdateSongs: Boolean
         ) =
             DetailsFragment().apply {
@@ -809,7 +811,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     TAG_ARTIST_FOLDER to selectedArtistOrFolder,
                     TAG_IS_FOLDER to launchedBy,
                     TAG_SELECTED_ALBUM_POSITION to playedAlbumPosition,
-                    TAG_HIGHLIGHTED_SONG_ID to highlightedSongId,
+                    TAG_SELECTED_SONG_ID to selectedSongId,
                     TAG_CAN_UPDATE_SONGS to canUpdateSongs
                 )
             }

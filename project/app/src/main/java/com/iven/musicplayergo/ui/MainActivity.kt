@@ -83,8 +83,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private var sRevealAnimationRunning = false
 
     private var sRestoreSettingsFragment = false
-    private var sTabToRestore = -1
-    private var sDialogToRestore: String? = null
+    private var mTabToRestore = -1
+    private var mDialogToRestore: String? = null
+    private var mArtistFolderToRestore: Pair<String, String>? = null
 
     // Queue dialog
     private var mQueueDialog: RecyclerSheet? = null
@@ -166,15 +167,19 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        sDialogToRestore = when {
+        mDialogToRestore = when {
             mNpDialog != null -> NowPlaying.TAG_MODAL
             mQueueDialog != null -> RecyclerSheet.QUEUE_TYPE
             else -> null
         }
         sAllowCommit = false
+
+        val artistOrFolderToRestore = mDetailsFragment?.getCurrentArtistFolder()
         val bundle = bundleOf(
             GoConstants.RESTORE_FRAGMENT to mMainActivityBinding.viewPager2.currentItem,
-            GoConstants.RESTORE_DIALOG_TYPE to sDialogToRestore
+            GoConstants.RESTORE_SELECTED_ARTIST_FOLDER to artistOrFolderToRestore?.first,
+            GoConstants.RESTORE_LAUNCHED_BY to artistOrFolderToRestore?.second,
+            GoConstants.RESTORE_DIALOG_TYPE to mDialogToRestore
         )
         outState.putAll(bundle)
     }
@@ -283,8 +288,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         )
 
         savedInstanceState?.run {
-            sTabToRestore = getInt(GoConstants.RESTORE_FRAGMENT, -1)
-            sDialogToRestore = getString(GoConstants.RESTORE_DIALOG_TYPE, null)
+            mTabToRestore = getInt(GoConstants.RESTORE_FRAGMENT, -1)
+            mDialogToRestore = getString(GoConstants.RESTORE_DIALOG_TYPE, null)
+            mArtistFolderToRestore = Pair(
+                getString(GoConstants.RESTORE_SELECTED_ARTIST_FOLDER, null),
+                getString(GoConstants.RESTORE_LAUNCHED_BY, null)
+            )
         }
 
         if (Permissions.hasToAskForReadStoragePermission(this)) {
@@ -410,10 +419,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             })
         }
 
-        Log.d("stab", sRestoreSettingsFragment.toString())
         mMainActivityBinding.viewPager2.setCurrentItem(
             when {
-                sTabToRestore != -1 && !sRestoreSettingsFragment -> sTabToRestore
+                mTabToRestore != -1 && !sRestoreSettingsFragment -> mTabToRestore
                 sRestoreSettingsFragment -> mMainActivityBinding.viewPager2.offscreenPageLimit
                 else -> 0
             },
@@ -460,20 +468,23 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 if (sEqFragmentExpanded) {
                     goBackFromFragmentNow(mEqualizerFragment)
                     mEqualizerFragment = null
-                    if (sTabToRestore != -1) {
+                    if (mTabToRestore != -1) {
                         onOpenEqualizer()
                     }
                 }
                 if (sDetailsFragmentExpanded) {
                     goBackFromFragmentNow(mDetailsFragment)
                     mDetailsFragment = null
-                    if (sTabToRestore != -1) {
-                        onOpenPlayingArtistAlbum()
+                    if (mTabToRestore != -1) {
+                        mArtistFolderToRestore?.let { values ->
+                            openDetailsFragment(values.first, values.second, mMediaPlayerHolder.currentSong?.id)
+                            mArtistFolderToRestore = null
+                        }
                     }
                 }
             }
 
-            sDialogToRestore?.let { dialogType ->
+            mDialogToRestore?.let { dialogType ->
 
                 val fragmentsIterator = supportFragmentManager.fragments.filterIsInstance(
                     DialogFragment::class.java
@@ -486,7 +497,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     NowPlaying.TAG_MODAL -> openNowPlayingFragment()
                     else -> openQueueFragment()
                 }
-                sDialogToRestore = null
+                mDialogToRestore = null
             }
         }
     }
@@ -518,7 +529,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private fun openDetailsFragment(
         selectedArtistOrFolder: String?,
         launchedBy: String,
-        highlightedSongId: Long?
+        selectedSongId: Long?
     ) {
         if (!sDetailsFragmentExpanded) {
             mDetailsFragment =
@@ -530,7 +541,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                         selectedArtistOrFolder,
                         mMusicViewModel.deviceAlbumsByArtist
                     ),
-                    highlightedSongId,
+                    selectedSongId,
                     canUpdateSongs = mMediaPlayerHolder.currentSong?.artist == selectedArtistOrFolder && mMediaPlayerHolder.launchedBy == GoConstants.ARTIST_VIEW
                 )
             sCloseDetailsFragment = true
