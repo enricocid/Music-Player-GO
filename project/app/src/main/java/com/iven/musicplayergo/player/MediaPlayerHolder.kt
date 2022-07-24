@@ -682,7 +682,7 @@ class MediaPlayerHolder:
 
     override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
         println("MediaPlayer error: $what")
-        synchronized(mediaPlayer.release()) {
+        synchronized(release()) {
             initMediaPlayer(currentSong, forceReset = true)
         }
         return true
