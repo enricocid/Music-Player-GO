@@ -102,7 +102,11 @@ class MediaPlayerHolder:
 
     private val sFocusEnabled get() = GoPreferences.getPrefsInstance().isFocusEnabled
     private var mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
-    private val sHasFocus get() = sFocusEnabled && mCurrentAudioFocusState == AUDIO_FOCUSED
+
+    private val sHasHeadsetsControl get() = GoPreferences.getPrefsInstance().isHeadsetPlugEnabled
+    private val sManageHeadsets get() =
+        isCurrentSong && sFocusEnabled && mCurrentAudioFocusState == AUDIO_FOCUSED && sHasHeadsetsControl
+                || isCurrentSong && !sFocusEnabled && sHasHeadsetsControl
     private var sRestoreVolume = false
     private var sPlayOnFocusGain = false
 
@@ -1043,43 +1047,36 @@ class MediaPlayerHolder:
 
                     when (act) {
 
-                        BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (
-                            isCurrentSong
-                            && GoPreferences.getPrefsInstance().isHeadsetPlugEnabled
-                        ) {
+                        BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (isCurrentSong && sHasHeadsetsControl) {
                             pauseMediaPlayer()
                         }
-                        BluetoothDevice.ACTION_ACL_CONNECTED -> if (
-                            isCurrentSong
-                            && GoPreferences.getPrefsInstance().isHeadsetPlugEnabled
-                            && sHasFocus
-                        ) {
+                        BluetoothDevice.ACTION_ACL_CONNECTED -> if (sManageHeadsets) {
                             resumeMediaPlayer()
                         }
 
                         Intent.ACTION_MEDIA_BUTTON -> handleMediaButton(intent)
 
-                        AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED -> if (isCurrentSong && GoPreferences.getPrefsInstance().isHeadsetPlugEnabled) {
+                        AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED -> if (isCurrentSong && sHasHeadsetsControl) {
                             when (intent.getIntExtra(AudioManager.EXTRA_SCO_AUDIO_STATE, -1)) {
-                                AudioManager.SCO_AUDIO_STATE_CONNECTED -> if (sHasFocus) {
+                                AudioManager.SCO_AUDIO_STATE_CONNECTED -> if (sManageHeadsets) {
                                     resumeMediaPlayer()
                                 }
                                 AudioManager.SCO_AUDIO_STATE_DISCONNECTED -> pauseMediaPlayer()
                             }
                         }
 
-                        Intent.ACTION_HEADSET_PLUG -> if (isCurrentSong && GoPreferences.getPrefsInstance().isHeadsetPlugEnabled) {
+                        Intent.ACTION_HEADSET_PLUG -> if (isCurrentSong && sHasHeadsetsControl) {
                             when (intent.getIntExtra("state", -1)) {
                                 // 0 means disconnected
                                 HEADSET_DISCONNECTED -> pauseMediaPlayer()
                                 // 1 means connected
-                                HEADSET_CONNECTED -> if (sHasFocus) {
+                                HEADSET_CONNECTED -> if (sManageHeadsets) {
                                     resumeMediaPlayer()
                                 }
                             }
                         }
 
-                        AudioManager.ACTION_AUDIO_BECOMING_NOISY -> if (isPlaying && GoPreferences.getPrefsInstance().isHeadsetPlugEnabled) {
+                        AudioManager.ACTION_AUDIO_BECOMING_NOISY -> if (isPlaying && sHasHeadsetsControl) {
                             pauseMediaPlayer()
                         }
                     }
