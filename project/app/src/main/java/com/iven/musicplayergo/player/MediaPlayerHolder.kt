@@ -104,9 +104,7 @@ class MediaPlayerHolder:
     private var mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
 
     private val sHasHeadsetsControl get() = GoPreferences.getPrefsInstance().isHeadsetPlugEnabled
-    private val sManageHeadsets get() =
-        isCurrentSong && sFocusEnabled && mCurrentAudioFocusState == AUDIO_FOCUSED && sHasHeadsetsControl
-                || isCurrentSong && !sFocusEnabled && sHasHeadsetsControl
+
     private var sRestoreVolume = false
     private var sPlayOnFocusGain = false
 
@@ -1050,7 +1048,7 @@ class MediaPlayerHolder:
                         BluetoothDevice.ACTION_ACL_DISCONNECTED -> if (isCurrentSong && sHasHeadsetsControl) {
                             pauseMediaPlayer()
                         }
-                        BluetoothDevice.ACTION_ACL_CONNECTED -> if (sManageHeadsets) {
+                        BluetoothDevice.ACTION_ACL_CONNECTED -> if (isCurrentSong && sHasHeadsetsControl) {
                             resumeMediaPlayer()
                         }
 
@@ -1058,9 +1056,7 @@ class MediaPlayerHolder:
 
                         AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED -> if (isCurrentSong && sHasHeadsetsControl) {
                             when (intent.getIntExtra(AudioManager.EXTRA_SCO_AUDIO_STATE, -1)) {
-                                AudioManager.SCO_AUDIO_STATE_CONNECTED -> if (sManageHeadsets) {
-                                    resumeMediaPlayer()
-                                }
+                                AudioManager.SCO_AUDIO_STATE_CONNECTED -> resumeMediaPlayer()
                                 AudioManager.SCO_AUDIO_STATE_DISCONNECTED -> pauseMediaPlayer()
                             }
                         }
@@ -1070,9 +1066,7 @@ class MediaPlayerHolder:
                                 // 0 means disconnected
                                 HEADSET_DISCONNECTED -> pauseMediaPlayer()
                                 // 1 means connected
-                                HEADSET_CONNECTED -> if (sManageHeadsets) {
-                                    resumeMediaPlayer()
-                                }
+                                HEADSET_CONNECTED -> resumeMediaPlayer()
                             }
                         }
 
