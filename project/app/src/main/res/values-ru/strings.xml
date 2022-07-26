@@ -54,7 +54,7 @@
     <string name="error_media_buttons">Что-то пошло не так! :( Пожалуйста перезапустите воспроизведение из приложения.</string>
     <string name="error_not_ready">Невозможно загрузить библиотеку музыки! :( Отключение SD-карты пересоздаёт базу данных Android MediaStore. Повторите попытку позже.</string>
     <string name="albums">Альбомы</string>
-    <string name="notification_actions_repeat">Дополнительные действия с уведомлением</string>
+    <string name="notification_actions_repeat">Повторить/закрыть</string>
     <string name="fast_seeking_pref_summary">Быстрая перемотка вперёд/назад (секунды)</string>
     <string name="fast_seeking_pref_title">Быстрый поиск</string>
     <string name="eq_pref_note_summary">Примечание: Используется системный эквалайзер, если он не был отключён в системных настройках. :)</string>
@@ -163,4 +163,9 @@
     <string name="filters_clear">Фильтры будут очищены. Продолжить\?</string>
     <string name="confirm_ask_pref_title">Запросы о подтверждении</string>
     <string name="confirm_ask_pref_sum">Запрашивать подтверждение перед совершением любых действий</string>
+    <string name="notification_actions_pref_title">Дополнительные действия с уведомлением</string>
+    <string name="notification_actions_favorite">Добавить в избранное/закрыть</string>
+    <string name="notification_actions_favorite_position">Добавить в избранное (с позицией)/закрыть</string>
+    <string name="notification_actions_fast_seeking">Быстрая перемотка</string>
+    <string name="continue_on_end_desc">Выберите, продолжать ли воспроизведение или приостанавливать при завершении</string>
 </resources>
