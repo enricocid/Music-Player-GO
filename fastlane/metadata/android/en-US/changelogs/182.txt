@@ -1,0 +1,11 @@
+- Improved now playing
+- Multi-select to hide
+- More notification actions options
+- Play a single artist/album/folder...
+- Improved swipe actions
+- Queue/favorites: add delete button
+- Review accents (see faq)
+- Fix equalizer not opening
+- Landscape layout improvements
+- Many code improvements/fixes
+- Translations update

@@ -1,0 +1,23 @@
+name: Question
+description: Ask a question
+title: "[Q&A]: "
+labels: ["question"]
+assignees:
+  - enricocid
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: What are You thinking?
+      description: Ask me a question, any question!
+      placeholder: Ask me things!
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to not spam the thread asking for ETA, etc.
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

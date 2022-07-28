@@ -1,14 +1,10 @@
 name: Feature request
 description: File a feature request
 title: "[FR]: "
-labels: ["feature request", "improvement"]
+labels: ["feature request"]
 assignees:
   - enricocid
 body:
-  - type: markdown
-    attributes:
-      value: |
-        Thanks for taking the time to fill out this feature request!
   - type: textarea
     id: what
     attributes:
