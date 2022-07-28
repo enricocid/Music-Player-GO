@@ -8,4 +8,4 @@
 - Corretto equalizzatore che non si apre
 - Migliorie layout landscape
 - Molte migliore/correzioni codice
-- Aggiormamento traduzioni
+- Aggiornamento traduzioni
