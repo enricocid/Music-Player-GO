@@ -9,7 +9,6 @@
     <string name="perm_rationale">Сначала выдайте Music Player GO доступ к вашим файлам для воспроизведения музыки.</string>
     <string name="artist_info">%1d Aльбомов, %2d Треков</string>
     <string name="active_fragments_pref_title">Активные вкладки</string>
-    <string name="active_fragments_pref_warning">Вы не можете закрыть все вкладки! :P</string>
     <string name="artists">Исполнители</string>
     <string name="category_general">Общее</string>
     <string name="error_no_queue">В очереди нет треков.</string>
@@ -51,7 +50,6 @@
     <string name="filter_popup_title">Скрыть</string>
     <string name="repeat_loop_enabled">∞ повтор включён.</string>
     <string name="error_no_music">Сначала добавьте какую-либо музыку.</string>
-    <string name="error_media_buttons">Что-то пошло не так! :( Пожалуйста перезапустите воспроизведение из приложения.</string>
     <string name="error_not_ready">Невозможно загрузить библиотеку музыки! :( Отключение SD-карты пересоздаёт базу данных Android MediaStore. Повторите попытку позже.</string>
     <string name="albums">Альбомы</string>
     <string name="notification_actions_repeat">Повторить/закрыть</string>

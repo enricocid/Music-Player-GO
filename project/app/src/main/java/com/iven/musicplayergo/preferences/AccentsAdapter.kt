@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
@@ -12,7 +13,6 @@ import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.extensions.toContrastColor
-import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.extensions.updateIconTint
 import com.iven.musicplayergo.utils.Theming
 
@@ -65,7 +65,8 @@ class AccentsAdapter(private val activity: Activity) :
                 }
 
                 setOnLongClickListener {
-                    accentFullName.toToast(activity)
+                    Toast.makeText(activity, accentFullName, Toast.LENGTH_SHORT)
+                        .show()
                     return@setOnLongClickListener true
                 }
             }

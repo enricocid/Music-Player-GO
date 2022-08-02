@@ -15,9 +15,7 @@ import android.view.KeyEvent
 import androidx.core.content.getSystemService
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
-import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toSavedMusic
-import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.utils.Lists
 import com.iven.musicplayergo.utils.Versioning
 
@@ -273,7 +271,6 @@ class PlayerService : Service() {
                 }
             }
         } catch (e: Exception) {
-            R.string.error_media_buttons.toToast(this)
             e.printStackTrace()
             return false
         }

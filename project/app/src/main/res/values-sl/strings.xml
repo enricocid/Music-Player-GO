@@ -14,7 +14,6 @@
     <string name="fast_seeking_pref_summary">Prevrti naprej/nazaj (sekunde)</string>
     <string name="fast_seeking_pref_title">Hitro iskanje</string>
     <string name="eq_pref_note_summary">Opomba: Prednost ima sistemski izenačevalec, razen če ga izkopite v sistemskih nastavitvah. :)</string>
-    <string name="active_fragments_pref_warning">Ne morete zapreti kar vseh zavihkov! :P</string>
     <string name="active_fragments_pref_title">Aktivni zavihki</string>
     <string name="song_visual_pref_fn_title">Ime datoteke</string>
     <string name="song_visual_pref_tl_title">Naslov</string>
@@ -39,7 +38,6 @@
     <string name="error_no_queue">V čakalni vrsti ni pesmi.</string>
     <string name="error_bad_id">Najprej predvajaj pesem.</string>
     <string name="error_no_browser">Nisem našel spletnega brskalnika.</string>
-    <string name="error_media_buttons">Nekaj se je zalomilo! :( Ponovno poskusite začeti predvajati.</string>
     <string name="error_unknown_unsupported">Nekaj se je zalomilo :( Izbrani format morda ni podprt, ali pa je mapa nedostopna (ni kriva aplikacija!).</string>
     <string name="error_not_ready">Nisem mogel naložiti glasbene knjižnjice! :( To se lahko zgodi, če se je izvržena SD kartica, kar prisili, da Androidov MediaStore ponovno sestavi podatkovno bazo. Poskusite ponovno kasneje.</string>
     <string name="error_no_music">Nisem našel nobene glasbe :(</string>

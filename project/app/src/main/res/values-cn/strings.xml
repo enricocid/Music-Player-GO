@@ -30,7 +30,6 @@
     <string name="error_no_music">请先添加一些音乐。</string>
     <string name="error_not_ready">无法加载音乐库！:(卸载 SD 卡会重建 Android MediaStore 数据库。请稍后再试。</string>
     <string name="error_unknown_unsupported">出了点问题！:( 也许格式不受支持，或者文件夹无法访问（不是 app 的错！）。</string>
-    <string name="error_media_buttons">出了点问题！:( 请从 app 中重新启动播放。</string>
     <string name="error_no_browser">请先安装 Web 浏览器。</string>
     <string name="error_bad_id">先播放一首歌曲。</string>
     <string name="error_no_queue">队列中无歌曲。</string>
@@ -47,7 +46,6 @@
     <string name="theme_pref_auto_title">系统</string>
     <string name="accent_pref_title">自定义</string>
     <string name="active_fragments_pref_title">标签管理</string>
-    <string name="active_fragments_pref_warning">您不能删除所有标签！ :P</string>
     <string name="precise_volume_pref_title">精确的音量控制</string>
     <string name="focus_pref_title">音频焦点管理</string>
     <string name="headset_pref_title">耳机接入管理</string>

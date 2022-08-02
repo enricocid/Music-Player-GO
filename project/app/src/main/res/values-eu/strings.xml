@@ -14,7 +14,6 @@
     <string name="fast_seeking_pref_summary">Azkar aurreratu/birbobinatzeko urrats (segundoak)</string>
     <string name="fast_seeking_pref_title">Bilaketa azkarra</string>
     <string name="eq_pref_note_summary">Oharra: sistemaren ekualizatzailea lehenetsiko da, sistemaren konfiguraziotik \"sistemaren ekualizatzailea\" aplikazioa desaktibatu ezean. :)</string>
-    <string name="active_fragments_pref_warning">Ezin dituzu erlaitz guztiak kendu! :P</string>
     <string name="active_fragments_pref_title">Pestañas activas</string>
     <string name="song_visual_pref_fn_title">Fitxategiaren izena</string>
     <string name="song_visual_pref_tl_title">Titulua</string>
@@ -39,7 +38,6 @@
     <string name="error_no_queue">Ez dago abestirik isatsean.</string>
     <string name="error_bad_id">Abesti bat jo hasi baino lehen.</string>
     <string name="error_no_browser">Ez da web nabigatzailerik aurkitu.</string>
-    <string name="error_media_buttons">Zerbait gaizki atera zen! :( Mesedez, berrabiarazi erreprodukzioa aplikaziotik.</string>
     <string name="error_unknown_unsupported">Zerbait gaizki joan da! :( Agian aukeratutako formatua ez da bateragarria, edo karpeta ez da eskuragarria (ez da aplikazioaren errua!).</string>
     <string name="error_not_ready">Ezin izan da musika liburutegia kargatu :( horren arrazoia SD txartela desmuntatu izana izan daiteke, Androiden MediaStore datu-baseko erregistroak berreraikitzera behartuz. Saiatu berriro geroago.</string>
     <string name="error_no_music">Ez da musikarik aurkitu :(</string>

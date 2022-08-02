@@ -4,12 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.extensions.toSavedMusic
-import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.models.Music
 import java.util.*
 
@@ -219,14 +219,17 @@ object Lists {
         song?.toSavedMusic(playerPosition, launchedBy)?.let { savedSong ->
             if (!favorites.contains(savedSong)) {
                 favorites.add(savedSong)
-                context.getString(
-                    R.string.favorite_added,
-                    savedSong.title,
-                    playerPosition.toLong().toFormattedDuration(
-                        isAlbum = false,
-                        isSeekBar = false
-                    )
-                ).toToast(context)
+                Toast.makeText(
+                    context,
+                    context.getString(
+                        R.string.favorite_added,
+                        savedSong.title,
+                        playerPosition.toLong().toFormattedDuration(
+                            isAlbum = false,
+                            isSeekBar = false
+                        )
+                    ),
+                    Toast.LENGTH_SHORT).show()
             } else if (canRemove) {
                 favorites.remove(savedSong)
             }

@@ -9,7 +9,6 @@
     <string name="fast_seeking_pref_summary">Bước nhảy nhanh về phía trước/sau (giây)</string>
     <string name="fast_seeking_pref_title">Tua nhanh</string>
     <string name="eq_pref_note_summary">Lưu ý: Bộ cân bằng của hệ thống sẽ được ưu tiên trừ khi bạn tắt ứng dụng \"bộ cân bằng hệ thống\" từ cài đặt hệ thống. :)</string>
-    <string name="active_fragments_pref_warning">Bạn không thể cứ thế xoá tất cả tab được! :P</string>
     <string name="active_fragments_pref_title">Tab hoạt động</string>
     <string name="song_visual_pref_fn_title">Tên tệp</string>
     <string name="song_visual_pref_tl_title">Tiêu đề</string>
@@ -34,7 +33,6 @@
     <string name="error_no_queue">Không có bài hát nào trong hàng đợi.</string>
     <string name="error_bad_id">Hãy phát một bài hát trước.</string>
     <string name="error_no_browser">Không tìm thấy trình duyệt web nào.</string>
-    <string name="error_media_buttons">Có gì đó xảy ra! :( Vui lòng bắt đầu phát lại từ ứng dụng.</string>
     <string name="error_unknown_unsupported">Có gì đó xảy ra! :( Có lẽ là định dạng đã chọn không được hỗ trợ, hoặc thư mục không thể truy cập vào được (không phải lỗi của ứng dụng!).</string>
     <string name="error_not_ready">Không thể tải thư viện nhạc! :( Điều này có thể là do thẻ SD bị tháo ra, buộc MediaStore của Android phải xây dựng lại các bản ghi cơ sở dữ liệu. Hãy thử lại sau.</string>
     <string name="playback_pref_summary_on">Giữ tốc độ phát đã chọn</string>

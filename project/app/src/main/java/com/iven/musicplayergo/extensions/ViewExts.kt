@@ -5,7 +5,6 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
-import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.Bitmap
@@ -19,7 +18,6 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.Toolbar
 import androidx.core.animation.doOnEnd
@@ -237,14 +235,6 @@ fun View.handleViewVisibility(show: Boolean) {
     } else {
         View.GONE
     }
-}
-
-fun String.toToast(context: Context) {
-    Toast.makeText(context, this, Toast.LENGTH_SHORT).show()
-}
-
-fun Int.toToast(context: Context) {
-    Toast.makeText(context, this, Toast.LENGTH_SHORT).show()
 }
 
 fun View.safeClickListener(safeClickListener: (view: View) -> Unit) {

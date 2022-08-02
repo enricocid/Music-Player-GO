@@ -46,7 +46,6 @@
     <string name="error_no_music">Aggiungi qualche canzone prima.</string>
     <string name="error_not_ready">Impossibile caricare la libreria musicale! :( Lo smontaggio della scheda SD ricostruisce il database di Android MediaStore. Riprova più tardi.</string>
     <string name="error_unknown_unsupported">Qualcosa è andato storto! :( Forse il formato non è supportato, o la cartella è inaccessibile (non dipende dall\'app!).</string>
-    <string name="error_media_buttons">Qualcosa è andato storto! :( Per favore riavvia la riproduzione dall\'applicazione.</string>
     <string name="error_eq">Errore</string>
     <string name="error_fs_not_allowed_sum">Errore! Disattiva l\'ottimizzazione della batteria per MPGO</string>
     <string name="error_fs_not_allowed">Qualcosa è andato storto! :( Prova a disattivare l\'ottimizzazione della batteria nelle impostazioni di sistema: App &gt; Tutte le app &gt; Music Player GO &gt; Batteria &gt; Senza limitazioni, in quanto potrebbe causare l\'arresto del servizio musicale.</string>
@@ -75,7 +74,6 @@
     <string name="on_list_ended_pref_continue_title">Continua</string>
     <string name="error_list_ended">Lista terminata.</string>
     <string name="active_fragments_pref_title">Tab attive</string>
-    <string name="active_fragments_pref_warning">Non puoi rimuovere tutte le tabs! :P</string>
     <string name="eq_pref_note_summary">Nota: L\'equalizzatore di sistema è usato a meno che non lo disattivi dalle impostazioni di sistema. :)</string>
     <string name="fast_seeking_pref_title">Avanzamento veloce</string>
     <string name="fast_seeking_pref_summary">Step di avanzamento veloce in secondi</string>

@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.SeekBar
-import android.widget.TextView
+import android.widget.*
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
@@ -96,7 +93,8 @@ class NowPlaying: BottomSheetDialogFragment() {
                     dismiss()
                 }
                 setOnLongClickListener {
-                    R.string.open_details_fragment.toToast(requireContext())
+                    Toast.makeText(requireContext(), getString(R.string.open_details_fragment), Toast.LENGTH_SHORT)
+                        .show()
                     return@setOnLongClickListener false
                 }
             }
@@ -180,14 +178,21 @@ class NowPlaying: BottomSheetDialogFragment() {
                     isChecked = GoPreferences.getPrefsInstance().continueOnEnd
                     setOnCheckedChangeListener { _, isChecked ->
                         GoPreferences.getPrefsInstance().continueOnEnd = isChecked
-                        getString(if (isChecked) {
-                            R.string.pause_on_end_disabled
-                        } else {
-                            R.string.pause_on_end
-                        }).toToast(requireContext())
+                        Toast.makeText(
+                            requireContext(),
+                            getString(
+                                if (isChecked) {
+                                    R.string.pause_on_end_disabled
+                                } else {
+                                    R.string.pause_on_end
+                                }
+                            ),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                     setOnLongClickListener { switch ->
-                        switch.contentDescription.toString().toToast(requireContext())
+                        Toast.makeText(requireContext(), switch.contentDescription, Toast.LENGTH_SHORT)
+                            .show()
                         return@setOnLongClickListener true
                     }
                 }
@@ -199,7 +204,8 @@ class NowPlaying: BottomSheetDialogFragment() {
         val iterator = imageButtons.iterator()
         while (iterator.hasNext()) {
             iterator.next().setOnLongClickListener { btn ->
-                btn.contentDescription.toString().toToast(requireContext())
+                Toast.makeText(requireContext(), btn.contentDescription, Toast.LENGTH_SHORT)
+                    .show()
                 return@setOnLongClickListener true
             }
         }
@@ -376,7 +382,11 @@ class NowPlaying: BottomSheetDialogFragment() {
                     loadNpCover(song)
                 }
                 // load album/song info
-                _nowPlayingBinding?.npSong?.text = song.title
+                _nowPlayingBinding?.npSong?.text = if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
+                    song.displayName.toFilenameWithoutExtension()
+                } else {
+                    song.title
+                }
                 _nowPlayingBinding?.npArtistAlbum?.text =
                     getString(
                         R.string.artist_and_album,

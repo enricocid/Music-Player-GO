@@ -26,7 +26,6 @@
     <string name="error_bad_id">Először játsszon le egy dalt.</string>
     <string name="error_no_music">Nem található zene.</string>
     <string name="error_unknown_unsupported">Valami rosszul sikerült! :( Lehet, hogy a formátum nem támogatott vagy a mappa nem elérhető (nem az alkalmazás hibája!).</string>
-    <string name="error_media_buttons">Valami rosszul sikerült! :( Kérlek indítsa újra a lejátszást.</string>
     <string name="on_close_activity">Lejátszás megállítása\?</string>
     <string name="repeat_enabled">Egyszeri ismélés bekapcsolva.</string>
     <string name="repeat_loop_enabled">∞ ismétlés bekapcsolva.</string>
@@ -40,7 +39,6 @@
     <string name="theme_pref_auto_title">Rendzser</string>
     <string name="accent_pref_title">Kiemelés</string>
     <string name="active_fragments_pref_title">Aktív oldalak</string>
-    <string name="active_fragments_pref_warning">Nem tudja eltávolítani az összes oldalt! :P</string>
     <string name="sorting_pref_default">Alapértelmezett</string>
     <string name="precise_volume_pref_title">Pontos hangerő-szabályozás</string>
     <string name="focus_pref_title">Hangfókusz</string>

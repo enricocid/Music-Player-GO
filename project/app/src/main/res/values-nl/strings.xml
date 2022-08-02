@@ -31,7 +31,6 @@
     <string name="error_bad_id">Start eerst een nummer.</string>
     <string name="error_no_music">Geen muziek aangetroffen :(</string>
     <string name="error_unknown_unsupported">Er is iets misgegaan! :( Het gekozen bestandstype wordt mogelijk niet ondersteund of de map is ontoegankelijk (wat niet de schuld van de app is!).</string>
-    <string name="error_media_buttons">Er is iets misgegaan! :( Start de muziek opnieuw in de app.</string>
     <string name="on_close_activity">Wil je het afspelen stoppen?</string>
     <string name="repeat_enabled">Eenmaal herhalen ingeschakeld.</string>
     <string name="repeat_loop_enabled">∞ herhalen ingeschakeld.</string>
@@ -45,7 +44,6 @@
     <string name="theme_pref_auto_title">Automatisch</string>
     <string name="accent_pref_title">Accent</string>
     <string name="active_fragments_pref_title">Actieve tabbladen</string>
-    <string name="active_fragments_pref_warning">Je kunt niet álle tabbladen verwijderen! :P</string>
     <string name="sorting_pref_default">Standaard</string>
     <string name="precise_volume_pref_title">Nauwkeurige volumebediening</string>
     <string name="focus_pref_title">Audiofocus</string>

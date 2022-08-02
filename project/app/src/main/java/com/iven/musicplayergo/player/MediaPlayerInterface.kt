@@ -11,4 +11,6 @@ interface MediaPlayerInterface {
     fun onUpdateSleepTimerCountdown(value: Long)
     fun onStopSleepTimer()
     fun onUpdateFavorites()
+    fun onRepeat(toastMessage: Int)
+    fun onListEnded()
 }

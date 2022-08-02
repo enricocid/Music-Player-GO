@@ -38,7 +38,6 @@ import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toContentUri
 import com.iven.musicplayergo.extensions.toSavedMusic
-import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.extensions.waitForCover
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedEqualizerSettings
@@ -375,10 +374,9 @@ class MediaPlayerHolder:
                     if (GoPreferences.getPrefsInstance().onListEnded == GoConstants.CONTINUE) {
                         skip(isNext = true)
                     } else {
-                        synchronized(pauseMediaPlayer()) {
-                            mMusicNotificationManager.cancelNotification()
-                            R.string.error_list_ended.toToast(mPlayerService)
-                        }
+                        GoPreferences.getPrefsInstance().hasCompletedPlayback = true
+                        pauseMediaPlayer()
+                        mediaPlayerInterface.onListEnded()
                     }
                 } else {
                     skip(isNext = true)
@@ -482,7 +480,7 @@ class MediaPlayerHolder:
                 tryToGetAudioFocus()
             }
             val hasCompletedPlayback = GoPreferences.getPrefsInstance().hasCompletedPlayback
-            if (!continueOnEnd && isSongFromPrefs && hasCompletedPlayback || !continueOnEnd && hasCompletedPlayback) {
+            if (!continueOnEnd && isSongFromPrefs && hasCompletedPlayback || !continueOnEnd && hasCompletedPlayback || GoPreferences.getPrefsInstance().onListEnded != GoConstants.CONTINUE && hasCompletedPlayback) {
                 GoPreferences.getPrefsInstance().hasCompletedPlayback = false
                 skip(isNext = true)
             } else {
@@ -836,7 +834,7 @@ class MediaPlayerHolder:
         mSleepTimer?.cancel()
     }
 
-    fun pauseBySleepTimer(minutes: Long, label: String) : Boolean {
+    fun pauseBySleepTimer(minutes: Long) : Boolean {
         return if (isPlaying) {
             mSleepTimer = object : CountDownTimer(TimeUnit.MINUTES.toMillis(minutes), 1000) {
                 override fun onTick(p0: Long) {
@@ -852,10 +850,8 @@ class MediaPlayerHolder:
                     cancelSleepTimer()
                 }
             }.start()
-            mPlayerService.getString(R.string.sleeptimer_enabled, label).toToast(mPlayerService)
             true
         } else {
-            R.string.error_bad_id.toToast(mPlayerService)
             false
         }
     }
@@ -886,11 +882,10 @@ class MediaPlayerHolder:
             isLooping -> {
                 isLooping = false
                 toastMessage = R.string.repeat_disabled
-                toastMessage.toToast(mPlayerService)
             }
             else -> isRepeat1X = true
         }
-        toastMessage.toToast(mPlayerService)
+        mediaPlayerInterface.onRepeat(toastMessage)
     }
 
     fun repeat(updatePlaybackStatus: Boolean) {

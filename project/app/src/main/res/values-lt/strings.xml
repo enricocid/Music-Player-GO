@@ -32,7 +32,6 @@
     <string name="notification_actions_repeat">Papildomi pranešimo veiksmai</string>
     <string name="fast_seeking_pref_summary">Greito persukimo pirmyn/atgal žingsnis (sekundėmis)</string>
     <string name="eq_pref_note_summary">Pastaba: pirmenybė bus teikiama sistemos ekvalaizeriui, nebent sistemos nustatymuose išjungsite programėlę „sistemos ekvalaizerį“ :)</string>
-    <string name="active_fragments_pref_warning">Jūs negalite tiesiog pašalinti visus skirtukus! :P</string>
     <string name="active_fragments_pref_title">Aktyvūs skirtukai</string>
     <string name="song_visual_pref_fn_title">Failo pavadinimas</string>
     <string name="song_visual_pref_tl_title">Pavadinimas</string>
@@ -50,7 +49,6 @@
     <string name="error_list_ended">Sąrašas baigėsi.</string>
     <string name="error_no_queue">Jokių dainų eilėje.</string>
     <string name="error_no_browser">Nerasta jokia žiniatinklio naršyklė.</string>
-    <string name="error_media_buttons">Kažkas nutiko ne taip! :( Prašome iš naujo paleisti atkūrimą iš programos.</string>
     <string name="error_unknown_unsupported">Kažkas nepavyko! :( Galbūt pasirinktas formatas nepalaikomas arba aplankas nepasiekiamas (ne dėl programos kaltės!).</string>
     <string name="error_not_ready">Nepavyko įkelti muzikos bibliotekos! :( Taip galėjo nutikti dėl to, kad SD kortelė buvo atjungta ir „Android MediaStore“ buvo priversta iš naujo atkurti savo duomenų bazės įrašus. Pabandykite dar kartą vėliau.</string>
     <string name="error_no_music">Muzikos nerasta :(</string>

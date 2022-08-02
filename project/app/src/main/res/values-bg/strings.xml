@@ -42,7 +42,6 @@
     <string name="error_no_queue">Няма песни в опашката.</string>
     <string name="error_bad_id">Пусни песен първо.</string>
     <string name="error_no_browser">Изтегли уеб браузер първо.</string>
-    <string name="error_media_buttons">Нещо се обърка! :( Моля рестартирай възпроизвеждането от приложението.</string>
     <string name="open_details_fragment">Отвори детайли на изпълнител/папка</string>
     <string name="open_git_pref_summary">Отвори уебстраницата на проекта за повече информация :)</string>
     <string name="content_repeat">Включи/Изключи избрано повторение</string>
@@ -126,7 +125,6 @@
     <string name="locale_pref_title">Език</string>
     <string name="locale_basque">Баски</string>
     <string name="locale_bengali">Бенгалски</string>
-    <string name="active_fragments_pref_warning">Не може просто да затвориш всички прозорци! :Р</string>
     <string name="locale_arabic">Арабски</string>
     <string name="locale_arabic_egypt">Арабски (Египет)</string>
     <string name="locale_czech">Чешки</string>

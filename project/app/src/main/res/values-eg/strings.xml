@@ -29,7 +29,6 @@
     <string name="error_no_music">لم يتم إيجاد أغاني.</string>
     <string name="error_not_ready">حدثت مشكلة أثناء تحميل مكتبة الموسيقى! :( قد يكون هذا بسبب إخراج بطاقة الذاكرة، مما أدى إلى إعادة بناء سجلات قاعدة البيانات الخاصة بالجهاز. الحل: حاول مرة أخرى لاحقًا.</string>
     <string name="error_unknown_unsupported">حدث خطأ ما! :( ربما التنسيق المختار غير مدعوم، أو المجلد غير قابل للوصول (ليس خطأ التطبيق!).</string>
-    <string name="error_media_buttons">حدث خطأ ما! :( يرجى إعادة التشغيل من التطبيق.</string>
     <string name="error_no_browser">قم بتثبيت متصفح أولا.</string>
     <string name="error_bad_id">قم بتشغيل أغنية أولاً.</string>
     <string name="error_no_queue">لا يوجد أغاني في قائمة التشغيل.</string>
@@ -46,7 +45,6 @@
     <string name="theme_pref_auto_title">حسب النظام</string>
     <string name="accent_pref_title">درجة اللون الفرعية</string>
     <string name="active_fragments_pref_title">علامات التبويب النشطة</string>
-    <string name="active_fragments_pref_warning">لا يمكنك إزالة جميع علامات التبويب! :P</string>
     <string name="precise_volume_pref_title">تحكم دقيق في مستوى الصوت</string>
     <string name="focus_pref_title">إدارة تعارض مصادر الصوت</string>
     <string name="headset_pref_title">إعدادات إدخال سماعة الرأس</string>

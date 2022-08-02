@@ -14,7 +14,6 @@
     <string name="fast_seeking_pref_summary">Snabbspolning framåt/bakåt (sekunder)</string>
     <string name="fast_seeking_pref_title">Snabbsökning</string>
     <string name="eq_pref_note_summary">Obs: Systemfrekvenskorrigeraren föredras om du inte stänger av den från systeminställningarna. :)</string>
-    <string name="active_fragments_pref_warning">Du kan inte bara ta bort alla flikar! :P</string>
     <string name="active_fragments_pref_title">Aktiva flikar</string>
     <string name="song_visual_pref_fn_title">Filnamn</string>
     <string name="song_visual_pref_tl_title">Titel</string>
@@ -39,7 +38,6 @@
     <string name="error_no_queue">Inga låtar i kön.</string>
     <string name="error_bad_id">Spela en låt först.</string>
     <string name="error_no_browser">Installera en webbläsare först.</string>
-    <string name="error_media_buttons">Något gick fel! :( Vänligen starta om uppspelningen från appen.</string>
     <string name="error_unknown_unsupported">Något gick fel! :( Kanske formatet inte stöds, eller så är mappen otillgänglig (inte appens fel!).</string>
     <string name="error_not_ready">Det gick inte att läsa in musikbiblioteket! :( Avmontering av SD-kortet bygger om Android MediaStore-databasen. Försök igen senare.</string>
     <string name="error_no_music">Lägg till musik först.</string>

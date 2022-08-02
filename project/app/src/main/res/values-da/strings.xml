@@ -57,7 +57,6 @@
     <string name="error_no_music">Læg til musik først.</string>
     <string name="repeat_enabled">Enkel gentagelse på.</string>
     <string name="error_not_ready">Kunde ikke laste ind musikbiblioteket! :( Afmontering af SD-kort genopbygger Androids MediaStore-database. Prøv igen senere.</string>
-    <string name="error_media_buttons">Bøs og nøgler! :( Start afspilning igen fra programmet.</string>
     <string name="error_no_browser">Installer en web-browser først.</string>
     <string name="playback_pref_title">Valgt afspilningshastighed</string>
     <string name="playback_pref_summary_off">Kun et spor</string>
@@ -66,7 +65,6 @@
     <string name="on_list_ended_pref_continue_title">Fortsæt</string>
     <string name="fast_seeking_pref_title">Rask bladring</string>
     <string name="song_visual_pref_fn_title">Filnavn</string>
-    <string name="active_fragments_pref_warning">Du kan ikke bare fjerne alle faneblade! :P</string>
     <string name="focus_pref_title">Lydfokushåndtering</string>
     <string name="headset_pref_title">Headsethåndtering</string>
     <string name="covers_pref_title">Indbyggede albumsomslag</string>

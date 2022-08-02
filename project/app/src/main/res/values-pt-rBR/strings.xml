@@ -28,7 +28,6 @@
     <string name="error_bad_id">Toque uma música primeiro.</string>
     <string name="error_no_music">Adicione algumas músicas primeiro.</string>
     <string name="error_unknown_unsupported">Algo deu errado! :( Provavelmente o formato não é suportado, ou a pasta não está acessível (não é culpa do aplicativo!).</string>
-    <string name="error_media_buttons">Algo deu errado! :( Por favor, reinicie a reprodução do aplicativo.</string>
     <string name="on_close_activity">Parar a reprodução\?</string>
     <string name="repeat_enabled">Repetição única ligada.</string>
     <string name="repeat_loop_enabled">Repetir ∞.</string>
@@ -42,7 +41,6 @@
     <string name="theme_pref_auto_title">Sistema</string>
     <string name="accent_pref_title">Cor de destaque</string>
     <string name="active_fragments_pref_title">Abas ativas</string>
-    <string name="active_fragments_pref_warning">Você não pode simplesmente remover todas as abas! :P</string>
     <string name="sorting_pref_default">Padrão</string>
     <string name="precise_volume_pref_title">Controle preciso do volume</string>
     <string name="focus_pref_title">Gerenciamento de foco de áudio</string>

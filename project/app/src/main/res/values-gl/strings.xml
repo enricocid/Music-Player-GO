@@ -38,7 +38,6 @@
     <string name="error_no_music">Debes engadir algunha música.</string>
     <string name="error_not_ready">Non se cargou a biblioteca de música! :( Desmontar a tarxeta SD reconstrúe a base de datos Android MediaStore. Inténtao máis tarde.</string>
     <string name="error_unknown_unsupported">Algo fallou! :( Quizais o formato escollido non está soportado, ou o cartafol non é accesible (non é culpa da app!).</string>
-    <string name="error_media_buttons">Algo fallou! :( Por favor reinicia a reprodución desde a app.</string>
     <string name="error_no_browser">Instala un navegador web.</string>
     <string name="error_bad_id">Reproduce primeiro unha pista.</string>
     <string name="error_no_queue">Sen cancións na cola.</string>
@@ -55,7 +54,6 @@
     <string name="theme_pref_auto_title">Sistema</string>
     <string name="accent_pref_title">Cor</string>
     <string name="active_fragments_pref_title">Lapelas activas</string>
-    <string name="active_fragments_pref_warning">Non podes eliminar todas as lapelas! :P</string>
     <string name="precise_volume_pref_title">Control preciso do volume</string>
     <string name="focus_pref_title">Xestión do foco do audio</string>
     <string name="headset_pref_title">Conexión de auriculares</string>

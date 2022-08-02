@@ -29,7 +29,6 @@
     <string name="error_no_music">සංගීතයක් හමු නොවීය :(</string>
     <string name="error_not_ready">සංගීත පුස්තකාලය පූරණය කිරීමේදී ගැටලුවක් ඇති විය! :( මෙය SD කාඩ් පත නොසලකා හැරීම නිසා විය හැකිය, ඇන්ඩ්රොයිඩ් හි මීඩියා ස්ටෝර් එහි දත්ත සමුදා වාර්තා නැවත ගොඩනඟා ගැනීමට බල කරයි. විසඳුම: පසුව නැවත උත්සාහ කරන්න.</string>
     <string name="error_unknown_unsupported">මොකක්හරි වැරැද්දක් වෙලා! :( සමහර විට තෝරාගත් ආකෘතියට සහය නොදක්වයි, නැතහොත් ෆෝල්ඩරයට ප්රවේශ විය නොහැක (යෙදුමක වරදක් නොවේ!).</string>
-    <string name="error_media_buttons">මොකක්හරි වැරැද්දක් වෙලා! :( කරුණාකර යෙදුමෙන් නැවත ධාවනය නැවත ආරම්භ කරන්න.</string>
     <string name="error_no_browser">බ්රව්සරයක් හමු නොවීය!</string>
     <string name="error_bad_id">මුලින්ම ගීතයක් වාදනය කරන්න!</string>
     <string name="error_no_queue">ගීත කිසිවක් පෝලිම් නැත!</string>
@@ -46,7 +45,6 @@
     <string name="theme_pref_auto_title">ස්වයංක්රීය</string>
     <string name="accent_pref_title">උච්චාරණය</string>
     <string name="active_fragments_pref_title">සක්රිය ටැබ්</string>
-    <string name="active_fragments_pref_warning">ඔබට සියලු ටැබ් ඉවත් කළ නොහැක! :P</string>
     <string name="precise_volume_pref_title">නිවැරදි පරිමාව පාලනය කිරීම</string>
     <string name="focus_pref_title">ශ්රව්ය නාභිගත කිරීම</string>
     <string name="headset_pref_title">හෙඩ්සෙට් ප්ලග්</string>

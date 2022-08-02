@@ -35,7 +35,6 @@
     <string name="error_no_music">कोई संगीत नहीं मिला :(</string>
     <string name="error_not_ready">संगीत लायब्रेरी को लोड करने में एक समस्या है! :( यह शायद ऐस डी कार्ड के अनमाउंट होने के कारण है जो कभी-कभी एंड्रॉयड के मीडिया स्टोर को अपने डेटाबेस रिकॉर्ड को फिर से बनाने के लिए के लिए मजबूर करता है। समाधान: दोबारा प्रयास करें |</string>
     <string name="error_unknown_unsupported">कुछ गलत हो गया! :( संभवतः चयनित प्रारूप समर्थित नहीं है या फ़ोल्डर सुलभ नहीं है (ऐप का दोष नहीं है!) |</string>
-    <string name="error_media_buttons">कुछ गलत हो गया! :( कृपया एप्लिकेशन से प्लेबैक पुनः आरंभ करें |</string>
     <string name="error_no_browser">कोई ब्राउज़र नहीं मिला |</string>
     <string name="error_bad_id">पहले एक गाना चलाएं |</string>
     <string name="error_no_queue">कोई गीत पंक्तिबद्ध नहीं |</string>
@@ -60,7 +59,6 @@
     <string name="song_visual_pref_tl_title">शीर्षक</string>
     <string name="song_visual_pref_fn_title">फ़ाइल नाम</string>
     <string name="active_fragments_pref_title">सक्रिय टैब</string>
-    <string name="active_fragments_pref_warning">आप सभी टैब नहीं निकाल सकते हैं! :P</string>
     <string name="fast_seeking_pref_title">फ़ास्ट सीकिंग</string>
     <string name="fast_seeking_pref_summary">फ़ास्ट फॉरवर्ड/रिवाइंड स्टैप (सेकण्ड)</string>
     <string name="notification_actions_repeat">अन्य  नोटिफिकेशन एक्शन</string>

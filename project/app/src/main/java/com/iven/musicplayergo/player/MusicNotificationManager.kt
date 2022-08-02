@@ -18,6 +18,7 @@ import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.extensions.toFilenameWithoutExtension
 import com.iven.musicplayergo.extensions.waitForCover
 import com.iven.musicplayergo.models.NotificationAction
 import com.iven.musicplayergo.ui.MainActivity
@@ -98,12 +99,6 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         }
     }
 
-    fun cancelNotification() {
-        with(NotificationManagerCompat.from(playerService)) {
-            cancel(GoConstants.NOTIFICATION_ID)
-        }
-    }
-
     fun updateNotification() {
         if (::mNotificationBuilder.isInitialized) {
             mNotificationBuilder.setOngoing(playerService.mediaPlayerHolder.isPlaying)
@@ -143,7 +138,11 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                 .setContentTitle(
                     playerService.getString(
                         R.string.song_title_notification,
-                        song.title
+                        if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
+                            song.displayName.toFilenameWithoutExtension()
+                        } else {
+                            song.title
+                        }
                     ).parseAsHtml()
                 )
                 .setSubText(song.album)

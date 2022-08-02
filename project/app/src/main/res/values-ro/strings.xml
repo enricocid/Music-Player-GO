@@ -29,7 +29,6 @@
     <string name="error_no_music">Nu s-a găsit nici o muzică :(</string>
     <string name="error_not_ready">Un apărut sau eroare la încărcarea bibliotecii de muzică! (Cauza posibilă e reconectarea cartei SD care obligă uneori MediaStore-ul să reconstruiască informațile din baza de date. Soluție possibilă: Încercați mai târziu :)</string>
     <string name="error_unknown_unsupported">A apărut o eroare! :( Poate că formatul selectat nu este acceptat sau folderul nu este accesibil (nu este vina aplicației!).</string>
-    <string name="error_media_buttons">A apărut o eroare! :( Vă rugăm să reporniți redarea din aplicație</string>
     <string name="on_close_activity">Doriti sa opriti redarea ?</string>
     <string name="repeat_enabled">Repetarea x1 activată !</string>
     <string name="repeat_loop_enabled">Repetarea ∞ activată !</string>
@@ -43,7 +42,6 @@
     <string name="theme_pref_auto_title">Automatică</string>
     <string name="accent_pref_title">Culoare accentuată</string>
     <string name="active_fragments_pref_title">Filele active</string>
-    <string name="active_fragments_pref_warning">Nu puteți elimina toate filele! : P</string>
     <string name="sorting_pref">Sortare</string>
     <string name="sorting_pref_default">În mod implicit</string>
     <string name="sorting_pref_track">După numărul de titlu ↓</string>

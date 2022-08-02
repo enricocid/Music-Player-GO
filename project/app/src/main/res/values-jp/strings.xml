@@ -29,7 +29,6 @@
     <string name="error_no_music">先に曲を追加してください。</string>
     <string name="error_not_ready">音楽ライブラリの読み込み中に問題が発生しました。 SDカードのマウントが解除され、Androidメディアストレージのデータベースを再構築している可能性があります。後でもう一度お試しください。</string>
     <string name="error_unknown_unsupported">問題が発生しました。選択した形式がサポートされていないか、フォルダにアクセスできません（アプリのせいではありません）。</string>
-    <string name="error_media_buttons">問題が発生しました。アプリから再生を再開してください。</string>
     <string name="error_no_browser">先にブラウザをインストールしてください。</string>
     <string name="error_bad_id">はじめに曲を再生してください。</string>
     <string name="error_no_queue">キューに入っている曲はありません。</string>
@@ -46,7 +45,6 @@
     <string name="theme_pref_auto_title">システム設定</string>
     <string name="accent_pref_title">アクセントカラー</string>
     <string name="active_fragments_pref_title">有効なタブ</string>
-    <string name="active_fragments_pref_warning">すべてのタブを削除することはできません</string>
     <string name="precise_volume_pref_title">無段階の音量調節</string>
     <string name="focus_pref_title">オーディオフォーカス制御</string>
     <string name="headset_pref_title">ヘッドホン端子制御</string>

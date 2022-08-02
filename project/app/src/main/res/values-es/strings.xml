@@ -29,7 +29,6 @@
     <string name="error_bad_id">Primero reproduzca una canción.</string>
     <string name="error_no_music">No se encontró música :(</string>
     <string name="error_unknown_unsupported">¡Algo salió mal! :( Probablemente el formato elegido no es soportado o el directorio es inaccesible (¡La aplicación no es culpable de esto!).</string>
-    <string name="error_media_buttons">¡Algo malo sucedió! :( Por favor reinicia la reproducción desde la aplicación.</string>
     <string name="on_close_activity">¿Detener la reproducción\?</string>
     <string name="repeat_enabled">Repetición única activada.</string>
     <string name="repeat_loop_enabled">Repetición infinita activada.</string>
@@ -46,7 +45,6 @@
     <string name="theme_pref_auto_title">Sistema</string>
     <string name="accent_pref_title">Acento gráfico</string>
     <string name="active_fragments_pref_title">Pestañas activas</string>
-    <string name="active_fragments_pref_warning">¡No puedes remover todas las pestañas! :P</string>
     <string name="sorting_pref_default">Predeterminado</string>
     <string name="precise_volume_pref_title">Control preciso del volumen</string>
     <string name="focus_pref_title">Enfoque de audio</string>

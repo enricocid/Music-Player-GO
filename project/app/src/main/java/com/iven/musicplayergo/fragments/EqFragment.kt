@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.shape.CornerFamily
@@ -23,7 +24,6 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentEqualizerBinding
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.createCircularReveal
-import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.utils.Theming
@@ -263,7 +263,8 @@ class EqFragment : Fragment() {
 
         } catch (e: UnsupportedOperationException) {
             e.printStackTrace()
-            R.string.error_eq.toToast(requireContext())
+            Toast.makeText(requireContext(), getString(R.string.error_eq), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 

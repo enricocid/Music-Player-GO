@@ -30,7 +30,6 @@
     <string name="error_no_music">ไม่พบเพลง :(</string>
     <string name="error_not_ready">เกิดปัญหาขณะโหลดคลังเพลง! :( นี่อาจเป็นเพราะการ์ด SD ถูกยกเลิกการเมานท์บังคับให้ MediaStore ของ Android สร้างเร็กคอร์ดฐานข้อมูลขึ้นใหม่วิธีแก้ไข: ลองอีกครั้งในภายหลัง</string>
     <string name="error_unknown_unsupported">บางอย่างผิดพลาด! :( อาจไม่รองรับรูปแบบที่เลือกหรือโฟลเดอร์ไม่สามารถเข้าถึงได้ (ไม่ใช่ความผิดของแอพ!)</string>
-    <string name="error_media_buttons">บางอย่างผิดพลาด! :( โปรดรีสตาร์ทการเล่นจากแอพ</string>
     <string name="error_no_browser">ไม่พบเบราว์เซอร์!</string>
     <string name="error_bad_id">เล่นเพลงก่อน!</string>
     <string name="error_no_queue">ไม่มีคิวเพลง!</string>
@@ -47,7 +46,6 @@
     <string name="theme_pref_auto_title">อัตโนมัติ</string>
     <string name="accent_pref_title">สำเนียง</string>
     <string name="active_fragments_pref_title">แท็บที่ใช้งานอยู่</string>
-    <string name="active_fragments_pref_warning">คุณไม่สามารถลบแท็บทั้งหมดออกได้! :P</string>
     <string name="precise_volume_pref_title">การควบคุมระดับเสียงที่แม่นยำ</string>
     <string name="focus_pref_title">เน้นเสียง</string>
     <string name="headset_pref_title">ปลั๊กชุดหูฟัง</string>

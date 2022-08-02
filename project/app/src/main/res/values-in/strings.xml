@@ -31,7 +31,6 @@
     <string name="error_no_music">Tambahkan beberapa musik terlebih dahulu.</string>
     <string name="error_not_ready">Tidak dapat memuat perpustakaan musik! :( coba lepaskan kartu SD dan Coba lagi.</string>
     <string name="error_unknown_unsupported">Telah terjadi kesalahan! :( Mungkin format tidak didukung atau folder tidak bisa diakses (bukan kesalahan aplikasi!).</string>
-    <string name="error_media_buttons">Telah terjadi kesalahan! :( Silakan mulai ulang pemutaran dari aplikasi.</string>
     <string name="error_no_browser">Instal browser web terlebih dahulu.</string>
     <string name="error_bad_id">Putar lagu terlebih dahulu.</string>
     <string name="error_no_queue">Tidak ada lagu dalam antrean.</string>
@@ -48,7 +47,6 @@
     <string name="theme_pref_auto_title">Sistem</string>
     <string name="accent_pref_title">Aksen</string>
     <string name="active_fragments_pref_title">Tab aktif</string>
-    <string name="active_fragments_pref_warning">Anda tidak bisa menyembunyikan semua tab! :P</string>
     <string name="precise_volume_pref_title">Kontrol presisi volume</string>
     <string name="focus_pref_title">Manajemen fokus audio</string>
     <string name="headset_pref_title">Manajemen colokan headset</string>

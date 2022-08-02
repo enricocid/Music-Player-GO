@@ -30,7 +30,6 @@
     <string name="error_no_music">Ajoutez d\'abord de la musique.</string>
     <string name="error_not_ready">Impossible de charger la bibliothèque musicale ! :( Ceci est probablement dû au démontage de la carte SD qui oblige parfois le MediaStore d\'Android à reconstruire les entrées de sa base de données. Réessayez plus tard.</string>
     <string name="error_unknown_unsupported">Une erreur s\'est produite ! :( Peut-être que le format sélectionné n\'est pas supporté, ou que le dossier n\'est pas accessible (Ce n\'est pas de la faute de l\'application !).</string>
-    <string name="error_media_buttons">Une erreur s\'est produite ! :( Veuillez relancer la lecture depuis l\'application.</string>
     <string name="on_close_activity">Voulez-vous arrêter la lecture \?</string>
     <string name="repeat_enabled">Répétition simple activée.</string>
     <string name="repeat_loop_enabled">Répétition ∞ activée.</string>
@@ -44,7 +43,6 @@
     <string name="theme_pref_auto_title">Automatique</string>
     <string name="accent_pref_title">Couleur d\'accentuation</string>
     <string name="active_fragments_pref_title">Onglets actifs</string>
-    <string name="active_fragments_pref_warning">Vous ne pouvez pas retirer tous les onglets ! :P</string>
     <string name="sorting_pref">Tri</string>
     <string name="sorting_pref_default">Par défaut</string>
     <string name="sorting_pref_track">Par nº de titre ↓</string>

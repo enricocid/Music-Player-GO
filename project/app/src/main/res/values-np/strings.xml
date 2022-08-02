@@ -28,7 +28,6 @@
     <string name="error_no_music">कुनै संगीत फेला परेन :(</string>
     <string name="error_not_ready">संगीत लाइब्रेरी लोड गर्दा एक समस्या थियो! :( यो SD कार्ड अनमाउन्ट हुनको कारण हुन सक्छ, एन्ड्रोइडको मिडियास्टोरलाई यसको डाटाबेस रेकर्डहरू पुनर्निर्माण गर्न जबरजस्ती। समाधान: पछि पुन: प्रयास गर्नुहोस्।</string>
     <string name="error_unknown_unsupported">केहि गलत भयो! :( सायद छनौट गरिएको ढाँचा समर्थित छैन, वा फोल्डर पहुँचयोग्य छैन (कुनै अनुप्रयोगको गलती होईन!)।</string>
-    <string name="error_media_buttons">केहि गलत भयो! :( कृपया अनुप्रयोगबाट प्लेब्याक पुनःस्टार्ट गर्नुहोस्।</string>
     <string name="error_no_browser">कुनै ब्राउजर फेला परेन!</string>
     <string name="error_bad_id">पहिले गीत बजाउनुहोस्!</string>
     <string name="error_no_queue">कुनै गीत लाममा छैन!</string>
@@ -45,7 +44,6 @@
     <string name="theme_pref_auto_title">स्वचालित</string>
     <string name="accent_pref_title">एक्सेन्ट</string>
     <string name="active_fragments_pref_title">सक्रिय ट्याबहरू</string>
-    <string name="active_fragments_pref_warning">तपाईं केवल सबै ट्याबहरू हटाउन सक्नुहुन्न! :P</string>
     <string name="precise_volume_pref_title">सटीक भोल्युम नियन्त्रण</string>
     <string name="focus_pref_title">अडियो फोकस</string>
     <string name="headset_pref_title">हेडसेट प्लग</string>

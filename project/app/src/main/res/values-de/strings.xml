@@ -13,7 +13,6 @@
     <string name="notification_actions_repeat">Zusätzliche Benachrichtigungsaktionen</string>
     <string name="fast_seeking_pref_summary">Schneller Vor- / Rücklauf (Sekunden)</string>
     <string name="fast_seeking_pref_title">Schnelle Suche</string>
-    <string name="active_fragments_pref_warning">Du kannst nicht einfach alle Registerkarten schließen! :P</string>
     <string name="active_fragments_pref_title">Aktive Registerkarten</string>
     <string name="song_visual_pref_fn_title">Dateiname</string>
     <string name="song_visual_pref_tl_title">Titel</string>
@@ -33,7 +32,6 @@
     <string name="repeat_loop_enabled">∞ Wiederholung an.</string>
     <string name="repeat_enabled">Einmalige Wiederholen aktiv.</string>
     <string name="error_no_queue">Keine Lieder in der Wiedergabeliste.</string>
-    <string name="error_media_buttons">Etwas ist schief gelaufen :( Bitte die Wiedergabe in der App neu starten.</string>
     <string name="error_unknown_unsupported">Etwas ging schief. :( Vielleicht wird das Format nicht unterstützt oder der Zugriff auf den Ordner ist nicht möglich (Nicht die Schuld der Anwendung!).</string>
     <string name="error_not_ready">Es gab ein Problem beim Laden der Musikbibliothek. :( Nach dem Auswerfen der SD-Karte wird die Android MediaStore-Datenbank neu aufgebaut. Später erneut versuchen.</string>
     <string name="error_no_music">Es muss erst Musik hinzugefügt werden.</string>

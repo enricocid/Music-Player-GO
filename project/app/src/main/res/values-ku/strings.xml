@@ -30,7 +30,6 @@
     <string name="error_no_music">Pêşî hinek stranan tevlî bike.</string>
     <string name="error_not_ready">Nikare pirtûkxaneya muzîkê bar bike! :( Rakirina kerta SD databasa Android MediaStore ji nû ve ava dike. Paşê dîsa biceribîne.</string>
     <string name="error_unknown_unsupported">Tiştek çewt pêk hat! :( Belkî format nayê piştgirîkirin, an jî gihiştîn bo peldankê ne pêkan e (ne sucê sepanê ye!).</string>
-    <string name="error_media_buttons">Tiştek çewt pêk hat! :( Jkx stranê ji nû ve bide lêdan.</string>
     <string name="error_no_browser">Pêşî gerokeke tevnê saz bike.</string>
     <string name="error_bad_id">Pêşî stranekê lêde.</string>
     <string name="error_no_queue">Stran di rêzê de tune.</string>
@@ -79,7 +78,6 @@
     <string name="accent_pref_title">Rengê devokê</string>
     <string name="equalizer_bb">Bass bilind bike</string>
     <string name="error_eq">Çewtî</string>
-    <string name="active_fragments_pref_warning">Tu nikarî hemû rûgeran rakî! :P</string>
     <string name="on_list_ended_pref_stop_title">Rawestîne</string>
     <string name="fast_seeking_pref_title">Lêgerîna bilez</string>
     <string name="equalizer_v">Dengê derdorê</string>

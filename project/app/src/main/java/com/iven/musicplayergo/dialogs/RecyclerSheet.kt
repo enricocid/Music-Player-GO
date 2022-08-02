@@ -46,7 +46,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
     var onQueueCancelled: (() -> Unit)? = null
     var onFavoritesDialogCancelled: (() -> Unit)? = null
     var onSleepTimerDialogCancelled: (() -> Unit)? = null
-    var onSleepTimerEnabled: ((Boolean) -> Unit)? = null
+    var onSleepTimerEnabled: ((Boolean, String) -> Unit)? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -242,8 +242,8 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     }
                     btnPositive.setOnClickListener {
                         mMediaControlInterface.onGetMediaPlayerHolder()?.run {
-                            val isEnabled = pauseBySleepTimer(sleepTimerAdapter.getSelectedSleepTimerValue(), sleepTimerAdapter.getSelectedSleepTimer())
-                            onSleepTimerEnabled?.invoke(isEnabled)
+                            val isEnabled = pauseBySleepTimer(sleepTimerAdapter.getSelectedSleepTimerValue())
+                            onSleepTimerEnabled?.invoke(isEnabled, sleepTimerAdapter.getSelectedSleepTimer())
                         }
                         dismiss()
                     }
@@ -264,7 +264,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                         contentDescription = getString(R.string.sleeptimer_cancel_desc)
                         setOnClickListener {
                             mMediaControlInterface.onGetMediaPlayerHolder()?.cancelSleepTimer()
-                            onSleepTimerEnabled?.invoke(false)
+                            onSleepTimerEnabled?.invoke(false, "")
                             dismiss()
                         }
                     }

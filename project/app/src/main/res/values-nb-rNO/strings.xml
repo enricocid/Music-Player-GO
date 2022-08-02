@@ -29,7 +29,6 @@
     <string name="error_no_music">Fant ingen musikk :(</string>
     <string name="error_not_ready">Kunne ikke laste inn musikkbiblioteket! :( Dette kan skyldes at SD-kortet blir montert, og tvinger Android\'s MediaStore til å gjenopprette databaseoppføringene. Løsning: prøv igjen senere.</string>
     <string name="error_unknown_unsupported">Noe gikk galt! :( Kanskje støttes ikke det valgte formatet, eller mappen er utilgjengelig (ikke programmets feil!).</string>
-    <string name="error_media_buttons">Noe gikk galt! :( Start avspillingen på nytt fra programmet.</string>
     <string name="error_no_browser">Fant ingen nettlesere.</string>
     <string name="error_bad_id">Spill en spor først.</string>
     <string name="error_no_queue">Ingen spor i kø.</string>
@@ -46,7 +45,6 @@
     <string name="theme_pref_auto_title">Automatisk</string>
     <string name="accent_pref_title">Aksent</string>
     <string name="active_fragments_pref_title">Aktive faner</string>
-    <string name="active_fragments_pref_warning">Du kan ikke bare fjerne alle fanene! :P</string>
     <string name="precise_volume_pref_title">Presis lydstyrkekontroll</string>
     <string name="focus_pref_title">Lydfokus</string>
     <string name="headset_pref_title">Hodetelefonkontakt</string>

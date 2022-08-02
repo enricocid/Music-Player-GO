@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.os.IBinder
 import android.provider.OpenableColumns
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -110,7 +111,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun checkIsPlayer(showError: Boolean): Boolean {
         if (!isMediaPlayerHolder && !mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongFromPrefs && showError) {
-            R.string.error_bad_id.toToast(this)
+            Toast.makeText(this, getString(R.string.error_bad_id), Toast.LENGTH_SHORT)
+                .show()
             return false
         }
         return true
@@ -522,7 +524,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 }
             }
         } else {
-            R.string.error_no_queue.toToast(this@MainActivity)
+            Toast.makeText(this, getString(R.string.error_no_queue), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
@@ -600,7 +603,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                         }
                     }
                 } else {
-                    R.string.error_no_favorites.toToast(this@MainActivity)
+                    Toast.makeText(this@MainActivity, getString(R.string.error_no_favorites), Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
             setOnLongClickListener {
@@ -769,7 +773,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         mPlayerControlsPanelBinding.songProgress.progress = 0
         mPlayerControlsPanelBinding.songProgress.max = selectedSong?.duration!!.toInt()
 
-        mPlayerControlsPanelBinding.playingSong.text = selectedSong.title
+        updatePlayingSongTitle(selectedSong)
 
         mPlayerControlsPanelBinding.playingArtist.text =
             getString(
@@ -803,6 +807,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     }
                 }
             }
+        }
+    }
+
+    private fun updatePlayingSongTitle(currentSong: Music) {
+        mPlayerControlsPanelBinding.playingSong.text = if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
+            currentSong.displayName.toFilenameWithoutExtension()
+        } else {
+            currentSong.title
         }
     }
 
@@ -969,8 +981,18 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     RecyclerSheet.SLEEPTIMER_TYPE
                 }).apply {
                     show(supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
-                    onSleepTimerEnabled = { enabled ->
+                    onSleepTimerEnabled = { enabled, value ->
                         updateSleepTimerIcon(isEnabled = enabled)
+                        if (enabled) {
+                            Toast.makeText(
+                                this@MainActivity,
+                                getString(R.string.sleeptimer_enabled, value),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Toast.makeText(this@MainActivity, getString(R.string.error_bad_id), Toast.LENGTH_SHORT)
+                                .show()
+                        }
                     }
                     onSleepTimerDialogCancelled = {
                         mSleepTimerDialog = null
@@ -1033,10 +1055,14 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                         restoreQueueSong = songToQueue
                     }
 
-                    getString(
-                        R.string.queue_song_add,
-                        songToQueue.title
-                    ).toToast(this@MainActivity)
+                    Toast.makeText(
+                        this@MainActivity,
+                        getString(
+                            R.string.queue_song_add,
+                            songToQueue.title
+                        ),
+                        Toast.LENGTH_SHORT
+                    ).show()
 
                     if (!isPlaying || state == GoConstants.PAUSED) {
                         startSongFromQueue(songToQueue)
@@ -1094,6 +1120,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun onUpdatePlayingAlbumSongs(songs: List<Music>?) {
         if (isMediaPlayerHolder) {
+            mMediaPlayerHolder.currentSong?.run {
+                updatePlayingSongTitle(this)
+            }
+            if (::mPlayerService.isInitialized) {
+                mPlayerService.musicNotificationManager.onHandleNotificationUpdate(isAdditionalActionsChanged = false)
+            }
             if (songs != null) {
                 mMediaPlayerHolder.updateCurrentSongs(songs)
             } else {
@@ -1240,6 +1272,16 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         override fun onUpdateFavorites() {
             onFavoriteAddedOrRemoved()
+        }
+
+        override fun onRepeat(toastMessage: Int) {
+            Toast.makeText(this@MainActivity, this@MainActivity.getString(toastMessage), Toast.LENGTH_SHORT)
+                .show()
+        }
+
+        override fun onListEnded() {
+            Toast.makeText(this@MainActivity, this@MainActivity.getString(R.string.error_list_ended), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 

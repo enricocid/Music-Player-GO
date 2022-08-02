@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.extensions.updateIconTint
 import com.iven.musicplayergo.utils.Theming
 
@@ -88,7 +87,6 @@ class ActiveTabsAdapter(private val ctx: Context) :
                         mActiveItems.add(toggledItem)
                     }
                     if (mActiveItems.size < 2) {
-                        R.string.active_fragments_pref_warning.toToast(context)
                         mActiveItems.add(toggledItem)
                         manageTabStatus(selected = true, tabDragHandle, tabText, tabImageButton)
                     }

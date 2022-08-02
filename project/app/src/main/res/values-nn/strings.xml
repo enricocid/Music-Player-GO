@@ -5,7 +5,6 @@
     <string name="notification_actions_repeat">Ytterlegare handlingar for merknadar</string>
     <string name="fast_seeking_pref_summary">Rask spoling tilbake/framåt i steg (sekunder)</string>
     <string name="fast_seeking_pref_title">Rask blafring</string>
-    <string name="active_fragments_pref_warning">Du kan ikkje bare fjerna alle fanane! :P</string>
     <string name="song_visual_pref_title">Song-visualisering</string>
     <string name="on_list_ended_pref_title">Når ei liste sluttar …</string>
     <string name="settings">Innstillingar</string>
@@ -19,7 +18,6 @@
     <string name="sorting_pref_default">Forval</string>
     <string name="error_no_favorites">Legg til nokon favorittar fyst.</string>
     <string name="error_not_ready">Kunne ikkje lasta inn musikkbiblioteket! :( Avmontering av SD-kort tvingar Android sitt medie-bibliotek til gjenoppbygging . Prøv igjen seinare.</string>
-    <string name="error_media_buttons">Noko gikk gale! :( Start avspeling igjen frå programmet.</string>
     <string name="error_unknown_unsupported">Noko gikk gale! :( Kanskje vald format ikkje er støtta, eller mappa ikkje tilgjengeleg (ikkje programmet fel!).</string>
     <string name="playback_pref_summary_on">Behald</string>
     <string name="playback_pref_summary_off">Kun ein song</string>

@@ -49,7 +49,6 @@
     <string name="error_no_music">Nejprve přidejte nějakou hudbu.</string>
     <string name="error_not_ready">Nepodařilo se načíst hudební knihovnu! :( Vysunutí SD karty přestaví databázi Android MediaStorage. Zkuste to znovu později.</string>
     <string name="error_unknown_unsupported">Něco se pokazilo! :( Možná formát není podporovaný, nebo je složka nepřístupná (což není chybou aplikace!).</string>
-    <string name="error_media_buttons">Něco se pokazilo! :( Restartujte prosím přehrávání z aplikace.</string>
     <string name="error_no_browser">Nejprve si nainstalujte webový prohlížeč.</string>
     <string name="error_bad_id">Nejprve přehrát skladbu.</string>
     <string name="error_no_queue">Žádné skladby ve frontě.</string>
@@ -66,7 +65,6 @@
     <string name="category_general">Obecné</string>
     <string name="theme_pref_title">Motiv</string>
     <string name="active_fragments_pref_title">Aktivní karty</string>
-    <string name="active_fragments_pref_warning">Nemůžete odebrat všechny karty! :P</string>
     <string name="eq_pref_note_summary">Poznámka: Pokud není vypnut v nastavení, bude použit systémový ekvalizér. :)</string>
     <string name="precise_volume_pref_title">Precizní ovládání hlasitosti</string>
     <string name="focus_pref_title">Správa zaměření zvuku</string>

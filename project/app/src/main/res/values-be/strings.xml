@@ -14,7 +14,6 @@
     <string name="fast_seeking_pref_summary">Хуткая перамотка ўперад/назад (секунды)</string>
     <string name="fast_seeking_pref_title">Хуткі пошук</string>
     <string name="eq_pref_note_summary">Заўвага. Сістэмны эквалайзер будзе прыярытэтным, пакуль Вы не адключыце прыкладанне \"сістэмны эквалайзер\" у сістэмных наладах. :)</string>
-    <string name="active_fragments_pref_warning">Вы не можаце закрыць усе ў кладкі! :Р</string>
     <string name="active_fragments_pref_title">Актыўныя ўкладкі</string>
     <string name="song_visual_pref_fn_title">Назва файла</string>
     <string name="song_visual_pref_tl_title">Назва</string>
@@ -40,7 +39,6 @@
     <string name="error_no_queue">У чарзе няма трэкаў.</string>
     <string name="error_bad_id">Спачатку выберыце кампазіцыю.</string>
     <string name="error_no_browser">Браўзер не знойдзены.</string>
-    <string name="error_media_buttons">Нешта пайшло не так! :( Калі ласка, перазапусціце прайграванне з прыкладання.</string>
     <string name="error_unknown_unsupported">Нешта пайшло не так! :( Магчыма, фармат не падтрымліваецца або папка недаступна (прыкладанне не вінаватае!).</string>
     <string name="error_not_ready">Падчас загрузкі музыкальный бібліятэкі ўзнікла праблема :( Гэта магло адбыцца праз тое, што SD-карта была адключана, у выніку чаго Android MediaStore перабудаваў свае запісы ў базе даных. Паўтарыце спробу пазней.</string>
     <string name="error_no_music">Музыкі не знойдзена :(</string>

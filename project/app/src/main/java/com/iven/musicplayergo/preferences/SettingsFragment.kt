@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
@@ -15,7 +16,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentSettingsBinding
-import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.utils.Theming
 
@@ -123,7 +123,11 @@ class SettingsFragment : Fragment() {
             if (fallbackInfo.size > 0) {
                 requireContext().startActivity(browserIntent)
             } else {
-                R.string.error_no_browser.toToast(requireContext())
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.error_no_browser),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

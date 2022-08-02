@@ -29,7 +29,6 @@
     <string name="error_no_music">কোনো সংগীত পাওয়া যায়নি :(</string>
     <string name="error_not_ready">গানের লাইব্রেরিটি লোড করার সময় একটি সমস্যা হয়েছিল! :( অ্যান্ড্রয়েডের মিডিয়া স্টোরকে তার ডাটাবেস রেকর্ডগুলি পুনর্নির্মাণে বাধ্য করা, এসডি কার্ডটি আনমাউন্ট হওয়ার কারণে হতে পারে SD কার্ড সমাধান: পরে আবার চেষ্টা করুন।</string>
     <string name="error_unknown_unsupported">কিছু ভুল হয়েছে! :( হয়ত ফর্মাটটি সমর্থিত না, অথবা ফোল্ডারটি অ্যাক্সেসযোগ্য না (এটি অ্যাপ্লিকেশনের দোষ নয়!)।</string>
-    <string name="error_media_buttons">কিছু ভুল হয়েছে! :( অ্যাপ্লিকেশন থেকে প্লেব্যাক পুনরায় আরম্ভ করুন।</string>
     <string name="error_no_browser">কোনও ওয়েব ব্রাউজার পাওয়া যায়নি।</string>
     <string name="error_bad_id">প্রথমে একটি গান বাজান.</string>
     <string name="error_no_queue">কোনও গানের সারি নেই।</string>
@@ -46,7 +45,6 @@
     <string name="theme_pref_auto_title">স্বয়ংক্রিয়</string>
     <string name="accent_pref_title">স্বরাঘাত</string>
     <string name="active_fragments_pref_title">সক্রিয় ট্যাবগুলি</string>
-    <string name="active_fragments_pref_warning">আপনি সব ট্যাব সরাতে পারবেন না! :P</string>
     <string name="precise_volume_pref_title">সঠিক ভলিউম নিয়ন্ত্রণ</string>
     <string name="focus_pref_title">অডিও ফোকাস</string>
     <string name="headset_pref_title">হেডসেট প্লাগ</string>

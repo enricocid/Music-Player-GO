@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.radiobutton.MaterialRadioButton
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.extensions.toToast
 import com.iven.musicplayergo.models.NotificationAction
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.utils.Theming
@@ -69,7 +69,11 @@ class NotificationActionsAdapter(private val ctx: Context, private val mediaPlay
                 }
 
                 setOnLongClickListener {
-                    Theming.getNotificationActionTitle(mActions[absoluteAdapterPosition].first).toToast(ctx)
+                    Toast.makeText(
+                        ctx,
+                        Theming.getNotificationActionTitle(mActions[absoluteAdapterPosition].first),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     return@setOnLongClickListener true
                 }
             }
