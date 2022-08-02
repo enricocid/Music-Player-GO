@@ -424,6 +424,11 @@ class MusicContainersFragment : Fragment(),
                 itemsToHide.remove(itemTitle)
             } else {
                 itemsToHide.add(itemTitle)
+                mList?.run {
+                    if (itemsToHide.size - 1 >= size - 1) {
+                        itemsToHide.remove(itemTitle)
+                    }
+                }
             }
             actionMode?.title = itemsToHide.size.toString()
             notifyItemChanged(position)
