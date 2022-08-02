@@ -36,7 +36,7 @@
     <string name="perm_rationale">Tillåt Music Player GO åtkomst till dina filer för att spela musik.</string>
     <string name="error_eq">Fel</string>
     <string name="error_list_ended">Listan slut.</string>
-    <string name="error_no_queue">Inga låtar i kö.</string>
+    <string name="error_no_queue">Inga låtar i kön.</string>
     <string name="error_bad_id">Spela en låt först.</string>
     <string name="error_no_browser">Installera en webbläsare först.</string>
     <string name="error_media_buttons">Något gick fel! :( Vänligen starta om uppspelningen från appen.</string>
@@ -59,7 +59,7 @@
     <string name="queue">Kö</string>
     <string name="filter_popup_title">Dölj</string>
     <string name="favorite_add">Favoritmärk</string>
-    <string name="queue_add">Lägg till i kö</string>
+    <string name="queue_add">Lägg till i kön</string>
     <string name="shuffle_sa">Blanda valt album</string>
     <string name="shuffle_am">Blanda alla låtar</string>
     <string name="sorting_pref_album_inv">Efter album Ö-A</string>
@@ -158,4 +158,14 @@
     <string name="locale_pref_title">Språk</string>
     <string name="sleeptimer">Insomningstimer</string>
     <string name="locale_russian">Ryska</string>
+    <string name="notification_actions_pref_title">Ytterligare aviseringsåtgärder</string>
+    <string name="notification_actions_favorite">Lägg till i favoriter/stäng</string>
+    <string name="equalizer_presets">Förinställningar</string>
+    <string name="continue_on_end_desc">Välj om du vill fortsätta uppspelningen eller pausa när det är klart</string>
+    <string name="amber">Bärnsten</string>
+    <string name="notification_actions_favorite_position">Lägg till i favoriter (med position)/stäng</string>
+    <string name="notification_actions_fast_seeking">Snabbsökning</string>
+    <string name="filters_clear">Filtren kommer att rensas. Fortsätta\?</string>
+    <string name="confirm_ask_pref_title">Bekräftelsemeddelanden</string>
+    <string name="confirm_ask_pref_sum">Fråga om bekräftelse innan något görs</string>
 </resources>
