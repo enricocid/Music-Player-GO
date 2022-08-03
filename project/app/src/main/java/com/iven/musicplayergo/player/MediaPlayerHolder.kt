@@ -26,6 +26,7 @@ import android.support.v4.media.session.PlaybackStateCompat
 import android.support.v4.media.session.PlaybackStateCompat.*
 import android.util.AndroidRuntimeException
 import android.view.KeyEvent
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.graphics.drawable.toBitmap
@@ -1025,6 +1026,7 @@ class MediaPlayerHolder:
     fun stopPlaybackService(stopPlayback: Boolean) {
         if (mPlayerService.isRunning && isMediaPlayer && stopPlayback) {
             pauseMediaPlayer()
+            NotificationManagerCompat.from(mPlayerService).cancel(GoConstants.NOTIFICATION_ID)
         }
         if (::mediaPlayerInterface.isInitialized) {
             mediaPlayerInterface.onClose()
