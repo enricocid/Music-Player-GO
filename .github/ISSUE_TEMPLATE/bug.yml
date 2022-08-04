@@ -18,7 +18,7 @@ body:
     attributes:
       label: Version
       description: What version of MPGO are you running?
-      placeholder: 4.4.18
+      placeholder: 4.4.20
     validations:
       required: true
   - type: textarea
@@ -26,7 +26,7 @@ body:
     attributes:
       label: Device and Android version
       description: What is Your device/Android OS?
-      placeholder: Xiaomi Mi A2/Android 10.0 (Lineage OS 17.1)
+      placeholder: Mine is Xiaomi Mi A1/Android 10.0 (Lineage OS 17.1)
     validations:
       required: true
   - type: textarea
