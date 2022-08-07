@@ -2,6 +2,8 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
     tools:showIn="@layout/now_playing">
 
     <LinearLayout
@@ -29,6 +31,7 @@
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
             android:contentDescription="@string/content_skip_prev"
+            android:padding="16dp"
             app:srcCompat="@drawable/ic_skip_previous" />
 
         <ImageButton
@@ -50,6 +53,7 @@
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
             android:contentDescription="@string/content_skip_next"
+            android:padding="16dp"
             app:srcCompat="@drawable/ic_skip_next" />
 
         <ImageButton
@@ -60,6 +64,7 @@
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
             android:contentDescription="@string/fast_seeking_pref_title"
+            android:padding="16dp"
             app:srcCompat="@drawable/ic_fast_forward" />
     </LinearLayout>
 </merge>

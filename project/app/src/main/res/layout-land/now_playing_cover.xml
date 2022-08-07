@@ -83,7 +83,7 @@
             android:id="@+id/np_pause_on_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:contentDescription="@string/continue_on_end_desc"
             android:thumb="@drawable/switch_np_thumb" />
     </LinearLayout>

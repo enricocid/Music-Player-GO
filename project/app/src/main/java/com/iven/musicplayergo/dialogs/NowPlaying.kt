@@ -71,9 +71,9 @@ class NowPlaying: BottomSheetDialogFragment() {
 
         view.afterMeasured {
             val ratio = if (Theming.isDeviceLand(resources)) {
-                0.30f
+                0.35f
             } else {
-                0.75f
+                0.70f
             }
             val dim = (width * ratio).toInt()
             _npCoverBinding?.npCover?.layoutParams = LinearLayout.LayoutParams(dim, dim)
@@ -227,7 +227,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                         Theming.getPreciseVolumeIcon(this)
                     )
                     npVolumeSeek.progress = this
-                    npVolumeValue.text = this.toString()
+                    npVolumeValue.text = this.toString().padStart(3, '0')
                 }
 
                 npVolumeSeek.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -238,7 +238,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                         if (fromUser) {
                             mMediaControlInterface.onGetMediaPlayerHolder()?.setPreciseVolume(progress)
-                            npVolumeValue.text = progress.toString()
+                            npVolumeValue.text = progress.toString().padStart(3, '0')
                             npVolume.setImageResource(
                                 Theming.getPreciseVolumeIcon(progress)
                             )
