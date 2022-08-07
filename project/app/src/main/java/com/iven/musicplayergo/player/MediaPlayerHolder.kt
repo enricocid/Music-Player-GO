@@ -1024,12 +1024,18 @@ class MediaPlayerHolder:
     }
 
     fun stopPlaybackService(stopPlayback: Boolean) {
-        if (mPlayerService.isRunning && isMediaPlayer && stopPlayback) {
-            pauseMediaPlayer()
-            NotificationManagerCompat.from(mPlayerService).cancel(GoConstants.NOTIFICATION_ID)
-        }
-        if (::mediaPlayerInterface.isInitialized) {
-            mediaPlayerInterface.onClose()
+        try {
+            if (mPlayerService.isRunning && isMediaPlayer && stopPlayback) {
+                mPlayerService.stopSelf()
+                mPlayerService.stopForeground(false)
+                sNotificationForeground = false
+                NotificationManagerCompat.from(mPlayerService).cancel(GoConstants.NOTIFICATION_ID)
+            }
+            if (::mediaPlayerInterface.isInitialized) {
+                mediaPlayerInterface.onClose()
+            }
+        } catch (e: java.lang.IllegalArgumentException) {
+            e.printStackTrace()
         }
     }
 

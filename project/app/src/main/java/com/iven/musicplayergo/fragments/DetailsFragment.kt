@@ -84,8 +84,6 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         _detailsFragmentBinding?.songsRv?.adapter?.notifyDataSetChanged()
     }
 
-    fun getCurrentArtistFolder() = Pair(mSelectedArtistOrFolder, mLaunchedBy)
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
