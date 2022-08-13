@@ -40,7 +40,7 @@
                 android:paddingBottom="4dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:textAlignment="center"
+                android:textAlignment="textStart"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textStyle="bold" />
@@ -55,7 +55,7 @@
                 android:paddingEnd="16dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:textAlignment="center"
+                android:textAlignment="textStart"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 android:textColor="?android:attr/textColorSecondary" />
 
@@ -63,11 +63,12 @@
                 android:id="@+id/np_rates"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="4dp"
                 android:alpha="0.5"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 android:text="@string/unknown_year"
-                android:textAlignment="center"
+                android:textAlignment="textStart"
                 android:textAppearance="@android:style/TextAppearance.Material.Caption"
                 android:textColor="?android:attr/textColorTertiary" />
         </LinearLayout>

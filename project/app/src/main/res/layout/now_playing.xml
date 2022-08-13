@@ -56,17 +56,17 @@
         android:id="@+id/np_playing_song_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="8dp"
         android:background="?android:attr/selectableItemBackground"
         android:orientation="vertical"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp">
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
         <TextView
             android:id="@+id/np_song"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
             android:paddingStart="16dp"
@@ -74,7 +74,7 @@
             android:paddingBottom="4dp"
             android:scrollHorizontally="true"
             android:singleLine="true"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textColor="?android:attr/textColorPrimary"
             android:textStyle="bold" />
@@ -83,14 +83,13 @@
             android:id="@+id/np_artist_album"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:scrollHorizontally="true"
             android:singleLine="true"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
             android:textColor="?android:attr/textColorSecondary" />
 
@@ -98,11 +97,12 @@
             android:id="@+id/np_rates"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="4dp"
             android:alpha="0.5"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:text="@string/unknown_year"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             android:textColor="?android:attr/textColorTertiary" />
     </LinearLayout>
