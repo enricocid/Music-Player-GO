@@ -190,7 +190,11 @@ class MediaPlayerHolder:
     fun setMusicService(playerService: PlayerService) {
         mediaPlayer = MediaPlayer()
         mPlayerService = playerService
-        mAudioManager = playerService.getSystemService()
+        setupManagersAndReceivers()
+    }
+
+    private fun setupManagersAndReceivers() {
+        mAudioManager = mPlayerService.getSystemService()
         mMusicNotificationManager = mPlayerService.musicNotificationManager
         runBlocking {
             launch {
@@ -476,6 +480,7 @@ class MediaPlayerHolder:
     }
 
     fun resumeMediaPlayer() {
+
         if (!isPlaying) {
             if (sFocusEnabled) {
                 tryToGetAudioFocus()
@@ -502,6 +507,7 @@ class MediaPlayerHolder:
     }
 
     fun pauseMediaPlayer() {
+
         MediaPlayerUtils.safePause(mediaPlayer)
         mPlayerService.stopForeground(false)
         sNotificationForeground = false
@@ -681,6 +687,7 @@ class MediaPlayerHolder:
         println("MediaPlayer error: $what")
         synchronized(release()) {
             initMediaPlayer(currentSong, forceReset = true)
+            setupManagersAndReceivers()
         }
         return true
     }
@@ -1026,10 +1033,10 @@ class MediaPlayerHolder:
     fun stopPlaybackService(stopPlayback: Boolean) {
         try {
             if (mPlayerService.isRunning && isMediaPlayer && stopPlayback) {
-                mPlayerService.stopSelf()
                 mPlayerService.stopForeground(false)
                 sNotificationForeground = false
                 NotificationManagerCompat.from(mPlayerService).cancel(GoConstants.NOTIFICATION_ID)
+                mPlayerService.stopSelf()
             }
             if (::mediaPlayerInterface.isInitialized) {
                 mediaPlayerInterface.onClose()
