@@ -151,24 +151,30 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mMusicViewModel = ViewModelProvider(requireActivity()).get(MusicViewModel::class.java)
+        mMusicViewModel =
+            ViewModelProvider(requireActivity()).get(MusicViewModel::class.java).apply {
+                deviceMusic.observe(viewLifecycleOwner) { returnedMusic ->
+                    if (!returnedMusic.isNullOrEmpty()) {
 
-        mSongsList = getSongSource()
+                        mSongsList = getSongSource()
 
-        if (sLaunchedByArtistView) {
-            mSelectedAlbum = when {
-                mSelectedAlbumPosition != RecyclerView.NO_POSITION -> mSelectedArtistAlbums?.get(
-                    mSelectedAlbumPosition
-                )
-                else -> {
-                    mSelectedAlbumPosition = 0
-                    mSelectedArtistAlbums?.first()
+                        if (sLaunchedByArtistView) {
+                            mSelectedAlbum = when {
+                                mSelectedAlbumPosition != RecyclerView.NO_POSITION -> mSelectedArtistAlbums?.get(
+                                    mSelectedAlbumPosition
+                                )
+                                else -> {
+                                    mSelectedAlbumPosition = 0
+                                    mSelectedArtistAlbums?.first()
+                                }
+                            }
+                        }
+
+                        setupToolbar()
+                        setupViews(view)
+                    }
                 }
             }
-        }
-
-        setupToolbar()
-        setupViews(view)
     }
 
     private fun setupToolbar() {

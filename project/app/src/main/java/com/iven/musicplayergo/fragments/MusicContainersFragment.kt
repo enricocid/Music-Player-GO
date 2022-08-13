@@ -92,11 +92,16 @@ class MusicContainersFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mMusicViewModel = ViewModelProvider(requireActivity()).get(MusicViewModel::class.java)
-
-        mSorting = getSortingMethodFromPrefs()
-        mList = getSortedList()
-        finishSetup()
+        mMusicViewModel =
+            ViewModelProvider(requireActivity()).get(MusicViewModel::class.java).apply {
+                deviceMusic.observe(viewLifecycleOwner) { returnedMusic ->
+                    if (!returnedMusic.isNullOrEmpty()) {
+                        mSorting = getSortingMethodFromPrefs()
+                        mList = getSortedList()
+                        finishSetup()
+                    }
+                }
+            }
     }
 
     private fun finishSetup() {
