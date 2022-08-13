@@ -195,7 +195,9 @@ class MediaPlayerHolder:
 
     private fun setupManagersAndReceivers() {
         mAudioManager = mPlayerService.getSystemService()
-        mMusicNotificationManager = mPlayerService.musicNotificationManager
+        if (!::mMusicNotificationManager.isInitialized) {
+            mMusicNotificationManager = mPlayerService.musicNotificationManager
+        }
         runBlocking {
             launch {
                 registerActionsReceiver()
