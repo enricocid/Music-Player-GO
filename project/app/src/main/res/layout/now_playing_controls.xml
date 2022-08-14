@@ -35,16 +35,17 @@
             android:padding="16dp"
             app:srcCompat="@drawable/ic_skip_previous" />
 
-        <ImageButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/np_play"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:layout_weight="1"
-            android:background="?android:attr/actionBarItemBackground"
             android:contentDescription="@string/content_play"
             android:padding="16dp"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_play" />
+            app:elevation="2dp"
+            app:icon="@drawable/ic_play"
+            app:pressedTranslationZ="2dp" />
 
         <ImageButton
             android:id="@+id/np_skip_next"

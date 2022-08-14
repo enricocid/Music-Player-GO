@@ -423,6 +423,9 @@ class NowPlaying: BottomSheetDialogFragment() {
                 R.drawable.ic_play
             }
             _npControlsBinding?.npPlay?.setImageResource(drawable)
+            _npControlsBinding?.npPlay?.updateIconTint(
+                Theming.resolveThemeColor(resources).toContrastColor()
+            )
         }
     }
 
