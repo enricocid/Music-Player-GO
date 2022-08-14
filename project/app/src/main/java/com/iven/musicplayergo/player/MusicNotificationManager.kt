@@ -88,7 +88,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             .addAction(getNotificationAction(notificationActions.second))
             .setStyle(
                 MediaStyle()
-                    .setMediaSession(playerService.getMediaSession().sessionToken)
+                    .setMediaSession(playerService.getMediaSession()?.sessionToken)
                     .setShowActionsInCompactView(1, 2, 3)
             )
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)

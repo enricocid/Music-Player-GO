@@ -185,17 +185,13 @@ class MediaPlayerHolder:
 
     // Notifications
     private lateinit var mPlayerBroadcastReceiver: PlayerBroadcastReceiver
-    private lateinit var mMusicNotificationManager: MusicNotificationManager
+    private var mMusicNotificationManager: MusicNotificationManager? = null
 
     fun setMusicService(playerService: PlayerService) {
         mediaPlayer = MediaPlayer()
         mPlayerService = playerService
-        setupManagersAndReceivers()
-    }
-
-    private fun setupManagersAndReceivers() {
         mAudioManager = mPlayerService.getSystemService()
-        if (!::mMusicNotificationManager.isInitialized) {
+        if (mMusicNotificationManager == null) {
             mMusicNotificationManager = mPlayerService.musicNotificationManager
         }
         runBlocking {
@@ -208,14 +204,14 @@ class MediaPlayerHolder:
 
     private fun startForeground() {
         if (!sNotificationForeground) {
-            mMusicNotificationManager.createNotification { notification ->
+            mMusicNotificationManager?.createNotification { notification ->
                 if (Versioning.isQ()) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                         try {
                             startForegroundQ(notification)
                         } catch (fsNotAllowed: ForegroundServiceStartNotAllowedException) {
                             synchronized(pauseMediaPlayer()) {
-                                mMusicNotificationManager.createNotificationForError()
+                                mMusicNotificationManager?.createNotificationForError()
                             }
                             fsNotAllowed.printStackTrace()
                         }
@@ -228,7 +224,7 @@ class MediaPlayerHolder:
                 }
             }
         } else {
-            with(mMusicNotificationManager) {
+            mMusicNotificationManager?.run {
                 updatePlayPauseAction()
                 if (GoPreferences.getPrefsInstance().notificationActions.first == GoConstants.REPEAT_ACTION) {
                     updateRepeatIcon()
@@ -360,7 +356,7 @@ class MediaPlayerHolder:
                     putBitmap(METADATA_KEY_ALBUM_ART, bmp)
                 }
             }
-            mPlayerService.getMediaSession().setMetadata(build())
+            mPlayerService.getMediaSession()?.setMetadata(build())
         }
     }
 
@@ -408,12 +404,12 @@ class MediaPlayerHolder:
     }
 
     fun onHandleNotificationColorUpdate(color: Int) {
-        mMusicNotificationManager.onSetNotificationColor(color)
-        mMusicNotificationManager.onHandleNotificationUpdate(isAdditionalActionsChanged = false)
+        mMusicNotificationManager?.onSetNotificationColor(color)
+        mMusicNotificationManager?.onHandleNotificationUpdate(isAdditionalActionsChanged = false)
     }
 
     fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean) {
-        mMusicNotificationManager.onHandleNotificationUpdate(isAdditionalActionsChanged = isAdditionalActionsChanged)
+        mMusicNotificationManager?.onHandleNotificationUpdate(isAdditionalActionsChanged = isAdditionalActionsChanged)
     }
 
     fun tryToGetAudioFocus() {
@@ -453,7 +449,7 @@ class MediaPlayerHolder:
     }
 
     private fun updatePlaybackStatus(updateUI: Boolean) {
-        mPlayerService.getMediaSession().setPlaybackState(
+        mPlayerService.getMediaSession()?.setPlaybackState(
             PlaybackStateCompat.Builder()
                 .setActions(mMediaSessionActions)
                 .setState(
@@ -515,7 +511,7 @@ class MediaPlayerHolder:
         sNotificationForeground = false
         state = GoConstants.PAUSED
         updatePlaybackStatus(updateUI = true)
-        with(mMusicNotificationManager) {
+        mMusicNotificationManager?.run {
             updatePlayPauseAction()
             updateNotification()
         }
@@ -687,10 +683,7 @@ class MediaPlayerHolder:
 
     override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
         println("MediaPlayer error: $what")
-        synchronized(release()) {
-            initMediaPlayer(currentSong, forceReset = true)
-            setupManagersAndReceivers()
-        }
+        initMediaPlayer(currentSong, forceReset = true)
         return true
     }
 
@@ -826,6 +819,9 @@ class MediaPlayerHolder:
             }
             stopUpdatingCallbackWithPosition()
         }
+        if (mMusicNotificationManager != null) {
+            mMusicNotificationManager = null
+        }
         unregisterActionsReceiver()
     }
 
@@ -903,7 +899,7 @@ class MediaPlayerHolder:
         if (updatePlaybackStatus) {
             updatePlaybackStatus(updateUI = true)
         }
-        mMusicNotificationManager.updateRepeatIcon()
+        mMusicNotificationManager?.updateRepeatIcon()
     }
 
     fun onUpdateFavorites() {

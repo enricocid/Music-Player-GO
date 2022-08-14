@@ -43,7 +43,7 @@ class PlayerService : Service() {
     var headsetClicks = 0
     private var mLastTimeClick = 0L
 
-    private lateinit var mMediaSessionCompat: MediaSessionCompat
+    private var mMediaSessionCompat: MediaSessionCompat? = null
 
     private val mMediaSessionCallback = object : MediaSessionCompat.Callback() {
 
@@ -96,7 +96,7 @@ class PlayerService : Service() {
         }
     }
 
-    fun getMediaSession(): MediaSessionCompat = mMediaSessionCompat
+    fun getMediaSession(): MediaSessionCompat? = mMediaSessionCompat
 
     override fun onDestroy() {
         super.onDestroy()
@@ -118,17 +118,19 @@ class PlayerService : Service() {
             preferences.latestVolume = mediaPlayerHolder.currentVolumeInPercent
         }
 
-        if (::mMediaSessionCompat.isInitialized && mMediaSessionCompat.isActive) {
-            with(mMediaSessionCompat) {
+        mMediaSessionCompat?.run {
+            if (isActive) {
                 isActive = false
                 setCallback(null)
                 setMediaButtonReceiver(null)
                 release()
             }
-            mediaPlayerHolder.release()
-            releaseWakeLock()
-            isRunning = false
         }
+
+        mMediaSessionCompat = null
+        mediaPlayerHolder.release()
+        releaseWakeLock()
+        isRunning = false
     }
 
     override fun onCreate() {
