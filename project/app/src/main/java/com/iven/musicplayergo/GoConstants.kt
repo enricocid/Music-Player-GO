@@ -23,7 +23,6 @@ object GoConstants {
     const val ALBUM_VIEW = "1"
     const val FOLDER_VIEW = "2"
 
-    const val RESTORE_SETTINGS_FRAGMENT = "RESTORE_SETTINGS_FRAGMENT"
     const val RESTORE_FRAGMENT = "RESTORE_FRAGMENT"
 
     // playback speed options

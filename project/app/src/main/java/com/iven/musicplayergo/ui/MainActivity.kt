@@ -81,7 +81,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private var sRevealAnimationRunning = false
 
-    private var sRestoreSettingsFragment = false
     private var mTabToRestore = -1
 
     // Queue dialog
@@ -275,13 +274,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         sAllowCommit = true
 
-        sRestoreSettingsFragment = intent.getBooleanExtra(
-            GoConstants.RESTORE_SETTINGS_FRAGMENT,
-            false
-        )
-
         savedInstanceState?.run {
             mTabToRestore = getInt(GoConstants.RESTORE_FRAGMENT, -1)
+        }
+        if (intent.hasExtra(GoConstants.RESTORE_FRAGMENT) && mTabToRestore == -1) {
+            mTabToRestore = intent.getIntExtra(GoConstants.RESTORE_FRAGMENT, -1)
         }
 
         if (Permissions.hasToAskForReadStoragePermission(this)) {
@@ -409,12 +406,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
         mMainActivityBinding.viewPager2.setCurrentItem(
             when {
-                mTabToRestore != -1 && !sRestoreSettingsFragment -> mTabToRestore
-                sRestoreSettingsFragment -> mMainActivityBinding.viewPager2.offscreenPageLimit
+                mTabToRestore != -1 -> mTabToRestore
                 else -> 0
             },
             false
         )
+
         mPlayerControlsPanelBinding.tabLayout.getTabAt(
             mMainActivityBinding.viewPager2.currentItem
         )?.run {
@@ -600,7 +597,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     )
                 )
             } else {
-                Theming.applyChanges(this, restoreSettings = true)
+                Theming.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
             }
         }
     }
@@ -1094,7 +1091,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     mMediaPlayerHolder.updateCurrentSongs(null)
                 }
                 if (mAllMusicFragment != null && !mAllMusicFragment?.onSongVisualizationChanged()!!) {
-                    Theming.applyChanges(this, restoreSettings = true)
+                    Theming.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
                 }
             }
         }
@@ -1122,12 +1119,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 updatePlayingInfo(restore = false)
             }
         }
-        Theming.applyChanges(this, restoreSettings = false)
+        Theming.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
     }
 
     override fun onFiltersCleared() {
         GoPreferences.getPrefsInstance().filters = null
-        Theming.applyChanges(this, restoreSettings = false)
+        Theming.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
     }
 
     //method to handle intent to play audio file from external app

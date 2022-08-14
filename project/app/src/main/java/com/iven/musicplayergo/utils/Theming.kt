@@ -11,7 +11,6 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import com.google.android.material.appbar.MaterialToolbar
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
@@ -25,13 +24,11 @@ import com.iven.musicplayergo.ui.MainActivity
 object Theming {
 
     @JvmStatic
-    fun applyChanges(activity: Activity, restoreSettings: Boolean) {
+    fun applyChanges(activity: Activity, currentViewPagerItem: Int) {
         with(activity) {
             finishAfterTransition()
             val intent = Intent(this, MainActivity::class.java)
-            intent.putExtras(bundleOf(
-                GoConstants.RESTORE_SETTINGS_FRAGMENT to restoreSettings
-            ))
+            intent.putExtra(GoConstants.RESTORE_FRAGMENT, currentViewPagerItem)
             startActivity(intent)
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
