@@ -68,16 +68,6 @@ class NowPlaying: BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        view.afterMeasured {
-            val ratio = if (Theming.isDeviceLand(resources)) {
-                0.35f
-            } else {
-                0.70f
-            }
-            val dim = (width * ratio).toInt()
-            _npCoverBinding?.npCover?.layoutParams = LinearLayout.LayoutParams(dim, dim)
-        }
         setupView()
     }
 
@@ -131,6 +121,16 @@ class NowPlaying: BottomSheetDialogFragment() {
         if (!Theming.isDeviceLand(resources)) {
             _nowPlayingBinding?.npArtistAlbum?.textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
             _nowPlayingBinding?.npSong?.textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
+        }
+
+        _npCoverBinding?.npCover?.afterMeasured {
+            val ratio = if (Theming.isDeviceLand(resources)) {
+                1.20f
+            } else {
+                1.25f
+            }
+            val dim = (width * ratio).toInt()
+            layoutParams = LinearLayout.LayoutParams(dim, dim)
         }
 
         mMediaControlInterface.onGetMediaPlayerHolder()?.let { mph ->
