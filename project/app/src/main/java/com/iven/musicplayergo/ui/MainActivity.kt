@@ -1172,7 +1172,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     updatePlayingInfo(restore = false)
                     if (mMediaPlayerHolder.isQueue != null) {
                         mQueueDialog?.swapQueueSong(mMediaPlayerHolder.currentSong)
-                    } else if (sDetailsFragmentExpanded) {
+                    }
+                    if (sDetailsFragmentExpanded) {
                         mDetailsFragment?.swapSelectedSong(
                             mMediaPlayerHolder.currentSong?.id
                         )
