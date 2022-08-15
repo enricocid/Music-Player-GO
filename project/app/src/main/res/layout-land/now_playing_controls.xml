@@ -2,8 +2,6 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp"
     tools:showIn="@layout/now_playing">
 
     <LinearLayout
@@ -11,7 +9,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp">
 
         <ImageButton
             android:id="@+id/np_fast_rewind"
@@ -34,17 +34,16 @@
             android:padding="16dp"
             app:srcCompat="@drawable/ic_skip_previous" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <ImageButton
             android:id="@+id/np_play"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_gravity="center"
             android:layout_weight="1"
+            android:background="?android:attr/actionBarItemBackground"
             android:contentDescription="@string/content_play"
             android:padding="16dp"
-            app:elevation="2dp"
-            app:icon="@drawable/ic_play"
-            app:pressedTranslationZ="2dp" />
+            app:srcCompat="@drawable/ic_play" />
 
         <ImageButton
             android:id="@+id/np_skip_next"
