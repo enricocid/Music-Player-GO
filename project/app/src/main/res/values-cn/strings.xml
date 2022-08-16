@@ -166,4 +166,5 @@
     <string name="notification_actions_pref_title">附加通知操作</string>
     <string name="notification_actions_favorite_position">添加到收藏（带位置）/关闭</string>
     <string name="notification_actions_favorite">添加到收藏/关闭</string>
+    <string name="filters_error">错误！ 无法打开隐藏的艺术家/文件夹/专辑！</string>
 </resources>
