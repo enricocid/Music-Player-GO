@@ -102,17 +102,14 @@ class NowPlaying: BottomSheetDialogFragment() {
         setupSeekBarProgressListener()
         updateNpInfo()
 
-        val mediaPlayerHolder = mMediaControlInterface.onGetMediaPlayerHolder()
-
-        mediaPlayerHolder?.currentSong?.let { song ->
-            loadNpCover(song)
-            _nowPlayingBinding?.npSeek?.text =
-                mediaPlayerHolder.playerPosition.toLong()
-                    .toFormattedDuration(isAlbum = false, isSeekBar = true)
-
-            _nowPlayingBinding?.npSeekBar?.progress = mediaPlayerHolder.playerPosition
-
-            dialog.applyFullHeightDialog(requireActivity())
+        mMediaControlInterface.onGetMediaPlayerHolder()?.run {
+            (currentSongFM ?: currentSong)?.let { song ->
+                loadNpCover(song)
+                _nowPlayingBinding?.npSeek?.text =
+                    playerPosition.toLong().toFormattedDuration(isAlbum = false, isSeekBar = true)
+                _nowPlayingBinding?.npSeekBar?.progress = playerPosition
+                dialog.applyFullHeightDialog(requireActivity())
+            }
         }
     }
 
@@ -216,9 +213,7 @@ class NowPlaying: BottomSheetDialogFragment() {
         _npExtControlsBinding?.run {
 
             val isVolumeEnabled = GoPreferences.getPrefsInstance().isPreciseVolumeEnabled
-            npVolumeValue.handleViewVisibility(show = isVolumeEnabled)
-            npVolume.handleViewVisibility(show = isVolumeEnabled)
-            npVolumeSeek.handleViewVisibility(show = isVolumeEnabled)
+            npVolumeContainer.handleViewVisibility(show = isVolumeEnabled)
 
             if (isVolumeEnabled) {
 
@@ -375,37 +370,38 @@ class NowPlaying: BottomSheetDialogFragment() {
 
     fun updateNpInfo() {
         if (::mMediaControlInterface.isInitialized) {
-            val mediaPlayerHolder = mMediaControlInterface.onGetMediaPlayerHolder()
-            mediaPlayerHolder?.currentSong?.let { song ->
-                // load album cover
-                if (mAlbumIdNp != song.albumId && GoPreferences.getPrefsInstance().isCovers) {
-                    loadNpCover(song)
-                }
-                // load album/song info
-                _nowPlayingBinding?.npSong?.text = if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
-                    song.displayName.toFilenameWithoutExtension()
-                } else {
-                    song.title
-                }
-                _nowPlayingBinding?.npArtistAlbum?.text =
-                    getString(
-                        R.string.artist_and_album,
-                        song.artist,
-                        song.album
-                    )
+            mMediaControlInterface.onGetMediaPlayerHolder()?.run {
+                (currentSongFM ?: currentSong)?.let { song ->
+                    // load album cover
+                    if (mAlbumIdNp != song.albumId && GoPreferences.getPrefsInstance().isCovers) {
+                        loadNpCover(song)
+                    }
+                    // load album/song info
+                    _nowPlayingBinding?.npSong?.text = if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
+                        song.displayName.toFilenameWithoutExtension()
+                    } else {
+                        song.title
+                    }
+                    _nowPlayingBinding?.npArtistAlbum?.text =
+                        getString(
+                            R.string.artist_and_album,
+                            song.artist,
+                            song.album
+                        )
 
-                // load song's duration
-                val selectedSongDuration = song.duration
-                _nowPlayingBinding?.npDuration?.text =
-                    selectedSongDuration.toFormattedDuration(isAlbum = false, isSeekBar = true)
-                _nowPlayingBinding?.npSeekBar?.max = song.duration.toInt()
+                    // load song's duration
+                    val selectedSongDuration = song.duration
+                    _nowPlayingBinding?.npDuration?.text =
+                        selectedSongDuration.toFormattedDuration(isAlbum = false, isSeekBar = true)
+                    _nowPlayingBinding?.npSeekBar?.max = song.duration.toInt()
 
-                song.id?.toContentUri()?.toBitrate(requireContext())?.let { (first, second) ->
-                    _nowPlayingBinding?.npRates?.text =
-                        getString(R.string.rates, first, second)
+                    song.id?.toContentUri()?.toBitrate(requireContext())?.let { (first, second) ->
+                        _nowPlayingBinding?.npRates?.text =
+                            getString(R.string.rates, first, second)
+                    }
+                    updateNpFavoritesIcon(this)
+                    updatePlayingStatus(this)
                 }
-                updateNpFavoritesIcon(mediaPlayerHolder)
-                updatePlayingStatus(mediaPlayerHolder)
             }
         }
     }
@@ -423,9 +419,6 @@ class NowPlaying: BottomSheetDialogFragment() {
                 R.drawable.ic_play
             }
             _npControlsBinding?.npPlay?.setImageResource(drawable)
-            _npControlsBinding?.npPlay?.updateIconTint(
-                Theming.resolveThemeColor(resources).toContrastColor()
-            )
         }
     }
 

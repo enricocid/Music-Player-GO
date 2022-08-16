@@ -101,7 +101,7 @@ class PlayerService : Service() {
     override fun onDestroy() {
         super.onDestroy()
 
-        if (::mediaPlayerHolder.isInitialized && mediaPlayerHolder.isCurrentSong) {
+        if (::mediaPlayerHolder.isInitialized && mediaPlayerHolder.isCurrentSong && mediaPlayerHolder.currentSongFM == null) {
 
             // Saves last played song and its position if user is ok :)
             val preferences = GoPreferences.getPrefsInstance()

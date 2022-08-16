@@ -167,7 +167,6 @@ class MusicContainersFragment : Fragment(),
                     mSorting,
                     mMusicViewModel.deviceMusicByFolder?.keys?.toMutableList()
                 )
-
             else ->
                 Lists.getSortedListWithNull(
                     mSorting,

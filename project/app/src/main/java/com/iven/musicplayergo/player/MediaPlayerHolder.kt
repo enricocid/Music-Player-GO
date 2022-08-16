@@ -165,7 +165,9 @@ class MediaPlayerHolder:
 
     private var sNotificationForeground = false
 
-    val isCurrentSong get() = currentSong != null
+    val isCurrentSong get() = currentSong != null || currentSongFM != null
+    val isCurrentSongFM get() = currentSongFM != null
+
     private val sPlaybackSpeedPersisted get() = GoPreferences.getPrefsInstance().playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY
     var isRepeat1X = false
     var isLooping = false
@@ -179,6 +181,7 @@ class MediaPlayerHolder:
     var restoreQueueSong: Music? = null
 
     var isSongFromPrefs = false
+    var currentSongFM: Music? = null
 
     var state = GoConstants.PAUSED
     var isPlay = false
@@ -334,7 +337,7 @@ class MediaPlayerHolder:
 
     fun updateMediaSessionMetaData() {
         with(MediaMetadataCompat.Builder()) {
-            currentSong?.run {
+            (currentSongFM ?: currentSong)?.run {
                 putLong(METADATA_KEY_DURATION, duration)
                 putString(METADATA_KEY_ARTIST, artist)
                 putString(METADATA_KEY_AUTHOR, artist)
@@ -361,6 +364,10 @@ class MediaPlayerHolder:
     }
 
     override fun onCompletion(mediaPlayer: MediaPlayer) {
+
+        if (isCurrentSongFM) {
+            currentSongFM = null
+        }
 
         when {
             !continueOnEnd -> {
@@ -515,7 +522,7 @@ class MediaPlayerHolder:
             updatePlayPauseAction()
             updateNotification()
         }
-        if (::mediaPlayerInterface.isInitialized) {
+        if (::mediaPlayerInterface.isInitialized && !isCurrentSongFM) {
             mediaPlayerInterface.onBackupSong()
         }
     }
@@ -683,6 +690,9 @@ class MediaPlayerHolder:
 
     override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
         println("MediaPlayer error: $what")
+        if (isCurrentSong) {
+            currentSongFM = null
+        }
         initMediaPlayer(currentSong, forceReset = true)
         return true
     }
@@ -929,6 +939,9 @@ class MediaPlayerHolder:
     }
 
     fun skip(isNext: Boolean) {
+        if (isCurrentSongFM) {
+            currentSongFM = null
+        }
         when {
             isQueue != null && !canRestoreQueue -> manageQueue(isNext = isNext)
             canRestoreQueue -> manageRestoredQueue()

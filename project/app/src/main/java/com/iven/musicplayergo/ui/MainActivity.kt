@@ -197,7 +197,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         super.onPause()
 
         if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongFromPrefs) {
-            mMediaPlayerInterface.onBackupSong()
+            if (!mMediaPlayerHolder.isCurrentSongFM) {
+                mMediaPlayerInterface.onBackupSong()
+            }
             with(mMediaPlayerHolder) {
                 onPauseSeekBarCallback()
                 if (!isPlaying) {
@@ -331,12 +333,9 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     // Handle restoring: handle intent data, if any, or restore playback
     private fun handleRestore() {
+        restorePlayerStatus()
         if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null) {
-            handleIntent(
-                intent
-            )
-        } else {
-            restorePlayerStatus()
+            handleIntent(intent)
         }
     }
 
@@ -589,16 +588,17 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     override fun onAppearanceChanged(isThemeChanged: Boolean) {
-        synchronized(mMediaPlayerInterface.onBackupSong()) {
-            if (isThemeChanged) {
-                AppCompatDelegate.setDefaultNightMode(
-                    Theming.getDefaultNightMode(
-                        this
-                    )
+        if (!mMediaPlayerHolder.isCurrentSongFM) {
+            mMediaPlayerInterface.onBackupSong()
+        }
+        if (isThemeChanged) {
+            AppCompatDelegate.setDefaultNightMode(
+                Theming.getDefaultNightMode(
+                    this
                 )
-            } else {
-                Theming.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
-            }
+            )
+        } else {
+            Theming.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
         }
     }
 
@@ -706,7 +706,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                         if (!songs.isNullOrEmpty()) {
                             isPlay = false
                             updateCurrentSong(restoredSong, songs, restoredSong.launchedBy)
-                            preparePlayback()
+                            preparePlayback(restoredSong)
                             updatePlayingInfo(restore = false)
                             mPlayerControlsPanelBinding.songProgress.setProgressCompat(restoredSong.startFrom, true)
                         } else {
@@ -724,7 +724,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     // method to update info on controls panel
     private fun updatePlayingInfo(restore: Boolean) {
 
-        val selectedSong = mMediaPlayerHolder.currentSong
+        val selectedSong = mMediaPlayerHolder.currentSongFM ?: mMediaPlayerHolder.currentSong
 
         mPlayerControlsPanelBinding.songProgress.progress = 0
         mPlayerControlsPanelBinding.songProgress.max = selectedSong?.duration!!.toInt()
@@ -793,7 +793,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     private fun getSongSource(): String? {
-        val selectedSong = mMediaPlayerHolder.currentSong
+        val selectedSong = (mMediaPlayerHolder.currentSongFM ?: mMediaPlayerHolder.currentSong)
         return when (mMediaPlayerHolder.launchedBy) {
             GoConstants.FOLDER_VIEW -> selectedSong?.relativePath
             GoConstants.ARTIST_VIEW -> selectedSong?.artist
@@ -803,6 +803,19 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     override fun onOpenPlayingArtistAlbum() {
         if (isMediaPlayerHolder && mMediaPlayerHolder.isCurrentSong) {
+            GoPreferences.getPrefsInstance().filters?.let { filters ->
+                mMediaPlayerHolder.currentSongFM?.run {
+                    if (filters.contains(artist) || filters.contains(album) || filters.contains(this.relativePath)) {
+                        Toast.makeText(
+                            this@MainActivity,
+                            getString(R.string.filters_error),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return
+                    }
+                }
+            }
+
             val selectedArtistOrFolder = getSongSource()
             if (sDetailsFragmentExpanded) {
                 if (mDetailsFragment?.hasToUpdate(selectedArtistOrFolder)!!) {
@@ -864,7 +877,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
-    private fun preparePlayback() {
+    private fun preparePlayback(song: Music?) {
         if (isMediaPlayerHolder) {
             runBlocking {
                 launch {
@@ -874,7 +887,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     }
                 }
             }
-            mMediaPlayerHolder.initMediaPlayer(mMediaPlayerHolder.currentSong, forceReset = false)
+            mMediaPlayerHolder.initMediaPlayer(song, forceReset = false)
         }
     }
 
@@ -895,8 +908,22 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     song?.album,
                     mMusicViewModel.deviceAlbumsByArtist
                 )
-                updateCurrentSong(song, albumSongs, songLaunchedBy)
-                preparePlayback()
+                if (!isCurrentSongFM) {
+                    updateCurrentSong(song, albumSongs, songLaunchedBy)
+                } else {
+                    mPlayerControlsPanelBinding.songProgress.progress = 0
+                    mPlayerControlsPanelBinding.songProgress.max = song?.duration!!.toInt()
+
+                    updatePlayingSongTitle(song)
+
+                    mPlayerControlsPanelBinding.playingArtist.text =
+                        getString(
+                            R.string.artist_and_album,
+                            song.artist,
+                            song.album
+                        )
+                }
+                preparePlayback(song)
             }
         }
     }
@@ -1036,6 +1063,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
             with(mMediaPlayerHolder) {
 
+                if (isCurrentSongFM) {
+                    currentSongFM = null
+                }
+
                 setCanRestoreQueue()
 
                 // don't add duplicates
@@ -1136,9 +1167,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             try {
                 val displayNameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
                 cursor.moveToFirst()
-                val song = mMusicViewModel.getSongFromIntent(cursor.getString(displayNameIndex))
-
-                onSongSelected(song, null, GoConstants.ARTIST_VIEW)
+                mMediaPlayerHolder.currentSongFM = mMusicViewModel.getSongFromIntent(cursor.getString(displayNameIndex))
+                onSongSelected(mMediaPlayerHolder.currentSongFM, null, GoConstants.ARTIST_VIEW)
 
             } catch (e: Exception) {
                 e.printStackTrace()

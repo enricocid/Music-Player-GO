@@ -675,6 +675,11 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                             swapAlbum(itemAlbum?.music)
                         } else {
                             if (sPlayFirstSong) {
+                                mMediaControlInterface.onGetMediaPlayerHolder()?.run {
+                                    if (isCurrentSongFM) {
+                                        currentSongFM = null
+                                    }
+                                }
                                 mMediaControlInterface.onSongSelected(
                                     mSongsList?.first(),
                                     itemAlbum?.music,
@@ -755,6 +760,12 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     }
 
                     setOnClickListener {
+
+                        mMediaControlInterface.onGetMediaPlayerHolder()?.run {
+                            if (isCurrentSongFM) {
+                                currentSongFM = null
+                            }
+                        }
                         mMediaControlInterface.onSongSelected(
                             itemSong,
                             mSongsList,

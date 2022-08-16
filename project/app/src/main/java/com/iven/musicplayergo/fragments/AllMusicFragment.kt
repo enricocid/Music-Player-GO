@@ -272,6 +272,11 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                         getString(R.string.artist_and_album, itemSong?.artist, itemSong?.album)
 
                     setOnClickListener {
+                        mMediaControlInterface.onGetMediaPlayerHolder()?.run {
+                            if (isCurrentSongFM) {
+                                currentSongFM = null
+                            }
+                        }
                         mMediaControlInterface.onSongSelected(
                             itemSong,
                             mAllMusic,

@@ -132,7 +132,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     fun updateNotificationContent(onDone: (() -> Unit)? = null) {
         val mediaPlayerHolder = playerService.mediaPlayerHolder
 
-        mediaPlayerHolder.currentSong?.let { song ->
+        (mediaPlayerHolder.currentSongFM ?: mediaPlayerHolder.currentSong)?.let { song ->
             mNotificationBuilder
                 .setContentText(song.artist)
                 .setContentTitle(
