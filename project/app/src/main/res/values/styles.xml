@@ -1,10 +1,12 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Bottom sheets theming -->
     <!-- https://bryanherbst.com/2020/05/04/bottom-sheet-corners/ -->
     <style name="ThemeOverlay.Demo.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Widget.Demo.BottomSheet</item>
         <item name="colorOnSurface">@color/mainBg</item>
+        <item name="android:navigationBarColor">?attr/main_bg</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">@bool/is_light_system_bars</item>
     </style>
 
     <style name="Widget.Demo.BottomSheet" parent="Widget.MaterialComponents.BottomSheet">
