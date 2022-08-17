@@ -166,4 +166,5 @@
     <string name="filters_clear">Filtren kommer att rensas. Fortsätta\?</string>
     <string name="confirm_ask_pref_title">Bekräftelsemeddelanden</string>
     <string name="confirm_ask_pref_sum">Fråga om bekräftelse innan något görs</string>
+    <string name="filters_error">Fel! Kunde inte öppna dolda artister/mappar/album!</string>
 </resources>
