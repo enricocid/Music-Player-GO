@@ -166,4 +166,5 @@
     <string name="notification_actions_favorite_position">Přidat do oblíbených (s pozicí)/zavřít</string>
     <string name="notification_actions_fast_seeking">Rychlé hledání</string>
     <string name="notification_actions_favorite">Přidat do oblíbených/zavřít</string>
+    <string name="filters_error">Chyba! Nepodařilo se otevřít skryté umělce/složky/alba!</string>
 </resources>
