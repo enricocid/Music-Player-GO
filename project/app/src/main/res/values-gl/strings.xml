@@ -173,4 +173,5 @@
     <string name="filters_clear">Vanse limpar os filtros, continuar\?</string>
     <string name="confirm_ask_pref_title">Mensaxes de confirmación</string>
     <string name="confirm_ask_pref_sum">Pedir confirmación antes de facer calquera cousa</string>
+    <string name="filters_error">Erro! Non se poden abrir artistas/álbumes/cartafoles agochados!</string>
 </resources>
