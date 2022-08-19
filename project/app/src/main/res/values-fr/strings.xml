@@ -68,7 +68,7 @@
     <string name="albums">Albums</string>
     <string name="eq_pref_note_summary">Remarque : L\'égaliseur système sera utilisé à moins que vous ne désactiviez l\'option « égaliseur du système » depuis les paramètres. :)</string>
     <string name="on_list_ended_pref_title">Lorsqu\'une liste se termine…</string>
-    <string name="error_eq">Oups, une erreur s\'est produite !</string>
+    <string name="error_eq">Erreur</string>
     <string name="open_details_fragment">Ouvrir les informations sur l\'artiste/le dossier</string>
     <string name="content_repeat">Activer/Désactiver les options de répétition</string>
     <string name="content_skip_next">Passer au titre suivant</string>
@@ -150,4 +150,22 @@
     <string name="error_fs_not_allowed_sum">Erreur ! Éteindre l\'optimisation de batterie pour MPGO</string>
     <string name="equalizer_presets">Préréglages</string>
     <string name="locale_pref_title">Langue</string>
+    <string name="sleeptimer_cancel_desc">Arrêter la minuterie de sommeil</string>
+    <string name="sleeptimer">Minuterie de sommeil</string>
+    <string name="sleeptimer_enabled">Arrêter la lecture après %1s</string>
+    <string name="pause_on_end">Pause à l\'achêvement activée.</string>
+    <string name="confirm_ask_pref_title">Messages de confirmation</string>
+    <string name="filters_clear">Les filtres seront supprimés.
+\nContinuer \?</string>
+    <string name="theme_pref_black_title">Noir pur</string>
+    <string name="filters_error">Erreur ! Impossible d\'ouvrir les artistes/dossiers/albums cachés !</string>
+    <string name="sleeptimer_stop">Arrêter</string>
+    <string name="confirm_ask_pref_sum">Demander une confirmation avant de faire quoi que ce soit</string>
+    <string name="pause_on_end_disabled">Pause à l\'achêvement désactivée.</string>
+    <string name="notification_actions_pref_title">Actions de notification additionelles</string>
+    <string name="notification_actions_favorite">Ajouter aux favoris/fermer</string>
+    <string name="continue_on_end_desc">Choisir s\'il faut continuer la lecture ou arrêter à l\'achêvement</string>
+    <string name="locale_bulgarian">Bulgare</string>
+    <string name="notification_actions_favorite_position">Ajouter aux favoris (avec la position)/fermer</string>
+    <string name="notification_actions_fast_seeking">Recherche rapide</string>
 </resources>
