@@ -148,11 +148,11 @@ class MediaPlayerHolder:
     var currentVolumeInPercent = GoPreferences.getPrefsInstance().latestVolume
     private var currentPlaybackSpeed = GoPreferences.getPrefsInstance().latestPlaybackSpeed
 
-    val playerPosition get() = if (isSongFromPrefs) {
-            GoPreferences.getPrefsInstance().latestPlayedSong?.startFrom!!
-        } else {
-            mediaPlayer.currentPosition
-        }
+    val playerPosition get() = when {
+        isSongFromPrefs && !isCurrentSongFM -> GoPreferences.getPrefsInstance().latestPlayedSong?.startFrom!!
+        isCurrentSongFM -> 0
+        else -> mediaPlayer.currentPosition
+    }
 
     // Sleep Timer
     private var mSleepTimer: CountDownTimer? = null
@@ -699,7 +699,7 @@ class MediaPlayerHolder:
 
     override fun onPrepared(mp: MediaPlayer) {
 
-        if (currentSong?.startFrom != 0) {
+        if (currentSong?.startFrom != 0 && !isCurrentSongFM) {
             mediaPlayer.seekTo(currentSong?.startFrom!!)
         }
 

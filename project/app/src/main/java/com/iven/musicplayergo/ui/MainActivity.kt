@@ -185,6 +185,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        handleIntent(intent)
+    }
+
     override fun onResume() {
         super.onResume()
         if (isMediaPlayerHolder && mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongFromPrefs) {
@@ -334,9 +339,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     // Handle restoring: handle intent data, if any, or restore playback
     private fun handleRestore() {
         restorePlayerStatus()
-        if (intent != null && Intent.ACTION_VIEW == intent.action && intent.data != null) {
-            handleIntent(intent)
-        }
+        handleIntent(intent)
     }
 
     private fun initViewPager() {
@@ -708,7 +711,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                             updateCurrentSong(restoredSong, songs, restoredSong.launchedBy)
                             preparePlayback(restoredSong)
                             updatePlayingInfo(restore = false)
-                            mPlayerControlsPanelBinding.songProgress.setProgressCompat(restoredSong.startFrom, true)
+                            mPlayerControlsPanelBinding.songProgress.setProgressCompat(
+                                if (isCurrentSongFM) { 0 } else { restoredSong.startFrom },
+                                true
+                            )
                         } else {
                             notifyError(GoConstants.TAG_SD_NOT_READY)
                         }
@@ -1159,20 +1165,24 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     }
 
     //method to handle intent to play audio file from external app
-    private fun handleIntent(intent: Intent) {
+    private fun handleIntent(intent: Intent?) {
 
-        intent.data?.let { returnUri ->
-            contentResolver.query(returnUri, null, null, null, null)
-        }?.use { cursor ->
-            try {
-                val displayNameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                cursor.moveToFirst()
-                mMediaPlayerHolder.currentSongFM = mMusicViewModel.getSongFromIntent(cursor.getString(displayNameIndex))
-                onSongSelected(mMediaPlayerHolder.currentSongFM, null, GoConstants.ARTIST_VIEW)
+        intent?.let { it ->
+            if (Intent.ACTION_VIEW == it.action) {
+                it.data?.let { returnUri ->
+                    contentResolver.query(returnUri, null, null, null, null)
+                }?.use { cursor ->
+                    try {
+                        val displayNameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                        cursor.moveToFirst()
+                        mMediaPlayerHolder.currentSongFM = mMusicViewModel.getSongFromIntent(cursor.getString(displayNameIndex))
+                        onSongSelected(mMediaPlayerHolder.currentSongFM, null, GoConstants.ARTIST_VIEW)
 
-            } catch (e: Exception) {
-                e.printStackTrace()
-                notifyError(GoConstants.TAG_NO_MUSIC_INTENT)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        notifyError(GoConstants.TAG_NO_MUSIC_INTENT)
+                    }
+                }
             }
         }
     }
