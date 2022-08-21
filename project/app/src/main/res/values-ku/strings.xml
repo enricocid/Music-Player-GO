@@ -158,4 +158,13 @@
     <string name="theme_pref_black_title">Reş zelal</string>
     <string name="cancel">Têk bibe</string>
     <string name="ok">BAŞ E</string>
+    <string name="confirm_ask_pref_sum">Berî ku tiştek pêk be, ji bo pejirandinê bipirse</string>
+    <string name="notification_actions_pref_title">Çalakiyên agahdariyê yên din</string>
+    <string name="notification_actions_favorite_position">Tevlî bijarteyan bike (Li gel cîh)/bigire</string>
+    <string name="notification_actions_favorite">Tevlî bijarteyan bike/bigire</string>
+    <string name="filters_error">Şaşetî! Nikare hunermend/peldank/album ên veşartî vekê!</string>
+    <string name="confirm_ask_pref_title">Peyamên pejirandinê</string>
+    <string name="continue_on_end_desc">Hilbijêre ka lêdana stranê bidomînî an jî li ser qedandinê rawestînî</string>
+    <string name="notification_actions_fast_seeking">lêgerîna bi lez</string>
+    <string name="filters_clear">Parzûn wê werin rakirin. bidomîne\?</string>
 </resources>
