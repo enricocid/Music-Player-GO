@@ -1,0 +1,6 @@
+- Improved now playing
+- Improved playing music from file managers 
+(see: https://github.com/enricocid/Music-Player-GO/issues/461)
+- Bug fixes
+
+Thanks CodeCubeNeo and all translations

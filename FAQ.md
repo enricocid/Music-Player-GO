@@ -97,7 +97,7 @@ Apps > All apps > Music Player GO > Battery > Unrestricted
 
    - Job/real life.
    - Complex feature clashing with the KISS philosophy behind the app: Keep it snimple snupid :)
-   - The rather poor developer is rocking a Xiaomi Mi A1 as the only test device. A good computer could ensure emulator usage.
+   - The rather poor developer is rocking a ~~Xiaomi Mi A1~~ Xiaomi Mi A2 lite as the only test device. A good computer could ensure emulator usage.
    - Keep in mind that the app is built around the **developer's usage needs** and is shared for the love of libre software.
    - Sometimes time is just short…
    - Cyclic lack of motivation/interest in Android development.

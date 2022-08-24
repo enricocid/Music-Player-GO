@@ -1,0 +1,6 @@
+- Migliorato now playing
+- Migliorata apertura musica da file managers
+(vedi: https://github.com/enricocid/Music-Player-GO/issues/461)
+- Bug fixes
+
+Grazie CodeCubeNeo e a tutti i traduttori

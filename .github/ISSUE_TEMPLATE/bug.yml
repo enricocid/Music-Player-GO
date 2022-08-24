@@ -26,7 +26,7 @@ body:
     attributes:
       label: Device and Android version
       description: What is Your device/Android OS?
-      placeholder: Mine is Xiaomi Mi A1/Android 10.0 (Lineage OS 17.1)
+      placeholder: Mine is Xiaomi Mi A2 lite/Android 10.0
     validations:
       required: true
   - type: textarea

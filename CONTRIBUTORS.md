@@ -95,7 +95,7 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 
 - **Carmine Nives** for having reported this [issue](https://github.com/enricocid/Music-Player-GO/issues/410)
 
-- [**CodeCubeNeo**](https://github.com/CodeCubeNeo) for having reported this [issue](https://github.com/enricocid/Music-Player-GO/issues/439)
+- [**CodeCubeNeo**](https://github.com/CodeCubeNeo) for having reported issues [439](https://github.com/enricocid/Music-Player-GO/issues/439) and [461](https://github.com/enricocid/Music-Player-GO/issues/461)
 
 - [**otaboard**](https://github.com/otaboard) for having reported this [issue](https://github.com/enricocid/Music-Player-GO/issues/450)
 
