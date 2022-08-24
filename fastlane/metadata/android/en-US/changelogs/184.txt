@@ -3,4 +3,4 @@
 (see: https://github.com/enricocid/Music-Player-GO/issues/461)
 - Bug fixes
 
-Thanks CodeCubeNeo and all translations
+Thanks CodeCubeNeo and all translators
