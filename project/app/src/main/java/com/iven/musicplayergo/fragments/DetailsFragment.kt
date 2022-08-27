@@ -580,10 +580,8 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    fun hasToUpdate(selectedArtistOrFolder: String?) : Boolean {
-       sOpenNewDetailsFragment = selectedArtistOrFolder != mSelectedArtistOrFolder
-       return sOpenNewDetailsFragment
-    }
+    fun hasToUpdate(selectedArtistOrFolder: String?) : Boolean =
+        mSelectedArtistOrFolder != null && selectedArtistOrFolder != mSelectedArtistOrFolder
 
     fun tryToSnapToAlbumPosition(snapPosition: Int) {
         sPlayFirstSong = false
