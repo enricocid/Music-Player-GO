@@ -3,11 +3,9 @@ package com.iven.musicplayergo.player
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -111,6 +109,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean) {
         if (::mNotificationBuilder.isInitialized) {
             if (!isAdditionalActionsChanged) {
+                updateNotificationContent()
                 updateNotificationContent {
                     updateNotification()
                 }
@@ -217,14 +216,14 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     }
 
     @TargetApi(26)
-    private fun createNotificationChannel(channelId: String) {
-        with(NotificationManagerCompat.from(playerService)) {
-            val channel = NotificationChannel(
-                channelId,
-                playerService.getString(R.string.app_name),
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            createNotificationChannel(channel)
+    private fun createNotificationChannel(id: String) {
+        val name = playerService.getString(R.string.app_name)
+        val channel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_DEFAULT).apply {
+            description = name
         }
+        // Register the channel with the system
+        val notificationManager: NotificationManager =
+            playerService.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
     }
 }
