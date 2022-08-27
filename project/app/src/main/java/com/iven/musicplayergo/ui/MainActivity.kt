@@ -45,8 +45,6 @@ import com.iven.musicplayergo.player.PlayerService
 import com.iven.musicplayergo.preferences.ContextUtils
 import com.iven.musicplayergo.preferences.SettingsFragment
 import com.iven.musicplayergo.utils.*
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.util.*
 
 
@@ -885,12 +883,11 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun preparePlayback(song: Music?) {
         if (isMediaPlayerHolder) {
-            runBlocking {
-                launch {
-                    println("${Thread.currentThread()} has run.")
-                    if (::mPlayerService.isInitialized && !mPlayerService.isRunning) {
-                        startService(mBindingIntent)
-                    }
+            if (::mPlayerService.isInitialized && !mPlayerService.isRunning) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(mBindingIntent)
+                } else {
+                    startService(mBindingIntent)
                 }
             }
             mMediaPlayerHolder.initMediaPlayer(song, forceReset = false)
