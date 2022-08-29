@@ -166,4 +166,5 @@
     <string name="filters_clear">Os filtros serão limpos. Continuar\?</string>
     <string name="confirm_ask_pref_title">Mensagens de confirmação</string>
     <string name="confirm_ask_pref_sum">Peça confirmação antes de fazer qualquer coisa</string>
+    <string name="filters_error">Erro! Impossível abrir artistas/pastas/álbuns ocultos!</string>
 </resources>

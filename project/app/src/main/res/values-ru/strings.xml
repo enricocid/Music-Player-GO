@@ -166,4 +166,5 @@
     <string name="notification_actions_favorite_position">Добавить в избранное (с позицией)/закрыть</string>
     <string name="notification_actions_fast_seeking">Быстрая перемотка</string>
     <string name="continue_on_end_desc">Выберите, продолжать ли воспроизведение или приостанавливать при завершении</string>
+    <string name="filters_error">Ошибка! Невозможно открыть скрытых исполнителей/папки/альбомы!</string>
 </resources>
