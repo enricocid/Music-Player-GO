@@ -884,11 +884,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private fun preparePlayback(song: Music?) {
         if (isMediaPlayerHolder) {
             if (::mPlayerService.isInitialized && !mPlayerService.isRunning) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    startForegroundService(mBindingIntent)
-                } else {
-                    startService(mBindingIntent)
-                }
+                startService(mBindingIntent)
             }
             mMediaPlayerHolder.initMediaPlayer(song, forceReset = false)
         }
