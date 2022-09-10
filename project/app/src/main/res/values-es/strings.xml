@@ -19,11 +19,11 @@
     <string name="error_no_queue">No hay canciones en la cola de reproducción.</string>
     <string name="favorites">Favoritos</string>
     <string name="favorite_added">%1s (%2s) agregada a favoritos</string>
-    <string name="favorite_remove">%1s (%2s) será removida de las canciones favoritas. ¿Continuar?</string>
+    <string name="favorite_remove">¿Borrar %1s (%2s) de los favoritos\?</string>
     <string name="favorites_clear">¿Limpiar lista de favoritas\?</string>
     <string name="favorite_add">Favoritos</string>
     <string name="filter_popup_title">Ocultar</string>
-    <string name="error_no_favorites">Agrega canciones favoritas para empezar</string>
+    <string name="error_no_favorites">Agrega canciones favoritas para empezar.</string>
     <string name="perm_rationale">Concede a Music Player GO acceso a tus archivos para reproducir música.</string>
     <string name="error_no_browser">Instala primero un navegador web.</string>
     <string name="error_bad_id">Primero reproduzca una canción.</string>
@@ -88,7 +88,7 @@
     <string name="sorting_pref_album">Por álbum A-Z</string>
     <string name="delete">Borrar</string>
     <string name="pause_on_end_disabled">Pausar al finalizar apagado</string>
-    <string name="pause_on_end">Pausar al finalizar encendido</string>
+    <string name="pause_on_end">Pausa al finalizar.</string>
     <string name="sleeptimer">Temporizador de sueño</string>
     <string name="sleeptimer_enabled">Detener reproducción después de %1s</string>
     <string name="sleeptimer_stop">Detener</string>
@@ -108,7 +108,7 @@
     <string name="locale_lituanian">Lituano</string>
     <string name="equalizer_presets">Preconfiguraciones de ecualizador</string>
     <string name="locale_pref_title">Idioma</string>
-    <string name="error_fs_not_allowed">¡Algo salió mal! :( Considera desactivar la optimización de batería en la configuración de sistema: Aplicaciones &gt; Todas las aplicaciones &gt; Music Player GO &gt; Batería &gt; Sin restricciones</string>
+    <string name="error_fs_not_allowed">Algo salió mal :( Considera desactivar la optimización de la batería en los ajustes del sistema: Aplicaciones &gt; Todas las aplicaciones &gt; Reproductor de música GO &gt; Batería &gt; Sin restricciones, ya que podría hacer que el servicio del reproductor multimedia se detenga.</string>
     <string name="theme_pref_black_title">Negro Puro</string>
     <string name="locale_greek">Griego</string>
     <string name="locale_ukrainian">Ucraniano</string>
