@@ -848,6 +848,7 @@ class MediaPlayerHolder:
 
     fun cancelSleepTimer() {
         mSleepTimer?.cancel()
+        mSleepTimer = null
     }
 
     fun pauseBySleepTimer(minutes: Long) : Boolean {
@@ -868,6 +869,7 @@ class MediaPlayerHolder:
             }.start()
             true
         } else {
+            mSleepTimer = null
             false
         }
     }

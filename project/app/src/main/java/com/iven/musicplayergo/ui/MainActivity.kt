@@ -261,6 +261,15 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (Permissions.hasToAskForReadStoragePermission(this)) {
+            Permissions.manageAskForReadStoragePermission(this)
+        } else {
+            doBindService()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -284,12 +293,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
         if (intent.hasExtra(GoConstants.RESTORE_FRAGMENT) && mTabToRestore == -1) {
             mTabToRestore = intent.getIntExtra(GoConstants.RESTORE_FRAGMENT, -1)
-        }
-
-        if (Permissions.hasToAskForReadStoragePermission(this)) {
-            Permissions.manageAskForReadStoragePermission(this)
-        } else {
-            doBindService()
         }
     }
 
@@ -971,9 +974,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                                 getString(R.string.sleeptimer_enabled, value),
                                 Toast.LENGTH_SHORT
                             ).show()
-                        } else {
-                            Toast.makeText(this@MainActivity, getString(R.string.error_bad_id), Toast.LENGTH_SHORT)
-                                .show()
                         }
                     }
                     onSleepTimerDialogCancelled = {
