@@ -157,4 +157,15 @@
     <string name="locale_pref_title">Dil</string>
     <string name="locale_spanish">İspanyolca</string>
     <string name="sleeptimer_enabled">Oynatmayı %1s sonra durdur</string>
+    <string name="filters_error">Hata! Gizli sanatçılar/klasörler/albümler açılamıyor!</string>
+    <string name="notification_actions_pref_title">Ek bildirim eylemleri</string>
+    <string name="notification_actions_favorite">Favorilere ekle/kapat</string>
+    <string name="notification_actions_favorite_position">Favorilere ekle (pozisyonla)/kapat</string>
+    <string name="notification_actions_fast_seeking">Hızlı arama</string>
+    <string name="continue_on_end_desc">Tamamlandığında devam etsin ya da tekrar çalsın</string>
+    <string name="pause_on_end_disabled">Tamamlandığında devam et.</string>
+    <string name="filters_clear">Filtereler temizlenecek.
+\nDevam edilsin mi\?</string>
+    <string name="confirm_ask_pref_title">Onay mesajları</string>
+    <string name="confirm_ask_pref_sum">Bir şey yapmadan önce onay için sor</string>
 </resources>
