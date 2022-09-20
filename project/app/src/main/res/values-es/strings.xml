@@ -15,12 +15,12 @@
     <string name="queue_add">Cola</string>
     <string name="queue_song_add">%1s agregado a la cola de reproducción!</string>
     <string name="queue_song_remove">¿Eliminar %1s de la cola de reproducción\?</string>
-    <string name="queue_songs_clear">¿Limpiar cola de reproducción\?</string>
+    <string name="queue_songs_clear">¿Borrar cola\?</string>
     <string name="error_no_queue">No hay canciones en la cola de reproducción.</string>
     <string name="favorites">Favoritos</string>
     <string name="favorite_added">%1s (%2s) agregada a favoritos</string>
-    <string name="favorite_remove">¿Borrar %1s (%2s) de los favoritos\?</string>
-    <string name="favorites_clear">¿Limpiar lista de favoritas\?</string>
+    <string name="favorite_remove">¿Eliminar %1s (%2s) de favoritos\?</string>
+    <string name="favorites_clear">¿Borrar todos los favoritos\?</string>
     <string name="favorite_add">Favoritos</string>
     <string name="filter_popup_title">Ocultar</string>
     <string name="error_no_favorites">Agrega canciones favoritas para empezar.</string>
@@ -29,7 +29,7 @@
     <string name="error_bad_id">Primero reproduzca una canción.</string>
     <string name="error_no_music">Añade algo de música primero.</string>
     <string name="error_unknown_unsupported">¡Algo salió mal! :( Tal vez el formato no es compatible, o la carpeta es inaccesible (¡no es culpa de la aplicación!).</string>
-    <string name="on_close_activity">¿Parar la reproducción\?</string>
+    <string name="on_close_activity">¿Detener la reproducción\?</string>
     <string name="repeat_enabled">Repetición única activada.</string>
     <string name="repeat_loop_enabled">Repetición ∞ activada.</string>
     <string name="repeat_disabled">Repetición ∞ desactivada.</string>
@@ -87,7 +87,7 @@
     <string name="sorting_pref_album_inv">Por álbum Z-A</string>
     <string name="sorting_pref_album">Por álbum A-Z</string>
     <string name="delete">Borrar</string>
-    <string name="pause_on_end_disabled">Pausar al finalizar apagado</string>
+    <string name="pause_on_end_disabled">Pausar al finalizar apagado.</string>
     <string name="pause_on_end">Pausa al finalizar.</string>
     <string name="sleeptimer">Temporizador de sueño</string>
     <string name="sleeptimer_enabled">Detener reproducción después de %1s</string>
@@ -166,4 +166,5 @@
     <string name="blue_grey">Gris azulado</string>
     <string name="confirm_ask_pref_title">Mensajes de confirmación</string>
     <string name="locale_belarusian">Bielorruso</string>
+    <string name="teal">Turquesa</string>
 </resources>
