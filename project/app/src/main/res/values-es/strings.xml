@@ -15,7 +15,7 @@
     <string name="queue_add">Cola</string>
     <string name="queue_song_add">%1s agregado a la cola de reproducción!</string>
     <string name="queue_song_remove">¿Eliminar %1s de la cola de reproducción\?</string>
-    <string name="queue_songs_clear">¿Borrar cola\?</string>
+    <string name="queue_songs_clear">¿Borrar cola de reproducción\?</string>
     <string name="error_no_queue">No hay canciones en la cola de reproducción.</string>
     <string name="favorites">Favoritos</string>
     <string name="favorite_added">%1s (%2s) agregada a favoritos</string>
