@@ -84,7 +84,7 @@ dependencies {
 // Support
     //https://developer.android.com/jetpack/androidx/versions
     implementation 'androidx.browser:browser:1.4.0'
-    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.window:window:1.0.0'
     implementation 'androidx.media:media:1.6.0'
     implementation 'androidx.preference:preference-ktx:1.2.0'
