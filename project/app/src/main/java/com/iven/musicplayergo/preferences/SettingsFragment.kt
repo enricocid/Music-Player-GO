@@ -84,9 +84,7 @@ class SettingsFragment : Fragment() {
     private fun openLocaleSwitcher() {
         val locales = ContextUtils.getLocalesList(resources)
 
-        val dialog =
-            MaterialAlertDialogBuilder(requireContext()).setTitle(R.string.locale_pref_title)
-            .setItems(locales.values.toTypedArray()) { _, which ->
+        val dialog: MaterialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext()).setTitle(R.string.locale_pref_title).setItems(locales.values.toTypedArray()) { _, which ->
                 // Respond to item chosen
                 val newLocale = locales.keys.elementAt(which)
                 if (GoPreferences.getPrefsInstance().locale != newLocale) {
