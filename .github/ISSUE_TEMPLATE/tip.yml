@@ -1,10 +1,16 @@
 name: Feature request
-description: File a feature request. For storage related issues please add a comment on issue [415](https://github.com/enricocid/Music-Player-GO/issues/415)
+description: File a feature request.
 title: "[FR]: "
 labels: ["feature request"]
 assignees:
   - enricocid
 body:
+  - type: textarea
+    id: warning
+    attributes:
+      label: Is the issue related to storage?
+      description: If yes, do not open a new issue!
+      placeholder: Please add a comment to issue [415](https://github.com/enricocid/Music-Player-GO/issues/415)
   - type: textarea
     id: what
     attributes:
