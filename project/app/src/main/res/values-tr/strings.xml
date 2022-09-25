@@ -99,8 +99,6 @@
     <string name="locale_kurdish">Kürtçe</string>
     <string name="locale_russian">Rusça</string>
     <string name="pink">Pembe</string>
-    <string name="error_fs_not_allowed">Bir şeyler ters gitti! :( Sistem ayarlarından pil optimizasyonunu kapatmayı deneyin: Uygulamalar &gt; Tüm uygulamalar &gt; Müzik Çalar GO &gt; Pil &gt; Kısıtlanmamış, medya oynatıcı hizmetinin durmasına neden olabilir.</string>
-    <string name="error_fs_not_allowed_sum">Hata! MPGO için pil optimizasyonunu kapatın</string>
     <string name="locale_arabic">Arapça</string>
     <string name="locale_norwegian_n">Norveççe (Nynorsk)</string>
     <string name="locale_persian">Farsça</string>

@@ -86,8 +86,6 @@
     <string name="favorites_save_time">再生位置保存</string>
     <string name="delete">削除</string>
     <string name="equalizer_presets">プリセット</string>
-    <string name="error_fs_not_allowed">エラーが発生しました！バッテリー最適化がアプリを停止させた可能性があります。バッテリー最適化を無効化してみてください。(アプリ ＞ 全てのアプリ ＞ Music Player GO ＞ バッテリー ＞ 制限なし)</string>
-    <string name="error_fs_not_allowed_sum">エラーが発生しました！このアプリのバッテリー最適化を解除してください</string>
     <string name="confirm_ask_pref_title">確認メッセージ</string>
     <string name="sleeptimer">スリープタイマー</string>
     <string name="locale_pref_title">言語</string>

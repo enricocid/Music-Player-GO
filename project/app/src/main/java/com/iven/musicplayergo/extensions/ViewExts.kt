@@ -97,9 +97,11 @@ fun MenuItem.setTitleColor(color: Int) {
 
 // Extension to set menu items icon color
 fun MenuItem.setIconTint(color: Int) {
-    val wrapped = DrawableCompat.wrap(icon)
-    DrawableCompat.setTint(wrapped, color)
-    icon = wrapped
+    icon?.let { dw ->
+        val wrapped = DrawableCompat.wrap(dw)
+        DrawableCompat.setTint(wrapped, color)
+        icon = wrapped
+    }
 }
 
 // Extension to set span to menu title

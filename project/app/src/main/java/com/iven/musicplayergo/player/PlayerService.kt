@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
-import android.os.Parcelable
 import android.os.PowerManager
 import android.support.v4.media.session.MediaSessionCompat
 import android.view.KeyEvent
@@ -228,12 +227,17 @@ class PlayerService : Service() {
         fun getService() : PlayerService = this@PlayerService
     }
 
+    @Suppress("DEPRECATION")
     fun handleMediaIntent(intent: Intent?): Boolean {
 
         try {
             intent?.let {
-                val event =
-                    intent.getParcelableExtra<Parcelable>(Intent.EXTRA_KEY_EVENT) as KeyEvent
+
+                val event = if (Versioning.isTiramisu()) {
+                    intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT, KeyEvent::class.java)
+                } else {
+                    intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT)
+                } ?: return false
 
                 val eventTime =
                     if (event.eventTime != 0L) event.eventTime else System.currentTimeMillis()

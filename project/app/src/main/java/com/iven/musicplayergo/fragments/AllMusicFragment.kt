@@ -79,7 +79,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
         super.onViewCreated(view, savedInstanceState)
 
         mMusicViewModel =
-            ViewModelProvider(requireActivity()).get(MusicViewModel::class.java).apply {
+            ViewModelProvider(requireActivity())[MusicViewModel::class.java].apply {
                 deviceMusic.observe(viewLifecycleOwner) { returnedMusic ->
                     if (!returnedMusic.isNullOrEmpty()) {
                         mAllMusic = Lists.getSortedMusicListForAllMusic(
@@ -234,7 +234,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
         override fun getPopupText(position: Int): String {
             if (sIsFastScrollerPopup) {
                 mAllMusic?.get(position)?.title?.run {
-                    if (length > 0) {
+                    if (isNotEmpty()) {
                         return first().toString()
                     }
                 }

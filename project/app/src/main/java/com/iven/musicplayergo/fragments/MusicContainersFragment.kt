@@ -93,7 +93,7 @@ class MusicContainersFragment : Fragment(),
         super.onViewCreated(view, savedInstanceState)
 
         mMusicViewModel =
-            ViewModelProvider(requireActivity()).get(MusicViewModel::class.java).apply {
+            ViewModelProvider(requireActivity())[MusicViewModel::class.java].apply {
                 deviceMusic.observe(viewLifecycleOwner) { returnedMusic ->
                     if (!returnedMusic.isNullOrEmpty()) {
                         mSorting = getSortingMethodFromPrefs()
@@ -330,7 +330,7 @@ class MusicContainersFragment : Fragment(),
         override fun getPopupText(position: Int): String {
             if (sIsFastScrollerPopup) {
                 mList?.get(position)?.run {
-                    if (length > 0) {
+                    if (isNotEmpty()) {
                         return first().toString()
                     }
                 }

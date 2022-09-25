@@ -84,8 +84,6 @@
     <string name="sorting_pref_date_added">Legújabb dátum először</string>
     <string name="favorites_save_time">Dal pozíciójának mentése</string>
     <string name="delete">Törlés</string>
-    <string name="error_fs_not_allowed">Valami rosszul sikerült! :( Kérem kapcsolja ki az akkumulátor optimalizálást a rendszer beállításokban: Alkalmazások &gt; Minden alkalmazás &gt; Music Player GO &gt; Akkumulátor &gt; Korlátlan.</string>
-    <string name="error_fs_not_allowed_sum">Hiba! Kapcsolja ki az akkumulátor optimalizálást az MPGO alkalmazásnál</string>
     <string name="eq_pref_note_summary">Megjegyzés: A rendszer hangerőszabályzó lesz használva hacsak nincs kikapcsolva :)</string>
     <string name="pause_on_end">Szünet dal végén bekapcsolva.</string>
     <string name="pause_on_end_disabled">Szünet dal végén kikapcsolva.</string>

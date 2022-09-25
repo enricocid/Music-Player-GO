@@ -18,6 +18,7 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="actionModeCloseDrawable">@drawable/ic_close</item>
         <item name="actionModeBackground">@color/mainBg</item>
+        <item name="android:enforceNavigationBarContrast"  tools:targetApi="q">false</item>
     </style>
 
     <style name="BaseTheme.Black" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -37,5 +38,6 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="actionModeCloseDrawable">@drawable/ic_close</item>
         <item name="actionModeBackground">@android:color/black</item>
+        <item name="android:enforceNavigationBarContrast"  tools:targetApi="q">false</item>
     </style>
 </resources>

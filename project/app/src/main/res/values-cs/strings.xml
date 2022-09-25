@@ -54,7 +54,6 @@
     <string name="error_no_queue">Žádné skladby ve frontě.</string>
     <string name="error_list_ended">Seznam skončil.</string>
     <string name="error_eq">Chyba</string>
-    <string name="error_fs_not_allowed_sum">Chyba! Vypněte prosím optimalizaci baterie pro MPGO</string>
     <string name="perm_rationale">Udělte Music Player GO přístup k vašim souborům pro přehrávání hudby.</string>
     <string name="repeat_enabled">Opakování jedné skladby zapnuto.</string>
     <string name="repeat_loop_enabled">∞ opakování zapnuto.</string>
@@ -83,7 +82,6 @@
     <string name="song_visual_pref_tl_title">Název</string>
     <string name="song_visual_pref_fn_title">Název souboru</string>
     <string name="anim_pref_title">Animace</string>
-    <string name="error_fs_not_allowed">Něco se pokazilo! :( Zkuste vypnout optimalizaci baterie v nastavení systému: Aplikace &gt; Všechny aplikace &gt; Music Player GO &gt; Baterie &gt; Neomezená, protože to může způsobit zastavení služby přehrávače.</string>
     <string name="filter_pref_title">Filtry</string>
     <string name="favorites">Oblíbené</string>
     <string name="favorite_added">Skladba %1s (%2s) přidána do oblíbených</string>

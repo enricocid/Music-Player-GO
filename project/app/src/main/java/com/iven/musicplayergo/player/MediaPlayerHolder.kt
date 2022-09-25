@@ -2,14 +2,11 @@ package com.iven.musicplayergo.player
 
 import android.annotation.TargetApi
 import android.app.Activity
-import android.app.ForegroundServiceStartNotAllowedException
-import android.app.Notification
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.pm.ServiceInfo
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -27,6 +24,7 @@ import android.support.v4.media.session.PlaybackStateCompat.*
 import android.util.AndroidRuntimeException
 import android.view.KeyEvent
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.graphics.drawable.toBitmap
@@ -208,23 +206,8 @@ class MediaPlayerHolder:
     private fun startForeground() {
         if (!sNotificationForeground) {
             mMusicNotificationManager?.createNotification { notification ->
-                if (Versioning.isQ()) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        try {
-                            startForegroundQ(notification)
-                        } catch (fsNotAllowed: ForegroundServiceStartNotAllowedException) {
-                            synchronized(pauseMediaPlayer()) {
-                                mMusicNotificationManager?.createNotificationForError()
-                            }
-                            fsNotAllowed.printStackTrace()
-                        }
-                    } else {
-                        startForegroundQ(notification)
-                    }
-                } else {
-                    mPlayerService.startForeground(GoConstants.NOTIFICATION_ID, notification)
-                    sNotificationForeground = true
-                }
+                mPlayerService.startForeground(GoConstants.NOTIFICATION_ID, notification)
+                sNotificationForeground = true
             }
         } else {
             mMusicNotificationManager?.run {
@@ -239,15 +222,6 @@ class MediaPlayerHolder:
                 }
             }
         }
-    }
-
-    @TargetApi(Build.VERSION_CODES.Q)
-    private fun startForegroundQ(notification: Notification) {
-        mPlayerService.startForeground(
-            GoConstants.NOTIFICATION_ID,
-            notification,
-            ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
-        sNotificationForeground = true
     }
 
     private fun registerActionsReceiver() {
@@ -512,9 +486,8 @@ class MediaPlayerHolder:
     }
 
     fun pauseMediaPlayer() {
-
         MediaPlayerUtils.safePause(mediaPlayer)
-        mPlayerService.stopForeground(false)
+        ServiceCompat.stopForeground(mPlayerService, ServiceCompat.STOP_FOREGROUND_DETACH)
         sNotificationForeground = false
         state = GoConstants.PAUSED
         updatePlaybackStatus(updateUI = true)
@@ -830,6 +803,7 @@ class MediaPlayerHolder:
             stopUpdatingCallbackWithPosition()
         }
         if (mMusicNotificationManager != null) {
+            mMusicNotificationManager?.cancelNotification()
             mMusicNotificationManager = null
         }
         unregisterActionsReceiver()
@@ -1046,7 +1020,7 @@ class MediaPlayerHolder:
     fun stopPlaybackService(stopPlayback: Boolean) {
         try {
             if (mPlayerService.isRunning && isMediaPlayer && stopPlayback) {
-                mPlayerService.stopForeground(false)
+                ServiceCompat.stopForeground(mPlayerService, ServiceCompat.STOP_FOREGROUND_REMOVE)
                 sNotificationForeground = false
                 NotificationManagerCompat.from(mPlayerService).cancel(GoConstants.NOTIFICATION_ID)
                 mPlayerService.stopSelf()
@@ -1112,9 +1086,14 @@ class MediaPlayerHolder:
          * Handles "media button" which is how external applications
          * communicate with our app
          */
+        @Suppress("DEPRECATION")
         private fun handleMediaButton(intent: Intent) {
-            val event: KeyEvent =
-                intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT) as KeyEvent? ?: return
+            val event: KeyEvent = if (Versioning.isTiramisu()) {
+                intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT, KeyEvent::class.java)
+            } else {
+                intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT)
+            } ?: return
+
             val action: Int = event.action
             var handled = false
 

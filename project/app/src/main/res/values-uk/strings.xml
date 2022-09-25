@@ -105,8 +105,6 @@
     <string name="locale_vietnamese">В’єтнамська</string>
     <string name="grey">Сірий</string>
     <string name="blue_grey">Сіро-блакитний</string>
-    <string name="error_fs_not_allowed_sum">Помилка! Вимкніть оптимізацію акумулятора для MPGO</string>
-    <string name="error_fs_not_allowed">Щось пішло не так! :( Розгляньте можливість вимкнення оптимізації акумулятора в налаштуваннях системи: Програми &gt; Усі програми &gt; Music Player GO &gt; Акумулятор &gt; Не обмежено, оскільки це може призвести до зупинки служби медіапрогравача.</string>
     <string name="locale_basque">Баскська</string>
     <string name="locale_bengali">Бенгальська</string>
     <string name="locale_belarusian">Білоруська</string>

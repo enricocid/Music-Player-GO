@@ -57,7 +57,6 @@
     <string name="content_play">تشغيل/إيقاف مؤقت</string>
     <string name="open_details_fragment">فتح تفاصيل المغني/المجلد</string>
     <string name="song_visual_pref_fn_title">اسم الملف</string>
-    <string name="error_fs_not_allowed_sum">خطأ! قم بغلق تحسين البطارية لبرنامج MPGO</string>
     <string name="fast_seeking_pref_summary">مدة القفز للأمام/للخلف (بالثانية)</string>
     <string name="anim_pref_title">المؤثرات الحركية</string>
     <string name="error_list_ended">انتهت القائمة.</string>
@@ -71,7 +70,6 @@
     <string name="equalizer_presets">الإعدادات المسبقة</string>
     <string name="sorting_pref_artist">بالمؤلف تصاعدي</string>
     <string name="error_eq">خطأ</string>
-    <string name="error_fs_not_allowed">حدث خطأ ما! يقترح تعطيل خاصية تحسين البطارية من إعدادات الهاتف: التطبيقات&gt;كل التطبيقات&gt;Music Player GO&gt;البطارية&gt;غير مقيد، حيث قد تتسبب في غلق البرنامج.</string>
     <string name="eq_pref_note_summary">ملاحظة: يستخدم معادل صوت النظام ما لم يتم غلقه من إعدادات الهاتف. :)</string>
     <string name="pause_on_end_disabled">التوقف عند الانتهاء مغلق.</string>
     <string name="pause_on_end">التوقف عند الانتهاء مفعل.</string>

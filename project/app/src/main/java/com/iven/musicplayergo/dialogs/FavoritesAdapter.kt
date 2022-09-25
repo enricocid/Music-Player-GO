@@ -21,8 +21,7 @@ import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 
 
-class FavoritesAdapter(private val activity: Activity) :
-    RecyclerView.Adapter<FavoritesAdapter.FavoritesHolder>() {
+class FavoritesAdapter(private val activity: Activity) : RecyclerView.Adapter<FavoritesAdapter.FavoritesHolder>() {
 
     // interfaces
     private val mMediaControlInterface = activity as MediaControlInterface

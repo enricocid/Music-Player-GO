@@ -87,8 +87,6 @@
     <string name="sorting_pref_date_added">Nyeste dato først</string>
     <string name="pause_on_end">Pause ved fullførelse på.</string>
     <string name="pause_on_end_disabled">Pause ved fullførelse av.</string>
-    <string name="error_fs_not_allowed_sum">Feil. Skru av batterioptimisering for MPGO</string>
-    <string name="error_fs_not_allowed">Noe gikk galt. :( Overvei å skru av batterioptimalisering i systeminnstillinger: Programmer &gt; Alle programmer &gt; Music Player Go &gt; Batteri &gt; Ubegrenset siden det kan forårsake at avspillertjenesten stopper.</string>
     <string name="pink">Rosa</string>
     <string name="cyan">Cyanblå</string>
     <string name="teal">Mørk grønnblå</string>

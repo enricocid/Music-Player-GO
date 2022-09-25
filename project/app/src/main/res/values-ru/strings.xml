@@ -89,8 +89,6 @@
     <string name="delete">Удалить</string>
     <string name="pause_on_end">Пауза при завершении включена.</string>
     <string name="pause_on_end_disabled">Пауза при завершении выключена.</string>
-    <string name="error_fs_not_allowed_sum">Ошибка! Отключите оптимизацию расхода батареи для MPGO</string>
-    <string name="error_fs_not_allowed">Что-то пошло не так! :( Попробуйте отключить оптимизацию расхода батареи в настройках системы: Приложения &gt; Все приложения &gt; Music Player GO &gt; Батарея &gt; Без ограничений, так как это может провоцировать остановку сервиса плеера.</string>
     <string name="equalizer_presets">Предустановки</string>
     <string name="locale_arabic_egypt">Арабский (Египет)</string>
     <string name="locale_bengali">Бенгальский</string>

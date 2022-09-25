@@ -12,10 +12,12 @@ import android.os.IBinder
 import android.provider.OpenableColumns
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
+import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.WindowCompat
@@ -142,7 +144,13 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
-    override fun onBackPressed() {
+    private val onBackPressedCallback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            handleBackPressed()
+        }
+    }
+
+    private fun handleBackPressed() {
         when {
             sDetailsFragmentExpanded and !sEqFragmentExpanded -> closeDetailsFragment(isAnimation = mGoPreference.isAnimations)
             !sDetailsFragmentExpanded and sEqFragmentExpanded -> closeEqualizerFragment(isAnimation = mGoPreference.isAnimations)
@@ -151,7 +159,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
             } else {
                 closeEqualizerFragment(isAnimation = mGoPreference.isAnimations)
             }
-            sErrorFragmentExpanded -> super.onBackPressed()
+            sErrorFragmentExpanded -> finishAndRemoveTask()
             else -> if (mMainActivityBinding.viewPager2.currentItem != 0) {
                 mMainActivityBinding.viewPager2.currentItem = 0
             } else {
@@ -175,7 +183,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         super.onDestroy()
         mMusicViewModel.cancel()
         if (isMediaPlayerHolder && !mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning && !mMediaPlayerHolder.isSongFromPrefs) {
-            mPlayerService.stopForeground(true)
+            ServiceCompat.stopForeground(mPlayerService, ServiceCompat.STOP_FOREGROUND_DETACH)
             stopService(mBindingIntent)
             if (sBound) {
                 unbindService(connection)
@@ -274,6 +282,8 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         super.onCreate(savedInstanceState)
 
         setTheme(Theming.resolveTheme(this))
+
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
         mMainActivityBinding = MainActivityBinding.inflate(layoutInflater)
         mPlayerControlsPanelBinding = PlayerControlsPanelBinding.bind(mMainActivityBinding.root)
@@ -764,7 +774,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 //stop foreground if coming from pause state
                 with(mPlayerService) {
                     if (isRestoredFromPause) {
-                        stopForeground(false)
+                        ServiceCompat.stopForeground(mPlayerService, ServiceCompat.STOP_FOREGROUND_DETACH)
                         musicNotificationManager.updateNotification()
                         isRestoredFromPause = false
                     }

@@ -16,11 +16,7 @@ import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.utils.Theming
 
 
-class QueueAdapter(
-    private val ctx: Context,
-    private val mediaPlayerHolder: MediaPlayerHolder
-) :
-    RecyclerView.Adapter<QueueAdapter.QueueHolder>() {
+class QueueAdapter(private val ctx: Context, private val mediaPlayerHolder: MediaPlayerHolder) : RecyclerView.Adapter<QueueAdapter.QueueHolder>() {
 
     var queueSongs = mediaPlayerHolder.queueSongs
     private var mSelectedSong = mediaPlayerHolder.currentSong

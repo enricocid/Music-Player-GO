@@ -14,11 +14,18 @@ import com.iven.musicplayergo.ui.UIControlInterface
 
 object Permissions {
 
+    private val PERMISSION_READ_AUDIO get() = if (Versioning.isTiramisu()) {
+        // READ_EXTERNAL_STORAGE was superseded by READ_MEDIA_AUDIO in Android 13
+        Manifest.permission.READ_MEDIA_AUDIO
+    } else {
+        Manifest.permission.READ_EXTERNAL_STORAGE
+    }
+
     @JvmStatic
     fun hasToAskForReadStoragePermission(activity: Activity) =
         Versioning.isMarshmallow() && ContextCompat.checkSelfPermission(
             activity,
-            Manifest.permission.READ_EXTERNAL_STORAGE
+            PERMISSION_READ_AUDIO
         ) != PackageManager.PERMISSION_GRANTED
 
     @JvmStatic
@@ -28,7 +35,7 @@ object Permissions {
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(
                 activity,
-                Manifest.permission.READ_EXTERNAL_STORAGE
+                PERMISSION_READ_AUDIO
             )
         ) {
 
@@ -54,7 +61,7 @@ object Permissions {
     private fun askForReadStoragePermission(activity: Activity) {
         ActivityCompat.requestPermissions(
             activity,
-            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+            arrayOf(PERMISSION_READ_AUDIO),
             GoConstants.PERMISSION_REQUEST_READ_EXTERNAL_STORAGE
         )
     }

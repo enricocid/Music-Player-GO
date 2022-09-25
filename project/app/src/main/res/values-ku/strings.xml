@@ -42,8 +42,6 @@
     <string name="theme_pref_light_title">Ron</string>
     <string name="theme_pref_dark_title">Tarî</string>
     <string name="theme_pref_auto_title">Pergal</string>
-    <string name="error_fs_not_allowed">Tiştek çewt pêk hat! :( Dibe ku optimîzasyona battariyê çalak be û ev yek dibe sedem ku lêdera medyayê rawestê. Di sazkariyên pergalê de binêre û neçalak bike: Sepan &gt; Hemû sepan &gt; Lêdera muzîkê GO &gt; Battarî &gt; Neçalak e.</string>
-    <string name="error_fs_not_allowed_sum">Çewtî! Ji bo MPGO optimîzasyona batteriyê vemrîne</string>
     <string name="eq_pref_note_summary">Nîşe: Heya ku ji sazkariyên pergalê neyê girtin yeksanekera pergalê tê bikaranîn. :)</string>
     <string name="precise_volume_pref_title">Kontrolkirina dengî ya rast</string>
     <string name="focus_pref_title">Balkêşandina dengî</string>

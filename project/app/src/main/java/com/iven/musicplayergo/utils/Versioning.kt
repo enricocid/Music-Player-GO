@@ -9,4 +9,7 @@ object Versioning {
 
     @JvmStatic
     fun isMarshmallow() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+
+    @JvmStatic
+    fun isTiramisu() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
 }

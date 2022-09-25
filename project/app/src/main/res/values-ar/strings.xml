@@ -59,7 +59,6 @@
     <string name="error_no_queue">لا يوجد أغاني في قائمة التشغيل.</string>
     <string name="error_list_ended">انتهت القائمة.</string>
     <string name="error_eq">خطأ</string>
-    <string name="error_fs_not_allowed_sum">خطأ! قم بغلق تحسين البطارية لبرنامج MPGO</string>
     <string name="perm_rationale">يحتاج Music Player GO إلي إذن الوصول إلى ملفاتك لتشغيل الموسيقى.</string>
     <string name="repeat_enabled">تمكين تكرار 1x.</string>
     <string name="repeat_loop_enabled">التكرار اللانهائي ممكن.</string>
@@ -131,7 +130,6 @@
     <string name="song_visual_pref_fn_title">اسم الملف</string>
     <string name="anim_pref_title">المؤثرات الحركية</string>
     <string name="filter_pref_title">مرشحات</string>
-    <string name="error_fs_not_allowed">حدث خطأ ما! يقترح تعطيل خاصية تحسين البطارية من إعدادات الهاتف: التطبيقات&gt;كل التطبيقات&gt;Music Player GO&gt;البطارية&gt;غير مقيد، حيث قد تتسبب في إيقاف البرنامج.</string>
     <string name="locale_arabic">العربية</string>
     <string name="red">أحمر</string>
     <string name="pink">زهري</string>

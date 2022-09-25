@@ -120,7 +120,6 @@
     <string name="amber">Ambre</string>
     <string name="orange">Orange</string>
     <string name="deep_orange">Orange foncé</string>
-    <string name="error_fs_not_allowed">Quelque chose a mal tourné :( Pensez à désactiver l\'optimisateur de la batterie dans les paramètres système : Apps &gt; All apps &gt; Music Player GO &gt; Battery &gt; Unrestricted, car cela pourrait provoquer l\'arrêt du service du lecteur multimédia.</string>
     <string name="locale_german">Allemand</string>
     <string name="locale_greek">Grec</string>
     <string name="locale_arabic_egypt">Arabe (Égypte)</string>
@@ -147,7 +146,6 @@
     <string name="blue_grey">Gris bleu</string>
     <string name="yellow">Jaune</string>
     <string name="brown">Marron</string>
-    <string name="error_fs_not_allowed_sum">Erreur ! Éteindre l\'optimisation de batterie pour MPGO</string>
     <string name="equalizer_presets">Préréglages</string>
     <string name="locale_pref_title">Langue</string>
     <string name="sleeptimer_cancel_desc">Arrêter la minuterie de sommeil</string>

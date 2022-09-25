@@ -32,7 +32,6 @@
     <string name="queue">Опашка</string>
     <string name="theme_pref_title">Тема</string>
     <string name="error_eq">Грешка</string>
-    <string name="error_fs_not_allowed_sum">Грешка! Изклочи оптимизация на батерията за MPGO</string>
     <string name="repeat_enabled">Повтаряне на една песен е включено.</string>
     <string name="repeat_loop_enabled">∞ повтаряне е включено.</string>
     <string name="pause_on_end">Спри когато свърши е включено.</string>
@@ -144,7 +143,6 @@
     <string name="locale_kurdish">Кюрдски</string>
     <string name="locale_norwegian_b">Норвежки (Букмол)</string>
     <string name="locale_persian">Персийски</string>
-    <string name="error_fs_not_allowed">Нещо се обърка! :( Пробвай да изключиш оптимизацията на батерията в настройките: Приложения &gt; Всички приложения &gt; Music Player GO &gt; Батерия &gt; Неограничени, защото може да накара плейъра да спре.</string>
     <string name="pause_on_end_disabled">Спри когато свърши е извключено.</string>
     <string name="repeat_disabled">∞ повтаряне е извключено.</string>
     <string name="content_playback_speed">Скорост на възпроизвеждане</string>

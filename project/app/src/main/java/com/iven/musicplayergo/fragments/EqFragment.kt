@@ -195,7 +195,7 @@ class EqFragment : Fragment() {
         _eqFragmentBinding?.eqToolbar?.run {
 
             setNavigationOnClickListener {
-                requireActivity().onBackPressed()
+                requireActivity().onBackPressedDispatcher.onBackPressed()
             }
 
             inflateMenu(R.menu.menu_eq)

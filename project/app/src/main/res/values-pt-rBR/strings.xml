@@ -89,8 +89,6 @@
     <string name="delete">Excluir</string>
     <string name="pause_on_end">Pausar ao terminar ligado.</string>
     <string name="pause_on_end_disabled">Pausar ao terminar desligado.</string>
-    <string name="error_fs_not_allowed_sum">Erro! Desligue a otimização da bateria para o MPGO</string>
-    <string name="error_fs_not_allowed">Algo deu errado! :( Considere desativar a otimização da bateria nas configurações do sistema: Aplicativos &gt; Todos os aplicativos &gt; Music Player GO &gt; Bateria &gt; Irrestrito, pois isso pode fazer com que o serviço do media player pare.</string>
     <string name="equalizer_presets">Predefinições</string>
     <string name="locale_basque">Basco</string>
     <string name="locale_belarusian">Bielorrusso</string>

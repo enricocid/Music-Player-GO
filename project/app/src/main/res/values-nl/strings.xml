@@ -108,7 +108,6 @@
     <string name="locale_polish">Pools</string>
     <string name="confirm_ask_pref_title">Bevestigingsberichten</string>
     <string name="sleeptimer">Slaaptimer</string>
-    <string name="error_fs_not_allowed_sum">Fout! Zet batterijbesparing uit voor MPGO</string>
     <string name="pause_on_end_disabled">Pauzeren na afloop uit.</string>
     <string name="pause_on_end">Pauzeren na afloop aan.</string>
     <string name="locale_arabic_egypt">Arabisch (Egypte)</string>
@@ -132,7 +131,6 @@
     <string name="pink">Roze</string>
     <string name="lime">Limoen</string>
     <string name="equalizer_presets">Voorinstellingen</string>
-    <string name="error_fs_not_allowed">Er ging iets mis! :( Overweeg batterij-optimalisatie uit te zetten in de systeeminstellingen: Apps &gt; Alle apps &gt; Music Player GO &gt; Batterij &gt; Onbeperkt, omdat dit ertoe kan leiden dat de mediaspelerservice stopt.</string>
     <string name="locale_danish">Deens</string>
     <string name="continue_on_end_desc">Kies of u wilt doorgaan met afspelen of pauzeren na afloop</string>
     <string name="locale_dutch">Nederlands</string>

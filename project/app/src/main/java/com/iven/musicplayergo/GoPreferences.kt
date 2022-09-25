@@ -177,7 +177,7 @@ class GoPreferences(context: Context) {
         set(value) = mPrefs.edit { putInt(prefsFastSeek, value) }
 
     var isPreciseVolumeEnabled
-        get() = mPrefs.getBoolean(prefsPreciseVolume, false)
+        get() = mPrefs.getBoolean(prefsPreciseVolume, true)
         set(value) = mPrefs.edit { putBoolean(prefsPreciseVolume, value) }
 
     var isFocusEnabled

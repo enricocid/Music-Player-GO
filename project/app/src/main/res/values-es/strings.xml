@@ -93,7 +93,6 @@
     <string name="sleeptimer_enabled">Detener reproducción después de %1s</string>
     <string name="sleeptimer_stop">Detener</string>
     <string name="sleeptimer_cancel_desc">Detener temporizador de sueño</string>
-    <string name="error_fs_not_allowed_sum">¡Error! Desactiva la optimización de batería para MPGO</string>
     <string name="locale_french">Francés</string>
     <string name="locale_slovenian">Esloveno</string>
     <string name="locale_spanish">Español</string>
@@ -108,7 +107,6 @@
     <string name="locale_lituanian">Lituano</string>
     <string name="equalizer_presets">Preconfiguraciones de ecualizador</string>
     <string name="locale_pref_title">Idioma</string>
-    <string name="error_fs_not_allowed">Algo salió mal :( Considera desactivar la optimización de la batería en los ajustes del sistema: Aplicaciones &gt; Todas las aplicaciones &gt; Reproductor de música GO &gt; Batería &gt; Sin restricciones, ya que podría hacer que el servicio del reproductor multimedia se detenga.</string>
     <string name="theme_pref_black_title">Negro Puro</string>
     <string name="locale_greek">Griego</string>
     <string name="locale_ukrainian">Ucraniano</string>

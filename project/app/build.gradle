@@ -3,13 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
     //noinspection GradleDependency
-    buildToolsVersion "32.0.0"
     defaultConfig {
         applicationId "com.iven.musicplayergo"
         minSdkVersion 21
-        targetSdkVersion 32
+        targetSdkVersion 33
         versionCode 184
         versionName "4.4.21"
 
@@ -64,6 +63,7 @@ android {
     }
 
     lintOptions {
+        ignore "QueryPermissionsNeeded"
         disable 'MissingTranslation', 'AllowBackup',
                 'GoogleAppIndexingWarning'
     }
@@ -83,6 +83,7 @@ dependencies {
 
 // Support
     //https://developer.android.com/jetpack/androidx/versions
+    implementation "androidx.activity:activity-ktx:1.6.0"
     implementation 'androidx.browser:browser:1.4.0'
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.window:window:1.0.0'
@@ -95,12 +96,12 @@ dependencies {
 
 // Third-party
     //https://mvnrepository.com/artifact/com.squareup.moshi/moshi-kotlin
-    implementation 'com.squareup.moshi:moshi:1.13.0'
-    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.13.0'
+    implementation 'com.squareup.moshi:moshi:1.14.0'
+    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.14.0'
 
     //https://github.com/zhanghai/AndroidFastScroll/releases
     implementation 'me.zhanghai.android.fastscroll:library:1.1.8'
 
     //https://github.com/coil-kt/coil/releases
-    implementation 'io.coil-kt:coil:2.1.0'
+    implementation 'io.coil-kt:coil:2.2.1'
 }

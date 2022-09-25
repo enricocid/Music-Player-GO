@@ -85,8 +85,6 @@
     <string name="sorting_pref_album">Nach Album A-Z</string>
     <string name="favorites_save_time">Liedposition speichern</string>
     <string name="delete">Löschen</string>
-    <string name="error_fs_not_allowed_sum">Fehler! Batterieoptimierung für MPGO deaktivieren</string>
-    <string name="error_fs_not_allowed">Etwas ist schiefgelaufen! :( Bitte deaktiviere die Batterioptimierung in den Systemeinstellungen: Apps &gt; Alle Apps &gt; Music Player GO &gt; Akku &gt; Akkunutzung im Hintergrund zulassen, da es den Media Player Service stoppen kann.</string>
     <string name="pause_on_end">Am Ende pausieren an.</string>
     <string name="pause_on_end_disabled">Am Ende pausieren aus.</string>
     <string name="equalizer_presets">Voreinstellungen</string>

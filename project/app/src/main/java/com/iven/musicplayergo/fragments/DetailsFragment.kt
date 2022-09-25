@@ -152,7 +152,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         super.onViewCreated(view, savedInstanceState)
 
         mMusicViewModel =
-            ViewModelProvider(requireActivity()).get(MusicViewModel::class.java).apply {
+            ViewModelProvider(requireActivity())[MusicViewModel::class.java].apply {
                 deviceMusic.observe(viewLifecycleOwner) { returnedMusic ->
                     if (!returnedMusic.isNullOrEmpty()) {
 
@@ -203,7 +203,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             setupToolbarSpecs()
 
             setNavigationOnClickListener {
-                requireActivity().onBackPressed()
+                requireActivity().onBackPressedDispatcher.onBackPressed()
             }
 
             setupMenu()
@@ -563,7 +563,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             setHasFixedSize(true)
             adapter = AlbumsAdapter()
 
-            if (mSelectedAlbumPosition != RecyclerView.NO_POSITION || mSelectedAlbumPosition != 0) {
+            if (mSelectedAlbumPosition != RecyclerView.NO_POSITION) {
                 mAlbumsRecyclerViewLayoutManager.scrollToPositionWithOffset(
                     mSelectedAlbumPosition,
                     0
