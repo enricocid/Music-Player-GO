@@ -5,12 +5,11 @@ labels: ["feature request"]
 assignees:
   - enricocid
 body:
-  - type: textarea
+  - type: markdown
     id: warning
     attributes:
-      label: Is the issue related to storage?
-      description: If yes, do not open a new issue!
-      placeholder: Please add a comment to issue [415](https://github.com/enricocid/Music-Player-GO/issues/415)
+      value: |
+        "##**Is the issue related to storage?** If yes, do not open a new issue! Add a comment to issue [#415](https://github.com/enricocid/Music-Player-GO/issues/415) instead!"
   - type: textarea
     id: what
     attributes:
