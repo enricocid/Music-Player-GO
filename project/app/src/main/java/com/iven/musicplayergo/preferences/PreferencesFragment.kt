@@ -11,6 +11,7 @@ import androidx.preference.PreferenceFragmentCompat
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.dialogs.RecyclerSheet
+import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.utils.Theming
@@ -21,6 +22,8 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     private lateinit var mUIControlInterface: UIControlInterface
     private lateinit var mMediaControlInterface: MediaControlInterface
+
+    private val mMediaPlayerHolder get() = MediaPlayerHolder.getInstance()
 
     override fun setDivider(divider: Drawable?) {
         super.setDivider(null)
@@ -107,7 +110,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            getString(R.string.precise_volume_pref) -> mMediaControlInterface.onGetMediaPlayerHolder()?.run {
+            getString(R.string.precise_volume_pref) -> mMediaPlayerHolder.run {
                 setPreciseVolume(if (!GoPreferences.getPrefsInstance().isPreciseVolumeEnabled) {
                     GoPreferences.getPrefsInstance().latestVolume = currentVolumeInPercent
                     100
@@ -118,7 +121,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             getString(R.string.playback_vel_pref) -> mMediaControlInterface.onPlaybackSpeedToggled()
             getString(R.string.theme_pref) -> mUIControlInterface.onAppearanceChanged(isThemeChanged = true)
             getString(R.string.theme_pref_black) -> mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
-            getString(R.string.focus_pref) -> mMediaControlInterface.onGetMediaPlayerHolder()?.run {
+            getString(R.string.focus_pref) -> mMediaPlayerHolder.run {
                 if (GoPreferences.getPrefsInstance().isFocusEnabled) {
                     tryToGetAudioFocus()
                 } else {
@@ -126,7 +129,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 }
             }
             getString(R.string.covers_pref) -> {
-                mMediaControlInterface.onGetMediaPlayerHolder()?.onHandleNotificationUpdate(isAdditionalActionsChanged = false)
+                mMediaPlayerHolder.onHandleNotificationUpdate(isAdditionalActionsChanged = false)
                 mMediaControlInterface.onHandleCoverOptionsUpdate()
             }
             getString(R.string.notif_actions_pref) ->

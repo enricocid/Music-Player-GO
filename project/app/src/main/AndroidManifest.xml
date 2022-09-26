@@ -38,25 +38,40 @@
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.APP_MUSIC" />
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <action android:name="android.intent.action.MUSIC_PLAYER" />
             </intent-filter>
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:scheme="content" />
                 <data android:mimeType="audio/*" />
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".equalizer.EqualizerActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="user">
+
+            <intent-filter>
+                <action android:name="android.media.action.DISPLAY_AUDIO_EFFECT_CONTROL_PANEL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <service
             android:name=".player.PlayerService"
+            android:exported="false"
             android:foregroundServiceType="mediaPlayback"
             android:icon="@mipmap/ic_launcher"
-            android:exported="false"
             android:roundIcon="@mipmap/ic_launcher" />
 
         <service

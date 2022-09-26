@@ -58,7 +58,6 @@
     <string name="error_bad_id">قم بتشغيل أغنية أولاً.</string>
     <string name="error_no_queue">لا يوجد أغاني في قائمة التشغيل.</string>
     <string name="error_list_ended">انتهت القائمة.</string>
-    <string name="error_eq">خطأ</string>
     <string name="perm_rationale">يحتاج Music Player GO إلي إذن الوصول إلى ملفاتك لتشغيل الموسيقى.</string>
     <string name="repeat_enabled">تمكين تكرار 1x.</string>
     <string name="repeat_loop_enabled">التكرار اللانهائي ممكن.</string>
@@ -111,7 +110,6 @@
     <string name="locale_ukrainian">الأوكرانية</string>
     <string name="locale_urdu">الأردية (باكستان)</string>
     <string name="locale_vietnamese">الفيتنامية</string>
-    <string name="eq_pref_note_summary">ملاحظة: يستخدم معادل صوت النظام ما لم يتم غلقه من إعدادات الهاتف. :)</string>
     <string name="precise_volume_pref_title">تحكم دقيق في مستوى الصوت</string>
     <string name="focus_pref_title">إدارة تعارض مصادر الصوت</string>
     <string name="headset_pref_title">إعدادات إدخال سماعة الرأس</string>

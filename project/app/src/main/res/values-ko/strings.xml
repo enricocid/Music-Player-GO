@@ -10,7 +10,6 @@
     <string name="repeat_loop_enabled">∞반복 켜기.</string>
     <string name="repeat_enabled">싱글 반복 켜기.</string>
     <string name="perm_rationale">Music Player GO는 노래 재생을 위해 파일 접근 권한이 필요해요.</string>
-    <string name="error_eq">어… 에러가 났어요!</string>
     <string name="error_list_ended">리스트가 끝났습니다.</string>
     <string name="error_no_queue">대기열에 노래가 없습니다.</string>
     <string name="error_bad_id">노래를 먼저 재생해주세요.</string>
@@ -40,7 +39,6 @@
     <string name="focus_pref_title">오디오 포커스</string>
     <string name="precise_volume_pref_title">세밀한 볼륨 조절</string>
     <string name="notification_actions_repeat">추가적인 알림 활동</string>
-    <string name="eq_pref_note_summary">알아두세요: 시스템 설정에서 \"시스템 이퀄라이저\" 앱을 끄기 전까지는 시스템 이퀄라이저가 앱 이퀄라이저 대신 활성화될거에요. :)</string>
     <string name="active_fragments_pref_title">활성화된 탭</string>
     <string name="song_visual_pref_fn_title">파일 이름</string>
     <string name="song_visual_pref_tl_title">제목</string>

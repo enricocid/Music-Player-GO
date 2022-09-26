@@ -50,7 +50,6 @@
     <string name="headset_pref_title">Beheer headsetstekkers</string>
     <string name="filter_pref_title">Filters</string>
     <string name="filter_popup_title">Verbergen</string>
-    <string name="eq_pref_note_summary">Let op: de systeemequalizer wordt gebruikt, tenzij dit in de systeeminstellingen is uitgeschakelt. :)</string>
     <string name="fast_seeking_pref_title">Doorspoelen</string>
     <string name="notification_actions_repeat">Aanvullende meldingsacties</string>
     <string name="fast_seeking_pref_summary">Vooruitspoel-/Terugspoelstap (in seconden)</string>
@@ -61,7 +60,6 @@
     <string name="on_list_ended_pref_stop_title">Stoppen</string>
     <string name="on_list_ended_pref_title">Wanneer een lijst eindigt…</string>
     <string name="covers_pref_title">Meegeleverde albumhoezen</string>
-    <string name="error_eq">Fout</string>
     <string name="error_list_ended">Het einde is bereikt.</string>
     <string name="error_not_ready">Je muziekverzameling kan niet worden geladen! :( De Android MediaStore databank wordt opnieuw opgebouwd wanneer je de SD-kaart ontkoppeld. Probeer het later opnieuw.</string>
     <string name="equalizer_v">Surround sound</string>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="eq_pref_note_summary">Merk: System-tonekontrollen føretrekkast med mindre den skruast av i system-innstillingane. :)</string>
     <string name="precise_volume_pref_title">Presis kontroll av ljodstyrke</string>
     <string name="notification_actions_repeat">Ytterlegare handlingar for merknadar</string>
     <string name="fast_seeking_pref_summary">Rask spoling tilbake/framåt i steg (sekunder)</string>
@@ -12,7 +11,6 @@
     <string name="repeat_loop_enabled">∞ repetisjon.</string>
     <string name="repeat_enabled">Enkel repetisjon på.</string>
     <string name="perm_rationale">Innvilg Musikkspelaren GO tilgang til filane dine for å spela musikk.</string>
-    <string name="error_eq">Fel</string>
     <string name="error_list_ended">Listeslutt.</string>
     <string name="open_details_fragment">Vis detaljar om artist/mappe</string>
     <string name="sorting_pref_default">Forval</string>

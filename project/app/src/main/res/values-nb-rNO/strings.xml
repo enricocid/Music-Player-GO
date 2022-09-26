@@ -56,12 +56,10 @@
     <string name="on_list_ended_pref_stop_title">Stopp</string>
     <string name="on_list_ended_pref_continue_title">Fortsett</string>
     <string name="song_visual_pref_title">Sporvirtualisering</string>
-    <string name="eq_pref_note_summary">Merk: Systemtonekontroll foretrekkes. Hvis du ønsker å bruke den innebygde, skru av programmet systemtonekontroll fra innstillingene. :)</string>
     <string name="fast_seeking_pref_title">Rask blafring</string>
     <string name="notification_actions_repeat">Ytterligere merknadshandlinger</string>
     <string name="song_visual_pref_fn_title">Filnavn</string>
     <string name="song_visual_pref_tl_title">Tittel</string>
-    <string name="error_eq">Oida, en feil inntraff.</string>
     <string name="equalizer_v">Kringlyd</string>
     <string name="equalizer_bb">Bassforsterking</string>
     <string name="equalizer">Tonekontroll</string>

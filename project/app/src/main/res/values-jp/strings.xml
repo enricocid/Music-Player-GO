@@ -50,14 +50,12 @@
     <string name="headset_pref_title">ヘッドホン端子制御</string>
     <string name="filter_pref_title">フィルター</string>
     <string name="error_list_ended">キューにある曲を再生し終えました。</string>
-    <string name="eq_pref_note_summary">端末の設定からシステムのイコライザーを無効にしないと使用できません</string>
     <string name="notification_actions_repeat">通知領域に表示するボタン</string>
     <string name="fast_seeking_pref_title">早送り・早戻し</string>
     <string name="fast_seeking_pref_summary">早送り・早戻しの間隔（秒）</string>
     <string name="covers_pref_title">アルバムカバーの表示</string>
     <string name="on_list_ended_pref_title">キューの曲を再生し終えた場合 …</string>
     <string name="song_visual_pref_title">曲の表示方法</string>
-    <string name="error_eq">エラーが発生しました</string>
     <string name="song_visual_pref_tl_title">曲名</string>
     <string name="song_visual_pref_fn_title">ファイル名</string>
     <string name="on_list_ended_pref_stop_title">中断する</string>

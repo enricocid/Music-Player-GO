@@ -64,9 +64,7 @@
     <string name="equalizer_bb">Penguat bas</string>
     <string name="equalizer">Ekualiser</string>
     <string name="albums">Album</string>
-    <string name="eq_pref_note_summary">Catatan: Equalizer sistem digunakan kecuali dimatikan dari pengaturan sistem. :)</string>
     <string name="on_list_ended_pref_title">Ketika daftar berakhir…</string>
-    <string name="error_eq">Ups, telah terjadi kesalahan</string>
     <string name="error_list_ended">Daftar telah berakhir.</string>
     <string name="favorites_save_time">Simpan posisi lagu</string>
     <string name="open_details_fragment">Buka detail artis/folder</string>

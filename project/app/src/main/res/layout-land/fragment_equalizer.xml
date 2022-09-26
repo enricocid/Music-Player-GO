@@ -19,7 +19,7 @@
         android:theme="@style/ToolbarStyle.Eq"
         app:collapseIcon="@drawable/ic_navigate_before"
         app:navigationIcon="@drawable/ic_navigate_before"
-        app:title="@string/eq"
+        app:title="@string/equalizer"
         app:titleTextAppearance="@style/ToolbarStyle.Title" />
 
     <LinearLayout
@@ -46,9 +46,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="16dp"
-                    android:padding="4dp"
+                    android:padding="6dp"
                     android:textAlignment="center"
-                    android:textColor="?android:attr/textColorPrimary" />
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textStyle="bold" />
 
                 <com.google.android.material.slider.Slider
                     android:id="@+id/slider0"
@@ -72,9 +73,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="16dp"
-                    android:padding="4dp"
+                    android:padding="6dp"
                     android:textAlignment="center"
-                    android:textColor="?android:attr/textColorPrimary" />
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textStyle="bold" />
 
                 <com.google.android.material.slider.Slider
                     android:id="@+id/slider1"
@@ -98,9 +100,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="16dp"
-                    android:padding="4dp"
+                    android:padding="6dp"
                     android:textAlignment="center"
-                    android:textColor="?android:attr/textColorPrimary" />
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textStyle="bold" />
 
                 <com.google.android.material.slider.Slider
                     android:id="@+id/slider2"
@@ -124,9 +127,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="16dp"
-                    android:padding="4dp"
+                    android:padding="6dp"
                     android:textAlignment="center"
-                    android:textColor="?android:attr/textColorPrimary" />
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textStyle="bold" />
 
                 <com.google.android.material.slider.Slider
                     android:id="@+id/slider3"
@@ -150,9 +154,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="16dp"
-                    android:padding="4dp"
+                    android:padding="6dp"
                     android:textAlignment="center"
-                    android:textColor="?android:attr/textColorPrimary" />
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textStyle="bold" />
 
                 <com.google.android.material.slider.Slider
                     android:id="@+id/slider4"
@@ -173,6 +178,24 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:hint="@string/equalizer_presets"
+                app:endIconDrawable="@drawable/ic_dropdown"
+                app:startIconContentDescription="@string/equalizer_presets"
+                app:startIconDrawable="@drawable/ic_equalizer">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/textField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -73,8 +73,6 @@
     <string name="equalizer_bb">Potenciar baixos</string>
     <string name="equalizer">Ecualizador</string>
     <string name="albums">Álbumes</string>
-    <string name="eq_pref_note_summary">Nota: utilizarase o ecualizador do sistema a non ser que desactives nos axustes do sistema. :)</string>
-    <string name="error_eq">Erro</string>
     <string name="favorites_save_time">Gardar posición da canción</string>
     <string name="open_details_fragment">Abrir detalles do cartafol/artista</string>
     <string name="content_repeat">Activar/desactivar o tipo de repetición</string>

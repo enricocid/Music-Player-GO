@@ -11,7 +11,6 @@
     <string name="repeat_disabled">∞ повторення вимкнено.</string>
     <string name="repeat_loop_enabled">∞ повторення увімкнено.</string>
     <string name="repeat_enabled">Одноразове повторення увімкнено.</string>
-    <string name="error_eq">Помилка</string>
     <string name="error_list_ended">Список закінчився.</string>
     <string name="error_no_queue">У черзі немає пісень.</string>
     <string name="error_unknown_unsupported">Щось пішло не так! :( Можливо, формат не підтримується або тека недоступна (не провина застосунку!).</string>
@@ -55,7 +54,6 @@
     <string name="notification_actions_repeat">Додаткові дії зі сповіщення</string>
     <string name="fast_seeking_pref_summary">Крок вперед/назад (секунд)</string>
     <string name="fast_seeking_pref_title">Швидкий пошук</string>
-    <string name="eq_pref_note_summary">Примітка: Системний еквалайзер використовується, якщо не вимкнено в системних налаштуваннях. :)</string>
     <string name="active_fragments_pref_title">Активні вкладки</string>
     <string name="song_visual_pref_fn_title">Назва файлу</string>
     <string name="song_visual_pref_tl_title">Назва</string>

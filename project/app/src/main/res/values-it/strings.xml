@@ -46,7 +46,8 @@
     <string name="error_no_music">Aggiungi qualche canzone prima.</string>
     <string name="error_not_ready">Impossibile caricare la libreria musicale! :( Lo smontaggio della scheda SD ricostruisce il database di Android MediaStore. Riprova più tardi.</string>
     <string name="error_unknown_unsupported">Qualcosa è andato storto! :( Forse il formato non è supportato, o la cartella è inaccessibile (non dipende dall\'app!).</string>
-    <string name="error_eq">Errore</string>
+    <string name="error_builtin_eq">Si è verificato un errore! Usa l\'equalizzatore di sistema (se disponibile)!</string>
+    <string name="error_sys_eq">Equalizzatore di sistema non presente!</string>
     <string name="on_close_activity">Interrompere la riproduzione?</string>
     <string name="repeat_enabled">Ripeti 1x on.</string>
     <string name="repeat_loop_enabled">Ripetizione ∞ on.</string>
@@ -72,7 +73,6 @@
     <string name="on_list_ended_pref_continue_title">Continua</string>
     <string name="error_list_ended">Lista terminata.</string>
     <string name="active_fragments_pref_title">Tab attive</string>
-    <string name="eq_pref_note_summary">Nota: L\'equalizzatore di sistema è usato a meno che non lo disattivi dalle impostazioni di sistema. :)</string>
     <string name="fast_seeking_pref_title">Avanzamento veloce</string>
     <string name="fast_seeking_pref_summary">Step di avanzamento veloce in secondi</string>
     <string name="notification_actions_pref_title">Azioni aggiuntive notifica</string>

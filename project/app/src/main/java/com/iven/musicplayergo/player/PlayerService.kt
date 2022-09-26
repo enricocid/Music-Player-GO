@@ -195,7 +195,7 @@ class PlayerService : Service() {
     override fun onBind(intent: Intent): IBinder {
 
         if (!::mediaPlayerHolder.isInitialized) {
-            mediaPlayerHolder = MediaPlayerHolder().apply {
+            mediaPlayerHolder = MediaPlayerHolder.getInstance().apply {
                 synchronized(initializeNotificationManager()) {
                     setMusicService(this@PlayerService)
                 }

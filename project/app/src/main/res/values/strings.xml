@@ -73,7 +73,8 @@
     <string name="error_bad_id">Play a song first.</string>
     <string name="error_no_queue">No songs in queue.</string>
     <string name="error_list_ended">List ended.</string>
-    <string name="error_eq">Error</string>
+    <string name="error_builtin_eq">An error occurred! Use the system equalizer (if it exists)!</string>
+    <string name="error_sys_eq">System equalizer not available!</string>
     <!-- Messages - Permission rationale -->
     <string name="perm_rationale">Grant Music Player GO access to your files to play music.</string>
     <!-- Messages - Repeat -->
@@ -140,7 +141,6 @@
     <string name="locale_urdu">Urdu (Pakistan)</string>
     <string name="locale_vietnamese">Vietnamese</string>
     <!-- Preferences - Custom Equalizer note -->
-    <string name="eq_pref_note_summary">Note: The system equalizer is used unless turned off from the system settings. :)</string>
     <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">Precise volume control</string>
     <!-- Preferences - Focus -->

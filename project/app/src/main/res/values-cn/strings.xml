@@ -58,12 +58,10 @@
     <string name="equalizer">均衡器</string>
     <string name="covers_pref_title">专辑封面设置</string>
     <string name="on_list_ended_pref_title">当列表结束时 …</string>
-    <string name="eq_pref_note_summary">注意：除非从系统设置中关闭，否则使用系统均衡器。:)</string>
     <string name="song_visual_pref_fn_title">文件名</string>
     <string name="on_list_ended_pref_continue_title">继续</string>
     <string name="on_list_ended_pref_stop_title">停止</string>
     <string name="error_list_ended">列表已结束。</string>
-    <string name="error_eq">出错</string>
     <string name="fast_seeking_pref_summary">快进/快退间隔（秒）</string>
     <string name="equalizer_bb">低音增强</string>
     <string name="favorites_save_time">保存歌曲播放位置</string>

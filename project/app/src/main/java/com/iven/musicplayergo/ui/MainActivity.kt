@@ -14,7 +14,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import androidx.core.app.ServiceCompat
@@ -28,29 +27,26 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.iven.musicplayergo.GoConstants
-import com.iven.musicplayergo.GoPreferences
-import com.iven.musicplayergo.MusicViewModel
-import com.iven.musicplayergo.R
+import com.iven.musicplayergo.*
 import com.iven.musicplayergo.databinding.MainActivityBinding
 import com.iven.musicplayergo.databinding.PlayerControlsPanelBinding
 import com.iven.musicplayergo.dialogs.Dialogs
 import com.iven.musicplayergo.dialogs.NowPlaying
 import com.iven.musicplayergo.dialogs.RecyclerSheet
 import com.iven.musicplayergo.extensions.*
-import com.iven.musicplayergo.fragments.*
+import com.iven.musicplayergo.fragments.AllMusicFragment
+import com.iven.musicplayergo.fragments.DetailsFragment
+import com.iven.musicplayergo.fragments.ErrorFragment
+import com.iven.musicplayergo.fragments.MusicContainersFragment
 import com.iven.musicplayergo.models.Music
-import com.iven.musicplayergo.player.EqualizerUtils
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.player.MediaPlayerInterface
 import com.iven.musicplayergo.player.PlayerService
-import com.iven.musicplayergo.preferences.ContextUtils
 import com.iven.musicplayergo.preferences.SettingsFragment
 import com.iven.musicplayergo.utils.*
-import java.util.*
 
 
-class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterface {
+class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
     // View binding classes
     private lateinit var mMainActivityBinding: MainActivityBinding
@@ -69,12 +65,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
     private var mAlbumsFragment: MusicContainersFragment? = null
     private var mSettingsFragment: SettingsFragment? = null
     private var mDetailsFragment: DetailsFragment? = null
-    private var mEqualizerFragment: EqFragment? = null
 
     // Booleans
     private val sDetailsFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.DETAILS_FRAGMENT_TAG)
     private val sErrorFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.ERROR_FRAGMENT_TAG)
-    private val sEqFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.EQ_FRAGMENT_TAG)
     private var sAllowCommit = true
 
     private var sCloseDetailsFragment = true
@@ -152,13 +146,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun handleBackPressed() {
         when {
-            sDetailsFragmentExpanded and !sEqFragmentExpanded -> closeDetailsFragment(isAnimation = mGoPreference.isAnimations)
-            !sDetailsFragmentExpanded and sEqFragmentExpanded -> closeEqualizerFragment(isAnimation = mGoPreference.isAnimations)
-            sEqFragmentExpanded and sDetailsFragmentExpanded -> if (sCloseDetailsFragment) {
-                closeDetailsFragment(isAnimation = mGoPreference.isAnimations)
-            } else {
-                closeEqualizerFragment(isAnimation = mGoPreference.isAnimations)
-            }
+            sDetailsFragmentExpanded -> closeDetailsFragment(isAnimation = mGoPreference.isAnimations)
             sErrorFragmentExpanded -> finishAndRemoveTask()
             else -> if (mMainActivityBinding.viewPager2.currentItem != 0) {
                 mMainActivityBinding.viewPager2.currentItem = 0
@@ -254,21 +242,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         notifyError(GoConstants.TAG_NO_PERMISSION)
     }
 
-    override fun attachBaseContext(newBase: Context?) {
-        newBase?.let { ctx ->
-            // Be sure that prefs are initialized
-            GoPreferences.initPrefs(newBase)
-            if (mGoPreference.locale == null) {
-                val localeUpdatedContext = ContextUtils.updateLocale(ctx, Locale.getDefault())
-                super.attachBaseContext(localeUpdatedContext)
-            } else {
-                val locale = Locale.forLanguageTag(mGoPreference.locale!!)
-                val localeUpdatedContext = ContextUtils.updateLocale(ctx, locale)
-                super.attachBaseContext(localeUpdatedContext)
-            }
-        }
-    }
-
     override fun onStart() {
         super.onStart()
         if (Permissions.hasToAskForReadStoragePermission(this)) {
@@ -342,6 +315,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                     alpha(1.0F)
                 }
             }
+
         } else {
             notifyError(GoConstants.TAG_NO_MUSIC)
         }
@@ -390,6 +364,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
 
     private fun initTabLayout() {
 
+        fun closeDetails() {
+            if (sAllowCommit && sDetailsFragmentExpanded) {
+                supportFragmentManager.goBackFromFragmentNow(mDetailsFragment)
+            }
+        }
+
         val accent = Theming.resolveThemeColor(resources)
         val alphaAccentColor = ColorUtils.setAlphaComponent(accent, 200)
 
@@ -407,12 +387,12 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {
-                    closeFragments()
+                    closeDetails()
                     tab.icon?.setTint(alphaAccentColor)
                 }
 
                 override fun onTabReselected(tab: TabLayout.Tab) {
-                    closeFragments()
+                    closeDetails()
                 }
             })
         }
@@ -458,19 +438,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         GoConstants.SONGS_TAB -> mAllMusicFragment ?: initFragmentAt(index)
         GoConstants.FOLDERS_TAB -> mFoldersFragment ?: initFragmentAt(index)
         else -> mSettingsFragment ?: initFragmentAt(index)
-    }
-
-    private fun closeFragments() {
-        if (sAllowCommit) {
-            with(supportFragmentManager) {
-                if (sEqFragmentExpanded) {
-                    goBackFromFragmentNow(mEqualizerFragment)
-                }
-                if (sDetailsFragmentExpanded) {
-                    goBackFromFragmentNow(mDetailsFragment)
-                }
-            }
-        }
     }
 
     private fun openNowPlayingFragment() {
@@ -593,7 +560,7 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
                 openNowPlayingFragment()
             }
             setOnLongClickListener {
-                if (!sDetailsFragmentExpanded || sDetailsFragmentExpanded and !sEqFragmentExpanded) {
+                if (!sDetailsFragmentExpanded) {
                     onOpenPlayingArtistAlbum()
                 }
                 return@setOnLongClickListener true
@@ -940,30 +907,10 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         }
     }
 
-    override fun onGetMediaPlayerHolder() = if (isMediaPlayerHolder) {
-        mMediaPlayerHolder
-    } else {
-        null
-    }
-
     override fun onOpenEqualizer() {
         if (checkIsPlayer(showError = true)) {
-            if (!EqualizerUtils.hasEqualizer(this)) {
-                mMediaPlayerHolder.onOpenEqualizerCustom()
-                if (!sEqFragmentExpanded && mEqualizerFragment == null) {
-                    mEqualizerFragment = EqFragment.newInstance()
-                    sCloseDetailsFragment = !sDetailsFragmentExpanded
-                    if (sAllowCommit) {
-                        supportFragmentManager.addFragment(
-                            mEqualizerFragment,
-                            GoConstants.EQ_FRAGMENT_TAG
-                        )
-                    }
-                    mNpDialog?.dismissAllowingStateLoss()
-                }
-            } else {
-                mMediaPlayerHolder.openEqualizer(this)
-            }
+            mMediaPlayerHolder.openEqualizer(this, fallback = false)
+            mNpDialog?.dismissAllowingStateLoss()
         }
     }
 
@@ -1000,27 +947,6 @@ class MainActivity : AppCompatActivity(), UIControlInterface, MediaControlInterf
         mAlbumsFragment?.tintSleepTimerIcon(enabled = isEnabled)
         mAllMusicFragment?.tintSleepTimerIcon(enabled = isEnabled)
         mFoldersFragment?.tintSleepTimerIcon(enabled = isEnabled)
-    }
-
-    private fun closeEqualizerFragment(isAnimation: Boolean) {
-        if (isAnimation) {
-            if (!sRevealAnimationRunning) {
-                mEqualizerFragment?.onHandleBackPressed()?.run {
-                    sRevealAnimationRunning = true
-                    doOnEnd {
-                        if (sAllowCommit) {
-                            supportFragmentManager.goBackFromFragmentNow(mEqualizerFragment)
-                        }
-                        sRevealAnimationRunning = false
-                        mEqualizerFragment = null
-                    }
-                }
-            }
-        } else {
-            if (sAllowCommit) {
-                supportFragmentManager.goBackFromFragmentNow(mEqualizerFragment)
-            }
-        }
     }
 
     override fun onAddToQueue(song: Music?) {

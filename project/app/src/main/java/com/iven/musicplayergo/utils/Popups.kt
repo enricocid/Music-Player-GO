@@ -11,6 +11,7 @@ import com.iven.musicplayergo.extensions.enablePopupIcons
 import com.iven.musicplayergo.extensions.setTitle
 import com.iven.musicplayergo.extensions.setTitleColor
 import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 
@@ -91,7 +92,7 @@ object Popups {
                         )
                     )
                 }
-                (activity as MediaControlInterface).onGetMediaPlayerHolder()?.setPlaybackSpeed(playbackSpeed)
+                MediaPlayerHolder.getInstance().setPlaybackSpeed(playbackSpeed)
                 return@setOnMenuItemClickListener true
             }
             show()

@@ -2,13 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <item
-        android:id="@+id/presets"
-        android:icon="@drawable/ic_round_tune"
-        android:title="@string/equalizer_presets"
-        app:showAsAction="always" />
-
     <item
         android:id="@+id/equalizerSwitch"
         android:title="@string/equalizer"

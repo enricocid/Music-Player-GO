@@ -13,7 +13,6 @@
     <string name="notification_actions_repeat">Дадатковыя дзеянні з апавяшчэннямі</string>
     <string name="fast_seeking_pref_summary">Хуткая перамотка ўперад/назад (секунды)</string>
     <string name="fast_seeking_pref_title">Хуткі пошук</string>
-    <string name="eq_pref_note_summary">Заўвага. Сістэмны эквалайзер будзе прыярытэтным, пакуль Вы не адключыце прыкладанне \"сістэмны эквалайзер\" у сістэмных наладах. :)</string>
     <string name="active_fragments_pref_title">Актыўныя ўкладкі</string>
     <string name="song_visual_pref_fn_title">Назва файла</string>
     <string name="song_visual_pref_tl_title">Назва</string>
@@ -34,7 +33,6 @@
     <string name="repeat_loop_enabled">Паўтор ∞ уключаны.</string>
     <string name="repeat_enabled">Аднаразовы паўтор уключаны.</string>
     <string name="perm_rationale">Для прайгравання кампазіцый Music PLAYER GO неабходны доступ да вашых файлаў.</string>
-    <string name="error_eq">Ой, адбылася памылка!</string>
     <string name="error_list_ended">Спіс скончыўся.</string>
     <string name="error_no_queue">У чарзе няма трэкаў.</string>
     <string name="error_bad_id">Спачатку выберыце кампазіцыю.</string>

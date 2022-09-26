@@ -49,7 +49,6 @@
     <string name="focus_pref_title">অডিও ফোকাস</string>
     <string name="headset_pref_title">হেডসেট প্লাগ</string>
     <string name="filter_pref_title">ফিল্টার</string>
-    <string name="error_eq">দুঃখিত, একটি ক্রুটি ঘটেছে!</string>
     <string name="notification_actions_repeat">অতিরিক্ত বিজ্ঞপ্তি কার্যক্রম</string>
     <string name="fast_seeking_pref_summary">দ্রুত অগ্রগামি/রিওয়াইন্ড(সেকেন্ড)</string>
     <string name="fast_seeking_pref_title">দ্রুতি</string>
@@ -61,7 +60,6 @@
     <string name="on_list_ended_pref_title">যখন একটি তালিকা শেষ হবে …</string>
     <string name="albums">অ্যালবাম</string>
     <string name="equalizer_bb">ব্যাস জোরদার করুন</string>
-    <string name="eq_pref_note_summary">দ্রষ্টব্য: আপনি সিস্টেম সেটিংস থেকে অ্যাপ্লিকেশন \"সিস্টেম ইকুয়ালাইজার\" টি বন্ধ না করা পর্যন্ত সিস্টেম ইকুয়ালাইজারটিকে অগ্রাধিকার দেওয়া হবে</string>
     <string name="song_visual_pref_title">গানের দৃশ্যায়ন</string>
     <string name="song_visual_pref_fn_title">ফাইলের নাম</string>
     <string name="song_visual_pref_tl_title">শিরোনাম</string>

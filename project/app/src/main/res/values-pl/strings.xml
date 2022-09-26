@@ -78,13 +78,11 @@
     <string name="playback_pref_summary_on">Utrzymuj wybraną prędkość odtwarzania</string>
     <string name="sorting_pref_artist">Artyści A-Z</string>
     <string name="delete">Usuń</string>
-    <string name="error_eq">Ups, nastąpił błąd!</string>
     <string name="on_list_ended_pref_title">Gdy lista się skończy…</string>
     <string name="favorites_save_time">Zapisz pozycję utworu</string>
     <string name="sorting_pref_date_added">Od najnowszej</string>
     <string name="sorting_pref_date_added_inv">Od najstarszej</string>
     <string name="sorting_pref_artist_inv">Artyści Z-A</string>
-    <string name="eq_pref_note_summary">Notka: Systemowa korekta będzie używana dopóki nie wyłączysz aplikacjy \"system equalizer (systemowa korekta)\" w ustawieniach systemowych</string>
     <string name="anim_pref_title">Animacje</string>
     <string name="playback_pref_title">Prędkość odtwarzania</string>
 </resources>

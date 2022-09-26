@@ -3,10 +3,7 @@ package com.iven.musicplayergo.player
 import android.annotation.TargetApi
 import android.app.Activity
 import android.bluetooth.BluetoothDevice
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -23,6 +20,7 @@ import android.support.v4.media.session.PlaybackStateCompat
 import android.support.v4.media.session.PlaybackStateCompat.*
 import android.util.AndroidRuntimeException
 import android.view.KeyEvent
+import android.widget.Toast
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
@@ -43,8 +41,6 @@ import com.iven.musicplayergo.models.SavedEqualizerSettings
 import com.iven.musicplayergo.ui.MainActivity
 import com.iven.musicplayergo.utils.Lists
 import com.iven.musicplayergo.utils.Versioning
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -92,7 +88,6 @@ class MediaPlayerHolder:
     private var mEqualizer: Equalizer? = null
     private var mBassBoost: BassBoost? = null
     private var mVirtualizer: Virtualizer? = null
-    private var sHasOpenedAudioEffects = false
 
     // Audio focus
     private var mAudioManager: AudioManager? = null
@@ -195,12 +190,8 @@ class MediaPlayerHolder:
         if (mMusicNotificationManager == null) {
             mMusicNotificationManager = mPlayerService.musicNotificationManager
         }
-        runBlocking {
-            launch {
-                registerActionsReceiver()
-                mPlayerService.configureMediaSession()
-            }
-        }
+        registerActionsReceiver()
+        mPlayerService.configureMediaSession()
     }
 
     private fun startForeground() {
@@ -250,7 +241,7 @@ class MediaPlayerHolder:
         }
     }
 
-    private fun createCustomEqualizer() {
+    fun initOrGetBuiltInEqualizer(): Triple<Equalizer?, BassBoost?, Virtualizer?> {
         if (mEqualizer == null) {
             try {
                 val sessionId = mediaPlayer.audioSessionId
@@ -262,9 +253,19 @@ class MediaPlayerHolder:
                 e.printStackTrace()
             }
         }
+        return Triple(mEqualizer, mBassBoost, mVirtualizer)
     }
 
-    fun getEqualizer() = Triple(mEqualizer, mBassBoost, mVirtualizer)
+    fun releaseBuiltInEqualizer() {
+        if (mEqualizer != null) {
+            mEqualizer?.release()
+            mBassBoost?.release()
+            mVirtualizer?.release()
+            mEqualizer = null
+            mBassBoost = null
+            mVirtualizer = null
+        }
+    }
 
     fun setEqualizerEnabled(isEnabled: Boolean) {
         mEqualizer?.enabled = isEnabled
@@ -716,18 +717,9 @@ class MediaPlayerHolder:
 
         mPlayerService.releaseWakeLock()
 
-        // instantiate equalizer
-        if (mediaPlayer.audioSessionId != AudioEffect.ERROR_BAD_VALUE) {
-            if (EqualizerUtils.hasEqualizer(mPlayerService.applicationContext)) {
-                if (!sHasOpenedAudioEffects) {
-                    sHasOpenedAudioEffects = true
-                    EqualizerUtils.openAudioEffectSession(
-                        mPlayerService.applicationContext,
-                        mediaPlayer.audioSessionId
-                    )
-                }
-            } else {
-                createCustomEqualizer()
+        GoPreferences.getPrefsInstance().savedEqualizerSettings?.run {
+            if (enabled) {
+                initOrGetBuiltInEqualizer()
             }
         }
     }
@@ -762,40 +754,44 @@ class MediaPlayerHolder:
         }
     }
 
-    fun openEqualizer(activity: Activity) {
-        with(mediaPlayer) {
-            if (mEqualizer != null) {
-                releaseCustomEqualizer()
-                sHasOpenedAudioEffects = true
-                EqualizerUtils.openAudioEffectSession(
-                    mPlayerService.applicationContext,
-                    audioSessionId
-                )
-            }
-            EqualizerUtils.openEqualizer(activity, this)
-        }
-    }
+    fun openEqualizer(activity: Activity, fallback: Boolean) {
 
-    fun onOpenEqualizerCustom() {
-        if (sHasOpenedAudioEffects) {
-            EqualizerUtils.closeAudioEffectSession(
-                mPlayerService.applicationContext,
-                mediaPlayer.audioSessionId
-            )
-            sHasOpenedAudioEffects = false
+        if (fallback) {
+            releaseBuiltInEqualizer()
+        }
+
+        when (mediaPlayer.audioSessionId) {
+            AudioEffect.ERROR_BAD_VALUE -> Toast.makeText(
+                activity,
+                activity.getString(R.string.error_bad_id),
+                Toast.LENGTH_SHORT
+            ).show()
+            else -> {
+                try {
+                    Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL).apply {
+                        putExtra(
+                            AudioEffect.EXTRA_AUDIO_SESSION,
+                            mediaPlayer.audioSessionId
+                        )
+                        putExtra(
+                            AudioEffect.EXTRA_CONTENT_TYPE,
+                            AudioEffect.CONTENT_TYPE_MUSIC
+                        )
+                        activity.startActivityForResult(this, 0)
+                    }
+                } catch (notFound: ActivityNotFoundException) {
+                    if (fallback) {
+                        Toast.makeText(activity, R.string.error_sys_eq, Toast.LENGTH_SHORT).show()
+                    }
+                    notFound.printStackTrace()
+                }
+            }
         }
     }
 
     fun release() {
         if (isMediaPlayer) {
-            if (EqualizerUtils.hasEqualizer(mPlayerService.applicationContext)) {
-                EqualizerUtils.closeAudioEffectSession(
-                    mPlayerService.applicationContext,
-                    mediaPlayer.audioSessionId
-                )
-            } else {
-                releaseCustomEqualizer()
-            }
+            releaseBuiltInEqualizer()
             mediaPlayer.release()
             if (sFocusEnabled) {
                 giveUpAudioFocus()
@@ -807,17 +803,6 @@ class MediaPlayerHolder:
             mMusicNotificationManager = null
         }
         unregisterActionsReceiver()
-    }
-
-    private fun releaseCustomEqualizer() {
-        if (mEqualizer != null) {
-            mEqualizer?.release()
-            mBassBoost?.release()
-            mVirtualizer?.release()
-            mEqualizer = null
-            mBassBoost = null
-            mVirtualizer = null
-        }
     }
 
     fun cancelSleepTimer() {
@@ -1132,6 +1117,25 @@ class MediaPlayerHolder:
                 if (isOrderedBroadcast) {
                     abortBroadcast()
                 }
+            }
+        }
+    }
+
+    companion object {
+        @Volatile private var INSTANCE: MediaPlayerHolder? = null
+
+        /** Get/Instantiate the single instance of [MediaPlayerHolder]. */
+        fun getInstance(): MediaPlayerHolder {
+            val currentInstance = INSTANCE
+
+            if (currentInstance != null) {
+                return currentInstance
+            }
+
+            synchronized(this) {
+                val newInstance = MediaPlayerHolder()
+                INSTANCE = newInstance
+                return newInstance
             }
         }
     }

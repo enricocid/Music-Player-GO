@@ -55,7 +55,6 @@
     <string name="on_list_ended_pref_stop_title">Megállítás</string>
     <string name="on_list_ended_pref_title">Amikor egy lista véget ér…</string>
     <string name="covers_pref_title">Beágyazott albumborítók</string>
-    <string name="error_eq">Hiba</string>
     <string name="error_list_ended">A lista befejeződött.</string>
     <string name="filter_popup_title">Elrejtés</string>
     <string name="sorting_pref_track_inv">Szám szerint. ↑</string>
@@ -84,7 +83,6 @@
     <string name="sorting_pref_date_added">Legújabb dátum először</string>
     <string name="favorites_save_time">Dal pozíciójának mentése</string>
     <string name="delete">Törlés</string>
-    <string name="eq_pref_note_summary">Megjegyzés: A rendszer hangerőszabályzó lesz használva hacsak nincs kikapcsolva :)</string>
     <string name="pause_on_end">Szünet dal végén bekapcsolva.</string>
     <string name="pause_on_end_disabled">Szünet dal végén kikapcsolva.</string>
     <string name="locale_basque">Baszk</string>

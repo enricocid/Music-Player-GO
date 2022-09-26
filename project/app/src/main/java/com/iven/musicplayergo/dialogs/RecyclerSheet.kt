@@ -20,6 +20,7 @@ import com.iven.musicplayergo.databinding.ModalRvBinding
 import com.iven.musicplayergo.extensions.applyFullHeightDialog
 import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.preferences.AccentsAdapter
 import com.iven.musicplayergo.preferences.ActiveTabsAdapter
 import com.iven.musicplayergo.preferences.FiltersAdapter
@@ -47,6 +48,8 @@ class RecyclerSheet: BottomSheetDialogFragment() {
     var onFavoritesDialogCancelled: (() -> Unit)? = null
     var onSleepTimerDialogCancelled: (() -> Unit)? = null
     var onSleepTimerEnabled: ((Boolean, String) -> Unit)? = null
+
+    private val mMediaPlayerHolder get() = MediaPlayerHolder.getInstance()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -188,7 +191,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     bottomDivider.handleViewVisibility(show = true)
                     btnDelete.handleViewVisibility(show = true)
                     btnDelete.setOnClickListener {
-                        mMediaControlInterface.onGetMediaPlayerHolder()?.let { mph ->
+                        mMediaPlayerHolder.let { mph ->
                             Dialogs.showClearQueueDialog(requireContext(), mph)
                         }
                     }
@@ -197,7 +200,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
 
                     FastScrollerBuilder(modalRv).useMd2Style().build()
 
-                    mMediaControlInterface.onGetMediaPlayerHolder()?.run {
+                    mMediaPlayerHolder.run {
 
                         mQueueAdapter = QueueAdapter(requireActivity(), this)
                         modalRv.adapter = mQueueAdapter
@@ -241,7 +244,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                         dismiss()
                     }
                     btnPositive.setOnClickListener {
-                        mMediaControlInterface.onGetMediaPlayerHolder()?.run {
+                        mMediaPlayerHolder.run {
                             val isEnabled = pauseBySleepTimer(sleepTimerAdapter.getSelectedSleepTimerValue())
                             onSleepTimerEnabled?.invoke(isEnabled, sleepTimerAdapter.getSelectedSleepTimer())
                         }
@@ -263,7 +266,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                         text = getString(R.string.sleeptimer_stop)
                         contentDescription = getString(R.string.sleeptimer_cancel_desc)
                         setOnClickListener {
-                            mMediaControlInterface.onGetMediaPlayerHolder()?.cancelSleepTimer()
+                            mMediaPlayerHolder.cancelSleepTimer()
                             onSleepTimerEnabled?.invoke(false, "")
                             dismiss()
                         }
@@ -277,7 +280,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     sleepTimerElapsed.handleViewVisibility(show = false)
 
                     modalRv.setHasFixedSize(true)
-                    val notificationActionsAdapter = NotificationActionsAdapter(requireContext(), mMediaControlInterface.onGetMediaPlayerHolder())
+                    val notificationActionsAdapter = NotificationActionsAdapter(requireContext(), mMediaPlayerHolder)
                     val layoutManager =  LinearLayoutManager(requireActivity())
                     modalRv.layoutManager = layoutManager
                     modalRv.adapter = notificationActionsAdapter
@@ -287,7 +290,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                         dismiss()
                     }
                     btnPositive.setOnClickListener {
-                        mMediaControlInterface.onGetMediaPlayerHolder()?.onHandleNotificationUpdate(
+                        mMediaPlayerHolder.onHandleNotificationUpdate(
                             isAdditionalActionsChanged = true
                         )
                         dismiss()

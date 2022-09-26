@@ -13,7 +13,6 @@
     <string name="notification_actions_repeat">Akcije dodatnih obvestil</string>
     <string name="fast_seeking_pref_summary">Prevrti naprej/nazaj (sekunde)</string>
     <string name="fast_seeking_pref_title">Hitro iskanje</string>
-    <string name="eq_pref_note_summary">Opomba: Prednost ima sistemski izenačevalec, razen če ga izkopite v sistemskih nastavitvah. :)</string>
     <string name="active_fragments_pref_title">Aktivni zavihki</string>
     <string name="song_visual_pref_fn_title">Ime datoteke</string>
     <string name="song_visual_pref_tl_title">Naslov</string>
@@ -33,7 +32,6 @@
     <string name="repeat_loop_enabled">Vključeno je ∞ ponavljanje.</string>
     <string name="repeat_enabled">Vključeno je predvajanje ene pesmi.</string>
     <string name="perm_rationale">Music Player GO potrebuje dostop do vaših datotek, da lahko predvaja glasbo.</string>
-    <string name="error_eq">Ups, prišlo je do napake!</string>
     <string name="error_list_ended">Vrsta se je končala.</string>
     <string name="error_no_queue">V čakalni vrsti ni pesmi.</string>
     <string name="error_bad_id">Najprej predvajaj pesem.</string>

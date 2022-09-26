@@ -18,6 +18,5 @@ interface MediaControlInterface {
     fun onUpdatePlayingAlbumSongs(songs: List<Music>?)
     fun onPlaybackSpeedToggled()
     fun onHandleCoverOptionsUpdate()
-    fun onGetMediaPlayerHolder(): MediaPlayerHolder?
     fun onUpdatePositionFromNP(position: Int)
 }

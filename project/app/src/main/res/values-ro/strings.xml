@@ -58,7 +58,6 @@
     <string name="notification_actions_repeat">Acțiuni suplimentare de notificare</string>
     <string name="fast_seeking_pref_summary">Pasul înainte/înapoi rapid (secunde)</string>
     <string name="fast_seeking_pref_title">Căutare rapidă</string>
-    <string name="eq_pref_note_summary">Notă: Egalizatorul de sistem va fi preferat dacă nu dezactivați aplicația \"system equalizer\" din setările sistemului. :)</string>
     <string name="song_visual_pref_fn_title">Numele fișierului</string>
     <string name="song_visual_pref_tl_title">Titlu</string>
     <string name="song_visual_pref_title">Vizualizarea cântecului</string>
@@ -66,7 +65,6 @@
     <string name="on_list_ended_pref_stop_title">Stop</string>
     <string name="on_list_ended_pref_title">Când o listă se încheie …</string>
     <string name="covers_pref_title">Coperte de album încorporate</string>
-    <string name="error_eq">Ooops, a apărut o eroare!</string>
     <string name="error_list_ended">Lista s-a încheiat.</string>
     <string name="open_details_fragment">Deschideți detaliile artistului/folderului</string>
     <string name="content_repeat">Activați/dezactivați opțiunile de repetare</string>

@@ -50,11 +50,6 @@
         app:layout="@layout/custom_preference_category"
         app:title="@string/category_audio">
 
-        <Preference
-            android:enabled="false"
-            android:summary="@string/eq_pref_note_summary"
-            app:title="@string/equalizer" />
-
         <SwitchPreferenceCompat
             app:defaultValue="false"
             app:key="@string/precise_volume_pref"

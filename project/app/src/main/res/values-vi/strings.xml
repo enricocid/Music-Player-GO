@@ -8,7 +8,6 @@
     <string name="notification_actions_repeat">Hành động thông báo bổ sung</string>
     <string name="fast_seeking_pref_summary">Bước nhảy nhanh về phía trước/sau (giây)</string>
     <string name="fast_seeking_pref_title">Tua nhanh</string>
-    <string name="eq_pref_note_summary">Lưu ý: Bộ cân bằng của hệ thống sẽ được ưu tiên trừ khi bạn tắt ứng dụng \"bộ cân bằng hệ thống\" từ cài đặt hệ thống. :)</string>
     <string name="active_fragments_pref_title">Tab hoạt động</string>
     <string name="song_visual_pref_fn_title">Tên tệp</string>
     <string name="song_visual_pref_tl_title">Tiêu đề</string>
@@ -28,7 +27,6 @@
     <string name="repeat_loop_enabled">Đã bật lặp lại ∞.</string>
     <string name="repeat_enabled">Đã bật lặp lại một lần.</string>
     <string name="perm_rationale">Music Player GO cần quyền truy cập tệp để phát nhạc.</string>
-    <string name="error_eq">Ối, đã xảy ra lỗi!</string>
     <string name="error_list_ended">Đã kết thúc danh sách.</string>
     <string name="error_no_queue">Không có bài hát nào trong hàng đợi.</string>
     <string name="error_bad_id">Hãy phát một bài hát trước.</string>

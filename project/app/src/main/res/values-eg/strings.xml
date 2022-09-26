@@ -69,8 +69,6 @@
     <string name="content_repeat">غلق/فتح التكرار المحدد</string>
     <string name="equalizer_presets">الإعدادات المسبقة</string>
     <string name="sorting_pref_artist">بالمؤلف تصاعدي</string>
-    <string name="error_eq">خطأ</string>
-    <string name="eq_pref_note_summary">ملاحظة: يستخدم معادل صوت النظام ما لم يتم غلقه من إعدادات الهاتف. :)</string>
     <string name="pause_on_end_disabled">التوقف عند الانتهاء مغلق.</string>
     <string name="pause_on_end">التوقف عند الانتهاء مفعل.</string>
     <string name="sorting_pref_date_added">آخر المُضاف</string>

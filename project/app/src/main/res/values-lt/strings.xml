@@ -31,7 +31,6 @@
     <string name="precise_volume_pref_title">Tikslus garsumo valdymas</string>
     <string name="notification_actions_repeat">Papildomi pranešimo veiksmai</string>
     <string name="fast_seeking_pref_summary">Greito persukimo pirmyn/atgal žingsnis (sekundėmis)</string>
-    <string name="eq_pref_note_summary">Pastaba: pirmenybė bus teikiama sistemos ekvalaizeriui, nebent sistemos nustatymuose išjungsite programėlę „sistemos ekvalaizerį“ :)</string>
     <string name="active_fragments_pref_title">Aktyvūs skirtukai</string>
     <string name="song_visual_pref_fn_title">Failo pavadinimas</string>
     <string name="song_visual_pref_tl_title">Pavadinimas</string>
@@ -45,7 +44,6 @@
     <string name="theme_pref_title">Tema</string>
     <string name="category_general">Bendrieji</string>
     <string name="settings">Nustatymai</string>
-    <string name="error_eq">Oi, įvyko klaida!</string>
     <string name="error_list_ended">Sąrašas baigėsi.</string>
     <string name="error_no_queue">Jokių dainų eilėje.</string>
     <string name="error_no_browser">Nerasta jokia žiniatinklio naršyklė.</string>

@@ -51,8 +51,6 @@
     <string name="sorting_pref_track">Pelo número da faixa ↓</string>
     <string name="sorting_pref_track_inv">Pelo número da faixa ↑</string>
     <string name="error_not_ready">Não foi possível carregar a biblioteca de música! :( Desmontar o cartão SD reconstrói o banco de dados Android MediaStore. Tente novamente mais tarde.</string>
-    <string name="eq_pref_note_summary">Nota: O equalizador do sistema é usado, a menos que seja desligado nas configurações do sistema. :)</string>
-    <string name="error_eq">Erro</string>
     <string name="error_list_ended">A lista terminou.</string>
     <string name="equalizer_v">Som surround</string>
     <string name="equalizer_bb">Aumento dos graves</string>

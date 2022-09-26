@@ -29,6 +29,7 @@ import com.iven.musicplayergo.databinding.FragmentDetailsBinding
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.ItemSwipeCallback
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
@@ -77,6 +78,8 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
     private var sCanUpdateSongs = true
     private var sAlbumSwapped = false
     private var sOpenNewDetailsFragment = false
+
+    private val mMediaPlayerHolder get() = MediaPlayerHolder.getInstance()
 
     @SuppressLint("NotifyDataSetChanged")
     fun swapSelectedSong(songId: Long?) {
@@ -354,7 +357,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         mLaunchedBy
                     )
                     mUIControlInterface.onFavoriteAddedOrRemoved()
-                    mMediaControlInterface.onGetMediaPlayerHolder()?.onUpdateFavorites()
+                    mMediaPlayerHolder.onUpdateFavorites()
                 }
                 adapter?.notifyDataSetChanged()
             }).attachToRecyclerView(this)
@@ -517,9 +520,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             }
         }
 
-        mMediaControlInterface.onGetMediaPlayerHolder()?.let { mp ->
-            tintSleepTimerIcon(enabled = mp.isSleepTimer)
-        }
+        tintSleepTimerIcon(enabled = mMediaPlayerHolder.isSleepTimer)
     }
 
     fun tintSleepTimerIcon(enabled: Boolean) {
@@ -673,7 +674,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                             swapAlbum(itemAlbum?.music)
                         } else {
                             if (sPlayFirstSong) {
-                                mMediaControlInterface.onGetMediaPlayerHolder()?.run {
+                                mMediaPlayerHolder.run {
                                     if (isCurrentSongFM) {
                                         currentSongFM = null
                                     }
@@ -759,7 +760,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                     setOnClickListener {
 
-                        mMediaControlInterface.onGetMediaPlayerHolder()?.run {
+                        mMediaPlayerHolder.run {
                             if (isCurrentSongFM) {
                                 currentSongFM = null
                             }

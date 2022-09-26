@@ -48,7 +48,6 @@
     <string name="favorites">مورد علاقه‌ها</string>
     <string name="content_skip_prev">پرش به قبلی</string>
     <string name="content_skip_next">پرش به بعدی</string>
-    <string name="error_eq">خطا</string>
     <string name="active_fragments_pref_title">زبانه‌های فعّال</string>
     <string name="playback_pref_summary_off">فقط یک آهنگ</string>
     <string name="playback_pref_summary_on">نگه‌دار</string>

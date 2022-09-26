@@ -9,7 +9,7 @@ body:
     id: warning
     attributes:
       value: |
-        "##**Is the issue related to storage?** If yes, do not open a new issue! Add a comment to issue [#415](https://github.com/enricocid/Music-Player-GO/issues/415) instead!"
+        "**Is the issue related to storage?** If yes, please do not open a new issue! Add a comment to [#415](https://github.com/enricocid/Music-Player-GO/issues/415) instead!"
   - type: textarea
     id: what
     attributes:

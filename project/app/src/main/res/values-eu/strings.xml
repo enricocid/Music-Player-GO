@@ -13,7 +13,6 @@
     <string name="notification_actions_repeat">Jakinarazpen-ekintza gehigarriak</string>
     <string name="fast_seeking_pref_summary">Azkar aurreratu/birbobinatzeko urrats (segundoak)</string>
     <string name="fast_seeking_pref_title">Bilaketa azkarra</string>
-    <string name="eq_pref_note_summary">Oharra: sistemaren ekualizatzailea lehenetsiko da, sistemaren konfiguraziotik \"sistemaren ekualizatzailea\" aplikazioa desaktibatu ezean. :)</string>
     <string name="active_fragments_pref_title">Pestañas activas</string>
     <string name="song_visual_pref_fn_title">Fitxategiaren izena</string>
     <string name="song_visual_pref_tl_title">Titulua</string>
@@ -33,7 +32,6 @@
     <string name="repeat_loop_enabled">Infinituki errepikatu.</string>
     <string name="repeat_enabled">Errepikapen bakarra aktibatuta.</string>
     <string name="perm_rationale">Music Player GO bere artxiboetara sartu behar da musika erreproduzitzeko.</string>
-    <string name="error_eq">Ooops, akats bat gertatu da!</string>
     <string name="error_list_ended">Zerrenda amaitu da.</string>
     <string name="error_no_queue">Ez dago abestirik isatsean.</string>
     <string name="error_bad_id">Abesti bat jo hasi baino lehen.</string>

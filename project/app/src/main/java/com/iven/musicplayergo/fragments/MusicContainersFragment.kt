@@ -21,6 +21,7 @@ import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.extensions.loadWithError
 import com.iven.musicplayergo.extensions.setTitleColor
 import com.iven.musicplayergo.extensions.waitForCover
+import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.utils.Lists
@@ -144,9 +145,7 @@ class MusicContainersFragment : Fragment(),
             }
         }
 
-        mMediaControlInterface.onGetMediaPlayerHolder()?.let { mp ->
-            tintSleepTimerIcon(enabled = mp.isSleepTimer)
-        }
+        tintSleepTimerIcon(enabled = MediaPlayerHolder.getInstance().isSleepTimer)
     }
 
     fun tintSleepTimerIcon(enabled: Boolean) {

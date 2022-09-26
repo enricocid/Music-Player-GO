@@ -58,13 +58,11 @@
     <string name="equalizer_v">Sonido envolvente</string>
     <string name="notification_actions_repeat">Funciones adicionales de notificaciones</string>
     <string name="fast_seeking_pref_title">Búsqueda rápida</string>
-    <string name="eq_pref_note_summary">Nota: El ecualizador del sistema se utiliza a menos que se desactive desde los ajustes del sistema. :)</string>
     <string name="song_visual_pref_fn_title">Nombre del archivo</string>
     <string name="song_visual_pref_tl_title">Título</string>
     <string name="on_list_ended_pref_continue_title">Continuar</string>
     <string name="on_list_ended_pref_stop_title">Parar</string>
     <string name="on_list_ended_pref_title">Cuando termina una lista…</string>
-    <string name="error_eq">Error</string>
     <string name="error_list_ended">Lista terminada.</string>
     <string name="equalizer">Ecualizador</string>
     <string name="albums">Albumes</string>

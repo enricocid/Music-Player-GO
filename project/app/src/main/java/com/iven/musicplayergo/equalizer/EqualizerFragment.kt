@@ -1,7 +1,8 @@
-package com.iven.musicplayergo.fragments
+package com.iven.musicplayergo.equalizer
 
 import android.animation.Animator
-import android.content.Context
+import android.content.ComponentName
+import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.media.audiofx.BassBoost
 import android.media.audiofx.Equalizer
@@ -13,7 +14,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
@@ -24,17 +24,11 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentEqualizerBinding
 import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.createCircularReveal
-import com.iven.musicplayergo.ui.MediaControlInterface
-import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.utils.Theming
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [EqFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class EqFragment : Fragment() {
+class EqualizerFragment : Fragment() {
 
     private var _eqFragmentBinding: FragmentEqualizerBinding? = null
     private val mSliders = mutableMapOf<Slider?, TextView?>()
@@ -44,30 +38,7 @@ class EqFragment : Fragment() {
     private val mPresetsList = mutableListOf<String>()
     private var mSelectedPreset = 0
 
-    private lateinit var mUIControlInterface: UIControlInterface
-    private lateinit var mMediaControlInterface: MediaControlInterface
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
-        try {
-            mUIControlInterface = activity as UIControlInterface
-            mMediaControlInterface = activity as MediaControlInterface
-        } catch (e: ClassCastException) {
-            e.printStackTrace()
-        }
-    }
-
-    fun onHandleBackPressed(): Animator {
-        if (!mEqAnimator.isRunning) {
-            _eqFragmentBinding?.root?.run {
-                mEqAnimator = createCircularReveal(show = false)
-            }
-        }
-        return mEqAnimator
-    }
+    private val mMediaPlayerHolder get() = MediaPlayerHolder.getInstance()
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -83,7 +54,7 @@ class EqFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mEqualizer = mMediaControlInterface.onGetMediaPlayerHolder()?.getEqualizer()
+        mEqualizer = mMediaPlayerHolder.initOrGetBuiltInEqualizer()
 
         _eqFragmentBinding?.run {
             sliderBass.addOnChangeListener { _, value, fromUser ->
@@ -106,12 +77,16 @@ class EqFragment : Fragment() {
             }
         }
 
-        finishSetupEqualizer(view)
+        if (mPresetsList.isNotEmpty()) {
+            finishSetupEqualizer(view)
+        } else {
+            closeEqualizerOnError()
+        }
     }
 
     private fun saveEqSettings() {
         _eqFragmentBinding?.run {
-            mMediaControlInterface.onGetMediaPlayerHolder()?.onSaveEqualizerSettings(
+            mMediaPlayerHolder.onSaveEqualizerSettings(
                 mSelectedPreset,
                 sliderBass.value.toInt().toShort(),
                 sliderVirt.value.toInt().toShort()
@@ -139,7 +114,7 @@ class EqFragment : Fragment() {
             .build()
         val roundedTextBackground = MaterialShapeDrawable(shapeAppearanceModel).apply {
             strokeColor = ColorStateList.valueOf(Theming.resolveThemeColor(resources))
-            strokeWidth = 0.50F
+            strokeWidth = 2.5F
             fillColor =
                 ColorStateList.valueOf(
                     Theming.resolveColorAttr(requireContext(), R.attr.main_bg)
@@ -182,6 +157,19 @@ class EqFragment : Fragment() {
 
         setupToolbar()
 
+        // setup text field
+        _eqFragmentBinding?.textField?.run {
+            setSimpleItems(mPresetsList.toTypedArray())
+            isSaveEnabled = false
+            setText(mPresetsList[mSelectedPreset], false)
+            setOnItemClickListener { _, _, newPreset, _ ->
+                // Respond to item chosen
+                mSelectedPreset = newPreset
+                mEqualizer?.first?.usePreset(mSelectedPreset.toShort())
+                updateBandLevels(isPresetChanged = true)
+            }
+        }
+
         if (GoPreferences.getPrefsInstance().isAnimations) {
             view.afterMeasured {
                 _eqFragmentBinding?.root?.run {
@@ -208,33 +196,9 @@ class EqFragment : Fragment() {
             }
 
             equalizerSwitchMaterial.setOnCheckedChangeListener { _, isChecked ->
-                mMediaControlInterface.onGetMediaPlayerHolder()?.setEqualizerEnabled(isEnabled = isChecked)
+                mMediaPlayerHolder.setEqualizerEnabled(isEnabled = isChecked)
             }
-
-            setOnMenuItemClickListener {
-                if (it.itemId == R.id.presets) {
-                    startPresetChooser()
-                }
-                return@setOnMenuItemClickListener true
-            }
-            subtitle = mPresetsList[mSelectedPreset]
         }
-    }
-
-    private fun startPresetChooser() {
-        val items = mPresetsList.toTypedArray()
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.equalizer_presets)
-            .setItems(items) { _, which ->
-                // Respond to item chosen
-                mSelectedPreset = which
-                mEqualizer?.first?.usePreset(mSelectedPreset.toShort())
-                updateBandLevels(isPresetChanged = true)
-
-                _eqFragmentBinding?.eqToolbar?.subtitle = mPresetsList[mSelectedPreset]
-            }
-            .setNegativeButton(R.string.cancel, null)
-            .show()
     }
 
     private fun updateBandLevels(isPresetChanged: Boolean) {
@@ -260,11 +224,9 @@ class EqFragment : Fragment() {
                     }
                 }
             }
-
         } catch (e: UnsupportedOperationException) {
             e.printStackTrace()
-            Toast.makeText(requireContext(), getString(R.string.error_eq), Toast.LENGTH_SHORT)
-                .show()
+            closeEqualizerOnError()
         }
     }
 
@@ -274,15 +236,19 @@ class EqFragment : Fragment() {
         getString(R.string.freq_k, milliHz / 1000000)
     }
 
-    companion object {
+    private fun closeEqualizerOnError() {
 
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @return A new instance of fragment EqFragment.
-         */
-        @JvmStatic
-        fun newInstance() = EqFragment()
+        // disable equalizer component
+        val pm = requireActivity().packageManager
+        val cn = ComponentName(requireContext().applicationContext, EqualizerActivity::class.java)
+        pm.setComponentEnabledSetting(cn, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP)
+
+        //release built in equalizer
+        mMediaPlayerHolder.releaseBuiltInEqualizer()
+        mMediaPlayerHolder.openEqualizer(requireActivity(), fallback = true)
+        Toast.makeText(requireContext(), R.string.error_builtin_eq, Toast.LENGTH_SHORT).show()
+
+        // bye, bye
+        requireActivity().onBackPressedDispatcher.onBackPressed()
     }
 }

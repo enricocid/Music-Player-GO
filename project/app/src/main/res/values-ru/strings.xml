@@ -55,7 +55,6 @@
     <string name="notification_actions_repeat">Повторить/закрыть</string>
     <string name="fast_seeking_pref_summary">Быстрая перемотка вперёд/назад (секунды)</string>
     <string name="fast_seeking_pref_title">Быстрый поиск</string>
-    <string name="eq_pref_note_summary">Примечание: Используется системный эквалайзер, если он не был отключён в системных настройках. :)</string>
     <string name="song_visual_pref_fn_title">Имя файла</string>
     <string name="song_visual_pref_tl_title">Название</string>
     <string name="song_visual_pref_title">Визуализация музыки</string>
@@ -63,7 +62,6 @@
     <string name="on_list_ended_pref_stop_title">Остановить</string>
     <string name="on_list_ended_pref_title">Когда список заканчивается…</string>
     <string name="covers_pref_title">Встроенные обложки альбомов</string>
-    <string name="error_eq">Ошибка</string>
     <string name="error_list_ended">Список закончился.</string>
     <string name="equalizer_v">Объемный звук</string>
     <string name="equalizer_bb">Усиление басов</string>

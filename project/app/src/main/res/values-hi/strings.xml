@@ -66,8 +66,6 @@
     <string name="focus_pref_title">ऑडियो फोकस</string>
     <string name="headset_pref_title">हेडसेट प्लग</string>
     <string name="filter_pref_title">फिल्टर</string>
-    <string name="error_eq">कोई त्रुटि हुई है!</string>
-    <string name="eq_pref_note_summary">ध्यान दें : system equalizer इस्तेमाल होगा जब तक एप्प \"system equalizer\" सेटिंग से बंद नही कीया जाता. :)</string>
     <string name="favorites_save_time">गीत की जगह याद रखें</string>
     <string name="playback_pref_summary_on">चयनित प्लेबैक गति जारी रखें</string>
     <string name="playback_pref_summary_off">चयनित प्लेबैक गति को जारी न रखें</string>

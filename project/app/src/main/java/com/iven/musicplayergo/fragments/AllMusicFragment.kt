@@ -22,6 +22,7 @@ import com.iven.musicplayergo.extensions.toFormattedDate
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.extensions.toName
 import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.MediaControlInterface
 import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.utils.Lists
@@ -149,9 +150,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
             }
         }
 
-        mMediaControlInterface.onGetMediaPlayerHolder()?.run {
-            tintSleepTimerIcon(enabled = isSleepTimer)
-        }
+        tintSleepTimerIcon(enabled = MediaPlayerHolder.getInstance().isSleepTimer)
     }
 
     fun tintSleepTimerIcon(enabled: Boolean) {
@@ -272,7 +271,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                         getString(R.string.artist_and_album, itemSong?.artist, itemSong?.album)
 
                     setOnClickListener {
-                        mMediaControlInterface.onGetMediaPlayerHolder()?.run {
+                        MediaPlayerHolder.getInstance().run {
                             if (isCurrentSongFM) {
                                 currentSongFM = null
                             }

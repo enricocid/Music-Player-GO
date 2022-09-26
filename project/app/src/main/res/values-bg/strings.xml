@@ -31,7 +31,6 @@
     <string name="filter_popup_title">Скрий</string>
     <string name="queue">Опашка</string>
     <string name="theme_pref_title">Тема</string>
-    <string name="error_eq">Грешка</string>
     <string name="repeat_enabled">Повтаряне на една песен е включено.</string>
     <string name="repeat_loop_enabled">∞ повтаряне е включено.</string>
     <string name="pause_on_end">Спри когато свърши е включено.</string>
@@ -59,7 +58,6 @@
     <string name="locale_thai">Тайландски</string>
     <string name="locale_vietnamese">Виетнамски</string>
     <string name="locale_urdu">Урду (Пакистан)</string>
-    <string name="eq_pref_note_summary">Забележка: Изравнителя на системата е използван освен ако не е изклочен от настройките на системата. :)</string>
     <string name="precise_volume_pref_title">Точен контрол над сила на звука</string>
     <string name="focus_pref_title">Управление на аудио фокуса</string>
     <string name="playback_pref_title">Избрана скорост на възпроизвеждане</string>

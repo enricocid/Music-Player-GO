@@ -13,7 +13,6 @@
     <string name="notification_actions_repeat">Ytterligare aviseringsåtgärder</string>
     <string name="fast_seeking_pref_summary">Snabbspolning framåt/bakåt (sekunder)</string>
     <string name="fast_seeking_pref_title">Snabbsökning</string>
-    <string name="eq_pref_note_summary">Obs: Systemfrekvenskorrigeraren föredras om du inte stänger av den från systeminställningarna. :)</string>
     <string name="active_fragments_pref_title">Aktiva flikar</string>
     <string name="song_visual_pref_fn_title">Filnamn</string>
     <string name="song_visual_pref_tl_title">Titel</string>
@@ -33,7 +32,6 @@
     <string name="repeat_enabled">Enstaka repetition på.</string>
     <string name="repeat_loop_enabled">∞ upprepa på.</string>
     <string name="perm_rationale">Tillåt Music Player GO åtkomst till dina filer för att spela musik.</string>
-    <string name="error_eq">Fel</string>
     <string name="error_list_ended">Listan slut.</string>
     <string name="error_no_queue">Inga låtar i kön.</string>
     <string name="error_bad_id">Spela en låt först.</string>
