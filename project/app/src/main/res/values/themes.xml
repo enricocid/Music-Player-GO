@@ -8,11 +8,8 @@
         <item name="android:navigationBarColor">@color/systemBarBg</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">?attr/main_bg</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">@bool/is_light_system_bars
-        </item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">
-            @bool/is_light_system_bars
-        </item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">@bool/is_light_system_bars</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">@bool/is_light_system_bars</item>
         <item name="main_bg">@color/mainBg</item>
         <item name="toolbar_bg">@color/toolbarBg</item>
         <item name="popupMenuStyle">@style/PopupMenu</item>
