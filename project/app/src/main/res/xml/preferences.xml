@@ -57,7 +57,7 @@
             app:title="@string/eq_pref_title" />
 
         <SwitchPreferenceCompat
-            app:defaultValue="false"
+            app:defaultValue="true"
             app:key="@string/precise_volume_pref"
             app:title="@string/precise_volume_pref_title" />
 
