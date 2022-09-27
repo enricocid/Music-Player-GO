@@ -1,7 +1,6 @@
 package com.iven.musicplayergo.ui
 
 import com.iven.musicplayergo.models.Music
-import com.iven.musicplayergo.player.MediaPlayerHolder
 
 interface MediaControlInterface {
     fun onSongSelected(song: Music?, songs: List<Music>?, songLaunchedBy: String)
