@@ -76,7 +76,7 @@ class EqualizerFragment : Fragment() {
             }
         }
 
-        if (mPresetsList.isEmpty()) {
+        if (mPresetsList.isNotEmpty()) {
             finishSetupEqualizer(view)
         } else {
             closeEqualizerOnError()
