@@ -42,6 +42,7 @@ class GoPreferences(context: Context) {
 
     private val prefsFastSeek = context.getString(R.string.fast_seeking_pref)
     private val prefsNotificationActions = context.getString(R.string.notif_actions_pref)
+    private val prefsEq = context.getString(R.string.eq_pref)
     private val prefsPreciseVolume = context.getString(R.string.precise_volume_pref)
     private val prefsFocus = context.getString(R.string.focus_pref)
     private val prefsHeadsetPlug = context.getString(R.string.headset_pref)
@@ -175,6 +176,10 @@ class GoPreferences(context: Context) {
     var fastSeekingStep
         get() = mPrefs.getInt(prefsFastSeek, 5)
         set(value) = mPrefs.edit { putInt(prefsFastSeek, value) }
+
+    var isEqForced
+        get() = mPrefs.getBoolean(prefsEq, false)
+        set(value) = mPrefs.edit { putBoolean(prefsEq, value) }
 
     var isPreciseVolumeEnabled
         get() = mPrefs.getBoolean(prefsPreciseVolume, true)

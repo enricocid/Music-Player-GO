@@ -140,7 +140,9 @@
     <string name="locale_ukrainian">Ukrainian</string>
     <string name="locale_urdu">Urdu (Pakistan)</string>
     <string name="locale_vietnamese">Vietnamese</string>
-    <!-- Preferences - Custom Equalizer note -->
+    <!-- Preferences - Built-in Equalizer -->
+    <string name="eq_pref_title">Built-in equalizer</string>
+    <string name="eq_pref_sum">Force built-in equalizer use</string>
     <!-- Preferences - Fine volume control -->
     <string name="precise_volume_pref_title">Precise volume control</string>
     <!-- Preferences - Focus -->

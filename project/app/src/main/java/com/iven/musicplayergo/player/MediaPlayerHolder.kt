@@ -21,6 +21,7 @@ import android.support.v4.media.session.PlaybackStateCompat.*
 import android.util.AndroidRuntimeException
 import android.view.KeyEvent
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
@@ -754,7 +755,7 @@ class MediaPlayerHolder:
         }
     }
 
-    fun openEqualizer(activity: Activity, fallback: Boolean) {
+    fun openEqualizer(activity: Activity, resultLauncher: ActivityResultLauncher<Intent>, fallback: Boolean) {
 
         if (fallback) {
             releaseBuiltInEqualizer()
@@ -777,7 +778,7 @@ class MediaPlayerHolder:
                             AudioEffect.EXTRA_CONTENT_TYPE,
                             AudioEffect.CONTENT_TYPE_MUSIC
                         )
-                        activity.startActivityForResult(this, 0)
+                        resultLauncher.launch(this)
                     }
                 } catch (notFound: ActivityNotFoundException) {
                     if (fallback) {

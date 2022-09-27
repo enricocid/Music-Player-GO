@@ -139,6 +139,13 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         }
     }
 
+    fun disableEqualizerOption() {
+        findPreference<Preference>(getString(R.string.eq_pref))?.run {
+            isEnabled = false
+            summary = getString(R.string.error_builtin_eq)
+        }
+    }
+
     companion object {
         /**
          * Use this factory method to create a new instance of

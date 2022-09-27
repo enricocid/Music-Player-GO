@@ -90,6 +90,8 @@
     <string name="sorting_pref_artist_inv">Per artista Z-A</string>
     <string name="sorting_pref_album">Per album A-Z</string>
     <string name="sorting_pref_album_inv">Per album Z-A</string>
+    <string name="eq_pref_title">Equalizzatore integrato</string>
+    <string name="eq_pref_sum">Forza uso equalizzatore integrato</string>
     <string name="precise_volume_pref_title">Controllo preciso del volume</string>
     <string name="focus_pref_title">Gestione focus audio</string>
     <string name="headset_pref_title">Gestione inserimento cuffie</string>

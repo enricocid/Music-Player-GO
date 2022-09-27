@@ -60,6 +60,7 @@
     <string name="on_list_ended_pref">on_list_ended_pref</string>
     <string name="notif_actions_pref">notification_actions_pref</string>
     <string name="fast_seeking_pref">fast_seeking_pref</string>
+    <string name="eq_pref">eq_pref</string>
     <string name="precise_volume_pref">precise_volume_pref</string>
     <string name="focus_pref">focus_pref</string>
     <string name="headset_pref">headsets_pref</string>

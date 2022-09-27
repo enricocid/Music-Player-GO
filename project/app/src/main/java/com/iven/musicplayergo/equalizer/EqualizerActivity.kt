@@ -1,8 +1,11 @@
 package com.iven.musicplayergo.equalizer
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.ActivityResult
 import androidx.core.view.WindowCompat
 import com.iven.musicplayergo.BaseActivity
 import com.iven.musicplayergo.R

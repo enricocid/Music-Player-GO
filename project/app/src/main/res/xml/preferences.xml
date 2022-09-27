@@ -52,6 +52,12 @@
 
         <SwitchPreferenceCompat
             app:defaultValue="false"
+            app:key="@string/eq_pref"
+            app:summary="@string/eq_pref_sum"
+            app:title="@string/eq_pref_title" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
             app:key="@string/precise_volume_pref"
             app:title="@string/precise_volume_pref_title" />
 
@@ -70,9 +76,9 @@
             app:dialogTitle="@string/playback_pref_title"
             app:entries="@array/playbackSpeedModeArray"
             app:entryValues="@array/playbackSpeedModeEntryArray"
+            app:isPreferenceVisible="@bool/is_playback_speed_pref"
             app:key="@string/playback_vel_pref"
             app:title="@string/playback_pref_title"
-            app:isPreferenceVisible="@bool/is_playback_speed_pref"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference

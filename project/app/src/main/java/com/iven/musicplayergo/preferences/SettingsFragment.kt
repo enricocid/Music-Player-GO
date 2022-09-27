@@ -1,6 +1,7 @@
 package com.iven.musicplayergo.preferences
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -81,6 +82,9 @@ class SettingsFragment : Fragment() {
         }
     }
 
+    fun getPreferencesFragment() = mPreferencesFragment
+
+    @SuppressLint("SuspiciousIndentation")
     private fun openLocaleSwitcher() {
         val locales = ContextUtils.getLocalesList(resources)
 

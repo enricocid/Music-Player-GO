@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -77,7 +76,7 @@ class EqualizerFragment : Fragment() {
             }
         }
 
-        if (mPresetsList.isNotEmpty()) {
+        if (mPresetsList.isEmpty()) {
             finishSetupEqualizer(view)
         } else {
             closeEqualizerOnError()
@@ -245,10 +244,14 @@ class EqualizerFragment : Fragment() {
 
         //release built in equalizer
         mMediaPlayerHolder.releaseBuiltInEqualizer()
-        mMediaPlayerHolder.openEqualizer(requireActivity(), fallback = true)
-        Toast.makeText(requireContext(), R.string.error_builtin_eq, Toast.LENGTH_SHORT).show()
+
+        requireActivity().setResult(EQUALIZER_CANCELED_RESULT)
 
         // bye, bye
         requireActivity().onBackPressedDispatcher.onBackPressed()
+    }
+
+    companion object {
+        const val EQUALIZER_CANCELED_RESULT = 666
     }
 }

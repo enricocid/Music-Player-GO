@@ -13,6 +13,7 @@ import android.provider.OpenableColumns
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
@@ -33,6 +34,8 @@ import com.iven.musicplayergo.databinding.PlayerControlsPanelBinding
 import com.iven.musicplayergo.dialogs.Dialogs
 import com.iven.musicplayergo.dialogs.NowPlaying
 import com.iven.musicplayergo.dialogs.RecyclerSheet
+import com.iven.musicplayergo.equalizer.EqualizerActivity
+import com.iven.musicplayergo.equalizer.EqualizerFragment
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.fragments.AllMusicFragment
 import com.iven.musicplayergo.fragments.DetailsFragment
@@ -132,6 +135,13 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
         }
     }
 
+    private val equalizerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == EqualizerFragment.EQUALIZER_CANCELED_RESULT) {
+            tryOpenSysEqualizer()
+            mSettingsFragment?.getPreferencesFragment()?.disableEqualizerOption()
+        }
+    }
+
     private fun doBindService() {
         mBindingIntent = Intent(this, PlayerService::class.java).also {
             bindService(it, connection, Context.BIND_AUTO_CREATE)
@@ -169,6 +179,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
     override fun onDestroy() {
         super.onDestroy()
+        equalizerLauncher.unregister()
         mMusicViewModel.cancel()
         if (isMediaPlayerHolder && !mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning && !mMediaPlayerHolder.isSongFromPrefs) {
             ServiceCompat.stopForeground(mPlayerService, ServiceCompat.STOP_FOREGROUND_DETACH)
@@ -907,9 +918,19 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
         }
     }
 
+    private fun tryOpenSysEqualizer() {
+        Toast.makeText(this, R.string.error_builtin_eq, Toast.LENGTH_SHORT).show()
+        mMediaPlayerHolder.openEqualizer(this, equalizerLauncher, fallback = true)
+    }
+
     override fun onOpenEqualizer() {
         if (checkIsPlayer(showError = true)) {
-            mMediaPlayerHolder.openEqualizer(this, fallback = false)
+            if (mGoPreference.isEqForced) {
+                val eqIntent = Intent(this, EqualizerActivity::class.java)
+                equalizerLauncher.launch(eqIntent)
+            } else {
+                mMediaPlayerHolder.openEqualizer(this, equalizerLauncher, fallback = false)
+            }
             mNpDialog?.dismissAllowingStateLoss()
         }
     }
