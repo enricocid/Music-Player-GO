@@ -193,6 +193,7 @@ class MediaPlayerHolder:
         }
         registerActionsReceiver()
         mPlayerService.configureMediaSession()
+        openOrCloseAudioEffectAction(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION)
     }
 
     private fun startForeground() {
@@ -242,50 +243,6 @@ class MediaPlayerHolder:
         }
     }
 
-    fun initOrGetBuiltInEqualizer(): Triple<Equalizer?, BassBoost?, Virtualizer?> {
-        if (mEqualizer == null) {
-            try {
-                val sessionId = mediaPlayer.audioSessionId
-                mBassBoost = BassBoost(0, sessionId)
-                mVirtualizer = Virtualizer(0, sessionId)
-                mEqualizer = Equalizer(0, sessionId)
-                restoreCustomEqSettings()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-        return Triple(mEqualizer, mBassBoost, mVirtualizer)
-    }
-
-    fun releaseBuiltInEqualizer() {
-        if (mEqualizer != null) {
-            mEqualizer?.release()
-            mBassBoost?.release()
-            mVirtualizer?.release()
-            mEqualizer = null
-            mBassBoost = null
-            mVirtualizer = null
-        }
-    }
-
-    fun setEqualizerEnabled(isEnabled: Boolean) {
-        mEqualizer?.enabled = isEnabled
-        mBassBoost?.enabled = isEnabled
-        mVirtualizer?.enabled = isEnabled
-    }
-
-    fun onSaveEqualizerSettings(selectedPreset: Int, bassBoost: Short, virtualizer: Short) {
-        mEqualizer?.run {
-            GoPreferences.getPrefsInstance().savedEqualizerSettings = SavedEqualizerSettings(
-                enabled,
-                selectedPreset,
-                properties.bandLevels.toList(),
-                bassBoost,
-                virtualizer
-            )
-        }
-    }
-
     fun updateCurrentSong(song: Music?, albumSongs: List<Music>?, songLaunchedBy: String) {
         currentSong = song
         mPlayingSongs = albumSongs
@@ -309,6 +266,15 @@ class MediaPlayerHolder:
         mPlayingSongs?.size!!
     } else {
         0
+    }
+
+    private fun openOrCloseAudioEffectAction(event: String) {
+        mPlayerService.sendBroadcast(
+            Intent(event)
+                .putExtra(AudioEffect.EXTRA_PACKAGE_NAME, mPlayerService.packageName)
+                .putExtra(AudioEffect.EXTRA_AUDIO_SESSION, mediaPlayer.audioSessionId)
+                .putExtra(AudioEffect.EXTRA_CONTENT_TYPE, AudioEffect.CONTENT_TYPE_MUSIC)
+        )
     }
 
     fun updateMediaSessionMetaData() {
@@ -790,8 +756,53 @@ class MediaPlayerHolder:
         }
     }
 
+    fun initOrGetBuiltInEqualizer(): Triple<Equalizer?, BassBoost?, Virtualizer?> {
+        if (mEqualizer == null) {
+            try {
+                val sessionId = mediaPlayer.audioSessionId
+                mBassBoost = BassBoost(0, sessionId)
+                mVirtualizer = Virtualizer(0, sessionId)
+                mEqualizer = Equalizer(0, sessionId)
+                restoreCustomEqSettings()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        return Triple(mEqualizer, mBassBoost, mVirtualizer)
+    }
+
+    fun releaseBuiltInEqualizer() {
+        if (mEqualizer != null) {
+            mEqualizer?.release()
+            mBassBoost?.release()
+            mVirtualizer?.release()
+            mEqualizer = null
+            mBassBoost = null
+            mVirtualizer = null
+        }
+    }
+
+    fun setEqualizerEnabled(isEnabled: Boolean) {
+        mEqualizer?.enabled = isEnabled
+        mBassBoost?.enabled = isEnabled
+        mVirtualizer?.enabled = isEnabled
+    }
+
+    fun onSaveEqualizerSettings(selectedPreset: Int, bassBoost: Short, virtualizer: Short) {
+        mEqualizer?.run {
+            GoPreferences.getPrefsInstance().savedEqualizerSettings = SavedEqualizerSettings(
+                enabled,
+                selectedPreset,
+                properties.bandLevels.toList(),
+                bassBoost,
+                virtualizer
+            )
+        }
+    }
+
     fun release() {
         if (isMediaPlayer) {
+            openOrCloseAudioEffectAction(AudioEffect.ACTION_CLOSE_AUDIO_EFFECT_CONTROL_SESSION)
             releaseBuiltInEqualizer()
             mediaPlayer.release()
             if (sFocusEnabled) {
