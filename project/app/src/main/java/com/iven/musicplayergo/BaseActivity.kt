@@ -8,11 +8,6 @@ import java.util.*
 
 abstract class BaseActivity: AppCompatActivity() {
 
-    override fun onDestroy() {
-        super.onDestroy()
-        GoPreferences.destroyInstance()
-    }
-
     override fun attachBaseContext(newBase: Context?) {
         newBase?.let { ctx ->
             // Be sure that prefs are initialized

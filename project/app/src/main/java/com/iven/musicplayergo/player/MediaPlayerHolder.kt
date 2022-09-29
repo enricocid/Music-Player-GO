@@ -152,9 +152,9 @@ class MediaPlayerHolder:
     val isSleepTimer get() = mSleepTimer != null
 
     // Media player state/booleans
-    val isPlaying get() = ::mediaPlayer.isInitialized && state == GoConstants.PLAYING ||
-            ::mediaPlayer.isInitialized && state == GoConstants.RESUMED
     val isMediaPlayer get() = ::mediaPlayer.isInitialized
+    val isPlaying get() = isMediaPlayer && state == GoConstants.PLAYING ||
+            ::mediaPlayer.isInitialized && state == GoConstants.RESUMED
 
     private var sNotificationForeground = false
 
@@ -815,7 +815,9 @@ class MediaPlayerHolder:
         }
         state = GoConstants.PAUSED
         unregisterActionsReceiver()
-        destroyInstance()
+        if (!isPlaying) {
+            destroyInstance()
+        }
     }
 
     fun cancelSleepTimer() {
