@@ -815,9 +815,7 @@ class MediaPlayerHolder:
         }
         state = GoConstants.PAUSED
         unregisterActionsReceiver()
-        if (!isPlaying) {
-            destroyInstance()
-        }
+        destroyInstance()
     }
 
     fun cancelSleepTimer() {
