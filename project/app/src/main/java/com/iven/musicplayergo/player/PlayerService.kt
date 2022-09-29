@@ -93,6 +93,8 @@ class PlayerService : Service() {
             setCallback(mMediaSessionCallback)
             setMediaButtonReceiver(mediaButtonReceiverPendingIntent)
         }
+
+        
     }
 
     fun getMediaSession(): MediaSessionCompat? = mMediaSessionCompat

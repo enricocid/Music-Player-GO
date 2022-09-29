@@ -22,7 +22,6 @@ import android.util.AndroidRuntimeException
 import android.view.KeyEvent
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
@@ -814,7 +813,9 @@ class MediaPlayerHolder:
             mMusicNotificationManager?.cancelNotification()
             mMusicNotificationManager = null
         }
+        state = GoConstants.PAUSED
         unregisterActionsReceiver()
+        destroyInstance()
     }
 
     fun cancelSleepTimer() {
@@ -1017,9 +1018,12 @@ class MediaPlayerHolder:
     fun stopPlaybackService(stopPlayback: Boolean) {
         try {
             if (mPlayerService.isRunning && isMediaPlayer && stopPlayback) {
-                ServiceCompat.stopForeground(mPlayerService, ServiceCompat.STOP_FOREGROUND_REMOVE)
-                sNotificationForeground = false
-                NotificationManagerCompat.from(mPlayerService).cancel(GoConstants.NOTIFICATION_ID)
+                if (sNotificationForeground) {
+                    ServiceCompat.stopForeground(mPlayerService, ServiceCompat.STOP_FOREGROUND_REMOVE)
+                    sNotificationForeground = false
+                } else {
+                    mMusicNotificationManager?.cancelNotification()
+                }
                 mPlayerService.stopSelf()
             }
             if (::mediaPlayerInterface.isInitialized) {
@@ -1149,6 +1153,10 @@ class MediaPlayerHolder:
                 INSTANCE = newInstance
                 return newInstance
             }
+        }
+
+        fun destroyInstance() {
+            INSTANCE = null
         }
     }
 }
