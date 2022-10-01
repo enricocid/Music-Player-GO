@@ -629,11 +629,20 @@ class MediaPlayerHolder:
     }
 
     override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
+
         println("MediaPlayer error: $what")
         if (isCurrentSong) {
             currentSongFM = null
         }
+
+        //restore media player
         initMediaPlayer(currentSong, forceReset = true)
+
+        //restore equalizer
+        if (mEqualizer != null) {
+            mEqualizer = null
+            initOrGetBuiltInEqualizer()
+        }
         return true
     }
 
