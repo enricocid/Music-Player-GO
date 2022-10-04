@@ -40,6 +40,8 @@
     <string name="error_no_queue">Няма песни в опашката.</string>
     <string name="error_bad_id">Пусни песен първо.</string>
     <string name="error_no_browser">Изтегли уеб браузер първо.</string>
+    <string name="error_fs_not_allowed">Нещо се обърка! :( Пробвай да изключиш оптимизацията на батерията в настройките: Приложения &gt; Всички приложения &gt; Music Player GO &gt; Батерия &gt; Неограничени, защото може да накара плейъра да спре.</string>
+    <string name="error_fs_not_allowed_sum">Грешка! Изклочи оптимизация на батерията за MPGO</string>
     <string name="open_details_fragment">Отвори детайли на изпълнител/папка</string>
     <string name="open_git_pref_summary">Отвори уебстраницата на проекта за повече информация :)</string>
     <string name="content_repeat">Включи/Изключи избрано повторение</string>

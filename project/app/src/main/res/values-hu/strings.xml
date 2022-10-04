@@ -26,6 +26,8 @@
     <string name="error_bad_id">Először játsszon le egy dalt.</string>
     <string name="error_no_music">Nem található zene.</string>
     <string name="error_unknown_unsupported">Valami rosszul sikerült! :( Lehet, hogy a formátum nem támogatott vagy a mappa nem elérhető (nem az alkalmazás hibája!).</string>
+    <string name="error_fs_not_allowed">Valami rosszul sikerült! :( Kérem kapcsolja ki az akkumulátor optimalizálást a rendszer beállításokban: Alkalmazások &gt; Minden alkalmazás &gt; Music Player GO &gt; Akkumulátor &gt; Korlátlan.</string>
+    <string name="error_fs_not_allowed_sum">Hiba! Kapcsolja ki az akkumulátor optimalizálást az MPGO alkalmazásnál</string>
     <string name="on_close_activity">Lejátszás megállítása\?</string>
     <string name="repeat_enabled">Egyszeri ismélés bekapcsolva.</string>
     <string name="repeat_loop_enabled">∞ ismétlés bekapcsolva.</string>

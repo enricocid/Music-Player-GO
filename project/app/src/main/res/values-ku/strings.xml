@@ -33,6 +33,8 @@
     <string name="error_no_browser">Pêşî gerokeke tevnê saz bike.</string>
     <string name="error_bad_id">Pêşî stranekê lêde.</string>
     <string name="error_no_queue">Stran di rêzê de tune.</string>
+    <string name="error_fs_not_allowed">Tiştek çewt pêk hat! :( Dibe ku optimîzasyona battariyê çalak be û ev yek dibe sedem ku lêdera medyayê rawestê. Di sazkariyên pergalê de binêre û neçalak bike: Sepan &gt; Hemû sepan &gt; Lêdera muzîkê GO &gt; Battarî &gt; Neçalak e.</string>
+    <string name="error_fs_not_allowed_sum">Çewtî! Ji bo MPGO optimîzasyona batteriyê vemrîne</string>
     <string name="perm_rationale">Mafê gihiştînê bide Music Player GO bo pelên muzîkê te.</string>
     <string name="repeat_enabled">Carekî tenê dubare bike.</string>
     <string name="repeat_disabled">∞ dubarekirin neçalak e.</string>

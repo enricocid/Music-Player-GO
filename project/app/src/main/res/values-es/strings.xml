@@ -29,6 +29,8 @@
     <string name="error_bad_id">Primero reproduzca una canción.</string>
     <string name="error_no_music">Añade algo de música primero.</string>
     <string name="error_unknown_unsupported">¡Algo salió mal! :( Tal vez el formato no es compatible, o la carpeta es inaccesible (¡no es culpa de la aplicación!).</string>
+    <string name="error_fs_not_allowed">Algo salió mal :( Considera desactivar la optimización de la batería en los ajustes del sistema: Aplicaciones &gt; Todas las aplicaciones &gt; Reproductor de música GO &gt; Batería &gt; Sin restricciones, ya que podría hacer que el servicio del reproductor multimedia se detenga.</string>
+    <string name="error_fs_not_allowed_sum">¡Error! Desactiva la optimización de batería para MPGO</string>
     <string name="on_close_activity">¿Detener la reproducción\?</string>
     <string name="repeat_enabled">Repetición única activada.</string>
     <string name="repeat_loop_enabled">Repetición ∞ activada.</string>

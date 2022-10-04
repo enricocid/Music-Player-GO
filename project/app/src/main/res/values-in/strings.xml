@@ -34,6 +34,8 @@
     <string name="error_no_browser">Instal browser web terlebih dahulu.</string>
     <string name="error_bad_id">Putar lagu terlebih dahulu.</string>
     <string name="error_no_queue">Tidak ada lagu dalam antrean.</string>
+    <string name="error_fs_not_allowed">Telah terjadi kesalahan! :( Nonaktifkan pengoptimalan baterai di dalam pengaturan sistem: Aplikasi &gt; Semua aplikasi &gt; Music Player GO &gt; Baterai &gt; Tidak terbatas, karena bisa menyebabkan aplikasi berhenti bekerja.</string>
+    <string name="error_fs_not_allowed_sum">Galat! Matikan pengoptimalan baterai untuk MPGO</string>
     <string name="perm_rationale">Izinkan Music Player GO mengakses file Anda untuk memutar musik.</string>
     <string name="repeat_enabled">1x pengulangan diaktifkan.</string>
     <string name="repeat_loop_enabled">∞ pengulangan.</string>

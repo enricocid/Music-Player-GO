@@ -32,6 +32,8 @@
     <string name="error_no_browser">Fant ingen nettlesere.</string>
     <string name="error_bad_id">Spill en spor først.</string>
     <string name="error_no_queue">Ingen spor i kø.</string>
+    <string name="error_fs_not_allowed_sum">Feil. Skru av batterioptimisering for MPGO</string>
+    <string name="error_fs_not_allowed">Noe gikk galt. :( Overvei å skru av batterioptimalisering i systeminnstillinger: Programmer &gt; Alle programmer &gt; Music Player Go &gt; Batteri &gt; Ubegrenset siden det kan forårsake at avspillertjenesten stopper.</string>
     <string name="perm_rationale">Music Player GO trenger tilgang til filene dine for å spille musikk.</string>
     <string name="repeat_enabled">Enkel gjentagelse på.</string>
     <string name="repeat_loop_enabled">∞ gjentagelse på.</string>

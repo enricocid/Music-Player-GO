@@ -31,6 +31,8 @@
     <string name="error_bad_id">Start eerst een nummer.</string>
     <string name="error_no_music">Voeg eerst muziek toe.</string>
     <string name="error_unknown_unsupported">Er is iets misgegaan! :( Het gekozen bestandstype wordt mogelijk niet ondersteund of de map is ontoegankelijk (wat niet de schuld van de app is!).</string>
+    <string name="error_fs_not_allowed">Er ging iets mis! :( Overweeg batterij-optimalisatie uit te zetten in de systeeminstellingen: Apps &gt; Alle apps &gt; Music Player GO &gt; Batterij &gt; Onbeperkt, omdat dit ertoe kan leiden dat de mediaspelerservice stopt.</string>
+    <string name="error_fs_not_allowed_sum">Fout! Zet batterijbesparing uit voor MPGO</string>
     <string name="on_close_activity">Afspelen Stoppen\?</string>
     <string name="repeat_enabled">Eenmaal herhalen ingeschakeld.</string>
     <string name="repeat_loop_enabled">∞ herhalen ingeschakeld.</string>

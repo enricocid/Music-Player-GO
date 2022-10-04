@@ -56,7 +56,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             NotificationCompat.Builder(playerService, GoConstants.NOTIFICATION_CHANNEL_ID)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannel()
+            createNotificationChannel(GoConstants.NOTIFICATION_CHANNEL_ID)
         }
 
         val openPlayerIntent = Intent(playerService, MainActivity::class.java)
@@ -200,10 +200,30 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         return NotificationCompat.Action.Builder(icon, action, getPendingIntent(action)).build()
     }
 
+    @TargetApi(31)
+    fun createNotificationForError() {
+
+        val notificationBuilder =
+            NotificationCompat.Builder(playerService, GoConstants.NOTIFICATION_CHANNEL_ERROR_ID)
+
+        createNotificationChannel(GoConstants.NOTIFICATION_CHANNEL_ERROR_ID)
+
+        notificationBuilder.setSmallIcon(R.drawable.ic_report)
+            .setSilent(true)
+            .setContentTitle(playerService.getString(R.string.error_fs_not_allowed_sum))
+            .setContentText(playerService.getString(R.string.error_fs_not_allowed))
+            .setStyle(NotificationCompat.BigTextStyle()
+                .bigText(playerService.getString(R.string.error_fs_not_allowed)))
+            .priority = NotificationCompat.PRIORITY_DEFAULT
+        with(NotificationManagerCompat.from(playerService)) {
+            notify(GoConstants.NOTIFICATION_ERROR_ID, notificationBuilder.build())
+        }
+    }
+
     @TargetApi(26)
-    private fun createNotificationChannel() {
+    private fun createNotificationChannel(id: String) {
         val name = playerService.getString(R.string.app_name)
-        val channel = NotificationChannel(GoConstants.NOTIFICATION_CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT).apply {
+        val channel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_DEFAULT).apply {
             description = name
         }
         // Register the channel with the system

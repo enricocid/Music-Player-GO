@@ -30,6 +30,8 @@
     <string name="error_no_music">Ajoutez d\'abord de la musique.</string>
     <string name="error_not_ready">Impossible de charger la bibliothèque musicale ! :( Ceci est probablement dû au démontage de la carte SD qui oblige parfois le MediaStore d\'Android à reconstruire les entrées de sa base de données. Réessayez plus tard.</string>
     <string name="error_unknown_unsupported">Une erreur s\'est produite ! :( Peut-être que le format sélectionné n\'est pas supporté, ou que le dossier n\'est pas accessible (Ce n\'est pas de la faute de l\'application !).</string>
+    <string name="error_fs_not_allowed">Quelque chose a mal tourné :( Pensez à désactiver l\'optimisateur de la batterie dans les paramètres système : Apps &gt; All apps &gt; Music Player GO &gt; Battery &gt; Unrestricted, car cela pourrait provoquer l\'arrêt du service du lecteur multimédia.</string>
+    <string name="error_fs_not_allowed_sum">Erreur ! Éteindre l\'optimisation de batterie pour MPGO</string>
     <string name="on_close_activity">Voulez-vous arrêter la lecture \?</string>
     <string name="repeat_enabled">Répétition simple activée.</string>
     <string name="repeat_loop_enabled">Répétition ∞ activée.</string>

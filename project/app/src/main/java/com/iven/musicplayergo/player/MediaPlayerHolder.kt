@@ -2,6 +2,7 @@ package com.iven.musicplayergo.player
 
 import android.annotation.TargetApi
 import android.app.Activity
+import android.app.ForegroundServiceStartNotAllowedException
 import android.bluetooth.BluetoothDevice
 import android.content.*
 import android.media.AudioAttributes
@@ -197,9 +198,24 @@ class MediaPlayerHolder:
 
     private fun startForeground() {
         if (!sNotificationForeground) {
-            mMusicNotificationManager?.createNotification { notification ->
-                mPlayerService.startForeground(GoConstants.NOTIFICATION_ID, notification)
-                sNotificationForeground = true
+            if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                sNotificationForeground = try {
+                    mMusicNotificationManager?.createNotification { notification ->
+                        mPlayerService.startForeground(GoConstants.NOTIFICATION_ID, notification)
+                    }
+                    true
+                } catch (fsNotAllowed: ForegroundServiceStartNotAllowedException) {
+                    synchronized(pauseMediaPlayer()) {
+                        mMusicNotificationManager?.createNotificationForError()
+                    }
+                    fsNotAllowed.printStackTrace()
+                    false
+                }
+            } else {
+                mMusicNotificationManager?.createNotification { notification ->
+                    mPlayerService.startForeground(GoConstants.NOTIFICATION_ID, notification)
+                    sNotificationForeground = true
+                }
             }
         } else {
             mMusicNotificationManager?.run {

@@ -33,6 +33,8 @@
     <string name="error_no_browser">请先安装 Web 浏览器。</string>
     <string name="error_bad_id">先播放一首歌曲。</string>
     <string name="error_no_queue">队列中无歌曲。</string>
+    <string name="error_fs_not_allowed_sum">错误！关闭针对本应用的电池优化</string>
+    <string name="error_fs_not_allowed">出错了！:( 考虑在系统设置中关闭电池优化:应用程序&gt;所有应用程序&gt; Music Player GO &gt;电池&gt;无限制，因为它可能会导致媒体播放器服务停止。</string>
     <string name="perm_rationale">授予 Music Player GO 访问文件的权限，以便播放音乐。</string>
     <string name="repeat_enabled">开启了单曲循环。</string>
     <string name="repeat_loop_enabled">∞ 循环已开启。</string>

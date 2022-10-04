@@ -36,6 +36,8 @@
     <string name="error_not_ready">Es gab ein Problem beim Laden der Musikbibliothek. :( Nach dem Auswerfen der SD-Karte wird die Android MediaStore-Datenbank neu aufgebaut. Später erneut versuchen.</string>
     <string name="error_no_music">Es muss erst Musik hinzugefügt werden.</string>
     <string name="error_no_favorites">Es müssen erst Favoriten hinzugefügt werden.</string>
+    <string name="error_fs_not_allowed_sum">Fehler! Batterieoptimierung für MPGO deaktivieren</string>
+    <string name="error_fs_not_allowed">Etwas ist schiefgelaufen! :( Bitte deaktiviere die Batterioptimierung in den Systemeinstellungen: Apps &gt; Alle Apps &gt; Music Player GO &gt; Akku &gt; Akkunutzung im Hintergrund zulassen, da es den Media Player Service stoppen kann.</string>
     <string name="favorite_added">%1s (2%2s) zu den Lieblingsliedern zugefügt</string>
     <string name="favorites">Favoriten</string>
     <string name="queue_song_remove">%1s aus Warteschlange entfernen\?</string>

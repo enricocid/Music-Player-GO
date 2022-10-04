@@ -17,6 +17,8 @@
     <string name="error_not_ready">Не вдалося завантажити музичну бібліотеку! :( Демонтування SD-карти перебудовує базу даних Android MediaStore. Повторіть спробу пізніше.</string>
     <string name="error_no_music">Спочатку додайте музику.</string>
     <string name="error_no_favorites">Спочатку додайте обране.</string>
+    <string name="error_fs_not_allowed_sum">Помилка! Вимкніть оптимізацію акумулятора для MPGO</string>
+    <string name="error_fs_not_allowed">Щось пішло не так! :( Розгляньте можливість вимкнення оптимізації акумулятора в налаштуваннях системи: Програми &gt; Усі програми &gt; Music Player GO &gt; Акумулятор &gt; Не обмежено, оскільки це може призвести до зупинки служби медіапрогравача.</string>
     <string name="favorite_added">%1s (%2s) додано в обране</string>
     <string name="favorites">Обране</string>
     <string name="queue_song_remove">Прибрати %1s з черги\?</string>

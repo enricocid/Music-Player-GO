@@ -63,6 +63,8 @@
     <string name="on_list_ended_pref_title">Когда список заканчивается…</string>
     <string name="covers_pref_title">Встроенные обложки альбомов</string>
     <string name="error_list_ended">Список закончился.</string>
+    <string name="error_fs_not_allowed_sum">Ошибка! Отключите оптимизацию расхода батареи для MPGO</string>
+    <string name="error_fs_not_allowed">Что-то пошло не так! :( Попробуйте отключить оптимизацию расхода батареи в настройках системы: Приложения &gt; Все приложения &gt; Music Player GO &gt; Батарея &gt; Без ограничений, так как это может провоцировать остановку сервиса плеера.</string>
     <string name="equalizer_v">Объемный звук</string>
     <string name="equalizer_bb">Усиление басов</string>
     <string name="equalizer">Эквалайзер</string>

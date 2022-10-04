@@ -28,6 +28,8 @@
     <string name="error_bad_id">Önce bir şarkı çal.</string>
     <string name="error_no_music">Önce biraz müzik ekleyin.</string>
     <string name="error_unknown_unsupported">Bir şeyler yanlış gitti! :( Muhtemelen biçim desteklenmiyor veya klasöre erişilemiyor (uygulamanın hatası değil!).</string>
+    <string name="error_fs_not_allowed">Bir şeyler ters gitti! :( Sistem ayarlarından pil optimizasyonunu kapatmayı deneyin: Uygulamalar &gt; Tüm uygulamalar &gt; Müzik Çalar GO &gt; Pil &gt; Kısıtlanmamış, medya oynatıcı hizmetinin durmasına neden olabilir.</string>
+    <string name="error_fs_not_allowed_sum">Hata! MPGO için pil optimizasyonunu kapatın</string>
     <string name="on_close_activity">Oynatma durdurulsun mu\?</string>
     <string name="settings">Ayarlar</string>
     <string name="category_general">Genel</string>

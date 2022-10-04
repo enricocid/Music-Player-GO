@@ -48,6 +48,8 @@
     <string name="error_unknown_unsupported">Qualcosa è andato storto! :( Forse il formato non è supportato, o la cartella è inaccessibile (non dipende dall\'app!).</string>
     <string name="error_builtin_eq">Si è verificato un errore! Usa l\'equalizzatore di sistema (se disponibile)!</string>
     <string name="error_sys_eq">Equalizzatore di sistema non presente!</string>
+    <string name="error_fs_not_allowed_sum">Errore! Disattiva l\'ottimizzazione della batteria per MPGO</string>
+    <string name="error_fs_not_allowed">Qualcosa è andato storto! :( Prova a disattivare l\'ottimizzazione della batteria nelle impostazioni di sistema: App &gt; Tutte le app &gt; Music Player GO &gt; Batteria &gt; Senza limitazioni, in quanto potrebbe causare l\'arresto del servizio musicale.</string>
     <string name="on_close_activity">Interrompere la riproduzione?</string>
     <string name="repeat_enabled">Ripeti 1x on.</string>
     <string name="repeat_loop_enabled">Ripetizione ∞ on.</string>

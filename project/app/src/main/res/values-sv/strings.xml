@@ -40,6 +40,8 @@
     <string name="error_not_ready">Det gick inte att läsa in musikbiblioteket! :( Avmontering av SD-kortet bygger om Android MediaStore-databasen. Försök igen senare.</string>
     <string name="error_no_music">Lägg till musik först.</string>
     <string name="error_no_favorites">Lägg till några favoriter först.</string>
+    <string name="error_fs_not_allowed_sum">Fel! Stäng av batterioptimering för MPGO</string>
+    <string name="error_fs_not_allowed">Något gick fel! :( Överväg att stänga av batterioptimering i systeminställningarna: Appar &gt; Alla appar &gt; Music Player GO &gt; Batteri &gt; Obegränsad, eftersom det kan få mediespelaren att stoppas.</string>
     <string name="open_details_fragment">Öppna detaljer om artist/mapp</string>
     <string name="open_git_pref_summary">Öppna projektwebbplatsen för mer info :)</string>
     <string name="content_repeat">Aktivera/inaktivera upprepningsalternativ</string>
