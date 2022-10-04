@@ -200,7 +200,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         return NotificationCompat.Action.Builder(icon, action, getPendingIntent(action)).build()
     }
 
-    @TargetApi(31)
+    @TargetApi(Build.VERSION_CODES.S)
     fun createNotificationForError() {
 
         val notificationBuilder =
