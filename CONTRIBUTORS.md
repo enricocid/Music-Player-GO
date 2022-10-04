@@ -45,6 +45,8 @@ for [strings](https://github.com/enricocid/Music-Player-GO/pull/227), [readme](h
 
 - [**SCOTT-HAMILTON**](https://github.com/SCOTT-HAMILTON) for the original [media notification dark implementation](https://github.com/enricocid/Music-Player-GO/pull/308/)
 
+- [**abelbabel**](https://github.com/abelbabel) for [bug](https://github.com/enricocid/Music-Player-GO/issues/469) reporting
+
 - [**Ramón**](https://github.com/proideo) for [bug](https://github.com/enricocid/Music-Player-GO/issues/309) reporting
 
 - **Simon Gould** for having reported this [bug](https://github.com/enricocid/Music-Player-GO/commit/f95b81ce49b9f58418de4a416990ede732d9f715)

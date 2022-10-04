@@ -22,7 +22,7 @@
 | [sort-alphabetical-ascending-variant icon](https://materialdesignicons.com/icon/sort-alphabetical-ascending-variant) | Michael Irigoyen [mririgo](https://twitter.com/mririgo)
 | [sort-numeric-ascending-variant icon](https://materialdesignicons.com/icon/sort-numeric-ascending-variant) | Michael Irigoyen [mririgo](https://twitter.com/mririgo)
 | [sort-numeric-descending-variant icon](https://materialdesignicons.com/icon/sort-numeric-descending-variant) | Michael Irigoyen [mririgo](https://twitter.com/mririgo)
-| img-to-gif | [gifmaker.net](https://www.gifmaker.net/)
+| Animated GIF Maker (delay time: 350) | [ezgif.com/maker](https://ezgif.com/maker)
 | Badges | [shields.io](https://shields.io/)
 
 
@@ -38,3 +38,4 @@
 | [Screener](https://forum.xda-developers.com/t/app-4-0-screener.3605029/) | toastcode
 | [Compact disc icon](https://www.svgrepo.com/svg/181020/compact-disc-music) | [svgrepo.com](https://www.svgrepo.com)
 | gifmaker | [gifmaker.me](https://gifmaker.me/)
+| img-to-gif | [gifmaker.net](https://www.gifmaker.net/)

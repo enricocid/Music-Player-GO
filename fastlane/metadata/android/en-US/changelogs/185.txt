@@ -1,0 +1,8 @@
+- Android 13 support
+- Improve Android 12 support
+- Improve built-in equalizer
+- Improve support to external equalizers (e.g. wavelet, poweramp)
+- Fix sleep timer (thanks @abelbabel)
+- Code improvements/bug fixes
+- Upgrade libs/dependecies
+- Update translations (thanks to all contributors).

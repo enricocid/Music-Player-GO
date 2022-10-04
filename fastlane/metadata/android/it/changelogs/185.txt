@@ -1,0 +1,8 @@
+- Supporto Android 13
+- Migliorato supporto Android 12
+- Migliorato equalizzatore integrato
+- Migliorato supporto equalizzatori esterni (e.g. wavelet, poweramp)
+- Corretto timer spegnimento (grazie @abelbabel)
+- Miglioramento codice/fix bug
+- Aggiornate librerie e dipendenze
+- Aggiornate traduzioni (grazie a chi contribuisce)
