@@ -135,7 +135,10 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             getString(R.string.notif_actions_pref) ->
                 findPreference<Preference>(getString(R.string.notif_actions_pref))?.summary =
                     getString(Theming.getNotificationActionTitle(GoPreferences.getPrefsInstance().notificationActions.first))
-            getString(R.string.song_visual_pref) -> mMediaControlInterface.onUpdatePlayingAlbumSongs(null)
+            getString(R.string.song_visual_pref) -> {
+                mMediaPlayerHolder.updateMediaSessionMetaData()
+                mMediaControlInterface.onUpdatePlayingAlbumSongs(null)
+            }
         }
     }
 
