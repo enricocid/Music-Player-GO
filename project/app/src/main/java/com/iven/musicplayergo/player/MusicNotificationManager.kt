@@ -4,18 +4,15 @@ package com.iven.musicplayergo.player
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Notification
-import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.support.v4.media.MediaMetadataCompat
+import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.text.parseAsHtml
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
@@ -33,7 +30,6 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     //notification manager/builder
     private lateinit var mNotificationBuilder: NotificationCompat.Builder
     private val mNotificationManagerCompat get() = NotificationManagerCompat.from(playerService)
-    private var mNotificationColor = Color.BLACK
 
     private val mNotificationActions
         @SuppressLint("RestrictedApi")
@@ -79,24 +75,20 @@ class MusicNotificationManager(private val playerService: PlayerService) {
 
         mNotificationBuilder
             .setContentIntent(contentIntent)
-            .setCategory(NotificationCompat.CATEGORY_SERVICE)
+            .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
             .setSilent(true)
             .setShowWhen(false)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setOngoing(mMediaPlayerHolder.isPlaying)
-            .addAction(getNotificationAction(notificationActions.first))
+            .setSmallIcon(R.drawable.ic_music_note)            .addAction(getNotificationAction(notificationActions.first))
             .addAction(getNotificationAction(GoConstants.PREV_ACTION))
             .addAction(getNotificationAction(GoConstants.PLAY_PAUSE_ACTION))
             .addAction(getNotificationAction(GoConstants.NEXT_ACTION))
             .addAction(getNotificationAction(notificationActions.second))
-            .setColorized(true)
-            .setSmallIcon(getNotificationSmallIcon())
-            .setStyle(
-                MediaStyle()
-                    .setMediaSession(playerService.getMediaSession()?.sessionToken)
-                    .setShowActionsInCompactView(1, 2, 3)
+            .setStyle(MediaStyle()
+                .setMediaSession(playerService.getMediaSession()?.sessionToken)
+                .setShowActionsInCompactView(1, 2, 3)
             )
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .priority = NotificationCompat.PRIORITY_DEFAULT
 
         updateNotificationContent {
             onCreated(mNotificationBuilder.build())
@@ -134,36 +126,15 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         }
     }
 
-    fun onSetNotificationColor(color: Int) {
-        mNotificationColor = color
-        onHandleNotificationUpdate(isAdditionalActionsChanged = false)
-    }
-
     fun updateNotificationContent(onDone: (() -> Unit)? = null) {
         mMediaPlayerHolder.getMediaMetadataCompat()?.run {
             mNotificationBuilder
                 .setContentText(getText(MediaMetadataCompat.METADATA_KEY_ARTIST))
-                .setContentTitle(playerService.getString(
-                    R.string.song_title_notification,
-                    getText(MediaMetadataCompat.METADATA_KEY_TITLE)
-                ).parseAsHtml())
+                .setContentTitle(getText(MediaMetadataCompat.METADATA_KEY_TITLE))
                 .setSubText(getText(MediaMetadataCompat.METADATA_KEY_ALBUM))
                 .setLargeIcon(getBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART))
-                .color = mNotificationColor
         }
         onDone?.invoke()
-    }
-
-    private fun getNotificationSmallIcon(): Int {
-        return if (mMediaPlayerHolder.isQueue != null && mMediaPlayerHolder.isQueueStarted) {
-            R.drawable.ic_music_note
-        } else {
-            when (mMediaPlayerHolder.launchedBy) {
-                GoConstants.FOLDER_VIEW -> R.drawable.ic_folder_music
-                GoConstants.ALBUM_VIEW -> R.drawable.ic_library_music
-                else -> R.drawable.ic_music_note
-            }
-        }
     }
 
     fun updatePlayPauseAction() {
@@ -217,12 +188,14 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     @TargetApi(26)
     private fun createNotificationChannel(id: String) {
         val name = playerService.getString(R.string.app_name)
-        val channel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_DEFAULT).apply {
-            description = name
-        }
+        val channel = NotificationChannelCompat.Builder(id, NotificationManager.IMPORTANCE_LOW)
+            .setName(name)
+            .setLightsEnabled(false)
+            .setVibrationEnabled(false)
+            .setShowBadge(false)
+            .build()
+
         // Register the channel with the system
-        val notificationManager: NotificationManager =
-            playerService.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
+        mNotificationManagerCompat.createNotificationChannel(channel)
     }
 }

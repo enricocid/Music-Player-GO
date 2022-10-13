@@ -128,10 +128,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                     giveUpAudioFocus()
                 }
             }
-            getString(R.string.covers_pref) -> {
-                mMediaPlayerHolder.onHandleNotificationUpdate(isAdditionalActionsChanged = false)
-                mMediaControlInterface.onHandleCoverOptionsUpdate()
-            }
+            getString(R.string.covers_pref) -> mMediaControlInterface.onHandleCoverOptionsUpdate()
             getString(R.string.notif_actions_pref) ->
                 findPreference<Preference>(getString(R.string.notif_actions_pref))?.summary =
                     getString(Theming.getNotificationActionTitle(GoPreferences.getPrefsInstance().notificationActions.first))

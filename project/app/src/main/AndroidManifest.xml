@@ -26,6 +26,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:appCategory="audio"
         android:theme="@style/BaseTheme.Default"
         tools:ignore="UnusedAttribute">
 

@@ -381,11 +381,6 @@ class MediaPlayerHolder:
         stopUpdatingCallbackWithPosition()
     }
 
-    fun onHandleNotificationColorUpdate(color: Int) {
-        mMusicNotificationManager?.onSetNotificationColor(color)
-        mMusicNotificationManager?.onHandleNotificationUpdate(isAdditionalActionsChanged = false)
-    }
-
     fun onHandleNotificationUpdate(isAdditionalActionsChanged: Boolean) {
         mMusicNotificationManager?.onHandleNotificationUpdate(isAdditionalActionsChanged = isAdditionalActionsChanged)
     }
@@ -660,6 +655,9 @@ class MediaPlayerHolder:
     }
 
     override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
+
+        mediaPlayer.release()
+        releaseBuiltInEqualizer()
 
         println("MediaPlayer error: $what")
         if (isCurrentSong) {

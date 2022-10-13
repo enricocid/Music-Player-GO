@@ -119,7 +119,6 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
             mMediaPlayerHolder.run {
                 mediaPlayerInterface = mMediaPlayerInterface
-                onHandleNotificationColorUpdate(Theming.resolveColorAttr(this@MainActivity, R.attr.main_bg))
             }
 
             // load music and setup UI
@@ -1042,9 +1041,6 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
     override fun onUpdatePlayingAlbumSongs(songs: List<Music>?) {
         mMediaPlayerHolder.currentSong?.run {
             updatePlayingSongTitle(this)
-        }
-        if (::mPlayerService.isInitialized) {
-            mPlayerService.musicNotificationManager.onHandleNotificationUpdate(isAdditionalActionsChanged = false)
         }
         if (songs != null) {
             mMediaPlayerHolder.updateCurrentSongs(songs)
