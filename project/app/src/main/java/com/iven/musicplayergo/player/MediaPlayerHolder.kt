@@ -35,6 +35,7 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.toContentUri
+import com.iven.musicplayergo.extensions.toFilenameWithoutExtension
 import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.extensions.waitForCover
 import com.iven.musicplayergo.models.Music
@@ -82,6 +83,7 @@ class MediaPlayerHolder:
 
     private lateinit var mPlayerService: PlayerService
 
+    private var mMediaMetadataCompat: MediaMetadataCompat? = null
     private val mMediaSessionActions = ACTION_PLAY or ACTION_PAUSE or ACTION_PLAY_PAUSE or ACTION_SKIP_TO_NEXT or ACTION_SKIP_TO_PREVIOUS or ACTION_STOP or ACTION_SEEK_TO
     lateinit var mediaPlayerInterface: MediaPlayerInterface
 
@@ -196,6 +198,8 @@ class MediaPlayerHolder:
         openOrCloseAudioEffectAction(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION)
     }
 
+    fun getMediaMetadataCompat() = mMediaMetadataCompat
+
     private fun startForeground() {
         if (!sNotificationForeground) {
             if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -299,8 +303,13 @@ class MediaPlayerHolder:
                 putString(METADATA_KEY_ARTIST, artist)
                 putString(METADATA_KEY_AUTHOR, artist)
                 putString(METADATA_KEY_COMPOSER, artist)
-                putString(METADATA_KEY_TITLE, title)
-                putString(METADATA_KEY_DISPLAY_TITLE, title)
+                val songTitle = if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
+                    displayName.toFilenameWithoutExtension()
+                } else {
+                    title
+                }
+                putString(METADATA_KEY_TITLE, songTitle)
+                putString(METADATA_KEY_DISPLAY_TITLE, songTitle)
                 putString(METADATA_KEY_ALBUM_ARTIST, album)
                 putString(METADATA_KEY_DISPLAY_SUBTITLE, album)
                 putString(METADATA_KEY_ALBUM, album)
@@ -314,9 +323,14 @@ class MediaPlayerHolder:
                 }
                 albumId?.waitForCover(mPlayerService) { bmp, _ ->
                     putBitmap(METADATA_KEY_ALBUM_ART, bmp)
+                    putBitmap(METADATA_KEY_ART, bmp)
+                    mMediaMetadataCompat = build()
+                    mPlayerService.getMediaSession()?.setMetadata(mMediaMetadataCompat)
+                    if (isPlay) {
+                        startForeground()
+                    }
                 }
             }
-            mPlayerService.getMediaSession()?.setMetadata(build())
         }
     }
 
@@ -462,9 +476,10 @@ class MediaPlayerHolder:
                 GoConstants.RESUMED
             }
 
+            isPlay = true
+
             updatePlaybackStatus(updateUI = true)
             startForeground()
-            isPlay = true
         }
     }
 
@@ -719,7 +734,6 @@ class MediaPlayerHolder:
         startOrChangePlaybackSpeed()
         state = GoConstants.PLAYING
         updatePlaybackStatus(updateUI = true)
-        startForeground()
     }
 
     private fun restoreCustomEqSettings() {

@@ -102,5 +102,5 @@ dependencies {
     implementation 'me.zhanghai.android.fastscroll:library:1.1.8'
 
     //https://github.com/coil-kt/coil/releases
-    implementation 'io.coil-kt:coil:2.2.1'
+    implementation 'io.coil-kt:coil:2.2.2'
 }

@@ -35,7 +35,7 @@ class PlayerService : Service() {
     private lateinit var mWakeLock: PowerManager.WakeLock
 
     // Media player
-    lateinit var mediaPlayerHolder: MediaPlayerHolder
+    private val mMediaPlayerHolder get() = MediaPlayerHolder.getInstance()
     lateinit var musicNotificationManager: MusicNotificationManager
     var isRestoredFromPause = false
 
@@ -47,27 +47,27 @@ class PlayerService : Service() {
     private val mMediaSessionCallback = object : MediaSessionCompat.Callback() {
 
         override fun onPlay() {
-            mediaPlayerHolder.resumeOrPause()
+            mMediaPlayerHolder.resumeOrPause()
         }
 
         override fun onPause() {
-            mediaPlayerHolder.resumeOrPause()
+            mMediaPlayerHolder.resumeOrPause()
         }
 
         override fun onSkipToNext() {
-            mediaPlayerHolder.skip(isNext = true)
+            mMediaPlayerHolder.skip(isNext = true)
         }
 
         override fun onSkipToPrevious() {
-            mediaPlayerHolder.skip(isNext = false)
+            mMediaPlayerHolder.skip(isNext = false)
         }
 
         override fun onStop() {
-            mediaPlayerHolder.stopPlaybackService(stopPlayback = true)
+            mMediaPlayerHolder.stopPlaybackService(stopPlayback = true)
         }
 
         override fun onSeekTo(pos: Long) {
-            mediaPlayerHolder.seekTo(
+            mMediaPlayerHolder.seekTo(
                 pos.toInt(),
                 updatePlaybackStatus = true,
                 restoreProgressCallBack = false
@@ -100,11 +100,11 @@ class PlayerService : Service() {
     override fun onDestroy() {
         super.onDestroy()
 
-        if (::mediaPlayerHolder.isInitialized && mediaPlayerHolder.isCurrentSong && mediaPlayerHolder.currentSongFM == null) {
+        if (mMediaPlayerHolder.isCurrentSong && mMediaPlayerHolder.currentSongFM == null) {
 
             // Saves last played song and its position if user is ok :)
             val preferences = GoPreferences.getPrefsInstance()
-            with(mediaPlayerHolder) {
+            with(mMediaPlayerHolder) {
                 preferences.latestPlayedSong = if (isQueue != null && isQueueStarted) {
                     preferences.isQueue = isQueue
                     currentSong
@@ -114,7 +114,7 @@ class PlayerService : Service() {
                 }
                 if (queueSongs.isNotEmpty()) { preferences.queue = queueSongs }
             }
-            preferences.latestVolume = mediaPlayerHolder.currentVolumeInPercent
+            preferences.latestVolume = mMediaPlayerHolder.currentVolumeInPercent
         }
 
         mMediaSessionCompat?.run {
@@ -127,7 +127,7 @@ class PlayerService : Service() {
         }
 
         mMediaSessionCompat = null
-        mediaPlayerHolder.release()
+        mMediaPlayerHolder.release()
         releaseWakeLock()
         isRunning = false
     }
@@ -151,7 +151,7 @@ class PlayerService : Service() {
         try {
             intent?.action?.let { act ->
 
-                with(mediaPlayerHolder) {
+                with(mMediaPlayerHolder) {
                     when (act) {
                         GoConstants.FAVORITE_ACTION -> {
                             Lists.addToFavorites(
@@ -162,7 +162,7 @@ class PlayerService : Service() {
                                 launchedBy
                             )
                             musicNotificationManager.updateFavoriteIcon()
-                            mediaPlayerHolder.mediaPlayerInterface.onUpdateFavorites()
+                            mMediaPlayerHolder.mediaPlayerInterface.onUpdateFavorites()
                         }
                         GoConstants.FAVORITE_POSITION_ACTION -> Lists.addToFavorites(
                             this@PlayerService,
@@ -193,13 +193,8 @@ class PlayerService : Service() {
     }
 
     override fun onBind(intent: Intent): IBinder {
-
-        if (!::mediaPlayerHolder.isInitialized) {
-            mediaPlayerHolder = MediaPlayerHolder.getInstance().apply {
-                synchronized(initializeNotificationManager()) {
-                    setMusicService(this@PlayerService)
-                }
-            }
+        synchronized(initializeNotificationManager()) {
+            mMediaPlayerHolder.setMusicService(this@PlayerService)
         }
         return binder
     }
@@ -250,27 +245,27 @@ class PlayerService : Service() {
                                 headsetClicks = 2
                             }
                             if (headsetClicks == 2) {
-                                mediaPlayerHolder.skip(isNext = true)
+                                mMediaPlayerHolder.skip(isNext = true)
                             } else {
-                                mediaPlayerHolder.resumeOrPause()
+                                mMediaPlayerHolder.resumeOrPause()
                             }
                             mLastTimeClick = eventTime
                             return true
                         }
                         KeyEvent.KEYCODE_MEDIA_CLOSE, KeyEvent.KEYCODE_MEDIA_STOP -> {
-                            mediaPlayerHolder.stopPlaybackService(stopPlayback = true)
+                            mMediaPlayerHolder.stopPlaybackService(stopPlayback = true)
                             return true
                         }
                         KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {
-                            mediaPlayerHolder.skip(isNext = false)
+                            mMediaPlayerHolder.skip(isNext = false)
                             return true
                         }
                         KeyEvent.KEYCODE_MEDIA_NEXT -> {
-                            mediaPlayerHolder.skip(isNext = true)
+                            mMediaPlayerHolder.skip(isNext = true)
                             return true
                         }
                         KeyEvent.KEYCODE_MEDIA_REWIND -> {
-                            mediaPlayerHolder.repeatSong(0)
+                            mMediaPlayerHolder.repeatSong(0)
                             return true
                         }
                     }
