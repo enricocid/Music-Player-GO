@@ -10,17 +10,14 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**Izzy**](https://github.com/IzzySoft) and [**Poussinou**](https://github.com/Poussinou) for setting up the F-Droid repository
 
-- [**Drhaal**](https://github.com/Drhaal) for Always On Display (AOD) [fixes](https://github.com/enricocid/Music-Player-GO/pull/186) and the following implementations: [190](https://github.com/enricocid/Music-Player-GO/pull/190), [193](https://github.com/enricocid/Music-Player-GO/pull/193), [230](https://github.com/enricocid/Music-Player-GO/pull/230), [234](https://github.com/enricocid/Music-Player-GO/pull/234), [240](https://github.com/enricocid/Music-Player-GO/pull/240), [297](https://github.com/enricocid/Music-Player-GO/pull/297),
-
-- [**Aidan Follestad**](https://github.com/afollestad) for the [RecyclerView's swipe implementation](https://github.com/afollestad/recyclical/blob/master/swipe/src/main/java/com/afollestad/recyclical/swipe/SwipeItemTouchListener.kt#L120) found in details fragment and queue/loved songs dialogs
-
 - [**Arianna Masciolini**](https://github.com/harisont) for the [original precise volume control](https://github.com/enricocid/Music-Player-GO/commits?author=harisont) implementation
-
-- [**watauoa**](https://github.com/watauoa) for the [original sleep timer](https://github.com/enricocid/Music-Player-GO/pull/388) implementation
 
 - [**Steven Schoen**](https://github.com/DSteve595) for the search function [fixes](https://github.com/enricocid/Music-Player-GO/commit/1c27ff3421dbf7820608237dc60a974955efb022) and quick [support](https://github.com/reddit/IndicatorFastScroll/issues/30)
 
-- [**quindecim**](https://github.com/quindecim) for bug reports ([0](https://github.com/enricocid/Music-Player-GO/commit/c7dab08d86bf84c2ddb7c058bacdfc5dddb307db), [1](https://github.com/enricocid/Music-Player-GO/commit/2a7f7a7270f43134d62baa24be78dffaac850749)) and support
+- [**OxygenCobalt**](https://github.com/OxygenCobalt) for [image loading optimizations](https://github.com/enricocid/Music-Player-GO/pull/287), [ViewPager2 improvements](https://github.com/enricocid/Music-Player-GO/pull/314) and incredible support to solve issues.
+
+- [**Allan Nordhøy**](https://github.com/comradekingu) 
+for [strings](https://github.com/enricocid/Music-Player-GO/pull/227), [readme](https://github.com/enricocid/Music-Player-GO/pull/277) and [FAQ](https://github.com/enricocid/Music-Player-GO/pull/278/) improvements
 
 - [**TacoTheDank**](https://github.com/TacoTheDank) for upgrades to gradle, java 1.8, translations and improvements [247](https://github.com/enricocid/Music-Player-GO/issues/247), [248](https://github.com/enricocid/Music-Player-GO/pull/248), [250](https://github.com/enricocid/Music-Player-GO/pull/250)
 
@@ -28,12 +25,17 @@ If you think you should be listed, don't hesitate to notify me! :)
 
 - [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes](https://github.com/enricocid/Music-Player-GO/pull/121) and its equalizer implementation: I learned so much about how an equalizer works
 
+- [**Drhaal**](https://github.com/Drhaal) for Always On Display (AOD) [fixes](https://github.com/enricocid/Music-Player-GO/pull/186) and the following implementations: [190](https://github.com/enricocid/Music-Player-GO/pull/190), [193](https://github.com/enricocid/Music-Player-GO/pull/193), [230](https://github.com/enricocid/Music-Player-GO/pull/230), [234](https://github.com/enricocid/Music-Player-GO/pull/234), [240](https://github.com/enricocid/Music-Player-GO/pull/240), [297](https://github.com/enricocid/Music-Player-GO/pull/297)
+
+- [**Aidan Follestad**](https://github.com/afollestad) for the [RecyclerView's swipe implementation](https://github.com/afollestad/recyclical/blob/master/swipe/src/main/java/com/afollestad/recyclical/swipe/SwipeItemTouchListener.kt#L120) found in details fragment and queue/loved songs dialogs
+
+- [**watauoa**](https://github.com/watauoa) for the [original sleep timer](https://github.com/enricocid/Music-Player-GO/pull/388) implementation
+
+- [**sinoory**](https://github.com/sinoory) for helping to fix a bug with [equalizer](https://github.com/enricocid/Music-Player-GO/issues/479) implementation
+
+- [**quindecim**](https://github.com/quindecim) for bug reports ([0](https://github.com/enricocid/Music-Player-GO/commit/c7dab08d86bf84c2ddb7c058bacdfc5dddb307db), [1](https://github.com/enricocid/Music-Player-GO/commit/2a7f7a7270f43134d62baa24be78dffaac850749)) and support
+
 - [**hoangchung**](https://github.com/hoangchungk53qx1) for [fixing double click](https://github.com/enricocid/Music-Player-GO/pull/356) in controls panel
-
-- [**OxygenCobalt**](https://github.com/OxygenCobalt) for [image loading optimizations](https://github.com/enricocid/Music-Player-GO/pull/287) and [ViewPager2 improvements](https://github.com/enricocid/Music-Player-GO/pull/314)
-
-- [**Allan Nordhøy**](https://github.com/comradekingu) 
-for [strings](https://github.com/enricocid/Music-Player-GO/pull/227), [readme](https://github.com/enricocid/Music-Player-GO/pull/277) and [FAQ](https://github.com/enricocid/Music-Player-GO/pull/278/) improvements
 
 - [**vtkhatri**](https://github.com/vtkhatri) for the original [date added sorting](https://github.com/enricocid/Music-Player-GO/commit/fe8077b1c067a7722f2605a0b89afe7e6805311d) implementation
 

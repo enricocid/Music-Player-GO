@@ -40,14 +40,12 @@ As per [guidelines](https://material.io/design/color/dark-theme.html) **desatura
 ### Does Music Player GO have or use an equalizer?
 
 Yes!
-Music Player GO has a built-in equalizer! The equalizer can be found in the "Now Playing" dialog.
+The equalizer can be found in the "Now Playing" dialog.
 
-Note however that MPGO presents a dialog that lets you to choose which equalizer to use by default.
+Note however that by default MPGO tries to open the system equalizer (**if it exists**)!
+You can force the use of the built-in equalizer from the app settings! 
 
-Notes:
-
-- In case of built-in equalizer faults, MPGO tries to fall back to the the system equalizer (**if it exists**) found on the device.
-- On certain ROMs (e.g. Lineage OS) use of the system equalizer (e.g. AudioFX, MusicFX) is forced unless you enable built-in equalizer via MPGO settings or disable the system equalizer from the system settings.
+Note: in case of built-in equalizer faults, MPGO tries to fall back to the the system equalizer (**if it exists**) found on the device.
 
 PS: don't blame the devs if equalizer is not working properly, blame the device manufacturer instead!
 

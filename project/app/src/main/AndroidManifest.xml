@@ -58,15 +58,9 @@
 
         <activity
             android:name=".equalizer.EqualizerActivity"
-            android:exported="false"
+            android:exported="true"
             android:launchMode="singleTask"
-            android:screenOrientation="user">
-
-            <intent-filter>
-                <action android:name="android.media.action.DISPLAY_AUDIO_EFFECT_CONTROL_PANEL" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="user" />
 
         <service
             android:name=".player.PlayerService"

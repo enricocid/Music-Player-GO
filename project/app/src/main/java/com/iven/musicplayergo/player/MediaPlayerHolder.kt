@@ -786,6 +786,7 @@ class MediaPlayerHolder:
                     if (fallback) {
                         Toast.makeText(activity, R.string.error_sys_eq, Toast.LENGTH_SHORT).show()
                     }
+                    GoPreferences.getPrefsInstance().isEqForced = true
                     notFound.printStackTrace()
                 }
             }
