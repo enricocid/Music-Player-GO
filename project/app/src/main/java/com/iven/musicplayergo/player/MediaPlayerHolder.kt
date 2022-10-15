@@ -157,7 +157,7 @@ class MediaPlayerHolder:
     // Media player state/booleans
     val isMediaPlayer get() = ::mediaPlayer.isInitialized
     val isPlaying get() = isMediaPlayer && state == GoConstants.PLAYING ||
-            ::mediaPlayer.isInitialized && state == GoConstants.RESUMED
+            isMediaPlayer && state == GoConstants.RESUMED
 
     private var sNotificationForeground = false
 
