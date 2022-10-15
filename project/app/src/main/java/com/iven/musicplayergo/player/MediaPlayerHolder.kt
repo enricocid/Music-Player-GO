@@ -315,7 +315,7 @@ class MediaPlayerHolder:
                     putBitmap(METADATA_KEY_ART, bmp)
                     mMediaMetadataCompat = build()
                     mPlayerService.getMediaSession()?.setMetadata(mMediaMetadataCompat)
-                    if (!isSongFromPrefs) {
+                    if (isPlay) {
                         startForeground()
                         mMusicNotificationManager?.run {
                             updatePlayPauseAction()
