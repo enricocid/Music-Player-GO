@@ -12,11 +12,10 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.models.NotificationAction
-import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.utils.Theming
 
 
-class NotificationActionsAdapter(private val ctx: Context, private val mediaPlayerHolder: MediaPlayerHolder?) :
+class NotificationActionsAdapter(private val ctx: Context) :
     RecyclerView.Adapter<NotificationActionsAdapter.CheckableItemsHolder>() {
 
     var selectedActions = GoPreferences.getPrefsInstance().notificationActions
@@ -49,17 +48,14 @@ class NotificationActionsAdapter(private val ctx: Context, private val mediaPlay
             with(itemView) {
 
                 val radioButton = findViewById<MaterialRadioButton>(R.id.radio)
-                mediaPlayerHolder?.let { mph ->
-                    findViewById<ImageView>(R.id.notif_action_0).setImageResource(
-                        Theming.getNotificationActionIcon(mActions[absoluteAdapterPosition].first, mph, isNotification = false)
-                    )
-                    findViewById<ImageView>(R.id.notif_action_1).setImageResource(
-                        Theming.getNotificationActionIcon(mActions[absoluteAdapterPosition].second, mph, isNotification = false)
-                    )
-                    radioButton.isChecked = selectedActions == mActions[absoluteAdapterPosition]
-
-                    contentDescription = ctx.getString(Theming.getNotificationActionTitle(mActions[absoluteAdapterPosition].first))
-                }
+                findViewById<ImageView>(R.id.notif_action_0).setImageResource(
+                    Theming.getNotificationActionIcon(mActions[absoluteAdapterPosition].first, isNotification = false)
+                )
+                findViewById<ImageView>(R.id.notif_action_1).setImageResource(
+                    Theming.getNotificationActionIcon(mActions[absoluteAdapterPosition].second, isNotification = false)
+                )
+                radioButton.isChecked = selectedActions == mActions[absoluteAdapterPosition]
+                contentDescription = ctx.getString(Theming.getNotificationActionTitle(mActions[absoluteAdapterPosition].first))
 
                 setOnClickListener {
                     notifyItemChanged(mActions.indexOf(selectedActions))

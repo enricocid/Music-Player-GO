@@ -280,7 +280,7 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                     sleepTimerElapsed.handleViewVisibility(show = false)
 
                     modalRv.setHasFixedSize(true)
-                    val notificationActionsAdapter = NotificationActionsAdapter(requireContext(), mMediaPlayerHolder)
+                    val notificationActionsAdapter = NotificationActionsAdapter(requireContext())
                     val layoutManager =  LinearLayoutManager(requireActivity())
                     modalRv.layoutManager = layoutManager
                     modalRv.adapter = notificationActionsAdapter

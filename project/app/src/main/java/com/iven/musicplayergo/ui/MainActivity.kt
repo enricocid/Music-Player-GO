@@ -569,9 +569,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
                 openNowPlayingFragment()
             }
             setOnLongClickListener {
-                if (!sDetailsFragmentExpanded) {
-                    onOpenPlayingArtistAlbum()
-                }
+                onOpenPlayingArtistAlbum()
                 return@setOnLongClickListener true
             }
         }
@@ -804,6 +802,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
             }
 
             val selectedArtistOrFolder = getSongSource()
+
             if (sDetailsFragmentExpanded) {
                 if (mDetailsFragment?.hasToUpdate(selectedArtistOrFolder)!!) {
                     closeDetailsFragment(isAnimation = false)

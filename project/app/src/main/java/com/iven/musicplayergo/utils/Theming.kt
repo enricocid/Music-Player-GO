@@ -204,11 +204,10 @@ object Theming {
     }
 
     @JvmStatic
-    fun getNotificationActionIcon(action: String,
-                                  mediaPlayerHolder: MediaPlayerHolder,
-                                  isNotification: Boolean) =
-        when (action) {
-            GoConstants.PLAY_PAUSE_ACTION -> if (mediaPlayerHolder.state != GoConstants.PAUSED) {
+    fun getNotificationActionIcon(action: String, isNotification: Boolean): Int {
+        val mediaPlayerHolder = MediaPlayerHolder.getInstance()
+        return when (action) {
+            GoConstants.PLAY_PAUSE_ACTION -> if (mediaPlayerHolder.state == GoConstants.PLAYING || mediaPlayerHolder.state == GoConstants.RESUMED) {
                 R.drawable.ic_pause
             } else {
                 R.drawable.ic_play
@@ -230,6 +229,7 @@ object Theming {
             }
             else -> R.drawable.ic_save_time
         }
+    }
 
     @JvmStatic
     fun getRepeatIcon(mediaPlayerHolder: MediaPlayerHolder, isNotification: Boolean) = when {

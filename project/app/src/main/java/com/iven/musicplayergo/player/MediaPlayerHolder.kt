@@ -161,8 +161,8 @@ class MediaPlayerHolder:
 
     private var sNotificationForeground = false
 
-    val isCurrentSong get() = currentSong != null || currentSongFM != null
     val isCurrentSongFM get() = currentSongFM != null
+    val isCurrentSong get() = currentSong != null || isCurrentSongFM
 
     private val sPlaybackSpeedPersisted get() = GoPreferences.getPrefsInstance().playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY
     var isRepeat1X = false
@@ -202,7 +202,7 @@ class MediaPlayerHolder:
 
     private fun startForeground() {
         if (!sNotificationForeground) {
-            if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 sNotificationForeground = try {
                     mMusicNotificationManager?.createNotification { notification ->
                         mPlayerService.startForeground(GoConstants.NOTIFICATION_ID, notification)
@@ -219,18 +219,6 @@ class MediaPlayerHolder:
                 mMusicNotificationManager?.createNotification { notification ->
                     mPlayerService.startForeground(GoConstants.NOTIFICATION_ID, notification)
                     sNotificationForeground = true
-                }
-            }
-        } else {
-            mMusicNotificationManager?.run {
-                updatePlayPauseAction()
-                if (GoPreferences.getPrefsInstance().notificationActions.first == GoConstants.REPEAT_ACTION) {
-                    updateRepeatIcon()
-                } else if (GoPreferences.getPrefsInstance().notificationActions.first == GoConstants.FAVORITE_ACTION) {
-                    updateFavoriteIcon()
-                }
-                updateNotificationContent {
-                    updateNotification()
                 }
             }
         }
@@ -321,13 +309,20 @@ class MediaPlayerHolder:
                     putLong(METADATA_KEY_NUM_TRACKS, songs.size.toLong())
                     putLong(METADATA_KEY_TRACK_NUMBER, songs.indexOf(this).toLong())
                 }
+
                 albumId?.waitForCover(mPlayerService) { bmp, _ ->
                     putBitmap(METADATA_KEY_ALBUM_ART, bmp)
                     putBitmap(METADATA_KEY_ART, bmp)
                     mMediaMetadataCompat = build()
                     mPlayerService.getMediaSession()?.setMetadata(mMediaMetadataCompat)
-                    if (isPlay) {
+                    if (!isSongFromPrefs) {
                         startForeground()
+                        mMusicNotificationManager?.run {
+                            updatePlayPauseAction()
+                            updateNotificationContent {
+                                updateNotification()
+                            }
+                        }
                     }
                 }
             }
@@ -698,8 +693,6 @@ class MediaPlayerHolder:
             mediaPlayerInterface.onQueueStartedOrEnded(started = isQueueStarted)
         }
 
-        updateMediaSessionMetaData()
-
         if (mExecutor == null) {
             startUpdatingCallbackWithPosition()
         }
@@ -718,6 +711,8 @@ class MediaPlayerHolder:
             }
             play()
         }
+
+        updateMediaSessionMetaData()
 
         mPlayerService.releaseWakeLock()
 

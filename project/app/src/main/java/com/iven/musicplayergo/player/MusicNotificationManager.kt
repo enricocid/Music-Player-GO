@@ -76,9 +76,11 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         mNotificationBuilder
             .setContentIntent(contentIntent)
             .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setSilent(true)
             .setShowWhen(false)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setLargeIcon(null)
             .setOngoing(mMediaPlayerHolder.isPlaying)
             .setSmallIcon(R.drawable.ic_music_note)
             .addAction(getNotificationAction(notificationActions.first))
@@ -99,6 +101,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     fun updateNotification() {
         if (::mNotificationBuilder.isInitialized) {
             mNotificationBuilder.setOngoing(mMediaPlayerHolder.isPlaying)
+            updatePlayPauseAction()
             with(mNotificationManagerCompat) {
                 notify(GoConstants.NOTIFICATION_ID, mNotificationBuilder.build())
             }
@@ -162,7 +165,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
     }
 
     private fun getNotificationAction(action: String): NotificationCompat.Action {
-        val icon = Theming.getNotificationActionIcon(action, mMediaPlayerHolder, isNotification = true)
+        val icon = Theming.getNotificationActionIcon(action, isNotification = true)
         return NotificationCompat.Action.Builder(icon, action, getPendingIntent(action)).build()
     }
 
