@@ -8,6 +8,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreferenceCompat
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.dialogs.RecyclerSheet
@@ -24,6 +25,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     private lateinit var mMediaControlInterface: MediaControlInterface
 
     private val mMediaPlayerHolder get() = MediaPlayerHolder.getInstance()
+    private val mGoPreferences get() = GoPreferences.getPrefsInstance()
 
     override fun setDivider(divider: Drawable?) {
         super.setDivider(null)
@@ -64,19 +66,19 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         findPreference<Preference>(getString(R.string.theme_pref_black))?.isVisible = Theming.isThemeNight(resources)
 
         findPreference<Preference>(getString(R.string.accent_pref))?.run {
-            summary = Theming.getAccentName(resources, GoPreferences.getPrefsInstance().accent)
+            summary = Theming.getAccentName(resources, mGoPreferences.accent)
             onPreferenceClickListener = this@PreferencesFragment
         }
 
         findPreference<Preference>(getString(R.string.filter_pref))?.onPreferenceClickListener = this@PreferencesFragment
 
         findPreference<Preference>(getString(R.string.active_tabs_pref))?.run {
-            summary = GoPreferences.getPrefsInstance().activeTabs.size.toString()
+            summary = mGoPreferences.activeTabs.size.toString()
             onPreferenceClickListener = this@PreferencesFragment
         }
 
         findPreference<Preference>(getString(R.string.notif_actions_pref))?.run {
-            summary = getString(Theming.getNotificationActionTitle(GoPreferences.getPrefsInstance().notificationActions.first))
+            summary = getString(Theming.getNotificationActionTitle(mGoPreferences.notificationActions.first))
             onPreferenceClickListener = this@PreferencesFragment
         }
 
@@ -98,7 +100,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 .show(requireActivity().supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
             getString(R.string.active_tabs_pref) -> RecyclerSheet.newInstance(RecyclerSheet.TABS_TYPE)
                 .show(requireActivity().supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
-            getString(R.string.filter_pref) -> if (!GoPreferences.getPrefsInstance().filters.isNullOrEmpty()) {
+            getString(R.string.filter_pref) -> if (!mGoPreferences.filters.isNullOrEmpty()) {
                 RecyclerSheet.newInstance(RecyclerSheet.FILTERS_TYPE)
                     .show(requireActivity().supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
             }
@@ -111,18 +113,23 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
             getString(R.string.precise_volume_pref) -> mMediaPlayerHolder.run {
-                setPreciseVolume(if (!GoPreferences.getPrefsInstance().isPreciseVolumeEnabled) {
-                    GoPreferences.getPrefsInstance().latestVolume = currentVolumeInPercent
+                setPreciseVolume(if (!mGoPreferences.isPreciseVolumeEnabled) {
+                    mGoPreferences.latestVolume = currentVolumeInPercent
                     100
                 } else {
-                    GoPreferences.getPrefsInstance().latestVolume
+                    mGoPreferences.latestVolume
                 })
             }
             getString(R.string.playback_vel_pref) -> mMediaControlInterface.onPlaybackSpeedToggled()
             getString(R.string.theme_pref) -> mUIControlInterface.onAppearanceChanged(isThemeChanged = true)
             getString(R.string.theme_pref_black) -> mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
+            getString(R.string.eq_pref) -> if (mGoPreferences.isEqForced) {
+                mMediaPlayerHolder.onBuiltInEqualizerEnabled()
+            } else {
+                mMediaPlayerHolder.releaseBuiltInEqualizer()
+            }
             getString(R.string.focus_pref) -> mMediaPlayerHolder.run {
-                if (GoPreferences.getPrefsInstance().isFocusEnabled) {
+                if (mGoPreferences.isFocusEnabled) {
                     tryToGetAudioFocus()
                 } else {
                     giveUpAudioFocus()
@@ -131,7 +138,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             getString(R.string.covers_pref) -> mMediaControlInterface.onHandleCoverOptionsUpdate()
             getString(R.string.notif_actions_pref) ->
                 findPreference<Preference>(getString(R.string.notif_actions_pref))?.summary =
-                    getString(Theming.getNotificationActionTitle(GoPreferences.getPrefsInstance().notificationActions.first))
+                    getString(Theming.getNotificationActionTitle(mGoPreferences.notificationActions.first))
             getString(R.string.song_visual_pref) -> {
                 mMediaPlayerHolder.updateMediaSessionMetaData()
                 mMediaControlInterface.onUpdatePlayingAlbumSongs(null)
@@ -139,10 +146,16 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         }
     }
 
-    fun disableEqualizerOption() {
-        findPreference<Preference>(getString(R.string.eq_pref))?.run {
-            isEnabled = false
-            summary = getString(R.string.error_builtin_eq)
+    fun enableEqualizerOption() {
+        val eqEnabled = mGoPreferences.isEqForced
+        findPreference<SwitchPreferenceCompat>(getString(R.string.eq_pref))?.run {
+            isChecked = eqEnabled
+            isEnabled = eqEnabled
+            summary = if (!eqEnabled) {
+                getString(R.string.error_builtin_eq)
+            } else {
+                getString(R.string.eq_pref_sum)
+            }
         }
     }
 

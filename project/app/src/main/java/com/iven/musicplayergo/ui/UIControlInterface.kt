@@ -13,4 +13,5 @@ interface UIControlInterface {
     fun onOpenPlayingArtistAlbum()
     fun onOpenEqualizer()
     fun onOpenSleepTimerDialog()
+    fun onEnableEqualizer()
 }

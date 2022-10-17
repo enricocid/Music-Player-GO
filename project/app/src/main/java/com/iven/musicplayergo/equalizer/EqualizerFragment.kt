@@ -1,8 +1,6 @@
 package com.iven.musicplayergo.equalizer
 
 import android.animation.Animator
-import android.content.ComponentName
-import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.media.audiofx.BassBoost
 import android.media.audiofx.Equalizer
@@ -237,10 +235,7 @@ class EqualizerFragment : Fragment() {
 
     private fun closeEqualizerOnError() {
 
-        // disable equalizer component
-        val pm = requireActivity().packageManager
-        val cn = ComponentName(requireContext().applicationContext, EqualizerActivity::class.java)
-        pm.setComponentEnabledSetting(cn, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP)
+        GoPreferences.getPrefsInstance().isEqForced = false
 
         //release built in equalizer
         mMediaPlayerHolder.releaseBuiltInEqualizer()

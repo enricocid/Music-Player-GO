@@ -4,7 +4,10 @@ import android.annotation.TargetApi
 import android.app.Activity
 import android.app.ForegroundServiceStartNotAllowedException
 import android.bluetooth.BluetoothDevice
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -41,6 +44,7 @@ import com.iven.musicplayergo.extensions.waitForCover
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedEqualizerSettings
 import com.iven.musicplayergo.ui.MainActivity
+import com.iven.musicplayergo.ui.UIControlInterface
 import com.iven.musicplayergo.utils.Lists
 import com.iven.musicplayergo.utils.Versioning
 import java.util.concurrent.Executors
@@ -75,6 +79,7 @@ private const val AUDIO_FOCUS_LOSS_TRANSIENT = 3
 // The headset connection states (0,1)
 private const val HEADSET_DISCONNECTED = 0
 private const val HEADSET_CONNECTED = 1
+
 
 class MediaPlayerHolder:
     MediaPlayer.OnErrorListener,
@@ -716,11 +721,7 @@ class MediaPlayerHolder:
 
         mPlayerService.releaseWakeLock()
 
-        GoPreferences.getPrefsInstance().savedEqualizerSettings?.run {
-            if (enabled) {
-                initOrGetBuiltInEqualizer()
-            }
-        }
+        onBuiltInEqualizerEnabled()
     }
 
     private fun play() {
@@ -752,12 +753,7 @@ class MediaPlayerHolder:
         }
     }
 
-    fun openEqualizer(activity: Activity, resultLauncher: ActivityResultLauncher<Intent>, fallback: Boolean) {
-
-        if (fallback) {
-            releaseBuiltInEqualizer()
-        }
-
+    fun openEqualizer(activity: Activity, resultLauncher: ActivityResultLauncher<Intent>) {
         when (mediaPlayer.audioSessionId) {
             AudioEffect.ERROR_BAD_VALUE -> Toast.makeText(
                 activity,
@@ -777,13 +773,20 @@ class MediaPlayerHolder:
                         )
                         resultLauncher.launch(this)
                     }
-                } catch (notFound: ActivityNotFoundException) {
-                    if (fallback) {
-                        Toast.makeText(activity, R.string.error_sys_eq, Toast.LENGTH_SHORT).show()
-                    }
+                } catch (e: Exception) {
+                    Toast.makeText(activity, R.string.error_sys_eq, Toast.LENGTH_SHORT).show()
                     GoPreferences.getPrefsInstance().isEqForced = true
-                    notFound.printStackTrace()
+                    (activity as UIControlInterface).onEnableEqualizer()
+                    e.printStackTrace()
                 }
+            }
+        }
+    }
+
+    fun onBuiltInEqualizerEnabled() {
+        GoPreferences.getPrefsInstance().savedEqualizerSettings?.run {
+            if (enabled) {
+                initOrGetBuiltInEqualizer()
             }
         }
     }

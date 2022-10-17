@@ -71,7 +71,6 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
     // Booleans
     private val sDetailsFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.DETAILS_FRAGMENT_TAG)
-    private val sErrorFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.ERROR_FRAGMENT_TAG)
     private var sAllowCommit = true
 
     private var sCloseDetailsFragment = true
@@ -135,9 +134,12 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
     private val equalizerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == EqualizerFragment.EQUALIZER_CANCELED_RESULT) {
-            tryOpenSysEqualizer()
-            mSettingsFragment?.getPreferencesFragment()?.disableEqualizerOption()
+            mSettingsFragment?.getPreferencesFragment()?.enableEqualizerOption()
         }
+    }
+
+    override fun onEnableEqualizer() {
+        mSettingsFragment?.getPreferencesFragment()?.enableEqualizerOption()
     }
 
     private fun doBindService() {
@@ -155,7 +157,6 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
     private fun handleBackPressed() {
         when {
             sDetailsFragmentExpanded -> closeDetailsFragment(isAnimation = mGoPreference.isAnimations)
-            sErrorFragmentExpanded -> finishAndRemoveTask()
             else -> if (mMainActivityBinding.viewPager2.currentItem != 0) {
                 mMainActivityBinding.viewPager2.currentItem = 0
             } else {
@@ -899,18 +900,13 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
         }
     }
 
-    private fun tryOpenSysEqualizer() {
-        Toast.makeText(this, R.string.error_builtin_eq, Toast.LENGTH_SHORT).show()
-        mMediaPlayerHolder.openEqualizer(this, equalizerLauncher, fallback = true)
-    }
-
     override fun onOpenEqualizer() {
         if (checkIsPlayer(showError = true)) {
             if (mGoPreference.isEqForced) {
                 val eqIntent = Intent(this, EqualizerActivity::class.java)
                 equalizerLauncher.launch(eqIntent)
             } else {
-                mMediaPlayerHolder.openEqualizer(this, equalizerLauncher, fallback = false)
+                mMediaPlayerHolder.openEqualizer(this, equalizerLauncher)
             }
             mNpDialog?.dismissAllowingStateLoss()
         }
@@ -1013,10 +1009,10 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
                     restoreQueueSong = forcePlay.second ?: songs.first()
                 }
 
-                    if (!isPlaying || forcePlay.first) {
-                        startSongFromQueue(forcePlay.second ?: songs.first())
-                    }
+                if (!isPlaying || forcePlay.first) {
+                    startSongFromQueue(forcePlay.second ?: songs.first())
                 }
+            }
         }
     }
 
