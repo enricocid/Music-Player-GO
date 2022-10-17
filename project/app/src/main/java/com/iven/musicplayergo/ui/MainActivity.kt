@@ -59,7 +59,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
     private val mMusicViewModel: MusicViewModel by viewModels()
 
     // Preferences
-    private val mGoPreference get() = GoPreferences.getPrefsInstance()
+    private val mGoPreferences get() = GoPreferences.getPrefsInstance()
 
     // Fragments
     private var mArtistsFragment: MusicContainersFragment? = null
@@ -156,7 +156,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
     private fun handleBackPressed() {
         when {
-            sDetailsFragmentExpanded -> closeDetailsFragment(isAnimation = mGoPreference.isAnimations)
+            sDetailsFragmentExpanded -> closeDetailsFragment(isAnimation = mGoPreferences.isAnimations)
             else -> if (mMainActivityBinding.viewPager2.currentItem != 0) {
                 mMainActivityBinding.viewPager2.currentItem = 0
             } else {
@@ -340,7 +340,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
     private fun initViewPager() {
         val pagerAdapter = ScreenSlidePagerAdapter(this)
         mMainActivityBinding.viewPager2.offscreenPageLimit =
-            mGoPreference.activeTabs.toList().size.minus(1)
+            mGoPreferences.activeTabs.toList().size.minus(1)
         mMainActivityBinding.viewPager2.adapter = pagerAdapter
         mMainActivityBinding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -388,7 +388,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
             tabIconTint = ColorStateList.valueOf(alphaAccentColor)
 
             TabLayoutMediator(this, mMainActivityBinding.viewPager2) { tab, position ->
-                tab.setIcon(Theming.getTabIcon(mGoPreference.activeTabs.toList()[position]))
+                tab.setIcon(Theming.getTabIcon(mGoPreferences.activeTabs.toList()[position]))
             }.attach()
 
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -424,7 +424,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
     }
 
     private fun initFragmentAt(position: Int) : Fragment {
-        when (mGoPreference.activeTabs.toList()[position]) {
+        when (mGoPreferences.activeTabs.toList()[position]) {
             GoConstants.ARTISTS_TAB -> mArtistsFragment = MusicContainersFragment.newInstance(GoConstants.ARTIST_VIEW)
             GoConstants.ALBUM_TAB -> mAlbumsFragment = MusicContainersFragment.newInstance(GoConstants.ALBUM_VIEW)
             GoConstants.SONGS_TAB -> mAllMusicFragment = AllMusicFragment.newInstance()
@@ -442,7 +442,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
         else -> getFragmentForIndex(4)
     }
 
-    private fun getFragmentForIndex(index: Int) = when (mGoPreference.activeTabs.toList()[index]) {
+    private fun getFragmentForIndex(index: Int) = when (mGoPreferences.activeTabs.toList()[index]) {
         GoConstants.ARTISTS_TAB -> mArtistsFragment ?: initFragmentAt(index)
         GoConstants.ALBUM_TAB -> mAlbumsFragment ?: initFragmentAt(index)
         GoConstants.SONGS_TAB -> mAllMusicFragment ?: initFragmentAt(index)
@@ -541,7 +541,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
         with(mPlayerControlsPanelBinding.favoritesButton) {
             safeClickListener {
-                if (!mGoPreference.favorites.isNullOrEmpty() && mFavoritesDialog == null) {
+                if (!mGoPreferences.favorites.isNullOrEmpty() && mFavoritesDialog == null) {
                     mFavoritesDialog = RecyclerSheet.newInstance(RecyclerSheet.FAV_TYPE).apply {
                         show(supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
                         onFavoritesDialogCancelled = {
@@ -554,7 +554,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
                 }
             }
             setOnLongClickListener {
-                if (!mGoPreference.favorites.isNullOrEmpty()) {
+                if (!mGoPreferences.favorites.isNullOrEmpty()) {
                     Dialogs.showClearFavoritesDialog(
                         this@MainActivity
                     )
@@ -593,9 +593,9 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
     override fun onPlaybackSpeedToggled() {
         //avoid having user stuck at selected playback speed
-        val isPlaybackPersisted = mGoPreference.playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY
+        val isPlaybackPersisted = mGoPreferences.playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY
         mMediaPlayerHolder.setPlaybackSpeed(if (isPlaybackPersisted) {
-            mGoPreference.latestPlaybackSpeed
+            mGoPreferences.latestPlaybackSpeed
         } else {
             1.0F
         })
@@ -625,11 +625,11 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
     override fun onFavoritesUpdated(clear: Boolean) {
 
-        val favorites = mGoPreference.favorites?.toMutableList()
+        val favorites = mGoPreferences.favorites?.toMutableList()
 
         if (clear) {
             favorites?.clear()
-            mGoPreference.favorites = null
+            mGoPreferences.favorites = null
             mFavoritesDialog?.dismissAllowingStateLoss()
         }
 
@@ -653,18 +653,18 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
                 onRestartSeekBarCallback()
                 updatePlayingInfo(restore = true)
             } else {
-                isSongFromPrefs = mGoPreference.latestPlayedSong != null
+                isSongFromPrefs = mGoPreferences.latestPlayedSong != null
 
-                var isQueueRestored = mGoPreference.isQueue
-                if (!mGoPreference.queue.isNullOrEmpty()) {
-                    queueSongs = mGoPreference.queue?.toMutableList()!!
+                var isQueueRestored = mGoPreferences.isQueue
+                if (!mGoPreferences.queue.isNullOrEmpty()) {
+                    queueSongs = mGoPreferences.queue?.toMutableList()!!
                     setQueueEnabled(enabled = true, canSkip = false)
                 }
 
                 val song = if (isSongFromPrefs) {
-                    val songIsAvailable = songIsAvailable(mGoPreference.latestPlayedSong)
+                    val songIsAvailable = songIsAvailable(mGoPreferences.latestPlayedSong)
                     if (!songIsAvailable.first && isQueueRestored != null) {
-                        mGoPreference.isQueue = null
+                        mGoPreferences.isQueue = null
                         isQueueRestored = null
                         isQueue = null
                     } else {
@@ -774,7 +774,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
     private fun saveRandomSongToPrefs() : Music? {
         val randomMusic = mMusicViewModel.getRandomMusic()
-        mGoPreference.latestPlayedSong = randomMusic
+        mGoPreferences.latestPlayedSong = randomMusic
         return randomMusic
     }
 
@@ -902,7 +902,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
     override fun onOpenEqualizer() {
         if (checkIsPlayer(showError = true)) {
-            if (mGoPreference.isEqForced) {
+            if (mGoPreferences.isEqForced) {
                 val eqIntent = Intent(this, EqualizerActivity::class.java)
                 equalizerLauncher.launch(eqIntent)
             } else {
@@ -1162,7 +1162,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
         override fun onBackupSong() {
             if (checkIsPlayer(showError = false) && !mMediaPlayerHolder.isPlaying) {
-                mGoPreference.latestPlayedSong = mMediaPlayerHolder.currentSong?.toSavedMusic(mMediaPlayerHolder.playerPosition, mMediaPlayerHolder.launchedBy)
+                mGoPreferences.latestPlayedSong = mMediaPlayerHolder.currentSong?.toSavedMusic(mMediaPlayerHolder.playerPosition, mMediaPlayerHolder.launchedBy)
             }
         }
 
@@ -1197,7 +1197,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
     // ViewPager2 adapter class
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-        override fun getItemCount() = mGoPreference.activeTabs.toList().size
+        override fun getItemCount() = mGoPreferences.activeTabs.toList().size
         override fun createFragment(position: Int): Fragment = handleOnNavigationItemSelected(position)
     }
 }
