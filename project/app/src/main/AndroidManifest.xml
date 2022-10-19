@@ -58,7 +58,6 @@
 
         <activity
             android:name=".equalizer.EqualizerActivity"
-            android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="user" />
 
