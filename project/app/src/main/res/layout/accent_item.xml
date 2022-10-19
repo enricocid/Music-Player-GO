@@ -11,13 +11,4 @@
     android:layout_marginBottom="16dp"
     app:cardCornerRadius="@dimen/accent_dim_radius"
     tools:ignore="ContentDescription"
-    tools:viewBindingIgnore="true">
-
-    <ImageView
-        android:id="@+id/check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:srcCompat="@drawable/ic_check" />
-
-</com.google.android.material.card.MaterialCardView>
+    tools:viewBindingIgnore="true" />

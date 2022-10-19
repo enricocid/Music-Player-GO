@@ -1,19 +1,17 @@
 package com.iven.musicplayergo.preferences
 
 import android.app.Activity
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.extensions.handleViewVisibility
-import com.iven.musicplayergo.extensions.toContrastColor
-import com.iven.musicplayergo.extensions.updateIconTint
 import com.iven.musicplayergo.utils.Theming
 
 
@@ -46,14 +44,19 @@ class AccentsAdapter(private val activity: Activity) :
                 val accentFullName = Theming.getAccentName(resources, absoluteAdapterPosition)
                 contentDescription = accentFullName
 
-                val cardView = this as MaterialCardView
-                cardView.setCardBackgroundColor(color)
-
-                findViewById<ImageView>(R.id.check).run {
-                    handleViewVisibility(
-                        show = absoluteAdapterPosition == selectedAccent
-                    )
-                    updateIconTint(ColorUtils.setAlphaComponent(color.toContrastColor(), 75))
+                (this as MaterialCardView).run {
+                    setCardBackgroundColor(color)
+                    radius = resources.getDimensionPixelSize(
+                        if (absoluteAdapterPosition != selectedAccent) {
+                            strokeWidth = 0
+                            strokeColor = Color.TRANSPARENT
+                            R.dimen.accent_dim_radius
+                        } else {
+                            strokeColor = ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.widgetsColor), 100)
+                            strokeWidth = resources.getDimensionPixelSize(R.dimen.search_bar_elevation)
+                            R.dimen.accent_dim_radius_uns
+                        }
+                    ).toFloat()
                 }
 
                 setOnClickListener {

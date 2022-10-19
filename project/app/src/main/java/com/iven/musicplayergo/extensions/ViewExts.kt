@@ -8,7 +8,6 @@ import android.app.Dialog
 import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.drawable.InsetDrawable
 import android.text.Spannable
 import android.text.SpannableString
@@ -22,7 +21,6 @@ import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.Toolbar
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.WindowInsetsCompat
@@ -246,8 +244,6 @@ fun View.safeClickListener(safeClickListener: (view: View) -> Unit) {
         }
     }
 }
-
-fun Int.toContrastColor() = if (ColorUtils.calculateLuminance(this) < 0.35) Color.WHITE else Color.DKGRAY
 
 fun ImageView.updateIconTint(tint: Int) {
     ImageViewCompat.setImageTintList(
