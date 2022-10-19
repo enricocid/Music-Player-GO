@@ -1,7 +1,9 @@
 package com.iven.musicplayergo.player
 
 
+import android.annotation.TargetApi
 import android.media.MediaPlayer
+import android.os.Build
 
 
 object MediaPlayerUtils {
@@ -27,6 +29,19 @@ object MediaPlayerUtils {
             } catch (e: IllegalStateException) {
                 e.printStackTrace()
             }
+        }
+    }
+
+    @JvmStatic
+    @TargetApi(Build.VERSION_CODES.M)
+    fun safeSetPlaybackSpeed(mediaPlayer: MediaPlayer, speed: Float) {
+        with(mediaPlayer) {
+            playbackParams = playbackParams.setSpeed(try {
+                speed
+            } catch (e: IllegalArgumentException) {
+                e.printStackTrace()
+                1.0F
+            })
         }
     }
 }

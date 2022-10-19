@@ -1028,8 +1028,8 @@ class MediaPlayerHolder:
                 GoPreferences.getPrefsInstance().latestPlaybackSpeed = currentPlaybackSpeed
             }
             if (state != GoConstants.PAUSED) {
+                MediaPlayerUtils.safeSetPlaybackSpeed(mediaPlayer, currentPlaybackSpeed)
                 updatePlaybackStatus(updateUI = false)
-                mediaPlayer.playbackParams = mediaPlayer.playbackParams.setSpeed(currentPlaybackSpeed)
             }
         }
     }
