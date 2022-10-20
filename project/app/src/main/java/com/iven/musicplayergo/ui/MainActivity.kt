@@ -280,21 +280,21 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
         if (sLaunchedByTile) {
             mMainActivityBinding.loadingProgressBar.handleViewVisibility(false)
-        }
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+                window?.navigationBarColor = Theming.resolveColorAttr(this, R.attr.main_bg)
+                WindowCompat.setDecorFitsSystemWindows(window, true)
+                mMainActivityBinding.root.applyEdgeToEdge()
+            }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            window?.navigationBarColor = Theming.resolveColorAttr(this, R.attr.main_bg)
-            WindowCompat.setDecorFitsSystemWindows(window, true)
-            mMainActivityBinding.root.applyEdgeToEdge()
-        }
+            sAllowCommit = true
 
-        sAllowCommit = true
-
-        savedInstanceState?.run {
-            mTabToRestore = getInt(GoConstants.RESTORE_FRAGMENT, -1)
-        }
-        if (intent.hasExtra(GoConstants.RESTORE_FRAGMENT) && mTabToRestore == -1) {
-            mTabToRestore = intent.getIntExtra(GoConstants.RESTORE_FRAGMENT, -1)
+            savedInstanceState?.run {
+                mTabToRestore = getInt(GoConstants.RESTORE_FRAGMENT, -1)
+            }
+            if (intent.hasExtra(GoConstants.RESTORE_FRAGMENT) && mTabToRestore == -1) {
+                mTabToRestore = intent.getIntExtra(GoConstants.RESTORE_FRAGMENT, -1)
+            }
         }
     }
 
@@ -326,13 +326,19 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
             // Be sure that prefs are initialized
             GoPreferences.initPrefs(this)
 
-            initMediaButtons()
-            initViewPager()
-            synchronized(handleRestore()) {
-                mMainActivityBinding.mainView.animate().apply {
-                    duration = 750
-                    alpha(1.0F)
+            if (!sLaunchedByTile) {
+
+                initMediaButtons()
+                initViewPager()
+
+                synchronized(handleRestore()) {
+                    mMainActivityBinding.mainView.animate().apply {
+                        duration = 750
+                        alpha(1.0F)
+                    }
                 }
+            } else {
+                handleRestore()
             }
 
         } else {
