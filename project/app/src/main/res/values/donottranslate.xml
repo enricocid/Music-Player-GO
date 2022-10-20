@@ -37,9 +37,6 @@
     <string name="sorting_pref_ascending">A-Z</string>
     <string name="sorting_pref_descending">Z-A</string>
 
-    <!-- Notifications -->
-    <string name="song_title_notification">&lt;b>%1s&lt;/b></string>
-
     <!-- Extended FAB placeholder -->
     <string name="extended_fab_placeholder">0</string>
 
