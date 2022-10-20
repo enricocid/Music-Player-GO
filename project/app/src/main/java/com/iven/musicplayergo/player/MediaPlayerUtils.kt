@@ -36,12 +36,12 @@ object MediaPlayerUtils {
     @TargetApi(Build.VERSION_CODES.M)
     fun safeSetPlaybackSpeed(mediaPlayer: MediaPlayer, speed: Float) {
         with(mediaPlayer) {
-            playbackParams = playbackParams.setSpeed(try {
-                speed
-            } catch (e: IllegalArgumentException) {
+            try {
+                playbackParams = playbackParams.setSpeed(speed)
+            } catch (e: IllegalStateException) {
+                playbackParams = playbackParams.setSpeed(1.0F)
                 e.printStackTrace()
-                1.0F
-            })
+            }
         }
     }
 }
