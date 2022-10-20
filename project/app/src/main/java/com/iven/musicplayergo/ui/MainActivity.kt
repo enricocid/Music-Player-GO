@@ -278,6 +278,10 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
         setContentView(mMainActivityBinding.root)
 
+        if (sLaunchedByTile) {
+            mMainActivityBinding.loadingProgressBar.handleViewVisibility(false)
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             window?.navigationBarColor = Theming.resolveColorAttr(this, R.attr.main_bg)
             WindowCompat.setDecorFitsSystemWindows(window, true)
@@ -338,9 +342,6 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
     // Handle restoring: handle intent data, if any, or restore playback
     private fun handleRestore() {
-        if (sLaunchedByTile) {
-            moveTaskToBack(true)
-        }
         synchronized(restorePlayerStatus()) {
             if (sLaunchedByTile) {
                 finishAndRemoveTask()
