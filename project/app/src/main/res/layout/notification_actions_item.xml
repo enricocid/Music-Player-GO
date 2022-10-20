@@ -8,8 +8,7 @@
     android:background="?android:selectableItemBackground"
     android:gravity="center"
     android:orientation="horizontal"
-    android:padding="16dp"
-    tools:viewBindingIgnore="true">
+    android:padding="16dp">
 
     <com.google.android.material.radiobutton.MaterialRadioButton
         android:id="@+id/radio"

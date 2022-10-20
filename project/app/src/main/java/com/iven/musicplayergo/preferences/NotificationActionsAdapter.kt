@@ -2,15 +2,12 @@ package com.iven.musicplayergo.preferences
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.radiobutton.MaterialRadioButton
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
-import com.iven.musicplayergo.R
+import com.iven.musicplayergo.databinding.NotificationActionsItemBinding
 import com.iven.musicplayergo.models.NotificationAction
 import com.iven.musicplayergo.utils.Theming
 
@@ -27,13 +24,10 @@ class NotificationActionsAdapter(private val ctx: Context) :
         NotificationAction(GoConstants.FAVORITE_POSITION_ACTION, GoConstants.CLOSE_ACTION)
     )
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = CheckableItemsHolder(
-        LayoutInflater.from(parent.context).inflate(
-            R.layout.notification_actions_item,
-            parent,
-            false
-        )
-    )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckableItemsHolder {
+        val binding = NotificationActionsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CheckableItemsHolder(binding)
+    }
 
     override fun getItemCount() = mActions.size
 
@@ -41,30 +35,30 @@ class NotificationActionsAdapter(private val ctx: Context) :
         holder.bindItems()
     }
 
-    inner class CheckableItemsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class CheckableItemsHolder(private val binding: NotificationActionsItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindItems() {
 
-            with(itemView) {
+            with(binding) {
 
-                val radioButton = findViewById<MaterialRadioButton>(R.id.radio)
-                findViewById<ImageView>(R.id.notif_action_0).setImageResource(
+                notifAction0.setImageResource(
                     Theming.getNotificationActionIcon(mActions[absoluteAdapterPosition].first, isNotification = false)
                 )
-                findViewById<ImageView>(R.id.notif_action_1).setImageResource(
+                notifAction1.setImageResource(
                     Theming.getNotificationActionIcon(mActions[absoluteAdapterPosition].second, isNotification = false)
                 )
-                radioButton.isChecked = selectedActions == mActions[absoluteAdapterPosition]
-                contentDescription = ctx.getString(Theming.getNotificationActionTitle(mActions[absoluteAdapterPosition].first))
+                radio.isChecked = selectedActions == mActions[absoluteAdapterPosition]
 
-                setOnClickListener {
+                root.contentDescription = ctx.getString(Theming.getNotificationActionTitle(mActions[absoluteAdapterPosition].first))
+
+                root.setOnClickListener {
                     notifyItemChanged(mActions.indexOf(selectedActions))
                     selectedActions = mActions[absoluteAdapterPosition]
                     notifyItemChanged(absoluteAdapterPosition)
                     GoPreferences.getPrefsInstance().notificationActions = selectedActions
                 }
 
-                setOnLongClickListener {
+                root.setOnLongClickListener {
                     Toast.makeText(
                         ctx,
                         Theming.getNotificationActionTitle(mActions[absoluteAdapterPosition].first),

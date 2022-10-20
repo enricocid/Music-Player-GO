@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.*
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -17,6 +15,7 @@ import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentMusicContainersBinding
+import com.iven.musicplayergo.databinding.GenericItemBinding
 import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.extensions.loadWithError
 import com.iven.musicplayergo.extensions.setTitleColor
@@ -337,13 +336,10 @@ class MusicContainersFragment : Fragment(),
             return ""
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ArtistHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.generic_item,
-                parent,
-                false
-            )
-        )
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistHolder {
+            val binding = GenericItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return ArtistHolder(binding)
+        }
 
         override fun getItemCount(): Int {
             return mList?.size!!
@@ -353,16 +349,11 @@ class MusicContainersFragment : Fragment(),
             holder.bindItems(mList?.get(holder.absoluteAdapterPosition)!!)
         }
 
-        inner class ArtistHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        inner class ArtistHolder(private val binding: GenericItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
             fun bindItems(item: String) {
 
-                with(itemView) {
-
-                    val title = findViewById<TextView>(R.id.title)
-                    val subtitle = findViewById<TextView>(R.id.subtitle)
-                    val selector = findViewById<ImageView>(R.id.selector)
-                    val albumCover = findViewById<ImageView>(R.id.album_cover)
+                with(binding) {
 
                     if (sLaunchedByAlbumView) {
                         albumCover.background.alpha = Theming.getAlbumCoverAlpha(requireContext())
@@ -378,7 +369,7 @@ class MusicContainersFragment : Fragment(),
 
                     selector.handleViewVisibility(show = itemsToHide.contains(item))
 
-                    setOnClickListener {
+                    root.setOnClickListener {
                         if (isActionMode) {
                             setItemViewSelected(item, absoluteAdapterPosition)
                         } else {
@@ -388,7 +379,7 @@ class MusicContainersFragment : Fragment(),
                             )
                         }
                     }
-                    setOnLongClickListener {
+                    root.setOnLongClickListener {
                         startActionMode()
                         setItemViewSelected(item, absoluteAdapterPosition)
                         return@setOnLongClickListener true

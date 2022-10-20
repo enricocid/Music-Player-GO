@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -17,6 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.ModalRvBinding
+import com.iven.musicplayergo.databinding.SleeptimerItemBinding
 import com.iven.musicplayergo.extensions.applyFullHeightDialog
 import com.iven.musicplayergo.extensions.handleViewVisibility
 import com.iven.musicplayergo.models.Music
@@ -371,13 +371,10 @@ class RecyclerSheet: BottomSheetDialogFragment() {
         fun getSelectedSleepTimer(): String = sleepOptions[mSelectedPosition]
         fun getSelectedSleepTimerValue() = sleepOptionValues[mSelectedPosition].toLong()
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SleepTimerHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.sleeptimer_item,
-                parent,
-                false
-            )
-        )
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SleepTimerHolder {
+            val binding = SleeptimerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return SleepTimerHolder(binding)
+        }
 
         override fun getItemCount(): Int {
             return sleepOptions.size
@@ -387,11 +384,11 @@ class RecyclerSheet: BottomSheetDialogFragment() {
             holder.bindItems(sleepOptions[holder.absoluteAdapterPosition])
         }
 
-        inner class SleepTimerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        inner class SleepTimerHolder(private val binding: SleeptimerItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
             fun bindItems(itemSleepOption: String) {
 
-                with(itemView as TextView) {
+                with(binding.root) {
                     text = itemSleepOption
                     contentDescription = itemSleepOption
                     setTextColor(if (mSelectedPosition == absoluteAdapterPosition) {

@@ -6,12 +6,12 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.databinding.MusicItemBinding
 import com.iven.musicplayergo.extensions.enablePopupIcons
 import com.iven.musicplayergo.extensions.setTitle
 import com.iven.musicplayergo.extensions.toFormattedDuration
@@ -32,13 +32,10 @@ class FavoritesAdapter(private val activity: Activity) : RecyclerView.Adapter<Fa
     // favorites
     private var mFavorites = GoPreferences.getPrefsInstance().favorites?.toMutableList()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = FavoritesHolder(
-        LayoutInflater.from(parent.context).inflate(
-            R.layout.music_item,
-            parent,
-            false
-        )
-    )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesHolder {
+        val binding = MusicItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return FavoritesHolder(binding)
+    }
 
     override fun getItemCount(): Int {
         return mFavorites?.size!!
@@ -48,30 +45,26 @@ class FavoritesAdapter(private val activity: Activity) : RecyclerView.Adapter<Fa
         holder.bindItems(mFavorites?.get(holder.absoluteAdapterPosition))
     }
 
-    inner class FavoritesHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class FavoritesHolder(private val binding: MusicItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindItems(favorite: Music?) {
 
-            val title = itemView.findViewById<TextView>(R.id.title)
-            val duration = itemView.findViewById<TextView>(R.id.duration)
-            val subtitle = itemView.findViewById<TextView>(R.id.subtitle)
-
             val displayedTitle = favorite?.toName()
 
-            title.text = displayedTitle
-            duration.text = Dialogs.computeDurationText(activity, favorite)
-            subtitle.text =
-                activity.getString(R.string.artist_and_album, favorite?.artist, favorite?.album)
+            with(binding) {
+                title.text = displayedTitle
+                duration.text = Dialogs.computeDurationText(activity, favorite)
+                subtitle.text =
+                    activity.getString(R.string.artist_and_album, favorite?.artist, favorite?.album)
 
-            with(itemView) {
-                setOnClickListener {
+                root.setOnClickListener {
                     mMediaControlInterface.onAddAlbumToQueue(
                         mFavorites,
                         forcePlay = Pair(first = true, second = mFavorites?.get(absoluteAdapterPosition))
                     )
                 }
-                setOnLongClickListener {
-                    showPopupForFavoriteSongs(absoluteAdapterPosition, this)
+                root.setOnLongClickListener {
+                    showPopupForFavoriteSongs(absoluteAdapterPosition, root)
                     return@setOnLongClickListener true
                 }
             }

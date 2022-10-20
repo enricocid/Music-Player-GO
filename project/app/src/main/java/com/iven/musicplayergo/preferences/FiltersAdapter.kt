@@ -2,12 +2,10 @@ package com.iven.musicplayergo.preferences
 
 import android.app.Activity
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.checkbox.MaterialCheckBox
 import com.iven.musicplayergo.GoPreferences
-import com.iven.musicplayergo.R
+import com.iven.musicplayergo.databinding.FilterItemBinding
 import com.iven.musicplayergo.utils.Theming
 
 
@@ -26,13 +24,10 @@ class FiltersAdapter(val activity: Activity) :
         removeAll(mItemsToRemove.toSet())
     }?.toSet()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = CheckableItemsHolder(
-        LayoutInflater.from(parent.context).inflate(
-            R.layout.filter_item,
-            parent,
-            false
-        )
-    )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckableItemsHolder {
+        val binding = FilterItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CheckableItemsHolder(binding)
+    }
 
     override fun getItemCount() = mAvailableItems?.size!!
 
@@ -40,11 +35,11 @@ class FiltersAdapter(val activity: Activity) :
         holder.bindItems(mAvailableItems?.get(position))
     }
 
-    inner class CheckableItemsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class CheckableItemsHolder(private val binding: FilterItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindItems(itemFilter: String?) {
 
-            with(itemView as MaterialCheckBox) {
+            with(binding.root) {
                 text = itemFilter
                 setOnCheckedChangeListener { _, b ->
                     if (b) {

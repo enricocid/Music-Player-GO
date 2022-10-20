@@ -2,7 +2,6 @@
 
 <com.google.android.material.checkbox.MaterialCheckBox xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/filter"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,5 +14,4 @@
     android:singleLine="true"
     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
     android:textColor="?android:attr/textColorPrimary"
-    app:buttonTint="@color/checkbox_tint"
-    tools:viewBindingIgnore="true" />
+    app:buttonTint="@color/checkbox_tint" />

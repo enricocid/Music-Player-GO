@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.*
-import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
@@ -17,6 +16,7 @@ import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentAllMusicBinding
+import com.iven.musicplayergo.databinding.MusicItemBinding
 import com.iven.musicplayergo.extensions.setTitleColor
 import com.iven.musicplayergo.extensions.toFormattedDate
 import com.iven.musicplayergo.extensions.toFormattedDuration
@@ -222,13 +222,10 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private inner class AllMusicAdapter : RecyclerView.Adapter<AllMusicAdapter.SongsHolder>(), PopupTextProvider {
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SongsHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.music_item,
-                parent,
-                false
-            )
-        )
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongsHolder {
+            val binding = MusicItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return SongsHolder(binding)
+        }
 
         override fun getPopupText(position: Int): String {
             if (sIsFastScrollerPopup) {
@@ -249,15 +246,11 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
             holder.bindItems(mAllMusic?.get(holder.absoluteAdapterPosition))
         }
 
-        inner class SongsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        inner class SongsHolder(private val binding: MusicItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
             fun bindItems(itemSong: Music?) {
 
-                with(itemView) {
-
-                    val title = findViewById<TextView>(R.id.title)
-                    val duration = findViewById<TextView>(R.id.duration)
-                    val subtitle = findViewById<TextView>(R.id.subtitle)
+                with(binding) {
 
                     val formattedDuration = itemSong?.duration?.toFormattedDuration(
                         isAlbum = false,
@@ -270,7 +263,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                     subtitle.text =
                         getString(R.string.artist_and_album, itemSong?.artist, itemSong?.album)
 
-                    setOnClickListener {
+                    root.setOnClickListener {
                         MediaPlayerHolder.getInstance().run {
                             if (isCurrentSongFM) {
                                 currentSongFM = null
@@ -283,7 +276,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                         )
                     }
 
-                    setOnLongClickListener {
+                    root.setOnLongClickListener {
                         val vh = _allMusicFragmentBinding?.allMusicRv?.findViewHolderForAdapterPosition(absoluteAdapterPosition)
                         Popups.showPopupForSongs(
                             requireActivity(),

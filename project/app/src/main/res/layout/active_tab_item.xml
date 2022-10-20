@@ -7,8 +7,7 @@
     android:layout_gravity="center_vertical"
     android:background="?android:attr/selectableItemBackground"
     android:gravity="center"
-    android:orientation="horizontal"
-    tools:viewBindingIgnore="true">
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/tab_drag_handle"

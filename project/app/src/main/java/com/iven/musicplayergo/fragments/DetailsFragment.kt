@@ -8,9 +8,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -20,12 +18,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.card.MaterialCardView
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.databinding.AlbumItemBinding
 import com.iven.musicplayergo.databinding.FragmentDetailsBinding
+import com.iven.musicplayergo.databinding.GenericItemBinding
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
@@ -618,13 +617,10 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
         private val mMediaControlInterface = activity as MediaControlInterface
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = AlbumsHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.album_item,
-                parent,
-                false
-            )
-        )
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumsHolder {
+            val binding = AlbumItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return AlbumsHolder(binding)
+        }
 
         override fun getItemCount(): Int {
             return mSelectedArtistAlbums?.size!!
@@ -634,17 +630,11 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             holder.bindItems(mSelectedArtistAlbums?.get(holder.absoluteAdapterPosition))
         }
 
-        inner class AlbumsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        inner class AlbumsHolder(private val binding: AlbumItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
             fun bindItems(itemAlbum: Album?) {
 
-                with(itemView) {
-                    val cardView = this as MaterialCardView
-
-                    val albumCover = findViewById<ImageView>(R.id.image)
-                    val album = findViewById<TextView>(R.id.album)
-                    val year = findViewById<TextView>(R.id.year)
-                    val totalDuration = findViewById<TextView>(R.id.total_duration)
+                with(binding) {
 
                     album.text = itemAlbum?.title
 
@@ -654,19 +644,19 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         isSeekBar = false
                     )
 
-                    cardView.strokeWidth = if (mSelectedAlbum?.title == itemAlbum?.title) {
+                    root.strokeWidth = if (mSelectedAlbum?.title == itemAlbum?.title) {
                         resources.getDimensionPixelSize(R.dimen.album_stroke)
                     } else {
                         0
                     }
 
-                    albumCover.background.alpha = Theming.getAlbumCoverAlpha(requireContext())
+                    image.background.alpha = Theming.getAlbumCoverAlpha(requireContext())
 
                     itemAlbum?.music?.first()?.albumId?.waitForCover(requireContext()) { bmp, error ->
-                        albumCover.loadWithError(bmp, error, R.drawable.ic_music_note_cover_alt)
+                        image.loadWithError(bmp, error, R.drawable.ic_music_note_cover_alt)
                     }
 
-                    setOnClickListener {
+                    root.setOnClickListener {
                         if (absoluteAdapterPosition != mSelectedAlbumPosition) {
                             notifyItemChanged(mSelectedAlbumPosition)
                             notifyItemChanged(absoluteAdapterPosition)
@@ -701,13 +691,10 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         val defaultTextColor = Theming.resolveColorAttr(requireContext(), android.R.attr.textColorPrimary)
         val accentTextColor = Theming.resolveThemeColor(resources)
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SongsHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.generic_item,
-                parent,
-                false
-            )
-        )
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongsHolder {
+            val binding = GenericItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return SongsHolder(binding)
+        }
 
         override fun getItemCount(): Int {
             return mSongsList?.size!!
@@ -717,15 +704,13 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             holder.bindItems(mSongsList?.get(holder.absoluteAdapterPosition))
         }
 
-        inner class SongsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        inner class SongsHolder(private val binding: GenericItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
             fun bindItems(itemSong: Music?) {
 
-                with(itemView) {
+                with(binding) {
 
-                    val title = findViewById<TextView>(R.id.title)
-                    val subtitle = findViewById<TextView>(R.id.subtitle)
-                    findViewById<ImageView>(R.id.album_cover).handleViewVisibility(show = false)
+                    albumCover.handleViewVisibility(show = false)
 
                     val displayedTitle =
                         if (sShowDisplayName || sLaunchedByFolderView) {
@@ -760,7 +745,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         duration
                     }
 
-                    setOnClickListener {
+                    root.setOnClickListener {
 
                         mMediaPlayerHolder.run {
                             if (isCurrentSongFM) {
@@ -786,7 +771,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         }
                     }
 
-                    setOnLongClickListener {
+                    root.setOnLongClickListener {
                         Popups.showPopupForSongs(
                             requireActivity(),
                             _detailsFragmentBinding?.songsRv?.findViewHolderForAdapterPosition(absoluteAdapterPosition)?.itemView,

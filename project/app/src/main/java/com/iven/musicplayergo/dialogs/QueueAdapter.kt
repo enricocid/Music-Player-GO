@@ -2,13 +2,12 @@ package com.iven.musicplayergo.dialogs
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.databinding.QueueItemBinding
 import com.iven.musicplayergo.extensions.startSongFromQueue
 import com.iven.musicplayergo.extensions.toName
 import com.iven.musicplayergo.models.Music
@@ -32,13 +31,10 @@ class QueueAdapter(private val ctx: Context, private val mediaPlayerHolder: Medi
         notifyItemChanged(queueSongs.indexOf(mSelectedSong))
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = QueueHolder(
-        LayoutInflater.from(parent.context).inflate(
-            R.layout.queue_item,
-            parent,
-            false
-        )
-    )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QueueHolder {
+        val binding = QueueItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return QueueHolder(binding)
+    }
 
     override fun getItemCount() = queueSongs.size
 
@@ -46,30 +42,26 @@ class QueueAdapter(private val ctx: Context, private val mediaPlayerHolder: Medi
         holder.bindItems(queueSongs[holder.absoluteAdapterPosition])
     }
 
-    inner class QueueHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class QueueHolder(private val binding: QueueItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindItems(song: Music) {
 
-            with(itemView) {
-
-                val title = findViewById<TextView>(R.id.title)
-                val duration = findViewById<TextView>(R.id.duration)
-                val subtitle = findViewById<TextView>(R.id.subtitle)
+            with(binding) {
 
                 val displayedTitle = song.toName()
 
                 title.text = displayedTitle
                 duration.text = Dialogs.computeDurationText(ctx, song)
                 subtitle.text =
-                    context.getString(R.string.artist_and_album, song.artist, song.album)
+                    ctx.getString(R.string.artist_and_album, song.artist, song.album)
 
                 title.setTextColor(if (mediaPlayerHolder.isQueue != null && mediaPlayerHolder.isQueueStarted && queueSongs.indexOf(mSelectedSong) == absoluteAdapterPosition) {
-                    Theming.resolveThemeColor(resources)
+                    Theming.resolveThemeColor(ctx.resources)
                 } else {
                     mDefaultTextColor
                 })
 
-                setOnClickListener {
+                root.setOnClickListener {
                     with(mediaPlayerHolder) {
                         if (isQueue == null) {
                             isQueue = currentSong

@@ -2,7 +2,6 @@ package com.iven.musicplayergo.preferences
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.databinding.ActiveTabItemBinding
 import com.iven.musicplayergo.extensions.updateIconTint
 import com.iven.musicplayergo.utils.Theming
 
@@ -27,13 +27,10 @@ class ActiveTabsAdapter(private val ctx: Context) :
         GoPreferences.getPrefsInstance().activeTabsDef = this
     }.minus(availableItems.minus(mActiveItems.toSet()).toSet()) /*make sure to respect tabs order*/
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = CheckableItemsHolder(
-        LayoutInflater.from(parent.context).inflate(
-            R.layout.active_tab_item,
-            parent,
-            false
-        )
-    )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckableItemsHolder {
+        val binding = ActiveTabItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CheckableItemsHolder(binding)
+    }
 
     override fun getItemCount() = availableItems.size
 
@@ -41,54 +38,50 @@ class ActiveTabsAdapter(private val ctx: Context) :
         holder.bindItems()
     }
 
-    inner class CheckableItemsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class CheckableItemsHolder(private val binding: ActiveTabItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindItems() {
 
-            with(itemView) {
+            with(binding) {
 
-                val tabDragHandle = findViewById<ImageView>(R.id.tab_drag_handle)
-
-                val tabText = findViewById<TextView>(R.id.tab_text)
                 tabText.text = ctx.getString(getTabText(availableItems[absoluteAdapterPosition]))
 
-                val tabImageButton = findViewById<ImageView>(R.id.tab_image)
-                tabImageButton.setImageResource(Theming.getTabIcon(availableItems[absoluteAdapterPosition]))
+                tabImage.setImageResource(Theming.getTabIcon(availableItems[absoluteAdapterPosition]))
 
-                isEnabled = availableItems[absoluteAdapterPosition] != GoConstants.SETTINGS_TAB
-                isClickable = isEnabled
+                root.isEnabled = availableItems[absoluteAdapterPosition] != GoConstants.SETTINGS_TAB
+                root.isClickable = root.isEnabled
 
-                if (isEnabled) {
+                if (root.isEnabled) {
                     manageTabStatus(
                         selected = mActiveItems.contains(availableItems[absoluteAdapterPosition]),
                         tabDragHandle,
                         tabText,
-                        tabImageButton
+                        tabImage
                     )
                 } else {
                     tabDragHandle.updateIconTint(mDisabledColor)
                     tabText.setTextColor(mDisabledColor)
-                    tabImageButton.updateIconTint(mDisabledColor)
+                    tabImage.updateIconTint(mDisabledColor)
                 }
 
-                setOnClickListener {
+                root.setOnClickListener {
 
                     manageTabStatus(
-                        selected = !tabImageButton.isSelected,
+                        selected = !tabImage.isSelected,
                         tabDragHandle,
                         tabText,
-                        tabImageButton
+                        tabImage
                     )
 
                     val toggledItem = availableItems[absoluteAdapterPosition]
-                    if (!tabImageButton.isSelected) {
+                    if (!tabImage.isSelected) {
                         mActiveItems.remove(toggledItem)
                     } else {
                         mActiveItems.add(toggledItem)
                     }
                     if (mActiveItems.size < 2) {
                         mActiveItems.add(toggledItem)
-                        manageTabStatus(selected = true, tabDragHandle, tabText, tabImageButton)
+                        manageTabStatus(selected = true, tabDragHandle, tabText, tabImage)
                     }
                 }
             }
