@@ -72,6 +72,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
     // Booleans
     private val sDetailsFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.DETAILS_FRAGMENT_TAG)
     private var sAllowCommit = true
+    private val sLaunchedByTile get() = intent != null && intent.getStringExtra(GoConstants.LAUNCHED_BY_TILE) != null
 
     private var sCloseDetailsFragment = true
 
@@ -264,7 +265,11 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setTheme(Theming.resolveTheme(this))
+        setTheme(if (sLaunchedByTile) {
+            R.style.BaseTheme_Transparent
+        } else {
+            Theming.resolveTheme(this)
+        })
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
@@ -333,7 +338,15 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
     // Handle restoring: handle intent data, if any, or restore playback
     private fun handleRestore() {
-        restorePlayerStatus()
+        if (sLaunchedByTile) {
+            moveTaskToBack(true)
+        }
+        synchronized(restorePlayerStatus()) {
+            if (sLaunchedByTile) {
+                finishAndRemoveTask()
+                mMediaPlayerHolder.resumeMediaPlayer()
+            }
+        }
         handleIntent(intent)
     }
 
@@ -699,9 +712,6 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
                     } else {
                         notifyError(GoConstants.TAG_SD_NOT_READY)
                     }
-                }
-                if (intent != null && intent.getStringExtra(GoConstants.LAUNCHED_BY_TILE) != null) {
-                    mMediaPlayerHolder.resumeMediaPlayer()
                 }
             }
         }

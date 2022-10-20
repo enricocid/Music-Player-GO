@@ -15,7 +15,7 @@ class PlayerTileService : TileService() {
         with(Intent(this, MainActivity::class.java)) {
             putExtra(GoConstants.LAUNCHED_BY_TILE, GoConstants.LAUNCHED_BY_TILE)
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            startActivityAndCollapse(this)
+            startActivity(this)
         }
     }
 }
