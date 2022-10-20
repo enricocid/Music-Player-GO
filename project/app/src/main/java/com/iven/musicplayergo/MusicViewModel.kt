@@ -242,5 +242,16 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
         }
+
+        // update queue/favorites by removing deleted or moved songs
+        val goPreferences = GoPreferences.getPrefsInstance()
+        deviceMusicFiltered?.let { deviceMusic ->
+            goPreferences.queue?.run {
+                goPreferences.queue = this.filter { deviceMusic.contains(it.copy(startFrom = 0))}
+            }
+            goPreferences.favorites?.run {
+                goPreferences.favorites = this.filter { deviceMusic.contains(it.copy(startFrom = 0))}
+            }
+        }
     }
 }
