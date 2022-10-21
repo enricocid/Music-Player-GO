@@ -163,14 +163,10 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
         _allMusicFragmentBinding?.searchToolbar?.setOnMenuItemClickListener {
 
-            if (it.itemId == R.id.default_sorting
-                || it.itemId == R.id.ascending_sorting
-                || it.itemId == R.id.descending_sorting
-                || it.itemId == R.id.date_added_sorting
-                || it.itemId == R.id.date_added_sorting_inv
-                || it.itemId == R.id.artist_sorting
-                || it.itemId == R.id.artist_sorting_inv
-                || it.itemId == R.id.album_sorting
+            if (it.itemId == R.id.default_sorting || it.itemId == R.id.ascending_sorting
+                || it.itemId == R.id.descending_sorting || it.itemId == R.id.date_added_sorting
+                || it.itemId == R.id.date_added_sorting_inv || it.itemId == R.id.artist_sorting
+                || it.itemId == R.id.artist_sorting_inv || it.itemId == R.id.album_sorting
                 || it.itemId == R.id.album_sorting_inv) {
 
                 mSorting = it.order
@@ -179,10 +175,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                 setMusicDataSource(mAllMusic)
 
                 mSortMenuItem.setTitleColor(
-                    Theming.resolveColorAttr(
-                        requireContext(),
-                        android.R.attr.textColorPrimary
-                    )
+                    Theming.resolveColorAttr(requireContext(), android.R.attr.textColorPrimary)
                 )
 
                 mSortMenuItem = Lists.getSelectedSortingForAllMusic(mSorting, menu).apply {
@@ -210,10 +203,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onQueryTextChange(newText: String?): Boolean {
         setMusicDataSource(
             Lists.processQueryForMusic(newText,
-                Lists.getSortedMusicListForAllMusic(
-                    mSorting,
-                    mMusicViewModel.deviceMusicFiltered
-                )
+                Lists.getSortedMusicListForAllMusic(mSorting, mMusicViewModel.deviceMusicFiltered)
             ) ?: mAllMusic)
         return false
     }

@@ -82,11 +82,12 @@ class PlayerService : Service() {
         val mediaButtonIntent = Intent(Intent.ACTION_MEDIA_BUTTON)
         val mediaButtonReceiverComponentName = ComponentName(applicationContext, MediaBtnReceiver::class.java)
 
-        val mediaButtonReceiverPendingIntent = PendingIntent.getBroadcast(applicationContext, 0, mediaButtonIntent, if (Versioning.isMarshmallow()) {
-            PendingIntent.FLAG_IMMUTABLE or 0
-        } else {
-            0
-        })
+        var flags = 0
+        if (Versioning.isMarshmallow()) {
+            flags = PendingIntent.FLAG_IMMUTABLE or 0
+        }
+        val mediaButtonReceiverPendingIntent = PendingIntent.getBroadcast(applicationContext,
+            0, mediaButtonIntent, flags)
 
         mMediaSessionCompat = MediaSessionCompat(this, packageName, mediaButtonReceiverComponentName, mediaButtonReceiverPendingIntent).apply {
             isActive = true

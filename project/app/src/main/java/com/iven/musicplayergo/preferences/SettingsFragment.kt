@@ -87,22 +87,21 @@ class SettingsFragment : Fragment() {
     @SuppressLint("SuspiciousIndentation")
     private fun openLocaleSwitcher() {
         val locales = ContextUtils.getLocalesList(resources)
-
         val dialog: MaterialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext()).setTitle(R.string.locale_pref_title).setItems(locales.values.toTypedArray()) { _, which ->
-                // Respond to item chosen
-                val newLocale = locales.keys.elementAt(which)
-                if (GoPreferences.getPrefsInstance().locale != newLocale) {
-                    GoPreferences.getPrefsInstance().locale = locales.keys.elementAt(which)
-                    mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
-                }
-            }.setNegativeButton(R.string.cancel, null)
-
-            if (GoPreferences.getPrefsInstance().locale != null) {
-                dialog.setNeutralButton(R.string.sorting_pref_default) { _, _ ->
-                    GoPreferences.getPrefsInstance().locale = null
-                    mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
-                }
+            // Respond to item chosen
+            val newLocale = locales.keys.elementAt(which)
+            if (GoPreferences.getPrefsInstance().locale != newLocale) {
+                GoPreferences.getPrefsInstance().locale = locales.keys.elementAt(which)
+                mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
             }
+        }.setNegativeButton(R.string.cancel, null)
+
+        if (GoPreferences.getPrefsInstance().locale != null) {
+            dialog.setNeutralButton(R.string.sorting_pref_default) { _, _ ->
+                GoPreferences.getPrefsInstance().locale = null
+                mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
+            }
+        }
         dialog.show()
     }
 
@@ -118,22 +117,19 @@ class SettingsFragment : Fragment() {
 
         if (info.size > 0) {
             customTabsIntent.launchUrl(requireContext(), parsedUri)
-        } else {
-            //from: https://github.com/immuni-app/immuni-app-android/blob/development/extensions/src/main/java/it/ministerodellasalute/immuni/extensions/utils/ExternalLinksHelper.kt
-            val browserIntent = Intent(Intent.ACTION_VIEW, parsedUri)
-            browserIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-
-            val fallbackInfo = solveInfo(browserIntent)
-            if (fallbackInfo.size > 0) {
-                requireContext().startActivity(browserIntent)
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.error_no_browser),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            return
         }
+
+        //from: https://github.com/immuni-app/immuni-app-android/blob/development/extensions/src/main/java/it/ministerodellasalute/immuni/extensions/utils/ExternalLinksHelper.kt
+        val browserIntent = Intent(Intent.ACTION_VIEW, parsedUri)
+        browserIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+        val fallbackInfo = solveInfo(browserIntent)
+        if (fallbackInfo.size > 0) {
+            requireContext().startActivity(browserIntent)
+            return
+        }
+        Toast.makeText(requireContext(), R.string.error_no_browser, Toast.LENGTH_SHORT).show()
     }
 
     @Suppress("DEPRECATION")

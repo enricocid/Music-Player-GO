@@ -27,9 +27,9 @@ object Dialogs {
                 }
                 .setNegativeButton(R.string.no, null)
                 .show()
-        } else {
-            uiControlInterface.onFiltersCleared()
+            return
         }
+        uiControlInterface.onFiltersCleared()
     }
 
     @JvmStatic
@@ -53,9 +53,9 @@ object Dialogs {
                 }
                 .setNegativeButton(R.string.no, null)
                 .show()
-        } else {
-            clearQueue()
+            return
         }
+        clearQueue()
     }
 
     @JvmStatic
@@ -70,9 +70,9 @@ object Dialogs {
                 }
                 .setNegativeButton(R.string.no, null)
                 .show()
-        } else {
-            uiControlInterface.onFavoritesUpdated(clear = true)
+            return
         }
+        uiControlInterface.onFavoritesUpdated(clear = true)
     }
 
     @JvmStatic
@@ -90,23 +90,24 @@ object Dialogs {
                 }
                 .setNeutralButton(R.string.cancel, null)
                 .show()
-        } else {
-            mediaPlayerHolder.stopPlaybackService(stopPlayback = false)
+            return
         }
-
+        mediaPlayerHolder.stopPlaybackService(stopPlayback = false)
     }
 
     @JvmStatic
     fun computeDurationText(ctx: Context, favorite: Music?): Spanned? {
-        if (favorite?.startFrom != null && favorite.startFrom > 0L) {
-            return ctx.getString(
-                R.string.favorite_subtitle,
-                favorite.startFrom.toLong().toFormattedDuration(
-                    isAlbum = false,
-                    isSeekBar = false
-                ),
-                favorite.duration.toFormattedDuration(isAlbum = false, isSeekBar = false)
-            ).parseAsHtml()
+        favorite?.startFrom?.let { start ->
+            if (start > 0L) {
+                return ctx.getString(
+                    R.string.favorite_subtitle,
+                    start.toLong().toFormattedDuration(
+                        isAlbum = false,
+                        isSeekBar = false
+                    ),
+                    favorite.duration.toFormattedDuration(isAlbum = false, isSeekBar = false)
+                ).parseAsHtml()
+            }
         }
         return favorite?.duration?.toFormattedDuration(isAlbum = false, isSeekBar = false)
             ?.parseAsHtml()

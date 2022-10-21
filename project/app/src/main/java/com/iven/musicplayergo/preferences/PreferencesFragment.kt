@@ -131,9 +131,9 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             getString(R.string.focus_pref) -> mMediaPlayerHolder.run {
                 if (mGoPreferences.isFocusEnabled) {
                     tryToGetAudioFocus()
-                } else {
-                    giveUpAudioFocus()
+                    return
                 }
+                giveUpAudioFocus()
             }
             getString(R.string.covers_pref) -> mMediaControlInterface.onHandleCoverOptionsUpdate()
             getString(R.string.notif_actions_pref) ->

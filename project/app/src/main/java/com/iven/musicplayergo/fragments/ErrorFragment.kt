@@ -31,7 +31,7 @@ class ErrorFragment : Fragment() {
 
         arguments?.getString(TAG_ERROR)?.let { errorType ->
 
-            when (errorType) {
+             when (errorType) {
                 GoConstants.TAG_NO_MUSIC -> {
                     mErrorIcon = R.drawable.ic_music_off
                     mErrorString = R.string.error_no_music

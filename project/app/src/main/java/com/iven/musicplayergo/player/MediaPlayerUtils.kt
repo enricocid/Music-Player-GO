@@ -38,7 +38,7 @@ object MediaPlayerUtils {
         with(mediaPlayer) {
             try {
                 playbackParams = playbackParams.setSpeed(speed)
-            } catch (e: IllegalStateException) {
+            } catch (e: IllegalArgumentException) {
                 playbackParams = playbackParams.setSpeed(1.0F)
                 e.printStackTrace()
             }

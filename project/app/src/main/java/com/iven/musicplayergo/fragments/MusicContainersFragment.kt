@@ -372,12 +372,9 @@ class MusicContainersFragment : Fragment(),
                     root.setOnClickListener {
                         if (isActionMode) {
                             setItemViewSelected(item, absoluteAdapterPosition)
-                        } else {
-                            mUiControlInterface.onArtistOrFolderSelected(
-                                item,
-                                mLaunchedBy
-                            )
+                            return@setOnClickListener
                         }
+                        mUiControlInterface.onArtistOrFolderSelected(item, mLaunchedBy)
                     }
                     root.setOnLongClickListener {
                         startActionMode()

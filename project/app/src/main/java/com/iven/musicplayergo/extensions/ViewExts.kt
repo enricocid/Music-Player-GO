@@ -68,10 +68,10 @@ fun ImageView.loadWithError(bitmap: Bitmap?, error: Boolean, albumArt: Int) {
     if (error) {
         scaleType = ImageView.ScaleType.CENTER_INSIDE
         load(ContextCompat.getDrawable(context, albumArt)?.toBitmap())
-    } else {
-        scaleType = ImageView.ScaleType.CENTER_CROP
-        load(bitmap)
+        return
     }
+    scaleType = ImageView.ScaleType.CENTER_CROP
+    load(bitmap)
 }
 
 // https://stackoverflow.com/a/38241603
@@ -137,11 +137,7 @@ fun FragmentManager.addFragment(fragment: Fragment?, tag: String?) {
     fragment?.let { fm ->
         commit {
             addToBackStack(null)
-            add(
-                R.id.container,
-                fm,
-                tag
-            )
+            add(R.id.container, fm, tag)
         }
     }
 }
@@ -166,26 +162,15 @@ fun View.createCircularReveal(show: Boolean): Animator {
 
     val revealDuration = 500L
     val radius = max(width, height).toFloat()
-
-    val startRadius = if (show) {
-        0f
-    } else {
-        radius
-    }
-    val finalRadius = if (show) {
-        radius
-    } else {
-        0f
+    var startRadius = radius
+    var finalRadius = 0F
+    if (show) {
+        startRadius = 0F
+        finalRadius = radius
     }
 
-    val animator =
-        ViewAnimationUtils.createCircularReveal(
-            this,
-            0,
-            0,
-            startRadius,
-            finalRadius
-        ).apply {
+    val animator = ViewAnimationUtils.createCircularReveal(this, 0, 0,
+        startRadius, finalRadius).apply {
             interpolator = FastOutSlowInInterpolator()
             duration = revealDuration
             doOnEnd {
@@ -221,8 +206,7 @@ fun RecyclerView.smoothSnapToPosition(position: Int) {
 
         override fun onStop() {
             super.onStop()
-            findViewHolderForAdapterPosition(position)
-                ?.itemView?.performClick()
+            findViewHolderForAdapterPosition(position)?.itemView?.performClick()
         }
     }
     smoothScroller.targetPosition = position
@@ -230,15 +214,11 @@ fun RecyclerView.smoothSnapToPosition(position: Int) {
 }
 
 fun View.handleViewVisibility(show: Boolean) {
-    visibility = if (show) {
-        View.VISIBLE
-    } else {
-        View.GONE
-    }
+    visibility = if (show) View.VISIBLE else View.GONE
 }
 
 fun View.safeClickListener(safeClickListener: (view: View) -> Unit) {
-    this.setOnClickListener {
+    setOnClickListener {
         if (!SingleClickHelper.isBlockingClick()) {
             safeClickListener(it)
         }
@@ -246,9 +226,7 @@ fun View.safeClickListener(safeClickListener: (view: View) -> Unit) {
 }
 
 fun ImageView.updateIconTint(tint: Int) {
-    ImageViewCompat.setImageTintList(
-        this, ColorStateList.valueOf(tint)
-    )
+    ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(tint))
 }
 
 

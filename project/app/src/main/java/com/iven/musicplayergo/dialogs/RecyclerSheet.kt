@@ -145,9 +145,9 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                         if (GoPreferences.getPrefsInstance().activeTabs != updatedItems) {
                             GoPreferences.getPrefsInstance().activeTabs = updatedItems
                             mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
-                        } else {
-                            dismiss()
+                            return@setOnClickListener
                         }
+                        dismiss()
                     }
                 }
 
@@ -175,9 +175,9 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                         if (GoPreferences.getPrefsInstance().filters != updatedItems) {
                             GoPreferences.getPrefsInstance().filters = updatedItems
                             mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
-                        } else {
-                            dismiss()
+                            return@setOnClickListener
                         }
+                        dismiss()
                     }
                 }
 
@@ -328,12 +328,12 @@ class RecyclerSheet: BottomSheetDialogFragment() {
                             viewHolder: RecyclerView.ViewHolder,
                             direction: Int ->
                         val index = viewHolder.absoluteAdapterPosition
+                        favoritesAdapter.notifyItemChanged(index)
                         if (direction == ItemTouchHelper.RIGHT) {
                             mMediaControlInterface.onAddToQueue(GoPreferences.getPrefsInstance().favorites?.get(index))
-                        } else {
-                            favoritesAdapter.performFavoriteDeletion(index)
+                            return@ItemSwipeCallback
                         }
-                        favoritesAdapter.notifyItemChanged(index)
+                        favoritesAdapter.performFavoriteDeletion(index)
                     }).attachToRecyclerView(modalRv)
                 }
             }
