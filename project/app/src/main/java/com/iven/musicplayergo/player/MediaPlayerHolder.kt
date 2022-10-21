@@ -161,8 +161,7 @@ class MediaPlayerHolder:
 
     // Media player state/booleans
     val isMediaPlayer get() = ::mediaPlayer.isInitialized
-    val isPlaying get() = isMediaPlayer && state == GoConstants.PLAYING ||
-            isMediaPlayer && state == GoConstants.RESUMED
+    val isPlaying get() = isMediaPlayer && state != GoConstants.PAUSED
 
     private var sNotificationForeground = false
 
@@ -265,20 +264,15 @@ class MediaPlayerHolder:
         mPlayingSongs = if (sortedMusic != null) {
             sortedMusic
         } else {
-            val sorting = if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
-                GoConstants.ASCENDING_SORTING
-            } else {
-                GoConstants.TRACK_SORTING
+            var sorting = GoConstants.TRACK_SORTING
+            if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
+                sorting = GoConstants.ASCENDING_SORTING
             }
             Lists.getSortedMusicList(sorting, mPlayingSongs?.toMutableList())
         }
     }
 
-    fun getCurrentAlbumSize() = if (mPlayingSongs != null) {
-        mPlayingSongs?.size!!
-    } else {
-        0
-    }
+    fun getCurrentAlbumSize() = mPlayingSongs?.size ?: 0
 
     private fun openOrCloseAudioEffectAction(event: String) {
         mPlayerService.sendBroadcast(
@@ -296,10 +290,9 @@ class MediaPlayerHolder:
                 putString(METADATA_KEY_ARTIST, artist)
                 putString(METADATA_KEY_AUTHOR, artist)
                 putString(METADATA_KEY_COMPOSER, artist)
-                val songTitle = if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
-                    displayName.toFilenameWithoutExtension()
-                } else {
-                    title
+                var songTitle = title
+                if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
+                    songTitle = displayName.toFilenameWithoutExtension()
                 }
                 putString(METADATA_KEY_TITLE, songTitle)
                 putString(METADATA_KEY_DISPLAY_TITLE, songTitle)
@@ -426,11 +419,7 @@ class MediaPlayerHolder:
             PlaybackStateCompat.Builder()
                 .setActions(mMediaSessionActions)
                 .setState(
-                    if (isPlaying) {
-                        GoConstants.PLAYING
-                    } else {
-                        GoConstants.PAUSED
-                           },
+                    if (isPlaying) GoConstants.PLAYING else GoConstants.PAUSED,
                     mediaPlayer.currentPosition.toLong(),
                     currentPlaybackSpeed
                 ).build()
@@ -529,16 +518,14 @@ class MediaPlayerHolder:
 
     private fun getSkipSong(isNext: Boolean): Music? {
 
-        val listToSeek = if (isQueue != null) {
-            queueSongs
-        } else {
-            mPlayingSongs
+        var listToSeek = mPlayingSongs
+        if (isQueue != null) {
+            listToSeek = queueSongs
         }
 
-        val songToSkip = if (isQueue != null && queueSongs.isNotEmpty() && isQueueStarted) {
-            currentSong
-        } else {
-            currentSong?.toSavedMusic(0, GoConstants.ARTIST_VIEW)
+        var songToSkip = currentSong?.toSavedMusic(0, GoConstants.ARTIST_VIEW)
+        if (isQueue != null && queueSongs.isNotEmpty() && isQueueStarted) {
+            songToSkip = currentSong
         }
 
         try {
@@ -553,13 +540,12 @@ class MediaPlayerHolder:
             e.printStackTrace()
             return when {
                 isQueue != null -> {
-                    val returnedSong = isQueue
                     if (isNext) {
                         setQueueEnabled(enabled = false, canSkip = false)
                     } else {
                         isQueueStarted = false
                     }
-                    returnedSong
+                    isQueue
                 }
                 else -> if (listToSeek?.indexOf(songToSkip) != 0) {
                     listToSeek?.first()
@@ -608,9 +594,9 @@ class MediaPlayerHolder:
                 mediaPlayer.currentPosition < 5000 -> skip(isNext = false)
                 else -> repeatSong(0)
             }
-        } else {
-            skip(isNext = false)
+            return
         }
+        skip(isNext = false)
     }
 
     /**
@@ -755,11 +741,7 @@ class MediaPlayerHolder:
 
     fun openEqualizer(activity: Activity, resultLauncher: ActivityResultLauncher<Intent>) {
         when (mediaPlayer.audioSessionId) {
-            AudioEffect.ERROR_BAD_VALUE -> Toast.makeText(
-                activity,
-                activity.getString(R.string.error_bad_id),
-                Toast.LENGTH_SHORT
-            ).show()
+            AudioEffect.ERROR_BAD_VALUE -> Toast.makeText(activity, R.string.error_bad_id, Toast.LENGTH_SHORT).show()
             else -> {
                 try {
                     Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL).apply {
@@ -931,21 +913,23 @@ class MediaPlayerHolder:
 
     fun setQueueEnabled(enabled: Boolean, canSkip: Boolean) {
         if (enabled) {
-            if (::mediaPlayerInterface.isInitialized) { mediaPlayerInterface.onQueueEnabled() }
-        } else {
-            if (isQueue != null) {
-                currentSong = isQueue
-                isQueue = null
-            }
-            restoreQueueSong = null
-            canRestoreQueue = false
-            isQueueStarted = false
-            GoPreferences.getPrefsInstance().isQueue = null
             if (::mediaPlayerInterface.isInitialized) {
-                mediaPlayerInterface.onQueueStartedOrEnded(started = false)
+                mediaPlayerInterface.onQueueEnabled()
             }
-            if (canSkip) { skip(isNext = true) }
+            return
         }
+        if (isQueue != null) {
+            currentSong = isQueue
+            isQueue = null
+        }
+        restoreQueueSong = null
+        canRestoreQueue = false
+        isQueueStarted = false
+        GoPreferences.getPrefsInstance().isQueue = null
+        if (::mediaPlayerInterface.isInitialized) {
+            mediaPlayerInterface.onQueueStartedOrEnded(started = false)
+        }
+        if (canSkip) { skip(isNext = true) }
     }
 
     fun skip(isNext: Boolean) {
@@ -1131,10 +1115,9 @@ class MediaPlayerHolder:
                 intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT)
             } ?: return
 
-            val action: Int = event.action
             var handled = false
 
-            if (action == KeyEvent.ACTION_DOWN) {
+            if (event.action == KeyEvent.ACTION_DOWN) {
                 when (event.keyCode) {
                     KeyEvent.KEYCODE_MEDIA_STOP, KeyEvent.KEYCODE_MEDIA_PAUSE -> if (isPlaying) {
                         pauseMediaPlayer()

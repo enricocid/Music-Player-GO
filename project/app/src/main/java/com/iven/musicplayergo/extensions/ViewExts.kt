@@ -68,10 +68,10 @@ fun ImageView.loadWithError(bitmap: Bitmap?, error: Boolean, albumArt: Int) {
     if (error) {
         scaleType = ImageView.ScaleType.CENTER_INSIDE
         load(ContextCompat.getDrawable(context, albumArt)?.toBitmap())
-    } else {
-        scaleType = ImageView.ScaleType.CENTER_CROP
-        load(bitmap)
+        return
     }
+    scaleType = ImageView.ScaleType.CENTER_CROP
+    load(bitmap)
 }
 
 // https://stackoverflow.com/a/38241603
@@ -166,16 +166,11 @@ fun View.createCircularReveal(show: Boolean): Animator {
 
     val revealDuration = 500L
     val radius = max(width, height).toFloat()
-
-    val startRadius = if (show) {
-        0f
-    } else {
-        radius
-    }
-    val finalRadius = if (show) {
-        radius
-    } else {
-        0f
+    var startRadius = radius
+    var finalRadius = 0F
+    if (show) {
+        startRadius = 0F
+        finalRadius = radius
     }
 
     val animator =

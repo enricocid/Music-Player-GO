@@ -85,7 +85,7 @@ class NowPlaying: BottomSheetDialogFragment() {
                     dismiss()
                 }
                 setOnLongClickListener {
-                    Toast.makeText(requireContext(), getString(R.string.open_details_fragment), Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), R.string.open_details_fragment, Toast.LENGTH_SHORT)
                         .show()
                     return@setOnLongClickListener false
                 }
@@ -123,10 +123,9 @@ class NowPlaying: BottomSheetDialogFragment() {
         }
 
         _npCoverBinding?.npCover?.afterMeasured {
-            val ratio = if (Theming.isDeviceLand(resources)) {
-                1.20f
-            } else {
-                1.25f
+            var ratio = 1.25F
+            if (Theming.isDeviceLand(resources)) {
+                ratio = 1.20f
             }
             val dim = (width * ratio).toInt()
             layoutParams = LinearLayout.LayoutParams(dim, dim)
@@ -177,17 +176,12 @@ class NowPlaying: BottomSheetDialogFragment() {
                     isChecked = GoPreferences.getPrefsInstance().continueOnEnd
                     setOnCheckedChangeListener { _, isChecked ->
                         GoPreferences.getPrefsInstance().continueOnEnd = isChecked
-                        Toast.makeText(
-                            requireContext(),
-                            getString(
-                                if (isChecked) {
-                                    R.string.pause_on_end_disabled
-                                } else {
-                                    R.string.pause_on_end
-                                }
-                            ),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        var msg = R.string.pause_on_end_disabled
+                        if (isChecked) {
+                            msg = R.string.pause_on_end
+                        }
+                        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT)
+                            .show()
                     }
                     setOnLongClickListener { switch ->
                         Toast.makeText(requireContext(), switch.contentDescription, Toast.LENGTH_SHORT)
@@ -354,7 +348,11 @@ class NowPlaying: BottomSheetDialogFragment() {
         mMediaPlayerHolder.run {
             if (!isPlay) { isPlay = true }
             if (isSongFromPrefs) { isSongFromPrefs = false }
-            if (isNext) { skip(isNext = true) } else { instantReset() }
+            if (isNext) {
+                skip(isNext = true)
+                return
+            }
+            instantReset()
         }
     }
 
@@ -362,11 +360,11 @@ class NowPlaying: BottomSheetDialogFragment() {
         _npCoverBinding?.run {
             val favoriteIcon = Theming.getFavoriteIcon(mediaPlayerHolder, isNotification = false)
             npLove.setImageResource(favoriteIcon)
-            npLove.updateIconTint(if (favoriteIcon == R.drawable.ic_favorite) {
-                Theming.resolveThemeColor(resources)
-            } else {
-                Theming.resolveWidgetsColorNormal(requireContext())
-            })
+            if (favoriteIcon == R.drawable.ic_favorite) {
+                npLove.updateIconTint(Theming.resolveThemeColor(resources))
+                return
+            }
+            npLove.updateIconTint(Theming.resolveWidgetsColorNormal(requireContext()))
         }
     }
 
@@ -379,11 +377,11 @@ class NowPlaying: BottomSheetDialogFragment() {
                         loadNpCover(song)
                     }
                     // load album/song info
-                    _nowPlayingBinding?.npSong?.text = if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
-                        song.displayName.toFilenameWithoutExtension()
-                    } else {
-                        song.title
+                    var songTitle = song.title
+                    if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
+                        songTitle = song.displayName.toFilenameWithoutExtension()
                     }
+                    _nowPlayingBinding?.npSong?.text = songTitle
                     _nowPlayingBinding?.npArtistAlbum?.text =
                         getString(
                             R.string.artist_and_album,
@@ -414,13 +412,11 @@ class NowPlaying: BottomSheetDialogFragment() {
 
     fun updatePlayingStatus(mediaPlayerHolder: MediaPlayerHolder) {
         mediaPlayerHolder.run {
-            val isPlaying = state != GoConstants.PAUSED
-            val drawable = if (isPlaying) {
-                R.drawable.ic_pause
-            } else {
-                R.drawable.ic_play
+            if (isPlaying) {
+                _npControlsBinding?.npPlay?.setImageResource(R.drawable.ic_pause)
+                return
             }
-            _npControlsBinding?.npPlay?.setImageResource(drawable)
+            _npControlsBinding?.npPlay?.setImageResource(R.drawable.ic_play)
         }
     }
 

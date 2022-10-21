@@ -157,15 +157,11 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                          if (Versioning.isQ()) {
                              audioRelativePath ?: application.getString(R.string.slash)
                          } else {
-                             val returnedPath = File(audioRelativePath).parentFile?.name
-                                 ?: application.getString(R.string.slash)
-                             if (returnedPath != "0") {
-                                 returnedPath
-                             } else {
-                                 application.getString(
-                                                R.string.slash
-                                        )
+                             var returnedPath = File(audioRelativePath).parentFile?.name
+                             if (returnedPath == null || returnedPath == "0") {
+                                 returnedPath = application.getString(R.string.slash)
                              }
+                             returnedPath
                          }
 
                      // Add the current music to the list

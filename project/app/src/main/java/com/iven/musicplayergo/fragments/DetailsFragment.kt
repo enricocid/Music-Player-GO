@@ -184,11 +184,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
             overflowIcon = ContextCompat.getDrawable(
                 requireContext(),
-                if (sLaunchedByArtistView) {
-                    R.drawable.ic_shuffle
-                } else {
-                    R.drawable.ic_more_vert
-                }
+                if (sLaunchedByArtistView) R.drawable.ic_shuffle else R.drawable.ic_more_vert
             )
 
             if (sLaunchedByArtistView || sLaunchedByFolderView) {
@@ -327,11 +323,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         }
 
         setSongsDataSource(
-            if (sLaunchedByArtistView) {
-                mSelectedAlbum?.music
-            } else {
-                mSongsList
-            },
+            if (sLaunchedByArtistView) mSelectedAlbum?.music else mSongsList,
             updateSongs = false,
             updateAdapter = false
         )

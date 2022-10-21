@@ -102,8 +102,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
     private fun checkIsPlayer(showError: Boolean): Boolean {
         if (!mMediaPlayerHolder.isMediaPlayer && !mMediaPlayerHolder.isSongFromPrefs && showError) {
-            Toast.makeText(this, getString(R.string.error_bad_id), Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(this, R.string.error_bad_id, Toast.LENGTH_SHORT).show()
             return false
         }
         return true
@@ -237,13 +236,13 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
             when (requestCode) {
                 GoConstants.PERMISSION_REQUEST_READ_EXTERNAL_STORAGE -> {
                     // If request is cancelled, the result arrays are empty.
-                    if ((grantResults.isNotEmpty() && grantResults.first() == PackageManager.PERMISSION_GRANTED)) {
-                        // Permission was granted, yay! Do bind service
-                        doBindService()
-                    } else {
+                    if ((grantResults.isNotEmpty() && grantResults.first() != PackageManager.PERMISSION_GRANTED)) {
                         // Permission denied, boo! Error!
                         notifyError(GoConstants.TAG_NO_PERMISSION)
+                        return
                     }
+                    // Permission was granted, yay! Do bind service
+                    doBindService()
                 }
             }
         }
@@ -257,19 +256,19 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
         super.onStart()
         if (Permissions.hasToAskForReadStoragePermission(this)) {
             Permissions.manageAskForReadStoragePermission(this)
-        } else {
-            doBindService()
+            return
         }
+        doBindService()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setTheme(if (sLaunchedByTile) {
-            R.style.BaseTheme_Transparent
-        } else {
-            Theming.resolveTheme(this)
-        })
+        var newTheme = Theming.resolveTheme(this)
+        if (sLaunchedByTile) {
+            newTheme = R.style.BaseTheme_Transparent
+        }
+        setTheme(newTheme)
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
@@ -280,21 +279,23 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
         if (sLaunchedByTile) {
             mMainActivityBinding.loadingProgressBar.handleViewVisibility(false)
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-                window?.navigationBarColor = Theming.resolveColorAttr(this, R.attr.main_bg)
-                WindowCompat.setDecorFitsSystemWindows(window, true)
-                mMainActivityBinding.root.applyEdgeToEdge()
-            }
+            return
+        }
 
-            sAllowCommit = true
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            window?.navigationBarColor = Theming.resolveColorAttr(this, R.attr.main_bg)
+            WindowCompat.setDecorFitsSystemWindows(window, true)
+            mMainActivityBinding.root.applyEdgeToEdge()
+        }
 
-            savedInstanceState?.run {
-                mTabToRestore = getInt(GoConstants.RESTORE_FRAGMENT, -1)
-            }
-            if (intent.hasExtra(GoConstants.RESTORE_FRAGMENT) && mTabToRestore == -1) {
-                mTabToRestore = intent.getIntExtra(GoConstants.RESTORE_FRAGMENT, -1)
-            }
+        sAllowCommit = true
+
+        savedInstanceState?.run {
+            mTabToRestore = getInt(GoConstants.RESTORE_FRAGMENT, -1)
+        }
+
+        if (intent.hasExtra(GoConstants.RESTORE_FRAGMENT) && mTabToRestore == -1) {
+            mTabToRestore = intent.getIntExtra(GoConstants.RESTORE_FRAGMENT, -1)
         }
     }
 
@@ -340,10 +341,9 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
             } else {
                 handleRestore()
             }
-
-        } else {
-            notifyError(GoConstants.TAG_NO_MUSIC)
+            return
         }
+        notifyError(GoConstants.TAG_NO_MUSIC)
     }
 
     // Handle restoring: handle intent data, if any, or restore playback
@@ -489,10 +489,9 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
                     mQueueDialog = null
                 }
             }
-        } else {
-            Toast.makeText(this, getString(R.string.error_no_queue), Toast.LENGTH_SHORT)
-                .show()
+            return
         }
+        Toast.makeText(this, R.string.error_no_queue, Toast.LENGTH_SHORT).show()
     }
 
     private fun openDetailsFragment(
@@ -536,10 +535,10 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
                     }
                 }
             }
-        } else {
-            if (sAllowCommit) {
-                supportFragmentManager.goBackFromFragmentNow(mDetailsFragment)
-            }
+            return
+        }
+        if (sAllowCommit) {
+            supportFragmentManager.goBackFromFragmentNow(mDetailsFragment)
         }
     }
 
@@ -569,8 +568,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
                         }
                     }
                 } else {
-                    Toast.makeText(this@MainActivity, getString(R.string.error_no_favorites), Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(this@MainActivity, R.string.error_no_favorites, Toast.LENGTH_SHORT).show()
                 }
             }
             setOnLongClickListener {
@@ -602,36 +600,29 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
         }
         if (isThemeChanged) {
             AppCompatDelegate.setDefaultNightMode(
-                Theming.getDefaultNightMode(
-                    this
-                )
+                Theming.getDefaultNightMode(this)
             )
-        } else {
-            Theming.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
+            return
         }
+        Theming.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
     }
 
     override fun onPlaybackSpeedToggled() {
         //avoid having user stuck at selected playback speed
         val isPlaybackPersisted = mGoPreferences.playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY
-        mMediaPlayerHolder.setPlaybackSpeed(if (isPlaybackPersisted) {
-            mGoPreferences.latestPlaybackSpeed
-        } else {
-            1.0F
-        })
+        var playbackSpeed = 1.0F
+        if (isPlaybackPersisted) {
+            playbackSpeed = mGoPreferences.latestPlaybackSpeed
+        }
+        mMediaPlayerHolder.setPlaybackSpeed(playbackSpeed)
     }
 
     private fun updatePlayingStatus() {
-        val isPlaying = mMediaPlayerHolder.state != GoConstants.PAUSED
-        val drawable =
-            if (isPlaying) {
-                R.drawable.ic_pause
-            } else {
-                R.drawable.ic_play
-            }
-        mPlayerControlsPanelBinding.playPauseButton.setImageResource(
-            drawable
-        )
+        if (mMediaPlayerHolder.isPlaying) {
+            mPlayerControlsPanelBinding.playPauseButton.setImageResource(R.drawable.ic_pause)
+            return
+        }
+        mPlayerControlsPanelBinding.playPauseButton.setImageResource(R.drawable.ic_play)
     }
 
     override fun onFavoriteAddedOrRemoved() {
@@ -653,16 +644,15 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
             mFavoritesDialog?.dismissAllowingStateLoss()
         }
 
-        val favoritesButtonColor = if (favorites.isNullOrEmpty()) {
-            mPlayerControlsPanelBinding.favoritesButton.setImageResource(R.drawable.ic_favorite_empty)
-            Theming.resolveWidgetsColorNormal(this)
-        } else {
-            mPlayerControlsPanelBinding.favoritesButton.setImageResource(R.drawable.ic_favorite)
-            Theming.resolveThemeColor(resources)
+        mPlayerControlsPanelBinding.favoritesButton.run {
+            if (favorites.isNullOrEmpty()) {
+                setImageResource(R.drawable.ic_favorite_empty)
+                updateIconTint(Theming.resolveWidgetsColorNormal(this@MainActivity))
+            } else {
+                setImageResource(R.drawable.ic_favorite)
+                updateIconTint(Theming.resolveThemeColor(resources))
+            }
         }
-        mPlayerControlsPanelBinding.favoritesButton.updateIconTint(
-            favoritesButtonColor
-        )
     }
 
     private fun restorePlayerStatus() {
@@ -672,54 +662,55 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
             if (isMediaPlayer && isPlaying) {
                 onRestartSeekBarCallback()
                 updatePlayingInfo(restore = true)
-            } else {
-                isSongFromPrefs = mGoPreferences.latestPlayedSong != null
+                return
+            }
 
-                var isQueueRestored = mGoPreferences.isQueue
-                if (!mGoPreferences.queue.isNullOrEmpty()) {
-                    queueSongs = mGoPreferences.queue?.toMutableList()!!
-                    setQueueEnabled(enabled = true, canSkip = false)
-                }
+            isSongFromPrefs = mGoPreferences.latestPlayedSong != null
 
-                val song = if (isSongFromPrefs) {
-                    val songIsAvailable = songIsAvailable(mGoPreferences.latestPlayedSong)
-                    if (!songIsAvailable.first && isQueueRestored != null) {
-                        mGoPreferences.isQueue = null
-                        isQueueRestored = null
-                        isQueue = null
-                    } else {
-                        if (isQueueRestored != null) {
-                            isQueue = isQueueRestored
-                            isQueueStarted = true
-                            mediaPlayerInterface.onQueueStartedOrEnded(started = true)
-                        }
-                    }
-                    songIsAvailable.second
+            var isQueueRestored = mGoPreferences.isQueue
+            if (!mGoPreferences.queue.isNullOrEmpty()) {
+                queueSongs = mGoPreferences.queue?.toMutableList()!!
+                setQueueEnabled(enabled = true, canSkip = false)
+            }
+
+            val song = if (isSongFromPrefs) {
+                val songIsAvailable = songIsAvailable(mGoPreferences.latestPlayedSong)
+                if (!songIsAvailable.first && isQueueRestored != null) {
+                    mGoPreferences.isQueue = null
+                    isQueueRestored = null
+                    isQueue = null
                 } else {
-                    mMusicViewModel.getRandomMusic()
-                }
-
-                song?.let { restoredSong ->
-
-                    val songs = MusicUtils.getAlbumSongs(
-                        (isQueueRestored ?: restoredSong).artist,
-                        (isQueueRestored ?: restoredSong).album,
-                        mMusicViewModel.deviceAlbumsByArtist
-                    )
-
-                    if (!songs.isNullOrEmpty()) {
-                        isPlay = false
-                        updateCurrentSong(restoredSong, songs, restoredSong.launchedBy)
-                        preparePlayback(restoredSong)
-                        updatePlayingInfo(restore = false)
-                        mPlayerControlsPanelBinding.songProgress.setProgressCompat(
-                            if (isCurrentSongFM) { 0 } else { restoredSong.startFrom },
-                            true
-                        )
-                    } else {
-                        notifyError(GoConstants.TAG_SD_NOT_READY)
+                    if (isQueueRestored != null) {
+                        isQueue = isQueueRestored
+                        isQueueStarted = true
+                        mediaPlayerInterface.onQueueStartedOrEnded(started = true)
                     }
                 }
+                songIsAvailable.second
+            } else {
+                mMusicViewModel.getRandomMusic()
+            }
+
+            song?.let { restoredSong ->
+
+                val songs = MusicUtils.getAlbumSongs(
+                    (isQueueRestored ?: restoredSong).artist,
+                    (isQueueRestored ?: restoredSong).album,
+                    mMusicViewModel.deviceAlbumsByArtist
+                )
+
+                if (!songs.isNullOrEmpty()) {
+                    isPlay = false
+                    updateCurrentSong(restoredSong, songs, restoredSong.launchedBy)
+                    preparePlayback(restoredSong)
+                    updatePlayingInfo(restore = false)
+                    mPlayerControlsPanelBinding.songProgress.setProgressCompat(
+                        if (isCurrentSongFM) { 0 } else { restoredSong.startFrom },
+                        true
+                    )
+                    return
+                }
+                notifyError(GoConstants.TAG_SD_NOT_READY)
             }
         }
     }
@@ -770,11 +761,11 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
     }
 
     private fun updatePlayingSongTitle(currentSong: Music) {
-        mPlayerControlsPanelBinding.playingSong.text = if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
-            currentSong.displayName.toFilenameWithoutExtension()
-        } else {
-            currentSong.title
+        var songTitle = currentSong.title
+        if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
+            songTitle = currentSong.displayName.toFilenameWithoutExtension()
         }
+        mPlayerControlsPanelBinding.playingSong.text = songTitle
     }
 
     // first: song is available, second: returned song
@@ -809,11 +800,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
             GoPreferences.getPrefsInstance().filters?.let { filters ->
                 mMediaPlayerHolder.currentSongFM?.run {
                     if (filters.contains(artist) || filters.contains(album) || filters.contains(this.relativePath)) {
-                        Toast.makeText(
-                            this@MainActivity,
-                            getString(R.string.filters_error),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(this@MainActivity, R.string.filters_error, Toast.LENGTH_SHORT).show()
                         return
                     }
                 }
@@ -834,22 +821,22 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
                     )
                 }
                 mDetailsFragment?.scrollToPlayingSong(mMediaPlayerHolder.currentSong?.id)
-            } else {
-                openDetailsFragment(
-                    selectedArtistOrFolder,
-                    mMediaPlayerHolder.launchedBy,
-                    mMediaPlayerHolder.currentSong?.id
-                )
+                return
             }
+            openDetailsFragment(
+                selectedArtistOrFolder,
+                mMediaPlayerHolder.launchedBy,
+                mMediaPlayerHolder.currentSong?.id
+            )
         }
     }
 
     override fun onCloseActivity() {
         if (mMediaPlayerHolder.isPlaying) {
             Dialogs.stopPlaybackDialog(this, mMediaPlayerHolder)
-        } else {
-            finishAndRemoveTask()
+            return
         }
+        finishAndRemoveTask()
     }
 
     override fun onHandleCoverOptionsUpdate() {
@@ -1056,15 +1043,15 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
         }
         if (songs != null) {
             mMediaPlayerHolder.updateCurrentSongs(songs)
-        } else {
-            val currentAlbumSize = mMediaPlayerHolder.getCurrentAlbumSize()
-            if (currentAlbumSize != 0 && currentAlbumSize > 1) {
-                // update current song to reflect this change
-                mMediaPlayerHolder.updateCurrentSongs(null)
-            }
-            if (mAllMusicFragment != null && !mAllMusicFragment?.onSongVisualizationChanged()!!) {
-                Theming.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
-            }
+            return
+        }
+        val currentAlbumSize = mMediaPlayerHolder.getCurrentAlbumSize()
+        if (currentAlbumSize != 0 && currentAlbumSize > 1) {
+            // update current song to reflect this change
+            mMediaPlayerHolder.updateCurrentSongs(null)
+        }
+        if (mAllMusicFragment != null && !mAllMusicFragment?.onSongVisualizationChanged()!!) {
+            Theming.applyChanges(this, mMainActivityBinding.viewPager2.currentItem)
         }
     }
 
@@ -1202,13 +1189,11 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
         }
 
         override fun onRepeat(toastMessage: Int) {
-            Toast.makeText(this@MainActivity, this@MainActivity.getString(toastMessage), Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(this@MainActivity, toastMessage, Toast.LENGTH_SHORT).show()
         }
 
         override fun onListEnded() {
-            Toast.makeText(this@MainActivity, this@MainActivity.getString(R.string.error_list_ended), Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(this@MainActivity, R.string.error_list_ended, Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -118,21 +118,18 @@ class SettingsFragment : Fragment() {
 
         if (info.size > 0) {
             customTabsIntent.launchUrl(requireContext(), parsedUri)
-        } else {
-            //from: https://github.com/immuni-app/immuni-app-android/blob/development/extensions/src/main/java/it/ministerodellasalute/immuni/extensions/utils/ExternalLinksHelper.kt
-            val browserIntent = Intent(Intent.ACTION_VIEW, parsedUri)
-            browserIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            return
+        }
 
-            val fallbackInfo = solveInfo(browserIntent)
-            if (fallbackInfo.size > 0) {
-                requireContext().startActivity(browserIntent)
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.error_no_browser),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+        //from: https://github.com/immuni-app/immuni-app-android/blob/development/extensions/src/main/java/it/ministerodellasalute/immuni/extensions/utils/ExternalLinksHelper.kt
+        val browserIntent = Intent(Intent.ACTION_VIEW, parsedUri)
+        browserIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+        val fallbackInfo = solveInfo(browserIntent)
+        if (fallbackInfo.size > 0) {
+            requireContext().startActivity(browserIntent)
+        } else {
+            Toast.makeText(requireContext(), R.string.error_no_browser, Toast.LENGTH_SHORT).show()
         }
     }
 

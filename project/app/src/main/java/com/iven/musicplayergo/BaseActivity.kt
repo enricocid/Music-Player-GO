@@ -11,15 +11,13 @@ abstract class BaseActivity: AppCompatActivity() {
     override fun attachBaseContext(newBase: Context?) {
         newBase?.let { ctx ->
             // Be sure that prefs are initialized
-            val goPreferences = GoPreferences.initPrefs(newBase)
-            if (goPreferences.locale == null) {
-                val localeUpdatedContext = ContextUtils.updateLocale(ctx, Locale.getDefault())
-                super.attachBaseContext(localeUpdatedContext)
-            } else {
-                val locale = Locale.forLanguageTag(goPreferences.locale!!)
+            GoPreferences.initPrefs(newBase).locale?.run {
+                val locale = Locale.forLanguageTag(this)
                 val localeUpdatedContext = ContextUtils.updateLocale(ctx, locale)
                 super.attachBaseContext(localeUpdatedContext)
+                return
             }
+            super.attachBaseContext(ContextUtils.updateLocale(ctx, Locale.getDefault()))
         }
     }
 }

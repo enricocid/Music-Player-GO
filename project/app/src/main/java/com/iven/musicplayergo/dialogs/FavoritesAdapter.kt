@@ -131,9 +131,9 @@ class FavoritesAdapter(private val activity: Activity) : RecyclerView.Adapter<Fa
                     }
                     .setNegativeButton(R.string.no, null)
                     .show()
-            } else {
-                deleteSong(song)
+                return
             }
+            deleteSong(song)
         }
     }
 }

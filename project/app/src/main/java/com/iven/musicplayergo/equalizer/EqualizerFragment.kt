@@ -112,10 +112,9 @@ class EqualizerFragment : Fragment() {
         val roundedTextBackground = MaterialShapeDrawable(shapeAppearanceModel).apply {
             strokeColor = ColorStateList.valueOf(Theming.resolveThemeColor(resources))
             strokeWidth = 2.5F
-            fillColor =
-                ColorStateList.valueOf(
-                    Theming.resolveColorAttr(requireContext(), R.attr.main_bg)
-                )
+            fillColor = ColorStateList.valueOf(
+                Theming.resolveColorAttr(requireContext(), R.attr.main_bg)
+            )
         }
 
         mEqualizer?.first?.run {
@@ -133,10 +132,7 @@ class EqualizerFragment : Fragment() {
                     slider.addOnChangeListener { selectedSlider, value, fromUser ->
                         if (fromUser) {
                             if (slider == selectedSlider) {
-                                setBandLevel(
-                                    item.index.toShort(),
-                                    value.toInt().toShort()
-                                )
+                                setBandLevel(item.index.toShort(), value.toInt().toShort())
                             }
                         }
                     }

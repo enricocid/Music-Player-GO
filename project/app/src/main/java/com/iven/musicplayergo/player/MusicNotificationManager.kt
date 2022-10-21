@@ -40,10 +40,9 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             action = playerAction
             component = ComponentName(playerService, PlayerService::class.java)
         }
-        val flags = if (Versioning.isMarshmallow()) {
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-        } else {
-            PendingIntent.FLAG_UPDATE_CURRENT
+        var flags = PendingIntent.FLAG_UPDATE_CURRENT
+        if (Versioning.isMarshmallow()) {
+            flags = PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         }
         return PendingIntent.getService(playerService, GoConstants.NOTIFICATION_INTENT_REQUEST_CODE, intent, flags)
     }
@@ -63,10 +62,9 @@ class MusicNotificationManager(private val playerService: PlayerService) {
         openPlayerIntent.flags =
             Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
 
-        val flags = if (Versioning.isMarshmallow()) {
-            PendingIntent.FLAG_IMMUTABLE or 0
-        } else {
-            0
+        var flags = 0
+        if (Versioning.isMarshmallow()) {
+            flags = PendingIntent.FLAG_IMMUTABLE or 0
         }
         val contentIntent = PendingIntent.getActivity(
             playerService, GoConstants.NOTIFICATION_INTENT_REQUEST_CODE,
@@ -120,13 +118,13 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                 updateNotificationContent {
                     updateNotification()
                 }
-            } else {
-                mNotificationActions[0] =
-                    getNotificationAction(notificationActions.first)
-                mNotificationActions[4] =
-                    getNotificationAction(notificationActions.second)
-                updateNotification()
+                return
             }
+            mNotificationActions[0] =
+                getNotificationAction(notificationActions.first)
+            mNotificationActions[4] =
+                getNotificationAction(notificationActions.second)
+            updateNotification()
         }
     }
 
