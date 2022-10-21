@@ -55,9 +55,9 @@ fun MediaPlayerHolder.addSongsToNextQueuePosition(songsToQueue: List<Music>) {
     if (isQueue != null && !canRestoreQueue && isQueueStarted) {
         val currentPosition = queueSongs.indexOf(currentSong)
         queueSongs.addAll(currentPosition+1, songsToQueue)
-    } else {
-        queueSongs.addAll(songsToQueue)
+        return
     }
+    queueSongs.addAll(songsToQueue)
 }
 
 //https://codereview.stackexchange.com/a/97819
@@ -97,11 +97,7 @@ fun Long.toAlbumArtURI(): Uri {
 fun Long.waitForCover(context: Context, onDone: (Bitmap?, Boolean) -> Unit) {
     Coil.imageLoader(context).enqueue(
         ImageRequest.Builder(context)
-            .data(if (GoPreferences.getPrefsInstance().isCovers) {
-                toAlbumArtURI()
-            } else {
-                null
-            })
+            .data(if (GoPreferences.getPrefsInstance().isCovers) toAlbumArtURI() else null)
             .target(
                 onSuccess = { onDone(it.toBitmap(), false) },
                 onError = { onDone(null, true) }
@@ -157,15 +153,16 @@ fun Int.toFormattedDate(): String {
     }
 }
 
-fun Int.toFormattedTrack() = try {
-    if (this >= 1000) {
-        this % 1000
-    } else {
-        this
+fun Int.toFormattedTrack(): Int {
+    try {
+        if (this >= 1000) {
+            return this % 1000
+        }
+        return this
+    } catch (e: Exception) {
+        e.printStackTrace()
+        return 0
     }
-} catch (e: Exception) {
-    e.printStackTrace()
-    0
 }
 
 fun Int.toFormattedYear(resources: Resources): String {
@@ -176,20 +173,8 @@ fun Int.toFormattedYear(resources: Resources): String {
 }
 
 fun Music.toSavedMusic(playerPosition: Int, savedLaunchedBy: String) =
-    Music(
-        artist,
-        year,
-        track,
-        title,
-        displayName,
-        duration,
-        album,
-        albumId,
-        relativePath,
-        id,
-        savedLaunchedBy,
-        playerPosition,
-        dateAdded
+    Music(artist, year, track, title, displayName, duration, album, albumId,
+        relativePath, id, savedLaunchedBy, playerPosition, dateAdded
     )
 
 fun List<Music>.savedSongIsAvailable(currentSong: Music?) : Music? =

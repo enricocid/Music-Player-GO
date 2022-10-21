@@ -137,11 +137,7 @@ fun FragmentManager.addFragment(fragment: Fragment?, tag: String?) {
     fragment?.let { fm ->
         commit {
             addToBackStack(null)
-            add(
-                R.id.container,
-                fm,
-                tag
-            )
+            add(R.id.container, fm, tag)
         }
     }
 }
@@ -173,14 +169,8 @@ fun View.createCircularReveal(show: Boolean): Animator {
         finalRadius = radius
     }
 
-    val animator =
-        ViewAnimationUtils.createCircularReveal(
-            this,
-            0,
-            0,
-            startRadius,
-            finalRadius
-        ).apply {
+    val animator = ViewAnimationUtils.createCircularReveal(this, 0, 0,
+        startRadius, finalRadius).apply {
             interpolator = FastOutSlowInInterpolator()
             duration = revealDuration
             doOnEnd {
@@ -216,8 +206,7 @@ fun RecyclerView.smoothSnapToPosition(position: Int) {
 
         override fun onStop() {
             super.onStop()
-            findViewHolderForAdapterPosition(position)
-                ?.itemView?.performClick()
+            findViewHolderForAdapterPosition(position)?.itemView?.performClick()
         }
     }
     smoothScroller.targetPosition = position
@@ -225,15 +214,11 @@ fun RecyclerView.smoothSnapToPosition(position: Int) {
 }
 
 fun View.handleViewVisibility(show: Boolean) {
-    visibility = if (show) {
-        View.VISIBLE
-    } else {
-        View.GONE
-    }
+    visibility = if (show) View.VISIBLE else View.GONE
 }
 
 fun View.safeClickListener(safeClickListener: (view: View) -> Unit) {
-    this.setOnClickListener {
+    setOnClickListener {
         if (!SingleClickHelper.isBlockingClick()) {
             safeClickListener(it)
         }
@@ -241,9 +226,7 @@ fun View.safeClickListener(safeClickListener: (view: View) -> Unit) {
 }
 
 fun ImageView.updateIconTint(tint: Int) {
-    ImageViewCompat.setImageTintList(
-        this, ColorStateList.valueOf(tint)
-    )
+    ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(tint))
 }
 
 

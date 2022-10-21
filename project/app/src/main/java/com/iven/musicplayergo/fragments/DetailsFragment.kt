@@ -210,22 +210,14 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private fun setupToolbarSpecs() {
         _detailsFragmentBinding?.detailsToolbar?.run {
-
-            elevation = if (sLaunchedByFolderView) {
-                resources.getDimensionPixelSize(R.dimen.search_bar_elevation).toFloat()
-            } else {
-                0F
+            if (sLaunchedByFolderView) {
+                elevation = resources.getDimensionPixelSize(R.dimen.search_bar_elevation).toFloat()
+                setBackgroundColor(Theming.resolveColorAttr(requireContext(), R.attr.toolbar_bg))
             }
 
             val params = layoutParams as LinearLayout.LayoutParams
-            params.bottomMargin = if (!sLaunchedByArtistView) {
-                0
-            } else {
-                resources.getDimensionPixelSize(R.dimen.player_controls_padding_normal)
-            }
-
-            if (sLaunchedByFolderView) {
-                setBackgroundColor(Theming.resolveColorAttr(requireContext(), R.attr.toolbar_bg))
+            if (sLaunchedByArtistView) {
+                params.bottomMargin = resources.getDimensionPixelSize(R.dimen.player_controls_padding_normal)
             }
         }
     }
@@ -294,6 +286,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                 val searchView =
                     detailsToolbar.menu.findItem(R.id.action_search).actionView as SearchView
+
                 with(searchView) {
                     setOnQueryTextListener(this@DetailsFragment)
                     setOnQueryTextFocusChangeListener { _, hasFocus ->
@@ -340,12 +333,8 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                 if (direction == ItemTouchHelper.RIGHT) {
                     mMediaControlInterface.onAddToQueue(song)
                 } else {
-                    Lists.addToFavorites(
-                        requireContext(),
-                        song,
-                        canRemove = false,
-                        0,
-                        mLaunchedBy
+                    Lists.addToFavorites(requireContext(), song,
+                        canRemove = false, 0, mLaunchedBy
                     )
                     mUIControlInterface.onFavoriteAddedOrRemoved()
                     mMediaPlayerHolder.onUpdateFavorites()
@@ -436,8 +425,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onQueryTextChange(newText: String?): Boolean {
         setSongsDataSource(
-            Lists.processQueryForMusic(newText, getSongSource())
-                ?: mSongsList,
+            Lists.processQueryForMusic(newText, getSongSource()) ?: mSongsList,
             updateSongs = false,
             updateAdapter = true
         )
@@ -580,9 +568,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
     fun tryToSnapToAlbumPosition(snapPosition: Int) {
         sPlayFirstSong = false
         if (sLaunchedByArtistView && snapPosition != -1) {
-            _detailsFragmentBinding?.albumsRv?.smoothSnapToPosition(
-                snapPosition
-            )
+            _detailsFragmentBinding?.albumsRv?.smoothSnapToPosition(snapPosition)
         }
     }
 

@@ -87,22 +87,21 @@ class SettingsFragment : Fragment() {
     @SuppressLint("SuspiciousIndentation")
     private fun openLocaleSwitcher() {
         val locales = ContextUtils.getLocalesList(resources)
-
         val dialog: MaterialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext()).setTitle(R.string.locale_pref_title).setItems(locales.values.toTypedArray()) { _, which ->
-                // Respond to item chosen
-                val newLocale = locales.keys.elementAt(which)
-                if (GoPreferences.getPrefsInstance().locale != newLocale) {
-                    GoPreferences.getPrefsInstance().locale = locales.keys.elementAt(which)
-                    mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
-                }
-            }.setNegativeButton(R.string.cancel, null)
-
-            if (GoPreferences.getPrefsInstance().locale != null) {
-                dialog.setNeutralButton(R.string.sorting_pref_default) { _, _ ->
-                    GoPreferences.getPrefsInstance().locale = null
-                    mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
-                }
+            // Respond to item chosen
+            val newLocale = locales.keys.elementAt(which)
+            if (GoPreferences.getPrefsInstance().locale != newLocale) {
+                GoPreferences.getPrefsInstance().locale = locales.keys.elementAt(which)
+                mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
             }
+        }.setNegativeButton(R.string.cancel, null)
+
+        if (GoPreferences.getPrefsInstance().locale != null) {
+            dialog.setNeutralButton(R.string.sorting_pref_default) { _, _ ->
+                GoPreferences.getPrefsInstance().locale = null
+                mUIControlInterface.onAppearanceChanged(isThemeChanged = false)
+            }
+        }
         dialog.show()
     }
 
@@ -128,9 +127,9 @@ class SettingsFragment : Fragment() {
         val fallbackInfo = solveInfo(browserIntent)
         if (fallbackInfo.size > 0) {
             requireContext().startActivity(browserIntent)
-        } else {
-            Toast.makeText(requireContext(), R.string.error_no_browser, Toast.LENGTH_SHORT).show()
+            return
         }
+        Toast.makeText(requireContext(), R.string.error_no_browser, Toast.LENGTH_SHORT).show()
     }
 
     @Suppress("DEPRECATION")
