@@ -127,9 +127,11 @@ class MediaPlayerHolder:
                     sPlayOnFocusGain =
                         isMediaPlayer && state == GoConstants.PLAYING || state == GoConstants.RESUMED
                 }
-                AudioManager.AUDIOFOCUS_LOSS ->
+                AudioManager.AUDIOFOCUS_LOSS -> {
                     // Lost audio focus, probably "permanently"
                     mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
+                    stopPlaybackService(true)
+                }
             }
             // Update the player state based on the change
             if (isPlaying || state == GoConstants.PAUSED && sRestoreVolume || state == GoConstants.PAUSED && sPlayOnFocusGain) {
@@ -468,9 +470,8 @@ class MediaPlayerHolder:
     }
 
     fun pauseMediaPlayer() {
+        // Do not pause foreground service, we will need to resume likely
         MediaPlayerUtils.safePause(mediaPlayer)
-        ServiceCompat.stopForeground(mPlayerService, ServiceCompat.STOP_FOREGROUND_DETACH)
-        sNotificationForeground = false
         state = GoConstants.PAUSED
         updatePlaybackStatus(updateUI = true)
         mMusicNotificationManager?.run {
