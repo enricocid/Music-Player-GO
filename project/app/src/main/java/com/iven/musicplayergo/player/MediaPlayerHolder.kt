@@ -531,28 +531,27 @@ class MediaPlayerHolder:
         }
 
         try {
-            return listToSeek?.get(
-                if (isNext) {
-                    listToSeek.indexOf(songToSkip).plus(1)
-                } else {
-                    listToSeek.indexOf(songToSkip).minus(1)
-                }
-            )
+            if (isNext) {
+                return listToSeek?.get(listToSeek.indexOf(songToSkip).plus(1))
+            }
+            return listToSeek?.get(listToSeek.indexOf(songToSkip).minus(1))
         } catch (e: IndexOutOfBoundsException) {
             e.printStackTrace()
-            return when {
+            when {
                 isQueue != null -> {
+                    val returnedSong = isQueue
                     if (isNext) {
                         setQueueEnabled(enabled = false, canSkip = false)
                     } else {
                         isQueueStarted = false
                     }
-                    isQueue
+                    return returnedSong
                 }
-                else -> if (listToSeek?.indexOf(songToSkip) != 0) {
-                    listToSeek?.first()
-                } else {
-                    listToSeek.last()
+                else -> {
+                    if (listToSeek?.indexOf(songToSkip) != 0) {
+                        return listToSeek?.first()
+                    }
+                    return listToSeek.last()
                 }
             }
         }
@@ -564,8 +563,7 @@ class MediaPlayerHolder:
     private fun startUpdatingCallbackWithPosition() {
 
         if (mSeekBarPositionUpdateTask == null) {
-            mSeekBarPositionUpdateTask =
-                Runnable { updateProgressCallbackTask() }
+            mSeekBarPositionUpdateTask = Runnable { updateProgressCallbackTask() }
         }
 
         mExecutor = Executors.newSingleThreadScheduledExecutor()
