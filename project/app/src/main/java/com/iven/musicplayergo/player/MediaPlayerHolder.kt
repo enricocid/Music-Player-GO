@@ -165,7 +165,7 @@ class MediaPlayerHolder:
     val isMediaPlayer get() = ::mediaPlayer.isInitialized
     val isPlaying get() = isMediaPlayer && state != GoConstants.PAUSED
 
-    private var sNotificationForeground = false
+    private var sNotificationOngoing = false
 
     val isCurrentSongFM get() = currentSongFM != null
     val isCurrentSong get() = currentSong != null || isCurrentSongFM
@@ -207,9 +207,9 @@ class MediaPlayerHolder:
     fun getMediaMetadataCompat() = mMediaMetadataCompat
 
     private fun startForeground() {
-        if (!sNotificationForeground) {
+        if (!sNotificationOngoing) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                sNotificationForeground = try {
+                sNotificationOngoing = try {
                     mMusicNotificationManager?.createNotification { notification ->
                         mPlayerService.startForeground(GoConstants.NOTIFICATION_ID, notification)
                     }
@@ -224,7 +224,7 @@ class MediaPlayerHolder:
             } else {
                 mMusicNotificationManager?.createNotification { notification ->
                     mPlayerService.startForeground(GoConstants.NOTIFICATION_ID, notification)
-                    sNotificationForeground = true
+                    sNotificationOngoing = true
                 }
             }
         }
@@ -472,6 +472,7 @@ class MediaPlayerHolder:
     fun pauseMediaPlayer() {
         // Do not pause foreground service, we will need to resume likely
         MediaPlayerUtils.safePause(mediaPlayer)
+        sNotificationOngoing = false
         state = GoConstants.PAUSED
         updatePlaybackStatus(updateUI = true)
         mMusicNotificationManager?.run {
@@ -1039,9 +1040,9 @@ class MediaPlayerHolder:
     fun stopPlaybackService(stopPlayback: Boolean) {
         try {
             if (mPlayerService.isRunning && isMediaPlayer && stopPlayback) {
-                if (sNotificationForeground) {
+                if (sNotificationOngoing) {
                     ServiceCompat.stopForeground(mPlayerService, ServiceCompat.STOP_FOREGROUND_REMOVE)
-                    sNotificationForeground = false
+                    sNotificationOngoing = false
                 } else {
                     mMusicNotificationManager?.cancelNotification()
                 }

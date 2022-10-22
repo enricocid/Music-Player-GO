@@ -207,7 +207,7 @@ object Theming {
     fun getNotificationActionIcon(action: String, isNotification: Boolean): Int {
         val mediaPlayerHolder = MediaPlayerHolder.getInstance()
         return when (action) {
-            GoConstants.PLAY_PAUSE_ACTION -> if (mediaPlayerHolder.state == GoConstants.PLAYING || mediaPlayerHolder.state == GoConstants.RESUMED) {
+            GoConstants.PLAY_PAUSE_ACTION -> if (mediaPlayerHolder.isPlaying) {
                 R.drawable.ic_pause
             } else {
                 R.drawable.ic_play
