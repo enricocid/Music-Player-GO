@@ -1,5 +1,6 @@
 package com.iven.musicplayergo.equalizer
 
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
@@ -30,7 +31,8 @@ class EqualizerActivity : BaseActivity() {
         setContentView(mEqualizerBinding.root)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            window?.navigationBarColor = Theming.resolveColorAttr(this, R.attr.main_bg)
+            window?.statusBarColor = Color.TRANSPARENT
+            window?.navigationBarColor = Color.TRANSPARENT
             WindowCompat.setDecorFitsSystemWindows(window, true)
             mEqualizerBinding.root.applyEdgeToEdge()
         }

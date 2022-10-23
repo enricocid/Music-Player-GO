@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-            android:textColor="@color/widgetsColor" />
+            android:textColor="@color/widgets_color" />
 
         <!-- VOLUME SEEKBAR-->
         <SeekBar
@@ -31,9 +31,9 @@
             android:clickable="true"
             android:focusable="true"
             android:max="100"
-            android:progressTint="@color/widgetsColor"
+            android:progressTint="@color/widgets_color"
             android:splitTrack="false"
-            android:thumbTint="@color/widgetsColor" />
+            android:thumbTint="@color/widgets_color" />
 
         <ImageButton
             android:id="@+id/np_volume"

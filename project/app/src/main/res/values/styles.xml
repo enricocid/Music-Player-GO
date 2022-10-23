@@ -4,11 +4,12 @@
     <!-- https://bryanherbst.com/2020/05/04/bottom-sheet-corners/ -->
     <style name="ThemeOverlay.Demo.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Widget.Demo.BottomSheet</item>
-        <item name="colorOnSurface">@color/mainBg</item>
-        <item name="android:navigationBarColor">?attr/main_bg</item>
+        <item name="colorOnSurface">@color/main_bg</item>
+        <item name="android:navigationBarColor">@color/system_bars_bg</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">@bool/is_light_system_bars</item>
         <item name="android:windowIsFloating">false</item>
-        <item name="android:colorBackground">@color/mainBg</item>
+        <item name="android:colorBackground">@color/main_bg</item>
+        <item name="enableEdgeToEdge" tools:targetApi="o_mr1">true</item>
     </style>
 
     <style name="Widget.Demo.BottomSheet" parent="Widget.MaterialComponents.BottomSheet">
@@ -27,7 +28,7 @@
     <!-- Custom dialogs -->
     <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
-        <item name="android:backgroundTint">@color/mainBg</item>
+        <item name="android:backgroundTint">@color/main_bg</item>
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialAlertDialog.Rounded</item>
     </style>
 
@@ -42,7 +43,7 @@
 
     <!-- Settings - alert dialogs -->
     <style name="Options.DialogsStyle" parent="ThemeOverlay.AppCompat.Dialog">
-        <item name="colorBackgroundFloating">@color/mainBg</item>
+        <item name="colorBackgroundFloating">@color/main_bg</item>
         <item name="dialogCornerRadius">@dimen/md_corner_radius</item>
         <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
     </style>

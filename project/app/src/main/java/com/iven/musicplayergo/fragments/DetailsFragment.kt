@@ -385,7 +385,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     isEnabled = mSelectedAlbum?.music?.size!! >= 2
                     updateIconTint(
                         if (isEnabled) {
-                            ContextCompat.getColor(requireContext(), R.color.widgetsColor)
+                            ContextCompat.getColor(requireContext(), R.color.widgets_color)
                         } else {
                             Theming.resolveWidgetsColorNormal(requireContext())
                         }

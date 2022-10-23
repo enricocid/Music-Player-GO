@@ -264,7 +264,7 @@ object Theming {
         tb.menu.findItem(R.id.sleeptimer).setIconTint(if (isEnabled) {
             resolveThemeColor(tb.resources)
         } else {
-            ContextCompat.getColor(tb.context, R.color.widgetsColor)
+            ContextCompat.getColor(tb.context, R.color.widgets_color)
         })
     }
 }

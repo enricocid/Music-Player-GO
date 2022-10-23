@@ -41,10 +41,10 @@
         android:layout_margin="16dp"
         android:contentDescription="@string/shuffle_am"
         android:text="@string/extended_fab_placeholder"
-        android:textColor="@color/widgetsColor"
+        android:textColor="@color/widgets_color"
         app:elevation="4dp"
         app:icon="@drawable/ic_shuffle"
-        app:iconTint="@color/widgetsColor"
+        app:iconTint="@color/widgets_color"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

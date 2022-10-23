@@ -47,7 +47,7 @@ class AccentsAdapter(private val activity: Activity) :
                         strokeColor = Color.TRANSPARENT
                         R.dimen.accent_dim_radius
                     } else {
-                        strokeColor = ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.widgetsColor), 100)
+                        strokeColor = ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.widgets_color), 100)
                         strokeWidth = resources.getDimensionPixelSize(R.dimen.search_bar_elevation)
                         R.dimen.accent_dim_radius_uns
                     }
