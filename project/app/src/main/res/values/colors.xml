@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <color name="red">#d32f2f</color>
     <color name="pink">#c2185b</color>
     <color name="purple">#7b1fa2</color>
@@ -23,7 +22,11 @@
 
     <color name="widgets_color">#212121</color>
 
-    <color name="system_bars_bg">#20111111</color>
+    <color name="def_system_bars_color">#20111111</color>
+    <color name="status_bar_color">@color/def_system_bars_color</color>
+    <color name="nav_bar_color">@color/status_bar_color</color>
+    <color name="nav_bar_color_sheets">@color/nav_bar_color</color>
+
     <color name="main_bg">#fcfcfc</color>
     <color name="toolbar_bg">@color/main_bg</color>
 </resources>

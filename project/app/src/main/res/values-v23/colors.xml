@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="status_bar_color">@android:color/transparent</color>
+    <color name="nav_bar_color">@color/def_system_bars_color</color>
+    <color name="nav_bar_color_sheets">@color/nav_bar_color</color>
+</resources>

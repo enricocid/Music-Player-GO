@@ -51,6 +51,10 @@ object Theming {
         return uiMode == Configuration.UI_MODE_NIGHT_YES
     }
 
+    @JvmStatic
+    fun isThemeBlack(resources: Resources) =
+        isThemeNight(resources) && GoPreferences.getPrefsInstance().isBlackTheme
+
     fun getSortIconForSongs(sort: Int): Int {
         return when (sort) {
             GoConstants.ASCENDING_SORTING -> R.drawable.ic_sort_alphabetical_descending
@@ -126,12 +130,10 @@ object Theming {
     @JvmStatic
     fun resolveTheme(context: Context): Int {
         val position = GoPreferences.getPrefsInstance().accent
-        val stylesRes = if (isThemeNight(context.resources) && GoPreferences.getPrefsInstance().isBlackTheme) {
-            stylesBlack
-        } else {
-            styles
+        if (isThemeBlack(context.resources)) {
+            return stylesBlack[position]
         }
-        return stylesRes[position]
+        return styles[position]
     }
 
     @ColorInt
@@ -172,7 +174,7 @@ object Theming {
     @JvmStatic
     fun getAlbumCoverAlpha(context: Context): Int {
         return when {
-            isThemeNight(context.resources) && GoPreferences.getPrefsInstance().isBlackTheme -> 25
+            isThemeBlack(context.resources) -> 25
             isThemeNight(context.resources) -> 15
             else -> 20
         }

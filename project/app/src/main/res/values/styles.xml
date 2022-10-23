@@ -5,7 +5,7 @@
     <style name="ThemeOverlay.Demo.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Widget.Demo.BottomSheet</item>
         <item name="colorOnSurface">@color/main_bg</item>
-        <item name="android:navigationBarColor">@color/system_bars_bg</item>
+        <item name="android:navigationBarColor">@color/nav_bar_color_sheets</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">@bool/is_light_system_bars</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:colorBackground">@color/main_bg</item>

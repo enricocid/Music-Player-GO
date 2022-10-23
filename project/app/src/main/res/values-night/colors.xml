@@ -23,7 +23,10 @@
 
     <color name="widgets_color">#fafafa</color>
 
+    <color name="status_bar_color">@color/toolbar_bg</color>
+    <color name="nav_bar_color">@android:color/transparent</color>
+    <color name="nav_bar_color_sheets">@android:color/transparent</color>
+
     <color name="main_bg">#151515</color>
-    <color name="system_bars_bg">#20000000</color>
     <color name="toolbar_bg">#111111</color>
 </resources>

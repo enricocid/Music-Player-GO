@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
@@ -280,6 +281,10 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
         if (sLaunchedByTile) {
             mMainActivityBinding.loadingProgressBar.handleViewVisibility(false)
             return
+        }
+
+        if (Theming.isThemeBlack(resources)) {
+            window?.statusBarColor = Color.BLACK
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
