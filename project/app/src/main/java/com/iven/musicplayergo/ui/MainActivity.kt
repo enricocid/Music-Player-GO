@@ -284,8 +284,6 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            window?.statusBarColor = Color.TRANSPARENT
-            window?.navigationBarColor = Color.TRANSPARENT
             WindowCompat.setDecorFitsSystemWindows(window, true)
             mMainActivityBinding.root.applyEdgeToEdge()
         }

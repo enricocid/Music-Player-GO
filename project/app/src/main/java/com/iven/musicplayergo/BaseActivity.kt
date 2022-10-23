@@ -10,10 +10,6 @@ import java.util.*
 
 abstract class BaseActivity: AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-    }
-
     override fun attachBaseContext(newBase: Context?) {
         newBase?.let { ctx ->
             // Be sure that prefs are initialized
