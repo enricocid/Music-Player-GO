@@ -1,12 +1,10 @@
 package com.iven.musicplayergo.equalizer
 
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.WindowCompat
 import com.iven.musicplayergo.BaseActivity
-import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.ActivityEqualizerBinding
 import com.iven.musicplayergo.extensions.applyEdgeToEdge
 import com.iven.musicplayergo.utils.Theming
