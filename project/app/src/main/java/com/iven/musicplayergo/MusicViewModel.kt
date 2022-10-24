@@ -239,15 +239,34 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
 
-        // update queue/favorites by removing deleted or moved songs
+        // update queue/favorites by updating moved songs id, albumId
+        // and filtering out deleted songs
         val goPreferences = GoPreferences.getPrefsInstance()
         deviceMusicFiltered?.let { deviceMusic ->
             goPreferences.queue?.run {
-                goPreferences.queue = this.filter { deviceMusic.contains(it.copy(startFrom = 0))}
+                // update queue songs id
+                val updatedQueue = map {
+                    val music = findMusicToUpdate(it)
+                    it.copy(albumId = music?.albumId, id= music?.id)
+                }
+                // filter
+                goPreferences.queue = updatedQueue.filter { deviceMusic.contains(it.copy(startFrom = 0))}
             }
             goPreferences.favorites?.run {
-                goPreferences.favorites = this.filter { deviceMusic.contains(it.copy(startFrom = 0))}
+                val updatedFavorites = map {
+                    val music = findMusicToUpdate(it)
+                    it.copy(albumId = music?.albumId, id= music?.id)
+                }
+                goPreferences.favorites = updatedFavorites.filter { deviceMusic.contains(it.copy(startFrom = 0))}
             }
+        }
+    }
+
+    private fun findMusicToUpdate(song: Music?): Music? {
+        val songToFind = song?.copy(startFrom = 0)
+        return deviceMusicFiltered?.find { newMusic ->
+            songToFind?.title == newMusic.title && songToFind?.displayName == newMusic.displayName
+                    && songToFind?.track == newMusic.track && songToFind.album == newMusic.album
         }
     }
 }
