@@ -83,16 +83,16 @@ object Dialogs {
                 .setTitle(R.string.app_name)
                 .setMessage(R.string.on_close_activity)
                 .setPositiveButton(R.string.yes) { _, _ ->
-                    mediaPlayerHolder.stopPlaybackService(stopPlayback = true)
+                    mediaPlayerHolder.stopPlaybackService(stopPlayback = true, fromUser = true)
                 }
                 .setNegativeButton(R.string.no) { _, _ ->
-                    mediaPlayerHolder.stopPlaybackService(stopPlayback = false)
+                    mediaPlayerHolder.stopPlaybackService(stopPlayback = false, fromUser = true)
                 }
                 .setNeutralButton(R.string.cancel, null)
                 .show()
             return
         }
-        mediaPlayerHolder.stopPlaybackService(stopPlayback = false)
+        mediaPlayerHolder.stopPlaybackService(stopPlayback = false, fromUser = true)
     }
 
     @JvmStatic

@@ -130,7 +130,7 @@ class MediaPlayerHolder:
                 AudioManager.AUDIOFOCUS_LOSS -> {
                     // Lost audio focus, probably "permanently"
                     mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
-                    stopPlaybackService(true)
+                    stopPlaybackService(stopPlayback = true, fromUser = false)
                 }
             }
             // Update the player state based on the change
@@ -1035,7 +1035,7 @@ class MediaPlayerHolder:
         }
     }
 
-    fun stopPlaybackService(stopPlayback: Boolean) {
+    fun stopPlaybackService(stopPlayback: Boolean, fromUser: Boolean) {
         try {
             if (mPlayerService.isRunning && isMediaPlayer && stopPlayback) {
                 if (sNotificationOngoing) {
@@ -1046,7 +1046,7 @@ class MediaPlayerHolder:
                 }
                 mPlayerService.stopSelf()
             }
-            if (::mediaPlayerInterface.isInitialized) {
+            if (::mediaPlayerInterface.isInitialized && fromUser) {
                 mediaPlayerInterface.onClose()
             }
         } catch (e: java.lang.IllegalArgumentException) {
