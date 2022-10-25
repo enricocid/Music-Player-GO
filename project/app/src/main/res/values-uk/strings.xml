@@ -165,4 +165,10 @@
     <string name="notification_actions_fast_seeking">Швидкий пошук</string>
     <string name="notification_actions_favorite">Додати в обране/закрити</string>
     <string name="filters_error">Помилка! Неможливо відкрити прихованих виконавців/теки/альбоми!</string>
+    <string name="category_audio">Аудіо</string>
+    <string name="category_ui">інтерфейс користувача</string>
+    <string name="error_builtin_eq">Виникла помилка! Використовуйте системний еквалайзер (якщо він є)!</string>
+    <string name="error_sys_eq">Системний еквалайзер відсутній!</string>
+    <string name="eq_pref_title">Вбудований еквалайзер</string>
+    <string name="eq_pref_sum">Примусове використання вбудованого еквалайзера</string>
 </resources>
