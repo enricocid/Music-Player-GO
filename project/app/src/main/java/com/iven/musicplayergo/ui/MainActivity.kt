@@ -181,7 +181,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
         equalizerLauncher.unregister()
         mMusicViewModel.cancel()
         if (!mMediaPlayerHolder.isPlaying && ::mPlayerService.isInitialized && mPlayerService.isRunning && !mMediaPlayerHolder.isSongFromPrefs) {
-            ServiceCompat.stopForeground(mPlayerService, ServiceCompat.STOP_FOREGROUND_DETACH)
+            ServiceCompat.stopForeground(mPlayerService, ServiceCompat.STOP_FOREGROUND_REMOVE)
             stopService(mBindingIntent)
             if (sBound) {
                 unbindService(connection)
