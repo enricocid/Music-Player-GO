@@ -114,13 +114,13 @@
         <item>ku</item> <!-- Kurdish -->
         <item>lk</item> <!-- Sinhalese -->
         <item>lt</item> <!-- Lithuanian -->
-        <item>nb-rNO</item> <!-- Norwegian (Bokmål) -->
+        <item>nb-NO</item> <!-- Norwegian (Bokmål) -->
         <item>nl</item> <!-- Dutch -->
         <item>nn</item> <!-- Norwegian (Nynorsk) -->
         <item>np</item> <!-- Nepali -->
         <item>pk</item> <!-- Urdu (Pakistan) -->
         <item>pl</item> <!-- Polish -->
-        <item>pt-rBR</item> <!-- Portuguese (Brazil) -->
+        <item>pt-BR</item> <!-- Portuguese (Brazil) -->
         <item>ro</item> <!-- Romanian -->
         <item>ru</item> <!-- Russian -->
         <item>sl</item> <!-- Slovenian -->
@@ -129,7 +129,7 @@
         <item>tr</item> <!-- Turkish -->
         <item>uk</item> <!-- Ukrainian -->
         <item>vi</item> <!-- Vietnamese -->
-        <item>zh-rTW</item> <!-- Chinese (Traditional) -->
+        <item>zh-TW</item> <!-- Chinese (Traditional) -->
     </string-array>
 
     <string-array name="supported_locales_names">
