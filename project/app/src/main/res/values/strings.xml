@@ -87,6 +87,8 @@
     <string name="pause_on_end">Pause on completion on.</string>
     <string name="pause_on_end_disabled">Pause on completion off.</string>
     <!-- Preferences - Categories -->
+    <string name="category_ui">UI</string>
+    <string name="category_audio">Audio</string>
     <string name="settings">Settings</string>
     <string name="category_general">General</string>
     <!-- Preferences - Themes -->

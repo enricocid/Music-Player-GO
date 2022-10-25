@@ -40,10 +40,6 @@
     <!-- Extended FAB placeholder -->
     <string name="extended_fab_placeholder">0</string>
 
-    <!-- Other preferences titles/subtitles -->
-    <string name="category_ui">UI</string>
-    <string name="category_audio">Audio</string>
-
     <!-- Preferences keys used in settings-->
     <string name="theme_pref">theme_pref</string>
     <string name="theme_pref_light">theme_pref_light</string>
