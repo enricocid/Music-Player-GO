@@ -27,6 +27,7 @@
             app:entries="@array/themeListArray"
             app:entryValues="@array/themeEntryArray"
             app:key="@string/theme_pref"
+            app:negativeButtonText="@string/cancel"
             app:title="@string/theme_pref_title"
             app:useSimpleSummaryProvider="true" />
 
@@ -78,6 +79,7 @@
             app:entryValues="@array/playbackSpeedModeEntryArray"
             app:isPreferenceVisible="@bool/is_playback_speed_pref"
             app:key="@string/playback_vel_pref"
+            app:negativeButtonText="@string/cancel"
             app:title="@string/playback_pref_title"
             app:useSimpleSummaryProvider="true" />
 
@@ -87,6 +89,7 @@
             app:entries="@array/onListEndedArray"
             app:entryValues="@array/onListEndedEntryArray"
             app:key="@string/on_list_ended_pref"
+            app:negativeButtonText="@string/cancel"
             app:title="@string/on_list_ended_pref_title"
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
@@ -120,6 +123,7 @@
             app:entries="@array/songVisualizationArray"
             app:entryValues="@array/songVisualizationEntryArray"
             app:key="@string/song_visual_pref"
+            app:negativeButtonText="@string/cancel"
             app:title="@string/song_visual_pref_title"
             app:useSimpleSummaryProvider="true" />
 
