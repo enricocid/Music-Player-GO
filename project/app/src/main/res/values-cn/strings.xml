@@ -165,4 +165,10 @@
     <string name="notification_actions_favorite_position">添加到收藏（带位置）/关闭</string>
     <string name="notification_actions_favorite">添加到收藏/关闭</string>
     <string name="filters_error">错误！ 无法打开隐藏的艺术家/文件夹/专辑！</string>
+    <string name="category_ui">界面</string>
+    <string name="category_audio">音频</string>
+    <string name="eq_pref_title">内置均衡器</string>
+    <string name="eq_pref_sum">强制使用内置均衡器</string>
+    <string name="error_builtin_eq">发生了一个错误！请使用系统均衡器（如果有的话）！</string>
+    <string name="error_sys_eq">系统均衡器不可用！</string>
 </resources>
