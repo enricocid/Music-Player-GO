@@ -164,4 +164,11 @@
     <string name="continue_on_end_desc">Velg hvorvidt du vil forsette avspilling eller sette på pause ved fullføring</string>
     <string name="filters_clear">Tøm filtre og fortsett\?</string>
     <string name="confirm_ask_pref_sum">Spør om bekreftelse før noe gjøres</string>
+    <string name="filters_error">Kunne ikke åpne skjulte artister/mapper/album.</string>
+    <string name="eq_pref_sum">Påtving bruk av innebygd tonekontroll</string>
+    <string name="category_audio">Lyd</string>
+    <string name="category_ui">Grensesnitt</string>
+    <string name="eq_pref_title">Innebygd tonekontroll</string>
+    <string name="error_builtin_eq">En feil oppstod. Bruk systemets tonekontroll (hvis den forefinnes).</string>
+    <string name="error_sys_eq">Systemtonekontroll er ikke tilgjengelig.</string>
 </resources>
