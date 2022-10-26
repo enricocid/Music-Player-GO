@@ -1,0 +1,18 @@
+<b>Music Player GO</b> er en minimal og fullverdig lokal musikkspiller som tar sikte på <b>enkelhet</b> og ytelse.
+
+<b>Funksjoner</b>
+
+- Minimalistisk grensesnitt
+- Tonekontroll
+- Musikk organisert etter artist, album, spor og mapper; faner kan organiseres
+- Lys, mørk, og systemdrakt, med aksentfarger
+- Helsvart drakt
+- Kø
+- Søvntidsur
+- Lydfokus, presis lydstyrkekontroll, og hodetelefonshåndtering
+- Spilles nå, innebygde omslag, søk, avspillingshastighet, pause ved fullføring, sortering, omstokking, hurtigblafring …
+
+
+<b>Du kan bidra til oversettelsen</b>
+
+på <a href="https://hosted.weblate.org/engage/music-player-go/">Hosted Weblate</a>
