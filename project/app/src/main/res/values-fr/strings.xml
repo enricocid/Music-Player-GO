@@ -32,7 +32,7 @@
     <string name="error_unknown_unsupported">Une erreur s\'est produite ! :( Peut-être que le format sélectionné n\'est pas supporté, ou que le dossier n\'est pas accessible (Ce n\'est pas de la faute de l\'application !).</string>
     <string name="error_fs_not_allowed">Quelque chose a mal tourné :( Pensez à désactiver l\'optimisateur de la batterie dans les paramètres système : Applis &gt; Toutes les applis &gt; Music Player GO &gt; Batterie &gt; Illimité, car cela pourrait provoquer l\'arrêt du service de lecteur multimédia.</string>
     <string name="error_fs_not_allowed_sum">Erreur ! Éteindre l\'optimisation de batterie pour MPGO</string>
-    <string name="on_close_activity">Voulez-vous arrêter la lecture \?</string>
+    <string name="on_close_activity">Arrêter la lecture \?</string>
     <string name="repeat_enabled">Répétition simple activée.</string>
     <string name="repeat_loop_enabled">Répétition ∞ activée.</string>
     <string name="repeat_disabled">Répétition ∞ désactivée.</string>
@@ -153,7 +153,7 @@
     <string name="sleeptimer_enabled">Arrêter la lecture après %1s</string>
     <string name="pause_on_end">Pause à la fin activée.</string>
     <string name="confirm_ask_pref_title">Messages de confirmation</string>
-    <string name="filters_clear">Les filtres seront supprimés. Continuer \?</string>
+    <string name="filters_clear">Les filtres seront supprimés. Continuer \?</string>
     <string name="theme_pref_black_title">Noir pur</string>
     <string name="filters_error">Erreur ! Impossible d\'ouvrir les artistes/dossiers/albums masqués !</string>
     <string name="sleeptimer_stop">Arrêter</string>
