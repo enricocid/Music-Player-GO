@@ -90,7 +90,7 @@
     <string name="equalizer_presets">Voreinstellungen</string>
     <string name="sleeptimer">Ruhemodus</string>
     <string name="sleeptimer_enabled">Wiedergabe pausieren nach %1s</string>
-    <string name="sleeptimer_stop">Stop</string>
+    <string name="sleeptimer_stop">Stopp</string>
     <string name="green">Grün</string>
     <string name="light_green">Helles Grün</string>
     <string name="blue">Blau</string>
@@ -99,7 +99,7 @@
     <string name="teal">Blaugrün</string>
     <string name="locale_german">Deutsch</string>
     <string name="locale_greek">Griechisch</string>
-    <string name="locale_hindi">Indisch</string>
+    <string name="locale_hindi">Hindi</string>
     <string name="locale_hungarian">Ungarisch</string>
     <string name="locale_indonesian">Indonesisch</string>
     <string name="locale_lituanian">Litauisch</string>
@@ -165,4 +165,10 @@
     <string name="confirm_ask_pref_title">Bestätigungsmeldungen</string>
     <string name="confirm_ask_pref_sum">Bitten um Bestätigung, bevor etwas getan wird</string>
     <string name="filters_error">Fehler! Nicht möglich versteckte Künstler/Ordner/Alben zu öffnen!</string>
+    <string name="category_ui">Benutzeroberfläche</string>
+    <string name="category_audio">Audio</string>
+    <string name="eq_pref_title">Eigener Equalizer</string>
+    <string name="eq_pref_sum">Eigenen Equalizer bevorzugen</string>
+    <string name="error_sys_eq">Kein System-Equalizer vorhanden!</string>
+    <string name="error_builtin_eq">Ein Fehler ist aufgetreten! Verwenden Sie den System-Equalizer (falls vorhanden)!</string>
 </resources>
