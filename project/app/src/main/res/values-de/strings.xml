@@ -171,4 +171,5 @@
     <string name="eq_pref_sum">Eigenen Equalizer bevorzugen</string>
     <string name="error_sys_eq">Kein System-Equalizer vorhanden!</string>
     <string name="error_builtin_eq">Ein Fehler ist aufgetreten! Verwenden Sie den System-Equalizer (falls vorhanden)!</string>
+    <string name="locale_finnish">Finnisch</string>
 </resources>
