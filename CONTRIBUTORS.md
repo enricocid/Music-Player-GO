@@ -21,7 +21,7 @@ for [strings](https://github.com/enricocid/Music-Player-GO/pull/227), [readme](h
 
 - [**TacoTheDank**](https://github.com/TacoTheDank) for upgrades to gradle, java 1.8, translations and improvements [247](https://github.com/enricocid/Music-Player-GO/issues/247), [248](https://github.com/enricocid/Music-Player-GO/pull/248), [250](https://github.com/enricocid/Music-Player-GO/pull/250)
 
-- [**gaycodegal**](https://github.com/gaycodegal) for the [fixes/improvements](https://github.com/enricocid/Music-Player-GO/pull/332) to media button intent app's response
+- [**gaycodegal**](https://github.com/gaycodegal) for the [fixes/improvements](https://github.com/enricocid/Music-Player-GO/pull/332) to media button intent app's response and [484](https://github.com/enricocid/Music-Player-GO/pull/484)
 
 - [**bullhead**](https://github.com/bullheadandplato) for dialog titles blinking cursor [fixes](https://github.com/enricocid/Music-Player-GO/pull/121) and its equalizer implementation: I learned so much about how an equalizer works
 
@@ -31,7 +31,7 @@ for [strings](https://github.com/enricocid/Music-Player-GO/pull/227), [readme](h
 
 - [**watauoa**](https://github.com/watauoa) for the [original sleep timer](https://github.com/enricocid/Music-Player-GO/pull/388) implementation
 
-- [**sinoory**](https://github.com/sinoory) for helping to fix a bug with [equalizer](https://github.com/enricocid/Music-Player-GO/issues/479) and [playback speed](https://github.com/enricocid/Music-Player-GO/issues/480) 
+- [**sinoory**](https://github.com/sinoory) for helping to fix a bug with [equalizer](https://github.com/enricocid/Music-Player-GO/issues/479), [playback speed](https://github.com/enricocid/Music-Player-GO/issues/480) and [favorites](https://github.com/enricocid/Music-Player-GO/issues/486)
 
 - [**quindecim**](https://github.com/quindecim) for bug reports ([0](https://github.com/enricocid/Music-Player-GO/commit/c7dab08d86bf84c2ddb7c058bacdfc5dddb307db), [1](https://github.com/enricocid/Music-Player-GO/commit/2a7f7a7270f43134d62baa24be78dffaac850749)) and support
 
@@ -103,7 +103,7 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 
 - [**otaboard**](https://github.com/otaboard) for having reported this [issue](https://github.com/enricocid/Music-Player-GO/issues/450)
 
-- [**lgjint**](https://github.com/lgjint) for having reported this [issue](https://github.com/enricocid/Music-Player-GO/issues/447)
+- [**lgjint**](https://github.com/lgjint) for having reported [447](https://github.com/enricocid/Music-Player-GO/issues/447) and [487](https://github.com/enricocid/Music-Player-GO/issues/487)
 
 
 ### Big thanks to translators:
@@ -138,7 +138,9 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 
 - [**1t3x**](https://github.com/1t3x) for **Romanian** translations
 
-- [**AimerNeige**](https://github.com/aimerneige) for **Chinese-Shimply & Chinese-Traditional Support** translations
+- [**AimerNeige**](https://github.com/aimerneige) for **Chinese simplified and traditional Chinese** translations
+
+- [**lgjint**](https://github.com/lgjint) for **Chinese simplified** translations
 
 - [**Krishan**](https://github.com/k7bura) for **Hindi** translations
 

@@ -215,21 +215,27 @@ object Lists {
         playerPosition: Int,
         launchedBy: String
     ) {
-        val favorites = GoPreferences.getPrefsInstance().favorites?.toMutableList() ?: mutableListOf()
+        val goPreferences = GoPreferences.getPrefsInstance()
+        val favorites = goPreferences.favorites?.toMutableList() ?: mutableListOf()
         song?.toSavedMusic(playerPosition, launchedBy)?.let { savedSong ->
             if (!favorites.contains(savedSong)) {
                 favorites.add(savedSong)
-                Toast.makeText(
-                    context,
-                    context.getString(
-                        R.string.favorite_added,
-                        savedSong.title,
-                        playerPosition.toLong().toFormattedDuration(
-                            isAlbum = false,
-                            isSeekBar = false
-                        )
-                    ),
-                    Toast.LENGTH_SHORT).show()
+
+                var msg = context.getString(
+                    R.string.favorite_added,
+                    savedSong.title,
+                    playerPosition.toLong().toFormattedDuration(
+                        isAlbum = false,
+                        isSeekBar = false
+                    )
+                )
+
+                if (playerPosition == 0) {
+                    val regex = "\\s\\(.*\\)".toRegex()
+                    msg = msg.replace(regex, "")
+                }
+
+                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
             } else if (canRemove) {
                 favorites.remove(savedSong)
             }
