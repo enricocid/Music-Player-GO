@@ -103,6 +103,7 @@
         <item>es</item> <!-- Spanish -->
         <item>eu</item> <!-- Basque -->
         <item>fa</item> <!-- Persian -->
+        <item>fi</item> <!-- Finnish -->
         <item>fr</item> <!-- French -->
         <item>gl</item> <!-- Galician -->
         <item>hi</item> <!-- Hindi -->
@@ -147,6 +148,7 @@
         <item>@string/locale_spanish</item>
         <item>@string/locale_basque</item>
         <item>@string/locale_persian</item>
+        <item>@string/locale_finnish</item>
         <item>@string/locale_french</item>
         <item>@string/locale_galician</item>
         <item>@string/locale_hindi</item>
