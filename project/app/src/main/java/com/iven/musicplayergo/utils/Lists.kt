@@ -215,8 +215,7 @@ object Lists {
         playerPosition: Int,
         launchedBy: String
     ) {
-        val goPreferences = GoPreferences.getPrefsInstance()
-        val favorites = goPreferences.favorites?.toMutableList() ?: mutableListOf()
+        val favorites = GoPreferences.getPrefsInstance().favorites?.toMutableList() ?: mutableListOf()
         song?.toSavedMusic(playerPosition, launchedBy)?.let { savedSong ->
             if (!favorites.contains(savedSong)) {
                 favorites.add(savedSong)
