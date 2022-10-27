@@ -171,4 +171,5 @@
     <string name="eq_pref_title">Innebygd tonekontroll</string>
     <string name="error_builtin_eq">En feil oppstod. Bruk systemets tonekontroll (hvis den forefinnes).</string>
     <string name="error_sys_eq">Systemtonekontroll er ikke tilgjengelig.</string>
+    <string name="locale_finnish">Finsk</string>
 </resources>
