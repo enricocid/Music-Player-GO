@@ -1,0 +1,18 @@
+<b>Music Player GO</b> je minimalistický, ale plně vybavený místní hudební přehrávač zaměřený na <b>jednoduchost</b> a výkon.
+
+<b>Funkce</b>
+
+- Minimalistické rozhraní
+- Ekvalizér
+- Hudba uspořádaná podle interpretů, alb, skladeb a složek; karty jsou organizovatelné
+- Světlé, tmavé a automatické motivy a akcenty
+- Čistě černé téma
+- Fronta
+- Časovač spánku
+- Zaměření zvuku, přesná hlasitost a správa náhlavní soupravy
+- Přehrávání, vložené obaly, vyhledávání, rychlost přehrávání, pozastavení po dokončení, třídění, náhodné přehrávání, rychlé vyhledávání...
+
+
+<b>Chcete se podílet na překladech?</b>
+
+Přidejte se k nám na <a href="https://hosted.weblate.org/engage/music-player-go/">Weblate</a>
