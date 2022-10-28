@@ -171,4 +171,5 @@
     <string name="eq_pref_sum">强制使用内置均衡器</string>
     <string name="error_builtin_eq">发生了一个错误！请使用系统均衡器（如果有的话）！</string>
     <string name="error_sys_eq">系统均衡器不可用！</string>
+    <string name="locale_finnish">芬兰语</string>
 </resources>

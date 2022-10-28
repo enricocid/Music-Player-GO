@@ -171,4 +171,5 @@
     <string name="error_sys_eq">Системний еквалайзер відсутній!</string>
     <string name="eq_pref_title">Вбудований еквалайзер</string>
     <string name="eq_pref_sum">Примусове використання вбудованого еквалайзера</string>
+    <string name="locale_finnish">Фінська</string>
 </resources>

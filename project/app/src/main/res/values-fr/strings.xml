@@ -171,4 +171,5 @@
     <string name="category_ui">Interface</string>
     <string name="category_audio">Audio</string>
     <string name="error_sys_eq">L\'égaliseur du système n\'est pas disponible !</string>
+    <string name="locale_finnish">Finnois</string>
 </resources>
