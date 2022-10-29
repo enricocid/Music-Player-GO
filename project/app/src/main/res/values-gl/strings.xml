@@ -172,4 +172,11 @@
     <string name="confirm_ask_pref_title">Mensaxes de confirmación</string>
     <string name="confirm_ask_pref_sum">Pedir confirmación antes de facer calquera cousa</string>
     <string name="filters_error">Erro! Non se poden abrir artistas/álbumes/cartafoles agochados!</string>
+    <string name="category_ui">IU</string>
+    <string name="category_audio">Audio</string>
+    <string name="eq_pref_title">Ecualizador propio</string>
+    <string name="error_builtin_eq">Algo fallou! Usa o ecualizador do sistema (se existe)!</string>
+    <string name="error_sys_eq">O ecualizador do sistema non está dispoñible!</string>
+    <string name="eq_pref_sum">Forzar o uso do ecualizador propio</string>
+    <string name="locale_finnish">Rematar</string>
 </resources>
