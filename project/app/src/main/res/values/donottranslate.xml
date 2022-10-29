@@ -21,6 +21,7 @@
     <string name="slash">/</string>
     <string name="unknown_year">N&#x2F;A</string>
     <string name="freq_k">%1dk</string>
+    <string name="favorites_no_position">"&#x20;(00:00)"</string>
 
     <!-- Playback speed menu -->
     <string name="speed_0">0.25x</string>

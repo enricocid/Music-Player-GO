@@ -195,10 +195,11 @@ object Lists {
     }
 
     @JvmStatic
-    fun getSongsDisplayNameSorting(currentSorting: Int) = if (currentSorting == GoConstants.ASCENDING_SORTING) {
-        GoConstants.DESCENDING_SORTING
-    } else {
-        GoConstants.ASCENDING_SORTING
+    fun getSongsDisplayNameSorting(currentSorting: Int): Int {
+        if (currentSorting == GoConstants.ASCENDING_SORTING) {
+            return GoConstants.DESCENDING_SORTING
+        }
+        return GoConstants.ASCENDING_SORTING
     }
 
     fun hideItems(items: List<String>) {
@@ -230,8 +231,7 @@ object Lists {
                 )
 
                 if (playerPosition == 0) {
-                    val regex = "\\s\\(.*\\)".toRegex()
-                    msg = msg.replace(regex, "")
+                    msg = msg.replace(context.getString(R.string.favorites_no_position), "")
                 }
 
                 Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()

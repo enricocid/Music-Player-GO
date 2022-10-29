@@ -118,14 +118,23 @@ class FavoritesAdapter(private val activity: Activity) : RecyclerView.Adapter<Fa
 
         mFavorites?.get(position)?.let { song ->
             if (GoPreferences.getPrefsInstance().isAskForRemoval) {
+
+                var msg = activity.getString(
+                    R.string.favorite_remove,
+                    song.title,
+                    song.startFrom.toLong().toFormattedDuration(
+                        isAlbum = false,
+                        isSeekBar = false
+                    )
+                )
+
+                if (song.startFrom == 0) {
+                    msg = msg.replace(activity.getString(R.string.favorites_no_position), "")
+                }
+
                 MaterialAlertDialogBuilder(activity)
                     .setTitle(R.string.favorites)
-                    .setMessage(activity.getString(
-                        R.string.favorite_remove,
-                        song.title,
-                        song.startFrom.toLong().toFormattedDuration(
-                            isAlbum = false,
-                            isSeekBar = false)))
+                    .setMessage(msg)
                     .setPositiveButton(R.string.yes) { _, _ ->
                         deleteSong(song)
                     }
