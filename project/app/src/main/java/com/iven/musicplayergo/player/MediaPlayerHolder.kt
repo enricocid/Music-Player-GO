@@ -525,10 +525,10 @@ class MediaPlayerHolder:
             listToSeek = queueSongs
         }
 
-        var songToSkip = currentSong?.toSavedMusic(0, GoConstants.ARTIST_VIEW)
-        if (isQueue != null && queueSongs.isNotEmpty() && isQueueStarted) {
-            songToSkip = currentSong
-        }
+        val songToSkip = currentSong?.toSavedMusic(
+            0,
+            GoConstants.ARTIST_VIEW
+        )
 
         try {
             if (isNext) {

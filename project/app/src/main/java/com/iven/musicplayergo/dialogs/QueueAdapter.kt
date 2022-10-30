@@ -10,6 +10,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.QueueItemBinding
 import com.iven.musicplayergo.extensions.startSongFromQueue
 import com.iven.musicplayergo.extensions.toName
+import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.utils.Theming
@@ -55,7 +56,7 @@ class QueueAdapter(private val ctx: Context, private val mediaPlayerHolder: Medi
                 subtitle.text =
                     ctx.getString(R.string.artist_and_album, song.artist, song.album)
 
-                title.setTextColor(if (mediaPlayerHolder.isQueue != null && mediaPlayerHolder.isQueueStarted && queueSongs.indexOf(mSelectedSong) == absoluteAdapterPosition) {
+                title.setTextColor(if (mediaPlayerHolder.isQueue != null && mediaPlayerHolder.isQueueStarted && queueSongs.indexOf(mSelectedSong?.copy(startFrom = 0)) == absoluteAdapterPosition) {
                     Theming.resolveThemeColor(ctx.resources)
                 } else {
                     mDefaultTextColor

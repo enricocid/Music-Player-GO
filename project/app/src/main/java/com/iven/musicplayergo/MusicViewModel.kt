@@ -238,33 +238,65 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
         }
+        updatePreferences()
+    }
 
+    private fun updatePreferences() {
         // update queue/favorites by updating moved songs id, albumId
         // and filtering out deleted songs
-        val goPreferences = GoPreferences.getPrefsInstance()
-        deviceMusicFiltered?.let { deviceMusic ->
-            goPreferences.queue?.run {
-                // update queue songs id
-                val updatedQueue = map {
-                    val music = findMusicToUpdate(it)
-                    it.copy(albumId = music?.albumId, id= music?.id)
+        GoPreferences.getPrefsInstance().run {
+            deviceMusicFiltered?.let { deviceMusic ->
+
+                queue?.let { list ->
+                    // update queue songs id
+                    val updatedQueue = list.map { queueIt ->
+                        val music = findMusicToUpdate(deviceMusic, queueIt)
+                        queueIt.copy(albumId = music?.albumId, id= music?.id)
+                    }
+                    // filter
+                    queue = updatedQueue.filter { queueItNew ->
+                        deviceMusic.contains(queueItNew.copy(startFrom = 0))
+                    }
+
+                    isQueue?.let { preQueueSong ->
+                        val found = findMusicToUpdate(queue, preQueueSong)
+                        isQueue = if (found != null) {
+                            preQueueSong.copy(albumId = found.albumId, id = found.id)
+                        } else {
+                            null
+                        }
+                    }
                 }
-                // filter
-                goPreferences.queue = updatedQueue.filter { deviceMusic.contains(it.copy(startFrom = 0))}
-            }
-            goPreferences.favorites?.run {
-                val updatedFavorites = map {
-                    val music = findMusicToUpdate(it)
-                    it.copy(albumId = music?.albumId, id= music?.id)
+
+                // update favorites songs id
+                favorites?.let { fav ->
+                    val updatedFavorites = fav.map {
+                        val music = findMusicToUpdate(deviceMusic, it)
+                        it.copy(albumId = music?.albumId, id= music?.id)
+                    }
+                    favorites = updatedFavorites.filter { deviceMusic.contains(it.copy(startFrom = 0))}
                 }
-                goPreferences.favorites = updatedFavorites.filter { deviceMusic.contains(it.copy(startFrom = 0))}
+
+                // check if latestPlayedSong exists and update id
+                if (latestPlayedSong == null) {
+                    latestPlayedSong = getRandomMusic()
+                } else {
+                    latestPlayedSong?.let { lps ->
+                        val found = findMusicToUpdate(deviceMusic,lps)
+                        latestPlayedSong = if (found != null) {
+                            lps.copy(albumId = found.albumId, id = found.id)
+                        } else {
+                            getRandomMusic()
+                        }
+                    }
+                }
             }
         }
     }
 
-    private fun findMusicToUpdate(song: Music?): Music? {
-        val songToFind = song?.copy(startFrom = 0)
-        return deviceMusicFiltered?.find { newMusic ->
+    private fun findMusicToUpdate(list: List<Music>?, song: Music?): Music? {
+        val songToFind = song?.copy(startFrom = 0, launchedBy = GoConstants.ARTIST_VIEW)
+        return list?.find { newMusic ->
             songToFind?.title == newMusic.title && songToFind?.displayName == newMusic.displayName
                     && songToFind?.track == newMusic.track && songToFind.album == newMusic.album
                     && songToFind.year == newMusic.year && songToFind.duration == newMusic.duration

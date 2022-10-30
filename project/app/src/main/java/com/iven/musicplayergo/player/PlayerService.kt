@@ -104,18 +104,17 @@ class PlayerService : Service() {
         if (mMediaPlayerHolder.isCurrentSong && mMediaPlayerHolder.currentSongFM == null) {
 
             // Saves last played song and its position if user is ok :)
-            val preferences = GoPreferences.getPrefsInstance()
+            val prefs = GoPreferences.getPrefsInstance()
             with(mMediaPlayerHolder) {
-                preferences.latestPlayedSong = if (isQueue != null && isQueueStarted) {
-                    preferences.isQueue = isQueue
-                    currentSong
+                if (queueSongs.isNotEmpty()) { prefs.queue = queueSongs }
+                prefs.latestPlayedSong = currentSong?.toSavedMusic(playerPosition, launchedBy)
+                if (isQueue != null && isQueueStarted) {
+                    prefs.isQueue = isQueue
                 } else {
-                    if (preferences.isQueue != null) { preferences.isQueue = null }
-                    currentSong?.toSavedMusic(playerPosition, launchedBy)
+                    if (prefs.isQueue != null) { prefs.isQueue = null }
                 }
-                if (queueSongs.isNotEmpty()) { preferences.queue = queueSongs }
             }
-            preferences.latestVolume = mMediaPlayerHolder.currentVolumeInPercent
+            prefs.latestVolume = mMediaPlayerHolder.currentVolumeInPercent
         }
 
         mMediaSessionCompat?.run {

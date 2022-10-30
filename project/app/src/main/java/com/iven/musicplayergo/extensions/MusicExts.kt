@@ -177,9 +177,6 @@ fun Music.toSavedMusic(playerPosition: Int, savedLaunchedBy: String) =
         relativePath, id, savedLaunchedBy, playerPosition, dateAdded
     )
 
-fun List<Music>.savedSongIsAvailable(currentSong: Music?) : Music? =
-    find { currentSong?.title == it.title && currentSong?.displayName == it.displayName && currentSong?.track == it.track && currentSong.albumId == it.albumId && currentSong.album == it.album }
-
 fun Music?.toName(): String? {
     if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
         return this?.displayName?.toFilenameWithoutExtension()

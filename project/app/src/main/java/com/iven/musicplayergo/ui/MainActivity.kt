@@ -664,37 +664,26 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
                 return
             }
 
-            isSongFromPrefs = mGoPreferences.latestPlayedSong != null
+            val song = mGoPreferences.latestPlayedSong
+            isSongFromPrefs = song != null
 
-            var isQueueRestored = mGoPreferences.isQueue
             if (!mGoPreferences.queue.isNullOrEmpty()) {
                 queueSongs = mGoPreferences.queue?.toMutableList()!!
                 setQueueEnabled(enabled = true, canSkip = false)
             }
 
-            val song = if (isSongFromPrefs) {
-                val songIsAvailable = songIsAvailable(mGoPreferences.latestPlayedSong)
-                if (!songIsAvailable.first && isQueueRestored != null) {
-                    mGoPreferences.isQueue = null
-                    isQueueRestored = null
-                    isQueue = null
-                } else {
-                    if (isQueueRestored != null) {
-                        isQueue = isQueueRestored
-                        isQueueStarted = true
-                        mediaPlayerInterface.onQueueStartedOrEnded(started = true)
-                    }
-                }
-                songIsAvailable.second
-            } else {
-                mMusicViewModel.getRandomMusic()
+            val preQueueSong = mGoPreferences.isQueue
+            if (preQueueSong != null) {
+                isQueue = preQueueSong
+                isQueueStarted = true
+                mediaPlayerInterface.onQueueStartedOrEnded(started = true)
             }
 
             song?.let { restoredSong ->
 
                 val songs = MusicUtils.getAlbumSongs(
-                    (isQueueRestored ?: restoredSong).artist,
-                    (isQueueRestored ?: restoredSong).album,
+                    restoredSong.artist,
+                    restoredSong.album,
                     mMusicViewModel.deviceAlbumsByArtist
                 )
 
@@ -765,24 +754,6 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
             songTitle = currentSong.displayName.toFilenameWithoutExtension()
         }
         mPlayerControlsPanelBinding.playingSong.text = songTitle
-    }
-
-    // first: song is available, second: returned song
-    private fun songIsAvailable(song: Music?) : Pair<Boolean, Music?> = try {
-        if (mMusicViewModel.deviceMusicFiltered?.savedSongIsAvailable(song) == null) {
-            Pair(first = false, second = saveRandomSongToPrefs())
-        } else {
-            Pair(first = true, second = song)
-        }
-    } catch (e: Exception) {
-        e.printStackTrace()
-        Pair(first = false, second = saveRandomSongToPrefs())
-    }
-
-    private fun saveRandomSongToPrefs() : Music? {
-        val randomMusic = mMusicViewModel.getRandomMusic()
-        mGoPreferences.latestPlayedSong = randomMusic
-        return randomMusic
     }
 
     private fun getSongSource(): String? {
