@@ -267,6 +267,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
         return deviceMusicFiltered?.find { newMusic ->
             songToFind?.title == newMusic.title && songToFind?.displayName == newMusic.displayName
                     && songToFind?.track == newMusic.track && songToFind.album == newMusic.album
+                    && songToFind.year == newMusic.year && songToFind.duration == newMusic.duration
         }
     }
 }
