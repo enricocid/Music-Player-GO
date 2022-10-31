@@ -245,38 +245,58 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
         // update queue/favorites by updating moved songs id, albumId
         // and filtering out deleted songs
 
-        val goPreferences = GoPreferences.getPrefsInstance()
+        val prefs = GoPreferences.getPrefsInstance()
 
         deviceMusicFiltered?.let { deviceMusic ->
 
             // update queue songs id
-            goPreferences.queue?.run {
+            prefs.queue?.run {
                 val updatedQueue = map {
                     val music = findMusicToUpdate(it)
                     it.copy(albumId = music?.albumId, id= music?.id)
                 }
                 // filter queue to remove songs not available on the device
-                goPreferences.queue = updatedQueue.filter { deviceMusic.contains(it.copy(startFrom = 0))}
+                prefs.queue = updatedQueue.filter { deviceMusic.contains(it.copy(startFrom = 0))}
             }
 
             // update favorite songs id
-            goPreferences.favorites?.run {
+            prefs.favorites?.run {
                 val updatedFavorites = map {
                     val music = findMusicToUpdate(it)
                     it.copy(albumId = music?.albumId, id= music?.id)
                 }
-                goPreferences.favorites = updatedFavorites.filter { deviceMusic.contains(it.copy(startFrom = 0))}
+                prefs.favorites = updatedFavorites.filter { deviceMusic.contains(it.copy(startFrom = 0))}
+            }
+
+            // check if pre queue song exists and update id
+            if (prefs.isQueue != null) {
+                prefs.isQueue?.let { preQueueSong ->
+                    val found = findMusicToUpdate(preQueueSong)
+                    prefs.isQueue = if (found != null) {
+                        preQueueSong.copy(albumId = found.albumId, id = found.id)
+                    } else {
+                        getRandomMusic()
+                    }
+                }
             }
 
             // check if latestPlayedSong exists and update id
-            if (goPreferences.latestPlayedSong == null) {
-                goPreferences.latestPlayedSong = getRandomMusic()
+            if (prefs.latestPlayedSong == null) {
+                prefs.latestPlayedSong = getRandomMusic()
             } else {
-                goPreferences.latestPlayedSong?.let { lps ->
+                prefs.latestPlayedSong?.let { lps ->
                     val found = findMusicToUpdate(lps)
-                    goPreferences.latestPlayedSong = if (found != null) {
+                    prefs.latestPlayedSong = if (found != null) {
                         lps.copy(albumId = found.albumId, id = found.id)
                     } else {
+                        // if queue had started, update latestPlayedSong
+                        // picking the first queued song
+                        prefs.queue?.let { queue ->
+                            if (prefs.isQueue != null && queue.isNotEmpty()) {
+                                prefs.latestPlayedSong = queue[0]
+                            }
+                            return
+                        }
                         getRandomMusic()
                     }
                 }
