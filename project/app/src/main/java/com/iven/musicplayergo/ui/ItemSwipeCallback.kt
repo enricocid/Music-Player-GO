@@ -1,8 +1,8 @@
 package com.iven.musicplayergo.ui
 
-import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -10,11 +10,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.utils.Theming
 
 
-class ItemSwipeCallback(private val ctx: Context, private val isQueueDialog: Boolean, private val isFavoritesDialog: Boolean, private val onSwipedAction: (viewHolder: RecyclerView.ViewHolder, direction: Int) -> Unit) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
-
-    private var colorDrawableBackground = ColorDrawable(Theming.resolveWidgetsColorNormal(ctx))
-    private var icon = ContextCompat.getDrawable(ctx, R.drawable.ic_queue_add)
-    private var iconMarginVertical = 0
+class ItemSwipeCallback(private val isQueueDialog: Boolean, private val isFavoritesDialog: Boolean, private val onSwipedAction: (viewHolder: RecyclerView.ViewHolder, direction: Int) -> Unit): ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
 
     override fun onMove(
         recyclerView: RecyclerView,
@@ -34,11 +30,16 @@ class ItemSwipeCallback(private val ctx: Context, private val isQueueDialog: Boo
     override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
 
+        val context = recyclerView.context
+        val colorDrawableBackground = ColorDrawable(Theming.resolveWidgetsColorNormal(context))
+        val icon: Drawable?
+        var iconMarginVertical: Int
+
         val itemView = viewHolder.itemView
 
         if (dX > 0) {
 
-            icon = ContextCompat.getDrawable(ctx, if (isQueueDialog && !isFavoritesDialog) {
+            icon = ContextCompat.getDrawable(context, if (isQueueDialog && !isFavoritesDialog) {
                 R.drawable.ic_delete
             } else {
                 R.drawable.ic_queue_add
@@ -64,7 +65,7 @@ class ItemSwipeCallback(private val ctx: Context, private val isQueueDialog: Boo
                 itemView.bottom
             )
 
-            icon = ContextCompat.getDrawable(ctx, if (isQueueDialog || isFavoritesDialog) {
+            icon = ContextCompat.getDrawable(context, if (isQueueDialog || isFavoritesDialog) {
                 R.drawable.ic_delete
             } else {
                 R.drawable.ic_favorite

@@ -1,6 +1,5 @@
 package com.iven.musicplayergo
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.content.res.Resources
 import android.provider.MediaStore
@@ -15,7 +14,7 @@ import java.io.File
 import kotlin.random.Random
 
 
-class MusicViewModel(application: Application) : AndroidViewModel(application) {
+class MusicViewModel(application: Application): AndroidViewModel(application) {
 
     /**
      * This is the job for all coroutines started by this ViewModel.
@@ -53,7 +52,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
     //keys: artist || value: songs contained in the folder
     var deviceMusicByFolder: Map<String, List<Music>>? = null
 
-    fun getRandomMusic() : Music? {
+    fun getRandomMusic(): Music? {
         deviceMusicFiltered?.shuffled()?.run {
            return get(Random.nextInt(size))
         }
@@ -83,7 +82,6 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    @SuppressLint("InlinedApi")
     @Suppress("DEPRECATION")
     fun queryForMusic(application: Application) =
 
@@ -230,10 +228,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                 iterate.next()?.let { artistKey ->
                     val album = deviceSongsByArtist?.getValue(artistKey)
                     deviceAlbumsByArtist?.set(
-                        artistKey, MusicUtils.buildSortedArtistAlbums(
-                            resources,
-                            album
-                        )
+                        artistKey, MusicUtils.buildSortedArtistAlbums(resources, album)
                     )
                 }
             }
@@ -252,7 +247,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
             // update queue songs id
             prefs.queue?.run {
                 val updatedQueue = map {
-                    val music = findMusicToUpdate(it)
+                    val music = findMusic(it)
                     it.copy(albumId = music?.albumId, id= music?.id)
                 }
                 // filter queue to remove songs not available on the device
@@ -262,7 +257,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
             // update favorite songs id
             prefs.favorites?.run {
                 val updatedFavorites = map {
-                    val music = findMusicToUpdate(it)
+                    val music = findMusic(it)
                     it.copy(albumId = music?.albumId, id= music?.id)
                 }
                 prefs.favorites = updatedFavorites.filter { deviceMusic.contains(it.copy(startFrom = 0))}
@@ -271,7 +266,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
             // check if pre queue song exists and update id
             if (prefs.isQueue != null) {
                 prefs.isQueue?.let { preQueueSong ->
-                    val found = findMusicToUpdate(preQueueSong)
+                    val found = findMusic(preQueueSong)
                     prefs.isQueue = if (found != null) {
                         preQueueSong.copy(albumId = found.albumId, id = found.id)
                     } else {
@@ -285,7 +280,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                 prefs.latestPlayedSong = getRandomMusic()
             } else {
                 prefs.latestPlayedSong?.let { lps ->
-                    val found = findMusicToUpdate(lps)
+                    val found = findMusic(lps)
                     prefs.latestPlayedSong = if (found != null) {
                         lps.copy(albumId = found.albumId, id = found.id)
                     } else {
@@ -304,7 +299,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun findMusicToUpdate(song: Music?): Music? {
+    private fun findMusic(song: Music?): Music? {
         val songToFind = song?.copy(startFrom = 0)
         return deviceMusicFiltered?.find { newMusic ->
             songToFind?.title == newMusic.title && songToFind?.displayName == newMusic.displayName

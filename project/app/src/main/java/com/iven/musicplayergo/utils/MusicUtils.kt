@@ -18,13 +18,12 @@ object MusicUtils {
     // if selected artist differs from played artist -1 will be returned
     @JvmStatic
     fun getPlayingAlbumPosition(
-        mediaPlayerHolder: MediaPlayerHolder,
         selectedArtist: String?,
         deviceAlbumsByArtist: MutableMap<String, List<Album>>?
     ) = try {
         val album = getAlbumFromList(
             selectedArtist,
-            mediaPlayerHolder.currentSong?.album,
+            MediaPlayerHolder.getInstance().currentSong?.album,
             deviceAlbumsByArtist
         )
         album.second
@@ -67,10 +66,7 @@ object MusicUtils {
     }
 
     @JvmStatic
-    fun buildSortedArtistAlbums(
-        resources: Resources,
-        artistSongs: List<Music>?
-    ): List<Album> {
+    fun buildSortedArtistAlbums(resources: Resources, artistSongs: List<Music>?): List<Album> {
 
         val sortedAlbums = mutableListOf<Album>()
 
@@ -105,8 +101,9 @@ object MusicUtils {
     }
 
     @JvmStatic
-    fun updateMediaPlayerHolderLists(mediaPlayerHolder: MediaPlayerHolder, uiControlInterface: UIControlInterface, randomMusic: Music?): Music? {
+    fun updateMediaPlayerHolderLists(uiControlInterface: UIControlInterface, randomMusic: Music?): Music? {
 
+        val mediaPlayerHolder = MediaPlayerHolder.getInstance()
         val currentSong = mediaPlayerHolder.currentSong
 
         fun selectNewSong(filter: Set<String>): Music? {

@@ -220,9 +220,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
         override fun getPopupText(position: Int): String {
             if (sIsFastScrollerPopup) {
                 mAllMusic?.get(position)?.title?.run {
-                    if (isNotEmpty()) {
-                        return first().toString()
-                    }
+                    if (isNotEmpty()) return first().toString()
                 }
             }
             return ""
@@ -236,7 +234,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
             holder.bindItems(mAllMusic?.get(holder.absoluteAdapterPosition))
         }
 
-        inner class SongsHolder(private val binding: MusicItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        inner class SongsHolder(private val binding: MusicItemBinding): RecyclerView.ViewHolder(binding.root) {
 
             fun bindItems(itemSong: Music?) {
 
@@ -254,10 +252,8 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                         getString(R.string.artist_and_album, itemSong?.artist, itemSong?.album)
 
                     root.setOnClickListener {
-                        MediaPlayerHolder.getInstance().run {
-                            if (isCurrentSongFM) {
-                                currentSongFM = null
-                            }
+                        with(MediaPlayerHolder.getInstance()) {
+                            if (isCurrentSongFM) currentSongFM = null
                         }
                         mMediaControlInterface.onSongSelected(
                             itemSong,

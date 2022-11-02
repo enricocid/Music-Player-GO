@@ -13,6 +13,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
+import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -32,6 +33,7 @@ import androidx.fragment.app.commit
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import androidx.window.layout.WindowMetricsCalculator
 import coil.load
 import com.google.android.material.animation.ArgbEvaluatorCompat
@@ -117,8 +119,8 @@ fun MenuItem.setTitle(resources: Resources, title: String?) {
 }
 
 @SuppressLint("RestrictedApi")
-fun Menu.enablePopupIcons(activity: Activity) {
-    val iconMarginPx = activity.resources.getDimensionPixelSize(R.dimen.player_controls_padding_start)
+fun Menu.enablePopupIcons(resources: Resources) {
+    val iconMarginPx = resources.getDimensionPixelSize(R.dimen.player_controls_padding_start)
 
     if (this is MenuBuilder) {
         setOptionalIconsVisible(true)
@@ -143,11 +145,9 @@ fun FragmentManager.addFragment(fragment: Fragment?, tag: String?) {
 }
 
 fun FragmentManager.goBackFromFragmentNow(fragment: Fragment?) {
-    if (backStackEntryCount >= 0) {
+    fragment.takeIf { it != null && backStackEntryCount > 0 }?.let { fm ->
         commit {
-            fragment?.run {
-                remove(this)
-            }
+            remove(fm)
             popBackStackImmediate()
         }
     }
@@ -174,9 +174,7 @@ fun View.createCircularReveal(show: Boolean): Animator {
             interpolator = FastOutSlowInInterpolator()
             duration = revealDuration
             doOnEnd {
-                if (!show) {
-                    handleViewVisibility(show = false)
-                }
+                if (!show) handleViewVisibility(show = false)
             }
             start()
         }
@@ -196,14 +194,8 @@ fun View.createCircularReveal(show: Boolean): Animator {
 // https://stackoverflow.com/a/53986874
 fun RecyclerView.smoothSnapToPosition(position: Int) {
     val smoothScroller = object : LinearSmoothScroller(context) {
-        override fun getVerticalSnapPreference(): Int {
-            return SNAP_TO_START
-        }
-
-        override fun getHorizontalSnapPreference(): Int {
-            return SNAP_TO_START
-        }
-
+        override fun getVerticalSnapPreference() = SNAP_TO_START
+        override fun getHorizontalSnapPreference() = SNAP_TO_START
         override fun onStop() {
             super.onStop()
             findViewHolderForAdapterPosition(position)?.itemView?.performClick()
@@ -219,9 +211,7 @@ fun View.handleViewVisibility(show: Boolean) {
 
 fun View.safeClickListener(safeClickListener: (view: View) -> Unit) {
     setOnClickListener {
-        if (!SingleClickHelper.isBlockingClick()) {
-            safeClickListener(it)
-        }
+        if (!SingleClickHelper.isBlockingClick()) safeClickListener(it)
     }
 }
 
@@ -238,5 +228,28 @@ fun Dialog?.applyFullHeightDialog(activity: Activity) {
 
     this?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)?.let { bs ->
         BottomSheetBehavior.from(bs).peekHeight = height
+    }
+}
+
+fun ViewPager2.reduceDragSensitivity() {
+
+    // By default, ViewPager2's sensitivity is high enough to result in vertical
+    // scroll events being registered as horizontal scroll events. Reflect into the
+    // internal recyclerview and change the touch slope so that touch actions will
+    // act more as a scroll than as a swipe.
+    try {
+
+        val recycler = ViewPager2::class.java.getDeclaredField("mRecyclerView")
+        recycler.isAccessible = true
+        val recyclerView = recycler.get(this) as RecyclerView
+
+        val touchSlopField = RecyclerView::class.java.getDeclaredField("mTouchSlop")
+        touchSlopField.isAccessible = true
+        val touchSlop = touchSlopField.get(recyclerView) as Int
+        touchSlopField.set(recyclerView, touchSlop*3) // 3x seems to be the best fit here
+
+    } catch (e: Exception) {
+        Log.e("MainActivity", "Unable to reduce ViewPager sensitivity")
+        Log.e("MainActivity", e.stackTraceToString())
     }
 }

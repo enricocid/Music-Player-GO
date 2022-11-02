@@ -12,9 +12,7 @@ object MediaPlayerUtils {
     fun safePause(mediaPlayer: MediaPlayer) {
         with(mediaPlayer) {
             try {
-                if (isPlaying) {
-                    pause()
-                }
+                if (isPlaying) pause()
             } catch (e: IllegalStateException) {
                 e.printStackTrace()
             }

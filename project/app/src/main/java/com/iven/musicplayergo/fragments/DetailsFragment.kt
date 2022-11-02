@@ -96,9 +96,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             getString(TAG_IS_FOLDER)?.let { launchedBy ->
                 mLaunchedBy = launchedBy
             }
-            if (sLaunchedByArtistView) {
-                mSelectedAlbumPosition = getInt(TAG_SELECTED_ALBUM_POSITION)
-            }
+            if (sLaunchedByArtistView) mSelectedAlbumPosition = getInt(TAG_SELECTED_ALBUM_POSITION)
             mSelectedSongId = getLong(TAG_SELECTED_SONG_ID)
             sCanUpdateSongs = getBoolean(TAG_CAN_UPDATE_SONGS)
         }
@@ -216,9 +214,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             }
 
             val params = layoutParams as LinearLayout.LayoutParams
-            if (sLaunchedByArtistView) {
-                params.bottomMargin = resources.getDimensionPixelSize(R.dimen.player_controls_padding_normal)
-            }
+            if (sLaunchedByArtistView) params.bottomMargin = resources.getDimensionPixelSize(R.dimen.player_controls_padding_normal)
         }
     }
 
@@ -327,7 +323,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             adapter = SongsAdapter()
             FastScrollerBuilder(this).useMd2Style().build()
 
-            ItemTouchHelper(ItemSwipeCallback(requireContext(), isQueueDialog = false, isFavoritesDialog = false) { viewHolder: RecyclerView.ViewHolder,
+            ItemTouchHelper(ItemSwipeCallback(isQueueDialog = false, isFavoritesDialog = false) { viewHolder: RecyclerView.ViewHolder,
                                                                           direction: Int ->
                 val song = mSongsList?.get(viewHolder.absoluteAdapterPosition)
                 if (direction == ItemTouchHelper.RIGHT) {
@@ -398,12 +394,8 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
         songs?.let { newSongsList ->
             mSongsList = newSongsList
-            if (updateAdapter) {
-                _detailsFragmentBinding?.songsRv?.adapter?.notifyDataSetChanged()
-            }
-            if (updateSongs) {
-                mMediaControlInterface.onUpdatePlayingAlbumSongs(mSongsList)
-            }
+            if (updateAdapter) _detailsFragmentBinding?.songsRv?.adapter?.notifyDataSetChanged()
+            if (updateSongs) mMediaControlInterface.onUpdatePlayingAlbumSongs(mSongsList)
         }
     }
 
@@ -560,7 +552,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    fun hasToUpdate(selectedArtistOrFolder: String?) : Boolean {
+    fun hasToUpdate(selectedArtistOrFolder: String?): Boolean {
         sOpenNewDetailsFragment = mSelectedArtistOrFolder != null && selectedArtistOrFolder != mSelectedArtistOrFolder
         return sOpenNewDetailsFragment
     }
@@ -608,7 +600,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             holder.bindItems(mSelectedArtistAlbums?.get(holder.absoluteAdapterPosition))
         }
 
-        inner class AlbumsHolder(private val binding: AlbumItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        inner class AlbumsHolder(private val binding: AlbumItemBinding): RecyclerView.ViewHolder(binding.root) {
 
             fun bindItems(itemAlbum: Album?) {
 
@@ -644,10 +636,8 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                             swapAlbum(itemAlbum?.music)
                         } else {
                             if (sPlayFirstSong) {
-                                mMediaPlayerHolder.run {
-                                    if (isCurrentSongFM) {
-                                        currentSongFM = null
-                                    }
+                                with(mMediaPlayerHolder) {
+                                    if (isCurrentSongFM) currentSongFM = null
                                 }
                                 mMediaControlInterface.onSongSelected(
                                     mSongsList?.first(),
@@ -682,7 +672,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             holder.bindItems(mSongsList?.get(holder.absoluteAdapterPosition))
         }
 
-        inner class SongsHolder(private val binding: GenericItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        inner class SongsHolder(private val binding: GenericItemBinding): RecyclerView.ViewHolder(binding.root) {
 
             fun bindItems(itemSong: Music?) {
 
@@ -725,10 +715,8 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
                     root.setOnClickListener {
 
-                        mMediaPlayerHolder.run {
-                            if (isCurrentSongFM) {
-                                currentSongFM = null
-                            }
+                        with(mMediaPlayerHolder) {
+                            if (isCurrentSongFM) currentSongFM = null
                         }
                         mMediaControlInterface.onSongSelected(
                             itemSong,
@@ -741,12 +729,8 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                             mSelectedSongId = itemSong?.id
                             notifyItemChanged(absoluteAdapterPosition)
                         }
-                        if (!sCanUpdateSongs) {
-                            sCanUpdateSongs = true
-                        }
-                        if (sAlbumSwapped) {
-                            sAlbumSwapped = false
-                        }
+                        if (!sCanUpdateSongs) sCanUpdateSongs = true
+                        if (sAlbumSwapped) sAlbumSwapped = false
                     }
 
                     root.setOnLongClickListener {

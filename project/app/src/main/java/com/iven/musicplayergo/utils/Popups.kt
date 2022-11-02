@@ -32,7 +32,7 @@ object Popups {
                 inflate(R.menu.popup_songs)
 
                 menu.findItem(R.id.song_title).setTitle(activity.resources, song?.title)
-                menu.enablePopupIcons(activity)
+                menu.enablePopupIcons(activity.resources)
                 gravity = Gravity.END
 
                 setOnMenuItemClickListener { menuItem ->
@@ -57,10 +57,7 @@ object Popups {
     }
 
     @JvmStatic
-    fun showPopupForPlaybackSpeed(
-        activity: Activity,
-        view: View
-    ) {
+    fun showPopupForPlaybackSpeed(activity: Activity, view: View) {
 
         PopupMenu(activity, view).apply {
             inflate(R.menu.popup_speed)
@@ -87,9 +84,7 @@ object Popups {
                 }
                 if (GoPreferences.getPrefsInstance().playbackSpeedMode != GoConstants.PLAYBACK_SPEED_ONE_ONLY) {
                     menu.findItem(getSelectedPlaybackItem(playbackSpeed)).setTitleColor(
-                        Theming.resolveThemeColor(
-                            activity.resources
-                        )
+                        Theming.resolveThemeColor(activity.resources)
                     )
                 }
                 MediaPlayerHolder.getInstance().setPlaybackSpeed(playbackSpeed)

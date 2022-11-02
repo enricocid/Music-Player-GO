@@ -33,11 +33,7 @@ object Permissions {
         activity: Activity
     ) {
 
-        if (ActivityCompat.shouldShowRequestPermissionRationale(
-                activity,
-                PERMISSION_READ_AUDIO
-            )
-        ) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, PERMISSION_READ_AUDIO)) {
 
             MaterialAlertDialogBuilder(activity)
                 .setCancelable(false)

@@ -63,9 +63,7 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
 
         var flags = 0
-        if (Versioning.isMarshmallow()) {
-            flags = PendingIntent.FLAG_IMMUTABLE or 0
-        }
+        if (Versioning.isMarshmallow()) flags = PendingIntent.FLAG_IMMUTABLE or 0
         val contentIntent = PendingIntent.getActivity(
             playerService, GoConstants.NOTIFICATION_INTENT_REQUEST_CODE,
             openPlayerIntent, flags

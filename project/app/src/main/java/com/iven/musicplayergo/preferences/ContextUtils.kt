@@ -9,7 +9,7 @@ import com.iven.musicplayergo.R
 import java.util.*
 
 // https://medium.com/swlh/android-app-specific-language-change-programmatically-using-kotlin-d650a5392220
-class ContextUtils(base: Context) : ContextWrapper(base) {
+class ContextUtils(base: Context): ContextWrapper(base) {
 
     companion object {
 

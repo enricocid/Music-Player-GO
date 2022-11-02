@@ -16,7 +16,6 @@ import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.extensions.setIconTint
-import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.MainActivity
 
@@ -46,7 +45,7 @@ object Theming {
     }
 
     @JvmStatic
-    fun isThemeNight(resources: Resources) : Boolean {
+    fun isThemeNight(resources: Resources): Boolean {
         val uiMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         return uiMode == Configuration.UI_MODE_NIGHT_YES
     }
@@ -64,7 +63,7 @@ object Theming {
         }
     }
 
-    fun getSortIconForSongsDisplayName(sort: Int) : Int {
+    fun getSortIconForSongsDisplayName(sort: Int): Int {
         return when (sort) {
             GoConstants.ASCENDING_SORTING -> R.drawable.ic_sort_alphabetical_descending
             else -> R.drawable.ic_sort_alphabetical_ascending
@@ -130,9 +129,7 @@ object Theming {
     @JvmStatic
     fun resolveTheme(context: Context): Int {
         val position = GoPreferences.getPrefsInstance().accent
-        if (isThemeBlack(context.resources)) {
-            return stylesBlack[position]
-        }
+        if (isThemeBlack(context.resources)) return stylesBlack[position]
         return styles[position]
     }
 
@@ -152,11 +149,7 @@ object Theming {
     @ColorInt
     @JvmStatic
     fun resolveColorAttr(context: Context, @AttrRes colorAttr: Int): Int {
-        val resolvedAttr: TypedValue =
-            resolveThemeAttr(
-                    context,
-                    colorAttr
-            )
+        val resolvedAttr: TypedValue = resolveThemeAttr(context, colorAttr)
         // resourceId is used if it's a ColorStateList, and data if it's a color reference or a hex color
         val colorRes =
             if (resolvedAttr.resourceId != 0) {
@@ -215,7 +208,7 @@ object Theming {
                 R.drawable.ic_play
             }
             GoConstants.REPEAT_ACTION -> if (isNotification) {
-                getRepeatIcon(mediaPlayerHolder, isNotification = true)
+                getRepeatIcon(isNotification = true)
             } else {
                 R.drawable.ic_repeat
             }
@@ -225,7 +218,7 @@ object Theming {
             GoConstants.FAST_FORWARD_ACTION -> R.drawable.ic_fast_forward
             GoConstants.REWIND_ACTION -> R.drawable.ic_fast_rewind
             GoConstants.FAVORITE_ACTION -> if (isNotification) {
-                getFavoriteIcon(mediaPlayerHolder, isNotification = true)
+                getFavoriteIcon(isNotification = true)
             } else {
                 R.drawable.ic_favorite
             }
@@ -234,22 +227,25 @@ object Theming {
     }
 
     @JvmStatic
-    fun getRepeatIcon(mediaPlayerHolder: MediaPlayerHolder, isNotification: Boolean) = when {
-        mediaPlayerHolder.isRepeat1X -> R.drawable.ic_repeat_one
-        mediaPlayerHolder.isLooping -> R.drawable.ic_repeat
-        else -> if (isNotification) {
-            R.drawable.ic_repeat_one_disabled_alt
-        } else {
-            R.drawable.ic_repeat_one_disabled
+    fun getRepeatIcon(isNotification: Boolean): Int {
+        val mediaPlayerHolder = MediaPlayerHolder.getInstance()
+        return when {
+            mediaPlayerHolder.isRepeat1X -> R.drawable.ic_repeat_one
+            mediaPlayerHolder.isLooping -> R.drawable.ic_repeat
+            else -> if (isNotification) {
+                R.drawable.ic_repeat_one_disabled_alt
+            } else {
+                R.drawable.ic_repeat_one_disabled
+            }
         }
     }
 
     @JvmStatic
-    fun getFavoriteIcon(mediaPlayerHolder: MediaPlayerHolder, isNotification: Boolean): Int {
+    fun getFavoriteIcon(isNotification: Boolean): Int {
+        val mediaPlayerHolder = MediaPlayerHolder.getInstance()
         val favorites = GoPreferences.getPrefsInstance().favorites
         val isFavorite = favorites != null && favorites.contains(
-            mediaPlayerHolder.currentSong?.toSavedMusic(0, mediaPlayerHolder.launchedBy)
-        )
+            mediaPlayerHolder.currentSong?.copy(startFrom = 0, launchedBy = mediaPlayerHolder.launchedBy))
         return if (isFavorite) {
             R.drawable.ic_favorite
         } else {

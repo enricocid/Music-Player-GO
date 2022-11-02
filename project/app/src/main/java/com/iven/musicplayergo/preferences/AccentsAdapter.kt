@@ -1,6 +1,5 @@
 package com.iven.musicplayergo.preferences
 
-import android.app.Activity
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,10 +13,9 @@ import com.iven.musicplayergo.databinding.AccentItemBinding
 import com.iven.musicplayergo.utils.Theming
 
 
-class AccentsAdapter(private val activity: Activity) :
+class AccentsAdapter(private val accents: IntArray):
     RecyclerView.Adapter<AccentsAdapter.AccentsHolder>() {
 
-    private val mAccents = activity.resources.getIntArray(R.array.colors)
     var selectedAccent = GoPreferences.getPrefsInstance().accent
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccentsHolder {
@@ -25,19 +23,19 @@ class AccentsAdapter(private val activity: Activity) :
         return AccentsHolder(binding)
     }
 
-    override fun getItemCount() = mAccents.size
+    override fun getItemCount() = accents.size
 
     override fun onBindViewHolder(holder: AccentsHolder, position: Int) {
-        holder.bindItems(mAccents[holder.absoluteAdapterPosition])
+        holder.bindItems(accents[holder.absoluteAdapterPosition])
     }
 
-    inner class AccentsHolder(private val binding: AccentItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class AccentsHolder(private val binding: AccentItemBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bindItems(color: Int) {
 
             with(binding.root) {
 
-                val accentFullName = Theming.getAccentName(activity.resources, absoluteAdapterPosition)
+                val accentFullName = Theming.getAccentName(resources, absoluteAdapterPosition)
                 contentDescription = accentFullName
 
                 setCardBackgroundColor(color)
@@ -62,7 +60,7 @@ class AccentsAdapter(private val activity: Activity) :
                 }
 
                 setOnLongClickListener {
-                    Toast.makeText(activity, accentFullName, Toast.LENGTH_SHORT)
+                    Toast.makeText(context, accentFullName, Toast.LENGTH_SHORT)
                         .show()
                     return@setOnLongClickListener true
                 }

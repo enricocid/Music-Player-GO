@@ -112,7 +112,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            getString(R.string.precise_volume_pref) -> mMediaPlayerHolder.run {
+            getString(R.string.precise_volume_pref) -> with(mMediaPlayerHolder) {
                 setPreciseVolume(if (!mGoPreferences.isPreciseVolumeEnabled) {
                     mGoPreferences.latestVolume = currentVolumeInPercent
                     100
@@ -128,7 +128,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             } else {
                 mMediaPlayerHolder.releaseBuiltInEqualizer()
             }
-            getString(R.string.focus_pref) -> mMediaPlayerHolder.run {
+            getString(R.string.focus_pref) -> with(mMediaPlayerHolder) {
                 if (mGoPreferences.isFocusEnabled) {
                     tryToGetAudioFocus()
                     return

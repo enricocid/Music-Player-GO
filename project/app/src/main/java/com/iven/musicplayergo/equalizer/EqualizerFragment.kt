@@ -37,6 +37,8 @@ class EqualizerFragment : Fragment() {
 
     private val mMediaPlayerHolder get() = MediaPlayerHolder.getInstance()
 
+    private val mGoPreferences get() = GoPreferences.getPrefsInstance()
+
     override fun onDestroyView() {
         super.onDestroyView()
         saveEqSettings()
@@ -56,15 +58,11 @@ class EqualizerFragment : Fragment() {
         _eqFragmentBinding?.run {
             sliderBass.addOnChangeListener { _, value, fromUser ->
                 // Responds to when slider's value is changed
-                if (fromUser) {
-                    mEqualizer?.second?.setStrength(value.toInt().toShort())
-                }
+                if (fromUser) mEqualizer?.second?.setStrength(value.toInt().toShort())
             }
             sliderVirt.addOnChangeListener { _, value, fromUser ->
                 // Responds to when slider's value is changed
-                if (fromUser) {
-                    mEqualizer?.third?.setStrength(value.toInt().toShort())
-                }
+                if (fromUser) mEqualizer?.third?.setStrength(value.toInt().toShort())
             }
         }
 
@@ -101,7 +99,7 @@ class EqualizerFragment : Fragment() {
             mSliders[slider4] = freq4
         }
 
-        GoPreferences.getPrefsInstance().savedEqualizerSettings?.let { savedEqualizerSettings ->
+        mGoPreferences.savedEqualizerSettings?.let { savedEqualizerSettings ->
             mSelectedPreset = savedEqualizerSettings.preset
         }
 
@@ -130,10 +128,8 @@ class EqualizerFragment : Fragment() {
                     slider.valueFrom = minBandLevel.toFloat()
                     slider.valueTo = maxBandLevel.toFloat()
                     slider.addOnChangeListener { selectedSlider, value, fromUser ->
-                        if (fromUser) {
-                            if (slider == selectedSlider) {
-                                setBandLevel(item.index.toShort(), value.toInt().toShort())
-                            }
+                        if (fromUser && slider == selectedSlider) {
+                            setBandLevel(item.index.toShort(), value.toInt().toShort())
                         }
                     }
                     mSliders[slider]?.let { textView ->
@@ -163,7 +159,7 @@ class EqualizerFragment : Fragment() {
             }
         }
 
-        if (GoPreferences.getPrefsInstance().isAnimations) {
+        if (mGoPreferences.isAnimations) {
             view.afterMeasured {
                 _eqFragmentBinding?.root?.run {
                     mEqAnimator = createCircularReveal(show = true)
@@ -209,7 +205,7 @@ class EqualizerFragment : Fragment() {
 
             if (!isPresetChanged) {
                 _eqFragmentBinding?.run {
-                    GoPreferences.getPrefsInstance().savedEqualizerSettings?.let { eqSettings ->
+                    mGoPreferences.savedEqualizerSettings?.let { eqSettings ->
                         sliderBass.value = eqSettings.bassBoost.toFloat()
                     }
                     mEqualizer?.third?.let { virtualizer ->
@@ -231,7 +227,7 @@ class EqualizerFragment : Fragment() {
 
     private fun closeEqualizerOnError() {
 
-        GoPreferences.getPrefsInstance().isEqForced = false
+        mGoPreferences.isEqForced = false
 
         //release built in equalizer
         mMediaPlayerHolder.releaseBuiltInEqualizer()

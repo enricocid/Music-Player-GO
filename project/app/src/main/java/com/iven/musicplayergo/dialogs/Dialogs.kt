@@ -33,18 +33,20 @@ object Dialogs {
     }
 
     @JvmStatic
-    fun showClearQueueDialog(context: Context, mediaPlayerHolder: MediaPlayerHolder) {
+    fun showClearQueueDialog(context: Context) {
 
+        val mediaPlayerHolder = MediaPlayerHolder.getInstance()
+        val prefs = GoPreferences.getPrefsInstance()
         fun clearQueue() {
-            GoPreferences.getPrefsInstance().isQueue = null
-            GoPreferences.getPrefsInstance().queue = null
+            prefs.isQueue = null
+            prefs.queue = null
             with(mediaPlayerHolder) {
                 queueSongs.clear()
                 setQueueEnabled(enabled = false, canSkip = isQueueStarted)
             }
         }
 
-        if (GoPreferences.getPrefsInstance().isAskForRemoval) {
+        if (prefs.isAskForRemoval) {
             MaterialAlertDialogBuilder(context)
                 .setTitle(R.string.queue)
                 .setMessage(R.string.queue_songs_clear)
@@ -76,7 +78,8 @@ object Dialogs {
     }
 
     @JvmStatic
-    fun stopPlaybackDialog(context: Context, mediaPlayerHolder: MediaPlayerHolder) {
+    fun stopPlaybackDialog(context: Context) {
+        val mediaPlayerHolder = MediaPlayerHolder.getInstance()
         if (GoPreferences.getPrefsInstance().isAskForRemoval) {
             MaterialAlertDialogBuilder(context)
                 .setCancelable(false)

@@ -1,6 +1,5 @@
 package com.iven.musicplayergo.preferences
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,16 +8,11 @@ import com.iven.musicplayergo.databinding.FilterItemBinding
 import com.iven.musicplayergo.utils.Theming
 
 
-class FiltersAdapter(val activity: Activity) :
-    RecyclerView.Adapter<FiltersAdapter.CheckableItemsHolder>() {
+class FiltersAdapter: RecyclerView.Adapter<FiltersAdapter.CheckableItemsHolder>() {
 
     private val mItemsToRemove = mutableListOf<String>()
 
     private val mAvailableItems = GoPreferences.getPrefsInstance().filters?.sorted()?.toMutableList()
-
-    private val mDisabledColor = Theming.resolveWidgetsColorNormal(activity)
-
-    private val mDefaultTextColor = Theming.resolveColorAttr(activity, android.R.attr.textColorPrimary)
 
     fun getUpdatedItems() = mAvailableItems?.apply {
         removeAll(mItemsToRemove.toSet())
@@ -35,7 +29,7 @@ class FiltersAdapter(val activity: Activity) :
         holder.bindItems(mAvailableItems?.get(position))
     }
 
-    inner class CheckableItemsHolder(private val binding: FilterItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class CheckableItemsHolder(private val binding: FilterItemBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bindItems(itemFilter: String?) {
 
@@ -43,10 +37,10 @@ class FiltersAdapter(val activity: Activity) :
                 text = itemFilter
                 setOnCheckedChangeListener { _, b ->
                     if (b) {
-                        setTextColor(mDefaultTextColor)
+                        setTextColor(Theming.resolveColorAttr(context, android.R.attr.textColorPrimary))
                         mItemsToRemove.remove(itemFilter)
                     } else {
-                        setTextColor(mDisabledColor)
+                        setTextColor(Theming.resolveWidgetsColorNormal(context))
                         mItemsToRemove.add(itemFilter!!)
                     }
                 }

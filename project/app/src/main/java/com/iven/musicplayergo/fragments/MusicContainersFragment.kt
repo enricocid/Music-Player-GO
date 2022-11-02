@@ -112,9 +112,7 @@ class MusicContainersFragment : Fragment(),
             mListAdapter = MusicContainersAdapter()
             adapter = mListAdapter
             FastScrollerBuilder(this).useMd2Style().build()
-            if (sLaunchedByAlbumView) {
-                recycledViewPool.setMaxRecycledViews(0, 0)
-            }
+            if (sLaunchedByAlbumView) recycledViewPool.setMaxRecycledViews(0, 0)
         }
 
         _musicContainerListBinding?.searchToolbar?.let { stb ->
@@ -197,9 +195,7 @@ class MusicContainersFragment : Fragment(),
     }
 
     private fun setListDataSource(selectedList: List<String>?) {
-        if (!selectedList.isNullOrEmpty()) {
-            mListAdapter.swapList(selectedList)
-        }
+        if (!selectedList.isNullOrEmpty()) mListAdapter.swapList(selectedList)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -244,13 +240,12 @@ class MusicContainersFragment : Fragment(),
     }
 
     private fun saveSortingMethodToPrefs(sortingMethod: Int) {
-        when (mLaunchedBy) {
-            GoConstants.ARTIST_VIEW ->
-                GoPreferences.getPrefsInstance().artistsSorting = sortingMethod
-            GoConstants.FOLDER_VIEW ->
-                GoPreferences.getPrefsInstance().foldersSorting = sortingMethod
-            else ->
-                GoPreferences.getPrefsInstance().albumsSorting = sortingMethod
+        with(GoPreferences.getPrefsInstance()) {
+            when (mLaunchedBy) {
+                GoConstants.ARTIST_VIEW -> artistsSorting = sortingMethod
+                GoConstants.FOLDER_VIEW -> foldersSorting = sortingMethod
+                else -> albumsSorting = sortingMethod
+            }
         }
     }
 
@@ -328,9 +323,7 @@ class MusicContainersFragment : Fragment(),
         override fun getPopupText(position: Int): String {
             if (sIsFastScrollerPopup) {
                 mList?.get(position)?.run {
-                    if (isNotEmpty()) {
-                        return first().toString()
-                    }
+                    if (isNotEmpty()) return first().toString()
                 }
             }
             return ""
@@ -349,7 +342,7 @@ class MusicContainersFragment : Fragment(),
             holder.bindItems(mList?.get(holder.absoluteAdapterPosition)!!)
         }
 
-        inner class ArtistHolder(private val binding: GenericItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        inner class ArtistHolder(private val binding: GenericItemBinding): RecyclerView.ViewHolder(binding.root) {
 
             fun bindItems(item: String) {
 
@@ -405,9 +398,7 @@ class MusicContainersFragment : Fragment(),
         )
 
         private fun startActionMode() {
-            if (!isActionMode) {
-                actionMode = _musicContainerListBinding?.searchToolbar?.startActionMode(actionModeCallback)
-            }
+            if (!isActionMode) actionMode = _musicContainerListBinding?.searchToolbar?.startActionMode(actionModeCallback)
         }
 
         private fun setItemViewSelected(itemTitle: String, position: Int) {
@@ -416,9 +407,7 @@ class MusicContainersFragment : Fragment(),
             } else {
                 itemsToHide.add(itemTitle)
                 mList?.run {
-                    if (itemsToHide.size - 1 >= size - 1) {
-                        itemsToHide.remove(itemTitle)
-                    }
+                    if (itemsToHide.size - 1 >= size - 1) itemsToHide.remove(itemTitle)
                 }
             }
             actionMode?.title = itemsToHide.size.toString()

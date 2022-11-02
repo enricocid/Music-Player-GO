@@ -14,7 +14,6 @@ import android.view.KeyEvent
 import androidx.core.content.getSystemService
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
-import com.iven.musicplayergo.extensions.toSavedMusic
 import com.iven.musicplayergo.utils.Lists
 import com.iven.musicplayergo.utils.Versioning
 
@@ -83,9 +82,7 @@ class PlayerService : Service() {
         val mediaButtonReceiverComponentName = ComponentName(applicationContext, MediaBtnReceiver::class.java)
 
         var flags = 0
-        if (Versioning.isMarshmallow()) {
-            flags = PendingIntent.FLAG_IMMUTABLE or 0
-        }
+        if (Versioning.isMarshmallow()) flags = PendingIntent.FLAG_IMMUTABLE or 0
         val mediaButtonReceiverPendingIntent = PendingIntent.getBroadcast(applicationContext,
             0, mediaButtonIntent, flags)
 
@@ -106,12 +103,12 @@ class PlayerService : Service() {
             // Saves last played song and its position if user is ok :)
             val prefs = GoPreferences.getPrefsInstance()
             with(mMediaPlayerHolder) {
-                if (queueSongs.isNotEmpty()) { prefs.queue = queueSongs }
-                prefs.latestPlayedSong = currentSong?.toSavedMusic(playerPosition, launchedBy)
+                if (queueSongs.isNotEmpty()) prefs.queue = queueSongs
+                prefs.latestPlayedSong = currentSong?.copy(startFrom = playerPosition, launchedBy = launchedBy)
                 if (isQueue != null && isQueueStarted) {
                     prefs.isQueue = isQueue
                 } else {
-                    if (prefs.isQueue != null) { prefs.isQueue = null }
+                    if (prefs.isQueue != null) prefs.isQueue = null
                 }
             }
             prefs.latestVolume = mMediaPlayerHolder.currentVolumeInPercent
@@ -206,20 +203,16 @@ class PlayerService : Service() {
     }
 
     fun acquireWakeLock() {
-        if (::mWakeLock.isInitialized && !mWakeLock.isHeld) {
-            mWakeLock.acquire(WAKELOCK_MILLI)
-        }
+        if (::mWakeLock.isInitialized && !mWakeLock.isHeld) mWakeLock.acquire(WAKELOCK_MILLI)
     }
 
     fun releaseWakeLock() {
-        if (::mWakeLock.isInitialized && mWakeLock.isHeld) {
-            mWakeLock.release()
-        }
+        if (::mWakeLock.isInitialized && mWakeLock.isHeld) mWakeLock.release()
     }
 
     inner class LocalBinder : Binder() {
         // Return this instance of PlayerService so we can call public methods
-        fun getService() : PlayerService = this@PlayerService
+        fun getService(): PlayerService = this@PlayerService
     }
 
     @Suppress("DEPRECATION")
@@ -241,9 +234,7 @@ class PlayerService : Service() {
                     when (event.keyCode) {
                         KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, KeyEvent.KEYCODE_MEDIA_PLAY, KeyEvent.KEYCODE_MEDIA_PAUSE, KeyEvent.KEYCODE_HEADSETHOOK -> {
                             // respond to double click
-                            if (eventTime - mLastTimeClick <= DOUBLE_CLICK) {
-                                headsetClicks = 2
-                            }
+                            if (eventTime - mLastTimeClick <= DOUBLE_CLICK) headsetClicks = 2
                             if (headsetClicks == 2) {
                                 mMediaPlayerHolder.skip(isNext = true)
                             } else {

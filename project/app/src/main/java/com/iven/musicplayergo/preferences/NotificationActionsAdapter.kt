@@ -1,6 +1,5 @@
 package com.iven.musicplayergo.preferences
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -12,8 +11,7 @@ import com.iven.musicplayergo.models.NotificationAction
 import com.iven.musicplayergo.utils.Theming
 
 
-class NotificationActionsAdapter(private val ctx: Context) :
-    RecyclerView.Adapter<NotificationActionsAdapter.CheckableItemsHolder>() {
+class NotificationActionsAdapter: RecyclerView.Adapter<NotificationActionsAdapter.CheckableItemsHolder>() {
 
     var selectedActions = GoPreferences.getPrefsInstance().notificationActions
 
@@ -35,11 +33,13 @@ class NotificationActionsAdapter(private val ctx: Context) :
         holder.bindItems()
     }
 
-    inner class CheckableItemsHolder(private val binding: NotificationActionsItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class CheckableItemsHolder(private val binding: NotificationActionsItemBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bindItems() {
 
             with(binding) {
+
+                val context = binding.root.context
 
                 notifAction0.setImageResource(
                     Theming.getNotificationActionIcon(mActions[absoluteAdapterPosition].first, isNotification = false)
@@ -49,7 +49,7 @@ class NotificationActionsAdapter(private val ctx: Context) :
                 )
                 radio.isChecked = selectedActions == mActions[absoluteAdapterPosition]
 
-                root.contentDescription = ctx.getString(Theming.getNotificationActionTitle(mActions[absoluteAdapterPosition].first))
+                root.contentDescription = context.getString(Theming.getNotificationActionTitle(mActions[absoluteAdapterPosition].first))
 
                 root.setOnClickListener {
                     notifyItemChanged(mActions.indexOf(selectedActions))
@@ -60,7 +60,7 @@ class NotificationActionsAdapter(private val ctx: Context) :
 
                 root.setOnLongClickListener {
                     Toast.makeText(
-                        ctx,
+                        context,
                         Theming.getNotificationActionTitle(mActions[absoluteAdapterPosition].first),
                         Toast.LENGTH_SHORT
                     ).show()

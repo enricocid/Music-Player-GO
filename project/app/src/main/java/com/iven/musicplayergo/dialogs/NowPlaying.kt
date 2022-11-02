@@ -41,6 +41,8 @@ class NowPlaying: BottomSheetDialogFragment() {
 
     private val mMediaPlayerHolder get() = MediaPlayerHolder.getInstance()
 
+    private val mGoPreferences get() = GoPreferences.getPrefsInstance()
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         // This makes sure that the container activity has implemented
@@ -104,7 +106,7 @@ class NowPlaying: BottomSheetDialogFragment() {
         setupSeekBarProgressListener()
         updateNpInfo()
 
-        mMediaPlayerHolder.run {
+        with(mMediaPlayerHolder) {
             (currentSongFM ?: currentSong)?.let { song ->
                 loadNpCover(song)
                 _nowPlayingBinding?.npSeek?.text =
@@ -124,9 +126,7 @@ class NowPlaying: BottomSheetDialogFragment() {
 
         _npCoverBinding?.npCover?.afterMeasured {
             var ratio = 1.25F
-            if (Theming.isDeviceLand(resources)) {
-                ratio = 1.20f
-            }
+            if (Theming.isDeviceLand(resources)) ratio = 1.20f
             val dim = (width * ratio).toInt()
             layoutParams = LinearLayout.LayoutParams(dim, dim)
         }
@@ -153,13 +153,13 @@ class NowPlaying: BottomSheetDialogFragment() {
                         0,
                         mph.launchedBy)
                     mUIControlInterface.onFavoritesUpdated(clear = false)
-                    mMediaPlayerHolder.onUpdateFavorites()
-                    updateNpFavoritesIcon(mph)
+                    mph.onUpdateFavorites()
+                    updateNpFavoritesIcon()
                 }
 
                 with(npRepeat) {
                     setImageResource(
-                        Theming.getRepeatIcon(mph, isNotification = false)
+                        Theming.getRepeatIcon(isNotification = false)
                     )
                     updateIconTint(
                         if (mph.isRepeat1X || mph.isLooping) {
@@ -173,13 +173,11 @@ class NowPlaying: BottomSheetDialogFragment() {
                 }
 
                 with (npPauseOnEnd) {
-                    isChecked = GoPreferences.getPrefsInstance().continueOnEnd
+                    isChecked = mGoPreferences.continueOnEnd
                     setOnCheckedChangeListener { _, isChecked ->
-                        GoPreferences.getPrefsInstance().continueOnEnd = isChecked
+                        mGoPreferences.continueOnEnd = isChecked
                         var msg = R.string.pause_on_end_disabled
-                        if (isChecked) {
-                            msg = R.string.pause_on_end
-                        }
+                        if (isChecked) msg = R.string.pause_on_end
                         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT)
                             .show()
                     }
@@ -208,15 +206,13 @@ class NowPlaying: BottomSheetDialogFragment() {
 
         _npExtControlsBinding?.run {
 
-            val isVolumeEnabled = GoPreferences.getPrefsInstance().isPreciseVolumeEnabled
+            val isVolumeEnabled = mGoPreferences.isPreciseVolumeEnabled
             npVolumeContainer.handleViewVisibility(show = isVolumeEnabled)
 
             if (isVolumeEnabled) {
 
-                mMediaPlayerHolder.currentVolumeInPercent.run {
-                    npVolume.setImageResource(
-                        Theming.getPreciseVolumeIcon(this)
-                    )
+                with(mMediaPlayerHolder.currentVolumeInPercent) {
+                    npVolume.setImageResource(Theming.getPreciseVolumeIcon(this))
                     npVolumeSeek.progress = this
                     npVolumeValue.text = this.toString().padStart(3, '0')
                 }
@@ -265,18 +261,14 @@ class NowPlaying: BottomSheetDialogFragment() {
                             progress: Int,
                             fromUser: Boolean
                         ) {
-                            if (fromUser) {
-                                userSelectedPosition = progress
-                            }
+                            if (fromUser) userSelectedPosition = progress
                             npSeek.text =
                                 progress.toLong().toFormattedDuration(isAlbum = false, isSeekBar = true)
                         }
 
                         override fun onStartTrackingTouch(seekBar: SeekBar?) {
                             isUserSeeking = true
-                            npSeek.setTextColor(
-                                selectedColor
-                            )
+                            npSeek.setTextColor(selectedColor)
                         }
 
                         override fun onStopTrackingTouch(seekBar: SeekBar?) {
@@ -302,10 +294,10 @@ class NowPlaying: BottomSheetDialogFragment() {
 
     fun updateRepeatStatus(onPlaybackCompletion: Boolean) {
         if (::mMediaControlInterface.isInitialized) {
-            mMediaPlayerHolder.run {
+            with(mMediaPlayerHolder) {
                 val widgetsColorDisabled = Theming.resolveWidgetsColorNormal(requireContext())
                 _npCoverBinding?.npRepeat?.let { rpBtn ->
-                    rpBtn.setImageResource(Theming.getRepeatIcon(this, isNotification = false))
+                    rpBtn.setImageResource(Theming.getRepeatIcon(isNotification = false))
                     when {
                         onPlaybackCompletion -> rpBtn.updateIconTint(widgetsColorDisabled)
                         isRepeat1X or isLooping ->
@@ -325,14 +317,14 @@ class NowPlaying: BottomSheetDialogFragment() {
     }
 
     private fun setRepeat() {
-        mMediaPlayerHolder.run {
+        with(mMediaPlayerHolder) {
             repeat(updatePlaybackStatus = isPlaying)
             updateRepeatStatus(onPlaybackCompletion = false)
         }
     }
 
     private fun saveSongPosition() {
-        mMediaPlayerHolder.run {
+        with(mMediaPlayerHolder) {
             val song = currentSong
             when (val position = playerPosition) {
                 0 -> _npCoverBinding?.npLove?.callOnClick()
@@ -345,9 +337,9 @@ class NowPlaying: BottomSheetDialogFragment() {
     }
 
     private fun skip(isNext: Boolean) {
-        mMediaPlayerHolder.run {
-            if (!isPlay) { isPlay = true }
-            if (isSongFromPrefs) { isSongFromPrefs = false }
+        with(mMediaPlayerHolder) {
+            if (!isPlay) isPlay = true
+            if (isSongFromPrefs) isSongFromPrefs = false
             if (isNext) {
                 skip(isNext = true)
                 return
@@ -356,9 +348,9 @@ class NowPlaying: BottomSheetDialogFragment() {
         }
     }
 
-    fun updateNpFavoritesIcon(mediaPlayerHolder: MediaPlayerHolder) {
+    fun updateNpFavoritesIcon() {
         _npCoverBinding?.run {
-            val favoriteIcon = Theming.getFavoriteIcon(mediaPlayerHolder, isNotification = false)
+            val favoriteIcon = Theming.getFavoriteIcon(isNotification = false)
             npLove.setImageResource(favoriteIcon)
             if (favoriteIcon == R.drawable.ic_favorite) {
                 npLove.updateIconTint(Theming.resolveThemeColor(resources))
@@ -370,15 +362,15 @@ class NowPlaying: BottomSheetDialogFragment() {
 
     fun updateNpInfo() {
         if (::mMediaControlInterface.isInitialized) {
-            mMediaPlayerHolder.run {
+            with(mMediaPlayerHolder) {
                 (currentSongFM ?: currentSong)?.let { song ->
                     // load album cover
-                    if (mAlbumIdNp != song.albumId && GoPreferences.getPrefsInstance().isCovers) {
+                    if (mAlbumIdNp != song.albumId && mGoPreferences.isCovers) {
                         loadNpCover(song)
                     }
                     // load album/song info
                     var songTitle = song.title
-                    if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
+                    if (mGoPreferences.songsVisualization == GoConstants.FN) {
                         songTitle = song.displayName.toFilenameWithoutExtension()
                     }
                     _nowPlayingBinding?.npSong?.text = songTitle
@@ -399,8 +391,8 @@ class NowPlaying: BottomSheetDialogFragment() {
                         _nowPlayingBinding?.npRates?.text =
                             getString(R.string.rates, first, second)
                     }
-                    updateNpFavoritesIcon(this)
-                    updatePlayingStatus(this)
+                    updateNpFavoritesIcon()
+                    updatePlayingStatus()
                 }
             }
         }
@@ -410,8 +402,8 @@ class NowPlaying: BottomSheetDialogFragment() {
         _nowPlayingBinding?.npSeekBar?.progress = position
     }
 
-    fun updatePlayingStatus(mediaPlayerHolder: MediaPlayerHolder) {
-        mediaPlayerHolder.run {
+    fun updatePlayingStatus() {
+        with(mMediaPlayerHolder) {
             if (isPlaying) {
                 _npControlsBinding?.npPlay?.setImageResource(R.drawable.ic_pause)
                 return

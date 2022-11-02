@@ -14,9 +14,7 @@ object SingleClickHelper {
 		val isBlocking: Boolean
 		val currentTime = System.currentTimeMillis()
 		isBlocking = abs(currentTime - sLastClickTime) < minClickInterval
-		if (!isBlocking) {
-			sLastClickTime = currentTime
-		}
+		if (!isBlocking) sLastClickTime = currentTime
 		return isBlocking
 	}
 }
