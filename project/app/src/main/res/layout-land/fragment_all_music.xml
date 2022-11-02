@@ -47,6 +47,7 @@
         app:elevation="4dp"
         app:icon="@drawable/ic_shuffle"
         app:iconTint="@color/widgets_color"
-        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.SmallComponent" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

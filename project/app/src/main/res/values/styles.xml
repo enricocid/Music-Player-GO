@@ -93,4 +93,10 @@
     <style name="ImageView.Cover" parent="">
         <item name="cornerSize">8dp</item>
     </style>
+
+    <!-- Style for rounded FAB in AllMusicFragment -->
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
 </resources>
