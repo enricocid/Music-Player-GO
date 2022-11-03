@@ -275,7 +275,7 @@ class GoPreferences(context: Context) {
         }
 
         fun getPrefsInstance(): GoPreferences {
-            return INSTANCE ?: error("GoPreferences not initialized!")
+            return INSTANCE ?: error("Preferences not initialized!")
         }
     }
 }
