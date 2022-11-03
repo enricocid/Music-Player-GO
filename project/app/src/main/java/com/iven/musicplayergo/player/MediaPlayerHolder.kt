@@ -488,6 +488,7 @@ class MediaPlayerHolder:
         when {
             isQueueStarted -> currentSong = getSkipSong(isNext = isNext)
             else -> {
+                isQueue = currentSong?.copy(startFrom = playerPosition)
                 isQueueStarted = true
                 currentSong = queueSongs.first()
             }
