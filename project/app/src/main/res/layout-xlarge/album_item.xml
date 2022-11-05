@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/album_width"
+    android:layout_height="@dimen/album_height"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="12dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:strokeColor="?attr/colorControlHighlight">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/toolbar_bg"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="?attr/colorPrimary"
+            android:contentDescription="@string/covers_pref_title"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_music_note_cover_alt" />
+
+        <TextView
+            android:id="@+id/album"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_weight="0.50"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="3"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <LinearLayout
+            android:id="@+id/info_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:paddingBottom="2dp">
+
+            <TextView
+                android:id="@+id/total_duration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:textAlignment="textStart"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/year"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:textAlignment="textEnd"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

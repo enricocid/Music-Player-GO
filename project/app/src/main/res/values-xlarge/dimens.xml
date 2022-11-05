@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="album_height">180dp</dimen>
+    <dimen name="album_width">156dp</dimen>
+    <dimen name="cover_ratio" format="float" type="dimen">0.65</dimen>
+</resources>
