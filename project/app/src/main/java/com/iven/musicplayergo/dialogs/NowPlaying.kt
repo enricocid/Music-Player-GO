@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
@@ -125,8 +126,7 @@ class NowPlaying: BottomSheetDialogFragment() {
         }
 
         _npCoverBinding?.npCover?.afterMeasured {
-            var ratio = 1.25F
-            if (Theming.isDeviceLand(resources)) ratio = 1.20f
+            val ratio = ResourcesCompat.getFloat(resources, R.dimen.cover_ratio)
             val dim = (width * ratio).toInt()
             layoutParams = LinearLayout.LayoutParams(dim, dim)
         }
