@@ -16,11 +16,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:checked="true"
         android:clickable="false"
-        android:paddingStart="8dp"
-        android:paddingEnd="16dp"
         app:buttonTint="@color/checkbox_tint" />
 
     <TextView
