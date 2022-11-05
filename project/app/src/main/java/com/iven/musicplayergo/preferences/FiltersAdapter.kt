@@ -33,15 +33,25 @@ class FiltersAdapter: RecyclerView.Adapter<FiltersAdapter.CheckableItemsHolder>(
 
         fun bindItems(itemFilter: String?) {
 
-            with(binding.root) {
-                text = itemFilter
-                setOnCheckedChangeListener { _, b ->
-                    if (b) {
-                        setTextColor(Theming.resolveColorAttr(context, android.R.attr.textColorPrimary))
-                        mItemsToRemove.remove(itemFilter)
-                    } else {
-                        setTextColor(Theming.resolveWidgetsColorNormal(context))
-                        mItemsToRemove.add(itemFilter!!)
+            with(binding) {
+
+                val context = binding.root.context
+
+                itemFilter?.let { itemFiltered ->
+
+                    title.text = itemFiltered
+                    filter.setOnCheckedChangeListener { _, b ->
+                        if (b) {
+                            title.setTextColor(Theming.resolveColorAttr(context, android.R.attr.textColorPrimary))
+                            mItemsToRemove.remove(itemFiltered)
+                        } else {
+                            title.setTextColor(Theming.resolveWidgetsColorNormal(context))
+                            mItemsToRemove.add(itemFiltered)
+                        }
+                    }
+
+                    root.setOnClickListener {
+                        filter.isChecked = !filter.isChecked
                     }
                 }
             }

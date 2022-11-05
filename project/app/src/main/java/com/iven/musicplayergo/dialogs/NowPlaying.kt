@@ -176,8 +176,8 @@ class NowPlaying: BottomSheetDialogFragment() {
                     isChecked = mGoPreferences.continueOnEnd
                     setOnCheckedChangeListener { _, isChecked ->
                         mGoPreferences.continueOnEnd = isChecked
-                        var msg = R.string.pause_on_end_disabled
-                        if (isChecked) msg = R.string.pause_on_end
+                        var msg = R.string.pause_on_end
+                        if (isChecked) msg = R.string.pause_on_end_disabled
                         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT)
                             .show()
                     }

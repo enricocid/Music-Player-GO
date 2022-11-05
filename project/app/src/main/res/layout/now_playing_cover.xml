@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
     android:layout_marginTop="32dp"
     android:layout_marginBottom="16dp"
-    android:layout_gravity="center_horizontal"
     android:gravity="center_horizontal"
     android:orientation="horizontal">
 
@@ -23,10 +23,10 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_gravity="center"
         android:layout_marginStart="16dp"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <ImageButton
             android:id="@+id/np_playback_speed"
@@ -36,7 +36,7 @@
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
             android:contentDescription="@string/content_playback_speed"
-            android:padding="8dp"
+            android:padding="4dp"
             app:srcCompat="@drawable/ic_speed" />
 
         <ImageButton
@@ -47,7 +47,7 @@
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
             android:contentDescription="@string/favorites_save_time"
-            android:padding="8dp"
+            android:padding="4dp"
             app:srcCompat="@drawable/ic_save_time" />
 
         <ImageButton
@@ -58,7 +58,7 @@
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
             android:contentDescription="@string/equalizer"
-            android:padding="8dp"
+            android:padding="4dp"
             app:srcCompat="@drawable/ic_equalizer" />
 
         <ImageButton
@@ -69,7 +69,7 @@
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
             android:contentDescription="@string/favorite_add"
-            android:padding="8dp"
+            android:padding="4dp"
             app:srcCompat="@drawable/ic_favorite" />
 
         <ImageButton
@@ -80,15 +80,18 @@
             android:layout_weight="1"
             android:background="?android:attr/actionBarItemBackground"
             android:contentDescription="@string/content_repeat"
-            android:padding="8dp"
+            android:padding="4dp"
             app:srcCompat="@drawable/ic_repeat_one_disabled" />
 
-        <androidx.appcompat.widget.SwitchCompat
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/np_pause_on_end"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:button="@drawable/button_icon"
             android:contentDescription="@string/continue_on_end_desc"
-            android:thumb="@drawable/switch_np_thumb" />
+            android:padding="4dp"
+            app:buttonTint="@drawable/button_tint" />
     </LinearLayout>
 </LinearLayout>

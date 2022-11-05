@@ -3,21 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:baselineAligned="false"
     android:clickable="false"
     android:focusable="false"
-    android:orientation="horizontal"
-    tools:context=".ui.MainActivity"
     android:gravity="center"
-    android:baselineAligned="false">
+    android:orientation="horizontal"
+    tools:context=".ui.MainActivity">
 
     <!-- the album's cover + actions -->
     <include layout="@layout/now_playing_cover" />
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <!-- the album's title -->
@@ -26,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center"
             android:orientation="vertical"
