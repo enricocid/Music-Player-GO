@@ -2,9 +2,10 @@
 <resources>
     <dimen name="album_stroke">2dp</dimen>
     <dimen name="preset_dim">56dp</dimen>
-    <dimen name="accent_dim">36dp</dimen>
-    <dimen name="accent_dim_radius">18dp</dimen>
-    <dimen name="accent_dim_radius_uns">6dp</dimen>
+    <dimen name="accent_dim">40dp</dimen>
+    <dimen name="accent_radius">20dp</dimen>
+    <dimen name="accent_radius_alt">6dp</dimen>
+    <dimen name="accent_stroke">2dp</dimen>
     <dimen name="album_height">148dp</dimen>
     <dimen name="album_width">124dp</dimen>
     <dimen name="md_corner_radius">8dp</dimen>

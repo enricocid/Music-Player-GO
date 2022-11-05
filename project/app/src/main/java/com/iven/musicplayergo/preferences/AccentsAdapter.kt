@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.iven.musicplayergo.GoPreferences
@@ -42,12 +41,12 @@ class AccentsAdapter(private val accents: IntArray):
                 radius = resources.getDimensionPixelSize(
                     if (absoluteAdapterPosition != selectedAccent) {
                         strokeWidth = 0
-                        strokeColor = Color.TRANSPARENT
-                        R.dimen.accent_dim_radius
+                        R.dimen.accent_radius
                     } else {
-                        strokeColor = ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.widgets_color), 100)
-                        strokeWidth = resources.getDimensionPixelSize(R.dimen.search_bar_elevation)
-                        R.dimen.accent_dim_radius_uns
+                        strokeWidth = resources.getDimensionPixelSize(R.dimen.accent_stroke)
+                        val stroke = if (ColorUtils.calculateLuminance(color) < 0.35) Color.WHITE else Color.DKGRAY
+                        strokeColor = ColorUtils.setAlphaComponent(stroke, 75)
+                        R.dimen.accent_radius_alt
                     }
                 ).toFloat()
 
