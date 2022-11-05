@@ -190,7 +190,9 @@ class MusicViewModel(application: Application): AndroidViewModel(application) {
 
     private fun getMusic(application: Application): MutableList<Music> {
         synchronized(startQuery(application)) {
-            buildLibrary(application.resources)
+            if (mDeviceMusicList.isNotEmpty()) {
+                buildLibrary(application.resources)
+            }
         }
         return mDeviceMusicList
     }
