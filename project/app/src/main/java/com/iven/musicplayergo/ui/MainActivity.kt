@@ -71,7 +71,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
     // Booleans
     private val sDetailsFragmentExpanded get() = supportFragmentManager.isFragment(GoConstants.DETAILS_FRAGMENT_TAG)
     private var sAllowCommit = true
-    private val sLaunchedByTile get() = intent != null && intent.getStringExtra(GoConstants.LAUNCHED_BY_TILE) != null
+    private val sLaunchedByTile get() = intent != null && intent.hasExtra(GoConstants.LAUNCHED_BY_TILE)
 
     private var sCloseDetailsFragment = true
 
@@ -186,6 +186,10 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
+        if (intent != null && intent.hasExtra(GoConstants.LAUNCHED_BY_TILE)) {
+            mMediaPlayerHolder.resumeOrPause()
+            return
+        }
         handleIntent(intent)
     }
 
