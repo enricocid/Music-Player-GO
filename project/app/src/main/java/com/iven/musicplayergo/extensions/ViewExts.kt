@@ -38,6 +38,7 @@ import androidx.window.layout.WindowMetricsCalculator
 import coil.load
 import com.google.android.material.animation.ArgbEvaluatorCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.ui.SingleClickHelper
 import com.iven.musicplayergo.utils.Theming
@@ -252,4 +253,19 @@ fun ViewPager2.reduceDragSensitivity() {
         Log.e("MainActivity", "Unable to reduce ViewPager sensitivity")
         Log.e("MainActivity", e.stackTraceToString())
     }
+}
+
+@SuppressLint("RestrictedApi", "VisibleForTests")
+fun Dialog?.disableShapeAnimation() {
+    try {
+        val bottomSheetDialog = this as BottomSheetDialog
+        bottomSheetDialog.behavior.disableShapeAnimations()
+    } catch (ex: Exception) {
+        Log.e("BaseBottomSheet", "disableShapeAnimation Exception:", ex)
+    }
+}
+
+fun RecyclerView.disableScrollbars() {
+    isVerticalScrollBarEnabled = false
+    isHorizontalScrollBarEnabled = false
 }
