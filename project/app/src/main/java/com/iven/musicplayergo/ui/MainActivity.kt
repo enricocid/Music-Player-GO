@@ -187,7 +187,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         if (intent != null && intent.hasExtra(GoConstants.LAUNCHED_BY_TILE)) {
-            mMediaPlayerHolder.resumeOrPause()
+            mMediaPlayerHolder.resumeMediaPlayer()
             return
         }
         handleIntent(intent)
