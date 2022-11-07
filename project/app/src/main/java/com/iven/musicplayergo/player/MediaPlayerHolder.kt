@@ -1013,6 +1013,8 @@ class MediaPlayerHolder:
 
         override fun onReceive(context: Context, intent: Intent) {
 
+            var handled = false
+
             try {
                 intent.action?.let { act ->
 
@@ -1026,7 +1028,7 @@ class MediaPlayerHolder:
                             resumeMediaPlayer()
                         }
 
-                        Intent.ACTION_MEDIA_BUTTON -> handleMediaButton(intent)
+                        Intent.ACTION_MEDIA_BUTTON -> handled = handleMediaButton(intent)
 
                         AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED -> if (isHeadsetsControl) {
                             when (intent.getIntExtra(AudioManager.EXTRA_SCO_AUDIO_STATE, -1)) {
@@ -1050,62 +1052,58 @@ class MediaPlayerHolder:
                     }
                 }
 
+                if (handled) resultCode = Activity.RESULT_OK
                 if (isOrderedBroadcast) abortBroadcast()
 
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
+    }
 
-        /**
-         * Handles "media button" which is how external applications
-         * communicate with our app
-         */
-        @Suppress("DEPRECATION")
-        private fun handleMediaButton(intent: Intent) {
-            val event: KeyEvent = if (Versioning.isTiramisu()) {
-                intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT, KeyEvent::class.java)
-            } else {
-                intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT)
-            } ?: return
+    /**
+     * Handles "media button" which is how external applications
+     * communicate with our app
+     */
+    @Suppress("DEPRECATION")
+    fun handleMediaButton(intent: Intent): Boolean {
+        val event: KeyEvent = if (Versioning.isTiramisu()) {
+            intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT, KeyEvent::class.java)
+        } else {
+            intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT)
+        } ?: return false
 
-            var handled = false
-
-            if (event.action == KeyEvent.ACTION_DOWN) {
-                when (event.keyCode) {
-                    KeyEvent.KEYCODE_MEDIA_STOP, KeyEvent.KEYCODE_MEDIA_PAUSE -> if (isPlaying) {
-                        pauseMediaPlayer()
-                        handled = true
-                    }
-                    KeyEvent.KEYCODE_MEDIA_PLAY -> if (!isPlaying) {
-                        resumeMediaPlayer()
-                        handled = true
-                    }
-                    KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> {
-                        resumeOrPause()
-                        handled = true
-                    }
-                    KeyEvent.KEYCODE_MEDIA_NEXT -> {
-                        if (isPlaying) {
-                            skip(true)
-                            handled = true
-                        }
-                    }
-                    KeyEvent.KEYCODE_MEDIA_PREVIOUS -> if (isPlaying) {
-                        // Because this comes from an AI, we may want to
-                        // not have the immediate reset because the user
-                        // specifically requested the previous song
-                        // for example by saying "previous song"
-                        skip(false)
-                        handled = true
+        if (event.action == KeyEvent.ACTION_DOWN) {
+            when (event.keyCode) {
+                KeyEvent.KEYCODE_MEDIA_STOP, KeyEvent.KEYCODE_MEDIA_PAUSE -> if (isPlaying) {
+                    pauseMediaPlayer()
+                    return true
+                }
+                KeyEvent.KEYCODE_MEDIA_PLAY -> if (!isPlaying) {
+                    resumeMediaPlayer()
+                    return true
+                }
+                KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> {
+                    resumeOrPause()
+                    return true
+                }
+                KeyEvent.KEYCODE_MEDIA_NEXT -> {
+                    if (isPlaying) {
+                        skip(true)
+                        return true
                     }
                 }
-            }
-            if (handled) {
-                resultCode = Activity.RESULT_OK
-                if (isOrderedBroadcast) abortBroadcast()
+                KeyEvent.KEYCODE_MEDIA_PREVIOUS -> if (isPlaying) {
+                    // Because this comes from an AI, we may want to
+                    // not have the immediate reset because the user
+                    // specifically requested the previous song
+                    // for example by saying "previous song"
+                    skip(false)
+                    return true
+                }
             }
         }
+        return false
     }
 
     companion object {

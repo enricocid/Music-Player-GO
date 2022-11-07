@@ -61,6 +61,18 @@
             android:launchMode="singleTask"
             android:screenOrientation="user" />
 
+        <!--
+        Work around apps that blindly query for ACTION_MEDIA_BUTTON working.
+        See the class for more info.
+        -->
+        <receiver
+            android:name=".player.MediaButtonReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
+
         <service
             android:name=".player.PlayerService"
             android:exported="false"
