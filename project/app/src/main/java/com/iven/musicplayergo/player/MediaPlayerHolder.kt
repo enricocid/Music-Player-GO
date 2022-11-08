@@ -1013,8 +1013,6 @@ class MediaPlayerHolder:
 
         override fun onReceive(context: Context, intent: Intent) {
 
-            var handled = false
-
             try {
                 intent.action?.let { act ->
 
@@ -1028,7 +1026,9 @@ class MediaPlayerHolder:
                             resumeMediaPlayer()
                         }
 
-                        Intent.ACTION_MEDIA_BUTTON -> handled = handleMediaButton(intent)
+                        Intent.ACTION_MEDIA_BUTTON -> if (handleMediaButton(intent)) {
+                            resultCode = Activity.RESULT_OK
+                        }
 
                         AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED -> if (isHeadsetsControl) {
                             when (intent.getIntExtra(AudioManager.EXTRA_SCO_AUDIO_STATE, -1)) {
@@ -1052,7 +1052,6 @@ class MediaPlayerHolder:
                     }
                 }
 
-                if (handled) resultCode = Activity.RESULT_OK
                 if (isOrderedBroadcast) abortBroadcast()
 
             } catch (e: Exception) {
