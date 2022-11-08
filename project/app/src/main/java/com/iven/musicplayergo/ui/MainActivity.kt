@@ -429,15 +429,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
         return handleOnNavigationItemSelected(position)
     }
 
-    private fun handleOnNavigationItemSelected(itemId: Int) = when (itemId) {
-        0 -> getFragmentForIndex(0)
-        1 -> getFragmentForIndex(1)
-        2 -> getFragmentForIndex(2)
-        3 -> getFragmentForIndex(3)
-        else -> getFragmentForIndex(4)
-    }
-
-    private fun getFragmentForIndex(index: Int) = when (mGoPreferences.activeTabs.toList()[index]) {
+    private fun handleOnNavigationItemSelected(index: Int) = when (mGoPreferences.activeTabs.toList()[index]) {
         GoConstants.ARTISTS_TAB -> mArtistsFragment ?: initFragmentAt(index)
         GoConstants.ALBUM_TAB -> mAlbumsFragment ?: initFragmentAt(index)
         GoConstants.SONGS_TAB -> mAllMusicFragment ?: initFragmentAt(index)
