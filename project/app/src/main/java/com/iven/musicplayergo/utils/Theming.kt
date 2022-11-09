@@ -183,6 +183,15 @@ object Theming {
     }
 
     @JvmStatic
+    fun getTabAccessibilityText(tab: String) = when (tab) {
+        GoConstants.ARTISTS_TAB -> R.string.artists
+        GoConstants.ALBUM_TAB -> R.string.albums
+        GoConstants.SONGS_TAB -> R.string.songs
+        GoConstants.FOLDERS_TAB -> R.string.folders
+        else -> R.string.settings
+    }
+
+    @JvmStatic
     fun getPreciseVolumeIcon(volume: Int) = when (volume) {
         in 1..33 -> R.drawable.ic_volume_mute
         in 34..67 -> R.drawable.ic_volume_down

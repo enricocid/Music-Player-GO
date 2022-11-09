@@ -385,7 +385,9 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
             tabIconTint = ColorStateList.valueOf(alphaAccentColor)
 
             TabLayoutMediator(this, mMainActivityBinding.viewPager2) { tab, position ->
-                tab.setIcon(Theming.getTabIcon(mGoPreferences.activeTabs.toList()[position]))
+                val selectedTab = mGoPreferences.activeTabs.toList()[position]
+                tab.setIcon(Theming.getTabIcon(selectedTab))
+                tab.contentDescription = getString(Theming.getTabAccessibilityText(selectedTab))
             }.attach()
 
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

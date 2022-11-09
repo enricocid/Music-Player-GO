@@ -93,6 +93,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="4dp"
+                android:contentDescription="@string/cancel"
                 android:text="@string/cancel" />
 
             <com.google.android.material.button.MaterialButton
@@ -104,6 +105,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="4dp"
+                android:contentDescription="@string/ok"
                 android:text="@string/ok" />
         </LinearLayout>
     </LinearLayout>
