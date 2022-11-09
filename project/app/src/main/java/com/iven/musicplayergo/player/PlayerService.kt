@@ -62,7 +62,7 @@ class PlayerService : Service() {
         }
 
         override fun onStop() {
-            mMediaPlayerHolder.stopPlaybackService(stopPlayback = true, fromUser = true)
+            mMediaPlayerHolder.stopPlaybackService(stopPlayback = true, fromUser = true, fromFocus = false)
         }
 
         override fun onSeekTo(pos: Long) {
@@ -178,7 +178,7 @@ class PlayerService : Service() {
                             mediaPlayerInterface.onUpdateRepeatStatus()
                         }
                         GoConstants.CLOSE_ACTION -> if (isRunning && isMediaPlayer) {
-                            stopPlaybackService(stopPlayback = true, fromUser = true)
+                            stopPlaybackService(stopPlayback = true, fromUser = true, fromFocus = false)
                         }
                     }
                 }
@@ -244,7 +244,7 @@ class PlayerService : Service() {
                             return true
                         }
                         KeyEvent.KEYCODE_MEDIA_CLOSE, KeyEvent.KEYCODE_MEDIA_STOP -> {
-                            mMediaPlayerHolder.stopPlaybackService(stopPlayback = true, fromUser = true)
+                            mMediaPlayerHolder.stopPlaybackService(stopPlayback = true, fromUser = true, fromFocus = false)
                             return true
                         }
                         KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {

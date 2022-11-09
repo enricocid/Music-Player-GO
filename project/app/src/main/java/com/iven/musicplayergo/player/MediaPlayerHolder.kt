@@ -127,11 +127,8 @@ class MediaPlayerHolder:
                     sPlayOnFocusGain =
                         isMediaPlayer && state == GoConstants.PLAYING || state == GoConstants.RESUMED
                 }
-                AudioManager.AUDIOFOCUS_LOSS -> {
-                    // Lost audio focus, probably "permanently"
-                    mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
-                    stopPlaybackService(stopPlayback = true, fromUser = false)
-                }
+                // Lost audio focus, probably "permanently"
+                AudioManager.AUDIOFOCUS_LOSS -> mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
             }
             // Update the player state based on the change
             if (isPlaying || state == GoConstants.PAUSED && sRestoreVolume || state == GoConstants.PAUSED && sPlayOnFocusGain) {
@@ -943,8 +940,14 @@ class MediaPlayerHolder:
      */
     private fun configurePlayerState() {
         when (mCurrentAudioFocusState) {
-            AUDIO_NO_FOCUS_NO_DUCK -> pauseMediaPlayer()
-            AUDIO_FOCUS_LOSS_TRANSIENT -> pauseMediaPlayer()
+            AUDIO_NO_FOCUS_NO_DUCK -> {
+                stopPlaybackService(stopPlayback = true, fromUser = false, fromFocus = true)
+                pauseMediaPlayer()
+            }
+            AUDIO_FOCUS_LOSS_TRANSIENT -> {
+                stopPlaybackService(stopPlayback = true, fromUser = false, fromFocus = true)
+                pauseMediaPlayer()
+            }
             AUDIO_NO_FOCUS_CAN_DUCK -> mediaPlayer.setVolume(VOLUME_DUCK, VOLUME_DUCK)
             else -> {
                 if (sRestoreVolume) {
@@ -990,7 +993,7 @@ class MediaPlayerHolder:
         }
     }
 
-    fun stopPlaybackService(stopPlayback: Boolean, fromUser: Boolean) {
+    fun stopPlaybackService(stopPlayback: Boolean, fromUser: Boolean, fromFocus: Boolean) {
         try {
             if (mPlayerService.isRunning && isMediaPlayer && stopPlayback) {
                 if (sNotificationOngoing) {
@@ -999,7 +1002,7 @@ class MediaPlayerHolder:
                 } else {
                     mMusicNotificationManager?.cancelNotification()
                 }
-                mPlayerService.stopSelf()
+                if (!fromFocus) mPlayerService.stopSelf()
             }
             if (::mediaPlayerInterface.isInitialized && fromUser) {
                 mediaPlayerInterface.onClose()
