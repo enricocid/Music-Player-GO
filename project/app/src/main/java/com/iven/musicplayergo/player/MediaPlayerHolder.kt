@@ -64,6 +64,9 @@ private const val VOLUME_DUCK = 0.2f
 // The volume we set the media player when we have audio focus.
 private const val VOLUME_NORMAL = 1.0f
 
+// We don't have audio focus, can't play
+private const val AUDIO_FOCUS_FAILED = -1
+
 // We don't have audio focus, and can't duck (play at a low volume)
 private const val AUDIO_NO_FOCUS_NO_DUCK = 0
 
@@ -129,6 +132,7 @@ class MediaPlayerHolder:
                 }
                 // Lost audio focus, probably "permanently"
                 AudioManager.AUDIOFOCUS_LOSS -> mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
+                AudioManager.AUDIOFOCUS_REQUEST_FAILED -> mCurrentAudioFocusState = AUDIO_FOCUS_FAILED
             }
             // Update the player state based on the change
             if (isPlaying || state == GoConstants.PAUSED && sRestoreVolume || state == GoConstants.PAUSED && sPlayOnFocusGain) {
@@ -418,10 +422,12 @@ class MediaPlayerHolder:
 
     private fun startOrChangePlaybackSpeed() {
         with(mediaPlayer) {
-            if (sPlaybackSpeedPersisted && Versioning.isMarshmallow()) {
-                playbackParams = playbackParams.setSpeed(currentPlaybackSpeed)
-            } else {
-                MediaPlayerUtils.safePlay(this)
+            if (mCurrentAudioFocusState != AUDIO_FOCUS_FAILED) {
+                if (sPlaybackSpeedPersisted && Versioning.isMarshmallow()) {
+                    playbackParams = playbackParams.setSpeed(currentPlaybackSpeed)
+                } else {
+                    MediaPlayerUtils.safePlay(this)
+                }
             }
         }
     }
