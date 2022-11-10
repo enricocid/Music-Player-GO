@@ -52,10 +52,10 @@ class GoPreferences(context: Context) {
     private val prefsPlaybackVel = context.getString(R.string.playback_vel_pref)
     private val prefsIsContinueOnEnd = context.getString(R.string.continue_on_end_pref)
     private val prefsHasCompletedPlayback = context.getString(R.string.has_completed_playback_pref)
+    private val prefsIsAskConfirmation = context.getString(R.string.ask_confirmation_pref)
+    private val prefsLockRotation = context.getString(R.string.rotation_pref)
 
     private val prefsLocale = context.getString(R.string.locale_pref)
-
-    private val prefsIsAskConfirmation = context.getString(R.string.ask_confirmation_pref)
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
 
@@ -216,6 +216,10 @@ class GoPreferences(context: Context) {
     var isAskForRemoval: Boolean
         get() = mPrefs.getBoolean(prefsIsAskConfirmation, true)
         set(value) = mPrefs.edit { putBoolean(prefsIsAskConfirmation, value) }
+
+    var lockRotation: Boolean
+        get() = mPrefs.getBoolean(prefsLockRotation, false)
+        set(value) = mPrefs.edit { putBoolean(prefsLockRotation, value) }
 
     // Retrieve object from the Preferences using Moshi
     private fun <T : Any> putObjectForType(key: String, value: T?, type: Type) {

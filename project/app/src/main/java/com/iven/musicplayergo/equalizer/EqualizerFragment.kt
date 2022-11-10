@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.doOnLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -19,7 +20,6 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.FragmentEqualizerBinding
-import com.iven.musicplayergo.extensions.afterMeasured
 import com.iven.musicplayergo.extensions.createCircularReveal
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.utils.Theming
@@ -160,7 +160,7 @@ class EqualizerFragment : Fragment() {
         }
 
         if (mGoPreferences.isAnimations) {
-            view.afterMeasured {
+            view.doOnLayout {
                 _eqFragmentBinding?.root?.run {
                     mEqAnimator = createCircularReveal(show = true)
                 }

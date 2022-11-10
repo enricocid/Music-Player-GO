@@ -13,6 +13,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
+import androidx.core.view.doOnLayout
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -271,8 +273,8 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     selectedAlbumViewSize.isSelected = true
 
                     albumViewArt.background.alpha = Theming.getAlbumCoverAlpha(requireContext())
-                    albumViewArt.afterMeasured {
-                        val dim = width * 2
+                    albumViewArt.doOnPreDraw {
+                        val dim = it.width * 2
                         albumViewArt.layoutParams = LinearLayout.LayoutParams(dim, dim)
                     }
                     firstSong?.albumId?.waitForCover(requireContext()) { bmp, error ->
@@ -292,7 +294,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         )
                         detailsToolbar.menu.findItem(R.id.sleeptimer).isVisible = !hasFocus
                         if (sLaunchedByAlbumView) {
-                            albumViewCoverContainer.afterMeasured {
+                            albumViewCoverContainer.doOnPreDraw {
                                 animate()?.let { anim ->
                                     anim.duration = 500
                                     var newY = 0F
@@ -339,7 +341,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             }).attachToRecyclerView(this)
         }
 
-        view.afterMeasured {
+        view.doOnLayout {
             if (GoPreferences.getPrefsInstance().isAnimations) {
                 _detailsFragmentBinding?.root?.run {
                     mArtistDetailsAnimator = createCircularReveal(show = true)
@@ -578,7 +580,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
     private fun swapAlbum(songs: MutableList<Music>?) {
         sAlbumSwapped = true
         setSongsDataSource(songs, updateSongs = false, updateAdapter = true)
-        _detailsFragmentBinding?.songsRv?.afterMeasured {
+        _detailsFragmentBinding?.songsRv?.doOnPreDraw {
             scrollToPlayingSong(mSelectedSongId)
         }
     }

@@ -60,6 +60,7 @@
     <string name="headset_pref">headsets_pref</string>
     <string name="anim_pref">anim_pref</string>
     <string name="filter_pref">strings_filter_pref</string>
+    <string name="rotation_pref">rotation_pref</string>
 
     <!-- Sorting -->
     <string name="artists_sorting_pref">sorting_artists_pref</string>

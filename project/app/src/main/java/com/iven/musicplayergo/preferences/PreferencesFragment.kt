@@ -143,6 +143,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 mMediaPlayerHolder.updateMediaSessionMetaData()
                 mMediaControlInterface.onUpdatePlayingAlbumSongs(null)
             }
+            getString(R.string.rotation_pref) -> requireActivity().requestedOrientation = Theming.getOrientation()
         }
     }
 

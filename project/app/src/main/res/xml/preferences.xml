@@ -141,5 +141,10 @@
             app:defaultValue="true"
             app:key="@string/ask_confirmation_pref"
             app:title="@string/confirm_ask_pref_title" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="@string/rotation_pref"
+            app:title="@string/rotation_pref_title" />
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>

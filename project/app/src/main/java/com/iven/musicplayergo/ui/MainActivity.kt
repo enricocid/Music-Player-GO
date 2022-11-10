@@ -261,6 +261,8 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        requestedOrientation = Theming.getOrientation()
+
         var newTheme = Theming.resolveTheme(this)
         if (sLaunchedByTile) newTheme = R.style.BaseTheme_Transparent
         setTheme(newTheme)
@@ -295,7 +297,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
     private fun notifyError(errorType: String) {
 
-        mMainActivityBinding.mainView.animate().apply {
+        mMainActivityBinding.mainView.animate().run {
             withStartAction {
                 mPlayerControlsPanelBinding.playerView.handleViewVisibility(show = false)
                 mMainActivityBinding.loadingProgressBar.handleViewVisibility(show = false)
@@ -327,7 +329,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
                 initViewPager()
 
                 synchronized(handleRestore()) {
-                    mMainActivityBinding.mainView.animate().apply {
+                    mMainActivityBinding.mainView.animate().run {
                         duration = 750
                         alpha(1.0F)
                     }

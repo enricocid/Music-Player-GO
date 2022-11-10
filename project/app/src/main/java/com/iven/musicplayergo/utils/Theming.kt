@@ -4,6 +4,7 @@ package com.iven.musicplayergo.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.util.TypedValue
@@ -273,5 +274,13 @@ object Theming {
         } else {
             ContextCompat.getColor(tb.context, R.color.widgets_color)
         })
+    }
+
+    @JvmStatic
+    fun getOrientation(): Int {
+        if (GoPreferences.getPrefsInstance().lockRotation) {
+            return ActivityInfo.SCREEN_ORIENTATION_LOCKED
+        }
+        return ActivityInfo.SCREEN_ORIENTATION_FULL_USER
     }
 }

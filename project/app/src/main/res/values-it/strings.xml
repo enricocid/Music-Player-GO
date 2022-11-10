@@ -101,6 +101,7 @@
     <string name="headset_pref_title">Gestione inserimento cuffie</string>
     <string name="anim_pref_title">Animazioni</string>
     <string name="filter_pref_title">Filtri</string>
+    <string name="rotation_pref_title">Blocca rotazione</string>
     <string name="filter_popup_title">Nascondi</string>
     <string name="filters_clear">I filtri saranno cancellati. Continuare?</string>
     <string name="filters_error">Errore! Non posso aprire artisti/cartelle/album nascosti!</string>

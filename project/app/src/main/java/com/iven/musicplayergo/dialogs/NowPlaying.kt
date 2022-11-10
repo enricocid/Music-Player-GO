@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.doOnPreDraw
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
@@ -126,10 +127,10 @@ class NowPlaying: BottomSheetDialogFragment() {
             _nowPlayingBinding?.npSong?.textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
         }
 
-        _npCoverBinding?.npCover?.afterMeasured {
+        _npCoverBinding?.npCover?.doOnPreDraw {
             val ratio = ResourcesCompat.getFloat(resources, R.dimen.cover_ratio)
-            val dim = (width * ratio).toInt()
-            layoutParams = LinearLayout.LayoutParams(dim, dim)
+            val dim = (it.width * ratio).toInt()
+            it.layoutParams = LinearLayout.LayoutParams(dim, dim)
         }
 
         mMediaPlayerHolder.let { mph ->

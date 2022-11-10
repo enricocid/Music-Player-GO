@@ -45,19 +45,6 @@ import com.iven.musicplayergo.utils.Theming
 import kotlin.math.max
 
 
-// viewTreeObserver extension to measure layout params
-// https://antonioleiva.com/kotlin-ongloballayoutlistener/
-inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
-    viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-        override fun onGlobalLayout() {
-            if (measuredWidth > 0 && measuredHeight > 0) {
-                viewTreeObserver.removeOnGlobalLayoutListener(this)
-                f()
-            }
-        }
-    })
-}
-
 fun View.applyEdgeToEdge() {
     setOnApplyWindowInsetsListener { view, insets ->
         val bars = WindowInsetsCompat.toWindowInsetsCompat(insets)
