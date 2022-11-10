@@ -165,4 +165,11 @@
     <string name="notification_actions_favorite_position">Tambahkan ke favorit (dengan posisi)/tutup</string>
     <string name="continue_on_end_desc">Pilih apakah ingin melanjutkan atau jeda pada saat selesai</string>
     <string name="filters_error">Galat! Tidak bisa membuka artis/folder/album tersembunyi!</string>
+    <string name="rotation_pref_title">Kunci rotasi</string>
+    <string name="error_builtin_eq">Telah terjadi kesalahan! Gunakan equalizer sistem (jika ada)!</string>
+    <string name="error_sys_eq">Equalizer sistem tidak tersedia!</string>
+    <string name="category_audio">Audio</string>
+    <string name="eq_pref_sum">Paksa gunakan equalizer bawaan</string>
+    <string name="locale_finnish">Selesai</string>
+    <string name="eq_pref_title">Equalizer bawaan</string>
 </resources>
