@@ -146,11 +146,13 @@ fun FragmentManager.addFragment(fragment: Fragment?, tag: String?) {
 }
 
 fun FragmentManager.goBackFromFragmentNow(fragment: Fragment?) {
-    fragment.takeIf { it != null && backStackEntryCount > 0 }?.let { fm ->
-        commit {
-            remove(fm)
-            popBackStackImmediate()
+    if (backStackEntryCount > 0) {
+        fragment?.let { fm ->
+            commit {
+                remove(fm)
+            }
         }
+        popBackStackImmediate()
     }
 }
 
