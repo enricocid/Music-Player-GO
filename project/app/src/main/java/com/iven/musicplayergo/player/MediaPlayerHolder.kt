@@ -106,6 +106,7 @@ class MediaPlayerHolder:
 
     private val sFocusEnabled get() = GoPreferences.getPrefsInstance().isFocusEnabled
     private var mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
+    private var sHasFocus = mCurrentAudioFocusState != AUDIO_NO_FOCUS_NO_DUCK || mCurrentAudioFocusState != AUDIO_FOCUS_FAILED
 
     private val sHasHeadsetsControl get() = GoPreferences.getPrefsInstance().isHeadsetPlugEnabled
 
@@ -135,8 +136,10 @@ class MediaPlayerHolder:
                 AudioManager.AUDIOFOCUS_REQUEST_FAILED -> mCurrentAudioFocusState = AUDIO_FOCUS_FAILED
             }
             // Update the player state based on the change
-            if (isPlaying || state == GoConstants.PAUSED && sRestoreVolume || state == GoConstants.PAUSED && sPlayOnFocusGain) {
-                configurePlayerState()
+            if (sHasFocus) {
+                if (isPlaying || state == GoConstants.PAUSED && sRestoreVolume || state == GoConstants.PAUSED && sPlayOnFocusGain) {
+                    configurePlayerState()
+                }
             }
         }
 
@@ -378,6 +381,7 @@ class MediaPlayerHolder:
                 AudioManagerCompat.requestAudioFocus(am, mAudioFocusRequestCompat)
             mCurrentAudioFocusState = when (requestFocus) {
                 AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> AUDIO_FOCUSED
+                AudioManager.AUDIOFOCUS_REQUEST_FAILED -> AUDIO_FOCUS_FAILED
                 else -> AUDIO_NO_FOCUS_NO_DUCK
             }
         }
@@ -397,7 +401,7 @@ class MediaPlayerHolder:
     }
 
     fun giveUpAudioFocus() {
-        if (::mAudioFocusRequestCompat.isInitialized) {
+        if (::mAudioFocusRequestCompat.isInitialized && sFocusEnabled && sHasFocus) {
             mAudioManager?.let { am ->
                 AudioManagerCompat.abandonAudioFocusRequest(am, mAudioFocusRequestCompat)
                 mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
@@ -422,7 +426,7 @@ class MediaPlayerHolder:
 
     private fun startOrChangePlaybackSpeed() {
         with(mediaPlayer) {
-            if (mCurrentAudioFocusState != AUDIO_FOCUS_FAILED) {
+            if (!sFocusEnabled || sFocusEnabled && sHasFocus) {
                 if (sPlaybackSpeedPersisted && Versioning.isMarshmallow()) {
                     playbackParams = playbackParams.setSpeed(currentPlaybackSpeed)
                 } else {
@@ -672,7 +676,7 @@ class MediaPlayerHolder:
         if (mPlayerService.headsetClicks != 0) mPlayerService.headsetClicks = 0
 
         if (isPlay) {
-            if (sFocusEnabled && mCurrentAudioFocusState != AUDIO_FOCUSED) {
+            if (sFocusEnabled && !sHasFocus) {
                 tryToGetAudioFocus()
             }
             play()
@@ -795,7 +799,7 @@ class MediaPlayerHolder:
             openOrCloseAudioEffectAction(AudioEffect.ACTION_CLOSE_AUDIO_EFFECT_CONTROL_SESSION)
             releaseBuiltInEqualizer()
             mediaPlayer.release()
-            if (sFocusEnabled) giveUpAudioFocus()
+            giveUpAudioFocus()
             stopUpdatingCallbackWithPosition()
         }
         if (mMusicNotificationManager != null) {
