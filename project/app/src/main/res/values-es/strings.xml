@@ -19,7 +19,7 @@
     <string name="error_no_queue">No hay canciones en la cola de reproducción.</string>
     <string name="favorites">Favoritos</string>
     <string name="favorite_added">%1s (%2s) agregada a favoritos</string>
-    <string name="favorite_remove">¿Eliminar %1s (%2s) de favoritos\?</string>
+    <string name="favorite_remove">¿Borrar %1s (%2s) de favoritos\?</string>
     <string name="favorites_clear">¿Borrar todos los favoritos\?</string>
     <string name="favorite_add">Favoritos</string>
     <string name="filter_popup_title">Ocultar</string>
@@ -165,4 +165,12 @@
     <string name="confirm_ask_pref_title">Mensajes de confirmación</string>
     <string name="locale_belarusian">Bielorruso</string>
     <string name="teal">Turquesa</string>
+    <string name="rotation_pref_title">Bloqueo de la rotación</string>
+    <string name="category_audio">Audio</string>
+    <string name="category_ui">Interfaz de usuario</string>
+    <string name="eq_pref_title">Ecualizador integrado</string>
+    <string name="eq_pref_sum">Forzar el uso del ecualizador integrado</string>
+    <string name="error_builtin_eq">¡Ocurrió un error! ¡Use el ecualizador del sistema (si existe)!</string>
+    <string name="error_sys_eq">¡El ecualizador del sistema no está disponible!</string>
+    <string name="locale_finnish">Finés</string>
 </resources>

@@ -172,4 +172,5 @@
     <string name="error_builtin_eq">Ett fel uppstod! Använd systemfrekvenskorrigeraren (om den finns)!</string>
     <string name="error_sys_eq">Systemfrekvenskorrigeraren är inte tillgänglig!</string>
     <string name="locale_finnish">Finska</string>
+    <string name="rotation_pref_title">Lås rotation</string>
 </resources>
