@@ -172,4 +172,5 @@
     <string name="error_sys_eq">Kein System-Equalizer vorhanden!</string>
     <string name="error_builtin_eq">Ein Fehler ist aufgetreten! Verwenden Sie den System-Equalizer (falls vorhanden)!</string>
     <string name="locale_finnish">Finnisch</string>
+    <string name="rotation_pref_title">Drehung sperren</string>
 </resources>
