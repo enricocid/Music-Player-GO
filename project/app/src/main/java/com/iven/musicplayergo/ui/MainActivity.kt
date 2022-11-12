@@ -389,7 +389,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
             TabLayoutMediator(this, mMainActivityBinding.viewPager2) { tab, position ->
                 val selectedTab = mGoPreferences.activeTabs.toList()[position]
                 tab.setIcon(Theming.getTabIcon(selectedTab))
-                tab.contentDescription = getString(Theming.getTabAccessibilityText(selectedTab))
+                tab.setContentDescription(Theming.getTabAccessibilityText(selectedTab))
             }.attach()
 
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
