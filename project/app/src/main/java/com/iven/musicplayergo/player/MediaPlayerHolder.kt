@@ -401,7 +401,7 @@ class MediaPlayerHolder:
     }
 
     fun giveUpAudioFocus() {
-        if (::mAudioFocusRequestCompat.isInitialized && sFocusEnabled && sHasFocus) {
+        if (::mAudioFocusRequestCompat.isInitialized && sHasFocus) {
             mAudioManager?.let { am ->
                 AudioManagerCompat.abandonAudioFocusRequest(am, mAudioFocusRequestCompat)
                 mCurrentAudioFocusState = AUDIO_NO_FOCUS_NO_DUCK
