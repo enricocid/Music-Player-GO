@@ -957,7 +957,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
     }
 
     override fun onSongsShuffled(songs: List<Music>?, songLaunchedBy: String) {
-        val cutoff = 250
+        val cutoff = 100
         songs?.run {
             onAddAlbumToQueue(
                 if (size >= cutoff) {
