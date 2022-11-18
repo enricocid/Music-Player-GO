@@ -49,7 +49,6 @@
     <string name="theme_pref_black">theme_pref_black</string>
     <string name="accent_pref">color_primary_pref</string>
     <string name="covers_pref">covers_pref</string>
-    <string name="active_tabs_def_pref">active_tabs_def_pref</string>
     <string name="active_tabs_pref">active_tabs_pref</string>
     <string name="on_list_ended_pref">on_list_ended_pref</string>
     <string name="notif_actions_pref">notification_actions_pref</string>
@@ -63,23 +62,9 @@
     <string name="rotation_pref">rotation_pref</string>
 
     <!-- Sorting -->
-    <string name="artists_sorting_pref">sorting_artists_pref</string>
-    <string name="albums_sorting_pref">sorting_album_details_pref</string>
-    <string name="folders_sorting_pref">sorting_folder_details_pref</string>
-    <string name="all_music_sorting_pref">sorting_all_music_tab_pref</string>
 
     <!-- Other preferences keys -->
-    <string name="saved_eq_settings">eq_settings_pref</string>
-    <string name="latest_played_song_pref">to_restore_song_pref</string>
-    <string name="is_queue_pref">is_queue_pref</string>
-    <string name="favorites_pref">favorite_songs_pref</string>
-    <string name="queue_pref">queue_songs_pref</string>
-    <string name="latest_volume_pref">latest_volume_pref</string>
-    <string name="latest_playback_vel_pref">latest_playback_vel_pref</string>
     <string name="song_visual_pref">song_visual_pref</string>
     <string name="playback_vel_pref">playback_vel_pref</string>
-    <string name="continue_on_end_pref">continue_on_end_pref</string>
-    <string name="has_completed_playback_pref">has_completed_playback_pref</string>
-    <string name="locale_pref">locale_pref</string>
     <string name="ask_confirmation_pref">ask_confirmation_pref</string>
 </resources>
