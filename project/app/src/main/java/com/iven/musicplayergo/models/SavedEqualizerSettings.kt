@@ -9,4 +9,4 @@ data class SavedEqualizerSettings(
     val bandsSettings: List<Short>?,
     val bassBoost: Short,
     val virtualizer: Short
-)
+    )

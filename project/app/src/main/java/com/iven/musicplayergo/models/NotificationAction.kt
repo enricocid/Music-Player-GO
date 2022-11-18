@@ -6,4 +6,4 @@ import com.squareup.moshi.JsonClass
 data class NotificationAction(
     val first: String,
     val second: String
-)
+    )

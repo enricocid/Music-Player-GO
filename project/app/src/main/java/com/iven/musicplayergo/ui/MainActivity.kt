@@ -480,7 +480,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
                         mMusicViewModel.deviceAlbumsByArtist
                     ),
                     selectedSongId,
-                    canUpdateSongs = mMediaPlayerHolder.currentSong?.artist == selectedArtistOrFolder && mMediaPlayerHolder.launchedBy == GoConstants.ARTIST_VIEW
+                    canUpdateSongs = mMediaPlayerHolder.currentSong?.artist == selectedArtistOrFolder
                 )
             sCloseDetailsFragment = true
             if (sAllowCommit) {
@@ -646,11 +646,14 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
             song?.let { restoredSong ->
 
-                val songs = MusicUtils.getAlbumSongs(
-                    restoredSong.artist,
-                    restoredSong.album,
-                    mMusicViewModel.deviceAlbumsByArtist
-                )
+                var songs = getRestoredSongs(restoredSong)?.toMutableList()
+
+                val sorting = restoredSong.findSorting()?.sorting ?: Lists.getDefSortingMode()
+                songs = if (launchedBy == GoConstants.ARTIST_VIEW) {
+                    Lists.getSortedMusicList(sorting, songs)
+                } else {
+                    Lists.getSortedMusicListForFolder(sorting, songs)
+                }?.toMutableList()
 
                 if (!songs.isNullOrEmpty()) {
                     isPlay = false
@@ -665,6 +668,21 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
                 }
                 notifyError(GoConstants.TAG_SD_NOT_READY)
             }
+        }
+    }
+
+    private fun getRestoredSongs(song: Music): List<Music>? {
+        return when (song.launchedBy) {
+            GoConstants.ARTIST_VIEW ->
+                MusicUtils.getAlbumSongs(
+                    song.artist,
+                    song.album,
+                    mMusicViewModel.deviceAlbumsByArtist
+                )
+            GoConstants.FOLDER_VIEW ->
+                mMusicViewModel.deviceMusicByFolder?.get(song.relativePath)
+            else ->
+                mMusicViewModel.deviceMusicByAlbum?.get(song.album)
         }
     }
 

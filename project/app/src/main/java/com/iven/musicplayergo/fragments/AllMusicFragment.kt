@@ -133,7 +133,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
 
                 with(stb.menu) {
 
-                    mSortMenuItem = Lists.getSelectedSortingForAllMusic(mSorting, this).apply {
+                    mSortMenuItem = Lists.getSelectedSortingForMusic(mSorting, this).apply {
                         setTitleColor(Theming.resolveThemeColor(resources))
                     }
 
@@ -178,7 +178,7 @@ class AllMusicFragment : Fragment(), SearchView.OnQueryTextListener {
                     Theming.resolveColorAttr(requireContext(), android.R.attr.textColorPrimary)
                 )
 
-                mSortMenuItem = Lists.getSelectedSortingForAllMusic(mSorting, menu).apply {
+                mSortMenuItem = Lists.getSelectedSortingForMusic(mSorting, menu).apply {
                     setTitleColor(Theming.resolveThemeColor(resources))
                 }
 

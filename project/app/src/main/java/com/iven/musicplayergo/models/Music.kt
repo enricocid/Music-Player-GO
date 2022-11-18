@@ -17,4 +17,4 @@ data class Music(
     val launchedBy: String,
     val startFrom: Int,
     val dateAdded: Int
-)
+    )

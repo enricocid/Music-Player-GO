@@ -8,8 +8,10 @@ import android.widget.Toast
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.extensions.findSorting
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.models.Music
+import com.iven.musicplayergo.models.Sorting
 import java.util.*
 
 @SuppressLint("DefaultLocale")
@@ -99,7 +101,7 @@ object Lists {
     }
 
     @JvmStatic
-    fun getSelectedSortingForAllMusic(sorting: Int, menu: Menu): MenuItem {
+    fun getSelectedSortingForMusic(sorting: Int, menu: Menu): MenuItem {
         return when (sorting) {
             GoConstants.ASCENDING_SORTING -> menu.findItem(R.id.ascending_sorting)
             GoConstants.DESCENDING_SORTING -> menu.findItem(R.id.descending_sorting)
@@ -215,5 +217,34 @@ object Lists {
             }
             GoPreferences.getPrefsInstance().favorites = favorites
         }
+    }
+
+    @JvmStatic
+    fun getDefSortingMode() = if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
+        GoConstants.ASCENDING_SORTING
+    } else {
+        GoConstants.TRACK_SORTING
+    }
+
+    @JvmStatic
+    fun addToSortings(
+        artistOrFolder: String?,
+        launchedBy: String,
+        sorting: Int
+    ) {
+        val prefs = GoPreferences.getPrefsInstance()
+        val toSorting = Sorting(artistOrFolder, launchedBy, prefs.songsVisualization, sorting)
+        val sortings = prefs.sortings?.toMutableList() ?: mutableListOf()
+        artistOrFolder?.findSorting(launchedBy)?.let { toReplaceSorting ->
+            sortings.remove(toReplaceSorting)
+            val newSorting = toReplaceSorting.copy(sorting = sorting)
+            sortings.add(newSorting)
+            prefs.sortings = sortings
+            return
+        }
+        if (!sortings.contains(toSorting)) {
+            sortings.add(toSorting)
+        }
+        prefs.sortings = sortings
     }
 }

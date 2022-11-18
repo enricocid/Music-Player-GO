@@ -185,3 +185,11 @@ fun Music?.toName(): String? {
     }
     return this?.title
 }
+
+fun String?.findSorting(launchedBy: String) = GoPreferences.getPrefsInstance().sortings?.firstOrNull {
+    it.albumOrFolder == this && it.launchedBy == launchedBy && it.songVisualization == GoPreferences.getPrefsInstance().songsVisualization
+}
+
+fun Music.findSorting() = GoPreferences.getPrefsInstance().sortings?.firstOrNull {
+    it.albumOrFolder == album && it.launchedBy == launchedBy && it.songVisualization == GoPreferences.getPrefsInstance().songsVisualization
+}

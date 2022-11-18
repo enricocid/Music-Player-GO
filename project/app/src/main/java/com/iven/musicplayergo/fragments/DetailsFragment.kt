@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -71,12 +72,13 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
     private var mSelectedSongId: Long? = null
     private var mSelectedSongPosition = RecyclerView.NO_POSITION
 
-    private var mSongsSorting = getDefSortingModeForArtistView()
+    private lateinit var mSortMenuItem: MenuItem
+    private var mSongsSorting = Lists.getDefSortingMode()
 
     private val sShowDisplayName get() = GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN
 
     private var sPlayFirstSong = true
-    private var sCanUpdateSongs = true
+    private var sCanUpdateSongs = false
     private var sAlbumSwapped = false
     private var sOpenNewDetailsFragment = false
 
@@ -170,6 +172,13 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                                     mSelectedArtistAlbums?.first()
                                 }
                             }
+                            mSelectedAlbum?.title?.findSorting(mLaunchedBy)?.let { sorting ->
+                                mSongsSorting = sorting.sorting
+                            }
+                        } else {
+                            mSelectedArtistOrFolder?.findSorting(mLaunchedBy)?.let { sorting ->
+                                mSongsSorting = sorting.sorting
+                            }
                         }
 
                         setupToolbar()
@@ -230,13 +239,14 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             setupAlbumsContainer()
 
             _detailsFragmentBinding?.sortButton?.run {
-                setImageResource(getDefSortingIconForArtistView())
+                setImageResource(getDefSortingIcon())
                 setOnClickListener {
                     mSongsSorting = if (sShowDisplayName) {
                         Lists.getSongsDisplayNameSorting(mSongsSorting)
                     } else {
                         Lists.getSongsSorting(mSongsSorting)
                     }
+                    Lists.addToSortings(mSelectedAlbum?.title, mLaunchedBy, mSongsSorting)
                     setSongsDataSource(mSelectedAlbum?.music, updateSongs = !sAlbumSwapped && sCanUpdateSongs, updateAdapter = true)
                 }
             }
@@ -379,7 +389,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         if (sLaunchedByArtistView) {
             _detailsFragmentBinding?.let { _binding ->
                 with(_binding.sortButton) {
-                    setImageResource(getDefSortingIconForArtistView())
+                    setImageResource(getDefSortingIcon())
                     isEnabled = mSelectedAlbum?.music?.size!! >= 2
                     updateIconTint(
                         if (isEnabled) {
@@ -401,20 +411,10 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private fun getDefSortingIconForArtistView() = if (sShowDisplayName) {
-        Theming.getSortIconForSongsDisplayName(
-            mSongsSorting
-        )
+    private fun getDefSortingIcon() = if (sShowDisplayName) {
+        Theming.getSortIconForSongsDisplayName(mSongsSorting)
     } else {
-        Theming.getSortIconForSongs(
-            mSongsSorting
-        )
-    }
-
-    private fun getDefSortingModeForArtistView() = if (sShowDisplayName) {
-        GoConstants.ASCENDING_SORTING
-    } else {
-        GoConstants.TRACK_SORTING
+        Theming.getSortIconForSongs(mSongsSorting)
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
@@ -451,6 +451,9 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         findItem(R.id.action_shuffle_sa).isEnabled = false
                         findItem(R.id.sorting).isEnabled =
                             mSongsList?.size!! >= 2
+                        mSortMenuItem = Lists.getSelectedSortingForMusic(mSongsSorting, this).apply {
+                            setTitleColor(Theming.resolveThemeColor(resources))
+                        }
                     }
                     else -> {
                         findItem(R.id.action_shuffle_am).isEnabled = mSongsList?.size!! >= 2
@@ -459,6 +462,9 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         findItem(R.id.track_sorting_inv).isEnabled = !sShowDisplayName
                         findItem(R.id.sorting).isEnabled =
                             mSongsList?.size!! >= 2
+                        mSortMenuItem = Lists.getSelectedSortingForMusic(mSongsSorting, this).apply {
+                            setTitleColor(Theming.resolveThemeColor(resources))
+                        }
                     }
                 }
             }
@@ -504,6 +510,21 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private fun applySortingToMusic(order: Int) {
         mSongsSorting = order
+
+        _detailsFragmentBinding?.detailsToolbar?.menu?.run {
+            // update selected menu item
+            mSortMenuItem.setTitleColor(
+                Theming.resolveColorAttr(
+                    requireContext(),
+                    android.R.attr.textColorPrimary
+                )
+            )
+            mSortMenuItem = Lists.getSelectedSortingForMusic(mSongsSorting, this).apply {
+                setTitleColor(Theming.resolveThemeColor(resources))
+            }
+        }
+
+        Lists.addToSortings(mSelectedArtistOrFolder, mLaunchedBy, mSongsSorting)
         val selectedList = if (sLaunchedByFolderView) {
             mMusicViewModel.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
         } else {
@@ -579,6 +600,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private fun swapAlbum(songs: MutableList<Music>?) {
         sAlbumSwapped = true
+        mSongsSorting = songs?.get(0)?.findSorting()?.sorting ?: Lists.getDefSortingMode()
         setSongsDataSource(songs, updateSongs = false, updateAdapter = true)
         _detailsFragmentBinding?.songsRv?.doOnPreDraw {
             scrollToPlayingSong(mSelectedSongId)
@@ -587,7 +609,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private inner class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumsHolder>() {
 
-        private val mMediaControlInterface = activity as MediaControlInterface
+        private val mMediaControlInterface = requireActivity() as MediaControlInterface
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumsHolder {
             val binding = AlbumItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
