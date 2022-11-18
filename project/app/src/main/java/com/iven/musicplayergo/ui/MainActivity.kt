@@ -961,9 +961,9 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
         songs?.run {
             onAddAlbumToQueue(
                 if (size >= cutoff) {
-                    this.shuffled().take(cutoff)
+                    shuffled().take(cutoff)
                 } else {
-                    this.shuffled()
+                    shuffled()
                 },
                 forcePlay = Pair(first = true, second = null)
             )
