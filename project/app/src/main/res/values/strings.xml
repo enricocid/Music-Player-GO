@@ -12,9 +12,9 @@
     <string name="favorite_remove">Delete %1s (%2s) from favorites?</string>
     <string name="favorites_save_time">Save song position</string>
     <string name="sorting_pref_save">Set as default sorting?</string>
-    <string name="sorting_pref_reset">Reset tracks sorting</string>
+    <string name="sorting_pref_reset">Reset track sorting</string>
     <string name="sorting_pref_reset_sum">Applies to albums and folders</string>
-    <string name="sorting_pref_reset_confirm">Sorting preferences will be reset. Continue?</string>
+    <string name="sorting_pref_reset_confirm">Reset sorting preferences\?</string>
     <string name="sorting_pref_reset_neutral">Stop asking</string>
     <!-- Main - Fragments titles -->
     <string name="artists">Artists</string>
@@ -45,8 +45,8 @@
     <string name="queue_add">Enqueue</string>
     <string name="favorite_add">Favorite</string>
     <string name="filter_popup_title">Hide</string>
-    <string name="filters_clear">Filters will be cleared. Continue?</string>
-    <string name="filters_error">Error! Unable to open hidden artists/folders/albums!</string>
+    <string name="filters_clear">Clear filters\?</string>
+    <string name="filters_error">Could not open open hidden artists/folders/albums.</string>
     <!-- Queue -->
     <string name="queue">Queue</string>
     <string name="queue_song_add">%1s enqueued!</string>
@@ -178,7 +178,6 @@
     <string name="notification_actions_favorite">Add to favorites/close</string>
     <string name="notification_actions_favorite_position">Add to favorites (with position)/close</string>
     <string name="notification_actions_fast_seeking">Fast seeking</string>
-
     <!-- Preferences - Song visualization options (tl = title, fn = full name) -->
     <string name="song_visual_pref_title">Song visualization</string>
     <string name="song_visual_pref_tl_title">Title</string>
@@ -192,7 +191,6 @@
     <string name="confirm_ask_pref_sum">Ask for confirmation before doing anything</string>
     <!-- Preferences - Lock rotation -->
     <string name="rotation_pref_title">Lock rotation</string>
-
     <!-- Preferences - Accents names -->
     <string name="red">Red</string>
     <string name="pink">Pink</string>
