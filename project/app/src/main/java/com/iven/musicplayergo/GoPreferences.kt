@@ -14,53 +14,7 @@ import java.lang.reflect.Type
 
 class GoPreferences(context: Context) {
 
-    private val prefsSavedEqualizerSettings = "eq_settings_pref"
-    private val prefsLatestVolume = "latest_volume_pref"
-    private val prefsLatestPlaybackVel = "latest_playback_vel_pref"
-    private val prefsLatestPlayedSong = "to_restore_song_pref"
-    private val prefsFavorites = "favorite_songs_pref"
-    private val prefsQueue = "queue_songs_pref"
-    private val prefsIsQueue = "is_queue_pref"
-
-    private val prefsTheme = "theme_pref"
-    private val prefsThemeDef = "theme_pref_auto"
-    private val prefsThemeBlack = "theme_pref_black"
-    private val prefsAccent = "color_primary_pref"
-
-    private val prefsActiveTabsDef = "active_tabs_def_pref"
-    private val prefsActiveTabs = "active_tabs_pref"
-
-    private val prefsCover = "covers_pref"
-
-    private val prefsOnListEnded = "on_list_ended_pref"
-
-    private val prefsSongsVisual = "song_visual_pref"
-
-    private val prefsArtistsSorting = "sorting_artists_pref"
-    private val prefsFoldersSorting = "sorting_folder_details_pref"
-    private val prefsAlbumsSorting = "sorting_album_details_pref"
-    private val prefsAllMusicSorting = "sorting_all_music_tab_pref"
-
-    private val prefsFastSeek = "fast_seeking_pref"
-    private val prefsNotificationActions = "notification_actions_pref"
-    private val prefsEq = "eq_pref"
-    private val prefsPreciseVolume = "precise_volume_pref"
-    private val prefsFocus = "focus_pref"
-    private val prefsHeadsetPlug = "headsets_pref"
-
-    private val prefsAnim = "anim_pref"
-    private val prefsFilter = "strings_filter_pref"
-    private val prefsPlaybackVel = "playback_vel_pref"
-    private val prefsIsContinueOnEnd = "continue_on_end_pref"
-    private val prefsHasCompletedPlayback = "has_completed_playback_pref"
-    private val prefsIsAskConfirmation = "ask_confirmation_pref"
-    private val prefsLockRotation = "rotation_pref"
-
-    private val prefsDetailsSorting = "details_sorting_pref"
-    private val prefsLocale = "locale_pref"
-
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
-
     private val mMoshi = Moshi.Builder().build()
 
     // active fragments type
@@ -73,150 +27,151 @@ class GoPreferences(context: Context) {
     private val typeSorting = Types.newParameterizedType(List::class.java, Sorting::class.java)
 
     var latestVolume: Int
-        get() = mPrefs.getInt(prefsLatestVolume, 100)
-        set(value) = mPrefs.edit { putInt(prefsLatestVolume, value) }
+        get() = mPrefs.getInt("latest_volume_pref", 100)
+        set(value) = mPrefs.edit { putInt("latest_volume_pref", value) }
 
     var latestPlaybackSpeed: Float
-        get() = mPrefs.getFloat(prefsLatestPlaybackVel, 1.0F)
-        set(value) = mPrefs.edit { putFloat(prefsLatestPlaybackVel, value) }
+        get() = mPrefs.getFloat("latest_playback_vel_pref", 1.0F)
+        set(value) = mPrefs.edit { putFloat("latest_playback_vel_pref", value) }
 
     var latestPlayedSong: Music?
-        get() = getObjectForClass(prefsLatestPlayedSong, Music::class.java)
-        set(value) = putObjectForClass(prefsLatestPlayedSong, value, Music::class.java)
+        get() = getObjectForClass("to_restore_song_pref", Music::class.java)
+        set(value) = putObjectForClass("to_restore_song_pref", value, Music::class.java)
 
     var savedEqualizerSettings: SavedEqualizerSettings?
-        get() = getObjectForClass(
-            prefsSavedEqualizerSettings,
-            SavedEqualizerSettings::class.java
-        )
+        get() = getObjectForClass("eq_settings_pref", SavedEqualizerSettings::class.java)
         set(value) = putObjectForClass(
-            prefsSavedEqualizerSettings,
+            "eq_settings_pref",
             value,
             SavedEqualizerSettings::class.java
         )
 
     var favorites: List<Music>?
-        get() = getObjectForType(prefsFavorites, typeFavorites)
-        set(value) = putObjectForType(prefsFavorites, value, typeFavorites)
+        get() = getObjectForType("favorite_songs_pref", typeFavorites)
+        set(value) = putObjectForType("favorite_songs_pref", value, typeFavorites)
 
     var queue: List<Music>?
-        get() = getObjectForType(prefsQueue, typeFavorites)
-        set(value) = putObjectForType(prefsQueue, value, typeFavorites)
+        get() = getObjectForType("queue_songs_pref", typeFavorites)
+        set(value) = putObjectForType("queue_songs_pref", value, typeFavorites)
 
     var isQueue: Music?
-        get() = getObjectForClass(prefsIsQueue, Music::class.java)
-        set(value) = putObjectForClass(prefsIsQueue, value, Music::class.java)
+        get() = getObjectForClass("is_queue_pref", Music::class.java)
+        set(value) = putObjectForClass("is_queue_pref", value, Music::class.java)
 
     var theme
-        get() = mPrefs.getString(prefsTheme, prefsThemeDef)
-        set(value) = mPrefs.edit { putString(prefsTheme, value) }
+        get() = mPrefs.getString("theme_pref", "theme_pref_auto")
+        set(value) = mPrefs.edit { putString("theme_pref", value) }
 
     var isBlackTheme: Boolean
-        get() = mPrefs.getBoolean(prefsThemeBlack, false)
-        set(value) = mPrefs.edit { putBoolean(prefsThemeBlack, value) }
+        get() = mPrefs.getBoolean("theme_pref_black", false)
+        set(value) = mPrefs.edit { putBoolean("theme_pref_black", value) }
 
     var accent
-        get() = mPrefs.getInt(prefsAccent, 3)
-        set(value) = mPrefs.edit { putInt(prefsAccent, value) }
+        get() = mPrefs.getInt("color_primary_pref", 3)
+        set(value) = mPrefs.edit { putInt("color_primary_pref", value) }
 
     var activeTabsDef: List<String>
-        get() = getObjectForType(prefsActiveTabsDef, typeActiveTabs)
+        get() = getObjectForType("active_tabs_def_pref", typeActiveTabs)
             ?: GoConstants.DEFAULT_ACTIVE_FRAGMENTS
-        set(value) = putObjectForType(prefsActiveTabsDef, value, typeActiveTabs)
+        set(value) = putObjectForType("active_tabs_def_pref", value, typeActiveTabs)
 
     var activeTabs: List<String>
-        get() = getObjectForType(prefsActiveTabs, typeActiveTabs)
+        get() = getObjectForType("active_tabs_pref", typeActiveTabs)
             ?: GoConstants.DEFAULT_ACTIVE_FRAGMENTS
-        set(value) = putObjectForType(prefsActiveTabs, value, typeActiveTabs)
+        set(value) = putObjectForType("active_tabs_pref", value, typeActiveTabs)
 
     var onListEnded
-        get() = mPrefs.getString(prefsOnListEnded, GoConstants.CONTINUE)
-        set(value) = mPrefs.edit { putString(prefsOnListEnded, value) }
+        get() = mPrefs.getString("on_list_ended_pref", GoConstants.CONTINUE)
+        set(value) = mPrefs.edit { putString("on_list_ended_pref", value) }
 
     var isCovers: Boolean
-        get() = mPrefs.getBoolean(prefsCover, false)
-        set(value) = mPrefs.edit { putBoolean(prefsCover, value) }
+        get() = mPrefs.getBoolean("covers_pref", false)
+        set(value) = mPrefs.edit { putBoolean("covers_pref", value) }
 
     var songsVisualization
-        get() = mPrefs.getString(prefsSongsVisual, GoConstants.FN)
-        set(value) = mPrefs.edit { putString(prefsSongsVisual, value.toString()) }
+        get() = mPrefs.getString("song_visual_pref", GoConstants.FN)
+        set(value) = mPrefs.edit { putString("song_visual_pref", value.toString()) }
 
     var artistsSorting
-        get() = mPrefs.getInt(prefsArtistsSorting, GoConstants.ASCENDING_SORTING)
-        set(value) = mPrefs.edit { putInt(prefsArtistsSorting, value) }
+        get() = mPrefs.getInt("sorting_artists_pref", GoConstants.ASCENDING_SORTING)
+        set(value) = mPrefs.edit { putInt("sorting_artists_pref", value) }
 
     var foldersSorting
-        get() = mPrefs.getInt(prefsFoldersSorting, GoConstants.DEFAULT_SORTING)
-        set(value) = mPrefs.edit { putInt(prefsFoldersSorting, value) }
+        get() = mPrefs.getInt("sorting_folder_details_pref", GoConstants.DEFAULT_SORTING)
+        set(value) = mPrefs.edit { putInt("sorting_folder_details_pref", value) }
 
     var albumsSorting
-        get() = mPrefs.getInt(prefsAlbumsSorting, GoConstants.DEFAULT_SORTING)
-        set(value) = mPrefs.edit { putInt(prefsAlbumsSorting, value) }
+        get() = mPrefs.getInt("sorting_album_details_pref", GoConstants.DEFAULT_SORTING)
+        set(value) = mPrefs.edit { putInt("sorting_album_details_pref", value) }
 
     var allMusicSorting
-        get() = mPrefs.getInt(prefsAllMusicSorting, GoConstants.DEFAULT_SORTING)
-        set(value) = mPrefs.edit { putInt(prefsAllMusicSorting, value) }
+        get() = mPrefs.getInt("sorting_all_music_tab_pref", GoConstants.DEFAULT_SORTING)
+        set(value) = mPrefs.edit { putInt("sorting_all_music_tab_pref", value) }
 
     var notificationActions: NotificationAction
-        get() = getObjectForType(prefsNotificationActions, NotificationAction::class.java)
+        get() = getObjectForType("notification_actions_pref", NotificationAction::class.java)
             ?: NotificationAction(GoConstants.REPEAT_ACTION, GoConstants.CLOSE_ACTION)
-        set(value) = putObjectForType(prefsNotificationActions, value, NotificationAction::class.java)
+        set(value) = putObjectForType("notification_actions_pref", value, NotificationAction::class.java)
 
     var filters: Set<String>?
-        get() = mPrefs.getStringSet(prefsFilter, setOf())
-        set(value) = mPrefs.edit { putStringSet(prefsFilter, value) }
+        get() = mPrefs.getStringSet("strings_filter_pref", setOf())
+        set(value) = mPrefs.edit { putStringSet("strings_filter_pref", value) }
 
     var fastSeekingStep
-        get() = mPrefs.getInt(prefsFastSeek, 5)
-        set(value) = mPrefs.edit { putInt(prefsFastSeek, value) }
+        get() = mPrefs.getInt("fast_seeking_pref", 5)
+        set(value) = mPrefs.edit { putInt("fast_seeking_pref", value) }
 
     var isEqForced
-        get() = mPrefs.getBoolean(prefsEq, false)
-        set(value) = mPrefs.edit { putBoolean(prefsEq, value) }
+        get() = mPrefs.getBoolean("eq_pref", false)
+        set(value) = mPrefs.edit { putBoolean("eq_pref", value) }
 
     var isPreciseVolumeEnabled
-        get() = mPrefs.getBoolean(prefsPreciseVolume, true)
-        set(value) = mPrefs.edit { putBoolean(prefsPreciseVolume, value) }
+        get() = mPrefs.getBoolean("precise_volume_pref", true)
+        set(value) = mPrefs.edit { putBoolean("precise_volume_pref", value) }
 
     var isFocusEnabled
-        get() = mPrefs.getBoolean(prefsFocus, true)
-        set(value) = mPrefs.edit { putBoolean(prefsFocus, value) }
+        get() = mPrefs.getBoolean("focus_pref", true)
+        set(value) = mPrefs.edit { putBoolean("focus_pref", value) }
 
     var isHeadsetPlugEnabled
-        get() = mPrefs.getBoolean(prefsHeadsetPlug, true)
-        set(value) = mPrefs.edit { putBoolean(prefsHeadsetPlug, value) }
+        get() = mPrefs.getBoolean("headsets_pref", true)
+        set(value) = mPrefs.edit { putBoolean("headsets_pref", value) }
 
     var playbackSpeedMode
-        get() = mPrefs.getString(prefsPlaybackVel, GoConstants.PLAYBACK_SPEED_ONE_ONLY)
-        set(value) = mPrefs.edit { putString(prefsPlaybackVel, value) }
+        get() = mPrefs.getString("playback_vel_pref", GoConstants.PLAYBACK_SPEED_ONE_ONLY)
+        set(value) = mPrefs.edit { putString("playback_vel_pref", value) }
 
     var isAnimations
-        get() = mPrefs.getBoolean(prefsAnim, true)
-        set(value) = mPrefs.edit { putBoolean(prefsAnim, value) }
+        get() = mPrefs.getBoolean("anim_pref", true)
+        set(value) = mPrefs.edit { putBoolean("anim_pref", value) }
 
     var continueOnEnd
-        get() = mPrefs.getBoolean(prefsIsContinueOnEnd, true)
-        set(value) = mPrefs.edit { putBoolean(prefsIsContinueOnEnd, value) }
+        get() = mPrefs.getBoolean("continue_on_end_pref", true)
+        set(value) = mPrefs.edit { putBoolean("continue_on_end_pref", value) }
 
     var hasCompletedPlayback
-        get() = mPrefs.getBoolean(prefsHasCompletedPlayback, false)
-        set(value) = mPrefs.edit { putBoolean(prefsHasCompletedPlayback, value) }
+        get() = mPrefs.getBoolean("has_completed_playback_pref", false)
+        set(value) = mPrefs.edit { putBoolean("has_completed_playback_pref", value) }
 
     var locale
-        get() = mPrefs.getString(prefsLocale, null)
-        set(value) = mPrefs.edit { putString(prefsLocale, value) }
+        get() = mPrefs.getString("locale_pref", null)
+        set(value) = mPrefs.edit { putString("locale_pref", value) }
 
     var isAskForRemoval: Boolean
-        get() = mPrefs.getBoolean(prefsIsAskConfirmation, true)
-        set(value) = mPrefs.edit { putBoolean(prefsIsAskConfirmation, value) }
+        get() = mPrefs.getBoolean("ask_confirmation_pref", true)
+        set(value) = mPrefs.edit { putBoolean("ask_confirmation_pref", value) }
 
     var lockRotation: Boolean
-        get() = mPrefs.getBoolean(prefsLockRotation, false)
-        set(value) = mPrefs.edit { putBoolean(prefsLockRotation, value) }
+        get() = mPrefs.getBoolean("rotation_pref", false)
+        set(value) = mPrefs.edit { putBoolean("rotation_pref", value) }
+
+    var isSetDefSorting: Boolean
+        get() = mPrefs.getBoolean("ask_sorting_pref", true)
+        set(value) = mPrefs.edit { putBoolean("ask_sorting_pref", value) }
 
     var sortings: List<Sorting>?
-        get() = getObjectForType(prefsDetailsSorting, typeSorting)
-        set(value) = putObjectForType(prefsDetailsSorting, value, typeSorting)
+        get() = getObjectForType(PREFS_DETAILS_SORTING, typeSorting)
+        set(value) = putObjectForType(PREFS_DETAILS_SORTING, value, typeSorting)
 
     // Retrieve object from the Preferences using Moshi
     private fun <T : Any> putObjectForType(key: String, value: T?, type: Type) {
@@ -259,6 +214,9 @@ class GoPreferences(context: Context) {
     }
 
     companion object {
+
+        const val PREFS_DETAILS_SORTING = "details_sorting_pref"
+
         // Singleton prevents multiple instances of GoPreferences opening at the
         // same time.
         @Volatile

@@ -11,6 +11,7 @@ import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.UIControlInterface
+import com.iven.musicplayergo.utils.Lists
 
 
 object Dialogs {
@@ -96,6 +97,37 @@ object Dialogs {
             return
         }
         mediaPlayerHolder.stopPlaybackService(stopPlayback = false, fromUser = true, fromFocus = false)
+    }
+
+    @JvmStatic
+    fun showSaveSortingDialog(context: Context, artistOrFolder: String?, launchedBy: String, sorting: Int) {
+        MaterialAlertDialogBuilder(context)
+            .setTitle(R.string.sorting_pref)
+            .setMessage(R.string.sorting_pref_save)
+            .setPositiveButton(R.string.yes) { _, _ ->
+                Lists.addToSortings(GoPreferences.PREFS_DETAILS_SORTING, launchedBy, sorting)
+            }
+            .setNegativeButton(R.string.no) { _, _ ->
+                Lists.addToSortings(artistOrFolder, launchedBy, sorting)
+            }
+            .setNeutralButton(R.string.sorting_pref_reset_neutral) { _, _ ->
+                GoPreferences.getPrefsInstance().isSetDefSorting = false
+            }
+            .show()
+    }
+
+    @JvmStatic
+    fun showResetSortingsDialog(context: Context) {
+        val prefs = GoPreferences.getPrefsInstance()
+        MaterialAlertDialogBuilder(context)
+            .setTitle(R.string.sorting_pref)
+            .setMessage(R.string.sorting_pref_reset_confirm)
+            .setPositiveButton(R.string.yes) { _, _ ->
+                prefs.sortings = null
+                prefs.isSetDefSorting = true
+            }
+            .setNegativeButton(R.string.no, null)
+            .show()
     }
 
     @JvmStatic

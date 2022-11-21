@@ -11,6 +11,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
+import com.iven.musicplayergo.dialogs.Dialogs
 import com.iven.musicplayergo.dialogs.RecyclerSheet
 import com.iven.musicplayergo.player.MediaPlayerHolder
 import com.iven.musicplayergo.ui.MediaControlInterface
@@ -88,6 +89,8 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 isEnabled = ft.isNotEmpty()
             }
         }
+
+        findPreference<Preference>(getString(R.string.reset_sortings_pref))?.onPreferenceClickListener = this@PreferencesFragment
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -106,6 +109,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             }
             getString(R.string.notif_actions_pref) -> RecyclerSheet.newInstance(RecyclerSheet.NOTIFICATION_ACTIONS_TYPE)
                 .show(requireActivity().supportFragmentManager, RecyclerSheet.TAG_MODAL_RV)
+            getString(R.string.reset_sortings_pref) -> Dialogs.showResetSortingsDialog(requireContext())
         }
         return false
     }

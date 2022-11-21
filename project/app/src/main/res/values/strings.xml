@@ -11,6 +11,11 @@
     <string name="favorites_clear">Clear all favorites?</string>
     <string name="favorite_remove">Delete %1s (%2s) from favorites?</string>
     <string name="favorites_save_time">Save song position</string>
+    <string name="sorting_pref_save">Set as default sorting?</string>
+    <string name="sorting_pref_reset">Reset tracks sorting</string>
+    <string name="sorting_pref_reset_sum">Applies to albums and folders</string>
+    <string name="sorting_pref_reset_confirm">Sorting preferences will be reset. Continue?</string>
+    <string name="sorting_pref_reset_neutral">Stop asking</string>
     <!-- Main - Fragments titles -->
     <string name="artists">Artists</string>
     <string name="albums">Albums</string>

@@ -85,6 +85,11 @@
     <string name="notification_actions_favorite_position">Aggiungi ai preferiti (con posizione)/chiudi</string>
     <string name="notification_actions_fast_seeking">Avanzamento veloce</string>
     <string name="sorting_pref">Ordine</string>
+    <string name="sorting_pref_save">Impostare come ordine preferito?</string>
+    <string name="sorting_pref_reset">Ripristina ordine tracce</string>
+    <string name="sorting_pref_reset_sum">Si applica ad album e cartelle</string>
+    <string name="sorting_pref_reset_confirm">Le preferenze dell\'ordine verranno ripristinate. Continuare?</string>
+    <string name="sorting_pref_reset_neutral">Smetti di chiedere</string>
     <string name="sorting_pref_default">Predefinito</string>
     <string name="sorting_pref_track">Per nº traccia ↓</string>
     <string name="sorting_pref_track_inv">Per nº traccia ↑</string>

@@ -28,6 +28,7 @@ import com.iven.musicplayergo.R
 import com.iven.musicplayergo.databinding.AlbumItemBinding
 import com.iven.musicplayergo.databinding.FragmentDetailsBinding
 import com.iven.musicplayergo.databinding.GenericItemBinding
+import com.iven.musicplayergo.dialogs.Dialogs
 import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.models.Album
 import com.iven.musicplayergo.models.Music
@@ -172,11 +173,11 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                                     mSelectedArtistAlbums?.first()
                                 }
                             }
-                            mSelectedAlbum?.title?.findSorting(mLaunchedBy)?.let { sorting ->
+                            (mSelectedAlbum?.title?.findSorting(mLaunchedBy) ?: getDefUserSorting(mLaunchedBy))?.let { sorting ->
                                 mSongsSorting = sorting.sorting
                             }
                         } else {
-                            mSelectedArtistOrFolder?.findSorting(mLaunchedBy)?.let { sorting ->
+                            (mSelectedArtistOrFolder?.findSorting(mLaunchedBy) ?: getDefUserSorting(mLaunchedBy))?.let { sorting ->
                                 mSongsSorting = sorting.sorting
                             }
                         }
@@ -246,7 +247,11 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     } else {
                         Lists.getSongsSorting(mSongsSorting)
                     }
-                    Lists.addToSortings(mSelectedAlbum?.title, mLaunchedBy, mSongsSorting)
+                    if (GoPreferences.PREFS_DETAILS_SORTING.findSorting(mLaunchedBy) == null && GoPreferences.getPrefsInstance().isSetDefSorting) {
+                        Dialogs.showSaveSortingDialog(requireContext(), mSelectedAlbum?.title, mLaunchedBy, mSongsSorting)
+                    } else {
+                        Lists.addToSortings(mSelectedAlbum?.title, mLaunchedBy, mSongsSorting)
+                    }
                     setSongsDataSource(mSelectedAlbum?.music, updateSongs = !sAlbumSwapped && sCanUpdateSongs, updateAdapter = true)
                 }
             }
@@ -411,6 +416,8 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
+    private fun getDefUserSorting(launchedBy: String) = GoPreferences.PREFS_DETAILS_SORTING.findSorting(launchedBy)
+
     private fun getDefSortingIcon() = if (sShowDisplayName) {
         Theming.getSortIconForSongsDisplayName(mSongsSorting)
     } else {
@@ -524,7 +531,12 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             }
         }
 
-        Lists.addToSortings(mSelectedArtistOrFolder, mLaunchedBy, mSongsSorting)
+        if (GoPreferences.PREFS_DETAILS_SORTING.findSorting(mLaunchedBy) == null && GoPreferences.getPrefsInstance().isSetDefSorting) {
+            Dialogs.showSaveSortingDialog(requireContext(), mSelectedArtistOrFolder, mLaunchedBy, mSongsSorting)
+        } else {
+            Lists.addToSortings(mSelectedArtistOrFolder, mLaunchedBy, mSongsSorting)
+        }
+
         val selectedList = if (sLaunchedByFolderView) {
             mMusicViewModel.deviceMusicByFolder?.get(mSelectedArtistOrFolder)
         } else {
@@ -600,7 +612,8 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private fun swapAlbum(songs: MutableList<Music>?) {
         sAlbumSwapped = true
-        mSongsSorting = songs?.get(0)?.findSorting()?.sorting ?: Lists.getDefSortingMode()
+        mSongsSorting = songs?.get(0)?.findSorting()?.sorting
+            ?: GoPreferences.PREFS_DETAILS_SORTING.findSorting(GoConstants.ARTIST_VIEW)?.sorting ?: Lists.getDefSortingMode()
         setSongsDataSource(songs, updateSongs = false, updateAdapter = true)
         _detailsFragmentBinding?.songsRv?.doOnPreDraw {
             scrollToPlayingSong(mSelectedSongId)

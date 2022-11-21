@@ -136,6 +136,11 @@
             app:key="@string/filter_pref"
             app:title="@string/filter_pref_title" />
 
+        <Preference
+            app:key="@string/reset_sortings_pref"
+            app:title="@string/sorting_pref_reset"
+            app:summary="@string/sorting_pref_reset_sum" />
+
         <SwitchPreferenceCompat
             android:summary="@string/confirm_ask_pref_sum"
             app:defaultValue="true"

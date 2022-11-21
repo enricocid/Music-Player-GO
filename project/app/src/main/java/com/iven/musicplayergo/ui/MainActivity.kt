@@ -960,11 +960,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
         val cutoff = 100
         songs?.run {
             onAddAlbumToQueue(
-                if (size >= cutoff) {
-                    shuffled().take(cutoff)
-                } else {
-                    shuffled()
-                },
+                if (size >= cutoff) shuffled().take(cutoff) else shuffled(),
                 forcePlay = Pair(first = true, second = null)
             )
         }

@@ -60,6 +60,7 @@
     <string name="anim_pref">anim_pref</string>
     <string name="filter_pref">strings_filter_pref</string>
     <string name="rotation_pref">rotation_pref</string>
+    <string name="reset_sortings_pref">reset_sortings_pref</string>
 
     <!-- Sorting -->
 
