@@ -173,4 +173,9 @@
     <string name="eq_pref_sum">Примусове використання вбудованого еквалайзера</string>
     <string name="locale_finnish">Фінська</string>
     <string name="rotation_pref_title">Блокування обертання</string>
+    <string name="sorting_pref_save">Налаштувати типовим сортуванням\?</string>
+    <string name="sorting_pref_reset_neutral">Припинити запитувати</string>
+    <string name="sorting_pref_reset_sum">Застосовується до альбомів і тек</string>
+    <string name="sorting_pref_reset_confirm">Налаштування сортування буде скинуто. Продовжити\?</string>
+    <string name="sorting_pref_reset">Скинути сортування доріжок</string>
 </resources>

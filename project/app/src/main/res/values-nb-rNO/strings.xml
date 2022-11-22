@@ -172,4 +172,10 @@
     <string name="error_builtin_eq">En feil oppstod. Bruk systemets tonekontroll (hvis den forefinnes).</string>
     <string name="error_sys_eq">Systemtonekontroll er ikke tilgjengelig.</string>
     <string name="locale_finnish">Finsk</string>
+    <string name="rotation_pref_title">Lås sideretning</string>
+    <string name="sorting_pref_reset_sum">For alle album og mapper</string>
+    <string name="sorting_pref_reset_neutral">Slutt å spørre</string>
+    <string name="sorting_pref_reset_confirm">Tilbakestill sorteringsinnstillinger\?</string>
+    <string name="sorting_pref_reset">Tilbakestill sporrekkefølge</string>
+    <string name="sorting_pref_save">Bruk som forvalgt sortering\?</string>
 </resources>
