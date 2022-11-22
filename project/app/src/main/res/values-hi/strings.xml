@@ -97,4 +97,21 @@
     <string name="pink">गुलाबी</string>
     <string name="purple">बैंगनी</string>
     <string name="deep_purple">गहरा बैंगनी</string>
+    <string name="theme_pref_black_title">शुद्ध काल</string>
+    <string name="locale_finnish">फिनिश</string>
+    <string name="locale_belarusian">बेलारूसी</string>
+    <string name="locale_czech">चेक</string>
+    <string name="locale_bulgarian">बल्गेरियाई</string>
+    <string name="locale_chinese_s">चीनी (सरलीकृत)</string>
+    <string name="locale_danish">दानिश</string>
+    <string name="locale_arabic">अरबी</string>
+    <string name="locale_dutch">डच</string>
+    <string name="locale_pref_title">भाषा</string>
+    <string name="locale_french">फ्रेंच</string>
+    <string name="pause_on_end">पूरा होने पर रुकें।</string>
+    <string name="locale_arabic_egypt">अरबी (मिस्र)</string>
+    <string name="locale_bengali">बंगाली</string>
+    <string name="locale_chinese_t">चीनी (पारंपरिक)</string>
+    <string name="locale_basque">बस्क</string>
+    <string name="locale_english">अंग्रेज़ी</string>
 </resources>
