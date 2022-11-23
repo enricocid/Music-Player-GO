@@ -46,7 +46,7 @@
     <string name="favorite_add">Favorite</string>
     <string name="filter_popup_title">Hide</string>
     <string name="filters_clear">Clear filters\?</string>
-    <string name="filters_error">Could not open open hidden artists/folders/albums.</string>
+    <string name="filters_error">Could not open hidden artists/folders/albums.</string>
     <!-- Queue -->
     <string name="queue">Queue</string>
     <string name="queue_song_add">%1s enqueued!</string>

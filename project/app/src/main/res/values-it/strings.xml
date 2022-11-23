@@ -84,11 +84,11 @@
     <string name="notification_actions_favorite">Aggiungi ai preferiti/chiudi</string>
     <string name="notification_actions_favorite_position">Aggiungi ai preferiti (con posizione)/chiudi</string>
     <string name="notification_actions_fast_seeking">Avanzamento veloce</string>
-    <string name="sorting_pref">Ordine</string>
-    <string name="sorting_pref_save">Impostare come ordine preferito?</string>
-    <string name="sorting_pref_reset">Ripristina ordine tracce</string>
+    <string name="sorting_pref">Ordinamento</string>
+    <string name="sorting_pref_save">Usare come ordinamento preferito?</string>
+    <string name="sorting_pref_reset">Ripristina ordinamento tracce</string>
     <string name="sorting_pref_reset_sum">Si applica ad album e cartelle</string>
-    <string name="sorting_pref_reset_confirm">Le preferenze dell\'ordine verranno ripristinate. Continuare?</string>
+    <string name="sorting_pref_reset_confirm">Ripristinare le preferenze di ordinamento?</string>
     <string name="sorting_pref_reset_neutral">Smetti di chiedere</string>
     <string name="sorting_pref_default">Predefinito</string>
     <string name="sorting_pref_track">Per nº traccia ↓</string>
@@ -108,8 +108,8 @@
     <string name="filter_pref_title">Filtri</string>
     <string name="rotation_pref_title">Blocca rotazione</string>
     <string name="filter_popup_title">Nascondi</string>
-    <string name="filters_clear">I filtri saranno cancellati. Continuare?</string>
-    <string name="filters_error">Errore! Non posso aprire artisti/cartelle/album nascosti!</string>
+    <string name="filters_clear">Cancellare i filtri?</string>
+    <string name="filters_error">Impossibile aprire gli artisti/cartelle/album nascosti!</string>
     <string name="playback_pref_title">Velocità riproduzione selezionata</string>
     <string name="playback_pref_summary_off">Solo una canzone</string>
     <string name="playback_pref_summary_on">Mantieni</string>
