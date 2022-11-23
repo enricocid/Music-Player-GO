@@ -178,4 +178,6 @@
     <string name="sorting_pref_reset">重置歌曲排序</string>
     <string name="sorting_pref_reset_sum">应用到专辑和文件夹</string>
     <string name="sorting_pref_reset_confirm">重置排序选项？</string>
+    <string name="locale_azerbaijani">阿塞拜疆语</string>
+    <string name="locale_malayalam">马拉雅拉姆语</string>
 </resources>
