@@ -117,6 +117,7 @@
     <string name="locale_pref_title">Lingua</string>
     <string name="locale_arabic">Arabo</string>
     <string name="locale_arabic_egypt">Arabo (Egitto)</string>
+    <string name="locale_azerbaijani">Azerbaigiano</string>
     <string name="locale_basque">Basco</string>
     <string name="locale_bengali">Bengalese</string>
     <string name="locale_belarusian">Bielorusso</string>
@@ -140,6 +141,7 @@
     <string name="locale_korean">Coreano</string>
     <string name="locale_kurdish">Curdo</string>
     <string name="locale_lituanian">Lituano</string>
+    <string name="locale_malayalam">Malayalam</string>
     <string name="locale_nepali">Nepalese</string>
     <string name="locale_norwegian_b">Norvegese (Bokmål)</string>
     <string name="locale_norwegian_n">Norvegese (Nynorsk)</string>

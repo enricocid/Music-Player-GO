@@ -90,6 +90,7 @@
 
     <string-array name="supported_locales">
         <item>ar</item> <!-- Arabic -->
+        <item>az</item> <!-- Azerbaijani -->
         <item>bd</item> <!-- Bengali -->
         <item>be</item> <!-- Belarusian -->
         <item>bg</item> <!-- Bulgarian -->
@@ -115,6 +116,7 @@
         <item>ku</item> <!-- Kurdish -->
         <item>lk</item> <!-- Sinhalese -->
         <item>lt</item> <!-- Lithuanian -->
+        <item>ml</item> <!-- Malayalam -->
         <item>nb-NO</item> <!-- Norwegian (Bokmål) -->
         <item>nl</item> <!-- Dutch -->
         <item>nn</item> <!-- Norwegian (Nynorsk) -->
@@ -135,6 +137,7 @@
 
     <string-array name="supported_locales_names">
         <item>@string/locale_arabic</item>
+        <item>@string/locale_azerbaijani</item>
         <item>@string/locale_bengali</item>
         <item>@string/locale_belarusian</item>
         <item>@string/locale_bulgarian</item>
@@ -160,6 +163,7 @@
         <item>@string/locale_kurdish</item>
         <item>@string/locale_sinhalese</item>
         <item>@string/locale_lituanian</item>
+        <item>@string/locale_malayalam</item>
         <item>@string/locale_norwegian_b</item>
         <item>@string/locale_dutch</item>
         <item>@string/locale_norwegian_n</item>
