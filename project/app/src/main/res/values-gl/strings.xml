@@ -185,4 +185,6 @@
     <string name="sorting_pref_reset_sum">Aplícase a álbums e cartafoles</string>
     <string name="sorting_pref_reset_confirm">Restablecer preferencia da orde?</string>
     <string name="sorting_pref_reset_neutral">Deixar de preguntar</string>
+    <string name="locale_azerbaijani">Azerbaiyano</string>
+    <string name="locale_malayalam">Malayalam</string>
 </resources>
