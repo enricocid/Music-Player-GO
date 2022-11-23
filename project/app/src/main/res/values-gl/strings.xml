@@ -168,10 +168,10 @@
     <string name="notification_actions_fast_seeking">Avance rápido</string>
     <string name="notification_actions_pref_title">Accións de notificación adicionais</string>
     <string name="notification_actions_favorite_position">Engadir a favoritos (con posición)/pechar</string>
-    <string name="filters_clear">Vanse limpar os filtros, continuar\?</string>
+    <string name="filters_clear">Limpar filtros?</string>
     <string name="confirm_ask_pref_title">Mensaxes de confirmación</string>
     <string name="confirm_ask_pref_sum">Pedir confirmación antes de facer calquera cousa</string>
-    <string name="filters_error">Erro! Non se poden abrir artistas/álbumes/cartafoles agochados!</string>
+    <string name="filters_error">Non se poden abrir os artistas/álbumes/cartafoles agochados.</string>
     <string name="category_ui">IU</string>
     <string name="category_audio">Audio</string>
     <string name="eq_pref_title">Ecualizador propio</string>
@@ -180,4 +180,9 @@
     <string name="eq_pref_sum">Forzar o uso do ecualizador propio</string>
     <string name="locale_finnish">Rematar</string>
     <string name="rotation_pref_title">Bloqueo da rotación</string>
+    <string name="sorting_pref_save">Establecer como orde por defecto?</string>
+    <string name="sorting_pref_reset">Restablecer orde</string>
+    <string name="sorting_pref_reset_sum">Aplícase a álbums e cartafoles</string>
+    <string name="sorting_pref_reset_confirm">Restablecer preferencia da orde?</string>
+    <string name="sorting_pref_reset_neutral">Deixar de preguntar</string>
 </resources>
