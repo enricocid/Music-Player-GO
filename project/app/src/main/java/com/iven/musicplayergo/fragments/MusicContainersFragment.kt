@@ -402,9 +402,7 @@ class MusicContainersFragment : Fragment(),
         }
 
         private fun setItemViewSelected(itemTitle: String, position: Int) {
-            if (itemsToHide.contains(itemTitle)) {
-                itemsToHide.remove(itemTitle)
-            } else {
+            if (!itemsToHide.remove(itemTitle)) {
                 itemsToHide.add(itemTitle)
                 mList?.run {
                     if (itemsToHide.size - 1 >= size - 1) itemsToHide.remove(itemTitle)
