@@ -164,5 +164,20 @@
     <string name="filters_clear">Os filtros serão limpos. Continuar\?</string>
     <string name="confirm_ask_pref_title">Mensagens de confirmação</string>
     <string name="confirm_ask_pref_sum">Peça confirmação antes de fazer qualquer coisa</string>
-    <string name="filters_error">Erro! Impossível abrir artistas/pastas/álbuns ocultos!</string>
+    <string name="filters_error">Não foi possível abrir artistas/pastas/álbuns ocultos.</string>
+    <string name="locale_malayalam">Malaiala</string>
+    <string name="locale_azerbaijani">Azerbaijano</string>
+    <string name="eq_pref_title">Equalizador integrado</string>
+    <string name="sorting_pref_reset_sum">Aplica-se a álbuns e pastas</string>
+    <string name="rotation_pref_title">Bloquear rotação</string>
+    <string name="sorting_pref_reset_neutral">Parar de perguntar</string>
+    <string name="category_ui">UI</string>
+    <string name="category_audio">Áudio</string>
+    <string name="eq_pref_sum">Forçar o uso do equalizador integrado</string>
+    <string name="locale_finnish">Finlandês</string>
+    <string name="sorting_pref_save">Definir como ordenação padrão\?</string>
+    <string name="sorting_pref_reset">Redefinir ordenação de faixas</string>
+    <string name="sorting_pref_reset_confirm">Redefinir as preferências de ordenação\?</string>
+    <string name="error_builtin_eq">Um erro ocorreu! Use o equalizador do sistema (se existir)!</string>
+    <string name="error_sys_eq">Equalizador do sistema não disponível!</string>
 </resources>
