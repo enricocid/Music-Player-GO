@@ -248,9 +248,9 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         Lists.getSongsSorting(mSongsSorting)
                     }
                     if (GoPreferences.PREFS_DETAILS_SORTING.findSorting(mLaunchedBy) == null && GoPreferences.getPrefsInstance().isSetDefSorting) {
-                        Dialogs.showSaveSortingDialog(requireContext(), mSelectedAlbum?.title, mLaunchedBy, mSongsSorting)
+                        Dialogs.showSaveSortingDialog(requireActivity(), mSelectedAlbum?.title, mLaunchedBy, mSongsSorting)
                     } else {
-                        Lists.addToSortings(mSelectedAlbum?.title, mLaunchedBy, mSongsSorting)
+                        Lists.addToSortings(requireActivity(), mSelectedAlbum?.title, mLaunchedBy, mSongsSorting)
                     }
                     setSongsDataSource(mSelectedAlbum?.music, updateSongs = !sAlbumSwapped && sCanUpdateSongs, updateAdapter = true)
                 }
@@ -532,9 +532,9 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         }
 
         if (GoPreferences.PREFS_DETAILS_SORTING.findSorting(mLaunchedBy) == null && GoPreferences.getPrefsInstance().isSetDefSorting) {
-            Dialogs.showSaveSortingDialog(requireContext(), mSelectedArtistOrFolder, mLaunchedBy, mSongsSorting)
+            Dialogs.showSaveSortingDialog(requireActivity(), mSelectedArtistOrFolder, mLaunchedBy, mSongsSorting)
         } else {
-            Lists.addToSortings(mSelectedArtistOrFolder, mLaunchedBy, mSongsSorting)
+            Lists.addToSortings(requireActivity(), mSelectedArtistOrFolder, mLaunchedBy, mSongsSorting)
         }
 
         val selectedList = if (sLaunchedByFolderView) {

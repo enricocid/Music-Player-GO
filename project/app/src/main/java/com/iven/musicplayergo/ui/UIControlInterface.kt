@@ -14,4 +14,5 @@ interface UIControlInterface {
     fun onOpenEqualizer()
     fun onOpenSleepTimerDialog()
     fun onEnableEqualizer()
+    fun onUpdateSortings()
 }

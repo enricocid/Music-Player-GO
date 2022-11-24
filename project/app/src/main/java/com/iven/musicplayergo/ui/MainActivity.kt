@@ -139,6 +139,10 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
         mSettingsFragment?.getPreferencesFragment()?.enableEqualizerOption()
     }
 
+    override fun onUpdateSortings() {
+        mSettingsFragment?.getPreferencesFragment()?.updateResetSortingsOption()
+    }
+
     private fun doBindService() {
         mBindingIntent = Intent(this, PlayerService::class.java).also {
             bindService(it, connection, Context.BIND_AUTO_CREATE)

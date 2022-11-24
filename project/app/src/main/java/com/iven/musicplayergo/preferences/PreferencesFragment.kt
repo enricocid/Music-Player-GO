@@ -90,7 +90,10 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             }
         }
 
-        findPreference<Preference>(getString(R.string.reset_sortings_pref))?.onPreferenceClickListener = this@PreferencesFragment
+        findPreference<Preference>(getString(R.string.reset_sortings_pref))?.run {
+            isEnabled = mGoPreferences.sortings != null && mGoPreferences.sortings?.isNotEmpty()!!
+            onPreferenceClickListener = this@PreferencesFragment
+        }
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -148,6 +151,7 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 mMediaControlInterface.onUpdatePlayingAlbumSongs(null)
             }
             getString(R.string.rotation_pref) -> requireActivity().requestedOrientation = Theming.getOrientation()
+            GoPreferences.PREFS_DETAILS_SORTING -> updateResetSortingsOption()
         }
     }
 
@@ -161,6 +165,12 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             } else {
                 getString(R.string.eq_pref_sum)
             }
+        }
+    }
+
+    fun updateResetSortingsOption() {
+        findPreference<Preference>(getString(R.string.reset_sortings_pref))?.run {
+            isEnabled = mGoPreferences.sortings != null && mGoPreferences.sortings?.isNotEmpty()!!
         }
     }
 

@@ -1,6 +1,7 @@
 package com.iven.musicplayergo.utils
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.view.Menu
 import android.view.MenuItem
@@ -12,6 +13,7 @@ import com.iven.musicplayergo.extensions.findSorting
 import com.iven.musicplayergo.extensions.toFormattedDuration
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.Sorting
+import com.iven.musicplayergo.ui.UIControlInterface
 import java.util.*
 
 @SuppressLint("DefaultLocale")
@@ -228,6 +230,7 @@ object Lists {
 
     @JvmStatic
     fun addToSortings(
+        activity: Activity,
         artistOrFolder: String?,
         launchedBy: String,
         sorting: Int
@@ -246,5 +249,6 @@ object Lists {
             sortings.add(toSorting)
         }
         prefs.sortings = sortings
+        (activity as UIControlInterface).onUpdateSortings()
     }
 }
