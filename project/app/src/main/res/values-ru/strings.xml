@@ -156,7 +156,7 @@
     <string name="sleeptimer_enabled">Остановить проигрывание после %1s</string>
     <string name="theme_pref_black_title">Абсолютно чёрный</string>
     <string name="locale_bulgarian">Болгарский</string>
-    <string name="filters_clear">Фильтры будут очищены. Продолжить\?</string>
+    <string name="filters_clear">Очистить фильтры\?</string>
     <string name="confirm_ask_pref_title">Запросы о подтверждении</string>
     <string name="confirm_ask_pref_sum">Запрашивать подтверждение перед совершением любых действий</string>
     <string name="notification_actions_pref_title">Дополнительные действия с уведомлением</string>
@@ -164,5 +164,20 @@
     <string name="notification_actions_favorite_position">Добавить в избранное (с позицией)/закрыть</string>
     <string name="notification_actions_fast_seeking">Быстрая перемотка</string>
     <string name="continue_on_end_desc">Выберите, продолжать ли воспроизведение или приостанавливать при завершении</string>
-    <string name="filters_error">Ошибка! Невозможно открыть скрытых исполнителей/папки/альбомы!</string>
+    <string name="filters_error">Не удалось открыть скрытых исполнителей/папки/альбомы.</string>
+    <string name="locale_azerbaijani">Азербайджанский</string>
+    <string name="locale_malayalam">Малаялам</string>
+    <string name="sorting_pref_reset">Сбросить сортировку дорожек</string>
+    <string name="sorting_pref_reset_confirm">Сбросить настройки сортировки\?</string>
+    <string name="sorting_pref_reset_neutral">Остановить запросы</string>
+    <string name="sorting_pref_reset_sum">Применяется для альбомов и папок</string>
+    <string name="rotation_pref_title">Блокировка поворота</string>
+    <string name="error_sys_eq">Системный эквалайзер недоступен!</string>
+    <string name="sorting_pref_save">Задать сортировку по умолчанию\?</string>
+    <string name="category_audio">Аудио</string>
+    <string name="category_ui">Пользовательский интерфейс</string>
+    <string name="eq_pref_title">Встроенный эквалайзер</string>
+    <string name="eq_pref_sum">Принудительное использование встроенного эквалайзера</string>
+    <string name="error_builtin_eq">Произошла ошибка! Используйте системный эквалайзер (если он существует)!</string>
+    <string name="locale_finnish">Финский</string>
 </resources>
