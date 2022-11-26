@@ -156,7 +156,7 @@
     <string name="sleeptimer_stop">Setop</string>
     <string name="sleeptimer_cancel_desc">Setop waktu tidur</string>
     <string name="theme_pref_black_title">Hitam pekat</string>
-    <string name="filters_clear">Filter akan dihapus. Lanjutkan\?</string>
+    <string name="filters_clear">Hapus filter\?</string>
     <string name="confirm_ask_pref_title">Pesan konfirmasi</string>
     <string name="confirm_ask_pref_sum">Minta konfirmasi sebelum melakukan sesuatu</string>
     <string name="notification_actions_pref_title">Tindakan notifikasi tambahan</string>
@@ -164,7 +164,7 @@
     <string name="notification_actions_fast_seeking">Maju cepat</string>
     <string name="notification_actions_favorite_position">Tambahkan ke favorit (dengan posisi)/tutup</string>
     <string name="continue_on_end_desc">Pilih apakah ingin melanjutkan atau jeda pada saat selesai</string>
-    <string name="filters_error">Galat! Tidak bisa membuka artis/folder/album tersembunyi!</string>
+    <string name="filters_error">Tidak bisa membuka artis/folder/album tersembunyi.</string>
     <string name="rotation_pref_title">Kunci rotasi</string>
     <string name="error_builtin_eq">Telah terjadi kesalahan! Gunakan equalizer sistem (jika ada)!</string>
     <string name="error_sys_eq">Equalizer sistem tidak tersedia!</string>
@@ -172,4 +172,12 @@
     <string name="eq_pref_sum">Paksa gunakan equalizer bawaan</string>
     <string name="locale_finnish">Selesai</string>
     <string name="eq_pref_title">Equalizer bawaan</string>
+    <string name="sorting_pref_reset_confirm">Setel ulang preferensi pengurutan\?</string>
+    <string name="sorting_pref_save">Tetapkan sebagai urutan baku\?</string>
+    <string name="sorting_pref_reset_sum">Terapkan ke album dan folder</string>
+    <string name="sorting_pref_reset_neutral">Berhenti bertanya</string>
+    <string name="sorting_pref_reset">Setel ulang pengurutan trek</string>
+    <string name="locale_azerbaijani">Azeri</string>
+    <string name="locale_malayalam">Malayalam</string>
+    <string name="category_ui">UI</string>
 </resources>
