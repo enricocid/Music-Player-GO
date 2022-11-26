@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="ok">Oldu</string>
+    <string name="delete">Sil</string>
+    <string name="cancel">Ləğv et</string>
+    <string name="sorting_pref_save">Defolt çeşidləmə kimi təyin edilsin\?</string>
+    <string name="yes">Bəli</string>
+    <string name="no">Xeyr</string>
+    <string name="on_close_activity">Oynatma dayandırılsın\?</string>
+    <string name="queue_songs_clear">Növbə təmizlənsin\?</string>
+    <string name="favorites_clear">Bütün sevimlilər silinsin\?</string>
+    <string name="favorite_remove">%1s (%2s) sevimlilərdən silinsin\?</string>
+    <string name="favorites_save_time">Mahnı mövqeyini saxla</string>
+    <string name="sorting_pref_reset">İzləmə çeşidlənməsini sıfırla</string>
+    <string name="sorting_pref_reset_sum">Albom və qovluqlara aiddir</string>
+</resources>
