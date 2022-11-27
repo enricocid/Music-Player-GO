@@ -143,8 +143,8 @@
     <string name="locale_czech">Checo</string>
     <string name="pink">Rosa</string>
     <string name="light_blue">Azúl Claro</string>
-    <string name="filters_error">¡Error! ¡No se pueden abrir los artistas/carpetas/álbumes ocultos!</string>
-    <string name="filters_clear">Los filtros serán limpiados. ¿Continuar\?</string>
+    <string name="filters_error">No se pudieron abrir artistas/carpetas/álbumes ocultos.</string>
+    <string name="filters_clear">¿Borrar filtros\?</string>
     <string name="continue_on_end_desc">Elija si desea continuar la reproducción o pausarla al terminar</string>
     <string name="locale_kurdish">Kurdo</string>
     <string name="confirm_ask_pref_sum">Pide confirmación antes de hacer nada</string>
@@ -173,4 +173,11 @@
     <string name="error_builtin_eq">¡Ocurrió un error! ¡Use el ecualizador del sistema (si existe)!</string>
     <string name="error_sys_eq">¡El ecualizador del sistema no está disponible!</string>
     <string name="locale_finnish">Finés</string>
+    <string name="locale_malayalam">Malayalam</string>
+    <string name="sorting_pref_reset_sum">Aplicar a álbumes y carpetas</string>
+    <string name="sorting_pref_reset_neutral">Para de preguntar</string>
+    <string name="sorting_pref_reset_confirm">¿Restablecer las opciones de clasificación\?</string>
+    <string name="locale_azerbaijani">Azerbaiyán</string>
+    <string name="sorting_pref_save">¿Establecer como método de clasificación predeterminado\?</string>
+    <string name="sorting_pref_reset">Restablecer la clasificación de las pistas</string>
 </resources>

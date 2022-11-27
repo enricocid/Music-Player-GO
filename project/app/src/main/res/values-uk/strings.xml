@@ -164,7 +164,7 @@
     <string name="notification_actions_pref_title">Додаткові дії зі сповіщення</string>
     <string name="notification_actions_fast_seeking">Швидкий пошук</string>
     <string name="notification_actions_favorite">Додати в обране/закрити</string>
-    <string name="filters_error">Помилка! Неможливо відкрити прихованих виконавців/теки/альбоми!</string>
+    <string name="filters_error">Неможливо відкрити прихованих виконавців/теки/альбоми.</string>
     <string name="category_audio">Аудіо</string>
     <string name="category_ui">інтерфейс користувача</string>
     <string name="error_builtin_eq">Виникла помилка! Використовуйте системний еквалайзер (якщо він є)!</string>
@@ -178,4 +178,6 @@
     <string name="sorting_pref_reset_sum">Застосовується до альбомів і тек</string>
     <string name="sorting_pref_reset_confirm">Налаштування сортування буде скинуто. Продовжити\?</string>
     <string name="sorting_pref_reset">Скинути сортування доріжок</string>
+    <string name="locale_malayalam">Малаялам</string>
+    <string name="locale_azerbaijani">Азербайджанська</string>
 </resources>
