@@ -151,7 +151,11 @@ class PreferencesFragment : PreferenceFragmentCompat(),
                 mMediaControlInterface.onUpdatePlayingAlbumSongs(null)
             }
             getString(R.string.rotation_pref) -> requireActivity().requestedOrientation = Theming.getOrientation()
-            GoPreferences.PREFS_DETAILS_SORTING -> updateResetSortingsOption()
+            GoPreferences.PREFS_DETAILS_SORTING -> {
+                updateResetSortingsOption()
+                mMediaPlayerHolder.updateMediaSessionMetaData()
+                mMediaControlInterface.onUpdatePlayingAlbumSongs(null)
+            }
         }
     }
 

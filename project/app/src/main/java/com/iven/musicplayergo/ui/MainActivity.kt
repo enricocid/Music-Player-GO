@@ -650,14 +650,8 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
 
             song?.let { restoredSong ->
 
-                var songs = getRestoredSongs(restoredSong)?.toMutableList()
-
-                val sorting = restoredSong.findSorting()?.sorting ?: Lists.getDefSortingMode()
-                songs = if (launchedBy == GoConstants.ARTIST_VIEW) {
-                    Lists.getSortedMusicList(sorting, songs)
-                } else {
-                    Lists.getSortedMusicListForFolder(sorting, songs)
-                }?.toMutableList()
+                val sorting = restoredSong.findRestoreSorting(restoredSong.launchedBy)
+                val songs = restoredSong.findRestoreSongs(sorting, mMusicViewModel)
 
                 if (!songs.isNullOrEmpty()) {
                     isPlay = false
@@ -675,21 +669,6 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
         }
     }
 
-    private fun getRestoredSongs(song: Music): List<Music>? {
-        return when (song.launchedBy) {
-            GoConstants.ARTIST_VIEW ->
-                MusicUtils.getAlbumSongs(
-                    song.artist,
-                    song.album,
-                    mMusicViewModel.deviceAlbumsByArtist
-                )
-            GoConstants.FOLDER_VIEW ->
-                mMusicViewModel.deviceMusicByFolder?.get(song.relativePath)
-            else ->
-                mMusicViewModel.deviceMusicByAlbum?.get(song.album)
-        }
-    }
-
     // method to update info on controls panel
     private fun updatePlayingInfo(restore: Boolean) {
 
@@ -701,11 +680,7 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
         updatePlayingSongTitle(selectedSong)
 
         mPlayerControlsPanelBinding.playingArtist.text =
-            getString(
-                R.string.artist_and_album,
-                selectedSong.artist,
-                selectedSong.album
-            )
+            getString(R.string.artist_and_album, selectedSong.artist, selectedSong.album)
 
         mNpDialog?.run {
             updateRepeatStatus(onPlaybackCompletion = false)
@@ -840,15 +815,9 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
             } else {
                 mPlayerControlsPanelBinding.songProgress.progress = 0
                 mPlayerControlsPanelBinding.songProgress.max = song?.duration!!.toInt()
-
                 updatePlayingSongTitle(song)
-
                 mPlayerControlsPanelBinding.playingArtist.text =
-                    getString(
-                        R.string.artist_and_album,
-                        song.artist,
-                        song.album
-                    )
+                    getString(R.string.artist_and_album, song.artist, song.album)
             }
             preparePlayback(song)
         }
@@ -1027,7 +996,9 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
                     try {
                         val displayNameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
                         cursor.moveToFirst()
-                        mMediaPlayerHolder.currentSongFM = mMusicViewModel.getSongFromIntent(cursor.getString(displayNameIndex))
+                        mMediaPlayerHolder.currentSongFM = mMusicViewModel.getSongFromIntent(
+                            cursor.getString(displayNameIndex)
+                        )
                         onSongSelected(mMediaPlayerHolder.currentSongFM, null, GoConstants.ARTIST_VIEW)
 
                     } catch (e: Exception) {

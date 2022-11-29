@@ -173,11 +173,11 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                                     mSelectedArtistAlbums?.first()
                                 }
                             }
-                            (mSelectedAlbum?.title?.findSorting(mLaunchedBy) ?: getDefUserSorting(mLaunchedBy))?.let { sorting ->
+                            (mSelectedAlbum?.title?.findSorting(mLaunchedBy) ?: Lists.getUserSorting(mLaunchedBy))?.let { sorting ->
                                 mSongsSorting = sorting.sorting
                             }
                         } else {
-                            (mSelectedArtistOrFolder?.findSorting(mLaunchedBy) ?: getDefUserSorting(mLaunchedBy))?.let { sorting ->
+                            (mSelectedArtistOrFolder?.findSorting(mLaunchedBy) ?: Lists.getUserSorting(mLaunchedBy))?.let { sorting ->
                                 mSongsSorting = sorting.sorting
                             }
                         }
@@ -247,7 +247,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                     } else {
                         Lists.getSongsSorting(mSongsSorting)
                     }
-                    if (GoPreferences.PREFS_DETAILS_SORTING.findSorting(mLaunchedBy) == null && GoPreferences.getPrefsInstance().isSetDefSorting) {
+                    if (Lists.getUserSorting(mLaunchedBy) == null && GoPreferences.getPrefsInstance().isSetDefSorting) {
                         Dialogs.showSaveSortingDialog(requireActivity(), mSelectedAlbum?.title, mLaunchedBy, mSongsSorting)
                     } else {
                         Lists.addToSortings(requireActivity(), mSelectedAlbum?.title, mLaunchedBy, mSongsSorting)
@@ -416,8 +416,6 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private fun getDefUserSorting(launchedBy: String) = GoPreferences.PREFS_DETAILS_SORTING.findSorting(launchedBy)
-
     private fun getDefSortingIcon() = if (sShowDisplayName) {
         Theming.getSortIconForSongsDisplayName(mSongsSorting)
     } else {
@@ -531,7 +529,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
             }
         }
 
-        if (GoPreferences.PREFS_DETAILS_SORTING.findSorting(mLaunchedBy) == null && GoPreferences.getPrefsInstance().isSetDefSorting) {
+        if (Lists.getUserSorting(mLaunchedBy) == null && GoPreferences.getPrefsInstance().isSetDefSorting) {
             Dialogs.showSaveSortingDialog(requireActivity(), mSelectedArtistOrFolder, mLaunchedBy, mSongsSorting)
         } else {
             Lists.addToSortings(requireActivity(), mSelectedArtistOrFolder, mLaunchedBy, mSongsSorting)
@@ -612,8 +610,9 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private fun swapAlbum(songs: MutableList<Music>?) {
         sAlbumSwapped = true
-        mSongsSorting = songs?.get(0)?.findSorting()?.sorting
-            ?: GoPreferences.PREFS_DETAILS_SORTING.findSorting(GoConstants.ARTIST_VIEW)?.sorting ?: Lists.getDefSortingMode()
+        songs?.get(0)?.findRestoreSorting(GoConstants.ARTIST_VIEW)?.let { sorting ->
+            mSongsSorting = sorting
+        }
         setSongsDataSource(songs, updateSongs = false, updateAdapter = true)
         _detailsFragmentBinding?.songsRv?.doOnPreDraw {
             scrollToPlayingSong(mSelectedSongId)

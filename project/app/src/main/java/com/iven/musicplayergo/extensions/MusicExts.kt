@@ -15,9 +15,12 @@ import coil.Coil
 import coil.request.ImageRequest
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
+import com.iven.musicplayergo.MusicViewModel
 import com.iven.musicplayergo.R
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.player.MediaPlayerHolder
+import com.iven.musicplayergo.utils.Lists
+import com.iven.musicplayergo.utils.MusicUtils
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -192,4 +195,25 @@ fun String?.findSorting(launchedBy: String) = GoPreferences.getPrefsInstance().s
 
 fun Music.findSorting() = GoPreferences.getPrefsInstance().sortings?.firstOrNull {
     it.albumOrFolder == album && it.launchedBy == launchedBy && it.songVisualization == GoPreferences.getPrefsInstance().songsVisualization
+}
+
+fun Music.findRestoreSorting(launchedBy: String): Int {
+    val sorting = when (launchedBy) {
+        GoConstants.ARTIST_VIEW -> findSorting()
+        GoConstants.FOLDER_VIEW -> relativePath?.findSorting(GoConstants.FOLDER_VIEW)
+        else -> album?.findSorting(GoConstants.ALBUM_VIEW)
+    }
+    return sorting?.sorting ?: Lists.getUserSorting(launchedBy)?.sorting ?: Lists.getDefSortingMode()
+}
+
+fun Music.findRestoreSongs(sorting: Int, musicViewModel: MusicViewModel) = when (launchedBy) {
+    GoConstants.ARTIST_VIEW -> {
+        val songs = MusicUtils.getAlbumSongs(artist, album, musicViewModel.deviceAlbumsByArtist)
+        Lists.getSortedMusicList(sorting, songs)
+    }
+    GoConstants.FOLDER_VIEW -> Lists.getSortedMusicListForFolder(
+        sorting,
+        musicViewModel.deviceMusicByFolder?.get(relativePath)
+    )
+    else -> Lists.getSortedMusicListForFolder(sorting, musicViewModel.deviceMusicByAlbum?.get(album))
 }

@@ -118,12 +118,25 @@ object Lists {
     }
 
     @JvmStatic
-    fun getSortedMusicList(id: Int, list: MutableList<Music>?): List<Music>? {
+    fun getSortedMusicList(id: Int, list: List<Music>?): List<Music>? {
         return when (id) {
             GoConstants.ASCENDING_SORTING -> getSortedListBySelectedVisualization(list)
             GoConstants.DESCENDING_SORTING -> getSortedListBySelectedVisualization(list)?.asReversed()
             GoConstants.TRACK_SORTING -> list?.sortedBy { it.track }
             GoConstants.TRACK_SORTING_INVERTED -> list?.sortedBy { it.track }?.asReversed()
+            else -> list
+        }
+    }
+
+    @JvmStatic
+    fun getSortedMusicListForFolder(id: Int, list: List<Music>?): List<Music>? {
+        return when (id) {
+            GoConstants.ASCENDING_SORTING -> list?.sortedBy { it.displayName }
+            GoConstants.DESCENDING_SORTING -> list?.sortedBy { it.displayName }?.asReversed()
+            GoConstants.DATE_ADDED_SORTING -> list?.sortedBy { it.dateAdded }?.asReversed()
+            GoConstants.DATE_ADDED_SORTING_INV -> list?.sortedBy { it.dateAdded }
+            GoConstants.ARTIST_SORTING -> list?.sortedBy { it.artist }
+            GoConstants.ARTIST_SORTING_INV -> list?.sortedBy { it.artist }?.asReversed()
             else -> list
         }
     }
@@ -150,19 +163,6 @@ object Lists {
             it.displayName
         } else {
             it.title
-        }
-    }
-
-    @JvmStatic
-    fun getSortedMusicListForFolder(id: Int, list: MutableList<Music>?): List<Music>? {
-        return when (id) {
-            GoConstants.ASCENDING_SORTING -> list?.sortedBy { it.displayName }
-            GoConstants.DESCENDING_SORTING -> list?.sortedBy { it.displayName }?.asReversed()
-            GoConstants.DATE_ADDED_SORTING -> list?.sortedBy { it.dateAdded }?.asReversed()
-            GoConstants.DATE_ADDED_SORTING_INV -> list?.sortedBy { it.dateAdded }
-            GoConstants.ARTIST_SORTING -> list?.sortedBy { it.artist }
-            GoConstants.ARTIST_SORTING_INV -> list?.sortedBy { it.artist }?.asReversed()
-            else -> list
         }
     }
 
@@ -227,6 +227,9 @@ object Lists {
     } else {
         GoConstants.TRACK_SORTING
     }
+
+    @JvmStatic
+    fun getUserSorting(launchedBy: String) = GoPreferences.PREFS_DETAILS_SORTING.findSorting(launchedBy)
 
     @JvmStatic
     fun addToSortings(

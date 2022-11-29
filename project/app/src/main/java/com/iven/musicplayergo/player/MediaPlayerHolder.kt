@@ -37,10 +37,7 @@ import androidx.media.AudioManagerCompat
 import com.iven.musicplayergo.GoConstants
 import com.iven.musicplayergo.GoPreferences
 import com.iven.musicplayergo.R
-import com.iven.musicplayergo.extensions.findIndex
-import com.iven.musicplayergo.extensions.toContentUri
-import com.iven.musicplayergo.extensions.toFilenameWithoutExtension
-import com.iven.musicplayergo.extensions.waitForCover
+import com.iven.musicplayergo.extensions.*
 import com.iven.musicplayergo.models.Music
 import com.iven.musicplayergo.models.SavedEqualizerSettings
 import com.iven.musicplayergo.ui.MainActivity
@@ -265,15 +262,13 @@ class MediaPlayerHolder:
     }
 
     fun updateCurrentSongs(sortedMusic: List<Music>?) {
-        mPlayingSongs = if (sortedMusic != null) {
-            sortedMusic
-        } else {
-            var sorting = GoConstants.TRACK_SORTING
-            if (GoPreferences.getPrefsInstance().songsVisualization == GoConstants.FN) {
-                sorting = GoConstants.ASCENDING_SORTING
+        if (sortedMusic.isNullOrEmpty()) {
+            currentSong?.findRestoreSorting(launchedBy)?.let { sorting ->
+                mPlayingSongs = Lists.getSortedMusicList(sorting, mPlayingSongs?.toMutableList())
             }
-            Lists.getSortedMusicList(sorting, mPlayingSongs?.toMutableList())
+            return
         }
+        mPlayingSongs = sortedMusic
     }
 
     fun getCurrentAlbumSize() = mPlayingSongs?.size ?: 0
