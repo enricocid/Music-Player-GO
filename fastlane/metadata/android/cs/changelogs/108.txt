@@ -1,0 +1,3 @@
+-*
+-Zlepšení kódu
+-Update Kotlin pluginu
