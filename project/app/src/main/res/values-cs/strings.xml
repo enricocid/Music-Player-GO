@@ -156,7 +156,7 @@
     <string name="sleeptimer_stop">Zastavit</string>
     <string name="locale_bulgarian">Bulharština</string>
     <string name="theme_pref_black_title">Plně černá</string>
-    <string name="filters_clear">Filtry budou vymazány. Pokračovat\?</string>
+    <string name="filters_clear">Pokračovat\?</string>
     <string name="confirm_ask_pref_title">Potvrzovací zprávy</string>
     <string name="confirm_ask_pref_sum">Zeptat se na potvrzení před vykonáním akce</string>
     <string name="continue_on_end_desc">Vyberte, zda pokračovat v přehrávání nebo pozastavit při dokončení</string>
@@ -172,4 +172,12 @@
     <string name="locale_finnish">Finština</string>
     <string name="eq_pref_sum">Vynucení použití vestavěného ekvalizéru</string>
     <string name="eq_pref_title">Vestavěný ekvalizér</string>
+    <string name="locale_azerbaijani">Ázerbajdžánština</string>
+    <string name="locale_malayalam">Malajálamština</string>
+    <string name="rotation_pref_title">Zamknout otáčení</string>
+    <string name="sorting_pref_save">Nastavit jako výchozí řazení\?</string>
+    <string name="sorting_pref_reset_sum">Platí pro alba a složky</string>
+    <string name="sorting_pref_reset_confirm">Resetovat nastavení řazení\?</string>
+    <string name="sorting_pref_reset_neutral">Neptat se</string>
+    <string name="sorting_pref_reset">Resetovat řazení hudby</string>
 </resources>
