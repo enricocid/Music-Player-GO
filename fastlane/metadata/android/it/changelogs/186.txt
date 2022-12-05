@@ -1,0 +1,8 @@
+- Album/cartelle: mantieni ordine selezionato
+- Migliorato quick tile
+- Corretto crash equalizzatore
+- Miglioramenti coda
+- Nuova opzione per bloccare rotazione
+- Corretta opzione lingue
+- Diverse migliorie/correzioni del codice
+- Aggiornate dipendenze/traduzioni

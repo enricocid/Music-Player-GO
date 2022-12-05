@@ -1,0 +1,8 @@
+- Albums/folders: persist the selected sorting
+- Improve quick tile
+- Fix equalizer crash
+- Better queue
+- New option to lock rotation
+- Fix locales option
+- Various code improvements and fixes
+- Update dependencies/translations

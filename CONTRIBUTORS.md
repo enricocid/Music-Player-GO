@@ -31,7 +31,7 @@ for [strings](https://github.com/enricocid/Music-Player-GO/pull/227), [readme](h
 
 - [**watauoa**](https://github.com/watauoa) for the [original sleep timer](https://github.com/enricocid/Music-Player-GO/pull/388) implementation
 
-- [**sinoory**](https://github.com/sinoory) for helping to fix a bug with [equalizer](https://github.com/enricocid/Music-Player-GO/issues/479), [playback speed](https://github.com/enricocid/Music-Player-GO/issues/480) and [favorites](https://github.com/enricocid/Music-Player-GO/issues/486)
+- [**sinoory**](https://github.com/sinoory) for helping to fix a bug with [equalizer](https://github.com/enricocid/Music-Player-GO/issues/479), [playback speed](https://github.com/enricocid/Music-Player-GO/issues/480), [favorites](https://github.com/enricocid/Music-Player-GO/issues/486) and [audio focus](https://github.com/enricocid/Music-Player-GO/issues/496)
 
 - [**quindecim**](https://github.com/quindecim) for bug reports ([0](https://github.com/enricocid/Music-Player-GO/commit/c7dab08d86bf84c2ddb7c058bacdfc5dddb307db), [1](https://github.com/enricocid/Music-Player-GO/commit/2a7f7a7270f43134d62baa24be78dffaac850749)) and support
 
@@ -104,6 +104,10 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 - [**otaboard**](https://github.com/otaboard) for having reported this [issue](https://github.com/enricocid/Music-Player-GO/issues/450)
 
 - [**lgjint**](https://github.com/lgjint) for having reported [447](https://github.com/enricocid/Music-Player-GO/issues/447) and [487](https://github.com/enricocid/Music-Player-GO/issues/487)
+
+- [**anmith**](https://github.com/anmith) for having reported [494](https://github.com/enricocid/Music-Player-GO/issues/494)
+
+- [**Landry Racoon**](https://github.com/landry314) for having reported [495](https://github.com/enricocid/Music-Player-GO/issues/495)
 
 
 ### Big thanks to translators:
