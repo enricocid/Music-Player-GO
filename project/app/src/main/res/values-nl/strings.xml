@@ -162,7 +162,20 @@
     <string name="locale_romanian">Roemeens</string>
     <string name="locale_turkish">Turks</string>
     <string name="locale_urdu">Urdu (Pakistan)</string>
-    <string name="filters_clear">Filters zullen worden gewist. Doorgaan\?</string>
+    <string name="filters_clear">Filters wissen\?</string>
     <string name="confirm_ask_pref_sum">Vraag om bevestiging voordat iets verandert</string>
     <string name="cyan">Cyaan</string>
+    <string name="locale_azerbaijani">Azerbeidzjaans</string>
+    <string name="locale_malayalam">Malayalam</string>
+    <string name="eq_pref_title">Ingebouwde equalizer</string>
+    <string name="rotation_pref_title">Rotatie vergrendelen</string>
+    <string name="sorting_pref_save">Instellen als standaard sortering\?</string>
+    <string name="sorting_pref_reset_sum">Geldt voor albums en mappen</string>
+    <string name="sorting_pref_reset_neutral">Stop met vragen</string>
+    <string name="error_builtin_eq">Er is een fout opgetreden! Gebruik de systeem equalizer (als deze bestaat)!</string>
+    <string name="error_sys_eq">Systeem equalizer niet beschikbaar!</string>
+    <string name="category_audio">Audio</string>
+    <string name="sorting_pref_reset">Tracksortering opnieuw instellen</string>
+    <string name="sorting_pref_reset_confirm">Sorteervoorkeuren opnieuw instellen\?</string>
+    <string name="locale_finnish">Fins</string>
 </resources>
