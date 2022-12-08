@@ -15,13 +15,13 @@
     <string name="queue_add">Ajouter à la file d\'attente</string>
     <string name="queue_song_add">%1s ajouté à la file d\'attente !</string>
     <string name="queue_song_remove">Retirer %1s de la file d\'attente \?</string>
-    <string name="queue_songs_clear">Effacer la file d\'attente \?</string>
+    <string name="queue_songs_clear">Effacer la file d\'attente \?</string>
     <string name="error_no_queue">Aucun titre dans la file d\'attente.</string>
     <string name="favorites">Titres favoris</string>
     <string name="favorite_added">%1s (%2s) ajouté aux titres favoris</string>
     <string name="favorites_save_time">Sauvegarder la position</string>
-    <string name="favorite_remove">Retirer %1s (%2s) des titres favoris \?</string>
-    <string name="favorites_clear">Effacer tous les titres favoris \?</string>
+    <string name="favorite_remove">Retirer %1s (%2s) des titres favoris \?</string>
+    <string name="favorites_clear">Effacer tous les titres favoris \?</string>
     <string name="favorite_add">Ajouter aux titres favoris</string>
     <string name="error_no_favorites">Ajouter des titres favoris.</string>
     <string name="perm_rationale">Music Player GO a besoin d\'accéder à vos fichiers pour lire de la musique.</string>
@@ -155,7 +155,7 @@
     <string name="confirm_ask_pref_title">Messages de confirmation</string>
     <string name="filters_clear">Les filtres seront supprimés. Continuer \?</string>
     <string name="theme_pref_black_title">Noir pur</string>
-    <string name="filters_error">Erreur ! Impossible d\'ouvrir les artistes/dossiers/albums masqués !</string>
+    <string name="filters_error">Impossible d\'ouvrir les artistes/dossiers/albums cachés.</string>
     <string name="sleeptimer_stop">Arrêter</string>
     <string name="confirm_ask_pref_sum">Demander une confirmation avant de faire quoi que ce soit</string>
     <string name="pause_on_end_disabled">Pause à la fin désactivée.</string>
@@ -173,4 +173,11 @@
     <string name="error_sys_eq">L\'égaliseur du système n\'est pas disponible !</string>
     <string name="locale_finnish">Finnois</string>
     <string name="rotation_pref_title">Bloquer la rotation</string>
+    <string name="locale_azerbaijani">Azéri</string>
+    <string name="locale_malayalam">Malayalam</string>
+    <string name="sorting_pref_save">Définir comme tri par défaut \?</string>
+    <string name="sorting_pref_reset_confirm">Réinitialiser les préférences de tri \?</string>
+    <string name="sorting_pref_reset">Réinitialiser le tri des pistes</string>
+    <string name="sorting_pref_reset_sum">S\'applique aux albums et aux dossiers</string>
+    <string name="sorting_pref_reset_neutral">Ne plus demander</string>
 </resources>
