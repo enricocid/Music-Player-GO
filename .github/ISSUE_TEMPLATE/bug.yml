@@ -46,6 +46,3 @@ body:
     attributes:
       label: Code of Conduct
       description: By submitting this issue, you agree to not yell at the developer if response is slow.
-      options:
-        - label: I agree to follow this project's Code of Conduct
-          required: true
