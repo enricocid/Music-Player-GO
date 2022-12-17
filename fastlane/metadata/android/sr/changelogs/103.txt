@@ -1,0 +1,1 @@
+- Додат превод на турски (заслуге: https://github.com/ozcanfurkan)
