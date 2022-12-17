@@ -39,10 +39,13 @@ body:
     id: more-info
     attributes:
       label: More info
-      description: Add more information to the bug report
+      description: Add more info to the bug report
       placeholder: For example, attach a screenshot or a screen recording
   - type: checkboxes
     id: terms
     attributes:
-      label: Code of Conduct
+      label: Nice things
       description: By submitting this issue, you agree to not yell at the developer if response is slow.
+      options:
+        - label: We can have
+          required: true
