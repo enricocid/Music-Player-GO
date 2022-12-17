@@ -16,8 +16,8 @@ body:
   - type: checkboxes
     id: terms
     attributes:
-      label: Code of Conduct
-      description: By submitting this issue, you agree to not spam the thread asking for ETA, etc.
+      label: Nice things
+      description: By submitting this issue, you agree to not yell at the developer if response is slow.
       options:
-        - label: I agree to follow this project's Code of Conduct
+        - label: We can have
           required: true
