@@ -40,6 +40,3 @@ body:
     attributes:
       label: Code of Conduct
       description: By submitting this issue, you agree to not spam the thread asking for ETA, etc.
-      options:
-        - label: I agree to follow this project's Code of Conduct
-          required: true
