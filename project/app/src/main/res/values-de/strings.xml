@@ -61,7 +61,7 @@
     <string name="albums">Alben</string>
     <string name="artists">Künstler</string>
     <string name="favorite_remove">%1s (%2s) aus der Liste der Lieblingslieder löschen\?</string>
-    <string name="favorites_clear">Lieblingslieder löschen\?</string>
+    <string name="favorites_clear">Alle Lieblingslieder löschen\?</string>
     <string name="queue_songs_clear">Warteschlange leeren\?</string>
     <string name="on_close_activity">Wiedergabe beenden\?</string>
     <string name="on_list_ended_pref_title">Wenn die Liste zu Ende ist…</string>
@@ -164,7 +164,7 @@
     <string name="continue_on_end_desc">Auswählen, ob die Wiedergabe fortgesetzt oder nach Abschluss angehalten werden soll</string>
     <string name="confirm_ask_pref_title">Bestätigungsmeldungen</string>
     <string name="confirm_ask_pref_sum">Bitten um Bestätigung, bevor etwas getan wird</string>
-    <string name="filters_error">Fehler! Nicht möglich versteckte Künstler/Ordner/Alben zu öffnen!</string>
+    <string name="filters_error">Versteckte Künstler/Ordner/Alben konnten nicht geöffnet werden.</string>
     <string name="category_ui">Benutzeroberfläche</string>
     <string name="category_audio">Audio</string>
     <string name="eq_pref_title">Eigener Equalizer</string>
@@ -173,4 +173,11 @@
     <string name="error_builtin_eq">Ein Fehler ist aufgetreten! Verwenden Sie den System-Equalizer (falls vorhanden)!</string>
     <string name="locale_finnish">Finnisch</string>
     <string name="rotation_pref_title">Drehung sperren</string>
+    <string name="locale_azerbaijani">Aserbaidschanisch</string>
+    <string name="locale_malayalam">Malayalam</string>
+    <string name="sorting_pref_save">Als Standardsortierung festlegen\?</string>
+    <string name="sorting_pref_reset_sum">Gilt für Alben und Ordner</string>
+    <string name="sorting_pref_reset_confirm">Sortiereinstellungen zurücksetzen\?</string>
+    <string name="sorting_pref_reset_neutral">Nicht mehr fragen</string>
+    <string name="sorting_pref_reset">Sortierung zurücksetzen</string>
 </resources>

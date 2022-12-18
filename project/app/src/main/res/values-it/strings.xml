@@ -109,7 +109,7 @@
     <string name="rotation_pref_title">Blocca rotazione</string>
     <string name="filter_popup_title">Nascondi</string>
     <string name="filters_clear">Cancellare i filtri?</string>
-    <string name="filters_error">Impossibile aprire gli artisti/cartelle/album nascosti!</string>
+    <string name="filters_error">Impossibile aprire gli artisti/cartelle/album nascosti.</string>
     <string name="playback_pref_title">Velocità riproduzione selezionata</string>
     <string name="playback_pref_summary_off">Solo una canzone</string>
     <string name="playback_pref_summary_on">Mantieni</string>
