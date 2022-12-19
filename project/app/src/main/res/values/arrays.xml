@@ -121,6 +121,7 @@
         <item>nl</item> <!-- Dutch -->
         <item>nn</item> <!-- Norwegian (Nynorsk) -->
         <item>np</item> <!-- Nepali -->
+        <item>pa</item> <!-- Punjabi -->
         <item>pk</item> <!-- Urdu (Pakistan) -->
         <item>pl</item> <!-- Polish -->
         <item>pt-BR</item> <!-- Portuguese (Brazil) -->
@@ -168,6 +169,7 @@
         <item>@string/locale_dutch</item>
         <item>@string/locale_norwegian_n</item>
         <item>@string/locale_nepali</item>
+        <item>@string/locale_punjabi</item>
         <item>@string/locale_urdu</item>
         <item>@string/locale_polish</item>
         <item>@string/locale_portuguese</item>
