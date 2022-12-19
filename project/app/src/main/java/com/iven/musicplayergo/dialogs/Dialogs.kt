@@ -100,7 +100,7 @@ object Dialogs {
     }
 
     @JvmStatic
-    fun showSaveSortingDialog(activity: Activity, artistOrFolder: String?, launchedBy: String, sorting: Int) {
+    fun showSaveSortingDialog(activity: Activity, artistOrFolder: String?, launchedBy: Int, sorting: Int) {
         MaterialAlertDialogBuilder(activity)
             .setTitle(R.string.sorting_pref)
             .setMessage(R.string.sorting_pref_save)
@@ -119,15 +119,20 @@ object Dialogs {
     @JvmStatic
     fun showResetSortingsDialog(context: Context) {
         val prefs = GoPreferences.getPrefsInstance()
-        MaterialAlertDialogBuilder(context)
-            .setTitle(R.string.sorting_pref)
-            .setMessage(R.string.sorting_pref_reset_confirm)
-            .setPositiveButton(R.string.yes) { _, _ ->
-                prefs.sortings = null
-                prefs.isSetDefSorting = true
-            }
-            .setNegativeButton(R.string.no, null)
-            .show()
+        if (prefs.isAskForRemoval) {
+            MaterialAlertDialogBuilder(context)
+                .setTitle(R.string.sorting_pref)
+                .setMessage(R.string.sorting_pref_reset_confirm)
+                .setPositiveButton(R.string.yes) { _, _ ->
+                    prefs.sortings = null
+                    prefs.isSetDefSorting = true
+                }
+                .setNegativeButton(R.string.no, null)
+                .show()
+            return
+        }
+        prefs.sortings = null
+        prefs.isSetDefSorting = true
     }
 
     @JvmStatic
