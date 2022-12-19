@@ -100,7 +100,7 @@ object Dialogs {
     }
 
     @JvmStatic
-    fun showSaveSortingDialog(activity: Activity, artistOrFolder: String?, launchedBy: Int, sorting: Int) {
+    fun showSaveSortingDialog(activity: Activity, artistOrFolder: String?, launchedBy: String, sorting: Int) {
         MaterialAlertDialogBuilder(activity)
             .setTitle(R.string.sorting_pref)
             .setMessage(R.string.sorting_pref_save)
