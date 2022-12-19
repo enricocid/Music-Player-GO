@@ -180,4 +180,5 @@
     <string name="eq_pref_sum">बिल्ट-इन इक्वलाइज़र का बलपूर्वक उपयोग करें</string>
     <string name="eq_pref_title">बिल्ट-इन ईकव्लाईज़र</string>
     <string name="filters_clear">फ़िल्टर साफ़ करें\?</string>
+    <string name="locale_punjabi">पंजाबी</string>
 </resources>
