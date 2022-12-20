@@ -180,4 +180,5 @@
     <string name="sorting_pref_reset_confirm">Sortiereinstellungen zurücksetzen\?</string>
     <string name="sorting_pref_reset_neutral">Nicht mehr fragen</string>
     <string name="sorting_pref_reset">Sortierung zurücksetzen</string>
+    <string name="locale_punjabi">Pandschabi</string>
 </resources>

@@ -180,4 +180,5 @@
     <string name="sorting_pref_reset">Réinitialiser le tri des pistes</string>
     <string name="sorting_pref_reset_sum">S\'applique aux albums et aux dossiers</string>
     <string name="sorting_pref_reset_neutral">Ne plus demander</string>
+    <string name="locale_punjabi">Pendjabi</string>
 </resources>

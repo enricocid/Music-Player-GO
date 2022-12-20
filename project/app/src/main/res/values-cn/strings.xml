@@ -180,4 +180,5 @@
     <string name="sorting_pref_reset_confirm">重置排序选项？</string>
     <string name="locale_azerbaijani">阿塞拜疆语</string>
     <string name="locale_malayalam">马拉雅拉姆语</string>
+    <string name="locale_punjabi">旁遮普语</string>
 </resources>
