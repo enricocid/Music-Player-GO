@@ -165,4 +165,5 @@
     <string name="confirm_ask_pref_title">Megerősítő üzenetek</string>
     <string name="confirm_ask_pref_sum">Kérjen megerősítést, mielőtt bármit is tenne</string>
     <string name="filters_error">Hiba! Nem lehet megnyitni a rejtett előadót/mappát/albumot!</string>
+    <string name="sorting_pref_save">Alap sorrend ként állítani\?</string>
 </resources>
