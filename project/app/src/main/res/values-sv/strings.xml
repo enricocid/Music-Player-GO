@@ -180,4 +180,5 @@
     <string name="sorting_pref_reset_sum">Gäller album och mappar</string>
     <string name="sorting_pref_reset_confirm">Återställa sorteringsinställningarna\?</string>
     <string name="sorting_pref_reset_neutral">Sluta fråga</string>
+    <string name="locale_punjabi">Punjabi</string>
 </resources>
