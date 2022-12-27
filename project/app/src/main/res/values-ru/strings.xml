@@ -180,4 +180,5 @@
     <string name="eq_pref_sum">Принудительное использование встроенного эквалайзера</string>
     <string name="error_builtin_eq">Произошла ошибка! Используйте системный эквалайзер (если он существует)!</string>
     <string name="locale_finnish">Финский</string>
+    <string name="locale_punjabi">Панджаби</string>
 </resources>

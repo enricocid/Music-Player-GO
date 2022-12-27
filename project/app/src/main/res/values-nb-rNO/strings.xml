@@ -178,4 +178,7 @@
     <string name="sorting_pref_reset_confirm">Tilbakestill sorteringsinnstillinger\?</string>
     <string name="sorting_pref_reset">Tilbakestill sporrekkefølge</string>
     <string name="sorting_pref_save">Bruk som forvalgt sortering\?</string>
+    <string name="locale_punjabi">Punjabi</string>
+    <string name="locale_azerbaijani">Aserbajdsjansk</string>
+    <string name="locale_malayalam">Malayalam</string>
 </resources>

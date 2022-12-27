@@ -1,0 +1,1 @@
+Fikset krasj ved oppstart
