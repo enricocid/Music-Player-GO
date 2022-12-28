@@ -1,1 +1,1 @@
-Fix colors palette
+Fix colour palette
