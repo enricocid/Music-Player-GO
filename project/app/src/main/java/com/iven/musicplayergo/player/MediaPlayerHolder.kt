@@ -1049,8 +1049,6 @@ class MediaPlayerHolder:
                             when (intent.getIntExtra("state", -1)) {
                                 // 0 means disconnected
                                 HEADSET_DISCONNECTED -> pauseMediaPlayer()
-                                // 1 means connected
-                                HEADSET_CONNECTED -> resumeMediaPlayer()
                             }
                         }
 
