@@ -180,4 +180,5 @@
     <string name="locale_finnish">Fins</string>
     <string name="category_ui">Gebruikersinterface</string>
     <string name="locale_punjabi">Punjabi</string>
+    <string name="eq_pref_sum">Gebruik van de ingebouwde equalizer afdwingen</string>
 </resources>
