@@ -35,8 +35,8 @@
     <string name="sorting_pref_artist_inv">演出者 Z-A</string>
     <string name="sorting_pref_album">專輯 A-Z</string>
     <string name="sorting_pref_album_inv">專輯 Z-A</string>
-    <string name="shuffle_am">隨機播放所有曲目。</string>
-    <string name="shuffle_sa">隨機播放指定專輯。</string>
+    <string name="shuffle_am">隨機播放所有曲目</string>
+    <string name="shuffle_sa">隨機播放指定專輯</string>
     <string name="queue_add">新增至佇列</string>
     <string name="favorite_add">加入至最愛</string>
     <string name="filter_popup_title">隱藏</string>
@@ -48,7 +48,7 @@
     <string name="favorites">最愛</string>
     <string name="favorite_added">已將「%1s (%2s)」加入至最愛。</string>
     <string name="content_playback_speed">播放速度</string>
-    <string name="speed_3">一般</string>
+    <string name="speed_3">標準</string>
     <string name="sleeptimer">休眠計時</string>
     <string name="sleeptimer_enabled">將於 %1s後停止播放。</string>
     <string name="sleeptimer_stop">停止</string>
@@ -57,7 +57,7 @@
     <string name="content_play">播放 / 暫停</string>
     <string name="content_skip_next">跳轉至下一首</string>
     <string name="content_repeat">切換指定的循環模式</string>
-    <string name="open_git_pref_summary">前往應用程式網站以檢視更多資訊：)</string>
+    <string name="open_git_pref_summary">更多關於這個應用程式：)</string>
     <string name="open_details_fragment">檢視演出者 / 資料夾詳細資訊</string>
     <string name="error_no_favorites">請先將一些曲目加入至最愛。</string>
     <string name="error_no_music">請先新增一些音樂。</string>
@@ -138,15 +138,15 @@
     <string name="eq_pref_title">內建等化器</string>
     <string name="eq_pref_sum">強制使用內建等化器</string>
     <string name="precise_volume_pref_title">更精確的音量控制</string>
-    <string name="focus_pref_title">音訊焦點管理</string>
-    <string name="headset_pref_title">耳機連接管理</string>
+    <string name="focus_pref_title">音訊焦點</string>
+    <string name="headset_pref_title">耳機連接</string>
     <string name="playback_pref_title">播放速度類別</string>
     <string name="playback_pref_summary_off">僅限單曲</string>
     <string name="playback_pref_summary_on">持續</string>
     <string name="on_list_ended_pref_title">清單結尾時…</string>
     <string name="on_list_ended_pref_stop_title">停止</string>
     <string name="on_list_ended_pref_continue_title">繼續</string>
-    <string name="covers_pref_title">使用嵌入式專輯封面</string>
+    <string name="covers_pref_title">使用內嵌專輯封面</string>
     <string name="fast_seeking_pref_title">快速跳轉</string>
     <string name="fast_seeking_pref_summary">快速前進 / 後退的間隔 (秒)</string>
     <string name="notification_actions_pref_title">通知中的附加功能</string>
