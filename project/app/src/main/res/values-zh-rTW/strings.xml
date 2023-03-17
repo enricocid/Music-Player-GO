@@ -73,9 +73,9 @@
     <string name="error_fs_not_allowed">"發生一些問題！：(
 請試著前往「系統設定 → 應用程式 → Music Player GO → 電池」並改為「不受限制」，避免媒體播放服務被系統終止。"</string>
     <string name="perm_rationale">請允許 Music Player GO 存取您的檔案以播放音樂。</string>
-    <string name="repeat_enabled">重複一次。</string>
-    <string name="repeat_loop_enabled">已啟用持續循環。</string>
-    <string name="repeat_disabled">已停用持續循環。</string>
+    <string name="repeat_enabled">已啟用單曲循環。</string>
+    <string name="repeat_loop_enabled">已啟用循環播放。</string>
+    <string name="repeat_disabled">已停用循環播放。</string>
     <string name="continue_on_end_desc">選擇繼續播放或是完成後暫停</string>
     <string name="pause_on_end">已啟用完成後暫停。</string>
     <string name="pause_on_end_disabled">已停用完成後暫停。</string>
