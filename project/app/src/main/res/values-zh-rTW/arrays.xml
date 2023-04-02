@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sleepOptions">
+        <item>5 分</item>
+        <item>15 分</item>
+        <item>30 分</item>
+        <item>45 分</item>
+        <item>1 小時</item>
+        <item>1.5 小時</item>
+        <item>2 小時</item>
+        <item>2.5 小時</item>
+        <item>3 小時</item>
+        <item>3.5 小時</item>
+        <item>4 小時</item>
+        <item>4.5 小時</item>
+        <item>5 小時</item>
+        <item>5.5 小時</item>
+        <item>6 小時</item>
+        <item>6.5 小時</item>
+        <item>7 小時</item>
+        <item>7.5 小時</item>
+        <item>8 小時</item>
+        <item>8.5 小時</item>
+        <item>9 小時</item>
+        <item>9.5 小時</item>
+        <item>10 小時</item>
+        <item>10.5 小時</item>
+        <item>11 小時</item>
+        <item>11.5 小時</item>
+        <item>12 小時</item>
+    </string-array>
+</resources>
