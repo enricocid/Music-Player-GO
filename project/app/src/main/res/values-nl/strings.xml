@@ -18,12 +18,12 @@
     <string name="queue_add">Toevoegen aan wachtrij</string>
     <string name="queue_song_add">%1s is toegevoegd aan de wachtrij!</string>
     <string name="queue_song_remove">Verwijder %1s uit de wachtrij\?</string>
-    <string name="queue_songs_clear">Wachtrij legen\?</string>
+    <string name="queue_songs_clear">Wachtrij leegmaken\?</string>
     <string name="error_no_queue">Er staan geen nummers in de wachtrij.</string>
     <string name="favorites">Favorieten</string>
     <string name="favorite_added">%1s (%2s) is toegevoegd aan je favorieten</string>
     <string name="favorite_remove">Verwijder %1s (%2s) uit je favorieten\?</string>
-    <string name="favorites_clear">Favorieten wissen\?</string>
+    <string name="favorites_clear">Alle favorieten wissen\?</string>
     <string name="favorite_add">Toevoegen aan favorieten</string>
     <string name="error_no_favorites">Voeg eerst favorieten toe.</string>
     <string name="perm_rationale">Geef Music Player GO toegang tot je bestanden om muziek af te spelen.</string>
@@ -178,4 +178,7 @@
     <string name="sorting_pref_reset">Tracksortering opnieuw instellen</string>
     <string name="sorting_pref_reset_confirm">Sorteervoorkeuren opnieuw instellen\?</string>
     <string name="locale_finnish">Fins</string>
+    <string name="category_ui">Gebruikersinterface</string>
+    <string name="locale_punjabi">Punjabi</string>
+    <string name="eq_pref_sum">Gebruik van de ingebouwde equalizer afdwingen</string>
 </resources>
