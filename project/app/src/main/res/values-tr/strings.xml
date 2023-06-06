@@ -177,6 +177,8 @@
     <string name="error_builtin_eq">Bir hata oluştu! Sistem dengeleyicisini kullanın (eğer varsa)!</string>
     <string name="error_sys_eq">Sistem dengeleyicisi mevcut değil!</string>
     <string name="locale_finnish">Fince</string>
-    <string name="eq_pref_title">Dahili dengeleyici</string>
-    <string name="eq_pref_sum">"Dahili dengeleyiciyi  kullanımını zorla"</string>
+    <string name="eq_pref_title">Dahili ekolayzır</string>
+    <string name="eq_pref_sum">Dahili ekolayzır kullanımını zorla</string>
+    <string name="locale_malayalam">Malayalam</string>
+    <string name="locale_punjabi">Pencapça</string>
 </resources>
