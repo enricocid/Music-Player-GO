@@ -1,2 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="cancel">Batal</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+    <string name="delete">Padam</string>
+    <string name="on_close_activity">Hentikan main semula\?</string>
+    <string name="favorite_remove">Padamkan %1s (%2s) daripada kegemaran\?</string>
+    <string name="favorites_save_time">Simpan kedudukan lagu</string>
+    <string name="sorting_pref_save">Tetapkan sebagai pengisihan lalai\?</string>
+    <string name="sorting_pref_reset">Tetapkan semula pengisihan trek</string>
+    <string name="sorting_pref_reset_confirm">Tetapkan semula pilihan pengisihan\?</string>
+    <string name="albums">Album</string>
+    <string name="songs">Lagu</string>
+    <string name="folders">Folder</string>
+    <string name="equalizer">Penyamaan</string>
+    <string name="equalizer_presets">Pratetap</string>
+    <string name="ok">Okey</string>
+    <string name="sorting_pref_reset_sum">Digunakan pada album dan folder</string>
+    <string name="queue_songs_clear">Kosongkan baris gilir\?</string>
+    <string name="favorites_clear">Kosongkan semua kegemaran\?</string>
+    <string name="sorting_pref_reset_neutral">Berhenti bertanya</string>
+    <string name="artists">Artis</string>
+</resources>
