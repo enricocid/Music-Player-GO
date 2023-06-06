@@ -180,4 +180,5 @@
     <string name="focus_pref_title">Управљање примарног звука (Audio focus)</string>
     <string name="song_visual_pref_title">Визуелизација нумере</string>
     <string name="song_visual_pref_tl_title">Наслов</string>
+    <string name="locale_punjabi">панџапски</string>
 </resources>
