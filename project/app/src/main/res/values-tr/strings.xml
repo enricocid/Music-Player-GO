@@ -155,15 +155,30 @@
     <string name="locale_pref_title">Dil</string>
     <string name="locale_spanish">İspanyolca</string>
     <string name="sleeptimer_enabled">Oynatmayı %1s sonra durdur</string>
-    <string name="filters_error">Hata! Gizli sanatçılar/klasörler/albümler açılamıyor!</string>
+    <string name="filters_error">Gizli sanatçılar/klasörler/albümler açılamıyor!</string>
     <string name="notification_actions_pref_title">Ek bildirim eylemleri</string>
     <string name="notification_actions_favorite">Favorilere ekle/kapat</string>
     <string name="notification_actions_favorite_position">Favorilere ekle (pozisyonla)/kapat</string>
     <string name="notification_actions_fast_seeking">Hızlı arama</string>
     <string name="continue_on_end_desc">Tamamlandığında devam etsin ya da tekrar çalsın</string>
     <string name="pause_on_end_disabled">Tamamlandığında devam et.</string>
-    <string name="filters_clear">Filtereler temizlenecek.
-\nDevam edilsin mi\?</string>
+    <string name="filters_clear">Filtereler temizlenecek. Devam edilsin mi\?</string>
     <string name="confirm_ask_pref_title">Onay mesajları</string>
     <string name="confirm_ask_pref_sum">Bir şey yapmadan önce onay için sor</string>
+    <string name="locale_azerbaijani">Azerice</string>
+    <string name="rotation_pref_title">Döndürmeyi kilitle</string>
+    <string name="sorting_pref_reset_sum">Albüm ve klasörlere uygulanır</string>
+    <string name="category_ui">Arayüz</string>
+    <string name="sorting_pref_save">Varsıylan sıralama olarak kaydedilsin mi\?</string>
+    <string name="sorting_pref_reset">Şarkı sıralamasını sıfırla</string>
+    <string name="sorting_pref_reset_neutral">Sorguyu durdur</string>
+    <string name="category_audio">Ses</string>
+    <string name="sorting_pref_reset_confirm">Sıralama ayarları sıfırlansın mı\?</string>
+    <string name="error_builtin_eq">Bir hata oluştu! Sistem dengeleyicisini kullanın (eğer varsa)!</string>
+    <string name="error_sys_eq">Sistem dengeleyicisi mevcut değil!</string>
+    <string name="locale_finnish">Fince</string>
+    <string name="eq_pref_title">Dahili ekolayzır</string>
+    <string name="eq_pref_sum">Dahili ekolayzır kullanımını zorla</string>
+    <string name="locale_malayalam">Malayalam</string>
+    <string name="locale_punjabi">Pencapça</string>
 </resources>

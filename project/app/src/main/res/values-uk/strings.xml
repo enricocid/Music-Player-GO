@@ -53,7 +53,7 @@
     <string name="headset_pref_title">Керування гарнітурою</string>
     <string name="focus_pref_title">Керування фокусом звуку</string>
     <string name="precise_volume_pref_title">Тонкий контроль гучності</string>
-    <string name="notification_actions_repeat">Додаткові дії зі сповіщення</string>
+    <string name="notification_actions_repeat">Повторити/закрити</string>
     <string name="fast_seeking_pref_summary">Крок вперед/назад (секунд)</string>
     <string name="fast_seeking_pref_title">Швидкий пошук</string>
     <string name="active_fragments_pref_title">Активні вкладки</string>
