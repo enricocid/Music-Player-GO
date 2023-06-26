@@ -127,7 +127,7 @@
     <string name="locale_romanian">羅馬尼亞</string>
     <string name="locale_russian">俄羅斯</string>
     <string name="locale_sinhalese">僧伽羅</string>
-    <string name="locale_slovenian">斯洛文尼亞</string>
+    <string name="locale_slovenian">斯洛維尼亞</string>
     <string name="locale_spanish">西班牙</string>
     <string name="locale_swedish">瑞典</string>
     <string name="locale_thai">泰文</string>
@@ -136,7 +136,7 @@
     <string name="locale_urdu">烏爾都 (巴基斯坦)</string>
     <string name="locale_vietnamese">越南</string>
     <string name="eq_pref_title">內建等化器</string>
-    <string name="eq_pref_sum">強制使用內建等化器</string>
+    <string name="eq_pref_sum">強制使用附帶等化器</string>
     <string name="precise_volume_pref_title">更精確的音量控制</string>
     <string name="focus_pref_title">音訊焦點</string>
     <string name="headset_pref_title">耳機連接</string>
