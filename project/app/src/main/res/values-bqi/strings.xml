@@ -133,4 +133,25 @@
     <string name="eq_pref_sum">majburês ko, êkolāyzêr mêni nê vê kār gêre</string>
     <string name="eq_pref_title">êkolāyzêr mêni</string>
     <string name="focus_pref_title">dîvowdâri fokosê dong</string>
+    <string name="pause_on_end"></string>
+    <string name="playback_pref_title">soratê pêškê pêsand biďa</string>
+    <string name="playback_pref_summary_off">têynā ya ārêng</string>
+    <string name="playback_pref_summary_on">vāďārn</string>
+    <string name="on_list_ended_pref_stop_title">vāďāštên</string>
+    <string name="on_list_ended_pref_continue_title">raw vā pîš</string>
+    <string name="fast_seeking_pref_title">pitiniďênê zêl</string>
+    <string name="notification_actions_repeat">têkrār/bastên</string>
+    <string name="notification_actions_favorite">êzāf kerdên vê mavāred dêlxā/bastên</string>
+    <string name="notification_actions_fast_seeking">pitiniďênê zêl</string>
+    <string name="song_visual_pref_fn_title">nomê fāyl</string>
+    <string name="anim_pref_title">animêyšênā</string>
+    <string name="filter_pref_title">filtêrā</string>
+    <string name="red">so\'r</string>
+    <string name="pink">surati</string>
+    <string name="error_fs_not_allowed_sum">xatā! behine sâzi bâtri nê si MPGO kur ko</string>
+    <string name="on_list_ended_pref_title">harsā ke ya nomga tamom vâbi…</string>
+    <string name="covers_pref_title">jêltā ālbom jāsâzi vâbida</string>
+    <string name="song_visual_pref_tl_title">onvān</string>
+    <string name="rotation_pref_title">čêftê ler xardên</string>
+    <string name="purple">banawš</string>
 </resources>
