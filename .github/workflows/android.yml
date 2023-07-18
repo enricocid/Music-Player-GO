@@ -18,7 +18,6 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-        cache: gradle
     - name: Build debug apk with Gradle
       run: cd project && bash ./gradlew clean assemble
     - uses: actions/upload-artifact@v2
