@@ -117,10 +117,12 @@ To get started, you would need to clone/fork this repository:
 
 Windows Terminal commands:
 git clone https://github.com/*user*/Music-Player-GO.git
+
 cd Music-Player-GO
 
 Mac Terminal commands:
 git clone https://github.com/*user*/Music-Player-GO.git
+
 cd Music-Player-GO
 
 # License
