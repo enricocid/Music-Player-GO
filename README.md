@@ -55,7 +55,7 @@
 
 # Description
 
-Welcome to **Music Player GO**, your go-to local Android music player that strikes the perfect balance between simplicity and performance. Dive into a world where your music is organized intuitively, offering a minimal yet fully-featured experience.
+Welcome to **Music Player GO**, your go-to local Android music player that strikes the perfect balance between simplicity and performance. Dive into a world where your music is organized intuitively, offering a minimal yet fully-featured experience!
 
 
 # Download
@@ -100,7 +100,7 @@ By clicking the link, you will be directed to the Weblate monetary donations pag
 
 # Contributing
 
-Thank you for considering contributing to Music Player GO! We welcome contributions from the community to help improve and grow this project.
+Thank you for considering contributing to Music Player GO! We welcome contributions from the community to help improve and grow this project. Below are some guidelines for front and backend contributions. If you would like to contribut towards translations, please see the above [Translations](#translations) section.
 
 ### How to Contribute
 
