@@ -49,12 +49,13 @@
 - [Download](#download)
 - [Features](#features)
 - [Translations](#translations)
+- [Contributing](#contributing)
 - [License](#license)
 
 
 # Description
 
-Home of **Music Player GO**, a minimal yet fully-featured local Android music player aiming at **simplicity** and performance
+Welcome to **Music Player GO**, your go-to local Android music player that strikes the perfect balance between simplicity and performance. Dive into a world where your music is organized intuitively, offering a minimal yet fully-featured experience.
 
 
 # Download
@@ -76,18 +77,48 @@ Home of **Music Player GO**, a minimal yet fully-featured local Android music pl
 - Queue
 - Sleep timer
 - Audio focus, precise volume and headset management
-- Now playing, embedded covers, search, playback speed, pause on completion, sorting, shuffle, fast-seeking...
+- Now playing, embedded covers, search, playback speed, pause on completion, sorting, shuffle, fast-seeking, and more!
  
 
 # Translations
 
-Help us to translate the project on [Hosted Weblate](https://hosted.weblate.org/engage/music-player-go/).
-Consider sending some [love](https://weblate.org/donate/new/) to the Weblate guys who made easy translations possible. :)
+We currently need help translating the project so our app can be more accessible to everyone worldwide!
+The image below is an overview of the language translations that are currently being worked on:
+- The smaller red bars indicate that there is a significant amount of translating needed
+- We would ideally like each language to reach to green (less translations needed)
+- Please feel free to add new languages that are not currently being translated
+
+In order to contribute please use [Weblate](https://hosted.weblate.org/engage/music-player-go/). 
+You will need to create an account with Weblate (if you don't already have one) in order to do so.
+
+It would also be greatly appreciated if you could send some [love](https://weblate.org/donate/new/) to the Weblate contributors who made easy translations possible :)
+By clicking the link, you will be directed to the Weblate monetary donations page, where you will also be prompted to sign in or create an account.
 
 <a href="https://hosted.weblate.org/engage/music-player-go/">
 <img src="https://hosted.weblate.org/widgets/music-player-go/-/horizontal-auto.svg" alt="Stato traduzione" />
 </a>
 
+# Contributing
+
+Thank you for considering contributing to Music Player GO! We welcome contributions from the community to help improve and grow this project.
+
+### How to Contribute
+
+* Feel free to submit pull requests for any contributions, using a [feature branch](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow).
+* We would greatly appreciate if you could look at the issues tab to see what needs fixing. especially if there are any bugs!!
+* While there is no strict coding style for this project, we encourage you to strive for consistency within the existing codebase, and following with the aesthetic of the application.
+* Please make sure to look at the the [FAQ's](FAQ.md), [Privacy Policy](PRIVACY_POLICY.md), [Formats](FORMATS.md), [library's we utilize](LIBS.md), and [our license](LICENSE.md) before you get started. Once you have made a contribution and your Pull Request has been approved, we can add you to our list of [contributorss](CONTRIBUTORS.md)!
+
+  
+To get started, you would need to clone/fork this repository:
+- Note *user* refers to your GitHub username
+Windows Terminal commands:
+git clone https://github.com/*user*/Music-Player-GO.git
+cd Music-Player-GO
+
+Mac Terminal commands:
+git clone https://github.com/*user*/Music-Player-GO.git
+cd Music-Player-GO
 
 # License
 
