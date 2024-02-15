@@ -115,13 +115,13 @@ Thank you for considering contributing to Music Player GO! We welcome contributi
 To get started, you would need to clone/fork this repository:
 - Note *user* refers to your GitHub username
 
-Windows Terminal commands:
+## Windows Terminal commands:
 
 git clone https://github.com/*user*/Music-Player-GO.git
 
 cd Music-Player-GO
 
-Mac Terminal commands:
+## Mac Terminal commands:
 
 git clone https://github.com/*user*/Music-Player-GO.git
 
