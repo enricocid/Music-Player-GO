@@ -109,7 +109,7 @@ Thank you for considering contributing to Music Player GO! We welcome contributi
 * After your contribution has been added we can add you to our list of [contributors](CONTRIBUTORS.md)!
 * We would greatly appreciate if you could look at the issues tab to see what needs fixing, especially if there are any bugs!!
 * While there is no strict coding style for this project, we encourage you to strive for consistency within the existing codebase and UI following with the minimalistic aesthetic of the application.
-* Please make sure to look at the the [FAQ's](FAQ.md), [Privacy Policy](PRIVACY_POLICY.md), [Formats](FORMATS.md), [library's we utilize](LIBS.md), and [our license](LICENSE.md) before you get started to familiairze yourself with our app and frameworks.
+* Please make sure to look at the the [FAQ's](FAQ.md), [Privacy Policy](PRIVACY_POLICY.md), [Formats](FORMATS.md), [libraries we utilize](LIBS.md), and [our license](LICENSE.md) before you get started to familiairze yourself with our app and frameworks.
 
 
 To get started, you would need to clone/fork this repository:
