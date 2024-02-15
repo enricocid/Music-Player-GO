@@ -100,7 +100,7 @@ By clicking the link, you will be directed to the Weblate monetary donations pag
 
 # Contributing
 
-Thank you for considering contributing to Music Player GO! We welcome contributions from the community to help improve and grow this project. Below are some guidelines for front and backend contributions. If you would like to contribut towards translations, please see the above [Translations](#translations) section.
+Thank you for considering contributing to Music Player GO! We welcome contributions from the community to help improve and grow this project. Below are some guidelines for front and back end contributions. If you would like to contribute towards translations, please see the above [Translations](#translations) section.
 
 ### How to Contribute
 
