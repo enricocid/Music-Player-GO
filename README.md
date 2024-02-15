@@ -105,13 +105,16 @@ Thank you for considering contributing to Music Player GO! We welcome contributi
 ### How to Contribute
 
 * Feel free to submit pull requests for any contributions, using a [feature branch](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow).
-* We would greatly appreciate if you could look at the issues tab to see what needs fixing. especially if there are any bugs!!
-* While there is no strict coding style for this project, we encourage you to strive for consistency within the existing codebase, and following with the aesthetic of the application.
-* Please make sure to look at the the [FAQ's](FAQ.md), [Privacy Policy](PRIVACY_POLICY.md), [Formats](FORMATS.md), [library's we utilize](LIBS.md), and [our license](LICENSE.md) before you get started. Once you have made a contribution and your Pull Request has been approved, we can add you to our list of [contributorss](CONTRIBUTORS.md)!
+* Once you have submitted a pull request, we will need to review and appove it before it can be merged with the project.
+* After your contribution has been added we can add you to our list of [contributors](CONTRIBUTORS.md)!
+* We would greatly appreciate if you could look at the issues tab to see what needs fixing, especially if there are any bugs!!
+* While there is no strict coding style for this project, we encourage you to strive for consistency within the existing codebase and UI following with the minimalistic aesthetic of the application.
+* Please make sure to look at the the [FAQ's](FAQ.md), [Privacy Policy](PRIVACY_POLICY.md), [Formats](FORMATS.md), [library's we utilize](LIBS.md), and [our license](LICENSE.md) before you get started to familiairze yourself with our app and frameworks.
 
-  
+
 To get started, you would need to clone/fork this repository:
 - Note *user* refers to your GitHub username
+
 Windows Terminal commands:
 git clone https://github.com/*user*/Music-Player-GO.git
 cd Music-Player-GO
