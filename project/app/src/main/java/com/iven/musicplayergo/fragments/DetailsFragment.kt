@@ -309,19 +309,7 @@ class DetailsFragment : Fragment(), SearchView.OnQueryTextListener {
                         )
                         detailsToolbar.menu.findItem(R.id.sleeptimer).isVisible = !hasFocus
                         if (sLaunchedByAlbumView) {
-                            albumViewCoverContainer.doOnPreDraw {
-                                animate()?.let { anim ->
-                                    anim.duration = 500
-                                    var newY = 0F
-                                    if (hasFocus) {
-                                        newY = -(height.toFloat() + detailsToolbar.height)
-                                        anim.withEndAction { albumViewCoverContainer.handleViewVisibility(show = false) }
-                                    } else {
-                                        anim.withStartAction { albumViewCoverContainer.handleViewVisibility(show = true) }
-                                    }
-                                    anim.translationY(newY)
-                                }
-                            }
+                            albumViewCoverContainer.slide(!hasFocus())
                         }
                     }
                 }

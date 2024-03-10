@@ -33,6 +33,8 @@ import androidx.fragment.app.commit
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Slide
+import androidx.transition.TransitionManager
 import androidx.viewpager2.widget.ViewPager2
 import androidx.window.layout.WindowMetricsCalculator
 import coil.load
@@ -257,4 +259,17 @@ fun Dialog?.disableShapeAnimation() {
 fun RecyclerView.disableScrollbars() {
     isVerticalScrollBarEnabled = false
     isHorizontalScrollBarEnabled = false
+}
+
+// https://stackoverflow.com/a/56144349
+fun View.slide(show: Boolean) {
+    with(Slide(Gravity.TOP)) {
+        duration = 500
+        addTarget(this@slide)
+        TransitionManager.beginDelayedTransition(
+            this@slide.parent as ViewGroup,
+            this
+        )
+        handleViewVisibility(show)
+    }
 }
