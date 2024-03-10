@@ -884,12 +884,21 @@ class MainActivity : BaseActivity(), UIControlInterface, MediaControlInterface {
                     } else {
                         queueSongs.add(songToQueue)
                     }
-                    Toast.makeText(
-                        this@MainActivity,
-                        getString(R.string.queue_song_add, songToQueue.title),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                } else {
+                    // song is already present but queue is already started
+                    // move the song next to the played song
+                    if (isQueue != null && !canRestoreQueue && isQueueStarted) {
+                        queueSongs.remove(songToQueue)
+                        val currentPosition = queueSongs.findIndex(currentSong)
+                        queueSongs.add(currentPosition+1, songToQueue)
+                    }
                 }
+
+                Toast.makeText(
+                    this@MainActivity,
+                    getString(R.string.queue_song_add, songToQueue.title),
+                    Toast.LENGTH_SHORT
+                ).show()
 
                 if (canRestoreQueue && restoreQueueSong == null) {
                     restoreQueueSong = songToQueue
