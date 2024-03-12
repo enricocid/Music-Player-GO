@@ -88,7 +88,7 @@
         <item>1</item>
     </string-array>
 
-        <string-array name="supported_locales">
+    <string-array name="supported_locales">
         <item>ar</item> <!-- Arabic -->
         <item>az</item> <!-- Azerbaijani -->
         <item>bd</item> <!-- Bengali -->
