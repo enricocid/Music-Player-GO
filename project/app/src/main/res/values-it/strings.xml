@@ -145,6 +145,7 @@
     <string name="locale_nepali">Nepalese</string>
     <string name="locale_norwegian_b">Norvegese (Bokmål)</string>
     <string name="locale_norwegian_n">Norvegese (Nynorsk)</string>
+    <string name="locale_odia">Odia</string>
     <string name="locale_persian">Persiano</string>
     <string name="locale_polish">Polacco</string>
     <string name="locale_portuguese">Portoghese</string>
@@ -152,6 +153,7 @@
     <string name="locale_romanian">Rumeno</string>
     <string name="locale_russian">Russo</string>
     <string name="locale_sinhalese">Singalese</string>
+    <string name="locale_serbian">Serbo</string>
     <string name="locale_slovenian">Sloveno</string>
     <string name="locale_spanish">Spagnolo</string>
     <string name="locale_swedish">Svedese</string>

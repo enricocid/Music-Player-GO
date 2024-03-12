@@ -88,7 +88,7 @@
         <item>1</item>
     </string-array>
 
-    <string-array name="supported_locales">
+        <string-array name="supported_locales">
         <item>ar</item> <!-- Arabic -->
         <item>az</item> <!-- Azerbaijani -->
         <item>bd</item> <!-- Bengali -->
@@ -121,6 +121,7 @@
         <item>nl</item> <!-- Dutch -->
         <item>nn</item> <!-- Norwegian (Nynorsk) -->
         <item>np</item> <!-- Nepali -->
+        <item>or</item> <!-- Odia -->
         <item>pa</item> <!-- Punjabi -->
         <item>pk</item> <!-- Urdu (Pakistan) -->
         <item>pl</item> <!-- Polish -->
@@ -128,6 +129,7 @@
         <item>ro</item> <!-- Romanian -->
         <item>ru</item> <!-- Russian -->
         <item>sl</item> <!-- Slovenian -->
+        <item>sr</item> <!-- Serbian -->
         <item>sv</item> <!-- Swedish -->
         <item>th</item> <!-- Thai -->
         <item>tr</item> <!-- Turkish -->
@@ -169,6 +171,7 @@
         <item>@string/locale_dutch</item>
         <item>@string/locale_norwegian_n</item>
         <item>@string/locale_nepali</item>
+        <item>@string/locale_odia</item>
         <item>@string/locale_punjabi</item>
         <item>@string/locale_urdu</item>
         <item>@string/locale_polish</item>
@@ -176,6 +179,7 @@
         <item>@string/locale_romanian</item>
         <item>@string/locale_russian</item>
         <item>@string/locale_slovenian</item>
+        <item>@string/locale_serbian</item>
         <item>@string/locale_swedish</item>
         <item>@string/locale_thai</item>
         <item>@string/locale_turkish</item>

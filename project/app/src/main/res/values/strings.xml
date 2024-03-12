@@ -138,12 +138,14 @@
     <string name="locale_nepali">Nepali</string>
     <string name="locale_norwegian_b">Norwegian (Bokmål)</string>
     <string name="locale_norwegian_n">Norwegian (Nynorsk)</string>
+    <string name="locale_odia">Odia</string>
     <string name="locale_persian">Persian</string>
     <string name="locale_polish">Polish</string>
     <string name="locale_portuguese">Portuguese (Brazil)</string>
     <string name="locale_punjabi">Punjabi</string>
     <string name="locale_romanian">Romanian</string>
     <string name="locale_russian">Russian</string>
+    <string name="locale_serbian">Serbian</string>
     <string name="locale_sinhalese">Sinhalese</string>
     <string name="locale_slovenian">Slovenian</string>
     <string name="locale_spanish">Spanish</string>
