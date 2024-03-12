@@ -1,0 +1,3 @@
+- Corretta coda che non aggiungeva/aggiornava canzoni già presenti
+- Altre correzioni qua e la
+- Aggiornate/aggiunte traduzioni

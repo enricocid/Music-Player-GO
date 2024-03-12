@@ -109,6 +109,8 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 
 - [**Landry Racoon**](https://github.com/landry314) for having reported [495](https://github.com/enricocid/Music-Player-GO/issues/495)
 
+- [**UdeshyaDhungana**](https://github.com/UdeshyaDhungana) for this [improvement](https://github.com/enricocid/Music-Player-GO/commit/23ba8c3fd7e28dec411743c8bdd48cb0ceadfc5d)
+
 
 ### Big thanks to translators:
 
@@ -147,5 +149,13 @@ This work is licensed under a [CC 0](https://creativecommons.org/share-your-work
 - [**lgjint**](https://github.com/lgjint) for **Chinese simplified** translations
 
 - [**Krishan**](https://github.com/k7bura) for **Hindi** translations
+
+- [**hosêyň abāspanā**](https://github.com/hosseinabaspanah) for **Bakhtiari" translations
+
+- **Aleksandar L ** for **Serbian** translations
+
+- [**GET100PERCENT**](https://github.com/GET100PERCENT) for **Odia** translations
+
+- [**K Gill**](https://github.com/ShareASmile) for **Punjabi** translations
 
 ... and many others from Weblate! : )

@@ -9,14 +9,14 @@ android {
         applicationId "com.iven.musicplayergo"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 186
-        versionName "4.4.23"
+        versionCode 187
+        versionName "4.4.24"
 
         vectorDrawables.useSupportLibrary true
     }
 
     //retrieve version number
-    applicationVariants.all { variant ->
+    applicationVariants.configureEach { variant ->
         resValue "string", "versionName", variant.versionName
     }
 

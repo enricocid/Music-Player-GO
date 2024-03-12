@@ -1,0 +1,3 @@
+- Fix queue not adding songs when already present
+- General fixes
+- Update/add translations
