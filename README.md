@@ -130,7 +130,7 @@ cd Music-Player-GO
 # License
 
 
-2022 &copy; **Enrico D'Ortenzio**
+2024 &copy; **Enrico D'Ortenzio**
 
 This repository is copylefted libre software, licensed [GPLv3](https://www.gnu.org/licenses/#GPL), as described in the [LICENSE](LICENSE.md) file.
 Use, study, change and share at will; with all.
