@@ -181,4 +181,7 @@
     <string name="sorting_pref_save">¿Establecer como método de clasificación predeterminado\?</string>
     <string name="sorting_pref_reset">Restablecer la clasificación de las pistas</string>
     <string name="locale_punjabi">Punjabi</string>
+    <string name="locale_bakhtiari">Bajtiarí o Bakhtiari</string>
+    <string name="locale_odia">Odia</string>
+    <string name="locale_serbian">Serbio</string>
 </resources>
