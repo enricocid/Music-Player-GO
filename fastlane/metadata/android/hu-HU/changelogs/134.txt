@@ -1,0 +1,9 @@
+- Üres képernyő javítása bizonyos eszközökön
+- A párbeszédpanelek címek villogó kurzor problémájának javítása
+- A hullámforma MusicBar eltávolítása (egyelőre) kompatibilitási problémák miatt
+- Reagál a fejhallgató vezérlésére
+- A zene betöltési mechanizmusának javítása
+- Zene betöltésének előrehaladási sávjának megjelenítése a zene letöltése közben 
+- Akcentus preferenciák másolásának engedélyezése (hosszú kattintás)
+- Kódjavítások/javítások
+- Francia és orosz fordítások hozzáadása

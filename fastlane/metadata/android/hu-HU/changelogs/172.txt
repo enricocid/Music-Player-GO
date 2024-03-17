@@ -1,0 +1,4 @@
+- Queue: a dalok nem törölhetőek (köszönet Decimnek)
+- Queue: egyéb kisebb javítások
+- Vietnámi nyelv hozzáadása/fordítások frissítése (köszönöm mindenkinek! :D)
+- Frissítés libs/plugins

@@ -1,0 +1,6 @@
+- Android 12: üzenet hozzáadása a lejátszási problémákról való tájékoztatáshoz
+PS: fontolja meg az akkumulátor-optimalizálás kikapcsolását a rendszerbeállításokban: 
+Alkalmazások > Minden alkalmazás > Music Player GO > Akkumulátor > Korlátozás nélkül
+- Szűrési opció javítása
+- A beállítások felülvizsgálata
+- Fordítások frissítése

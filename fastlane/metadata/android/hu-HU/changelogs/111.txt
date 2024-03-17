@@ -1,0 +1,6 @@
+- Új mutató gyors görgetés Reddit által
+- Jelentős UI átdolgozás
+- Témák és ékezetek zökkenőmentes alkalmazása
+- Alapértelmezett material téma betűtípus használata
+- A beállítások kezelése megváltozott, ezért újra kell alkalmazni őket
+- Kódjavítások

@@ -1,0 +1,8 @@
+- Sorban állás helyreállítása
+- A várólista és a kedvencek felülvizsgálata/javítása
+- Keverés: a teljesítményproblémák elkerülése érdekében a nagy listák 250 dalra korlátozódnak
+- A várólista/kedvencek gyors görgetésének engedélyezése
+- Javított MediaPlayer hibakezelés
+- Kódjavítások és optimalizálások
+- Svéd és olasz fordítás hozzáadása és frissítése
+- A libs frissítése

@@ -1,0 +1,3 @@
+- Fix queue nem ad hozzá dalokat, ha már jelen van
+- Általános javítások
+- Fordítások frissítése/hozzáadása

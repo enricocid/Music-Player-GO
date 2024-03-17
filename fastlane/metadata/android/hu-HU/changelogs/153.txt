@@ -1,0 +1,3 @@
+- Most már akkor is használhatod a lapokat, ha a részletek/egyenlítő meg van nyitva (köszönet Drhaalnak).
+- Fix beágyazott borító opció be/ki összefoglaló (köszönöm Ricardo)
+- Fordítások frissítése

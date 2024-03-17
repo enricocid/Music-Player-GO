@@ -1,0 +1,7 @@
+- Aktív lapok kezelése: a lapok helytelen sorrendjének javítása (köszönet Martin Teboulnak a jelentésért)
+- ErrorFragment összeomlás javítása
+- Értesítési menedzser javítása
+- Projekt javítások (köszönet TacoTheDank-nak)
+- Angol fordítások javítása és javítása (köszönet TacoTheDank)
+- Lengyel fordítások hozzáadása (köszönet SpacingBat3)
+- Török fordítások frissítése (köszönöm https://github.com/ozcanfurkan)

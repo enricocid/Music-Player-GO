@@ -1,0 +1,6 @@
+- Hibajavítások
+- Most cseréltem le egy régi könyvtárat, amit a dalok mentésére használtam, és ami problémákat okozott, egy újabb
+modernebbel. Ennek a változásnak a fényében a szeretett dalok elvesznek. Sajnálom, de ez volt
+szükség volt rá :)
+- Az automatikus téma legyen az alapértelmezett (köszönöm Drhaalnak a javaslatot).
+- Könyvtárak/függőségek frissítése

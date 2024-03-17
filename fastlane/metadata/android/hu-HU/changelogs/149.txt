@@ -1,0 +1,3 @@
+- Összeomlás javítása
+- Indonéz fordítások frissítése (köszönet zmni)
+- Indonéz és holland PlayStore listázási leírások hozzáadása. Köszönet zmni és Heimen Stoffels

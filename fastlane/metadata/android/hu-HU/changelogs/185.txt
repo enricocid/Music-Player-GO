@@ -1,0 +1,8 @@
+- Android 13 támogatás
+- Android 12 támogatás javítása
+- Beépített equalizer javítása
+- Külső equalizerek támogatásának javítása (pl. wavelet, poweramp)
+- Alvásidőzítő javítása (köszönet @abelbabel)
+- Kódjavítások/hibajavítások
+- A libs/függőségek frissítése
+- Fordítások frissítése (köszönet minden közreműködőnek).

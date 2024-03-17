@@ -1,0 +1,3 @@
+- Alkalmazza a színtémákat zökkenőmentesebben
+- A játékos vezérlő információk automatikus görgetése, ha túl hosszúak
+- Kód javítások

@@ -1,0 +1,8 @@
+- Albumok/mappák: a kiválasztott rendezés megőrzése
+- Gyors csempék javítása
+- Az equalizer összeomlásának javítása
+- Jobb várólista
+- Új lehetőség a forgatás rögzítésére
+- Helyszínek opció javítása
+- Különböző kódjavítások és javítások
+- Függőségek/fordítások frissítése

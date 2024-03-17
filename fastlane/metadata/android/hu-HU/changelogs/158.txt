@@ -1,0 +1,4 @@
+- Az equalizer inicializálása közbeni rendszerindításkor bekövetkező összeomlás javítása
+- Beágyazott borítók opció miatti összeomlás javítása
+- Hozzáadott egy lebegő gombot az "összes zene" fülön a dalok keveréséhez
+- Kódjavítások (köszönet TacoTheDank-nek)

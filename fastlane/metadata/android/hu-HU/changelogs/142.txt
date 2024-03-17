@@ -1,0 +1,8 @@
+- Gyorsugrás funkció felülvizsgálata: mostantól támogatja a mappákat
+- A listák/gyors görgető átfedések kezelésének javítása és javítása
+- Erros: hibaképernyő megjelenítése az alkalmazás befejezése helyett
+- A keverés javítása
+- Fizikai médiagombok: javítások (köszönet abirke)
+- Kódoptimalizálás és egyéb javítások
+- Brazil portugál nyelv hozzáadása (köszönet Glaucio Santosnak)
+- Fordítások frissítése (köszönet mindenkinek)

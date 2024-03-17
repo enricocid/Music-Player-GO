@@ -1,0 +1,8 @@
+- Javítás és javítás shuffle/queue
+Megjegyzés a dalok fülhöz: a kevert zenék csak akkor kerülnek sorba, ha nem haladják meg az 1000 bejegyzést.
+- Összeomlás javítása az alkalmazásnak a recensekből való eltávolításakor
+- A hangfókusz helytelen kezelése miatti összeomlás javítása
+- Összeomlás javítása a listák utolsó elemének szűrésekor
+- Kisebb kód-felülvizsgálat
+
+Külön köszönet Ricardo-nak és Matt-nek :)

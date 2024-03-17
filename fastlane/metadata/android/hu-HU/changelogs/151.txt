@@ -1,0 +1,6 @@
+- Fix AOD (Always On Display) nem mutatja az információkat (köszönet Drhaalnak)
+- Hangfókusz javítások
+- Az utoljára lejátszott dal mentési mechanizmusának javítása
+- Román fordítások hozzáadása (köszönet 1t3x-nek)
+- Galego (galíciai) fordítások hozzáadása (köszönet Xose M-nek)
+- A libs és függőségek frissítése

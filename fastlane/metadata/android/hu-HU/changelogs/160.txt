@@ -1,0 +1,12 @@
+- Fedezetek: a teljesítmény javítása és az ANR valószínűségének csökkentése.
+  Megjegyzés: a zenék lekérdezésének mechanizmusát meg kellett változtatni.
+  Ez azt jelenti, hogy a szeretett dalok elvesznek. Sajnálom :)
+
+- Szűrőoptika javítása.
+- Javítani a swipinget
+- A dalok megjelenítésének javítása opt.
+- Rendszeres rendezés
+- Fix album hozzáadása a várólistához
+- Lollipop: a Now Playing keresősáv javítása
+- Sok más hibajavítás és javítás
+- Zene fül: a dalok számának megjelenítése

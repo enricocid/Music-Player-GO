@@ -1,0 +1,6 @@
+- Javított most játszó
+- Javított zenelejátszás fájlkezelőkből 
+(lásd: https://github.com/enricocid/Music-Player-GO/issues/461)
+- Hibajavítások
+
+Köszönet CodeCubeNeo és minden fordítónak

@@ -1,0 +1,3 @@
+- A várólista párbeszédpanel összeomlásának javítása
+- A változók helytelen inicializálása miatti összeomlások javítása
+- Függőségek frissítése

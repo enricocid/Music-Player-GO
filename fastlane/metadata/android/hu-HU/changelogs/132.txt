@@ -1,0 +1,13 @@
+4.0.0:
+- Új füles UI: előadók, összes dal, mappák, beállítások
+- Automatikus téma (az Android Q rendszer és az akkumulátor szintje szerint)
+régebbi verziókon, az irányelvek szerint)
+- Az utoljára reprodukált dal (és pozíció) mostantól mentve van&visszaállítva
+- Most lejátszás párbeszédpanel (kattintson az alsó panelre):
+  - Zenei sáv (spektrum)
+  - Média gombok
+  - 'Hozzáadás a szeretett dalokhoz' gomb
+  - Hangerő finomszabályozás
+- Egyszerű várólista-kezelés
+- Szeretett dalok
+- Rendezés

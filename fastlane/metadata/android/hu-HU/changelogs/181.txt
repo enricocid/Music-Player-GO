@@ -1,0 +1,4 @@
+- Fix close btn viselkedés
+- Kódjavítások/javítások
+- Függőségek frissítése
+- Ukrán fordítások frissítése (köszönet Ihor Hordiichuknak)

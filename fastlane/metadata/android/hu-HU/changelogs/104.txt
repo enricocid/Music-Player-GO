@@ -1,0 +1,2 @@
+- A zenei betöltési mechanizmus átnézése/javítása
+- Török fordítások javítása (kreditek: https://github.com/ozcanfurkan)

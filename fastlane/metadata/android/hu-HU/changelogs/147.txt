@@ -1,0 +1,3 @@
+- [Oreo és magasabb verzió] audiofókusz-kérés összeomlásának javítása. Köszönjük Stephan Maiernek a probléma bejelentését.
+- Egyéb kisebb javítások a médialejátszó-tartozón
+- A build tools/kotlin plugin frissítése

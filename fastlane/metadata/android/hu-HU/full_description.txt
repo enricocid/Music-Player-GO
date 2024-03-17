@@ -1,0 +1,18 @@
+A <b>Music Player GO</b> egy minimális, mégis teljes körű helyi zenelejátszó, amelynek célja az <b>egyszerűség</b> és a gyorsaság.
+
+<b>Jellemzők<b>
+
+- Minimális felület
+- Hangszínszabályzó
+- Előadó, albumok, dalok és mappák szerint rendezett zene; a fülek szervezhetőek.
+- Világos, sötét, automatikus témák és kiemelések
+- Tiszta fekete téma
+- Lejátszási sorrend
+- Elalvási időzítő
+- Hangfókusz, pontos hangerő és headset-kezelés
+- Most lejátszás, beágyazott borítók, keresés, lejátszási sebesség, szünet a befejezéskor, rendezés, keverés, gyorskeresés...
+
+
+<b>Szeretnél hozzájárulni a fordításokhoz?<b>
+
+Csatlakozz hozzánk a <a href="https://hosted.weblate.org/engage/music-player-go/">Weblate-nél</a>

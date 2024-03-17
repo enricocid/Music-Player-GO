@@ -1,0 +1,3 @@
+- Összeomlás javítása Android M-en sagorahmed és Alex Lockwoodnak köszönhetően
+- Hindi támogatás hozzáadása Somesh Kumarnak köszönhetően
+- Az alkalmazás építőelemeinek (libs, stb.) frissítése
