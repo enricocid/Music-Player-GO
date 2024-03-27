@@ -1,0 +1,5 @@
+- Javítottuk a rendszerindításkor bekövetkező összeomlást
+- A zenei szolgáltatás szivárgása javítva a készülék forgatásakor
+- Kódoptimalizálás (299 sornyi kód eltávolítása!)
+- Engedélyezési párbeszédpanel: Az "Igen" és a "Nem" helyett mostantól "Oké" és "Mégse" felirat szerepel
+- Török és hindi fordítások frissítése

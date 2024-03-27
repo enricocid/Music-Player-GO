@@ -1,0 +1,11 @@
+- Javított most játszó
+- Többszörös kiválasztás a rejtéshez
+- Több értesítési művelet lehetőségei
+- Egyetlen előadó/album/mappa lejátszása...
+- Javított húzási műveletek
+- Sorba állítás/kedvencek: törlés gomb hozzáadása
+- Áttekintési ékezetek (lásd faq)
+- Fix equalizer nem nyílik meg
+- Tájképi elrendezés javítása
+- Számos kódjavítás/javítás
+- Fordítások frissítése

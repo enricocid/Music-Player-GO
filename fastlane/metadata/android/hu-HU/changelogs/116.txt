@@ -1,0 +1,5 @@
+Fix lejátszás szándékból
+
+- A lejátszott album megfelelő beállítása, hogy a felhasználó szándékból is tudjon navigálni a dalok között a kihagyás gombok segítségével
+- Duplikált dalok lejátszásának javítása szűrve
+- Egyszerűsítések

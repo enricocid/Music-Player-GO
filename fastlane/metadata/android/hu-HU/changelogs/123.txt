@@ -1,0 +1,2 @@
+- A következő dal nem kerül automatikusan lejátszásra a dal reprodukciójának befejezése után
+- Török fordítások frissítése

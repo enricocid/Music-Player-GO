@@ -1,0 +1,3 @@
+- Fix lejátszási sebesség opció
+- Hibaképernyő láthatóságának javítása
+- Kód egyszerűsítések

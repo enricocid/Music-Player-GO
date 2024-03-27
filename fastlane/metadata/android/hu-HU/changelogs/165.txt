@@ -1,0 +1,10 @@
+Karbantartási kiadás:
+
+- UI javítások/javítások
+- Beállítások javítása/átnézése
+- Értesítési fejlesztések
+- Kódoptimalizálás
+- A libs/függőségek frissítése
+- Fordítások frissítése (KÖSZÖNET MINDENKINEK)
+
+Credits: OxygenCobalt, Drhaal, SCOTT-HAMILTON és az összes fordító

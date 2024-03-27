@@ -1,0 +1,11 @@
+- Equalizer (a rendszer eq-t nélkülöző készülékekhez)
+- Új ikonok és átdolgozott design
+- Beágyazott borítók támogatása
+- Albumok lap
+- Gyors keresés (hosszú koppintás a kihagyás gombokra)
+- További opciók
+
+- Javított Android 11 kompatibilitás
+- Húzás a sorba állított dalok/kedvencek eltávolításához vagy a dalok sorba állításához
+- A lapok nem kattinthatók az előadóművészek adatainak vagy az equalizer megnyitásakor a problémák elkerülése érdekében
+- Számos javítás és forráskód javítás

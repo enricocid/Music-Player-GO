@@ -1,0 +1,3 @@
+- Néhány összeomlás javítása (köszönet Carmine Nives)
+- Fordítások frissítése (kínai - Hagyományos) - Köszönöm EarthlyEric
+- Függőségi frissítés

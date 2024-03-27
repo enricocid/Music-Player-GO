@@ -1,0 +1,1 @@
+Android 10: lejátszás javítása. Köszönöm Robin H.

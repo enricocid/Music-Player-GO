@@ -181,4 +181,7 @@
     <string name="sorting_pref_reset_confirm">Återställa sorteringsinställningarna\?</string>
     <string name="sorting_pref_reset_neutral">Sluta fråga</string>
     <string name="locale_punjabi">Punjabi</string>
+    <string name="locale_bakhtiari">Bakhtiari</string>
+    <string name="locale_odia">Oriya</string>
+    <string name="locale_serbian">Serbiska</string>
 </resources>

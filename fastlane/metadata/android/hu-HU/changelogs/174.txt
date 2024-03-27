@@ -1,0 +1,7 @@
+- Fix dupla kattintás kedvenc, sorban állás a játékos vezérlőpulton (köszönöm hoangchung)
+- Most lejátszás: szünet opció ragasztása, amíg manuálisan meg nem változtatjuk (köszönet Glitchy-Tozier)
+- Éjszakai téma javítása/javítása (köszönet repparw)
+- Fordítások frissítése (köszönet yzqzss, sr093906, calcitem, S3aBreeze)
+
+- Android 12 támogatás. Bármilyen probléma esetén kérjük, lépjen kapcsolatba velem (nincs
+S-t futtató eszközök, csak emulátor).

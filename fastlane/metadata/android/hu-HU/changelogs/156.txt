@@ -1,0 +1,10 @@
+- Fülecskék rendszerezése
+- Albumok hozzáadása a várólistához
+- Szeretett/kevert dalok kezelése a várólistából
+- Alapértelmezetté teheti az élről élre váltást
+- Android 11: edge to edge rögzítése
+- Hangfókusz javítása (köszönet Drhaalnak)
+- A hangerő visszaállítása, ha a pontos hangerőszabályzó ki van kapcsolva (köszönöm Drhaal)
+- A rendszer sávok színének felülvizsgálata
+- Számos kódjavítás és javítás
+- Fordítások frissítése / hozzáadása

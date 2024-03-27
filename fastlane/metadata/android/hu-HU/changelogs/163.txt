@@ -1,0 +1,15 @@
+- Új: lejátszási sebesség
+- Új: dalok sorba rendezése
+- Új: lehetőség az animációk letiltására
+- Új: gyors csempe
+- Új rendezési lehetőségek hozzáadása
+  - Köszönöm vtkhatri
+- Áttekintés Most Playind
+  - Új gombok hozzáadása (hosszú kattintás a leíráshoz)
+  - Drhaal-tól
+- Borítók megjelenítése az album fülön/részletekben
+- Értesítési műveletek javítása (Samsung)
+  - Köszönöm Arlin Daniel és Dan Muntz
+- Fejhallgató gombok támogatásának javítása
+- A beállítások felülvizsgálata
+- Számos javítás

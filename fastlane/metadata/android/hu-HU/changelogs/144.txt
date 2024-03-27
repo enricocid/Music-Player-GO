@@ -1,0 +1,13 @@
+- Tervezés, UI teljesítmény és kódminőség javítás
+(kockáknak: coroutines, viewmodel, viewbinding stb.)
+- Új betűtípus/ikonok: source sans pro/outline
+- Hozzáadott képesség:
+  - Részletek szerinti dalok menet közbeni rendezése
+  - Dalok loopolása
+  - Előadóművészek/mappák szűrése
+- Fókuszkezelési lehetőség javítása
+- Előadóművészek rendezésének javítása
+- Szeretett dalok áttekintése mentési mechanizmus
+- Anyagi komponensek témára váltott
+- Update libs
+- Sok más kisebb hibajavítás

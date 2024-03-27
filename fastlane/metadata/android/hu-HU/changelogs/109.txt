@@ -1,0 +1,3 @@
+- Összeomlás javítása, amikor az alkalmazás bezárásakor az értesítésből próbálsz dalt váltani (köszönet sagorahmed-nek a problémabejelentésért).
+- A kód javítása
+- Kotlin plugin frissítése

@@ -1,0 +1,3 @@
+A médiagombok kezelésének javítása.
+
+Köszönet keddadnak a tesztelésért.

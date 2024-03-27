@@ -1,0 +1,7 @@
+- Visszaállítani az eredeti pontos hangerő párbeszédpanel végrehajtását:
+A hangerőszabályzó most már PRECISE lehetővé teszi, hogy Ön 
+a tényleges hangerő lépés teljes ellenőrzését.
+Köszönet Arianna Masciolini-nek!!!
+
+Megjegyzés: ez a 3.x ág utolsó frissítése. A következő iteráció (4.0 EX) tartalmazni fogja a
+teljes újraírást tartalmaz majd, és tartalmazza az Ön által kért funkciók többségét

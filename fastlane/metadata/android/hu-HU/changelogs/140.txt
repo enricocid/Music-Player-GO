@@ -1,0 +1,3 @@
+- Tájkép: átfedési problémák javítása a mutatók és a művészek/mappák listája között
+- Landscape: összeomlás javítása párbeszédpanelek (pl. most lejátszás) megjelenítésekor
+- Spanyol fordítások frissítése

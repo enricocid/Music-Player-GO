@@ -1,0 +1,5 @@
+- A hiányzó lejátszóvezérlők javítása a más alkalmazásokból történő lejátszás kezelésénél
+- A tematizálással (automatikus)/világítási rendszer sávokkal kapcsolatos problémák javítása
+- A keresési szöveg javítása, ha a zene időtartama 60 percnél hosszabb
+- Orosz fordítások frissítése
+- Kódjavítások

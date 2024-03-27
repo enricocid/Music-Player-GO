@@ -1,0 +1,3 @@
+- Bezárás gomb hozzáadása az értesítéshez
+- Duplikált dalok eltávolítása (több példányban, különböző elérési utakon mentett dalok)
+- Kódtisztítás/javítások

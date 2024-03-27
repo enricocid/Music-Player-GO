@@ -181,4 +181,7 @@
     <string name="sorting_pref_reset_sum">S\'applique aux albums et aux dossiers</string>
     <string name="sorting_pref_reset_neutral">Ne plus demander</string>
     <string name="locale_punjabi">Pendjabi</string>
+    <string name="locale_bakhtiari">Bakhtiari</string>
+    <string name="locale_odia">Odia</string>
+    <string name="locale_serbian">Serbe</string>
 </resources>

@@ -1,0 +1,5 @@
+- Értesítéskezelési fejlesztések
+- Értesítések egyszerűsítése
+- Egyéb kisebb kódjavítások
+- Alkalmazásfüggőségek frissítése
+- Frissített hindi fordítások (köszönjük szépen Pirhszm Yfiz)

@@ -1,0 +1,3 @@
+- WaveView áttekintése
+- Kisebb UI változások
+- Az előadói részletek elrendezésének javítása

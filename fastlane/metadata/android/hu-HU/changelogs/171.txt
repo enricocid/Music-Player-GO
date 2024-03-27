@@ -1,0 +1,6 @@
+- Jobb csúszás a lapok közötti érzékenység
+- Minden zenei lap rendezésének javítása
+- Frissítés libs / plugins
+- Egyszerűsített kínai fordítások frissítése
+
+Credits: OxygenCobalt, DECIM, 360Tencent

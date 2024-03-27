@@ -1,0 +1,7 @@
+Javítottuk a gyors görgetés jelző indexeit keresés közben. Köszönet Steven Schoen-nak
+(https://github.com/DSteve595)
+
+Megjegyzés: Ez a 3.x ág utolsó frissítése. A következő frissítés (4.0 EX)
+az MPGO-t a semmiből fogja újraírni, és tartalmazni fogja a legtöbb általad kért funkciót.
+(mappák, fülek az összes zeneszámmal, jobb fókuszkezelés, jobb navigáció, now playing,
+várólisták kezelése, új felhasználói felület opciók, új téma, automatikus sötét téma támogatás android Q és így tovább).

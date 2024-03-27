@@ -1,0 +1,3 @@
+- Fix szortírozás (köszönöm Simon)
+- Lollipop: értesítés javítása (köszönöm Ramon)
+- Litván és baszk fordítások hozzáadása/frissítése (köszönet mindenkinek)

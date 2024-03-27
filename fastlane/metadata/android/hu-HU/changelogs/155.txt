@@ -1,0 +1,3 @@
+- Visszatérés a régi, félelmetes ikonhoz Julian Javier Gomez által
+- A Media Player tartójának javítása
+- Kód tisztaság

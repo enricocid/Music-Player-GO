@@ -1,0 +1,6 @@
+- Pontos hangerőszabályzó párbeszédpanel hozzáadása (köszönet Arianna Masciolini, https://github.com/harisont)
+- Hozzáadva színes értesítési pirítósok!
+- Indonéz fordítások hozzáadva (köszönet zmni, https://github.com/zmni)
+- Frissített török karakterláncok (köszönet https://github.com/ozcanfurkan)
+- Javítottuk, hogy a progress bar nem volt engedélyezve keveréskor
+- Szükségletek frissítése (libs, stb.)

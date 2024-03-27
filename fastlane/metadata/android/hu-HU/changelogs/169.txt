@@ -1,0 +1,5 @@
+- Fix sorban állás
+- Kedvencek javítása
+- Fix duplikátumok nem szűrt
+- Fix rendezés #2
+- Kód javítás

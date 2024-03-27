@@ -1,0 +1,10 @@
+- Alvás időzítő (köszönöm watauoa)
+- Helyszínváltó
+- Add vissza valódi sötét téma...
+- ...és egy opciót a tiszta fekete téma kikényszerítésére! :trollface:
+- A dalok mostantól közvetlenül eltávolíthatók a listákból
+- UI felülvizsgálat
+- Kísérlet az egyes Android 12 eszközökön nem megjelenő értesítések javítására
+- Frissített/új fordítások (köszönet mindenkinek)
+- Kódjavítások/tisztítás
+- Frissített függőségek

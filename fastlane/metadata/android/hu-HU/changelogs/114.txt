@@ -1,0 +1,1 @@
+Lehetőséget adott a zenei fájlok lejátszására az MPGO-ban más alkalmazásokból (pl. Fájlkezelő)

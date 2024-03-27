@@ -1,0 +1,5 @@
+- Aosp stílusú gyors görgető használata
+- Gyors görgető hozzáadása a mappa részleteihez
+- A lapok tematizálási problémáinak javítása
+- Kód egyszerűsítések/javítások
+- Fordítások frissítése: Portugál (Brazília)

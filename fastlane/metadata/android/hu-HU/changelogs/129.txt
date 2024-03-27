@@ -1,0 +1,4 @@
+Karbantartási kiadás, amely hozza:
+- Javítások a fókusz és az engedélyek párbeszédpanelhez
+- Indikátor gyors görgetés Reddit verziófrissítéssel
+- A zene betöltési mechanizmusának javítása

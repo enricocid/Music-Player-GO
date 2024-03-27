@@ -188,4 +188,7 @@
     <string name="locale_azerbaijani">Azerbaiyano</string>
     <string name="locale_malayalam">Malayalam</string>
     <string name="locale_punjabi">Punjabi</string>
+    <string name="locale_odia">Odia</string>
+    <string name="locale_serbian">Serbio</string>
+    <string name="locale_bakhtiari">Bakhtiari</string>
 </resources>

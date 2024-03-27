@@ -1,0 +1,4 @@
+- Javítani kell az alkalmazás reakcióképességét a médiagomb műveleteire (köszönöm Sarah)
+- Most lejátszás: hozzáadott egy módot a szüneteltetésre, amikor a zeneszám befejeződik.
+- UI & témák/sötét üzemmód javítások/javítások
+- A fordítások javítása/frissítése (köszönet Allan Nordhøy-nek/akárkinek)

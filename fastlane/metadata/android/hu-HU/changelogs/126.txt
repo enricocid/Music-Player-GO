@@ -1,0 +1,3 @@
+- Jelző Gyors görgetés: a kiválasztott index az első látható elem a művészek listáján
+- Művészek rendezésének javítása
+- Gyors görgetés indikátor könyvtár frissítése

@@ -1,0 +1,9 @@
+- Lecserélt/eltávolított elavult könyvtárak
+- Hangfókusz javítása hangüzenetek rögzítésekor (pl. Telegram)
+  Köszönöm Decim
+- Fix equalizer nem megfelelően visszaállítva
+- Fejhallgató vezérlőgombok: dupla koppintás a szünet/újrakezdéshez a kihagyáshoz
+- A dalok mentésének javítása, amikor az alkalmazást eltávolítják a recensek közül
+- Függőségek frissítése
+- Kódjavítások/tisztítás
+- Fordítások frissítése (köszönöm mindenkinek)

@@ -1,0 +1,3 @@
+- Raleway font a visszatérés!
+- Kisebb UI felülvizsgálat
+- Javítások

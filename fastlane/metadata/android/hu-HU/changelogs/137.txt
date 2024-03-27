@@ -1,0 +1,5 @@
+- Sötét téma mélyebbé tétele
+- Tájkép: 3 hibajavítás
+- Összeomlás javítása, ha a zenei könyvtár üres
+- Az ékezetek párbeszédpanel javításai
+- Kerekített sarkok hozzáadása a témák párbeszédpanelhez
