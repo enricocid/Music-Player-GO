@@ -60,7 +60,7 @@
     <string name="focus_pref_title">Xestión do foco do audio</string>
     <string name="headset_pref_title">Conexión de auriculares</string>
     <string name="filter_pref_title">Filtros</string>
-    <string name="notification_actions_repeat">Accións de notificación adicionais</string>
+    <string name="notification_actions_repeat">Repetir/pechar</string>
     <string name="fast_seeking_pref_summary">Avanzar/Retroceder en pasos (segundos)</string>
     <string name="fast_seeking_pref_title">Busca rápida</string>
     <string name="song_visual_pref_fn_title">Nome do ficheiro</string>
@@ -190,5 +190,5 @@
     <string name="locale_punjabi">Punjabi</string>
     <string name="locale_odia">Odia</string>
     <string name="locale_serbian">Serbio</string>
-    <string name="locale_bakhtiari">Bakhtiari</string>
+    <string name="locale_bakhtiari">Luri Bakhtiari</string>
 </resources>
