@@ -1,0 +1,3 @@
+- Sprawdzono WaveView
+- Małe zmiany interfejsu
+- Poprawki układu szczegółów artysty
