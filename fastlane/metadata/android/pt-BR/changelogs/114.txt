@@ -1,0 +1,1 @@
+Adicionada possibilidade de reproduzir arquivos de música no MPGO de outros aplicativos (por exemplo, um gerenciador de arquivos)

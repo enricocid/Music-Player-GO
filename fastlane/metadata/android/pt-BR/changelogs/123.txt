@@ -1,0 +1,2 @@
+- Correção da próxima música que não é reproduzida automaticamente após a conclusão da reprodução da música atual
+- Atualiza traduções em turco

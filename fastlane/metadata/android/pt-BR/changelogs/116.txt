@@ -1,0 +1,5 @@
+Corrigea reprodução da intenção
+
+- Define o álbum reproduzido corretamente para que o usuário possa navegar pelas músicas usando os botões de pular também por intenção
+- Corrige a reprodução de músicas duplicadas filtradas
+- Simplificações

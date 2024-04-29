@@ -1,0 +1,1 @@
+Melhorias no código-fonte (agradecimentos a TacoTheDank, https://gitlab.com/TacoTheDank)

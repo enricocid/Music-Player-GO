@@ -1,0 +1,3 @@
+- Correção de uma falha ao tentar alterar a música da notificação quando o aplicativo é fechado (obrigado a sagorahmed por relatar o problema)
+- Melhora o código
+- Atualiza plug-in Kotlin

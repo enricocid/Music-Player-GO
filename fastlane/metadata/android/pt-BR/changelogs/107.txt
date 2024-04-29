@@ -1,0 +1,3 @@
+- Corrige uma falha no Android M graças a sagorahmed e Alex Lockwood
+- Adicionado suporte para Hindi graças a Somesh Kumar
+- Atualiza os blocos de construção do aplicativo (libs, etc.)
