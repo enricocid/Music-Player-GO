@@ -1,0 +1,18 @@
+4.0.0:
+- Nueva interfaz de usuario con pestañas: artistas, todas las canciones, carpetas, configuraciones
+- Tema automático (siguiendo sistema en Android Q y nivel de batería
+en versiones anteriores, según las pautas)
+- La última canción reproducida (y posición) ahora está guardada y restaurada.
+- Diálogo de reproducción (haga clic en el panel inferior):
+  - Barra de música (espectro)
+  - Botones multimedia
+  - Botón 'Agregar a canciones favoritas'
+  - Control fino de volumen
+- Gestión de colas sencilla
+- Canciones amadas
+- Clasificación
+- Nuevo esquema de acentos
+- Soporte de paisaje
+- Muchas correcciones/mejoras
+
+Para más información/consejos/créditos: https://github.com/enricocid/Music-Player-GO

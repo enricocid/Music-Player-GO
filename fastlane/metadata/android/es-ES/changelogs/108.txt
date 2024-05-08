@@ -1,0 +1,3 @@
+- Se solucionó un problema al intentar cambiar la canción desde la notificación cuando la aplicación estaba cerrada (gracias a sagorahmed por informar el problema)
+- Mejorar el código
+- Actualizar el complemento Kotlin

@@ -1,0 +1,6 @@
+- Se agregó un cuadro de diálogo de control de volumen preciso (gracias Arianna Masciolini, https://github.com/harisont)
+- ¡Se agregaron brindis de notificación coloridos!
+- Se agregaron traducciones al indonesio (gracias zmni, https://github.com/zmni)
+- Cadenas turcas mejoradas (gracias https://github.com/ozcanfurkan)
+- Se corrigió que la barra de progreso no estuviera habilitada al barajar
+- Actualizar dependencias (libs, etc.)

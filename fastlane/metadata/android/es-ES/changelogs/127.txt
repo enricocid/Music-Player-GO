@@ -1,0 +1,10 @@
+Corregido los índices del indicador de desplazamiento rápido durante la búsqueda. Gracias a Steven Schoen.
+(https://github.com/DSteve595) de Reddit :D
+
+Aviso: esta es la última actualización de la rama 3.x. La próxima actualización (4.0 EX) 
+será una reescritura desde cero de MPGO e incluirá la mayor parte de las características requeridas por usted
+(carpetas, pestañas con todas las canciones, mejor gestión del foco, mejor navegación, reproducción instantánea,
+gestión de colas, nuevas opciones de interfaz de usuario, nuevo tema, soporte automático tema oscuro android Q y así sucesivamente)
+
+Puedes seguir las actualizaciones aquí (puedes leer los mensajes de confirmación, los mantendré legibles):
+https://github.com/enricocid/Music-Player-GO/commits/master-mpgo-ex

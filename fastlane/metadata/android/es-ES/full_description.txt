@@ -1,0 +1,18 @@
+<b>Music Player GO</b> es un reproductor de música local minimalista pero con todas las funciones que busca <b>la simplicidad</b> y el rendimiento.
+
+<b>Funciones</b>
+
+- Interfaz mínima
+-Igualador
+- Música organizada por artista, álbumes, canciones y carpetas; las pestañas se pueden organizar
+- Luz, oscuridad, temas y acentos automáticos
+- Tema negro puro
+- Cola
+- Temporizador de sueño
+- Enfoque de audio, volumen preciso y gestión de auriculares
+- Ahora jugando, cubiertas incrustadas, búsqueda, velocidad de reproducción, pausa en la finalización, clasificación, aleatorio, búsqueda rápida...
+
+
+<b>¿Quieres contribuir a las traducciones?</b>
+
+Únete a nosotros en <a href="https://hosted.weblate.org/engage/music-player-go/">Weblate</a>

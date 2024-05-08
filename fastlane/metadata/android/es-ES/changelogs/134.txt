@@ -1,0 +1,13 @@
+- Reparar pantalla en blanco en ciertos dispositivos
+- Solucionar el problema del cursor parpadeante en los títulos de los cuadros de diálogo
+- Elimina MusicBar de forma de onda (por ahora) por problemas de compatibilidad.
+- Mejorar de borde a borde
+- Responder a los controles de los auriculares.
+- Mejorar el mecanismo de carga de música.
+- Muestra una barra de progreso de carga mientras buscas música 
+- Habilitar la copia de preferencia de acento (clic largo)
+- Mejoras/correcciones de código
+- Agregar traducciones al francés y al ruso.
+- Actualización de traducciones
+
+Muchas gracias a cualquiera que me haya ayudado a mejorar MPGO :)

@@ -1,0 +1,14 @@
+- Recuperar la implementación original del diálogo de volumen preciso:
+El control de volumen ahora es PRECISO, lo que le permite tener 
+un control completo sobre el paso de volumen real.
+¡¡Gracias a Arianna Masciolini!!
+
+- Actualizar la versión de Dynamic Toasts
+
+Aviso: esta es la última actualización de la rama 3.x. La próxima iteración (4.0 EX) contará con una
+reescriba completamente desde cero e incluirá la mayoría de las funciones que solicitó (carpetas,
+pestaña con todas las canciones, mejor gestión del enfoque, mejor navegación, reproducción en curso, gestión de colas,
+nuevas opciones de interfaz de usuario, nuevo tema, compatibilidad automática con temas oscuros de Android Q, etc.).
+
+Puedes seguir todas las actualizaciones aquí (mantendremos los commits legibles por humanos):
+https://github.com/enricocid/Music-Player-GO/commits/master-mpgo-ex

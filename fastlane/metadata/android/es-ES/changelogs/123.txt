@@ -1,0 +1,2 @@
+- Se corrigió que la siguiente canción no se reprodujera automáticamente después de completar la reproducción de la canción.
+- Actualizar las traducciones turcas

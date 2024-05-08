@@ -1,0 +1,1 @@
+Android 10: arregla la reproducción. Gracias Robin H.

@@ -1,0 +1,1 @@
+Mover la lista de canciones al principio al cambiar de álbum

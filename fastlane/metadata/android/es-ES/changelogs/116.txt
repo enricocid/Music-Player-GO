@@ -1,0 +1,5 @@
+Corregir la reproducción desde la intención
+
+- Configure el álbum reproducido correctamente para que el usuario pueda navegar a través de las canciones usando los botones de saltar también desde la intención.
+- Corregir la reproducción de canciones duplicadas filtradas.
+- Simplificaciones
