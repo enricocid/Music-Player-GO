@@ -1,0 +1,3 @@
+- 修复在 Android M 上的崩溃（感谢 sagorahmed 和 Alex Lockwood）
+- 添加了印地语支持（感谢 Somesh Kumar）
+- 更新应用程序的构建模块（例如库）

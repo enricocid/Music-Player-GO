@@ -1,0 +1,2 @@
+- 审查/改进音乐加载机制
+- 修复土耳其语翻译（感谢：https://github.com/ozcanfurkan）
