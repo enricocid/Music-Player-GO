@@ -1,0 +1,1 @@
+Android 10: Oprava přehrávání. Díky Robinovi H.

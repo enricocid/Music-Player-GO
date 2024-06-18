@@ -1,0 +1,5 @@
+Opraveny indexy Indikátoru rychlého posouvání během vyhledávání. Díky uživateli Steven Schoen (https://github.com/DSteve595) z Redditu
+
+Oznámení: Toto je poslední aktualizace větve 3.x. Příští aktualizace (verze 4.0 EX) bude zcela novým přepsáním aplikace MPGO a bude zahrnovat mnoho funkcí, které jste požadovali (adresáře, záložky se všemi písněmi, lepší správa zaměření, zlepšená navigace, nyní přehrávání, správa fronty, nové možnosti uživatelského rozhraní, nové téma, automatická podpora tmavého režimu v Androidu Q atd.).
+
+Můžete sledovat aktualizace zde: https://github.com/enricocid/Music-Player-GO/commits/master-mpgo-ex

@@ -1,0 +1,4 @@
+Údržbová verze, která přináší:
+- Opravy zaměření a dialogu oprávnění
+- Aktualizace verze Indikátoru rychlého posouvání od Redditu
+- Vylepšení mechanismu načítání hudby

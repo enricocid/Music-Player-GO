@@ -1,0 +1,3 @@
+- Hladší aplikace barevných témat
+- Automatické posouvání informací o ovládání přehrávače při příliš dlouhém textu
+- Vylepšení kódu

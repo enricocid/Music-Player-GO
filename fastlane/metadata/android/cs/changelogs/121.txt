@@ -1,0 +1,6 @@
+- Přidán dialog pro přesnou kontrolu hlasitosti (díky Arianna Masciolini, https://github.com/harisont)
+- Přidány barevné oznámení!
+- Přidány indonéské překlady (díky zmni, https://github.com/zmni)
+- Aktualizovány turecké řetězce (díky https://github.com/ozcanfurkan)
+- Opravena chyba, kdy pruh postupu nebyl aktivován při zamíchání
+- Aktualizace závislostí (knihoven apod.)

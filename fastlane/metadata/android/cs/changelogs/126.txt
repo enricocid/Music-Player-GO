@@ -1,0 +1,3 @@
+- Indikátor rychlého posouvání: udělejte vybraný index prvním viditelným prvkem v seznamu umělců
+- Oprava řazení umělců
+- Aktualizace knihovny indikátoru rychlého posouvání

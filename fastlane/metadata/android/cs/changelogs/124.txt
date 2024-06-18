@@ -1,0 +1,1 @@
+Přesunutí seznamu skladeb na začátek při přepínání alb
