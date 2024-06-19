@@ -85,4 +85,18 @@
     <string name="sorting_pref_artist_inv">아티스트 내림차순</string>
     <string name="sorting_pref_artist">아티스트 오름차순</string>
     <string name="sorting_pref_date_added_inv">오래된순</string>
+    <string name="filters_error">숨겨진 아티스트/폴더/앨범을 열 수 없습니다.</string>
+    <string name="sorting_pref_save">기본 정렬로 설정하시겠습니까?</string>
+    <string name="sorting_pref_reset">트랙 정렬 초기화</string>
+    <string name="sorting_pref_reset_neutral">그만 묻기</string>
+    <string name="sorting_pref_reset_confirm">정렬 설정을 초기화하시겠습니까?</string>
+    <string name="sleeptimer">슬립 타이머</string>
+    <string name="equalizer_presets">프리셋</string>
+    <string name="sorting_pref_reset_sum">앨범 및 폴더에 적용</string>
+    <string name="sleeptimer_enabled">%1s 후 재생 중지</string>
+    <string name="sleeptimer_stop">재생 중지</string>
+    <string name="sleeptimer_cancel_desc">슬립 타이머 중지</string>
+    <string name="error_sys_eq">시스템 이퀄라이저를 사용할 수 없습니다!</string>
+    <string name="error_builtin_eq">오류가 발생했습니다! 시스템 이퀄라이저가 존재하는 경우 시스템 이퀄라이저를 사용하세요!</string>
+    <string name="filters_clear">필터를 초기화하시겠습니까?</string>
 </resources>
