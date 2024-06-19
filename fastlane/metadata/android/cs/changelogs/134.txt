@@ -1,0 +1,13 @@
+- Oprava prázdné obrazovky na některých zařízeních
+- Oprava problému s blikajícím kurzorem v názvech dialogů
+- Odebrání MusicBar (prozatím) kvůli problémům s kompatibilitou
+- Zlepšení zobrazení od okraje k okraji
+- Reakce na ovládání sluchátky
+- Zlepšení mechanismu načítání hudby
+- Zobrazení ukazatele průběhu načítání při načítání hudby
+- Povolení kopírování preference akcentu (dlouhým kliknutím)
+- Vylepšení/opravy kódu
+- Přidání francouzských a ruských překladů
+- Aktualizace překladů
+
+Velké díky všem, kteří mi pomohli vylepšit MPGO :)

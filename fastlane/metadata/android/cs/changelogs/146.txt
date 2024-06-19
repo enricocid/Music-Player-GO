@@ -1,0 +1,5 @@
+- Oprava chybějících ovládacích prvků přehrávače při přehrávání z jiných aplikací
+- Oprava problémů s tématy (automatickými)/světlými systémovými panely
+- Vylepšení textu posunu, když doba trvání hudby přesahuje 60 minut
+- Aktualizace ruských překladů
+- Vylepšení kódu

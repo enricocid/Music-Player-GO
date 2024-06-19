@@ -1,0 +1,18 @@
+- Nové: rychlost přehrávání
+- Nové: organizace fronty skladeb
+- Nové: možnost vypnout animace
+- Nové: rychlá dlaždice
+- Přidány nové možnosti řazení
+  - Díky vtkhatri
+- Přezkoumání panelu "Nyní se přehrává"
+  - Přidány nové tlačítka (dlouhým stisknutím pro popis)
+  - Díky Drhaal
+- Zobrazení obálek v kartě alb/detailů
+- Oprava akcí oznámení (Samsung)
+  - Díky uživatelům Arlin Daniel a Dan Muntz
+- Zlepšení podpory tlačítek na sluchátkách
+- Přezkoumání nastavení
+- Mnoho oprav
+- Aktualizace překladů a závislostí
+
+Poznámka: Oblíbené skladby budou smazány. Omlouvám se. :)

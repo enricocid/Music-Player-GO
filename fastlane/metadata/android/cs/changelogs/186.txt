@@ -1,0 +1,8 @@
+- Alba/složky: Uchovávání vybraného řazení
+- Vylepšení rychlého panelu
+- Oprava pádu ekvalizéru
+- Vylepšení fronty
+- Nová možnost uzamčení otáčení
+- Oprava volby jazyků
+- Různé vylepšení kódu a opravy
+- Aktualizace závislostí/překladů

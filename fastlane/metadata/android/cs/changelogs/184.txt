@@ -1,0 +1,6 @@
+- Vylepšené "nyní se přehrává"
+- Vylepšené přehrávání hudby z souborových správců
+(https://github.com/enricocid/Music-Player-GO/issues/461)
+- Opravy chyb
+
+Díky CodeCubeNeo a všem překladatelům

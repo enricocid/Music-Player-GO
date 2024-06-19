@@ -1,0 +1,3 @@
+- Oprava řazení (díky Simonovi)
+- Lollipop: oprava oznámení (díky Ramonovi)
+- Přidání litevských a baskických překladů/aktualizace překladů (díky všem)

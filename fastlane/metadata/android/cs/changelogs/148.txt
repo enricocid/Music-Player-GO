@@ -1,0 +1,5 @@
+- Vylepšení správy oznámení
+- Zjednodušení oznámení
+- Další drobná vylepšení kódu
+- Aktualizace závislostí aplikace
+- Aktualizace hindských překladů (díky moc Pirhszm Yfiz)

@@ -1,0 +1,13 @@
+-Obaly: zlepšení výkonu a snížení pravděpodobnosti ANRs.
+  Poznámka: Mechanismus pro získávání hudby musel být změněn.
+  To znamená, že oblíbené skladby budou ztraceny. Omlouvám se :)
+
+- Zlepšení možností filtru
+- Zlepšení přejetí prstem
+- Zlepšení zobrazení skladeb
+- Oprava řazení
+- Oprava přidání alba do fronty
+- Lollipop: Oprava seekbaru v panelu "Nyní se přehrává"
+- Mnoho dalších oprav chyb a vylepšení
+- Karta Hudba: Zobrazení počtu skladeb
+- Aktualizace překladů

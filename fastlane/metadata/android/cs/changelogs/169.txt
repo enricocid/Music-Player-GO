@@ -1,0 +1,5 @@
+- Oprava fronty
+- Oprava oblíbených skladeb
+- Oprava nezobrazení duplikátů
+- Oprava řazení #2
+- Vylepšení kódu

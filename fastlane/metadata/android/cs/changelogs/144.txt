@@ -1,0 +1,13 @@
+- Vylepšení designu, výkonu uživatelského rozhraní a kvality kódu
+(pro nadšence: korutiny, viewmodel, viewbinding atd.)
+- Nové písmo/ikony: source sans pro/outline
+- Přidána možnost:
+  - Řazení písní v detailech za běhu
+  - Opakování písně
+  - Filtrování umělců/složek
+- Oprava správy zaměření
+- Oprava řazení umělců
+- Přezkoumání mechanismu ukládání oblíbených písní
+- Přechod na téma material components
+- Aktualizace knihoven
+- Mnoho dalších drobných oprav chyb

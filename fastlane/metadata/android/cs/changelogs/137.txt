@@ -1,0 +1,5 @@
+- Zesílení tmavého režimu
+- Režim na šířku: 3 opravy chyb
+- Oprava pádu při prázdné hudební knihovně
+- Vylepšení dialogu akcentů
+- Přidání zaoblených rohů do dialogu s tématy

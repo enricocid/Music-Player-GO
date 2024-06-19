@@ -1,0 +1,11 @@
+- Ekvalizér (pro zařízení, která nemají systémový ekvalizér)
+- Nové ikony a přepracovaný design
+- Podpora vložených obalů
+- Karta alb
+- Rychlé přesouvání (dlouhým klepnutím na tlačítka přeskočení)
+- Více možností
+
+- Zlepšená kompatibilita s Androidem 11
+- Přejetí prstem pro odstranění skladeb z fronty/oblíbených skladeb nebo pro zařazení skladeb do fronty
+- Karty nejsou klikatelné při otevření detailů umělců nebo ekvalizéru, aby se předešlo problémům
+- Mnoho oprav a vylepšení zdrojového kódu

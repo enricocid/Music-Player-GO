@@ -1,0 +1,3 @@
+Dialog "Nyní se přehrává": opraveno, že obálka nebyla aktualizována
+
+Díky uživateli Soyeb Mullick za nahlášení

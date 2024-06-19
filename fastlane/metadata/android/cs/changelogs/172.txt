@@ -1,0 +1,4 @@
+- Fronta: oprava nesmazatelných skladeb (díky Decim)
+- Fronta: další drobná vylepšení
+- Přidání vietnamštiny/aktualizace překladů (díky všem!)
+- Aktualizace knihoven/pluginů

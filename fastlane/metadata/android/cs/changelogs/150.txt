@@ -1,0 +1,7 @@
+- Správa aktivních karet: oprava nesprávného pořadí karet (díky Martinu Teboulovi za hlášení)
+- Oprava pádu ErrorFragmentu
+- Oprava správce oznámení
+- Vylepšení projektu (díky TacoTheDank)
+- Opravy a vylepšení anglických překladů (díky TacoTheDank)
+- Přidání polských překladů (díky SpacingBat3)
+- Aktualizace tureckých překladů (díky https://github.com/ozcanfurkan)

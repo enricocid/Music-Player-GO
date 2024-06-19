@@ -1,0 +1,3 @@
+- Oprava pádu
+- Aktualizace indonéských překladů (díky zmni)
+- Přidány popisy v indonéském a nizozemském jazyce do PlayStore. Díky zmni a Heimen Stoffels

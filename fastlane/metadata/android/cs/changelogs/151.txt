@@ -1,0 +1,6 @@
+- Oprava AOD (Always On Display), který nezobrazuje informace (díky Drhaal)
+- Vylepšení zaměření zvuku
+- Vylepšení mechanismu ukládání naposledy přehrané skladby
+- Přidání rumunských překladů (díky 1t3x)
+- Přidání galských (galicijských) překladů (díky Xose M)
+- Aktualizace knihoven a závislostí

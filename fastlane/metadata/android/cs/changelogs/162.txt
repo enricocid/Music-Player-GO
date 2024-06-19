@@ -1,0 +1,8 @@
+- Oprava a vylepšení náhodného přehrávání/fronty
+Poznámka ohledně karty skladeb: náhodně přehraná hudba bude přidána do fronty pouze pokud nepřekročí 1000 položek
+- Oprava pádu při odstranění aplikace z nedávných
+- Oprava pádu způsobeného nesprávným zpracováním zvukového zaměření
+- Oprava pádu při pokusu o filtrování poslední položky v seznamech
+- Drobné přezkoumání kódu
+
+Speciální poděkování patří Ricardovi a Mattovi :)

@@ -1,0 +1,3 @@
+- Nyní můžete používat karty i při otevření detailů/ekvalizéru (díky Drhaal)
+- Oprava zobrazení možnosti zapnutí/vypnutí vloženého obalu (díky Ricardovi)
+- Aktualizace překladů

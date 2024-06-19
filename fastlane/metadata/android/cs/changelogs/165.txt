@@ -1,0 +1,10 @@
+Údržbové vydání:
+
+- Opravy/vylepšení uživatelského rozhraní
+- Vylepšení/přezkoumání nastavení
+- Vylepšení oznámení
+- Optimalizace kódu
+- Aktualizace knihoven/závislostí
+- Aktualizace překladů (DÍKY VŠEM)
+
+Poděkování: OxygenCobalt, Drhaal, SCOTT-HAMILTON a všem překladatelům

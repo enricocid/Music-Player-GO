@@ -1,0 +1,18 @@
+4.0.0:
+- Nové uživatelské rozhraní: umělci, všechny písně, složky, nastavení
+- Automatické téma (podle systému na Androidu Q a úrovně baterie 
+na starších verzích, dle pokynů)
+- Naposledy přehrávaná skladba (a pozice) je nyní uložena a obnovena
+- Dialog "Nyní přehrávané" (kliknutí na spodní panel):
+  - Hudební lišta (spektrum)
+  - Tlačítka pro média
+  - Tlačítko 'Přidat k oblíbeným skladbám'
+  - Jemné ovládání hlasitosti
+- Jednoduchá správa fronty
+- Oblíbené skladby
+- Řazení
+- Nové schéma akcentů
+- Podpora režimu na šířku
+- Mnoho oprav/vylepšení
+
+Pro více informací/tipů/poděkování: https://github.com/enricocid/Music-Player-GO

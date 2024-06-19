@@ -1,0 +1,4 @@
+- Zlepšení odezvy aplikace na akce mediálních tlačítek (díky Sarah)
+- Přehrávání: přidán režim pozastavení po dokončení skladby
+- Vylepšení/opravy uživatelského rozhraní/tmavého režimu
+- Zlepšení/aktualizace překladů (díky uživateli Allan Nordhøy/všem)

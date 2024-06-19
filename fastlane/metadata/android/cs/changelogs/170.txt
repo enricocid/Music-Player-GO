@@ -1,0 +1,8 @@
+- Obnovení fronty
+- Přezkoumání/vylepšení fronty a oblíbených skladeb
+- Náhodné přehrávání: aby se předešlo problémům s výkonem, jsou velké seznamy omezeny na 250 skladeb
+- Povolení rychlého posouvání fronty/oblíbených položek
+- Vylepšené zpracování chyb v přehrávači hudby
+- Opravy a optimalizace kódu
+- Přidání švédského a aktualizace italského překladu
+- Aktualizace knihoven

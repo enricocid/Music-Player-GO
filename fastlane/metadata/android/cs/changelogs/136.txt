@@ -1,0 +1,3 @@
+Opravy ovládání mediálních tlačítek.
+
+Díky uživateli keddad za testování.

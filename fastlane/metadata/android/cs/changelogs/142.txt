@@ -1,0 +1,8 @@
+- Přezkoumání funkce rychlého skoku: nyní podporuje složky
+- Oprava a vylepšení řízení překrývání seznamů a rychlého posouvání
+- Chyby: místo ukončení aplikace zobrazit chybovou obrazovku
+- Zlepšení zamíchání
+- Fyzická média tlačítka: opravy (díky abirke)
+- Optimalizace kódu a další opravy
+- Přidání brazilské portugalštiny (díky uživateli Glaucio Santos)
+- Aktualizace překladů (díky všem)

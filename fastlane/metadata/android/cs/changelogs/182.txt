@@ -1,0 +1,11 @@
+- Vylepšené přehrávání
+- Vícenásobný výběr k skrytí
+- Další možnosti akcí v notifikaci
+- Přehrát jediného umělce/album/složku...
+- Vylepšené akce při přejetí prstem
+- Fronta/oblíbené: přidat tlačítko pro smazání
+- Přezkoumání akcentů (viz FAQ)
+- Oprava nefunkčního ekvalizéru
+- Vylepšení rozložení v režimu na šířku
+- Mnoho vylepšení a oprav kódu
+- Aktualizace překladů

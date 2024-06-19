@@ -1,0 +1,4 @@
+- Oprava pádu při spuštění systému při inicializaci ekvalizéru
+- Oprava pádu kvůli možnosti vložených obalů 
+- Přidáno plovoucí tlačítko na kartě "veškerá hudba" pro náhodné přehrávání skladeb
+- Vylepšení kódu (díky TacoTheDank)

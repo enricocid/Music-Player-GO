@@ -1,0 +1,3 @@
+- Oprava pádu v dialogu fronty
+- Opravy pádů způsobených nesprávným inicializováním proměnných
+- Aktualizace závislostí
