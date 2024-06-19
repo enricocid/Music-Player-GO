@@ -1,0 +1,2 @@
+- Android 10 : notifiaction's SeekBar 지원 추가
+- 음악 서비스 간소화

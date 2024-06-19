@@ -1,0 +1,7 @@
+- 활성 탭 관리 : 잘못된 탭 순서 수정 (문제를 보고해주신 Martin Teboul에게 감사드립니다)
+- ErrorFragment 충돌 수정
+- 알림 관리자 수정
+- 프로젝트 개선 (TacoTheDank에게 감사드립니다)
+- 영어 번역 수정 및 개선 (TacoTheDank에게 감사드립니다)
+- 폴란드어 번역 추가 (SpacingBat3에게 감사드립니다)
+- 터키어 번역 업데이트 (https://github.com/ozcanfurkan 에게 감사드립니다)

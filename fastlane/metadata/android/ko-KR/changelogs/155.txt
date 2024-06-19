@@ -1,0 +1,3 @@
+- Julian Javier Gomez의 awsome old icon으로 복귀
+- 미디어 플레이어 홀더 개선
+- 코드 정리
