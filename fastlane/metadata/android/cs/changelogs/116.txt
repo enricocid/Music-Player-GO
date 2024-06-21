@@ -1,0 +1,5 @@
+Oprava přehrávání z intentu
+
+- Správně nastaveno přehrávání alba, aby uživatel mohl pomocí tlačítek přeskočit skladby také z intentu
+- Oprava přehrávání filtrovaných duplicitních skladeb
+- Zjednodušení

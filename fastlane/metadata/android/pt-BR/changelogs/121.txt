@@ -1,0 +1,6 @@
+- Adicionada caixa de diálogo precisa de controle de volume (obrigado Arianna Masciolini, https://github.com/harisont)
+- Adicionados brindes de notificação coloridos!
+- Adicionadas traduções para o indonésio (obrigado zmni, https://github.com/zmni)
+- Strings turcas atualizadas (obrigado https://github.com/ozcanfurkan)
+- Correção da barra de progresso não ativada ao embaralhar
+- Atualiza dependências (libs, etc.)

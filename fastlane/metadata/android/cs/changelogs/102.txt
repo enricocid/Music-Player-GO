@@ -1,0 +1,3 @@
+- Recenze WaveView
+- Menší změny uživatelského rozhraní
+- Opravy rozložení detailů umělce

@@ -133,7 +133,7 @@
     <string name="eq_pref_sum">majburês ko, êkolāyzêr mêni nê vê kār gêre</string>
     <string name="eq_pref_title">êkolāyzêr mêni</string>
     <string name="focus_pref_title">dîvowdâri fokosê dong</string>
-    <string name="pause_on_end"></string>
+    <string name="pause_on_end"/>
     <string name="playback_pref_title">soratê pêškê pêsand biďa</string>
     <string name="playback_pref_summary_off">têynā ya ārêng</string>
     <string name="playback_pref_summary_on">vāďārn</string>
@@ -154,4 +154,5 @@
     <string name="song_visual_pref_tl_title">onvān</string>
     <string name="rotation_pref_title">čêftê ler xardên</string>
     <string name="purple">banawš</string>
+    <string name="locale_bakhtiari">Luri Baxtiyâri</string>
 </resources>

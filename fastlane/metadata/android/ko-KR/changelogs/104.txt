@@ -1,0 +1,2 @@
+- 음악 로딩 메커니즘 검토/개선
+- 터키어 번역 수정 (출처 : https://github.com/ozcanfurkan)

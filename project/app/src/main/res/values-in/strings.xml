@@ -181,4 +181,7 @@
     <string name="locale_malayalam">Malayalam</string>
     <string name="category_ui">UI</string>
     <string name="locale_punjabi">Punjabi</string>
+    <string name="locale_serbian">Serbia</string>
+    <string name="locale_bakhtiari">Luri Bakhtiari</string>
+    <string name="locale_odia">Odia</string>
 </resources>

@@ -1,0 +1,8 @@
+- Albümler/klasörler: seçilen sıralamayı sürdür
+- Hızlı döşeme iyileştirildi
+- Dengeleyici çökmesi düzeltildi
+- Daha iyi kuyruk
+- Döndürmeyi kilitlemek için yeni seçenek
+- Yerel ayarlar seçeneği düzeltildi
+- Çeşitli kod iyileştirmeleri ve düzeltmeleri
+- Bağımlılıklar/çeviriler güncellendi

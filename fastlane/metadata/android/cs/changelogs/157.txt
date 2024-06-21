@@ -1,0 +1,6 @@
+- Opravy chyb
+- Stará knihovna, která se používala pro ukládání skladeb a způsobovala problémy, byla nahrazena
+modernější knihovnou. Vzhledem k této změně budou oblíbené skladby ztraceny. Omlouvám se, ale bylo to
+potřeba :)
+- Automatické téma se stalo výchozím (díky Drhaal za návrh)
+- Aktualizovány knihovny/závislosti

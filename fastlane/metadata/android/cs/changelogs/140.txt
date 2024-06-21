@@ -1,0 +1,3 @@
+- Režim na šířku: oprava problémů s překrýváním mezi indikátory a seznamem umělců/složek
+- Režim na šířku: oprava pádu při zobrazení dialogů (např. nyní přehrávané)
+- Aktualizace španělských překladů

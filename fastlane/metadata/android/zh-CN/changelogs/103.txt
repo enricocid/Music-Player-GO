@@ -1,0 +1,1 @@
+- 添加土耳其语翻译（感谢：https://github.com/ozcanfurkan）

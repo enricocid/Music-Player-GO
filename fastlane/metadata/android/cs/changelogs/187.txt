@@ -1,0 +1,3 @@
+- Oprava problému s frontou nepřidávající písně, které jsou již přítomny
+- Obecné opravy
+- Aktualizace/přidání překladů

@@ -1,0 +1,3 @@
+- Návrat k úžasnému starému ikonu od Julia Javiera Gomeze
+- Vylepšení mediálního přehrávače
+- Čištění kódu

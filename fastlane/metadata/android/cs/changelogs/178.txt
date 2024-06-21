@@ -1,0 +1,5 @@
+- Použití rychlého posuvníku ve stylu AOSP
+- Přidání rychlého posuvníku do detailů složky
+- Oprava problémů s tématy záložek
+- Zjednodušení/zlepšení kódu
+- Aktualizace překladů: portugalština (Brazílie)

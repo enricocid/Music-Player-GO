@@ -1,0 +1,3 @@
+- Opraveno několik pádů (díky Carmine Nives)
+- Aktualizace překladů (čínština - tradiční) - Díky EarthlyEric
+- Aktualizace závislostí

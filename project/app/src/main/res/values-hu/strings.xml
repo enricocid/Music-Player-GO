@@ -179,7 +179,7 @@
     <string name="category_audio">Hang</string>
     <string name="error_sys_eq">A rendszer hangszínszabályzója nem áll rendelkezésre!</string>
     <string name="locale_finnish">Finn</string>
-    <string name="locale_bakhtiari">Bakhtiari</string>
+    <string name="locale_bakhtiari">Lrio Bakhtiari</string>
     <string name="locale_odia">Odia</string>
     <string name="eq_pref_sum">Beépített hangszínszabályzó használatának kényszerítése</string>
     <string name="locale_malayalam">Malayalam</string>

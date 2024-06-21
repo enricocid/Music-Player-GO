@@ -1,0 +1,2 @@
+- Mecanismo de carregamento de música revisado/melhorado
+- Correção nas traduções do Turco (créditos: https://github.com/ozcanfurkan)

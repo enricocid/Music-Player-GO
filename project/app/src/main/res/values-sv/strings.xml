@@ -10,7 +10,7 @@
     <string name="headset_pref_title">Hantering av headsetkontakt</string>
     <string name="focus_pref_title">Ljudfokushantering</string>
     <string name="precise_volume_pref_title">Exakt volymkontroll</string>
-    <string name="notification_actions_repeat">Ytterligare aviseringsåtgärder</string>
+    <string name="notification_actions_repeat">Upprepa/stäng</string>
     <string name="fast_seeking_pref_summary">Snabbspolning framåt/bakåt (sekunder)</string>
     <string name="fast_seeking_pref_title">Snabbsökning</string>
     <string name="active_fragments_pref_title">Aktiva flikar</string>
@@ -181,7 +181,7 @@
     <string name="sorting_pref_reset_confirm">Återställa sorteringsinställningarna\?</string>
     <string name="sorting_pref_reset_neutral">Sluta fråga</string>
     <string name="locale_punjabi">Punjabi</string>
-    <string name="locale_bakhtiari">Bakhtiari</string>
+    <string name="locale_bakhtiari">Luri Bakhtiari</string>
     <string name="locale_odia">Oriya</string>
     <string name="locale_serbian">Serbiska</string>
 </resources>

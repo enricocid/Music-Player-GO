@@ -1,0 +1,4 @@
+Una versión de mantenimiento que trae:
+- Correcciones al cuadro de diálogo de enfoque y permisos.
+- Desplazamiento rápido del indicador con actualización de la versión de Reddit
+- Mejora del mecanismo de carga de música

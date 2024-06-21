@@ -181,4 +181,7 @@
     <string name="sorting_pref_reset_neutral">Nicht mehr fragen</string>
     <string name="sorting_pref_reset">Sortierung zurücksetzen</string>
     <string name="locale_punjabi">Pandschabi</string>
+    <string name="locale_odia">Odia</string>
+    <string name="locale_serbian">Serbisch</string>
+    <string name="locale_bakhtiari">Luri Bakhtiari</string>
 </resources>

@@ -1,0 +1,9 @@
+- Nahrazení/odstranění zastaralých knihoven
+- Oprava zaměření zvuku při nahrávání hlasových zpráv (např. Telegram) 
+  Díky Decim
+- Oprava neúplné obnovy nastavení ekvalizéru
+- Ovládací tlačítka na sluchátkách: dvojklikem pozastavení/pokračování k přeskočení
+- Oprava ukládání skladeb při odstranění aplikace z nedávných
+- Aktualizace závislostí
+- Vylepšení/úpravy kódu
+- Aktualizace překladů (díky všem)

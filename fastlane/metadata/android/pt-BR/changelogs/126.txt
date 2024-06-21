@@ -1,0 +1,3 @@
+- Indicador de rolagem rápida: faz do índice selecionado o primeiro item visível na lista de artistas
+- Corrige classificação de artistas
+- Atualização na biblioteca do Indicador de Rolagem Rápida

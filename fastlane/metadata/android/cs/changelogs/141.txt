@@ -1,0 +1,5 @@
+- Opraven pád při startu
+- Opraven únik hudební služby při otočení zařízení
+- Optimalizace kódu (odebráno 299 řádků kódu!)
+- Dialog oprávnění: "Ano" a "Ne" jsou nyní nahrazeny "OK" a "Zrušit"
+- Aktualizace tureckých a hindských překladů

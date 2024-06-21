@@ -1,0 +1,3 @@
+- Solucionar un fallo en Android M gracias a sagorahmed y Alex Lockwood
+- Se agregó soporte para hindi gracias a Somesh Kumar.
+- Actualizar los componentes básicos de la aplicación (libs, etc.)

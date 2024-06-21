@@ -1,0 +1,6 @@
+- Android 12: přidáno upozornění informující uživatele o problémech s přehráváním
+PS: Zvažte deaktivaci optimalizace baterie v systémových nastaveních:
+Aplikace > Všechny aplikace > Music Player GO > Baterie > Neomezeně
+- Oprava možnosti filtrování
+- Přezkoumání nastavení
+- Aktualizace překladů

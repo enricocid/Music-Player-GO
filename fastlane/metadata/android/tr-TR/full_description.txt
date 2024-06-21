@@ -1,0 +1,18 @@
+<b>Music Player GO</b>, <b>basitlik</b> ve performansı hedefleyen sade ancak tam özellikli bir yerel müzik çalardır.
+
+<b>Özellikler</b>
+
+- Sade arayüz
+- Dengeleyici
+- Sanatçı, albüm, şarkı ve klasörlere göre düzenlenen müzik; sekmeler düzenlenebilir
+- Açık, koyu, otomatik temalar ve vurgular
+- Saf siyah tema
+- Kuyruk
+- Uyku zamanlayıcısı
+- Ses odaklaması, hassas ses seviyesi ve kulaklık yönetimi
+- Şimdi çalıyor, gömülü kapaklar, arama, oynatma hızı, tamamlandığında duraklatma, sıralama, karıştırma, hızlı sarma...
+
+
+<b>Çevirilere katkıda bulunmak ister misiniz?</b>
+
+<a href="https://hosted.weblate.org/engage/music-player-go/">Weblate</a> üzerinde bize katılın

@@ -1,0 +1,3 @@
+- Kuyruğun zaten var olan şarkıları eklememesi düzeltildi
+- Genel düzeltmeler
+- Çeviriler güncellendi/eklendi

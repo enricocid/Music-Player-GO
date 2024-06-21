@@ -1,0 +1,3 @@
+- Indicador de desplazamiento rápido: hace que el índice seleccionado sea el primer elemento visible en la lista de artistas
+- Arreglar la clasificación de artistas.
+- Biblioteca de desplazamiento rápido del indicador de actualización

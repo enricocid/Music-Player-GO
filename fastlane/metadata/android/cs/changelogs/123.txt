@@ -1,0 +1,2 @@
+- Opraveno chybějící automatické přehrávání další skladby po dokončení přehrávání
+- Aktualizace tureckých překladů

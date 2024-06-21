@@ -1,0 +1,6 @@
+- Zlepšení citlivosti při posouvání mezi kartami
+- Oprava třídění všech hudebních karet
+- Aktualizace knihoven/pluginů
+- Aktualizace překladů do zjednodušené čínštiny
+
+Poděkování: OxygenCobalt, DECIM, 360Tencent

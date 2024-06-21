@@ -1,0 +1,3 @@
+- Revisão do WaveView
+- Mudanças minoritárias da Interface de Usuário
+- Consertos para o layout dos detalhes do artista

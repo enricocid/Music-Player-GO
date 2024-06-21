@@ -1,0 +1,6 @@
+- Nový indikátor rychlého posouvání od Redditu
+- Velký přezkum uživatelského rozhraní
+- Plynulé aplikování témat a akcentů
+- Použití výchozího písma 
+- Správa preferencí byla změněna, takže je musíte znovu aplikovat
+- Vylepšení kódu

@@ -1,0 +1,12 @@
+- Organizace karet
+- Přidání alb do fronty
+- Správa oblíbených/náhodně přehrávaných skladeb z fronty
+- Výchozí nastavení od okraje k okraji
+- Android 11: oprava nastavení od okraje k okraji
+- Oprava zaostření zvuku (díky Drhaal)
+- Resetování hlasitosti při vypnutí přesného ovládání hlasitosti (díky Drhaal)
+- Přezkoumání barvování systémových panelů
+- Mnoho vylepšení a oprav kódu
+- Aktualizace/přidání překladů
+
+Poznámka: Oblíbené skladby budou smazány kvůli změnám v mechanismu ukládání

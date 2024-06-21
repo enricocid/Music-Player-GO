@@ -1,0 +1,2 @@
+- Revisar/mejorar el mecanismo de carga de música.
+- Corregir traducciones al turco (https://github.com/ozcanfurkan)

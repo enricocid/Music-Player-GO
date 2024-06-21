@@ -1,0 +1,3 @@
+- Agregar botón de cerrar a la notificación
+- Eliminar canciones duplicadas (aquellas guardadas en múltiples copias en diferentes rutas)
+- Limpieza/mejoras de código

@@ -1,0 +1,3 @@
+- Přidáno tlačítko zavření do oznámení
+- Odstraněny duplicitní skladby (uložené v různých cestách ve více kopiích)
+- Úpravy/čištění kódu

@@ -4,10 +4,10 @@
     <string name="cancel">Anuluj</string>
     <string name="yes">Tak</string>
     <string name="no">Nie</string>
-    <string name="on_close_activity">Czy chcesz zatrzymać odtwarzanie muzyki?</string>
-    <string name="queue_songs_clear">Kolejka zostanie wyczyszczona. Kontynuować?</string>
-    <string name="favorites_clear">Lista polubionych zostanie wyczyszczona. Kontynuować?</string>
-    <string name="favorite_remove">%1s (%2s) zostanie usunięty z listy polubionych. Kontynuować?</string>
+    <string name="on_close_activity">Zatrzymać odtwarzanie?</string>
+    <string name="queue_songs_clear">Wyczyścić kolejkę?</string>
+    <string name="favorites_clear">Pozbyć się wszystkich ulubionych?</string>
+    <string name="favorite_remove">Usunąć %1s (%2s) z ulubionych?</string>
     <string name="artists">Artyści</string>
     <string name="songs">Utwory</string>
     <string name="folders">Foldery</string>
@@ -85,4 +85,10 @@
     <string name="sorting_pref_artist_inv">Artyści Z-A</string>
     <string name="anim_pref_title">Animacje</string>
     <string name="playback_pref_title">Prędkość odtwarzania</string>
+    <string name="sorting_pref_reset_confirm">Zresetować preferencje sortowania?</string>
+    <string name="sorting_pref_reset_neutral">Przestań pytać</string>
+    <string name="equalizer_presets">Ustawienia wstępne</string>
+    <string name="sorting_pref_save">Ustawić jako domyślne sortowanie?</string>
+    <string name="sorting_pref_reset">Reset sortowania utworów</string>
+    <string name="sorting_pref_reset_sum">Dotyczy albumów i folderów</string>
 </resources>

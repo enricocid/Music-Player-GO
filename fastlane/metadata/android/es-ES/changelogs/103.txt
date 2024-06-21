@@ -1,0 +1,1 @@
+- Añadir traducciones al turco (créditos: https://github.com/ozcanfurkan)

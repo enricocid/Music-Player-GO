@@ -1,0 +1,3 @@
+- Opraven pád na Androidu M díky sagorahmedovi a Alexi Lockwoodovi
+- Přidána podpora hindštiny díky Someshi Kumarovi
+- Aktualizovány stavební bloky aplikace (knihovny atd.)

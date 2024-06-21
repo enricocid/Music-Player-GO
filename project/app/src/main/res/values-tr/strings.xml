@@ -39,7 +39,7 @@
     <string name="theme_pref_dark_title">Koyu</string>
     <string name="theme_pref_auto_title">Sistem</string>
     <string name="accent_pref_title">Ana Renk</string>
-    <string name="active_fragments_pref_title">Aktif sekmeler</string>
+    <string name="active_fragments_pref_title">Etkin sekmeler</string>
     <string name="sorting_pref_default">Varsayılan</string>
     <string name="precise_volume_pref_title">Hassas ses denetimi</string>
     <string name="focus_pref_title">Ses odak yönetimi</string>
@@ -54,7 +54,7 @@
     <string name="sorting_pref_track_inv">Şarkı numarasına göre ↑</string>
     <string name="error_not_ready">Müzik kütüphanesi yüklenemedi! :( SD kartın bağlantısını kesmek, Android MediaStore veri tabanını yeniden oluşturur. Daha sonra tekrar deneyin.</string>
     <string name="on_list_ended_pref_title">Bir liste sona erdiğinde…</string>
-    <string name="notification_actions_repeat">Ek bildirim eylemleri</string>
+    <string name="notification_actions_repeat">Tekrarla/kapat</string>
     <string name="fast_seeking_pref_summary">Hızlı ileri/geri sarma adımı (saniye)</string>
     <string name="fast_seeking_pref_title">Hızlı arama</string>
     <string name="song_visual_pref_fn_title">Dosya adı</string>
@@ -64,7 +64,7 @@
     <string name="on_list_ended_pref_stop_title">Dur</string>
     <string name="covers_pref_title">Gömülü albüm kapakları</string>
     <string name="error_list_ended">Liste sona erdi.</string>
-    <string name="equalizer_v">Surround ses</string>
+    <string name="equalizer_v">Çevresel ses</string>
     <string name="equalizer_bb">Bas güçlendirme</string>
     <string name="equalizer">Dengeleyici</string>
     <string name="albums">Albümler</string>
@@ -109,7 +109,7 @@
     <string name="locale_vietnamese">Vietnamca</string>
     <string name="locale_bulgarian">Bulgarca</string>
     <string name="locale_danish">Danca</string>
-    <string name="locale_dutch">Flemenkçe</string>
+    <string name="locale_dutch">Felemenkçe</string>
     <string name="locale_italian">İtalyanca</string>
     <string name="locale_hindi">Hintçe</string>
     <string name="locale_lituanian">Litvanca</string>
@@ -118,7 +118,7 @@
     <string name="locale_thai">Tayca</string>
     <string name="locale_turkish">Türkçe</string>
     <string name="deep_purple">Koyu mor</string>
-    <string name="indigo">İndigo</string>
+    <string name="indigo">Çivit mavisi</string>
     <string name="blue">Mavi</string>
     <string name="light_blue">Açık mavi</string>
     <string name="cyan">Camgöbeği</string>
@@ -138,7 +138,7 @@
     <string name="locale_belarusian">Belarusça</string>
     <string name="locale_english">İngilizce</string>
     <string name="locale_sinhalese">Singalaca</string>
-    <string name="locale_basque">Bask</string>
+    <string name="locale_basque">Baskça</string>
     <string name="pause_on_end">Tamamlandığında duraklat.</string>
     <string name="locale_slovenian">Slovence</string>
     <string name="lime">Limon rengi</string>
@@ -155,14 +155,14 @@
     <string name="locale_pref_title">Dil</string>
     <string name="locale_spanish">İspanyolca</string>
     <string name="sleeptimer_enabled">Oynatmayı %1s sonra durdur</string>
-    <string name="filters_error">Gizli sanatçılar/klasörler/albümler açılamıyor!</string>
+    <string name="filters_error">Gizli sanatçılar/klasörler/albümler açılamıyor.</string>
     <string name="notification_actions_pref_title">Ek bildirim eylemleri</string>
     <string name="notification_actions_favorite">Favorilere ekle/kapat</string>
     <string name="notification_actions_favorite_position">Favorilere ekle (pozisyonla)/kapat</string>
     <string name="notification_actions_fast_seeking">Hızlı arama</string>
     <string name="continue_on_end_desc">Tamamlandığında devam etsin ya da tekrar çalsın</string>
     <string name="pause_on_end_disabled">Tamamlandığında devam et.</string>
-    <string name="filters_clear">Filtereler temizlenecek. Devam edilsin mi\?</string>
+    <string name="filters_clear">Filtreler temizlensin mi?</string>
     <string name="confirm_ask_pref_title">Onay mesajları</string>
     <string name="confirm_ask_pref_sum">Bir şey yapmadan önce onay için sor</string>
     <string name="locale_azerbaijani">Azerice</string>
@@ -175,10 +175,13 @@
     <string name="category_audio">Ses</string>
     <string name="sorting_pref_reset_confirm">Sıralama ayarları sıfırlansın mı\?</string>
     <string name="error_builtin_eq">Bir hata oluştu! Sistem dengeleyicisini kullanın (eğer varsa)!</string>
-    <string name="error_sys_eq">Sistem dengeleyicisi mevcut değil!</string>
+    <string name="error_sys_eq">Sistem dengeleyicisi kullanılabilir değil!</string>
     <string name="locale_finnish">Fince</string>
     <string name="eq_pref_title">Dahili ekolayzır</string>
     <string name="eq_pref_sum">Dahili ekolayzır kullanımını zorla</string>
     <string name="locale_malayalam">Malayalam</string>
     <string name="locale_punjabi">Pencapça</string>
+    <string name="locale_bakhtiari">Bahtiyari Lurca</string>
+    <string name="locale_serbian">Sırpça</string>
+    <string name="locale_odia">Oriya dili</string>
 </resources>

@@ -1,0 +1,3 @@
+- Aplicação de temas de cores com mais suavidade
+- Faz com que as informações dos controles do jogador sejam roladas automaticamente quando muito longas
+- Melhorias de código

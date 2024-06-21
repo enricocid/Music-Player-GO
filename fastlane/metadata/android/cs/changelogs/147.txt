@@ -1,0 +1,3 @@
+- [Oreo a vyšší] oprava pádu požadavku na zaostření zvuku. Děkujeme Stephanu Maierovi za nahlášení problému.
+- Další drobná vylepšení přehrávače médií
+- Aktualizace nástrojů pro sestavování a pluginu Kotlin

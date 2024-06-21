@@ -1,1 +1,1 @@
--Přidat Turecký překlad (kredit: https://github.com/ozcanfurkan)
+- Přidány turecké překlady (překladatel: https://github.com/ozcanfurkan)

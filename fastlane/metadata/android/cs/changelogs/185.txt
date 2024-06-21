@@ -1,0 +1,8 @@
+- Podpora pro Android 13
+- Vylepšení podpory pro Android 12
+- Vylepšení vestavěného ekvalizéru
+- Vylepšení podpory pro externí ekvalizéry (např. Wavelet, Poweramp)
+- Oprava spánkového časovače (díky @abelbabel)
+- Vylepšení kódu/opravy chyb
+- Aktualizace knihoven/závislostí
+- Aktualizace překladů (díky všem přispěvatelům).

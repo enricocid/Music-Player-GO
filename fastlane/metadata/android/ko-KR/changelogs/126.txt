@@ -1,0 +1,3 @@
+- Indicator Fast scroll : 선택된 인덱스를 아티스트 목록의 첫 번째 항목으로 설정
+- 아티스트 정렬 수정
+- Indicator Fast Scroll 라이브러리 업데이트

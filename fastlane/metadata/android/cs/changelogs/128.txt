@@ -1,0 +1,14 @@
+- Vrácen původní dialog implementace přesné hlasitosti:
+Ovládání hlasitosti bylo NASTAVENO PŘESNĚ, což vám umožnilo
+úplnou kontrolu nad skutečnou úrovní hlasitosti.
+Díky Arianna Masciolini!!
+
+- Aktualizována verze Dynamic Toasts
+
+Poznámka: Toto byla poslední aktualizace větve 3.x. Příští verze (4.0 EX) bude
+kompletně přepsána od základů a bude zahrnovat většinu funkcí, které jste požadovali (složky, 
+záložky se všemi písněmi, lepší správa zaměření, lepší navigace, nyní se přehrává, správa fronty,
+nové možnosti uživatelského rozhraní, nové téma, podpora automatického tmavého režimu v Androidu Q a další).
+
+Můžete sledovat všechny aktualizace zde:
+https://github.com/enricocid/Music-Player-GO/commits/master-mpgo-ex

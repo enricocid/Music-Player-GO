@@ -1,0 +1,3 @@
+- Adiciona botão Fechar à notificação
+- Remove músicas duplicadas (aquelas salvas em múltiplas cópias em caminhos diferentes)
+- Limpeza/melhorias de código

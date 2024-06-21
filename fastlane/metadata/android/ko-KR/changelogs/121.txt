@@ -1,0 +1,6 @@
+- 정밀 볼륨 조절 다이얼로그 추가 (thanks : Arianna Masciolini, https://github.com/harisont)
+- 다채로운 토스트 메시지 추가!
+- 인도네시아어 번역 추가 (thanks zmni, https://github.com/zmni)
+- 튀르키예어 문자열 업그레이드 (thanks https://github.com/ozcanfurkan)
+- 셔플 시 progress bar가 활성화되지 않는 문제 수정
+- 종속성(라이브러리 등) 업그레이드

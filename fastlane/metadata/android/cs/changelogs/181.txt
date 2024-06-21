@@ -1,0 +1,4 @@
+- Oprava chování tlačítka zavření
+- Opravy/zlepšení kódu
+- Aktualizace závislostí
+- Aktualizace ukrajinských překladů (díky uživateli Ihor Hordiichuk)

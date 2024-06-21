@@ -1,0 +1,6 @@
+- Novo indicador de rolagem rápida do Reddit
+- Revisão majoritária da IU
+- Aplique temas e acentos sem problemas
+- Use fonte de tema de material padrão
+- O gerenciamento de preferências mudou, então você precisa reaplicá-las
+- Melhorias de código

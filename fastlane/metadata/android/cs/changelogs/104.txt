@@ -1,0 +1,2 @@
+- Přezkoumán/zlepšen mechanismus načítání hudby
+- Opraven turecký překlad (překladatel: https://github.com/ozcanfurkan)

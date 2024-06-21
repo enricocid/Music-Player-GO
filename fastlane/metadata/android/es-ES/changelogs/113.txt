@@ -1,0 +1,1 @@
+Arreglar el servicio del reproductor

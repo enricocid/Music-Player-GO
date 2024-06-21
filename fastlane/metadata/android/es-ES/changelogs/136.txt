@@ -1,0 +1,3 @@
+Correcciones en el manejo de los botones multimedia.
+
+Gracias a keddad por realizar la prueba.

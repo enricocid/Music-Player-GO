@@ -1,0 +1,7 @@
+- Oprava dvojkliku na oblíbené, fronta v ovládacím panelu (díky hoangchung)
+- Nyní se přehrává: pauza zůstane označena, dokud není manuálně změněna (díky Glitchy-Tozier)
+- Oprava/vylepšení nočního tématu (díky repparw)
+- Aktualizace překladů (díky yzqzss, sr093906, calcitem, S3aBreeze)
+
+- Podpora Androidu 12. V případě jakéhokoli problému mě prosím kontaktujte (nemám
+zařízení se systémem S, pouze emulátor).

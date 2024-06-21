@@ -1,0 +1,10 @@
+- Časovač spánku (díky watauoa)
+- Přepínač jazykové verze
+- Vrácení opravdového tmavého režimu...
+- ...a možnost vynutit čistě černý režim! :trollface:
+- Skladby lze nyní přímo odstranit ze seznamů
+- Přezkoumání uživatelského rozhraní
+- Pokus o opravu problému s notifikacemi na určitých zařízeních s Androidem 12
+- Aktualizace/nové překlady (díky všem)
+- Vylepšení/úpravy kódu
+- Aktualizace závislostí

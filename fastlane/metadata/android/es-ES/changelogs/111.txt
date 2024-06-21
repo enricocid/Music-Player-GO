@@ -1,0 +1,6 @@
+- Nuevo indicador de desplazamiento rápido de Reddit
+- Revisión importante de la interfaz de usuario
+- Aplicar temas y acentos sin problemas.
+- Usar fuente de tema de material predeterminada
+- La gestión de preferencias ha cambiado, por lo que debes volver a aplicarlas.
+- Mejoras de código

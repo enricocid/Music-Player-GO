@@ -181,4 +181,7 @@
     <string name="error_builtin_eq">Um erro ocorreu! Use o equalizador do sistema (se existir)!</string>
     <string name="error_sys_eq">Equalizador do sistema não disponível!</string>
     <string name="locale_punjabi">Punjabi</string>
+    <string name="locale_odia">Oriá</string>
+    <string name="locale_serbian">Sérvio</string>
+    <string name="locale_bakhtiari">Luri</string>
 </resources>
