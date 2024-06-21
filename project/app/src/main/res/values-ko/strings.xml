@@ -47,7 +47,7 @@
     <string name="on_list_ended_pref_stop_title">중단</string>
     <string name="on_list_ended_pref_title">리스트가 끝났을 때…</string>
     <string name="covers_pref_title">앨범 커버 표시</string>
-    <string name="accent_pref_title">강조</string>
+    <string name="accent_pref_title">강조 색상</string>
     <string name="theme_pref_auto_title">자동</string>
     <string name="theme_pref_dark_title">어두운 테마</string>
     <string name="theme_pref_light_title">밝은 테마</string>
