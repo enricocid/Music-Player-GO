@@ -1,4 +1,4 @@
-- 정밀 볼륨 조절 대화상자 추가 (thanks : Arianna Masciolini, https://github.com/harisont)
+- 정밀 볼륨 조절 다이얼로그 추가 (thanks : Arianna Masciolini, https://github.com/harisont)
 - 다채로운 토스트 메시지 추가!
 - 인도네시아어 번역 추가 (thanks zmni, https://github.com/zmni)
 - 튀르키예어 문자열 업그레이드 (thanks https://github.com/ozcanfurkan)

@@ -1,1 +1,1 @@
-소스 코드 개선 (thanks : TacoTheDank, https://gitlab.com/TacoTheDank)
+소스 코드 개선 (TacoTheDank에게 감사드립니다, https://gitlab.com/TacoTheDank)

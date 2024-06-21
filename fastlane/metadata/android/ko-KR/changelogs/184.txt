@@ -1,0 +1,6 @@
+- 현재 재생 화면 개선
+- 파일 관리자에서 음악 재생 기능 개선
+(참조 : https://github.com/enricocid/Music-Player-GO/issues/461)
+- 버그 수정
+
+CodeCubeNeo와 모든 번역자들에게 감사드립니다
