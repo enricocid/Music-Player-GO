@@ -78,6 +78,7 @@ Welcome to **Music Player GO**, your go-to local Android music player that strik
 - Sleep timer
 - Audio focus, precise volume and headset management
 - Now playing, embedded covers, search, playback speed, pause on completion, sorting, shuffle, fast-seeking, and more!
+- Gapless Playback
  
 
 # Translations
